@@ -2,17 +2,35 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useFinancialStore } from '@/stores/financial-store';
+import { useEffect, useState } from 'react';
 
-const navItems = [
-  { href: '/', label: 'Dashboard', icon: '🚗' },
-  { href: '/simulator', label: 'Simulator', icon: '📊' },
-  { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
-  { href: '/learn', label: 'Learn', icon: '📚' },
-  { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
-];
+const domainIcons: Record<string, string> = {
+  car: '🚗',
+  house: '🏠',
+  land: '🏞️',
+  creditCard: '💳',
+  studentLoan: '🎓',
+};
 
 export default function Navigation() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+  const activeDomain = useFinancialStore((state) => state.activeDomain);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const dashboardIcon = mounted ? (domainIcons[activeDomain] || '🚗') : '🚗';
+
+  const navItems = [
+    { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },
+    { href: '/simulator', label: 'Simulator', icon: '📊' },
+    { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
+    { href: '/learn', label: 'Learn', icon: '📚' },
+    { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur border-t border-gray-800 md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen">
@@ -25,13 +43,15 @@ export default function Navigation() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                 pathname === item.href
                   ? 'bg-emerald-500/20 text-emerald-400'
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
-              }`}
+              } ${item.isDynamic ? 'relative' : ''}`}
             >
-              <span className="text-xl">{item.icon}</span>
+              <span className={`text-xl ${item.isDynamic ? 'transition-transform duration-200' : ''}`}>
+                {item.icon}
+              </span>
               <span className="hidden md:inline">{item.label}</span>
             </Link>
           ))}

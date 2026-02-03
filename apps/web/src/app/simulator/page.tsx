@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { runSimulation, formatCurrency, formatDate, SimulationInputs } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
+import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { useFinancialStore } from '@/stores/financial-store';
 
@@ -64,7 +65,7 @@ export default function SimulatorPage() {
 
       <DomainTabs 
         activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'vault')} 
+        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
       />
 
       <div className="mt-6">
@@ -105,6 +106,12 @@ export default function SimulatorPage() {
                     size="lg"
                   />
                 </div>
+                <DualSlider
+                  incomeValue={store.monthlyIncome}
+                  expenseValue={store.monthlyExpenses}
+                  onIncomeChange={store.setMonthlyIncome}
+                  onExpenseChange={store.setMonthlyExpenses}
+                />
                 <div className="pt-2 border-t border-slate-700">
                   <div className="flex justify-between">
                     <span className="text-gray-400">Cash Flow</span>
