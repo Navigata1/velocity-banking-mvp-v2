@@ -354,6 +354,9 @@ export default function Dashboard() {
     const cashFlow = store.getCashFlow();
     const chunkAmount = store.chunkAmount;
     
+    const creditCard = store.debts.creditCard || { balance: 0, interestRate: 0.20, minimumPayment: 0, termMonths: 60 };
+    const studentLoan = store.debts.studentLoan || { balance: 0, interestRate: 0.068, minimumPayment: 0, termMonths: 120 };
+    
     interface ActionInsight {
       description: string;
       metrics: { label: string; value: string; trend: 'up' | 'down' | 'neutral' }[];
@@ -502,7 +505,7 @@ export default function Dashboard() {
           insight: { description: 'Credit cards have the highest interest rates - crushing this first saves the most money.',
             metrics: [
               { label: 'Daily Interest', value: formatCurrency(store.getDailyInterest('creditCard')), trend: 'down' },
-              { label: 'Interest Rate', value: `${(store.debts.creditCard.interestRate * 100).toFixed(1)}%`, trend: 'down' },
+              { label: 'Interest Rate', value: `${(creditCard.interestRate * 100).toFixed(1)}%`, trend: 'down' },
               { label: 'Payoff Impact', value: `${baseline.months - velocity.months} mo faster`, trend: 'up' },
             ],
             tips: ['Always pay more than minimum', 'Consider balance transfer options', 'Stop using card until paid off'],
@@ -512,7 +515,7 @@ export default function Dashboard() {
           insight: { description: 'By using velocity banking on credit cards, you\'re avoiding massive interest charges.',
             metrics: [
               { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
-              { label: 'APR Defeated', value: `${(store.debts.creditCard.interestRate * 100).toFixed(1)}%`, trend: 'up' },
+              { label: 'APR Defeated', value: `${(creditCard.interestRate * 100).toFixed(1)}%`, trend: 'up' },
               { label: 'Freedom Date', value: `${velocity.months} mo`, trend: 'up' },
             ],
             tips: ['Credit card payoff is your first priority', 'Each payment reduces compounding damage', 'Track your shrinking balance'],
@@ -521,8 +524,8 @@ export default function Dashboard() {
         { id: 'cc-3', type: 'tip', title: 'Freeze the Card', subtitle: 'Prevent new charges while paying off', icon: '🧊',
           insight: { description: 'Stop adding to your balance while aggressively paying it down.',
             metrics: [
-              { label: 'Current Balance', value: formatCurrency(store.debts.creditCard.balance), trend: 'down' },
-              { label: 'Monthly Interest', value: formatCurrency(store.debts.creditCard.balance * store.debts.creditCard.interestRate / 12), trend: 'down' },
+              { label: 'Current Balance', value: formatCurrency(creditCard.balance), trend: 'down' },
+              { label: 'Monthly Interest', value: formatCurrency(creditCard.balance * creditCard.interestRate / 12), trend: 'down' },
               { label: 'Break-Even', value: 'In progress', trend: 'neutral' },
             ],
             tips: ['Use debit or cash temporarily', 'Unlink card from subscriptions', 'Remove from online shopping sites'],
@@ -532,7 +535,7 @@ export default function Dashboard() {
           insight: { description: 'Making payments before statement date reduces reported balance and interest.',
             metrics: [
               { label: 'Best Time', value: 'Before closing date', trend: 'neutral' },
-              { label: 'Credit Utilization', value: `${Math.round((store.debts.creditCard.balance / 10000) * 100)}%`, trend: 'down' },
+              { label: 'Credit Utilization', value: `${Math.round((creditCard.balance / 10000) * 100)}%`, trend: 'down' },
               { label: 'Score Impact', value: 'Positive', trend: 'up' },
             ],
             tips: ['Pay twice monthly for best results', 'Note your statement closing date', 'Reduce utilization below 30%'],
@@ -544,7 +547,7 @@ export default function Dashboard() {
           insight: { description: 'Extra payments on student loans go directly to principal - accelerating freedom.',
             metrics: [
               { label: 'Principal Attack', value: formatCurrency(chunkAmount), trend: 'up' },
-              { label: 'Interest Rate', value: `${(store.debts.studentLoan.interestRate * 100).toFixed(1)}%`, trend: 'neutral' },
+              { label: 'Interest Rate', value: `${(studentLoan.interestRate * 100).toFixed(1)}%`, trend: 'neutral' },
               { label: 'Time Saved', value: `${baseline.months - velocity.months} mo`, trend: 'up' },
             ],
             tips: ['Specify payments go to principal', 'Consider refinancing if rate is high', 'Stay consistent with chunks'],
@@ -563,7 +566,7 @@ export default function Dashboard() {
         { id: 'sl-3', type: 'tip', title: 'Tax Deduction Check', subtitle: 'Student loan interest may be deductible', icon: '📋',
           insight: { description: 'Up to $2,500 in student loan interest may be tax deductible annually.',
             metrics: [
-              { label: 'Annual Interest', value: formatCurrency(store.debts.studentLoan.balance * store.debts.studentLoan.interestRate), trend: 'neutral' },
+              { label: 'Annual Interest', value: formatCurrency(studentLoan.balance * studentLoan.interestRate), trend: 'neutral' },
               { label: 'Max Deduction', value: '$2,500', trend: 'neutral' },
               { label: 'Potential Savings', value: formatCurrency(500), trend: 'up' },
             ],
@@ -573,7 +576,7 @@ export default function Dashboard() {
         { id: 'sl-4', type: 'action', title: 'Income-Driven Backup', subtitle: 'Know your options if income changes', icon: '🛡️',
           insight: { description: 'Federal loans offer income-driven plans as a safety net if needed.',
             metrics: [
-              { label: 'Current Payment', value: formatCurrency(store.debts.studentLoan.minimumPayment), trend: 'neutral' },
+              { label: 'Current Payment', value: formatCurrency(studentLoan.minimumPayment), trend: 'neutral' },
               { label: 'Loan Type', value: 'Federal', trend: 'neutral' },
               { label: 'Flexibility', value: 'High', trend: 'up' },
             ],
