@@ -188,6 +188,11 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 - 2026-02-03: Added Action Feed filtering (All/Actions/Tips/Wins) with dynamic content
 - 2026-02-03: Implemented click-to-expand deep insights with metrics and tips
 - 2026-02-03: Created domain-specific actions for Car, House, Land, and Vault
+- 2026-02-03: Replaced Vault domain with Credit Card (💳) and added Student Loan (🎓) as 5th domain
+- 2026-02-03: Moved Vault to standalone "Wealth Timeline" page for generational wealth calculations
+- 2026-02-03: Added comprehensive Investopedia resource links to all Learn page lessons and glossary
+- 2026-02-03: Implemented store merge strategy for backward compatibility with persisted data
+- 2026-02-03: Added guard clauses in calculations to prevent undefined errors
 
 ## User Preferences
 
