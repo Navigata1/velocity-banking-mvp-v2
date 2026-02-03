@@ -169,6 +169,7 @@ export const useFinancialStore = create<FinancialState>()(
       getDailyInterest: (type) => {
         const state = get();
         const debt = state.debts[type];
+        if (!debt) return 0;
         return (debt.balance * debt.interestRate) / 365;
       },
       
@@ -180,6 +181,7 @@ export const useFinancialStore = create<FinancialState>()(
       getBaselinePayoff: (type) => {
         const state = get();
         const debt = state.debts[type];
+        if (!debt) return { months: 0, totalInterest: 0 };
         const { totalInterest } = calculateAmortization(debt.balance, debt.interestRate, debt.termMonths);
         return { months: debt.termMonths, totalInterest };
       },
@@ -187,6 +189,7 @@ export const useFinancialStore = create<FinancialState>()(
       getVelocityPayoff: (type) => {
         const state = get();
         const debt = state.debts[type];
+        if (!debt) return { months: 0, totalInterest: 0, savings: 0 };
         const baseline = state.getBaselinePayoff(type);
         const cashFlow = state.getCashFlow();
         const chunkAmount = state.chunkAmount;
@@ -228,6 +231,17 @@ export const useFinancialStore = create<FinancialState>()(
         chunkAmount: state.chunkAmount,
         chunkFrequency: state.chunkFrequency,
       }),
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as Partial<FinancialState>;
+        return {
+          ...currentState,
+          ...persisted,
+          debts: {
+            ...currentState.debts,
+            ...(persisted.debts || {}),
+          },
+        };
+      },
     }
   )
 );
