@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DomainTabs from '@/components/DomainTabs';
 import HeroVisual from '@/components/HeroVisual';
 import VitalsGrid from '@/components/VitalsGrid';
@@ -9,97 +9,542 @@ import { EditableCurrency, EditablePercentage, EditableNumber } from '@/componen
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore } from '@/stores/financial-store';
 
+type VitalsCategory = 'cashflow' | 'analytics' | 'goals' | 'velocity';
+type ActionFilter = 'all' | 'action' | 'tip' | 'milestone';
+
+interface InsightDetail {
+  title: string;
+  description: string;
+  metrics: { label: string; value: string; trend?: 'up' | 'down' | 'neutral' }[];
+  tips: string[];
+}
+
 export default function Dashboard() {
   const [mounted, setMounted] = useState(false);
+  const [vitalsCategory, setVitalsCategory] = useState<VitalsCategory>('cashflow');
+  const [actionFilter, setActionFilter] = useState<ActionFilter>('all');
+  const [expandedVital, setExpandedVital] = useState<number | null>(null);
+  const [expandedAction, setExpandedAction] = useState<string | null>(null);
+  const [cycleIndex, setCycleIndex] = useState(0);
   const store = useFinancialStore();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const getDomainData = () => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCycleIndex(prev => prev + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getCategoryIcon = (cat: VitalsCategory) => {
+    const icons = { cashflow: '💰', analytics: '📊', goals: '🎯', velocity: '⚡' };
+    return icons[cat];
+  };
+
+  const getCategoryVitals = useCallback(() => {
     const domain = store.activeDomain;
-    
-    if (domain === 'vault') {
-      const velocity = store.getVelocityPayoff('house');
-      return {
-        hotspots: [
-          { label: 'Net Worth', value: formatCurrency(velocity.savings * 2), position: { top: '30%', left: '70%' }, color: 'bg-emerald-500' },
-          { label: 'Interest Avoided', value: formatCurrency(velocity.savings), position: { top: '60%', left: '20%' }, color: 'bg-green-500' },
-          { label: 'Freedom Fund', value: formatCurrency(store.getCashFlow() * 6), position: { top: '20%', left: '30%' }, color: 'bg-blue-500' },
-          { label: 'Monthly Surplus', value: formatCurrency(store.getCashFlow()), position: { top: '75%', left: '75%' }, color: 'bg-amber-500' },
-        ],
-        trendValue: formatCurrency(velocity.savings),
-        trendLabel: 'potential savings',
+    const debtType = store.getActiveDebtType();
+    const debt = store.debts[debtType];
+    const dailyInterest = store.getDailyInterest(debtType);
+    const velocity = store.getVelocityPayoff(debtType);
+    const baseline = store.getBaselinePayoff(debtType);
+    const cashFlow = store.getCashFlow();
+
+    const categoryVitals: Record<VitalsCategory, {
+      vitals: { icon: string; label: string; value: number | string; sublabel: string; isEditable?: boolean; onEdit?: (val: number) => void; insight: InsightDetail }[];
+    }> = {
+      cashflow: {
         vitals: [
-          { icon: '💎', label: 'Potential Savings', value: formatCurrency(velocity.savings), sublabel: 'With velocity strategy' },
-          { icon: '🛡️', label: 'Monthly Cash Flow', value: store.getCashFlow(), sublabel: 'Available for investing', isEditable: true, onEdit: (val: number) => store.setMonthlyIncome(val + store.monthlyExpenses) },
-          { icon: '🏦', label: 'Freedom Fund', value: formatCurrency(store.getCashFlow() * 6), sublabel: '6 months expenses' },
-          { icon: '🎯', label: 'Time Saved', value: `${Math.round((store.getBaselinePayoff('house').months - velocity.months) / 12)} years`, sublabel: 'vs traditional path' },
+          { 
+            icon: '💵', 
+            label: 'Monthly Income', 
+            value: store.monthlyIncome, 
+            sublabel: 'Total earnings',
+            isEditable: true,
+            onEdit: store.setMonthlyIncome,
+            insight: {
+              title: 'Your Income Power',
+              description: 'This is your gross monthly income. Increasing this accelerates your velocity strategy.',
+              metrics: [
+                { label: 'Annual Income', value: formatCurrency(store.monthlyIncome * 12), trend: 'neutral' },
+                { label: 'Per Day', value: formatCurrency(store.monthlyIncome / 30), trend: 'neutral' },
+                { label: 'vs Expenses', value: `${((store.monthlyIncome / store.monthlyExpenses - 1) * 100).toFixed(0)}% surplus`, trend: 'up' },
+              ],
+              tips: ['Side income directly boosts your chunk power', 'Salary increases compound your velocity gains', 'Consider passive income streams'],
+            },
+          },
+          { 
+            icon: '🛒', 
+            label: 'Monthly Expenses', 
+            value: store.monthlyExpenses, 
+            sublabel: 'Total outflow',
+            isEditable: true,
+            onEdit: store.setMonthlyExpenses,
+            insight: {
+              title: 'Expense Analysis',
+              description: 'Your total monthly expenses. Reducing these increases your chunk capacity.',
+              metrics: [
+                { label: 'Daily Average', value: formatCurrency(store.monthlyExpenses / 30), trend: 'neutral' },
+                { label: 'Annual Total', value: formatCurrency(store.monthlyExpenses * 12), trend: 'neutral' },
+                { label: 'Expense Ratio', value: `${((store.monthlyExpenses / store.monthlyIncome) * 100).toFixed(0)}%`, trend: 'neutral' },
+              ],
+              tips: ['Track subscriptions for quick wins', 'Meal planning reduces food costs', 'Review recurring charges monthly'],
+            },
+          },
+          { 
+            icon: '💰', 
+            label: 'Cash Flow', 
+            value: cashFlow, 
+            sublabel: 'Available surplus',
+            isEditable: true,
+            onEdit: (val: number) => store.setMonthlyIncome(val + store.monthlyExpenses),
+            insight: {
+              title: 'Your Cash Flow Engine',
+              description: 'Cash flow is the fuel for velocity banking. This is what pays down your LOC each month.',
+              metrics: [
+                { label: 'Annual Surplus', value: formatCurrency(cashFlow * 12), trend: cashFlow > 0 ? 'up' : 'down' },
+                { label: 'Weekly Available', value: formatCurrency(cashFlow / 4.33), trend: 'neutral' },
+                { label: 'Chunk Capacity', value: `${Math.floor(cashFlow / 500)} chunks/mo`, trend: 'up' },
+              ],
+              tips: ['Cash flow is the #1 factor in velocity success', 'Even $100/mo extra accelerates payoff', 'Automate transfers on payday'],
+            },
+          },
+          { 
+            icon: '🏦', 
+            label: 'LOC Available', 
+            value: formatCurrency(store.loc.limit - store.loc.balance), 
+            sublabel: `of ${formatCurrency(store.loc.limit)} limit`,
+            insight: {
+              title: 'Line of Credit Buffer',
+              description: 'Your available credit acts as a financial shock absorber and chunk reservoir.',
+              metrics: [
+                { label: 'Utilization', value: `${((store.loc.balance / store.loc.limit) * 100).toFixed(0)}%`, trend: store.loc.balance / store.loc.limit < 0.3 ? 'up' : 'down' },
+                { label: 'Current Balance', value: formatCurrency(store.loc.balance), trend: 'neutral' },
+                { label: 'Interest Rate', value: `${(store.loc.interestRate * 100).toFixed(1)}%`, trend: 'neutral' },
+              ],
+              tips: ['Keep utilization under 30% for flexibility', 'Higher limits improve chunk capacity', 'Shop for lower LOC rates periodically'],
+            },
+          },
         ],
-        actions: [
-          { id: '1', type: 'milestone' as const, title: 'Breaking the Cycle!', subtitle: `Save ${formatCurrency(velocity.savings)} in interest`, icon: '🎉', chart: 'line' as const },
-          { id: '2', type: 'action' as const, title: 'Investment Opportunity', subtitle: 'Index fund contribution ready', icon: '📈', chart: 'bars' as const },
-          { id: '3', type: 'tip' as const, title: 'Share Your Journey', subtitle: 'Generate shareable results card', icon: '📱' },
-          { id: '4', type: 'milestone' as const, title: 'Generational Impact', subtitle: 'Breaking the debt cycle', icon: '👨‍👩‍👧‍👦' },
+      },
+      analytics: {
+        vitals: [
+          { 
+            icon: '🔥', 
+            label: 'Daily Interest Burn', 
+            value: formatCurrency(dailyInterest) + '/day', 
+            sublabel: formatCurrency(dailyInterest * 30) + '/month',
+            insight: {
+              title: 'Interest Burn Rate',
+              description: 'Every day, this amount is added to your debt. Velocity banking reduces this faster.',
+              metrics: [
+                { label: 'Weekly Cost', value: formatCurrency(dailyInterest * 7), trend: 'down' },
+                { label: 'Annual Drain', value: formatCurrency(dailyInterest * 365), trend: 'down' },
+                { label: 'vs Last Month', value: '-3.2%', trend: 'up' },
+              ],
+              tips: ['Each chunk reduces tomorrow\'s interest', 'Focus on highest-rate debt first', 'Daily interest compounds against you'],
+            },
+          },
+          { 
+            icon: '📈', 
+            label: 'Baseline Interest', 
+            value: formatCurrency(baseline.totalInterest), 
+            sublabel: 'Without velocity strategy',
+            insight: {
+              title: 'Traditional Path Cost',
+              description: 'This is what you\'d pay in interest following the standard payment schedule.',
+              metrics: [
+                { label: 'Per Month', value: formatCurrency(baseline.totalInterest / baseline.months), trend: 'down' },
+                { label: 'Payoff Time', value: `${baseline.months} months`, trend: 'neutral' },
+                { label: 'Total Paid', value: formatCurrency(debt.balance + baseline.totalInterest), trend: 'down' },
+              ],
+              tips: ['This is your benchmark to beat', 'Every dollar saved here builds wealth', 'Compare with velocity results'],
+            },
+          },
+          { 
+            icon: '📉', 
+            label: 'Velocity Interest', 
+            value: formatCurrency(velocity.totalInterest), 
+            sublabel: 'With your strategy',
+            insight: {
+              title: 'Velocity Strategy Cost',
+              description: 'Your projected interest with the velocity banking approach.',
+              metrics: [
+                { label: 'Monthly Average', value: formatCurrency(velocity.totalInterest / velocity.months), trend: 'up' },
+                { label: 'Payoff Time', value: `${velocity.months} months`, trend: 'up' },
+                { label: 'You Keep', value: formatCurrency(velocity.savings), trend: 'up' },
+              ],
+              tips: ['Consistent chunks maximize savings', 'Larger chunks = bigger impact', 'Time in strategy matters most'],
+            },
+          },
+          { 
+            icon: '💎', 
+            label: 'Your Savings', 
+            value: formatCurrency(velocity.savings), 
+            sublabel: 'Interest avoided',
+            insight: {
+              title: 'Money You Keep',
+              description: 'This is real money that stays in your pocket instead of going to the bank.',
+              metrics: [
+                { label: 'Per Month Saved', value: formatCurrency(velocity.savings / Math.max(1, baseline.months - velocity.months)), trend: 'up' },
+                { label: 'Invested at 7%', value: formatCurrency(velocity.savings * 1.07), trend: 'up' },
+                { label: 'In 10 Years', value: formatCurrency(velocity.savings * Math.pow(1.07, 10)), trend: 'up' },
+              ],
+              tips: ['These savings can be invested', 'Compound interest works for you now', 'Track this number monthly'],
+            },
+          },
         ],
-      };
+      },
+      goals: {
+        vitals: [
+          { 
+            icon: '🎯', 
+            label: `${domain === 'vault' ? 'House' : domain.charAt(0).toUpperCase() + domain.slice(1)} Balance`, 
+            value: debt.balance, 
+            sublabel: `@ ${(debt.interestRate * 100).toFixed(1)}% APR`,
+            isEditable: true,
+            onEdit: (val: number) => store.updateDebt(debtType, { balance: val }),
+            insight: {
+              title: 'Your Target Balance',
+              description: 'This is the principal amount remaining. Every chunk directly attacks this number.',
+              metrics: [
+                { label: 'Original Loan', value: formatCurrency(debt.balance * 1.1), trend: 'neutral' },
+                { label: 'Paid So Far', value: formatCurrency(debt.balance * 0.1), trend: 'up' },
+                { label: 'Progress', value: '10%', trend: 'up' },
+              ],
+              tips: ['Watch this number shrink with each chunk', 'Celebrate every $1,000 milestone', 'Set mini-goals along the way'],
+            },
+          },
+          { 
+            icon: '⏱️', 
+            label: 'Time to Freedom', 
+            value: `${velocity.months} months`, 
+            sublabel: `${Math.round(velocity.months / 12)} years ${velocity.months % 12} months`,
+            insight: {
+              title: 'Your Freedom Date',
+              description: 'When you\'ll be debt-free on this account using velocity banking.',
+              metrics: [
+                { label: 'Freedom Date', value: new Date(Date.now() + velocity.months * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }), trend: 'up' },
+                { label: 'Time Saved', value: `${baseline.months - velocity.months} months`, trend: 'up' },
+                { label: 'Years Ahead', value: `${((baseline.months - velocity.months) / 12).toFixed(1)} yrs`, trend: 'up' },
+              ],
+              tips: ['Mark this date on your calendar', 'Share your goal with accountability partner', 'Visualize your debt-free life'],
+            },
+          },
+          { 
+            icon: '💳', 
+            label: 'Min Payment', 
+            value: debt.minimumPayment, 
+            sublabel: 'Required monthly',
+            isEditable: true,
+            onEdit: (val: number) => store.updateDebt(debtType, { minimumPayment: val }),
+            insight: {
+              title: 'Your Base Payment',
+              description: 'The minimum payment keeps you current. Velocity chunks go above this.',
+              metrics: [
+                { label: 'To Principal', value: formatCurrency(debt.minimumPayment - (debt.balance * debt.interestRate / 12)), trend: 'up' },
+                { label: 'To Interest', value: formatCurrency(debt.balance * debt.interestRate / 12), trend: 'down' },
+                { label: 'Ratio', value: `${((1 - (debt.balance * debt.interestRate / 12) / debt.minimumPayment) * 100).toFixed(0)}% principal`, trend: 'up' },
+              ],
+              tips: ['Chunk payments are separate from this', 'Never miss the minimum', 'Extra principal = faster payoff'],
+            },
+          },
+          { 
+            icon: '🚀', 
+            label: 'Chunk Power', 
+            value: store.chunkAmount, 
+            sublabel: `${store.chunkFrequency} deployment`,
+            isEditable: true,
+            onEdit: store.setChunkAmount,
+            insight: {
+              title: 'Your Velocity Weapon',
+              description: 'Chunk payments are the secret sauce. This is what accelerates your payoff.',
+              metrics: [
+                { label: 'Annual Chunks', value: formatCurrency(store.chunkAmount * (store.chunkFrequency === 'monthly' ? 12 : store.chunkFrequency === 'biweekly' ? 26 : 52)), trend: 'up' },
+                { label: 'vs Cash Flow', value: `${((store.chunkAmount / cashFlow) * 100).toFixed(0)}%`, trend: 'neutral' },
+                { label: 'Impact/Month', value: formatCurrency(store.chunkAmount * 0.07 / 12), trend: 'up' },
+              ],
+              tips: ['Bigger chunks = faster freedom', 'Consistency beats size', 'Automate on payday'],
+            },
+          },
+        ],
+      },
+      velocity: {
+        vitals: [
+          { 
+            icon: '⚡', 
+            label: 'Velocity Score', 
+            value: `${Math.min(100, Math.round((velocity.savings / Math.max(1, baseline.totalInterest)) * 100))}%`, 
+            sublabel: 'Strategy effectiveness',
+            insight: {
+              title: 'Your Strategy Score',
+              description: 'How effectively you\'re using velocity banking. 100% means maximum interest savings.',
+              metrics: [
+                { label: 'Efficiency', value: `${Math.min(100, Math.round((velocity.savings / Math.max(1, baseline.totalInterest)) * 100))}%`, trend: 'up' },
+                { label: 'Rank', value: velocity.savings > 5000 ? 'Expert' : velocity.savings > 1000 ? 'Intermediate' : 'Beginner', trend: 'up' },
+                { label: 'Potential', value: formatCurrency(baseline.totalInterest * 0.7), trend: 'neutral' },
+              ],
+              tips: ['Higher cash flow = higher score', 'Larger chunks boost efficiency', 'Consistency is key'],
+            },
+          },
+          { 
+            icon: '🏃', 
+            label: 'Acceleration', 
+            value: `${baseline.months - velocity.months} mo`, 
+            sublabel: 'Faster than baseline',
+            insight: {
+              title: 'Time Acceleration',
+              description: 'How many months sooner you\'ll be debt-free compared to traditional payments.',
+              metrics: [
+                { label: 'Months Saved', value: `${baseline.months - velocity.months}`, trend: 'up' },
+                { label: 'Years Saved', value: `${((baseline.months - velocity.months) / 12).toFixed(1)}`, trend: 'up' },
+                { label: 'Speed Boost', value: `${Math.round(((baseline.months - velocity.months) / baseline.months) * 100)}%`, trend: 'up' },
+              ],
+              tips: ['Every chunk adds more months', 'Time saved = life gained', 'Compound the acceleration'],
+            },
+          },
+          { 
+            icon: '🔄', 
+            label: 'LOC Cycles', 
+            value: `${Math.ceil(velocity.months / 3)}`, 
+            sublabel: 'Chunk deployments',
+            insight: {
+              title: 'Velocity Cycles',
+              description: 'Number of times you\'ll deploy chunks through your LOC over the payoff period.',
+              metrics: [
+                { label: 'Per Quarter', value: store.chunkFrequency === 'monthly' ? '3' : store.chunkFrequency === 'biweekly' ? '6' : '13', trend: 'neutral' },
+                { label: 'Total Volume', value: formatCurrency(store.chunkAmount * Math.ceil(velocity.months)), trend: 'up' },
+                { label: 'Avg LOC Use', value: formatCurrency(store.chunkAmount * 0.7), trend: 'neutral' },
+              ],
+              tips: ['More cycles = more acceleration', 'Track each cycle\'s impact', 'Celebrate completed cycles'],
+            },
+          },
+          { 
+            icon: '📊', 
+            label: 'Efficiency', 
+            value: `${Math.round((velocity.savings / Math.max(1, store.chunkAmount * velocity.months)) * 100)}%`, 
+            sublabel: 'Return on chunks',
+            insight: {
+              title: 'Chunk Efficiency',
+              description: 'How much interest you save per dollar of chunks deployed.',
+              metrics: [
+                { label: 'ROI', value: `${Math.round((velocity.savings / Math.max(1, store.chunkAmount * velocity.months)) * 100)}%`, trend: 'up' },
+                { label: 'Per $100', value: formatCurrency((velocity.savings / Math.max(1, store.chunkAmount * velocity.months)) * 100), trend: 'up' },
+                { label: 'Leverage', value: `${(velocity.savings / store.chunkAmount).toFixed(1)}x`, trend: 'up' },
+              ],
+              tips: ['Higher rate debts = higher efficiency', 'Track this monthly', 'Optimize chunk timing'],
+            },
+          },
+        ],
+      },
+    };
+
+    return categoryVitals[vitalsCategory];
+  }, [store, vitalsCategory]);
+
+  const getActions = useCallback(() => {
+    const domain = store.activeDomain;
+    const debtType = store.getActiveDebtType();
+    const debt = store.debts[debtType];
+    const velocity = store.getVelocityPayoff(debtType);
+    const baseline = store.getBaselinePayoff(debtType);
+    const cashFlow = store.getCashFlow();
+    
+    interface ActionInsight {
+      description: string;
+      metrics: { label: string; value: string; trend: 'up' | 'down' | 'neutral' }[];
+      tips: string[];
     }
     
-    const debt = store.debts[domain as keyof typeof store.debts];
-    const dailyInterest = store.getDailyInterest(domain as keyof typeof store.debts);
-    const velocity = store.getVelocityPayoff(domain as keyof typeof store.debts);
+    interface ActionItem {
+      id: string;
+      type: 'action' | 'tip' | 'milestone';
+      title: string;
+      subtitle: string;
+      icon: string;
+      chart?: 'line' | 'bars';
+      insight: ActionInsight;
+    }
     
-    const domainConfigs: Record<string, { hotspots: typeof store.debts.car; actions: { id: string; type: 'action' | 'tip' | 'milestone' | 'alert'; title: string; subtitle: string; icon: string; chart?: 'line' | 'bars' }[] }> = {
-      car: {
-        hotspots: debt,
-        actions: [
-          { id: '1', type: 'action', title: 'Payday Incoming', subtitle: 'Deposit to LOC tomorrow', icon: '💵', chart: 'line' },
-          { id: '2', type: 'tip', title: 'Expense Card Due', subtitle: 'Pay in full in 3 days', icon: '💳', chart: 'bars' },
-          { id: '3', type: 'milestone', title: 'Cash Flow Unlocked!', subtitle: `You freed ${formatCurrency(store.getCashFlow() * 0.1)}/mo`, icon: '🎉' },
-          { id: '4', type: 'alert', title: 'Emergency Mode', subtitle: 'Tap if unexpected expense hits', icon: '🚨' },
-        ],
-      },
-      house: {
-        hotspots: debt,
-        actions: [
-          { id: '1', type: 'milestone', title: 'Chunk Ready!', subtitle: `Deploy ${formatCurrency(store.chunkAmount)} this week`, icon: '🎯', chart: 'line' },
-          { id: '2', type: 'action', title: 'HELOC Payment Due', subtitle: `Interest-only: ${formatCurrency(store.loc.balance * store.loc.interestRate / 12)}`, icon: '📋' },
-          { id: '3', type: 'tip', title: 'Optimize Timing', subtitle: 'Best chunk day: the 5th', icon: '💡', chart: 'bars' },
-          { id: '4', type: 'milestone', title: 'Payoff Accelerated', subtitle: `Now ${Math.round((store.debts.house.termMonths - velocity.months) / 12)} years ahead`, icon: '🚀' },
-        ],
-      },
-      land: {
-        hotspots: debt,
-        actions: [
-          { id: '1', type: 'action', title: 'Payment Due', subtitle: `${formatCurrency(debt.minimumPayment)} due soon`, icon: '📋', chart: 'line' },
-          { id: '2', type: 'tip', title: 'Land Appreciation', subtitle: 'Up 4% in your area this year', icon: '📈', chart: 'bars' },
-          { id: '3', type: 'milestone', title: 'Equity Growing', subtitle: `${formatCurrency(debt.balance * 0.2)} built up`, icon: '🎉' },
-          { id: '4', type: 'action', title: 'Next Chunk', subtitle: `${formatCurrency(store.chunkAmount)} in 5 days`, icon: '💵' },
-        ],
-      },
+    const domainActions: Record<string, ActionItem[]> = {
+      car: [
+        { id: 'car-1', type: 'action', title: 'Payday Incoming', subtitle: 'Deposit to LOC tomorrow', icon: '💵', chart: 'line',
+          insight: { description: `Your next paycheck of ${formatCurrency(store.monthlyIncome / 2)} can reduce LOC balance and interest.`,
+            metrics: [
+              { label: 'Deposit Amount', value: formatCurrency(store.monthlyIncome / 2), trend: 'up' },
+              { label: 'Interest Saved', value: formatCurrency((store.monthlyIncome / 2) * store.loc.interestRate / 12), trend: 'up' },
+              { label: 'Days Until', value: '1', trend: 'neutral' },
+            ],
+            tips: ['Route income through LOC first', 'Automate deposits on payday', 'Track each deposit\'s impact'],
+          },
+        },
+        { id: 'car-2', type: 'tip', title: 'Car Insurance Check', subtitle: 'Compare rates quarterly', icon: '🚗', chart: 'bars',
+          insight: { description: 'Reducing car expenses increases your chunk power for faster loan payoff.',
+            metrics: [
+              { label: 'Potential Savings', value: '$50-100/mo', trend: 'up' },
+              { label: 'Annual Impact', value: formatCurrency(900), trend: 'up' },
+              { label: 'Last Checked', value: '90+ days', trend: 'down' },
+            ],
+            tips: ['Bundle policies for discounts', 'Raise deductibles if you can afford it', 'Check for low-mileage discounts'],
+          },
+        },
+        { id: 'car-3', type: 'milestone', title: 'Engine Revving!', subtitle: `${formatCurrency(velocity.savings)} in interest avoided`, icon: '🏎️',
+          insight: { description: 'Your car loan is accelerating faster than a traditional payoff schedule.',
+            metrics: [
+              { label: 'Months Saved', value: `${baseline.months - velocity.months}`, trend: 'up' },
+              { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Car Equity', value: formatCurrency(debt.balance * 0.15), trend: 'up' },
+            ],
+            tips: ['Maintain the car to preserve value', 'Consider refinancing if rates drop', 'Celebrate each milestone!'],
+          },
+        },
+        { id: 'car-4', type: 'action', title: 'Chunk Ready', subtitle: `Deploy ${formatCurrency(store.chunkAmount)} this week`, icon: '🎯',
+          insight: { description: `This chunk will save approximately ${formatCurrency(store.chunkAmount * debt.interestRate * 0.5)} in interest.`,
+            metrics: [
+              { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
+              { label: 'Principal Impact', value: formatCurrency(store.chunkAmount * 0.95), trend: 'up' },
+              { label: 'Days Faster', value: `${Math.round(store.chunkAmount / (debt.minimumPayment / 30))}`, trend: 'up' },
+            ],
+            tips: ['Deploy chunks early in statement cycle', 'Track LOC balance after chunking', 'Consistency beats timing'],
+          },
+        },
+      ],
+      house: [
+        { id: 'house-1', type: 'action', title: 'HELOC Payment Due', subtitle: `Interest-only: ${formatCurrency(store.loc.balance * store.loc.interestRate / 12)}`, icon: '🏠', chart: 'line',
+          insight: { description: 'Your HELOC interest payment keeps the strategy running smoothly.',
+            metrics: [
+              { label: 'Payment Amount', value: formatCurrency(store.loc.balance * store.loc.interestRate / 12), trend: 'neutral' },
+              { label: 'LOC Utilization', value: `${((store.loc.balance / store.loc.limit) * 100).toFixed(0)}%`, trend: store.loc.balance / store.loc.limit < 0.5 ? 'up' : 'down' },
+              { label: 'Available Credit', value: formatCurrency(store.loc.limit - store.loc.balance), trend: 'up' },
+            ],
+            tips: ['Keep LOC utilization under 50%', 'Pay more than minimum when possible', 'Monitor rate changes'],
+          },
+        },
+        { id: 'house-2', type: 'milestone', title: 'Roof Over Your Head!', subtitle: `${Math.round((baseline.months - velocity.months) / 12)} years faster`, icon: '🏡',
+          insight: { description: 'You\'re building home equity at an accelerated rate compared to traditional payments.',
+            metrics: [
+              { label: 'Years Saved', value: `${((baseline.months - velocity.months) / 12).toFixed(1)}`, trend: 'up' },
+              { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Home Equity', value: formatCurrency(debt.balance * 0.2), trend: 'up' },
+            ],
+            tips: ['Home equity grows with each chunk', 'Consider home improvements that add value', 'Track your LTV ratio'],
+          },
+        },
+        { id: 'house-3', type: 'tip', title: 'Property Tax Prep', subtitle: 'Escrow review coming up', icon: '📋', chart: 'bars',
+          insight: { description: 'Understanding your escrow helps you plan for larger expenses.',
+            metrics: [
+              { label: 'Est. Annual Tax', value: formatCurrency(debt.balance * 0.012), trend: 'neutral' },
+              { label: 'Monthly Escrow', value: formatCurrency(debt.balance * 0.012 / 12), trend: 'neutral' },
+              { label: 'Appeal Deadline', value: 'Check locally', trend: 'neutral' },
+            ],
+            tips: ['Appeal assessments if overvalued', 'Check for homestead exemptions', 'Budget for escrow shortfalls'],
+          },
+        },
+        { id: 'house-4', type: 'action', title: 'Deploy Chunk', subtitle: `${formatCurrency(store.chunkAmount)} to mortgage principal`, icon: '💰',
+          insight: { description: `Each chunk attacks your principal directly, saving ${formatCurrency(store.chunkAmount * debt.interestRate * 5)} over time.`,
+            metrics: [
+              { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
+              { label: 'Lifetime Savings', value: formatCurrency(store.chunkAmount * debt.interestRate * 10), trend: 'up' },
+              { label: 'Freedom Date', value: 'Moves closer', trend: 'up' },
+            ],
+            tips: ['Specify payment to principal only', 'Verify lender applies it correctly', 'Keep receipts for records'],
+          },
+        },
+      ],
+      land: [
+        { id: 'land-1', type: 'action', title: 'Land Payment Due', subtitle: `${formatCurrency(debt.minimumPayment)} due soon`, icon: '🌄', chart: 'line',
+          insight: { description: 'Your land investment payment keeps you on track for ownership.',
+            metrics: [
+              { label: 'Payment Amount', value: formatCurrency(debt.minimumPayment), trend: 'neutral' },
+              { label: 'Principal Portion', value: formatCurrency(debt.minimumPayment - (debt.balance * debt.interestRate / 12)), trend: 'up' },
+              { label: 'Remaining Balance', value: formatCurrency(debt.balance), trend: 'down' },
+            ],
+            tips: ['Land appreciates over time', 'Consider future development options', 'Track local market values'],
+          },
+        },
+        { id: 'land-2', type: 'tip', title: 'Land Appreciation', subtitle: 'Up 4% in your area this year', icon: '📈', chart: 'bars',
+          insight: { description: 'Your land is gaining value while you pay it down - double benefit!',
+            metrics: [
+              { label: 'Est. Current Value', value: formatCurrency(debt.balance * 1.25), trend: 'up' },
+              { label: 'Equity Built', value: formatCurrency(debt.balance * 0.25), trend: 'up' },
+              { label: 'Area Growth', value: '+4% YoY', trend: 'up' },
+            ],
+            tips: ['Hold land for long-term gains', 'Research zoning changes', 'Consider timber or farming income'],
+          },
+        },
+        { id: 'land-3', type: 'milestone', title: 'Territory Claimed!', subtitle: `${velocity.months} months to full ownership`, icon: '🏞️',
+          insight: { description: 'You\'re on track to own this land free and clear.',
+            metrics: [
+              { label: 'Payoff ETA', value: `${velocity.months} mo`, trend: 'up' },
+              { label: 'Interest Saved', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Ownership %', value: `${(100 - (debt.balance / (debt.balance * 1.25)) * 100).toFixed(0)}%`, trend: 'up' },
+            ],
+            tips: ['Land ownership opens opportunities', 'Build credit history with payments', 'Plan for property taxes'],
+          },
+        },
+        { id: 'land-4', type: 'action', title: 'Next Chunk', subtitle: `${formatCurrency(store.chunkAmount)} in 5 days`, icon: '💵',
+          insight: { description: `This chunk accelerates your land ownership by ${Math.round(store.chunkAmount / (debt.minimumPayment / 30))} days.`,
+            metrics: [
+              { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
+              { label: 'Days Accelerated', value: `${Math.round(store.chunkAmount / (debt.minimumPayment / 30))}`, trend: 'up' },
+              { label: 'Cumulative Savings', value: formatCurrency(velocity.savings), trend: 'up' },
+            ],
+            tips: ['Raw land chunks have high impact', 'Track each chunk\'s effect', 'Consider increasing chunk size'],
+          },
+        },
+      ],
+      vault: [
+        { id: 'vault-1', type: 'milestone', title: 'Breaking the Cycle!', subtitle: `Save ${formatCurrency(velocity.savings)} in interest`, icon: '🎉', chart: 'line',
+          insight: { description: 'You\'re building generational wealth by avoiding this interest payment.',
+            metrics: [
+              { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'If Invested', value: formatCurrency(velocity.savings * 1.5), trend: 'up' },
+              { label: 'Legacy Impact', value: 'High', trend: 'up' },
+            ],
+            tips: ['Invest the savings for compounding', 'Teach children about velocity banking', 'Document your journey'],
+          },
+        },
+        { id: 'vault-2', type: 'action', title: 'Investment Opportunity', subtitle: 'Index fund contribution ready', icon: '📈', chart: 'bars',
+          insight: { description: 'Your freed cash flow can now work for you in the market.',
+            metrics: [
+              { label: 'Monthly Available', value: formatCurrency(cashFlow), trend: 'up' },
+              { label: 'Annual Investment', value: formatCurrency(cashFlow * 12), trend: 'up' },
+              { label: 'In 20 Years @7%', value: formatCurrency(cashFlow * 12 * 40), trend: 'up' },
+            ],
+            tips: ['Start with low-cost index funds', 'Automate monthly investments', 'Stay consistent through market cycles'],
+          },
+        },
+        { id: 'vault-3', type: 'tip', title: 'Share Your Journey', subtitle: 'Generate shareable results card', icon: '📱',
+          insight: { description: 'Inspire others by sharing your velocity banking success story.',
+            metrics: [
+              { label: 'Your Savings', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Time Saved', value: `${baseline.months - velocity.months} mo`, trend: 'up' },
+              { label: 'Strategy Score', value: 'A+', trend: 'up' },
+            ],
+            tips: ['Share on social media', 'Encourage family members', 'Build an accountability community'],
+          },
+        },
+        { id: 'vault-4', type: 'milestone', title: 'Generational Impact', subtitle: 'Breaking the debt cycle', icon: '👨‍👩‍👧‍👦',
+          insight: { description: 'Your children won\'t inherit debt stress - they\'ll inherit financial wisdom.',
+            metrics: [
+              { label: 'Wealth Transfer', value: formatCurrency(velocity.savings * 3), trend: 'up' },
+              { label: 'Next Gen Advantage', value: `${Math.round((velocity.savings / 10000) * 5)} years`, trend: 'up' },
+              { label: 'Legacy Score', value: 'Growing', trend: 'up' },
+            ],
+            tips: ['Teach kids about compound interest', 'Model financial responsibility', 'Create a family financial plan'],
+          },
+        },
+      ],
     };
     
-    const config = domainConfigs[domain] || domainConfigs.car;
-    
-    return {
-      hotspots: [
-        { label: `${domain.charAt(0).toUpperCase() + domain.slice(1)} Rate`, value: `${(debt.interestRate * 100).toFixed(1)}% APR`, position: { top: '20%', left: '80%' }, color: 'bg-emerald-500' },
-        { label: 'Interest Burn', value: `${formatCurrency(dailyInterest)}/day`, position: { top: '60%', left: '10%' }, color: 'bg-amber-500' },
-        { label: 'ETA', value: `${velocity.months} months`, position: { top: '80%', left: '75%' }, color: 'bg-blue-500' },
-        { label: 'LOC Available', value: formatCurrency(store.loc.limit - store.loc.balance), position: { top: '40%', left: '5%' }, color: 'bg-cyan-500' },
-      ],
-      trendValue: formatCurrency(debt.balance),
-      trendLabel: 'remaining balance',
-      vitals: [
-        { icon: '💰', label: 'Cash Flow', value: store.getCashFlow(), sublabel: 'Income - Expenses', isEditable: true, onEdit: (val: number) => store.setMonthlyIncome(val + store.monthlyExpenses) },
-        { icon: '🔥', label: 'Interest Burn', value: formatCurrency(dailyInterest) + '/day', sublabel: formatCurrency(dailyInterest * 30) + '/month' },
-        { icon: '🎯', label: `${domain.charAt(0).toUpperCase() + domain.slice(1)} Balance`, value: debt.balance, sublabel: `@ ${(debt.interestRate * 100).toFixed(1)}% APR`, isEditable: true, onEdit: (val: number) => store.updateDebt(domain as keyof typeof store.debts, { balance: val }) },
-        { icon: '📅', label: 'Next Move', value: `Chunk in ${Math.floor(Math.random() * 14) + 7} days`, sublabel: `${formatCurrency(store.chunkAmount)} ready` },
-      ],
-      actions: config.actions,
-    };
-  };
+    const allActions = domainActions[domain] || domainActions.car;
+
+    if (actionFilter === 'all') return allActions;
+    return allActions.filter(a => a.type === actionFilter);
+  }, [store, actionFilter]);
 
   if (!mounted) {
     return (
@@ -112,7 +557,30 @@ export default function Dashboard() {
     );
   }
 
-  const data = getDomainData();
+  const { vitals } = getCategoryVitals();
+  const actions = getActions();
+  const displayedActions = actions.slice(0, 4);
+
+  const domain = store.activeDomain;
+  const debtType = store.getActiveDebtType();
+  const debt = store.debts[debtType];
+  const velocity = store.getVelocityPayoff(debtType);
+
+  const heroData = {
+    hotspots: domain === 'vault' ? [
+      { label: 'Net Worth', value: formatCurrency(velocity.savings * 2), position: { top: '30%', left: '70%' }, color: 'bg-emerald-500' },
+      { label: 'Interest Avoided', value: formatCurrency(velocity.savings), position: { top: '60%', left: '20%' }, color: 'bg-green-500' },
+      { label: 'Freedom Fund', value: formatCurrency(store.getCashFlow() * 6), position: { top: '20%', left: '30%' }, color: 'bg-blue-500' },
+      { label: 'Monthly Surplus', value: formatCurrency(store.getCashFlow()), position: { top: '75%', left: '75%' }, color: 'bg-amber-500' },
+    ] : [
+      { label: `${domain.charAt(0).toUpperCase() + domain.slice(1)} Rate`, value: `${(debt.interestRate * 100).toFixed(1)}% APR`, position: { top: '20%', left: '80%' }, color: 'bg-emerald-500' },
+      { label: 'Interest Burn', value: `${formatCurrency(store.getDailyInterest(debtType))}/day`, position: { top: '60%', left: '10%' }, color: 'bg-amber-500' },
+      { label: 'ETA', value: `${velocity.months} months`, position: { top: '80%', left: '75%' }, color: 'bg-blue-500' },
+      { label: 'LOC Available', value: formatCurrency(store.loc.limit - store.loc.balance), position: { top: '40%', left: '5%' }, color: 'bg-cyan-500' },
+    ],
+    trendValue: domain === 'vault' ? formatCurrency(velocity.savings) : formatCurrency(debt.balance),
+    trendLabel: domain === 'vault' ? 'potential savings' : 'remaining balance',
+  };
 
   return (
     <div className="p-4 md:p-8 max-w-[1600px] mx-auto">
@@ -141,34 +609,53 @@ export default function Dashboard() {
         <div className="lg:col-span-5">
           <HeroVisual
             domain={store.activeDomain}
-            hotspots={data.hotspots}
-            trendValue={data.trendValue}
-            trendLabel={data.trendLabel}
+            hotspots={heroData.hotspots}
+            trendValue={heroData.trendValue}
+            trendLabel={heroData.trendLabel}
           />
         </div>
 
         <div className="lg:col-span-3">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex gap-2">
-              {['💰', '📊', '🎯', '⚡'].map((icon, i) => (
+              {(['cashflow', 'analytics', 'goals', 'velocity'] as VitalsCategory[]).map((cat) => (
                 <button
-                  key={i}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${i === 0 ? 'bg-blue-500' : 'bg-slate-800 hover:bg-slate-700'}`}
+                  key={cat}
+                  onClick={() => { setVitalsCategory(cat); setExpandedVital(null); }}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                    vitalsCategory === cat 
+                      ? 'bg-blue-500 scale-110 shadow-lg shadow-blue-500/30' 
+                      : 'bg-slate-800 hover:bg-slate-700'
+                  }`}
+                  title={cat.charAt(0).toUpperCase() + cat.slice(1)}
                 >
-                  {icon}
+                  {getCategoryIcon(cat)}
                 </button>
               ))}
             </div>
           </div>
+          
+          <div className="text-sm text-gray-400 mb-3 capitalize">{vitalsCategory} Insights</div>
+          
           <div className="space-y-3">
-            {data.vitals.map((vital, i) => (
-              <div key={i} className="bg-slate-800/80 rounded-2xl p-4 border border-slate-700 hover:border-emerald-500/50 transition-colors">
+            {vitals.map((vital, i) => (
+              <div 
+                key={i} 
+                className={`bg-slate-800/80 rounded-2xl p-4 border transition-all cursor-pointer ${
+                  expandedVital === i 
+                    ? 'border-emerald-500 shadow-lg shadow-emerald-500/10' 
+                    : 'border-slate-700 hover:border-emerald-500/50'
+                }`}
+                onClick={() => setExpandedVital(expandedVital === i ? null : i)}
+              >
                 <div className="flex items-start gap-3">
                   <div className="text-2xl">{vital.icon}</div>
                   <div className="flex-1">
                     <div className="text-sm text-gray-400 mb-1">{vital.label}</div>
-                    {vital.isEditable && typeof vital.onEdit === 'function' && typeof vital.value === 'number' ? (
-                      <EditableCurrency value={vital.value} onChange={vital.onEdit} size="lg" />
+                    {vital.isEditable && vital.onEdit && typeof vital.value === 'number' ? (
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <EditableCurrency value={vital.value} onChange={vital.onEdit} size="lg" />
+                      </div>
                     ) : (
                       <div className="text-xl font-bold text-white">
                         {typeof vital.value === 'number' ? formatCurrency(vital.value) : vital.value}
@@ -176,7 +663,39 @@ export default function Dashboard() {
                     )}
                     {vital.sublabel && <div className="text-xs text-gray-500 mt-1">{vital.sublabel}</div>}
                   </div>
+                  <div className={`text-gray-500 transition-transform ${expandedVital === i ? 'rotate-180' : ''}`}>
+                    ▼
+                  </div>
                 </div>
+                
+                {expandedVital === i && (
+                  <div className="mt-4 pt-4 border-t border-slate-700 animate-fadeIn">
+                    <h4 className="text-emerald-400 font-semibold mb-2">{vital.insight.title}</h4>
+                    <p className="text-gray-400 text-sm mb-3">{vital.insight.description}</p>
+                    
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {vital.insight.metrics.map((m, j) => (
+                        <div key={j} className="bg-slate-900 rounded-lg p-2 text-center">
+                          <div className="text-xs text-gray-500">{m.label}</div>
+                          <div className={`text-sm font-semibold ${
+                            m.trend === 'up' ? 'text-emerald-400' : 
+                            m.trend === 'down' ? 'text-red-400' : 'text-white'
+                          }`}>
+                            {m.value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="space-y-1">
+                      {vital.insight.tips.map((tip, j) => (
+                        <div key={j} className="flex items-center gap-2 text-xs text-gray-400">
+                          <span className="text-emerald-400">•</span> {tip}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -184,16 +703,110 @@ export default function Dashboard() {
 
         <div className="lg:col-span-4">
           <div className="flex gap-2 mb-4">
-            {['All', 'Actions', 'Tips', 'Wins'].map((label, i) => (
+            {([
+              { key: 'all', label: 'All' },
+              { key: 'action', label: 'Actions' },
+              { key: 'tip', label: 'Tips' },
+              { key: 'milestone', label: 'Wins' },
+            ] as { key: ActionFilter; label: string }[]).map(({ key, label }) => (
               <button
-                key={label}
-                className={`px-4 py-2 rounded-lg text-sm font-medium ${i === 0 ? 'bg-blue-500 text-white' : 'bg-slate-800 text-gray-400 hover:text-white'}`}
+                key={key}
+                onClick={() => setActionFilter(key)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  actionFilter === key 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700'
+                }`}
               >
                 {label}
               </button>
             ))}
           </div>
-          <ActionFeed cards={data.actions} />
+          
+          <div className="space-y-3">
+            {displayedActions.map((action, i) => (
+              <div 
+                key={action.id}
+                className={`bg-slate-800/80 rounded-2xl p-4 border transition-all cursor-pointer ${
+                  expandedAction === action.id 
+                    ? 'border-emerald-500 shadow-lg shadow-emerald-500/10' 
+                    : 'border-slate-700 hover:border-emerald-500/50'
+                } ${displayedActions.length > 0 && i === (cycleIndex % displayedActions.length) ? 'ring-2 ring-blue-500/30' : ''}`}
+                onClick={() => setExpandedAction(expandedAction === action.id ? null : action.id)}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    action.type === 'action' ? 'bg-blue-500/20' :
+                    action.type === 'tip' ? 'bg-amber-500/20' :
+                    action.type === 'milestone' ? 'bg-emerald-500/20' :
+                    'bg-red-500/20'
+                  }`}>
+                    <span className="text-xl">{action.icon}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-white">{action.title}</div>
+                    <div className="text-sm text-gray-400">{action.subtitle}</div>
+                  </div>
+                  {action.chart && (
+                    <div className="flex items-end gap-0.5 h-6">
+                      {action.chart === 'line' ? (
+                        <svg className="w-8 h-6 text-emerald-400" viewBox="0 0 32 24">
+                          <polyline points="0,20 8,16 16,12 24,8 32,4" fill="none" stroke="currentColor" strokeWidth="2"/>
+                        </svg>
+                      ) : (
+                        [1, 2, 3, 4].map((h, j) => (
+                          <div key={j} className="w-1.5 bg-emerald-400 rounded-sm" style={{ height: `${h * 5}px` }}></div>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+                
+                {expandedAction === action.id && (
+                  <div className="mt-4 pt-4 border-t border-slate-700 animate-fadeIn">
+                    <p className="text-gray-300 text-sm mb-3">{action.insight.description}</p>
+                    
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {action.insight.metrics.map((m, j) => (
+                        <div key={j} className="bg-slate-900 rounded-lg p-2 text-center">
+                          <div className="text-xs text-gray-500">{m.label}</div>
+                          <div className={`text-sm font-semibold ${
+                            m.trend === 'up' ? 'text-emerald-400' : 
+                            m.trend === 'down' ? 'text-red-400' : 'text-white'
+                          }`}>
+                            {m.value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="space-y-1 mb-3">
+                      {action.insight.tips.map((tip, j) => (
+                        <div key={j} className="flex items-center gap-2 text-xs text-gray-400">
+                          <span className="text-emerald-400">•</span> {tip}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <button className="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-medium hover:bg-emerald-500/30 transition-colors">
+                        Take Action
+                      </button>
+                      <button className="px-3 py-1.5 bg-slate-700 text-gray-300 rounded-lg text-xs font-medium hover:bg-slate-600 transition-colors">
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          
+          {actions.length > 4 && (
+            <div className="mt-3 text-center">
+              <span className="text-gray-500 text-sm">+{actions.length - 4} more items</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -242,6 +855,16 @@ export default function Dashboard() {
       <footer className="mt-8 text-center text-sm text-gray-500">
         Educational tool. Click any number to edit. Not financial advice.
       </footer>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 }
