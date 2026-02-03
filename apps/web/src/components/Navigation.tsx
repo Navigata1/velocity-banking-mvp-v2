@@ -8,7 +8,7 @@ const navItems = [
   { href: '/simulator', label: 'Simulator', icon: '📊' },
   { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
   { href: '/learn', label: 'Learn', icon: '📚' },
-  { href: '/vault', label: 'Vault', icon: '🏦' },
+  { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
 ];
 
 export default function Navigation() {

@@ -47,22 +47,23 @@ reference/                   # Design assets and transcripts
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Multi-Domain Dashboard with tabs (Car, House, Land, Vault) |
+| `/` | Multi-Domain Dashboard with tabs (Car, House, Land, Credit Card, Student Loan) |
 | `/simulator` | What-If Engine - Compare baseline vs velocity strategy |
 | `/cockpit` | Flight Simulator - Visual instruments for debt payoff |
 | `/learn` | Micro-lessons and glossary |
-| `/vault` | Wealth Transfer Timeline - Generational impact calculator |
+| `/vault` | Wealth Timeline - Generational wealth transfer calculator (standalone) |
 
 ## Dashboard Domains
 
-The main dashboard (`/`) features a tabbed interface with 4 domains:
+The main dashboard (`/`) features a tabbed interface with 5 debt domains:
 
 | Domain | Hero Visual | Purpose |
 |--------|-------------|---------|
-| Car | 🚗 | Car loan payoff tracking with engine/fuel metaphors |
-| House | 🏠 | Mortgage acceleration with roof/basement/pipes metaphors |
-| Land | 🏞️ | Property investment tracking |
-| Vault | 🏦 | Wealth building and generational impact |
+| Car | 🚗 | Car loan payoff tracking |
+| House | 🏠 | Mortgage acceleration |
+| Land | 🏞️ | Property/land investment tracking |
+| Credit Card | 💳 | High-interest credit card debt crushing |
+| Student Loan | 🎓 | Education debt payoff tracking |
 
 Each domain includes:
 - **Hero Visual**: Large visual on left with interactive hotspots
@@ -144,7 +145,7 @@ Every vitals card and action item can be clicked to reveal:
 - Actionable tips
 
 ### Domain-Specific Content
-Each domain (Car, House, Land, Vault) has unique:
+Each domain (Car, House, Land, Credit Card, Student Loan) has unique:
 - Actions tailored to that asset type
 - Metrics relevant to the specific debt
 - Tips specific to that financial situation
