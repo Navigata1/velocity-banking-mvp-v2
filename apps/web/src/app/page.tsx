@@ -202,7 +202,7 @@ export default function Dashboard() {
         vitals: [
           { 
             icon: '🎯', 
-            label: `${domain === 'vault' ? 'House' : domain.charAt(0).toUpperCase() + domain.slice(1)} Balance`, 
+            label: `${domain === 'creditCard' ? 'Credit Card' : domain === 'studentLoan' ? 'Student Loan' : domain.charAt(0).toUpperCase() + domain.slice(1)} Balance`, 
             value: debt.balance, 
             sublabel: `@ ${(debt.interestRate * 100).toFixed(1)}% APR`,
             isEditable: true,
@@ -352,6 +352,7 @@ export default function Dashboard() {
     const velocity = store.getVelocityPayoff(debtType);
     const baseline = store.getBaselinePayoff(debtType);
     const cashFlow = store.getCashFlow();
+    const chunkAmount = store.chunkAmount;
     
     interface ActionInsight {
       description: string;
@@ -496,45 +497,87 @@ export default function Dashboard() {
           },
         },
       ],
-      vault: [
-        { id: 'vault-1', type: 'milestone', title: 'Breaking the Cycle!', subtitle: `Save ${formatCurrency(velocity.savings)} in interest`, icon: '🎉', chart: 'line',
-          insight: { description: 'You\'re building generational wealth by avoiding this interest payment.',
+      creditCard: [
+        { id: 'cc-1', type: 'action', title: 'High-Interest Attack!', subtitle: `Chunk ${formatCurrency(chunkAmount)} to credit card`, icon: '🎯', chart: 'bars',
+          insight: { description: 'Credit cards have the highest interest rates - crushing this first saves the most money.',
+            metrics: [
+              { label: 'Daily Interest', value: formatCurrency(store.getDailyInterest('creditCard')), trend: 'down' },
+              { label: 'Interest Rate', value: `${(store.debts.creditCard.interestRate * 100).toFixed(1)}%`, trend: 'down' },
+              { label: 'Payoff Impact', value: `${baseline.months - velocity.months} mo faster`, trend: 'up' },
+            ],
+            tips: ['Always pay more than minimum', 'Consider balance transfer options', 'Stop using card until paid off'],
+          },
+        },
+        { id: 'cc-2', type: 'milestone', title: 'Interest Crusher!', subtitle: `Saving ${formatCurrency(velocity.savings)} vs minimum payments`, icon: '💪',
+          insight: { description: 'By using velocity banking on credit cards, you\'re avoiding massive interest charges.',
             metrics: [
               { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
-              { label: 'If Invested', value: formatCurrency(velocity.savings * 1.5), trend: 'up' },
-              { label: 'Legacy Impact', value: 'High', trend: 'up' },
+              { label: 'APR Defeated', value: `${(store.debts.creditCard.interestRate * 100).toFixed(1)}%`, trend: 'up' },
+              { label: 'Freedom Date', value: `${velocity.months} mo`, trend: 'up' },
             ],
-            tips: ['Invest the savings for compounding', 'Teach children about velocity banking', 'Document your journey'],
+            tips: ['Credit card payoff is your first priority', 'Each payment reduces compounding damage', 'Track your shrinking balance'],
           },
         },
-        { id: 'vault-2', type: 'action', title: 'Investment Opportunity', subtitle: 'Index fund contribution ready', icon: '📈', chart: 'bars',
-          insight: { description: 'Your freed cash flow can now work for you in the market.',
+        { id: 'cc-3', type: 'tip', title: 'Freeze the Card', subtitle: 'Prevent new charges while paying off', icon: '🧊',
+          insight: { description: 'Stop adding to your balance while aggressively paying it down.',
             metrics: [
-              { label: 'Monthly Available', value: formatCurrency(cashFlow), trend: 'up' },
-              { label: 'Annual Investment', value: formatCurrency(cashFlow * 12), trend: 'up' },
-              { label: 'In 20 Years @7%', value: formatCurrency(cashFlow * 12 * 40), trend: 'up' },
+              { label: 'Current Balance', value: formatCurrency(store.debts.creditCard.balance), trend: 'down' },
+              { label: 'Monthly Interest', value: formatCurrency(store.debts.creditCard.balance * store.debts.creditCard.interestRate / 12), trend: 'down' },
+              { label: 'Break-Even', value: 'In progress', trend: 'neutral' },
             ],
-            tips: ['Start with low-cost index funds', 'Automate monthly investments', 'Stay consistent through market cycles'],
+            tips: ['Use debit or cash temporarily', 'Unlink card from subscriptions', 'Remove from online shopping sites'],
           },
         },
-        { id: 'vault-3', type: 'tip', title: 'Share Your Journey', subtitle: 'Generate shareable results card', icon: '📱',
-          insight: { description: 'Inspire others by sharing your velocity banking success story.',
+        { id: 'cc-4', type: 'action', title: 'Statement Date Tip', subtitle: 'Time your chunks strategically', icon: '📅',
+          insight: { description: 'Making payments before statement date reduces reported balance and interest.',
             metrics: [
-              { label: 'Your Savings', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Best Time', value: 'Before closing date', trend: 'neutral' },
+              { label: 'Credit Utilization', value: `${Math.round((store.debts.creditCard.balance / 10000) * 100)}%`, trend: 'down' },
+              { label: 'Score Impact', value: 'Positive', trend: 'up' },
+            ],
+            tips: ['Pay twice monthly for best results', 'Note your statement closing date', 'Reduce utilization below 30%'],
+          },
+        },
+      ],
+      studentLoan: [
+        { id: 'sl-1', type: 'action', title: 'Chunk to Principal', subtitle: `Apply ${formatCurrency(chunkAmount)} to student loan`, icon: '🎓',
+          insight: { description: 'Extra payments on student loans go directly to principal - accelerating freedom.',
+            metrics: [
+              { label: 'Principal Attack', value: formatCurrency(chunkAmount), trend: 'up' },
+              { label: 'Interest Rate', value: `${(store.debts.studentLoan.interestRate * 100).toFixed(1)}%`, trend: 'neutral' },
               { label: 'Time Saved', value: `${baseline.months - velocity.months} mo`, trend: 'up' },
-              { label: 'Strategy Score', value: 'A+', trend: 'up' },
             ],
-            tips: ['Share on social media', 'Encourage family members', 'Build an accountability community'],
+            tips: ['Specify payments go to principal', 'Consider refinancing if rate is high', 'Stay consistent with chunks'],
           },
         },
-        { id: 'vault-4', type: 'milestone', title: 'Generational Impact', subtitle: 'Breaking the debt cycle', icon: '👨‍👩‍👧‍👦',
-          insight: { description: 'Your children won\'t inherit debt stress - they\'ll inherit financial wisdom.',
+        { id: 'sl-2', type: 'milestone', title: 'Degree Paid Off Faster!', subtitle: `${velocity.months} months to freedom`, icon: '🏆',
+          insight: { description: 'Your education investment is being reclaimed faster than the standard plan.',
             metrics: [
-              { label: 'Wealth Transfer', value: formatCurrency(velocity.savings * 3), trend: 'up' },
-              { label: 'Next Gen Advantage', value: `${Math.round((velocity.savings / 10000) * 5)} years`, trend: 'up' },
-              { label: 'Legacy Score', value: 'Growing', trend: 'up' },
+              { label: 'Velocity Payoff', value: `${velocity.months} months`, trend: 'up' },
+              { label: 'Standard Payoff', value: `${baseline.months} months`, trend: 'neutral' },
+              { label: 'Interest Saved', value: formatCurrency(velocity.savings), trend: 'up' },
             ],
-            tips: ['Teach kids about compound interest', 'Model financial responsibility', 'Create a family financial plan'],
+            tips: ['Visualize being loan-free', 'Plan what to do with freed payments', 'Celebrate balance milestones'],
+          },
+        },
+        { id: 'sl-3', type: 'tip', title: 'Tax Deduction Check', subtitle: 'Student loan interest may be deductible', icon: '📋',
+          insight: { description: 'Up to $2,500 in student loan interest may be tax deductible annually.',
+            metrics: [
+              { label: 'Annual Interest', value: formatCurrency(store.debts.studentLoan.balance * store.debts.studentLoan.interestRate), trend: 'neutral' },
+              { label: 'Max Deduction', value: '$2,500', trend: 'neutral' },
+              { label: 'Potential Savings', value: formatCurrency(500), trend: 'up' },
+            ],
+            tips: ['Keep interest statements', 'Consult tax professional', 'Use refund for extra chunk'],
+          },
+        },
+        { id: 'sl-4', type: 'action', title: 'Income-Driven Backup', subtitle: 'Know your options if income changes', icon: '🛡️',
+          insight: { description: 'Federal loans offer income-driven plans as a safety net if needed.',
+            metrics: [
+              { label: 'Current Payment', value: formatCurrency(store.debts.studentLoan.minimumPayment), trend: 'neutral' },
+              { label: 'Loan Type', value: 'Federal', trend: 'neutral' },
+              { label: 'Flexibility', value: 'High', trend: 'up' },
+            ],
+            tips: ['Understand IDR plan options', 'Keep employment docs handy', 'Don\'t default - adjust instead'],
           },
         },
       ],
@@ -566,20 +609,21 @@ export default function Dashboard() {
   const debt = store.debts[debtType];
   const velocity = store.getVelocityPayoff(debtType);
 
+  const getDomainLabel = () => {
+    if (domain === 'creditCard') return 'Credit Card';
+    if (domain === 'studentLoan') return 'Student Loan';
+    return domain.charAt(0).toUpperCase() + domain.slice(1);
+  };
+
   const heroData = {
-    hotspots: domain === 'vault' ? [
-      { label: 'Net Worth', value: formatCurrency(velocity.savings * 2), position: { top: '30%', left: '70%' }, color: 'bg-emerald-500' },
-      { label: 'Interest Avoided', value: formatCurrency(velocity.savings), position: { top: '60%', left: '20%' }, color: 'bg-green-500' },
-      { label: 'Freedom Fund', value: formatCurrency(store.getCashFlow() * 6), position: { top: '20%', left: '30%' }, color: 'bg-blue-500' },
-      { label: 'Monthly Surplus', value: formatCurrency(store.getCashFlow()), position: { top: '75%', left: '75%' }, color: 'bg-amber-500' },
-    ] : [
-      { label: `${domain.charAt(0).toUpperCase() + domain.slice(1)} Rate`, value: `${(debt.interestRate * 100).toFixed(1)}% APR`, position: { top: '20%', left: '80%' }, color: 'bg-emerald-500' },
+    hotspots: [
+      { label: `${getDomainLabel()} Rate`, value: `${(debt.interestRate * 100).toFixed(1)}% APR`, position: { top: '20%', left: '80%' }, color: 'bg-emerald-500' },
       { label: 'Interest Burn', value: `${formatCurrency(store.getDailyInterest(debtType))}/day`, position: { top: '60%', left: '10%' }, color: 'bg-amber-500' },
       { label: 'ETA', value: `${velocity.months} months`, position: { top: '80%', left: '75%' }, color: 'bg-blue-500' },
       { label: 'LOC Available', value: formatCurrency(store.loc.limit - store.loc.balance), position: { top: '40%', left: '5%' }, color: 'bg-cyan-500' },
     ],
-    trendValue: domain === 'vault' ? formatCurrency(velocity.savings) : formatCurrency(debt.balance),
-    trendLabel: domain === 'vault' ? 'potential savings' : 'remaining balance',
+    trendValue: formatCurrency(debt.balance),
+    trendLabel: 'remaining balance',
   };
 
   return (
@@ -601,7 +645,7 @@ export default function Dashboard() {
         
         <DomainTabs 
           activeTab={store.activeDomain} 
-          onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'vault')} 
+          onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
         />
       </header>
 

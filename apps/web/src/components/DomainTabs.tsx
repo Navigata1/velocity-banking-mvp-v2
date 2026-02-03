@@ -9,7 +9,8 @@ const tabs = [
   { id: 'car', label: 'Car', icon: '🚗' },
   { id: 'house', label: 'House', icon: '🏠' },
   { id: 'land', label: 'Land', icon: '🏞️' },
-  { id: 'vault', label: 'Vault', icon: '🏦' },
+  { id: 'creditCard', label: 'Credit Card', icon: '💳' },
+  { id: 'studentLoan', label: 'Student Loan', icon: '🎓' },
 ];
 
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {

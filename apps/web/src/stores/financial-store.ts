@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware';
 
 export interface DebtAccount {
   id: string;
-  type: 'car' | 'house' | 'land' | 'vault';
+  type: 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
   name: string;
   balance: number;
   interestRate: number;
@@ -20,8 +20,8 @@ export interface LOC {
   interestRate: number;
 }
 
-export type DebtType = 'car' | 'house' | 'land';
-export type Domain = 'car' | 'house' | 'land' | 'vault';
+export type DebtType = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
+export type Domain = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
 
 export interface FinancialState {
   monthlyIncome: number;
@@ -33,6 +33,8 @@ export interface FinancialState {
     car: DebtAccount;
     house: DebtAccount;
     land: DebtAccount;
+    creditCard: DebtAccount;
+    studentLoan: DebtAccount;
   };
   
   loc: LOC;
@@ -102,6 +104,24 @@ export const useFinancialStore = create<FinancialState>()(
           minimumPayment: 650,
           termMonths: 180,
         },
+        creditCard: {
+          id: 'cc-1',
+          type: 'creditCard',
+          name: 'Credit Card',
+          balance: 8500,
+          interestRate: 0.219,
+          minimumPayment: 250,
+          termMonths: 60,
+        },
+        studentLoan: {
+          id: 'student-1',
+          type: 'studentLoan',
+          name: 'Student Loan',
+          balance: 32000,
+          interestRate: 0.068,
+          minimumPayment: 380,
+          termMonths: 120,
+        },
       },
       
       loc: {
@@ -123,7 +143,7 @@ export const useFinancialStore = create<FinancialState>()(
       
       getActiveDebtType: (): DebtType => {
         const state = get();
-        return state.activeDomain === 'vault' ? 'house' : state.activeDomain;
+        return state.activeDomain;
       },
       
       updateDebt: (type, updates) => set((state) => ({

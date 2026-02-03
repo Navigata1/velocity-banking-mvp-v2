@@ -8,7 +8,7 @@ interface HotspotProps {
 }
 
 interface HeroVisualProps {
-  domain: 'car' | 'house' | 'land' | 'vault';
+  domain: 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
   hotspots?: HotspotProps[];
   trendValue?: string;
   trendLabel?: string;
@@ -18,7 +18,8 @@ const domainVisuals: Record<string, { emoji: string; gradient: string }> = {
   car: { emoji: '🚗', gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent' },
   house: { emoji: '🏠', gradient: 'from-amber-500/20 via-orange-500/10 to-transparent' },
   land: { emoji: '🏞️', gradient: 'from-green-500/20 via-emerald-500/10 to-transparent' },
-  vault: { emoji: '🏦', gradient: 'from-purple-500/20 via-violet-500/10 to-transparent' },
+  creditCard: { emoji: '💳', gradient: 'from-purple-500/20 via-pink-500/10 to-transparent' },
+  studentLoan: { emoji: '🎓', gradient: 'from-indigo-500/20 via-violet-500/10 to-transparent' },
 };
 
 export default function HeroVisual({ domain, hotspots = [], trendValue, trendLabel }: HeroVisualProps) {

@@ -102,7 +102,7 @@ export default function CockpitPage() {
 
       <DomainTabs 
         activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'vault')} 
+        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
       />
 
       <div className="mt-6">
