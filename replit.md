@@ -145,10 +145,29 @@ Every vitals card and action item can be clicked to reveal:
 - Actionable tips
 
 ### Domain-Specific Content
-Each domain (Car, House, Land, Credit Card, Student Loan) has unique:
-- Actions tailored to that asset type
-- Metrics relevant to the specific debt
-- Tips specific to that financial situation
+Each of the 9 domains has unique content:
+- **Auto**: Car loan payoff with insurance tips
+- **House**: Mortgage acceleration with equity insights
+- **Land**: Property investment tracking
+- **Credit Card**: High-interest debt crushing strategies
+- **Student Loan**: Education debt with tax deduction tips
+- **Medical**: Negotiable medical debt (18% APR default)
+- **Personal Loan**: Debt consolidation (11% APR default)
+- **Recreation**: Boats, RVs, jet skis (8.9% APR default)
+- **Custom**: User-defined assets with custom settings
+
+### AI Assistant
+Click the 🤖 AI Assistant button in the navigation to open a chat interface:
+- Answers questions about velocity banking concepts
+- Explains chunks, LOC strategy, and cash flow
+- Provides guidance on using the app
+- Keyword-based responses with helpful tips
+
+### Non-Linear Sliders
+The income/expense quick-adjust sliders use non-linear breakpoints:
+- 0-25% of slider = $1 to $3,000 (fine control for low incomes)
+- Gradual acceleration through $10K, $100K to $10M
+- Better UX for users across all income levels
 
 ### Auto-Cycling Highlight
 Action items cycle every 5 seconds with a subtle ring highlight.
@@ -195,6 +214,10 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 - 2026-02-03: Added guard clauses in calculations to prevent undefined errors
 - 2026-02-03: Added dual non-linear sliders for quick income/expense adjustment in Simulator
 - 2026-02-03: Dynamic dashboard icon in navigation changes based on active domain (Car/House/Land/Credit Card/Student Loan)
+- 2026-02-03: Expanded to 9 domains: Auto, House, Land, Credit Card, Student Loan, Medical, Personal Loan, Recreation, Custom
+- 2026-02-03: Generated AI hero images for all 9 domains (professional photography style)
+- 2026-02-03: Added AI Assistant chatbot with velocity banking Q&A
+- 2026-02-03: Improved dual sliders with non-linear breakpoints favoring low-income users
 
 ## User Preferences
 
