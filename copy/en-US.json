@@ -1,0 +1,116 @@
+{
+  "app": {
+    "name": "VelocityBank",
+    "disclaimerShort": "Educational tool. Not financial advice.",
+    "disclaimerLong": "Numbers are estimates. Your lender's terms are the source of truth. We will never tell you to miss required minimum payments.",
+    "privacy": "Your data is yours. We don't sell it."
+  },
+  "tabs": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "simulator": "Simulator",
+    "cashflow": "Cash Flow",
+    "learn": "Learn"
+  },
+  "buttons": {
+    "continue": "Continue",
+    "save": "Save",
+    "done": "Done",
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip for now",
+    "runSimulation": "Run simulation",
+    "createPlan": "Create plan",
+    "enableReminders": "Enable reminders"
+  },
+  "validation": {
+    "requiredNumber": "Please enter a number.",
+    "nonNegative": "This can't be negative.",
+    "doubleCheck": "That looks too high — double-check the amount.",
+    "negativeCashflow": "Your expenses are higher than your income. That's okay — we'll help you stabilize first."
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Pick up where you left off.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "primaryCta": "Sign in",
+      "secondaryCreate": "Create account",
+      "secondaryForgot": "Forgot password?",
+      "errorInvalid": "That email or password doesn't match."
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Let's turn your numbers into a plan.",
+      "primaryCta": "Create account",
+      "secondarySignIn": "Already have an account? Sign in",
+      "terms": "I agree to the Terms and Privacy Policy."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "We'll email you a reset link.",
+      "primaryCta": "Send reset email",
+      "success": "Check your inbox for a reset link.",
+      "secondary": "Back to sign in"
+    }
+  },
+  "firstRun": {
+    "video": {
+      "title": "A 90-second reset",
+      "body": "Most people were taught to make payments. You're about to learn a better tool.",
+      "primaryCta": "Watch the Money Loop",
+      "secondaryCta": "Skip (watch later)",
+      "dontShowAgain": "Don't show this again"
+    }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Start with what’s closest",
+      "subtitle": "Car first. Then house. Then vault.",
+      "car": {"title": "Car First", "desc": "Get a win fast. Turn payments into cash flow.", "cta": "Start with my car"},
+      "house": {"title": "House Next", "desc": "See how chunking changes your mortgage timeline.", "cta": "Start with my house"},
+      "vault": {"title": "Vault Later", "desc": "Track interest avoided and build freedom.", "cta": "Explore Vault mode"},
+      "footer": "You can switch paths anytime."
+    },
+    "revelation": {
+      "title": "Here’s what interest does",
+      "subtitle": "Not to scare you — to put you back in control.",
+      "primaryCta": "Show me a better path",
+      "secondaryCta": "I'm overwhelmed — go slower"
+    },
+    "alternative": {
+      "title": "The Money Loop",
+      "subtitle": "Same income. Same life. Different flow.",
+      "step1": "Income hits the line first",
+      "step2": "Expenses come out over the month",
+      "step3": "Cash flow stays behind to reduce the balance",
+      "primaryCta": "Let’s enter my numbers",
+      "secondaryCta": "Why does this work?"
+    },
+    "setup": {
+      "title": "Your Snapshot",
+      "subtitle": "You don’t need perfection — just a starting point.",
+      "incomeLabel": "Monthly take-home income",
+      "incomeHelper": "After taxes. If your income changes, use an average.",
+      "expensesLabel": "Monthly living expenses",
+      "expensesHelper": "Housing, food, bills, minimum payments — everything.",
+      "carTitle": "Car loan",
+      "balanceLabel": "Current balance",
+      "aprLabel": "Interest rate (APR %)",
+      "paymentLabel": "Monthly payment",
+      "primaryCta": "Build my dashboard",
+      "safety": "We will never tell you to miss required minimum payments."
+    }
+  },
+  "dashboard": {
+    "car": {
+      "title": "Your Financial Vitals",
+      "subtitle": "Small moves. Big momentum.",
+      "quickActionPrimary": "Run a what-if",
+      "quickActionSecondary": "Add an account"
+    }
+  }
+}
