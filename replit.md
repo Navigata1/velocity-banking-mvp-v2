@@ -193,6 +193,8 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 - 2026-02-03: Added comprehensive Investopedia resource links to all Learn page lessons and glossary
 - 2026-02-03: Implemented store merge strategy for backward compatibility with persisted data
 - 2026-02-03: Added guard clauses in calculations to prevent undefined errors
+- 2026-02-03: Added dual non-linear sliders for quick income/expense adjustment in Simulator
+- 2026-02-03: Dynamic dashboard icon in navigation changes based on active domain (Car/House/Land/Credit Card/Student Loan)
 
 ## User Preferences
 
