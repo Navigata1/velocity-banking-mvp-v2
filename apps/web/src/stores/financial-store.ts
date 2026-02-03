@@ -5,13 +5,15 @@ import { persist } from 'zustand/middleware';
 
 export interface DebtAccount {
   id: string;
-  type: 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
+  type: 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
   name: string;
   balance: number;
   interestRate: number;
   minimumPayment: number;
   termMonths: number;
   startDate?: string;
+  customIcon?: string;
+  customImage?: string;
 }
 
 export interface LOC {
@@ -20,8 +22,8 @@ export interface LOC {
   interestRate: number;
 }
 
-export type DebtType = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
-export type Domain = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan';
+export type DebtType = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
+export type Domain = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
 
 export interface FinancialState {
   monthlyIncome: number;
@@ -35,6 +37,10 @@ export interface FinancialState {
     land: DebtAccount;
     creditCard: DebtAccount;
     studentLoan: DebtAccount;
+    medical: DebtAccount;
+    personal: DebtAccount;
+    recreation: DebtAccount;
+    custom: DebtAccount;
   };
   
   loc: LOC;
@@ -80,7 +86,7 @@ export const useFinancialStore = create<FinancialState>()(
         car: {
           id: 'car-1',
           type: 'car',
-          name: 'Car Loan',
+          name: 'Auto Loan',
           balance: 18450,
           interestRate: 0.069,
           minimumPayment: 425,
@@ -121,6 +127,42 @@ export const useFinancialStore = create<FinancialState>()(
           interestRate: 0.068,
           minimumPayment: 380,
           termMonths: 120,
+        },
+        medical: {
+          id: 'medical-1',
+          type: 'medical',
+          name: 'Medical Debt',
+          balance: 12000,
+          interestRate: 0.18,
+          minimumPayment: 300,
+          termMonths: 48,
+        },
+        personal: {
+          id: 'personal-1',
+          type: 'personal',
+          name: 'Personal Loan',
+          balance: 15000,
+          interestRate: 0.11,
+          minimumPayment: 350,
+          termMonths: 60,
+        },
+        recreation: {
+          id: 'recreation-1',
+          type: 'recreation',
+          name: 'Boat/RV Loan',
+          balance: 45000,
+          interestRate: 0.089,
+          minimumPayment: 650,
+          termMonths: 84,
+        },
+        custom: {
+          id: 'custom-1',
+          type: 'custom',
+          name: 'Custom Asset',
+          balance: 25000,
+          interestRate: 0.075,
+          minimumPayment: 400,
+          termMonths: 72,
         },
       },
       

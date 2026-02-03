@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
-import { useFinancialStore } from '@/stores/financial-store';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
 
 interface Instrument {
   label: string;
@@ -102,7 +102,7 @@ export default function CockpitPage() {
 
       <DomainTabs 
         activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
+        onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
       />
 
       <div className="mt-6">

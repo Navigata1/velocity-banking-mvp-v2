@@ -7,7 +7,7 @@ import VitalsGrid from '@/components/VitalsGrid';
 import ActionFeed from '@/components/ActionFeed';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
-import { useFinancialStore } from '@/stores/financial-store';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
 
 type VitalsCategory = 'cashflow' | 'analytics' | 'goals' | 'velocity';
 type ActionFilter = 'all' | 'action' | 'tip' | 'milestone';
@@ -584,6 +584,174 @@ export default function Dashboard() {
           },
         },
       ],
+      medical: [
+        { id: 'med-1', type: 'action', title: 'Medical Bill Attack', subtitle: `Chunk ${formatCurrency(chunkAmount)} to medical debt`, icon: '🏥',
+          insight: { description: 'Medical debt can often be negotiated - attack it aggressively while exploring options.',
+            metrics: [
+              { label: 'Chunk Power', value: formatCurrency(chunkAmount), trend: 'up' },
+              { label: 'Current Balance', value: formatCurrency(debt?.balance || 0), trend: 'down' },
+              { label: 'Time Saved', value: `${baseline.months - velocity.months} mo`, trend: 'up' },
+            ],
+            tips: ['Ask about financial assistance programs', 'Request itemized bills', 'Negotiate before paying'],
+          },
+        },
+        { id: 'med-2', type: 'tip', title: 'Negotiate Your Bills', subtitle: 'Medical debt is often negotiable', icon: '💬',
+          insight: { description: 'Healthcare providers often accept reduced payments - always ask.',
+            metrics: [
+              { label: 'Potential Savings', value: '20-50%', trend: 'up' },
+              { label: 'Success Rate', value: 'High', trend: 'up' },
+              { label: 'Time to Negotiate', value: '1-2 calls', trend: 'neutral' },
+            ],
+            tips: ['Call billing department directly', 'Ask for hardship discount', 'Offer lump sum for discount'],
+          },
+        },
+        { id: 'med-3', type: 'milestone', title: 'Healing Your Finances!', subtitle: `${velocity.months} months to debt-free health`, icon: '💚',
+          insight: { description: 'You\'re healing financially while conquering medical debt.',
+            metrics: [
+              { label: 'Velocity Payoff', value: `${velocity.months} mo`, trend: 'up' },
+              { label: 'Interest Saved', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Progress', value: 'On Track', trend: 'up' },
+            ],
+            tips: ['Check for billing errors', 'Set up payment plan if needed', 'Document all communications'],
+          },
+        },
+        { id: 'med-4', type: 'action', title: 'Check for Errors', subtitle: 'Medical bills often have mistakes', icon: '🔍',
+          insight: { description: 'Studies show up to 80% of medical bills contain errors.',
+            metrics: [
+              { label: 'Error Rate', value: 'Up to 80%', trend: 'neutral' },
+              { label: 'Avg Overcharge', value: '$200-$1,000', trend: 'neutral' },
+              { label: 'Action', value: 'Review bills', trend: 'neutral' },
+            ],
+            tips: ['Request itemized statement', 'Compare to EOB', 'Dispute discrepancies'],
+          },
+        },
+      ],
+      personal: [
+        { id: 'pl-1', type: 'action', title: 'Crush Personal Loan', subtitle: `Apply ${formatCurrency(chunkAmount)} extra payment`, icon: '💵',
+          insight: { description: 'Personal loans often have fixed terms - extra payments accelerate freedom.',
+            metrics: [
+              { label: 'Extra Payment', value: formatCurrency(chunkAmount), trend: 'up' },
+              { label: 'Interest Rate', value: `${((debt?.interestRate || 0.11) * 100).toFixed(1)}%`, trend: 'down' },
+              { label: 'Months Saved', value: `${baseline.months - velocity.months}`, trend: 'up' },
+            ],
+            tips: ['Verify no prepayment penalty', 'Direct extra to principal', 'Consider refinancing options'],
+          },
+        },
+        { id: 'pl-2', type: 'tip', title: 'Refinance Check', subtitle: 'Lower rate = more savings', icon: '🔄',
+          insight: { description: 'If your credit improved, you may qualify for a lower rate.',
+            metrics: [
+              { label: 'Current Rate', value: `${((debt?.interestRate || 0.11) * 100).toFixed(1)}%`, trend: 'neutral' },
+              { label: 'Potential Savings', value: 'Significant', trend: 'up' },
+              { label: 'Credit Check', value: 'Soft pull available', trend: 'neutral' },
+            ],
+            tips: ['Check rates without hard inquiry', 'Compare multiple lenders', 'Factor in fees vs savings'],
+          },
+        },
+        { id: 'pl-3', type: 'milestone', title: 'Loan Liberation!', subtitle: `Saving ${formatCurrency(velocity.savings)} with velocity`, icon: '🎉',
+          insight: { description: 'Your velocity strategy is crushing this personal loan.',
+            metrics: [
+              { label: 'Total Savings', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'Original Term', value: `${baseline.months} mo`, trend: 'neutral' },
+              { label: 'New Term', value: `${velocity.months} mo`, trend: 'up' },
+            ],
+            tips: ['Track your progress monthly', 'Celebrate milestones', 'Plan for post-payoff'],
+          },
+        },
+        { id: 'pl-4', type: 'action', title: 'Consolidation Review', subtitle: 'Could you combine high-rate debts?', icon: '🔗',
+          insight: { description: 'Consolidating multiple debts can simplify and potentially lower costs.',
+            metrics: [
+              { label: 'Number of Debts', value: 'Multiple', trend: 'neutral' },
+              { label: 'Strategy', value: 'Consolidate', trend: 'up' },
+              { label: 'Benefit', value: 'Simplify', trend: 'up' },
+            ],
+            tips: ['Compare total costs', 'Watch for hidden fees', 'Don\'t extend term too much'],
+          },
+        },
+      ],
+      recreation: [
+        { id: 'rec-1', type: 'action', title: 'Luxury Payoff Power', subtitle: `Chunk ${formatCurrency(chunkAmount)} to recreation loan`, icon: '🚤',
+          insight: { description: 'Recreational vehicles depreciate - paying faster preserves value.',
+            metrics: [
+              { label: 'Chunk Applied', value: formatCurrency(chunkAmount), trend: 'up' },
+              { label: 'Depreciation', value: 'Active', trend: 'down' },
+              { label: 'Equity Building', value: 'Accelerated', trend: 'up' },
+            ],
+            tips: ['Pay before value drops', 'Consider selling if underwater', 'Maintain for resale value'],
+          },
+        },
+        { id: 'rec-2', type: 'tip', title: 'Seasonal Strategy', subtitle: 'Time your payments strategically', icon: '📅',
+          insight: { description: 'Recreation vehicles have seasonal value - optimize timing.',
+            metrics: [
+              { label: 'Peak Season', value: 'Summer', trend: 'up' },
+              { label: 'Best Sale Time', value: 'Spring', trend: 'up' },
+              { label: 'Strategy', value: 'Pay or sell high', trend: 'up' },
+            ],
+            tips: ['Sell in peak demand', 'Winterize properly', 'Consider rental income'],
+          },
+        },
+        { id: 'rec-3', type: 'milestone', title: 'Adventure Awaits!', subtitle: `${velocity.months} months to owned freedom`, icon: '🌊',
+          insight: { description: 'Own your adventure vehicle outright and enjoy payment-free fun.',
+            metrics: [
+              { label: 'Freedom Date', value: `${velocity.months} mo`, trend: 'up' },
+              { label: 'Interest Saved', value: formatCurrency(velocity.savings), trend: 'up' },
+              { label: 'True Ownership', value: 'Coming soon', trend: 'up' },
+            ],
+            tips: ['Picture debt-free adventures', 'Maintain during payoff', 'Plan celebration trip'],
+          },
+        },
+        { id: 'rec-4', type: 'action', title: 'Rental Income Option', subtitle: 'Could your asset generate income?', icon: '💰',
+          insight: { description: 'Many boats, RVs, and vehicles can be rented when not in use.',
+            metrics: [
+              { label: 'Rental Potential', value: '$100-500/day', trend: 'up' },
+              { label: 'Platforms', value: 'Multiple available', trend: 'neutral' },
+              { label: 'Strategy', value: 'Offset payments', trend: 'up' },
+            ],
+            tips: ['Research peer-to-peer platforms', 'Check insurance requirements', 'Start small to test'],
+          },
+        },
+      ],
+      custom: [
+        { id: 'cust-1', type: 'action', title: 'Custom Chunk Attack', subtitle: `Apply ${formatCurrency(chunkAmount)} to your asset`, icon: '➕',
+          insight: { description: 'Your custom debt follows the same velocity principles.',
+            metrics: [
+              { label: 'Chunk Power', value: formatCurrency(chunkAmount), trend: 'up' },
+              { label: 'Balance', value: formatCurrency(debt?.balance || 0), trend: 'down' },
+              { label: 'Time Saved', value: `${baseline.months - velocity.months} mo`, trend: 'up' },
+            ],
+            tips: ['Stay consistent with chunks', 'Track progress weekly', 'Adjust strategy as needed'],
+          },
+        },
+        { id: 'cust-2', type: 'tip', title: 'Personalize Your Plan', subtitle: 'Tailor strategy to your asset', icon: '⚙️',
+          insight: { description: 'Different assets may benefit from different approaches.',
+            metrics: [
+              { label: 'Asset Type', value: 'Custom', trend: 'neutral' },
+              { label: 'Flexibility', value: 'High', trend: 'up' },
+              { label: 'Optimization', value: 'Available', trend: 'up' },
+            ],
+            tips: ['Research your specific asset', 'Consider appreciation/depreciation', 'Adjust chunk frequency'],
+          },
+        },
+        { id: 'cust-3', type: 'milestone', title: 'Custom Victory!', subtitle: `${velocity.months} months to freedom`, icon: '🏆',
+          insight: { description: 'Your unique debt is being conquered with velocity banking.',
+            metrics: [
+              { label: 'Velocity Payoff', value: `${velocity.months} mo`, trend: 'up' },
+              { label: 'Standard Payoff', value: `${baseline.months} mo`, trend: 'neutral' },
+              { label: 'Savings', value: formatCurrency(velocity.savings), trend: 'up' },
+            ],
+            tips: ['Celebrate your progress', 'Document your journey', 'Share your success'],
+          },
+        },
+        { id: 'cust-4', type: 'action', title: 'Track Your Asset', subtitle: 'Upload custom image for motivation', icon: '📸',
+          insight: { description: 'Seeing your actual asset keeps you motivated.',
+            metrics: [
+              { label: 'Motivation', value: 'Visual reminder', trend: 'up' },
+              { label: 'Progress', value: 'Trackable', trend: 'up' },
+              { label: 'Goal', value: 'Ownership', trend: 'up' },
+            ],
+            tips: ['Take a photo of your asset', 'Display it prominently', 'Update as you progress'],
+          },
+        },
+      ],
     };
     
     const allActions = domainActions[domain] || domainActions.car;
@@ -613,9 +781,18 @@ export default function Dashboard() {
   const velocity = store.getVelocityPayoff(debtType);
 
   const getDomainLabel = () => {
-    if (domain === 'creditCard') return 'Credit Card';
-    if (domain === 'studentLoan') return 'Student Loan';
-    return domain.charAt(0).toUpperCase() + domain.slice(1);
+    const labels: Record<string, string> = {
+      car: 'Auto',
+      house: 'House',
+      land: 'Land',
+      creditCard: 'Credit Card',
+      studentLoan: 'Student Loan',
+      medical: 'Medical',
+      personal: 'Personal Loan',
+      recreation: 'Recreation',
+      custom: 'Custom Asset',
+    };
+    return labels[domain] || domain.charAt(0).toUpperCase() + domain.slice(1);
   };
 
   const heroData = {
@@ -648,7 +825,7 @@ export default function Dashboard() {
         
         <DomainTabs 
           activeTab={store.activeDomain} 
-          onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
+          onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
         />
       </header>
 

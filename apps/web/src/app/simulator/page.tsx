@@ -5,7 +5,7 @@ import { runSimulation, formatCurrency, formatDate, SimulationInputs } from '@/e
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
-import { useFinancialStore } from '@/stores/financial-store';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
 
 export default function SimulatorPage() {
   const [mounted, setMounted] = useState(false);
@@ -65,7 +65,7 @@ export default function SimulatorPage() {
 
       <DomainTabs 
         activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan')} 
+        onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
       />
 
       <div className="mt-6">

@@ -9,33 +9,63 @@ interface DualSliderProps {
   onExpenseChange: (value: number) => void;
 }
 
-const MIN_VALUE = 1;
-const BREAKPOINT_VALUE = 750000;
-const MAX_VALUE = 10000000;
-const BREAKPOINT_PERCENT = 0.75;
+const BREAKPOINTS = [
+  { percent: 0, value: 1 },
+  { percent: 25, value: 3000 },
+  { percent: 35, value: 5000 },
+  { percent: 45, value: 10000 },
+  { percent: 55, value: 20000 },
+  { percent: 65, value: 50000 },
+  { percent: 75, value: 100000 },
+  { percent: 85, value: 500000 },
+  { percent: 100, value: 10000000 },
+];
 
 function valueToSlider(value: number): number {
-  if (value <= BREAKPOINT_VALUE) {
-    return (value - MIN_VALUE) / (BREAKPOINT_VALUE - MIN_VALUE) * BREAKPOINT_PERCENT * 100;
-  } else {
-    return (BREAKPOINT_PERCENT + (value - BREAKPOINT_VALUE) / (MAX_VALUE - BREAKPOINT_VALUE) * (1 - BREAKPOINT_PERCENT)) * 100;
+  value = Math.max(1, Math.min(10000000, value));
+  
+  for (let i = 1; i < BREAKPOINTS.length; i++) {
+    const prev = BREAKPOINTS[i - 1];
+    const curr = BREAKPOINTS[i];
+    if (value <= curr.value) {
+      const valueRatio = (value - prev.value) / (curr.value - prev.value);
+      return prev.percent + valueRatio * (curr.percent - prev.percent);
+    }
   }
+  return 100;
 }
 
 function sliderToValue(sliderPercent: number): number {
-  const percent = sliderPercent / 100;
-  if (percent <= BREAKPOINT_PERCENT) {
-    return MIN_VALUE + (percent / BREAKPOINT_PERCENT) * (BREAKPOINT_VALUE - MIN_VALUE);
-  } else {
-    return BREAKPOINT_VALUE + ((percent - BREAKPOINT_PERCENT) / (1 - BREAKPOINT_PERCENT)) * (MAX_VALUE - BREAKPOINT_VALUE);
+  sliderPercent = Math.max(0, Math.min(100, sliderPercent));
+  
+  for (let i = 1; i < BREAKPOINTS.length; i++) {
+    const prev = BREAKPOINTS[i - 1];
+    const curr = BREAKPOINTS[i];
+    if (sliderPercent <= curr.percent) {
+      const percentRatio = (sliderPercent - prev.percent) / (curr.percent - prev.percent);
+      return prev.value + percentRatio * (curr.value - prev.value);
+    }
   }
+  return 10000000;
+}
+
+function roundToNice(value: number): number {
+  if (value <= 100) return Math.round(value);
+  if (value <= 1000) return Math.round(value / 10) * 10;
+  if (value <= 5000) return Math.round(value / 50) * 50;
+  if (value <= 10000) return Math.round(value / 100) * 100;
+  if (value <= 50000) return Math.round(value / 500) * 500;
+  if (value <= 100000) return Math.round(value / 1000) * 1000;
+  if (value <= 500000) return Math.round(value / 5000) * 5000;
+  if (value <= 1000000) return Math.round(value / 10000) * 10000;
+  return Math.round(value / 50000) * 50000;
 }
 
 function formatCompactCurrency(value: number): string {
   if (value >= 1000000) {
     return `$${(value / 1000000).toFixed(1)}M`;
   } else if (value >= 1000) {
-    return `$${(value / 1000).toFixed(0)}K`;
+    return `$${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}K`;
   }
   return `$${value.toFixed(0)}`;
 }
@@ -45,13 +75,13 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
   const expenseSlider = useMemo(() => valueToSlider(expenseValue), [expenseValue]);
 
   const handleIncomeSlider = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Math.round(sliderToValue(parseFloat(e.target.value)));
-    onIncomeChange(newValue);
+    const rawValue = sliderToValue(parseFloat(e.target.value));
+    onIncomeChange(roundToNice(rawValue));
   }, [onIncomeChange]);
 
   const handleExpenseSlider = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Math.round(sliderToValue(parseFloat(e.target.value)));
-    onExpenseChange(newValue);
+    const rawValue = sliderToValue(parseFloat(e.target.value));
+    onExpenseChange(roundToNice(rawValue));
   }, [onExpenseChange]);
 
   return (
@@ -115,7 +145,9 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
 
       <div className="flex justify-between mt-2 text-[10px] text-gray-500">
         <span>$1</span>
-        <span className="opacity-60">$750K</span>
+        <span className="opacity-50">$3K</span>
+        <span className="opacity-50">$10K</span>
+        <span className="opacity-50">$100K</span>
         <span>$10M</span>
       </div>
     </div>

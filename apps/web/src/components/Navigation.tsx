@@ -11,6 +11,10 @@ const domainIcons: Record<string, string> = {
   land: '🏞️',
   creditCard: '💳',
   studentLoan: '🎓',
+  medical: '🏥',
+  personal: '💵',
+  recreation: '🚤',
+  custom: '➕',
 };
 
 export default function Navigation() {
