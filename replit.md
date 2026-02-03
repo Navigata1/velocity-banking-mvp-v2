@@ -42,11 +42,27 @@ reference/                   # Design assets and transcripts
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Car Dashboard - 4 vitals, progress ring, cash flow unlock |
+| `/` | Multi-Domain Dashboard with tabs (Car, House, Land, Vault) |
 | `/simulator` | What-If Engine - Compare baseline vs velocity strategy |
 | `/cockpit` | Flight Simulator - Visual instruments for debt payoff |
 | `/learn` | Micro-lessons and glossary |
 | `/vault` | Wealth Transfer Timeline - Generational impact calculator |
+
+## Dashboard Domains
+
+The main dashboard (`/`) features a tabbed interface with 4 domains:
+
+| Domain | Hero Visual | Purpose |
+|--------|-------------|---------|
+| Car | 🚗 | Car loan payoff tracking with engine/fuel metaphors |
+| House | 🏠 | Mortgage acceleration with roof/basement/pipes metaphors |
+| Land | 🏞️ | Property investment tracking |
+| Vault | 🏦 | Wealth building and generational impact |
+
+Each domain includes:
+- **Hero Visual**: Large visual on left with interactive hotspots
+- **Vitals Grid**: 4 key metrics in center column
+- **Action Feed**: Contextual actions/tips/milestones on right
 
 ## Running the App
 
@@ -85,6 +101,9 @@ cd apps/web && npm run dev
 - 2026-02-03: Initial setup with Next.js 16, TypeScript, Tailwind CSS
 - 2026-02-03: Implemented all 5 routes with core functionality
 - 2026-02-03: Added calculation engine in `/engine/calculations.ts`
+- 2026-02-03: Redesigned dashboard with 3-column layout matching reference design
+- 2026-02-03: Added multi-domain tabs (Car, House, Land, Vault) with domain-specific data
+- 2026-02-03: Created HeroVisual, VitalsGrid, ActionFeed, and DomainTabs components
 
 ## User Preferences
 
