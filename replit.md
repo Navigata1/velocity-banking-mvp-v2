@@ -12,15 +12,20 @@ VelocityBank is an educational web application that helps users understand and v
 apps/web/                    # Next.js 16 web application
 ├── src/
 │   ├── app/                # App router pages
-│   │   ├── page.tsx        # Car Dashboard (/)
+│   │   ├── page.tsx        # Multi-Domain Dashboard (/)
 │   │   ├── simulator/      # What-If Simulator
 │   │   ├── cockpit/        # Flight Simulator UI
 │   │   ├── learn/          # Micro-lessons & glossary
 │   │   └── vault/          # Wealth Transfer Timeline
 │   ├── components/         # Reusable UI components
 │   │   ├── Navigation.tsx
-│   │   ├── VitalCard.tsx
-│   │   └── ProgressRing.tsx
+│   │   ├── DomainTabs.tsx
+│   │   ├── EditableNumber.tsx  # Inline editable numbers
+│   │   ├── HeroVisual.tsx
+│   │   ├── VitalsGrid.tsx
+│   │   └── ActionFeed.tsx
+│   ├── stores/             # Zustand state management
+│   │   └── financial-store.ts
 │   └── engine/             # Calculation logic
 │       └── calculations.ts
 ├── package.json
@@ -96,6 +101,40 @@ cd apps/web && npm run dev
 ### LOC Interest
 - Uses average-balance monthly estimate (labeled as estimate)
 
+## Shared State Management
+
+The app uses Zustand for shared state across all views. The `financial-store.ts` provides:
+
+- **User data**: Income, expenses, age, active domain
+- **Debt accounts**: Car, House, Land with balance, rate, term, minimum payment
+- **LOC**: Limit, balance, interest rate
+- **Chunk settings**: Amount and frequency
+- **Calculated values**: Cash flow, daily interest, baseline vs velocity payoff
+
+All views (Dashboard, Simulator, Cockpit, Vault) share this state, so changes in one view are reflected everywhere.
+
+## Editable Numbers
+
+Click any number in the app to edit it inline. The EditableNumber component supports:
+- Currency formatting ($X,XXX)
+- Percentage formatting (X.X%)
+- Custom suffixes (years, months)
+- Keyboard shortcuts (Enter to save, Escape to cancel)
+
+## Current Phase
+
+**Phase 2: Dashboards** (Sprint 3)
+- ✅ Multi-domain dashboard with tabs
+- ✅ Domain tabs in Cockpit view
+- ✅ Editable numbers across all views
+- ✅ Shared state with Zustand
+- ✅ Vault calculator connected to shared state
+
+**Next Steps (Phase 3)**:
+- Plan builder with chunk rules and reminders
+- Calendar notifications
+- Recovery Mode toggle
+
 ## Recent Changes
 
 - 2026-02-03: Initial setup with Next.js 16, TypeScript, Tailwind CSS
@@ -104,6 +143,11 @@ cd apps/web && npm run dev
 - 2026-02-03: Redesigned dashboard with 3-column layout matching reference design
 - 2026-02-03: Added multi-domain tabs (Car, House, Land, Vault) with domain-specific data
 - 2026-02-03: Created HeroVisual, VitalsGrid, ActionFeed, and DomainTabs components
+- 2026-02-03: Added Zustand store for shared state management across views
+- 2026-02-03: Created EditableNumber component for inline editing
+- 2026-02-03: Added domain tabs to Cockpit view
+- 2026-02-03: Connected all views to shared store for real-time calculations
+- 2026-02-03: Updated Vault to use shared state for mortgage calculations
 
 ## User Preferences
 

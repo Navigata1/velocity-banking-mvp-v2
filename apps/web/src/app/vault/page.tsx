@@ -1,18 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
+import { useFinancialStore } from '@/stores/financial-store';
 
 const formatCurrency = (num: number): string => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
-};
-
-const calculateAmortization = (principal: number, annualRate: number, years: number) => {
-  const monthlyRate = annualRate / 12;
-  const numPayments = years * 12;
-  const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
-  const totalPaid = monthlyPayment * numPayments;
-  const totalInterest = totalPaid - principal;
-  return { monthlyPayment, totalPaid, totalInterest };
 };
 
 const calculateFutureValue = (presentValue: number, annualRate: number, years: number) => {
@@ -73,67 +66,48 @@ function ProgressBar({ progress, color = 'green' }: ProgressBarProps) {
   );
 }
 
-interface FormData {
-  age: number;
-  mortgageBalance: number;
-  interestRate: number;
-  yearsRemaining: number;
-}
-
-interface Calculations {
-  traditional: { monthlyPayment: number; totalPaid: number; totalInterest: number };
-  velocityInterest: number;
-  moneySaved: number;
-  futureValueOfInterest: number;
-  parentsMortgageInterest: number;
-  childMortgageInterest: number;
-  totalGenerational: number;
-  generationalFutureValue: number;
-  investmentGrowth: number;
-  payoffAge: number;
-  velocityPayoffAge: number;
-  yearsOfInvesting: number;
-}
-
 export default function VaultPage() {
+  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState<FormData>({
-    age: 32,
-    mortgageBalance: 350000,
-    interestRate: 6.5,
-    yearsRemaining: 28
-  });
-  const [calculations, setCalculations] = useState<Calculations | null>(null);
+  const [investmentRate, setInvestmentRate] = useState(0.07);
+  const store = useFinancialStore();
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: parseFloat(value) || 0 }));
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const calculateAll = () => {
-    const { age, mortgageBalance, interestRate, yearsRemaining } = formData;
-    const rate = interestRate / 100;
+  const calculations = useMemo(() => {
+    const debt = store.debts.house;
+    const rate = debt.interestRate;
+    const yearsRemaining = Math.ceil(debt.termMonths / 12);
+    const age = store.currentAge;
     
-    const traditional = calculateAmortization(mortgageBalance, rate, yearsRemaining);
+    const monthlyRate = rate / 12;
+    const numPayments = yearsRemaining * 12;
+    const monthlyPayment = debt.balance * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+    const totalPaid = monthlyPayment * numPayments;
+    const totalInterest = totalPaid - debt.balance;
+    
+    const traditional = { monthlyPayment, totalPaid, totalInterest };
+    
     const velocityYears = Math.min(7, yearsRemaining);
-    const velocityInterest = mortgageBalance * rate * velocityYears * 0.4;
-    const investmentReturn = 0.07;
-    const futureValueOfInterest = calculateFutureValue(traditional.totalInterest, investmentReturn, yearsRemaining);
+    const velocityInterest = debt.balance * rate * velocityYears * 0.4;
+    const futureValueOfInterest = calculateFutureValue(totalInterest, investmentRate, yearsRemaining);
     
-    const parentsMortgageInterest = traditional.totalInterest * 0.73;
-    const childMortgageInterest = traditional.totalInterest * 1.56;
-    const totalGenerational = parentsMortgageInterest + traditional.totalInterest + childMortgageInterest;
-    const generationalFutureValue = calculateFutureValue(totalGenerational, investmentReturn, 50);
+    const parentsMortgageInterest = totalInterest * 0.73;
+    const childMortgageInterest = totalInterest * 1.56;
+    const totalGenerational = parentsMortgageInterest + totalInterest + childMortgageInterest;
+    const generationalFutureValue = calculateFutureValue(totalGenerational, investmentRate, 50);
     
-    const moneySaved = traditional.totalInterest - velocityInterest;
+    const moneySaved = totalInterest - velocityInterest;
     const yearsOfInvesting = yearsRemaining - velocityYears;
-    const monthlyInvestment = traditional.monthlyPayment;
     
     let investmentGrowth = 0;
     for (let i = 0; i < yearsOfInvesting * 12; i++) {
-      investmentGrowth = (investmentGrowth + monthlyInvestment) * (1 + investmentReturn / 12);
+      investmentGrowth = (investmentGrowth + monthlyPayment) * (1 + investmentRate / 12);
     }
     
-    setCalculations({
+    return {
       traditional,
       velocityInterest,
       moneySaved,
@@ -146,24 +120,23 @@ export default function VaultPage() {
       payoffAge: age + yearsRemaining,
       velocityPayoffAge: age + velocityYears,
       yearsOfInvesting
-    });
-  };
+    };
+  }, [store.debts.house, store.currentAge, investmentRate]);
 
-  const nextStep = () => {
-    if (step === 0) {
-      calculateAll();
-    }
-    setStep(prev => prev + 1);
-  };
+  const nextStep = () => setStep(prev => Math.min(prev + 1, 4));
+  const prevStep = () => setStep(prev => Math.max(prev - 1, 0));
+  const restart = () => setStep(0);
 
-  const prevStep = () => {
-    setStep(prev => prev - 1);
-  };
-
-  const restart = () => {
-    setStep(0);
-    setCalculations(null);
-  };
+  if (!mounted) {
+    return (
+      <div className="p-6 md:p-10 max-w-2xl mx-auto">
+        <div className="animate-pulse">
+          <div className="h-8 bg-slate-700 rounded w-1/3 mb-4"></div>
+          <div className="h-96 bg-slate-800 rounded-3xl"></div>
+        </div>
+      </div>
+    );
+  }
 
   const renderStep = () => {
     switch (step) {
@@ -172,46 +145,44 @@ export default function VaultPage() {
           <div className="space-y-6">
             <div>
               <label className="block text-sm text-gray-400 mb-2">Your Current Age</label>
-              <input
-                type="number"
-                value={formData.age}
-                onChange={(e) => handleInputChange('age', e.target.value)}
-                className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-xl font-mono text-white focus:border-emerald-500 outline-none"
+              <EditableNumber
+                value={store.currentAge}
+                onChange={store.setCurrentAge}
+                size="xl"
+                className="w-full"
               />
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-2">Mortgage Balance</label>
-              <input
-                type="number"
-                value={formData.mortgageBalance}
-                onChange={(e) => handleInputChange('mortgageBalance', e.target.value)}
-                className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-xl font-mono text-white focus:border-emerald-500 outline-none"
+              <EditableCurrency
+                value={store.debts.house.balance}
+                onChange={(val) => store.updateDebt('house', { balance: val })}
+                size="xl"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Interest Rate (%)</label>
-              <input
-                type="number"
-                step="0.1"
-                value={formData.interestRate}
-                onChange={(e) => handleInputChange('interestRate', e.target.value)}
-                className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-xl font-mono text-white focus:border-emerald-500 outline-none"
+              <label className="block text-sm text-gray-400 mb-2">Interest Rate</label>
+              <EditablePercentage
+                value={store.debts.house.interestRate}
+                onChange={(val) => store.updateDebt('house', { interestRate: val })}
+                size="xl"
               />
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-2">Years Remaining</label>
-              <input
-                type="number"
-                value={formData.yearsRemaining}
-                onChange={(e) => handleInputChange('yearsRemaining', e.target.value)}
-                className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-xl font-mono text-white focus:border-emerald-500 outline-none"
+              <EditableNumber
+                value={Math.ceil(store.debts.house.termMonths / 12)}
+                onChange={(val) => store.updateDebt('house', { termMonths: val * 12 })}
+                suffix=" years"
+                size="xl"
               />
             </div>
+            <p className="text-sm text-gray-500 text-center">Click any number to edit</p>
           </div>
         );
 
       case 1:
-        return calculations && (
+        return (
           <div className="space-y-6">
             <div className="text-center py-4">
               <div className="text-gray-400 mb-2">Your monthly payment</div>
@@ -222,7 +193,7 @@ export default function VaultPage() {
             
             <div className="bg-slate-800/50 rounded-xl p-6 space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">Total you&apos;ll pay over {formData.yearsRemaining} years</span>
+                <span className="text-gray-400">Total you&apos;ll pay over {Math.ceil(store.debts.house.termMonths / 12)} years</span>
                 <span className="text-2xl font-mono text-white">
                   <AnimatedNumber value={calculations.traditional.totalPaid} />
                 </span>
@@ -230,7 +201,7 @@ export default function VaultPage() {
               <div className="border-t border-gray-700 pt-4">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-400">Your home (principal)</span>
-                  <span className="text-emerald-400 font-mono">{formatCurrency(formData.mortgageBalance)}</span>
+                  <span className="text-emerald-400 font-mono">{formatCurrency(store.debts.house.balance)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400">Bank&apos;s cut (interest)</span>
@@ -251,7 +222,7 @@ export default function VaultPage() {
         );
 
       case 2:
-        return calculations && (
+        return (
           <div className="space-y-6">
             <div className="text-center">
               <div className="text-gray-400 mb-2">Traditional path: You&apos;ll be debt-free at age</div>
@@ -265,7 +236,7 @@ export default function VaultPage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full" />
                 </div>
                 <div className="flex justify-between mt-1 text-xs text-gray-500">
-                  <span>Age {formData.age}</span>
+                  <span>Age {store.currentAge}</span>
                   <span>Age {calculations.payoffAge}</span>
                 </div>
               </div>
@@ -275,15 +246,15 @@ export default function VaultPage() {
                 <div className="relative h-4 bg-gray-700 rounded-full overflow-hidden">
                   <div 
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"
-                    style={{ width: `${((calculations.velocityPayoffAge - formData.age) / (calculations.payoffAge - formData.age)) * 100}%` }}
+                    style={{ width: `${((calculations.velocityPayoffAge - store.currentAge) / (calculations.payoffAge - store.currentAge)) * 100}%` }}
                   />
                   <div 
                     className="absolute inset-y-0 bg-gradient-to-r from-amber-500 to-amber-300 rounded-full"
-                    style={{ left: `${((calculations.velocityPayoffAge - formData.age) / (calculations.payoffAge - formData.age)) * 100}%`, right: 0 }}
+                    style={{ left: `${((calculations.velocityPayoffAge - store.currentAge) / (calculations.payoffAge - store.currentAge)) * 100}%`, right: 0 }}
                   />
                 </div>
                 <div className="flex justify-between mt-1 text-xs">
-                  <span className="text-gray-500">Age {formData.age}</span>
+                  <span className="text-gray-500">Age {store.currentAge}</span>
                   <span className="text-emerald-400">Debt-free at {calculations.velocityPayoffAge}</span>
                   <span className="text-amber-400">Building wealth</span>
                 </div>
@@ -300,7 +271,7 @@ export default function VaultPage() {
         );
 
       case 3:
-        return calculations && (
+        return (
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-white mb-2">The Generational Picture</h3>
@@ -330,17 +301,25 @@ export default function VaultPage() {
             </div>
             
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 text-center">
-              <div className="text-gray-400 mb-2">If invested instead (50 years @ 7%)</div>
+              <div className="text-gray-400 mb-2">If invested instead (50 years @ {(investmentRate * 100).toFixed(0)}%)</div>
               <div className="text-4xl font-bold text-amber-400">
                 <AnimatedNumber value={calculations.generationalFutureValue} />
               </div>
               <p className="text-sm text-gray-500 mt-2">This could have been generational wealth</p>
+              <div className="mt-4">
+                <EditablePercentage 
+                  value={investmentRate} 
+                  onChange={setInvestmentRate}
+                  size="sm"
+                  label="Adjust return rate"
+                />
+              </div>
             </div>
           </div>
         );
 
       case 4:
-        return calculations && (
+        return (
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-white mb-2">Your Alternative Future</h3>
@@ -368,7 +347,7 @@ export default function VaultPage() {
                 <AnimatedNumber value={calculations.investmentGrowth} />
               </div>
               <p className="text-sm text-gray-500 mt-4">
-                By investing your freed-up mortgage payment for {calculations.yearsOfInvesting} years @ 7% return
+                By investing your freed-up mortgage payment for {calculations.yearsOfInvesting} years @ {(investmentRate * 100).toFixed(0)}% return
               </p>
             </div>
             
@@ -376,6 +355,19 @@ export default function VaultPage() {
               <p className="text-gray-400">
                 This is wealth you can pass on to the next generation, 
                 <span className="text-emerald-400"> breaking the cycle.</span>
+              </p>
+            </div>
+
+            <div className="bg-slate-800 rounded-xl p-4 text-center">
+              <p className="text-sm text-gray-400">
+                These calculations use your shared data. 
+                <a href="/" className="text-emerald-400 hover:underline ml-1">
+                  View Dashboard
+                </a>
+                {" "}or{" "}
+                <a href="/simulator" className="text-blue-400 hover:underline">
+                  Run Simulator
+                </a>
               </p>
             </div>
           </div>
@@ -405,7 +397,8 @@ export default function VaultPage() {
         {stepTitles.map((_, i) => (
           <div
             key={i}
-            className={`flex-1 h-2 rounded-full ${i <= step ? 'bg-emerald-500' : 'bg-slate-700'}`}
+            className={`flex-1 h-2 rounded-full cursor-pointer transition-colors ${i <= step ? 'bg-emerald-500' : 'bg-slate-700 hover:bg-slate-600'}`}
+            onClick={() => setStep(i)}
           />
         ))}
       </div>
@@ -446,7 +439,7 @@ export default function VaultPage() {
       </div>
 
       <footer className="mt-12 text-center text-sm text-gray-500">
-        Educational estimate. Assumptions shown in the tool. Not financial advice.
+        Educational estimate. Click any number to edit. Not financial advice.
       </footer>
     </div>
   );
