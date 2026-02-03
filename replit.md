@@ -121,14 +121,49 @@ Click any number in the app to edit it inline. The EditableNumber component supp
 - Custom suffixes (years, months)
 - Keyboard shortcuts (Enter to save, Escape to cancel)
 
+## Dashboard Features
+
+### Vitals Category Buttons (💰📊🎯⚡)
+Four icon buttons switch between different insight categories:
+- **💰 Cashflow**: Income, expenses, cash flow, LOC available
+- **📊 Analytics**: Daily interest burn, baseline vs velocity interest, savings
+- **🎯 Goals**: Debt balance, time to freedom, min payment, chunk power
+- **⚡ Velocity**: Velocity score, acceleration, LOC cycles, efficiency
+
+### Action Feed Filters (All/Actions/Tips/Wins)
+Filter the action feed by type:
+- **All**: Shows all items
+- **Actions**: Actionable tasks (payday, chunks, payments)
+- **Tips**: Helpful suggestions and optimizations
+- **Wins**: Milestones and achievements
+
+### Click-to-Expand Deep Insights
+Every vitals card and action item can be clicked to reveal:
+- Detailed description
+- 3 key metrics with trend indicators (up/down/neutral)
+- Actionable tips
+
+### Domain-Specific Content
+Each domain (Car, House, Land, Vault) has unique:
+- Actions tailored to that asset type
+- Metrics relevant to the specific debt
+- Tips specific to that financial situation
+
+### Auto-Cycling Highlight
+Action items cycle every 5 seconds with a subtle ring highlight.
+
 ## Current Phase
 
-**Phase 2: Dashboards** (Sprint 3)
+**Phase 2: Dashboards** (Sprint 3) - COMPLETE
 - ✅ Multi-domain dashboard with tabs
 - ✅ Domain tabs in Cockpit view
 - ✅ Editable numbers across all views
 - ✅ Shared state with Zustand
 - ✅ Vault calculator connected to shared state
+- ✅ Interactive vitals category buttons
+- ✅ Action feed filtering
+- ✅ Click-to-expand deep insights
+- ✅ Domain-specific actions and content
 
 **Next Steps (Phase 3)**:
 - Plan builder with chunk rules and reminders
@@ -148,6 +183,10 @@ Click any number in the app to edit it inline. The EditableNumber component supp
 - 2026-02-03: Added domain tabs to Cockpit view
 - 2026-02-03: Connected all views to shared store for real-time calculations
 - 2026-02-03: Updated Vault to use shared state for mortgage calculations
+- 2026-02-03: Added interactive vitals category buttons (💰📊🎯⚡) with 4 insight categories
+- 2026-02-03: Added Action Feed filtering (All/Actions/Tips/Wins) with dynamic content
+- 2026-02-03: Implemented click-to-expand deep insights with metrics and tips
+- 2026-02-03: Created domain-specific actions for Car, House, Land, and Vault
 
 ## User Preferences
 
