@@ -58,7 +58,7 @@ function ProgressBar({ progress, color = 'green' }: ProgressBarProps) {
   };
   
   return (
-    <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+    <div className="w-full bg-gray-400/30 rounded-full h-3 overflow-hidden">
       <div 
         className={`h-full ${colors[color]} transition-all duration-1000 ease-out rounded-full`}
         style={{ width: `${Math.min(progress, 100)}%` }}
@@ -134,8 +134,8 @@ export default function VaultPage() {
     return (
       <div className="p-6 md:p-10 max-w-2xl mx-auto">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-700 rounded w-1/3 mb-4"></div>
-          <div className="h-96 bg-slate-800 rounded-3xl"></div>
+          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-4"></div>
+          <div className="h-96 bg-gray-500/20 rounded-3xl"></div>
         </div>
       </div>
     );
@@ -194,14 +194,14 @@ export default function VaultPage() {
               </div>
             </div>
             
-            <div className="bg-slate-800/50 rounded-xl p-6 space-y-4">
+            <div className="bg-gray-500/20 rounded-xl p-6 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-gray-400">Total you&apos;ll pay over {Math.ceil(store.debts.house.termMonths / 12)} years</span>
                 <span className="text-2xl font-mono text-white">
                   <AnimatedNumber value={calculations.traditional.totalPaid} />
                 </span>
               </div>
-              <div className="border-t border-gray-700 pt-4">
+              <div className="border-t border-gray-400/30 pt-4">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-400">Your home (principal)</span>
                   <span className="text-emerald-400 font-mono">{formatCurrency(store.debts.house.balance)}</span>
@@ -235,7 +235,7 @@ export default function VaultPage() {
             <div className="relative py-8">
               <div className="mb-8">
                 <div className="text-sm text-gray-400 mb-2">Traditional Path (30-year mortgage)</div>
-                <div className="relative h-4 bg-gray-700 rounded-full overflow-hidden">
+                <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full" />
                 </div>
                 <div className="flex justify-between mt-1 text-xs text-gray-500">
@@ -246,7 +246,7 @@ export default function VaultPage() {
               
               <div>
                 <div className="text-sm text-emerald-400 mb-2">Velocity Banking Path</div>
-                <div className="relative h-4 bg-gray-700 rounded-full overflow-hidden">
+                <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
                   <div 
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"
                     style={{ width: `${((calculations.velocityPayoffAge - store.currentAge) / (calculations.payoffAge - store.currentAge)) * 100}%` }}
@@ -282,15 +282,15 @@ export default function VaultPage() {
             </div>
             
             <div className="space-y-4">
-              <div className="bg-slate-800/50 rounded-xl p-4 flex justify-between items-center">
+              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
                 <span className="text-gray-400">Your parents&apos; mortgage interest</span>
                 <span className="text-red-400 font-mono">{formatCurrency(calculations.parentsMortgageInterest)}</span>
               </div>
-              <div className="bg-slate-800/50 rounded-xl p-4 flex justify-between items-center">
+              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
                 <span className="text-gray-400">Your mortgage interest</span>
                 <span className="text-red-400 font-mono">{formatCurrency(calculations.traditional.totalInterest)}</span>
               </div>
-              <div className="bg-slate-800/50 rounded-xl p-4 flex justify-between items-center">
+              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
                 <span className="text-gray-400">Your child&apos;s projected interest</span>
                 <span className="text-red-400 font-mono">{formatCurrency(calculations.childMortgageInterest)}</span>
               </div>
@@ -361,14 +361,14 @@ export default function VaultPage() {
               </p>
             </div>
 
-            <div className="bg-slate-800 rounded-xl p-4 text-center">
-              <p className="text-sm text-gray-400">
+            <div className="bg-gray-500/20 rounded-xl p-4 text-center">
+              <p className="text-sm text-gray-500">
                 These calculations use your shared data. 
-                <a href="/" className="text-emerald-400 hover:underline ml-1">
+                <a href="/" className="text-emerald-500 hover:underline ml-1">
                   View Dashboard
                 </a>
                 {" "}or{" "}
-                <a href="/simulator" className="text-blue-400 hover:underline">
+                <a href="/simulator" className="text-blue-500 hover:underline">
                   Run Simulator
                 </a>
               </p>

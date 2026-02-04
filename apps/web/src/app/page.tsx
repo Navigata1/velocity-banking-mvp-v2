@@ -767,8 +767,8 @@ export default function Dashboard() {
     return (
       <div className="p-4 md:p-8 max-w-[1600px] mx-auto">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-700 rounded w-1/3 mb-4"></div>
-          <div className="h-96 bg-slate-800 rounded-3xl"></div>
+          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-4"></div>
+          <div className="h-96 bg-gray-500/20 rounded-3xl"></div>
         </div>
       </div>
     );

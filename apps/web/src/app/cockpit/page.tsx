@@ -43,8 +43,8 @@ export default function CockpitPage() {
     return (
       <div className="p-6 md:p-10 max-w-6xl mx-auto">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-700 rounded w-1/3 mb-4"></div>
-          <div className="h-96 bg-slate-800 rounded-3xl"></div>
+          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-4"></div>
+          <div className="h-96 bg-gray-500/20 rounded-3xl"></div>
         </div>
       </div>
     );
@@ -198,7 +198,7 @@ export default function CockpitPage() {
                     step="100"
                     value={store.monthlyIncome}
                     onChange={(e) => store.setMonthlyIncome(Number(e.target.value))}
-                    className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                   />
                   <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="sm" />
                 </div>
@@ -213,7 +213,7 @@ export default function CockpitPage() {
                     step="100"
                     value={store.monthlyExpenses}
                     onChange={(e) => store.setMonthlyExpenses(Number(e.target.value))}
-                    className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
                   <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="sm" />
                 </div>
@@ -228,7 +228,7 @@ export default function CockpitPage() {
                     step="100"
                     value={store.chunkAmount}
                     onChange={(e) => store.setChunkAmount(Number(e.target.value))}
-                    className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
                   />
                   <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} size="sm" />
                 </div>
