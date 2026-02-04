@@ -159,7 +159,7 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
   
   const gradient = currentTheme === 'light' 
     ? lightDomainGradients[domain] || lightDomainGradients.car
-    : currentTheme === 'black'
+    : currentTheme === 'dark'
     ? blackDomainGradients[domain] || blackDomainGradients.car
     : domainGradients[domain] || domainGradients.car;
 
@@ -183,7 +183,7 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
 
   const borderColor = currentTheme === 'light'
     ? 'border-gray-300/60'
-    : currentTheme === 'black'
+    : currentTheme === 'dark'
     ? 'border-zinc-700/50'
     : 'border-slate-600/50';
 
