@@ -1,6 +1,7 @@
 'use client';
 
-import Image from 'next/image';
+import { useState, useRef, useEffect } from 'react';
+import { useFinancialStore, Domain, domainSubcategories } from '@/stores/financial-store';
 
 interface DomainTabsProps {
   activeTab: string;
@@ -8,34 +9,113 @@ interface DomainTabsProps {
 }
 
 const tabs = [
-  { id: 'car', label: 'Auto', icon: '🚗', image: '/images/hero-car.png' },
-  { id: 'house', label: 'House', icon: '🏠', image: '/images/hero-house.png' },
-  { id: 'land', label: 'Land', icon: '🏞️', image: '/images/hero-land.png' },
-  { id: 'creditCard', label: 'Credit Card', icon: '💳', image: '/images/hero-creditcard.png' },
-  { id: 'studentLoan', label: 'Student Loan', icon: '🎓', image: '/images/hero-studentloan.png' },
-  { id: 'medical', label: 'Medical', icon: '🏥', image: '/images/hero-medical.png' },
-  { id: 'personal', label: 'Personal', icon: '💵', image: '/images/hero-personal.png' },
-  { id: 'recreation', label: 'Recreation', icon: '🚤', image: '/images/hero-recreation.png' },
-  { id: 'custom', label: 'Custom', icon: '➕', image: '/images/hero-custom.png' },
+  { id: 'car', label: 'Auto', defaultIcon: '🚗' },
+  { id: 'house', label: 'House', defaultIcon: '🏠' },
+  { id: 'land', label: 'Land', defaultIcon: '🏞️' },
+  { id: 'creditCard', label: 'Credit Card', defaultIcon: '💳' },
+  { id: 'studentLoan', label: 'Student Loan', defaultIcon: '🎓' },
+  { id: 'medical', label: 'Medical', defaultIcon: '🏥' },
+  { id: 'personal', label: 'Personal', defaultIcon: '💵' },
+  { id: 'recreation', label: 'Recreation', defaultIcon: '🚤' },
+  { id: 'custom', label: 'Custom', defaultIcon: '➕' },
 ];
 
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const store = useFinancialStore();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleTabClick = (tabId: string) => {
+    if (activeTab === tabId) {
+      setDropdownOpen(dropdownOpen === tabId ? null : tabId);
+    } else {
+      onTabChange(tabId);
+      setDropdownOpen(null);
+    }
+  };
+
+  const handleSubcategorySelect = (domain: Domain, subcatId: string) => {
+    store.setSubcategory(domain, subcatId);
+    setDropdownOpen(null);
+  };
+
+  const getTabIcon = (tabId: string, defaultIcon: string) => {
+    const subcat = store.getActiveSubcategory(tabId as Domain);
+    return subcat?.icon || defaultIcon;
+  };
+
   return (
-    <div className="flex flex-wrap gap-1.5 p-1.5 bg-slate-800/50 rounded-xl border border-slate-700">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
-            activeTab === tab.id
-              ? 'bg-emerald-500 text-white shadow-lg'
-              : 'text-gray-400 hover:text-white hover:bg-slate-700'
-          }`}
-        >
-          <span className="text-base">{tab.icon}</span>
-          <span className="hidden sm:inline">{tab.label}</span>
-        </button>
-      ))}
+    <div className="relative flex flex-wrap gap-1.5 p-1.5 bg-slate-800/50 rounded-xl border border-slate-700" ref={dropdownRef}>
+      {tabs.map((tab) => {
+        const isActive = activeTab === tab.id;
+        const hasDropdown = dropdownOpen === tab.id;
+        const currentIcon = getTabIcon(tab.id, tab.defaultIcon);
+        const subcategories = domainSubcategories[tab.id as Domain];
+        
+        return (
+          <div key={tab.id} className="relative">
+            <button
+              onClick={() => handleTabClick(tab.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
+                isActive
+                  ? 'bg-emerald-500 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-slate-700'
+              }`}
+            >
+              <span className="text-base">{currentIcon}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
+              {isActive && (
+                <span className={`ml-1 text-xs transition-transform ${hasDropdown ? 'rotate-180' : ''}`}>
+                  ▼
+                </span>
+              )}
+            </button>
+            
+            {hasDropdown && (
+              <div className="absolute top-full left-0 mt-2 z-50 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="p-2 border-b border-slate-700">
+                  <p className="text-xs text-gray-400 font-medium px-2">Select {tab.label} Type</p>
+                </div>
+                <div className="p-2 max-h-[300px] overflow-y-auto">
+                  {subcategories.map((subcat) => {
+                    const isSelected = store.getActiveSubcategory(tab.id as Domain)?.id === subcat.id;
+                    return (
+                      <button
+                        key={subcat.id}
+                        onClick={() => handleSubcategorySelect(tab.id as Domain, subcat.id)}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
+                          isSelected
+                            ? 'bg-emerald-500/20 text-emerald-400'
+                            : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                        }`}
+                      >
+                        <span className="text-xl">{subcat.icon}</span>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{subcat.label}</p>
+                          <p className="text-xs text-gray-500">{subcat.description}</p>
+                        </div>
+                        {isSelected && (
+                          <span className="text-emerald-400">✓</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

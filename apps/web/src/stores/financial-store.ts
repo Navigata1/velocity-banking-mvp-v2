@@ -25,11 +25,94 @@ export interface LOC {
 export type DebtType = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
 export type Domain = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
 
+export interface Subcategory {
+  id: string;
+  label: string;
+  icon: string;
+  description: string;
+}
+
+export const domainSubcategories: Record<Domain, Subcategory[]> = {
+  car: [
+    { id: 'sedan', label: 'Sedan', icon: '🚗', description: 'Family sedan' },
+    { id: 'sports', label: 'Sports Car', icon: '🏎️', description: 'Two-door sports car' },
+    { id: 'suv', label: 'SUV', icon: '🚙', description: 'Sport utility vehicle' },
+    { id: 'motorcycle', label: 'Motorcycle', icon: '🏍️', description: 'Harley-Davidson style' },
+    { id: 'truck', label: 'Pickup Truck', icon: '🛻', description: 'Dually or pickup' },
+    { id: 'semi', label: 'Semi Truck', icon: '🚛', description: '18-wheeler' },
+  ],
+  house: [
+    { id: 'starter', label: 'Starter Home', icon: '🏠', description: 'Small starter home' },
+    { id: 'family', label: 'Family Home', icon: '🏡', description: 'Family-sized home' },
+    { id: 'townhouse', label: 'Townhouse', icon: '🏘️', description: 'Townhouse or duplex' },
+    { id: 'condo', label: 'Condo', icon: '🏢', description: 'Condominium' },
+    { id: 'luxury', label: 'Luxury Home', icon: '🏛️', description: 'Luxury residence' },
+    { id: 'mansion', label: 'Mansion', icon: '🏰', description: 'Estate or mansion' },
+  ],
+  land: [
+    { id: 'lot', label: 'Building Lot', icon: '🏞️', description: 'Small building lot' },
+    { id: 'acre', label: 'Acreage', icon: '🌾', description: 'Few acres' },
+    { id: 'farm', label: 'Farmland', icon: '🚜', description: 'Working farm' },
+    { id: 'ranch', label: 'Ranch', icon: '🐎', description: 'Large ranch' },
+    { id: 'commercial', label: 'Commercial', icon: '🏗️', description: 'Commercial property' },
+    { id: 'estate', label: 'Estate', icon: '⛳', description: 'Golf course or estate' },
+  ],
+  creditCard: [
+    { id: 'basic', label: 'Basic Card', icon: '💳', description: 'Basic credit card' },
+    { id: 'rewards', label: 'Rewards Card', icon: '🎁', description: 'Rewards or cashback' },
+    { id: 'store', label: 'Store Card', icon: '🏪', description: 'Retail store card' },
+    { id: 'premium', label: 'Premium Card', icon: '✨', description: 'Premium rewards' },
+    { id: 'platinum', label: 'Platinum', icon: '💎', description: 'Platinum status' },
+    { id: 'black', label: 'Black Card', icon: '🖤', description: 'Elite black card' },
+  ],
+  studentLoan: [
+    { id: 'community', label: 'Community College', icon: '📚', description: 'Community college' },
+    { id: 'state', label: 'State University', icon: '🎓', description: 'State school' },
+    { id: 'private', label: 'Private University', icon: '🏫', description: 'Private university' },
+    { id: 'graduate', label: 'Graduate Degree', icon: '📜', description: 'Masters program' },
+    { id: 'professional', label: 'Professional', icon: '⚕️', description: 'Medical/Law school' },
+    { id: 'phd', label: 'Doctorate', icon: '🎖️', description: 'PhD program' },
+  ],
+  medical: [
+    { id: 'routine', label: 'Routine Care', icon: '🩺', description: 'Doctor visits' },
+    { id: 'dental', label: 'Dental', icon: '🦷', description: 'Dental work' },
+    { id: 'emergency', label: 'Emergency', icon: '🚑', description: 'ER visit' },
+    { id: 'surgery', label: 'Surgery', icon: '🏥', description: 'Surgical procedure' },
+    { id: 'specialist', label: 'Specialist', icon: '👨‍⚕️', description: 'Specialist treatment' },
+    { id: 'major', label: 'Major Medical', icon: '💊', description: 'Major medical event' },
+  ],
+  personal: [
+    { id: 'small', label: 'Small Loan', icon: '💵', description: 'Under $5K' },
+    { id: 'medium', label: 'Medium Loan', icon: '💰', description: '$5K-$15K' },
+    { id: 'consolidation', label: 'Consolidation', icon: '🔗', description: 'Debt consolidation' },
+    { id: 'large', label: 'Large Loan', icon: '🏦', description: '$15K-$50K' },
+    { id: 'signature', label: 'Signature Loan', icon: '✍️', description: 'Unsecured signature' },
+    { id: 'premium', label: 'Premium Loan', icon: '💎', description: '$50K+' },
+  ],
+  recreation: [
+    { id: 'jetski', label: 'Jet Ski', icon: '🌊', description: 'Personal watercraft' },
+    { id: 'boat', label: 'Boat', icon: '🚤', description: 'Speedboat or fishing' },
+    { id: 'rv', label: 'RV', icon: '🚐', description: 'Recreational vehicle' },
+    { id: 'yacht', label: 'Yacht', icon: '🛥️', description: 'Luxury yacht' },
+    { id: 'superyacht', label: 'Super Yacht', icon: '🚢', description: 'Mega yacht' },
+    { id: 'jet', label: 'Private Jet', icon: '✈️', description: 'G5 or similar' },
+  ],
+  custom: [
+    { id: 'other', label: 'Other Asset', icon: '➕', description: 'Custom asset' },
+    { id: 'business', label: 'Business', icon: '🏢', description: 'Business expense' },
+    { id: 'equipment', label: 'Equipment', icon: '🔧', description: 'Tools/equipment' },
+    { id: 'jewelry', label: 'Jewelry', icon: '💍', description: 'Fine jewelry' },
+    { id: 'art', label: 'Art/Collectibles', icon: '🎨', description: 'Art or collectibles' },
+    { id: 'crypto', label: 'Crypto/Investments', icon: '📈', description: 'Investment debt' },
+  ],
+};
+
 export interface FinancialState {
   monthlyIncome: number;
   monthlyExpenses: number;
   currentAge: number;
   activeDomain: Domain;
+  activeSubcategories: Record<Domain, string>;
   
   debts: {
     car: DebtAccount;
@@ -52,6 +135,8 @@ export interface FinancialState {
   setMonthlyExpenses: (expenses: number) => void;
   setCurrentAge: (age: number) => void;
   setActiveDomain: (domain: Domain) => void;
+  setSubcategory: (domain: Domain, subcategoryId: string) => void;
+  getActiveSubcategory: (domain: Domain) => Subcategory;
   updateDebt: (type: DebtType, updates: Partial<DebtAccount>) => void;
   updateLOC: (updates: Partial<LOC>) => void;
   setChunkAmount: (amount: number) => void;
@@ -81,6 +166,17 @@ export const useFinancialStore = create<FinancialState>()(
       monthlyExpenses: 5000,
       currentAge: 32,
       activeDomain: 'car' as Domain,
+      activeSubcategories: {
+        car: 'sedan',
+        house: 'family',
+        land: 'lot',
+        creditCard: 'basic',
+        studentLoan: 'state',
+        medical: 'routine',
+        personal: 'small',
+        recreation: 'boat',
+        custom: 'other',
+      },
       
       debts: {
         car: {
@@ -182,6 +278,19 @@ export const useFinancialStore = create<FinancialState>()(
       setCurrentAge: (age) => set({ currentAge: age }),
       
       setActiveDomain: (domain) => set({ activeDomain: domain }),
+      
+      setSubcategory: (domain, subcategoryId) => set((state) => ({
+        activeSubcategories: {
+          ...state.activeSubcategories,
+          [domain]: subcategoryId,
+        },
+      })),
+      
+      getActiveSubcategory: (domain): Subcategory => {
+        const state = get();
+        const subcatId = state.activeSubcategories?.[domain] || domainSubcategories[domain][0].id;
+        return domainSubcategories[domain].find(s => s.id === subcatId) || domainSubcategories[domain][0];
+      },
       
       getActiveDebtType: (): DebtType => {
         const state = get();

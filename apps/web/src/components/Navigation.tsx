@@ -2,20 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useFinancialStore } from '@/stores/financial-store';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useEffect, useState, useCallback } from 'react';
-
-const domainIcons: Record<string, string> = {
-  car: '🚗',
-  house: '🏠',
-  land: '🏞️',
-  creditCard: '💳',
-  studentLoan: '🎓',
-  medical: '🏥',
-  personal: '💵',
-  recreation: '🚤',
-  custom: '➕',
-};
 
 const aiResponses: Record<string, string[]> = {
   greeting: [
@@ -64,7 +52,8 @@ export default function Navigation() {
   const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
     { role: 'ai', text: aiResponses.greeting[0] }
   ]);
-  const activeDomain = useFinancialStore((state) => state.activeDomain);
+  const store = useFinancialStore();
+  const activeDomain = store.activeDomain;
 
   useEffect(() => {
     setMounted(true);
@@ -81,7 +70,8 @@ export default function Navigation() {
     }, 500);
   }, [aiQuery]);
 
-  const dashboardIcon = mounted ? (domainIcons[activeDomain] || '🚗') : '🚗';
+  const activeSubcat = mounted ? store.getActiveSubcategory(activeDomain as Domain) : null;
+  const dashboardIcon = activeSubcat?.icon || '🚗';
 
   const navItems = [
     { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },

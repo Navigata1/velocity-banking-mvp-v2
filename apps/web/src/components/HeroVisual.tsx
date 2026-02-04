@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Domain } from '@/stores/financial-store';
+import { Domain, useFinancialStore } from '@/stores/financial-store';
 
 interface HotspotProps {
   label: string;
@@ -17,19 +17,21 @@ interface HeroVisualProps {
   trendLabel?: string;
 }
 
-const domainVisuals: Record<string, { emoji: string; gradient: string; image: string }> = {
-  car: { emoji: '🚗', gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent', image: '/images/hero-car.png' },
-  house: { emoji: '🏠', gradient: 'from-amber-500/20 via-orange-500/10 to-transparent', image: '/images/hero-house.png' },
-  land: { emoji: '🏞️', gradient: 'from-green-500/20 via-emerald-500/10 to-transparent', image: '/images/hero-land.png' },
-  creditCard: { emoji: '💳', gradient: 'from-purple-500/20 via-pink-500/10 to-transparent', image: '/images/hero-creditcard.png' },
-  studentLoan: { emoji: '🎓', gradient: 'from-indigo-500/20 via-violet-500/10 to-transparent', image: '/images/hero-studentloan.png' },
-  medical: { emoji: '🏥', gradient: 'from-red-500/20 via-rose-500/10 to-transparent', image: '/images/hero-medical.png' },
-  personal: { emoji: '💵', gradient: 'from-emerald-500/20 via-green-500/10 to-transparent', image: '/images/hero-personal.png' },
-  recreation: { emoji: '🚤', gradient: 'from-sky-500/20 via-blue-500/10 to-transparent', image: '/images/hero-recreation.png' },
-  custom: { emoji: '➕', gradient: 'from-slate-500/20 via-gray-500/10 to-transparent', image: '/images/hero-custom.png' },
+const domainVisuals: Record<string, { gradient: string; image: string }> = {
+  car: { gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent', image: '/images/hero-car.png' },
+  house: { gradient: 'from-amber-500/20 via-orange-500/10 to-transparent', image: '/images/hero-house.png' },
+  land: { gradient: 'from-green-500/20 via-emerald-500/10 to-transparent', image: '/images/hero-land.png' },
+  creditCard: { gradient: 'from-purple-500/20 via-pink-500/10 to-transparent', image: '/images/hero-creditcard.png' },
+  studentLoan: { gradient: 'from-indigo-500/20 via-violet-500/10 to-transparent', image: '/images/hero-studentloan.png' },
+  medical: { gradient: 'from-red-500/20 via-rose-500/10 to-transparent', image: '/images/hero-medical.png' },
+  personal: { gradient: 'from-emerald-500/20 via-green-500/10 to-transparent', image: '/images/hero-personal.png' },
+  recreation: { gradient: 'from-sky-500/20 via-blue-500/10 to-transparent', image: '/images/hero-recreation.png' },
+  custom: { gradient: 'from-slate-500/20 via-gray-500/10 to-transparent', image: '/images/hero-custom.png' },
 };
 
 export default function HeroVisual({ domain, hotspots = [], trendValue, trendLabel }: HeroVisualProps) {
+  const store = useFinancialStore();
+  const subcategory = store.getActiveSubcategory(domain);
   const visual = domainVisuals[domain] || domainVisuals.car;
 
   return (
@@ -63,7 +65,7 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
       {trendValue && (
         <div className="mt-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-emerald-400">💰</span>
+            <span className="text-emerald-400 text-2xl">{subcategory.icon}</span>
             <span className="text-xl font-bold text-white">{trendValue}</span>
           </div>
           <p className="text-xs text-gray-400">{trendLabel}</p>
