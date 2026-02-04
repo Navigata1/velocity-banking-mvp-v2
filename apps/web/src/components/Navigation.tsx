@@ -10,7 +10,7 @@ import { useEffect, useState, useCallback } from 'react';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
-  { value: 'black', label: 'Black', icon: '⚫' },
+  { value: 'dark', label: 'Dark', icon: '⚫' },
   { value: 'light', label: 'Light', icon: '☀️' },
 ];
 

@@ -8,6 +8,7 @@ import ActionFeed from '@/components/ActionFeed';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 type VitalsCategory = 'cashflow' | 'analytics' | 'goals' | 'velocity';
 type ActionFilter = 'all' | 'action' | 'tip' | 'milestone';
@@ -27,6 +28,8 @@ export default function Dashboard() {
   const [expandedAction, setExpandedAction] = useState<string | null>(null);
   const [cycleIndex, setCycleIndex] = useState(0);
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   useEffect(() => {
     setMounted(true);
@@ -808,17 +811,17 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 md:p-8 max-w-[1600px] mx-auto">
-      <header className="mb-6">
+      <header className="mb-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
-            <p className="text-gray-400 text-sm">Check your</p>
-            <h1 className="text-3xl font-bold text-white">Financial Health</h1>
+            <p className={`${classes.textSecondary} text-sm`}>Check your</p>
+            <h1 className={`text-3xl font-bold ${classes.text}`}>Financial Health</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-slate-800 rounded-xl px-4 py-2 border border-slate-700">
-              <button className="text-gray-400 hover:text-white">&lt;</button>
-              <span className="text-white font-medium px-4">February 2026</span>
-              <button className="text-gray-400 hover:text-white">&gt;</button>
+            <div className={`flex items-center gap-2 ${classes.glass} rounded-xl px-4 py-2`}>
+              <button className={`${classes.textSecondary} hover:${classes.text}`}>&lt;</button>
+              <span className={`${classes.text} font-medium px-4`}>February 2026</span>
+              <button className={`${classes.textSecondary} hover:${classes.text}`}>&gt;</button>
             </div>
           </div>
         </div>
@@ -849,7 +852,7 @@ export default function Dashboard() {
                   className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
                     vitalsCategory === cat 
                       ? 'bg-blue-500 scale-110 shadow-lg shadow-blue-500/30' 
-                      : 'bg-slate-800 hover:bg-slate-700'
+                      : `${classes.glassButton}`
                   }`}
                   title={cat.charAt(0).toUpperCase() + cat.slice(1)}
                 >
@@ -859,51 +862,51 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="text-sm text-gray-400 mb-3 capitalize">{vitalsCategory} Insights</div>
+          <div className={`text-sm ${classes.textSecondary} mb-3 capitalize`}>{vitalsCategory} Insights</div>
           
           <div className="space-y-3">
             {vitals.map((vital, i) => (
               <div 
                 key={i} 
-                className={`bg-slate-800/80 rounded-2xl p-4 border transition-all cursor-pointer ${
+                className={`${classes.glass} rounded-2xl p-4 transition-all cursor-pointer ${
                   expandedVital === i 
-                    ? 'border-emerald-500 shadow-lg shadow-emerald-500/10' 
-                    : 'border-slate-700 hover:border-emerald-500/50'
+                    ? 'ring-2 ring-emerald-500 shadow-lg shadow-emerald-500/10' 
+                    : 'hover:ring-1 hover:ring-emerald-500/50'
                 }`}
                 onClick={() => setExpandedVital(expandedVital === i ? null : i)}
               >
                 <div className="flex items-start gap-3">
                   <div className="text-2xl">{vital.icon}</div>
                   <div className="flex-1">
-                    <div className="text-sm text-gray-400 mb-1">{vital.label}</div>
+                    <div className={`text-sm ${classes.textSecondary} mb-1`}>{vital.label}</div>
                     {vital.isEditable && vital.onEdit && typeof vital.value === 'number' ? (
                       <div onClick={(e) => e.stopPropagation()}>
                         <EditableCurrency value={vital.value} onChange={vital.onEdit} size="lg" />
                       </div>
                     ) : (
-                      <div className="text-xl font-bold text-white">
+                      <div className={`text-xl font-bold ${classes.text}`}>
                         {typeof vital.value === 'number' ? formatCurrency(vital.value) : vital.value}
                       </div>
                     )}
-                    {vital.sublabel && <div className="text-xs text-gray-500 mt-1">{vital.sublabel}</div>}
+                    {vital.sublabel && <div className={`text-xs ${classes.textSecondary} mt-1`}>{vital.sublabel}</div>}
                   </div>
-                  <div className={`text-gray-500 transition-transform ${expandedVital === i ? 'rotate-180' : ''}`}>
+                  <div className={`${classes.textSecondary} transition-transform ${expandedVital === i ? 'rotate-180' : ''}`}>
                     ▼
                   </div>
                 </div>
                 
                 {expandedVital === i && (
-                  <div className="mt-4 pt-4 border-t border-slate-700 animate-fadeIn">
-                    <h4 className="text-emerald-400 font-semibold mb-2">{vital.insight.title}</h4>
-                    <p className="text-gray-400 text-sm mb-3">{vital.insight.description}</p>
+                  <div className={`mt-4 pt-4 border-t ${classes.border} animate-fadeIn`}>
+                    <h4 className="text-emerald-500 font-semibold mb-2">{vital.insight.title}</h4>
+                    <p className={`${classes.textSecondary} text-sm mb-3`}>{vital.insight.description}</p>
                     
                     <div className="grid grid-cols-3 gap-2 mb-3">
                       {vital.insight.metrics.map((m, j) => (
-                        <div key={j} className="bg-slate-900 rounded-lg p-2 text-center">
-                          <div className="text-xs text-gray-500">{m.label}</div>
+                        <div key={j} className={`${classes.bgSecondary} rounded-lg p-2 text-center`}>
+                          <div className={`text-xs ${classes.textSecondary}`}>{m.label}</div>
                           <div className={`text-sm font-semibold ${
-                            m.trend === 'up' ? 'text-emerald-400' : 
-                            m.trend === 'down' ? 'text-red-400' : 'text-white'
+                            m.trend === 'up' ? 'text-emerald-500' : 
+                            m.trend === 'down' ? 'text-red-500' : classes.text
                           }`}>
                             {m.value}
                           </div>
@@ -913,8 +916,8 @@ export default function Dashboard() {
                     
                     <div className="space-y-1">
                       {vital.insight.tips.map((tip, j) => (
-                        <div key={j} className="flex items-center gap-2 text-xs text-gray-400">
-                          <span className="text-emerald-400">•</span> {tip}
+                        <div key={j} className={`flex items-center gap-2 text-xs ${classes.textSecondary}`}>
+                          <span className="text-emerald-500">•</span> {tip}
                         </div>
                       ))}
                     </div>
@@ -939,7 +942,7 @@ export default function Dashboard() {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   actionFilter === key 
                     ? 'bg-blue-500 text-white' 
-                    : 'bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700'
+                    : `${classes.glassButton} ${classes.textSecondary}`
                 }`}
               >
                 {label}
@@ -951,10 +954,10 @@ export default function Dashboard() {
             {displayedActions.map((action, i) => (
               <div 
                 key={action.id}
-                className={`bg-slate-800/80 rounded-2xl p-4 border transition-all cursor-pointer ${
+                className={`${classes.glass} rounded-2xl p-4 transition-all cursor-pointer ${
                   expandedAction === action.id 
-                    ? 'border-emerald-500 shadow-lg shadow-emerald-500/10' 
-                    : 'border-slate-700 hover:border-emerald-500/50'
+                    ? 'ring-2 ring-emerald-500 shadow-lg shadow-emerald-500/10' 
+                    : 'hover:ring-1 hover:ring-emerald-500/50'
                 } ${displayedActions.length > 0 && i === (cycleIndex % displayedActions.length) ? 'ring-2 ring-blue-500/30' : ''}`}
                 onClick={() => setExpandedAction(expandedAction === action.id ? null : action.id)}
               >
@@ -968,18 +971,18 @@ export default function Dashboard() {
                     <span className="text-xl">{action.icon}</span>
                   </div>
                   <div className="flex-1">
-                    <div className="font-medium text-white">{action.title}</div>
-                    <div className="text-sm text-gray-400">{action.subtitle}</div>
+                    <div className={`font-medium ${classes.text}`}>{action.title}</div>
+                    <div className={`text-sm ${classes.textSecondary}`}>{action.subtitle}</div>
                   </div>
                   {action.chart && (
                     <div className="flex items-end gap-0.5 h-6">
                       {action.chart === 'line' ? (
-                        <svg className="w-8 h-6 text-emerald-400" viewBox="0 0 32 24">
+                        <svg className="w-8 h-6 text-emerald-500" viewBox="0 0 32 24">
                           <polyline points="0,20 8,16 16,12 24,8 32,4" fill="none" stroke="currentColor" strokeWidth="2"/>
                         </svg>
                       ) : (
                         [1, 2, 3, 4].map((h, j) => (
-                          <div key={j} className="w-1.5 bg-emerald-400 rounded-sm" style={{ height: `${h * 5}px` }}></div>
+                          <div key={j} className="w-1.5 bg-emerald-500 rounded-sm" style={{ height: `${h * 5}px` }}></div>
                         ))
                       )}
                     </div>
@@ -987,16 +990,16 @@ export default function Dashboard() {
                 </div>
                 
                 {expandedAction === action.id && (
-                  <div className="mt-4 pt-4 border-t border-slate-700 animate-fadeIn">
-                    <p className="text-gray-300 text-sm mb-3">{action.insight.description}</p>
+                  <div className={`mt-4 pt-4 border-t ${classes.border} animate-fadeIn`}>
+                    <p className={`${classes.textSecondary} text-sm mb-3`}>{action.insight.description}</p>
                     
                     <div className="grid grid-cols-3 gap-2 mb-3">
                       {action.insight.metrics.map((m, j) => (
-                        <div key={j} className="bg-slate-900 rounded-lg p-2 text-center">
-                          <div className="text-xs text-gray-500">{m.label}</div>
+                        <div key={j} className={`${classes.bgSecondary} rounded-lg p-2 text-center`}>
+                          <div className={`text-xs ${classes.textSecondary}`}>{m.label}</div>
                           <div className={`text-sm font-semibold ${
-                            m.trend === 'up' ? 'text-emerald-400' : 
-                            m.trend === 'down' ? 'text-red-400' : 'text-white'
+                            m.trend === 'up' ? 'text-emerald-500' : 
+                            m.trend === 'down' ? 'text-red-500' : classes.text
                           }`}>
                             {m.value}
                           </div>
@@ -1006,17 +1009,17 @@ export default function Dashboard() {
                     
                     <div className="space-y-1 mb-3">
                       {action.insight.tips.map((tip, j) => (
-                        <div key={j} className="flex items-center gap-2 text-xs text-gray-400">
-                          <span className="text-emerald-400">•</span> {tip}
+                        <div key={j} className={`flex items-center gap-2 text-xs ${classes.textSecondary}`}>
+                          <span className="text-emerald-500">•</span> {tip}
                         </div>
                       ))}
                     </div>
                     
                     <div className="flex gap-2">
-                      <button className="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-medium hover:bg-emerald-500/30 transition-colors">
+                      <button className="px-3 py-1.5 bg-emerald-500/20 text-emerald-500 rounded-lg text-xs font-medium hover:bg-emerald-500/30 transition-colors">
                         Take Action
                       </button>
-                      <button className="px-3 py-1.5 bg-slate-700 text-gray-300 rounded-lg text-xs font-medium hover:bg-slate-600 transition-colors">
+                      <button className={`px-3 py-1.5 ${classes.glassButton} ${classes.textSecondary} rounded-lg text-xs font-medium transition-colors`}>
                         Learn More
                       </button>
                     </div>
@@ -1028,29 +1031,29 @@ export default function Dashboard() {
           
           {actions.length > 4 && (
             <div className="mt-3 text-center">
-              <span className="text-gray-500 text-sm">+{actions.length - 4} more items</span>
+              <span className={`${classes.textSecondary} text-sm`}>+{actions.length - 4} more items</span>
             </div>
           )}
         </div>
       </div>
 
-      <div className="mt-8 bg-slate-800 rounded-2xl p-6 border border-slate-700">
-        <h3 className="text-lg font-semibold text-white mb-4">Quick Settings</h3>
+      <div className={`mt-8 ${classes.glass} rounded-2xl p-6`}>
+        <h3 className={`text-lg font-semibold ${classes.text} mb-4`}>Quick Settings</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm text-gray-400 mb-2">Monthly Income</label>
+            <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Income</label>
             <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="md" />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-2">Monthly Expenses</label>
+            <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Expenses</label>
             <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="md" />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-2">Chunk Amount</label>
+            <label className={`block text-sm ${classes.textSecondary} mb-2`}>Chunk Amount</label>
             <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} size="md" />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-2">LOC Rate</label>
+            <label className={`block text-sm ${classes.textSecondary} mb-2`}>LOC Rate</label>
             <EditablePercentage value={store.loc.interestRate} onChange={(val) => store.updateLOC({ interestRate: val })} size="md" />
           </div>
         </div>
@@ -1076,7 +1079,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <footer className="mt-8 text-center text-sm text-gray-500">
+      <footer className={`mt-8 text-center text-sm ${classes.textSecondary}`}>
         Educational tool. Click any number to edit. Not financial advice.
       </footer>
 

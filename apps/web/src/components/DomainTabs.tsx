@@ -91,7 +91,10 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
             </button>
             
             {hasDropdown && (
-              <div className={`absolute top-full left-0 mt-2 z-50 ${classes.glass} rounded-xl shadow-2xl overflow-hidden min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200`}>
+              <div 
+                className={`absolute top-full left-0 mt-2 ${classes.dropdown} rounded-xl shadow-2xl overflow-hidden min-w-[220px] animate-in fade-in slide-in-from-top-2 duration-200`}
+                style={{ zIndex: 9999 }}
+              >
                 <div className={`p-2 border-b ${classes.border}`}>
                   <p className={`text-xs ${classes.textSecondary} font-medium px-2`}>Select {tab.label} Type</p>
                 </div>
@@ -104,17 +107,17 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                         onClick={() => handleSubcategorySelect(tab.id as Domain, subcat.id)}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
                           isSelected
-                            ? 'bg-emerald-500/20 text-emerald-400'
-                            : `${classes.textSecondary} hover:bg-slate-700/30 hover:${classes.text}`
+                            ? 'bg-emerald-500/30 text-emerald-500 font-semibold'
+                            : `${classes.text} hover:bg-emerald-500/10`
                         }`}
                       >
                         <span className="text-xl">{subcat.icon}</span>
                         <div className="flex-1">
-                          <p className={`font-medium text-sm ${isSelected ? 'text-emerald-400' : classes.text}`}>{subcat.label}</p>
+                          <p className={`font-medium text-sm ${isSelected ? 'text-emerald-500' : classes.text}`}>{subcat.label}</p>
                           <p className={`text-xs ${classes.textSecondary}`}>{subcat.description}</p>
                         </div>
                         {isSelected && (
-                          <span className="text-emerald-400">✓</span>
+                          <span className="text-emerald-500">✓</span>
                         )}
                       </button>
                     );
