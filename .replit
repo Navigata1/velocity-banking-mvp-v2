@@ -17,10 +17,10 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "VelocityBank Web App"
+args = "InterestShield Web App"
 
 [[workflows.workflow]]
-name = "VelocityBank Web App"
+name = "InterestShield Web App"
 author = "agent"
 
 [[workflows.workflow.tasks]]

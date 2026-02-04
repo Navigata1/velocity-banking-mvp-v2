@@ -1,10 +1,10 @@
-# VelocityBank MVP
+# InterestShield MVP
 
 A truth-first, hope-forward financial empowerment prototype that teaches and simulates Velocity Banking.
 
 ## Overview
 
-VelocityBank is an educational web application that helps users understand and visualize velocity banking strategies for debt payoff. The app provides interactive simulations, visual dashboards, and educational content.
+InterestShield is an educational web application that helps users understand and visualize velocity banking strategies for debt payoff. The app provides interactive simulations, visual dashboards, and educational content.
 
 ## Project Structure
 

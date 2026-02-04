@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VelocityBank - Financial Empowerment",
+  title: "InterestShield - Financial Empowerment",
   description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
 };
 
