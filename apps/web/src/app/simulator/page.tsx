@@ -6,14 +6,18 @@ import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 export default function SimulatorPage() {
   const [mounted, setMounted] = useState(false);
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
   
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   const inputs: SimulationInputs = useMemo(() => {
     const debtType = store.getActiveDebtType();
@@ -59,8 +63,8 @@ export default function SimulatorPage() {
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">What-If Simulator</h1>
-        <p className="text-gray-400">See how velocity banking could accelerate your payoff</p>
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>What-If Simulator</h1>
+        <p className={classes.textSecondary}>See how velocity banking could accelerate your payoff</p>
       </header>
 
       <DomainTabs 
@@ -87,11 +91,11 @@ export default function SimulatorPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-xl font-semibold mb-4">Income & Expenses</h2>
+            <div className={`${classes.glass} rounded-2xl p-6`}>
+              <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>Income & Expenses</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Monthly Income</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Monthly Income</label>
                   <EditableCurrency 
                     value={store.monthlyIncome} 
                     onChange={store.setMonthlyIncome}
@@ -99,7 +103,7 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Monthly Expenses</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Monthly Expenses</label>
                   <EditableCurrency 
                     value={store.monthlyExpenses} 
                     onChange={store.setMonthlyExpenses}
@@ -114,7 +118,7 @@ export default function SimulatorPage() {
                 />
                 <div className="pt-2 border-t border-slate-700">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Cash Flow</span>
+                    <span className={classes.textSecondary}>Cash Flow</span>
                     <span className={cashFlow > 0 ? 'text-emerald-400 font-bold text-xl' : 'text-red-400 font-bold text-xl'}>
                       {formatCurrency(cashFlow)}/mo
                     </span>
@@ -123,11 +127,11 @@ export default function SimulatorPage() {
               </div>
             </div>
 
-            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-xl font-semibold mb-4">{domainName} Loan</h2>
+            <div className={`${classes.glass} rounded-2xl p-6`}>
+              <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>{domainName} Loan</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Balance</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Balance</label>
                   <EditableCurrency 
                     value={currentDebt.balance} 
                     onChange={(val) => store.updateDebt(debtType, { balance: val })}
@@ -135,7 +139,7 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">APR</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>APR</label>
                   <EditablePercentage 
                     value={currentDebt.interestRate} 
                     onChange={(val) => store.updateDebt(debtType, { interestRate: val })}
@@ -143,7 +147,7 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Monthly Payment</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Monthly Payment</label>
                   <EditableCurrency 
                     value={currentDebt.minimumPayment} 
                     onChange={(val) => store.updateDebt(debtType, { minimumPayment: val })}
@@ -153,11 +157,11 @@ export default function SimulatorPage() {
               </div>
             </div>
 
-            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-xl font-semibold mb-4">Line of Credit</h2>
+            <div className={`${classes.glass} rounded-2xl p-6`}>
+              <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>Line of Credit</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Limit</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Limit</label>
                   <EditableCurrency 
                     value={store.loc.limit} 
                     onChange={(val) => store.updateLOC({ limit: val })}
@@ -165,7 +169,7 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">APR</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>APR</label>
                   <EditablePercentage 
                     value={store.loc.interestRate} 
                     onChange={(val) => store.updateLOC({ interestRate: val })}
@@ -173,7 +177,7 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-400">Extra Payment / Chunk</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Extra Payment / Chunk</label>
                   <EditableCurrency 
                     value={store.chunkAmount} 
                     onChange={store.setChunkAmount}
@@ -221,7 +225,7 @@ export default function SimulatorPage() {
               </div>
             </div>
 
-            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+            <div className={`${classes.glass} rounded-2xl p-6`}>
               <h3 className="font-semibold mb-4">Balance Over Time (Estimate)</h3>
               <div className="h-48 flex items-end justify-between gap-1">
                 {results.baseline.monthlyData.slice(0, 24).map((month, i) => (

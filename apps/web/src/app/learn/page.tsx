@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 interface Lesson {
   id: string;
@@ -80,15 +81,23 @@ const glossary: GlossaryItem[] = [
 export default function LearnPage() {
   const [activeLesson, setActiveLesson] = useState<string | null>(null);
   const [activeGlossary, setActiveGlossary] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   return (
     <div className="p-6 md:p-10 max-w-4xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Learn</h1>
-        <p className="text-gray-400">Understand velocity banking step by step</p>
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Learn</h1>
+        <p className={classes.textSecondary}>Understand velocity banking step by step</p>
       </header>
 
-      <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 border border-blue-500/30 mb-8">
+      <div className={`${classes.glass} bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 mb-8`}>
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-xl bg-blue-500/30 flex items-center justify-center">
             <span className="text-3xl">🎬</span>
@@ -105,18 +114,18 @@ export default function LearnPage() {
         <h2 className="text-xl font-semibold mb-4">Micro-Lessons</h2>
         <div className="space-y-3">
           {lessons.map((lesson) => (
-            <div key={lesson.id} className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+            <div key={lesson.id} className={`${classes.glass} rounded-xl overflow-hidden`}>
               <button
                 onClick={() => setActiveLesson(activeLesson === lesson.id ? null : lesson.id)}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-700/50 transition-colors"
+                className={`w-full p-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors`}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">
+                  <div className={`w-10 h-10 rounded-lg ${classes.glassButton} flex items-center justify-center text-emerald-400 font-bold`}>
                     {lesson.id}
                   </div>
                   <div className="text-left">
-                    <h3 className="font-medium text-white">{lesson.title}</h3>
-                    <p className="text-sm text-gray-500">{lesson.duration}</p>
+                    <h3 className={`font-medium ${classes.text}`}>{lesson.title}</h3>
+                    <p className={`text-sm ${classes.textSecondary}`}>{lesson.duration}</p>
                   </div>
                 </div>
                 <svg
@@ -129,8 +138,8 @@ export default function LearnPage() {
                 </svg>
               </button>
               {activeLesson === lesson.id && (
-                <div className="p-4 pt-0 border-t border-slate-700">
-                  <p className="text-gray-300 leading-relaxed mb-3">{lesson.content}</p>
+                <div className={`p-4 pt-0 border-t ${classes.border}`}>
+                  <p className={`${classes.textSecondary} leading-relaxed mb-3`}>{lesson.content}</p>
                   <a 
                     href={lesson.learnMoreUrl} 
                     target="_blank" 
@@ -155,13 +164,13 @@ export default function LearnPage() {
           {glossary.map((item) => (
             <div
               key={item.term}
-              className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden"
+              className={`${classes.glass} rounded-xl overflow-hidden`}
             >
               <button
                 onClick={() => setActiveGlossary(activeGlossary === item.term ? null : item.term)}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-700/50 transition-colors"
+                className={`w-full p-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors`}
               >
-                <span className="font-medium text-white">{item.term}</span>
+                <span className={`font-medium ${classes.text}`}>{item.term}</span>
                 <svg
                   className={`w-5 h-5 text-gray-400 transition-transform ${activeGlossary === item.term ? 'rotate-180' : ''}`}
                   fill="none"
@@ -172,8 +181,8 @@ export default function LearnPage() {
                 </svg>
               </button>
               {activeGlossary === item.term && (
-                <div className="p-4 pt-0 border-t border-slate-700">
-                  <p className="text-gray-300 mb-2">{item.definition}</p>
+                <div className={`p-4 pt-0 border-t ${classes.border}`}>
+                  <p className={`${classes.textSecondary} mb-2`}>{item.definition}</p>
                   <a 
                     href={item.learnMoreUrl} 
                     target="_blank" 
@@ -194,8 +203,8 @@ export default function LearnPage() {
 
       <section className="mt-12">
         <h2 className="text-xl font-semibold mb-4">Additional Resources</h2>
-        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-          <p className="text-gray-400 mb-4">
+        <div className={`${classes.glass} rounded-xl p-6`}>
+          <p className={`${classes.textSecondary} mb-4`}>
             All educational content in this app is supplemented by articles from Investopedia, 
             a trusted source for financial education since 1999.
           </p>
@@ -204,55 +213,55 @@ export default function LearnPage() {
               href="https://www.investopedia.com/terms/d/debtmanagement.asp" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+              className={`flex items-center gap-3 p-3 ${classes.glassButton} rounded-lg transition-colors`}
             >
               <span className="text-2xl">📚</span>
               <div>
-                <p className="text-white font-medium">Debt Management Guide</p>
-                <p className="text-xs text-gray-400">Investopedia</p>
+                <p className={`${classes.text} font-medium`}>Debt Management Guide</p>
+                <p className={`text-xs ${classes.textSecondary}`}>Investopedia</p>
               </div>
             </a>
             <a 
               href="https://www.investopedia.com/mortgage/heloc/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+              className={`flex items-center gap-3 p-3 ${classes.glassButton} rounded-lg transition-colors`}
             >
               <span className="text-2xl">🏠</span>
               <div>
-                <p className="text-white font-medium">HELOC Complete Guide</p>
-                <p className="text-xs text-gray-400">Investopedia</p>
+                <p className={`${classes.text} font-medium`}>HELOC Complete Guide</p>
+                <p className={`text-xs ${classes.textSecondary}`}>Investopedia</p>
               </div>
             </a>
             <a 
               href="https://www.investopedia.com/terms/i/interestrate.asp" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+              className={`flex items-center gap-3 p-3 ${classes.glassButton} rounded-lg transition-colors`}
             >
               <span className="text-2xl">📈</span>
               <div>
-                <p className="text-white font-medium">Understanding Interest Rates</p>
-                <p className="text-xs text-gray-400">Investopedia</p>
+                <p className={`${classes.text} font-medium`}>Understanding Interest Rates</p>
+                <p className={`text-xs ${classes.textSecondary}`}>Investopedia</p>
               </div>
             </a>
             <a 
               href="https://www.investopedia.com/articles/pf/12/good-debt-bad-debt.asp" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+              className={`flex items-center gap-3 p-3 ${classes.glassButton} rounded-lg transition-colors`}
             >
               <span className="text-2xl">⚖️</span>
               <div>
-                <p className="text-white font-medium">Good Debt vs Bad Debt</p>
-                <p className="text-xs text-gray-400">Investopedia</p>
+                <p className={`${classes.text} font-medium`}>Good Debt vs Bad Debt</p>
+                <p className={`text-xs ${classes.textSecondary}`}>Investopedia</p>
               </div>
             </a>
           </div>
         </div>
       </section>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className={`mt-12 text-center text-sm ${classes.textSecondary}`}>
         Educational tool. Not financial advice. Resources provided by{' '}
         <a href="https://www.investopedia.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
           Investopedia

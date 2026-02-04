@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useFinancialStore, Domain, domainSubcategories } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 interface DomainTabsProps {
   activeTab: string;
@@ -22,8 +23,14 @@ const tabs = [
 
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,6 +41,8 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   const handleTabClick = (tabId: string) => {
     if (activeTab === tabId) {
@@ -55,7 +64,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
   };
 
   return (
-    <div className="relative flex flex-wrap gap-1.5 p-1.5 bg-slate-800/50 rounded-xl border border-slate-700" ref={dropdownRef}>
+    <div className={`relative flex flex-wrap gap-1.5 p-1.5 ${classes.glass} rounded-xl`} ref={dropdownRef}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const hasDropdown = dropdownOpen === tab.id;
@@ -68,8 +77,8 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
               onClick={() => handleTabClick(tab.id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
                 isActive
-                  ? 'bg-emerald-500 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-slate-700'
+                  ? `${classes.glassButton} text-emerald-400 ring-1 ring-emerald-500/50`
+                  : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-700/30`
               }`}
             >
               <span className="text-base">{currentIcon}</span>
@@ -82,9 +91,9 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
             </button>
             
             {hasDropdown && (
-              <div className="absolute top-full left-0 mt-2 z-50 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200">
-                <div className="p-2 border-b border-slate-700">
-                  <p className="text-xs text-gray-400 font-medium px-2">Select {tab.label} Type</p>
+              <div className={`absolute top-full left-0 mt-2 z-50 ${classes.glass} rounded-xl shadow-2xl overflow-hidden min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200`}>
+                <div className={`p-2 border-b ${classes.border}`}>
+                  <p className={`text-xs ${classes.textSecondary} font-medium px-2`}>Select {tab.label} Type</p>
                 </div>
                 <div className="p-2 max-h-[300px] overflow-y-auto">
                   {subcategories.map((subcat) => {
@@ -96,13 +105,13 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
                           isSelected
                             ? 'bg-emerald-500/20 text-emerald-400'
-                            : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                            : `${classes.textSecondary} hover:bg-slate-700/30 hover:${classes.text}`
                         }`}
                       >
                         <span className="text-xl">{subcat.icon}</span>
                         <div className="flex-1">
-                          <p className="font-medium text-sm">{subcat.label}</p>
-                          <p className="text-xs text-gray-500">{subcat.description}</p>
+                          <p className={`font-medium text-sm ${isSelected ? 'text-emerald-400' : classes.text}`}>{subcat.label}</p>
+                          <p className={`text-xs ${classes.textSecondary}`}>{subcat.description}</p>
                         </div>
                         {isSelected && (
                           <span className="text-emerald-400">✓</span>
