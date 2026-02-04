@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { useFinancialStore } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 const formatCurrency = (num: number): string => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
@@ -71,6 +72,8 @@ export default function VaultPage() {
   const [step, setStep] = useState(0);
   const [investmentRate, setInvestmentRate] = useState(0.07);
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   useEffect(() => {
     setMounted(true);
@@ -389,24 +392,24 @@ export default function VaultPage() {
   return (
     <div className="p-6 md:p-10 max-w-2xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Wealth Transfer Timeline</h1>
-        <p className="text-gray-400">See the true cost of your mortgage</p>
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Wealth Transfer Timeline</h1>
+        <p className={classes.textSecondary}>See the true cost of your mortgage</p>
       </header>
 
       <div className="flex gap-2 mb-8">
         {stepTitles.map((_, i) => (
           <div
             key={i}
-            className={`flex-1 h-2 rounded-full cursor-pointer transition-colors ${i <= step ? 'bg-emerald-500' : 'bg-slate-700 hover:bg-slate-600'}`}
+            className={`flex-1 h-2 rounded-full cursor-pointer transition-colors ${i <= step ? 'bg-emerald-500' : `${classes.bgSecondary} hover:opacity-80`}`}
             onClick={() => setStep(i)}
           />
         ))}
       </div>
 
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-slate-700 mb-8">
+      <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
         <div className="text-center mb-6">
-          <h2 className="text-xl font-semibold text-white">{stepTitles[step].title}</h2>
-          <p className="text-gray-400">{stepTitles[step].subtitle}</p>
+          <h2 className={`text-xl font-semibold ${classes.text}`}>{stepTitles[step].title}</h2>
+          <p className={classes.textSecondary}>{stepTitles[step].subtitle}</p>
         </div>
         
         {renderStep()}
@@ -416,7 +419,7 @@ export default function VaultPage() {
         {step > 0 && (
           <button
             onClick={prevStep}
-            className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-xl hover:bg-slate-600 transition-colors"
+            className={`flex-1 px-6 py-3 ${classes.glassButton} ${classes.text} rounded-xl transition-colors`}
           >
             Back
           </button>
@@ -438,7 +441,7 @@ export default function VaultPage() {
         )}
       </div>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className={`mt-12 text-center text-sm ${classes.textSecondary}`}>
         Educational estimate. Click any number to edit. Not financial advice.
       </footer>
     </div>

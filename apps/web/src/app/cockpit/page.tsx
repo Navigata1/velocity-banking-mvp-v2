@@ -5,6 +5,7 @@ import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 interface Instrument {
   label: string;
@@ -21,6 +22,8 @@ export default function CockpitPage() {
   const [emergency, setEmergency] = useState(false);
   const [turbulence, setTurbulence] = useState(false);
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
+  const classes = themeClasses[mounted ? theme : 'original'];
 
   useEffect(() => {
     setMounted(true);
@@ -96,8 +99,8 @@ export default function CockpitPage() {
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Cockpit Mode</h1>
-        <p className="text-gray-400">Your financial flight simulator</p>
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Cockpit Mode</h1>
+        <p className={classes.textSecondary}>Your financial flight simulator</p>
       </header>
 
       <DomainTabs 
@@ -114,7 +117,7 @@ export default function CockpitPage() {
           </div>
         )}
 
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-slate-700 mb-8">
+        <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {instruments.map((instrument, i) => (
               <div
@@ -182,11 +185,11 @@ export default function CockpitPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-            <h3 className="font-semibold mb-4">Scenario Controls</h3>
+          <div className={`${classes.glass} rounded-2xl p-6`}>
+            <h3 className={`font-semibold mb-4 ${classes.text}`}>Scenario Controls</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Monthly Income</label>
+                <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Income</label>
                 <div className="flex items-center gap-4">
                   <input
                     type="range"
@@ -201,7 +204,7 @@ export default function CockpitPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Monthly Expenses</label>
+                <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Expenses</label>
                 <div className="flex items-center gap-4">
                   <input
                     type="range"
@@ -216,7 +219,7 @@ export default function CockpitPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Chunk Size</label>
+                <label className={`block text-sm ${classes.textSecondary} mb-2`}>Chunk Size</label>
                 <div className="flex items-center gap-4">
                   <input
                     type="range"
@@ -233,13 +236,13 @@ export default function CockpitPage() {
             </div>
           </div>
 
-          <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-            <h3 className="font-semibold mb-4">
+          <div className={`${classes.glass} rounded-2xl p-6`}>
+            <h3 className={`font-semibold mb-4 ${classes.text}`}>
               {store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1)} Details
             </h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">Balance</span>
+                <span className={classes.textSecondary}>Balance</span>
                 <EditableCurrency 
                   value={currentDebt.balance} 
                   onChange={(val) => store.updateDebt(debtType, { balance: val })}
@@ -247,7 +250,7 @@ export default function CockpitPage() {
                 />
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">Interest Rate</span>
+                <span className={classes.textSecondary}>Interest Rate</span>
                 <EditablePercentage 
                   value={currentDebt.interestRate} 
                   onChange={(val) => store.updateDebt(debtType, { interestRate: val })}
@@ -255,23 +258,23 @@ export default function CockpitPage() {
                 />
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">Min Payment</span>
+                <span className={classes.textSecondary}>Min Payment</span>
                 <EditableCurrency 
                   value={currentDebt.minimumPayment} 
                   onChange={(val) => store.updateDebt(debtType, { minimumPayment: val })}
                   size="md"
                 />
               </div>
-              <div className="pt-2 border-t border-slate-700 flex justify-between">
-                <span className="text-gray-400">Potential Savings</span>
-                <span className="text-emerald-400 font-bold">{formatCurrency(velocity.savings)}</span>
+              <div className={`pt-2 border-t ${classes.border} flex justify-between`}>
+                <span className={classes.textSecondary}>Potential Savings</span>
+                <span className="text-emerald-500 font-bold">{formatCurrency(velocity.savings)}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-          <h3 className="font-semibold mb-4">Flight Controls</h3>
+        <div className={`${classes.glass} rounded-2xl p-6`}>
+          <h3 className={`font-semibold mb-4 ${classes.text}`}>Flight Controls</h3>
           <div className="flex flex-wrap gap-4">
             {!emergency ? (
               <button
@@ -295,13 +298,13 @@ export default function CockpitPage() {
               Toggle: Expense Card On/Off
             </button>
           </div>
-          <p className="mt-4 text-sm text-gray-500">
+          <p className={`mt-4 text-sm ${classes.textSecondary}`}>
             Every slider change updates the gauges in real-time. More cash flow = lower average balance = less interest.
           </p>
         </div>
       </div>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className={`mt-12 text-center text-sm ${classes.textSecondary}`}>
         Educational tool. Click any number to edit. Not financial advice.
       </footer>
     </div>
