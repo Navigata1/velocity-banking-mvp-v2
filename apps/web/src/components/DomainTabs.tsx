@@ -64,7 +64,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
   };
 
   return (
-    <div className={`relative flex flex-wrap gap-1.5 p-1.5 ${classes.glass} rounded-xl`} ref={dropdownRef}>
+    <div className={`relative flex flex-wrap justify-center gap-1.5 p-1.5 ${classes.glass} rounded-xl`} ref={dropdownRef}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const hasDropdown = dropdownOpen === tab.id;

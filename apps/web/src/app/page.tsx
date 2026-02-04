@@ -905,10 +905,12 @@ export default function Dashboard() {
           </div>
         </div>
         
-        <DomainTabs 
-          activeTab={store.activeDomain} 
-          onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
-        />
+        <div className="flex justify-center relative z-50">
+          <DomainTabs 
+            activeTab={store.activeDomain} 
+            onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
+          />
+        </div>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -922,7 +924,7 @@ export default function Dashboard() {
         </div>
 
         <div className="lg:col-span-3">
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
             <div className="flex gap-2">
               {(['cashflow', 'analytics', 'goals', 'velocity'] as VitalsCategory[]).map((cat) => (
                 <button
@@ -941,7 +943,7 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className={`text-sm ${classes.textSecondary} mb-3 capitalize`}>{vitalsCategory} Insights</div>
+          <div className={`text-sm ${classes.textSecondary} mb-3 capitalize text-center lg:text-left`}>{vitalsCategory} Insights</div>
           
           <div className="space-y-3">
             {vitals.map((vital, i) => (
@@ -1008,7 +1010,7 @@ export default function Dashboard() {
         </div>
 
         <div className="lg:col-span-4">
-          <div className="flex gap-2 mb-4">
+          <div className="flex justify-center lg:justify-start gap-2 mb-4">
             {([
               { key: 'all', label: 'All' },
               { key: 'action', label: 'Actions' },

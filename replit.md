@@ -206,6 +206,9 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 
 ## Recent Changes
 
+- 2026-02-04: Added colorful gradient shield logo with "Powered by Velocity Banking" tagline in navigation
+- 2026-02-04: Center-justified domain selector tabs on dashboard for symmetry
+- 2026-02-04: Center-justified vitals category buttons and action filter buttons on mobile portrait view
 - 2026-02-04: Fixed domain selector z-index on Simulator and Cockpit pages - dropdown now appears above content
 - 2026-02-04: Added Wealth Timeline summary section at top of dashboard with key metrics
 - 2026-02-04: Created 3-gauge flight simulator panel in Cockpit page (altitude/progress, heading dial, fuel gauge) with decorative rivets

@@ -58,9 +58,19 @@ export default function Navigation() {
     <>
       <nav className={`fixed bottom-0 left-0 right-0 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
         <div className="px-4 py-2 md:p-6">
-          <h1 className={`hidden md:block text-xl font-bold ${classes.text} mb-8`}>
-            🛡️ InterestShield
-          </h1>
+          <div className="hidden md:block mb-8">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo.jpg" 
+                alt="InterestShield Logo" 
+                className="w-10 h-10 rounded-lg object-cover"
+              />
+              <div>
+                <h1 className={`text-xl font-bold ${classes.text}`}>InterestShield</h1>
+                <p className={`text-[10px] ${classes.textSecondary} tracking-wide uppercase`}>Powered by Velocity Banking</p>
+              </div>
+            </div>
+          </div>
           <div className="flex justify-around md:flex-col md:space-y-2">
             {navItems.map((item) => (
               <Link
