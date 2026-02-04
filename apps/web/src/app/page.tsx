@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import Link from 'next/link';
 import DomainTabs from '@/components/DomainTabs';
 import HeroVisual from '@/components/HeroVisual';
 import VitalsGrid from '@/components/VitalsGrid';
@@ -27,9 +28,38 @@ export default function Dashboard() {
   const [expandedVital, setExpandedVital] = useState<number | null>(null);
   const [expandedAction, setExpandedAction] = useState<string | null>(null);
   const [cycleIndex, setCycleIndex] = useState(0);
+  const [showWealthTimeline, setShowWealthTimeline] = useState(true);
   const store = useFinancialStore();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
+
+  const wealthMetrics = useMemo(() => {
+    const houseDebt = store.debts.house;
+    const cashFlow = store.getCashFlow();
+    const monthlyRate = houseDebt.interestRate / 12;
+    const balance = houseDebt.balance;
+    const termMonths = houseDebt.termMonths;
+    
+    const monthlyPayment = (balance * monthlyRate * Math.pow(1 + monthlyRate, termMonths)) / 
+      (Math.pow(1 + monthlyRate, termMonths) - 1);
+    const totalPaid = monthlyPayment * termMonths;
+    const totalInterest = totalPaid - balance;
+    const payoffAge = store.currentAge + Math.ceil(termMonths / 12);
+    
+    const chunkedMonths = Math.ceil(balance / (monthlyPayment + Math.max(0, cashFlow * 0.5)));
+    const velocityPayoffAge = store.currentAge + Math.ceil(Math.min(chunkedMonths, termMonths) / 12);
+    const yearsGained = payoffAge - velocityPayoffAge;
+    const moneySaved = Math.max(0, totalInterest * (yearsGained / 30) * 0.5);
+    const yearsOfInvesting = 65 - velocityPayoffAge;
+    const investmentGrowth = moneySaved * Math.pow(1.07, Math.max(0, yearsOfInvesting));
+    
+    return {
+      totalInterest,
+      yearsGained: Math.max(1, yearsGained),
+      moneySaved: Math.max(0, moneySaved),
+      investmentGrowth: Math.max(0, investmentGrowth),
+    };
+  }, [store]);
 
   useEffect(() => {
     setMounted(true);
@@ -811,6 +841,55 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 md:p-8 max-w-[1600px] mx-auto">
+      {showWealthTimeline && (
+        <section className={`${classes.glass} rounded-2xl p-5 mb-6 relative overflow-hidden`}>
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-amber-500/5 to-emerald-500/5 pointer-events-none" />
+          <button 
+            onClick={() => setShowWealthTimeline(false)}
+            className={`absolute top-3 right-3 ${classes.textSecondary} hover:${classes.text} text-xl`}
+            title="Hide"
+          >
+            ×
+          </button>
+          
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">🏆</span>
+              <div>
+                <h2 className={`text-lg font-bold ${classes.text}`}>Wealth Timeline</h2>
+                <p className={`text-xs ${classes.textSecondary}`}>Your generational wealth potential</p>
+              </div>
+            </div>
+            
+            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
+                <div className={`text-xs ${classes.textSecondary}`}>Interest to Save</div>
+                <div className="text-lg font-bold text-red-500">{formatCurrency(wealthMetrics.totalInterest)}</div>
+              </div>
+              <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
+                <div className={`text-xs ${classes.textSecondary}`}>Years Gained</div>
+                <div className="text-lg font-bold text-emerald-500">{wealthMetrics.yearsGained}+ yrs</div>
+              </div>
+              <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
+                <div className={`text-xs ${classes.textSecondary}`}>Money Saved</div>
+                <div className="text-lg font-bold text-blue-500">{formatCurrency(wealthMetrics.moneySaved)}</div>
+              </div>
+              <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
+                <div className={`text-xs ${classes.textSecondary}`}>Potential Growth</div>
+                <div className="text-lg font-bold text-amber-500">{formatCurrency(wealthMetrics.investmentGrowth)}</div>
+              </div>
+            </div>
+            
+            <Link 
+              href="/vault" 
+              className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg shadow-emerald-500/20 text-sm whitespace-nowrap"
+            >
+              View Full Timeline →
+            </Link>
+          </div>
+        </section>
+      )}
+      
       <header className="mb-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
