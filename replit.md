@@ -206,6 +206,7 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 
 ## Recent Changes
 
+- 2026-02-04: Fixed domain selector z-index on Simulator and Cockpit pages - dropdown now appears above content
 - 2026-02-04: Added Wealth Timeline summary section at top of dashboard with key metrics
 - 2026-02-04: Created 3-gauge flight simulator panel in Cockpit page (altitude/progress, heading dial, fuel gauge) with decorative rivets
 - 2026-02-04: Made EditableNumber component fully theme-aware for light theme text visibility

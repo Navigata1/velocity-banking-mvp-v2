@@ -67,12 +67,14 @@ export default function SimulatorPage() {
         <p className={classes.textSecondary}>See how velocity banking could accelerate your payoff</p>
       </header>
 
-      <DomainTabs 
-        activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
-      />
+      <div className="relative z-50">
+        <DomainTabs 
+          activeTab={store.activeDomain} 
+          onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
+        />
+      </div>
 
-      <div className="mt-6">
+      <div className="mt-6 relative z-10">
         {cashFlow <= 0 && (
           <div className="mb-6 bg-red-500/20 border border-red-500/50 rounded-xl p-4">
             <p className="text-red-400 font-medium">

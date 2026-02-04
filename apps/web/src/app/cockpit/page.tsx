@@ -103,12 +103,14 @@ export default function CockpitPage() {
         <p className={classes.textSecondary}>Your financial flight simulator</p>
       </header>
 
-      <DomainTabs 
-        activeTab={store.activeDomain} 
-        onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
-      />
+      <div className="relative z-50">
+        <DomainTabs 
+          activeTab={store.activeDomain} 
+          onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
+        />
+      </div>
 
-      <div className="mt-6">
+      <div className="mt-6 relative z-10">
         {turbulence && (
           <div className="mb-6 bg-amber-500/20 border border-amber-500/50 rounded-xl p-4 animate-pulse">
             <p className="text-amber-400 font-medium">
