@@ -206,6 +206,11 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 
 ## Recent Changes
 
+- 2026-02-04: Added Wealth Timeline summary section at top of dashboard with key metrics
+- 2026-02-04: Created 3-gauge flight simulator panel in Cockpit page (altitude/progress, heading dial, fuel gauge) with decorative rivets
+- 2026-02-04: Made EditableNumber component fully theme-aware for light theme text visibility
+- 2026-02-04: Added textMuted class to theme store for consistent tertiary text styling
+- 2026-02-04: Fixed Vault page step content with full theme support across all 5 steps
 - 2026-02-04: Fixed remaining hardcoded colors in Cockpit and Vault pages for cross-theme compatibility
 - 2026-02-04: Updated loading skeletons and progress bars to use theme-neutral bg-gray-500/20-30 colors
 - 2026-02-04: Renamed "Black" theme to "Dark" for better naming consistency
