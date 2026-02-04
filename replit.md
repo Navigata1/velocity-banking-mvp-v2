@@ -206,8 +206,12 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 
 ## Recent Changes
 
+- 2026-02-04: Fixed remaining hardcoded colors in Cockpit and Vault pages for cross-theme compatibility
+- 2026-02-04: Updated loading skeletons and progress bars to use theme-neutral bg-gray-500/20-30 colors
+- 2026-02-04: Renamed "Black" theme to "Dark" for better naming consistency
+- 2026-02-04: Fixed domain selector dropdown z-index (9999) to appear above hero visuals
 - 2026-02-04: Generated 250 curated Q&A responses for Shield Guardian AI assistant
-- 2026-02-04: Created three-theme system (Original dark, Black deeper, Light white/grey)
+- 2026-02-04: Created three-theme system (Original dark, Dark deeper, Light white/grey)
 - 2026-02-04: Applied liquid glass effects to all buttons, cards, hero visuals, and panels
 - 2026-02-04: Repositioned Shield Guardian under Wealth Timeline for better visibility
 - 2026-02-04: Updated all components with theme-aware styling (Navigation, DomainTabs, VitalsGrid, ActionFeed, Learn, Simulator)
