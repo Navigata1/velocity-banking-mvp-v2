@@ -64,7 +64,7 @@ export default function Navigation() {
                 <img 
                   src="/logo.jpg" 
                   alt="InterestShield Logo" 
-                  className="w-[200%] max-w-none -translate-x-1/4 -translate-y-1"
+                  className="w-[200%] max-w-none -translate-x-1/4 translate-y-0.5"
                 />
               </div>
               <div>
