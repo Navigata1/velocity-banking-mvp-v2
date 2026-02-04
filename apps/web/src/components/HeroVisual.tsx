@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Domain, useFinancialStore } from '@/stores/financial-store';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useState, useEffect } from 'react';
 
 interface HotspotProps {
@@ -28,6 +29,30 @@ const domainGradients: Record<string, string> = {
   personal: 'from-emerald-600/30 via-green-500/20 to-emerald-900/40',
   recreation: 'from-sky-600/30 via-blue-500/20 to-sky-900/40',
   custom: 'from-slate-600/30 via-gray-500/20 to-slate-900/40',
+};
+
+const lightDomainGradients: Record<string, string> = {
+  car: 'from-blue-200/50 via-cyan-100/40 to-blue-300/30',
+  house: 'from-amber-200/50 via-orange-100/40 to-amber-300/30',
+  land: 'from-green-200/50 via-emerald-100/40 to-green-300/30',
+  creditCard: 'from-purple-200/50 via-pink-100/40 to-purple-300/30',
+  studentLoan: 'from-indigo-200/50 via-violet-100/40 to-indigo-300/30',
+  medical: 'from-red-200/50 via-rose-100/40 to-red-300/30',
+  personal: 'from-emerald-200/50 via-green-100/40 to-emerald-300/30',
+  recreation: 'from-sky-200/50 via-blue-100/40 to-sky-300/30',
+  custom: 'from-gray-200/50 via-gray-100/40 to-gray-300/30',
+};
+
+const blackDomainGradients: Record<string, string> = {
+  car: 'from-blue-900/50 via-cyan-800/30 to-black/60',
+  house: 'from-amber-900/50 via-orange-800/30 to-black/60',
+  land: 'from-green-900/50 via-emerald-800/30 to-black/60',
+  creditCard: 'from-purple-900/50 via-pink-800/30 to-black/60',
+  studentLoan: 'from-indigo-900/50 via-violet-800/30 to-black/60',
+  medical: 'from-red-900/50 via-rose-800/30 to-black/60',
+  personal: 'from-emerald-900/50 via-green-800/30 to-black/60',
+  recreation: 'from-sky-900/50 via-blue-800/30 to-black/60',
+  custom: 'from-zinc-900/50 via-zinc-800/30 to-black/60',
 };
 
 const domainFallbackImages: Record<string, string> = {
@@ -119,10 +144,24 @@ const subcategoryImageMap: Record<string, Record<string, string>> = {
 
 export default function HeroVisual({ domain, hotspots = [], trendValue, trendLabel }: HeroVisualProps) {
   const store = useFinancialStore();
+  const { theme } = useThemeStore();
   const subcategory = store.getActiveSubcategory(domain);
-  const gradient = domainGradients[domain] || domainGradients.car;
+  const [mounted, setMounted] = useState(false);
   const [rotationY, setRotationY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const currentTheme = mounted ? theme : 'original';
+  const classes = themeClasses[currentTheme];
+  
+  const gradient = currentTheme === 'light' 
+    ? lightDomainGradients[domain] || lightDomainGradients.car
+    : currentTheme === 'black'
+    ? blackDomainGradients[domain] || blackDomainGradients.car
+    : domainGradients[domain] || domainGradients.car;
 
   const heroImage = subcategoryImageMap[domain]?.[subcategory?.id] || domainFallbackImages[domain] || domainFallbackImages.car;
 
@@ -138,13 +177,23 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
 
   const rotation3D = isHovered ? 0 : Math.sin(rotationY * Math.PI / 180) * 15;
 
+  const glowColor = currentTheme === 'light' 
+    ? 'rgba(16, 185, 129, 0.2)' 
+    : 'rgba(16, 185, 129, 0.15)';
+
+  const borderColor = currentTheme === 'light'
+    ? 'border-gray-300/60'
+    : currentTheme === 'black'
+    ? 'border-zinc-700/50'
+    : 'border-slate-600/50';
+
   return (
     <div 
-      className={`relative bg-gradient-to-br ${gradient} rounded-[2.5rem] border border-slate-600/50 p-6 h-full min-h-[400px] flex flex-col items-center justify-center overflow-hidden`}
+      className={`relative bg-gradient-to-br ${gradient} rounded-[2.5rem] ${borderColor} border p-6 h-full min-h-[400px] flex flex-col items-center justify-center overflow-hidden backdrop-blur-xl`}
       style={{
         boxShadow: `
-          0 0 60px rgba(16, 185, 129, 0.15),
-          inset 0 1px 0 rgba(255,255,255,0.1),
+          0 0 60px ${glowColor},
+          inset 0 1px 0 rgba(255,255,255,${currentTheme === 'light' ? '0.5' : '0.1'}),
           inset 0 -1px 0 rgba(0,0,0,0.2)
         `,
       }}
@@ -152,14 +201,14 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
       <div 
         className="absolute inset-0 opacity-30"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.15) 0%, transparent 60%)',
+          background: `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,${currentTheme === 'light' ? '0.4' : '0.15'}) 0%, transparent 60%)`,
         }}
       />
       
       <div 
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%)',
+          background: `linear-gradient(180deg, transparent 0%, rgba(0,0,0,${currentTheme === 'light' ? '0.1' : '0.3'}) 100%)`,
         }}
       />
 
@@ -179,9 +228,7 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
 
       <div 
         className="relative w-full max-w-[320px] aspect-[4/3] z-10"
-        style={{
-          perspective: '1000px',
-        }}
+        style={{ perspective: '1000px' }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -205,9 +252,9 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
           />
           
           <div 
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none rounded-xl"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)',
             }}
           />
         </div>
@@ -220,9 +267,9 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
           >
             <div className={`w-3 h-3 rounded-full ${hotspot.color} animate-ping absolute`} />
             <div className={`w-3 h-3 rounded-full ${hotspot.color} relative`} />
-            <div className="absolute left-5 top-1/2 -translate-y-1/2 bg-slate-800/95 backdrop-blur border border-slate-600 rounded-xl px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-30 shadow-xl">
-              <p className="text-xs text-gray-400">{hotspot.label}</p>
-              <p className="text-sm font-bold text-white">{hotspot.value}</p>
+            <div className={`absolute left-5 top-1/2 -translate-y-1/2 ${classes.glass} rounded-xl px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-30`}>
+              <p className={`text-xs ${classes.textSecondary}`}>{hotspot.label}</p>
+              <p className={`text-sm font-bold ${classes.text}`}>{hotspot.value}</p>
             </div>
           </div>
         ))}
@@ -232,9 +279,9 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
         <div className="mt-6 text-center z-10">
           <div className="flex items-center justify-center gap-3 mb-1">
             <span className="text-3xl drop-shadow-lg">{subcategory?.icon}</span>
-            <span className="text-2xl font-bold text-white drop-shadow-lg">{trendValue}</span>
+            <span className={`text-2xl font-bold ${classes.text} drop-shadow-lg`}>{trendValue}</span>
           </div>
-          <p className="text-sm text-gray-300">{trendLabel}</p>
+          <p className={`text-sm ${classes.textSecondary}`}>{trendLabel}</p>
           <div className="mt-4 h-12 flex items-end gap-1 px-4">
             {[40, 35, 45, 30, 50, 42, 38, 55, 48, 60, 52, 65].map((h, i) => (
               <div
