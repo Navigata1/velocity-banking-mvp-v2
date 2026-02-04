@@ -169,6 +169,20 @@ The income/expense quick-adjust sliders use non-linear breakpoints:
 - Gradual acceleration through $10K, $100K to $10M
 - Better UX for users across all income levels
 
+### Subcategory Dropdowns
+Click an active domain tab to reveal a dropdown with subcategory options:
+- **Auto**: Sedan, Sports Car, SUV, Motorcycle, Pickup Truck, Semi Truck
+- **House**: Starter Home, Family Home, Townhouse, Condo, Luxury Home, Mansion
+- **Land**: Building Lot, Acreage, Farmland, Ranch, Commercial, Estate
+- **Credit Card**: Basic, Rewards, Store Card, Premium, Platinum, Black Card
+- **Student Loan**: Community College, State University, Private, Graduate, Professional, Doctorate
+- **Medical**: Routine Care, Dental, Emergency, Surgery, Specialist, Major Medical
+- **Personal Loan**: Small, Medium, Consolidation, Large, Signature, Premium
+- **Recreation**: Jet Ski, Boat, RV, Yacht, Super Yacht, Private Jet
+- **Custom**: Other Asset, Business, Equipment, Jewelry, Art/Collectibles, Crypto/Investments
+
+Selected subcategory icons appear in the navigation and hero visual.
+
 ### Auto-Cycling Highlight
 Action items cycle every 5 seconds with a subtle ring highlight.
 
@@ -218,6 +232,8 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 - 2026-02-03: Generated AI hero images for all 9 domains (professional photography style)
 - 2026-02-03: Added AI Assistant chatbot with velocity banking Q&A
 - 2026-02-03: Improved dual sliders with non-linear breakpoints favoring low-income users
+- 2026-02-04: Added subcategory dropdowns for all 9 domains (click active tab to reveal options)
+- 2026-02-04: Subcategory icons reflect in navigation and hero visuals for personalization
 
 ## User Preferences
 
