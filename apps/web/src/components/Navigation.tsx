@@ -58,16 +58,14 @@ export default function Navigation() {
     <>
       <nav className={`fixed bottom-0 left-0 right-0 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
         <div className="px-4 py-2 md:p-6">
-          <div className="hidden md:block mb-8">
-            <div className="flex flex-col items-center gap-3">
-              <img 
-                src="/logo.jpg" 
-                alt="InterestShield Logo" 
-                className="w-20 h-20 rounded-2xl object-cover shadow-lg shadow-emerald-500/20"
-              />
-              <div className="text-center">
-                <h1 className={`text-xl font-bold ${classes.text}`}>InterestShield</h1>
-                <p className={`text-[10px] ${classes.textSecondary} tracking-wide uppercase`}>Powered by Velocity Banking</p>
+          <div className="hidden md:block mb-6">
+            <div className="flex flex-col items-center">
+              <div className="w-48 h-32 rounded-2xl overflow-hidden shadow-lg shadow-emerald-500/20">
+                <img 
+                  src="/logo.jpg" 
+                  alt="InterestShield Logo" 
+                  className="w-[200%] max-w-none -translate-x-1/4 -translate-y-6"
+                />
               </div>
             </div>
           </div>
