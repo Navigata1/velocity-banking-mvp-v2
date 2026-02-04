@@ -60,13 +60,11 @@ export default function Navigation() {
         <div className="px-4 py-2 md:p-6">
           <div className="hidden md:block mb-8">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg shadow-emerald-500/20 flex-shrink-0">
-                <img 
-                  src="/logo.jpg" 
-                  alt="InterestShield Logo" 
-                  className="w-[200%] max-w-none -translate-x-1/4 translate-y-0.5"
-                />
-              </div>
+              <img 
+                src="/logo.jpg" 
+                alt="InterestShield Logo" 
+                className="w-12 h-12 rounded-xl object-contain shadow-lg shadow-emerald-500/20 flex-shrink-0"
+              />
               <div>
                 <h1 className={`text-xl font-bold ${classes.text}`}>InterestShield</h1>
                 <p className={`text-[10px] ${classes.textSecondary} tracking-wide uppercase`}>Powered by Velocity Banking</p>
