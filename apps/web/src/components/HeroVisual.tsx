@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Domain, useFinancialStore, domainSubcategories } from '@/stores/financial-store';
+import { Domain, useFinancialStore } from '@/stores/financial-store';
 import { useState, useEffect } from 'react';
 
 interface HotspotProps {

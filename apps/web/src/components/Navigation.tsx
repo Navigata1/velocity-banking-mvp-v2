@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useEffect, useState, useCallback } from 'react';
@@ -108,34 +109,87 @@ export default function Navigation() {
             
             <button
               onClick={() => setShowAI(true)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800 md:mt-4 md:border-t md:border-gray-700 md:pt-4"
+              className="md:hidden flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800"
             >
-              <span className="text-xl">🤖</span>
-              <span className="hidden md:inline">AI Assistant</span>
+              <span className="text-xl">🛡️</span>
             </button>
           </div>
         </div>
-        <div className="hidden md:block absolute bottom-6 left-6 right-6">
-          <p className="text-xs text-gray-500 text-center">
+        
+        <div className="hidden md:flex flex-col items-center absolute bottom-4 left-4 right-4">
+          <button
+            onClick={() => setShowAI(true)}
+            className="group relative w-full flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br from-emerald-900/40 to-slate-900/60 border border-emerald-700/30 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/10"
+            style={{
+              perspective: '500px',
+            }}
+          >
+            <div 
+              className="relative w-16 h-16 group-hover:scale-110 transition-transform duration-300"
+              style={{
+                animation: 'float 3s ease-in-out infinite',
+              }}
+            >
+              <Image
+                src="/shield-guardian.png"
+                alt="Shield Guardian"
+                fill
+                sizes="64px"
+                loading="eager"
+                className="object-contain drop-shadow-lg"
+                style={{
+                  filter: 'drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3))',
+                }}
+              />
+            </div>
+            <span className="text-sm font-medium text-emerald-400 group-hover:text-emerald-300">Shield Guardian</span>
+            <span className="text-xs text-gray-500">Ask me anything</span>
+          </button>
+          
+          <p className="text-xs text-gray-500 text-center mt-3">
             Educational tool. Not financial advice.
           </p>
         </div>
+        
       </nav>
+      
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotateY(0deg); }
+          50% { transform: translateY(-5px) rotateY(10deg); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.9; transform: scale(1.05); }
+        }
+      `}</style>
 
       {showAI && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-800 rounded-2xl border border-slate-700 w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🛡️</span>
+            <div className="flex items-center justify-between p-4 border-b border-slate-700 bg-gradient-to-r from-emerald-900/30 to-transparent">
+              <div className="flex items-center gap-4">
+                <div className="relative w-14 h-14">
+                  <Image
+                    src="/shield-guardian.png"
+                    alt="Shield Guardian"
+                    fill
+                    sizes="56px"
+                    className="object-contain"
+                    style={{
+                      filter: 'drop-shadow(0 4px 12px rgba(16, 185, 129, 0.4))',
+                      animation: 'pulse 2s ease-in-out infinite',
+                    }}
+                  />
+                </div>
                 <div>
-                  <h3 className="text-white font-semibold">Shield Guardian</h3>
-                  <p className="text-gray-400 text-sm">Your interest protection guide</p>
+                  <h3 className="text-white font-semibold text-lg">Shield Guardian</h3>
+                  <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowAI(false)}
-                className="text-gray-400 hover:text-white p-2"
+                className="text-gray-400 hover:text-white p-2 hover:bg-slate-700 rounded-lg transition-colors"
               >
                 ✕
               </button>

@@ -234,6 +234,12 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 - 2026-02-03: Improved dual sliders with non-linear breakpoints favoring low-income users
 - 2026-02-04: Added subcategory dropdowns for all 9 domains (click active tab to reveal options)
 - 2026-02-04: Subcategory icons reflect in navigation and hero visuals for personalization
+- 2026-02-04: Rebranded from VelocityBank to InterestShield
+- 2026-02-04: Generated 54 AI hero images for all subcategories (9 domains x 6 each)
+- 2026-02-04: Immersive 3D hero container with gradients, glow effects, and soft rounded corners
+- 2026-02-04: Added 3D rotation animation to hero images (racing game car selection style)
+- 2026-02-04: Created Shield Guardian mascot with animated floating effect in navigation
+- 2026-02-04: Domain background color shifts locked as permanent feature
 
 ## User Preferences
 
