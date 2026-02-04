@@ -28,6 +28,7 @@ export const themeClasses: Record<Theme, {
   bgTertiary: string;
   text: string;
   textSecondary: string;
+  textMuted: string;
   border: string;
   glass: string;
   glassButton: string;
@@ -42,6 +43,7 @@ export const themeClasses: Record<Theme, {
     bgTertiary: 'bg-slate-700',
     text: 'text-white',
     textSecondary: 'text-gray-400',
+    textMuted: 'text-gray-500',
     border: 'border-slate-700',
     glass: 'bg-slate-800/60 backdrop-blur-xl border border-slate-600/40 shadow-lg shadow-emerald-500/5',
     glassButton: 'bg-gradient-to-br from-slate-700/80 via-slate-800/60 to-slate-900/80 backdrop-blur-xl border border-slate-500/30 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300',
@@ -55,6 +57,7 @@ export const themeClasses: Record<Theme, {
     bgTertiary: 'bg-zinc-800',
     text: 'text-white',
     textSecondary: 'text-zinc-400',
+    textMuted: 'text-zinc-500',
     border: 'border-zinc-800',
     glass: 'bg-zinc-900/70 backdrop-blur-xl border border-zinc-700/50 shadow-lg shadow-emerald-500/5',
     glassButton: 'bg-gradient-to-br from-zinc-800/90 via-zinc-900/70 to-black/90 backdrop-blur-xl border border-zinc-600/40 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:border-emerald-500/40 transition-all duration-300',
@@ -68,6 +71,7 @@ export const themeClasses: Record<Theme, {
     bgTertiary: 'bg-gray-50',
     text: 'text-slate-800',
     textSecondary: 'text-slate-600',
+    textMuted: 'text-slate-500',
     border: 'border-gray-300',
     glass: 'bg-white/85 backdrop-blur-xl border border-gray-300/70 shadow-lg shadow-gray-400/20',
     glassButton: 'bg-gradient-to-br from-white/95 via-gray-100/85 to-gray-200/95 backdrop-blur-xl border border-gray-300/60 shadow-lg shadow-gray-400/30 hover:shadow-emerald-500/30 hover:border-emerald-500/50 transition-all duration-300',

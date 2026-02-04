@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useThemeStore } from '@/stores/theme-store';
 
 interface EditableNumberProps {
   value: number;
@@ -99,6 +100,8 @@ export function EditableNumber({
     }
   };
 
+  const { theme } = useThemeStore();
+  
   const sizeClasses = {
     sm: 'text-sm px-2 py-1',
     md: 'text-lg px-3 py-2',
@@ -113,12 +116,23 @@ export function EditableNumber({
     xl: 'text-3xl',
   };
 
+  const inputBgClass = theme === 'light' 
+    ? 'bg-white border border-emerald-500 text-slate-800' 
+    : 'bg-slate-700 border border-emerald-500 text-white';
+  
+  const buttonHoverClass = theme === 'light'
+    ? 'hover:bg-gray-200/50'
+    : 'hover:bg-slate-700/50';
+  
+  const textClass = theme === 'light' ? 'text-slate-800' : 'text-white';
+  const mutedClass = theme === 'light' ? 'text-slate-500' : 'text-gray-400';
+
   if (isEditing) {
     return (
       <div className={`inline-flex flex-col ${className}`}>
-        {label && <span className="text-xs text-gray-500 mb-1">{label}</span>}
+        {label && <span className={`text-xs ${mutedClass} mb-1`}>{label}</span>}
         <div className="flex items-center gap-1">
-          {prefix && <span className="text-gray-400">{prefix}</span>}
+          {prefix && <span className={mutedClass}>{prefix}</span>}
           <input
             ref={inputRef}
             type="text"
@@ -128,9 +142,9 @@ export function EditableNumber({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             step={step}
-            className={`bg-slate-700 border border-emerald-500 rounded-lg font-mono text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 ${sizeClasses[size]} w-32`}
+            className={`${inputBgClass} rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 ${sizeClasses[size]} w-32`}
           />
-          {suffix && <span className="text-gray-400">{suffix}</span>}
+          {suffix && <span className={mutedClass}>{suffix}</span>}
         </div>
       </div>
     );
@@ -138,15 +152,15 @@ export function EditableNumber({
 
   return (
     <div className={`inline-flex flex-col ${className}`}>
-      {label && <span className="text-xs text-gray-500 mb-1">{label}</span>}
+      {label && <span className={`text-xs ${mutedClass} mb-1`}>{label}</span>}
       <button
         onClick={handleClick}
-        className={`group inline-flex items-center gap-1 hover:bg-slate-700/50 rounded-lg px-2 py-1 transition-colors cursor-pointer border border-transparent hover:border-emerald-500/50 ${displaySizeClasses[size]} font-mono text-white`}
+        className={`group inline-flex items-center gap-1 ${buttonHoverClass} rounded-lg px-2 py-1 transition-colors cursor-pointer border border-transparent hover:border-emerald-500/50 ${displaySizeClasses[size]} font-mono ${textClass}`}
         title="Click to edit"
       >
         {prefix && <span>{prefix}</span>}
         <span>{formatDisplay(value)}</span>
-        {suffix && <span className="text-gray-400">{suffix}</span>}
+        {suffix && <span className={mutedClass}>{suffix}</span>}
         <svg 
           className="w-3 h-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity ml-1" 
           fill="none" 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useMemo } from 'react';
+import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 interface DualSliderProps {
   incomeValue: number;
@@ -71,6 +72,9 @@ function formatCompactCurrency(value: number): string {
 }
 
 export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, onExpenseChange }: DualSliderProps) {
+  const { theme } = useThemeStore();
+  const classes = themeClasses[theme];
+  
   const incomeSlider = useMemo(() => valueToSlider(incomeValue), [incomeValue]);
   const expenseSlider = useMemo(() => valueToSlider(expenseValue), [expenseValue]);
 
@@ -84,16 +88,18 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
     onExpenseChange(roundToNice(rawValue));
   }, [onExpenseChange]);
 
+  const sliderTrackColor = theme === 'light' ? '#d1d5db' : '#475569';
+
   return (
-    <div className="mt-4 p-3 bg-slate-700/50 rounded-xl border border-slate-600/50">
+    <div className={`mt-4 p-3 ${classes.glass} rounded-xl border border-gray-400/30`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-emerald-400 font-medium">Quick Adjust</span>
-        <span className="text-xs text-gray-500">Slide to estimate</span>
+        <span className="text-xs text-emerald-500 font-medium">Quick Adjust</span>
+        <span className={`text-xs ${classes.textMuted}`}>Slide to estimate</span>
       </div>
       
       <div className="space-y-3">
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-400 w-16">Income</span>
+          <span className={`text-xs ${classes.textSecondary} w-16`}>Income</span>
           <div className="flex-1 relative">
             <input
               type="range"
@@ -102,7 +108,7 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
               step="0.1"
               value={incomeSlider}
               onChange={handleIncomeSlider}
-              className="w-full h-1.5 bg-slate-600 rounded-full appearance-none cursor-pointer
+              className="w-full h-1.5 rounded-full appearance-none cursor-pointer
                 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-emerald-500 
                 [&::-webkit-slider-thumb]:hover:bg-emerald-400 [&::-webkit-slider-thumb]:transition-colors
@@ -110,15 +116,15 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
                 [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full 
                 [&::-moz-range-thumb]:bg-emerald-500 [&::-moz-range-thumb]:border-0"
               style={{
-                background: `linear-gradient(to right, #10b981 0%, #10b981 ${incomeSlider}%, #475569 ${incomeSlider}%, #475569 100%)`
+                background: `linear-gradient(to right, #10b981 0%, #10b981 ${incomeSlider}%, ${sliderTrackColor} ${incomeSlider}%, ${sliderTrackColor} 100%)`
               }}
             />
           </div>
-          <span className="text-xs text-emerald-400 font-medium w-16 text-right">{formatCompactCurrency(incomeValue)}</span>
+          <span className="text-xs text-emerald-500 font-medium w-16 text-right">{formatCompactCurrency(incomeValue)}</span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-400 w-16">Expenses</span>
+          <span className={`text-xs ${classes.textSecondary} w-16`}>Expenses</span>
           <div className="flex-1 relative">
             <input
               type="range"
@@ -127,7 +133,7 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
               step="0.1"
               value={expenseSlider}
               onChange={handleExpenseSlider}
-              className="w-full h-1.5 bg-slate-600 rounded-full appearance-none cursor-pointer
+              className="w-full h-1.5 rounded-full appearance-none cursor-pointer
                 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-amber-500 
                 [&::-webkit-slider-thumb]:hover:bg-amber-400 [&::-webkit-slider-thumb]:transition-colors
@@ -135,15 +141,15 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
                 [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full 
                 [&::-moz-range-thumb]:bg-amber-500 [&::-moz-range-thumb]:border-0"
               style={{
-                background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${expenseSlider}%, #475569 ${expenseSlider}%, #475569 100%)`
+                background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${expenseSlider}%, ${sliderTrackColor} ${expenseSlider}%, ${sliderTrackColor} 100%)`
               }}
             />
           </div>
-          <span className="text-xs text-amber-400 font-medium w-16 text-right">{formatCompactCurrency(expenseValue)}</span>
+          <span className="text-xs text-amber-500 font-medium w-16 text-right">{formatCompactCurrency(expenseValue)}</span>
         </div>
       </div>
 
-      <div className="flex justify-between mt-2 text-[10px] text-gray-500">
+      <div className={`flex justify-between mt-2 text-[10px] ${classes.textMuted}`}>
         <span>$1</span>
         <span className="opacity-50">$3K</span>
         <span className="opacity-50">$10K</span>

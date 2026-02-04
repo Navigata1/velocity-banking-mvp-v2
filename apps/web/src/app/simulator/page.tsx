@@ -49,8 +49,8 @@ export default function SimulatorPage() {
     return (
       <div className="p-6 md:p-10 max-w-6xl mx-auto">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-700 rounded w-1/3 mb-4"></div>
-          <div className="h-96 bg-slate-800 rounded-3xl"></div>
+          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-4"></div>
+          <div className="h-96 bg-gray-500/20 rounded-3xl"></div>
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ export default function SimulatorPage() {
                   onIncomeChange={store.setMonthlyIncome}
                   onExpenseChange={store.setMonthlyExpenses}
                 />
-                <div className="pt-2 border-t border-slate-700">
+                <div className="pt-2 border-t border-gray-400/30">
                   <div className="flex justify-between">
                     <span className={classes.textSecondary}>Cash Flow</span>
                     <span className={cashFlow > 0 ? 'text-emerald-400 font-bold text-xl' : 'text-red-400 font-bold text-xl'}>
@@ -189,38 +189,38 @@ export default function SimulatorPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-xl font-semibold mb-6">Results Comparison</h2>
+            <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
+              <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Results Comparison</h2>
               
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-                    <p className="text-sm text-gray-400 mb-1">Traditional</p>
+                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Traditional</p>
                     <p className="text-2xl font-bold text-red-400">{results.baseline.payoffMonths} mo</p>
-                    <p className="text-sm text-gray-500">{formatDate(results.baseline.payoffMonths)}</p>
+                    <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.baseline.payoffMonths)}</p>
                   </div>
                   <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/30">
-                    <p className="text-sm text-gray-400 mb-1">Velocity</p>
+                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Velocity</p>
                     <p className="text-2xl font-bold text-emerald-400">{results.velocity.payoffMonths} mo</p>
-                    <p className="text-sm text-gray-500">{formatDate(results.velocity.payoffMonths)}</p>
+                    <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.velocity.payoffMonths)}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-800/50 rounded-xl p-4">
-                    <p className="text-sm text-gray-400 mb-1">Traditional Interest</p>
+                  <div className={`${classes.glass} rounded-xl p-4`}>
+                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Traditional Interest</p>
                     <p className="text-xl font-bold text-red-400">{formatCurrency(results.baseline.totalInterest)}</p>
                   </div>
-                  <div className="bg-slate-800/50 rounded-xl p-4">
-                    <p className="text-sm text-gray-400 mb-1">Velocity Interest</p>
+                  <div className={`${classes.glass} rounded-xl p-4`}>
+                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Velocity Interest</p>
                     <p className="text-xl font-bold text-emerald-400">{formatCurrency(results.velocity.totalInterest)}</p>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-emerald-500/20 to-amber-500/20 rounded-xl p-6 text-center">
-                  <p className="text-gray-400 mb-2">Potential Savings</p>
+                <div className={`${classes.glass} rounded-xl p-6 text-center border border-emerald-500/30`}>
+                  <p className={`${classes.textSecondary} mb-2`}>Potential Savings</p>
                   <p className="text-3xl font-bold text-emerald-400">{formatCurrency(results.velocity.interestSaved)}</p>
-                  <p className="text-amber-400 mt-2">{results.velocity.monthsSaved} months faster</p>
+                  <p className="text-amber-500 mt-2">{results.velocity.monthsSaved} months faster</p>
                 </div>
               </div>
             </div>

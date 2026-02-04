@@ -147,7 +147,7 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Your Current Age</label>
+              <label className={`block text-sm ${classes.textSecondary} mb-2`}>Your Current Age</label>
               <EditableNumber
                 value={store.currentAge}
                 onChange={store.setCurrentAge}
@@ -156,7 +156,7 @@ export default function VaultPage() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Mortgage Balance</label>
+              <label className={`block text-sm ${classes.textSecondary} mb-2`}>Mortgage Balance</label>
               <EditableCurrency
                 value={store.debts.house.balance}
                 onChange={(val) => store.updateDebt('house', { balance: val })}
@@ -164,7 +164,7 @@ export default function VaultPage() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Interest Rate</label>
+              <label className={`block text-sm ${classes.textSecondary} mb-2`}>Interest Rate</label>
               <EditablePercentage
                 value={store.debts.house.interestRate}
                 onChange={(val) => store.updateDebt('house', { interestRate: val })}
@@ -172,7 +172,7 @@ export default function VaultPage() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Years Remaining</label>
+              <label className={`block text-sm ${classes.textSecondary} mb-2`}>Years Remaining</label>
               <EditableNumber
                 value={Math.ceil(store.debts.house.termMonths / 12)}
                 onChange={(val) => store.updateDebt('house', { termMonths: val * 12 })}
@@ -180,7 +180,7 @@ export default function VaultPage() {
                 size="xl"
               />
             </div>
-            <p className="text-sm text-gray-500 text-center">Click any number to edit</p>
+            <p className={`text-sm ${classes.textMuted} text-center`}>Click any number to edit</p>
           </div>
         );
 
@@ -188,27 +188,27 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <div className="text-center py-4">
-              <div className="text-gray-400 mb-2">Your monthly payment</div>
-              <div className="text-3xl font-mono text-white">
+              <div className={`${classes.textSecondary} mb-2`}>Your monthly payment</div>
+              <div className={`text-3xl font-mono ${classes.text}`}>
                 {formatCurrency(calculations.traditional.monthlyPayment)}
               </div>
             </div>
             
-            <div className="bg-gray-500/20 rounded-xl p-6 space-y-4">
+            <div className={`${classes.glass} rounded-xl p-6 space-y-4`}>
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">Total you&apos;ll pay over {Math.ceil(store.debts.house.termMonths / 12)} years</span>
-                <span className="text-2xl font-mono text-white">
+                <span className={classes.textSecondary}>Total you&apos;ll pay over {Math.ceil(store.debts.house.termMonths / 12)} years</span>
+                <span className={`text-2xl font-mono ${classes.text}`}>
                   <AnimatedNumber value={calculations.traditional.totalPaid} />
                 </span>
               </div>
               <div className="border-t border-gray-400/30 pt-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400">Your home (principal)</span>
-                  <span className="text-emerald-400 font-mono">{formatCurrency(store.debts.house.balance)}</span>
+                  <span className={classes.textSecondary}>Your home (principal)</span>
+                  <span className="text-emerald-500 font-mono">{formatCurrency(store.debts.house.balance)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Bank&apos;s cut (interest)</span>
-                  <span className="text-red-400 font-mono text-xl">
+                  <span className={classes.textSecondary}>Bank&apos;s cut (interest)</span>
+                  <span className="text-red-500 font-mono text-xl">
                     <AnimatedNumber value={calculations.traditional.totalInterest} />
                   </span>
                 </div>
@@ -217,7 +217,7 @@ export default function VaultPage() {
             
             <div className="text-center">
               <ProgressBar progress={(calculations.traditional.totalInterest / calculations.traditional.totalPaid) * 100} color="red" />
-              <p className="text-gray-500 mt-2 text-sm">
+              <p className={`${classes.textMuted} mt-2 text-sm`}>
                 {Math.round((calculations.traditional.totalInterest / calculations.traditional.totalPaid) * 100)}% of your payments go to the bank
               </p>
             </div>
@@ -228,24 +228,24 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="text-gray-400 mb-2">Traditional path: You&apos;ll be debt-free at age</div>
-              <div className="text-5xl font-bold text-red-400">{calculations.payoffAge}</div>
+              <div className={`${classes.textSecondary} mb-2`}>Traditional path: You&apos;ll be debt-free at age</div>
+              <div className="text-5xl font-bold text-red-500">{calculations.payoffAge}</div>
             </div>
             
             <div className="relative py-8">
               <div className="mb-8">
-                <div className="text-sm text-gray-400 mb-2">Traditional Path (30-year mortgage)</div>
+                <div className={`text-sm ${classes.textSecondary} mb-2`}>Traditional Path (30-year mortgage)</div>
                 <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full" />
                 </div>
-                <div className="flex justify-between mt-1 text-xs text-gray-500">
+                <div className={`flex justify-between mt-1 text-xs ${classes.textMuted}`}>
                   <span>Age {store.currentAge}</span>
                   <span>Age {calculations.payoffAge}</span>
                 </div>
               </div>
               
               <div>
-                <div className="text-sm text-emerald-400 mb-2">Velocity Banking Path</div>
+                <div className="text-sm text-emerald-500 mb-2">Velocity Banking Path</div>
                 <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
                   <div 
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"
@@ -257,16 +257,16 @@ export default function VaultPage() {
                   />
                 </div>
                 <div className="flex justify-between mt-1 text-xs">
-                  <span className="text-gray-500">Age {store.currentAge}</span>
-                  <span className="text-emerald-400">Debt-free at {calculations.velocityPayoffAge}</span>
-                  <span className="text-amber-400">Building wealth</span>
+                  <span className={classes.textMuted}>Age {store.currentAge}</span>
+                  <span className="text-emerald-500">Debt-free at {calculations.velocityPayoffAge}</span>
+                  <span className="text-amber-500">Building wealth</span>
                 </div>
               </div>
             </div>
             
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-6 text-center">
-              <div className="text-gray-400 mb-2">Years of freedom you&apos;d gain</div>
-              <div className="text-4xl font-bold text-emerald-400">
+              <div className={`${classes.textSecondary} mb-2`}>Years of freedom you&apos;d gain</div>
+              <div className="text-4xl font-bold text-emerald-500">
                 {calculations.payoffAge - calculations.velocityPayoffAge} years
               </div>
             </div>
@@ -277,38 +277,38 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-white mb-2">The Generational Picture</h3>
-              <p className="text-gray-400">What banks extract over 3 generations</p>
+              <h3 className={`text-2xl font-bold ${classes.text} mb-2`}>The Generational Picture</h3>
+              <p className={classes.textSecondary}>What banks extract over 3 generations</p>
             </div>
             
             <div className="space-y-4">
-              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
-                <span className="text-gray-400">Your parents&apos; mortgage interest</span>
-                <span className="text-red-400 font-mono">{formatCurrency(calculations.parentsMortgageInterest)}</span>
+              <div className={`${classes.glass} rounded-xl p-4 flex justify-between items-center`}>
+                <span className={classes.textSecondary}>Your parents&apos; mortgage interest</span>
+                <span className="text-red-500 font-mono">{formatCurrency(calculations.parentsMortgageInterest)}</span>
               </div>
-              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
-                <span className="text-gray-400">Your mortgage interest</span>
-                <span className="text-red-400 font-mono">{formatCurrency(calculations.traditional.totalInterest)}</span>
+              <div className={`${classes.glass} rounded-xl p-4 flex justify-between items-center`}>
+                <span className={classes.textSecondary}>Your mortgage interest</span>
+                <span className="text-red-500 font-mono">{formatCurrency(calculations.traditional.totalInterest)}</span>
               </div>
-              <div className="bg-gray-500/20 rounded-xl p-4 flex justify-between items-center">
-                <span className="text-gray-400">Your child&apos;s projected interest</span>
-                <span className="text-red-400 font-mono">{formatCurrency(calculations.childMortgageInterest)}</span>
+              <div className={`${classes.glass} rounded-xl p-4 flex justify-between items-center`}>
+                <span className={classes.textSecondary}>Your child&apos;s projected interest</span>
+                <span className="text-red-500 font-mono">{formatCurrency(calculations.childMortgageInterest)}</span>
               </div>
             </div>
             
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6 text-center">
-              <div className="text-gray-400 mb-2">Total transferred to banks (3 generations)</div>
-              <div className="text-4xl font-bold text-red-400">
+              <div className={`${classes.textSecondary} mb-2`}>Total transferred to banks (3 generations)</div>
+              <div className="text-4xl font-bold text-red-500">
                 <AnimatedNumber value={calculations.totalGenerational} />
               </div>
             </div>
             
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 text-center">
-              <div className="text-gray-400 mb-2">If invested instead (50 years @ {(investmentRate * 100).toFixed(0)}%)</div>
-              <div className="text-4xl font-bold text-amber-400">
+              <div className={`${classes.textSecondary} mb-2`}>If invested instead (50 years @ {(investmentRate * 100).toFixed(0)}%)</div>
+              <div className="text-4xl font-bold text-amber-500">
                 <AnimatedNumber value={calculations.generationalFutureValue} />
               </div>
-              <p className="text-sm text-gray-500 mt-2">This could have been generational wealth</p>
+              <p className={`text-sm ${classes.textMuted} mt-2`}>This could have been generational wealth</p>
               <div className="mt-4">
                 <EditablePercentage 
                   value={investmentRate} 
@@ -325,39 +325,39 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-white mb-2">Your Alternative Future</h3>
-              <p className="text-gray-400">With velocity banking strategy</p>
+              <h3 className={`text-2xl font-bold ${classes.text} mb-2`}>Your Alternative Future</h3>
+              <p className={classes.textSecondary}>With velocity banking strategy</p>
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-6 text-center">
-                <div className="text-gray-400 text-sm mb-2">Interest Saved</div>
-                <div className="text-2xl font-bold text-emerald-400">
+                <div className={`${classes.textSecondary} text-sm mb-2`}>Interest Saved</div>
+                <div className="text-2xl font-bold text-emerald-500">
                   {formatCurrency(calculations.moneySaved)}
                 </div>
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6 text-center">
-                <div className="text-gray-400 text-sm mb-2">Years of Investing</div>
-                <div className="text-2xl font-bold text-blue-400">
+                <div className={`${classes.textSecondary} text-sm mb-2`}>Years of Investing</div>
+                <div className="text-2xl font-bold text-blue-500">
                   {calculations.yearsOfInvesting} years
                 </div>
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-emerald-500/20 to-amber-500/20 rounded-xl p-8 text-center border border-emerald-500/30">
-              <div className="text-gray-400 mb-2">Potential Portfolio Value</div>
-              <div className="text-5xl font-bold text-emerald-400">
+            <div className={`${classes.glass} rounded-xl p-8 text-center border border-emerald-500/30`}>
+              <div className={`${classes.textSecondary} mb-2`}>Potential Portfolio Value</div>
+              <div className="text-5xl font-bold text-emerald-500">
                 <AnimatedNumber value={calculations.investmentGrowth} />
               </div>
-              <p className="text-sm text-gray-500 mt-4">
+              <p className={`text-sm ${classes.textMuted} mt-4`}>
                 By investing your freed-up mortgage payment for {calculations.yearsOfInvesting} years @ {(investmentRate * 100).toFixed(0)}% return
               </p>
             </div>
             
             <div className="text-center">
-              <p className="text-gray-400">
+              <p className={classes.textSecondary}>
                 This is wealth you can pass on to the next generation, 
-                <span className="text-emerald-400"> breaking the cycle.</span>
+                <span className="text-emerald-500"> breaking the cycle.</span>
               </p>
             </div>
 

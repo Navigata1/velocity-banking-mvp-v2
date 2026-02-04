@@ -141,45 +141,142 @@ export default function CockpitPage() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col items-center">
-            <div className="relative w-64 h-64">
-              <svg viewBox="0 0 200 200" className="w-full h-full">
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="4"
-                />
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="80"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.05)"
-                  strokeWidth="2"
-                />
-                <line
-                  x1="100"
-                  y1="100"
-                  x2="100"
-                  y2="30"
-                  stroke={turbulence ? '#f59e0b' : '#10b981'}
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  className={turbulence ? 'animate-pulse' : ''}
-                />
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="8"
-                  fill={turbulence ? '#f59e0b' : '#10b981'}
-                />
-                <text x="100" y="160" textAnchor="middle" fill="#9ca3af" fontSize="12">
-                  DEBT-FREE HEADING
-                </text>
-              </svg>
+          {/* Flight Simulator Panel */}
+          <div className={`mt-8 relative rounded-3xl overflow-hidden ${
+            theme === 'light' 
+              ? 'bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900' 
+              : theme === 'dark'
+              ? 'bg-gradient-to-b from-zinc-800 via-zinc-900 to-black'
+              : 'bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900'
+          } border-4 ${theme === 'light' ? 'border-slate-500' : theme === 'dark' ? 'border-zinc-600' : 'border-slate-600'}`}>
+            {/* Cockpit frame with rivets */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-2 left-4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute top-2 right-4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute bottom-2 left-4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute bottom-2 right-4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute top-2 left-1/4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute top-2 right-1/4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute bottom-2 left-1/4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+              <div className="absolute bottom-2 right-1/4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
+            </div>
+
+            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+              {/* Left panel - Altitude/Progress gauge */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 border-2 border-zinc-500 shadow-inner">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                    <circle 
+                      cx="50" 
+                      cy="50" 
+                      r="40" 
+                      fill="none" 
+                      stroke="#10b981" 
+                      strokeWidth="3" 
+                      strokeDasharray={`${((currentDebt.balance / 50000) * 100) * 2.51} 251`}
+                      strokeLinecap="round"
+                      transform="rotate(-90 50 50)"
+                      className="opacity-60"
+                    />
+                    <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">ALTITUDE</text>
+                    <text x="50" y="58" textAnchor="middle" fill="#10b981" fontSize="12" fontFamily="monospace">
+                      {(((50000 - currentDebt.balance) / 50000) * 100).toFixed(0)}%
+                    </text>
+                  </svg>
+                </div>
+                <span className="text-xs text-zinc-400 mt-2">Progress to Freedom</span>
+              </div>
+
+              {/* Center - Main Heading Dial */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-gradient-to-br from-zinc-800 to-black border-4 border-zinc-500 shadow-2xl">
+                  <svg viewBox="0 0 200 200" className="w-full h-full">
+                    <defs>
+                      <radialGradient id="dialGradient" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#27272a" />
+                        <stop offset="100%" stopColor="#18181b" />
+                      </radialGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="url(#dialGradient)" />
+                    <circle
+                      cx="100"
+                      cy="100"
+                      r="85"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.15)"
+                      strokeWidth="2"
+                    />
+                    <circle
+                      cx="100"
+                      cy="100"
+                      r="75"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth="1"
+                    />
+                    {/* Tick marks */}
+                    {[...Array(12)].map((_, i) => {
+                      const angle = (i * 30 - 90) * (Math.PI / 180);
+                      const x1 = 100 + 70 * Math.cos(angle);
+                      const y1 = 100 + 70 * Math.sin(angle);
+                      const x2 = 100 + 80 * Math.cos(angle);
+                      const y2 = 100 + 80 * Math.sin(angle);
+                      return (
+                        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+                      );
+                    })}
+                    {/* Needle */}
+                    <line
+                      x1="100"
+                      y1="100"
+                      x2="100"
+                      y2="30"
+                      stroke={turbulence ? '#f59e0b' : '#10b981'}
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      className={turbulence ? 'animate-pulse' : ''}
+                      style={{ filter: `drop-shadow(0 0 8px ${turbulence ? '#f59e0b' : '#10b981'})` }}
+                    />
+                    <circle
+                      cx="100"
+                      cy="100"
+                      r="10"
+                      fill={turbulence ? '#f59e0b' : '#10b981'}
+                      style={{ filter: `drop-shadow(0 0 6px ${turbulence ? '#f59e0b' : '#10b981'})` }}
+                    />
+                    <text x="100" y="160" textAnchor="middle" fill="#9ca3af" fontSize="10" fontFamily="monospace">
+                      DEBT-FREE HEADING
+                    </text>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Right panel - Fuel gauge */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 border-2 border-zinc-500 shadow-inner">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                    <circle 
+                      cx="50" 
+                      cy="50" 
+                      r="40" 
+                      fill="none" 
+                      stroke="#f59e0b" 
+                      strokeWidth="3" 
+                      strokeDasharray={`${((cashFlow / 3000) * 100) * 2.51} 251`}
+                      strokeLinecap="round"
+                      transform="rotate(-90 50 50)"
+                      className="opacity-60"
+                    />
+                    <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">FUEL</text>
+                    <text x="50" y="58" textAnchor="middle" fill="#f59e0b" fontSize="12" fontFamily="monospace">
+                      {formatCurrency(cashFlow)}
+                    </text>
+                  </svg>
+                </div>
+                <span className="text-xs text-zinc-400 mt-2">Cash Flow Rate</span>
+              </div>
             </div>
           </div>
         </div>
