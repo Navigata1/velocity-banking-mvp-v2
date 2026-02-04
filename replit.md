@@ -206,6 +206,11 @@ Action items cycle every 5 seconds with a subtle ring highlight.
 
 ## Recent Changes
 
+- 2026-02-04: Generated 250 curated Q&A responses for Shield Guardian AI assistant
+- 2026-02-04: Created three-theme system (Original dark, Black deeper, Light white/grey)
+- 2026-02-04: Applied liquid glass effects to all buttons, cards, hero visuals, and panels
+- 2026-02-04: Repositioned Shield Guardian under Wealth Timeline for better visibility
+- 2026-02-04: Updated all components with theme-aware styling (Navigation, DomainTabs, VitalsGrid, ActionFeed, Learn, Simulator)
 - 2026-02-03: Initial setup with Next.js 16, TypeScript, Tailwind CSS
 - 2026-02-03: Implemented all 5 routes with core functionality
 - 2026-02-03: Added calculation engine in `/engine/calculations.ts`
