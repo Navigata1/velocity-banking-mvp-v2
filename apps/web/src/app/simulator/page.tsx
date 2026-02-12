@@ -27,12 +27,12 @@ export default function SimulatorPage() {
       monthlyExpenses: store.monthlyExpenses,
       carLoan: {
         balance: debt.balance,
-        apr: debt.interestRate * 100,
+        apr: debt.interestRate,
         monthlyPayment: debt.minimumPayment,
       },
       loc: {
         limit: store.loc.limit,
-        apr: store.loc.interestRate * 100,
+        apr: store.loc.interestRate,
         balance: store.loc.balance,
       },
       useVelocity: true,
