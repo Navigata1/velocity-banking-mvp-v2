@@ -61,6 +61,7 @@ export default function Navigation() {
     { href: '/simulator', label: 'Simulator', icon: '📊' },
     { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
     { href: '/learn', label: 'Learn', icon: '📚' },
+    { href: '/portfolio', label: 'Portfolio', icon: '📋' },
     { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
   ];
 
