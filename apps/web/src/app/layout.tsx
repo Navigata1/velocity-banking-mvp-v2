@@ -18,6 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "InterestShield - Financial Empowerment",
   description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: '/icon-192.png', sizes: '192x192' },
+  },
 };
 
 export default function RootLayout({

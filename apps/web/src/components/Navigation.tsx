@@ -73,9 +73,11 @@ export default function Navigation() {
           <div className="hidden md:block mb-8">
             <div className="flex items-center gap-3">
               <img 
-                src="/logo.jpg" 
+                src="/icon-32.png" 
                 alt="InterestShield Logo" 
-                className="w-12 h-12 rounded-xl object-contain shadow-lg shadow-emerald-500/20 flex-shrink-0"
+                width={32}
+                height={32}
+                className="w-8 h-8 flex-shrink-0"
               />
               <div>
                 <h1 className={`text-xl font-bold ${classes.text}`}>InterestShield</h1>
