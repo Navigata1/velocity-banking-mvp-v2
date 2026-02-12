@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import Link from 'next/link';
 
@@ -22,19 +22,264 @@ interface Lesson {
   subtitle: string;
   duration: string;
   icon: string;
-  color: string; // tailwind color prefix e.g. 'emerald', 'blue'
+  color: string;
   content: string[];
   keyTakeaway: string;
   deepDive: string;
   quiz: Quiz;
   investopediaUrl: string;
   investopediaLabel: string;
+  simulatorFocus: string;
 }
 
 interface GlossaryItem {
   term: string;
   definition: string;
   url: string;
+}
+
+/* ──────────────────────────────────────────────────────────
+   PARTICLE COLORS
+   ────────────────────────────────────────────────────────── */
+
+const RAINBOW = [
+  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+  '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+];
+
+/* ──────────────────────────────────────────────────────────
+   CONFETTI EXPLOSION (canvas-based for performance)
+   ────────────────────────────────────────────────────────── */
+
+interface Particle {
+  x: number; y: number;
+  vx: number; vy: number;
+  color: string;
+  size: number;
+  rotation: number;
+  rotationSpeed: number;
+  opacity: number;
+  isStar: boolean;
+}
+
+function ConfettiExplosion({ originX, originY, count = 40, duration = 2000, spread = 1, onDone }: {
+  originX: number; originY: number; count?: number; duration?: number; spread?: number; onDone?: () => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles: Particle[] = [];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = (2 + Math.random() * 6) * spread;
+      particles.push({
+        x: originX, y: originY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - Math.random() * 3,
+        color: RAINBOW[Math.floor(Math.random() * RAINBOW.length)],
+        size: 3 + Math.random() * 5,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.3,
+        opacity: 1,
+        isStar: Math.random() > 0.6,
+      });
+    }
+
+    const start = performance.now();
+    let raf: number;
+
+    function drawStar(c: CanvasRenderingContext2D, x: number, y: number, size: number, rotation: number) {
+      c.save();
+      c.translate(x, y);
+      c.rotate(rotation);
+      c.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const a = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+        if (i === 0) c.moveTo(Math.cos(a) * size, Math.sin(a) * size);
+        else c.lineTo(Math.cos(a) * size, Math.sin(a) * size);
+      }
+      c.closePath();
+      c.fill();
+      c.restore();
+    }
+
+    const c = ctx;
+    const cv = canvas;
+    function loop(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      c.clearRect(0, 0, cv.width, cv.height);
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.15;
+        p.rotation += p.rotationSpeed;
+        p.opacity = 1 - progress;
+
+        c.globalAlpha = p.opacity;
+        c.fillStyle = p.color;
+
+        if (p.isStar) {
+          drawStar(c, p.x, p.y, p.size, p.rotation);
+        } else {
+          c.beginPath();
+          c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          c.fill();
+        }
+      }
+      c.globalAlpha = 1;
+
+      if (progress < 1) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        onDone?.();
+      }
+    }
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [originX, originY, count, duration, spread, onDone]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[100]"
+      style={{ width: '100vw', height: '100vh' }}
+    />
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   GRAND FINALE — full-width raining confetti
+   ────────────────────────────────────────────────────────── */
+
+function GrandFinale({ onDone }: { onDone?: () => void }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles: Particle[] = [];
+    // Spawn particles across the top
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -10 - Math.random() * 100,
+        vx: (Math.random() - 0.5) * 3,
+        vy: 1 + Math.random() * 4,
+        color: RAINBOW[Math.floor(Math.random() * RAINBOW.length)],
+        size: 3 + Math.random() * 6,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.2,
+        opacity: 1,
+        isStar: Math.random() > 0.4,
+      });
+    }
+
+    const start = performance.now();
+    const duration = 3500;
+    let raf: number;
+
+    function drawStar(c: CanvasRenderingContext2D, x: number, y: number, size: number, rotation: number) {
+      c.save();
+      c.translate(x, y);
+      c.rotate(rotation);
+      c.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const a = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+        if (i === 0) c.moveTo(Math.cos(a) * size, Math.sin(a) * size);
+        else c.lineTo(Math.cos(a) * size, Math.sin(a) * size);
+      }
+      c.closePath();
+      c.fill();
+      c.restore();
+    }
+
+    const c = ctx;
+    const cv = canvas;
+    function loop(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      c.clearRect(0, 0, cv.width, cv.height);
+
+      const fadeStart = 0.7;
+      const globalFade = progress > fadeStart ? 1 - (progress - fadeStart) / (1 - fadeStart) : 1;
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx += (Math.random() - 0.5) * 0.1;
+        p.rotation += p.rotationSpeed;
+
+        c.globalAlpha = globalFade * 0.9;
+        c.fillStyle = p.color;
+
+        if (p.isStar) {
+          drawStar(c, p.x, p.y, p.size, p.rotation);
+        } else {
+          c.beginPath();
+          c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          c.fill();
+        }
+      }
+      c.globalAlpha = 1;
+
+      if (progress < 1) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        onDone?.();
+      }
+    }
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [onDone]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[100]"
+      style={{ width: '100vw', height: '100vh' }}
+    />
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   ANIMATED COUNTER
+   ────────────────────────────────────────────────────────── */
+
+function AnimatedCounter({ value, className }: { value: number; className?: string }) {
+  const motionVal = useMotionValue(0);
+  const rounded = useTransform(motionVal, (v) => Math.round(v));
+  const [display, setDisplay] = useState(value);
+
+  useEffect(() => {
+    const controls = animate(motionVal, value, {
+      duration: 0.6,
+      ease: 'easeOut',
+    });
+    const unsub = rounded.on('change', (v) => setDisplay(v));
+    return () => { controls.stop(); unsub(); };
+  }, [value, motionVal, rounded]);
+
+  return <span className={className}>{display}</span>;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -49,6 +294,7 @@ const lessons: Lesson[] = [
     duration: '5 min',
     icon: '💰',
     color: 'emerald',
+    simulatorFocus: 'cashflow',
     content: [
       'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number — however small — is the fuel that drives the entire velocity banking engine. Without positive cash flow, velocity banking cannot work. Period.',
       'Here\'s what most people miss: even $200/month of cash flow, when deployed strategically through a Line of Credit, can shave years off a 30-year mortgage. That\'s because velocity banking doesn\'t just make extra payments — it restructures how interest is calculated on your debt by leveraging the difference between amortized interest and average daily balance interest.',
@@ -78,6 +324,7 @@ const lessons: Lesson[] = [
     duration: '6 min',
     icon: '🔄',
     color: 'blue',
+    simulatorFocus: 'loc',
     content: [
       'The Money Loop is the heartbeat of velocity banking. It\'s a simple but powerful cycle: your entire paycheck deposits directly into your Line of Credit (LOC), immediately reducing the balance. Then, throughout the month, you pay your living expenses from the LOC. At the end of the month, the net effect is that your LOC balance dropped by your cash flow amount — but the average daily balance was lower the entire month.',
       'Here\'s the step-by-step: Say your LOC balance is $5,000. On the 1st, your $4,000 paycheck deposits in — balance drops to $1,000. Over 30 days, you draw $3,500 for expenses. End-of-month balance: $4,500 (down $500 — your cash flow). But here\'s the magic: your average daily balance was roughly $2,800 instead of $5,000 because the income sat in the LOC for days before being drawn out.',
@@ -107,6 +354,7 @@ const lessons: Lesson[] = [
     duration: '6 min',
     icon: '⏱️',
     color: 'purple',
+    simulatorFocus: 'results',
     content: [
       'Understanding interest timing is what separates velocity banking from simple "pay extra on your mortgage" advice. There are two fundamentally different ways lenders calculate interest: amortized (your mortgage) and average daily balance (your LOC). Exploiting the difference between them is the entire strategy.',
       'Amortized debt (mortgages, auto loans) calculates interest on the scheduled principal balance at each payment. Your mortgage doesn\'t care if you had $10,000 sitting in your checking account all month — it charges the same interest. The balance only changes when your monthly payment is applied. Early in a mortgage, 70-80% of each payment goes to interest.',
@@ -137,6 +385,7 @@ const lessons: Lesson[] = [
     duration: '5 min',
     icon: '🎯',
     color: 'orange',
+    simulatorFocus: 'chunk',
     content: [
       'While the Money Loop handles the LOC efficiently, the Chunk Strategy is where the real mortgage-killing power lives. A "chunk" is a large lump-sum payment from your LOC directly to your primary amortized debt\'s principal. It\'s the offensive weapon in your velocity banking arsenal.',
       'Here\'s how it works: As you cycle income through the Money Loop, your cash flow gradually pays down the LOC. When the LOC balance drops enough to have significant available credit, you deploy a chunk. For example, if your $15,000 LOC has been paid down to $5,000 through income cycling, you have $10,000 of available credit. You might deploy a $8,000 chunk to your mortgage principal.',
@@ -166,6 +415,7 @@ const lessons: Lesson[] = [
     duration: '4 min',
     icon: '✅',
     color: 'green',
+    simulatorFocus: 'overview',
     content: [
       'Velocity banking isn\'t magic — it\'s math. And the math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, the strategy cannot function.',
       'Ideal conditions include: a LOC interest rate lower than your primary debt rate (this maximizes the arbitrage), consistent and predictable income (makes cycling reliable), front-loaded amortized debt like mortgages where early payments are mostly interest (this is where chunks have maximum impact), and financial discipline to avoid increasing spending as credit becomes available.',
@@ -195,6 +445,7 @@ const lessons: Lesson[] = [
     duration: '5 min',
     icon: '⚠️',
     color: 'amber',
+    simulatorFocus: 'loc',
     content: [
       'The most dangerous mistake in velocity banking is over-utilizing your LOC. Using more than 80% of your credit limit does two harmful things: it leaves no emergency buffer, and it can damage your credit score. If an unexpected expense hits when your LOC is maxed, you\'re forced to use high-interest alternatives. Always maintain at least 20% available credit.',
       'Not tracking expenses accurately is the silent killer. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs eat into the savings. Track every dollar for at least 3 months before starting.',
@@ -234,13 +485,17 @@ const glossary: GlossaryItem[] = [
    PROGRESS STORE (localStorage)
    ────────────────────────────────────────────────────────── */
 
+const STORAGE_KEY = 'interestshield-learn-progress';
+
 function useProgress() {
   const [completed, setCompleted] = useState<Set<number>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>({});
+  const [justCompleted, setJustCompleted] = useState<number | null>(null);
+  const [milestone, setMilestone] = useState<'half' | 'full' | null>(null);
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('learn-progress');
+      const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         setCompleted(new Set(parsed.completed || []));
@@ -250,17 +505,34 @@ function useProgress() {
   }, []);
 
   const save = (c: Set<number>, q: Record<number, number | null>) => {
-    localStorage.setItem('learn-progress', JSON.stringify({ completed: [...c], quizAnswers: q }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed: [...c], quizAnswers: q }));
   };
 
   const toggleComplete = (id: number) => {
     setCompleted(prev => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
+      const wasComplete = next.has(id);
+      if (wasComplete) {
+        next.delete(id);
+        setJustCompleted(null);
+      } else {
+        next.add(id);
+        setJustCompleted(id);
+        // Check milestones
+        if (next.size === lessons.length) {
+          setMilestone('full');
+        } else if (next.size === Math.floor(lessons.length / 2)) {
+          setMilestone('half');
+        }
+        // Clear justCompleted after animation
+        setTimeout(() => setJustCompleted(null), 2500);
+      }
       save(next, quizAnswers);
       return next;
     });
   };
+
+  const clearMilestone = useCallback(() => setMilestone(null), []);
 
   const answerQuiz = (lessonId: number, answerIndex: number) => {
     setQuizAnswers(prev => {
@@ -270,7 +542,7 @@ function useProgress() {
     });
   };
 
-  return { completed, quizAnswers, toggleComplete, answerQuiz };
+  return { completed, quizAnswers, toggleComplete, answerQuiz, justCompleted, milestone, clearMilestone };
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -564,6 +836,9 @@ function LessonCard({
   onToggleComplete,
   onAnswerQuiz,
   classes,
+  justCompleted,
+  index,
+  isLast,
 }: {
   lesson: Lesson;
   isComplete: boolean;
@@ -571,180 +846,242 @@ function LessonCard({
   onToggleComplete: () => void;
   onAnswerQuiz: (idx: number) => void;
   classes: ReturnType<typeof themeClasses['original'] extends infer T ? () => T : never> extends () => infer R ? R : typeof themeClasses['original'];
+  justCompleted: boolean;
+  index: number;
+  isLast: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showDeepDive, setShowDeepDive] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [confetti, setConfetti] = useState<{ x: number; y: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
   const Viz = visualizations[lesson.id];
   const quizCorrect = quizAnswer === lesson.quiz.correctIndex;
   const quizAnswered = quizAnswer !== null && quizAnswer !== undefined;
 
+  const handleComplete = () => {
+    if (!isComplete && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setConfetti({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+      setTimeout(() => setConfetti(null), 2500);
+    }
+    onToggleComplete();
+  };
+
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5 }}
-      className={`${classes.glass} rounded-2xl overflow-hidden`}
-    >
-      {/* Header */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full p-5 flex items-center gap-4 hover:bg-white/5 transition-colors"
+    <div className="relative">
+      {/* Learning path connector line */}
+      {!isLast && (
+        <div className="absolute left-6 top-[4.5rem] bottom-0 w-px z-0">
+          <div className={`w-full h-full ${isComplete ? 'bg-emerald-500/40' : 'border-l border-dashed border-slate-600/40'}`} />
+        </div>
+      )}
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.5 }}
+        className={`relative z-10 rounded-2xl overflow-hidden transition-all duration-500 ${classes.glass} ${
+          isComplete
+            ? 'border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
+            : ''
+        } ${justCompleted ? 'animate-[glow-pulse_0.6s_ease-out]' : ''}`}
+        style={isComplete ? { borderColor: 'rgba(16,185,129,0.3)' } : undefined}
       >
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-          isComplete ? 'bg-emerald-500/20 ring-2 ring-emerald-500/40' : 'bg-slate-700/50'
-        }`}>
-          {isComplete ? '✅' : lesson.icon}
-        </div>
-        <div className="flex-1 text-left">
-          <h3 className={`font-semibold ${classes.text}`}>{lesson.title}</h3>
-          <p className={`text-sm ${classes.textSecondary}`}>{lesson.subtitle}</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className={`text-xs px-2 py-1 rounded-full ${classes.bgTertiary} ${classes.textSecondary}`}>
-            {lesson.duration}
-          </span>
-          <motion.svg
-            animate={{ rotate: expanded ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-5 h-5 text-gray-400"
-            fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </motion.svg>
-        </div>
-      </button>
-
-      {/* Expanded Content */}
-      <AnimatePresence>
-        {expanded && (
+        {/* Header */}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="w-full p-5 flex items-center gap-4 hover:bg-white/5 transition-colors"
+        >
+          {/* Module number / checkmark */}
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl relative ${
+              isComplete ? 'bg-emerald-500/20 ring-2 ring-emerald-500/40' : 'bg-slate-700/50'
+            }`}
+            animate={justCompleted ? { scale: [1, 1.3, 1] } : {}}
             transition={{ duration: 0.4 }}
-            className="overflow-hidden"
           >
-            <div className={`px-5 pb-5 border-t ${classes.border}`}>
-              {/* Visualization */}
-              <div className="my-4 bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
-                <Viz />
-              </div>
-
-              {/* Content */}
-              <div className="space-y-3 mb-5">
-                {lesson.content.map((p, i) => (
-                  <motion.p
-                    key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 * i }}
-                    className={`${classes.textSecondary} text-sm leading-relaxed`}
-                  >
-                    {p}
-                  </motion.p>
-                ))}
-              </div>
-
-              {/* Key Takeaway */}
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-4">
-                <p className="text-xs font-semibold text-emerald-400 mb-1">💡 Key Takeaway</p>
-                <p className="text-sm text-emerald-300/90">{lesson.keyTakeaway}</p>
-              </div>
-
-              {/* Deep Dive */}
-              <div className="mb-4">
-                <button
-                  onClick={() => setShowDeepDive(!showDeepDive)}
-                  className={`flex items-center gap-2 text-sm ${classes.textSecondary} hover:text-white transition-colors`}
-                >
-                  <span>{showDeepDive ? '▾' : '▸'}</span>
-                  <span className="font-medium">Deep Dive</span>
-                </button>
-                <AnimatePresence>
-                  {showDeepDive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <p className={`mt-2 text-sm ${classes.textSecondary} leading-relaxed bg-slate-800/30 rounded-lg p-3 border border-slate-700/20`}>
-                        {lesson.deepDive}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Quiz */}
-              <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-4">
-                <p className="text-xs font-semibold text-blue-400 mb-2">📝 Quick Check</p>
-                <p className="text-sm text-blue-200 mb-3">{lesson.quiz.question}</p>
-                <div className="space-y-2">
-                  {lesson.quiz.options.map((opt, i) => {
-                    const isSelected = quizAnswer === i;
-                    const isCorrect = i === lesson.quiz.correctIndex;
-                    let style = 'bg-slate-700/30 border-slate-600/30 hover:border-blue-500/40';
-                    if (quizAnswered && isSelected && isCorrect) style = 'bg-emerald-500/20 border-emerald-500/40';
-                    else if (quizAnswered && isSelected && !isCorrect) style = 'bg-red-500/20 border-red-500/40';
-                    else if (quizAnswered && isCorrect) style = 'bg-emerald-500/10 border-emerald-500/20';
-
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => !quizAnswered && onAnswerQuiz(i)}
-                        disabled={quizAnswered}
-                        className={`w-full text-left text-sm p-2.5 rounded-lg border transition-all ${style} ${
-                          quizAnswered ? 'cursor-default' : 'cursor-pointer'
-                        }`}
-                      >
-                        <span className={quizAnswered && isCorrect ? 'text-emerald-300' : classes.textSecondary}>
-                          {opt}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-                {quizAnswered && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`mt-3 text-xs ${quizCorrect ? 'text-emerald-400' : 'text-amber-400'}`}
-                  >
-                    {quizCorrect ? '✅ Correct! ' : '❌ Not quite. '}
-                    {lesson.quiz.explanation}
-                  </motion.p>
-                )}
-              </div>
-
-              {/* Actions */}
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  onClick={onToggleComplete}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                    isComplete
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                      : `${classes.glassButton}`
-                  }`}
-                >
-                  {isComplete ? '✅ Completed' : '☐ Mark Complete'}
-                </button>
-                <Link
-                  href="/simulator"
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 transition-all"
-                >
-                  📊 Try it in Simulator
-                </Link>
-              </div>
-            </div>
+            {isComplete ? (
+              <motion.span
+                initial={justCompleted ? { scale: 0, rotate: -180 } : {}}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                ✓
+              </motion.span>
+            ) : (
+              <span className="text-base font-bold text-slate-400">{index + 1}</span>
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+          <div className="flex-1 text-left">
+            <h3 className={`font-semibold ${classes.text}`}>{lesson.title}</h3>
+            <p className={`text-sm ${classes.textSecondary}`}>{lesson.subtitle}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className={`text-xs px-2 py-1 rounded-full ${classes.bgTertiary} ${classes.textSecondary}`}>
+              {lesson.duration}
+            </span>
+            <motion.svg
+              animate={{ rotate: expanded ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-5 h-5 text-gray-400"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </motion.svg>
+          </div>
+        </button>
+
+        {/* Expanded Content */}
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="overflow-hidden"
+            >
+              <div className={`px-5 pb-5 border-t ${classes.border}`}>
+                {/* Visualization */}
+                <div className="my-4 bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
+                  <Viz />
+                </div>
+
+                {/* Content */}
+                <div className="space-y-3 mb-5">
+                  {lesson.content.map((p, i) => (
+                    <motion.p
+                      key={i}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 * i }}
+                      className={`${classes.textSecondary} text-sm leading-relaxed`}
+                    >
+                      {p}
+                    </motion.p>
+                  ))}
+                </div>
+
+                {/* Key Takeaway */}
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-4">
+                  <p className="text-xs font-semibold text-emerald-400 mb-1">💡 Key Takeaway</p>
+                  <p className="text-sm text-emerald-300/90">{lesson.keyTakeaway}</p>
+                </div>
+
+                {/* Deep Dive */}
+                <div className="mb-4">
+                  <button
+                    onClick={() => setShowDeepDive(!showDeepDive)}
+                    className={`flex items-center gap-2 text-sm ${classes.textSecondary} hover:text-white transition-colors`}
+                  >
+                    <span>{showDeepDive ? '▾' : '▸'}</span>
+                    <span className="font-medium">Deep Dive</span>
+                  </button>
+                  <AnimatePresence>
+                    {showDeepDive && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className={`mt-2 text-sm ${classes.textSecondary} leading-relaxed bg-slate-800/30 rounded-lg p-3 border border-slate-700/20`}>
+                          {lesson.deepDive}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Quiz */}
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-4">
+                  <p className="text-xs font-semibold text-blue-400 mb-2">📝 Quick Check</p>
+                  <p className="text-sm text-blue-200 mb-3">{lesson.quiz.question}</p>
+                  <div className="space-y-2">
+                    {lesson.quiz.options.map((opt, i) => {
+                      const isSelected = quizAnswer === i;
+                      const isCorrect = i === lesson.quiz.correctIndex;
+                      let style = 'bg-slate-700/30 border-slate-600/30 hover:border-blue-500/40';
+                      if (quizAnswered && isSelected && isCorrect) style = 'bg-emerald-500/20 border-emerald-500/40';
+                      else if (quizAnswered && isSelected && !isCorrect) style = 'bg-red-500/20 border-red-500/40';
+                      else if (quizAnswered && isCorrect) style = 'bg-emerald-500/10 border-emerald-500/20';
+
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => !quizAnswered && onAnswerQuiz(i)}
+                          disabled={quizAnswered}
+                          className={`w-full text-left text-sm p-2.5 rounded-lg border transition-all ${style} ${
+                            quizAnswered ? 'cursor-default' : 'cursor-pointer'
+                          }`}
+                        >
+                          <span className={quizAnswered && isCorrect ? 'text-emerald-300' : classes.textSecondary}>
+                            {opt}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {quizAnswered && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`mt-3 text-xs ${quizCorrect ? 'text-emerald-400' : 'text-amber-400'}`}
+                    >
+                      {quizCorrect ? '✅ Correct! ' : '❌ Not quite. '}
+                      {lesson.quiz.explanation}
+                    </motion.p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <motion.button
+                    ref={btnRef}
+                    onClick={handleComplete}
+                    whileTap={{ scale: 0.95 }}
+                    animate={justCompleted ? {
+                      boxShadow: [
+                        '0 0 0 rgba(16,185,129,0)',
+                        '0 0 20px rgba(16,185,129,0.5)',
+                        '0 0 0 rgba(16,185,129,0)',
+                      ],
+                    } : {}}
+                    transition={{ duration: 0.6 }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                      isComplete
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                        : `${classes.glassButton}`
+                    }`}
+                  >
+                    {isComplete ? '✅ Completed' : '☐ Mark Complete'}
+                  </motion.button>
+                  <Link
+                    href={`/simulator?focus=${lesson.simulatorFocus}`}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 transition-all"
+                  >
+                    📊 Try it in Simulator
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Confetti on complete */}
+      {confetti && (
+        <ConfettiExplosion
+          originX={confetti.x}
+          originY={confetti.y}
+          count={35}
+          duration={2000}
+          onDone={() => setConfetti(null)}
+        />
+      )}
+    </div>
   );
 }
 
@@ -756,15 +1093,32 @@ export default function LearnPage() {
   const [mounted, setMounted] = useState(false);
   const [hoveredTerm, setHoveredTerm] = useState<string | null>(null);
   const { theme } = useThemeStore();
-  const { completed, quizAnswers, toggleComplete, answerQuiz } = useProgress();
+  const { completed, quizAnswers, toggleComplete, answerQuiz, justCompleted, milestone, clearMilestone } = useProgress();
 
   useEffect(() => { setMounted(true); }, []);
 
   const classes = themeClasses[mounted ? theme : 'original'];
   const completedCount = completed.size;
+  const allComplete = completedCount === lessons.length;
+  const pct = Math.round((completedCount / lessons.length) * 100);
 
   return (
     <div className="p-4 md:p-8 max-w-4xl mx-auto">
+      {/* Milestone celebrations */}
+      {milestone === 'half' && (
+        <ConfettiExplosion
+          originX={typeof window !== 'undefined' ? window.innerWidth / 2 : 400}
+          originY={120}
+          count={60}
+          duration={2500}
+          spread={1.5}
+          onDone={clearMilestone}
+        />
+      )}
+      {milestone === 'full' && (
+        <GrandFinale onDone={clearMilestone} />
+      )}
+
       {/* Hero */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -774,30 +1128,92 @@ export default function LearnPage() {
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Learn Center</h1>
         <p className={classes.textSecondary}>Master velocity banking — one concept at a time</p>
 
-        {/* Progress */}
-        <div className="mt-5">
+        {/* Progress — achievement tracker style */}
+        <motion.div
+          className={`mt-5 p-4 rounded-2xl transition-all duration-700 ${
+            allComplete
+              ? 'bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-yellow-500/10 border border-yellow-500/30 shadow-[0_0_30px_rgba(234,179,8,0.15)]'
+              : milestone === 'half'
+              ? 'bg-emerald-500/5 border border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
+              : ''
+          }`}
+          animate={milestone === 'half' ? {
+            boxShadow: [
+              '0 0 0px rgba(16,185,129,0)',
+              '0 0 25px rgba(16,185,129,0.3)',
+              '0 0 0px rgba(16,185,129,0)',
+            ],
+          } : {}}
+          transition={{ duration: 1.5 }}
+        >
           <div className="flex items-center justify-between mb-2">
-            <span className={`text-sm ${classes.textSecondary}`}>
-              {completedCount} of {lessons.length} modules complete
-            </span>
-            <span className="text-sm text-emerald-400 font-medium">
-              {Math.round((completedCount / lessons.length) * 100)}%
-            </span>
+            {allComplete ? (
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-sm font-semibold text-yellow-400"
+                style={{ animation: 'glow-text 2s ease-in-out infinite' }}
+              >
+                🎉 All Modules Complete! You&apos;re a Velocity Banking Expert!
+              </motion.span>
+            ) : (
+              <span className={`text-sm ${classes.textSecondary}`}>
+                <AnimatedCounter value={completedCount} className="font-bold text-emerald-400" /> of {lessons.length} modules complete
+              </span>
+            )}
+            <motion.span
+              className={`text-sm font-medium ${allComplete ? 'text-yellow-400' : 'text-emerald-400'}`}
+              key={pct}
+              initial={{ scale: 1.4, color: '#4ade80' }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              {pct}%
+            </motion.span>
           </div>
-          <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+          <div className={`h-3 rounded-full overflow-hidden ${allComplete ? 'bg-yellow-900/30' : 'bg-slate-700/50'}`}>
             <motion.div
-              className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"
+              className={`h-full rounded-full relative ${
+                allComplete
+                  ? 'bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500'
+                  : 'bg-gradient-to-r from-emerald-600 to-emerald-400'
+              }`}
               initial={{ width: 0 }}
-              animate={{ width: `${(completedCount / lessons.length) * 100}%` }}
-              transition={{ duration: 0.8 }}
-            />
+              animate={{ width: `${pct}%` }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            >
+              {/* Sparkle shimmer on progress bar */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
+              />
+            </motion.div>
           </div>
-        </div>
+
+          {/* Module checkpoint dots */}
+          <div className="flex justify-between mt-2 px-1">
+            {lessons.map((l, i) => (
+              <motion.div
+                key={l.id}
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold transition-all duration-300 ${
+                  completed.has(l.id)
+                    ? 'bg-emerald-500 text-white shadow-[0_0_6px_rgba(16,185,129,0.5)]'
+                    : 'bg-slate-700/60 text-slate-500'
+                }`}
+                animate={justCompleted === l.id ? { scale: [1, 1.5, 1] } : {}}
+                transition={{ duration: 0.4 }}
+              >
+                {completed.has(l.id) ? '✓' : i + 1}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </motion.header>
 
       {/* Lessons */}
-      <section className="space-y-4 mb-12">
-        {lessons.map((lesson) => (
+      <section className="space-y-4 mb-12 relative">
+        {lessons.map((lesson, i) => (
           <LessonCard
             key={lesson.id}
             lesson={lesson}
@@ -806,6 +1222,9 @@ export default function LearnPage() {
             onToggleComplete={() => toggleComplete(lesson.id)}
             onAnswerQuiz={(idx) => answerQuiz(lesson.id, idx)}
             classes={classes}
+            justCompleted={justCompleted === lesson.id}
+            index={i}
+            isLast={i === lessons.length - 1}
           />
         ))}
       </section>
@@ -889,6 +1308,19 @@ export default function LearnPage() {
           Investopedia
         </a>.
       </footer>
+
+      {/* Global CSS for glow animations */}
+      <style jsx global>{`
+        @keyframes glow-pulse {
+          0% { box-shadow: 0 0 0 rgba(16,185,129,0); }
+          50% { box-shadow: 0 0 25px rgba(16,185,129,0.4); }
+          100% { box-shadow: 0 0 0 rgba(16,185,129,0); }
+        }
+        @keyframes glow-text {
+          0%, 100% { text-shadow: 0 0 10px rgba(234,179,8,0.3); }
+          50% { text-shadow: 0 0 20px rgba(234,179,8,0.6), 0 0 40px rgba(234,179,8,0.3); }
+        }
+      `}</style>
     </div>
   );
 }
