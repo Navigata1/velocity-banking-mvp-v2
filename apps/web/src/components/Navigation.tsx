@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
+import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
 import { useEffect, useState, useCallback } from 'react';
 
@@ -26,6 +27,7 @@ export default function Navigation() {
   const store = useFinancialStore();
   const activeDomain = store.activeDomain;
   const { theme, setTheme } = useThemeStore();
+  const { teacherMode, setTeacherMode } = usePreferencesStore();
 
   useEffect(() => {
     setMounted(true);
@@ -37,10 +39,18 @@ export default function Navigation() {
     setAiMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setAiQuery('');
     setTimeout(() => {
-      const response = getGuardianResponse(userMessage);
+      const response = getGuardianResponse(userMessage, {
+        teacherMode,
+        context: {
+          monthlyIncome: store.monthlyIncome,
+          monthlyExpenses: store.monthlyExpenses,
+          cashFlow: store.monthlyIncome - store.monthlyExpenses,
+          activeDomainLabel: store.activeDomain,
+        }
+      });
       setAiMessages(prev => [...prev, { role: 'ai', text: response }]);
     }, 300);
-  }, [aiQuery]);
+  }, [aiQuery, teacherMode, store]);
 
   const activeSubcat = mounted ? store.getActiveSubcategory(activeDomain as Domain) : null;
   const dashboardIcon = activeSubcat?.icon || '🚗';
@@ -192,6 +202,16 @@ export default function Navigation() {
                   <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>
+               <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setTeacherMode(!teacherMode)}
+                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${teacherMode ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-transparent text-gray-400 border-slate-600/50 hover:border-slate-500/70'}`}
+                  title="Teacher Mode formats answers as: what it means → what to do next → why it works"
+                >
+                  {teacherMode ? 'Teacher Mode: On' : 'Teacher Mode: Off'}
+                </button>
+              </div>
+
               <button
                 onClick={() => setShowAI(false)}
                 className={`${classes.textSecondary} hover:${classes.text} p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}

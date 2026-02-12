@@ -626,27 +626,146 @@ export const shieldGuardianQA: QAPair[] = [
   },
 ];
 
-export function getGuardianResponse(input: string): string {
-  const lower = input.toLowerCase().trim();
-  
-  if (!lower || lower.length < 2) {
-    return "I'm here to help! Ask me anything about velocity banking, cash flow, chunks, or how to use InterestShield.";
+type GuardianContext = {
+  monthlyIncome?: number;
+  monthlyExpenses?: number;
+  cashFlow?: number;
+  activeDomainLabel?: string;
+};
+
+type GuardianOptions = {
+  teacherMode?: boolean;
+  context?: GuardianContext;
+};
+
+function classifyIntent(lower: string): 'cashFlow' | 'moneyLoop' | 'chunk' | 'loc' | 'interest' | 'emergency' | 'app' | 'general' {
+  if (/(cash\s*flow|surplus|income\s*-\s*expenses)/.test(lower)) return 'cashFlow';
+  if (/(money\s*loop|velocity\s*banking)/.test(lower)) return 'moneyLoop';
+  if (/(chunk|lump\s*sum|extra\s*payment)/.test(lower)) return 'chunk';
+  if (/(loc|heloc|line\s*of\s*credit)/.test(lower)) return 'loc';
+  if (/(interest|apr|amort)/.test(lower)) return 'interest';
+  if (/(emergency|unexpected|setback|medical|repair)/.test(lower)) return 'emergency';
+  if (/(how\s*do\s*i\s*use|where\s*do\s*i\s*click|dashboard|simulator|vault|learn|cockpit)/.test(lower)) return 'app';
+  return 'general';
+}
+
+function money(n?: number): string {
+  if (typeof n !== 'number' || !isFinite(n)) return '';
+  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+}
+
+function formatTeacherMode(baseAnswer: string, input: string, context?: GuardianContext): string {
+  const lower = input.toLowerCase();
+  const intent = classifyIntent(lower);
+  const cashFlow = typeof context?.cashFlow === 'number' ? context!.cashFlow : (
+    (typeof context?.monthlyIncome === 'number' && typeof context?.monthlyExpenses === 'number')
+      ? context!.monthlyIncome! - context!.monthlyExpenses!
+      : undefined
+  );
+
+  const header = "Teacher Mode 🧭\n";
+  const meaning = `What it means\n${baseAnswer}`;
+
+  let nextSteps: string[] = [];
+  let why: string[] = [];
+
+  // Default WHY (teacher-aligned)
+  why.push("Interest is calculated on the balance that sits there over time (average balance matters).");
+  why.push("When you free up a monthly payment, that payment becomes new cash flow you can redeploy as a bigger chunk.");
+  why.push("Single-lane focus keeps the system simple—momentum beats complexity.");
+
+  if (intent === 'cashFlow') {
+    nextSteps = [
+      "Open **Simulator** → confirm monthly income and monthly expenses.",
+      "Aim for **positive cash flow** first (even $100–$300/mo changes the whole timeline).",
+      "Pick **one target debt** and keep paying minimums everywhere else."
+    ];
+  } else if (intent === 'chunk') {
+    nextSteps = [
+      "Choose a **chunk size** you can repeat (start smaller if you’re nervous).",
+      "Run the simulation with $100 / $200 / $400 extra to see how payoff time changes.",
+      "When a chunk is ready, deploy it—then rebuild the next chunk."
+    ];
+  } else if (intent === 'loc') {
+    nextSteps = [
+      "Confirm your LOC rate + limit, and set a utilization safety line (ideally stay under ~80%).",
+      "Route income to the LOC first (if that matches your plan), then pay expenses intentionally.",
+      "Use the dashboard’s **Next Move** panel to time your next chunk."
+    ];
+  } else if (intent === 'interest') {
+    nextSteps = [
+      "Look at **interest burn per day** and identify the balances that are “burning” the most.",
+      "Compare **baseline vs velocity** in Simulator—don’t guess.",
+      "If you have a promo APR (0%), plan ahead for when it ends."
+    ];
+  } else if (intent === 'emergency') {
+    nextSteps = [
+      "Pause chunks temporarily—protect necessities first (food, housing, transportation).",
+      "Stabilize cash flow, then restart your single lane when the dust settles.",
+      "You didn’t fail. Recovery is part of the plan."
+    ];
+    why = [
+      "Life happens—velocity banking works best when you can recover without abandoning the strategy.",
+      "Keeping the plan simple reduces stress during emergencies.",
+      "Even a small restart keeps momentum alive."
+    ];
+  } else if (intent === 'app') {
+    nextSteps = [
+      "Start with **Vault** if you want the big-picture “why.”",
+      "Use **Simulator** to test your real numbers and chunk sizes.",
+      "Use **Dashboard** to run the plan day-to-day (next move, cash flow, interest burn).",
+      "Try **Cockpit** when you want a different mental model."
+    ];
+  } else {
+    nextSteps = [
+      "Tell me your goal: **pay off car**, **pay off credit cards**, or **reduce mortgage cost**.",
+      "Then we’ll pick one lane and run your numbers in Simulator."
+    ];
   }
-  
+
+  const cashLine = (typeof cashFlow === 'number')
+    ? `\nYour current cash flow estimate: ${money(cashFlow)} / month.`
+    : "";
+
+  const next = "What to do next\n" + nextSteps.map((s, i) => `${i+1}. ${s}`).join("\n");
+  const whyBlock = "Why it works\n" + why.map((s) => `• ${s}`).join("\n");
+
+  return `${header}${meaning}${cashLine}\n\n${next}\n\n${whyBlock}`;
+}
+
+export function getGuardianResponse(input: string, options?: GuardianOptions): string {
+  const lower = input.toLowerCase().trim();
+
+  if (!lower || lower.length < 2) {
+    return "I'm here to help! Ask me anything about velocity banking, cash flow, chunks, LOCs, or interest timing.";
+  }
+
+  let baseAnswer: string | null = null;
+
   for (const qa of shieldGuardianQA) {
     for (const keyword of qa.keywords) {
       if (lower.includes(keyword)) {
         const answers = qa.answers;
-        return answers[Math.floor(Math.random() * answers.length)];
+        baseAnswer = answers[Math.floor(Math.random() * answers.length)];
+        break;
       }
     }
+    if (baseAnswer) break;
   }
-  
-  const fallbackResponses = [
-    "Great question! While I focus on velocity banking topics from the Learn section, I recommend checking there for detailed lessons. Ask me about cash flow, chunks, LOCs, or interest timing!",
-    "I'm trained on velocity banking concepts from the Learn section. Try asking about cash flow, the money loop, chunks, or how to use the app!",
-    "I specialize in velocity banking education. For this topic, check out the Learn section. I can help with cash flow, chunks, LOCs, and debt strategy!",
-  ];
-  
-  return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+
+  if (!baseAnswer) {
+    const fallbackResponses = [
+      "I can help with velocity banking concepts. Try asking about cash flow, the money loop, chunks, LOCs, or interest timing.",
+      "Ask me about cash flow, chunks, LOCs/HELOCs, or how to use the Simulator and Vault to see payoff timelines.",
+      "If you tell me your goal (car, cards, mortgage), I can help you pick a single lane and your next move."
+    ];
+    baseAnswer = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+  }
+
+  const teacherMode = options?.teacherMode ?? false;
+  if (teacherMode) {
+    return formatTeacherMode(baseAnswer, input, options?.context);
+  }
+
+  return baseAnswer;
 }
