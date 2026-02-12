@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { Suspense, useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 /* ──────────────────────────────────────────────────────────
@@ -839,6 +840,8 @@ function LessonCard({
   justCompleted,
   index,
   isLast,
+  forceExpand,
+  cardRef,
 }: {
   lesson: Lesson;
   isComplete: boolean;
@@ -849,12 +852,19 @@ function LessonCard({
   justCompleted: boolean;
   index: number;
   isLast: boolean;
+  forceExpand?: boolean;
+  cardRef?: React.Ref<HTMLDivElement>;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showDeepDive, setShowDeepDive] = useState(false);
   const [confetti, setConfetti] = useState<{ x: number; y: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const Viz = visualizations[lesson.id];
+
+  // Force expand from query param
+  useEffect(() => {
+    if (forceExpand && !expanded) setExpanded(true);
+  }, [forceExpand]); // eslint-disable-line react-hooks/exhaustive-deps
   const quizCorrect = quizAnswer === lesson.quiz.correctIndex;
   const quizAnswered = quizAnswer !== null && quizAnswer !== undefined;
 
@@ -868,7 +878,7 @@ function LessonCard({
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={cardRef}>
       {/* Learning path connector line */}
       {!isLast && (
         <div className="absolute left-6 top-[4.5rem] bottom-0 w-px z-0">
@@ -1089,13 +1099,34 @@ function LessonCard({
    MAIN PAGE
    ────────────────────────────────────────────────────────── */
 
-export default function LearnPage() {
+function LearnPageInner() {
   const [mounted, setMounted] = useState(false);
   const [hoveredTerm, setHoveredTerm] = useState<string | null>(null);
+  const [targetModule, setTargetModule] = useState<number | null>(null);
   const { theme } = useThemeStore();
   const { completed, quizAnswers, toggleComplete, answerQuiz, justCompleted, milestone, clearMilestone } = useProgress();
+  const searchParams = useSearchParams();
+  const lessonRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   useEffect(() => { setMounted(true); }, []);
+
+  // Handle ?module=X query param
+  useEffect(() => {
+    const mod = searchParams.get('module');
+    if (mod) {
+      const moduleNum = parseInt(mod, 10);
+      if (moduleNum >= 1 && moduleNum <= lessons.length) {
+        setTargetModule(moduleNum);
+        // Scroll after a short delay to let DOM render
+        setTimeout(() => {
+          const el = lessonRefs.current[moduleNum];
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      }
+    }
+  }, [searchParams]);
 
   const classes = themeClasses[mounted ? theme : 'original'];
   const completedCount = completed.size;
@@ -1225,6 +1256,8 @@ export default function LearnPage() {
             justCompleted={justCompleted === lesson.id}
             index={i}
             isLast={i === lessons.length - 1}
+            forceExpand={targetModule === lesson.id}
+            cardRef={(el: HTMLDivElement | null) => { lessonRefs.current[lesson.id] = el; }}
           />
         ))}
       </section>
@@ -1322,5 +1355,13 @@ export default function LearnPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function LearnPage() {
+  return (
+    <Suspense>
+      <LearnPageInner />
+    </Suspense>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import DomainTabs from '@/components/DomainTabs';
 import HeroVisual from '@/components/HeroVisual';
 import VitalsGrid from '@/components/VitalsGrid';
@@ -28,6 +29,7 @@ export default function Dashboard() {
   const [actionFilter, setActionFilter] = useState<ActionFilter>('all');
   const [expandedVital, setExpandedVital] = useState<number | null>(null);
   const [expandedAction, setExpandedAction] = useState<string | null>(null);
+  const [checklistState, setChecklistState] = useState<Record<string, boolean>>({});
   const [cycleIndex, setCycleIndex] = useState(0);
   const [showWealthTimeline, setShowWealthTimeline] = useState(true);
   const store = useFinancialStore();
@@ -405,11 +407,16 @@ export default function Dashboard() {
       icon: string;
       chart?: 'line' | 'bars';
       insight: ActionInsight;
+      actionRoute?: string;
+      learnRoute?: string;
+      inlineChecklist?: { label: string; key: string }[];
     }
     
     const domainActions: Record<string, ActionItem[]> = {
       car: [
         { id: 'car-1', type: 'action', title: 'Payday Incoming', subtitle: 'Deposit to LOC tomorrow', icon: '💵', chart: 'line',
+          actionRoute: '/cockpit',
+          learnRoute: '/learn?module=2',
           insight: { description: `Your next paycheck of ${formatCurrency(store.monthlyIncome / 2)} can reduce LOC balance and interest.`,
             metrics: [
               { label: 'Deposit Amount', value: formatCurrency(store.monthlyIncome / 2), trend: 'up' },
@@ -420,6 +427,14 @@ export default function Dashboard() {
           },
         },
         { id: 'car-2', type: 'tip', title: 'Car Insurance Check', subtitle: 'Compare rates quarterly', icon: '🚗', chart: 'bars',
+          learnRoute: '/learn?module=1',
+          inlineChecklist: [
+            { label: 'Bundle home & auto policies', key: 'bundle' },
+            { label: 'Raise deductibles to $1,000', key: 'deductible' },
+            { label: 'Check low-mileage discounts', key: 'mileage' },
+            { label: 'Compare 3+ quotes online', key: 'quotes' },
+            { label: 'Ask about safe-driver discount', key: 'safe-driver' },
+          ],
           insight: { description: 'Reducing car expenses increases your chunk power for faster loan payoff.',
             metrics: [
               { label: 'Potential Savings', value: '$50-100/mo', trend: 'up' },
@@ -430,6 +445,8 @@ export default function Dashboard() {
           },
         },
         { id: 'car-3', type: 'milestone', title: 'Engine Revving!', subtitle: `${formatCurrency(velocity.savings)} in interest avoided`, icon: '🏎️',
+          actionRoute: '/portfolio',
+          learnRoute: '/learn?module=3',
           insight: { description: 'Your car loan is accelerating faster than a traditional payoff schedule.',
             metrics: [
               { label: 'Months Saved', value: `${baseline.months - velocity.months}`, trend: 'up' },
@@ -440,6 +457,8 @@ export default function Dashboard() {
           },
         },
         { id: 'car-4', type: 'action', title: 'Chunk Ready', subtitle: `Deploy ${formatCurrency(store.chunkAmount)} this week`, icon: '🎯',
+          actionRoute: '/simulator?focus=chunk',
+          learnRoute: '/learn?module=4',
           insight: { description: `This chunk will save approximately ${formatCurrency(store.chunkAmount * debt.interestRate * 0.5)} in interest.`,
             metrics: [
               { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
@@ -452,6 +471,8 @@ export default function Dashboard() {
       ],
       house: [
         { id: 'house-1', type: 'action', title: 'HELOC Payment Due', subtitle: `Interest-only: ${formatCurrency(store.loc.balance * store.loc.interestRate / 12)}`, icon: '🏠', chart: 'line',
+          actionRoute: '/cockpit',
+          learnRoute: '/learn?module=2',
           insight: { description: 'Your HELOC interest payment keeps the strategy running smoothly.',
             metrics: [
               { label: 'Payment Amount', value: formatCurrency(store.loc.balance * store.loc.interestRate / 12), trend: 'neutral' },
@@ -462,6 +483,8 @@ export default function Dashboard() {
           },
         },
         { id: 'house-2', type: 'milestone', title: 'Roof Over Your Head!', subtitle: `${Math.round((baseline.months - velocity.months) / 12)} years faster`, icon: '🏡',
+          actionRoute: '/portfolio',
+          learnRoute: '/learn?module=3',
           insight: { description: 'You\'re building home equity at an accelerated rate compared to traditional payments.',
             metrics: [
               { label: 'Years Saved', value: `${((baseline.months - velocity.months) / 12).toFixed(1)}`, trend: 'up' },
@@ -472,6 +495,7 @@ export default function Dashboard() {
           },
         },
         { id: 'house-3', type: 'tip', title: 'Property Tax Prep', subtitle: 'Escrow review coming up', icon: '📋', chart: 'bars',
+          learnRoute: '/learn?module=1',
           insight: { description: 'Understanding your escrow helps you plan for larger expenses.',
             metrics: [
               { label: 'Est. Annual Tax', value: formatCurrency(debt.balance * 0.012), trend: 'neutral' },
@@ -482,6 +506,8 @@ export default function Dashboard() {
           },
         },
         { id: 'house-4', type: 'action', title: 'Deploy Chunk', subtitle: `${formatCurrency(store.chunkAmount)} to mortgage principal`, icon: '💰',
+          actionRoute: '/simulator?focus=chunk',
+          learnRoute: '/learn?module=4',
           insight: { description: `Each chunk attacks your principal directly, saving ${formatCurrency(store.chunkAmount * debt.interestRate * 5)} over time.`,
             metrics: [
               { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
@@ -494,6 +520,7 @@ export default function Dashboard() {
       ],
       land: [
         { id: 'land-1', type: 'action', title: 'Land Payment Due', subtitle: `${formatCurrency(debt.minimumPayment)} due soon`, icon: '🌄', chart: 'line',
+          actionRoute: '/cockpit', learnRoute: '/learn?module=2',
           insight: { description: 'Your land investment payment keeps you on track for ownership.',
             metrics: [
               { label: 'Payment Amount', value: formatCurrency(debt.minimumPayment), trend: 'neutral' },
@@ -504,6 +531,7 @@ export default function Dashboard() {
           },
         },
         { id: 'land-2', type: 'tip', title: 'Land Appreciation', subtitle: 'Up 4% in your area this year', icon: '📈', chart: 'bars',
+          learnRoute: '/learn?module=5',
           insight: { description: 'Your land is gaining value while you pay it down - double benefit!',
             metrics: [
               { label: 'Est. Current Value', value: formatCurrency(debt.balance * 1.25), trend: 'up' },
@@ -514,6 +542,7 @@ export default function Dashboard() {
           },
         },
         { id: 'land-3', type: 'milestone', title: 'Territory Claimed!', subtitle: `${velocity.months} months to full ownership`, icon: '🏞️',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'You\'re on track to own this land free and clear.',
             metrics: [
               { label: 'Payoff ETA', value: `${velocity.months} mo`, trend: 'up' },
@@ -524,6 +553,7 @@ export default function Dashboard() {
           },
         },
         { id: 'land-4', type: 'action', title: 'Next Chunk', subtitle: `${formatCurrency(store.chunkAmount)} in 5 days`, icon: '💵',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: `This chunk accelerates your land ownership by ${Math.round(store.chunkAmount / (debt.minimumPayment / 30))} days.`,
             metrics: [
               { label: 'Chunk Amount', value: formatCurrency(store.chunkAmount), trend: 'neutral' },
@@ -536,6 +566,7 @@ export default function Dashboard() {
       ],
       creditCard: [
         { id: 'cc-1', type: 'action', title: 'High-Interest Attack!', subtitle: `Chunk ${formatCurrency(chunkAmount)} to credit card`, icon: '🎯', chart: 'bars',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Credit cards have the highest interest rates - crushing this first saves the most money.',
             metrics: [
               { label: 'Daily Interest', value: formatCurrency(store.getDailyInterest('creditCard')), trend: 'down' },
@@ -546,6 +577,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cc-2', type: 'milestone', title: 'Interest Crusher!', subtitle: `Saving ${formatCurrency(velocity.savings)} vs minimum payments`, icon: '💪',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'By using velocity banking on credit cards, you\'re avoiding massive interest charges.',
             metrics: [
               { label: 'Interest Avoided', value: formatCurrency(velocity.savings), trend: 'up' },
@@ -556,6 +588,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cc-3', type: 'tip', title: 'Freeze the Card', subtitle: 'Prevent new charges while paying off', icon: '🧊',
+          learnRoute: '/learn?module=6',
           insight: { description: 'Stop adding to your balance while aggressively paying it down.',
             metrics: [
               { label: 'Current Balance', value: formatCurrency(creditCard.balance), trend: 'down' },
@@ -566,6 +599,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cc-4', type: 'action', title: 'Statement Date Tip', subtitle: 'Time your chunks strategically', icon: '📅',
+          actionRoute: '/cockpit', learnRoute: '/learn?module=4',
           insight: { description: 'Making payments before statement date reduces reported balance and interest.',
             metrics: [
               { label: 'Best Time', value: 'Before closing date', trend: 'neutral' },
@@ -578,6 +612,7 @@ export default function Dashboard() {
       ],
       studentLoan: [
         { id: 'sl-1', type: 'action', title: 'Chunk to Principal', subtitle: `Apply ${formatCurrency(chunkAmount)} to student loan`, icon: '🎓',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Extra payments on student loans go directly to principal - accelerating freedom.',
             metrics: [
               { label: 'Principal Attack', value: formatCurrency(chunkAmount), trend: 'up' },
@@ -588,6 +623,7 @@ export default function Dashboard() {
           },
         },
         { id: 'sl-2', type: 'milestone', title: 'Degree Paid Off Faster!', subtitle: `${velocity.months} months to freedom`, icon: '🏆',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'Your education investment is being reclaimed faster than the standard plan.',
             metrics: [
               { label: 'Velocity Payoff', value: `${velocity.months} months`, trend: 'up' },
@@ -598,6 +634,7 @@ export default function Dashboard() {
           },
         },
         { id: 'sl-3', type: 'tip', title: 'Tax Deduction Check', subtitle: 'Student loan interest may be deductible', icon: '📋',
+          learnRoute: '/learn?module=1',
           insight: { description: 'Up to $2,500 in student loan interest may be tax deductible annually.',
             metrics: [
               { label: 'Annual Interest', value: formatCurrency(studentLoan.balance * studentLoan.interestRate), trend: 'neutral' },
@@ -608,6 +645,7 @@ export default function Dashboard() {
           },
         },
         { id: 'sl-4', type: 'action', title: 'Income-Driven Backup', subtitle: 'Know your options if income changes', icon: '🛡️',
+          learnRoute: '/learn?module=5',
           insight: { description: 'Federal loans offer income-driven plans as a safety net if needed.',
             metrics: [
               { label: 'Current Payment', value: formatCurrency(studentLoan.minimumPayment), trend: 'neutral' },
@@ -620,6 +658,7 @@ export default function Dashboard() {
       ],
       medical: [
         { id: 'med-1', type: 'action', title: 'Medical Bill Attack', subtitle: `Chunk ${formatCurrency(chunkAmount)} to medical debt`, icon: '🏥',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Medical debt can often be negotiated - attack it aggressively while exploring options.',
             metrics: [
               { label: 'Chunk Power', value: formatCurrency(chunkAmount), trend: 'up' },
@@ -630,6 +669,7 @@ export default function Dashboard() {
           },
         },
         { id: 'med-2', type: 'tip', title: 'Negotiate Your Bills', subtitle: 'Medical debt is often negotiable', icon: '💬',
+          learnRoute: '/learn?module=1',
           insight: { description: 'Healthcare providers often accept reduced payments - always ask.',
             metrics: [
               { label: 'Potential Savings', value: '20-50%', trend: 'up' },
@@ -640,6 +680,7 @@ export default function Dashboard() {
           },
         },
         { id: 'med-3', type: 'milestone', title: 'Healing Your Finances!', subtitle: `${velocity.months} months to debt-free health`, icon: '💚',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'You\'re healing financially while conquering medical debt.',
             metrics: [
               { label: 'Velocity Payoff', value: `${velocity.months} mo`, trend: 'up' },
@@ -650,6 +691,7 @@ export default function Dashboard() {
           },
         },
         { id: 'med-4', type: 'action', title: 'Check for Errors', subtitle: 'Medical bills often have mistakes', icon: '🔍',
+          learnRoute: '/learn?module=6',
           insight: { description: 'Studies show up to 80% of medical bills contain errors.',
             metrics: [
               { label: 'Error Rate', value: 'Up to 80%', trend: 'neutral' },
@@ -662,6 +704,7 @@ export default function Dashboard() {
       ],
       personal: [
         { id: 'pl-1', type: 'action', title: 'Crush Personal Loan', subtitle: `Apply ${formatCurrency(chunkAmount)} extra payment`, icon: '💵',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Personal loans often have fixed terms - extra payments accelerate freedom.',
             metrics: [
               { label: 'Extra Payment', value: formatCurrency(chunkAmount), trend: 'up' },
@@ -672,6 +715,7 @@ export default function Dashboard() {
           },
         },
         { id: 'pl-2', type: 'tip', title: 'Refinance Check', subtitle: 'Lower rate = more savings', icon: '🔄',
+          learnRoute: '/learn?module=5',
           insight: { description: 'If your credit improved, you may qualify for a lower rate.',
             metrics: [
               { label: 'Current Rate', value: `${((debt?.interestRate || 0.11) * 100).toFixed(1)}%`, trend: 'neutral' },
@@ -682,6 +726,7 @@ export default function Dashboard() {
           },
         },
         { id: 'pl-3', type: 'milestone', title: 'Loan Liberation!', subtitle: `Saving ${formatCurrency(velocity.savings)} with velocity`, icon: '🎉',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'Your velocity strategy is crushing this personal loan.',
             metrics: [
               { label: 'Total Savings', value: formatCurrency(velocity.savings), trend: 'up' },
@@ -692,6 +737,7 @@ export default function Dashboard() {
           },
         },
         { id: 'pl-4', type: 'action', title: 'Consolidation Review', subtitle: 'Could you combine high-rate debts?', icon: '🔗',
+          learnRoute: '/learn?module=6',
           insight: { description: 'Consolidating multiple debts can simplify and potentially lower costs.',
             metrics: [
               { label: 'Number of Debts', value: 'Multiple', trend: 'neutral' },
@@ -704,6 +750,7 @@ export default function Dashboard() {
       ],
       recreation: [
         { id: 'rec-1', type: 'action', title: 'Luxury Payoff Power', subtitle: `Chunk ${formatCurrency(chunkAmount)} to recreation loan`, icon: '🚤',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Recreational vehicles depreciate - paying faster preserves value.',
             metrics: [
               { label: 'Chunk Applied', value: formatCurrency(chunkAmount), trend: 'up' },
@@ -714,6 +761,7 @@ export default function Dashboard() {
           },
         },
         { id: 'rec-2', type: 'tip', title: 'Seasonal Strategy', subtitle: 'Time your payments strategically', icon: '📅',
+          learnRoute: '/learn?module=5',
           insight: { description: 'Recreation vehicles have seasonal value - optimize timing.',
             metrics: [
               { label: 'Peak Season', value: 'Summer', trend: 'up' },
@@ -724,6 +772,7 @@ export default function Dashboard() {
           },
         },
         { id: 'rec-3', type: 'milestone', title: 'Adventure Awaits!', subtitle: `${velocity.months} months to owned freedom`, icon: '🌊',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'Own your adventure vehicle outright and enjoy payment-free fun.',
             metrics: [
               { label: 'Freedom Date', value: `${velocity.months} mo`, trend: 'up' },
@@ -734,6 +783,7 @@ export default function Dashboard() {
           },
         },
         { id: 'rec-4', type: 'action', title: 'Rental Income Option', subtitle: 'Could your asset generate income?', icon: '💰',
+          learnRoute: '/learn?module=1',
           insight: { description: 'Many boats, RVs, and vehicles can be rented when not in use.',
             metrics: [
               { label: 'Rental Potential', value: '$100-500/day', trend: 'up' },
@@ -746,6 +796,7 @@ export default function Dashboard() {
       ],
       custom: [
         { id: 'cust-1', type: 'action', title: 'Custom Chunk Attack', subtitle: `Apply ${formatCurrency(chunkAmount)} to your asset`, icon: '➕',
+          actionRoute: '/simulator?focus=chunk', learnRoute: '/learn?module=4',
           insight: { description: 'Your custom debt follows the same velocity principles.',
             metrics: [
               { label: 'Chunk Power', value: formatCurrency(chunkAmount), trend: 'up' },
@@ -756,6 +807,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cust-2', type: 'tip', title: 'Personalize Your Plan', subtitle: 'Tailor strategy to your asset', icon: '⚙️',
+          learnRoute: '/learn?module=5',
           insight: { description: 'Different assets may benefit from different approaches.',
             metrics: [
               { label: 'Asset Type', value: 'Custom', trend: 'neutral' },
@@ -766,6 +818,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cust-3', type: 'milestone', title: 'Custom Victory!', subtitle: `${velocity.months} months to freedom`, icon: '🏆',
+          actionRoute: '/portfolio', learnRoute: '/learn?module=3',
           insight: { description: 'Your unique debt is being conquered with velocity banking.',
             metrics: [
               { label: 'Velocity Payoff', value: `${velocity.months} mo`, trend: 'up' },
@@ -776,6 +829,7 @@ export default function Dashboard() {
           },
         },
         { id: 'cust-4', type: 'action', title: 'Track Your Asset', subtitle: 'Upload custom image for motivation', icon: '📸',
+          learnRoute: '/learn?module=5',
           insight: { description: 'Seeing your actual asset keeps you motivated.',
             metrics: [
               { label: 'Motivation', value: 'Visual reminder', trend: 'up' },
@@ -1100,13 +1154,65 @@ export default function Dashboard() {
                       ))}
                     </div>
                     
+                    {/* Inline checklist for insurance-type cards */}
+                    {action.inlineChecklist && (
+                      <div className={`mb-3 p-3 rounded-lg ${classes.bgSecondary} space-y-2`}>
+                        <div className={`text-xs font-semibold ${classes.text} mb-2`}>📋 Quick Checklist</div>
+                        {action.inlineChecklist.map((item) => (
+                          <label key={item.key} className={`flex items-center gap-2 text-xs ${classes.textSecondary} cursor-pointer`}>
+                            <input
+                              type="checkbox"
+                              checked={checklistState[`${action.id}-${item.key}`] || false}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                setChecklistState(prev => ({ ...prev, [`${action.id}-${item.key}`]: !prev[`${action.id}-${item.key}`] }));
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                              className="rounded border-gray-600 text-emerald-500 focus:ring-emerald-500 w-3.5 h-3.5"
+                            />
+                            <span className={checklistState[`${action.id}-${item.key}`] ? 'line-through opacity-50' : ''}>
+                              {item.label}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+
                     <div className="flex gap-2">
-                      <button className="px-3 py-1.5 bg-emerald-500/20 text-emerald-500 rounded-lg text-xs font-medium hover:bg-emerald-500/30 transition-colors">
-                        Take Action
-                      </button>
-                      <button className={`px-3 py-1.5 ${classes.glassButton} ${classes.textSecondary} rounded-lg text-xs font-medium transition-colors`}>
-                        Learn More
-                      </button>
+                      {action.actionRoute ? (
+                        <Link
+                          href={action.actionRoute}
+                          onClick={(e) => e.stopPropagation()}
+                          className="px-3 py-1.5 bg-emerald-500/20 text-emerald-500 rounded-lg text-xs font-medium hover:bg-emerald-500/30 transition-colors"
+                        >
+                          Take Action →
+                        </Link>
+                      ) : action.inlineChecklist ? (
+                        <span className="px-3 py-1.5 bg-emerald-500/20 text-emerald-500 rounded-lg text-xs font-medium">
+                          ✓ Use Checklist Above
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-500/60 rounded-lg text-xs font-medium">
+                          Coming Soon
+                        </span>
+                      )}
+                      {action.learnRoute ? (
+                        <Link
+                          href={action.learnRoute}
+                          onClick={(e) => e.stopPropagation()}
+                          className={`px-3 py-1.5 ${classes.glassButton} ${classes.textSecondary} rounded-lg text-xs font-medium transition-colors`}
+                        >
+                          Learn More →
+                        </Link>
+                      ) : (
+                        <Link
+                          href="/learn"
+                          onClick={(e) => e.stopPropagation()}
+                          className={`px-3 py-1.5 ${classes.glassButton} ${classes.textSecondary} rounded-lg text-xs font-medium transition-colors`}
+                        >
+                          Learn More
+                        </Link>
+                      )}
                     </div>
                   </div>
                 )}
