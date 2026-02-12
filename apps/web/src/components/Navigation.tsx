@@ -22,7 +22,7 @@ export default function Navigation() {
   const [showThemes, setShowThemes] = useState(false);
   const [aiQuery, setAiQuery] = useState('');
   const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
-    { role: 'ai', text: "Hi! I'm your Shield Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
+    { role: 'ai', text: "Hi! I'm your Velocity Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
   ]);
   const store = useFinancialStore();
   const activeDomain = store.activeDomain;
@@ -63,6 +63,7 @@ export default function Navigation() {
     { href: '/learn', label: 'Learn', icon: '📚' },
     { href: '/portfolio', label: 'Portfolio', icon: '📋' },
     { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
+    { href: '/settings', label: 'Settings', icon: '⚙️' },
   ];
 
   return (
@@ -119,7 +120,7 @@ export default function Navigation() {
             >
               <Image
                 src="/shield-guardian.png"
-                alt="Shield Guardian"
+                alt="Velocity Guardian"
                 fill
                 sizes="64px"
                 loading="eager"
@@ -127,7 +128,7 @@ export default function Navigation() {
                 style={{ filter: 'drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3))' }}
               />
             </div>
-            <span className="text-sm font-medium text-emerald-400 group-hover:text-emerald-300">Shield Guardian</span>
+            <span className="text-sm font-medium text-emerald-400 group-hover:text-emerald-300">Velocity Guardian</span>
             <span className={`text-xs ${classes.textSecondary}`}>Ask me anything</span>
           </button>
           
@@ -188,7 +189,7 @@ export default function Navigation() {
                 <div className="relative w-14 h-14">
                   <Image
                     src="/shield-guardian.png"
-                    alt="Shield Guardian"
+                    alt="Velocity Guardian"
                     fill
                     sizes="56px"
                     className="object-contain"
@@ -199,7 +200,7 @@ export default function Navigation() {
                   />
                 </div>
                 <div>
-                  <h3 className={`${classes.text} font-semibold text-lg`}>Shield Guardian</h3>
+                  <h3 className={`${classes.text} font-semibold text-lg`}>Velocity Guardian</h3>
                   <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>

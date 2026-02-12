@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import ThemeProvider from "@/components/ThemeProvider";
+import IntroModal from "@/components/IntroModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className="flex flex-col md:flex-row min-h-screen">
             <Navigation />
             <main className="flex-1 pb-20 md:pb-0">
+              <IntroModal />
               {children}
             </main>
           </div>

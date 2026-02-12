@@ -1,0 +1,2400 @@
++          </video>
++
++          {!hasStarted && (
++            <button
++              onClick={handlePlay}
++              className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 text-white"
++            >
++              <span className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 backdrop-blur">
++                <Play className="h-5 w-5" />
++                <span className="font-semibold">Click to play</span>
++              </span>
++              <span className="text-xs text-white/70">Starts muted • Captions enabled</span>
++            </button>
++          )}
++
++          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-slate-950/60 px-5 py-4">
++            <label className="flex items-center gap-3 text-sm text-white/70">
++              <input
++                type="checkbox"
++                checked={dontShow}
++                onChange={(e) => setDontShow(e.target.checked)}
++                className="h-4 w-4 rounded border-white/20 bg-white/10"
++              />
++              Don’t show on startup
++            </label>
++
++            <div className="flex items-center gap-2">
++              <button
++                onClick={() => setMuted((m) => !m)}
++                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10"
++                title={muted ? 'Enable sound' : 'Mute'}
++              >
++                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
++                {muted ? 'Sound off' : 'Sound on'}
++              </button>
++
++              <button
++                onClick={handleClose}
++                className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-400"
++              >
++                Skip → Dashboard
++              </button>
++            </div>
++          </div>
++        </div>
++      </div>
++    </div>
++  );
++}
++
+*** End Patch
+PATCH
+Done!
+Inspecting IntroModal file
+I’ve added the IntroModal, but I need to make sure nothing got truncated. I'll take a quick look at the file to ensure everything is intact. It's important to verify that all the content has been properly included and nothing is missing or cut off. Let's do that now!
+
+Inspecting IntroModal file for truncation
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,240p' apps/web/src/components/IntroModal.tsx
+'use client';
+
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { X, Volume2, VolumeX, Play } from 'lucide-react';
+
+type IntroModalProps = {
+  open: boolean;
+  onClose: (opts?: { dontShowOnStartup?: boolean }) => void;
+  defaultDontShowOnStartup?: boolean;
+};
+
+export function IntroModal({ open, onClose, defaultDontShowOnStartup = false }: IntroModalProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [muted, setMuted] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [dontShow, setDontShow] = useState(defaultDontShowOnStartup);
+
+  useEffect(() => {
+    if (!open) return;
+    // Reset per-open state
+    setMuted(true);
+    setHasStarted(false);
+    const v = videoRef.current;
+    if (v) {
+      v.currentTime = 0;
+      v.pause();
+      v.muted = true;
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = muted;
+  }, [muted]);
+
+  const canShow = useMemo(() => open, [open]);
+  if (!canShow) return null;
+
+  const handlePlay = async () => {
+    const v = videoRef.current;
+    if (!v) return;
+    try {
+      await v.play();
+      setHasStarted(true);
+    } catch {
+      // Some browsers block play until user gesture; click is a gesture so this should work.
+    }
+  };
+
+  const handleClose = () => {
+    const v = videoRef.current;
+    if (v) v.pause();
+    onClose({ dontShowOnStartup: dontShow });
+  };
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={handleClose}
+        aria-hidden
+      />
+
+      <div className="relative w-[min(960px,92vw)] rounded-2xl border border-white/10 bg-slate-950/70 shadow-2xl">
+        <div className="flex items-start justify-between gap-4 p-5">
+          <div>
+            <div className="text-sm uppercase tracking-wider text-white/60">InterestShield • Velocity Banking</div>
+            <h2 className="mt-1 text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
+            <p className="mt-2 text-sm text-white/70">
+              Click play to see how lowering your <span className="text-white">average balance</span> reduces the interest burn.
+            </p>
+          </div>
+
+          <button
+            onClick={handleClose}
+            className="rounded-lg p-2 text-white/70 hover:bg-white/10 hover:text-white"
+            aria-label="Close intro"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="relative overflow-hidden rounded-b-2xl">
+          <video
+            ref={videoRef}
+            className="w-full bg-black"
+            controls={hasStarted}
+            playsInline
+            muted
+            preload="metadata"
+            poster="/intro/poster.png"
+            onPlay={() => setHasStarted(true)}
+          >
+            <source src="/intro/money-loop.mp4" type="video/mp4" />
+            <track kind="captions" src="/intro/money-loop.vtt" srcLang="en" label="English" default />
+          </video>
+
+          {!hasStarted && (
+            <button
+              onClick={handlePlay}
+              className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 text-white"
+            >
+              <span className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 backdrop-blur">
+                <Play className="h-5 w-5" />
+                <span className="font-semibold">Click to play</span>
+              </span>
+              <span className="text-xs text-white/70">Starts muted • Captions enabled</span>
+            </button>
+          )}
+
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-slate-950/60 px-5 py-4">
+            <label className="flex items-center gap-3 text-sm text-white/70">
+              <input
+                type="checkbox"
+                checked={dontShow}
+                onChange={(e) => setDontShow(e.target.checked)}
+                className="h-4 w-4 rounded border-white/20 bg-white/10"
+              />
+              Don’t show on startup
+            </label>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMuted((m) => !m)}
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10"
+                title={muted ? 'Enable sound' : 'Mute'}
+              >
+                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {muted ? 'Sound off' : 'Sound on'}
+              </button>
+
+              <button
+                onClick={handleClose}
+                className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-400"
+              >
+                Skip → Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+Moving on to creating IntroGate
+Everything looks good with the IntroModal! Now it's time to move forward and create the IntroGate. I'll start on this next step and make sure it fits well with the previous work. Let’s keep it going and ensure everything flows as expected!
+
+Creating IntroGate component with modal functionality
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Add File: apps/web/src/components/IntroGate.tsx
++'use client';
++
++import { useEffect, useMemo, useState } from 'react';
++import { usePathname, useRouter } from 'next/navigation';
++import { IntroModal } from './IntroModal';
++import { useAppStore } from '../stores/app-store';
++
++/**
++ * Handles first-run + optional startup intro.
++ * - Forced once on the very first launch
++ * - After that, only shown on startup if the user enables it
++ */
++export function IntroGate({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { introSeen, showIntroOnStartup, startupLanding, markIntroSeen, setShowIntroOnStartup } =
+    useAppStore();
+
+  const [hydrated, setHydrated] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const isHome = useMemo(() => pathname === '/', [pathname]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!isHome) {
+      setOpen(false);
+      return;
+    }
+
+    // Force intro once (first ever visit)
+    if (!introSeen) {
+      setOpen(true);
+      return;
+    }
+
+    // Optional intro on startup (once per browser session)
+    if (showIntroOnStartup) {
+      const dismissed = sessionStorage.getItem('vb_intro_dismissed') === '1';
+      if (!dismissed) setOpen(true);
+    }
+  }, [hydrated, isHome, introSeen, showIntroOnStartup]);
+
+  const goToLanding = () => {
+    if (startupLanding === 'portfolio') {
+      router.push('/portfolio');
+    } else {
+      router.push('/');
+    }
+  };
+
+  return (
+    <>
+      {children}
+      {hydrated && isHome && (
+        <IntroModal
+          open={open}
+          onClose={(opts) => {
+            sessionStorage.setItem('vb_intro_dismissed', '1');
+            markIntroSeen();
+            if (opts?.dontShowOnStartup) setShowIntroOnStartup(false);
+            setOpen(false);
+            // B: go straight to Dashboard (or chosen landing)
+            goToLanding();
+          }}
+          defaultDontShowOnStartup={!showIntroOnStartup}
+        />
+      )}
+    </>
+  );
+}
+*** End Patch
+PATCH
+Invalid Add File Line:   const pathname = usePathname();
+Fixing patch formatting error
+It looks like the patch failed because I forgot to prefix some lines with a '+'. The error message points to an invalid line due to that. I need to go back, fix the formatting, and make sure each line in the patch starts with a '+'. Once that's sorted, I can retry.
+
+Applying patch to IntroGate component
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Add File: apps/web/src/components/IntroGate.tsx
++'use client';
++
++import { useEffect, useMemo, useState } from 'react';
++import { usePathname, useRouter } from 'next/navigation';
++import { IntroModal } from './IntroModal';
++import { useAppStore } from '../stores/app-store';
++
++/**
++ * Handles first-run + optional startup intro.
++ * - Forced once on the very first launch
++ * - After first run, can be offered once-per-session on startup
++ * - User can disable startup intro in Settings
++ */
++export function IntroGate({ children }: { children: React.ReactNode }) {
++  const pathname = usePathname();
++  const router = useRouter();
++  const { introSeen, showIntroOnStartup, startupLanding, setIntroSeen, setShowIntroOnStartup } =
++    useAppStore();
++
++  const [hydrated, setHydrated] = useState(false);
++  const [open, setOpen] = useState(false);
++
++  useEffect(() => {
++    setHydrated(true);
++  }, []);
++
++  const shouldConsider = useMemo(() => pathname === '/', [pathname]);
++
++  useEffect(() => {
++    if (!hydrated) return;
++    if (!shouldConsider) {
++      setOpen(false);
++      return;
++    }
++
++    // Forced only on first-ever launch (introSeen === false)
++    if (!introSeen) {
++      setOpen(true);
++      return;
++    }
++
++    // Optional after first run: show once per session if enabled.
++    if (!showIntroOnStartup) {
++      setOpen(false);
++      return;
++    }
++
++    const dismissed = typeof window !== 'undefined' && window.sessionStorage.getItem('intro_session_dismissed');
++    if (!dismissed) setOpen(true);
++  }, [hydrated, introSeen, showIntroOnStartup, shouldConsider]);
++
++  const close = (opts?: { dontShowOnStartup?: boolean }) => {
++    // mark first-run complete
++    if (!introSeen) setIntroSeen(true);
++
++    // remember "dismissed" for this session so it doesn't pop repeatedly
++    if (typeof window !== 'undefined') {
++      window.sessionStorage.setItem('intro_session_dismissed', '1');
++    }
++
++    if (opts?.dontShowOnStartup) {
++      setShowIntroOnStartup(false);
++    }
++
++    setOpen(false);
++
++    // After closing, route to landing preference
++    if (startupLanding === 'portfolio') router.push('/portfolio');
++    else router.push('/');
++  };
++
++  return (
++    <>
++      {children}
++      <IntroModal open={open} onClose={close} defaultDontShowOnStartup={!showIntroOnStartup} />
++    </>
++  );
++}
++
+*** End Patch
+PATCH
+Done!
+Inspecting file
+Alright, time to take a closer look at the file. I want to ensure that everything is in order and that there’s no issue with truncation or formatting. I'll go through it carefully to check for any discrepancies before proceeding further. It'll be a quick check!
+
+Inspecting file content of IntroGate.tsx
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,240p' apps/web/src/components/IntroGate.tsx
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { IntroModal } from './IntroModal';
+import { useAppStore } from '../stores/app-store';
+
+/**
+ * Handles first-run + optional startup intro.
+ * - Forced once on the very first launch
+ * - After first run, can be offered once-per-session on startup
+ * - User can disable startup intro in Settings
+ */
+export function IntroGate({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { introSeen, showIntroOnStartup, startupLanding, setIntroSeen, setShowIntroOnStartup } =
+    useAppStore();
+
+  const [hydrated, setHydrated] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const shouldConsider = useMemo(() => pathname === '/', [pathname]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!shouldConsider) {
+      setOpen(false);
+      return;
+    }
+
+    // Forced only on first-ever launch (introSeen === false)
+    if (!introSeen) {
+      setOpen(true);
+      return;
+    }
+
+    // Optional after first run: show once per session if enabled.
+    if (!showIntroOnStartup) {
+      setOpen(false);
+      return;
+    }
+
+    const dismissed = typeof window !== 'undefined' && window.sessionStorage.getItem('intro_session_dismissed');
+    if (!dismissed) setOpen(true);
+  }, [hydrated, introSeen, showIntroOnStartup, shouldConsider]);
+
+  const close = (opts?: { dontShowOnStartup?: boolean }) => {
+    // mark first-run complete
+    if (!introSeen) setIntroSeen(true);
+
+    // remember "dismissed" for this session so it doesn't pop repeatedly
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('intro_session_dismissed', '1');
+    }
+
+    if (opts?.dontShowOnStartup) {
+      setShowIntroOnStartup(false);
+    }
+
+    setOpen(false);
+
+    // After closing, route to landing preference
+    if (startupLanding === 'portfolio') router.push('/portfolio');
+    else router.push('/');
+  };
+
+  return (
+    <>
+      {children}
+      <IntroModal open={open} onClose={close} defaultDontShowOnStartup={!showIntroOnStartup} />
+    </>
+  );
+}
+Updating layout and preparing for /portfolio route
+The file looks good, but the '/portfolio' route doesn't exist yet. I’ll consider making a placeholder portfolio page or keep the startup landing page as only the dashboard. If the user clicks to '/portfolio', we need to avoid a 404 error, so a placeholder might be better for now. Also, I’ll update the layout and ensure the modal doesn’t break when rerouting. Let’s patch by wrapping children with IntroGate and making sure we handle any potential exceptions!
+
+Updating layout.tsx with IntroGate component
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/layout.tsx
+@@
+ import './globals.css';
+ import { ThemeProvider } from '@/components/ThemeProvider';
+ import Navigation from '@/components/Navigation';
++import { IntroGate } from '@/components/IntroGate';
+@@
+           <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+             <Navigation />
+-            <main className="flex-1 overflow-y-auto">
+-              {children}
+-            </main>
++            <main className="flex-1 overflow-y-auto">
++              <IntroGate>{children}</IntroGate>
++            </main>
+           </div>
+         </ThemeProvider>
+       </body>
+     </html>
+   );
+ }
+*** End Patch
+PATCH
+Invalid Context 0:
+import './globals.css';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import Navigation from '@/components/Navigation';
+Inspecting layout.tsx file
+It looks like the content in the context doesn’t match what I expected. I’ll need to open the layout.tsx file to check it out closely and see what’s going on, so I can fix the issue. I'll figure out how to align it with the context and make necessary adjustments!
+
+Displaying first 120 lines of layout.tsx
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,120p' apps/web/src/app/layout.tsx
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Navigation from "@/components/Navigation";
+import ThemeProvider from "@/components/ThemeProvider";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "InterestShield - Financial Empowerment",
+  description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeProvider>
+          <div className="flex flex-col md:flex-row min-h-screen">
+            <Navigation />
+            <main className="flex-1 pb-20 md:pb-0">
+              {children}
+            </main>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+Importing IntroGate and wrapping children
+I need to import the IntroGate component and make sure it properly wraps the children elements. After that, I’ll go ahead and make the necessary updates to patch things accordingly. Once it's done, I'll check if everything works as expected!
+
+Importing IntroGate and wrapping children
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/layout.tsx
+@@
+ import "./globals.css";
+ import Navigation from "@/components/Navigation";
+ import ThemeProvider from "@/components/ThemeProvider";
++import { IntroGate } from "@/components/IntroGate";
+@@
+           <div className="flex flex-col md:flex-row min-h-screen">
+             <Navigation />
+             <main className="flex-1 pb-20 md:pb-0">
+-              {children}
++              <IntroGate>{children}</IntroGate>
+             </main>
+           </div>
+         </ThemeProvider>
+*** End Patch
+PATCH
+Done!
+Wrapping children inside IntroGate
+I think I should wrap the children inside the IntroGate component, possibly within the main element. This should help keep everything organized. Once I make that change, I'll go ahead and patch it. Let’s see if this works as expected!
+
+Wrapping children inside IntroGate component
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/layout.tsx
+@@
+-            <main className="flex-1 pb-20 md:pb-0">
+-              <div className="container max-w-7xl mx-auto p-4 md:p-6">
+-                {children}
+-              </div>
+-            </main>
++            <main className="flex-1 pb-20 md:pb-0">
++              <IntroGate />
++              <div className="container max-w-7xl mx-auto p-4 md:p-6">
++                {children}
++              </div>
++            </main>
+           </div>
+         </ThemeProvider>
+       </body>
+     </html>
+*** End Patch
+PATCH
+Invalid Context 0:
+            <main className="flex-1 pb-20 md:pb-0">
+              <div className="container max-w-7xl mx-auto p-4 md:p-6">
+                {children}
+              </div>
+            </main>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+Checking layout differences
+It seems like the layout might change depending on the lines. I’ll check the rest of the content to make sure everything aligns properly. I don’t want to miss anything, so it’s better to view the remaining sections to understand how things are set up.
+
+Viewing first 120 lines of layout file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,120p' apps/web/src/app/layout.tsx
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Navigation from "@/components/Navigation";
+import ThemeProvider from "@/components/ThemeProvider";
+import { IntroGate } from "@/components/IntroGate";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "InterestShield - Financial Empowerment",
+  description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeProvider>
+          <div className="flex flex-col md:flex-row min-h-screen">
+            <Navigation />
+            <main className="flex-1 pb-20 md:pb-0">
+              <IntroGate>{children}</IntroGate>
+            </main>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+Fixing IntroGate component to accept children
+It seems like the IntroGate component didn’t originally accept children — it only rendered the modal. Now that we’re passing children through, it's causing an error. To fix this, we need to adjust IntroGate to accept children and render them properly. I'll update the props and render structure accordingly.
+
+Updating IntroGate to accept children
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroGate.tsx
+@@
+-import { useEffect, useMemo, useState } from 'react';
++import { ReactNode, useEffect, useMemo, useState } from 'react';
+@@
+-export function IntroGate() {
++export function IntroGate({ children }: { children: ReactNode }) {
+@@
+-  return (
+-    <IntroModal
+-      open={open}
+-      onClose={(opts) => {
+-        setOpen(false);
+-        closeAndRoute(opts?.dontShowOnStartup);
+-      }}
+-    />
+-  );
++  return (
++    <>
++      {children}
++      <IntroModal
++        open={open}
++        onClose={(opts) => {
++          setOpen(false);
++          closeAndRoute(opts?.dontShowOnStartup);
++        }}
++      />
++    </>
++  );
+ }
+*** End Patch
+PATCH
+Invalid Context 3:
+export function IntroGate() {
+Displaying header content of file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,60p' apps/web/src/components/IntroGate.tsx
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { IntroModal } from './IntroModal';
+import { useAppStore } from '../stores/app-store';
+
+/**
+ * Handles first-run + optional startup intro.
+ * - Forced once on the very first launch
+ * - After first run, can be offered once-per-session on startup
+ * - User can disable startup intro in Settings
+ */
+export function IntroGate({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { introSeen, showIntroOnStartup, startupLanding, setIntroSeen, setShowIntroOnStartup } =
+    useAppStore();
+
+  const [hydrated, setHydrated] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const shouldConsider = useMemo(() => pathname === '/', [pathname]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!shouldConsider) {
+      setOpen(false);
+      return;
+    }
+
+    // Forced only on first-ever launch (introSeen === false)
+    if (!introSeen) {
+      setOpen(true);
+      return;
+    }
+
+    // Optional after first run: show once per session if enabled.
+    if (!showIntroOnStartup) {
+      setOpen(false);
+      return;
+    }
+
+    const dismissed = typeof window !== 'undefined' && window.sessionStorage.getItem('intro_session_dismissed');
+    if (!dismissed) setOpen(true);
+  }, [hydrated, introSeen, showIntroOnStartup, shouldConsider]);
+
+  const close = (opts?: { dontShowOnStartup?: boolean }) => {
+    // mark first-run complete
+    if (!introSeen) setIntroSeen(true);
+
+    // remember "dismissed" for this session so it doesn't pop repeatedly
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('intro_session_dismissed', '1');
+    }
+
+Fixing React import and handling ReactNode types
+I noticed React isn't imported even though we're using React.ReactNode. Since React 17+ allows JSX without an explicit import, we might be okay, but for type support, I'll import ReactNode explicitly. I'll adjust the import, fix the children type, and correctly wrap the children in the return statement.
+
+Patching React import and children type
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '60,160p' apps/web/src/components/IntroGate.tsx
+
+    if (opts?.dontShowOnStartup) {
+      setShowIntroOnStartup(false);
+    }
+
+    setOpen(false);
+
+    // After closing, route to landing preference
+    if (startupLanding === 'portfolio') router.push('/portfolio');
+    else router.push('/');
+  };
+
+  return (
+    <>
+      {children}
+      <IntroModal open={open} onClose={close} defaultDontShowOnStartup={!showIntroOnStartup} />
+    </>
+  );
+}
+Fixing ReactNode import in the return signature
+The return already includes {children}. Nice! But the type for children is currently using React.ReactNode, which isn't imported. I’ll fix that by importing ReactNode so that the type is correctly recognized. Once that’s done, I’ll be in good shape to patch the code.
+
+Patching ReactNode import in IntroGate component
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroGate.tsx
+@@
+-import { useEffect, useMemo, useState } from 'react';
++import { type ReactNode, useEffect, useMemo, useState } from 'react';
+@@
+-export function IntroGate({ children }: { children: React.ReactNode }) {
++export function IntroGate({ children }: { children: ReactNode }) {
+*** End Patch
+PATCH
+Done!
+Fixing layout to ensure proper container wrapping
+The layout now uses the structure:
+
+<main><IntroGate>{children}</IntroGate></main>
+However, this setup results in children not being inside the container with padding, which could break the layout. To fix it, I'll wrap the container inside IntroGate like this:
+
+<IntroGate>
+  <div className="container ...">{children}</div>
+</IntroGate>
+Time to patch the layout!
+
+Patching layout to wrap children in container
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/layout.tsx
+@@
+-            <main className="flex-1 pb-20 md:pb-0">
+-              <IntroGate>
+-                {children}
+-              </IntroGate>
+-            </main>
++            <main className="flex-1 pb-20 md:pb-0">
++              <IntroGate>
++                <div className="container max-w-7xl mx-auto p-4 md:p-6">
++                  {children}
++                </div>
++              </IntroGate>
++            </main>
+*** End Patch
+PATCH
+Invalid Context 0:
+            <main className="flex-1 pb-20 md:pb-0">
+              <IntroGate>
+                {children}
+              </IntroGate>
+            </main>
+Viewing lines 20 to 80 of layout.tsx
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '20,80p' apps/web/src/app/layout.tsx
+  description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeProvider>
+          <div className="flex flex-col md:flex-row min-h-screen">
+            <Navigation />
+            <main className="flex-1 pb-20 md:pb-0">
+              <IntroGate>{children}</IntroGate>
+            </main>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+Wrapping container for context matching
+I’ll adjust the layout to ensure the container is properly wrapped, addressing the context mismatch. This means placing the container inside the appropriate wrapper for consistency. I’ll patch this and verify the alignment to ensure everything displays as intended. Let's go ahead and make the change!
+
+Patching container wrapper to layout
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/layout.tsx
+@@
+             <Navigation />
+             <main className="flex-1 pb-20 md:pb-0">
+-              <IntroGate>{children}</IntroGate>
++              <IntroGate>
++                <div className="container max-w-7xl mx-auto p-4 md:p-6">
++                  {children}
++                </div>
++              </IntroGate>
+             </main>
+*** End Patch
+PATCH
+Done!
+Creating settings page and updating navigation
+I need to create the settings page first (/settings/page.tsx) with client-side components for toggles. For now, I’ll focus on toggling the intro screen and default landing, with options for "Show intro" or "Go straight to dashboard," and the portfolio placeholder. I'll also update Navigation and set up a teacher mode toggle later. Let's get started!
+
+Implementing settings page with toggles
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Add File: apps/web/src/app/settings/page.tsx
++'use client';
++
++import { useEffect, useState } from 'react';
++import { useAppStore } from '@/stores/app-store';
++
++function Switch({ checked, onChange, label, desc }: { checked: boolean; onChange: (v: boolean) => void; label: string; desc?: string }) {
++  return (
++    <div className="flex items-start justify-between gap-6 py-4 border-b border-gray-200 dark:border-gray-800">
++      <div>
++        <div className="font-medium text-gray-900 dark:text-gray-100">{label}</div>
++        {desc ? <div className="text-sm text-gray-600 dark:text-gray-400">{desc}</div> : null}
++      </div>
++      <button
++        type="button"
++        onClick={() => onChange(!checked)}
++        className={`relative inline-flex h-7 w-12 items-center rounded-full transition ${checked ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-700'}`}
++        aria-pressed={checked}
++      >
++        <span
++          className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${checked ? 'translate-x-6' : 'translate-x-1'}`}
++        />
++      </button>
++    </div>
++  );
++}
++
++export default function SettingsPage() {
++  const { introSeen, showIntroOnStartup, startupLanding, setShowIntroOnStartup, setStartupLanding, resetIntro } = useAppStore();
++  const [hydrated, setHydrated] = useState(false);
++
++  useEffect(() => setHydrated(true), []);
++
++  if (!hydrated) return null;
++
++  return (
++    <div className="max-w-3xl">
++      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
++      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
++        Control your startup experience and learning preferences.
++      </p>
++
++      <div className="mt-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
++        <div className="px-5 pt-5">
++          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Startup</h2>
++          <p className="text-sm text-gray-600 dark:text-gray-400">
++            Choose whether the intro appears before your dashboard.
++          </p>
++        </div>
++
++        <div className="px-5">
++          <Switch
++            checked={showIntroOnStartup}
++            onChange={setShowIntroOnStartup}
++            label="Offer intro on startup"
++            desc="When enabled, you’ll see the click-to-play intro with a Skip button. The intro is forced only once on your very first launch."
++          />
++
++          <div className="py-4 border-b border-gray-200 dark:border-gray-800">
++            <div className="font-medium text-gray-900 dark:text-gray-100">Default landing</div>
++            <div className="text-sm text-gray-600 dark:text-gray-400">
++              Where you go after skipping (or finishing) the intro.
++            </div>
++            <div className="mt-3 flex flex-wrap gap-2">
++              {(['dashboard', 'portfolio'] as const).map((opt) => (
++                <button
++                  key={opt}
++                  type="button"
++                  onClick={() => setStartupLanding(opt)}
++                  className={`px-3 py-1.5 rounded-lg text-sm border transition ${startupLanding === opt ? 'bg-gray-900 text-white border-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:border-gray-100' : 'bg-transparent text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'}`}
++                >
++                  {opt === 'dashboard' ? 'Dashboard' : 'Portfolio'}
++                </button>
++              ))}
++            </div>
++          </div>
++
++          <div className="py-4">
++            <div className="font-medium text-gray-900 dark:text-gray-100">Intro tools</div>
++            <div className="text-sm text-gray-600 dark:text-gray-400">
++              Need to show the first-run experience again for your demo? Reset it here.
++            </div>
++            <div className="mt-3 flex items-center gap-3">
++              <button
++                type="button"
++                onClick={resetIntro}
++                className="px-3 py-1.5 rounded-lg text-sm border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
++              >
++                Reset intro
++              </button>
++              <span className="text-xs text-gray-500 dark:text-gray-500">Current: {introSeen ? 'Seen' : 'Not seen yet'}</span>
++            </div>
++          </div>
++        </div>
++      </div>
++
++      <div className="mt-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
++        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Tip</h2>
++        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
++          Your intro video is also available any time under <span className="font-medium">Learn</span>.
++        </p>
++      </div>
++    </div>
++  );
++}
++
+*** End Patch
+PATCH
+Done!
+Inspecting first 240 lines of file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,240p' apps/web/src/app/settings/page.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useAppStore } from '@/stores/app-store';
+
+function Switch({ checked, onChange, label, desc }: { checked: boolean; onChange: (v: boolean) => void; label: string; desc?: string }) {
+  return (
+    <div className="flex items-start justify-between gap-6 py-4 border-b border-gray-200 dark:border-gray-800">
+      <div>
+        <div className="font-medium text-gray-900 dark:text-gray-100">{label}</div>
+        {desc ? <div className="text-sm text-gray-600 dark:text-gray-400">{desc}</div> : null}
+      </div>
+      <button
+        type="button"
+        onClick={() => onChange(!checked)}
+        className={`relative inline-flex h-7 w-12 items-center rounded-full transition ${checked ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-700'}`}
+        aria-pressed={checked}
+      >
+        <span
+          className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${checked ? 'translate-x-6' : 'translate-x-1'}`}
+        />
+      </button>
+    </div>
+  );
+}
+
+export default function SettingsPage() {
+  const { introSeen, showIntroOnStartup, startupLanding, setShowIntroOnStartup, setStartupLanding, resetIntro } = useAppStore();
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => setHydrated(true), []);
+
+  if (!hydrated) return null;
+
+  return (
+    <div className="max-w-3xl">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
+      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        Control your startup experience and learning preferences.
+      </p>
+
+      <div className="mt-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div className="px-5 pt-5">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Startup</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Choose whether the intro appears before your dashboard.
+          </p>
+        </div>
+
+        <div className="px-5">
+          <Switch
+            checked={showIntroOnStartup}
+            onChange={setShowIntroOnStartup}
+            label="Offer intro on startup"
+            desc="When enabled, you’ll see the click-to-play intro with a Skip button. The intro is forced only once on your very first launch."
+          />
+
+          <div className="py-4 border-b border-gray-200 dark:border-gray-800">
+            <div className="font-medium text-gray-900 dark:text-gray-100">Default landing</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Where you go after skipping (or finishing) the intro.
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {(['dashboard', 'portfolio'] as const).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => setStartupLanding(opt)}
+                  className={`px-3 py-1.5 rounded-lg text-sm border transition ${startupLanding === opt ? 'bg-gray-900 text-white border-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:border-gray-100' : 'bg-transparent text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'}`}
+                >
+                  {opt === 'dashboard' ? 'Dashboard' : 'Portfolio'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="py-4">
+            <div className="font-medium text-gray-900 dark:text-gray-100">Intro tools</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Need to show the first-run experience again for your demo? Reset it here.
+            </div>
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={resetIntro}
+                className="px-3 py-1.5 rounded-lg text-sm border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
+              >
+                Reset intro
+              </button>
+              <span className="text-xs text-gray-500 dark:text-gray-500">Current: {introSeen ? 'Seen' : 'Not seen yet'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Tip</h2>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          Your intro video is also available any time under <span className="font-medium">Learn</span>.
+        </p>
+      </div>
+    </div>
+  );
+}
+Finishing app-store file
+I realized that the useAppStore function isn't fully defined yet. I'll need to go back and finish the app-store file by adding the necessary fields and methods for proper functionality. Once it's completed, we’ll be able to use it without issues. Let's get to that!
+
+Editing app-store file for missing fields and methods
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && cat apps/web/src/stores/app-store.ts
+'use client';
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export type StartupLanding = 'dashboard' | 'portfolio';
+
+export interface AppState {
+  /** Whether the user has completed the first-run intro at least once. */
+  introSeen: boolean;
+  /** If true, offer the intro modal on startup (optional after first run). */
+  showIntroOnStartup: boolean;
+
+  /** Where to send the user when they continue after intro. */
+  startupLanding: StartupLanding;
+
+  setIntroSeen: (seen: boolean) => void;
+  setShowIntroOnStartup: (show: boolean) => void;
+  setStartupLanding: (landing: StartupLanding) => void;
+}
+
+export const useAppStore = create<AppState>()(
+  persist(
+    (set) => ({
+      introSeen: false,
+      showIntroOnStartup: true,
+      startupLanding: 'dashboard',
+
+      setIntroSeen: (introSeen) => set({ introSeen }),
+      setShowIntroOnStartup: (showIntroOnStartup) => set({ showIntroOnStartup }),
+      setStartupLanding: (startupLanding) => set({ startupLanding }),
+    }),
+    {
+      name: 'interestshield-app',
+      version: 1,
+      partialize: (s) => ({
+        introSeen: s.introSeen,
+        showIntroOnStartup: s.showIntroOnStartup,
+        startupLanding: s.startupLanding,
+      }),
+    }
+  )
+);
+Patching navigation for settings and portfolio
+The app store has functions like introSeen and setIntroSeen, which are already referenced in the settings page—great! Now, I need to add the navigation links for both the settings and portfolio pages. Once that's done, we should be good to go! Let's patch the Navigation component accordingly.
+
+Patching navigation links for settings and portfolio
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/Navigation.tsx
+@@
+-import { Home, Calculator, BarChart2, BookOpen, Settings, Moon, Sun } from 'lucide-react';
++import { Home, Calculator, BarChart2, BookOpen, Settings, Moon, Sun, LayoutGrid } from 'lucide-react';
+@@
+ const navItems = [
+   { href: '/', label: 'Dashboard', icon: Home },
++  { href: '/portfolio', label: 'Portfolio', icon: LayoutGrid },
+   { href: '/simulator', label: 'Simulator', icon: Calculator },
+   { href: '/vault', label: 'Vault', icon: BarChart2 },
+   { href: '/learn', label: 'Learn', icon: BookOpen },
++  { href: '/settings', label: 'Settings', icon: Settings },
+ ];
+*** End Patch
+PATCH
+Invalid Context 0:
+import { Home, Calculator, BarChart2, BookOpen, Settings, Moon, Sun } from 'lucide-react';
+Opening top lines of navigation
+It looks like the Navigation component is currently using a list with lucide icons. I should take a look at the top section of the code to make sure it's set up right. I'll check those first lines, and then I can adjust for adding the settings and portfolio links.
+
+Displaying top 60 lines of Navigation.tsx
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,60p' apps/web/src/components/Navigation.tsx
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
+import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
+import { getGuardianResponse } from '@/data/shield-guardian-qa';
+import { useEffect, useState, useCallback } from 'react';
+
+const themeOptions: { value: Theme; label: string; icon: string }[] = [
+  { value: 'original', label: 'Original', icon: '🌙' },
+  { value: 'dark', label: 'Dark', icon: '⚫' },
+  { value: 'light', label: 'Light', icon: '☀️' },
+];
+
+export default function Navigation() {
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+  const [showAI, setShowAI] = useState(false);
+  const [showThemes, setShowThemes] = useState(false);
+  const [aiQuery, setAiQuery] = useState('');
+  const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
+    { role: 'ai', text: "Hi! I'm your Shield Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
+  ]);
+  const store = useFinancialStore();
+  const activeDomain = store.activeDomain;
+  const { theme, setTheme } = useThemeStore();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleAISubmit = useCallback(() => {
+    if (!aiQuery.trim()) return;
+    const userMessage = aiQuery.trim();
+    setAiMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+    setAiQuery('');
+    setTimeout(() => {
+      const response = getGuardianResponse(userMessage);
+      setAiMessages(prev => [...prev, { role: 'ai', text: response }]);
+    }, 300);
+  }, [aiQuery]);
+
+  const activeSubcat = mounted ? store.getActiveSubcategory(activeDomain as Domain) : null;
+  const dashboardIcon = activeSubcat?.icon || '🚗';
+  const classes = themeClasses[mounted ? theme : 'original'];
+
+  const navItems = [
+    { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },
+    { href: '/simulator', label: 'Simulator', icon: '📊' },
+    { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
+    { href: '/learn', label: 'Learn', icon: '📚' },
+    { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
+  ];
+
+  return (
+    <>
+      <nav className={`fixed bottom-0 left-0 right-0 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
+        <div className="px-4 py-2 md:p-6">
+Updating navigation items
+I realized the navigation uses emoji icons, not lucide. To add the settings and portfolio links, I'll follow the same approach. I'll add the new items to navItems: {href:'/portfolio', label:'Portfolio', icon:'🧩'} and {href:'/settings', label:'Settings', icon:'⚙️'}. Time to patch the navigation!
+
+Patching navigation items with new links
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/Navigation.tsx
+@@
+   const navItems = [
+     { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },
++    { href: '/portfolio', label: 'Portfolio', icon: '🧩' },
+     { href: '/simulator', label: 'Simulator', icon: '📊' },
+     { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
+     { href: '/learn', label: 'Learn', icon: '📚' },
+     { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
++    { href: '/settings', label: 'Settings', icon: '⚙️' },
+   ];
+*** End Patch
+PATCH
+Done!
+Adding settings to the navigation
+It looks like I should add the settings item towards the bottom of the navigation, probably near the theme toggle. I need to decide whether to integrate it into navItems or make it a separate item. I think I'll add it after the "learn" section for clarity. Let's implement it!
+
+Adding settings item to navigation
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/Navigation.tsx
+@@
+-    { href: '/learn', label: 'Learn', icon: '📚' },
++    { href: '/learn', label: 'Learn', icon: '📚' },
++    { href: '/settings', label: 'Settings', icon: '⚙️' },
+   ];
+*** End Patch
+PATCH
+Invalid Context 0:
+    { href: '/learn', label: 'Learn', icon: '📚' },
+  ];
+Reevaluating the label for navigation
+I’m thinking the label for settings might need to be adjusted. "Learn" or "Education" seems more fitting for the context. I should go ahead and check the navItems list to confirm and ensure everything aligns properly before I make any final changes.
+
+Displaying navItems list from code
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && grep -n "navItems" -n -A20 apps/web/src/components/Navigation.tsx | sed -n '1,60p'
+49:  const navItems = [
+50-    { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },
+51-    { href: '/portfolio', label: 'Portfolio', icon: '🧩' },
+52-    { href: '/simulator', label: 'Simulator', icon: '📊' },
+53-    { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
+54-    { href: '/learn', label: 'Learn', icon: '📚' },
+55-    { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
+56-    { href: '/settings', label: 'Settings', icon: '⚙️' },
+57-  ];
+58-
+59-  return (
+60-    <>
+61-      <nav className={`fixed bottom-0 left-0 right-0 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
+62-        <div className="px-4 py-2 md:p-6">
+63-          <div className="hidden md:block mb-8">
+64-            <div className="flex items-center gap-3">
+65-              <img 
+66-                src="/logo.jpg" 
+67-                alt="InterestShield Logo" 
+68-                className="w-12 h-12 rounded-xl object-contain shadow-lg shadow-emerald-500/20 flex-shrink-0"
+69-              />
+--
+77:            {navItems.map((item) => (
+78-              <Link
+79-                key={item.href}
+80-                href={item.href}
+81-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+82-                  pathname === item.href
+83-                    ? 'bg-emerald-500/20 text-emerald-400'
+84-                    : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-800/50`
+85-                } ${item.isDynamic ? 'relative' : ''}`}
+86-              >
+87-                <span className={`text-xl ${item.isDynamic ? 'transition-transform duration-200' : ''}`}>
+88-                  {item.icon}
+89-                </span>
+90-                <span className="hidden md:inline">{item.label}</span>
+91-              </Link>
+92-            ))}
+93-            
+94-            <button
+95-              onClick={() => setShowAI(true)}
+96-              className="md:hidden flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800"
+97-            >
+Confirming settings and creating portfolio placeholder
+Okay, I see that we've already added the Settings item. Great! Now, it’s time to focus on the next task: creating a placeholder for the /portfolio page. I’ll set it up with minimal content and a simple message indicating that more will be added in the future. Let's get started!
+
+Creating portfolio page placeholder
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Add File: apps/web/src/app/portfolio/page.tsx
++import React from 'react';
++
++export default function PortfolioPage() {
++  return (
++    <div className="space-y-6">
++      <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
++        <h1 className="text-2xl font-bold text-white">Portfolio</h1>
++        <p className="mt-2 text-slate-300">
++          This is where multiple debts / projects will live (car, house, land, student loans, etc.) so you can track payoff order and cashflow unlock over time.
++        </p>
++      </div>
++
++      <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
++        <h2 className="text-lg font-semibold text-white">Coming next</h2>
++        <ul className="mt-3 list-disc pl-5 text-slate-300 space-y-1">
++          <li>Add unlimited debt items</li>
++          <li>Velocity Mode payoff ordering (cashflow unlock + daily interest burn)</li>
++          <li>Snowball & avalanche comparison toggles</li>
++          <li>Timeline + charts</li>
++        </ul>
++      </div>
++    </div>
++  );
++}
++
+*** End Patch
+PATCH
+Done!
+Updating Learn page with video
+I’m updating the Learn page right now by adding a video. I’ll patch it into the hero section with a video element. This should make the page more engaging! I’ll go ahead and implement that change now. Let’s get this video added!
+
+Updating Learn page with video element
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/learn/page.tsx
+@@
+-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+-          <div className="bg-gray-800 p-4 rounded-lg">
+-            <h3 className="text-white font-semibold mb-2">Debt Escape: The Money Loop</h3>
+-            <p className="text-gray-400 text-sm mb-3">First run intro video (coming soon)</p>
+-            <button
+-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+-              disabled
+-            >
+-              Watch Intro
+-            </button>
+-          </div>
++        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
++          <div className="bg-gray-800 p-4 rounded-lg">
++            <h3 className="text-white font-semibold mb-2">Debt Escape: The Money Loop</h3>
++            <p className="text-gray-400 text-sm mb-3">A 60-second explainer (silent by default, captions included)</p>
++            <div className="rounded-lg overflow-hidden border border-gray-700">
++              <video
++                className="w-full h-auto"
++                controls
++                preload="metadata"
++                muted
++                playsInline
++                poster="/intro/poster.png"
++              >
++                <source src="/intro/money-loop.mp4" type="video/mp4" />
++                <track default kind="captions" src="/intro/money-loop.vtt" />
++              </video>
++            </div>
++            <p className="mt-3 text-xs text-gray-500">
++              Tip: Tap play — it starts muted with captions so it’s safe in public spaces.
++            </p>
++          </div>
+*** End Patch
+PATCH
+Invalid Context 0:
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <h3 className="text-white font-semibold mb-2">Debt Escape: The Money Loop</h3>
+            <p className="text-gray-400 text-sm mb-3">First run intro video (coming soon)</p>
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+              disabled
+            >
+              Watch Intro
+            </button>
+          </div>
+Reviewing Learn page video section
+The Learn page looks a bit different from what I expected. I need to check the section where the video is located to make sure it fits properly. I'll focus on the part near the video to review how it's implemented and see if anything needs adjusting.
+
+Viewing relevant part near video
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && grep -n "First Run" -n apps/web/src/app/learn/page.tsx | head
+107:            <p className="text-gray-400">First Run Video - Coming Soon</p>
+Inspecting the area around the video
+I should take a closer look at the area surrounding the video on the Learn page to see how it's integrated. I want to make sure everything is flowing properly and that it looks visually appealing. Let's review the surrounding sections to better understand the layout.
+
+Viewing specific lines in file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '80,140p' apps/web/src/app/learn/page.tsx
+
+export default function LearnPage() {
+  const [activeLesson, setActiveLesson] = useState<string | null>(null);
+  const [activeGlossary, setActiveGlossary] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const classes = themeClasses[mounted ? theme : 'original'];
+
+  return (
+    <div className="p-6 md:p-10 max-w-4xl mx-auto">
+      <header className="mb-8">
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Learn</h1>
+        <p className={classes.textSecondary}>Understand velocity banking step by step</p>
+      </header>
+
+      <div className={`${classes.glass} bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 mb-8`}>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-xl bg-blue-500/30 flex items-center justify-center">
+            <span className="text-3xl">🎬</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
+            <p className="text-gray-400">First Run Video - Coming Soon</p>
+            <p className="text-sm text-blue-400 mt-1">Animated explainer series</p>
+          </div>
+        </div>
+      </div>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">Micro-Lessons</h2>
+        <div className="space-y-3">
+          {lessons.map((lesson) => (
+            <div key={lesson.id} className={`${classes.glass} rounded-xl overflow-hidden`}>
+              <button
+                onClick={() => setActiveLesson(activeLesson === lesson.id ? null : lesson.id)}
+                className={`w-full p-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-lg ${classes.glassButton} flex items-center justify-center text-emerald-400 font-bold`}>
+                    {lesson.id}
+                  </div>
+                  <div className="text-left">
+                    <h3 className={`font-medium ${classes.text}`}>{lesson.title}</h3>
+                    <p className={`text-sm ${classes.textSecondary}`}>{lesson.duration}</p>
+                  </div>
+                </div>
+                <svg
+                  className={`w-5 h-5 text-gray-400 transition-transform ${activeLesson === lesson.id ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeLesson === lesson.id && (
+Implementing video card update
+The video card currently says "Coming soon," but I'll change that by embedding a video directly into the card. I’ll probably place it below the header and use a video element with a play button and controls. I'll patch that section starting from the line where it says "Coming soon". Let’s do that!
+
+Applying video embed patch
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/app/learn/page.tsx
+@@
+-      <div className={`${classes.glass} bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 mb-8`}>
+-        <div className="flex items-center gap-4">
+-          <div className="w-16 h-16 rounded-xl bg-blue-500/30 flex items-center justify-center">
+-            <span className="text-3xl">🎬</span>
+-          </div>
+-          <div>
+-            <h2 className="text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
+-            <p className="text-gray-400">First Run Video - Coming Soon</p>
+-            <p className="text-sm text-blue-400 mt-1">Animated explainer series</p>
+-          </div>
+-        </div>
+-      </div>
++      <div className={`${classes.glass} bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 mb-8`}>
++        <div className="flex items-center gap-4">
++          <div className="w-16 h-16 rounded-xl bg-blue-500/30 flex items-center justify-center">
++            <span className="text-3xl">🎬</span>
++          </div>
++          <div>
++            <h2 className="text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
++            <p className="text-gray-400">First Run Video (click to play)</p>
++            <p className="text-sm text-blue-400 mt-1">Muted by default • captions included</p>
++          </div>
++        </div>
++
++        <div className="mt-4 overflow-hidden rounded-xl border border-slate-700 bg-black/40">
++          <video
++            className="w-full"
++            controls
++            playsInline
++            muted
++            preload="metadata"
++            poster="/intro/poster.png"
++          >
++            <source src="/intro/money-loop.mp4" type="video/mp4" />
++            <track kind="captions" src="/intro/money-loop.vtt" srcLang="en" label="English" default />
++          </video>
++        </div>
++
++        <p className="mt-3 text-sm text-slate-300">
++          If someone tells you “this looks like a finance manager,” play this once — it reframes the app as a *Money Loop simulator*.
++        </p>
++      </div>
+*** End Patch
+PATCH
+Done!
+Verifying the patch
+I need to check the content that was patched for correctness. I’ll review what was updated, making sure the video element has been correctly embedded and the changes appear as expected. Let’s go over that carefully to make sure everything is working smoothly.
+
+Checking patched content for correctness
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '92,170p' apps/web/src/app/learn/page.tsx
+
+  return (
+    <div className="p-6 md:p-10 max-w-4xl mx-auto">
+      <header className="mb-8">
+        <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Learn</h1>
+        <p className={classes.textSecondary}>Understand velocity banking step by step</p>
+      </header>
+
+      <div className={`${classes.glass} bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-6 mb-8`}>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-xl bg-blue-500/30 flex items-center justify-center">
+            <span className="text-3xl">🎬</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
+            <p className="text-gray-400">First Run Video (click to play)</p>
+            <p className="text-sm text-blue-400 mt-1">Muted by default • captions included</p>
+          </div>
+        </div>
+
+        <div className="mt-4 overflow-hidden rounded-xl border border-slate-700 bg-black/40">
+          <video
+            className="w-full"
+            controls
+            playsInline
+            muted
+            preload="metadata"
+            poster="/intro/poster.png"
+          >
+            <source src="/intro/money-loop.mp4" type="video/mp4" />
+            <track kind="captions" src="/intro/money-loop.vtt" srcLang="en" label="English" default />
+          </video>
+        </div>
+
+        <p className="mt-3 text-sm text-slate-300">
+          If someone tells you “this looks like a finance manager,” play this once — it reframes the app as a *Money Loop simulator*.
+        </p>
+      </div>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">Micro-Lessons</h2>
+        <div className="space-y-3">
+          {lessons.map((lesson) => (
+            <div key={lesson.id} className={`${classes.glass} rounded-xl overflow-hidden`}>
+              <button
+                onClick={() => setActiveLesson(activeLesson === lesson.id ? null : lesson.id)}
+                className={`w-full p-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-lg ${classes.glassButton} flex items-center justify-center text-emerald-400 font-bold`}>
+                    {lesson.id}
+                  </div>
+                  <div className="text-left">
+                    <h3 className={`font-medium ${classes.text}`}>{lesson.title}</h3>
+                    <p className={`text-sm ${classes.textSecondary}`}>{lesson.duration}</p>
+                  </div>
+                </div>
+                <svg
+                  className={`w-5 h-5 text-gray-400 transition-transform ${activeLesson === lesson.id ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeLesson === lesson.id && (
+                <div className={`p-4 pt-0 border-t ${classes.border}`}>
+                  <p className={`${classes.textSecondary} leading-relaxed mb-3`}>{lesson.content}</p>
+                  <a 
+                    href={lesson.learnMoreUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
+                    <span>Learn more: {lesson.learnMoreLabel}</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+Adjusting IntroGate path and creating video assets
+The Learn page is updated and now I need to adjust the IntroGate path. It currently uses startupLanding and pushes to /portfolio. We’ve created the portfolio placeholder, so now let’s focus on ensuring intro video assets are in place. I’ll create an intro folder in public and generate the necessary video files. I’ll check if the folder already exists.
+
+Checking public directory for intro folder
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && ls -la apps/web/public | head -n 50
+total 1663
+drwxr-xr-x 2 root root     220 Feb  4 23:23 .
+drwxr-xr-x 2 root root     240 Feb  4 23:23 ..
+-rw-r--r-- 1 root root     391 Feb  4 23:23 file.svg
+-rw-r--r-- 1 root root    1035 Feb  4 23:23 globe.svg
+drwxr-xr-x 2 root root      60 Feb  4 23:23 heroes
+drwxr-xr-x 2 root root     220 Feb  4 23:23 images
+-rw-r--r-- 1 root root  511442 Feb  4 23:23 logo.jpg
+-rw-r--r-- 1 root root    1375 Feb  4 23:23 next.svg
+-rw-r--r-- 1 root root 1186328 Feb  4 23:23 shield-guardian.png
+-rw-r--r-- 1 root root     128 Feb  4 23:23 vercel.svg
+-rw-r--r-- 1 root root     385 Feb  4 23:23 window.svg
+Creating intro assets and slides
+We don't have an intro folder, so I’ll create the directory apps/web/public/intro along with a subfolder for slides. I need to generate six slides using Python and PIL, creating images with a blue/orange color scheme, dark background, and shield-shaped design. I'll also prepare and design each slide with titles, subtitles, and small icons. This will include using DejaVuSans-Bold font and a gradient background.
+
+Creating and formatting slide assets
+For the slides, we'll create six images with a duration of 9 seconds each, except for the last one, which will be 11 seconds. I'll prepare a slides.txt file for concatenating the slides, defining filenames and durations. The total sequence may last around 56 seconds. The final slide will repeat for the last frame, per the specs.
+
+Running ffmpeg conversion and generating assets
+I'll run the ffmpeg command to convert the slides into a video with the appropriate settings, using the slides.txt file. I'll also create a poster image from slide01.png or a separate one. Then, I'll create VTT captions with timestamps to match the video. All of this will be done inside the container.
+
+Generating intro slides and video with captions
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && mkdir -p apps/web/public/intro/slides
+Generating slides with Python
+I'll generate the slides using Python, following the design plan. I'll incorporate the colors, fonts, and icons I planned for each slide. Once they're ready, I'll proceed with the next steps to integrate the slides into the overall project. Let's get those slides created!
+
+Generating slides and poster
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && python - <<'PY'
+from PIL import Image, ImageDraw, ImageFont
+import os, math
+
+W,H = 1280,720
+out_dir = 'apps/web/public/intro/slides'
+os.makedirs(out_dir, exist_ok=True)
+
+def load_font(size, bold=False):
+    candidates = [
+        '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return ImageFont.truetype(p, size=size)
+    return ImageFont.load_default()
+
+TITLE = load_font(64, bold=True)
+SUB = load_font(30, bold=False)
+SMALL = load_font(22, bold=False)
+
+slides = [
+    ("Interest burns daily.", "Your balance is what interest sees — every day."),
+    ("The old path", "Paycheck → checking → bills. Debt stays high most of the month."),
+    ("The Money Loop", "Income hits your line of credit first — lowering average balance."),
+    ("Build a chunk", "Deploy it to principal. Rebuild it. Momentum grows as cashflow unlocks."),
+    ("Recovery Mode", "Emergencies happen. Pause, stabilize, then resume — without losing the plan."),
+    ("Run your numbers", "Start with the Mortgage Vault. Then add anything: car, loan, student debt, even a phone."),
+]
+
+# Colors
+bg1 = (10, 15, 25)
+bg2 = (3, 6, 12)
+blue = (56, 189, 248)  # sky-400
+orange = (251, 146, 60) # orange-400
+white = (245, 245, 245)
+muted = (180, 190, 205)
+
+
+def gradient():
+    img = Image.new('RGB', (W,H), bg1)
+    px = img.load()
+    for y in range(H):
+        t = y/(H-1)
+        r = int(bg2[0]*(1-t) + bg1[0]*t)
+        g = int(bg2[1]*(1-t) + bg1[1]*t)
+        b = int(bg2[2]*(1-t) + bg1[2]*t)
+        for x in range(W):
+            px[x,y] = (r,g,b)
+    return img
+
+
+def draw_shield(d: ImageDraw.ImageDraw, cx, cy, size, stroke=(70, 170, 255), glow=(70, 170, 255)):
+    # Simple shield outline
+    w = size
+    h = int(size*1.2)
+    top = cy - h//2
+    left = cx - w//2
+    right = cx + w//2
+    bottom = cy + h//2
+
+    pts = [
+        (cx, top),
+        (right, top + int(h*0.18)),
+        (right - int(w*0.1), top + int(h*0.65)),
+        (cx, bottom),
+        (left + int(w*0.1), top + int(h*0.65)),
+        (left, top + int(h*0.18)),
+    ]
+
+    # Glow
+    for i in range(10,0,-1):
+        alpha = int(18*i)
+        col = glow + (alpha,)
+        # create overlay
+        pass
+
+
+def draw_icon(img, idx):
+    d = ImageDraw.Draw(img)
+    # soft radial glow
+    cx, cy = 220, 190
+    for r in range(240, 0, -1):
+        a = int(80*(1 - r/240))
+        col = (20 + a, 40 + a, 70 + a)
+        d.ellipse((cx-r, cy-r, cx+r, cy+r), fill=col)
+
+    # main symbol per slide
+    if idx == 0:
+        # gauge / drop
+        d.arc((130, 90, 310, 270), start=200, end=340, fill=blue, width=10)
+        d.line((220, 180, 285, 140), fill=orange, width=8)
+        d.ellipse((210, 170, 230, 190), fill=white)
+    elif idx == 1:
+        # arrows old path
+        d.rounded_rectangle((120, 140, 320, 230), radius=18, outline=muted, width=4)
+        d.text((150, 162), "PAY", font=SMALL, fill=white)
+        d.polygon([(330,185),(365,165),(365,205)], fill=muted)
+        d.rounded_rectangle((375, 140, 585, 230), radius=18, outline=muted, width=4)
+        d.text((410, 162), "CHECK", font=SMALL, fill=white)
+    elif idx == 2:
+        # loop ring
+        d.ellipse((120, 90, 320, 290), outline=blue, width=10)
+        d.arc((120, 90, 320, 290), start=20, end=160, fill=orange, width=10)
+        d.polygon([(300,175),(335,155),(330,195)], fill=orange)
+    elif idx == 3:
+        # chunk bar
+        d.rounded_rectangle((120, 170, 580, 215), radius=22, outline=muted, width=4)
+        d.rounded_rectangle((120, 170, 420, 215), radius=22, fill=blue)
+        d.rounded_rectangle((420, 170, 510, 215), radius=22, fill=orange)
+        d.text((120, 120), "CHUNK", font=SMALL, fill=white)
+    elif idx == 4:
+        # shield
+        cx, cy = 220, 185
+        pts = [(cx, 95),(310, 135),(295, 230),(cx, 285),(145, 230),(130, 135)]
+        d.polygon(pts, outline=blue, fill=None)
+        d.line((cx,115,cx,265), fill=orange, width=8)
+    else:
+        # play button
+        d.rounded_rectangle((120, 120, 320, 260), radius=24, outline=blue, width=6)
+        d.polygon([(205,150),(205,230),(280,190)], fill=orange)
+
+for i,(title, sub) in enumerate(slides, start=1):
+    img = gradient()
+    d = ImageDraw.Draw(img)
+    # decorative lines
+    d.line((0, H-120, W, H-120), fill=(25, 35, 55), width=2)
+    d.line((0, 110, W, 110), fill=(25, 35, 55), width=2)
+
+    draw_icon(img, i-1)
+
+    # Title/sub positioning
+    tx = 460
+    ty = 170
+    d.text((tx, ty), title, font=TITLE, fill=white)
+    # wrap subtitle
+    import textwrap
+    wrap = textwrap.fill(sub, width=44)
+    d.multiline_text((tx, ty+90), wrap, font=SUB, fill=muted, spacing=10)
+
+    # footer
+    footer = "InterestShield • Powered by Velocity Banking • Educational estimate"
+    d.text((tx, H-80), footer, font=SMALL, fill=(150,160,175))
+    hint = "Click Play • Captions ON • Sound optional"
+    d.text((tx, H-50), hint, font=SMALL, fill=(170,180,195))
+
+    out_path = os.path.join(out_dir, f"slide{i:02d}.png")
+    img.save(out_path)
+
+# poster
+poster_src = os.path.join(out_dir, 'slide01.png')
+poster_dst = 'apps/web/public/intro/poster.png'
+Image.open(poster_src).save(poster_dst)
+print('Generated slides and poster')
+PY
+Generated slides and poster
+Preparing ffmpeg concat
+Now that the slides are ready, I’ll move on to creating the ffmpeg concat. This will bring everything together so that the slides can be converted into a video. I'll make sure the durations are correct, and then I'll run the command to produce the final video. Let's proceed!
+
+Generating video from slide images
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && cat > apps/web/public/intro/slides/slides.txt <<'TXT'
+file 'slide01.png'
+duration 9
+file 'slide02.png'
+duration 9
+file 'slide03.png'
+duration 9
+file 'slide04.png'
+duration 9
+file 'slide05.png'
+duration 9
+file 'slide06.png'
+duration 11
+file 'slide06.png'
+TXT
+ffmpeg -y -loglevel error -f concat -safe 0 -i apps/web/public/intro/slides/slides.txt -r 30 -pix_fmt yuv420p -c:v libx264 apps/web/public/intro/money-loop.mp4
+ls -lh apps/web/public/intro/money-loop.mp4 | awk '{print $5, $9}'
+Checking file existence and size
+I need to verify whether the file exists and if its size is as expected. This will ensure everything is in place before proceeding further. Let's double-check to make sure the necessary file is there and valid before moving ahead.
+
+Checking file existence and size
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && ls -la apps/web/public/intro | sed -n '1,50p'
+total 390
+drwxr-xr-x 2 root root    100 Feb  6 20:59 .
+drwxr-xr-x 2 root root    240 Feb  6 20:57 ..
+-rw-r--r-- 1 root root 340653 Feb  6 20:59 money-loop.mp4
+-rw-r--r-- 1 root root  58259 Feb  6 20:58 poster.png
+drwxr-xr-x 2 root root    180 Feb  6 20:59 slides
+Creating VTT captions with timestamps
+I'm going to create the VTT captions with precise timestamps that match the slide durations. Each slide will be assigned a cue and timestamp, with slide01 through slide05 lasting 9 seconds, and slide06 lasting 11 seconds, for a total of 56 seconds. I'll start crafting the VTT file now.
+
+Creating VTT captions with timestamps
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && cat > apps/web/public/intro/money-loop.vtt <<'VTT'
+WEBVTT
+
+00:00.000 --> 00:09.000
+Interest burns daily.
+Your balance is what interest sees — every day.
+
+00:09.000 --> 00:18.000
+The old path keeps balances high.
+Paycheck → checking → bills → debt.
+
+00:18.000 --> 00:27.000
+The Money Loop lowers the average balance.
+Income hits your credit line first.
+
+00:27.000 --> 00:36.000
+Build a chunk. Deploy it. Rebuild it.
+That’s how cashflow unlock compounds.
+
+00:36.000 --> 00:45.000
+Life happens.
+Recovery Mode keeps your plan alive.
+
+00:45.000 --> 00:56.000
+Run your numbers.
+Start with the Mortgage Vault — then add anything.
+VTT
+ls -la apps/web/public/intro/money-loop.vtt
+-rw-r--r-- 1 root root 584 Feb  6 21:00 apps/web/public/intro/money-loop.vtt
+Adding poster file
+I need to add a poster file for the video. I'll use slide01 as the poster, so it visually represents the video when displayed elsewhere. I'll copy it over and make sure it's in the right format, giving the video a clear and easy-to-understand starting image.
+
+Copying slide01 as poster file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && cp apps/web/public/intro/slides/slide01.png apps/web/public/intro/poster.png && ls -la apps/web/public/intro/poster.png
+-rw-r--r-- 1 root root 58259 Feb  6 21:00 apps/web/public/intro/poster.png
+Ensuring proper imports and dependencies
+I need to make sure references in the IntroModal and Learn page for the video and captions are correct. The useAppStore and imports need to be valid paths, and I’m double-checking the store setup. Also, I’m confirming that lucide-react is installed by checking the package.json file.
+
+Checking lucide-react dependency in package.json
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && cat apps/web/package.json
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0 -p 5000",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0 -p 5000",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+Replacing icons with simpler alternatives
+Since lucide-react isn’t installed, the IntroModal would fail. To avoid this, I’ll replace the icons with inline SVGs or emojis. I'll remove the lucide import and use simple text-based icons like play, volume, and close emojis. Let's update the IntroModal accordingly.
+
+Patching IntroModal to replace lucide-react with emojis
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroModal.tsx
+@@
+-import { useEffect, useMemo, useRef, useState } from 'react';
+-import { X, Volume2, VolumeX, Play } from 'lucide-react';
++import { useEffect, useMemo, useRef, useState } from 'react';
+@@
+-            <button
++            <button
+               type="button"
+               onClick={() => onClose({ dontShowOnStartup: dontShow })}
+               className="rounded-lg p-2 text-slate-300 hover:text-white hover:bg-white/10"
+               aria-label="Close"
+             >
+-              <X className="h-5 w-5" />
++              <span className="text-lg leading-none">✕</span>
+             </button>
+@@
+-              <Play className="h-5 w-5" />
++              <span className="text-lg leading-none">▶</span>
+@@
+-              {muted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
++              <span className="text-lg leading-none">{muted ? '🔇' : '🔈'}</span>
+*** End Patch
+PATCH
+Invalid Context 4:
+            <button
+              type="button"
+              onClick={() => onClose({ dontShowOnStartup: dontShow })}
+              className="rounded-lg p-2 text-slate-300 hover:text-white hover:bg-white/10"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5" />
+            </button>
+Patching IntroModal with exact text
+I need to patch the IntroModal file by updating it with the precise text. Time to open the file and carefully apply the changes. I'll make sure everything aligns correctly while keeping it simple and efficient.
+
+Opening IntroModal file for patching
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '1,120p' apps/web/src/components/IntroModal.tsx
+'use client';
+
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { X, Volume2, VolumeX, Play } from 'lucide-react';
+
+type IntroModalProps = {
+  open: boolean;
+  onClose: (opts?: { dontShowOnStartup?: boolean }) => void;
+  defaultDontShowOnStartup?: boolean;
+};
+
+export function IntroModal({ open, onClose, defaultDontShowOnStartup = false }: IntroModalProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [muted, setMuted] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [dontShow, setDontShow] = useState(defaultDontShowOnStartup);
+
+  useEffect(() => {
+    if (!open) return;
+    // Reset per-open state
+    setMuted(true);
+    setHasStarted(false);
+    const v = videoRef.current;
+    if (v) {
+      v.currentTime = 0;
+      v.pause();
+      v.muted = true;
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = muted;
+  }, [muted]);
+
+  const canShow = useMemo(() => open, [open]);
+  if (!canShow) return null;
+
+  const handlePlay = async () => {
+    const v = videoRef.current;
+    if (!v) return;
+    try {
+      await v.play();
+      setHasStarted(true);
+    } catch {
+      // Some browsers block play until user gesture; click is a gesture so this should work.
+    }
+  };
+
+  const handleClose = () => {
+    const v = videoRef.current;
+    if (v) v.pause();
+    onClose({ dontShowOnStartup: dontShow });
+  };
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={handleClose}
+        aria-hidden
+      />
+
+      <div className="relative w-[min(960px,92vw)] rounded-2xl border border-white/10 bg-slate-950/70 shadow-2xl">
+        <div className="flex items-start justify-between gap-4 p-5">
+          <div>
+            <div className="text-sm uppercase tracking-wider text-white/60">InterestShield • Velocity Banking</div>
+            <h2 className="mt-1 text-xl font-semibold text-white">Debt Escape: The Money Loop</h2>
+            <p className="mt-2 text-sm text-white/70">
+              Click play to see how lowering your <span className="text-white">average balance</span> reduces the interest burn.
+            </p>
+          </div>
+
+          <button
+            onClick={handleClose}
+            className="rounded-lg p-2 text-white/70 hover:bg-white/10 hover:text-white"
+            aria-label="Close intro"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="relative overflow-hidden rounded-b-2xl">
+          <video
+            ref={videoRef}
+            className="w-full bg-black"
+            controls={hasStarted}
+            playsInline
+            muted
+            preload="metadata"
+            poster="/intro/poster.png"
+            onPlay={() => setHasStarted(true)}
+          >
+            <source src="/intro/money-loop.mp4" type="video/mp4" />
+            <track kind="captions" src="/intro/money-loop.vtt" srcLang="en" label="English" default />
+          </video>
+
+          {!hasStarted && (
+            <button
+              onClick={handlePlay}
+              className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 text-white"
+            >
+              <span className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 backdrop-blur">
+                <Play className="h-5 w-5" />
+                <span className="font-semibold">Click to play</span>
+              </span>
+              <span className="text-xs text-white/70">Starts muted • Captions enabled</span>
+            </button>
+          )}
+
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-slate-950/60 px-5 py-4">
+            <label className="flex items-center gap-3 text-sm text-white/70">
+              <input
+                type="checkbox"
+                checked={dontShow}
+                onChange={(e) => setDontShow(e.target.checked)}
+                className="h-4 w-4 rounded border-white/20 bg-white/10"
+              />
+              Don’t show on startup
+Patching IntroModal
+I need to patch the IntroModal by removing the lucide import line and replacing the icons in the buttons. I'll use simple text emojis like "✕" for close, "▶" for play, and volume controls like "🔈" and "🔇." Time to implement this and continue checking through the rest.
+
+Patching IntroModal component in TypeScript
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '120,240p' apps/web/src/components/IntroModal.tsx
+              Don’t show on startup
+            </label>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMuted((m) => !m)}
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10"
+                title={muted ? 'Enable sound' : 'Mute'}
+              >
+                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {muted ? 'Sound off' : 'Sound on'}
+              </button>
+
+              <button
+                onClick={handleClose}
+                className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-400"
+              >
+                Skip → Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+Patching volume and play icons
+We need to replace both the "VolumeX/Volume2" and "Play" icons. I'll search for "Play" and "X" in the code and update them accordingly. Once I find them, I'll patch everything properly. Time to go ahead and make these changes!
+
+Patching icon replacements in IntroModal.tsx
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroModal.tsx
+@@
+-import { useEffect, useMemo, useRef, useState } from 'react';
+-import { X, Volume2, VolumeX, Play } from 'lucide-react';
++import { useEffect, useMemo, useRef, useState } from 'react';
+@@
+-            <button
++            <button
+               type="button"
+               onClick={() => onClose({ dontShowOnStartup: dontShow })}
+               className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white/80 hover:bg-white/10"
+               aria-label="Close"
+             >
+-              <X className="h-5 w-5" />
++              ✕
+             </button>
+@@
+-                <button
++                <button
+                   type="button"
+                   onClick={() => {
+                     const v = videoRef.current;
+                     if (!v) return;
+                     // Ensure muted-by-default behavior.
+                     v.muted = muted;
+                     v.play().catch(() => void 0);
+                     setHasStarted(true);
+                   }}
+                   className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-base font-semibold text-white hover:bg-white/15"
+                 >
+-                  <Play className="h-5 w-5" />
++                  ▶
+                   Click to play
+                 </button>
+@@
+-                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
++                {muted ? '🔇' : '🔈'}
+                 {muted ? 'Sound off' : 'Sound on'}
+               </button>
+*** End Patch
+PATCH
+Invalid Context 4:
+            <button
+              type="button"
+              onClick={() => onClose({ dontShowOnStartup: dontShow })}
+              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white/80 hover:bg-white/10"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5" />
+            </button>
+Patching context mismatch
+There seems to be a context mismatch due to some small differences in the lines. I'll start by patching the import line exactly as needed. Once that’s fixed, we can address the rest of the patch. Time to go ahead with just the import line for now.
+
+Patching import line discrepancy
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroModal.tsx
+@@
+-import { useEffect, useMemo, useRef, useState } from 'react';
+-import { X, Volume2, VolumeX, Play } from 'lucide-react';
++import { useEffect, useMemo, useRef, useState } from 'react';
+*** End Patch
+PATCH
+Done!
+Updating icon components
+I need to replace the close button's X component, which is currently <X className="h-4 w-4" />, with ✕. Similarly, I’ll switch the Play icon from <Play .../> to ▶ and update the volume icons. Time to apply this patch and make the necessary component changes.
+
+Applying icon replacements and patches
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroModal.tsx
+@@
+-              <X className="h-4 w-4" />
++              <span aria-hidden>✕</span>
+@@
+-                  <Play className="h-6 w-6 text-white" />
++                  <span className="text-white text-xl" aria-hidden>▶</span>
+@@
+-                {muted ? (
+-                  <VolumeX className="h-4 w-4" />
+-                ) : (
+-                  <Volume2 className="h-4 w-4" />
+-                )}
++                <span aria-hidden>{muted ? '🔇' : '🔊'}</span>
+*** End Patch
+PATCH
+Invalid Context 0:
+              <X className="h-4 w-4" />
+Searching for class occurrences in code
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && grep -n "className=\"h-4 w-4\"" -n apps/web/src/components/IntroModal.tsx | head -n 20
+128:                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+Locating close button in code
+I need to check the line numbers near the close button to make sure everything’s in the right place. Let’s find that section of the code and review it closely to address any possible issues and apply necessary adjustments. Time to open up and inspect the relevant lines!
+
+Finding line numbers near close button
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && grep -n "onClose" -n -A8 apps/web/src/components/IntroModal.tsx | head -n 40
+7:  onClose: (opts?: { dontShowOnStartup?: boolean }) => void;
+8-  defaultDontShowOnStartup?: boolean;
+9-};
+10-
+11:export function IntroModal({ open, onClose, defaultDontShowOnStartup = false }: IntroModalProps) {
+12-  const videoRef = useRef<HTMLVideoElement | null>(null);
+13-  const [muted, setMuted] = useState(true);
+14-  const [hasStarted, setHasStarted] = useState(false);
+15-  const [dontShow, setDontShow] = useState(defaultDontShowOnStartup);
+16-
+17-  useEffect(() => {
+18-    if (!open) return;
+19-    // Reset per-open state
+--
+53:    onClose({ dontShowOnStartup: dontShow });
+54-  };
+55-
+56-  return (
+57-    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+58-      <div
+59-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+60-        onClick={handleClose}
+61-        aria-hidden
+Adjusting the close icon placement
+It looks like I need to move the close icon further down to get the layout just right. I'll make the necessary adjustment so that it fits well with the other elements and the overall design. Let's carefully reposition it and check for alignment.
+
+Modifying close icon position in component
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && sed -n '70,110p' apps/web/src/components/IntroModal.tsx
+              Click play to see how lowering your <span className="text-white">average balance</span> reduces the interest burn.
+            </p>
+          </div>
+
+          <button
+            onClick={handleClose}
+            className="rounded-lg p-2 text-white/70 hover:bg-white/10 hover:text-white"
+            aria-label="Close intro"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="relative overflow-hidden rounded-b-2xl">
+          <video
+            ref={videoRef}
+            className="w-full bg-black"
+            controls={hasStarted}
+            playsInline
+            muted
+            preload="metadata"
+            poster="/intro/poster.png"
+            onPlay={() => setHasStarted(true)}
+          >
+            <source src="/intro/money-loop.mp4" type="video/mp4" />
+            <track kind="captions" src="/intro/money-loop.vtt" srcLang="en" label="English" default />
+          </video>
+
+          {!hasStarted && (
+            <button
+              onClick={handlePlay}
+              className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 text-white"
+            >
+              <span className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 backdrop-blur">
+                <Play className="h-5 w-5" />
+                <span className="font-semibold">Click to play</span>
+              </span>
+              <span className="text-xs text-white/70">Starts muted • Captions enabled</span>
+            </button>
+          )}
+
+Patch for X and Play icons
+I need to patch the X and Play components, so I'll patch them using the exact snippet I've identified. This will ensure the icons are properly updated. I'll keep things precise to make sure everything aligns well and functions as expected. Let's apply this fix.
+
+Patching components with snippet provided
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
+*** Update File: apps/web/src/components/IntroModal.tsx
+@@
+-            <X className="h-5 w-5" />
++            <span aria-hidden className="text-lg leading-none">✕</span>
+@@
+-                <Play className="h-5 w-5" />
++                <span aria-hidden className="text-base">▶</span>
+*** End Patch
+PATCH
+Done!
+Finding volume icons to update
+I need to locate the volume icons in the file so I can update them accordingly. I'll search through the file to find them and make the necessary changes. Once I find the appropriate icons, I'll proceed with the update. Let's get that sorted!
+
+Finding volume icons in file
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && grep -n "Volume" -n apps/web/src/components/IntroModal.tsx
+128:                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+Applying emoji for updated line
+I need to update the line by replacing the current content with the emoji version. This should make it more visually appealing. I'll go ahead and implement that change right now, updating the line with the appropriate emoji. Let's patch it and move forward!
+
+Patching volume icon with emoji
+Always show details
+
+bash -lc cd /mnt/data/vb2/velocity-banking-mvp-v2-main && apply_patch<<'PATCH'
+*** Begin Patch
