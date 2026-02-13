@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import ScrollReveal from '@/components/ScrollReveal';
+import PageTransition from '@/components/PageTransition';
 
 const formatCurrency = (num: number): string => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
@@ -390,11 +392,12 @@ export default function VaultPage() {
   ];
 
   return (
+    <PageTransition>
     <div className="p-6 md:p-10 max-w-2xl mx-auto">
-      <header className="mb-8">
+      <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Wealth Transfer Timeline</h1>
         <p className={classes.textSecondary}>See the true cost of your mortgage</p>
-      </header>
+      </ScrollReveal>
 
       <div className="flex gap-2 mb-8">
         {stepTitles.map((_, i) => (
@@ -406,6 +409,7 @@ export default function VaultPage() {
         ))}
       </div>
 
+      <ScrollReveal variant="scaleIn">
       <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
         <div className="text-center mb-6">
           <h2 className={`text-xl font-semibold ${classes.text}`}>{stepTitles[step].title}</h2>
@@ -414,6 +418,7 @@ export default function VaultPage() {
         
         {renderStep()}
       </div>
+      </ScrollReveal>
 
       <div className="flex gap-4">
         {step > 0 && (
@@ -445,5 +450,6 @@ export default function VaultPage() {
         Educational estimate. Click any number to edit. Not financial advice.
       </footer>
     </div>
+    </PageTransition>
   );
 }

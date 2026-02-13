@@ -7,6 +7,9 @@ import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import ScrollReveal from '@/components/ScrollReveal';
+import CountUp from '@/components/CountUp';
+import PageTransition from '@/components/PageTransition';
 
 export default function SimulatorPage() {
   const [mounted, setMounted] = useState(false);
@@ -61,11 +64,12 @@ export default function SimulatorPage() {
   const domainName = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
 
   return (
+    <PageTransition>
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
-      <header className="mb-8">
+      <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>What-If Simulator</h1>
         <p className={classes.textSecondary}>See how velocity banking could accelerate your payoff</p>
-      </header>
+      </ScrollReveal>
 
       <div className="relative z-50">
         <DomainTabs 
@@ -92,7 +96,7 @@ export default function SimulatorPage() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
+          <ScrollReveal variant="fadeUp" className="space-y-6" stagger={0.08}>
             <div className={`${classes.glass} rounded-2xl p-6`}>
               <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>Income & Expenses</h2>
               <div className="space-y-4">
@@ -188,9 +192,9 @@ export default function SimulatorPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="space-y-6">
+          <ScrollReveal variant="fadeUp" delay={0.15} className="space-y-6" stagger={0.08}>
             <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
               <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Results Comparison</h2>
               
@@ -198,12 +202,12 @@ export default function SimulatorPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
                     <p className={`text-sm ${classes.textSecondary} mb-1`}>Traditional</p>
-                    <p className="text-2xl font-bold text-red-400">{results.baseline.payoffMonths} mo</p>
+                    <p className="text-2xl font-bold text-red-400"><CountUp value={results.baseline.payoffMonths} prefix="" suffix=" mo" /></p>
                     <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.baseline.payoffMonths)}</p>
                   </div>
                   <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/30">
                     <p className={`text-sm ${classes.textSecondary} mb-1`}>Velocity</p>
-                    <p className="text-2xl font-bold text-emerald-400">{results.velocity.payoffMonths} mo</p>
+                    <p className="text-2xl font-bold text-emerald-400"><CountUp value={results.velocity.payoffMonths} prefix="" suffix=" mo" /></p>
                     <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.velocity.payoffMonths)}</p>
                   </div>
                 </div>
@@ -221,8 +225,8 @@ export default function SimulatorPage() {
 
                 <div className={`${classes.glass} rounded-xl p-6 text-center border border-emerald-500/30`}>
                   <p className={`${classes.textSecondary} mb-2`}>Potential Savings</p>
-                  <p className="text-3xl font-bold text-emerald-400">{formatCurrency(results.velocity.interestSaved)}</p>
-                  <p className="text-amber-500 mt-2">{results.velocity.monthsSaved} months faster</p>
+                  <p className="text-3xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
+                  <p className="text-amber-500 mt-2"><CountUp value={results.velocity.monthsSaved} prefix="" suffix=" months faster" /></p>
                 </div>
               </div>
             </div>
@@ -263,7 +267,7 @@ export default function SimulatorPage() {
                 </div>
               </div>
             </a>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
 
@@ -271,5 +275,6 @@ export default function SimulatorPage() {
         Educational tool. Click any number to edit. Estimates are simplified models. Not financial advice.
       </footer>
     </div>
+    </PageTransition>
   );
 }

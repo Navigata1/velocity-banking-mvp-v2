@@ -6,6 +6,9 @@ import { usePortfolioStore } from '@/stores/portfolio-store';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
 import type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
 import { formatCurrency, formatDate } from '@/engine/calculations';
+import ScrollReveal from '@/components/ScrollReveal';
+import CountUp from '@/components/CountUp';
+import PageTransition from '@/components/PageTransition';
 
 function categoryLabel(cat: DebtItem['category']): string {
   const labels: Record<string, string> = {
@@ -118,9 +121,10 @@ export default function PortfolioPage() {
   };
 
   return (
+    <PageTransition>
     <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8">
       {/* Header */}
-      <header className="space-y-2">
+      <ScrollReveal as="header" className="space-y-2">
         <h1 className={`text-3xl font-bold tracking-tight ${classes.text}`}>📋 Portfolio</h1>
         <p className={`${classes.textSecondary} max-w-3xl`}>
           Build a complete picture of your debts, then choose a payoff approach.{' '}
@@ -130,9 +134,10 @@ export default function PortfolioPage() {
         <p className={`${classes.textMuted} text-xs`}>
           Educational estimates. Not financial advice. Always verify lender terms.
         </p>
-      </header>
+      </ScrollReveal>
 
       {/* Plan Controls */}
+      <ScrollReveal variant="fadeUp">
       <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
         <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
           <div className="space-y-4 flex-1">
@@ -275,7 +280,7 @@ export default function PortfolioPage() {
           <div className="w-full lg:w-[320px] space-y-3 flex-shrink-0">
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Total Debt</p>
-              <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{formatCurrency(totalDebt)}</p>
+              <p className={`text-2xl font-bold mt-1 ${classes.text}`}><CountUp value={totalDebt} /></p>
             </div>
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Estimated Debt-Free</p>
@@ -287,7 +292,7 @@ export default function PortfolioPage() {
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Monthly Cash Flow</p>
               <p className={`text-2xl font-bold mt-1 ${cashFlow >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                {formatCurrency(cashFlow)}
+                <CountUp value={cashFlow} />
               </p>
               <p className={`${classes.textMuted} text-[11px] mt-1`}>Your velocity fuel</p>
             </div>
@@ -321,8 +326,10 @@ export default function PortfolioPage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Debts Table */}
+      <ScrollReveal variant="fadeUp" delay={0.1}>
       <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -470,9 +477,11 @@ export default function PortfolioPage() {
           </div>
         )}
       </section>
+      </ScrollReveal>
 
       {/* Payoff Order */}
       {payoffOrder.length > 0 && (
+        <ScrollReveal variant="fadeUp" delay={0.2}>
         <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
           <h2 className={`text-xl font-bold ${classes.text} mb-2`}>Payoff Order</h2>
           <p className={`${classes.textSecondary} text-sm mb-4`}>
@@ -504,6 +513,7 @@ export default function PortfolioPage() {
             ))}
           </ol>
         </section>
+        </ScrollReveal>
       )}
 
       {/* Add Debt Modal */}
@@ -613,5 +623,6 @@ export default function PortfolioPage() {
         📚 Educational simulation only. Results are estimates based on your inputs. Not financial advice.
       </p>
     </div>
+    </PageTransition>
   );
 }

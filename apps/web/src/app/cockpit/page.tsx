@@ -6,6 +6,8 @@ import { EditableCurrency, EditableNumber, EditablePercentage } from '@/componen
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import ScrollReveal from '@/components/ScrollReveal';
+import PageTransition from '@/components/PageTransition';
 
 interface Instrument {
   label: string;
@@ -97,11 +99,12 @@ export default function CockpitPage() {
   };
 
   return (
+    <PageTransition>
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
-      <header className="mb-8">
+      <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Cockpit Mode</h1>
         <p className={classes.textSecondary}>Your financial flight simulator</p>
-      </header>
+      </ScrollReveal>
 
       <div className="relative z-50">
         <DomainTabs 
@@ -119,6 +122,7 @@ export default function CockpitPage() {
           </div>
         )}
 
+        <ScrollReveal variant="scaleIn">
         <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {instruments.map((instrument, i) => (
@@ -282,8 +286,9 @@ export default function CockpitPage() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <ScrollReveal variant="fadeUp" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className={`${classes.glass} rounded-2xl p-6`}>
             <h3 className={`font-semibold mb-4 ${classes.text}`}>Scenario Controls</h3>
             <div className="space-y-4">
@@ -370,8 +375,9 @@ export default function CockpitPage() {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
+        <ScrollReveal variant="fadeUp">
         <div className={`${classes.glass} rounded-2xl p-6`}>
           <h3 className={`font-semibold mb-4 ${classes.text}`}>Flight Controls</h3>
           <div className="flex flex-wrap gap-4">
@@ -401,11 +407,13 @@ export default function CockpitPage() {
             Every slider change updates the gauges in real-time. More cash flow = lower average balance = less interest.
           </p>
         </div>
+        </ScrollReveal>
       </div>
 
       <footer className={`mt-12 text-center text-sm ${classes.textSecondary}`}>
         Educational tool. Click any number to edit. Not financial advice.
       </footer>
     </div>
+    </PageTransition>
   );
 }

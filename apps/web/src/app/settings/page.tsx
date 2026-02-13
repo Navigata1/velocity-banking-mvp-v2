@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { useAppStore, LandingPage } from '@/stores/app-store';
 import { usePortfolioStore } from '@/stores/portfolio-store';
+import ScrollReveal from '@/components/ScrollReveal';
+import PageTransition from '@/components/PageTransition';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -55,15 +57,17 @@ export default function SettingsPage() {
   };
 
   return (
+    <PageTransition>
     <div className="p-4 md:p-8 max-w-3xl mx-auto space-y-6">
-      <header>
+      <ScrollReveal as="header">
         <h1 className={`text-3xl font-bold ${classes.text}`}>⚙️ Settings</h1>
         <p className={`text-sm ${classes.textSecondary} mt-1`}>
           Customize your InterestShield experience.
         </p>
-      </header>
+      </ScrollReveal>
 
       {/* Theme */}
+      <ScrollReveal variant="fadeUp">
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Theme</h2>
         <div className="grid grid-cols-3 gap-3">
@@ -83,8 +87,10 @@ export default function SettingsPage() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Onboarding */}
+      <ScrollReveal variant="fadeUp" delay={0.05}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Onboarding</h2>
         <div className="space-y-3">
@@ -117,8 +123,10 @@ export default function SettingsPage() {
           </button>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Landing Page */}
+      <ScrollReveal variant="fadeUp" delay={0.1}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Default Landing Page</h2>
         <div className="grid grid-cols-2 gap-3">
@@ -138,8 +146,10 @@ export default function SettingsPage() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Data */}
+      <ScrollReveal variant="fadeUp" delay={0.15}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Data Backup</h2>
         <p className={`text-sm ${classes.textSecondary} mb-4`}>
@@ -170,8 +180,10 @@ export default function SettingsPage() {
           <p className="mt-3 text-sm">{importStatus}</p>
         )}
       </section>
+      </ScrollReveal>
 
       {/* Demo Auth */}
+      <ScrollReveal variant="fadeUp" delay={0.2}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account (Demo)</h2>
         {appStore.user ? (
@@ -213,10 +225,12 @@ export default function SettingsPage() {
           </div>
         )}
       </section>
+      </ScrollReveal>
 
       <p className={`text-xs ${classes.textMuted} text-center pt-4`}>
         InterestShield v2 • Educational tool • Not financial advice
       </p>
     </div>
+    </PageTransition>
   );
 }

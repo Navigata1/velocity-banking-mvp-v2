@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, animate } from '
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import PageTransition from '@/components/PageTransition';
 
 /* ──────────────────────────────────────────────────────────
    TYPES
@@ -1134,6 +1135,7 @@ function LearnPageInner() {
   const pct = Math.round((completedCount / lessons.length) * 100);
 
   return (
+    <PageTransition>
     <div className="p-4 md:p-8 max-w-4xl mx-auto">
       {/* Milestone celebrations */}
       {milestone === 'half' && (
@@ -1355,6 +1357,7 @@ function LearnPageInner() {
         }
       `}</style>
     </div>
+    </PageTransition>
   );
 }
 

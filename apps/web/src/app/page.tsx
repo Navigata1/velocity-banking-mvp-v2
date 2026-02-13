@@ -12,6 +12,10 @@ import { EditableCurrency, EditablePercentage, EditableNumber } from '@/componen
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import ScrollReveal from '@/components/ScrollReveal';
+import GlassCard from '@/components/GlassCard';
+import CountUp from '@/components/CountUp';
+import PageTransition from '@/components/PageTransition';
 
 type VitalsCategory = 'cashflow' | 'analytics' | 'goals' | 'velocity';
 type ActionFilter = 'all' | 'action' | 'tip' | 'milestone';
@@ -895,8 +899,10 @@ export default function Dashboard() {
   };
 
   return (
+    <PageTransition>
     <div className="p-4 md:p-8 max-w-[1600px] mx-auto">
       {showWealthTimeline && (
+        <ScrollReveal variant="fadeUp" as="section">
         <section className={`${classes.glass} rounded-2xl p-5 mb-6 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-amber-500/5 to-emerald-500/5 pointer-events-none" />
           <button 
@@ -919,19 +925,19 @@ export default function Dashboard() {
             <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
               <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
                 <div className={`text-xs ${classes.textSecondary}`}>Interest to Save</div>
-                <div className="text-lg font-bold text-red-500">{formatCurrency(wealthMetrics.totalInterest)}</div>
+                <div className="text-lg font-bold text-red-500"><CountUp value={wealthMetrics.totalInterest} /></div>
               </div>
               <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
                 <div className={`text-xs ${classes.textSecondary}`}>Years Gained</div>
-                <div className="text-lg font-bold text-emerald-500">{wealthMetrics.yearsGained}+ yrs</div>
+                <div className="text-lg font-bold text-emerald-500"><CountUp value={wealthMetrics.yearsGained} prefix="" suffix="+ yrs" /></div>
               </div>
               <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
                 <div className={`text-xs ${classes.textSecondary}`}>Money Saved</div>
-                <div className="text-lg font-bold text-blue-500">{formatCurrency(wealthMetrics.moneySaved)}</div>
+                <div className="text-lg font-bold text-blue-500"><CountUp value={wealthMetrics.moneySaved} /></div>
               </div>
               <div className={`${theme === 'light' ? 'bg-white/60' : 'bg-gray-500/20'} rounded-xl p-3 text-center`}>
                 <div className={`text-xs ${classes.textSecondary}`}>Potential Growth</div>
-                <div className="text-lg font-bold text-amber-500">{formatCurrency(wealthMetrics.investmentGrowth)}</div>
+                <div className="text-lg font-bold text-amber-500"><CountUp value={wealthMetrics.investmentGrowth} /></div>
               </div>
             </div>
             
@@ -943,8 +949,10 @@ export default function Dashboard() {
             </Link>
           </div>
         </section>
+        </ScrollReveal>
       )}
       
+      <ScrollReveal variant="fadeUp" as="header">
       <header className="mb-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
@@ -967,18 +975,19 @@ export default function Dashboard() {
           />
         </div>
       </header>
+      </ScrollReveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-5">
+        <ScrollReveal variant="scaleIn" className="lg:col-span-5">
           <HeroVisual
             domain={store.activeDomain}
             hotspots={heroData.hotspots}
             trendValue={heroData.trendValue}
             trendLabel={heroData.trendLabel}
           />
-        </div>
+        </ScrollReveal>
 
-        <div className="lg:col-span-3">
+        <ScrollReveal variant="fadeUp" delay={0.1} className="lg:col-span-3">
           <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
             <div className="flex gap-2">
               {(['cashflow', 'analytics', 'goals', 'velocity'] as VitalsCategory[]).map((cat) => (
@@ -1062,9 +1071,9 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="lg:col-span-4">
+        <ScrollReveal variant="fadeUp" delay={0.2} className="lg:col-span-4">
           <div className="mb-6">
             <PortfolioStrip />
           </div>
@@ -1225,9 +1234,10 @@ export default function Dashboard() {
               <span className={`${classes.textSecondary} text-sm`}>+{actions.length - 4} more items</span>
             </div>
           )}
-        </div>
+        </ScrollReveal>
       </div>
 
+      <ScrollReveal variant="fadeUp">
       <div className={`mt-8 ${classes.glass} rounded-2xl p-6`}>
         <h3 className={`text-lg font-semibold ${classes.text} mb-4`}>Quick Settings</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1249,7 +1259,9 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      </ScrollReveal>
 
+      <ScrollReveal variant="fadeUp">
       <div className="mt-8 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-2xl p-6 border border-emerald-500/30">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -1269,6 +1281,7 @@ export default function Dashboard() {
           </a>
         </div>
       </div>
+      </ScrollReveal>
 
       <footer className={`mt-8 text-center text-sm ${classes.textSecondary}`}>
         Educational tool. Click any number to edit. Not financial advice.
@@ -1284,5 +1297,6 @@ export default function Dashboard() {
         }
       `}</style>
     </div>
+    </PageTransition>
   );
 }
