@@ -108,17 +108,26 @@ export const domainSubcategories: Record<Domain, Subcategory[]> = {
 };
 
 export interface MortgageDetails {
-  entryMode: 'purchase' | 'current';
+  entryMode: 'purchase' | 'current' | 'both';
+  // Purchase details
   purchaseAge: number;
   originalCost: number;
   originalTermYears: number;
   originalRate: number;
+  downPayment: number;
+  // Current status
+  currentAge: number;
   currentBalance: number;
   remainingTermMonths: number;
   currentRate: number;
-  paymentFrequency: 'monthly' | 'biweekly' | 'weekly' | 'custom';
-  customPaymentAmount?: number;
-  customPaymentsPerYear?: number;
+  currentMonthlyPayment: number;
+  // Payment behavior
+  paymentFrequency: 'monthly' | 'biweekly' | 'weekly';
+  hasExtraPayments: boolean;
+  extraPaymentAmount: number;
+  // Refinance history
+  hasRefinanced: boolean;
+  refinanceCount: number;
 }
 
 export interface FinancialState {
@@ -183,15 +192,22 @@ export const useFinancialStore = create<FinancialState>()(
       currentAge: 32,
       activeDomain: 'car' as Domain,
       mortgageDetails: {
-        entryMode: 'current' as const,
+        entryMode: 'both' as const,
         purchaseAge: 28,
         originalCost: 320000,
         originalTermYears: 30,
         originalRate: 0.065,
+        downPayment: 64000,
+        currentAge: 32,
         currentBalance: 285000,
-        remainingTermMonths: 336,
+        remainingTermMonths: 312,
         currentRate: 0.065,
+        currentMonthlyPayment: 1850,
         paymentFrequency: 'monthly' as const,
+        hasExtraPayments: false,
+        extraPaymentAmount: 0,
+        hasRefinanced: false,
+        refinanceCount: 0,
       },
       activeSubcategories: {
         car: 'sedan',

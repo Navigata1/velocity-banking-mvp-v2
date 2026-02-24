@@ -627,38 +627,48 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
 // ─── Mortgage Analysis ───────────────────────────────────────────────
 
 export interface MortgageAnalysisInput {
-  entryMode: 'purchase' | 'current';
+  entryMode: 'purchase' | 'current' | 'both';
   purchaseAge: number;
   currentAge: number;
   originalCost: number;
   originalTermYears: number;
   originalRate: number;
+  downPayment: number;
   currentBalance: number;
   remainingTermMonths: number;
   currentRate: number;
-  paymentFrequency: 'monthly' | 'biweekly' | 'weekly' | 'custom';
-  customPaymentAmount?: number;
-  customPaymentsPerYear?: number;
+  currentMonthlyPayment: number;
+  paymentFrequency: 'monthly' | 'biweekly' | 'weekly';
+  hasExtraPayments: boolean;
+  extraPaymentAmount: number;
+  hasRefinanced: boolean;
+  refinanceCount: number;
 }
 
 export interface MortgageAnalysisResult {
   originalPayment: number;
+  originalLoanAmount: number;
   totalInterestLifetime: number;
+  totalPaidLifetime: number;
   interestPaidSoFar: number;
   interestRemaining: number;
   principalPaidSoFar: number;
   monthsElapsed: number;
   equityPercent: number;
+  interestPercentOfPayment: number;
+  principalPercentOfPayment: number;
+  first7YearsInterestPercent: number;
+  refinancePenalty: number;
 }
 
 export function calculateMortgageAnalysis(input: MortgageAnalysisInput): MortgageAnalysisResult {
+  const loanAmount = input.originalCost - (input.downPayment || 0);
   const origTermMonths = input.originalTermYears * 12;
-  const origPayment = calculateAmortizationPayment(input.originalCost, input.originalRate, origTermMonths);
-  const totalInterestLifetime = calculateTotalAmortizationInterest(input.originalCost, input.originalRate, origTermMonths);
+  const origPayment = calculateAmortizationPayment(loanAmount, input.originalRate, origTermMonths);
+  const totalInterestLifetime = calculateTotalAmortizationInterest(loanAmount, input.originalRate, origTermMonths);
+  const totalPaidLifetime = origPayment * origTermMonths;
 
   let monthsElapsed: number;
-  let interestPaidSoFar: number;
-
   if (input.entryMode === 'purchase') {
     monthsElapsed = (input.currentAge - input.purchaseAge) * 12;
   } else {
@@ -666,29 +676,222 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
   }
   monthsElapsed = Math.max(0, Math.min(monthsElapsed, origTermMonths));
 
-  // Simulate elapsed months to get interest paid so far
+  // Simulate elapsed months
   const monthlyRate = input.originalRate / 12;
-  let bal = input.originalCost;
-  interestPaidSoFar = 0;
-  for (let m = 0; m < monthsElapsed && bal > 0.01; m++) {
+  let bal = loanAmount;
+  let interestPaidSoFar = 0;
+  let first7YearsInterest = 0;
+  let first7YearsTotal = 0;
+  for (let m = 0; m < Math.max(monthsElapsed, 84) && bal > 0.01; m++) {
     const interest = bal * monthlyRate;
     const principal = origPayment - interest;
-    interestPaidSoFar += interest;
+    if (m < monthsElapsed) {
+      interestPaidSoFar += interest;
+    }
+    if (m < 84) { // first 7 years
+      first7YearsInterest += interest;
+      first7YearsTotal += origPayment;
+    }
     bal = Math.max(0, bal - Math.max(0, principal));
   }
 
-  const principalPaidSoFar = input.originalCost - (input.entryMode === 'current' ? input.currentBalance : bal);
+  // Current interest vs principal split
+  const currentBalance = input.entryMode === 'purchase' ? bal : input.currentBalance;
+  const currentRate = input.currentRate || input.originalRate;
+  const currentMonthlyInterest = currentBalance * (currentRate / 12);
+  const currentPayment = input.currentMonthlyPayment || origPayment;
+  const interestPercent = currentPayment > 0 ? (currentMonthlyInterest / currentPayment) * 100 : 0;
+
+  const principalPaidSoFar = loanAmount - currentBalance;
   const interestRemaining = totalInterestLifetime - interestPaidSoFar;
-  const equityPercent = (principalPaidSoFar / input.originalCost) * 100;
+  const equityPercent = input.originalCost > 0 ? ((input.downPayment + Math.max(0, principalPaidSoFar)) / input.originalCost) * 100 : 0;
+
+  // Refinance penalty estimate: each refinance resets ~2 years of amortization front-loading
+  const refinancePenalty = input.hasRefinanced
+    ? input.refinanceCount * loanAmount * input.originalRate * 0.15 // ~15% of first-year interest per refi
+    : 0;
 
   return {
     originalPayment: origPayment,
+    originalLoanAmount: loanAmount,
     totalInterestLifetime,
+    totalPaidLifetime,
     interestPaidSoFar,
     interestRemaining: Math.max(0, interestRemaining),
     principalPaidSoFar: Math.max(0, principalPaidSoFar),
     monthsElapsed,
     equityPercent: Math.max(0, Math.min(100, equityPercent)),
+    interestPercentOfPayment: Math.min(100, interestPercent),
+    principalPercentOfPayment: Math.max(0, 100 - interestPercent),
+    first7YearsInterestPercent: first7YearsTotal > 0 ? (first7YearsInterest / first7YearsTotal) * 100 : 0,
+    refinancePenalty,
+  };
+}
+
+// ─── Mortgage History Analysis ───────────────────────────────────────
+
+export interface MortgageHistoryResult {
+  yearsInMortgage: number;
+  totalPaidSoFar: number;
+  principalPaidSoFar: number;
+  interestPaidSoFar: number;
+  equityPercent: number;
+  interestPercentOfPayments: number;
+  principalPercentOfPayments: number;
+  refinancePenalty: number;
+}
+
+export function analyzeMortgageHistory(input: MortgageAnalysisInput): MortgageHistoryResult {
+  const analysis = calculateMortgageAnalysis(input);
+  const yearsInMortgage = analysis.monthsElapsed / 12;
+  const totalPaidSoFar = analysis.monthsElapsed * (input.currentMonthlyPayment || analysis.originalPayment);
+
+  return {
+    yearsInMortgage,
+    totalPaidSoFar,
+    principalPaidSoFar: analysis.principalPaidSoFar,
+    interestPaidSoFar: analysis.interestPaidSoFar,
+    equityPercent: analysis.equityPercent,
+    interestPercentOfPayments: analysis.interestPercentOfPayment,
+    principalPercentOfPayments: analysis.principalPercentOfPayment,
+    refinancePenalty: analysis.refinancePenalty,
+  };
+}
+
+// ─── Amortization Breakdown by Year ──────────────────────────────────
+
+export interface AmortizationYearBreakdown {
+  year: number;
+  interestPaid: number;
+  principalPaid: number;
+  remainingBalance: number;
+}
+
+export function generateAmortizationBreakdown(
+  principal: number,
+  rate: number,
+  termYears: number
+): AmortizationYearBreakdown[] {
+  const termMonths = termYears * 12;
+  const payment = calculateAmortizationPayment(principal, rate, termMonths);
+  const monthlyRate = rate / 12;
+  let bal = principal;
+  const results: AmortizationYearBreakdown[] = [];
+
+  for (let year = 1; year <= termYears && bal > 0.01; year++) {
+    let yearInterest = 0;
+    let yearPrincipal = 0;
+    for (let m = 0; m < 12 && bal > 0.01; m++) {
+      const interest = bal * monthlyRate;
+      const princ = Math.min(payment - interest, bal);
+      yearInterest += interest;
+      yearPrincipal += princ;
+      bal = Math.max(0, bal - princ);
+    }
+    results.push({
+      year,
+      interestPaid: yearInterest,
+      principalPaid: yearPrincipal,
+      remainingBalance: bal,
+    });
+  }
+  return results;
+}
+
+// ─── Strategy Comparison ─────────────────────────────────────────────
+
+export interface StrategyComparisonResult {
+  standard: { months: number; totalInterest: number; payoffDate: string };
+  biweekly: { months: number; totalInterest: number; saved: number; monthsSaved: number };
+  extraPayment: { months: number; totalInterest: number; saved: number; monthsSaved: number; extraAmount: number };
+  velocity: { months: number; totalInterest: number; saved: number; monthsSaved: number; chunkSize: number };
+}
+
+export function compareMortgageStrategies(
+  input: MortgageAnalysisInput,
+  cashFlow: number,
+  loc: LOCDetails
+): StrategyComparisonResult {
+  const balance = input.currentBalance;
+  const rate = input.currentRate || input.originalRate;
+  const remainingMonths = input.remainingTermMonths || (input.originalTermYears * 12);
+  const payment = input.currentMonthlyPayment || calculateAmortizationPayment(balance, rate, remainingMonths);
+  const monthlyRate = rate / 12;
+
+  // Standard
+  const standardInterest = calculateTotalAmortizationInterest(balance, rate, remainingMonths);
+  const standardDate = formatDate(remainingMonths);
+
+  // Bi-weekly (13 payments/year instead of 12)
+  const extraMonthlyFromBiweekly = payment / 12;
+  let biBal = balance, biInt = 0, biMonths = 0;
+  while (biBal > 0.01 && biMonths < remainingMonths * 2) {
+    biMonths++;
+    const interest = biBal * monthlyRate;
+    const totalPay = Math.min(payment + extraMonthlyFromBiweekly, biBal + interest);
+    biInt += interest;
+    biBal = Math.max(0, biBal - (totalPay - interest));
+  }
+
+  // Extra payments (use cashFlow * 0.5 or $500, whichever is less)
+  const extraAmt = Math.min(Math.max(cashFlow * 0.5, 200), 1000);
+  let exBal = balance, exInt = 0, exMonths = 0;
+  while (exBal > 0.01 && exMonths < remainingMonths * 2) {
+    exMonths++;
+    const interest = exBal * monthlyRate;
+    const totalPay = Math.min(payment + extraAmt, exBal + interest);
+    exInt += interest;
+    exBal = Math.max(0, exBal - (totalPay - interest));
+  }
+
+  // Velocity banking
+  const chunkSize = Math.min(loc.limit * 0.4, cashFlow * 3, balance * 0.1);
+  const chunkRecovery = cashFlow > 0 ? Math.ceil(chunkSize / cashFlow) : 999;
+  let vBal = balance, vInt = 0, vMonths = 0, vLocBal = loc.balance, monthsSinceChunk = 999;
+  while (vBal > 0.01 && vMonths < remainingMonths * 2) {
+    vMonths++;
+    monthsSinceChunk++;
+    const interest = vBal * monthlyRate;
+    // Deploy chunk
+    const locAvailable = loc.limit - vLocBal;
+    if (locAvailable >= chunkSize && monthsSinceChunk >= chunkRecovery && vBal > chunkSize * 0.1) {
+      vLocBal += chunkSize;
+      vBal = Math.max(0, vBal - chunkSize);
+      monthsSinceChunk = 0;
+    }
+    const totalPay = Math.min(payment, vBal + interest);
+    vInt += interest;
+    vBal = Math.max(0, vBal - Math.max(0, totalPay - interest));
+    // LOC paydown
+    if (vLocBal > 0) {
+      const locInt = calculateADBInterest(vLocBal, loc.apr, cashFlow + payment, payment);
+      vInt += locInt;
+      vLocBal = Math.max(0, vLocBal - cashFlow + locInt);
+    }
+  }
+
+  return {
+    standard: { months: remainingMonths, totalInterest: standardInterest, payoffDate: standardDate },
+    biweekly: {
+      months: biMonths,
+      totalInterest: biInt,
+      saved: Math.max(0, standardInterest - biInt),
+      monthsSaved: Math.max(0, remainingMonths - biMonths),
+    },
+    extraPayment: {
+      months: exMonths,
+      totalInterest: exInt,
+      saved: Math.max(0, standardInterest - exInt),
+      monthsSaved: Math.max(0, remainingMonths - exMonths),
+      extraAmount: extraAmt,
+    },
+    velocity: {
+      months: vMonths,
+      totalInterest: vInt,
+      saved: Math.max(0, standardInterest - vInt),
+      monthsSaved: Math.max(0, remainingMonths - vMonths),
+      chunkSize,
+    },
   };
 }
 

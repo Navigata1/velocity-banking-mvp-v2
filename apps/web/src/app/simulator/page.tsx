@@ -199,7 +199,7 @@ export default function SimulatorPage() {
               <div className={`${classes.glass} rounded-2xl p-6`}>
                 <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>🏠 Mortgage Details</h2>
                 <div className="flex gap-2 mb-4">
-                  {(['purchase', 'current'] as const).map((mode) => (
+                  {(['purchase', 'current', 'both'] as const).map((mode) => (
                     <button
                       key={mode}
                       onClick={() => store.updateMortgageDetails({ entryMode: mode })}
@@ -209,12 +209,12 @@ export default function SimulatorPage() {
                           : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
                       }`}
                     >
-                      {mode === 'purchase' ? 'Original Purchase' : 'Current Status'}
+                      {mode === 'purchase' ? 'Purchase' : mode === 'current' ? 'Current' : 'Both'}
                     </button>
                   ))}
                 </div>
                 <div className="space-y-3">
-                  {store.mortgageDetails.entryMode === 'purchase' ? (
+                  {(store.mortgageDetails.entryMode === 'purchase' || store.mortgageDetails.entryMode === 'both') && (
                     <>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Age at Purchase</label>
@@ -225,15 +225,29 @@ export default function SimulatorPage() {
                         <EditableCurrency value={store.mortgageDetails.originalCost} onChange={(v) => store.updateMortgageDetails({ originalCost: v })} size="lg" />
                       </div>
                       <div className="flex justify-between items-center">
-                        <label className={`text-sm ${classes.textSecondary}`}>Term (years)</label>
-                        <EditableNumber value={store.mortgageDetails.originalTermYears} onChange={(v) => store.updateMortgageDetails({ originalTermYears: v })} size="lg" />
+                        <label className={`text-sm ${classes.textSecondary}`}>Down Payment</label>
+                        <EditableCurrency value={store.mortgageDetails.downPayment} onChange={(v) => store.updateMortgageDetails({ downPayment: v })} size="lg" />
                       </div>
                       <div className="flex justify-between items-center">
-                        <label className={`text-sm ${classes.textSecondary}`}>Interest Rate</label>
+                        <label className={`text-sm ${classes.textSecondary}`}>Term</label>
+                        <div className="flex gap-2">
+                          {[15, 30].map(t => (
+                            <button key={t} onClick={() => store.updateMortgageDetails({ originalTermYears: t })}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                                store.mortgageDetails.originalTermYears === t
+                                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                                  : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
+                              }`}>{t} yr</button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Original Rate</label>
                         <EditablePercentage value={store.mortgageDetails.originalRate} onChange={(v) => store.updateMortgageDetails({ originalRate: v })} size="lg" />
                       </div>
                     </>
-                  ) : (
+                  )}
+                  {(store.mortgageDetails.entryMode === 'current' || store.mortgageDetails.entryMode === 'both') && (
                     <>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Current Balance</label>
@@ -246,6 +260,10 @@ export default function SimulatorPage() {
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Current Rate</label>
                         <EditablePercentage value={store.mortgageDetails.currentRate} onChange={(v) => store.updateMortgageDetails({ currentRate: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Monthly Payment</label>
+                        <EditableCurrency value={store.mortgageDetails.currentMonthlyPayment} onChange={(v) => store.updateMortgageDetails({ currentMonthlyPayment: v })} size="lg" />
                       </div>
                     </>
                   )}
@@ -267,6 +285,39 @@ export default function SimulatorPage() {
                       ))}
                     </div>
                   </div>
+                  {/* Extra payments & refinance toggles */}
+                  <div className="pt-2 border-t border-gray-400/30 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <label className={`text-sm ${classes.textSecondary}`}>Extra payments?</label>
+                      <button onClick={() => store.updateMortgageDetails({ hasExtraPayments: !store.mortgageDetails.hasExtraPayments })}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                          store.mortgageDetails.hasExtraPayments
+                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                            : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
+                        }`}>{store.mortgageDetails.hasExtraPayments ? 'Yes' : 'No'}</button>
+                    </div>
+                    {store.mortgageDetails.hasExtraPayments && (
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Extra/payment</label>
+                        <EditableCurrency value={store.mortgageDetails.extraPaymentAmount} onChange={(v) => store.updateMortgageDetails({ extraPaymentAmount: v })} size="lg" />
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center">
+                      <label className={`text-sm ${classes.textSecondary}`}>Refinanced?</label>
+                      <button onClick={() => store.updateMortgageDetails({ hasRefinanced: !store.mortgageDetails.hasRefinanced, refinanceCount: store.mortgageDetails.hasRefinanced ? 0 : 1 })}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                          store.mortgageDetails.hasRefinanced
+                            ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                            : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
+                        }`}>{store.mortgageDetails.hasRefinanced ? 'Yes' : 'No'}</button>
+                    </div>
+                    {store.mortgageDetails.hasRefinanced && (
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Times refinanced</label>
+                        <EditableNumber value={store.mortgageDetails.refinanceCount} onChange={(v) => store.updateMortgageDetails({ refinanceCount: v })} size="lg" min={1} max={10} />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 {/* Mortgage Analysis Summary */}
                 {(() => {
@@ -286,6 +337,15 @@ export default function SimulatorPage() {
                           <p className="text-lg font-bold text-amber-400">{formatCurrency(analysis.interestRemaining)}</p>
                         </div>
                       </div>
+                      {/* Interest vs Principal bar */}
+                      <div className="flex h-4 rounded-lg overflow-hidden">
+                        <div className="bg-red-500" style={{ width: `${analysis.interestPercentOfPayment}%` }} />
+                        <div className="bg-emerald-500" style={{ width: `${analysis.principalPercentOfPayment}%` }} />
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-red-400">Interest: {analysis.interestPercentOfPayment.toFixed(0)}%</span>
+                        <span className="text-emerald-400">Principal: {analysis.principalPercentOfPayment.toFixed(0)}%</span>
+                      </div>
                       <div className="flex justify-between text-sm">
                         <span className={classes.textSecondary}>Equity Built</span>
                         <span className="text-emerald-400 font-medium">{analysis.equityPercent.toFixed(1)}%</span>
@@ -294,6 +354,15 @@ export default function SimulatorPage() {
                         <span className={classes.textSecondary}>Total Lifetime Interest</span>
                         <span className="text-red-400 font-medium">{formatCurrency(analysis.totalInterestLifetime)}</span>
                       </div>
+                      {analysis.refinancePenalty > 0 && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-amber-400">Refinance Penalty (est.)</span>
+                          <span className="text-amber-400 font-medium">{formatCurrency(analysis.refinancePenalty)}</span>
+                        </div>
+                      )}
+                      <a href="/vault" className="block text-center text-xs text-emerald-400 hover:underline mt-2">
+                        See full Wealth Transfer Timeline →
+                      </a>
                     </div>
                   );
                 })()}
