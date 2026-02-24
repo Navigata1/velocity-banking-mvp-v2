@@ -401,52 +401,80 @@ export default function SimulatorPage() {
                   { label: 'Velocity ⭐', months: velocityResult.totalMonths, interest: velocityResult.totalInterestPaid, saved: Math.max(0, tradInterest - velocityResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - velocityResult.totalMonths), color: 'emerald', highlight: true },
                 ];
 
+                const maxMonths = Math.max(...strategies.map(s => s.months), 1);
+
                 return (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
-                      {strategies.map((s) => (
-                        <div
-                          key={s.label}
-                          className={`rounded-xl p-4 border ${
-                            s.highlight
-                              ? 'bg-emerald-500/15 border-emerald-500/50 ring-1 ring-emerald-500/30'
-                              : `bg-${s.color}-500/10 border-${s.color}-500/30`
-                          }`}
-                        >
-                          <p className={`text-xs ${classes.textSecondary} mb-1`}>{s.label}</p>
-                          <p className={`text-xl font-bold text-${s.color}-400`}>
-                            <CountUp value={s.months} prefix="" suffix=" mo" />
+                  <div className="space-y-5">
+                    {/* Visual Timeline Bars */}
+                    <div className="space-y-3">
+                      <p className={`text-xs ${classes.textMuted} mb-1`}>Payoff Timeline (shorter = better)</p>
+                      {strategies.map((s) => {
+                        const barWidth = Math.max(5, (s.months / maxMonths) * 100);
+                        const barColors: Record<string, string> = {
+                          red: 'bg-red-500',
+                          blue: 'bg-blue-500',
+                          amber: 'bg-amber-500',
+                          emerald: 'bg-emerald-500',
+                        };
+                        return (
+                          <div key={s.label} className="space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className={`text-xs font-medium ${s.highlight ? 'text-emerald-400' : classes.textSecondary}`}>
+                                {s.label}
+                              </span>
+                              <span className={`text-xs font-mono ${s.highlight ? 'text-emerald-400' : classes.textMuted}`}>
+                                {s.months} mo • {formatCurrency(s.interest)} interest
+                              </span>
+                            </div>
+                            <div className="relative h-6 bg-gray-500/20 rounded-lg overflow-hidden">
+                              <div
+                                className={`h-full ${barColors[s.color]} rounded-lg transition-all duration-700 ${s.highlight ? 'opacity-90' : 'opacity-50'}`}
+                                style={{ width: `${barWidth}%` }}
+                              />
+                              {s.highlight && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <span className="text-xs font-bold text-white drop-shadow-lg">
+                                    {s.monthsSaved > 0 ? `${s.monthsSaved} months faster` : 'Best option'} ⚡
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Savings Summary Cards */}
+                    <div className="grid grid-cols-3 gap-2">
+                      {strategies.filter(s => s.label !== 'Traditional').map((s) => (
+                        <div key={s.label} className={`rounded-xl p-3 text-center border ${
+                          s.highlight ? 'bg-emerald-500/15 border-emerald-500/50' : `border-gray-400/20 ${classes.glass}`
+                        }`}>
+                          <p className={`text-[10px] ${classes.textMuted} mb-1`}>{s.label.replace(' ⭐', '')}</p>
+                          <p className={`text-sm font-bold ${s.highlight ? 'text-emerald-400' : classes.textSecondary}`}>
+                            {s.saved > 0 ? formatCurrency(s.saved) : '$0'}
                           </p>
-                          <p className={`text-sm text-${s.color}-400/80 mt-1`}>{formatCurrency(s.interest)}</p>
-                          {s.label === 'Traditional' ? (
-                            <p className={`text-xs ${classes.textMuted} mt-1`}>Baseline</p>
-                          ) : s.highlight ? (
-                            <div className="mt-1">
-                              <p className="text-xs text-emerald-400 font-medium">
-                                Saves {formatCurrency(s.saved)} ✨
-                              </p>
-                              {s.monthsSaved > 0 && (
-                                <p className="text-xs text-emerald-400/70">{s.monthsSaved} months faster</p>
-                              )}
-                            </div>
-                          ) : (
-                            <div className="mt-1">
-                              <p className={`text-xs ${classes.textMuted}`}>
-                                {s.saved > 0 ? `Saves ${formatCurrency(s.saved)}` : 'No savings vs traditional'}
-                              </p>
-                              {s.monthsSaved > 0 && (
-                                <p className={`text-xs ${classes.textMuted}`}>{s.monthsSaved} months faster</p>
-                              )}
-                            </div>
-                          )}
+                          <p className={`text-[10px] ${classes.textMuted}`}>
+                            {s.saved > 0 ? 'saved' : 'no savings'}
+                          </p>
                         </div>
                       ))}
                     </div>
 
-                    <div className={`${classes.glass} rounded-xl p-6 text-center border border-emerald-500/30`}>
-                      <p className={`${classes.textSecondary} mb-2`}>Velocity Advantage</p>
-                      <p className="text-3xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
-                      <p className="text-amber-500 mt-2"><CountUp value={results.velocity.monthsSaved} prefix="" suffix=" months faster" /></p>
+                    {/* Velocity Advantage */}
+                    <div className={`${classes.glass} rounded-xl p-5 text-center border border-emerald-500/30`}>
+                      <p className={`text-xs ${classes.textSecondary} mb-2`}>Velocity Advantage vs Traditional</p>
+                      <div className="flex items-center justify-center gap-6">
+                        <div>
+                          <p className="text-2xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
+                          <p className={`text-xs ${classes.textMuted}`}>interest saved</p>
+                        </div>
+                        <div className="w-px h-10 bg-gray-400/30" />
+                        <div>
+                          <p className="text-2xl font-bold text-amber-400"><CountUp value={results.velocity.monthsSaved} prefix="" suffix="" /></p>
+                          <p className={`text-xs ${classes.textMuted}`}>months faster</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 );
