@@ -376,27 +376,29 @@ export default function SimulatorPage() {
               <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Strategy Comparison</h2>
               
               {(() => {
-                const allDebts = Object.entries(store.debts).map(([key, d]) => ({
-                  id: d.id,
-                  name: d.name,
-                  type: key,
-                  balance: d.balance,
-                  apr: d.interestRate,
-                  monthlyPayment: d.minimumPayment,
-                  termMonths: d.termMonths,
-                }));
+                // Compare strategies on the ACTIVE debt only
+                const activeDebt = [{
+                  id: currentDebt.id,
+                  name: currentDebt.name,
+                  type: debtType,
+                  balance: currentDebt.balance,
+                  apr: currentDebt.interestRate,
+                  monthlyPayment: currentDebt.minimumPayment,
+                  termMonths: currentDebt.termMonths,
+                }];
                 const locDetails = { limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance };
 
                 const traditional = { months: results.baseline.payoffMonths, totalInterest: results.baseline.totalInterest };
-                const snowballResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'snowball', store.chunkAmount);
-                const avalancheResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'avalanche', store.chunkAmount);
-                const velocityResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'velocity', store.chunkAmount);
+                const snowballResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'snowball', store.chunkAmount);
+                const avalancheResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'avalanche', store.chunkAmount);
+                const velocityResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'velocity', store.chunkAmount);
 
+                const tradInterest = traditional.totalInterest;
                 const strategies = [
-                  { label: 'Traditional', months: traditional.months, interest: traditional.totalInterest, color: 'red', highlight: false },
-                  { label: 'Snowball', months: snowballResult.totalMonths, interest: snowballResult.totalInterestPaid, color: 'blue', highlight: false },
-                  { label: 'Avalanche', months: avalancheResult.totalMonths, interest: avalancheResult.totalInterestPaid, color: 'amber', highlight: false },
-                  { label: 'Velocity ⭐', months: velocityResult.totalMonths, interest: velocityResult.totalInterestPaid, color: 'emerald', highlight: true },
+                  { label: 'Traditional', months: traditional.months, interest: tradInterest, saved: 0, monthsSaved: 0, color: 'red', highlight: false },
+                  { label: 'Snowball', months: snowballResult.totalMonths, interest: snowballResult.totalInterestPaid, saved: Math.max(0, tradInterest - snowballResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - snowballResult.totalMonths), color: 'blue', highlight: false },
+                  { label: 'Avalanche', months: avalancheResult.totalMonths, interest: avalancheResult.totalInterestPaid, saved: Math.max(0, tradInterest - avalancheResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - avalancheResult.totalMonths), color: 'amber', highlight: false },
+                  { label: 'Velocity ⭐', months: velocityResult.totalMonths, interest: velocityResult.totalInterestPaid, saved: Math.max(0, tradInterest - velocityResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - velocityResult.totalMonths), color: 'emerald', highlight: true },
                 ];
 
                 return (
@@ -416,15 +418,26 @@ export default function SimulatorPage() {
                             <CountUp value={s.months} prefix="" suffix=" mo" />
                           </p>
                           <p className={`text-sm text-${s.color}-400/80 mt-1`}>{formatCurrency(s.interest)}</p>
-                          {!s.highlight && traditional.totalInterest > 0 && (
-                            <p className={`text-xs ${classes.textMuted} mt-1`}>
-                              Saves {formatCurrency(Math.max(0, traditional.totalInterest - s.interest))}
-                            </p>
-                          )}
-                          {s.highlight && (
-                            <p className="text-xs text-emerald-400 mt-1 font-medium">
-                              Saves {formatCurrency(Math.max(0, traditional.totalInterest - s.interest))} ✨
-                            </p>
+                          {s.label === 'Traditional' ? (
+                            <p className={`text-xs ${classes.textMuted} mt-1`}>Baseline</p>
+                          ) : s.highlight ? (
+                            <div className="mt-1">
+                              <p className="text-xs text-emerald-400 font-medium">
+                                Saves {formatCurrency(s.saved)} ✨
+                              </p>
+                              {s.monthsSaved > 0 && (
+                                <p className="text-xs text-emerald-400/70">{s.monthsSaved} months faster</p>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="mt-1">
+                              <p className={`text-xs ${classes.textMuted}`}>
+                                {s.saved > 0 ? `Saves ${formatCurrency(s.saved)}` : 'No savings vs traditional'}
+                              </p>
+                              {s.monthsSaved > 0 && (
+                                <p className={`text-xs ${classes.textMuted}`}>{s.monthsSaved} months faster</p>
+                              )}
+                            </div>
                           )}
                         </div>
                       ))}
