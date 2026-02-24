@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 interface DualSliderProps {
@@ -89,15 +89,25 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
   }, [onExpenseChange]);
 
   const sliderTrackColor = theme === 'light' ? '#d1d5db' : '#475569';
+  const [locked, setLocked] = useState(false);
 
   return (
     <div className={`mt-4 p-3 ${classes.glass} rounded-xl border border-gray-400/30`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-emerald-500 font-medium">Quick Adjust</span>
-        <span className={`text-xs ${classes.textMuted}`}>Slide to estimate</span>
+        <div className="flex items-center gap-2">
+          <span className={`text-xs ${classes.textMuted}`}>Slide to estimate</span>
+          <button
+            onClick={() => setLocked(!locked)}
+            className={`px-2 py-0.5 rounded-full text-xs ${classes.glass} border border-gray-400/30 hover:border-gray-400/50 transition-colors`}
+            title={locked ? 'Unlock sliders' : 'Lock sliders'}
+          >
+            {locked ? '🔒' : '🔓'}
+          </button>
+        </div>
       </div>
       
-      <div className="space-y-3">
+      <div className={`space-y-3 transition-opacity ${locked ? 'opacity-50 pointer-events-none' : ''}`}>
         <div className="flex items-center gap-3">
           <span className={`text-xs ${classes.textSecondary} w-16`}>Income</span>
           <div className="flex-1 relative">

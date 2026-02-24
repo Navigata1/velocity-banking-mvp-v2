@@ -624,6 +624,175 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
   };
 }
 
+// ─── Mortgage Analysis ───────────────────────────────────────────────
+
+export interface MortgageAnalysisInput {
+  entryMode: 'purchase' | 'current';
+  purchaseAge: number;
+  currentAge: number;
+  originalCost: number;
+  originalTermYears: number;
+  originalRate: number;
+  currentBalance: number;
+  remainingTermMonths: number;
+  currentRate: number;
+  paymentFrequency: 'monthly' | 'biweekly' | 'weekly' | 'custom';
+  customPaymentAmount?: number;
+  customPaymentsPerYear?: number;
+}
+
+export interface MortgageAnalysisResult {
+  originalPayment: number;
+  totalInterestLifetime: number;
+  interestPaidSoFar: number;
+  interestRemaining: number;
+  principalPaidSoFar: number;
+  monthsElapsed: number;
+  equityPercent: number;
+}
+
+export function calculateMortgageAnalysis(input: MortgageAnalysisInput): MortgageAnalysisResult {
+  const origTermMonths = input.originalTermYears * 12;
+  const origPayment = calculateAmortizationPayment(input.originalCost, input.originalRate, origTermMonths);
+  const totalInterestLifetime = calculateTotalAmortizationInterest(input.originalCost, input.originalRate, origTermMonths);
+
+  let monthsElapsed: number;
+  let interestPaidSoFar: number;
+
+  if (input.entryMode === 'purchase') {
+    monthsElapsed = (input.currentAge - input.purchaseAge) * 12;
+  } else {
+    monthsElapsed = origTermMonths - input.remainingTermMonths;
+  }
+  monthsElapsed = Math.max(0, Math.min(monthsElapsed, origTermMonths));
+
+  // Simulate elapsed months to get interest paid so far
+  const monthlyRate = input.originalRate / 12;
+  let bal = input.originalCost;
+  interestPaidSoFar = 0;
+  for (let m = 0; m < monthsElapsed && bal > 0.01; m++) {
+    const interest = bal * monthlyRate;
+    const principal = origPayment - interest;
+    interestPaidSoFar += interest;
+    bal = Math.max(0, bal - Math.max(0, principal));
+  }
+
+  const principalPaidSoFar = input.originalCost - (input.entryMode === 'current' ? input.currentBalance : bal);
+  const interestRemaining = totalInterestLifetime - interestPaidSoFar;
+  const equityPercent = (principalPaidSoFar / input.originalCost) * 100;
+
+  return {
+    originalPayment: origPayment,
+    totalInterestLifetime,
+    interestPaidSoFar,
+    interestRemaining: Math.max(0, interestRemaining),
+    principalPaidSoFar: Math.max(0, principalPaidSoFar),
+    monthsElapsed,
+    equityPercent: Math.max(0, Math.min(100, equityPercent)),
+  };
+}
+
+export interface BiweeklyResult {
+  totalMonths: number;
+  totalInterest: number;
+  monthsSavedVsMonthly: number;
+  interestSavedVsMonthly: number;
+}
+
+export function simulateBiweeklyPayments(
+  balance: number,
+  apr: number,
+  monthlyPayment: number,
+  termMonths: number
+): BiweeklyResult {
+  // Bi-weekly = 26 half-payments per year = 13 full payments
+  const biweeklyPayment = monthlyPayment / 2;
+  const dailyRate = apr / 365;
+  let bal = balance;
+  let totalInterest = 0;
+  let day = 0;
+  const maxDays = termMonths * 31;
+
+  while (bal > 0.01 && day < maxDays) {
+    // Every 14 days, make a payment
+    for (let d = 0; d < 14 && bal > 0.01; d++) {
+      const interest = bal * dailyRate;
+      totalInterest += interest;
+      bal += interest; // accrue daily (simplified)
+      day++;
+    }
+    // Subtract accrued interest from balance tracking (already added above), apply payment
+    bal = Math.max(0, bal - biweeklyPayment);
+  }
+
+  // Simplified: re-simulate as monthly equivalent (13 payments/year)
+  // More accurate approach:
+  const monthlyResult = calculateTotalAmortizationInterest(balance, apr, termMonths);
+  const annualPaymentMonthly = monthlyPayment * 12;
+  const annualPaymentBiweekly = monthlyPayment * 13; // 26 half-payments
+  const extraAnnual = annualPaymentBiweekly - annualPaymentMonthly;
+
+  // Simulate with extra payment each month
+  let bal2 = balance;
+  let totalInt2 = 0;
+  let months2 = 0;
+  const mr = apr / 12;
+  const extraMonthly = extraAnnual / 12;
+
+  while (bal2 > 0.01 && months2 < termMonths) {
+    months2++;
+    const interest = bal2 * mr;
+    const payment = Math.min(monthlyPayment + extraMonthly, bal2 + interest);
+    const principal = payment - interest;
+    totalInt2 += interest;
+    bal2 = Math.max(0, bal2 - Math.max(0, principal));
+  }
+
+  return {
+    totalMonths: months2,
+    totalInterest: totalInt2,
+    monthsSavedVsMonthly: termMonths - months2,
+    interestSavedVsMonthly: Math.max(0, monthlyResult - totalInt2),
+  };
+}
+
+export interface StrategyComparison {
+  monthly: { months: number; totalInterest: number };
+  biweekly: { months: number; totalInterest: number };
+  velocity: { months: number; totalInterest: number };
+}
+
+export function comparePaymentStrategies(
+  balance: number,
+  apr: number,
+  monthlyPayment: number,
+  termMonths: number,
+  loc: LOCDetails | undefined,
+  monthlyIncome: number,
+  monthlyExpenses: number,
+  chunkAmount: number
+): StrategyComparison {
+  const monthlyInterest = calculateTotalAmortizationInterest(balance, apr, termMonths);
+  const biweekly = simulateBiweeklyPayments(balance, apr, monthlyPayment, termMonths);
+
+  // Velocity simulation
+  const velInputs: SimulationInputs = {
+    monthlyIncome,
+    monthlyExpenses,
+    carLoan: { balance, apr, monthlyPayment },
+    loc: loc ? { limit: loc.limit, apr: loc.apr, balance: loc.balance } : undefined,
+    useVelocity: true,
+    extraPayment: chunkAmount,
+  };
+  const velResult = simulateVelocity(velInputs);
+
+  return {
+    monthly: { months: termMonths, totalInterest: monthlyInterest },
+    biweekly: { months: biweekly.totalMonths, totalInterest: biweekly.totalInterest },
+    velocity: { months: velResult.payoffMonths, totalInterest: velResult.totalInterest },
+  };
+}
+
 // ─── Formatting ──────────────────────────────────────────────────────
 
 export function formatCurrency(amount: number): string {

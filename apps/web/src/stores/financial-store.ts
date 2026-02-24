@@ -107,12 +107,27 @@ export const domainSubcategories: Record<Domain, Subcategory[]> = {
   ],
 };
 
+export interface MortgageDetails {
+  entryMode: 'purchase' | 'current';
+  purchaseAge: number;
+  originalCost: number;
+  originalTermYears: number;
+  originalRate: number;
+  currentBalance: number;
+  remainingTermMonths: number;
+  currentRate: number;
+  paymentFrequency: 'monthly' | 'biweekly' | 'weekly' | 'custom';
+  customPaymentAmount?: number;
+  customPaymentsPerYear?: number;
+}
+
 export interface FinancialState {
   monthlyIncome: number;
   monthlyExpenses: number;
   currentAge: number;
   activeDomain: Domain;
   activeSubcategories: Record<Domain, string>;
+  mortgageDetails: MortgageDetails;
   
   debts: {
     car: DebtAccount;
@@ -141,6 +156,7 @@ export interface FinancialState {
   updateLOC: (updates: Partial<LOC>) => void;
   setChunkAmount: (amount: number) => void;
   setChunkFrequency: (frequency: 'weekly' | 'biweekly' | 'monthly') => void;
+  updateMortgageDetails: (updates: Partial<MortgageDetails>) => void;
   
   getActiveDebtType: () => DebtType;
   getCashFlow: () => number;
@@ -166,6 +182,17 @@ export const useFinancialStore = create<FinancialState>()(
       monthlyExpenses: 5000,
       currentAge: 32,
       activeDomain: 'car' as Domain,
+      mortgageDetails: {
+        entryMode: 'current' as const,
+        purchaseAge: 28,
+        originalCost: 320000,
+        originalTermYears: 30,
+        originalRate: 0.065,
+        currentBalance: 285000,
+        remainingTermMonths: 336,
+        currentRate: 0.065,
+        paymentFrequency: 'monthly' as const,
+      },
       activeSubcategories: {
         car: 'sedan',
         house: 'family',
@@ -312,6 +339,10 @@ export const useFinancialStore = create<FinancialState>()(
       
       setChunkFrequency: (frequency) => set({ chunkFrequency: frequency }),
       
+      updateMortgageDetails: (updates) => set((state) => ({
+        mortgageDetails: { ...state.mortgageDetails, ...updates },
+      })),
+      
       getCashFlow: () => {
         const state = get();
         return state.monthlyIncome - state.monthlyExpenses;
@@ -381,6 +412,7 @@ export const useFinancialStore = create<FinancialState>()(
         loc: state.loc,
         chunkAmount: state.chunkAmount,
         chunkFrequency: state.chunkFrequency,
+        mortgageDetails: state.mortgageDetails,
       }),
       merge: (persistedState, currentState) => {
         const persisted = persistedState as Partial<FinancialState>;

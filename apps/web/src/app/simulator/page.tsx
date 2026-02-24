@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { runSimulation, formatCurrency, formatDate, SimulationInputs } from '@/engine/calculations';
+import { runSimulation, formatCurrency, formatDate, formatMonths, SimulationInputs, simulateMultiDebt, calculateMortgageAnalysis, comparePaymentStrategies } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
-import { useFinancialStore, Domain } from '@/stores/financial-store';
+import { useFinancialStore, Domain, DebtType } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import CountUp from '@/components/CountUp';
@@ -192,43 +192,183 @@ export default function SimulatorPage() {
                 </div>
               </div>
             </div>
+
+
+            {/* Mortgage Details Panel */}
+            {store.activeDomain === 'house' && (
+              <div className={`${classes.glass} rounded-2xl p-6`}>
+                <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>🏠 Mortgage Details</h2>
+                <div className="flex gap-2 mb-4">
+                  {(['purchase', 'current'] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      onClick={() => store.updateMortgageDetails({ entryMode: mode })}
+                      className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                        store.mortgageDetails.entryMode === mode
+                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                          : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
+                      }`}
+                    >
+                      {mode === 'purchase' ? 'Original Purchase' : 'Current Status'}
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  {store.mortgageDetails.entryMode === 'purchase' ? (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Age at Purchase</label>
+                        <EditableNumber value={store.mortgageDetails.purchaseAge} onChange={(v) => store.updateMortgageDetails({ purchaseAge: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Purchase Price</label>
+                        <EditableCurrency value={store.mortgageDetails.originalCost} onChange={(v) => store.updateMortgageDetails({ originalCost: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Term (years)</label>
+                        <EditableNumber value={store.mortgageDetails.originalTermYears} onChange={(v) => store.updateMortgageDetails({ originalTermYears: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Interest Rate</label>
+                        <EditablePercentage value={store.mortgageDetails.originalRate} onChange={(v) => store.updateMortgageDetails({ originalRate: v })} size="lg" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Current Balance</label>
+                        <EditableCurrency value={store.mortgageDetails.currentBalance} onChange={(v) => store.updateMortgageDetails({ currentBalance: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Remaining Months</label>
+                        <EditableNumber value={store.mortgageDetails.remainingTermMonths} onChange={(v) => store.updateMortgageDetails({ remainingTermMonths: v })} size="lg" />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <label className={`text-sm ${classes.textSecondary}`}>Current Rate</label>
+                        <EditablePercentage value={store.mortgageDetails.currentRate} onChange={(v) => store.updateMortgageDetails({ currentRate: v })} size="lg" />
+                      </div>
+                    </>
+                  )}
+                  <div className="pt-2 border-t border-gray-400/30">
+                    <label className={`text-sm ${classes.textSecondary} mb-2 block`}>Payment Frequency</label>
+                    <div className="flex gap-2">
+                      {(['monthly', 'biweekly', 'weekly'] as const).map((freq) => (
+                        <button
+                          key={freq}
+                          onClick={() => store.updateMortgageDetails({ paymentFrequency: freq })}
+                          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors ${
+                            store.mortgageDetails.paymentFrequency === freq
+                              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                              : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
+                          }`}
+                        >
+                          {freq === 'monthly' ? 'Monthly' : freq === 'biweekly' ? 'Bi-Weekly' : 'Weekly'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {/* Mortgage Analysis Summary */}
+                {(() => {
+                  const analysis = calculateMortgageAnalysis({
+                    ...store.mortgageDetails,
+                    currentAge: store.currentAge,
+                  });
+                  return (
+                    <div className="mt-4 pt-4 border-t border-gray-400/30 space-y-2">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-red-500/10 rounded-lg p-3">
+                          <p className={`text-xs ${classes.textMuted}`}>Interest Paid So Far</p>
+                          <p className="text-lg font-bold text-red-400">{formatCurrency(analysis.interestPaidSoFar)}</p>
+                        </div>
+                        <div className="bg-amber-500/10 rounded-lg p-3">
+                          <p className={`text-xs ${classes.textMuted}`}>Interest Remaining</p>
+                          <p className="text-lg font-bold text-amber-400">{formatCurrency(analysis.interestRemaining)}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className={classes.textSecondary}>Equity Built</span>
+                        <span className="text-emerald-400 font-medium">{analysis.equityPercent.toFixed(1)}%</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className={classes.textSecondary}>Total Lifetime Interest</span>
+                        <span className="text-red-400 font-medium">{formatCurrency(analysis.totalInterestLifetime)}</span>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
           </ScrollReveal>
 
           <ScrollReveal variant="fadeUp" delay={0.15} className="space-y-6" stagger={0.08}>
+            {/* 4-Way Strategy Comparison */}
             <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
-              <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Results Comparison</h2>
+              <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Strategy Comparison</h2>
               
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Traditional</p>
-                    <p className="text-2xl font-bold text-red-400"><CountUp value={results.baseline.payoffMonths} prefix="" suffix=" mo" /></p>
-                    <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.baseline.payoffMonths)}</p>
-                  </div>
-                  <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/30">
-                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Velocity</p>
-                    <p className="text-2xl font-bold text-emerald-400"><CountUp value={results.velocity.payoffMonths} prefix="" suffix=" mo" /></p>
-                    <p className={`text-sm ${classes.textMuted}`}>{formatDate(results.velocity.payoffMonths)}</p>
-                  </div>
-                </div>
+              {(() => {
+                const allDebts = Object.entries(store.debts).map(([key, d]) => ({
+                  id: d.id,
+                  name: d.name,
+                  type: key,
+                  balance: d.balance,
+                  apr: d.interestRate,
+                  monthlyPayment: d.minimumPayment,
+                  termMonths: d.termMonths,
+                }));
+                const locDetails = { limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance };
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className={`${classes.glass} rounded-xl p-4`}>
-                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Traditional Interest</p>
-                    <p className="text-xl font-bold text-red-400">{formatCurrency(results.baseline.totalInterest)}</p>
-                  </div>
-                  <div className={`${classes.glass} rounded-xl p-4`}>
-                    <p className={`text-sm ${classes.textSecondary} mb-1`}>Velocity Interest</p>
-                    <p className="text-xl font-bold text-emerald-400">{formatCurrency(results.velocity.totalInterest)}</p>
-                  </div>
-                </div>
+                const traditional = { months: results.baseline.payoffMonths, totalInterest: results.baseline.totalInterest };
+                const snowballResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'snowball', store.chunkAmount);
+                const avalancheResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'avalanche', store.chunkAmount);
+                const velocityResult = simulateMultiDebt(allDebts, store.monthlyIncome, store.monthlyExpenses, locDetails, 'velocity', store.chunkAmount);
 
-                <div className={`${classes.glass} rounded-xl p-6 text-center border border-emerald-500/30`}>
-                  <p className={`${classes.textSecondary} mb-2`}>Potential Savings</p>
-                  <p className="text-3xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
-                  <p className="text-amber-500 mt-2"><CountUp value={results.velocity.monthsSaved} prefix="" suffix=" months faster" /></p>
-                </div>
-              </div>
+                const strategies = [
+                  { label: 'Traditional', months: traditional.months, interest: traditional.totalInterest, color: 'red', highlight: false },
+                  { label: 'Snowball', months: snowballResult.totalMonths, interest: snowballResult.totalInterestPaid, color: 'blue', highlight: false },
+                  { label: 'Avalanche', months: avalancheResult.totalMonths, interest: avalancheResult.totalInterestPaid, color: 'amber', highlight: false },
+                  { label: 'Velocity ⭐', months: velocityResult.totalMonths, interest: velocityResult.totalInterestPaid, color: 'emerald', highlight: true },
+                ];
+
+                return (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      {strategies.map((s) => (
+                        <div
+                          key={s.label}
+                          className={`rounded-xl p-4 border ${
+                            s.highlight
+                              ? 'bg-emerald-500/15 border-emerald-500/50 ring-1 ring-emerald-500/30'
+                              : `bg-${s.color}-500/10 border-${s.color}-500/30`
+                          }`}
+                        >
+                          <p className={`text-xs ${classes.textSecondary} mb-1`}>{s.label}</p>
+                          <p className={`text-xl font-bold text-${s.color}-400`}>
+                            <CountUp value={s.months} prefix="" suffix=" mo" />
+                          </p>
+                          <p className={`text-sm text-${s.color}-400/80 mt-1`}>{formatCurrency(s.interest)}</p>
+                          {!s.highlight && traditional.totalInterest > 0 && (
+                            <p className={`text-xs ${classes.textMuted} mt-1`}>
+                              Saves {formatCurrency(Math.max(0, traditional.totalInterest - s.interest))}
+                            </p>
+                          )}
+                          {s.highlight && (
+                            <p className="text-xs text-emerald-400 mt-1 font-medium">
+                              Saves {formatCurrency(Math.max(0, traditional.totalInterest - s.interest))} ✨
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={`${classes.glass} rounded-xl p-6 text-center border border-emerald-500/30`}>
+                      <p className={`${classes.textSecondary} mb-2`}>Velocity Advantage</p>
+                      <p className="text-3xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
+                      <p className="text-amber-500 mt-2"><CountUp value={results.velocity.monthsSaved} prefix="" suffix=" months faster" /></p>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
             <div className={`${classes.glass} rounded-2xl p-6`}>
