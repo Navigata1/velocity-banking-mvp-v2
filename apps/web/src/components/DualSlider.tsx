@@ -95,16 +95,18 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
     <div className={`mt-4 p-3 ${classes.glass} rounded-xl border border-gray-400/30`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-emerald-500 font-medium">Quick Adjust</span>
-        <div className="flex items-center gap-2">
-          <span className={`text-xs ${classes.textMuted}`}>Slide to estimate</span>
-          <button
-            onClick={() => setLocked(!locked)}
-            className={`px-2 py-0.5 rounded-full text-xs ${classes.glass} border border-gray-400/30 hover:border-gray-400/50 transition-colors`}
-            title={locked ? 'Unlock sliders' : 'Lock sliders'}
-          >
-            {locked ? '🔒' : '🔓'}
-          </button>
-        </div>
+        <button
+          onClick={() => setLocked(!locked)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            locked 
+              ? 'bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30' 
+              : `${classes.glass} border border-gray-400/30 ${classes.textMuted} hover:border-emerald-500/50 hover:text-emerald-400`
+          }`}
+          title={locked ? 'Unlock sliders' : 'Lock sliders'}
+        >
+          <span className="text-sm">{locked ? '🔒' : '🔓'}</span>
+          <span>{locked ? 'Locked' : 'Lock'}</span>
+        </button>
       </div>
       
       <div className={`space-y-3 transition-opacity ${locked ? 'opacity-50 pointer-events-none' : ''}`}>
