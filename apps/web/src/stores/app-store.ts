@@ -27,6 +27,9 @@ interface AppState {
   setLandingPage: (page: LandingPage) => void;
   signInLocal: (email: string, name?: string) => void;
   signOut: () => void;
+
+  previewDismissed: boolean;
+  setPreviewDismissed: (dismissed: boolean) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -47,6 +50,9 @@ export const useAppStore = create<AppState>()(
       setLandingPage: (page) => set({ landingPage: page }),
       signInLocal: (email, name) => set({ user: { email, name } }),
       signOut: () => set({ user: null }),
+
+      previewDismissed: false,
+      setPreviewDismissed: (dismissed) => set({ previewDismissed: dismissed }),
     }),
     {
       name: 'interestshield-app-v1',

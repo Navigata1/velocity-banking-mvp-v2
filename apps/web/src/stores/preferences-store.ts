@@ -20,6 +20,14 @@ interface PreferencesState {
 
   landingPreference: LandingPreference;
   setLandingPreference: (pref: LandingPreference) => void;
+
+  // Pre-App Preview
+  previewPersistHours: number;
+  setPreviewPersistHours: (hours: number) => void;
+  showPreAppPreview: boolean;
+  setShowPreAppPreview: (show: boolean) => void;
+  lastPreviewRefresh: number | null;
+  setLastPreviewRefresh: (ts: number | null) => void;
 }
 
 export const usePreferencesStore = create<PreferencesState>()(
@@ -33,6 +41,13 @@ export const usePreferencesStore = create<PreferencesState>()(
 
       landingPreference: 'dashboard',
       setLandingPreference: (pref) => set({ landingPreference: pref }),
+
+      previewPersistHours: 48,
+      setPreviewPersistHours: (hours) => set({ previewPersistHours: hours }),
+      showPreAppPreview: true,
+      setShowPreAppPreview: (show) => set({ showPreAppPreview: show }),
+      lastPreviewRefresh: null,
+      setLastPreviewRefresh: (ts) => set({ lastPreviewRefresh: ts }),
     }),
     { name: 'interestshield-preferences-v1' }
   )

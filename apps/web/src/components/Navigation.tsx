@@ -68,7 +68,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`fixed bottom-0 left-0 right-0 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
+      <nav className={`fixed bottom-0 left-0 right-0 z-50 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
         <div className="px-4 py-2 md:p-6">
           <div className="hidden md:block mb-8">
             <div className="flex items-center gap-3">

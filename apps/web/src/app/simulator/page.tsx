@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { runSimulation, formatCurrency, formatDate, formatMonths, SimulationInputs, simulateMultiDebt, calculateMortgageAnalysis, comparePaymentStrategies } from '@/engine/calculations';
+import { runSimulation, formatCurrency, formatDate, formatMonths, SimulationInputs, simulateMultiDebt, DebtItem, calculateMortgageAnalysis, comparePaymentStrategies } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
@@ -10,6 +10,7 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import CountUp from '@/components/CountUp';
 import PageTransition from '@/components/PageTransition';
+import StrategyGlassFill from '@/components/StrategyGlassFill';
 
 export default function SimulatorPage() {
   const [mounted, setMounted] = useState(false);
@@ -47,6 +48,40 @@ export default function SimulatorPage() {
   const locUtilization = (store.loc.balance / store.loc.limit) * 100;
 
   const results = useMemo(() => runSimulation(inputs), [inputs]);
+
+  // Build single-debt item for multi-strategy comparison
+  const strategyResults = useMemo(() => {
+    const debtType = store.getActiveDebtType();
+    const debt = store.debts[debtType];
+    const domainLabel = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
+    
+    const debtItem: DebtItem = {
+      id: debtType,
+      name: `${domainLabel} Loan`,
+      type: debtType,
+      balance: debt.balance,
+      apr: debt.interestRate,
+      monthlyPayment: debt.minimumPayment,
+      termMonths: Math.ceil(debt.balance / (debt.minimumPayment || 1)),
+    };
+    
+    const loc = store.loc.limit > 0 ? {
+      limit: store.loc.limit,
+      apr: store.loc.interestRate,
+      balance: store.loc.balance,
+    } : undefined;
+    
+    const snowball = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'snowball', store.chunkAmount);
+    const avalanche = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'avalanche', store.chunkAmount);
+    const velocity = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'velocity', store.chunkAmount);
+    
+    return [
+      { name: 'Traditional', months: results.baseline.payoffMonths, totalInterest: results.baseline.totalInterest, color: 'red', icon: '📊' },
+      { name: 'Snowball', months: snowball.totalMonths, totalInterest: snowball.totalInterestPaid, color: 'blue', icon: '☃️' },
+      { name: 'Avalanche', months: avalanche.totalMonths, totalInterest: avalanche.totalInterestPaid, color: 'amber', icon: '🏔️' },
+      { name: 'Velocity', months: velocity.totalMonths, totalInterest: velocity.totalInterestPaid, color: 'emerald', icon: '⚡' },
+    ];
+  }, [store, results]);
 
   if (!mounted) {
     return (
@@ -373,112 +408,10 @@ export default function SimulatorPage() {
           <ScrollReveal variant="fadeUp" delay={0.15} className="space-y-6" stagger={0.08}>
             {/* 4-Way Strategy Comparison */}
             <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
-              <h2 className={`text-xl font-semibold mb-6 ${classes.text}`}>Strategy Comparison</h2>
+              <h2 className={`text-xl font-semibold mb-2 ${classes.text}`}>Strategy Comparison</h2>
+              <p className={`text-xs ${classes.textMuted} mb-5`}>Fill level = time to payoff. Less fill = faster. Traditional is always 100%.</p>
               
-              {(() => {
-                // Compare strategies on the ACTIVE debt only
-                const activeDebt = [{
-                  id: currentDebt.id,
-                  name: currentDebt.name,
-                  type: debtType,
-                  balance: currentDebt.balance,
-                  apr: currentDebt.interestRate,
-                  monthlyPayment: currentDebt.minimumPayment,
-                  termMonths: currentDebt.termMonths,
-                }];
-                const locDetails = { limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance };
-
-                const traditional = { months: results.baseline.payoffMonths, totalInterest: results.baseline.totalInterest };
-                const snowballResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'snowball', store.chunkAmount);
-                const avalancheResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'avalanche', store.chunkAmount);
-                const velocityResult = simulateMultiDebt(activeDebt, store.monthlyIncome, store.monthlyExpenses, locDetails, 'velocity', store.chunkAmount);
-
-                const tradInterest = traditional.totalInterest;
-                const strategies = [
-                  { label: 'Traditional', months: traditional.months, interest: tradInterest, saved: 0, monthsSaved: 0, color: 'red', highlight: false },
-                  { label: 'Snowball', months: snowballResult.totalMonths, interest: snowballResult.totalInterestPaid, saved: Math.max(0, tradInterest - snowballResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - snowballResult.totalMonths), color: 'blue', highlight: false },
-                  { label: 'Avalanche', months: avalancheResult.totalMonths, interest: avalancheResult.totalInterestPaid, saved: Math.max(0, tradInterest - avalancheResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - avalancheResult.totalMonths), color: 'amber', highlight: false },
-                  { label: 'Velocity ⭐', months: velocityResult.totalMonths, interest: velocityResult.totalInterestPaid, saved: Math.max(0, tradInterest - velocityResult.totalInterestPaid), monthsSaved: Math.max(0, traditional.months - velocityResult.totalMonths), color: 'emerald', highlight: true },
-                ];
-
-                const maxMonths = Math.max(...strategies.map(s => s.months), 1);
-
-                return (
-                  <div className="space-y-5">
-                    {/* Visual Timeline Bars */}
-                    <div className="space-y-3">
-                      <p className={`text-xs ${classes.textMuted} mb-1`}>Payoff Timeline (shorter = better)</p>
-                      {strategies.map((s) => {
-                        const barWidth = Math.max(5, (s.months / maxMonths) * 100);
-                        const barColors: Record<string, string> = {
-                          red: 'bg-red-500',
-                          blue: 'bg-blue-500',
-                          amber: 'bg-amber-500',
-                          emerald: 'bg-emerald-500',
-                        };
-                        return (
-                          <div key={s.label} className="space-y-1">
-                            <div className="flex items-center justify-between">
-                              <span className={`text-xs font-medium ${s.highlight ? 'text-emerald-400' : classes.textSecondary}`}>
-                                {s.label}
-                              </span>
-                              <span className={`text-xs font-mono ${s.highlight ? 'text-emerald-400' : classes.textMuted}`}>
-                                {s.months} mo • {formatCurrency(s.interest)} interest
-                              </span>
-                            </div>
-                            <div className="relative h-6 bg-gray-500/20 rounded-lg overflow-hidden">
-                              <div
-                                className={`h-full ${barColors[s.color]} rounded-lg transition-all duration-700 ${s.highlight ? 'opacity-90' : 'opacity-50'}`}
-                                style={{ width: `${barWidth}%` }}
-                              />
-                              {s.highlight && (
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <span className="text-xs font-bold text-white drop-shadow-lg">
-                                    {s.monthsSaved > 0 ? `${s.monthsSaved} months faster` : 'Best option'} ⚡
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Savings Summary Cards */}
-                    <div className="grid grid-cols-3 gap-2">
-                      {strategies.filter(s => s.label !== 'Traditional').map((s) => (
-                        <div key={s.label} className={`rounded-xl p-3 text-center border ${
-                          s.highlight ? 'bg-emerald-500/15 border-emerald-500/50' : `border-gray-400/20 ${classes.glass}`
-                        }`}>
-                          <p className={`text-[10px] ${classes.textMuted} mb-1`}>{s.label.replace(' ⭐', '')}</p>
-                          <p className={`text-sm font-bold ${s.highlight ? 'text-emerald-400' : classes.textSecondary}`}>
-                            {s.saved > 0 ? formatCurrency(s.saved) : '$0'}
-                          </p>
-                          <p className={`text-[10px] ${classes.textMuted}`}>
-                            {s.saved > 0 ? 'saved' : 'no savings'}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Velocity Advantage */}
-                    <div className={`${classes.glass} rounded-xl p-5 text-center border border-emerald-500/30`}>
-                      <p className={`text-xs ${classes.textSecondary} mb-2`}>Velocity Advantage vs Traditional</p>
-                      <div className="flex items-center justify-center gap-6">
-                        <div>
-                          <p className="text-2xl font-bold text-emerald-400"><CountUp value={results.velocity.interestSaved} /></p>
-                          <p className={`text-xs ${classes.textMuted}`}>interest saved</p>
-                        </div>
-                        <div className="w-px h-10 bg-gray-400/30" />
-                        <div>
-                          <p className="text-2xl font-bold text-amber-400"><CountUp value={results.velocity.monthsSaved} prefix="" suffix="" /></p>
-                          <p className={`text-xs ${classes.textMuted}`}>months faster</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })()}
+              <StrategyGlassFill strategies={strategyResults} />
             </div>
 
             <div className={`${classes.glass} rounded-2xl p-6`}>

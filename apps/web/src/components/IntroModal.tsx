@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useAppStore } from '@/stores/app-store';
+import IntroAnimation from '@/components/IntroAnimation';
 
 export default function IntroModal() {
   const router = useRouter();
@@ -16,9 +17,7 @@ export default function IntroModal() {
   const setIntroSeen = useAppStore((s) => s.setIntroSeen);
   const setSkipIntroOnStartup = useAppStore((s) => s.setSkipIntroOnStartup);
 
-  const [muted, setMuted] = useState(true);
   const [dontShowAgain, setDontShowAgain] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Show on first visit if not seen and not skipped
   useEffect(() => {
@@ -26,13 +25,6 @@ export default function IntroModal() {
       openIntro();
     }
   }, [introSeen, skipIntroOnStartup, introModalOpen, openIntro]);
-
-  useEffect(() => {
-    if (!introModalOpen && videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, [introModalOpen]);
 
   if (!introModalOpen) return null;
 
@@ -63,39 +55,8 @@ export default function IntroModal() {
           </button>
         </div>
 
-        {/* Video area */}
-        <div className="relative bg-black aspect-video">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            muted={muted}
-            playsInline
-            controls
-            poster="/intro/poster.jpg"
-          >
-            <source src="/intro/money-loop.mp4" type="video/mp4" />
-            <track kind="captions" src="/intro/captions.vtt" srcLang="en" label="English" default />
-            Your browser does not support the video element.
-          </video>
-
-          {/* Sound toggle */}
-          <button
-            onClick={() => setMuted(!muted)}
-            className="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-sm text-white text-xs font-medium hover:bg-black/80 transition-colors"
-          >
-            {muted ? '🔇 Enable Sound' : '🔊 Sound On'}
-          </button>
-
-          {/* Fallback if no video exists */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 pointer-events-none">
-            <div className="text-6xl mb-4">🛡️</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Interest Is Invisible</h3>
-            <p className="text-gray-300 max-w-md">
-              Most people don&apos;t realize that 85-90% of their early mortgage payments go to interest, not principal.
-              InterestShield makes this visible — and shows you how to change it.
-            </p>
-          </div>
-        </div>
+        {/* Animated intro */}
+        <IntroAnimation onComplete={handleContinue} />
 
         {/* Content */}
         <div className="px-6 py-5 space-y-4">

@@ -843,6 +843,8 @@ function LessonCard({
   isLast,
   forceExpand,
   cardRef,
+  expanded,
+  onToggleExpand,
 }: {
   lesson: Lesson;
   isComplete: boolean;
@@ -855,8 +857,9 @@ function LessonCard({
   isLast: boolean;
   forceExpand?: boolean;
   cardRef?: React.Ref<HTMLDivElement>;
+  expanded: boolean;
+  onToggleExpand: () => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const [showDeepDive, setShowDeepDive] = useState(false);
   const [confetti, setConfetti] = useState<{ x: number; y: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -864,7 +867,7 @@ function LessonCard({
 
   // Force expand from query param
   useEffect(() => {
-    if (forceExpand && !expanded) setExpanded(true);
+    if (forceExpand && !expanded) onToggleExpand();
   }, [forceExpand]); // eslint-disable-line react-hooks/exhaustive-deps
   const quizCorrect = quizAnswer === lesson.quiz.correctIndex;
   const quizAnswered = quizAnswer !== null && quizAnswer !== undefined;
@@ -901,7 +904,7 @@ function LessonCard({
       >
         {/* Header */}
         <button
-          onClick={() => setExpanded(!expanded)}
+          onClick={onToggleExpand}
           className="w-full p-5 flex items-center gap-4 hover:bg-white/5 transition-colors"
         >
           {/* Module number / checkmark */}
@@ -1104,6 +1107,7 @@ function LearnPageInner() {
   const [mounted, setMounted] = useState(false);
   const [hoveredTerm, setHoveredTerm] = useState<string | null>(null);
   const [targetModule, setTargetModule] = useState<number | null>(null);
+  const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
   const { theme } = useThemeStore();
   const { completed, quizAnswers, toggleComplete, answerQuiz, justCompleted, milestone, clearMilestone } = useProgress();
   const searchParams = useSearchParams();
@@ -1118,6 +1122,7 @@ function LearnPageInner() {
       const moduleNum = parseInt(mod, 10);
       if (moduleNum >= 1 && moduleNum <= lessons.length) {
         setTargetModule(moduleNum);
+        setExpandedLesson(moduleNum);
         // Scroll after a short delay to let DOM render
         setTimeout(() => {
           const el = lessonRefs.current[moduleNum];
@@ -1259,6 +1264,8 @@ function LearnPageInner() {
             index={i}
             isLast={i === lessons.length - 1}
             forceExpand={targetModule === lesson.id}
+            expanded={expandedLesson === lesson.id}
+            onToggleExpand={() => setExpandedLesson(expandedLesson === lesson.id ? null : lesson.id)}
             cardRef={(el: HTMLDivElement | null) => { lessonRefs.current[lesson.id] = el; }}
           />
         ))}

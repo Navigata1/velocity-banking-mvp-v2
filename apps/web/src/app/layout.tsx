@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import ThemeProvider from "@/components/ThemeProvider";
 import IntroModal from "@/components/IntroModal";
+import PreAppPreview from "@/components/PreAppPreview";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
             <Navigation />
             <main className="flex-1 pb-20 md:pb-0">
               <IntroModal />
+              <PreAppPreview />
               {children}
             </main>
           </div>

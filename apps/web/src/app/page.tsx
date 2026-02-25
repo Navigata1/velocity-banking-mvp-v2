@@ -7,7 +7,6 @@ import DomainTabs from '@/components/DomainTabs';
 import HeroVisual from '@/components/HeroVisual';
 import VitalsGrid from '@/components/VitalsGrid';
 import ActionFeed from '@/components/ActionFeed';
-import PortfolioStrip from '@/components/PortfolioStrip';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
@@ -1074,9 +1073,6 @@ export default function Dashboard() {
         </ScrollReveal>
 
         <ScrollReveal variant="fadeUp" delay={0.2} className="lg:col-span-4">
-          <div className="mb-6">
-            <PortfolioStrip />
-          </div>
           <div className="flex justify-center lg:justify-start gap-2 mb-4">
             {([
               { key: 'all', label: 'All' },
