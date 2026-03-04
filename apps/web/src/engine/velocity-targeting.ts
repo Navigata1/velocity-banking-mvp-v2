@@ -1,11 +1,14 @@
 /**
  * Velocity Targeting Engine
- * 
+ *
  * Scores and ranks debts for velocity banking strategy.
  * Prioritizes: cash-flow unlock > daily interest burn > promo risk.
  */
 
-import type { DebtAccount, DebtType, LOC } from '@/stores/financial-store';
+import type { DebtAccount, DebtType } from '@/stores/financial-store';
+import { formatCurrency, estimateDailyInterest } from './utils';
+
+export { formatCurrency, estimateDailyInterest };
 
 export type PaymentSource = 'checking' | 'loc' | 'either';
 
@@ -18,17 +21,6 @@ export interface PromoTerms {
 export interface VelocityDebt extends DebtAccount {
   paymentSource?: PaymentSource;
   promo?: PromoTerms;
-}
-
-export function formatCurrency(n: number): string {
-  if (!isFinite(n)) return '$0';
-  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-}
-
-export function estimateDailyInterest(balance: number, apr: number): number {
-  // apr can be decimal (0.069) or percentage (6.9) — normalize
-  const rate = apr > 1 ? apr / 100 : apr;
-  return Math.max(0, balance) * rate / 365;
 }
 
 /**

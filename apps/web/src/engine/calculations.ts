@@ -1,9 +1,9 @@
 /**
  * InterestShield Velocity Banking Calculation Engine
- * 
+ *
  * Truth-first math. All results are estimates based on user inputs.
  * Not financial advice.
- * 
+ *
  * Key concepts from velocity banking methodology:
  * - Amortized loans front-load interest (85-90% of early payments = interest)
  * - Lines of Credit use average daily balance for interest calculation
@@ -11,6 +11,20 @@
  * - "Chunks" from LOC attack amortized debt principal directly
  * - Cash flow (Income - Expenses) pays down LOC over time
  */
+
+import {
+  formatCurrency,
+  formatCurrencyPrecise,
+  formatDate,
+  formatMonths,
+  formatPercent,
+  calculateMonthlyRate,
+  calculateDailyRate,
+  calculateCashFlow,
+  estimateDailyInterest,
+  calculateAmortizationPayment as _calcAmortPayment,
+  calculateTotalAmortizationInterest as _calcTotalAmortInt,
+} from './utils';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -104,36 +118,20 @@ export interface DebtPayoffResult {
 }
 
 // ─── Core Math ───────────────────────────────────────────────────────
+// Basic rate/cash flow functions imported from ./utils
 
-export function calculateMonthlyRate(apr: number): number {
-  return apr / 12;
-}
-
-export function calculateDailyRate(apr: number): number {
-  return apr / 365;
-}
-
-export function calculateCashFlow(income: number, expenses: number): number {
-  return income - expenses;
-}
+// Local wrappers to maintain existing API
+export { calculateMonthlyRate, calculateDailyRate, calculateCashFlow };
 
 /**
  * Calculate the standard amortization monthly payment.
  */
-export function calculateAmortizationPayment(principal: number, apr: number, termMonths: number): number {
-  if (principal <= 0 || termMonths <= 0) return 0;
-  const r = apr / 12;
-  if (r === 0) return principal / termMonths;
-  return principal * (r * Math.pow(1 + r, termMonths)) / (Math.pow(1 + r, termMonths) - 1);
-}
+export const calculateAmortizationPayment = _calcAmortPayment;
 
 /**
  * Calculate total interest paid over the life of an amortized loan.
  */
-export function calculateTotalAmortizationInterest(principal: number, apr: number, termMonths: number): number {
-  const payment = calculateAmortizationPayment(principal, apr, termMonths);
-  return Math.max(0, payment * termMonths - principal);
-}
+export const calculateTotalAmortizationInterest = _calcTotalAmortInt;
 
 /**
  * Average Daily Balance interest calculation for LOC.
@@ -997,34 +995,12 @@ export function comparePaymentStrategies(
 }
 
 // ─── Formatting ──────────────────────────────────────────────────────
-
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-export function formatCurrencyPrecise(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
-
-export function formatDate(monthsFromNow: number): string {
-  const date = new Date();
-  date.setMonth(date.getMonth() + monthsFromNow);
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-}
-
-export function formatMonths(months: number): string {
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-  if (years === 0) return `${months} months`;
-  if (remainingMonths === 0) return `${years} year${years > 1 ? 's' : ''}`;
-  return `${years}y ${remainingMonths}m`;
-}
+// Re-export formatting utils for backwards compatibility
+export {
+  formatCurrency,
+  formatCurrencyPrecise,
+  formatDate,
+  formatMonths,
+  formatPercent,
+  estimateDailyInterest,
+};

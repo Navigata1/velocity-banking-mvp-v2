@@ -1,9 +1,11 @@
 /**
  * Portfolio Simulation Engine
- * 
+ *
  * Supports multi-debt payoff simulation with velocity, snowball, and avalanche strategies.
  * Truth-first math. Educational estimates only. Not financial advice.
  */
+
+import { formatCurrency as fmt } from './utils';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -87,13 +89,13 @@ export interface PortfolioSimulationResult {
 
 // ─── Helpers ─────────────────────────────────────────────────────────
 
-function getMinPayment(debt: DebtItem): number {
+function getMinPayment(debt: DebtItem, currentBalance: number): number {
   if (debt.minPaymentRule.type === 'fixed') {
     return debt.minPaymentRule.amount;
   }
   return Math.max(
     debt.minPaymentRule.floor,
-    debt.balance * debt.minPaymentRule.percent
+    currentBalance * debt.minPaymentRule.percent
   );
 }
 
@@ -114,7 +116,7 @@ function getEffectiveApr(debt: DebtItem, month: number): number {
  * 3) Promo expiration risk adds urgency
  */
 function velocityScore(debt: DebtItem, balance: number): number {
-  const unlock = getMinPayment(debt);
+  const unlock = getMinPayment(debt, balance);
   const burn = balance * debt.apr / 365;
   const promoMonths = debt.promo?.monthsRemaining ?? null;
   const promoRisk =
@@ -145,24 +147,26 @@ function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: P
 export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioSimulationResult {
   const { monthlyIncome, monthlyExpenses, extraMonthlyPayment, debts, settings, maxMonths = 600 } = inputs;
   const warnings: string[] = [];
-  
+
   const cashFlow = monthlyIncome - monthlyExpenses;
-  const totalMinimums = debts.reduce((s, d) => s + getMinPayment(d), 0);
-  
+
+  const balances = new Map<string, number>();
+  const totalInterestPaid = new Map<string, number>();
+
+  for (const d of debts) {
+    balances.set(d.id, d.balance);
+    totalInterestPaid.set(d.id, 0);
+  }
+
+  // Calculate initial minimums for warnings (using original balances)
+  const initialMinimums = debts.reduce((s, d) => s + getMinPayment(d, d.balance), 0);
+
   // Warnings
   if (cashFlow <= 0) {
     warnings.push(`Cash flow is negative (${fmt(cashFlow)}/mo). Velocity banking requires positive cash flow.`);
   }
-  if (cashFlow < totalMinimums) {
-    warnings.push(`Cash flow (${fmt(cashFlow)}/mo) doesn't cover all minimums (${fmt(totalMinimums)}/mo). Some payments may be missed.`);
-  }
-
-  const balances = new Map<string, number>();
-  const totalInterestPaid = new Map<string, number>();
-  
-  for (const d of debts) {
-    balances.set(d.id, d.balance);
-    totalInterestPaid.set(d.id, 0);
+  if (cashFlow < initialMinimums) {
+    warnings.push(`Cash flow (${fmt(cashFlow)}/mo) doesn't cover all minimums (${fmt(initialMinimums)}/mo). Some payments may be missed.`);
   }
 
   const payoffOrder: DebtPayoffEvent[] = [];
@@ -187,13 +191,22 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       targetIds.push(sorted[0].id);
     }
 
+    // Calculate dynamic total minimums based on current balances
+    let totalMinimums = 0;
+    for (const d of debts) {
+      const bal = balances.get(d.id) ?? 0;
+      if (bal > 0.01) {
+        totalMinimums += getMinPayment(d, bal);
+      }
+    }
+
     // Calculate available extra payment
     let availableExtra = Math.max(0, cashFlow - totalMinimums) + extraMonthlyPayment;
-    
-    // Add freed payments from paid-off debts
+
+    // Add freed payments from paid-off debts (using original balance for min payment)
     for (const d of debts) {
       if ((balances.get(d.id) ?? 0) <= 0.01) {
-        availableExtra += getMinPayment(d);
+        availableExtra += getMinPayment(d, d.balance);
       }
     }
 
@@ -213,7 +226,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 
       const effectiveApr = getEffectiveApr(d, month);
       const interest = bal * effectiveApr / 12;
-      let payment = Math.min(getMinPayment(d), bal + interest);
+      let payment = Math.min(getMinPayment(d, bal), bal + interest);
 
       // Apply extra to target debts
       if (targetIds.includes(d.id) && availableExtra > 0) {
@@ -244,12 +257,8 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
     }
 
-    // Tick down promo months
-    for (const d of debts) {
-      if (d.promo && d.promo.monthsRemaining > 0) {
-        d.promo.monthsRemaining--;
-      }
-    }
+    // NOTE: Promo countdown is handled by getEffectiveApr comparing month to monthsRemaining
+    // No mutation needed - simulation is now pure
 
     monthResults.push({
       month,
@@ -269,8 +278,4 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     monthResults,
     warnings,
   };
-}
-
-function fmt(n: number): string {
-  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 }

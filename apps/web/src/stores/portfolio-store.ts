@@ -188,7 +188,7 @@ export const usePortfolioStore = create<PortfolioState>()(
           monthlyIncome: state.monthlyIncome,
           monthlyExpenses: state.monthlyExpenses,
           extraMonthlyPayment: state.extraMonthlyPayment,
-          debts: state.debts.map(d => ({ ...d })), // clone to avoid mutation
+          debts: structuredClone(state.debts), // deep clone to avoid mutation of nested objects like promo
           settings,
           maxMonths: 600,
         };
