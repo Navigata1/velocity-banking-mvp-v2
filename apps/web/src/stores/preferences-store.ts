@@ -4,6 +4,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type LandingPreference = 'dashboard' | 'portfolio' | 'learn' | 'vault';
+export type HeroAnimationMode = 'hover' | 'showroom360' | 'cinematicTilt' | 'lightSweep' | 'focusPulse';
+export type HeroQuality = 'low' | 'medium' | 'high';
 
 /**
  * Preferences are intentionally lightweight and safe to persist locally.
@@ -28,6 +30,14 @@ interface PreferencesState {
   setShowPreAppPreview: (show: boolean) => void;
   lastPreviewRefresh: number | null;
   setLastPreviewRefresh: (ts: number | null) => void;
+
+  // Hero showroom
+  heroAnimationMode: HeroAnimationMode;
+  setHeroAnimationMode: (mode: HeroAnimationMode) => void;
+  reducedMotion: boolean;
+  setReducedMotion: (value: boolean) => void;
+  heroQuality: HeroQuality;
+  setHeroQuality: (quality: HeroQuality) => void;
 }
 
 export const usePreferencesStore = create<PreferencesState>()(
@@ -48,6 +58,13 @@ export const usePreferencesStore = create<PreferencesState>()(
       setShowPreAppPreview: (show) => set({ showPreAppPreview: show }),
       lastPreviewRefresh: null,
       setLastPreviewRefresh: (ts) => set({ lastPreviewRefresh: ts }),
+
+      heroAnimationMode: 'hover',
+      setHeroAnimationMode: (heroAnimationMode) => set({ heroAnimationMode }),
+      reducedMotion: false,
+      setReducedMotion: (reducedMotion) => set({ reducedMotion }),
+      heroQuality: 'high',
+      setHeroQuality: (heroQuality) => set({ heroQuality }),
     }),
     { name: 'interestshield-preferences-v1' }
   )

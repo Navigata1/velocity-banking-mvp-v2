@@ -8,6 +8,7 @@ import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
 import { useEffect, useState, useCallback } from 'react';
+import UserMenu from '@/components/auth/UserMenu';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -62,6 +63,7 @@ export default function Navigation() {
     { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
     { href: '/learn', label: 'Learn', icon: '📚' },
     { href: '/portfolio', label: 'Portfolio', icon: '📋' },
+    { href: '/showroom', label: 'Showroom', icon: '🧿' },
     { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
     { href: '/settings', label: 'Settings', icon: '⚙️' },
   ];
@@ -161,6 +163,10 @@ export default function Navigation() {
                 ))}
               </div>
             )}
+
+            <div className="mt-3">
+              <UserMenu />
+            </div>
           </div>
         </div>
         

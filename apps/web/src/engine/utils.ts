@@ -94,6 +94,26 @@ export function calculateCashFlow(income: number, expenses: number): number {
   return income - expenses;
 }
 
+// ─── Payment Rule Calculations ───────────────────────────────────────
+
+export type GenericMinPaymentRule =
+  | { type: 'fixed'; amount: number }
+  | { type: 'percent'; percent: number; floor: number };
+
+/**
+ * Calculate minimum payment from a rule and current balance.
+ */
+export function calculateMinimumPayment(
+  minPaymentRule: GenericMinPaymentRule,
+  currentBalance: number,
+): number {
+  if (currentBalance <= 0.01) return 0;
+  if (minPaymentRule.type === 'fixed') {
+    return minPaymentRule.amount;
+  }
+  return Math.max(minPaymentRule.floor, currentBalance * minPaymentRule.percent);
+}
+
 // ─── Loan Calculations ───────────────────────────────────────────────
 
 /**

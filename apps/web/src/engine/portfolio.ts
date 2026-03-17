@@ -5,7 +5,7 @@
  * Truth-first math. Educational estimates only. Not financial advice.
  */
 
-import { formatCurrency as fmt } from './utils';
+import { calculateMinimumPayment, formatCurrency as fmt } from './utils';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -90,13 +90,7 @@ export interface PortfolioSimulationResult {
 // ─── Helpers ─────────────────────────────────────────────────────────
 
 function getMinPayment(debt: DebtItem, currentBalance: number): number {
-  if (debt.minPaymentRule.type === 'fixed') {
-    return debt.minPaymentRule.amount;
-  }
-  return Math.max(
-    debt.minPaymentRule.floor,
-    currentBalance * debt.minPaymentRule.percent
-  );
+  return calculateMinimumPayment(debt.minPaymentRule, currentBalance);
 }
 
 function getEffectiveApr(debt: DebtItem, month: number): number {
@@ -200,15 +194,9 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
     }
 
-    // Calculate available extra payment
+    // Calculate available extra payment from real-time cash-flow after current minimums.
+    // This naturally includes freed minimum payments from debts that are now paid off.
     let availableExtra = Math.max(0, cashFlow - totalMinimums) + extraMonthlyPayment;
-
-    // Add freed payments from paid-off debts (using original balance for min payment)
-    for (const d of debts) {
-      if ((balances.get(d.id) ?? 0) <= 0.01) {
-        availableExtra += getMinPayment(d, d.balance);
-      }
-    }
 
     const monthBalances: Record<string, number> = {};
     const monthInterest: Record<string, number> = {};

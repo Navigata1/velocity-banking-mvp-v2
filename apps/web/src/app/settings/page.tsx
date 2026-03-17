@@ -1,236 +1,203 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
-import { useAppStore, LandingPage } from '@/stores/app-store';
-import { usePortfolioStore } from '@/stores/portfolio-store';
-import ScrollReveal from '@/components/ScrollReveal';
+import { ChangeEvent, useEffect, useState } from 'react';
 import PageTransition from '@/components/PageTransition';
+import { Card, CardBody, CardHeader } from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Select from '@/components/ui/Select';
+import Badge from '@/components/ui/Badge';
+import UserMenu from '@/components/auth/UserMenu';
+import { useThemeStore, AccentColor, Theme } from '@/stores/theme-store';
+import { useAuthStore } from '@/stores/auth-store';
+import { useSyncStore } from '@/lib/sync';
+import { usePortfolioStore } from '@/stores/portfolio-store';
+import { usePreferencesStore, HeroAnimationMode, HeroQuality } from '@/stores/preferences-store';
+import { useGamificationStore } from '@/stores/gamification-store';
 
-const themeOptions: { value: Theme; label: string; icon: string }[] = [
-  { value: 'original', label: 'Original', icon: '🌙' },
-  { value: 'dark', label: 'Dark', icon: '⚫' },
-  { value: 'light', label: 'Light', icon: '☀️' },
-];
+const themeOptions: Theme[] = ['original', 'dark', 'light'];
+const accentOptions: AccentColor[] = ['emerald', 'blue', 'violet', 'amber'];
+const animationModes: HeroAnimationMode[] = ['hover', 'showroom360', 'cinematicTilt', 'lightSweep', 'focusPulse'];
+const qualityOptions: HeroQuality[] = ['low', 'medium', 'high'];
 
 export default function SettingsPage() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useThemeStore();
-  const classes = themeClasses[mounted ? theme : 'original'];
-  const appStore = useAppStore();
+  const { theme, setTheme, accent, setAccent } = useThemeStore();
+  const authSession = useAuthStore((state) => state.session);
+  const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
+  const syncStatus = useSyncStore((state) => state.status);
+  const syncError = useSyncStore((state) => state.error);
+  const lastSyncedAt = useSyncStore((state) => state.lastSyncedAt);
+
   const portfolioStore = usePortfolioStore();
+  const preferencesStore = usePreferencesStore();
+  const unlockedThemeAccents = useGamificationStore((state) => state.unlockedThemeAccents);
+  const unlockedShowroomEffects = useGamificationStore((state) => state.unlockedShowroomEffects);
   const [importStatus, setImportStatus] = useState<string | null>(null);
 
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) {
-    return (
-      <div className="p-4 md:p-8 max-w-3xl mx-auto">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-6" />
-          <div className="h-96 bg-gray-500/20 rounded-2xl" />
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!unlockedThemeAccents.includes(accent)) {
+      setAccent(unlockedThemeAccents[0] ?? 'emerald');
+    }
+  }, [accent, setAccent, unlockedThemeAccents]);
 
   const handleExport = () => {
     const text = portfolioStore.exportState();
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `interestshield-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `interestshield-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    anchor.click();
     URL.revokeObjectURL(url);
   };
 
-  const handleImport = async (file: File) => {
+  const handleImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
     const text = await file.text();
-    const res = portfolioStore.importState(text);
-    if (res.ok) {
-      setImportStatus('✅ Import successful!');
-    } else {
-      setImportStatus(`❌ ${res.error}`);
-    }
-    setTimeout(() => setImportStatus(null), 3000);
+    const result = portfolioStore.importState(text);
+    setImportStatus(result.ok ? 'Import successful.' : `Import failed: ${result.error}`);
+    event.currentTarget.value = '';
   };
 
   return (
     <PageTransition>
-    <div className="p-4 md:p-8 max-w-3xl mx-auto space-y-6">
-      <ScrollReveal as="header">
-        <h1 className={`text-3xl font-bold ${classes.text}`}>⚙️ Settings</h1>
-        <p className={`text-sm ${classes.textSecondary} mt-1`}>
-          Customize your InterestShield experience.
-        </p>
-      </ScrollReveal>
+      <div className="mx-auto max-w-4xl space-y-6 p-4 md:p-8">
+        <header>
+          <h1 className="text-3xl font-bold text-[var(--color-text)]">Settings</h1>
+          <p className="text-sm text-[var(--color-text-secondary)]">Account, cloud sync, theme, and motion preferences.</p>
+        </header>
 
-      {/* Theme */}
-      <ScrollReveal variant="fadeUp">
-      <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Theme</h2>
-        <div className="grid grid-cols-3 gap-3">
-          {themeOptions.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setTheme(opt.value)}
-              className={`p-4 rounded-xl text-center transition-all border ${
-                theme === opt.value
-                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
-                  : `${classes.bgTertiary} border-transparent ${classes.textSecondary} hover:border-slate-600`
-              }`}
-            >
-              <div className="text-2xl mb-1">{opt.icon}</div>
-              <div className="text-sm font-medium">{opt.label}</div>
-            </button>
-          ))}
-        </div>
-      </section>
-      </ScrollReveal>
+        <Card>
+          <CardHeader>
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Appearance</h2>
+          </CardHeader>
+          <CardBody className="grid gap-3 md:grid-cols-2">
+            <label className="space-y-1.5">
+              <span className="text-xs text-[var(--color-text-secondary)]">Theme</span>
+              <Select value={theme} onChange={(event) => setTheme(event.target.value as Theme)}>
+                {themeOptions.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </Select>
+            </label>
 
-      {/* Onboarding */}
-      <ScrollReveal variant="fadeUp" delay={0.05}>
-      <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Onboarding</h2>
-        <div className="space-y-3">
-          <label className="flex items-center justify-between cursor-pointer">
+            <label className="space-y-1.5">
+              <span className="text-xs text-[var(--color-text-secondary)]">Accent</span>
+              <Select value={accent} onChange={(event) => setAccent(event.target.value as AccentColor)}>
+                {accentOptions.filter((option) => unlockedThemeAccents.includes(option)).map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </Select>
+            </label>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Cosmetic Unlocks</h2>
+          </CardHeader>
+          <CardBody className="space-y-3">
             <div>
-              <p className={`font-medium ${classes.text}`}>Skip intro on startup</p>
-              <p className={`text-xs ${classes.textSecondary}`}>
-                Don&apos;t show the welcome modal when you open the app.
-              </p>
+              <p className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">Theme accents</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {accentOptions.map((option) => (
+                  <Badge key={option} tone={unlockedThemeAccents.includes(option) ? 'success' : 'default'}>
+                    {option}
+                    {unlockedThemeAccents.includes(option) ? '' : ' (locked)'}
+                  </Badge>
+                ))}
+              </div>
             </div>
-            <button
-              onClick={() => appStore.setSkipIntroOnStartup(!appStore.skipIntroOnStartup)}
-              className={`w-12 h-6 rounded-full transition-colors ${
-                appStore.skipIntroOnStartup ? 'bg-emerald-500' : classes.bgTertiary
-              }`}
-            >
-              <div
-                className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${
-                  appStore.skipIntroOnStartup ? 'translate-x-6' : 'translate-x-0.5'
-                }`}
-              />
-            </button>
-          </label>
-
-          <button
-            onClick={() => appStore.openIntro()}
-            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm ${classes.textSecondary} hover:${classes.text}`}
-          >
-            🎬 Replay Intro
-          </button>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      {/* Landing Page */}
-      <ScrollReveal variant="fadeUp" delay={0.1}>
-      <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Default Landing Page</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {(['dashboard', 'portfolio'] as LandingPage[]).map((page) => (
-            <button
-              key={page}
-              onClick={() => appStore.setLandingPage(page)}
-              className={`p-4 rounded-xl text-center transition-all border ${
-                appStore.landingPage === page
-                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
-                  : `${classes.bgTertiary} border-transparent ${classes.textSecondary}`
-              }`}
-            >
-              <div className="text-2xl mb-1">{page === 'dashboard' ? '📊' : '📋'}</div>
-              <div className="text-sm font-medium capitalize">{page}</div>
-            </button>
-          ))}
-        </div>
-      </section>
-      </ScrollReveal>
-
-      {/* Data */}
-      <ScrollReveal variant="fadeUp" delay={0.15}>
-      <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Data Backup</h2>
-        <p className={`text-sm ${classes.textSecondary} mb-4`}>
-          Export your portfolio data as JSON. Import to restore on a new device.
-        </p>
-        <div className="flex gap-3">
-          <button
-            onClick={handleExport}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors"
-          >
-            📤 Export Backup
-          </button>
-          <label className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium cursor-pointer ${classes.textSecondary} hover:${classes.text}`}>
-            📥 Import Backup
-            <input
-              type="file"
-              accept="application/json"
-              className="hidden"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) handleImport(f);
-                e.currentTarget.value = '';
-              }}
-            />
-          </label>
-        </div>
-        {importStatus && (
-          <p className="mt-3 text-sm">{importStatus}</p>
-        )}
-      </section>
-      </ScrollReveal>
-
-      {/* Demo Auth */}
-      <ScrollReveal variant="fadeUp" delay={0.2}>
-      <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account (Demo)</h2>
-        {appStore.user ? (
-          <div className="space-y-3">
-            <div className={`${classes.bgTertiary} rounded-xl p-4`}>
-              <p className={`text-sm ${classes.textSecondary}`}>Signed in as</p>
-              <p className={`font-medium ${classes.text}`}>{appStore.user.name || appStore.user.email}</p>
-              <p className={`text-xs ${classes.textMuted}`}>{appStore.user.email}</p>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">Hero showroom effects</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {unlockedShowroomEffects.map((effect) => (
+                  <Badge key={effect} tone="success">{effect}</Badge>
+                ))}
+              </div>
             </div>
-            <button
-              onClick={() => appStore.signOut()}
-              className="px-4 py-2 bg-red-500/20 text-red-400 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-colors"
-            >
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className={`text-sm ${classes.textSecondary}`}>
-              Demo login for class presentation. No real authentication.
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Account & Cloud</h2>
+            <Badge tone={syncStatus === 'error' ? 'danger' : syncStatus === 'synced' ? 'success' : 'default'}>
+              {syncStatus}
+            </Badge>
+          </CardHeader>
+          <CardBody className="space-y-3">
+            {authSession ? <UserMenu /> : <Button onClick={() => setAuthModalOpen(true)}>Sign In / Create Account</Button>}
+            <p className="text-xs text-[var(--color-text-secondary)]">
+              {authSession
+                ? `Cloud sync ${syncStatus === 'synced' ? 'active' : 'available'}${lastSyncedAt ? ` · last sync ${new Date(lastSyncedAt).toLocaleString()}` : ''}.`
+                : 'Not signed in. Your data stays local on this device.'}
             </p>
-            <button
-              onClick={() => appStore.signInLocal('demo@interestshield.app', 'Demo User')}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors"
-            >
-              Sign In as Demo User
-            </button>
-            <div className="flex gap-2">
-              {['Google', 'Microsoft', 'Apple'].map((provider) => (
-                <button
-                  key={provider}
-                  disabled
-                  className={`flex-1 px-3 py-2 rounded-xl ${classes.bgTertiary} ${classes.textMuted} text-xs cursor-not-allowed`}
-                >
-                  {provider} (requires keys)
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-      </ScrollReveal>
+            {syncError ? <p className="text-xs text-amber-300">{syncError}</p> : null}
+          </CardBody>
+        </Card>
 
-      <p className={`text-xs ${classes.textMuted} text-center pt-4`}>
-        InterestShield v2 • Educational tool • Not financial advice
-      </p>
-    </div>
+        <Card>
+          <CardHeader>
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Hero & Motion</h2>
+          </CardHeader>
+          <CardBody className="grid gap-3 md:grid-cols-3">
+            <label className="space-y-1.5">
+              <span className="text-xs text-[var(--color-text-secondary)]">Animation Mode</span>
+              <Select
+                value={preferencesStore.heroAnimationMode}
+                onChange={(event) => preferencesStore.setHeroAnimationMode(event.target.value as HeroAnimationMode)}
+              >
+                {animationModes.map((mode) => (
+                  <option key={mode} value={mode}>{mode}</option>
+                ))}
+              </Select>
+            </label>
+
+            <label className="space-y-1.5">
+              <span className="text-xs text-[var(--color-text-secondary)]">3D Quality</span>
+              <Select
+                value={preferencesStore.heroQuality}
+                onChange={(event) => preferencesStore.setHeroQuality(event.target.value as HeroQuality)}
+              >
+                {qualityOptions.map((quality) => (
+                  <option key={quality} value={quality}>{quality}</option>
+                ))}
+              </Select>
+            </label>
+
+            <label className="space-y-1.5">
+              <span className="text-xs text-[var(--color-text-secondary)]">Reduced Motion</span>
+              <Select
+                value={preferencesStore.reducedMotion ? 'on' : 'off'}
+                onChange={(event) => preferencesStore.setReducedMotion(event.target.value === 'on')}
+              >
+                <option value="off">Off</option>
+                <option value="on">On</option>
+              </Select>
+            </label>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Local Backup</h2>
+          </CardHeader>
+          <CardBody className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              <Button variant="secondary" onClick={handleExport}>Export JSON</Button>
+              <label className="inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-control)] border border-[color:var(--color-border-soft)] bg-[var(--surface-glass)] px-4 py-2.5 text-sm font-semibold text-[var(--color-text)]">
+                Import JSON
+                <input type="file" accept="application/json" className="hidden" onChange={handleImport} />
+              </label>
+            </div>
+            {importStatus ? <p className="text-xs text-[var(--color-text-secondary)]">{importStatus}</p> : null}
+          </CardBody>
+        </Card>
+
+        <p className="pb-2 text-center text-xs text-[var(--color-text-muted)]">Educational tool. Not financial advice.</p>
+      </div>
     </PageTransition>
   );
 }

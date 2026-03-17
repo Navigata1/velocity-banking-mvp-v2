@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { theme } = useThemeStore();
+  const { theme, accent } = useThemeStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,7 +14,11 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   const classes = themeClasses[mounted ? theme : 'original'];
 
   return (
-    <div className={`min-h-screen ${classes.bg} ${classes.text} transition-colors duration-300`}>
+    <div
+      className={`theme-root min-h-screen ${classes.bg} ${classes.text} transition-colors duration-200`}
+      data-theme={mounted ? theme : 'original'}
+      data-accent={mounted ? accent : 'emerald'}
+    >
       {children}
     </div>
   );

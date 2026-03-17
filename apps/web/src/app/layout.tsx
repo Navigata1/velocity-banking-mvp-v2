@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import ThemeProvider from "@/components/ThemeProvider";
 import IntroModal from "@/components/IntroModal";
 import PreAppPreview from "@/components/PreAppPreview";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { ToastProvider } from "@/components/ui/Toast";
+import AuthModal from "@/components/auth/AuthModal";
+import SyncBridge from "@/components/SyncBridge";
+import GamificationBridge from "@/components/GamificationBridge";
 
 export const metadata: Metadata = {
   title: "InterestShield - Financial Empowerment",
@@ -36,19 +29,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider>
-          <div className="flex flex-col md:flex-row min-h-screen">
-            <Navigation />
-            <main className="flex-1 pb-20 md:pb-0">
-              <IntroModal />
-              <PreAppPreview />
-              {children}
-            </main>
-          </div>
-        </ThemeProvider>
+      <body className="antialiased">
+        <ToastProvider>
+          <ThemeProvider>
+            <div className="flex flex-col md:flex-row min-h-screen">
+              <Navigation />
+              <main className="flex-1 pb-20 md:pb-0">
+                <SyncBridge />
+                <GamificationBridge />
+                <IntroModal />
+                <PreAppPreview />
+                <AuthModal />
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
+        </ToastProvider>
       </body>
     </html>
   );

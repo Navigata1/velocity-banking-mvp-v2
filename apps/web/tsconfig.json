@@ -19,7 +19,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@react-three/fiber": ["./src/shims/react-three-fiber.tsx"],
+      "@react-three/drei": ["./src/shims/react-three-drei.tsx"],
+      "three": ["./src/shims/three.ts"]
     }
   },
   "include": [
