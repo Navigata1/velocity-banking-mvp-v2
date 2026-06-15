@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "InterestShield",
+    "slug": "interest-shield",
+    "scheme": "interestshield",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "platforms": ["ios", "android", "web"],
+    "ios": {
+      "bundleIdentifier": "com.islanddevcrew.interestshield",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.islanddevcrew.interestshield",
+      "adaptiveIcon": {
+        "backgroundColor": "#0f172a"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

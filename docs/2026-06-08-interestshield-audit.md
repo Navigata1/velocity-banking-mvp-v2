@@ -1391,6 +1391,31 @@ Post-repair verification:
 - `npm run lint`: passed with 0 problems.
 - `npm run build`: passed with a successful production build.
 
+### Repair Pass 86: Expo Mobile Foundation And Shared Engine Contract
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added an initial Expo SDK 56 mobile app at `apps/mobile` with an Expo Router entry, native `ScrollView` layout, and Dashboard, Simulator, Learn, and Vault mode controls.
+- Added `packages/financial-engine` as the first shared engine boundary for native consumption. The mobile shell imports `@interestshield/financial-engine` instead of duplicating the dashboard cash-flow and interest formulas.
+- Added `scripts/mobile-port-contract-tests.cjs` to prove the mobile app declares the shared engine dependency, the shared engine matches the current web engine on cash-flow, amortization, ADB interest, and currency fixtures, and the native shell does not rely on static-export tab route hydration.
+- Replaced the first tab-route shell after browser smoke showed the static export changed URLs but kept Dashboard content mounted. The corrected shell uses in-app native mode switching so the exported web build and native shell render the same functional surface.
+- Ran Expo dependency alignment with `npx expo install --check`; after aligning versions and adding `react-native-worklets`, Expo Doctor passed all 21 checks.
+- Browser smoke served the exported Expo web build from `dist-web`, confirmed Dashboard, Simulator, Learn, and Vault modes render the expected panels, confirmed the footer copy remains visible, and found 0 captured console errors.
+- Native simulator smoke remains environment-limited on this Windows machine: `adb`, Android `emulator`, and `xcrun` were not available, so Android device/emulator and iOS simulator runs could not be executed locally in this pass.
+- `npm audit --audit-level=high` exited successfully. npm still reports moderate transitive Expo/uuid findings; the suggested `npm audit fix --force` would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npx expo export --platform web --output-dir dist-web --clear`: passed.
+- `apps/mobile` browser smoke at `http://127.0.0.1:8082/`: passed for Dashboard, Simulator, Learn, and Vault modes with 0 console errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1902,9 +1927,9 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 ### Phase 5: Mobile Port
 
-- Port shared engine to a package.
-- Build Expo app shell.
-- Reuse validated domain types and test fixtures.
+- Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke.
+- Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, and portfolio to native controls.
 - Add offline-first encrypted local storage.
 
