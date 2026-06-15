@@ -1580,6 +1580,35 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 93: Mobile Native Release Profiles
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage proving the Expo app has explicit Android/iOS preview build scripts, native release metadata, EAS build profiles, and committed icon assets.
+- Added `apps/mobile/eas.json` with development, preview, and production profiles. Preview builds target Android APKs and iOS simulator builds; production builds target Android app bundles with iOS `m-medium` resources and auto-increment enabled.
+- Added native app metadata to `apps/mobile/app.json`: app icon, runtime version policy, iOS build number, Android version code, Android adaptive icon foreground image, and the non-exempt-encryption flag.
+- Added `apps/mobile/assets/icon.png` and `apps/mobile/assets/adaptive-icon.png` from the existing 1024px project icon so native builds do not rely on parent-directory assets.
+- Added package scripts for `build:android:preview`, `build:ios:preview`, and `build:native:production` using `npx eas-cli@latest`.
+- Browser smoke used the committed `serve:web-export` script at `http://127.0.0.1:8092` and verified `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault` with 0 console warnings/errors.
+- Chrome smoke repeated the same direct-route set at `http://127.0.0.1:8092`, verified route-specific rendered labels, captured 0 console warnings/errors, and finalized the test tab.
+- Native Android/iOS simulator smoke was not run in this pass; the local Windows environment still needs Android SDK/emulator tooling and an iOS/macOS simulator path for true device smoke.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed after first failing for missing native build scripts, `eas.json`, native icon metadata, and icon asset paths.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo config --type public --json`: passed and showed the new icon, runtimeVersion, iOS, and Android metadata.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm run build:web`: passed; Expo printed the expected cache warning because the export script clears Metro cache.
+- `apps/mobile` exported route HTTP checks: `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault` all returned 200.
+- `apps/mobile` Browser smoke at `http://127.0.0.1:8092`: passed for all direct export routes with 0 console warnings/errors.
+- `apps/mobile` Chrome smoke at `http://127.0.0.1:8092`: passed for all direct export routes with 0 console warnings/errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2092,7 +2121,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.
