@@ -205,6 +205,12 @@ export function buildMobileDashboardSnapshot(
   const locDailyInterest = Math.max(0, input.loc.balance) * calculateDailyRate(Math.max(0, input.loc.apr));
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
   const safeChunk = Math.min(Math.max(0, input.chunkAmount), Math.max(0, input.activeDebt.balance), availableLoc);
+  const velocityProjection = simulateMobileVelocity(input);
+  const etaValue = velocityProjection.isPayoffPossible
+    ? `${velocityProjection.payoffMonths} mo`
+    : cashFlow <= 0
+      ? 'Stabilize first'
+      : 'Review inputs';
 
   let nextMove = 'Model the LOC limit';
   let warning: string | null = locNeedsSetup
@@ -243,10 +249,12 @@ export function buildMobileDashboardSnapshot(
         tone: dailyInterestBurn > 50 ? 'watch' : 'neutral',
       },
       {
-        label: 'LOC Room',
-        value: locNeedsSetup ? 'Missing limit' : `${formatCurrency(availableLoc)} open`,
-        detail: locNeedsSetup ? 'Setup needed before chunks are trusted.' : `${Math.round(locUtilization * 100)}% used.`,
-        tone: locNeedsSetup || locUtilization > 0.8 ? 'watch' : 'good',
+        label: 'Debt-Free ETA',
+        value: etaValue,
+        detail: velocityProjection.isPayoffPossible
+          ? 'Velocity payoff estimate from the shared simulator.'
+          : 'No debt-free date shown until inputs support a stable projection.',
+        tone: velocityProjection.isPayoffPossible ? 'good' : cashFlow <= 0 ? 'risk' : 'watch',
       },
       {
         label: 'Next Move',

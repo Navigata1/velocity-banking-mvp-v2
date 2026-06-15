@@ -173,6 +173,54 @@ test('shared financial engine matches current web engine on core fixtures', () =
   assert.equal(sharedEngine.formatCurrency(3500), webEngine.formatCurrency(3500));
 });
 
+test('shared mobile dashboard snapshot keeps the required four vitals aligned with web', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const stableSnapshot = sharedEngine.buildMobileDashboardSnapshot({
+    monthlyIncome: 8000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+  const unsafeSnapshot = sharedEngine.buildMobileDashboardSnapshot({
+    monthlyIncome: 4000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(
+    stableSnapshot.vitals.map((vital) => vital.label).join('|'),
+    'Cash Flow|Interest Burn|Debt-Free ETA|Next Move'
+  );
+  assert.equal(stableSnapshot.vitals.length, 4);
+  assert.equal(stableSnapshot.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, '10 mo');
+  assert.equal(unsafeSnapshot.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Stabilize first');
+  assert.equal(unsafeSnapshot.nextMove, 'Restore positive cash flow');
+  assert.ok(!stableSnapshot.vitals.some((vital) => vital.label === 'LOC Room'));
+});
+
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
   const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
