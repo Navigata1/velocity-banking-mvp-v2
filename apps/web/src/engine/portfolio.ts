@@ -28,7 +28,11 @@ export type DebtKind = 'amortized' | 'revolving' | 'simple';
 export type PaymentSource = 'checking' | 'loc' | 'either';
 export type PayoffStrategy = 'velocity' | 'snowball' | 'avalanche';
 export type FocusMode = 'single' | 'split';
-export type PortfolioFailureReason = 'negative-cashflow' | 'cashflow-below-minimums' | 'payment-below-interest';
+export type PortfolioFailureReason =
+  | 'negative-cashflow'
+  | 'cashflow-below-minimums'
+  | 'payment-below-interest'
+  | 'loc-overlimit';
 
 export type MinPaymentRule =
   | { type: 'fixed'; amount: number }
@@ -310,12 +314,23 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   }));
   const warnings: string[] = [];
   const cashFlow = monthlyIncome - monthlyExpenses;
+  const velocityLoc = settings.strategy === 'velocity' && settings.focusMode === 'single'
+    ? inputs.loc
+    : undefined;
+  const locBlocksVelocity =
+    !!velocityLoc &&
+    velocityLoc.limit > 0 &&
+    velocityLoc.balance >= velocityLoc.limit;
+  const locBalanceOverLimit =
+    !!velocityLoc &&
+    velocityLoc.limit > 0 &&
+    velocityLoc.balance > velocityLoc.limit;
   const hasUsableVelocityLoc =
     settings.strategy === 'velocity' &&
     settings.focusMode === 'single' &&
-    !!inputs.loc &&
-    inputs.loc.limit > 0 &&
-    inputs.loc.balance < inputs.loc.limit &&
+    !!velocityLoc &&
+    velocityLoc.limit > 0 &&
+    velocityLoc.balance < velocityLoc.limit &&
     cashFlow > 0;
   const assumptions = [
     'Portfolio estimates monthly interest from each debt balance and APR; lender fees, compounding rules, and statement timing can change real totals.',
@@ -355,6 +370,13 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       `${underInterestDebt.name} payment doesn't cover monthly interest (${fmt(monthlyInterest)}). Raise the payment or reduce principal before trusting a payoff estimate.`
     );
   }
+  if (locBlocksVelocity) {
+    warnings.push(
+      locBalanceOverLimit
+        ? 'LOC balance is above the available limit. Bring it back under the limit before modeling a Portfolio Velocity plan.'
+        : 'LOC balance is at the available limit. Pay it down before modeling a Portfolio Velocity plan.'
+    );
+  }
 
   const balances = new Map<string, number>();
   const totalInterestPaid = new Map<string, number>();
@@ -369,7 +391,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   const monthResults: MonthResult[] = [];
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
 
-  if (cashFlow <= 0 || cashFlow < totalMinimums || underInterestDebt) {
+  if (cashFlow <= 0 || cashFlow < totalMinimums || underInterestDebt || locBlocksVelocity) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -378,7 +400,9 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         ? 'negative-cashflow'
         : cashFlow < totalMinimums
           ? 'cashflow-below-minimums'
-          : 'payment-below-interest',
+          : underInterestDebt
+            ? 'payment-below-interest'
+            : 'loc-overlimit',
       payoffOrder,
       monthResults,
       debtRationales,

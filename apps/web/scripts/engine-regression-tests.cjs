@@ -1215,6 +1215,53 @@ test('portfolio velocity uses shared Money Loop LOC math when LOC inputs are pre
   );
 });
 
+test('portfolio velocity refuses over-limit LOC projections instead of ignoring the line', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    extraMonthlyPayment: 0,
+    loc: {
+      limit: 10000,
+      apr: 0.085,
+      balance: 10500,
+    },
+    chunkAmount: 1000,
+    debts: [
+      {
+        id: 'auto',
+        name: 'Auto Loan',
+        category: 'auto',
+        kind: 'amortized',
+        balance: 14000,
+        apr: 0.08,
+        minPaymentRule: { type: 'fixed', amount: 390 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 24,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-overlimit');
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.totalInterest, 0);
+  assert.equal(result.locInterestPaid, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.ok(
+    result.warnings.some((warning) => warning.includes('LOC balance is above the available limit')),
+    result.warnings.join(' | ')
+  );
+  assert.ok(
+    !result.warnings.some((warning) => warning.includes('LOC utilization: use the LOC lane only while utilization stays under 80%')),
+    result.warnings.join(' | ')
+  );
+});
+
 test('portfolio velocity treats target debt payments as cash outflows for LOC recovery', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 1000,
