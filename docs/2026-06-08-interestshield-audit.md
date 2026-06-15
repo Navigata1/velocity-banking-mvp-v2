@@ -1890,6 +1890,25 @@ Post-repair verification:
 - Browser/Chrome rendered smoke was not repeated for this pass because the change only adds a repeatable HTTP export fallback smoke command; Repair Pass 106 remains the latest rendered `/learn` behavior smoke.
 - Native Android/iOS simulator smoke was not run in this pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
 
+### Repair Pass 108: Mobile Native Smoke Preflight
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green mobile contract coverage requiring a repeatable `preflight:native` command for Android/iOS smoke readiness.
+- Added `apps/mobile/scripts/native-preflight.cjs`, which validates native app ids, Expo platform config, EAS preview profiles, and local Android/iOS simulator tool availability.
+- Added the `apps/mobile` package script `npm run preflight:native` so native smoke blockers are explicit before anyone claims Android or iOS simulator coverage.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first because `preflight:native` and `scripts/native-preflight.cjs` were missing, then passed after adding the command and script.
+- `apps/mobile` `npm run check`: passed with `tsc --noEmit`.
+- `apps/mobile` `npm run build:web`: passed and exported `dist-web`.
+- `apps/mobile` `npm run smoke:web-export` with `PORT=8113`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/web` `npm test`: passed with 103 regression tests.
+- `git diff --check`: passed; only existing Windows line-ending warnings were reported.
+- `apps/mobile` `npm run preflight:native`: exited non-zero by design on this Windows host after passing app/config checks and reporting four native-smoke blockers: missing `adb`, missing Android `emulator`, non-macOS iOS simulator host, and missing `xcrun`.
+- Native Android/iOS simulator smoke is still not complete; this pass makes the blocker repeatable and auditable instead of leaving it as ad hoc notes.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2403,7 +2422,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots; expanded in Repair Pass 105 with a shared-engine mobile Vault outcome path; expanded in Repair Pass 106 with shared-engine mobile Learn lessons and unsafe-input learning-mode guardrails; expanded in Repair Pass 107 with a repeatable Expo web export route-smoke command.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots; expanded in Repair Pass 105 with a shared-engine mobile Vault outcome path; expanded in Repair Pass 106 with shared-engine mobile Learn lessons and unsafe-input learning-mode guardrails; expanded in Repair Pass 107 with a repeatable Expo web export route-smoke command; expanded in Repair Pass 108 with a repeatable native smoke preflight that records local Android/iOS simulator blockers.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states; expanded in Repair Pass 102 with native LOC balance and LOC APR controls for mobile guardrail testing; expanded in Repair Pass 103 with native active-debt balance, APR, payment, and term controls; expanded in Repair Pass 104 with a native active-debt name control.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.

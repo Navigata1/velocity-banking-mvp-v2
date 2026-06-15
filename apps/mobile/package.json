@@ -11,6 +11,7 @@
     "build:web": "expo export --platform web --output-dir dist-web --clear",
     "serve:web-export": "node scripts/serve-web-export.cjs",
     "smoke:web-export": "node scripts/smoke-web-export.cjs",
+    "preflight:native": "node scripts/native-preflight.cjs",
     "build:android:preview": "npx eas-cli@latest build --platform android --profile preview",
     "build:ios:preview": "npx eas-cli@latest build --platform ios --profile preview",
     "build:native:production": "npx eas-cli@latest build --profile production",

@@ -93,6 +93,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts['build:web'], 'expo export --platform web --output-dir dist-web --clear');
   assert.equal(mobilePackage.scripts['serve:web-export'], 'node scripts/serve-web-export.cjs');
   assert.equal(mobilePackage.scripts['smoke:web-export'], 'node scripts/smoke-web-export.cjs');
+  assert.equal(mobilePackage.scripts['preflight:native'], 'node scripts/native-preflight.cjs');
   assert.equal(
     mobilePackage.scripts['build:android:preview'],
     'npx eas-cli@latest build --platform android --profile preview'
@@ -112,6 +113,8 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');
+  const nativePreflightPath = path.join(repoRoot, 'apps/mobile/scripts/native-preflight.cjs');
+  const nativePreflight = fs.readFileSync(nativePreflightPath, 'utf8');
 
   assert.equal(appConfig.expo.icon, './assets/icon.png');
   assert.deepEqual(appConfig.expo.runtimeVersion, { policy: 'appVersion' });
@@ -140,6 +143,17 @@ test('mobile native release config is explicit for Android and iOS builds', () =
   assert.deepEqual(easConfig.build.production.android, { buildType: 'app-bundle' });
   assert.equal(easConfig.build.production.autoIncrement, true);
   assert.equal(easConfig.build.production.ios.resourceClass, 'm-medium');
+
+  assert.ok(fs.existsSync(nativePreflightPath), 'expected a repeatable native smoke preflight script');
+  assert.ok(nativePreflight.includes('adb'), 'expected Android device bridge check');
+  assert.ok(nativePreflight.includes('emulator'), 'expected Android emulator check');
+  assert.ok(nativePreflight.includes('xcrun'), 'expected iOS simulator tool check');
+  assert.ok(nativePreflight.includes('process.platform'), 'expected host platform awareness');
+  assert.ok(nativePreflight.includes('com.islanddevcrew.interestshield'), 'expected app id validation');
+  assert.ok(nativePreflight.includes('build:android:preview'), 'expected Android build script validation');
+  assert.ok(nativePreflight.includes('build:ios:preview'), 'expected iOS build script validation');
+  assert.ok(nativePreflight.includes('Native smoke preflight'), 'expected clear CLI output heading');
+  assert.ok(nativePreflight.includes('process.exitCode = 1'), 'expected preflight to fail when smoke tools are missing');
 });
 
 test('mobile web export is configured for Vercel SPA hosting and repeatable smoke tests', () => {
