@@ -90,11 +90,29 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts.ios, 'expo start --ios');
   assert.equal(mobilePackage.scripts.android, 'expo start --android');
   assert.equal(mobilePackage.scripts.web, 'expo start --web');
+  assert.equal(mobilePackage.scripts['build:web'], 'expo export --platform web --output-dir dist-web --clear');
+  assert.equal(mobilePackage.scripts['serve:web-export'], 'node scripts/serve-web-export.cjs');
   assert.ok(mobilePackage.scripts.check, 'expected a mobile type-check script');
   assert.ok(mobilePackage.dependencies.expo, 'expected Expo dependency');
   assert.ok(mobilePackage.dependencies['expo-router'], 'expected Expo Router dependency');
   assert.ok(mobilePackage.dependencies['expo-secure-store'], 'expected encrypted native key-value storage dependency');
   assert.equal(mobilePackage.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
+});
+
+test('mobile web export is configured for Vercel SPA hosting and repeatable smoke tests', () => {
+  const vercelConfig = readJson('apps/mobile/vercel.json');
+  const serveScript = fs.readFileSync(path.join(repoRoot, 'apps/mobile/scripts/serve-web-export.cjs'), 'utf8');
+
+  assert.equal(vercelConfig.$schema, 'https://openapi.vercel.sh/vercel.json');
+  assert.equal(vercelConfig.buildCommand, 'npm run build:web');
+  assert.equal(vercelConfig.outputDirectory, 'dist-web');
+  assert.deepEqual(vercelConfig.rewrites, [{ source: '/(.*)', destination: '/' }]);
+
+  assert.ok(serveScript.includes('dist-web'), 'expected server to serve the Expo export directory');
+  assert.ok(serveScript.includes('index.html'), 'expected server to fall back to index.html for direct routes');
+  assert.ok(serveScript.includes('process.env.PORT'), 'expected configurable local smoke-test port');
+  assert.ok(serveScript.includes('path.relative(root, requestedPath)'), 'expected path traversal protection');
+  assert.ok(serveScript.includes('path.isAbsolute(relativePath)'), 'expected absolute escape protection');
 });
 
 test('shared financial engine matches current web engine on core fixtures', () => {

@@ -1551,6 +1551,35 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 92: Mobile Vercel Export Contract
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage proving the mobile app has a repeatable Expo web export command, a local export server command, and Vercel SPA hosting configuration.
+- Added `apps/mobile/vercel.json` with Vercel schema metadata, `npm run build:web` as the build command, `dist-web` as the output directory, and a rewrite from all paths to `/` so direct Expo Router paths can hydrate from the exported app.
+- Added `apps/mobile/scripts/serve-web-export.cjs`, a small local static server for smoke tests that serves `dist-web`, falls back to `index.html` for direct routes, supports `PORT`, and guards against path traversal.
+- Added `apps/mobile` package scripts: `build:web` and `serve:web-export`.
+- Browser smoke used the committed `serve:web-export` script at `http://127.0.0.1:8088`, verified `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`, clicked Cockpit to Learn, verified URL/content updates, and captured 0 console warnings/errors.
+- Chrome smoke repeated the same direct-route set, clicked Vault to Dashboard, verified URL/content updates, and captured 0 console warnings/errors. Chrome screenshot capture timed out after the DOM/URL/console checks, so screenshot evidence for this pass comes from the in-app Browser run.
+- Vercel CLI remains unavailable as an installed local command. `npx @vercel/config validate` did not validate this static config in this environment because the validator attempted to load a missing `router.config.ts`; the committed config shape is still covered by contract tests and follows Vercel's documented `buildCommand`, `outputDirectory`, and `rewrites` properties.
+- Native Android/iOS simulator smoke remains environment-blocked on this Windows machine because `adb`, Android `emulator`, and `xcrun` are unavailable.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed after first failing for missing `build:web`, `serve:web-export`, and Vercel config.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm audit --audit-level=high`: passed with the moderate transitive Expo/uuid advisory noted above.
+- `apps/mobile` `npm run serve:web-export`: served `/` and `/simulator` with HTTP 200 before browser smoke.
+- `apps/mobile` Browser smoke at `http://127.0.0.1:8088`: passed for direct export routes and route-changing mode buttons with 0 console warnings/errors.
+- `apps/mobile` Chrome smoke at `http://127.0.0.1:8088`: passed for direct export routes and route-changing mode buttons with 0 console warnings/errors; screenshot capture timed out after checks.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1569,7 +1598,7 @@ Post-repair verification:
 ### Vercel
 
 - The Vercel connector returned `401: Reauthentication required`.
-- The Vercel CLI is not installed in the workspace.
+- The Vercel CLI is not installed in the workspace. Mobile Vercel file-based config was added in Repair Pass 92, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
 - Deployment metadata, build logs, runtime logs, and project settings were not available during this pass.
 
 ## Highest Priority Findings
@@ -2063,7 +2092,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.

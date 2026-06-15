@@ -8,6 +8,8 @@
     "ios": "expo start --ios",
     "android": "expo start --android",
     "web": "expo start --web",
+    "build:web": "expo export --platform web --output-dir dist-web --clear",
+    "serve:web-export": "node scripts/serve-web-export.cjs",
     "check": "tsc --noEmit"
   },
   "dependencies": {
