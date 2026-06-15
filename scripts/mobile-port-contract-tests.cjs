@@ -275,6 +275,9 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
   assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
+  assert.ok(shellSource.includes('accessibilityLabel="Line of credit balance"'));
+  assert.ok(shellSource.includes('accessibilityLabel="Line of credit APR"'));
+  assert.ok(shellSource.includes('Math.round(value * 10000) / 100'), 'expected LOC APR input to preserve two decimal display precision');
   assert.ok(shellSource.includes('buildMobileCockpitSnapshot'));
   assert.ok(shellSource.includes('CockpitPanel'));
   assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));

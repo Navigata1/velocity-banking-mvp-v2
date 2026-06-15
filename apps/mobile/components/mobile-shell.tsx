@@ -89,6 +89,11 @@ function parseMoneyInput(value: string): number | null {
   return Number.isFinite(parsed) ? Math.max(0, parsed) : null;
 }
 
+function parsePercentageInput(value: string): number | null {
+  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
+  return Number.isFinite(parsed) ? Math.max(0, parsed / 100) : null;
+}
+
 function MoneyInput({
   accessibilityLabel,
   label,
@@ -133,6 +138,50 @@ function MoneyInput({
   );
 }
 
+function PercentageInput({
+  accessibilityLabel,
+  label,
+  value,
+  onChange,
+}: {
+  accessibilityLabel: string;
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <View style={{ gap: 6, minWidth: 150 }}>
+      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+        {label}
+      </Text>
+      <TextInput
+        accessibilityLabel={accessibilityLabel}
+        inputMode="decimal"
+        keyboardType="decimal-pad"
+        onChangeText={(nextValue) => {
+          const parsed = parsePercentageInput(nextValue);
+          if (parsed !== null) onChange(parsed);
+        }}
+        selectTextOnFocus
+        style={{
+          backgroundColor: '#020617',
+          borderColor: '#334155',
+          borderCurve: 'continuous',
+          borderRadius: 12,
+          borderWidth: 1,
+          color: '#f8fafc',
+          fontSize: 18,
+          fontVariant: ['tabular-nums'],
+          fontWeight: '800',
+          paddingHorizontal: 12,
+          paddingVertical: 10,
+        }}
+        value={String(Math.round(value * 10000) / 100)}
+      />
+    </View>
+  );
+}
+
 function AssumptionControls({
   input,
   onChange,
@@ -166,6 +215,18 @@ function AssumptionControls({
           label="LOC Limit"
           value={input.loc.limit}
           onChange={(limit) => onChange({ ...input, loc: { ...input.loc, limit } })}
+        />
+        <MoneyInput
+          accessibilityLabel="Line of credit balance"
+          label="LOC Balance"
+          value={input.loc.balance}
+          onChange={(balance) => onChange({ ...input, loc: { ...input.loc, balance } })}
+        />
+        <PercentageInput
+          accessibilityLabel="Line of credit APR"
+          label="LOC APR"
+          value={input.loc.apr}
+          onChange={(apr) => onChange({ ...input, loc: { ...input.loc, apr } })}
         />
       </View>
     </FinancialCard>
