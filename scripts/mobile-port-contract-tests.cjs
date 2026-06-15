@@ -129,17 +129,21 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
     'expected mobile shell to render the shared dashboard snapshot'
   );
   assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
-  assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'portfolio' | 'learn' | 'vault'"));
+  assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault'"));
   assert.ok(shellSource.includes("setMode('simulator')"));
+  assert.ok(shellSource.includes("setMode('cockpit')"));
   assert.ok(shellSource.includes("setMode('portfolio')"));
   assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
   assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
+  assert.ok(shellSource.includes('buildMobileCockpitSnapshot'));
+  assert.ok(shellSource.includes('CockpitPanel'));
   assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));
   assert.ok(shellSource.includes('SimulatorStrategyPanel'));
   assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
   assert.ok(shellSource.includes('StorageStatusCard'));
+  assert.equal(typeof sharedEngine.buildMobileCockpitSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
   assert.ok(
@@ -303,6 +307,72 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.equal(decoded.chunkAmount, 987);
   assert.equal(storageModule.decodeMobileAssumptions('{bad json'), null);
   assert.equal(storageModule.decodeMobileAssumptions(JSON.stringify({ version: 1, input: { monthlyIncome: -1 } })), null);
+});
+
+test('shared mobile cockpit snapshot exposes the core demo instruments and guardrails', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobileCockpitSnapshot({
+    monthlyIncome: 8000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(snapshot.flightStatusLabel, 'Ready to model');
+  assert.equal(snapshot.warning, null);
+  assert.equal(snapshot.instruments.length, 4);
+  assert.equal(
+    snapshot.instruments.map((instrument) => instrument.label).join('|'),
+    'Airspeed|Fuel Burn|Heading|ETA'
+  );
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'Airspeed').value, '$3,500/mo');
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'Fuel Burn').value, '$4/day');
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'Heading').value, 'Auto Loan');
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'ETA').value, '10 mo');
+  assert.equal(
+    snapshot.flightChecks.map((check) => check.label).join('|'),
+    'Positive cash flow|LOC capacity loaded|Utilization under 80%|Payoff claims labeled'
+  );
+  assert.equal(snapshot.flightChecks.every((check) => check.passed), true);
+});
+
+test('shared mobile cockpit snapshot stays in review mode when cash flow or LOC setup is unsafe', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobileCockpitSnapshot({
+    monthlyIncome: 4000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 0,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(snapshot.flightStatusLabel, 'Review inputs');
+  assert.ok(snapshot.warning.includes('Income needs to exceed expenses'));
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'Airspeed').status, 'danger');
+  assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'ETA').value, 'Review inputs');
+  assert.equal(snapshot.flightChecks.find((check) => check.label === 'Positive cash flow').passed, false);
+  assert.equal(snapshot.flightChecks.find((check) => check.label === 'LOC capacity loaded').passed, false);
 });
 
 if (process.exitCode) {

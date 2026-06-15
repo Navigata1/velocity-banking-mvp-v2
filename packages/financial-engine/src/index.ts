@@ -98,6 +98,28 @@ export interface MobileSimulatorSnapshot {
   };
 }
 
+export type MobileCockpitStatus = 'normal' | 'warning' | 'danger';
+
+export interface MobileCockpitInstrument {
+  label: 'Airspeed' | 'Fuel Burn' | 'Heading' | 'ETA';
+  value: string;
+  detail: string;
+  status: MobileCockpitStatus;
+}
+
+export interface MobileCockpitCheck {
+  label: string;
+  passed: boolean;
+  detail: string;
+}
+
+export interface MobileCockpitSnapshot {
+  flightStatusLabel: 'Ready to model' | 'Review inputs';
+  warning: string | null;
+  instruments: MobileCockpitInstrument[];
+  flightChecks: MobileCockpitCheck[];
+}
+
 interface MobilePayoffProjection {
   payoffMonths: number;
   totalInterest: number;
@@ -587,5 +609,77 @@ export function buildMobileSimulatorSnapshot(
       interestSavedLabel: canCompareVelocity ? `Saves ${formatCurrency(interestSaved)}` : 'Not projected',
       monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
     },
+  };
+}
+
+export function buildMobileCockpitSnapshot(
+  input: MobileDashboardInput = defaultMobileDashboardInput
+): MobileCockpitSnapshot {
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
+  const warning = simulator.guardrail ?? dashboard.warning;
+  const etaLabel = simulator.velocity.months > 0 ? `${simulator.velocity.months} mo` : 'Review inputs';
+
+  return {
+    flightStatusLabel: warning ? 'Review inputs' : 'Ready to model',
+    warning,
+    instruments: [
+      {
+        label: 'Airspeed',
+        value: `${formatCurrency(dashboard.cashFlow)}/mo`,
+        detail: 'Monthly cash flow powers LOC recovery.',
+        status: dashboard.cashFlow > 500 ? 'normal' : dashboard.cashFlow > 0 ? 'warning' : 'danger',
+      },
+      {
+        label: 'Fuel Burn',
+        value: `${formatCurrency(dashboard.dailyInterestBurn)}/day`,
+        detail: 'Daily interest estimate across active debt and LOC.',
+        status: dashboard.dailyInterestBurn > 0 ? 'warning' : 'normal',
+      },
+      {
+        label: 'Heading',
+        value: input.activeDebtName,
+        detail: 'Current modeled debt focus.',
+        status: 'normal',
+      },
+      {
+        label: 'ETA',
+        value: etaLabel,
+        detail: simulator.velocity.months > 0
+          ? 'Velocity payoff estimate from the shared simulator.'
+          : 'Suppressed until inputs support a stable projection.',
+        status: simulator.velocity.months > 0 ? 'normal' : 'warning',
+      },
+    ],
+    flightChecks: [
+      {
+        label: 'Positive cash flow',
+        passed: dashboard.cashFlow > 0,
+        detail: dashboard.cashFlow > 0
+          ? 'Income exceeds expenses.'
+          : 'Income needs to exceed expenses first.',
+      },
+      {
+        label: 'LOC capacity loaded',
+        passed: !dashboard.locNeedsSetup,
+        detail: dashboard.locNeedsSetup
+          ? 'Add a LOC limit before trusting chunk movement.'
+          : `${formatCurrency(dashboard.availableLoc)} available capacity.`,
+      },
+      {
+        label: 'Utilization under 80%',
+        passed: !dashboard.locNeedsSetup && dashboard.locUtilization <= 0.8,
+        detail: dashboard.locNeedsSetup
+          ? 'Utilization needs a LOC limit.'
+          : `${Math.round(dashboard.locUtilization * 100)}% current utilization.`,
+      },
+      {
+        label: 'Payoff claims labeled',
+        passed: true,
+        detail: warning
+          ? 'Unstable projections stay in review mode.'
+          : 'Projection copy remains labeled as educational.',
+      },
+    ],
   };
 }

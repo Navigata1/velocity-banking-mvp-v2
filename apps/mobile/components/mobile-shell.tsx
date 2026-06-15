@@ -1,7 +1,9 @@
 import {
+  buildMobileCockpitSnapshot,
   buildMobileDashboardSnapshot,
   buildMobilePortfolioSnapshot,
   buildMobileSimulatorSnapshot,
+  type MobileCockpitSnapshot,
   type MobileDashboardInput,
   type MobileDashboardSnapshot,
   type MobilePortfolioSnapshot,
@@ -15,11 +17,12 @@ import {
   type MobileAssumptionStorageStatus,
 } from '@/hooks/use-persisted-mobile-assumptions';
 
-type MobileMode = 'dashboard' | 'simulator' | 'portfolio' | 'learn' | 'vault';
+type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault';
 
 const modes: Array<{ id: MobileMode; label: string }> = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'simulator', label: 'Simulator' },
+  { id: 'cockpit', label: 'Cockpit' },
   { id: 'portfolio', label: 'Portfolio' },
   { id: 'learn', label: 'Learn' },
   { id: 'vault', label: 'Vault' },
@@ -286,6 +289,65 @@ function SimulatorPanel({
   );
 }
 
+function CockpitPanel({ cockpit }: { cockpit: MobileCockpitSnapshot }) {
+  return (
+    <View style={{ gap: 12 }}>
+      <FinancialCard
+        title="Flight Status"
+        value={cockpit.flightStatusLabel}
+        detail={cockpit.warning ?? 'Core Money Loop instruments are ready for an educational pass.'}
+      />
+      <FinancialCard title="Instruments">
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+          {cockpit.instruments.map((instrument) => (
+            <View
+              key={instrument.label}
+              style={{
+                borderColor:
+                  instrument.status === 'danger'
+                    ? '#fb7185'
+                    : instrument.status === 'warning'
+                      ? '#f59e0b'
+                      : '#34d399',
+                borderCurve: 'continuous',
+                borderRadius: 12,
+                borderWidth: 1,
+                gap: 4,
+                minWidth: 150,
+                padding: 12,
+              }}
+            >
+              <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+                {instrument.label}
+              </Text>
+              <Text selectable style={{ color: '#f8fafc', fontSize: 20, fontVariant: ['tabular-nums'], fontWeight: '900' }}>
+                {instrument.value}
+              </Text>
+              <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+                {instrument.detail}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </FinancialCard>
+      <FinancialCard title="Flight Checks">
+        <View style={{ gap: 10 }}>
+          {cockpit.flightChecks.map((check) => (
+            <View key={check.label} style={{ gap: 2 }}>
+              <Text selectable style={{ color: check.passed ? '#bbf7d0' : '#fecdd3', fontSize: 15, fontWeight: '800' }}>
+                {check.passed ? 'Pass' : 'Review'}: {check.label}
+              </Text>
+              <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+                {check.detail}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </FinancialCard>
+    </View>
+  );
+}
+
 function PortfolioPanel({ portfolio }: { portfolio: MobilePortfolioSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
@@ -334,6 +396,7 @@ export function MobileShell() {
   const [mode, setMode] = useState<MobileMode>('dashboard');
   const { input, setInput, storageStatus } = usePersistedMobileAssumptions();
   const snapshot = buildMobileDashboardSnapshot(input);
+  const cockpit = buildMobileCockpitSnapshot(input);
   const portfolio = buildMobilePortfolioSnapshot(input);
   const simulator = buildMobileSimulatorSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
@@ -359,6 +422,7 @@ export function MobileShell() {
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
         <ModeButton active={mode === 'dashboard'} label="Dashboard" onPress={() => setMode('dashboard')} />
         <ModeButton active={mode === 'simulator'} label="Simulator" onPress={() => setMode('simulator')} />
+        <ModeButton active={mode === 'cockpit'} label="Cockpit" onPress={() => setMode('cockpit')} />
         <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => setMode('portfolio')} />
         <ModeButton active={mode === 'learn'} label="Learn" onPress={() => setMode('learn')} />
         <ModeButton active={mode === 'vault'} label="Vault" onPress={() => setMode('vault')} />
@@ -369,6 +433,7 @@ export function MobileShell() {
 
       {mode === 'dashboard' ? <DashboardPanel snapshot={snapshot} /> : null}
       {mode === 'simulator' ? <SimulatorPanel snapshot={snapshot} simulator={simulator} /> : null}
+      {mode === 'cockpit' ? <CockpitPanel cockpit={cockpit} /> : null}
       {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
       {mode === 'learn' ? <LearnPanel /> : null}
       {mode === 'vault' ? <VaultPanel snapshot={snapshot} /> : null}
