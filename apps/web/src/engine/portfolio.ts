@@ -32,6 +32,7 @@ export type PortfolioFailureReason =
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
   | 'payment-below-interest'
+  | 'loc-setup'
   | 'loc-overlimit';
 
 export type MinPaymentRule =
@@ -317,6 +318,10 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   const velocityLoc = settings.strategy === 'velocity' && settings.focusMode === 'single'
     ? inputs.loc
     : undefined;
+  const locNeedsSetup =
+    !!velocityLoc &&
+    velocityLoc.limit <= 0 &&
+    velocityLoc.balance > 0;
   const locBlocksVelocity =
     !!velocityLoc &&
     velocityLoc.limit > 0 &&
@@ -377,6 +382,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         : 'LOC balance is at the available limit. Pay it down before modeling a Portfolio Velocity plan.'
     );
   }
+  if (locNeedsSetup) {
+    warnings.push(
+      'LOC balance is present, but the limit is missing. Enter a limit before trusting Portfolio Velocity projections.'
+    );
+  }
 
   const balances = new Map<string, number>();
   const totalInterestPaid = new Map<string, number>();
@@ -391,7 +401,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   const monthResults: MonthResult[] = [];
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
 
-  if (cashFlow <= 0 || cashFlow < totalMinimums || underInterestDebt || locBlocksVelocity) {
+  if (cashFlow <= 0 || cashFlow < totalMinimums || underInterestDebt || locNeedsSetup || locBlocksVelocity) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -402,7 +412,9 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           ? 'cashflow-below-minimums'
           : underInterestDebt
             ? 'payment-below-interest'
-            : 'loc-overlimit',
+            : locNeedsSetup
+              ? 'loc-setup'
+              : 'loc-overlimit',
       payoffOrder,
       monthResults,
       debtRationales,

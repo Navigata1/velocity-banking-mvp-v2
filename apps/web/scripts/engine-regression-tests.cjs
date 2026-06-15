@@ -1262,6 +1262,53 @@ test('portfolio velocity refuses over-limit LOC projections instead of ignoring 
   );
 });
 
+test('portfolio velocity treats an existing LOC balance without a limit as setup needed', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    extraMonthlyPayment: 0,
+    loc: {
+      limit: 0,
+      apr: 0.085,
+      balance: 3200,
+    },
+    chunkAmount: 1000,
+    debts: [
+      {
+        id: 'auto',
+        name: 'Auto Loan',
+        category: 'auto',
+        kind: 'amortized',
+        balance: 14000,
+        apr: 0.08,
+        minPaymentRule: { type: 'fixed', amount: 390 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 24,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-setup');
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.totalInterest, 0);
+  assert.equal(result.locInterestPaid, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.ok(
+    result.warnings.some((warning) => warning.includes('LOC balance is present, but the limit is missing')),
+    result.warnings.join(' | ')
+  );
+  assert.ok(
+    result.warnings.every((warning) => !warning.includes('Infinity') && !warning.includes('NaN')),
+    result.warnings.join(' | ')
+  );
+});
+
 test('portfolio velocity treats target debt payments as cash outflows for LOC recovery', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 1000,
