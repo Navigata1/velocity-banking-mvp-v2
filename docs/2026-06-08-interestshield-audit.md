@@ -1909,6 +1909,22 @@ Post-repair verification:
 - `apps/mobile` `npm run preflight:native`: exited non-zero by design on this Windows host after passing app/config checks and reporting four native-smoke blockers: missing `adb`, missing Android `emulator`, non-macOS iOS simulator host, and missing `xcrun`.
 - Native Android/iOS simulator smoke is still not complete; this pass makes the blocker repeatable and auditable instead of leaving it as ad hoc notes.
 
+### Repair Pass 109: Web Built Route Smoke Command
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring a repeatable `smoke:routes` command for the built Next app.
+- Added `apps/web/scripts/smoke-routes.cjs`, which starts the built `next start` server, checks Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault over HTTP, verifies `text/html` responses, verifies InterestShield metadata, verifies Next static assets, and cleans up the server process tree on Windows.
+- Added the `apps/web` package script `npm run smoke:routes` so future web route checks can run from one command after `npm run build`.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first because `smoke:routes` and `scripts/smoke-routes.cjs` were missing, failed again after real smoke exposed a Windows `npm.cmd` spawn issue, then passed after adding the Windows-safe `cmd.exe` wrapper and `taskkill` cleanup contract.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `npx vercel whoami`: timed out waiting for authentication, so deployment metadata and Vercel project logs are still not available from this environment.
+- Browser/Chrome rendered smoke was not repeated for this pass because the change adds repeatable built-server HTTP route smoke; hydrated interaction coverage remains the Browser/Chrome smoke from earlier route passes.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1927,7 +1943,7 @@ Post-repair verification:
 ### Vercel
 
 - The Vercel connector returned `401: Reauthentication required`.
-- The Vercel CLI is not installed in the workspace. Mobile Vercel file-based config was added in Repair Pass 92, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
+- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication. Mobile Vercel file-based config was added in Repair Pass 92, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
 - Deployment metadata, build logs, runtime logs, and project settings were not available during this pass.
 
 ## Highest Priority Findings
@@ -2356,7 +2372,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 - First-run desktop intro.
 - First-run mobile intro.
-- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42.
+- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
 - Domain switch. Status: covered in Repair Pass 42 for Dashboard Auto/House switching in Browser and Chrome.
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.

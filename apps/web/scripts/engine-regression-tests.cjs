@@ -3040,6 +3040,31 @@ test('app startup defaults keep the dashboard ungated', () => {
   assert.equal(state.previewDismissed, true);
 });
 
+test('web app exposes a repeatable route smoke command', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const smokeScriptPath = path.resolve(__dirname, 'smoke-routes.cjs');
+  const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+
+  assert.equal(packageJson.scripts['smoke:routes'], 'node scripts/smoke-routes.cjs');
+  assert.ok(fs.existsSync(smokeScriptPath), 'expected a repeatable web route smoke script');
+  assert.ok(smokeScript.includes("['/', 'Dashboard'"), 'expected smoke script to cover the dashboard route');
+  assert.ok(smokeScript.includes("['/simulator', 'Simulator'"), 'expected smoke script to cover the simulator route');
+  assert.ok(smokeScript.includes("['/cockpit', 'Cockpit'"), 'expected smoke script to cover the cockpit route');
+  assert.ok(smokeScript.includes("['/portfolio', 'Portfolio'"), 'expected smoke script to cover the portfolio route');
+  assert.ok(smokeScript.includes("['/learn', 'Learn'"), 'expected smoke script to cover the learn route');
+  assert.ok(smokeScript.includes("['/settings', 'Settings'"), 'expected smoke script to cover the settings route');
+  assert.ok(smokeScript.includes("['/vault', 'Vault'"), 'expected smoke script to cover the vault route');
+  assert.ok(smokeScript.includes("process.platform === 'win32' ? 'cmd.exe' : 'npm'"), 'expected smoke script to use a Windows-safe npm wrapper');
+  assert.ok(smokeScript.includes("'npm run start'"), 'expected smoke script to start Next through npm');
+  assert.ok(smokeScript.includes('taskkill'), 'expected smoke script to clean up Windows child processes');
+  assert.ok(smokeScript.includes("'start'"), 'expected smoke script to smoke the built Next server');
+  assert.ok(smokeScript.includes('response.statusCode !== 200'), 'expected smoke script to fail non-200 routes');
+  assert.ok(smokeScript.includes("content-type") && smokeScript.includes("text/html"), 'expected smoke script to verify HTML responses');
+  assert.ok(smokeScript.includes('InterestShield - Financial Empowerment'), 'expected smoke script to verify app metadata');
+  assert.ok(smokeScript.includes('/_next/static'), 'expected smoke script to verify Next static assets');
+  assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
+});
+
 test('client mount hook notifies subscribers after hydration', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/hooks/useIsClient.ts'), 'utf8');
 

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 5000",
     "lint": "eslint",
-    "test": "node scripts/engine-regression-tests.cjs"
+    "test": "node scripts/engine-regression-tests.cjs",
+    "smoke:routes": "node scripts/smoke-routes.cjs"
   },
   "dependencies": {
     "framer-motion": "^12.34.0",
