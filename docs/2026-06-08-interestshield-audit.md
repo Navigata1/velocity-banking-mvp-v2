@@ -1988,6 +1988,25 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 113: CountUp Accessible Financial Values
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring CountUp to compute a stable final value for assistive technology, hide animated tick text with `aria-hidden`, and render a screen-reader-only stable value.
+- Updated the shared `CountUp` component so visual users still see the animated number, while assistive technology reads one stable formatted value instead of transient intermediate financial amounts.
+- This central repair covers existing CountUp call sites in Portfolio and Vault without changing their financial calculations.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing stable assistive value, then passed with 108 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke against the local production server confirmed Portfolio rendered 2 CountUp values with matching visual/stable text and `aria-hidden="true"` on the visual spans; Vault rendered 3 CountUp values after advancing to the wealth-transfer step; no console errors were captured.
+- Chrome extension smoke against the local production server confirmed hydrated Portfolio CountUp values rendered the same visual/stable split with no captured console errors.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2451,7 +2470,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.
-- Static final values for animated financial numbers.
+- Static final values for animated financial numbers. Status: CountUp visual animation now renders a stable screen-reader value in Repair Pass 113; remaining non-CountUp animated learning visuals can be reviewed separately.
 - Modal focus trap. Status: covered in Repair Pass 111 for the replayable intro dialog.
 - Mobile nav reachability. Status: viewport reachability covered in Repair Pass 6; primary navigation landmark and active-page state covered in Repair Pass 111.
 

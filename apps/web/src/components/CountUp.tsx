@@ -36,7 +36,8 @@ export default function CountUp({
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const motionVal = useMotionValue(value);
   const display = useTransform(motionVal, (v) => formatCountUpValue(v, prefix, suffix, decimals));
-  const [text, setText] = useState(() => formatCountUpValue(value, prefix, suffix, decimals));
+  const stableText = formatCountUpValue(value, prefix, suffix, decimals);
+  const [text, setText] = useState(() => stableText);
 
   useEffect(() => {
     const unsub = display.on('change', (v) => setText(v));
@@ -58,7 +59,8 @@ export default function CountUp({
 
   return (
     <span ref={ref} className={className}>
-      {text}
+      <span aria-hidden="true">{text}</span>
+      <span className="sr-only">{stableText}</span>
     </span>
   );
 }

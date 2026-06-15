@@ -3034,6 +3034,18 @@ test('CountUp starts from the supplied value instead of a zero placeholder', () 
   );
 });
 
+test('CountUp hides animated financial ticks from assistive technology', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/CountUp.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('const stableText = formatCountUpValue(value, prefix, suffix, decimals)'),
+    'expected CountUp to compute a stable final value for assistive technology'
+  );
+  assert.ok(source.includes('aria-hidden="true"'), 'expected the animated text to be visual-only');
+  assert.ok(source.includes('className="sr-only"'), 'expected a screen-reader-only stable value');
+  assert.ok(source.includes('{stableText}'), 'expected CountUp to render the stable value for screen readers');
+});
+
 test('pre-app preview blocks unstable debt-free date claims', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PreAppPreview.tsx'), 'utf8');
 
