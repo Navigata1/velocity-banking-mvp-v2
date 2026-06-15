@@ -65,7 +65,11 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`fixed bottom-0 left-0 right-0 z-50 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}>
+      <nav
+        aria-label="Primary navigation"
+        data-testid="primary-navigation"
+        className={`fixed bottom-0 left-0 right-0 z-50 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}
+      >
         <div className="px-4 py-2 md:p-6">
           <div className="hidden md:block mb-8">
             <div className="flex items-center gap-3">
@@ -88,6 +92,7 @@ export default function Navigation() {
                 key={item.href}
                 href={item.href}
                 aria-label={item.label}
+                aria-current={pathname === item.href ? 'page' : undefined}
                 className={`flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all md:justify-start md:px-4 ${
                   pathname === item.href
                     ? 'bg-emerald-500/20 text-emerald-400'

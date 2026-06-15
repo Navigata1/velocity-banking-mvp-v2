@@ -1945,6 +1945,30 @@ Post-repair verification:
 - `apps/web` `npm test`, `npm run build`, and `npm run smoke:routes`: passed, keeping the stacked web gate clean.
 - Native Android/iOS simulator smoke is still blocked on this Windows host by the same missing local simulator tools recorded in Repair Pass 108; this pass improves the repeatable run entrypoint rather than claiming native simulator coverage.
 
+### Repair Pass 111: Web Modal And Navigation Accessibility
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring the primary navigation landmark, active-page `aria-current` state, intro dialog semantics, dialog label/description wiring, focus restoration, Tab focus containment, and Escape close behavior.
+- Updated `Navigation` so the shared desktop/mobile nav exposes `aria-label="Primary navigation"`, a stable smoke hook, and `aria-current="page"` on the active route.
+- Updated `IntroModal` so the onboarding replay overlay is a labeled modal dialog, places focus inside the dialog when opened, keeps keyboard focus inside the dialog, restores prior focus on close, and supports Escape close.
+- Added a narrow ESLint exception to the CommonJS built-route smoke script so `npm run lint` can run cleanly while keeping that Node utility in `.cjs` form.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the new accessibility regressions, then passed with 106 regression tests after the repair.
+- `apps/web` `npm run lint`: failed first on the existing CommonJS route-smoke utility, then passed after the file-scoped `@typescript-eslint/no-require-imports` exception.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke at `http://127.0.0.1:5000/` and `/simulator`: primary navigation rendered with the correct landmark label and active route state, with no captured console errors.
+- In-app Browser smoke at `http://127.0.0.1:5000/settings`: Replay Intro opened a labeled modal dialog, initial focus landed on Close intro, Shift+Tab wrapped to the final action, Escape closed the dialog, and no captured console errors were found.
+- Chrome extension smoke repeated the primary navigation and Replay Intro dialog checks against the local production server with no captured console errors.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed and exported `dist-web`.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/mobile` `npm run preflight:native`: exited non-zero by design on this Windows host after passing app/config checks and reporting the same four native-smoke blockers: missing `adb`, missing Android `emulator`, non-macOS iOS simulator host, and missing `xcrun`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2404,13 +2428,13 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 ### Accessibility Tests
 
-- Keyboard navigation.
+- Keyboard navigation. Status: intro modal focus containment and Escape close covered in Repair Pass 111; broader route-by-route keyboard traversal still needs a dedicated pass.
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.
 - Static final values for animated financial numbers.
-- Modal focus trap.
-- Mobile nav reachability.
+- Modal focus trap. Status: covered in Repair Pass 111 for the replayable intro dialog.
+- Mobile nav reachability. Status: viewport reachability covered in Repair Pass 6; primary navigation landmark and active-page state covered in Repair Pass 111.
 
 ## Priority Roadmap
 

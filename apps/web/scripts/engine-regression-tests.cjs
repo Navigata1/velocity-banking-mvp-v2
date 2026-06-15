@@ -886,6 +886,31 @@ test('theme controls expose selected state to assistive technology', () => {
   );
 });
 
+test('navigation exposes active page and mobile landmark state', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/Navigation.tsx'), 'utf8');
+
+  assert.ok(source.includes('aria-label="Primary navigation"'), 'expected navigation to expose a primary landmark label');
+  assert.ok(source.includes('data-testid="primary-navigation"'), 'expected a stable navigation smoke-test hook');
+  assert.ok(
+    source.includes("aria-current={pathname === item.href ? 'page' : undefined}"),
+    'expected active navigation links to expose aria-current page state'
+  );
+});
+
+test('intro modal exposes dialog semantics and traps keyboard focus', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/IntroModal.tsx'), 'utf8');
+
+  assert.ok(source.includes('role="dialog"'), 'expected intro modal to use dialog semantics');
+  assert.ok(source.includes('aria-modal="true"'), 'expected intro modal to mark the background inert for assistive technology');
+  assert.ok(source.includes('aria-labelledby="intro-dialog-title"'), 'expected intro dialog to point at its title');
+  assert.ok(source.includes('aria-describedby="intro-dialog-description"'), 'expected intro dialog to point at its description');
+  assert.ok(source.includes('introDialogRef'), 'expected intro modal to retain a dialog ref for focus management');
+  assert.ok(source.includes('previouslyFocusedElement'), 'expected intro modal to restore focus after close');
+  assert.ok(source.includes('focusableSelectors'), 'expected intro modal to define focusable children for a focus trap');
+  assert.ok(source.includes("event.key === 'Escape'"), 'expected Escape to close the intro dialog');
+  assert.ok(source.includes("event.key !== 'Tab'"), 'expected Tab handling to stay inside the intro dialog');
+});
+
 test('settings exposes controls to restore the pre-app snapshot preview', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
 
