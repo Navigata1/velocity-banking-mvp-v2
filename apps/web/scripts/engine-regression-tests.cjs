@@ -3137,6 +3137,18 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
 });
 
+test('web app declares Vercel Next deployment configuration', () => {
+  const vercelConfigPath = path.resolve(__dirname, '..', 'vercel.json');
+
+  assert.ok(fs.existsSync(vercelConfigPath), 'expected apps/web/vercel.json to document web deployment intent');
+  const config = JSON.parse(fs.readFileSync(vercelConfigPath, 'utf8'));
+
+  assert.equal(config.$schema, 'https://openapi.vercel.sh/vercel.json');
+  assert.equal(config.framework, 'nextjs');
+  assert.equal(config.buildCommand, 'npm run build');
+  assert.equal(config.devCommand, 'next dev --port $PORT');
+});
+
 test('client mount hook notifies subscribers after hydration', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/hooks/useIsClient.ts'), 'utf8');
 

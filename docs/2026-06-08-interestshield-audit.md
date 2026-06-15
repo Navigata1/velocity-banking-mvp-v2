@@ -2026,6 +2026,24 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 115: Web Vercel Deployment Config
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring the web app to declare file-based Vercel deployment intent for the Next.js app.
+- Added `apps/web/vercel.json` with Vercel schema metadata, `nextjs` framework detection, `npm run build` as the production build command, and `next dev --port $PORT` as the local Vercel dev command.
+- Consulted Vercel's official project configuration and `vercel.json` documentation after the Vercel connector returned `401: Reauthentication required`; no authenticated deployment or project mutation was attempted in this pass.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing web Vercel config, then passed with 110 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `npx vercel --version`: passed with Vercel CLI 54.14.0.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2044,7 +2062,7 @@ Post-repair verification:
 ### Vercel
 
 - The Vercel connector returned `401: Reauthentication required`.
-- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication. Mobile Vercel file-based config was added in Repair Pass 92, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
+- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication. Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
 - Deployment metadata, build logs, runtime logs, and project settings were not available during this pass.
 
 ## Highest Priority Findings
