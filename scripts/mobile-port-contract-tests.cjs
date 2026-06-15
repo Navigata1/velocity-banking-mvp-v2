@@ -110,6 +110,43 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
 });
 
+test('Expo app exposes Codex run actions for local mobile workflows', () => {
+  const runScriptPath = path.join(repoRoot, 'apps/mobile/script/build_and_run.sh');
+  const environmentPath = path.join(repoRoot, 'apps/mobile/.codex/environments/environment.toml');
+  const gitAttributesPath = path.join(repoRoot, '.gitattributes');
+
+  assert.ok(fs.existsSync(runScriptPath), 'expected a project-local Expo run script');
+  assert.ok(fs.existsSync(environmentPath), 'expected a Codex environment action file scoped to the Expo app');
+  assert.ok(fs.existsSync(gitAttributesPath), 'expected shell line-ending rules for the Expo run script');
+
+  const runScript = fs.readFileSync(runScriptPath, 'utf8');
+  const environment = fs.readFileSync(environmentPath, 'utf8');
+  const gitAttributes = fs.readFileSync(gitAttributesPath, 'utf8');
+
+  assert.ok(runScript.startsWith('#!/usr/bin/env bash'), 'expected a bash entrypoint for Codex Run');
+  assert.ok(runScript.includes('set -euo pipefail'), 'expected strict shell execution');
+  assert.ok(runScript.includes('ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"'), 'expected script to run from apps/mobile');
+  assert.ok(runScript.includes('npx expo'), 'expected npm/npx Expo fallback');
+  assert.ok(runScript.includes('start --ios'), 'expected iOS simulator start mode');
+  assert.ok(runScript.includes('start --android'), 'expected Android emulator start mode');
+  assert.ok(runScript.includes('start --web'), 'expected Expo web start mode');
+  assert.ok(runScript.includes('export --platform web'), 'expected local web export mode');
+  assert.ok(runScript.includes('expo-doctor'), 'expected diagnostics mode');
+  assert.ok(!runScript.includes('eas build'), 'expected Run actions to avoid authenticated cloud builds');
+
+  assert.ok(environment.includes('name = "InterestShield Mobile"'), 'expected the mobile app name in Codex actions');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh"'), 'expected primary Run action');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh --ios"'), 'expected direct iOS action');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh --android"'), 'expected direct Android action');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh --web"'), 'expected direct Web action');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh --doctor"'), 'expected Expo Doctor action');
+  assert.ok(environment.includes('command = "./script/build_and_run.sh --export-web"'), 'expected web export action');
+  assert.ok(
+    gitAttributes.includes('apps/mobile/script/*.sh text eol=lf'),
+    'expected mobile shell scripts to stay LF-only'
+  );
+});
+
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');
