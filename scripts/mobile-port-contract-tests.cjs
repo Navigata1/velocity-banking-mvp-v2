@@ -229,6 +229,7 @@ test('shared mobile default assumptions start with the verified web demo Money L
   const simulator = sharedEngine.buildMobileSimulatorSnapshot();
   const cockpit = sharedEngine.buildMobileCockpitSnapshot();
   const vault = sharedEngine.buildMobileVaultSnapshot();
+  const learn = sharedEngine.buildMobileLearnSnapshot();
 
   assert.equal(defaultInput.monthlyIncome, 6500);
   assert.equal(defaultInput.monthlyExpenses, 5000);
@@ -252,6 +253,9 @@ test('shared mobile default assumptions start with the verified web demo Money L
   assert.equal(cockpit.warning, null);
   assert.equal(vault.guardrail, null);
   assert.equal(vault.freedomPathLabel.endsWith('mo'), true);
+  assert.equal(learn.guardrail, null);
+  assert.equal(learn.lessons.length, 4);
+  assert.ok(learn.lessons.find((lesson) => lesson.title === 'Cash Flow').value.includes('$'));
 });
 
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
@@ -292,12 +296,15 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('SimulatorStrategyPanel'));
   assert.ok(shellSource.includes('buildMobileVaultSnapshot'));
   assert.ok(!shellSource.includes('until scenarios are editable'));
+  assert.ok(shellSource.includes('buildMobileLearnSnapshot'));
+  assert.ok(!shellSource.includes('const lessons = ['));
   assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
   assert.ok(shellSource.includes('StorageStatusCard'));
   assert.equal(typeof sharedEngine.buildMobileCockpitSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileVaultSnapshot, 'function');
+  assert.equal(typeof sharedEngine.buildMobileLearnSnapshot, 'function');
   assert.ok(
     !fs.existsSync(path.join(repoRoot, 'apps/mobile/app/(tabs)/_layout.tsx')),
     'expected static-export shell not to rely on tab route hydration'
@@ -682,6 +689,55 @@ test('shared mobile vault snapshot turns the active debt model into an outcome p
   assert.equal(unsafeVault.freedomPathLabel, 'Review inputs');
   assert.equal(unsafeVault.interestFreedLabel, 'Not projected');
   assert.ok(unsafeVault.guardrail.includes('Income needs to exceed expenses'));
+});
+
+test('shared mobile learn snapshot teaches from current Money Loop inputs', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const learn = sharedEngine.buildMobileLearnSnapshot({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    chunkAmount: 1000,
+    activeDebtName: 'Credit Card',
+    activeDebt: {
+      balance: 12000,
+      apr: 0.1875,
+      monthlyPayment: 425,
+      termMonths: 48,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(learn.guardrail, null);
+  assert.equal(learn.lessons.length, 4);
+  assert.ok(learn.lessons.find((lesson) => lesson.title === 'Money Loop').detail.includes('Credit Card'));
+  assert.equal(learn.lessons.find((lesson) => lesson.title === 'Cash Flow').value, '$1,500/mo');
+  assert.equal(learn.lessons.find((lesson) => lesson.title === 'LOC Room').value, '$21,800 open');
+  assert.ok(learn.lessons.find((lesson) => lesson.title === 'Interest Visibility').value.endsWith('/day'));
+
+  const unsafeLearn = sharedEngine.buildMobileLearnSnapshot({
+    monthlyIncome: 4000,
+    monthlyExpenses: 5000,
+    chunkAmount: 1000,
+    activeDebtName: 'Credit Card',
+    activeDebt: {
+      balance: 12000,
+      apr: 0.1875,
+      monthlyPayment: 425,
+      termMonths: 48,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.ok(unsafeLearn.guardrail.includes('Income needs to exceed expenses'));
+  assert.ok(unsafeLearn.lessons.find((lesson) => lesson.title === 'Cash Flow').detail.includes('learning mode'));
 });
 
 if (process.exitCode) {

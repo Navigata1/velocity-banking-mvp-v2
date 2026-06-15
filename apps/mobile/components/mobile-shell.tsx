@@ -1,12 +1,14 @@
 import {
   buildMobileCockpitSnapshot,
   buildMobileDashboardSnapshot,
+  buildMobileLearnSnapshot,
   buildMobilePortfolioSnapshot,
   buildMobileSimulatorSnapshot,
   buildMobileVaultSnapshot,
   type MobileCockpitSnapshot,
   type MobileDashboardInput,
   type MobileDashboardSnapshot,
+  type MobileLearnSnapshot,
   type MobilePortfolioSnapshot,
   type MobileSimulatorSnapshot,
   type MobileVaultSnapshot,
@@ -39,21 +41,6 @@ const modeRoutes: Record<MobileMode, '/' | '/simulator' | '/cockpit' | '/portfol
   learn: '/learn',
   vault: '/vault',
 };
-
-const lessons = [
-  {
-    title: 'Cash Flow',
-    detail: 'Positive cash flow is the fuel that recovers LOC draws after a principal chunk.',
-  },
-  {
-    title: 'LOC Room',
-    detail: 'Available credit is capacity, not income. Missing limits stay in setup mode.',
-  },
-  {
-    title: 'Interest Burn',
-    detail: 'Daily interest estimates are labels for learning, not promises about lender posting rules.',
-  },
-];
 
 function ModeButton({
   active,
@@ -563,11 +550,14 @@ function PortfolioPanel({ portfolio }: { portfolio: MobilePortfolioSnapshot }) {
   );
 }
 
-function LearnPanel() {
+function LearnPanel({ learn }: { learn: MobileLearnSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
-      {lessons.map((lesson) => (
-        <FinancialCard key={lesson.title} title={lesson.title} detail={lesson.detail} />
+      {learn.guardrail ? (
+        <FinancialCard title="Learning Mode" value="Review inputs" detail={learn.guardrail} />
+      ) : null}
+      {learn.lessons.map((lesson) => (
+        <FinancialCard key={lesson.title} title={lesson.title} value={lesson.value} detail={lesson.detail} />
       ))}
     </View>
   );
@@ -597,6 +587,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
   const portfolio = buildMobilePortfolioSnapshot(input);
   const simulator = buildMobileSimulatorSnapshot(input);
   const vault = buildMobileVaultSnapshot(input);
+  const learn = buildMobileLearnSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
   const handleModeChange = (nextMode: MobileMode) => {
     setMode(nextMode);
@@ -637,7 +628,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
       {mode === 'simulator' ? <SimulatorPanel snapshot={snapshot} simulator={simulator} /> : null}
       {mode === 'cockpit' ? <CockpitPanel cockpit={cockpit} /> : null}
       {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
-      {mode === 'learn' ? <LearnPanel /> : null}
+      {mode === 'learn' ? <LearnPanel learn={learn} /> : null}
       {mode === 'vault' ? <VaultPanel vault={vault} /> : null}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>

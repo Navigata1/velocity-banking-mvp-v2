@@ -133,6 +133,17 @@ export interface MobileVaultSnapshot {
   stages: MobileVaultStage[];
 }
 
+export interface MobileLearnLesson {
+  title: 'Money Loop' | 'Cash Flow' | 'LOC Room' | 'Interest Visibility';
+  value: string;
+  detail: string;
+}
+
+export interface MobileLearnSnapshot {
+  guardrail: string | null;
+  lessons: MobileLearnLesson[];
+}
+
 interface MobilePayoffProjection {
   payoffMonths: number;
   totalInterest: number;
@@ -677,6 +688,50 @@ export function buildMobileVaultSnapshot(
         detail: hasModeledPath
           ? 'Modeled interest freed is shown as an educational comparison; emergency reserves stay separate from payoff claims.'
           : 'Buffer planning waits until the payoff path is stable enough to model.',
+      },
+    ],
+  };
+}
+
+export function buildMobileLearnSnapshot(
+  input: MobileDashboardInput = defaultMobileDashboardInput
+): MobileLearnSnapshot {
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const locNeedsSetup = input.loc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
+  const availableLoc = locNeedsSetup ? 0 : Math.max(0, input.loc.limit - input.loc.balance);
+  const guardrail = simulator.guardrail ?? dashboard.warning;
+
+  return {
+    guardrail,
+    lessons: [
+      {
+        title: 'Money Loop',
+        value: dashboard.nextMove,
+        detail: `${input.activeDebtName} is the current modeled target. The loop connects income, expenses, LOC room, and principal movement before any payoff claim is shown.`,
+      },
+      {
+        title: 'Cash Flow',
+        value: `${formatCurrency(cashFlow)}/mo`,
+        detail: cashFlow > 0
+          ? `${formatCurrency(cashFlow)} monthly cash flow is the recovery fuel after minimum payments and planned chunks.`
+          : 'Income needs to exceed expenses first, so LOC payoff stays in learning mode.',
+      },
+      {
+        title: 'LOC Room',
+        value: locNeedsSetup ? 'Add LOC limit' : `${formatCurrency(availableLoc)} open`,
+        detail: locNeedsSetup
+          ? 'Available credit needs a real limit before velocity chunks are modeled.'
+          : locOverLimit
+            ? 'The LOC balance is above the limit, so payoff claims stay in review mode.'
+            : `${formatCurrency(availableLoc)} is available capacity, not income.`,
+      },
+      {
+        title: 'Interest Visibility',
+        value: `${formatCurrency(dashboard.dailyInterestBurn)}/day`,
+        detail: 'Daily interest is a simple accrual estimate across active debt and LOC balance, not a lender posting promise.',
       },
     ],
   };
