@@ -130,9 +130,9 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   );
   assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
   assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault'"));
-  assert.ok(shellSource.includes("setMode('simulator')"));
-  assert.ok(shellSource.includes("setMode('cockpit')"));
-  assert.ok(shellSource.includes("setMode('portfolio')"));
+  assert.ok(shellSource.includes("handleModeChange('simulator')"));
+  assert.ok(shellSource.includes("handleModeChange('cockpit')"));
+  assert.ok(shellSource.includes("handleModeChange('portfolio')"));
   assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
@@ -150,6 +150,38 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
     !fs.existsSync(path.join(repoRoot, 'apps/mobile/app/(tabs)/_layout.tsx')),
     'expected static-export shell not to rely on tab route hydration'
   );
+});
+
+test('Expo mobile app exposes direct route parity for every demo mode', () => {
+  const layoutSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/_layout.tsx'), 'utf8');
+  const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const routeExpectations = [
+    ['index.tsx', 'dashboard', 'index', 'InterestShield'],
+    ['simulator.tsx', 'simulator', 'simulator', 'Simulator'],
+    ['cockpit.tsx', 'cockpit', 'cockpit', 'Cockpit'],
+    ['portfolio.tsx', 'portfolio', 'portfolio', 'Portfolio'],
+    ['learn.tsx', 'learn', 'learn', 'Learn'],
+    ['vault.tsx', 'vault', 'vault', 'Vault'],
+  ];
+
+  assert.ok(shellSource.includes("import { useRouter } from 'expo-router'"));
+  assert.ok(shellSource.includes("initialMode = 'dashboard'"));
+  assert.ok(shellSource.includes('modeRoutes'));
+  assert.ok(shellSource.includes('router.push(modeRoutes[nextMode])'));
+
+  for (const [filename, mode, routeName, title] of routeExpectations) {
+    const routeFile = path.join(repoRoot, 'apps/mobile/app', filename);
+    assert.ok(fs.existsSync(routeFile), `expected direct Expo route file ${filename}`);
+    const routeSource = fs.readFileSync(routeFile, 'utf8');
+    assert.ok(
+      routeSource.includes(`<MobileShell initialMode="${mode}" />`),
+      `expected ${filename} to render MobileShell in ${mode} mode`
+    );
+    assert.ok(
+      layoutSource.includes(`<Stack.Screen name="${routeName}" options={{ title: '${title}' }} />`),
+      `expected layout to register ${routeName} with ${title} title`
+    );
+  }
 });
 
 test('shared mobile portfolio snapshot explains cash-flow coverage and debt priority', () => {

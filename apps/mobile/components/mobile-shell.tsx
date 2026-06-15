@@ -9,6 +9,7 @@ import {
   type MobilePortfolioSnapshot,
   type MobileSimulatorSnapshot,
 } from '@interestshield/financial-engine';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
@@ -27,6 +28,15 @@ const modes: Array<{ id: MobileMode; label: string }> = [
   { id: 'learn', label: 'Learn' },
   { id: 'vault', label: 'Vault' },
 ];
+
+const modeRoutes: Record<MobileMode, '/' | '/simulator' | '/cockpit' | '/portfolio' | '/learn' | '/vault'> = {
+  dashboard: '/',
+  simulator: '/simulator',
+  cockpit: '/cockpit',
+  portfolio: '/portfolio',
+  learn: '/learn',
+  vault: '/vault',
+};
 
 const lessons = [
   {
@@ -392,14 +402,19 @@ function VaultPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   );
 }
 
-export function MobileShell() {
-  const [mode, setMode] = useState<MobileMode>('dashboard');
+export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: MobileMode }) {
+  const router = useRouter();
+  const [mode, setMode] = useState<MobileMode>(initialMode);
   const { input, setInput, storageStatus } = usePersistedMobileAssumptions();
   const snapshot = buildMobileDashboardSnapshot(input);
   const cockpit = buildMobileCockpitSnapshot(input);
   const portfolio = buildMobilePortfolioSnapshot(input);
   const simulator = buildMobileSimulatorSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
+  const handleModeChange = (nextMode: MobileMode) => {
+    setMode(nextMode);
+    router.push(modeRoutes[nextMode]);
+  };
 
   return (
     <ScrollView
@@ -420,12 +435,12 @@ export function MobileShell() {
       </View>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-        <ModeButton active={mode === 'dashboard'} label="Dashboard" onPress={() => setMode('dashboard')} />
-        <ModeButton active={mode === 'simulator'} label="Simulator" onPress={() => setMode('simulator')} />
-        <ModeButton active={mode === 'cockpit'} label="Cockpit" onPress={() => setMode('cockpit')} />
-        <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => setMode('portfolio')} />
-        <ModeButton active={mode === 'learn'} label="Learn" onPress={() => setMode('learn')} />
-        <ModeButton active={mode === 'vault'} label="Vault" onPress={() => setMode('vault')} />
+        <ModeButton active={mode === 'dashboard'} label="Dashboard" onPress={() => handleModeChange('dashboard')} />
+        <ModeButton active={mode === 'simulator'} label="Simulator" onPress={() => handleModeChange('simulator')} />
+        <ModeButton active={mode === 'cockpit'} label="Cockpit" onPress={() => handleModeChange('cockpit')} />
+        <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => handleModeChange('portfolio')} />
+        <ModeButton active={mode === 'learn'} label="Learn" onPress={() => handleModeChange('learn')} />
+        <ModeButton active={mode === 'vault'} label="Vault" onPress={() => handleModeChange('vault')} />
       </View>
 
       <AssumptionControls input={input} onChange={setInput} />

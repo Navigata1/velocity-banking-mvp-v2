@@ -1524,6 +1524,33 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 91: Mobile Direct Route Parity
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage proving the Expo app exposes direct route files for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- Added route-specific Expo screens that render the shared `MobileShell` with the matching initial mode, so direct links open the intended mobile surface instead of only the default dashboard shell.
+- Registered all mobile demo routes in the Expo Router stack layout with route titles.
+- Updated the mobile mode switcher to use Expo Router navigation, so mode buttons update both the visible panel and the URL path.
+- Browser smoke served the exported Expo web build with SPA fallback at `http://127.0.0.1:8087`, verified all six direct routes render their expected mode content, clicked Simulator to Cockpit and Cockpit to Vault, verified URL changes to `/cockpit` and `/vault`, and captured 0 console warnings/errors.
+- Chrome smoke repeated all six direct routes, clicked Learn to Simulator, verified the URL changes to `/simulator`, and captured 0 console warnings/errors before closing the automation tab.
+- Native Android/iOS simulator smoke remains environment-blocked on this Windows machine because `adb`, Android `emulator`, and `xcrun` are unavailable.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed after first failing for missing route-aware shell behavior and missing direct Expo routes.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm audit --audit-level=high`: passed with the moderate transitive Expo/uuid advisory noted above.
+- `apps/mobile` `npx expo export --platform web --output-dir dist-web --clear`: passed.
+- `apps/mobile` Browser smoke at `http://127.0.0.1:8087`: passed for direct route parity and route-changing mode buttons with 0 console warnings/errors.
+- `apps/mobile` Chrome smoke at `http://127.0.0.1:8087`: passed for direct route parity and route-changing mode buttons with 0 console warnings/errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2036,7 +2063,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.
