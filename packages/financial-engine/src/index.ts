@@ -120,6 +120,19 @@ export interface MobileCockpitSnapshot {
   flightChecks: MobileCockpitCheck[];
 }
 
+export interface MobileVaultStage {
+  title: 'Stabilize' | 'Debt Freedom' | 'Buffer';
+  value: string;
+  detail: string;
+}
+
+export interface MobileVaultSnapshot {
+  guardrail: string | null;
+  freedomPathLabel: string;
+  interestFreedLabel: string;
+  stages: MobileVaultStage[];
+}
+
 interface MobilePayoffProjection {
   payoffMonths: number;
   totalInterest: number;
@@ -628,6 +641,44 @@ export function buildMobileSimulatorSnapshot(
       interestSavedLabel: canCompareVelocity ? `Saves ${formatCurrency(interestSaved)}` : 'Not projected',
       monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
     },
+  };
+}
+
+export function buildMobileVaultSnapshot(
+  input: MobileDashboardInput = defaultMobileDashboardInput
+): MobileVaultSnapshot {
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
+  const guardrail = simulator.guardrail ?? dashboard.warning;
+  const hasModeledPath = !guardrail && simulator.velocity.months > 0;
+  const freedomPathLabel = hasModeledPath ? `${simulator.velocity.months} mo` : 'Review inputs';
+  const interestFreedLabel = hasModeledPath ? simulator.velocity.interestSavedLabel : 'Not projected';
+
+  return {
+    guardrail,
+    freedomPathLabel,
+    interestFreedLabel,
+    stages: [
+      {
+        title: 'Stabilize',
+        value: guardrail ? 'Review inputs' : 'Ready',
+        detail: guardrail ?? 'Cash flow, LOC capacity, and minimum-payment coverage pass the first checks.',
+      },
+      {
+        title: 'Debt Freedom',
+        value: freedomPathLabel,
+        detail: hasModeledPath
+          ? `${input.activeDebtName} has a modeled Velocity path using the current chunk, LOC recovery, and daily interest assumptions.`
+          : 'No debt-free date is shown until the Money Loop inputs support a stable projection.',
+      },
+      {
+        title: 'Buffer',
+        value: interestFreedLabel,
+        detail: hasModeledPath
+          ? 'Modeled interest freed is shown as an educational comparison; emergency reserves stay separate from payoff claims.'
+          : 'Buffer planning waits until the payoff path is stable enough to model.',
+      },
+    ],
   };
 }
 

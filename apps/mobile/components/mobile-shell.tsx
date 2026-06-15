@@ -3,11 +3,13 @@ import {
   buildMobileDashboardSnapshot,
   buildMobilePortfolioSnapshot,
   buildMobileSimulatorSnapshot,
+  buildMobileVaultSnapshot,
   type MobileCockpitSnapshot,
   type MobileDashboardInput,
   type MobileDashboardSnapshot,
   type MobilePortfolioSnapshot,
   type MobileSimulatorSnapshot,
+  type MobileVaultSnapshot,
 } from '@interestshield/financial-engine';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -571,12 +573,17 @@ function LearnPanel() {
   );
 }
 
-function VaultPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
+function VaultPanel({ vault }: { vault: MobileVaultSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
-      <FinancialCard title="Stage 1" value="Stabilize" detail={snapshot.warning ?? 'Cash flow and LOC setup pass the first checks.'} />
-      <FinancialCard title="Stage 2" value="Debt Freedom" detail="Principal movement remains assumption-labeled until scenarios are editable." />
-      <FinancialCard title="Stage 3" value="Buffer" detail="Emergency reserves stay separate from velocity banking payoff claims." />
+      <FinancialCard
+        title="Freedom Path"
+        value={vault.freedomPathLabel}
+        detail={vault.guardrail ?? 'Modeled from the same shared engine used by Dashboard, Simulator, and Cockpit.'}
+      />
+      {vault.stages.map((stage) => (
+        <FinancialCard key={stage.title} title={stage.title} value={stage.value} detail={stage.detail} />
+      ))}
     </View>
   );
 }
@@ -589,6 +596,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
   const cockpit = buildMobileCockpitSnapshot(input);
   const portfolio = buildMobilePortfolioSnapshot(input);
   const simulator = buildMobileSimulatorSnapshot(input);
+  const vault = buildMobileVaultSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
   const handleModeChange = (nextMode: MobileMode) => {
     setMode(nextMode);
@@ -630,7 +638,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
       {mode === 'cockpit' ? <CockpitPanel cockpit={cockpit} /> : null}
       {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
       {mode === 'learn' ? <LearnPanel /> : null}
-      {mode === 'vault' ? <VaultPanel snapshot={snapshot} /> : null}
+      {mode === 'vault' ? <VaultPanel vault={vault} /> : null}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>
         Educational tool. Not financial advice.
