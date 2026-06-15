@@ -145,6 +145,9 @@ export const defaultMobileDashboardInput: MobileDashboardInput = {
   },
 };
 
+const LOC_HIGH_UTILIZATION_WARNING = 'LOC utilization is above the 80% planning guardrail.';
+const LOC_OVER_LIMIT_WARNING = 'LOC balance is above the available limit. Pay the LOC down before modeling velocity chunks.';
+
 export function calculateMonthlyRate(apr: number): number {
   return apr / 12;
 }
@@ -199,6 +202,7 @@ export function buildMobileDashboardSnapshot(
 ): MobileDashboardSnapshot {
   const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
   const locNeedsSetup = input.loc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
   const availableLoc = locNeedsSetup ? 0 : Math.max(0, input.loc.limit - input.loc.balance);
   const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
   const debtDailyInterest = Math.max(0, input.activeDebt.balance) * calculateDailyRate(Math.max(0, input.activeDebt.apr));
@@ -220,9 +224,12 @@ export function buildMobileDashboardSnapshot(
   if (cashFlow <= 0) {
     nextMove = 'Restore positive cash flow';
     warning = 'Income needs to exceed expenses before the Money Loop can recover LOC draws.';
+  } else if (locOverLimit) {
+    nextMove = 'Pay down the LOC';
+    warning = LOC_OVER_LIMIT_WARNING;
   } else if (!locNeedsSetup && locUtilization > 0.8) {
     nextMove = 'Pay down the LOC';
-    warning = 'LOC utilization is above the 80% planning guardrail.';
+    warning = LOC_HIGH_UTILIZATION_WARNING;
   } else if (!locNeedsSetup && safeChunk > 0) {
     nextMove = `Send ${formatCurrency(safeChunk)} to principal`;
   }
@@ -304,8 +311,10 @@ export function buildMobilePortfolioSnapshot(
     guardrail = 'Cash flow does not cover the modeled minimum payment yet.';
   } else if (input.loc.limit <= 0) {
     guardrail = 'Add a LOC limit before modeling portfolio velocity movement.';
+  } else if (input.loc.balance > input.loc.limit) {
+    guardrail = LOC_OVER_LIMIT_WARNING;
   } else if (input.loc.balance / input.loc.limit > 0.8) {
-    guardrail = 'LOC utilization is above the 80% planning guardrail.';
+    guardrail = LOC_HIGH_UTILIZATION_WARNING;
   }
 
   return {
@@ -599,8 +608,10 @@ export function buildMobileSimulatorSnapshot(
     guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
   } else if (input.loc.limit <= 0) {
     guardrail = 'Add a LOC limit before trusting velocity payoff projections.';
+  } else if (input.loc.balance > input.loc.limit) {
+    guardrail = LOC_OVER_LIMIT_WARNING;
   } else if (input.loc.balance / input.loc.limit > 0.8) {
-    guardrail = 'LOC utilization is above the 80% planning guardrail.';
+    guardrail = LOC_HIGH_UTILIZATION_WARNING;
   } else if (cashFlow < input.activeDebt.monthlyPayment) {
     guardrail = 'Cash flow does not cover the active debt minimum payment yet.';
   }

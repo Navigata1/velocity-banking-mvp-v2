@@ -431,6 +431,33 @@ test('shared mobile simulator snapshot suppresses velocity payoff claims when ca
   assert.equal(velocity.statusLabel, 'Needs positive cash flow');
 });
 
+test('shared mobile snapshots distinguish LOC over limit from high utilization', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const overLimitInput = {
+    ...sharedEngine.defaultMobileDashboardInput,
+    loc: {
+      limit: 10000,
+      apr: 0.085,
+      balance: 10500,
+    },
+  };
+  const dashboard = sharedEngine.buildMobileDashboardSnapshot(overLimitInput);
+  const portfolio = sharedEngine.buildMobilePortfolioSnapshot(overLimitInput);
+  const simulator = sharedEngine.buildMobileSimulatorSnapshot(overLimitInput);
+  const cockpit = sharedEngine.buildMobileCockpitSnapshot(overLimitInput);
+  const velocity = simulator.strategies.find((strategy) => strategy.name === 'Velocity');
+  const overLimitWarning = 'LOC balance is above the available limit. Pay the LOC down before modeling velocity chunks.';
+
+  assert.equal(dashboard.warning, overLimitWarning);
+  assert.equal(dashboard.nextMove, 'Pay down the LOC');
+  assert.equal(portfolio.guardrail, overLimitWarning);
+  assert.equal(simulator.guardrail, overLimitWarning);
+  assert.equal(simulator.velocity.months, 0);
+  assert.equal(velocity.statusLabel, 'LOC over limit');
+  assert.equal(cockpit.warning, overLimitWarning);
+  assert.equal(cockpit.flightStatusLabel, 'Review inputs');
+});
+
 test('mobile assumptions persist through encrypted native storage with a web fallback', () => {
   const storageSource = fs.readFileSync(
     path.join(repoRoot, 'apps/mobile/lib/mobile-assumption-storage.ts'),
