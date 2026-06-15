@@ -2,7 +2,6 @@ import {
   buildMobileDashboardSnapshot,
   buildMobilePortfolioSnapshot,
   buildMobileSimulatorSnapshot,
-  defaultMobileDashboardInput,
   type MobileDashboardInput,
   type MobileDashboardSnapshot,
   type MobilePortfolioSnapshot,
@@ -11,6 +10,10 @@ import {
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
+import {
+  usePersistedMobileAssumptions,
+  type MobileAssumptionStorageStatus,
+} from '@/hooks/use-persisted-mobile-assumptions';
 
 type MobileMode = 'dashboard' | 'simulator' | 'portfolio' | 'learn' | 'vault';
 
@@ -156,6 +159,44 @@ function AssumptionControls({
   );
 }
 
+function StorageStatusCard({ status }: { status: MobileAssumptionStorageStatus }) {
+  const copy: Record<MobileAssumptionStorageStatus, { detail: string; value: string }> = {
+    loading: {
+      detail: 'Checking for locally saved assumptions.',
+      value: 'Loading',
+    },
+    'restored-secure-store': {
+      detail: 'Assumptions restored from encrypted native storage on this device.',
+      value: 'Restored securely',
+    },
+    'restored-local-storage': {
+      detail: 'Assumptions restored from localStorage for exported web testing.',
+      value: 'Restored locally',
+    },
+    'saved-secure-store': {
+      detail: 'Assumptions are saved in encrypted native storage on this device.',
+      value: 'Saved securely',
+    },
+    'saved-local-storage': {
+      detail: 'Assumptions are saved in localStorage for exported web testing.',
+      value: 'Saved locally',
+    },
+    unavailable: {
+      detail: 'Local persistence is unavailable, so assumptions reset when this session ends.',
+      value: 'Session only',
+    },
+  };
+  const statusCopy = copy[status];
+
+  return (
+    <FinancialCard
+      title="Local Storage"
+      value={statusCopy.value}
+      detail={statusCopy.detail}
+    />
+  );
+}
+
 function DashboardPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
@@ -291,7 +332,7 @@ function VaultPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
 
 export function MobileShell() {
   const [mode, setMode] = useState<MobileMode>('dashboard');
-  const [input, setInput] = useState<MobileDashboardInput>(defaultMobileDashboardInput);
+  const { input, setInput, storageStatus } = usePersistedMobileAssumptions();
   const snapshot = buildMobileDashboardSnapshot(input);
   const portfolio = buildMobilePortfolioSnapshot(input);
   const simulator = buildMobileSimulatorSnapshot(input);
@@ -324,6 +365,7 @@ export function MobileShell() {
       </View>
 
       <AssumptionControls input={input} onChange={setInput} />
+      <StorageStatusCard status={storageStatus} />
 
       {mode === 'dashboard' ? <DashboardPanel snapshot={snapshot} /> : null}
       {mode === 'simulator' ? <SimulatorPanel snapshot={snapshot} simulator={simulator} /> : null}

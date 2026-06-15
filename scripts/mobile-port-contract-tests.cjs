@@ -43,6 +43,14 @@ function loadTsFile(filename) {
       return loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
     }
 
+    if (request === 'expo-secure-store') {
+      return {
+        getItemAsync: async () => null,
+        isAvailableAsync: async () => false,
+        setItemAsync: async () => undefined,
+      };
+    }
+
     return require(request);
   };
 
@@ -85,6 +93,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.ok(mobilePackage.scripts.check, 'expected a mobile type-check script');
   assert.ok(mobilePackage.dependencies.expo, 'expected Expo dependency');
   assert.ok(mobilePackage.dependencies['expo-router'], 'expected Expo Router dependency');
+  assert.ok(mobilePackage.dependencies['expo-secure-store'], 'expected encrypted native key-value storage dependency');
   assert.equal(mobilePackage.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
 });
 
@@ -129,6 +138,8 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
   assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));
   assert.ok(shellSource.includes('SimulatorStrategyPanel'));
+  assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
+  assert.ok(shellSource.includes('StorageStatusCard'));
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
   assert.ok(
@@ -244,6 +255,54 @@ test('shared mobile simulator snapshot suppresses velocity payoff claims when ca
   assert.equal(velocity.monthsLabel, 'Review inputs');
   assert.equal(velocity.interestLabel, 'Not projected');
   assert.equal(velocity.statusLabel, 'Needs positive cash flow');
+});
+
+test('mobile assumptions persist through encrypted native storage with a web fallback', () => {
+  const storageSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/lib/mobile-assumption-storage.ts'),
+    'utf8'
+  );
+  const hookSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/hooks/use-persisted-mobile-assumptions.ts'),
+    'utf8'
+  );
+
+  assert.ok(storageSource.includes("from 'expo-secure-store'"), 'expected SecureStore import');
+  assert.ok(!storageSource.includes('AsyncStorage'), 'expected no AsyncStorage usage');
+  assert.ok(storageSource.includes('MOBILE_ASSUMPTIONS_STORAGE_KEY'));
+  assert.ok(storageSource.includes('secure-store'));
+  assert.ok(storageSource.includes('local-storage'));
+  assert.ok(storageSource.includes('decodeMobileAssumptions'));
+  assert.ok(hookSource.includes('useEffect'));
+  assert.ok(hookSource.includes('loadMobileAssumptions'));
+  assert.ok(hookSource.includes('saveMobileAssumptions'));
+
+  const storageModule = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/mobile-assumption-storage.ts'));
+  const encoded = storageModule.encodeMobileAssumptions({
+    monthlyIncome: 8123,
+    monthlyExpenses: 4321,
+    chunkAmount: 987,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+  const decoded = storageModule.decodeMobileAssumptions(encoded);
+
+  assert.equal(storageModule.MOBILE_ASSUMPTIONS_STORAGE_KEY, 'interestshield.mobile.assumptions.v1');
+  assert.equal(decoded.monthlyIncome, 8123);
+  assert.equal(decoded.monthlyExpenses, 4321);
+  assert.equal(decoded.chunkAmount, 987);
+  assert.equal(storageModule.decodeMobileAssumptions('{bad json'), null);
+  assert.equal(storageModule.decodeMobileAssumptions(JSON.stringify({ version: 1, input: { monthlyIncome: -1 } })), null);
 });
 
 if (process.exitCode) {

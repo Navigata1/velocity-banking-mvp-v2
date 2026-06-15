@@ -1468,6 +1468,34 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 89: Mobile Assumption Persistence
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage proving the Expo app declares encrypted native key-value storage, exposes a persisted-assumptions hook, avoids AsyncStorage, and can encode/decode saved mobile assumptions safely.
+- Added `expo-secure-store` and its Expo config plugin so native iOS/Android builds can store assumptions through encrypted device storage when available.
+- Added `apps/mobile/lib/mobile-assumption-storage.ts` to persist `MobileDashboardInput` through SecureStore on native and through localStorage for exported-web smoke testing.
+- Added `apps/mobile/hooks/use-persisted-mobile-assumptions.ts` so the shell restores saved assumptions once, then saves edits after the initial restore completes.
+- Added a Local Storage status card in the Expo shell so users can see whether assumptions are loading, saved securely, restored securely, saved locally, restored locally, or session-only.
+- Browser smoke served the exported Expo web build from `dist-web`, verified the Local Storage card, edited income to `$8,123`, expenses to `$4,321`, chunk to `$987`, and LOC limit to `$25,000`, reloaded the page, and verified those values restored with `$3,802` cash flow, `$21,800 open` LOC room, footer copy, and 0 console errors.
+- Chrome extension smoke loaded the same local export, edited income to `$9,123`, expenses to `$5,123`, chunk to `$1,111`, and LOC limit to `$25,000`, reloaded the page, and verified those values restored with `Send $1,111 to principal`, footer copy, and 0 console errors.
+- Native simulator smoke remains environment-limited on this Windows machine: `adb`, Android `emulator`, and `xcrun` were not available, so Android device/emulator and iOS simulator runs could not be executed locally in this pass.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed after first failing for missing `expo-secure-store`, persisted hook, and storage module.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm audit --audit-level=high`: passed with the moderate transitive Expo/uuid advisory noted above.
+- `apps/mobile` `npx expo export --platform web --output-dir dist-web --clear`: passed.
+- `apps/mobile` Browser smoke at `http://127.0.0.1:8085/`: passed for assumption persistence across reload with 0 console errors.
+- `apps/mobile` Chrome smoke at `http://127.0.0.1:8085/`: passed for assumption persistence across reload with 0 console errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1983,7 +2011,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, and portfolio to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine.
-- Add offline-first encrypted local storage.
+- Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.
 
 ## Recommended Next Move
 
