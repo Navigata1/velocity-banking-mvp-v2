@@ -86,6 +86,22 @@ function normalizeMobileDashboardInput(value: unknown): MobileDashboardInput | n
   };
 }
 
+function isLegacyStandaloneMobileDefault(input: MobileDashboardInput): boolean {
+  return (
+    input.monthlyIncome === 7000 &&
+    input.monthlyExpenses === 4500 &&
+    input.chunkAmount === 1500 &&
+    input.activeDebtName === 'Auto Loan' &&
+    input.activeDebt.balance === 18450 &&
+    input.activeDebt.apr === 0.069 &&
+    input.activeDebt.monthlyPayment === 425 &&
+    input.activeDebt.termMonths === 60 &&
+    input.loc.limit === 0 &&
+    input.loc.apr === 0.085 &&
+    input.loc.balance === 3200
+  );
+}
+
 export function encodeMobileAssumptions(
   input: MobileDashboardInput,
   savedAt: string = new Date().toISOString()
@@ -105,7 +121,9 @@ export function decodeMobileAssumptions(rawValue: string | null): MobileDashboar
   try {
     const payload = JSON.parse(rawValue) as Partial<StoredMobileAssumptionsPayload>;
     if (payload.version !== 1) return null;
-    return normalizeMobileDashboardInput(payload.input);
+    const normalized = normalizeMobileDashboardInput(payload.input);
+    if (!normalized) return null;
+    return isLegacyStandaloneMobileDefault(normalized) ? defaultMobileDashboardInput : normalized;
   } catch {
     return null;
   }

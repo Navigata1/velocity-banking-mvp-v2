@@ -479,6 +479,50 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.equal(storageModule.decodeMobileAssumptions(JSON.stringify({ version: 1, input: { monthlyIncome: -1 } })), null);
 });
 
+test('mobile storage migrates only the legacy standalone demo default', () => {
+  const storageModule = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/mobile-assumption-storage.ts'));
+
+  const legacyDefault = {
+    monthlyIncome: 7000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 0,
+      apr: 0.085,
+      balance: 3200,
+    },
+  };
+
+  const migrated = storageModule.decodeMobileAssumptions(JSON.stringify({
+    version: 1,
+    savedAt: '2026-06-15T00:00:00.000Z',
+    input: legacyDefault,
+  }));
+  const customZeroLimit = storageModule.decodeMobileAssumptions(JSON.stringify({
+    version: 1,
+    savedAt: '2026-06-15T00:00:00.000Z',
+    input: {
+      ...legacyDefault,
+      monthlyIncome: 6400,
+    },
+  }));
+
+  assert.equal(migrated.monthlyIncome, 6500);
+  assert.equal(migrated.monthlyExpenses, 5000);
+  assert.equal(migrated.chunkAmount, 1000);
+  assert.equal(migrated.activeDebt.termMonths, 48);
+  assert.equal(migrated.loc.limit, 25000);
+  assert.equal(customZeroLimit.monthlyIncome, 6400);
+  assert.equal(customZeroLimit.loc.limit, 0);
+});
+
 test('shared mobile cockpit snapshot exposes the core demo instruments and guardrails', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const snapshot = sharedEngine.buildMobileCockpitSnapshot({

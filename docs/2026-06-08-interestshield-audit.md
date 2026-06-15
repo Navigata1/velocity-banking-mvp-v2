@@ -1655,6 +1655,24 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 96: Mobile Legacy Storage Migration
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage for the old standalone Expo demo defaults that saved `loc.limit: 0` under the v1 mobile assumptions key.
+- Added a narrow decode-time migration that upgrades only that exact legacy default shape to the current verified car-demo Money Loop defaults.
+- Preserved custom unsafe saved inputs: a user-shaped zero-LOC-limit snapshot still restores as review-mode data instead of being silently upgraded.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first with `7000 !== 6500`, then passed after the migration fix.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` exported route HTTP checks at `http://127.0.0.1:8096`: `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault` all returned 200.
+- `apps/mobile` Browser migration smoke at `http://127.0.0.1:8096`: a custom saved zero-LOC-limit snapshot stayed in `Review inputs`, the exact legacy standalone default migrated to `Send $1,000 to principal`, and 0 console warnings/errors were captured.
+- Chrome was not repeated for this storage-only pass; Repair Pass 95 contains the current-profile Chrome cross-check for the same exported mobile shell.
+- Native Android/iOS simulator smoke was not run in this pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2167,7 +2185,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.
