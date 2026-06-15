@@ -1969,6 +1969,25 @@ Post-repair verification:
 - `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
 - `apps/mobile` `npm run preflight:native`: exited non-zero by design on this Windows host after passing app/config checks and reporting the same four native-smoke blockers: missing `adb`, missing Android `emulator`, non-macOS iOS simulator host, and missing `xcrun`.
 
+### Repair Pass 112: Web Skip Link Keyboard Access
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring a keyboard skip link, plain skip-link copy, a stable main-content target, a focusable main landmark, and an accessible main landmark label.
+- Added a first-focus skip link to the app shell that becomes visible on focus and points to `#main-content`.
+- Updated the shared root `<main>` region with `id="main-content"`, `tabIndex={-1}`, and `aria-label="Main content"` so keyboard and assistive-technology users have a consistent destination after bypassing navigation.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing skip link, then passed with 107 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke against the local production server confirmed the skip link text, `Main content` landmark label, focusable main target, click activation to `#main-content`, and no captured console errors. Enter-key activation on the visually hidden link was noisy in this Browser surface, so Chrome was used as the keyboard activation authority.
+- Chrome extension smoke against the local production server confirmed Enter on the focused skip link moved to `#main-content` with no captured console errors.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2428,7 +2447,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 ### Accessibility Tests
 
-- Keyboard navigation. Status: intro modal focus containment and Escape close covered in Repair Pass 111; broader route-by-route keyboard traversal still needs a dedicated pass.
+- Keyboard navigation. Status: intro modal focus containment and Escape close covered in Repair Pass 111; skip-to-main-content access covered in Repair Pass 112; broader route-by-route keyboard traversal still needs a dedicated pass.
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.

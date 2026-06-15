@@ -897,6 +897,16 @@ test('navigation exposes active page and mobile landmark state', () => {
   );
 });
 
+test('root layout exposes a keyboard skip link to main content', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/layout.tsx'), 'utf8');
+
+  assert.ok(source.includes('href="#main-content"'), 'expected a skip link target for keyboard users');
+  assert.ok(source.includes('Skip to main content'), 'expected skip link copy to be plain and discoverable');
+  assert.ok(source.includes('id="main-content"'), 'expected the main region to expose the skip-link target id');
+  assert.ok(source.includes('tabIndex={-1}'), 'expected the main region to be programmatically focusable');
+  assert.ok(source.includes('aria-label="Main content"'), 'expected the main region to have a readable landmark label');
+});
+
 test('intro modal exposes dialog semantics and traps keyboard focus', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/IntroModal.tsx'), 'utf8');
 
