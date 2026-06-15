@@ -1309,6 +1309,49 @@ test('portfolio velocity treats an existing LOC balance without a limit as setup
   );
 });
 
+test('portfolio velocity warns when LOC utilization is high but still available', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    extraMonthlyPayment: 0,
+    loc: {
+      limit: 10000,
+      apr: 0.085,
+      balance: 9000,
+    },
+    chunkAmount: 1000,
+    debts: [
+      {
+        id: 'auto',
+        name: 'Auto Loan',
+        category: 'auto',
+        kind: 'amortized',
+        balance: 14000,
+        apr: 0.08,
+        minPaymentRule: { type: 'fixed', amount: 390 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 1,
+  });
+
+  assert.ok(result.moneyLoopMonthlyData.length > 0, 'expected high-but-available LOC to keep Money Loop math active');
+  assert.ok(
+    result.warnings.some((warning) => warning.includes('LOC is over 80% utilized')),
+    result.warnings.join(' | ')
+  );
+  assert.ok(
+    !result.warnings.some((warning) => warning.includes('above the available limit') || warning.includes('limit is missing')),
+    result.warnings.join(' | ')
+  );
+  assert.equal(result.failureReason, undefined);
+});
+
 test('portfolio velocity treats target debt payments as cash outflows for LOC recovery', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 1000,

@@ -330,6 +330,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     !!velocityLoc &&
     velocityLoc.limit > 0 &&
     velocityLoc.balance > velocityLoc.limit;
+  const locHighUtilization =
+    !!velocityLoc &&
+    velocityLoc.limit > 0 &&
+    velocityLoc.balance < velocityLoc.limit &&
+    velocityLoc.balance / velocityLoc.limit > 0.8;
   const hasUsableVelocityLoc =
     settings.strategy === 'velocity' &&
     settings.focusMode === 'single' &&
@@ -385,6 +390,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   if (locNeedsSetup) {
     warnings.push(
       'LOC balance is present, but the limit is missing. Enter a limit before trusting Portfolio Velocity projections.'
+    );
+  }
+  if (locHighUtilization) {
+    warnings.push(
+      'LOC is over 80% utilized. Bring it below 80% before modeling another Portfolio Velocity chunk.'
     );
   }
 

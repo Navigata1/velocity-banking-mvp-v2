@@ -1751,6 +1751,26 @@ Post-repair verification:
 - Chrome smoke repeated the same Portfolio missing-limit state with 0 console warnings/errors, then restored the Chrome demo LOC values to `$25,000` limit and `$3,200` balance before closing the automation tab.
 - Native Android/iOS simulator smoke was not run in this web-only pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
 
+### Repair Pass 101: Portfolio High LOC Utilization Warning
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green regression coverage proving Portfolio Velocity warns when LOC utilization is above 80% but still below the available limit.
+- Portfolio Velocity now emits a non-blocking warning for high LOC utilization while keeping the Money Loop simulation active.
+- The warning is separate from the over-limit and missing-limit guardrails, so users see the right coach-tone next step for each LOC state.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first with the high-utilization warning missing, then passed with 103 regression tests after the fix.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+- `node scripts\mobile-port-contract-tests.cjs`: passed, keeping Expo/mobile shared-engine snapshots aligned.
+- `git diff --check`: passed; only existing Windows line-ending warnings were reported.
+- Local route HTTP check at `http://127.0.0.1:5144`: `/portfolio` returned 200.
+- In-app Browser smoke at `http://127.0.0.1:5144/portfolio`: edited monthly expenses to `$1,000`, LOC limit to `$10,000`, and LOC balance to `$9,000`; Portfolio rendered `LOC is over 80% utilized`, kept the Money Loop ledger active, did not render `Review inputs`, and captured 0 console warnings/errors.
+- Chrome smoke repeated the same Portfolio high-utilization state with 0 console warnings/errors, then restored the Chrome demo values to `$5,000` expenses, `$25,000` LOC limit, and `$3,200` LOC balance before closing the automation tab.
+- Native Android/iOS simulator smoke was not run in this web-only pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2171,6 +2191,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Negative cash flow. Status: covered in Repair Pass 1 for Velocity chunk suppression and in Repair Pass 9 for dashboard unstable-plan warnings.
 - Cash flow below total minimum payments. Status: covered in Repair Pass 24 for Portfolio, Repair Pass 31 for multi-debt Velocity, and Repair Pass 35 for single-debt Velocity.
 - LOC balance at or above limit. Status: covered in Repair Pass 14 for single-debt Velocity, Repair Pass 30 for multi-debt Velocity, and Repair Pass 99 for Portfolio Velocity; web Dashboard/Simulator warning parity added in Repair Pass 98, and mobile snapshot warning parity added in Repair Pass 97.
+- LOC utilization above 80%. Status: covered in Repair Pass 101 for Portfolio Velocity; web Dashboard/Simulator warning parity exists from earlier warning models, and mobile snapshot warning parity was added in Repair Pass 97.
 - Missing LOC limit on dashboard/simulator/shared warnings. Status: covered in Repair Pass 53 for dashboard, Repair Pass 54 for simulator, Repair Pass 55 for shared engine warnings, and Repair Pass 100 for Portfolio Velocity so missing LOC capacity is setup needed instead of maxed-out/high utilization or `Infinity%` copy.
 - Chunk larger than remaining debt. Status: covered in Repair Pass 23 for the shared Money Loop LOC chunk ledger.
 - Chunk larger than available LOC credit. Status: covered in Repair Pass 28 for partial available-credit chunk draws.
@@ -2243,7 +2264,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94.
 - Rebuild simulator scenario comparison.
 - Rebuild portfolio mobile and desktop planner.
-- Add assumptions and warnings everywhere. Status: expanded through Repair Pass 100 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, and Repair Pass 97 mobile snapshot parity.
+- Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity.
 
 ### Phase 3: Backend
 
