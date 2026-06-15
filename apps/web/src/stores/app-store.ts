@@ -35,9 +35,9 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      introSeen: false,
+      introSeen: true,
       introModalOpen: false,
-      skipIntroOnStartup: false,
+      skipIntroOnStartup: true,
       setupComplete: false,
       landingPage: 'dashboard',
       user: null,
@@ -51,12 +51,23 @@ export const useAppStore = create<AppState>()(
       signInLocal: (email, name) => set({ user: { email, name } }),
       signOut: () => set({ user: null }),
 
-      previewDismissed: false,
+      previewDismissed: true,
       setPreviewDismissed: (dismissed) => set({ previewDismissed: dismissed }),
     }),
     {
       name: 'interestshield-app-v1',
-      version: 1,
+      version: 2,
+      migrate: (persistedState) => {
+        const persisted = persistedState as Partial<AppState> | undefined;
+
+        return {
+          ...persisted,
+          introSeen: true,
+          introModalOpen: false,
+          skipIntroOnStartup: true,
+          previewDismissed: true,
+        };
+      },
     }
   )
 );

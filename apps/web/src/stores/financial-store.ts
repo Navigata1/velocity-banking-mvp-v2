@@ -2,6 +2,12 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import {
+  simulateBaseline,
+  simulateVelocity,
+  type PayoffFailureReason,
+  type SimulationInputs,
+} from '../engine/calculations';
 
 export interface DebtAccount {
   id: string;
@@ -24,6 +30,17 @@ export interface LOC {
 
 export type DebtType = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
 export type Domain = 'car' | 'house' | 'land' | 'creditCard' | 'studentLoan' | 'medical' | 'personal' | 'recreation' | 'custom';
+
+export interface PayoffProjection {
+  months: number;
+  totalInterest: number;
+  isPayoffPossible?: boolean;
+  failureReason?: PayoffFailureReason;
+}
+
+export interface VelocityPayoffProjection extends PayoffProjection {
+  savings: number;
+}
 
 export interface Subcategory {
   id: string;
@@ -171,17 +188,31 @@ export interface FinancialState {
   getCashFlow: () => number;
   getDailyInterest: (type: DebtType) => number;
   getTotalDebt: () => number;
-  getBaselinePayoff: (type: DebtType) => { months: number; totalInterest: number };
-  getVelocityPayoff: (type: DebtType) => { months: number; totalInterest: number; savings: number };
+  getBaselinePayoff: (type: DebtType) => PayoffProjection;
+  getVelocityPayoff: (type: DebtType) => VelocityPayoffProjection;
 }
 
-const calculateAmortization = (principal: number, annualRate: number, termMonths: number) => {
-  if (principal <= 0 || termMonths <= 0) return { monthlyPayment: 0, totalInterest: 0 };
-  const monthlyRate = annualRate / 12;
-  if (monthlyRate === 0) return { monthlyPayment: principal / termMonths, totalInterest: 0 };
-  const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, termMonths)) / (Math.pow(1 + monthlyRate, termMonths) - 1);
-  const totalPaid = monthlyPayment * termMonths;
-  return { monthlyPayment, totalInterest: totalPaid - principal };
+const createSimulationInputs = (state: FinancialState, type: DebtType): SimulationInputs | null => {
+  const debt = state.debts[type];
+  if (!debt) return null;
+
+  return {
+    monthlyIncome: state.monthlyIncome,
+    monthlyExpenses: state.monthlyExpenses,
+    carLoan: {
+      balance: debt.balance,
+      apr: debt.interestRate,
+      monthlyPayment: debt.minimumPayment,
+      termMonths: debt.termMonths,
+    },
+    loc: {
+      limit: state.loc.limit,
+      apr: state.loc.interestRate,
+      balance: state.loc.balance,
+    },
+    useVelocity: true,
+    extraPayment: state.chunkAmount,
+  };
 };
 
 export const useFinancialStore = create<FinancialState>()(
@@ -378,44 +409,36 @@ export const useFinancialStore = create<FinancialState>()(
       
       getBaselinePayoff: (type) => {
         const state = get();
-        const debt = state.debts[type];
-        if (!debt) return { months: 0, totalInterest: 0 };
-        const { totalInterest } = calculateAmortization(debt.balance, debt.interestRate, debt.termMonths);
-        return { months: debt.termMonths, totalInterest };
+        const inputs = createSimulationInputs(state, type);
+        if (!inputs) return { months: 0, totalInterest: 0, isPayoffPossible: false };
+
+        const result = simulateBaseline(inputs);
+        return {
+          months: result.payoffMonths,
+          totalInterest: result.totalInterest,
+          isPayoffPossible: result.isPayoffPossible,
+          failureReason: result.failureReason,
+        };
       },
       
       getVelocityPayoff: (type) => {
         const state = get();
-        const debt = state.debts[type];
-        if (!debt) return { months: 0, totalInterest: 0, savings: 0 };
+        const inputs = createSimulationInputs(state, type);
+        if (!inputs) return { months: 0, totalInterest: 0, savings: 0, isPayoffPossible: false };
+
         const baseline = state.getBaselinePayoff(type);
-        const cashFlow = state.getCashFlow();
-        const chunkAmount = state.chunkAmount;
-        
-        if (cashFlow <= 0 || chunkAmount <= 0) {
-          return { months: baseline.months, totalInterest: baseline.totalInterest, savings: 0 };
-        }
-        
-        let balance = debt.balance;
-        let months = 0;
-        let totalInterest = 0;
-        const monthlyRate = debt.interestRate / 12;
-        const locRate = state.loc.interestRate / 12;
-        
-        while (balance > 0 && months < debt.termMonths) {
-          const interestPayment = balance * monthlyRate;
-          const principalPayment = Math.min(debt.minimumPayment - interestPayment + chunkAmount, balance);
-          
-          const locInterest = (chunkAmount * locRate) * 0.5;
-          
-          balance -= principalPayment;
-          totalInterest += interestPayment + locInterest;
-          months++;
-        }
-        
-        const savings = baseline.totalInterest - totalInterest;
-        
-        return { months, totalInterest, savings: Math.max(0, savings) };
+        const velocity = simulateVelocity(inputs);
+        const savings = baseline.isPayoffPossible && velocity.isPayoffPossible
+          ? Math.max(0, baseline.totalInterest - velocity.totalInterest)
+          : 0;
+
+        return {
+          months: velocity.payoffMonths,
+          totalInterest: velocity.totalInterest,
+          savings,
+          isPayoffPossible: velocity.isPayoffPossible,
+          failureReason: velocity.failureReason,
+        };
       },
     }),
     {

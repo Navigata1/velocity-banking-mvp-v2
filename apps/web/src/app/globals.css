@@ -26,3 +26,25 @@ body {
 .animate-shimmer {
   animation: shimmer 1.5s ease-in-out infinite;
 }
+
+@keyframes artifactFloat {
+  0%, 100% {
+    transform: rotateX(58deg) rotateZ(-14deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(58deg) rotateZ(-14deg) translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .artifact-token {
+    animation: artifactFloat 4.8s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifact-token {
+    transform: rotateX(58deg) rotateZ(-14deg);
+  }
+}

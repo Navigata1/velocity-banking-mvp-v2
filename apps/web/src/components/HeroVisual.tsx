@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Domain, useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import { useIsClient } from '@/hooks/useIsClient';
 import { useState, useEffect } from 'react';
 
 interface HotspotProps {
@@ -146,13 +147,9 @@ export default function HeroVisual({ domain, hotspots = [], trendValue, trendLab
   const store = useFinancialStore();
   const { theme } = useThemeStore();
   const subcategory = store.getActiveSubcategory(domain);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const [rotationY, setRotationY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const currentTheme = mounted ? theme : 'original';
   const classes = themeClasses[currentTheme];

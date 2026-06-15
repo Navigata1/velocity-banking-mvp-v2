@@ -6,6 +6,7 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition';
+import { useIsClient } from '@/hooks/useIsClient';
 
 /* ──────────────────────────────────────────────────────────
    TYPES
@@ -298,13 +299,13 @@ const lessons: Lesson[] = [
     color: 'emerald',
     simulatorFocus: 'cashflow',
     content: [
-      'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number — however small — is the fuel that drives the entire velocity banking engine. Without positive cash flow, velocity banking cannot work. Period.',
-      'Here\'s what most people miss: even $200/month of cash flow, when deployed strategically through a Line of Credit, can shave years off a 30-year mortgage. That\'s because velocity banking doesn\'t just make extra payments — it restructures how interest is calculated on your debt by leveraging the difference between amortized interest and average daily balance interest.',
+      'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number — however small — is the fuel that drives the entire velocity banking engine. Without positive cash flow, a LOC-based payoff plan should stay in learning mode rather than active strategy.',
+      'Here\'s what most people miss: even $200/month of cash flow can change a modeled payoff timeline when the debt rate, LOC cost, fees, timing, and discipline line up. That\'s because velocity banking doesn\'t just make extra payments — it changes when balances are reduced and how much interest-bearing balance remains.',
       'The "Cash Flow Multiplier" effect is where it gets exciting. As you pay off debts using velocity banking, those minimum payments you were making become available cash flow. Pay off a $300/month car payment? Your cash flow just jumped from $200 to $500. That acceleration compounds — each debt eliminated feeds the next cycle faster.',
-      'Think of cash flow as water pressure in a hose. The more pressure (cash flow), the faster you can fill the bucket (pay off debt). But even a trickle will get there — it just takes more cycles. The key is knowing your exact number, tracking it religiously, and protecting it from lifestyle creep.',
+      'Think of cash flow as water pressure in a hose. The more pressure (cash flow), the faster you can fill the bucket (pay off debt). But even a trickle will get there — it just takes more cycles. The key is knowing your exact number, checking it consistently, and protecting it from lifestyle creep.',
     ],
-    keyTakeaway: 'Positive cash flow is non-negotiable. Know your exact monthly surplus. Even $200/month can accelerate debt payoff by years when used in the velocity banking cycle.',
-    deepDive: 'To calculate your true cash flow: add up every recurring income source (net pay, side income, dividends). Then subtract every expense — fixed (rent, insurance, subscriptions) and variable (groceries, gas, entertainment). Use the last 3 months of bank statements for accuracy. The number you get is your "velocity fuel." If it\'s negative, you must fix that first through expense reduction or income increase before starting velocity banking.',
+    keyTakeaway: 'Positive cash flow is the first gate. Know your exact monthly surplus. Even $200/month may help in the velocity banking cycle, but the payoff impact depends on your actual inputs.',
+    deepDive: 'To calculate your true cash flow: add up every recurring income source (net pay, side income, dividends). Then subtract every expense — fixed (rent, insurance, subscriptions) and variable (groceries, gas, entertainment). Review recent statements or spending records so the number is grounded. The number you get is your "velocity fuel." If it\'s negative, keep a LOC-based payoff plan in learning mode while you work on expense reduction or income increase.',
     quiz: {
       question: 'What happens to your cash flow when you pay off a debt using velocity banking?',
       options: [
@@ -331,7 +332,7 @@ const lessons: Lesson[] = [
       'The Money Loop is the heartbeat of velocity banking. It\'s a simple but powerful cycle: your entire paycheck deposits directly into your Line of Credit (LOC), immediately reducing the balance. Then, throughout the month, you pay your living expenses from the LOC. At the end of the month, the net effect is that your LOC balance dropped by your cash flow amount — but the average daily balance was lower the entire month.',
       'Here\'s the step-by-step: Say your LOC balance is $5,000. On the 1st, your $4,000 paycheck deposits in — balance drops to $1,000. Over 30 days, you draw $3,500 for expenses. End-of-month balance: $4,500 (down $500 — your cash flow). But here\'s the magic: your average daily balance was roughly $2,800 instead of $5,000 because the income sat in the LOC for days before being drawn out.',
       'Why does the average daily balance matter? Because LOCs charge interest on the average daily balance, not the ending balance. A traditional bank account separates your income from your debt — money sits in checking earning nothing while your LOC accrues interest on the full balance. The Money Loop eliminates that gap.',
-      'This is the core innovation of velocity banking: using the same dollars to both reduce interest AND pay your bills. Your money works double-duty. The cycle repeats every pay period, creating a perpetual interest-reduction machine powered by your income flow.',
+      'This is the core innovation of velocity banking: using the same dollars to both reduce interest-bearing balance AND pay your bills. Your money works double-duty. The cycle repeats every pay period, creating a repeatable interest-management loop powered by your income flow.',
     ],
     keyTakeaway: 'Deposit income into LOC first, pay expenses from LOC. Your money reduces your average daily balance before it gets spent — making every dollar work double duty.',
     deepDive: 'The efficiency of the Money Loop depends on how your expenses are distributed throughout the month. If all expenses hit on day 1, the ADB benefit is minimal. If expenses trickle out evenly (which is typical — rent on the 1st, utilities mid-month, groceries weekly), the ADB stays low for longer. Some advanced practitioners even time bill payments to maximize the ADB reduction effect, though this is an optimization that adds complexity.',
@@ -364,7 +365,7 @@ const lessons: Lesson[] = [
       'Compare this to the alternative: income goes to checking, LOC stays at $5,000 all month, and you pay interest on the full $5,000. Same money, same expenses, but dramatically different interest charges. This timing advantage is what the Money Loop exploits every single month.',
       'The monthly interest difference might seem small ($18.75 savings in our example at 10% APR), but it compounds. Over years of cycling, these savings accumulate — and more importantly, they allow the LOC to be paid down faster, creating room for larger "chunks" against your primary debt.',
     ],
-    keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — reduces the average and saves interest.',
+    keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — can reduce the average and lower interest when the LOC cost and timing work in your favor.',
     deepDive: 'Detailed ADB math: Starting balance $5,000. Day 1: deposit $4,000 → $1,000. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 1: $1,000. Day 15: $1,000 + (14 × $116.67) = $2,633. Day 30: $4,500. Sum of daily balances ≈ $82,500. ADB = $82,500 ÷ 30 = $2,750. Monthly interest at 10% APR = $2,750 × (0.10 ÷ 12) = $22.92. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 12) = $41.67. Monthly savings: $18.75. Annual savings: $225. Over 5 years of cycling: $1,125+ in interest saved — just from the timing of your deposits.',
     quiz: {
       question: 'If your LOC has a $5,000 balance and you deposit $4,000 income on day 1, what approximately is your average daily balance for the month?',
@@ -389,12 +390,12 @@ const lessons: Lesson[] = [
     color: 'orange',
     simulatorFocus: 'chunk',
     content: [
-      'While the Money Loop handles the LOC efficiently, the Chunk Strategy is where the real mortgage-killing power lives. A "chunk" is a large lump-sum payment from your LOC directly to your primary amortized debt\'s principal. It\'s the offensive weapon in your velocity banking arsenal.',
+      'While the Money Loop handles the LOC efficiently, the Chunk Strategy is where principal reduction becomes visible. A "chunk" is a large lump-sum payment from your LOC directly to your primary amortized debt\'s principal. Treat it as a planning move that needs enough cash flow to recover the LOC safely.',
       'Here\'s how it works: As you cycle income through the Money Loop, your cash flow gradually pays down the LOC. When the LOC balance drops enough to have significant available credit, you deploy a chunk. For example, if your $15,000 LOC has been paid down to $5,000 through income cycling, you have $10,000 of available credit. You might deploy a $8,000 chunk to your mortgage principal.',
-      'The impact of a chunk on amortized debt is dramatic. On a $200,000 mortgage at 6% interest, a single $3,000 chunk payment in year 3 saves approximately $6,400 in interest over the life of the loan and eliminates roughly 4 months of payments from the end of your term. Why? Because every dollar of principal reduction means less interest is calculated at the next payment — and that compounds for the remaining 27 years.',
-      'The cycle then repeats: after the chunk, your LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with your cash flow. When there\'s room, you deploy another chunk. Each cycle accelerates the timeline — it\'s not linear, it\'s exponential because the chunks compound against the amortization schedule.',
+      'The impact of a chunk on amortized debt depends on timing and rate. In one sample $200,000 mortgage at 6% interest, a $3,000 chunk payment in year 3 saves approximately $6,400 in interest over the life of the loan and removes roughly 4 months from the end of the term. Why? Because every dollar of principal reduction means less interest is calculated at the next payment — and that compounds for the remaining 27 years.',
+      'The cycle then repeats: after the chunk, your LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with your cash flow. When there\'s room, you deploy another chunk. Each cycle can improve the timeline when the chunk size, LOC recovery time, and interest spread remain healthy.',
     ],
-    keyTakeaway: 'Chunks are large lump-sum attacks on your mortgage principal using LOC credit. A single $3,000 chunk can save $6,000+ in interest and cut months off your mortgage. Repeat the cycle for exponential acceleration.',
+    keyTakeaway: 'Chunks are large lump-sum payments toward principal using LOC credit. A sample $3,000 chunk may save more than the chunk amount in interest, but only when the debt rate, LOC cost, timing, and recovery plan support it.',
     deepDive: 'Chunk sizing is critical. A chunk should leave enough LOC capacity for emergencies (keep at least 20% available) and should be recoverable by your cash flow within a reasonable timeframe. If your monthly cash flow is $500, a $5,000 chunk takes 10 months to recover. That\'s fine for a steady income. But a $12,000 chunk with $500/month cash flow takes 24 months — you might need that LOC capacity for emergencies during that time. A general rule: chunk size should be recoverable in 6-12 months of cash flow cycling.',
     quiz: {
       question: 'Why does a $3,000 principal chunk on a 30-year mortgage save more than $3,000 in interest?',
@@ -420,12 +421,12 @@ const lessons: Lesson[] = [
     simulatorFocus: 'overview',
     content: [
       'Velocity banking isn\'t magic — it\'s math. And the math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, the strategy cannot function.',
-      'Ideal conditions include: a LOC interest rate lower than your primary debt rate (this maximizes the arbitrage), consistent and predictable income (makes cycling reliable), front-loaded amortized debt like mortgages where early payments are mostly interest (this is where chunks have maximum impact), and financial discipline to avoid increasing spending as credit becomes available.',
-      'Velocity banking still works even if your LOC rate is slightly higher than your mortgage rate — because the ADB calculation on the LOC means you\'re not paying the full rate on the full balance. However, the margin shrinks, and the strategy becomes less powerful. The sweet spot is a LOC rate 2-4% below your primary debt rate.',
+      'Ideal conditions include: a LOC interest rate lower than your primary debt rate, consistent and predictable income, front-loaded amortized debt where early payments are interest-heavy, and financial discipline to avoid increasing spending as credit becomes available.',
+      'If your LOC rate is close to or higher than the debt rate, do not assume the strategy works. The ADB benefit, chunk timing, fees, recovery window, and cash-flow stability all need to be modeled together before trusting the spread.',
       'When does it NOT work? If your cash flow is negative (you\'re spending more than you earn), if your LOC rate is significantly higher than your debt rate with low cash flow, if you can\'t maintain spending discipline (using the LOC for lifestyle inflation defeats the purpose), or if your debt is already near the end of its amortization schedule (most payments are already going to principal, so chunks have less impact).',
     ],
     keyTakeaway: 'Velocity banking thrives with: positive cash flow, LOC rate lower than debt rate, front-loaded amortized debt, and spending discipline. It fails without positive cash flow or spending control.',
-    deepDive: 'Rate comparison nuance: A 10% LOC vs 6% mortgage might seem like a losing proposition. But remember — you\'re paying 10% on the average daily balance (which is much lower than the actual balance), and the chunks are hitting principal on a front-loaded amortization where 70%+ of payments are interest. Run the numbers in the simulator with your actual rates to see if the math works for your situation. For many people, even a higher-rate LOC provides net savings because of the ADB advantage and the compounding effect of principal reduction.',
+    deepDive: 'Rate comparison nuance: A 10% LOC vs 6% mortgage might seem like a losing proposition. But remember — you\'re paying 10% on the average daily balance, and chunks may hit principal on a front-loaded amortization where early payments are interest-heavy. Run the numbers in the simulator with your actual rates, cash flow, fees, and payoff timing before assuming the spread works in your situation.',
     quiz: {
       question: 'Which of the following would make velocity banking LEAST effective?',
       options: [
@@ -449,13 +450,13 @@ const lessons: Lesson[] = [
     color: 'amber',
     simulatorFocus: 'loc',
     content: [
-      'The most dangerous mistake in velocity banking is over-utilizing your LOC. Using more than 80% of your credit limit does two harmful things: it leaves no emergency buffer, and it can damage your credit score. If an unexpected expense hits when your LOC is maxed, you\'re forced to use high-interest alternatives. Always maintain at least 20% available credit.',
-      'Not tracking expenses accurately is the silent killer. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs eat into the savings. Track every dollar for at least 3 months before starting.',
-      'Making chunks too large is tempting but risky. A massive chunk feels great — your mortgage balance drops dramatically. But if that chunk maxes your LOC and your income dips (job change, medical expense, car repair), you can\'t recover. Stick to chunks that leave 20% LOC headroom and can be recovered within 6-12 months of cash flow.',
-      'Two more critical mistakes: ignoring LOC interest (it\'s not free money — every month the LOC carries a balance, you\'re paying interest, so the cycle must be efficient), and treating the LOC as spending money. The LOC is a tool for debt elimination, not a lifestyle enhancer. The moment you use available LOC credit for vacations or gadgets, you\'ve broken the strategy.',
+      'A common LOC mistake is using too much of the available line at once. If utilization moves above 80%, the plan has less emergency room and may affect credit. Keep at least 20% available credit as a planning buffer before making another chunk.',
+      'Not tracking expenses accurately can make the plan look stronger than it is. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs eat into the savings. Track spending long enough to trust the surplus before modeling chunks.',
+      'Large chunks can feel encouraging because the mortgage balance falls quickly. The tradeoff is recovery risk: if income dips or an emergency hits before LOC recovery, the plan can strain cash flow. Size chunks to leave 20% LOC headroom and a recovery window you can sustain.',
+      'Two more checks: include LOC interest in the plan, and avoid treating LOC credit as spendable income. The LOC is a planning tool for a modeled debt strategy, not extra monthly income.',
     ],
-    keyTakeaway: 'Stay under 80% LOC utilization, track every expense, size chunks conservatively, remember LOC interest is real cost, and never use the LOC for lifestyle spending.',
-    deepDive: 'A real-world example of mistake cascading: Sarah has $500/month cash flow, a $15,000 LOC, and deploys a $12,000 chunk (80% utilization). Two months later, her car needs $2,000 in repairs. LOC is at $11,000 (only recovered $1,000). She has $4,000 available but needs it for emergencies. She uses a credit card at 24% APR for the car. Now she has LOC interest AND credit card interest eating her cash flow. The chunk savings are neutralized. If she had chunked $8,000 instead, she\'d have had $7,000 available and handled the emergency easily.',
+    keyTakeaway: 'Keep LOC utilization under 80%, track expenses, size chunks conservatively, include LOC interest, and avoid treating LOC credit as spendable income.',
+    deepDive: 'Planning example: a household has $500/month cash flow, a $15,000 LOC, and deploys a $12,000 chunk (80% utilization). Two months later, the car needs $2,000 in repairs. The LOC is at $11,000 (only recovered $1,000). The household has $4,000 available but needs it for emergencies, so a credit card at 24% APR enters the picture. Now LOC interest and credit card interest both pressure cash flow. If the household had chunked $8,000 instead, it would have had $8,000 available and handled the emergency more easily.',
     quiz: {
       question: 'What is the recommended maximum LOC utilization for velocity banking?',
       options: [
@@ -465,7 +466,7 @@ const lessons: Lesson[] = [
         '50% — only use half your LOC',
       ],
       correctIndex: 2,
-      explanation: 'Keeping utilization under 80% protects your credit score and ensures you have emergency capacity. Over-utilizing the LOC is one of the most common mistakes in velocity banking.',
+      explanation: 'Keeping utilization under 80% helps preserve emergency capacity and keeps the plan from depending on every available dollar of credit.',
     },
     investopediaUrl: 'https://www.investopedia.com/articles/pf/12/good-debt-bad-debt.asp',
     investopediaLabel: 'Good vs Bad Debt — Investopedia',
@@ -479,7 +480,7 @@ const glossary: GlossaryItem[] = [
   { term: 'Amortization', definition: 'A payment schedule where early payments are mostly interest. Velocity banking exploits this front-loading by attacking principal early.', url: 'https://www.investopedia.com/terms/a/amortization.asp' },
   { term: 'LOC / HELOC', definition: 'Line of Credit / Home Equity Line of Credit. The vehicle for the Money Loop — charges interest on average daily balance, not the fixed balance.', url: 'https://www.investopedia.com/mortgage/heloc/' },
   { term: 'Average Daily Balance', definition: 'The average of your account balance across each day of the billing period. LOCs use this to calculate interest — the core of why velocity banking works.', url: 'https://www.investopedia.com/terms/a/averagedailybalance.asp' },
-  { term: 'Chunk', definition: 'A large lump-sum payment from your LOC to your primary debt\'s principal. The offensive weapon in velocity banking.', url: '#' },
+  { term: 'Chunk', definition: 'A large lump-sum payment from your LOC to your primary debt\'s principal. It needs enough cash flow to recover the LOC safely.', url: '#' },
   { term: 'Money Loop', definition: 'The cycle of depositing income into LOC and paying expenses from it, keeping the average daily balance low and minimizing interest.', url: '#' },
 ];
 
@@ -489,22 +490,35 @@ const glossary: GlossaryItem[] = [
 
 const STORAGE_KEY = 'interestshield-learn-progress';
 
+function readSavedProgress(): { completed: Set<number>; quizAnswers: Record<number, number | null> } {
+  if (typeof window === 'undefined') {
+    return { completed: new Set(), quizAnswers: {} };
+  }
+
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (!saved) return { completed: new Set(), quizAnswers: {} };
+    const parsed = JSON.parse(saved);
+    return {
+      completed: new Set(parsed.completed || []),
+      quizAnswers: parsed.quizAnswers || {},
+    };
+  } catch {
+    return { completed: new Set(), quizAnswers: {} };
+  }
+}
+
+function parseTargetModule(value: string | null): number | null {
+  if (!value) return null;
+  const moduleNum = parseInt(value, 10);
+  return moduleNum >= 1 && moduleNum <= lessons.length ? moduleNum : null;
+}
+
 function useProgress() {
-  const [completed, setCompleted] = useState<Set<number>>(new Set());
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>({});
+  const [completed, setCompleted] = useState<Set<number>>(() => readSavedProgress().completed);
+  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>(() => readSavedProgress().quizAnswers);
   const [justCompleted, setJustCompleted] = useState<number | null>(null);
   const [milestone, setMilestone] = useState<'half' | 'full' | null>(null);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setCompleted(new Set(parsed.completed || []));
-        setQuizAnswers(parsed.quizAnswers || {});
-      }
-    } catch { /* ignore */ }
-  }, []);
 
   const save = (c: Set<number>, q: Record<number, number | null>) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed: [...c], quizAnswers: q }));
@@ -745,7 +759,7 @@ function ChunkStrategyViz() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
         className="text-center text-xs text-orange-400/80 mt-3"
       >
-        Each $3K chunk saves ~$6,400 in interest over the loan life
+        Sample chunk outcomes depend on rate, timing, LOC cost, and recovery
       </motion.p>
     </div>
   );
@@ -1104,35 +1118,27 @@ function LessonCard({
    ────────────────────────────────────────────────────────── */
 
 function LearnPageInner() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const [hoveredTerm, setHoveredTerm] = useState<string | null>(null);
-  const [targetModule, setTargetModule] = useState<number | null>(null);
-  const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
   const { theme } = useThemeStore();
   const { completed, quizAnswers, toggleComplete, answerQuiz, justCompleted, milestone, clearMilestone } = useProgress();
   const searchParams = useSearchParams();
+  const targetModule = parseTargetModule(searchParams.get('module'));
+  const [expandedLesson, setExpandedLesson] = useState<number | null>(targetModule);
   const lessonRefs = useRef<Record<number, HTMLDivElement | null>>({});
-
-  useEffect(() => { setMounted(true); }, []);
 
   // Handle ?module=X query param
   useEffect(() => {
-    const mod = searchParams.get('module');
-    if (mod) {
-      const moduleNum = parseInt(mod, 10);
-      if (moduleNum >= 1 && moduleNum <= lessons.length) {
-        setTargetModule(moduleNum);
-        setExpandedLesson(moduleNum);
-        // Scroll after a short delay to let DOM render
-        setTimeout(() => {
-          const el = lessonRefs.current[moduleNum];
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 300);
-      }
+    if (targetModule) {
+      const timeout = setTimeout(() => {
+        const el = lessonRefs.current[targetModule];
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+      return () => clearTimeout(timeout);
     }
-  }, [searchParams]);
+  }, [targetModule]);
 
   const classes = themeClasses[mounted ? theme : 'original'];
   const completedCount = completed.size;

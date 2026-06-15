@@ -7,7 +7,8 @@ import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { useIsClient } from '@/hooks/useIsClient';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -17,7 +18,7 @@ const themeOptions: { value: Theme; label: string; icon: string }[] = [
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const [showAI, setShowAI] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [aiQuery, setAiQuery] = useState('');
@@ -28,10 +29,6 @@ export default function Navigation() {
   const activeDomain = store.activeDomain;
   const { theme, setTheme } = useThemeStore();
   const { teacherMode, setTeacherMode } = usePreferencesStore();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleAISubmit = useCallback(() => {
     if (!aiQuery.trim()) return;
@@ -72,7 +69,7 @@ export default function Navigation() {
         <div className="px-4 py-2 md:p-6">
           <div className="hidden md:block mb-8">
             <div className="flex items-center gap-3">
-              <img 
+              <Image 
                 src="/logo-64.png" 
                 alt="InterestShield Logo" 
                 width={40}
@@ -85,12 +82,13 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          <div className="flex justify-around md:flex-col md:space-y-2">
+          <div className="grid grid-cols-8 gap-1 md:flex md:flex-col md:space-y-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                aria-label={item.label}
+                className={`flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all md:justify-start md:px-4 ${
                   pathname === item.href
                     ? 'bg-emerald-500/20 text-emerald-400'
                     : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-800/50`
@@ -105,7 +103,8 @@ export default function Navigation() {
             
             <button
               onClick={() => setShowAI(true)}
-              className="md:hidden flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800"
+              className="flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800 md:hidden"
+              aria-label="Open Velocity Guardian"
             >
               <span className="text-xl">🛡️</span>
             </button>
@@ -137,6 +136,9 @@ export default function Navigation() {
           <div className="hidden md:block mt-6">
             <button
               onClick={() => setShowThemes(!showThemes)}
+              aria-label="Choose theme"
+              aria-expanded={showThemes}
+              aria-haspopup="true"
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl ${classes.glassButton}`}
             >
               <span className={`text-sm ${classes.textSecondary}`}>Theme</span>
@@ -149,6 +151,8 @@ export default function Navigation() {
                   <button
                     key={option.value}
                     onClick={() => { setTheme(option.value); setShowThemes(false); }}
+                    aria-label={`Use ${option.label} theme`}
+                    aria-pressed={theme === option.value}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
                       theme === option.value 
                         ? 'bg-emerald-500/20 text-emerald-400' 

@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { useAppStore, LandingPage } from '@/stores/app-store';
+import { usePreferencesStore } from '@/stores/preferences-store';
 import { usePortfolioStore } from '@/stores/portfolio-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
+import { useIsClient } from '@/hooks/useIsClient';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -14,14 +16,13 @@ const themeOptions: { value: Theme; label: string; icon: string }[] = [
 ];
 
 export default function SettingsPage() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const { theme, setTheme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
   const appStore = useAppStore();
+  const preferencesStore = usePreferencesStore();
   const portfolioStore = usePortfolioStore();
   const [importStatus, setImportStatus] = useState<string | null>(null);
-
-  useEffect(() => setMounted(true), []);
 
   if (!mounted) {
     return (
@@ -48,11 +49,11 @@ export default function SettingsPage() {
   const handleImport = async (file: File) => {
     const text = await file.text();
     const res = portfolioStore.importState(text);
-    if (res.ok) {
-      setImportStatus('✅ Import successful!');
-    } else {
-      setImportStatus(`❌ ${res.error}`);
-    }
+    setImportStatus(
+      res.ok
+        ? 'Import complete. This local portfolio plan was replaced by the backup file.'
+        : `Import failed: ${res.error}`
+    );
     setTimeout(() => setImportStatus(null), 3000);
   };
 
@@ -75,6 +76,8 @@ export default function SettingsPage() {
             <button
               key={opt.value}
               onClick={() => setTheme(opt.value)}
+              aria-label={`Use ${opt.label} theme`}
+              aria-pressed={theme === opt.value}
               className={`p-4 rounded-xl text-center transition-all border ${
                 theme === opt.value
                   ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
@@ -96,9 +99,9 @@ export default function SettingsPage() {
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer">
             <div>
-              <p className={`font-medium ${classes.text}`}>Skip intro on startup</p>
+              <p className={`font-medium ${classes.text}`}>Keep intro hidden on startup</p>
               <p className={`text-xs ${classes.textSecondary}`}>
-                Don&apos;t show the welcome modal when you open the app.
+                The dashboard opens first by default. Turn this off only when you want the intro to appear at launch.
               </p>
             </div>
             <button
@@ -120,6 +123,40 @@ export default function SettingsPage() {
             className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm ${classes.textSecondary} hover:${classes.text}`}
           >
             🎬 Replay Intro
+          </button>
+
+          <label className="flex items-center justify-between cursor-pointer">
+            <div>
+              <p className={`font-medium ${classes.text}`}>Show snapshot preview</p>
+              <p className={`text-xs ${classes.textSecondary}`}>
+                Allow the quick snapshot to appear again after its refresh window expires.
+              </p>
+            </div>
+            <button
+              aria-label="Toggle snapshot preview"
+              aria-pressed={preferencesStore.showPreAppPreview}
+              onClick={() => preferencesStore.setShowPreAppPreview(!preferencesStore.showPreAppPreview)}
+              className={`w-12 h-6 rounded-full transition-colors ${
+                preferencesStore.showPreAppPreview ? 'bg-emerald-500' : classes.bgTertiary
+              }`}
+            >
+              <div
+                className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                  preferencesStore.showPreAppPreview ? 'translate-x-6' : 'translate-x-0.5'
+                }`}
+              />
+            </button>
+          </label>
+
+          <button
+            onClick={() => {
+              preferencesStore.setShowPreAppPreview(true);
+              preferencesStore.setLastPreviewRefresh(0);
+              appStore.setPreviewDismissed(false);
+            }}
+            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm ${classes.textSecondary} hover:${classes.text}`}
+          >
+            Show snapshot next visit
           </button>
         </div>
       </section>
@@ -153,20 +190,28 @@ export default function SettingsPage() {
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Data Backup</h2>
         <p className={`text-sm ${classes.textSecondary} mb-4`}>
-          Export your portfolio data as JSON. Import to restore on a new device.
+          Local backup only. Export your portfolio balances, LOC settings, strategy, and planning inputs as JSON.
+          Import replaces the current local portfolio plan in this browser.
         </p>
         <div className="flex gap-3">
           <button
             onClick={handleExport}
+            aria-label="Export local portfolio backup"
+            data-testid="settings-export-backup"
             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors"
           >
             📤 Export Backup
           </button>
-          <label className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium cursor-pointer ${classes.textSecondary} hover:${classes.text}`}>
+          <label
+            data-testid="settings-import-backup"
+            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium cursor-pointer ${classes.textSecondary} hover:${classes.text}`}
+          >
             📥 Import Backup
             <input
               type="file"
               accept="application/json"
+              aria-label="Import local portfolio backup JSON"
+              data-testid="settings-import-backup-input"
               className="hidden"
               onChange={(e) => {
                 const f = e.target.files?.[0];
@@ -182,10 +227,26 @@ export default function SettingsPage() {
       </section>
       </ScrollReveal>
 
-      {/* Demo Auth */}
+      {/* Backend Status */}
       <ScrollReveal variant="fadeUp" delay={0.2}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account (Demo)</h2>
+        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Backend status</h2>
+        <div className={`${classes.bgTertiary} rounded-xl p-4 space-y-2`}>
+          <p className={`text-sm font-medium ${classes.text}`}>Local demo mode</p>
+          <p className={`text-sm ${classes.textSecondary}`}>
+            Supabase is not connected yet. Data is stored in this browser for the demo.
+          </p>
+          <p className={`text-xs ${classes.textMuted}`}>
+            Next backend step: Supabase Postgres + Auth + RLS after the calculation engine stays stable.
+          </p>
+        </div>
+      </section>
+      </ScrollReveal>
+
+      {/* Demo Auth */}
+      <ScrollReveal variant="fadeUp" delay={0.25}>
+      <section className={`${classes.glass} rounded-2xl p-6`}>
+        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account (Local demo)</h2>
         {appStore.user ? (
           <div className="space-y-3">
             <div className={`${classes.bgTertiary} rounded-xl p-4`}>
@@ -203,7 +264,7 @@ export default function SettingsPage() {
         ) : (
           <div className="space-y-3">
             <p className={`text-sm ${classes.textSecondary}`}>
-              Demo login for class presentation. No real authentication.
+              Demo login for class presentation. No real authentication yet.
             </p>
             <button
               onClick={() => appStore.signInLocal('demo@interestshield.app', 'Demo User')}
@@ -216,6 +277,8 @@ export default function SettingsPage() {
                 <button
                   key={provider}
                   disabled
+                  aria-label={`${provider} sign-in unavailable: backend not connected`}
+                  title={`${provider} sign-in unavailable until backend keys are configured`}
                   className={`flex-1 px-3 py-2 rounded-xl ${classes.bgTertiary} ${classes.textMuted} text-xs cursor-not-allowed`}
                 >
                   {provider} (requires keys)

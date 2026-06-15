@@ -30,7 +30,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'If expenses exceed income, focus on reducing spending or increasing income first. Velocity banking requires positive cash flow to work.',
       'Negative cash flow means you\'re going deeper into debt each month. Address this before starting any debt payoff strategy.',
-      'First step: track all spending for 30 days. Most people find 10-20% they can cut without lifestyle changes.'
+      'First step: track all spending for 30 days. Look for recurring charges, timing gaps, and categories you can trim without destabilizing essentials.'
     ]
   },
   {
@@ -47,8 +47,8 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'How can I increase my cash flow?',
     answers: [
       'Two paths: reduce expenses (cancel unused subscriptions, cook more, refinance loans) or increase income (side gig, raise, overtime).',
-      'Audit subscriptions - the average person has $200+ in forgotten recurring charges. That\'s instant cash flow improvement.',
-      'Even $100 more per month in cash flow can save thousands in interest over your debt payoff journey.'
+      'Audit subscriptions and recurring charges. Any real monthly reduction becomes extra cash flow you can test in the Simulator.',
+      'Even a small monthly cash-flow improvement can change the modeled timeline when your rates, balances, and LOC assumptions support it.'
     ]
   },
   {
@@ -64,9 +64,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['cash flow examples', 'example', 'show me'],
     question: 'Can you give me a cash flow example?',
     answers: [
-      'If you earn $5,000/month and spend $4,000, your cash flow is +$1,500. That\'s $1,500 per month to deploy against debt.',
-      'Example: $6,500 income - $5,000 expenses = $1,500 cash flow. This surplus becomes your debt-crushing weapon.',
-      'Real example: Sarah earns $4,200, spends $3,500. Her $700 cash flow helped her pay off $18,000 in 2 years faster than normal.'
+      'If you earn $5,000/month and spend $4,000, your cash flow is +$1,000. That\'s $1,000 per month to test against debt payoff scenarios.',
+      'Example: $6,500 income - $5,000 expenses = $1,500 cash flow. This surplus becomes the amount you can test against debt payoff scenarios.',
+      'Example: $4,200 income - $3,500 expenses = $700 cash flow. Put that number into the Simulator to see what your own payoff path supports.'
     ]
   },
 
@@ -111,7 +111,7 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['velocity banking benefits', 'advantages', 'why use'],
     question: 'What are the benefits of velocity banking?',
     answers: [
-      'Faster debt payoff, less total interest paid, and builds financial awareness. Many pay off mortgages 10-15 years early.',
+      'Potentially faster debt payoff, less total interest paid, and stronger financial awareness when the assumptions hold. Your timeline depends on your balance, rates, cash flow, fees, and consistency.',
       'Benefits: reduces interest, accelerates payoff, creates a system for your money, and helps develop financial discipline.',
       'The main benefit is using your cash flow more efficiently - making your money work harder against debt instead of sitting idle.'
     ]
@@ -130,8 +130,8 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'How does velocity banking compare to traditional payments?',
     answers: [
       'Traditional: pay minimums, mostly interest early on, takes decades. Velocity: strategic chunks attack principal, pay off years faster.',
-      'The Simulator shows both side-by-side. Velocity typically saves 30-50% of total interest on mortgages.',
-      'Traditional is passive (autopay minimums). Velocity is active (strategic chunks). Active usually wins but requires more effort.'
+      'The Simulator shows both side-by-side. Your projected savings depend on your inputs, rates, cash flow, fees, LOC terms, and consistency.',
+      'Traditional is passive (autopay minimums). Velocity is active (strategic chunks). Active can help when the numbers line up, but it requires more effort.'
     ]
   },
 
@@ -146,21 +146,21 @@ export const shieldGuardianQA: QAPair[] = [
     ]
   },
   {
-    keywords: ['heloc', 'home equity', 'home line of credit'],
+    keywords: ['heloc', 'home equity', 'home line of credit', 'home equity line of credit'],
     question: 'What is a HELOC?',
     answers: [
-      'HELOC = Home Equity Line of Credit. It\'s a LOC secured by your home\'s equity, typically offering lower interest rates than unsecured LOCs.',
-      'A HELOC uses your home as collateral, which means lower rates (often 7-9% vs 15-20% for credit cards).',
-      'Home Equity Line of Credit - borrow against the value you\'ve built in your home. Lower rates but your home is at risk if you default.'
+      'HELOC = Home Equity Line of Credit. It\'s a LOC secured by your home\'s equity, so terms can differ from unsecured credit and the collateral risk matters.',
+      'A HELOC uses your home as collateral. Compare the actual APR, fees, draw rules, repayment terms, and collateral risk before assuming it improves the plan.',
+      'Home Equity Line of Credit - borrow against the value you\'ve built in your home. It can be useful, but your home is at risk if you default.'
     ]
   },
   {
     keywords: ['loc vs credit card', 'credit card or loc', 'difference loc credit card'],
     question: 'What\'s the difference between a LOC and credit card?',
     answers: [
-      'LOCs typically have lower rates (8-12%) vs credit cards (15-25%). LOCs calculate interest daily on balance; cards often have grace periods.',
-      'Credit cards are convenient for purchases. LOCs are better for strategic debt management due to lower rates.',
-      'Both are revolving credit, but LOCs usually offer better rates and are designed for larger, longer-term use.'
+      'Both are revolving credit, but the useful comparison is your actual APR, fees, draw rules, repayment terms, grace periods, and how quickly cash flow can repay the balance.',
+      'Credit cards are convenient for purchases. LOCs can support strategic debt management only when their actual terms and recovery timeline beat the alternative.',
+      'LOCs are often structured for larger, longer-term use, while cards are purchase tools. Model your exact balances and rates before choosing.'
     ]
   },
   {
@@ -169,7 +169,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Banks, credit unions, and online lenders offer LOCs. For HELOCs, you need home equity. Compare rates and fees before applying.',
       'Check with your current bank first - existing customers often get better terms. Credit unions typically have lower rates than big banks.',
-      'You\'ll need good credit (680+), proof of income, and for HELOCs, sufficient home equity (usually 15-20% minimum).'
+      'Lenders review credit, income, debt load, and for HELOCs, available home equity. Ask for written qualification criteria instead of relying on a generic cutoff.'
     ]
   },
   {
@@ -224,8 +224,8 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What is amortization?',
     answers: [
       'Amortization is how loans are structured so early payments are mostly interest, later payments mostly principal.',
-      'In a 30-year mortgage, you might pay $100K in interest the first 10 years but only reduce principal by $30K.',
-      'That\'s why extra principal payments early in a loan save massive interest - you\'re skipping ahead in the amortization schedule.'
+      'In many amortized loans, early payments lean more toward interest than principal. Use your exact balance, APR, term, and payment to see the split.',
+      'Extra principal payments can reduce future interest when your loan applies them correctly, but the amount depends on rate, timing, fees, and remaining term.'
     ]
   },
   {
@@ -252,9 +252,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['chunk size', 'how big chunk', 'chunk amount'],
     question: 'How big should my chunks be?',
     answers: [
-      'Chunks should be your accumulated cash flow. If you have $1,500 surplus monthly, that could be your monthly chunk.',
-      'Bigger is generally better, but don\'t over-extend your LOC. Keep a buffer for emergencies.',
-      'Start with whatever your positive cash flow allows. Even $500 chunks make a significant difference over time.'
+      'Chunks should come from positive cash flow after minimums and your safety buffer, not from pressure to hit a big number.',
+      'Bigger chunks can help only when LOC recovery stays safe. Keep a buffer for emergencies and utilization surprises.',
+      'Start with the cash flow your plan can actually support. Test the exact chunk size in the Simulator before trusting the impact.'
     ]
   },
   {
@@ -301,7 +301,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Check: Do you have positive cash flow? Are you making regular chunks? Is your LOC rate lower than your debt rate?',
       'Common issues: hidden expenses reducing cash flow, irregular chunk timing, or using LOC for new spending.',
-      'Review your numbers honestly. The math works - if it\'s not working, something in the inputs is off.'
+      'Review your numbers honestly. If the projection does not match real life, revisit cash flow, chunk timing, rates, fees, and new spending before trusting the plan.'
     ]
   },
   {
@@ -393,9 +393,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['vault', 'wealth timeline', 'generational wealth'],
     question: 'What is the Vault / Wealth Timeline?',
     answers: [
-      'The Vault shows how paying off debt early creates generational wealth - money your family keeps instead of paying interest.',
-      'Calculate: interest saved + redirected payments invested = wealth created. See the multi-generational impact.',
-      'It\'s the "why" behind debt payoff. Not just getting out of debt, but building lasting financial freedom.'
+      'The Vault models how reducing interest can change your long-term options - money that may stay in your household instead of going to interest.',
+      'It combines projected interest savings with redirected payments so you can inspect the assumptions behind the long-term impact.',
+      'It\'s the "why" behind debt payoff: not just getting out of debt, but understanding the choices your cash flow may create.'
     ]
   },
   {
@@ -422,27 +422,27 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['need loc first', 'before starting', 'prerequisites'],
     question: 'Do I need a LOC before starting?',
     answers: [
-      'Yes, you need access to a Line of Credit to use velocity banking. Start the application process now.',
-      'While waiting for LOC approval, use this time to track spending and confirm your positive cash flow.',
-      'No LOC? Some use credit cards strategically (0% periods) but this is advanced and risky. LOC is preferred.'
+      'You can learn the Money Loop before opening a LOC. To run the full strategy, compare real LOC terms, collateral risk, fees, and your cash-flow recovery plan first.',
+      'Before using any LOC, track spending and confirm positive cash flow for a few months so the chunk recovery math is grounded.',
+      'Without a LOC, stay in education and planning mode. Avoid substituting new credit until the terms, fees, promo windows, and risks are modeled clearly.'
     ]
   },
   {
     keywords: ['income requirement', 'minimum income', 'how much income'],
     question: 'Is there a minimum income needed?',
     answers: [
-      'No minimum, but you need positive cash flow. Someone earning $3K with $2.5K expenses has $500 chunk power.',
-      'The strategy scales. Higher income often means higher expenses too. Focus on the surplus, not the total.',
-      'Even $200/month surplus works - it just takes longer. The math is the math at any scale.'
+      'There is no universal income number. The key is positive, stable cash flow after essentials, minimum payments, and a safety buffer.',
+      'Higher income often comes with higher expenses too. Model your surplus against balances, rates, fees, minimums, and recovery time before trusting a plan.',
+      'A small surplus may still be useful for learning and planning, but the payoff impact depends on your exact debt, LOC terms, and how consistently the surplus holds.'
     ]
   },
   {
     keywords: ['best debt first', 'which debt', 'debt priority'],
     question: 'Which debt should I target first?',
     answers: [
-      'Mathematically: highest interest rate. Psychologically: smallest balance (debt snowball). Both work.',
-      'If your LOC is 8% and credit cards are 20%, attack the cards. If mortgage is 7%, that might come later.',
-      'The key is the spread between LOC rate and debt rate. Bigger spread = more benefit from velocity banking.'
+      'Compare each debt by actual APR, fees, minimum payment pressure, LOC cost, recovery timeline, and risk before picking a target.',
+      'A high-APR debt may rank first, but the safest first target is the one your cash flow can repay without straining the LOC buffer.',
+      'Use Portfolio or Simulator to compare avalanche, snowball, and velocity scenarios. The right first debt should come from your modeled inputs, not a canned rate example.'
     ]
   },
 
@@ -451,8 +451,8 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['auto', 'car loan', 'car debt'],
     question: 'How does velocity banking work for car loans?',
     answers: [
-      'Car loans are great for velocity banking - typically 4-7 years, $15K-$50K. Chunks can shave years off.',
-      'Many pay off car loans 2-3 years early with consistent chunks, saving thousands in interest.',
+      'Car loans can be a practical first model because the balances and terms are usually easier to see. Chunks may shorten payoff when cash flow stays positive.',
+      'Some car-loan scenarios show earlier payoff with consistent chunks, but the result depends on the balance, rate, LOC cost, and fees.',
       'Tip: Once the car is paid off, redirect those "payments" to your LOC or next debt target.'
     ]
   },
@@ -460,18 +460,18 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['mortgage', 'house loan', 'home debt'],
     question: 'How does velocity banking work for mortgages?',
     answers: [
-      'Mortgages are the biggest velocity banking opportunity. A 30-year can become 15-20 with strategic chunks.',
-      'The interest savings are massive - often $100K+ on a typical mortgage over its life.',
-      'HELOCs are perfect here - you\'re using home equity to pay down the home faster. Powerful combination.'
+      'Mortgages can show meaningful differences because the balances and interest windows are large. Run the model with your actual rate, payment, cash flow, LOC cost, and fees.',
+      'Some mortgage scenarios show large interest differences, but your result depends entirely on your balance, rate, cash flow, and LOC terms.',
+      'A HELOC can fit some mortgage payoff plans when the rate, equity, cash flow, and risk tolerance line up. Your home is collateral, so keep the risk visible.'
     ]
   },
   {
-    keywords: ['credit card debt', 'credit cards', 'card balance'],
+    keywords: ['credit card debt', 'credit cards', 'card balance', 'velocity banking for credit cards', 'use velocity banking for credit cards'],
     question: 'Should I use velocity banking for credit cards?',
     answers: [
-      'Credit cards have high rates (15-25%), so paying them off should be priority one - even before using velocity for mortgage.',
-      'If your LOC is 8% and cards are 22%, the interest spread is huge. Attack cards aggressively.',
-      'Pro tip: Some do balance transfers to 0% cards while chunking. Advanced but effective if disciplined.'
+      'Credit-card balances often deserve an early look because APR and compounding can be expensive. Model the card APR, minimums, fees, LOC terms, and cash-flow recovery timeline before deciding whether velocity helps.',
+      'If your actual LOC APR is below your card APR, the spread may help, but only when fees, utilization, and repayment speed stay safe. Run it as a separate Simulator scenario.',
+      'Balance transfers can reduce interest in some cases, but track transfer fees, promo expiry, minimums, and whether the plan still works after the promo window.'
     ]
   },
   {
@@ -500,23 +500,23 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Very normal, but unhelpful. Debt is common - focus on the solution, not the problem. You\'re here, taking action.',
       'Shame keeps people stuck. Pride in taking control is the antidote. Every chunk is a victory.',
-      'The average American has $100K+ in debt. You\'re not alone, and you\'re doing something about it.'
+      'Debt is common, and shame makes it harder to think clearly. You are not alone, and you are taking a practical step by looking at the numbers.'
     ]
   },
   {
     keywords: ['takes too long', 'impatient', 'slow progress'],
     question: 'This feels like it\'s taking forever.',
     answers: [
-      'Compare to doing nothing - years faster is still years faster. Trust the math, stay consistent.',
-      'Zoom out. A 30-year mortgage in 18 years saves 12 years. That\'s huge even if month-to-month feels slow.',
-      'Quick wins: See the Simulator comparison. Watch total interest savings grow. Progress is happening.'
+      'Compare the modeled path to minimum payments. Even a modest timeline improvement may be worth reviewing if the assumptions are realistic.',
+      'Zoom out with the model, not a canned timeline. If the Simulator shows years saved, inspect the assumptions that created that result.',
+      'Quick wins: check whether principal is falling, interest burn is shrinking, and your buffer is intact. Those signals matter more than a dramatic headline.'
     ]
   },
   {
     keywords: ['worth it', 'is it worth', 'benefit real'],
     question: 'Is all this effort really worth it?',
     answers: [
-      'The average family saves $50K-$150K in mortgage interest alone. That\'s a college fund, retirement boost, or legacy.',
+      'Some mortgage scenarios show meaningful interest reduction, but your range depends entirely on your actual balance, rate, cash flow, fees, and LOC terms.',
       'Beyond money: the financial confidence, reduced stress, and freedom from debt payments. Priceless.',
       'Think 10 years ahead: debt-free, investing what used to be payments. That\'s worth the effort today.'
     ]
@@ -563,18 +563,18 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['refinance', 'new loan', 'lower rate'],
     question: 'Should I refinance my mortgage?',
     answers: [
-      'If you can get a significantly lower rate (1%+), it often makes sense. But factor in closing costs.',
-      'Refinancing + velocity banking = powerful combination. Lower rate means more of each chunk hits principal.',
-      'Don\'t refinance to a longer term just for lower payments. Keep or shorten the term while using velocity banking.'
+      'A refinance depends on the new rate, closing costs, points, term, tax effects, and how long you keep the loan. Run a break-even check against closing costs, the new term, how long you expect to keep the loan, and your payoff plan.',
+      'Refinancing can help some velocity plans when the lower cost survives the break-even math. It is not automatically better.',
+      'Be cautious about extending the term only to lower the monthly payment. Compare total interest, flexibility, and your payoff plan before deciding.'
     ]
   },
   {
     keywords: ['invest instead', 'investing vs debt', 'should I invest'],
     question: 'Should I invest instead of paying off debt?',
     answers: [
-      'Classic question. Math says: if investment return > debt rate, invest. But debt has guaranteed "return" (saved interest).',
-      'Risk tolerance matters. Guaranteed 7% saved interest vs potential 10% market return (which could be -10% some years).',
-      'Many do both: enough in retirement accounts for employer match, then attack debt, then increase investing.'
+      'There is not a universal rule. Compare debt payoff with investing only after accounting for risk, taxes, liquidity, employer match, and time horizon.',
+      'Saved interest is more predictable than market returns, but the right tradeoff depends on emergency reserves, retirement match, debt APR, and volatility you can tolerate.',
+      'Some households split surplus: protect an employer match or emergency reserve, then model extra debt payoff and investing side by side. This tool is educational, not financial advice.'
     ]
   },
 
@@ -676,13 +676,13 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
 
   if (intent === 'cashFlow') {
     nextSteps = [
-      "Open **Simulator** → confirm monthly income and monthly expenses.",
-      "Aim for **positive cash flow** first (even $100–$300/mo changes the whole timeline).",
-      "Pick **one target debt** and keep paying minimums everywhere else."
+      "Open Simulator → confirm monthly income and monthly expenses.",
+      "Aim for positive cash flow first, then test small changes ($100-$300/mo) in Simulator before trusting the timeline.",
+      "Pick one target debt and keep paying minimums everywhere else."
     ];
   } else if (intent === 'chunk') {
     nextSteps = [
-      "Choose a **chunk size** you can repeat (start smaller if you’re nervous).",
+      "Choose a chunk size you can repeat (start smaller if you’re nervous).",
       "Run the simulation with $100 / $200 / $400 extra to see how payoff time changes.",
       "When a chunk is ready, deploy it—then rebuild the next chunk."
     ];
@@ -690,12 +690,12 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
     nextSteps = [
       "Confirm your LOC rate + limit, and set a utilization safety line (ideally stay under ~80%).",
       "Route income to the LOC first (if that matches your plan), then pay expenses intentionally.",
-      "Use the dashboard’s **Next Move** panel to time your next chunk."
+      "Use the dashboard’s Next Move panel to time your next chunk."
     ];
   } else if (intent === 'interest') {
     nextSteps = [
-      "Look at **interest burn per day** and identify the balances that are “burning” the most.",
-      "Compare **baseline vs velocity** in Simulator—don’t guess.",
+      "Look at interest burn per day and identify the balances that are “burning” the most.",
+      "Compare baseline vs velocity in Simulator—don’t guess.",
       "If you have a promo APR (0%), plan ahead for when it ends."
     ];
   } else if (intent === 'emergency') {
@@ -711,14 +711,14 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
     ];
   } else if (intent === 'app') {
     nextSteps = [
-      "Start with **Vault** if you want the big-picture “why.”",
-      "Use **Simulator** to test your real numbers and chunk sizes.",
-      "Use **Dashboard** to run the plan day-to-day (next move, cash flow, interest burn).",
-      "Try **Cockpit** when you want a different mental model."
+      "Start with Vault if you want the big-picture “why.”",
+      "Use Simulator to test your real numbers and chunk sizes.",
+      "Use Dashboard to run the plan day-to-day (next move, cash flow, interest burn).",
+      "Try Cockpit when you want a different mental model."
     ];
   } else {
     nextSteps = [
-      "Tell me your goal: **pay off car**, **pay off credit cards**, or **reduce mortgage cost**.",
+      "Tell me your goal: pay off car, pay off credit cards, or reduce mortgage cost.",
       "Then we’ll pick one lane and run your numbers in Simulator."
     ];
   }
@@ -741,16 +741,22 @@ export function getGuardianResponse(input: string, options?: GuardianOptions): s
   }
 
   let baseAnswer: string | null = null;
+  let bestMatch: { qa: QAPair; score: number } | null = null;
 
   for (const qa of shieldGuardianQA) {
     for (const keyword of qa.keywords) {
       if (lower.includes(keyword)) {
-        const answers = qa.answers;
-        baseAnswer = answers[Math.floor(Math.random() * answers.length)];
-        break;
+        const score = keyword.length;
+        if (!bestMatch || score > bestMatch.score) {
+          bestMatch = { qa, score };
+        }
       }
     }
-    if (baseAnswer) break;
+  }
+
+  if (bestMatch) {
+    const answers = bestMatch.qa.answers;
+    baseAnswer = answers[Math.floor(Math.random() * answers.length)];
   }
 
   if (!baseAnswer) {

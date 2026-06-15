@@ -15,6 +15,7 @@ interface EditableNumberProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   label?: string;
+  ariaLabel?: string;
 }
 
 export function EditableNumber({
@@ -29,6 +30,7 @@ export function EditableNumber({
   size = 'md',
   className = '',
   label,
+  ariaLabel,
 }: EditableNumberProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempValue, setTempValue] = useState(value.toString());
@@ -40,12 +42,6 @@ export function EditableNumber({
       inputRef.current.select();
     }
   }, [isEditing]);
-
-  useEffect(() => {
-    if (!isEditing) {
-      setTempValue(value.toString());
-    }
-  }, [value, isEditing]);
 
   const formatDisplay = (val: number): string => {
     switch (format) {
@@ -126,6 +122,9 @@ export function EditableNumber({
   
   const textClass = theme === 'light' ? 'text-slate-800' : 'text-white';
   const mutedClass = theme === 'light' ? 'text-slate-500' : 'text-gray-400';
+  const controlLabel = ariaLabel ?? label ?? 'Editable number';
+  const editLabel = `Edit ${controlLabel}, current value ${formatDisplay(value)}`;
+  const inputLabel = `${controlLabel} value`;
 
   if (isEditing) {
     return (
@@ -137,6 +136,7 @@ export function EditableNumber({
             ref={inputRef}
             type="text"
             inputMode="decimal"
+            aria-label={inputLabel}
             value={tempValue}
             onChange={(e) => setTempValue(e.target.value)}
             onBlur={handleBlur}
@@ -155,6 +155,7 @@ export function EditableNumber({
       {label && <span className={`text-xs ${mutedClass} mb-1`}>{label}</span>}
       <button
         onClick={handleClick}
+        aria-label={editLabel}
         className={`group inline-flex items-center gap-1 ${buttonHoverClass} rounded-lg px-2 py-1 transition-colors cursor-pointer border border-transparent hover:border-emerald-500/50 ${displaySizeClasses[size]} font-mono ${textClass}`}
         title="Click to edit"
       >

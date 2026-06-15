@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Beat {
@@ -50,6 +50,11 @@ const BEATS: Beat[] = [
 ];
 
 const TOTAL_DURATION = BEATS.reduce((sum, b) => sum + b.duration, 0);
+const AMBIENT_PARTICLES = Array.from({ length: 12 }, (_, i) => ({
+  x: `${(i * 37) % 100}%`,
+  duration: 6 + ((i * 17) % 40) / 10,
+  delay: ((i * 11) % 50) / 10,
+}));
 
 interface IntroAnimationProps {
   onComplete: () => void;
@@ -60,45 +65,45 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
   const [currentBeat, setCurrentBeat] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [elapsed, setElapsed] = useState(0);
-  const startRef = useRef<number>(Date.now());
+  const startRef = useRef<number>(0);
   const pausedAtRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
   const [completed, setCompleted] = useState(false);
 
-  const tick = useCallback(() => {
-    if (!playing) return;
-    const now = Date.now();
-    const total = now - startRef.current;
-    setElapsed(total);
+  useEffect(() => {
+    if (!playing || completed) return;
+    if (startRef.current === 0) {
+      startRef.current = Date.now();
+    }
 
-    // Determine beat
-    let acc = 0;
-    for (let i = 0; i < BEATS.length; i++) {
-      acc += BEATS[i].duration;
-      if (total < acc) {
-        setCurrentBeat(i);
-        break;
-      }
-      if (i === BEATS.length - 1 && total >= acc) {
-        setCurrentBeat(BEATS.length - 1);
-        if (!completed) {
+    const tick = () => {
+      const now = Date.now();
+      const total = now - startRef.current;
+      setElapsed(total);
+
+      let acc = 0;
+      for (let i = 0; i < BEATS.length; i++) {
+        acc += BEATS[i].duration;
+        if (total < acc) {
+          setCurrentBeat(i);
+          break;
+        }
+        if (i === BEATS.length - 1 && total >= acc) {
+          setCurrentBeat(BEATS.length - 1);
           setCompleted(true);
           setPlaying(false);
+          return;
         }
-        return;
       }
-    }
-    rafRef.current = requestAnimationFrame(tick);
-  }, [playing, completed]);
-
-  useEffect(() => {
-    if (playing && !completed) {
       rafRef.current = requestAnimationFrame(tick);
-    }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [playing, tick, completed]);
+  }, [playing, completed]);
 
   const togglePlay = () => {
     if (completed) return;
@@ -124,19 +129,19 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
     <div className={`relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 aspect-[3/4] sm:aspect-[4/3] md:aspect-video flex flex-col items-center justify-center overflow-hidden ${className}`}>
       {/* Ambient particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {AMBIENT_PARTICLES.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 rounded-full bg-emerald-500/30"
-            initial={{ x: `${Math.random() * 100}%`, y: '110%', opacity: 0 }}
+            initial={{ x: particle.x, y: '110%', opacity: 0 }}
             animate={{
               y: '-10%',
               opacity: [0, 0.6, 0],
             }}
             transition={{
-              duration: 6 + Math.random() * 4,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: particle.delay,
               ease: 'linear',
             }}
           />
