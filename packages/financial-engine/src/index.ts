@@ -128,18 +128,18 @@ interface MobilePayoffProjection {
 }
 
 export const defaultMobileDashboardInput: MobileDashboardInput = {
-  monthlyIncome: 7000,
-  monthlyExpenses: 4500,
-  chunkAmount: 1500,
+  monthlyIncome: 6500,
+  monthlyExpenses: 5000,
+  chunkAmount: 1000,
   activeDebtName: 'Auto Loan',
   activeDebt: {
     balance: 18450,
     apr: 0.069,
     monthlyPayment: 425,
-    termMonths: 60,
+    termMonths: 48,
   },
   loc: {
-    limit: 0,
+    limit: 25000,
     apr: 0.085,
     balance: 3200,
   },

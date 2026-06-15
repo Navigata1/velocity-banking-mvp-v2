@@ -221,6 +221,36 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
   assert.ok(!stableSnapshot.vitals.some((vital) => vital.label === 'LOC Room'));
 });
 
+test('shared mobile default assumptions start with the verified web demo Money Loop', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const webStoreSource = fs.readFileSync(path.join(repoRoot, 'apps/web/src/stores/financial-store.ts'), 'utf8');
+  const defaultInput = sharedEngine.defaultMobileDashboardInput;
+  const dashboard = sharedEngine.buildMobileDashboardSnapshot();
+  const simulator = sharedEngine.buildMobileSimulatorSnapshot();
+  const cockpit = sharedEngine.buildMobileCockpitSnapshot();
+
+  assert.equal(defaultInput.monthlyIncome, 6500);
+  assert.equal(defaultInput.monthlyExpenses, 5000);
+  assert.equal(defaultInput.chunkAmount, 1000);
+  assert.equal(defaultInput.activeDebt.termMonths, 48);
+  assert.equal(defaultInput.loc.limit, 25000);
+  assert.equal(defaultInput.loc.balance, 3200);
+  assert.equal(defaultInput.loc.apr, 0.085);
+  assert.ok(webStoreSource.includes('monthlyIncome: 6500'));
+  assert.ok(webStoreSource.includes('monthlyExpenses: 5000'));
+  assert.ok(webStoreSource.includes('limit: 25000'));
+  assert.ok(webStoreSource.includes('chunkAmount: 1000'));
+
+  assert.equal(dashboard.warning, null);
+  assert.equal(dashboard.nextMove, 'Send $1,000 to principal');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value.endsWith('mo'), true);
+  assert.notEqual(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
+  assert.equal(simulator.guardrail, null);
+  assert.equal(simulator.velocity.months > 0, true);
+  assert.equal(cockpit.flightStatusLabel, 'Ready to model');
+  assert.equal(cockpit.warning, null);
+});
+
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
   const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
