@@ -66,6 +66,7 @@ export default function PortfolioPage() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importText, setImportText] = useState('');
   const [newDebt, setNewDebt] = useState<Omit<DebtItem, 'id' | 'createdAt'>>({
     name: 'New Debt',
     category: 'auto',
@@ -123,15 +124,30 @@ export default function PortfolioPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleImport = async (file: File) => {
-    const text = await file.text();
-    const res = store.importState(text);
+  const showImportResult = (res: ReturnType<typeof store.importState>) => {
     setImportStatus(
       res.ok
         ? 'Import complete. This local portfolio plan was replaced by the backup file.'
         : `Import failed: ${res.error}`
     );
     setTimeout(() => setImportStatus(null), 3000);
+  };
+
+  const handleImport = async (file: File) => {
+    const text = await file.text();
+    showImportResult(store.importState(text));
+  };
+
+  const handleImportText = () => {
+    const text = importText.trim();
+    if (!text) {
+      showImportResult({ ok: false, error: 'Paste backup JSON first.' });
+      return;
+    }
+
+    const res = store.importState(text);
+    if (res.ok) setImportText('');
+    showImportResult(res);
   };
 
   const renderCategorySelect = (debt: DebtItem, fullWidth = false) => (
@@ -482,6 +498,29 @@ export default function PortfolioPage() {
                 }}
               />
             </label>
+            <div className="space-y-2">
+              <label htmlFor="portfolio-import-backup-json" className={`block text-xs font-medium ${classes.textSecondary}`}>
+                Paste backup JSON
+              </label>
+              <textarea
+                id="portfolio-import-backup-json"
+                aria-label="Paste local portfolio backup JSON"
+                data-testid="portfolio-import-backup-json"
+                value={importText}
+                onChange={(e) => setImportText(e.target.value)}
+                rows={3}
+                placeholder='{"version":1,"data":{"debts":[]}}'
+                className={`w-full rounded-xl border ${classes.border} ${classes.bgTertiary} ${classes.text} px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500/70`}
+              />
+              <button
+                type="button"
+                onClick={handleImportText}
+                data-testid="portfolio-import-backup-json-submit"
+                className={`${classes.glassButton} w-full px-4 py-3 rounded-2xl border ${classes.border} hover:bg-slate-800/40 transition-all text-sm font-semibold ${classes.text}`}
+              >
+                Import pasted JSON
+              </button>
+            </div>
             {importStatus && (
               <p className={`text-xs ${classes.textSecondary}`} role="status">
                 {importStatus}

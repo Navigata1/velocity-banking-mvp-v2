@@ -1008,6 +1008,31 @@ test('backup controls label local-only export and import replacement behavior', 
   );
 });
 
+test('backup controls expose a pasted JSON import path', () => {
+  const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
+  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+
+  for (const [name, source, prefix] of [
+    ['Settings', settingsSource, 'settings'],
+    ['Portfolio', portfolioSource, 'portfolio'],
+  ]) {
+    assert.ok(source.includes('Paste backup JSON'), `expected ${name} to expose paste import copy`);
+    assert.ok(source.includes('Import pasted JSON'), `expected ${name} to expose a paste import action`);
+    assert.ok(
+      source.includes(`data-testid="${prefix}-import-backup-json"`),
+      `expected ${name} paste textarea to expose a stable smoke-test hook`
+    );
+    assert.ok(
+      source.includes(`data-testid="${prefix}-import-backup-json-submit"`),
+      `expected ${name} paste submit to expose a stable smoke-test hook`
+    );
+    assert.ok(
+      source.includes('Paste backup JSON first.'),
+      `expected ${name} empty paste imports to give direct in-page feedback`
+    );
+  }
+});
+
 test('editable financial controls expose contextual screen-reader labels', () => {
   const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
   const dashboardSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');

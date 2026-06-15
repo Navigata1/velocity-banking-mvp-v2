@@ -2007,6 +2007,25 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 114: Pasted Backup Import Flow
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring Settings and Portfolio to expose a pasted-JSON import path with stable textarea and submit hooks, visible copy, and direct empty-paste feedback.
+- Added a paste-based JSON import fallback to Settings Data Backup and Portfolio backup controls so users can restore a local backup without relying only on a native file chooser.
+- Kept existing file import/export controls intact and reused the same portfolio-store import validator so pasted data follows the existing sanitization and invalid-input protections.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing paste-import path, then passed with 109 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke against the local production server confirmed Settings paste import accepted a valid backup and showed in-page success, Portfolio then rendered the imported Settings debt, Portfolio paste import accepted a second valid backup, Portfolio rendered the replacement debt, screenshot evidence was captured, and no console warnings/errors were found.
+- Chrome extension smoke against the local production server confirmed the Portfolio pasted import path using the stable textarea hook and a coordinate-click fallback for the visible submit button after Chrome locator-click timed out; the imported debt and success status rendered with no console warnings/errors.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2459,7 +2478,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.
 - Guardian chat answer. Status: covered in Repair Pass 44 for Browser and Chrome teacher-mode cash-flow answer rendering.
-- Export/import backup. Status: store-level round-trip and invalid-import rejection covered in Repair Pass 43; browser download/upload automation still needs a dedicated file-management pass.
+- Export/import backup. Status: store-level round-trip and invalid-import rejection covered in Repair Pass 43; file export browser verification covered in Repair Pass 83; pasted JSON import fallback and rendered Browser/Chrome import smoke covered in Repair Pass 114. Native file-chooser upload automation remains browser-surface dependent.
 - Settings theme switch. Status: covered in Repair Pass 44 for Browser theme switching and Chrome selected-state cross-check.
 - Portfolio add/remove debt. Status: covered in Repair Pass 43 for in-app Browser add/remove flow with debt-specific labels; Chrome cross-check confirmed the labels.
 - Vault mortgage analysis. Status: Vault step navigation and strategy/freedom-path rendering covered in Repair Pass 42; zero/under-interest current payment strategy guards covered in Repair Pass 49; explicit zero-current-rate rendering covered in Repair Pass 50; over-down-payment guard covered in Repair Pass 51; purchase-only hidden-current-field strategy guards covered in Repair Pass 52; deeper mortgage input edge cases beyond payment viability, zero-rate handling, purchase/down-payment mismatch, and entry-mode hidden-field leakage remain open.

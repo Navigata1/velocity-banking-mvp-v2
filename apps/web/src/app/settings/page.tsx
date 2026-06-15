@@ -23,6 +23,7 @@ export default function SettingsPage() {
   const preferencesStore = usePreferencesStore();
   const portfolioStore = usePortfolioStore();
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importText, setImportText] = useState('');
 
   if (!mounted) {
     return (
@@ -46,15 +47,30 @@ export default function SettingsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleImport = async (file: File) => {
-    const text = await file.text();
-    const res = portfolioStore.importState(text);
+  const showImportResult = (res: ReturnType<typeof portfolioStore.importState>) => {
     setImportStatus(
       res.ok
         ? 'Import complete. This local portfolio plan was replaced by the backup file.'
         : `Import failed: ${res.error}`
     );
     setTimeout(() => setImportStatus(null), 3000);
+  };
+
+  const handleImport = async (file: File) => {
+    const text = await file.text();
+    showImportResult(portfolioStore.importState(text));
+  };
+
+  const handleImportText = () => {
+    const text = importText.trim();
+    if (!text) {
+      showImportResult({ ok: false, error: 'Paste backup JSON first.' });
+      return;
+    }
+
+    const res = portfolioStore.importState(text);
+    if (res.ok) setImportText('');
+    showImportResult(res);
   };
 
   return (
@@ -221,8 +237,31 @@ export default function SettingsPage() {
             />
           </label>
         </div>
+        <div className="mt-4 space-y-2">
+          <label htmlFor="settings-import-backup-json" className={`block text-xs font-medium ${classes.textSecondary}`}>
+            Paste backup JSON
+          </label>
+          <textarea
+            id="settings-import-backup-json"
+            aria-label="Paste local portfolio backup JSON"
+            data-testid="settings-import-backup-json"
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+            rows={4}
+            placeholder='{"version":1,"data":{"debts":[]}}'
+            className={`w-full rounded-xl border ${classes.border} ${classes.bgTertiary} ${classes.text} px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500/70`}
+          />
+          <button
+            type="button"
+            onClick={handleImportText}
+            data-testid="settings-import-backup-json-submit"
+            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium ${classes.textSecondary} hover:${classes.text}`}
+          >
+            Import pasted JSON
+          </button>
+        </div>
         {importStatus && (
-          <p className="mt-3 text-sm">{importStatus}</p>
+          <p className="mt-3 text-sm" role="status">{importStatus}</p>
         )}
       </section>
       </ScrollReveal>
