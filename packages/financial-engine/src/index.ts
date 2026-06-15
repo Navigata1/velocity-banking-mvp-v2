@@ -45,6 +45,25 @@ export interface MobileDashboardSnapshot {
   }>;
 }
 
+export interface MobilePortfolioPriority {
+  name: string;
+  balanceLabel: string;
+  minimumPaymentLabel: string;
+  dailyInterestBurnLabel: string;
+  reason: string;
+}
+
+export interface MobilePortfolioSnapshot {
+  totalDebt: number;
+  totalDebtLabel: string;
+  totalMinimums: number;
+  totalMinimumsLabel: string;
+  cashFlowAfterMinimums: number;
+  cashFlowAfterMinimumsLabel: string;
+  guardrail: string | null;
+  priorities: MobilePortfolioPriority[];
+}
+
 export const defaultMobileDashboardInput: MobileDashboardInput = {
   monthlyIncome: 7000,
   monthlyExpenses: 4500,
@@ -193,6 +212,46 @@ export function buildMobileDashboardSnapshot(
         label: 'Principal',
         value: input.activeDebtName,
         detail: 'Chunks target balance reduction after setup checks.',
+      },
+    ],
+  };
+}
+
+export function buildMobilePortfolioSnapshot(
+  input: MobileDashboardInput = defaultMobileDashboardInput
+): MobilePortfolioSnapshot {
+  const totalDebt = Math.max(0, input.activeDebt.balance);
+  const totalMinimums = Math.max(0, input.activeDebt.monthlyPayment);
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const cashFlowAfterMinimums = cashFlow - totalMinimums;
+  const dailyInterestBurn = totalDebt * calculateDailyRate(Math.max(0, input.activeDebt.apr));
+
+  let guardrail: string | null = null;
+  if (cashFlow <= 0) {
+    guardrail = 'Cash flow is not positive, so portfolio payoff claims stay in review mode.';
+  } else if (cashFlowAfterMinimums < 0) {
+    guardrail = 'Cash flow does not cover the modeled minimum payment yet.';
+  } else if (input.loc.limit <= 0) {
+    guardrail = 'Add a LOC limit before modeling portfolio velocity movement.';
+  } else if (input.loc.balance / input.loc.limit > 0.8) {
+    guardrail = 'LOC utilization is above the 80% planning guardrail.';
+  }
+
+  return {
+    totalDebt,
+    totalDebtLabel: formatCurrency(totalDebt),
+    totalMinimums,
+    totalMinimumsLabel: formatCurrency(totalMinimums),
+    cashFlowAfterMinimums,
+    cashFlowAfterMinimumsLabel: formatCurrency(cashFlowAfterMinimums),
+    guardrail,
+    priorities: [
+      {
+        name: input.activeDebtName,
+        balanceLabel: formatCurrency(totalDebt),
+        minimumPaymentLabel: formatCurrency(totalMinimums),
+        dailyInterestBurnLabel: `${formatCurrency(dailyInterestBurn)}/day`,
+        reason: `Highest current modeled daily interest burn: ${formatCurrency(dailyInterestBurn)}/day.`,
       },
     ],
   };

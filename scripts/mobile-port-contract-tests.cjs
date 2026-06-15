@@ -107,6 +107,7 @@ test('shared financial engine matches current web engine on core fixtures', () =
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
   const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
 
   assert.ok(routeSource.includes("from '@/components/mobile-shell'"), 'expected route to delegate UI to a component');
 
@@ -119,12 +120,46 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
     'expected mobile shell to render the shared dashboard snapshot'
   );
   assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
-  assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'learn' | 'vault'"));
+  assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'portfolio' | 'learn' | 'vault'"));
   assert.ok(shellSource.includes("setMode('simulator')"));
+  assert.ok(shellSource.includes("setMode('portfolio')"));
+  assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
+  assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
+  assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
+  assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
+  assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.ok(
     !fs.existsSync(path.join(repoRoot, 'apps/mobile/app/(tabs)/_layout.tsx')),
     'expected static-export shell not to rely on tab route hydration'
   );
+});
+
+test('shared mobile portfolio snapshot explains cash-flow coverage and debt priority', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobilePortfolioSnapshot({
+    monthlyIncome: 8000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(snapshot.totalDebtLabel, '$18,450');
+  assert.equal(snapshot.cashFlowAfterMinimums, 3075);
+  assert.equal(snapshot.cashFlowAfterMinimumsLabel, '$3,075');
+  assert.equal(snapshot.priorities[0].name, 'Auto Loan');
+  assert.ok(snapshot.priorities[0].reason.includes('daily interest burn'));
+  assert.equal(snapshot.guardrail, null);
 });
 
 if (process.exitCode) {

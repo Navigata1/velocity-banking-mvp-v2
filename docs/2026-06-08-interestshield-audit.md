@@ -1416,6 +1416,31 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 87: Mobile Editable Assumptions And Portfolio Mode
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added a shared `buildMobilePortfolioSnapshot` engine function so the mobile shell can show portfolio coverage, modeled debt, priority debt, minimum payment, and daily interest burn rationale without duplicating formulas in the UI.
+- Added native editable assumption controls in `apps/mobile` for Monthly income, Monthly expenses, Velocity chunk amount, and Line of credit limit. The controls feed the shared dashboard and portfolio snapshots directly.
+- Added a Portfolio mode to the Expo shell while keeping Dashboard, Simulator, Learn, and Vault reachable through the same in-app native mode switcher.
+- Expanded `scripts/mobile-port-contract-tests.cjs` to prove the native shell exposes editable financial inputs, includes Portfolio mode, and uses the shared portfolio snapshot contract.
+- Browser smoke served the exported Expo web build from `dist-web`, confirmed the editable assumptions rendered with expected starting values, edited income to `$8,000` and LOC limit to `$25,000`, verified dashboard recalculation to `$3,500` cash flow and `$21,800 open` LOC room, opened Portfolio, and verified `$3,075` cash flow after minimums, `$18,450` modeled debt, and daily interest burn rationale with 0 console errors.
+- Native simulator smoke remains environment-limited on this Windows machine: `adb`, Android `emulator`, and `xcrun` were not available, so Android device/emulator and iOS simulator runs could not be executed locally in this pass.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm audit --audit-level=high`: passed with the moderate transitive Expo/uuid advisory noted above.
+- `apps/mobile` `npx expo export --platform web --output-dir dist-web --clear`: passed.
+- `apps/mobile` browser smoke at `http://127.0.0.1:8083/`: passed for editable Dashboard assumptions plus Dashboard, Portfolio, Simulator, Learn, and Vault modes with 0 console errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1930,7 +1955,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
 - Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
-- Adapt dashboard, simulator, and portfolio to native controls.
+- Adapt dashboard, simulator, and portfolio to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell.
 - Add offline-first encrypted local storage.
 
 ## Recommended Next Move

@@ -1,16 +1,21 @@
 import {
   buildMobileDashboardSnapshot,
+  buildMobilePortfolioSnapshot,
   defaultMobileDashboardInput,
+  type MobileDashboardInput,
+  type MobileDashboardSnapshot,
+  type MobilePortfolioSnapshot,
 } from '@interestshield/financial-engine';
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
 
-type MobileMode = 'dashboard' | 'simulator' | 'learn' | 'vault';
+type MobileMode = 'dashboard' | 'simulator' | 'portfolio' | 'learn' | 'vault';
 
 const modes: Array<{ id: MobileMode; label: string }> = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'simulator', label: 'Simulator' },
+  { id: 'portfolio', label: 'Portfolio' },
   { id: 'learn', label: 'Learn' },
   { id: 'vault', label: 'Vault' },
 ];
@@ -29,8 +34,6 @@ const lessons = [
     detail: 'Daily interest estimates are labels for learning, not promises about lender posting rules.',
   },
 ];
-
-const snapshot = buildMobileDashboardSnapshot(defaultMobileDashboardInput);
 
 function ModeButton({
   active,
@@ -63,7 +66,95 @@ function ModeButton({
   );
 }
 
-function DashboardPanel() {
+function parseMoneyInput(value: string): number | null {
+  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
+  return Number.isFinite(parsed) ? Math.max(0, parsed) : null;
+}
+
+function MoneyInput({
+  accessibilityLabel,
+  label,
+  value,
+  onChange,
+}: {
+  accessibilityLabel: string;
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <View style={{ gap: 6, minWidth: 150 }}>
+      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+        {label}
+      </Text>
+      <TextInput
+        accessibilityLabel={accessibilityLabel}
+        inputMode="numeric"
+        keyboardType="decimal-pad"
+        onChangeText={(nextValue) => {
+          const parsed = parseMoneyInput(nextValue);
+          if (parsed !== null) onChange(parsed);
+        }}
+        selectTextOnFocus
+        style={{
+          backgroundColor: '#020617',
+          borderColor: '#334155',
+          borderCurve: 'continuous',
+          borderRadius: 12,
+          borderWidth: 1,
+          color: '#f8fafc',
+          fontSize: 18,
+          fontVariant: ['tabular-nums'],
+          fontWeight: '800',
+          paddingHorizontal: 12,
+          paddingVertical: 10,
+        }}
+        value={String(Math.round(value))}
+      />
+    </View>
+  );
+}
+
+function AssumptionControls({
+  input,
+  onChange,
+}: {
+  input: MobileDashboardInput;
+  onChange: (input: MobileDashboardInput) => void;
+}) {
+  return (
+    <FinancialCard title="Tune Assumptions" detail="Native controls update the shared engine snapshot immediately.">
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+        <MoneyInput
+          accessibilityLabel="Monthly income"
+          label="Income"
+          value={input.monthlyIncome}
+          onChange={(monthlyIncome) => onChange({ ...input, monthlyIncome })}
+        />
+        <MoneyInput
+          accessibilityLabel="Monthly expenses"
+          label="Expenses"
+          value={input.monthlyExpenses}
+          onChange={(monthlyExpenses) => onChange({ ...input, monthlyExpenses })}
+        />
+        <MoneyInput
+          accessibilityLabel="Velocity chunk amount"
+          label="Chunk"
+          value={input.chunkAmount}
+          onChange={(chunkAmount) => onChange({ ...input, chunkAmount })}
+        />
+        <MoneyInput
+          accessibilityLabel="Line of credit limit"
+          label="LOC Limit"
+          value={input.loc.limit}
+          onChange={(limit) => onChange({ ...input, loc: { ...input.loc, limit } })}
+        />
+      </View>
+    </FinancialCard>
+  );
+}
+
+function DashboardPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
       {snapshot.warning ? (
@@ -94,7 +185,7 @@ function DashboardPanel() {
   );
 }
 
-function SimulatorPanel() {
+function SimulatorPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
       <FinancialCard
@@ -109,8 +200,32 @@ function SimulatorPanel() {
       />
       <FinancialCard
         title="Next Native Gate"
-        detail="Editable native scenarios come after the shared engine owns the full route contract."
+        detail="Scenario editing is now backed by native assumption controls and the shared engine snapshot."
       />
+    </View>
+  );
+}
+
+function PortfolioPanel({ portfolio }: { portfolio: MobilePortfolioSnapshot }) {
+  return (
+    <View style={{ gap: 12 }}>
+      <FinancialCard
+        title="Portfolio Coverage"
+        value={portfolio.cashFlowAfterMinimumsLabel}
+        detail={
+          portfolio.guardrail ??
+          `Cash flow after modeled minimums. Total minimums: ${portfolio.totalMinimumsLabel}.`
+        }
+      />
+      <FinancialCard title="Total Modeled Debt" value={portfolio.totalDebtLabel} detail="Current mobile shell starts with the active web demo debt." />
+      {portfolio.priorities.map((priority) => (
+        <FinancialCard
+          key={priority.name}
+          title={priority.name}
+          value={priority.balanceLabel}
+          detail={`${priority.reason} Minimum payment: ${priority.minimumPaymentLabel}.`}
+        />
+      ))}
     </View>
   );
 }
@@ -125,7 +240,7 @@ function LearnPanel() {
   );
 }
 
-function VaultPanel() {
+function VaultPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
       <FinancialCard title="Stage 1" value="Stabilize" detail={snapshot.warning ?? 'Cash flow and LOC setup pass the first checks.'} />
@@ -137,6 +252,9 @@ function VaultPanel() {
 
 export function MobileShell() {
   const [mode, setMode] = useState<MobileMode>('dashboard');
+  const [input, setInput] = useState<MobileDashboardInput>(defaultMobileDashboardInput);
+  const snapshot = buildMobileDashboardSnapshot(input);
+  const portfolio = buildMobilePortfolioSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
 
   return (
@@ -160,14 +278,18 @@ export function MobileShell() {
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
         <ModeButton active={mode === 'dashboard'} label="Dashboard" onPress={() => setMode('dashboard')} />
         <ModeButton active={mode === 'simulator'} label="Simulator" onPress={() => setMode('simulator')} />
+        <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => setMode('portfolio')} />
         <ModeButton active={mode === 'learn'} label="Learn" onPress={() => setMode('learn')} />
         <ModeButton active={mode === 'vault'} label="Vault" onPress={() => setMode('vault')} />
       </View>
 
-      {mode === 'dashboard' ? <DashboardPanel /> : null}
-      {mode === 'simulator' ? <SimulatorPanel /> : null}
+      <AssumptionControls input={input} onChange={setInput} />
+
+      {mode === 'dashboard' ? <DashboardPanel snapshot={snapshot} /> : null}
+      {mode === 'simulator' ? <SimulatorPanel snapshot={snapshot} /> : null}
+      {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
       {mode === 'learn' ? <LearnPanel /> : null}
-      {mode === 'vault' ? <VaultPanel /> : null}
+      {mode === 'vault' ? <VaultPanel snapshot={snapshot} /> : null}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>
         Educational tool. Not financial advice.
