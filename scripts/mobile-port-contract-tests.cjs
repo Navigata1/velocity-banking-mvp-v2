@@ -272,6 +272,7 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes("handleModeChange('cockpit')"));
   assert.ok(shellSource.includes("handleModeChange('portfolio')"));
   assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
+  assert.ok(shellSource.includes('accessibilityLabel="Active debt name"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
   assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));

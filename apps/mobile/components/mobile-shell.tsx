@@ -143,6 +143,45 @@ function MoneyInput({
   );
 }
 
+function TextValueInput({
+  accessibilityLabel,
+  label,
+  value,
+  onChange,
+}: {
+  accessibilityLabel: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <View style={{ gap: 6, minWidth: 150 }}>
+      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+        {label}
+      </Text>
+      <TextInput
+        accessibilityLabel={accessibilityLabel}
+        autoCapitalize="words"
+        onChangeText={(nextValue) => onChange(nextValue.trimStart())}
+        selectTextOnFocus
+        style={{
+          backgroundColor: '#020617',
+          borderColor: '#334155',
+          borderCurve: 'continuous',
+          borderRadius: 12,
+          borderWidth: 1,
+          color: '#f8fafc',
+          fontSize: 18,
+          fontWeight: '800',
+          paddingHorizontal: 12,
+          paddingVertical: 10,
+        }}
+        value={value}
+      />
+    </View>
+  );
+}
+
 function WholeNumberInput({
   accessibilityLabel,
   label,
@@ -241,6 +280,12 @@ function AssumptionControls({
   return (
     <FinancialCard title="Tune Assumptions" detail="Native controls update the shared engine snapshot immediately.">
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+        <TextValueInput
+          accessibilityLabel="Active debt name"
+          label="Debt Name"
+          value={input.activeDebtName}
+          onChange={(activeDebtName) => onChange({ ...input, activeDebtName })}
+        />
         <MoneyInput
           accessibilityLabel="Monthly income"
           label="Income"
