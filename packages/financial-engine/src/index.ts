@@ -11,6 +11,14 @@ export interface LOCDetails {
   balance: number;
 }
 
+export type MobilePayoffFailureReason =
+  | 'payment-below-interest'
+  | 'negative-cashflow'
+  | 'cashflow-below-minimums'
+  | 'loc-overlimit';
+
+export type MobileSimulatorStrategyName = 'Traditional' | 'Snowball' | 'Avalanche' | 'Velocity';
+
 export interface MobileDashboardInput {
   monthlyIncome: number;
   monthlyExpenses: number;
@@ -62,6 +70,39 @@ export interface MobilePortfolioSnapshot {
   cashFlowAfterMinimumsLabel: string;
   guardrail: string | null;
   priorities: MobilePortfolioPriority[];
+}
+
+export interface MobileSimulatorStrategy {
+  name: MobileSimulatorStrategyName;
+  months: number;
+  totalInterest: number;
+  isPayoffPossible: boolean;
+  failureReason?: MobilePayoffFailureReason;
+  monthsLabel: string;
+  totalInterestLabel: string;
+  interestLabel: string;
+  statusLabel?: string;
+}
+
+export interface MobileSimulatorSnapshot {
+  guardrail: string | null;
+  fastestStrategyName: MobileSimulatorStrategyName | null;
+  strategies: MobileSimulatorStrategy[];
+  velocity: {
+    months: number;
+    totalInterest: number;
+    interestSaved: number;
+    monthsSaved: number;
+    interestSavedLabel: string;
+    monthsSavedLabel: string;
+  };
+}
+
+interface MobilePayoffProjection {
+  payoffMonths: number;
+  totalInterest: number;
+  isPayoffPossible: boolean;
+  failureReason?: MobilePayoffFailureReason;
 }
 
 export const defaultMobileDashboardInput: MobileDashboardInput = {
@@ -254,5 +295,297 @@ export function buildMobilePortfolioSnapshot(
         reason: `Highest current modeled daily interest burn: ${formatCurrency(dailyInterestBurn)}/day.`,
       },
     ],
+  };
+}
+
+function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
+  if (reason === 'negative-cashflow') return 'Needs positive cash flow';
+  if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
+  if (reason === 'payment-below-interest') return 'Payment below interest';
+  if (reason === 'loc-overlimit') return 'LOC over limit';
+  return 'Review inputs';
+}
+
+function formatMonthsSaved(months: number): string {
+  return `${months} ${months === 1 ? 'month' : 'months'} faster`;
+}
+
+function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjection {
+  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
+  let balance = Math.max(0, input.activeDebt.balance);
+  let totalInterest = 0;
+  let month = 0;
+  const firstMonthInterest = balance * monthlyRate;
+
+  if (balance > 0.01 && input.activeDebt.monthlyPayment <= firstMonthInterest) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'payment-below-interest',
+    };
+  }
+
+  while (balance > 0.01 && month < 600) {
+    month += 1;
+    const interest = balance * monthlyRate;
+    const payment = Math.min(input.activeDebt.monthlyPayment, balance + interest);
+    const principal = payment - interest;
+
+    if (principal <= 0) {
+      balance += interest - input.activeDebt.monthlyPayment;
+      totalInterest += interest;
+      continue;
+    }
+
+    totalInterest += interest;
+    balance = Math.max(0, balance - principal);
+  }
+
+  return {
+    payoffMonths: month,
+    totalInterest,
+    isPayoffPossible: balance <= 0.01,
+    failureReason: balance <= 0.01 ? undefined : 'payment-below-interest',
+  };
+}
+
+function simulateMobileWithExtraPayments(input: MobileDashboardInput, extraPaymentInput: number): MobilePayoffProjection {
+  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
+  let balance = Math.max(0, input.activeDebt.balance);
+  let totalInterest = 0;
+  let month = 0;
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const extraPayment = Math.min(Math.max(0, extraPaymentInput), Math.max(0, cashFlow));
+  const firstMonthInterest = balance * monthlyRate;
+
+  if (balance > 0.01 && input.activeDebt.monthlyPayment + extraPayment <= firstMonthInterest) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'payment-below-interest',
+    };
+  }
+
+  while (balance > 0.01 && month < 600) {
+    month += 1;
+    const interest = balance * monthlyRate;
+    const totalPayment = Math.min(input.activeDebt.monthlyPayment + extraPayment, balance + interest);
+    const principal = totalPayment - interest;
+
+    totalInterest += interest;
+    balance = Math.max(0, balance - Math.max(0, principal));
+  }
+
+  return {
+    payoffMonths: month,
+    totalInterest,
+    isPayoffPossible: balance <= 0.01,
+    failureReason: balance <= 0.01 ? undefined : 'payment-below-interest',
+  };
+}
+
+function simulateMobileMoneyLoopPayoff(input: {
+  principalBalance: number;
+  debtApr: number;
+  debtPayment: number;
+  loc: LOCDetails;
+  chunkAmount: number;
+  cashFlowPaydown: number;
+  locDepositAmount: number;
+  locExpenseAmount: number;
+}): MobilePayoffProjection {
+  if (input.cashFlowPaydown <= 0) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'negative-cashflow',
+    };
+  }
+
+  if (input.loc.limit <= 0 || input.loc.balance >= input.loc.limit) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-overlimit',
+    };
+  }
+
+  const firstMonthInterest = input.principalBalance * input.debtApr / 12;
+  if (input.principalBalance > 0.01 && input.debtPayment <= firstMonthInterest) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'payment-below-interest',
+    };
+  }
+
+  const chunkAmount = Math.max(0, input.chunkAmount);
+  let debtBalance = Math.max(0, input.principalBalance);
+  let locBalance = Math.max(0, input.loc.balance);
+  let totalInterest = 0;
+  let month = 0;
+  let monthsSinceChunk = 0;
+
+  while ((debtBalance > 0.01 || locBalance > 0.01) && month < 600) {
+    month += 1;
+    monthsSinceChunk += 1;
+
+    const locAvailable = Math.max(0, input.loc.limit - locBalance);
+    const effectiveChunkAmount = Math.min(chunkAmount, Math.max(0, debtBalance), locAvailable);
+    const chunkRecoveryMonths = effectiveChunkAmount > 0 && input.cashFlowPaydown > 0
+      ? Math.ceil(effectiveChunkAmount / input.cashFlowPaydown)
+      : 999;
+
+    const debtInterest = debtBalance * input.debtApr / 12;
+    const debtPayment = Math.min(input.debtPayment, debtBalance + debtInterest);
+    const debtPrincipalPaid = Math.max(0, debtPayment - debtInterest);
+    const canChunk =
+      effectiveChunkAmount > 0 &&
+      monthsSinceChunk >= chunkRecoveryMonths &&
+      debtBalance > effectiveChunkAmount * 0.1;
+
+    if (canChunk) {
+      locBalance += effectiveChunkAmount;
+      debtBalance = Math.max(0, debtBalance - effectiveChunkAmount);
+      monthsSinceChunk = 0;
+    }
+
+    debtBalance = Math.max(0, debtBalance - debtPrincipalPaid);
+    const locInterest = calculateADBInterest(
+      locBalance,
+      input.loc.apr,
+      input.locDepositAmount,
+      input.locExpenseAmount
+    );
+    locBalance = Math.max(0, locBalance - input.cashFlowPaydown + locInterest);
+    totalInterest += debtInterest + locInterest;
+  }
+
+  const isPayoffPossible = debtBalance <= 0.01 && locBalance <= 0.01;
+
+  return {
+    payoffMonths: month,
+    totalInterest,
+    isPayoffPossible,
+    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+  };
+}
+
+function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjection {
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+
+  if (cashFlow <= 0) {
+    const baseline = simulateMobileBaseline(input);
+    return {
+      ...baseline,
+      isPayoffPossible: false,
+      failureReason: baseline.failureReason ?? 'negative-cashflow',
+    };
+  }
+
+  if (input.loc.limit <= 0 || input.loc.balance >= input.loc.limit) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-overlimit',
+    };
+  }
+
+  if (cashFlow < input.activeDebt.monthlyPayment) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'cashflow-below-minimums',
+    };
+  }
+
+  const locCashFlowPaydown = Math.max(0, cashFlow - input.activeDebt.monthlyPayment);
+  const chunkAmount = Math.max(
+    0,
+    input.chunkAmount > 0 ? input.chunkAmount : Math.min(locCashFlowPaydown * 3, input.loc.limit * 0.4)
+  );
+
+  return simulateMobileMoneyLoopPayoff({
+    principalBalance: Math.max(0, input.activeDebt.balance),
+    debtApr: Math.max(0, input.activeDebt.apr),
+    debtPayment: Math.max(0, input.activeDebt.monthlyPayment),
+    loc: input.loc,
+    chunkAmount,
+    cashFlowPaydown: locCashFlowPaydown,
+    locDepositAmount: Math.max(0, input.monthlyIncome),
+    locExpenseAmount: Math.max(0, input.monthlyExpenses + input.activeDebt.monthlyPayment),
+  });
+}
+
+function toMobileSimulatorStrategy(
+  name: MobileSimulatorStrategyName,
+  projection: MobilePayoffProjection
+): MobileSimulatorStrategy {
+  const isPayoffPossible = projection.isPayoffPossible !== false && projection.payoffMonths > 0;
+
+  return {
+    name,
+    months: isPayoffPossible ? projection.payoffMonths : 0,
+    totalInterest: isPayoffPossible ? projection.totalInterest : 0,
+    isPayoffPossible,
+    failureReason: projection.failureReason,
+    monthsLabel: isPayoffPossible ? `${projection.payoffMonths} mo` : 'Review inputs',
+    totalInterestLabel: isPayoffPossible ? formatCurrency(projection.totalInterest) : 'Not projected',
+    interestLabel: isPayoffPossible ? 'Projected interest' : 'Not projected',
+    statusLabel: isPayoffPossible ? undefined : formatPayoffFailure(projection.failureReason),
+  };
+}
+
+export function buildMobileSimulatorSnapshot(
+  input: MobileDashboardInput = defaultMobileDashboardInput
+): MobileSimulatorSnapshot {
+  const baseline = simulateMobileBaseline(input);
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const surplusAfterMinimum = Math.max(0, cashFlow - input.activeDebt.monthlyPayment);
+  const accelerated = simulateMobileWithExtraPayments(input, surplusAfterMinimum);
+  const velocityProjection = simulateMobileVelocity(input);
+  const strategies = [
+    toMobileSimulatorStrategy('Traditional', baseline),
+    toMobileSimulatorStrategy('Snowball', accelerated),
+    toMobileSimulatorStrategy('Avalanche', accelerated),
+    toMobileSimulatorStrategy('Velocity', velocityProjection),
+  ];
+  const canCompareVelocity = baseline.isPayoffPossible && velocityProjection.isPayoffPossible;
+  const interestSaved = canCompareVelocity ? Math.max(0, baseline.totalInterest - velocityProjection.totalInterest) : 0;
+  const monthsSaved = canCompareVelocity ? Math.max(0, baseline.payoffMonths - velocityProjection.payoffMonths) : 0;
+  const fastestStrategy = strategies
+    .filter((strategy) => strategy.isPayoffPossible)
+    .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
+
+  let guardrail: string | null = null;
+  if (cashFlow <= 0) {
+    guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
+  } else if (input.loc.limit <= 0) {
+    guardrail = 'Add a LOC limit before trusting velocity payoff projections.';
+  } else if (input.loc.balance / input.loc.limit > 0.8) {
+    guardrail = 'LOC utilization is above the 80% planning guardrail.';
+  } else if (cashFlow < input.activeDebt.monthlyPayment) {
+    guardrail = 'Cash flow does not cover the active debt minimum payment yet.';
+  }
+
+  return {
+    guardrail,
+    fastestStrategyName: fastestStrategy?.name ?? null,
+    strategies,
+    velocity: {
+      months: velocityProjection.isPayoffPossible ? velocityProjection.payoffMonths : 0,
+      totalInterest: velocityProjection.isPayoffPossible ? velocityProjection.totalInterest : 0,
+      interestSaved,
+      monthsSaved,
+      interestSavedLabel: canCompareVelocity ? `Saves ${formatCurrency(interestSaved)}` : 'Not projected',
+      monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
+    },
   };
 }

@@ -1441,6 +1441,33 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed with 0 problems.
 - `apps/web` `npm run build`: passed with a successful production build.
 
+### Repair Pass 88: Mobile Simulator Strategy Parity
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green contract coverage proving the shared mobile simulator snapshot exists, the Expo shell renders a native strategy panel, and the mobile strategy results match the current web single-debt simulator engine for Traditional, Snowball, Avalanche, and Velocity.
+- Added shared mobile simulator payoff projections in `packages/financial-engine`, including baseline payoff, extra-payment comparison, and Money Loop velocity payoff with LOC average-daily-balance interest included in total interest.
+- Added invalid-state handling so native Simulator suppresses Velocity payoff claims when cash flow is invalid, showing `Not projected`, `Review inputs`, and `Needs positive cash flow` instead of a false zero-month win.
+- Updated the Expo Simulator mode to render Velocity Delta, Interest Visibility, and a four-strategy comparison from the shared engine snapshot.
+- Browser smoke served the exported Expo web build from `dist-web`, edited income to `$8,000` and LOC limit to `$25,000`, opened Simulator, and verified Traditional `51 mo`, Snowball/Avalanche `6 mo`, Velocity `10 mo`, `Saves $2,252`, and `41 months faster` with 0 console errors. The same Browser flow then edited income to `$4,000` and verified the invalid cash-flow guardrail with 0 console errors.
+- Chrome extension smoke loaded the same local export, edited income to `$8,000` and LOC limit to `$25,000`, opened Simulator, and verified Strategy Comparison, Snowball `6 mo`, Velocity `10 mo`, Velocity savings, footer copy, and 0 console errors.
+- Native simulator smoke remains environment-limited on this Windows machine: `adb`, Android `emulator`, and `xcrun` were not available, so Android device/emulator and iOS simulator runs could not be executed locally in this pass.
+- `npm audit --audit-level=high` still exits successfully for the mobile app. npm continues to report moderate transitive Expo/uuid findings; the suggested forced fix would downgrade Expo to an old breaking version, so it was not applied.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed after first failing for the missing shared simulator snapshot and native strategy panel.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npx expo install --check`: passed.
+- `apps/mobile` `npx expo-doctor`: passed, 21/21 checks.
+- `apps/mobile` `npm audit --audit-level=high`: passed with the moderate transitive Expo/uuid advisory noted above.
+- `apps/mobile` `npx expo export --platform web --output-dir dist-web --clear`: passed.
+- `apps/mobile` Browser smoke at `http://127.0.0.1:8084/`: passed for valid and invalid Simulator strategy states with 0 console errors.
+- `apps/mobile` Chrome smoke at `http://127.0.0.1:8084/`: passed for the valid Simulator strategy state with 0 console errors.
+- `apps/web` `npm test`: passed, 99 regression tests.
+- `apps/web` `npm run lint`: passed with 0 problems.
+- `apps/web` `npm run build`: passed with a successful production build.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -1955,7 +1982,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
 - Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
-- Adapt dashboard, simulator, and portfolio to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell.
+- Adapt dashboard, simulator, and portfolio to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine.
 - Add offline-first encrypted local storage.
 
 ## Recommended Next Move

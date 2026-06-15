@@ -127,7 +127,10 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
   assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
+  assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));
+  assert.ok(shellSource.includes('SimulatorStrategyPanel'));
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
+  assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
   assert.ok(
     !fs.existsSync(path.join(repoRoot, 'apps/mobile/app/(tabs)/_layout.tsx')),
     'expected static-export shell not to rely on tab route hydration'
@@ -160,6 +163,87 @@ test('shared mobile portfolio snapshot explains cash-flow coverage and debt prio
   assert.equal(snapshot.priorities[0].name, 'Auto Loan');
   assert.ok(snapshot.priorities[0].reason.includes('daily interest burn'));
   assert.equal(snapshot.guardrail, null);
+});
+
+test('shared mobile simulator snapshot matches current web single-debt strategy comparison', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const webEngine = loadTsFile(path.join(repoRoot, 'apps/web/src/engine/calculations.ts'));
+  const input = {
+    monthlyIncome: 8000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  };
+  const webInput = {
+    monthlyIncome: input.monthlyIncome,
+    monthlyExpenses: input.monthlyExpenses,
+    carLoan: input.activeDebt,
+    loc: input.loc,
+    useVelocity: true,
+    extraPayment: input.chunkAmount,
+  };
+  const snapshot = sharedEngine.buildMobileSimulatorSnapshot(input);
+  const webStrategies = webEngine.compareSingleDebtStrategies(webInput);
+
+  assert.equal(snapshot.strategies.length, 4);
+  for (const webStrategy of webStrategies) {
+    const mobileStrategy = snapshot.strategies.find((strategy) => strategy.name === webStrategy.name);
+    assert.ok(mobileStrategy, `expected mobile strategy for ${webStrategy.name}`);
+    assert.equal(mobileStrategy.months, webStrategy.months);
+    assert.equal(mobileStrategy.totalInterest.toFixed(2), webStrategy.totalInterest.toFixed(2));
+    assert.equal(mobileStrategy.isPayoffPossible, webStrategy.isPayoffPossible);
+  }
+
+  const velocity = snapshot.strategies.find((strategy) => strategy.name === 'Velocity');
+  const fastestWebStrategy = webStrategies
+    .filter((strategy) => strategy.isPayoffPossible)
+    .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
+  assert.equal(snapshot.guardrail, null);
+  assert.equal(snapshot.velocity.months, velocity.months);
+  assert.equal(snapshot.velocity.interestSavedLabel.startsWith('Saves $'), true);
+  assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('faster'), true);
+  assert.equal(snapshot.fastestStrategyName, fastestWebStrategy.name);
+});
+
+test('shared mobile simulator snapshot suppresses velocity payoff claims when cash flow is invalid', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobileSimulatorSnapshot({
+    monthlyIncome: 4000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+  const velocity = snapshot.strategies.find((strategy) => strategy.name === 'Velocity');
+
+  assert.equal(snapshot.guardrail, 'Income needs to exceed expenses before velocity payoff claims are projected.');
+  assert.equal(snapshot.velocity.interestSavedLabel, 'Not projected');
+  assert.equal(snapshot.velocity.monthsSavedLabel, 'Review inputs');
+  assert.equal(velocity.isPayoffPossible, false);
+  assert.equal(velocity.monthsLabel, 'Review inputs');
+  assert.equal(velocity.interestLabel, 'Not projected');
+  assert.equal(velocity.statusLabel, 'Needs positive cash flow');
 });
 
 if (process.exitCode) {
