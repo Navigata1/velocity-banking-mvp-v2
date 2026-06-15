@@ -94,6 +94,11 @@ function parsePercentageInput(value: string): number | null {
   return Number.isFinite(parsed) ? Math.max(0, parsed / 100) : null;
 }
 
+function parseWholeNumberInput(value: string): number | null {
+  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
+  return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : null;
+}
+
 function MoneyInput({
   accessibilityLabel,
   label,
@@ -133,6 +138,50 @@ function MoneyInput({
           paddingVertical: 10,
         }}
         value={String(Math.round(value))}
+      />
+    </View>
+  );
+}
+
+function WholeNumberInput({
+  accessibilityLabel,
+  label,
+  value,
+  onChange,
+}: {
+  accessibilityLabel: string;
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <View style={{ gap: 6, minWidth: 150 }}>
+      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+        {label}
+      </Text>
+      <TextInput
+        accessibilityLabel={accessibilityLabel}
+        inputMode="numeric"
+        keyboardType="number-pad"
+        onChangeText={(nextValue) => {
+          const parsed = parseWholeNumberInput(nextValue);
+          if (parsed !== null) onChange(parsed);
+        }}
+        selectTextOnFocus
+        style={{
+          backgroundColor: '#020617',
+          borderColor: '#334155',
+          borderCurve: 'continuous',
+          borderRadius: 12,
+          borderWidth: 1,
+          color: '#f8fafc',
+          fontSize: 18,
+          fontVariant: ['tabular-nums'],
+          fontWeight: '800',
+          paddingHorizontal: 12,
+          paddingVertical: 10,
+        }}
+        value={String(value)}
       />
     </View>
   );
@@ -227,6 +276,30 @@ function AssumptionControls({
           label="LOC APR"
           value={input.loc.apr}
           onChange={(apr) => onChange({ ...input, loc: { ...input.loc, apr } })}
+        />
+        <MoneyInput
+          accessibilityLabel="Active debt balance"
+          label="Debt Balance"
+          value={input.activeDebt.balance}
+          onChange={(balance) => onChange({ ...input, activeDebt: { ...input.activeDebt, balance } })}
+        />
+        <PercentageInput
+          accessibilityLabel="Active debt APR"
+          label="Debt APR"
+          value={input.activeDebt.apr}
+          onChange={(apr) => onChange({ ...input, activeDebt: { ...input.activeDebt, apr } })}
+        />
+        <MoneyInput
+          accessibilityLabel="Active debt monthly payment"
+          label="Debt Payment"
+          value={input.activeDebt.monthlyPayment}
+          onChange={(monthlyPayment) => onChange({ ...input, activeDebt: { ...input.activeDebt, monthlyPayment } })}
+        />
+        <WholeNumberInput
+          accessibilityLabel="Active debt term months"
+          label="Debt Term"
+          value={input.activeDebt.termMonths ?? 0}
+          onChange={(termMonths) => onChange({ ...input, activeDebt: { ...input.activeDebt, termMonths } })}
         />
       </View>
     </FinancialCard>

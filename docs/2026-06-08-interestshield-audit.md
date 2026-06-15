@@ -1791,6 +1791,26 @@ Post-repair verification:
 - Chrome smoke repeated the same exported Expo LOC balance/APR edit flow with 0 console warnings/errors, then restored Chrome values to `$3,200` LOC balance and `8.5%` LOC APR before closing the automation tab.
 - Native Android/iOS simulator smoke was not run in this pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
 
+### Repair Pass 103: Mobile Active Debt Controls
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green mobile contract coverage requiring Expo native controls for active debt balance, active debt APR, active debt monthly payment, and active debt term months.
+- Added native active debt inputs to the Expo shell so the mobile Portfolio, Simulator, Dashboard, and Cockpit snapshots can be tested against debt assumptions beyond the default car demo.
+- Added a whole-number input for debt term months so term edits stay numeric without treating the value as currency.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first with the active debt balance control missing, then passed after adding the debt controls.
+- `apps/mobile` `npm run check`: passed with `tsc --noEmit`.
+- `apps/mobile` `npm run build:web`: passed and exported `dist-web`.
+- `apps/web` `npm test`: passed with 103 regression tests.
+- `git diff --check`: passed; only existing Windows line-ending warnings were reported.
+- Local exported Expo route HTTP check at `http://127.0.0.1:8103`: `/portfolio` returned 200.
+- In-app Browser smoke on the exported Expo web build: opened `/portfolio`, confirmed all four active debt controls rendered uniquely, edited debt balance to `$12,000`, debt APR to `5.75%`, monthly payment to `$500`, and term to `36` months, confirmed Portfolio recalculated total modeled debt and modeled minimums from the edited inputs, and captured 0 console warnings/errors.
+- Chrome smoke repeated the same exported Expo active-debt edit flow with 0 console warnings/errors, then restored Browser and Chrome active debt values to `$18,450`, `6.9%`, `$425`, and `48` months before closing the Chrome automation tab.
+- Native Android/iOS simulator smoke was not run in this pass; `adb`, Android `emulator`, and `xcrun` remain unavailable in the local Windows environment.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2306,7 +2326,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
 - Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
-- Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states; expanded in Repair Pass 102 with native LOC balance and LOC APR controls for mobile guardrail testing.
+- Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states; expanded in Repair Pass 102 with native LOC balance and LOC APR controls for mobile guardrail testing; expanded in Repair Pass 103 with native active-debt balance, APR, payment, and term controls.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.
 
 ## Recommended Next Move
