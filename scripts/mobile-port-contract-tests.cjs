@@ -92,6 +92,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts.web, 'expo start --web');
   assert.equal(mobilePackage.scripts['build:web'], 'expo export --platform web --output-dir dist-web --clear');
   assert.equal(mobilePackage.scripts['serve:web-export'], 'node scripts/serve-web-export.cjs');
+  assert.equal(mobilePackage.scripts['smoke:web-export'], 'node scripts/smoke-web-export.cjs');
   assert.equal(
     mobilePackage.scripts['build:android:preview'],
     'npx eas-cli@latest build --platform android --profile preview'
@@ -144,6 +145,8 @@ test('mobile native release config is explicit for Android and iOS builds', () =
 test('mobile web export is configured for Vercel SPA hosting and repeatable smoke tests', () => {
   const vercelConfig = readJson('apps/mobile/vercel.json');
   const serveScript = fs.readFileSync(path.join(repoRoot, 'apps/mobile/scripts/serve-web-export.cjs'), 'utf8');
+  const smokeScriptPath = path.join(repoRoot, 'apps/mobile/scripts/smoke-web-export.cjs');
+  const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
 
   assert.equal(vercelConfig.$schema, 'https://openapi.vercel.sh/vercel.json');
   assert.equal(vercelConfig.buildCommand, 'npm run build:web');
@@ -155,6 +158,19 @@ test('mobile web export is configured for Vercel SPA hosting and repeatable smok
   assert.ok(serveScript.includes('process.env.PORT'), 'expected configurable local smoke-test port');
   assert.ok(serveScript.includes('path.relative(root, requestedPath)'), 'expected path traversal protection');
   assert.ok(serveScript.includes('path.isAbsolute(relativePath)'), 'expected absolute escape protection');
+
+  assert.ok(fs.existsSync(smokeScriptPath), 'expected a repeatable Expo export smoke script');
+  assert.ok(smokeScript.includes("['/', 'Dashboard'"), 'expected smoke script to cover the dashboard route');
+  assert.ok(smokeScript.includes("['/simulator', 'Simulator'"), 'expected smoke script to cover the simulator route');
+  assert.ok(smokeScript.includes("['/cockpit', 'Cockpit'"), 'expected smoke script to cover the cockpit route');
+  assert.ok(smokeScript.includes("['/portfolio', 'Portfolio'"), 'expected smoke script to cover the portfolio route');
+  assert.ok(smokeScript.includes("['/learn', 'Learn'"), 'expected smoke script to cover the learn route');
+  assert.ok(smokeScript.includes("['/vault', 'Vault'"), 'expected smoke script to cover the vault route');
+  assert.ok(smokeScript.includes("spawn(process.execPath"), 'expected smoke script to start the committed export server');
+  assert.ok(smokeScript.includes('scripts/serve-web-export.cjs'), 'expected smoke script to reuse the committed server');
+  assert.ok(smokeScript.includes('response.statusCode !== 200'), 'expected smoke script to fail non-200 routes');
+  assert.ok(smokeScript.includes("content-type") && smokeScript.includes("text/html"), 'expected smoke script to verify HTML responses');
+  assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
 });
 
 test('shared financial engine matches current web engine on core fixtures', () => {
