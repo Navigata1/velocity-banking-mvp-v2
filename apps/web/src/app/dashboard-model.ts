@@ -47,7 +47,7 @@ export interface DashboardVital {
 }
 
 export interface DashboardWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-utilization' | 'payoff';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-overlimit' | 'loc-utilization' | 'payoff';
   title: string;
   body: string;
 }
@@ -123,6 +123,9 @@ function isProjectedPayoffPossible(projection: DashboardProjectionInput): boolea
 function dailyInterest(balance: number, apr: number): number {
   return (Math.max(0, balance) * Math.max(0, apr)) / 365;
 }
+
+const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
+const LOC_OVER_LIMIT_BODY = 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.';
 
 function formatLocSetupLabel(loc: DashboardLocInput): string {
   return loc.balance > 0 ? 'Missing limit' : 'No LOC';
@@ -249,7 +252,13 @@ function buildChangeExplanations(
   ];
 }
 
-function buildNextMove(input: DashboardModelInput, cashFlow: number, locUtilization: number, velocityPossible: boolean): DashboardNextMove {
+function buildNextMove(
+  input: DashboardModelInput,
+  cashFlow: number,
+  locUtilization: number,
+  locOverLimit: boolean,
+  velocityPossible: boolean
+): DashboardNextMove {
   const availableLoc = Math.max(0, input.loc.limit - input.loc.balance);
   const safeChunk = Math.min(Math.max(0, input.chunkAmount), Math.max(0, input.activeDebt.balance), availableLoc);
 
@@ -262,6 +271,19 @@ function buildNextMove(input: DashboardModelInput, cashFlow: number, locUtilizat
       assumptions: [
         'Cash flow is monthly income minus monthly expenses.',
         'The model does not show a payoff claim when monthly cash flow is zero or negative.',
+      ],
+    };
+  }
+
+  if (locOverLimit) {
+    return {
+      title: 'Pay down the LOC',
+      value: `${Math.round(locUtilization * 100)}% used`,
+      caption: LOC_OVER_LIMIT_BODY,
+      tone: 'rose',
+      assumptions: [
+        'LOC balance should stay at or below the entered LOC limit before modeling another chunk.',
+        'Over-limit state blocks velocity payoff claims until the LOC is back inside usable capacity.',
       ],
     };
   }
@@ -337,6 +359,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const availableLoc = Math.max(0, input.loc.limit - input.loc.balance);
   const locNeedsSetup = input.loc.limit <= 0;
   const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
+  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
   const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(input.loc) : `${Math.round(locUtilization * 100)}%`;
   const debtDailyInterest = input.allDebts.reduce(
     (sum, debt) => sum + dailyInterest(debt.balance, debt.interestRate),
@@ -347,7 +370,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(input.velocity);
   const baselinePossible = isProjectedPayoffPossible(input.baseline);
   const etaValue = velocityPossible ? formatMonths(input.velocity.months) : 'Stabilize first';
-  const nextMove = buildNextMove(input, cashFlow, locUtilization, velocityPossible);
+  const nextMove = buildNextMove(input, cashFlow, locUtilization, locOverLimit, velocityPossible);
 
   const warnings: DashboardWarning[] = [];
   if (cashFlow <= 0) {
@@ -362,6 +385,12 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       kind: 'loc-setup',
       title: 'Add LOC details',
       body: 'The Money Loop needs a LOC limit before chunk projections can be trusted. Enter a limit or keep the dashboard in baseline mode.',
+    });
+  } else if (locOverLimit) {
+    warnings.push({
+      kind: 'loc-overlimit',
+      title: LOC_OVER_LIMIT_TITLE,
+      body: LOC_OVER_LIMIT_BODY,
     });
   } else if (locUtilization > 0.8) {
     warnings.push({

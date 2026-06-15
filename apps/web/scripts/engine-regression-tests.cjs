@@ -1590,6 +1590,79 @@ test('simulator warnings treat a missing LOC limit as setup needed instead of hi
   );
 });
 
+test('web warning models distinguish LOC over limit from high utilization', () => {
+  const simulatorWarnings = simulatorModel.buildSimulatorWarnings({
+    cashFlow: 1500,
+    loc: {
+      limit: 10000,
+      balance: 10500,
+    },
+  });
+  const dashboard = dashboardModel.buildDashboardModel({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    chunkAmount: 1000,
+    activeDebt: {
+      name: 'Auto Loan',
+      balance: 18450,
+      interestRate: 0.069,
+      minimumPayment: 425,
+    },
+    allDebts: [
+      {
+        name: 'Auto Loan',
+        balance: 18450,
+        interestRate: 0.069,
+        minimumPayment: 425,
+      },
+    ],
+    loc: {
+      limit: 10000,
+      balance: 10500,
+      interestRate: 0.085,
+    },
+    baseline: {
+      months: 48,
+      totalInterest: 2600,
+      isPayoffPossible: true,
+    },
+    velocity: {
+      months: 0,
+      totalInterest: 0,
+      savings: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-overlimit',
+    },
+  });
+
+  assert.ok(
+    simulatorWarnings.some(
+      (warning) =>
+        warning.kind === 'loc-overlimit' &&
+        warning.title === 'LOC balance is over the limit' &&
+        warning.body.includes('above the available limit')
+    ),
+    JSON.stringify(simulatorWarnings)
+  );
+  assert.ok(
+    !simulatorWarnings.some((warning) => warning.title === 'High LOC utilization'),
+    JSON.stringify(simulatorWarnings)
+  );
+  assert.equal(dashboard.nextMove.title, 'Pay down the LOC');
+  assert.equal(dashboard.nextMove.value, '105% used');
+  assert.equal(dashboard.nextMove.caption, 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.');
+  assert.ok(
+    dashboard.warnings.some(
+      (warning) =>
+        warning.kind === 'loc-overlimit' &&
+        warning.title === 'LOC balance is over the limit' &&
+        warning.body.includes('above the available limit')
+    ),
+    JSON.stringify(dashboard.warnings)
+  );
+  assert.ok(!dashboard.warnings.some((warning) => warning.title === 'LOC utilization is above 80%'));
+});
+
 test('simulator timeline status does not claim LOC interest visibility without events', () => {
   assert.equal(
     typeof simulatorModel.buildSimulatorTimelineStatus,

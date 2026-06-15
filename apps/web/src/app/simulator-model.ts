@@ -22,7 +22,7 @@ export interface SimulatorWarningInput {
 }
 
 export interface SimulatorWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-utilization';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-overlimit' | 'loc-utilization';
   title: string;
   body: string;
   tone: 'rose' | 'amber';
@@ -39,6 +39,9 @@ const strategyStyles: Record<SingleDebtStrategyResult['name'], Pick<SimulatorStr
   Avalanche: { color: 'amber', icon: '🏔️' },
   Velocity: { color: 'emerald', icon: '⚡' },
 };
+
+const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
+const LOC_OVER_LIMIT_BODY = 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.';
 
 function formatFailure(reason?: PayoffFailureReason): string {
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
@@ -69,6 +72,17 @@ export function buildSimulatorWarnings(input: SimulatorWarningInput): SimulatorW
         ? 'A LOC balance is present, but the limit is missing. Enter a limit before trusting utilization or chunk projections.'
         : 'Enter a LOC limit before trusting utilization or chunk projections.',
       tone: 'amber',
+    });
+
+    return warnings;
+  }
+
+  if (input.loc.balance > input.loc.limit) {
+    warnings.push({
+      kind: 'loc-overlimit',
+      title: LOC_OVER_LIMIT_TITLE,
+      body: LOC_OVER_LIMIT_BODY,
+      tone: 'rose',
     });
 
     return warnings;
