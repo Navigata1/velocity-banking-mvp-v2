@@ -626,6 +626,9 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(!shellSource.includes('const lessons = ['));
   assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
   assert.ok(shellSource.includes('StorageStatusCard'));
+  assert.ok(shellSource.includes('SettingsPanel'), 'expected mobile Settings mode to render native readiness status');
+  assert.ok(shellSource.includes('testID="settings-backend-readiness"'), 'expected mobile Settings backend readiness smoke hook');
+  assert.ok(shellSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
   assert.ok(shellSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
@@ -670,12 +673,14 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
     ['portfolio.tsx', 'portfolio', 'portfolio', 'Portfolio'],
     ['learn.tsx', 'learn', 'learn', 'Learn'],
     ['vault.tsx', 'vault', 'vault', 'Vault'],
+    ['settings.tsx', 'settings', 'settings', 'Settings'],
   ];
 
-  assert.ok(shellSource.includes("import { useRouter } from 'expo-router'"));
+  assert.ok(shellSource.includes("import { useRouter, type Href } from 'expo-router'"));
+  assert.ok(shellSource.includes("type Href"), 'expected mobile navigation to use Expo Href at the route boundary');
   assert.ok(shellSource.includes("initialMode = 'dashboard'"));
   assert.ok(shellSource.includes('modeRoutes'));
-  assert.ok(shellSource.includes('router.push(modeRoutes[nextMode])'));
+  assert.ok(shellSource.includes('router.push(modeRoutes[nextMode] as Href)'));
 
   for (const [filename, mode, routeName, title] of routeExpectations) {
     const routeFile = path.join(repoRoot, 'apps/mobile/app', filename);
