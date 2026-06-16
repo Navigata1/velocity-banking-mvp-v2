@@ -246,6 +246,26 @@ test('GitHub CI protects web and mobile quality gates', () => {
   );
 });
 
+test('manual release smoke protects deployed web and optional mobile export gates', () => {
+  const workflowPath = path.join(repoRoot, '.github/workflows/release-smoke.yml');
+
+  assert.ok(fs.existsSync(workflowPath), 'expected a committed manual release smoke workflow');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.ok(workflow.includes('workflow_dispatch:'), 'expected release smoke to run manually');
+  assert.ok(workflow.includes('production_origin:'), 'expected release smoke to accept a target origin');
+  assert.ok(workflow.includes('VERCEL_AUTOMATION_BYPASS_SECRET'), 'expected release smoke to support protected Vercel previews');
+  assert.ok(workflow.includes('npm run smoke:production'), 'expected release smoke to verify deployed web routes');
+  assert.ok(workflow.includes('run_mobile_export'), 'expected release smoke to support optional Expo export checks');
+  assert.ok(workflow.includes('npm run check'), 'expected release smoke to type-check the mobile app when export checks run');
+  assert.ok(workflow.includes('npm run build:web'), 'expected release smoke to build the Expo web export');
+  assert.ok(workflow.includes('npm run smoke:web-export'), 'expected release smoke to verify the Expo web export');
+  assert.ok(
+    workflow.includes('node scripts/mobile-port-contract-tests.cjs'),
+    'expected release smoke to run shared mobile contract tests'
+  );
+});
+
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');

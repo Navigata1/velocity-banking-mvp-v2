@@ -2469,6 +2469,26 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 137: Release Smoke Mobile Contract Gate
+
+Local source repairs completed on 2026-06-16:
+
+- Strengthened the manual `Release smoke` workflow so optional Expo export verification now runs the mobile TypeScript check before building the export.
+- Added shared mobile contract tests to the same manual release path, so a release smoke run verifies the mobile snapshots, Expo routes, native smoke wiring, and export smoke hooks before considering the mobile export gate complete.
+- Added contract coverage for the manual release workflow itself, including protected-preview bypass support, deployed web route smoke, mobile type-check, Expo export smoke, and shared mobile contract tests.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

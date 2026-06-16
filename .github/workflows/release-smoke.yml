@@ -59,6 +59,11 @@ jobs:
         working-directory: apps/mobile
         run: npm ci
 
+      - name: Run mobile type-check
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        run: npm run check
+
       - name: Build Expo web export
         if: ${{ inputs.run_mobile_export }}
         working-directory: apps/mobile
@@ -70,3 +75,7 @@ jobs:
         if: ${{ inputs.run_mobile_export }}
         working-directory: apps/mobile
         run: npm run smoke:web-export
+
+      - name: Run mobile contract tests
+        if: ${{ inputs.run_mobile_export }}
+        run: node scripts/mobile-port-contract-tests.cjs
