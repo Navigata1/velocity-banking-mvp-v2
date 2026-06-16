@@ -294,6 +294,9 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('runs-on: ubuntu-latest'), 'expected Android smoke to use a Linux runner');
   assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
   assert.ok(workflow.includes('actions/setup-java@v4'), 'expected Android SDK tooling to have Java available');
+  assert.ok(workflow.includes('cmdline-tools/latest/bin'), 'expected Android smoke to expose SDK command-line tools on PATH');
+  assert.ok(workflow.includes('GITHUB_PATH'), 'expected Android smoke to persist Android SDK tool paths for later steps');
+  assert.ok(workflow.includes('test -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"'), 'expected Android smoke to fail clearly when sdkmanager is missing');
   assert.ok(workflow.includes('sdkmanager'), 'expected Android smoke to install emulator tooling');
   assert.ok(workflow.includes('avdmanager create avd'), 'expected Android smoke to create an emulator profile');
   assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
