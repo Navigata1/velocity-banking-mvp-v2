@@ -2511,6 +2511,28 @@ Post-repair verification:
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 - True iOS Simulator execution remains pending until the new manual workflow is run on GitHub's macOS runner or on a local macOS/Xcode host.
 
+### Repair Pass 139: Manual Android Native Smoke Workflow
+
+Local source repairs completed on 2026-06-16:
+
+- Added a manual `Mobile Android smoke` GitHub Actions workflow that prepares an Android emulator on `ubuntu-latest`, installs mobile dependencies, type-checks the Expo app, and runs the committed `npm run smoke:android` script.
+- The workflow accepts Android API level and AVD name inputs, creates the requested emulator profile, forwards it through `ANDROID_SMOKE_AVD`, and uploads the Android smoke screenshot artifact when available.
+- Added contract coverage so the Android native smoke workflow stays manual, Linux-backed, Java/SDK prepared, emulator-backed, screenshot-producing, and wired to the existing Expo Go Android smoke command.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:android`: passed on `emulator-5554` and reported `Orbit text: Payoff Orbit, LOC orbit step`.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+- True GitHub-hosted Android emulator execution remains pending until the new manual workflow is available to dispatch from GitHub.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

@@ -282,6 +282,26 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
 });
 
+test('manual Android native smoke runs on a GitHub emulator host', () => {
+  const workflowPath = path.join(repoRoot, '.github/workflows/mobile-android-smoke.yml');
+
+  assert.ok(fs.existsSync(workflowPath), 'expected a committed manual Android native smoke workflow');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.ok(workflow.includes('workflow_dispatch:'), 'expected Android smoke to run manually');
+  assert.ok(workflow.includes('api_level:'), 'expected Android smoke to accept an API level override');
+  assert.ok(workflow.includes('avd_name:'), 'expected Android smoke to accept an AVD name override');
+  assert.ok(workflow.includes('runs-on: ubuntu-latest'), 'expected Android smoke to use a Linux runner');
+  assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
+  assert.ok(workflow.includes('actions/setup-java@v4'), 'expected Android SDK tooling to have Java available');
+  assert.ok(workflow.includes('sdkmanager'), 'expected Android smoke to install emulator tooling');
+  assert.ok(workflow.includes('avdmanager create avd'), 'expected Android smoke to create an emulator profile');
+  assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
+  assert.ok(workflow.includes('ANDROID_SMOKE_SCREENSHOT'), 'expected Android smoke to capture a workflow artifact screenshot');
+  assert.ok(workflow.includes('npm run smoke:android'), 'expected Android smoke to run the committed Expo Go emulator smoke');
+  assert.ok(workflow.includes('actions/upload-artifact@v4'), 'expected Android smoke to upload visual evidence');
+});
+
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');
