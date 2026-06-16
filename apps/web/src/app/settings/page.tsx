@@ -8,6 +8,7 @@ import { usePortfolioStore } from '@/stores/portfolio-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
+import { BACKEND_READINESS_OPTIONS, BACKEND_STATUS_SUMMARY } from './backend-readiness';
 import { clearLocalDemoData } from './local-data-reset';
 import { exportLocalDemoSnapshot, importLocalDemoSnapshot } from './local-demo-snapshot';
 
@@ -385,14 +386,46 @@ export default function SettingsPage() {
       <ScrollReveal variant="fadeUp" delay={0.2}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Backend status</h2>
-        <div className={`${classes.bgTertiary} rounded-xl p-4 space-y-2`}>
-          <p className={`text-sm font-medium ${classes.text}`}>Local demo mode</p>
-          <p className={`text-sm ${classes.textSecondary}`}>
-            Supabase is not connected yet. Data is stored in this browser for the demo.
-          </p>
-          <p className={`text-xs ${classes.textMuted}`}>
-            Next backend step: Supabase Postgres + Auth + RLS after the calculation engine stays stable.
-          </p>
+        <div data-testid="settings-backend-readiness" className={`${classes.bgTertiary} rounded-xl p-4 space-y-4`}>
+          <div className="space-y-2">
+            <p className={`text-sm font-medium ${classes.text}`}>{BACKEND_STATUS_SUMMARY.mode}</p>
+            <p className={`text-sm ${classes.textSecondary}`}>
+              {BACKEND_STATUS_SUMMARY.headline} {BACKEND_STATUS_SUMMARY.detail}
+            </p>
+            <p className={`text-xs ${classes.textMuted}`}>{BACKEND_STATUS_SUMMARY.nextGate}</p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {BACKEND_READINESS_OPTIONS.map((option) => (
+              <article
+                key={option.id}
+                data-testid={`settings-backend-option-${option.id}`}
+                className={`rounded-xl border ${classes.border} p-4 space-y-3`}
+              >
+                <div className="space-y-1">
+                  <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>{option.status}</p>
+                  <h3 className={`text-sm font-semibold ${classes.text}`}>{option.label}</h3>
+                  <p className={`text-xs ${classes.textSecondary}`}>{option.bestFit}</p>
+                </div>
+                <div>
+                  <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>Strengths</p>
+                  <ul className={`mt-1 space-y-1 text-xs ${classes.textSecondary}`}>
+                    {option.strengths.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>Open gates</p>
+                  <ul className={`mt-1 space-y-1 text-xs ${classes.textSecondary}`}>
+                    {option.openGates.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <p className={`text-xs ${classes.textMuted}`}>{option.nextGate}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
       </ScrollReveal>

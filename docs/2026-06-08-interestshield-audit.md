@@ -2792,6 +2792,23 @@ Post-repair local verification:
 - `apps/web` `npm run build`: passed.
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 
+### Repair Pass 155: Backend Readiness Panel
+
+Local source repairs completed on 2026-06-16:
+
+- Added `apps/web/src/app/settings/backend-readiness.ts`, a typed provider-readiness model for the current local-demo mode plus Supabase and Cloudflare backend candidates.
+- Updated the Settings backend status panel so it no longer hard-codes Supabase as the selected next step while no production backend is connected.
+- Reused the same backend target IDs for the backend handoff snapshot export, keeping migration metadata aligned with the Settings readiness panel.
+- Added regression coverage for provider-neutral backend copy, candidate readiness fields, snapshot target consistency, and the access-control gate before storing user-owned financial data.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed 137 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Installed-Chrome smoke at `http://127.0.0.1:5022/settings`: verified the backend readiness panel rendered 2 provider candidates, local-demo status, no-production-backend copy, and no console warnings or page errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3294,7 +3311,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 3: Backend
 
 - Add Supabase auth and RLS.
-- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected.
+- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected, and Repair Pass 155 added a provider-neutral backend readiness model for Supabase and Cloudflare candidates before auth or user-owned data storage is implemented.
 - Add simulation run history.
 - Add learning progress.
 - Add export/import and delete account/data. Status: local portfolio backup, local demo reset, and full local-demo handoff snapshot are available; real account deletion remains blocked until backend auth exists.

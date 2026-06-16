@@ -1,10 +1,7 @@
 import { LOCAL_DEMO_STORAGE_KEYS, type StorageLike } from './local-data-reset';
+import { BACKEND_HANDOFF_TARGETS } from './backend-readiness';
 
 export const LOCAL_DEMO_SNAPSHOT_VERSION = 1;
-export const BACKEND_HANDOFF_TARGETS = [
-  'supabase-postgres-auth-rls',
-  'cloudflare-workers-d1-durable-objects',
-] as const;
 
 type LocalDemoStorageKey = typeof LOCAL_DEMO_STORAGE_KEYS[number];
 

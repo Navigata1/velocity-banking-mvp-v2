@@ -108,6 +108,7 @@ const appStore = loadTsModule('src/stores/app-store.ts');
 const themeStore = loadTsModule('src/stores/theme-store.ts');
 const preferencesStore = loadTsModule('src/stores/preferences-store.ts');
 const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
+const settingsBackend = loadTsModule('src/app/settings/backend-readiness.ts');
 const settingsReset = loadTsModule('src/app/settings/local-data-reset.ts');
 const settingsSnapshot = loadTsModule('src/app/settings/local-demo-snapshot.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
@@ -1093,10 +1094,25 @@ test('settings makes demo backend status explicit', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
 
   assert.ok(source.includes('Backend status'), 'expected Settings to include a backend status section');
-  assert.ok(source.includes('Local demo mode'), 'expected Settings to label the current persistence mode');
-  assert.ok(source.includes('Supabase is not connected yet'), 'expected Settings to say Supabase is not connected');
-  assert.ok(source.includes('Data is stored in this browser'), 'expected Settings to explain local-only storage');
-  assert.ok(source.includes('Next backend step'), 'expected Settings to name the backend migration path');
+  assert.equal(settingsBackend.BACKEND_STATUS_SUMMARY.mode, 'Local demo mode');
+  assert.ok(
+    settingsBackend.BACKEND_STATUS_SUMMARY.headline.includes('No production backend is connected'),
+    'expected Settings model to avoid implying a live backend'
+  );
+  assert.ok(
+    settingsBackend.BACKEND_STATUS_SUMMARY.detail.includes('Data is stored in this browser'),
+    'expected Settings model to explain local-only storage'
+  );
+  assert.ok(source.includes('BACKEND_STATUS_SUMMARY.mode'), 'expected Settings to render the modeled persistence mode');
+  assert.ok(source.includes('BACKEND_READINESS_OPTIONS'), 'expected Settings to render backend candidates from the readiness model');
+  assert.ok(
+    source.includes('data-testid="settings-backend-readiness"'),
+    'expected Settings backend readiness panel to expose a stable smoke hook'
+  );
+  assert.ok(
+    !source.includes('Next backend step: Supabase Postgres + Auth + RLS'),
+    'expected Settings not to hard-code Supabase as the selected backend'
+  );
   assert.ok(
     source.includes('aria-label={`${provider} sign-in unavailable: backend not connected`}'),
     'expected disabled OAuth buttons to explain why sign-in is unavailable'
@@ -1104,6 +1120,26 @@ test('settings makes demo backend status explicit', () => {
   assert.ok(
     source.includes('title={`${provider} sign-in unavailable until backend keys are configured`}'),
     'expected disabled OAuth buttons to expose unavailable reason on hover'
+  );
+});
+
+test('settings backend readiness model keeps provider choice explicit', () => {
+  assert.deepEqual(
+    Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS),
+    ['supabase-postgres-auth-rls', 'cloudflare-workers-d1-durable-objects']
+  );
+  assert.equal(settingsBackend.BACKEND_READINESS_OPTIONS.length, 2);
+  for (const option of settingsBackend.BACKEND_READINESS_OPTIONS) {
+    assert.ok(settingsBackend.BACKEND_HANDOFF_TARGETS.includes(option.id), `expected ${option.id} to be a handoff target`);
+    assert.equal(option.status, 'Candidate');
+    assert.ok(option.bestFit.length > 0, `expected ${option.id} to explain best fit`);
+    assert.ok(option.strengths.length >= 2, `expected ${option.id} to list strengths`);
+    assert.ok(option.openGates.length >= 2, `expected ${option.id} to list open gates`);
+    assert.ok(option.nextGate.length > 0, `expected ${option.id} to name the next gate`);
+  }
+  assert.ok(
+    settingsBackend.BACKEND_STATUS_SUMMARY.nextGate.includes('auth/RLS or equivalent access rules'),
+    'expected backend summary to require access-control rules before user data storage'
   );
 });
 
@@ -1253,8 +1289,7 @@ test('settings full local demo snapshot exports only known InterestShield storag
   const parsed = JSON.parse(result.json);
   assert.equal(parsed.version, 1);
   assert.equal(parsed.mode, 'local-demo');
-  assert.ok(Array.isArray(parsed.backendTargets));
-  assert.ok(parsed.backendTargets.includes('supabase-postgres-auth-rls'));
+  assert.deepEqual(parsed.backendTargets, Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS));
   assert.equal(parsed.storage.length, 2);
   assert.deepEqual(
     parsed.storage.map((entry) => entry.key).sort(),
