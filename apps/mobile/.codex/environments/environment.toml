@@ -36,6 +36,11 @@ icon = "tool"
 command = "./script/build_and_run.sh --preflight-native"
 
 [[actions]]
+name = "Smoke Android"
+icon = "tool"
+command = "./script/build_and_run.sh --smoke-android"
+
+[[actions]]
 name = "Export Web"
 icon = "tool"
 command = "./script/build_and_run.sh --export-web"

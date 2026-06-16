@@ -23,6 +23,8 @@ Modes:
   --doctor, doctor   Run Expo diagnostics
   --preflight-native, preflight-native
                     Run Android/iOS local smoke readiness checks
+  --smoke-android, smoke-android
+                    Run bounded Expo Go Android smoke against a booted device
   --help, help       Show this help
 USAGE
 }
@@ -86,6 +88,9 @@ case "$MODE" in
     ;;
   --preflight-native|preflight-native)
     npm run preflight:native
+    ;;
+  --smoke-android|smoke-android)
+    npm run smoke:android
     ;;
   --help|help)
     show_usage

@@ -93,6 +93,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts['build:web'], 'expo export --platform web --output-dir dist-web --clear');
   assert.equal(mobilePackage.scripts['serve:web-export'], 'node scripts/serve-web-export.cjs');
   assert.equal(mobilePackage.scripts['smoke:web-export'], 'node scripts/smoke-web-export.cjs');
+  assert.equal(mobilePackage.scripts['smoke:android'], 'node scripts/smoke-android-expo-go.cjs');
   assert.equal(mobilePackage.scripts['preflight:native'], 'node scripts/native-preflight.cjs');
   assert.equal(
     mobilePackage.scripts['build:android:preview'],
@@ -134,6 +135,8 @@ test('Expo app exposes Codex run actions for local mobile workflows', () => {
   assert.ok(runScript.includes('expo-doctor'), 'expected diagnostics mode');
   assert.ok(runScript.includes('--preflight-native, preflight-native'), 'expected native preflight action mode');
   assert.ok(runScript.includes('npm run preflight:native'), 'expected action to reuse the committed native preflight');
+  assert.ok(runScript.includes('--smoke-android, smoke-android'), 'expected Android smoke action mode');
+  assert.ok(runScript.includes('npm run smoke:android'), 'expected action to reuse the committed Android smoke');
   assert.ok(!runScript.includes('eas build'), 'expected Run actions to avoid authenticated cloud builds');
 
   assert.ok(environment.includes('name = "InterestShield Mobile"'), 'expected the mobile app name in Codex actions');
@@ -148,10 +151,33 @@ test('Expo app exposes Codex run actions for local mobile workflows', () => {
     environment.includes('command = "./script/build_and_run.sh --preflight-native"'),
     'expected direct native preflight action'
   );
+  assert.ok(environment.includes('name = "Smoke Android"'), 'expected Android smoke action');
+  assert.ok(
+    environment.includes('command = "./script/build_and_run.sh --smoke-android"'),
+    'expected direct Android smoke action'
+  );
   assert.ok(
     gitAttributes.includes('apps/mobile/script/*.sh text eol=lf'),
     'expected mobile shell scripts to stay LF-only'
   );
+});
+
+test('Expo Android smoke is repeatable against a booted emulator', () => {
+  const smokeScriptPath = path.join(repoRoot, 'apps/mobile/scripts/smoke-android-expo-go.cjs');
+  const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+
+  assert.ok(fs.existsSync(smokeScriptPath), 'expected a committed Android Expo Go smoke script');
+  assert.ok(smokeScript.includes("'expo', 'start'"), 'expected smoke script to launch Expo CLI');
+  assert.ok(smokeScript.includes('--android'), 'expected smoke script to target Android');
+  assert.ok(smokeScript.includes('--lan'), 'expected smoke script to use emulator-reachable LAN mode');
+  assert.ok(smokeScript.includes('adb'), 'expected smoke script to inspect the Android device state');
+  assert.ok(smokeScript.includes('-list-avds'), 'expected smoke script to discover available Android virtual devices');
+  assert.ok(smokeScript.includes('sys.boot_completed'), 'expected smoke script to wait for emulator boot completion');
+  assert.ok(smokeScript.includes('Android Bundled'), 'expected smoke script to wait for bundle completion');
+  assert.ok(smokeScript.includes('ExperienceActivity'), 'expected smoke script to reject Expo Go error screens');
+  assert.ok(smokeScript.includes('screencap'), 'expected smoke script to capture visual evidence');
+  assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
+  assert.ok(smokeScript.includes('taskkill.exe'), 'expected Windows process-tree cleanup for Metro');
 });
 
 test('mobile native release config is explicit for Android and iOS builds', () => {
