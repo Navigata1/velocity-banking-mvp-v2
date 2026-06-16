@@ -2044,6 +2044,24 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 116: Portfolio Persisted-State Sanitizer
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage proving corrupted browser-persisted Portfolio state is sanitized before hydration instead of poisoning the model with non-finite numbers, invalid modes, or malformed debts.
+- Added a Portfolio persisted-state sanitizer that reuses the existing debt import validator, clamps safe non-negative values, falls back to current defaults for invalid fields, and preserves only known strategy/focus modes.
+- Wired the sanitizer into the Zustand `persist` merge path for `interestshield-portfolio-v1`, so local-first demo storage is safer while backend auth/RLS remains intentionally unwired.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing sanitizer export, then passed with 111 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Chrome rendered smoke against the local production server seeded corrupt `interestshield-portfolio-v1` storage, loaded `/portfolio`, confirmed the starter Portfolio rendered, the corrupt debt did not render, no bad numeric tokens appeared, and no console warnings/errors were captured.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

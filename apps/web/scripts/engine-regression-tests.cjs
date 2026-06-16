@@ -1573,6 +1573,49 @@ test('portfolio backup import rejects non-finite money inputs without corrupting
   }
 });
 
+test('portfolio persisted state sanitizes corrupt browser storage before hydration', () => {
+  const store = portfolioStore.usePortfolioStore.getState();
+  const current = JSON.parse(store.exportState()).data;
+
+  const sanitized = portfolioStore.sanitizePersistedPortfolioState({
+    monthlyIncome: 'not-a-number',
+    monthlyExpenses: -250,
+    extraMonthlyPayment: Number.POSITIVE_INFINITY,
+    chunkAmount: Number.NaN,
+    loc: {
+      limit: 'missing',
+      balance: -400,
+      apr: 'bad-apr',
+    },
+    strategy: 'magic',
+    focusMode: 'all',
+    splitRatioPrimary: 5,
+    debts: [{
+      id: 'corrupt-debt',
+      name: 'Corrupt Debt',
+      category: 'auto',
+      kind: 'amortized',
+      balance: 'not-a-number',
+      apr: 0.07,
+      minPaymentRule: { type: 'fixed', amount: 300 },
+      paymentSource: 'checking',
+    }],
+  }, store);
+
+  assert.equal(sanitized.monthlyIncome, current.monthlyIncome);
+  assert.equal(sanitized.monthlyExpenses, 0);
+  assert.equal(sanitized.extraMonthlyPayment, current.extraMonthlyPayment);
+  assert.equal(sanitized.chunkAmount, current.chunkAmount);
+  assert.equal(sanitized.loc.limit, current.loc.limit);
+  assert.equal(sanitized.loc.balance, 0);
+  assert.equal(sanitized.loc.apr, current.loc.apr);
+  assert.equal(sanitized.strategy, 'velocity');
+  assert.equal(sanitized.focusMode, 'single');
+  assert.equal(sanitized.splitRatioPrimary, 1);
+  assert.equal(sanitized.debts.length, current.debts.length);
+  assert.equal(sanitized.debts[0].name, current.debts[0].name);
+});
+
 test('dashboard payoff helpers use the canonical single-debt engine', () => {
   const store = financialStore.useFinancialStore.getState();
   const debt = store.debts.car;

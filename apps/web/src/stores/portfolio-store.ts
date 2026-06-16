@@ -111,6 +111,8 @@ const debtCategories: DebtItem['category'][] = [
 ];
 const debtKinds: DebtItem['kind'][] = ['amortized', 'revolving', 'simple'];
 const paymentSources: DebtItem['paymentSource'][] = ['checking', 'loc', 'either'];
+const payoffStrategies = ['velocity', 'snowball', 'avalanche'] as const satisfies readonly PayoffStrategy[];
+const focusModes = ['single', 'split'] as const satisfies readonly FocusMode[];
 
 function finiteNumber(value: unknown, fallback: number, label: string): number {
   const number = Number(value ?? fallback);
@@ -128,6 +130,22 @@ function selectKnownValue<T extends string>(value: unknown, allowed: readonly T[
   return typeof value === 'string' && (allowed as readonly string[]).includes(value)
     ? value as T
     : fallback;
+}
+
+function safeNonNegativeNumber(value: unknown, fallback: number, label: string): number {
+  try {
+    return nonNegativeNumber(value, fallback, label);
+  } catch {
+    return fallback;
+  }
+}
+
+function safeRatio(value: unknown, fallback: number, label: string): number {
+  try {
+    return Math.min(1, Math.max(0, finiteNumber(value, fallback, label)));
+  } catch {
+    return fallback;
+  }
 }
 
 function sanitizeImportedDebt(raw: unknown, index: number): DebtItem {
@@ -186,6 +204,60 @@ function sanitizeImportedDebt(raw: unknown, index: number): DebtItem {
     promo,
     createdAt: typeof debt.createdAt === 'string' && debt.createdAt ? debt.createdAt : new Date().toISOString(),
     notes: typeof debt.notes === 'string' ? debt.notes : undefined,
+  };
+}
+
+function sanitizePersistedDebts(raw: unknown, fallback: DebtItem[]): DebtItem[] {
+  if (!Array.isArray(raw)) return fallback;
+
+  try {
+    return raw.map(sanitizeImportedDebt);
+  } catch {
+    return fallback;
+  }
+}
+
+type PersistedPortfolioFields = Pick<
+  PortfolioState,
+  | 'debts'
+  | 'monthlyIncome'
+  | 'monthlyExpenses'
+  | 'extraMonthlyPayment'
+  | 'chunkAmount'
+  | 'loc'
+  | 'strategy'
+  | 'focusMode'
+  | 'splitRatioPrimary'
+>;
+
+export function sanitizePersistedPortfolioState(
+  persistedState: unknown,
+  currentState: PortfolioState
+): Partial<PersistedPortfolioFields> {
+  if (!persistedState || typeof persistedState !== 'object' || Array.isArray(persistedState)) {
+    return {};
+  }
+
+  const persisted = persistedState as Partial<PersistedPortfolioFields>;
+
+  return {
+    debts: sanitizePersistedDebts(persisted.debts, currentState.debts),
+    monthlyIncome: safeNonNegativeNumber(persisted.monthlyIncome, currentState.monthlyIncome, 'Monthly income'),
+    monthlyExpenses: safeNonNegativeNumber(persisted.monthlyExpenses, currentState.monthlyExpenses, 'Monthly expenses'),
+    extraMonthlyPayment: safeNonNegativeNumber(
+      persisted.extraMonthlyPayment,
+      currentState.extraMonthlyPayment,
+      'Extra monthly payment'
+    ),
+    chunkAmount: safeNonNegativeNumber(persisted.chunkAmount, currentState.chunkAmount, 'Velocity chunk'),
+    loc: {
+      limit: safeNonNegativeNumber(persisted.loc?.limit, currentState.loc.limit, 'LOC limit'),
+      balance: safeNonNegativeNumber(persisted.loc?.balance, currentState.loc.balance, 'LOC balance'),
+      apr: safeNonNegativeNumber(persisted.loc?.apr, currentState.loc.apr, 'LOC APR'),
+    },
+    strategy: selectKnownValue(persisted.strategy, payoffStrategies, currentState.strategy),
+    focusMode: selectKnownValue(persisted.focusMode, focusModes, currentState.focusMode),
+    splitRatioPrimary: safeRatio(persisted.splitRatioPrimary, currentState.splitRatioPrimary, 'Split ratio'),
   };
 }
 
@@ -340,6 +412,10 @@ export const usePortfolioStore = create<PortfolioState>()(
         strategy: state.strategy,
         focusMode: state.focusMode,
         splitRatioPrimary: state.splitRatioPrimary,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...sanitizePersistedPortfolioState(persistedState, currentState),
       }),
     }
   )
