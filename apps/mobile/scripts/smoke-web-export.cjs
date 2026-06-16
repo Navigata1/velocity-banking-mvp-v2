@@ -21,6 +21,10 @@ const requiredDashboardBundleText = [
   'mobile-payoff-orbit-node-',
   'Money Loop payoff orbit',
   'Payoff Orbit',
+  'mobile-portfolio-payoff-path',
+  'mobile-portfolio-payoff-path-node-',
+  'Portfolio payoff path',
+  'Portfolio Payoff Path',
   'aria-checked',
   'aria-selected',
 ];
