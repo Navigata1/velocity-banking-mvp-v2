@@ -2589,6 +2589,7 @@ Local source repairs completed on 2026-06-16:
 - Added an explicit `Android smoke target` preflight row that reports whether `smoke:android` will use a connected device or auto-boot the first available AVD.
 - Kept iOS simulator readiness as a blocking check on non-macOS hosts so Windows runs still report that true iOS smoke requires macOS, Xcode, and Simulator.
 - Updated the manual Android native smoke workflow so GitHub exposes the Android SDK command-line tools, platform tools, and emulator directories on `PATH` before calling `sdkmanager` or `avdmanager`.
+- Updated the manual iOS native smoke workflow to select the available Xcode app and warm `simctl` before the Expo smoke command, and increased the iOS smoke script's initial `xcrun simctl` probe timeout for hosted macOS runners.
 - Added mobile contract coverage so the AVD auto-boot readiness behavior remains part of the committed mobile gate.
 
 Post-repair verification:
@@ -2598,6 +2599,7 @@ Post-repair verification:
 - `apps/mobile` `npm run smoke:android`: passed on the local emulator, verified `Payoff Orbit` and `LOC orbit step`, and captured the Android smoke screenshot.
 - `apps/mobile` `npm run smoke:ios`: correctly reported `iOS Expo Go smoke requires macOS with Xcode and Simulator.` on the Windows host.
 - GitHub manual Android smoke run `27598059003` failed before this repair because `sdkmanager` was not on `PATH`; the workflow now validates the SDK command-line tools path before the install step.
+- GitHub manual iOS smoke run `27598059032` failed before this repair because the hosted runner did not return `xcrun simctl help` within the old 10-second startup window; the workflow now selects/warmups Xcode and the script allows a longer startup probe.
 - In-app Browser local rendered smoke verified the dashboard current-shell marker, four vitals, Money Loop artifact rail, payoff orbit, zero horizontal overflow, and no console warnings/errors. The Browser screenshot capture path timed out in this session.
 - Chrome local mobile-emulation smoke at 390px verified the current dashboard shell, four vitals, Money Loop artifact rail, payoff orbit, zero horizontal overflow, a navigation click into `/simulator`, the Strategy Comparison and Money Loop Timeline, and no console warnings/errors. The Chrome screenshot capture path timed out in this session.
 

@@ -55,7 +55,7 @@ function restoreFile(snapshot) {
 }
 
 function requireXcodeTools() {
-  const result = run('xcrun', ['simctl', 'help'], { timeout: 10000 });
+  const result = run('xcrun', ['simctl', 'help'], { timeout: 60000 });
   if (result.status !== 0) {
     throw new Error(`xcrun simctl was not available. ${macosRequiredMessage}\n${result.output}`);
   }

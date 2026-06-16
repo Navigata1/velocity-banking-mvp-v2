@@ -208,6 +208,7 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes("process.platform !== 'darwin'"), 'expected iOS smoke to guard non-macOS hosts');
   assert.ok(smokeScript.includes('xcrun'), 'expected smoke script to use Xcode simulator tooling');
   assert.ok(smokeScript.includes('simctl'), 'expected smoke script to inspect and control iOS simulators');
+  assert.ok(smokeScript.includes('timeout: 60000'), 'expected simctl startup probe to allow slow hosted macOS runners');
   assert.ok(smokeScript.includes("'expo', 'start'"), 'expected smoke script to launch Expo CLI');
   assert.ok(smokeScript.includes('--ios'), 'expected smoke script to target iOS');
   assert.ok(smokeScript.includes('--localhost'), 'expected smoke script to use simulator-local Metro transport');
@@ -277,6 +278,8 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('runs-on: macos-latest'), 'expected iOS smoke to use a macOS runner');
   assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
   assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected iOS smoke to run from the Expo app');
+  assert.ok(workflow.includes('xcode-select'), 'expected iOS smoke to select the available Xcode app before simctl use');
+  assert.ok(workflow.includes('xcrun simctl list runtimes'), 'expected iOS smoke to warm Simulator tooling before npm smoke');
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');

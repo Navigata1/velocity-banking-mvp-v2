@@ -32,6 +32,14 @@ jobs:
           cache: npm
           cache-dependency-path: apps/mobile/package-lock.json
 
+      - name: Select Xcode and warm Simulator tools
+        run: |
+          XCODE_APP="$(ls -d /Applications/Xcode*.app 2>/dev/null | sort | tail -n 1)"
+          test -n "$XCODE_APP"
+          sudo xcode-select -s "$XCODE_APP/Contents/Developer"
+          xcodebuild -version
+          xcrun simctl list runtimes
+
       - name: Install mobile dependencies
         working-directory: apps/mobile
         run: npm ci
