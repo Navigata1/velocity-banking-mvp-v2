@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@interestshield/financial-engine": ["../../packages/financial-engine/src/index.ts"],
       "@/*": ["./src/*"]
     }
   },
