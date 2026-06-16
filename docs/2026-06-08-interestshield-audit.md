@@ -2897,6 +2897,28 @@ Post-repair local verification:
 - In-app Browser rendered `/settings`, confirmed the backend migration contract disclosure, financial snapshots, simulation runs, learning progress copy, and no captured console warnings/errors.
 - Installed-Chrome fallback rendered `/settings`, confirmed the migration contract disclosure, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-settings-contract.png`, and captured no console warnings/errors or page errors.
 
+### Repair Pass 161: LOC ADB Closing-Balance Correction
+
+Local source repairs completed on 2026-06-16:
+
+- Corrected the shared Expo financial engine LOC average-daily-balance helper to sample daily closing balances, so a 30-day model includes the full month of evenly drawn expenses.
+- Applied the same daily closing-balance correction to the web Money Loop event engine and the legacy web calculation helper.
+- Added a cross-engine regression fixture proving the web helper, shared package helper, and Money Loop LOC interest event all return `$27.70` for the same 30-day LOC example.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed with 140 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+- `apps/mobile` `npm run check`: passed.
+- `scripts/mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/vault`, and `/settings`.
+- `apps/mobile` `npm run smoke:android-bundle`: passed.
+- `apps/mobile` `npm run smoke:ios-bundle`: passed.
+- Installed-Chrome smoke at `http://127.0.0.1:5027`: rendered Dashboard and Simulator, confirmed the daily-accrual Dashboard assumption and Simulator event ledger, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-adb-dashboard-smoke.png`, and captured no console warnings/errors or page errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3386,7 +3408,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Define account types: amortized loan, revolving LOC, credit card, simple debt.
 - Define event types: income deposit, expense, minimum payment, chunk payment, interest post.
 - Return monthly rollups and transparent assumptions. Status: expanded through Repair Pass 16 with shared Money Loop ledgers for single-debt and multi-debt Velocity paths. Multi-debt invalid projection flags were added in Repair Pass 30.
-- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
+- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Repair Pass 161 aligned web and Expo LOC average-daily-balance interest to daily closing-balance sampling. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
 
 ### Phase 2: Product UX
 

@@ -215,19 +215,20 @@ export function calculateADBInterest(
   monthlyExpenses: number,
   daysInMonth: number = 30
 ): number {
+  const dayCount = Math.max(1, Math.trunc(daysInMonth));
   const balanceAfterDeposit = startBalance - monthlyIncome;
-  const dailyExpense = monthlyExpenses / daysInMonth;
+  const dailyExpense = monthlyExpenses / dayCount;
 
   let totalDailyBalance = 0;
-  for (let day = 0; day < daysInMonth; day += 1) {
+  for (let day = 1; day <= dayCount; day += 1) {
     const dayBalance = balanceAfterDeposit + dailyExpense * day;
     totalDailyBalance += Math.max(0, dayBalance);
   }
 
-  const averageDailyBalance = totalDailyBalance / daysInMonth;
+  const averageDailyBalance = totalDailyBalance / dayCount;
   const dailyRate = apr / 365;
 
-  return averageDailyBalance * dailyRate * daysInMonth;
+  return averageDailyBalance * dailyRate * dayCount;
 }
 
 export function formatCurrency(amount: number): string {

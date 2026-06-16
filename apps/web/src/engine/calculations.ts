@@ -190,22 +190,23 @@ export function calculateADBInterest(
   monthlyExpenses: number,
   daysInMonth: number = 30
 ): number {
+  const dayCount = Math.max(1, Math.trunc(daysInMonth));
   // Day 1: income deposited, reducing balance immediately
   const balanceAfterDeposit = startBalance - monthlyIncome;
   
-  // Expenses drawn evenly over the month
-  const dailyExpense = monthlyExpenses / daysInMonth;
+  // Expenses drawn evenly over the month, sampled as daily closing balances.
+  const dailyExpense = monthlyExpenses / dayCount;
   
   let totalDailyBalance = 0;
-  for (let day = 0; day < daysInMonth; day++) {
+  for (let day = 1; day <= dayCount; day++) {
     const dayBalance = balanceAfterDeposit + (dailyExpense * day);
     totalDailyBalance += Math.max(0, dayBalance); // can't go below 0 on LOC
   }
   
-  const averageDailyBalance = totalDailyBalance / daysInMonth;
+  const averageDailyBalance = totalDailyBalance / dayCount;
   const dailyRate = apr / 365;
   
-  return averageDailyBalance * dailyRate * daysInMonth;
+  return averageDailyBalance * dailyRate * dayCount;
 }
 
 // ─── Safety Warnings ─────────────────────────────────────────────────

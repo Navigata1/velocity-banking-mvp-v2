@@ -92,17 +92,18 @@ function calculateAverageDailyBalanceInterest(
   expenseAmount: number,
   daysInMonth = 30
 ): number {
+  const dayCount = Math.max(1, Math.trunc(daysInMonth));
   const balanceAfterDeposit = startBalance - depositAmount;
-  const dailyExpense = expenseAmount / daysInMonth;
+  const dailyExpense = expenseAmount / dayCount;
 
   let totalDailyBalance = 0;
-  for (let day = 0; day < daysInMonth; day++) {
+  for (let day = 1; day <= dayCount; day++) {
     const dayBalance = balanceAfterDeposit + dailyExpense * day;
     totalDailyBalance += Math.max(0, dayBalance);
   }
 
-  const averageDailyBalance = totalDailyBalance / daysInMonth;
-  return averageDailyBalance * (apr / 365) * daysInMonth;
+  const averageDailyBalance = totalDailyBalance / dayCount;
+  return averageDailyBalance * (apr / 365) * dayCount;
 }
 
 export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopMonthResult {
