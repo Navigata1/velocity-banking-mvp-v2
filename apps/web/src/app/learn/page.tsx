@@ -270,9 +270,10 @@ function GrandFinale({ onDone }: { onDone?: () => void }) {
    ────────────────────────────────────────────────────────── */
 
 function AnimatedCounter({ value, className }: { value: number; className?: string }) {
-  const motionVal = useMotionValue(0);
+  const motionVal = useMotionValue(value);
   const rounded = useTransform(motionVal, (v) => Math.round(v));
   const [display, setDisplay] = useState(value);
+  const stableText = String(value);
 
   useEffect(() => {
     const controls = animate(motionVal, value, {
@@ -283,7 +284,12 @@ function AnimatedCounter({ value, className }: { value: number; className?: stri
     return () => { controls.stop(); unsub(); };
   }, [value, motionVal, rounded]);
 
-  return <span className={className}>{display}</span>;
+  return (
+    <span className={className}>
+      <span aria-hidden="true">{display}</span>
+      <span className="sr-only">{stableText}</span>
+    </span>
+  );
 }
 
 /* ──────────────────────────────────────────────────────────
