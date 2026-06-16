@@ -2670,6 +2670,23 @@ Hosted evidence that drove the repair:
 
 - GitHub manual Android smoke run `27602289415` verified the dashboard orbit on `emulator-5554` and uploaded the screenshot, but the Node process stayed alive until the shell timeout and then ran the Android bundle fallback. This repair keeps a true emulator pass from falling through to fallback.
 
+### Repair Pass 148: Production Alias Diagnostic Refresh
+
+Release diagnostic work completed on 2026-06-16:
+
+- Confirmed local `main` is at `80593472992818e76b8ecb4977a5ed5b6d2826dd` and GitHub `main` CI run `27603738467` passed the full web and mobile quality gate.
+- Confirmed GitHub deployment record `5076411538` exists for that commit with environment `Production`, deployment URL `https://velocity-banking-mvp-v2-fqzvsk7oy-islanddevcrew.vercel.app`, and `production_environment: false`.
+- Re-ran `apps/web` `npm run smoke:production` against `https://web-islanddevcrew.vercel.app`; it still fails because the alias does not expose `data-testid="primary-navigation"`.
+- Fetched the public alias HTML with a cache-busting query and confirmed it still serves deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
+- Confirmed local Vercel CLI auth remains unavailable: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, and `VERCEL_AUTOMATION_BYPASS_SECRET` are missing, and `npx vercel whoami` waits for authentication.
+- Confirmed the Vercel MCP connector still requires reauthentication.
+- Confirmed Chrome redirects the Vercel project deployments page to login, so existing Chrome state cannot promote the alias from this environment.
+- Updated `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` with the latest commit, deployment record, current auth blockers, and exact diagnostic commands.
+
+Current blocker:
+
+- The remaining production issue is Vercel-side alias/promotion/authentication, tracked in issue #59. App source, CI, local smoke, and hosted mobile smoke gates are not the blocker.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
