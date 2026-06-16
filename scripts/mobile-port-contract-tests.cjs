@@ -324,6 +324,11 @@ test('mobile web export is configured for Vercel SPA hosting and repeatable smok
   assert.ok(smokeScript.includes('scripts/serve-web-export.cjs'), 'expected smoke script to reuse the committed server');
   assert.ok(smokeScript.includes('response.statusCode !== 200'), 'expected smoke script to fail non-200 routes');
   assert.ok(smokeScript.includes("content-type") && smokeScript.includes("text/html"), 'expected smoke script to verify HTML responses');
+  assert.ok(smokeScript.includes('requiredDashboardBundleText'), 'expected smoke script to verify compiled Dashboard hooks');
+  assert.ok(smokeScript.includes('mobile-payoff-orbit'), 'expected smoke script to require the mobile orbit hook in the export bundle');
+  assert.ok(smokeScript.includes('mobile-payoff-orbit-node-'), 'expected smoke script to require mobile orbit node hooks in the export bundle');
+  assert.ok(smokeScript.includes('aria-checked'), 'expected smoke script to require exported active orbit state');
+  assert.ok(smokeScript.includes('linkedWebBundlePaths'), 'expected smoke script to inspect the emitted Expo JS bundle');
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
 });
 

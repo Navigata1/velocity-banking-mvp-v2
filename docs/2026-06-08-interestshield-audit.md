@@ -2449,6 +2449,26 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 136: Mobile Web Export Orbit Smoke Gate
+
+Local source repairs completed on 2026-06-16:
+
+- Strengthened the repeatable Expo web export smoke so it inspects the emitted JavaScript bundle linked by `dist-web/index.html`, not only the HTML route shell.
+- The export smoke now fails when the compiled Dashboard bundle is missing the mobile payoff orbit hook, orbit node hook prefix, orbit copy, or checked/selected ARIA state strings.
+- Added contract coverage so CI keeps the bundle-level mobile Dashboard orbit assertion without adding a browser automation dependency.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault` with the Dashboard bundle orbit hooks present.
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

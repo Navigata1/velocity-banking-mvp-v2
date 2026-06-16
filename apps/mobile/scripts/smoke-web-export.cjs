@@ -16,6 +16,14 @@ const routes = [
   ['/learn', 'Learn'],
   ['/vault', 'Vault'],
 ];
+const requiredDashboardBundleText = [
+  'mobile-payoff-orbit',
+  'mobile-payoff-orbit-node-',
+  'Money Loop payoff orbit',
+  'Payoff Orbit',
+  'aria-checked',
+  'aria-selected',
+];
 
 function requestRoute(route) {
   return new Promise((resolve, reject) => {
@@ -59,6 +67,42 @@ async function waitForServer(server) {
   throw new Error(`Expo export smoke server did not start at ${origin}.`);
 }
 
+function exportedAssetPath(assetUrl) {
+  const pathname = assetUrl.split('?')[0].replace(/^\/+/, '');
+  const filePath = path.resolve(exportRoot, pathname);
+  const relativePath = path.relative(exportRoot, filePath);
+
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    throw new Error(`Exported asset path escaped dist-web: ${assetUrl}`);
+  }
+
+  return filePath;
+}
+
+function linkedWebBundlePaths(html) {
+  const matches = [...html.matchAll(/(?:src|href)="([^"]*_expo\/static\/js\/web\/[^"]+\.js)"/g)];
+  return [...new Set(matches.map((match) => exportedAssetPath(match[1])))];
+}
+
+function readLinkedWebBundleText(html) {
+  const bundlePaths = linkedWebBundlePaths(html);
+
+  if (bundlePaths.length === 0) {
+    throw new Error('Dashboard route did not link an Expo web JavaScript bundle.');
+  }
+
+  return bundlePaths.map((bundlePath) => fs.readFileSync(bundlePath, 'utf8')).join('\n');
+}
+
+function assertDashboardBundleContainsOrbit(html) {
+  const bundleText = readLinkedWebBundleText(html);
+  const missing = requiredDashboardBundleText.filter((text) => !bundleText.includes(text));
+
+  if (missing.length > 0) {
+    throw new Error(`Dashboard export bundle is missing mobile orbit hooks: ${missing.join(', ')}.`);
+  }
+}
+
 async function run() {
   const indexPath = path.join(exportRoot, 'index.html');
   if (!fs.existsSync(indexPath)) {
@@ -96,6 +140,10 @@ async function run() {
 
       if (!body.includes('_expo/static/js') || !body.includes('<title>InterestShield</title>')) {
         throw new Error(`${label} route ${route} did not return the exported InterestShield app shell.`);
+      }
+
+      if (route === '/') {
+        assertDashboardBundleContainsOrbit(body);
       }
 
       console.log(`PASS ${label} ${route}`);
