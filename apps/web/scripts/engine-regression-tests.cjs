@@ -104,6 +104,7 @@ const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
 const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
+const settingsReset = loadTsModule('src/app/settings/local-data-reset.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
 const dashboardModel = loadTsModule('src/app/dashboard-model.ts');
 const simulatorModel = loadTsModule('src/app/simulator-model.ts');
@@ -1032,6 +1033,37 @@ test('backup controls expose a pasted JSON import path', () => {
       `expected ${name} empty paste imports to give direct in-page feedback`
     );
   }
+});
+
+test('settings exposes a local demo data reset path', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('Reset local demo data'), 'expected Settings to expose a local data reset control');
+  assert.ok(
+    source.includes('data-testid="settings-reset-local-data"'),
+    'expected reset control to have a stable smoke-test hook'
+  );
+  assert.ok(
+    source.includes('clearLocalDemoData'),
+    'expected Settings reset control to use the scoped local data reset helper'
+  );
+});
+
+test('settings local demo data reset clears only InterestShield storage keys', () => {
+  const storage = createMemoryStorage();
+
+  for (const key of settingsReset.LOCAL_DEMO_STORAGE_KEYS) {
+    storage.setItem(key, 'demo-value');
+  }
+  storage.setItem('unrelated-app-key', 'keep-me');
+
+  const result = settingsReset.clearLocalDemoData(storage);
+
+  assert.equal(result.cleared, settingsReset.LOCAL_DEMO_STORAGE_KEYS.length);
+  for (const key of settingsReset.LOCAL_DEMO_STORAGE_KEYS) {
+    assert.equal(storage.getItem(key), null);
+  }
+  assert.equal(storage.getItem('unrelated-app-key'), 'keep-me');
 });
 
 test('editable financial controls expose contextual screen-reader labels', () => {

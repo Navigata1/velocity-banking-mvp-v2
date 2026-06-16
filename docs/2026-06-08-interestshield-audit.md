@@ -2098,6 +2098,24 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 119: Settings Local Demo Data Reset
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage requiring Settings to expose a local demo data reset path.
+- Added a scoped `clearLocalDemoData` helper that removes only known InterestShield browser storage keys and preserves unrelated local storage.
+- Added a Settings reset control with in-page status so users can recover from stale or corrupted local demo state without browser developer tools.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing local data reset helper, then passed with 115 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Chrome rendered smoke against the local production server clicked the Settings reset control, confirmed the success status rendered, known InterestShield storage keys were cleared, an unrelated storage key was preserved, and no console warnings/errors were captured.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

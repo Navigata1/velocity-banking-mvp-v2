@@ -8,6 +8,7 @@ import { usePortfolioStore } from '@/stores/portfolio-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
+import { clearLocalDemoData } from './local-data-reset';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -24,6 +25,7 @@ export default function SettingsPage() {
   const portfolioStore = usePortfolioStore();
   const [importStatus, setImportStatus] = useState<string | null>(null);
   const [importText, setImportText] = useState('');
+  const [resetStatus, setResetStatus] = useState<string | null>(null);
 
   if (!mounted) {
     return (
@@ -71,6 +73,16 @@ export default function SettingsPage() {
     const res = portfolioStore.importState(text);
     if (res.ok) setImportText('');
     showImportResult(res);
+  };
+
+  const handleResetLocalData = () => {
+    const result = clearLocalDemoData();
+    setResetStatus(
+      result.cleared > 0
+        ? `Local demo data cleared from this browser. Reload the page to restore starter defaults.`
+        : 'No local demo data was found in this browser.'
+    );
+    setTimeout(() => setResetStatus(null), 5000);
   };
 
   return (
@@ -263,6 +275,22 @@ export default function SettingsPage() {
         {importStatus && (
           <p className="mt-3 text-sm" role="status">{importStatus}</p>
         )}
+        <div className={`mt-5 border-t ${classes.border} pt-4`}>
+          <p className={`text-sm ${classes.textSecondary} mb-3`}>
+            Reset only InterestShield demo data stored in this browser. This does not touch files on your device.
+          </p>
+          <button
+            type="button"
+            onClick={handleResetLocalData}
+            data-testid="settings-reset-local-data"
+            className="px-4 py-2 rounded-xl bg-red-500/15 text-red-300 border border-red-400/30 text-sm font-medium hover:bg-red-500/25 transition-colors"
+          >
+            Reset local demo data
+          </button>
+          {resetStatus && (
+            <p className="mt-3 text-sm" role="status">{resetStatus}</p>
+          )}
+        </div>
       </section>
       </ScrollReveal>
 
