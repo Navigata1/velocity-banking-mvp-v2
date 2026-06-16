@@ -266,6 +266,22 @@ test('manual release smoke protects deployed web and optional mobile export gate
   );
 });
 
+test('manual iOS native smoke runs on a macOS simulator host', () => {
+  const workflowPath = path.join(repoRoot, '.github/workflows/mobile-ios-smoke.yml');
+
+  assert.ok(fs.existsSync(workflowPath), 'expected a committed manual iOS native smoke workflow');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.ok(workflow.includes('workflow_dispatch:'), 'expected iOS smoke to run manually');
+  assert.ok(workflow.includes('simulator:'), 'expected iOS smoke to accept a simulator override');
+  assert.ok(workflow.includes('runs-on: macos-latest'), 'expected iOS smoke to use a macOS runner');
+  assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
+  assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected iOS smoke to run from the Expo app');
+  assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
+  assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
+  assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
+});
+
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');

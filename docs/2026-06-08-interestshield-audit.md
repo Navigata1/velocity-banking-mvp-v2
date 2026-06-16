@@ -2489,6 +2489,28 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 138: Manual iOS Native Smoke Workflow
+
+Local source repairs completed on 2026-06-16:
+
+- Added a manual `Mobile iOS smoke` GitHub Actions workflow that runs on `macos-latest`, installs the Expo app dependencies, type-checks the mobile app, and runs the committed `npm run smoke:ios` script against an iOS Simulator.
+- The workflow accepts an optional simulator name or UDID and forwards it through `IOS_SMOKE_SIMULATOR`, matching the existing iOS smoke script.
+- Added contract coverage so the iOS native smoke workflow stays manual, macOS-backed, mobile-lockfile cached, type-checked, simulator-configurable, and wired to the existing Expo Go iOS smoke command.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:ios`: reported the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+- True iOS Simulator execution remains pending until the new manual workflow is run on GitHub's macOS runner or on a local macOS/Xcode host.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
