@@ -9,6 +9,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
 import { clearLocalDemoData } from './local-data-reset';
+import { exportLocalDemoSnapshot, importLocalDemoSnapshot } from './local-demo-snapshot';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -25,6 +26,8 @@ export default function SettingsPage() {
   const portfolioStore = usePortfolioStore();
   const [importStatus, setImportStatus] = useState<string | null>(null);
   const [importText, setImportText] = useState('');
+  const [snapshotImportText, setSnapshotImportText] = useState('');
+  const [snapshotStatus, setSnapshotStatus] = useState<string | null>(null);
   const [resetStatus, setResetStatus] = useState<string | null>(null);
 
   if (!mounted) {
@@ -83,6 +86,43 @@ export default function SettingsPage() {
         : 'No local demo data was found in this browser.'
     );
     setTimeout(() => setResetStatus(null), 5000);
+  };
+
+  const handleExportLocalSnapshot = () => {
+    const result = exportLocalDemoSnapshot();
+    if (!result.ok) {
+      setSnapshotStatus(`Snapshot export failed: ${result.error}`);
+      setTimeout(() => setSnapshotStatus(null), 5000);
+      return;
+    }
+
+    const blob = new Blob([result.json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `interestshield-local-demo-snapshot-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    setSnapshotStatus(`Backend handoff snapshot exported with ${result.count} local data keys.`);
+    setTimeout(() => setSnapshotStatus(null), 5000);
+  };
+
+  const handleImportLocalSnapshot = () => {
+    const text = snapshotImportText.trim();
+    if (!text) {
+      setSnapshotStatus('Paste a backend handoff snapshot first.');
+      setTimeout(() => setSnapshotStatus(null), 5000);
+      return;
+    }
+
+    const result = importLocalDemoSnapshot(text);
+    if (result.ok) {
+      setSnapshotImportText('');
+      setSnapshotStatus(`Backend handoff snapshot restored ${result.imported} local data keys. Reload to apply it.`);
+    } else {
+      setSnapshotStatus(`Snapshot import failed: ${result.error}`);
+    }
+    setTimeout(() => setSnapshotStatus(null), 5000);
   };
 
   return (
@@ -276,6 +316,53 @@ export default function SettingsPage() {
           <p className="mt-3 text-sm" role="status">{importStatus}</p>
         )}
         <div className={`mt-5 border-t ${classes.border} pt-4`}>
+          <div data-testid="settings-backend-handoff-snapshot" className="mb-5 space-y-3">
+            <div>
+              <p className={`text-sm font-medium ${classes.text}`}>Backend handoff snapshot</p>
+              <p className={`text-sm ${classes.textSecondary}`}>
+                Export all known InterestShield browser keys as a local-demo snapshot for a future Supabase/Auth/RLS
+                or Cloudflare migration. Import replaces only InterestShield demo keys and leaves unrelated browser
+                storage alone.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleExportLocalSnapshot}
+              data-testid="settings-export-local-snapshot"
+              className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium ${classes.textSecondary} hover:${classes.text}`}
+            >
+              Export backend handoff snapshot
+            </button>
+            <div className="space-y-2">
+              <label
+                htmlFor="settings-import-local-snapshot-json"
+                className={`block text-xs font-medium ${classes.textSecondary}`}
+              >
+                Paste handoff snapshot JSON
+              </label>
+              <textarea
+                id="settings-import-local-snapshot-json"
+                aria-label="Paste backend handoff snapshot JSON"
+                data-testid="settings-import-local-snapshot-json"
+                value={snapshotImportText}
+                onChange={(e) => setSnapshotImportText(e.target.value)}
+                rows={4}
+                placeholder='{"version":1,"mode":"local-demo","storage":[]}'
+                className={`w-full rounded-xl border ${classes.border} ${classes.bgTertiary} ${classes.text} px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500/70`}
+              />
+              <button
+                type="button"
+                onClick={handleImportLocalSnapshot}
+                data-testid="settings-import-local-snapshot-submit"
+                className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium ${classes.textSecondary} hover:${classes.text}`}
+              >
+                Import pasted handoff snapshot
+              </button>
+            </div>
+            {snapshotStatus && (
+              <p className="text-sm" role="status">{snapshotStatus}</p>
+            )}
+          </div>
           <p className={`text-sm ${classes.textSecondary} mb-3`}>
             Reset only InterestShield demo data stored in this browser. This does not touch files on your device.
           </p>

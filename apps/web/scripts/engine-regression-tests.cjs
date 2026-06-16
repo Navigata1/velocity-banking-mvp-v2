@@ -107,6 +107,7 @@ const themeStore = loadTsModule('src/stores/theme-store.ts');
 const preferencesStore = loadTsModule('src/stores/preferences-store.ts');
 const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
 const settingsReset = loadTsModule('src/app/settings/local-data-reset.ts');
+const settingsSnapshot = loadTsModule('src/app/settings/local-demo-snapshot.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
 const dashboardModel = loadTsModule('src/app/dashboard-model.ts');
 const simulatorModel = loadTsModule('src/app/simulator-model.ts');
@@ -1051,6 +1052,26 @@ test('settings exposes a local demo data reset path', () => {
   );
 });
 
+test('settings exposes a full local demo backend handoff snapshot path', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('Backend handoff snapshot'), 'expected Settings to name the backend handoff snapshot');
+  assert.ok(source.includes('exportLocalDemoSnapshot'), 'expected Settings to export the local demo handoff snapshot');
+  assert.ok(source.includes('importLocalDemoSnapshot'), 'expected Settings to import the local demo handoff snapshot');
+  assert.ok(
+    source.includes('data-testid="settings-backend-handoff-snapshot"'),
+    'expected Settings handoff snapshot section to have a stable hook'
+  );
+  assert.ok(
+    source.includes('data-testid="settings-export-local-snapshot"'),
+    'expected Settings handoff snapshot export to have a stable hook'
+  );
+  assert.ok(
+    source.includes('data-testid="settings-import-local-snapshot-json"'),
+    'expected Settings handoff snapshot import textarea to have a stable hook'
+  );
+});
+
 test('settings local demo data reset clears only InterestShield storage keys', () => {
   const storage = createMemoryStorage();
 
@@ -1065,6 +1086,69 @@ test('settings local demo data reset clears only InterestShield storage keys', (
   for (const key of settingsReset.LOCAL_DEMO_STORAGE_KEYS) {
     assert.equal(storage.getItem(key), null);
   }
+  assert.equal(storage.getItem('unrelated-app-key'), 'keep-me');
+});
+
+test('settings full local demo snapshot exports only known InterestShield storage keys', () => {
+  const storage = createMemoryStorage();
+  storage.setItem('velocity-bank-storage', '{"state":{"monthlyIncome":6500}}');
+  storage.setItem('interestshield-portfolio-v1', '{"state":{"strategy":"velocity"}}');
+  storage.setItem('unrelated-app-key', 'keep-me');
+
+  const result = settingsSnapshot.exportLocalDemoSnapshot(storage);
+  assert.equal(result.ok, true);
+  assert.equal(result.count, 2);
+
+  const parsed = JSON.parse(result.json);
+  assert.equal(parsed.version, 1);
+  assert.equal(parsed.mode, 'local-demo');
+  assert.ok(Array.isArray(parsed.backendTargets));
+  assert.ok(parsed.backendTargets.includes('supabase-postgres-auth-rls'));
+  assert.equal(parsed.storage.length, 2);
+  assert.deepEqual(
+    parsed.storage.map((entry) => entry.key).sort(),
+    ['interestshield-portfolio-v1', 'velocity-bank-storage']
+  );
+  assert.ok(!result.json.includes('unrelated-app-key'));
+});
+
+test('settings full local demo snapshot import rejects unknown storage keys without mutating storage', () => {
+  const storage = createMemoryStorage();
+  storage.setItem('velocity-bank-storage', 'keep-original');
+
+  const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({
+    version: 1,
+    storage: [
+      { key: 'velocity-bank-storage', value: '{"state":{"monthlyIncome":6500}}' },
+      { key: 'unknown-app-key', value: 'bad' },
+    ],
+  }), storage);
+
+  assert.equal(result.ok, false);
+  assert.equal(result.error, 'Snapshot contains an unknown storage key.');
+  assert.equal(storage.getItem('velocity-bank-storage'), 'keep-original');
+});
+
+test('settings full local demo snapshot import replaces only known InterestShield storage keys', () => {
+  const storage = createMemoryStorage();
+  storage.setItem('velocity-bank-storage', 'old');
+  storage.setItem('interestshield-theme', 'old-theme');
+  storage.setItem('unrelated-app-key', 'keep-me');
+
+  const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({
+    version: 1,
+    mode: 'local-demo',
+    storage: [
+      { key: 'interestshield-theme', value: '{"state":{"theme":"dark"}}' },
+      { key: 'interestshield-preferences-v1', value: '{"state":{"teacherMode":true}}' },
+    ],
+  }), storage);
+
+  assert.equal(result.ok, true);
+  assert.equal(result.imported, 2);
+  assert.equal(storage.getItem('velocity-bank-storage'), null);
+  assert.equal(storage.getItem('interestshield-theme'), '{"state":{"theme":"dark"}}');
+  assert.equal(storage.getItem('interestshield-preferences-v1'), '{"state":{"teacherMode":true}}');
   assert.equal(storage.getItem('unrelated-app-key'), 'keep-me');
 });
 

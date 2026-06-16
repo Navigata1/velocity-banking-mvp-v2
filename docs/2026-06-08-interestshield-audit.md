@@ -2193,6 +2193,26 @@ Post-repair verification:
 - `apps/web` `npm run build`: passed with all app routes prerendered.
 - `apps/web` `npm run smoke:routes`: passed.
 
+### Repair Pass 124: Backend Handoff Snapshot
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added a full local-demo backend handoff snapshot helper for Settings so future Supabase/Auth/RLS or Cloudflare migration work has a concrete, versioned export contract before real auth or server persistence is wired.
+- The snapshot exports only known InterestShield browser storage keys, records `local-demo` mode, and labels provider targets as `supabase-postgres-auth-rls` and `cloudflare-workers-d1-durable-objects`.
+- Added guarded snapshot import that validates version, rejects unknown storage keys before mutation, replaces only known InterestShield keys, and leaves unrelated browser storage untouched.
+- Added visible Settings controls for exporting a backend handoff snapshot and importing pasted handoff JSON while keeping the existing local-only backend status truthful.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing snapshot module, then passed with 122 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- In-app Browser rendered `/settings`, confirmed the backend handoff snapshot section, imported pasted handoff JSON, observed the success status, captured screenshot evidence, and found no console warnings/errors.
+- Chrome rendered `/settings`, confirmed the backend handoff snapshot section and import controls, captured screenshot evidence, and found no console warnings/errors. Chrome extension click interaction timed out on this pass, so the completed import interaction proof came from the in-app Browser.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2691,10 +2711,10 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 3: Backend
 
 - Add Supabase auth and RLS.
-- Add user-owned financial snapshots.
+- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected.
 - Add simulation run history.
 - Add learning progress.
-- Add export/import and delete account/data.
+- Add export/import and delete account/data. Status: local portfolio backup, local demo reset, and full local-demo handoff snapshot are available; real account deletion remains blocked until backend auth exists.
 
 ### Phase 4: Visual Overhaul
 
