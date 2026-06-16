@@ -2562,6 +2562,25 @@ Post-repair verification:
 - `apps/web` `npm test`: passed with 128 regression tests.
 - `apps/web` `npm run smoke:production`: intentionally failed against `https://web-islanddevcrew.vercel.app/` because the production alias does not expose `data-testid="primary-navigation"` from the current shell. This is the expected guard behavior until the current stack is promoted/deployed.
 
+### Repair Pass 142: Vercel Alias Release Runbook
+
+Release handoff completed on 2026-06-16 after PR #47 merged:
+
+- PR #47 merged into `main` at merge commit `cebeede30c6b5f52ab5aaa0b58d1114df0ddc284`.
+- `main` CI run `27596359559` passed the web and mobile quality gates.
+- GitHub deployment status for `cebeede` reported Vercel success with environment URL `https://velocity-banking-mvp-v2-4jmnl51zf-islanddevcrew.vercel.app`.
+- That Vercel deployment URL returned HTTP `401`, matching Deployment or Preview Protection behavior.
+- The public alias `https://web-islanddevcrew.vercel.app/` still served old deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg` and did not expose `data-testid="primary-navigation"`, `money-loop-artifact-rail`, or `money-loop-payoff-orbit`.
+- Chrome could open the Vercel project overview for `islanddevcrew/velocity-banking-mvp-v2`, but Vercel Domains and Deployments pages redirected to login. The overview also showed the project checklist still included `Connect Git Repository` and `Add Custom Domain`.
+- Added `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` with the exact alias/protection remediation steps, production smoke commands, rendered Browser/Chrome freshness markers, and GitHub issue close criteria.
+- Opened issue #59 to track the remaining Vercel-side alias/protection fix.
+
+Post-repair verification:
+
+- `apps/web` `npm run smoke:production`: still failed against `https://web-islanddevcrew.vercel.app/` with the expected missing current shell marker.
+- Vercel CLI inspect/list calls still timed out waiting for authentication.
+- Vercel MCP still reported that the app connection requires reauthentication.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -2582,8 +2601,10 @@ Post-repair verification:
 ### Vercel
 
 - The Vercel connector returned `401: Reauthentication required`.
-- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication again during Repair Pass 140. Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, alias promotion, and project settings still require Vercel authentication/access.
-- Deployment metadata, build logs, runtime logs, and project settings were not available during this pass.
+- `npx vercel --version` is available, but `npx vercel whoami`, `npx vercel inspect`, and `npx vercel ls` timed out waiting for authentication again during Repair Pass 140 and Repair Pass 142.
+- Chrome read-only inspection reached the Vercel project overview, but Domains and Deployments pages redirected to login during Repair Pass 142.
+- Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, alias promotion, and project settings still require Vercel authentication/access.
+- The Vercel alias/protection handoff is documented in `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` and tracked in issue #59.
 
 ## Highest Priority Findings
 
