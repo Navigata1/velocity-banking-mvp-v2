@@ -94,6 +94,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts['serve:web-export'], 'node scripts/serve-web-export.cjs');
   assert.equal(mobilePackage.scripts['smoke:web-export'], 'node scripts/smoke-web-export.cjs');
   assert.equal(mobilePackage.scripts['smoke:android'], 'node scripts/smoke-android-expo-go.cjs');
+  assert.equal(mobilePackage.scripts['smoke:android-bundle'], 'node scripts/smoke-android-bundle.cjs');
   assert.equal(mobilePackage.scripts['smoke:ios'], 'node scripts/smoke-ios-expo-go.cjs');
   assert.equal(mobilePackage.scripts['smoke:ios-bundle'], 'node scripts/smoke-ios-bundle.cjs');
   assert.equal(mobilePackage.scripts['preflight:native'], 'node scripts/native-preflight.cjs');
@@ -200,6 +201,26 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
   );
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
   assert.ok(smokeScript.includes('taskkill.exe'), 'expected Windows process-tree cleanup for Metro');
+});
+
+test('Expo Android bundle smoke validates native export output when emulator launch is unavailable', () => {
+  const smokeScriptPath = path.join(repoRoot, 'apps/mobile/scripts/smoke-android-bundle.cjs');
+  const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+
+  assert.ok(fs.existsSync(smokeScriptPath), 'expected a committed Android bundle smoke script');
+  assert.ok(
+    smokeScript.includes("process.env.ANDROID_BUNDLE_OUTPUT_DIR || 'dist-android'"),
+    'expected a stable Android export output directory'
+  );
+  assert.ok(smokeScript.includes('ANDROID_BUNDLE_TIMEOUT_MS || 300000'), 'expected a configurable Android bundle timeout');
+  assert.ok(
+    smokeScript.includes("'expo', 'export', '--platform', 'android'"),
+    'expected the script to run a native Android export'
+  );
+  assert.ok(smokeScript.includes('metadata.json'), 'expected the script to validate Expo export metadata');
+  assert.ok(smokeScript.includes('/_expo/static/js/android/'), 'expected the script to validate an Android JS bundle');
+  assert.ok(smokeScript.includes('Android bundle export smoke passed.'), 'expected a clear pass marker for hosted fallback logs');
+  assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
 });
 
 test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () => {
@@ -328,6 +349,7 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('workflow_dispatch:'), 'expected Android smoke to run manually');
   assert.ok(workflow.includes('api_level:'), 'expected Android smoke to accept an API level override');
   assert.ok(workflow.includes('avd_name:'), 'expected Android smoke to accept an AVD name override');
+  assert.ok(workflow.includes('require_emulator:'), 'expected Android smoke to support strict emulator-only mode');
   assert.ok(workflow.includes('runs-on: ubuntu-latest'), 'expected Android smoke to use a Linux runner');
   assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
   assert.ok(workflow.includes('actions/setup-java@v4'), 'expected Android SDK tooling to have Java available');
@@ -342,11 +364,23 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('test -f "$ANDROID_AVD_HOME/${{ inputs.avd_name }}.ini"'), 'expected Android smoke to verify the AVD ini path');
   assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
   assert.ok(workflow.includes('ANDROID_SMOKE_SCREENSHOT'), 'expected Android smoke to capture a workflow artifact screenshot');
-  assert.ok(workflow.includes('ANDROID_SMOKE_TIMEOUT_MS: 600000'), 'expected hosted Android smoke to allow slow emulator boot');
+  assert.ok(workflow.includes('ANDROID_SMOKE_TIMEOUT_MS: 480000'), 'expected hosted Android smoke fallback mode to use a bounded emulator attempt');
+  assert.ok(workflow.includes('ANDROID_BUNDLE_TIMEOUT_MS: 420000'), 'expected hosted Android bundle export to use a long timeout');
+  assert.ok(workflow.includes('STRICT_ANDROID_EMULATOR'), 'expected Android smoke to allow strict emulator mode');
+  assert.ok(workflow.includes('timeout 12m npm run smoke:android'), 'expected Android smoke to have a shell-level hosted timeout');
+  assert.ok(
+    workflow.includes('Hosted Android emulator launch did not complete; validating the Android bundle export fallback.'),
+    'expected hosted Android smoke to explain the fallback'
+  );
+  assert.ok(
+    workflow.includes('ANDROID_BUNDLE_OUTPUT_DIR=dist-android npm run smoke:android-bundle'),
+    'expected Android smoke to validate the bundle fallback'
+  );
   assert.ok(workflow.includes('sudo chown "$USER" /dev/kvm'), 'expected Android smoke to make hosted KVM access explicit');
   assert.ok(workflow.includes('/dev/kvm is not available'), 'expected Android smoke to fail clearly when hosted KVM is unavailable');
   assert.ok(workflow.includes('npm run smoke:android'), 'expected Android smoke to run the committed Expo Go emulator smoke');
-  assert.ok(workflow.includes('actions/upload-artifact@v4'), 'expected Android smoke to upload visual evidence');
+  assert.ok(workflow.includes('interestshield-android-bundle'), 'expected Android smoke to upload bundle fallback evidence');
+  assert.ok(workflow.includes('interestshield-android-smoke'), 'expected Android smoke to upload visual evidence');
 });
 
 test('mobile native release config is explicit for Android and iOS builds', () => {

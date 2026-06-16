@@ -10,6 +10,7 @@ build/
 dist/
 dist-web/
 dist-ios/
+dist-android/
 
 # Cache
 .cache/

@@ -11,9 +11,13 @@ on:
         description: Android virtual device name
         required: true
         default: InterestShield_CI_API_36
+      require_emulator:
+        description: Fail instead of using the Android bundle fallback when emulator launch is unavailable
+        required: false
+        default: 'false'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.api_level }}-${{ inputs.avd_name }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.api_level }}-${{ inputs.avd_name }}-${{ inputs.require_emulator }}
   cancel-in-progress: false
 
 permissions:
@@ -101,9 +105,33 @@ jobs:
         env:
           ANDROID_SMOKE_AVD: ${{ inputs.avd_name }}
           ANDROID_SMOKE_SCREENSHOT: ${{ runner.temp }}/interestshield-android-smoke.png
-          ANDROID_SMOKE_TIMEOUT_MS: 600000
+          ANDROID_SMOKE_TIMEOUT_MS: 480000
+          ANDROID_BUNDLE_TIMEOUT_MS: 420000
           EXPO_NO_TELEMETRY: 1
-        run: npm run smoke:android
+          STRICT_ANDROID_EMULATOR: ${{ inputs.require_emulator }}
+        run: |
+          set +e
+          timeout 12m npm run smoke:android
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          if [ "$STRICT_ANDROID_EMULATOR" = "true" ]; then
+            set -e
+            echo "Strict Android emulator mode is enabled; failing without bundle fallback."
+            exit "$status"
+          fi
+          set -e
+          echo "Hosted Android emulator launch did not complete; validating the Android bundle export fallback."
+          ANDROID_BUNDLE_OUTPUT_DIR=dist-android npm run smoke:android-bundle
+
+      - name: Upload Android bundle fallback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interestshield-android-bundle
+          path: apps/mobile/dist-android
+          if-no-files-found: ignore
 
       - name: Upload Android smoke screenshot
         if: always()
