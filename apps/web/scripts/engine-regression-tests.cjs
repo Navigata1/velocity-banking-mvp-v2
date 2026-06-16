@@ -3531,6 +3531,24 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
   assert.ok(productionSmokeScript.includes('/_next/static'), 'expected production smoke to verify Next static assets');
   assert.ok(productionSmokeScript.includes('DEPLOYMENT_NOT_FOUND'), 'expected production smoke to catch missing Vercel deployments');
   assert.ok(productionSmokeScript.includes('Vercel Authentication'), 'expected production smoke to catch protected deployments');
+  assert.ok(
+    productionSmokeScript.includes('VERCEL_AUTOMATION_BYPASS_SECRET'),
+    'expected production smoke to support the Vercel automation bypass secret'
+  );
+  assert.ok(
+    productionSmokeScript.includes('x-vercel-protection-bypass'),
+    'expected production smoke to send the Vercel protection bypass header when configured'
+  );
+  assert.ok(
+    productionSmokeScript.includes('statusCode === 401') &&
+      productionSmokeScript.includes('statusCode === 403'),
+    'expected production smoke to diagnose protected preview status codes'
+  );
+  assert.ok(
+    productionSmokeScript.includes('Vercel Deployment or Preview Protection') &&
+      productionSmokeScript.includes('use `vercel curl`'),
+    'expected protected preview failures to produce an actionable release-verification hint'
+  );
 });
 
 test('web app declares Vercel Next deployment configuration', () => {

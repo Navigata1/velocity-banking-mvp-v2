@@ -2346,6 +2346,28 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 131: Vercel Preview Protection Diagnostics
+
+Local source repairs completed on 2026-06-16:
+
+- Updated the production route smoke so it can send Vercel's automation bypass header when `VERCEL_AUTOMATION_BYPASS_SECRET` or `VERCEL_PROTECTION_BYPASS_SECRET` is present.
+- Added dedicated diagnostics for HTTP `401`/`403` and protected-deployment signatures so release review can distinguish Vercel Deployment or Preview Protection from an application render failure.
+- The current release PR preview remains blocked for unauthenticated public smoke because the Vercel preview URL returns HTTP `401`; the next release-ready smoke needs a valid bypass secret, `vercel curl`, or an unprotected production URL.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: passed with 126 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+- Protected-preview stub smoke: passed by returning HTTP `401` with `Authentication Required` and confirming the failure text names Vercel Deployment or Preview Protection, `VERCEL_AUTOMATION_BYPASS_SECRET`, and `x-vercel-protection-bypass`.
+- Bypass-header stub smoke: passed by requiring `x-vercel-protection-bypass: test-secret` before returning the valid Next shell for all production-smoke routes.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/mobile` `npm run smoke:ios`: returned the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/mobile` `npm run smoke:android`: passed against `emulator-5554` and captured screenshot evidence at the temp smoke path.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

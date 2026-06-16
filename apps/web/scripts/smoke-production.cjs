@@ -6,6 +6,8 @@ const { URL } = require('node:url');
 
 const origin = normalizeOrigin(process.env.PRODUCTION_ORIGIN || 'https://web-islanddevcrew.vercel.app');
 const timeoutMs = Number(process.env.PRODUCTION_SMOKE_TIMEOUT_MS || 20000);
+const protectionBypassSecret =
+  process.env.VERCEL_AUTOMATION_BYPASS_SECRET || process.env.VERCEL_PROTECTION_BYPASS_SECRET || '';
 const maxRedirects = 4;
 
 const routes = [
@@ -18,11 +20,17 @@ const routes = [
   ['/vault', 'Vault'],
 ];
 
+const protectedDeploymentSignatures = [
+  'Authentication Required',
+  'Vercel Authentication',
+  'Password Protection',
+  'Deployment Protection',
+];
+
 const failureSignatures = [
   'DEPLOYMENT_NOT_FOUND',
   'This deployment has been disabled',
-  'Authentication Required',
-  'Vercel Authentication',
+  ...protectedDeploymentSignatures,
   'Application error',
   'Internal Server Error',
   '__next_error__',
@@ -39,14 +47,20 @@ function normalizeOrigin(value) {
 function requestUrl(url, redirects = 0) {
   return new Promise((resolve, reject) => {
     const client = url.protocol === 'https:' ? https : http;
+    const headers = {
+      accept: 'text/html',
+      'accept-encoding': 'identity',
+      'user-agent': 'InterestShield-production-smoke/1.0',
+    };
+
+    if (protectionBypassSecret) {
+      headers['x-vercel-protection-bypass'] = protectionBypassSecret;
+    }
+
     const request = client.get(
       url,
       {
-        headers: {
-          accept: 'text/html',
-          'accept-encoding': 'identity',
-          'user-agent': 'InterestShield-production-smoke/1.0',
-        },
+        headers,
       },
       (response) => {
         const statusCode = response.statusCode || 0;
@@ -82,11 +96,39 @@ function requestUrl(url, redirects = 0) {
   });
 }
 
+function buildDeploymentProtectionHint({ statusCode, signature }) {
+  const isProtectedStatus = statusCode === 401 || statusCode === 403;
+  const hasProtectedSignature = protectedDeploymentSignatures.includes(signature);
+
+  if (!isProtectedStatus && !hasProtectedSignature) {
+    return '';
+  }
+
+  if (protectionBypassSecret) {
+    return (
+      ' This looks like Vercel Deployment or Preview Protection. The smoke sent ' +
+      '`x-vercel-protection-bypass`, so confirm the bypass secret is current and enabled for this project.'
+    );
+  }
+
+  return (
+    ' This looks like Vercel Deployment or Preview Protection, not an application render failure. ' +
+    'Set VERCEL_AUTOMATION_BYPASS_SECRET so this smoke sends `x-vercel-protection-bypass`, ' +
+    'use `vercel curl`, or test an unprotected production URL before marking the release ready.'
+  );
+}
+
 function assertCleanProductionShell({ body, response, route, label, url }) {
   const contentType = String(response.headers['content-type'] || '');
+  const failureSignature = failureSignatures.find((signature) => body.includes(signature));
 
   if (response.statusCode !== 200) {
-    throw new Error(`${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.`);
+    const hint = buildDeploymentProtectionHint({
+      statusCode: response.statusCode,
+      signature: failureSignature,
+    });
+
+    throw new Error(`${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.${hint}`);
   }
 
   if (!contentType.includes('text/html')) {
@@ -97,9 +139,15 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
     throw new Error(`${label} route ${route} did not return the expected InterestShield Next shell.`);
   }
 
-  const failureSignature = failureSignatures.find((signature) => body.includes(signature));
   if (failureSignature) {
-    throw new Error(`${label} route ${route} returned a deployment failure signature: ${failureSignature}.`);
+    const hint = buildDeploymentProtectionHint({
+      statusCode: response.statusCode,
+      signature: failureSignature,
+    });
+
+    throw new Error(
+      `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}`
+    );
   }
 }
 
