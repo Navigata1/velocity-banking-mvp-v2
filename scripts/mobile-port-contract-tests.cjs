@@ -199,6 +199,7 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
     smokeScript.includes('Requested Android virtual device was not available'),
     'expected Android smoke to fail fast when the requested hosted AVD is not visible'
   );
+  assert.ok(smokeScript.includes('process.exit(0)'), 'expected Android smoke to exit after successful hosted cleanup');
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
   assert.ok(smokeScript.includes('taskkill.exe'), 'expected Windows process-tree cleanup for Metro');
 });
