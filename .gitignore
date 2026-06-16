@@ -9,6 +9,7 @@ out/
 build/
 dist/
 dist-web/
+dist-ios/
 
 # Cache
 .cache/

@@ -95,6 +95,7 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.scripts['smoke:web-export'], 'node scripts/smoke-web-export.cjs');
   assert.equal(mobilePackage.scripts['smoke:android'], 'node scripts/smoke-android-expo-go.cjs');
   assert.equal(mobilePackage.scripts['smoke:ios'], 'node scripts/smoke-ios-expo-go.cjs');
+  assert.equal(mobilePackage.scripts['smoke:ios-bundle'], 'node scripts/smoke-ios-bundle.cjs');
   assert.equal(mobilePackage.scripts['preflight:native'], 'node scripts/native-preflight.cjs');
   assert.equal(
     mobilePackage.scripts['build:android:preview'],
@@ -221,6 +222,20 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
 });
 
+test('Expo iOS bundle smoke validates native export output when Simulator launch is unavailable', () => {
+  const smokeScriptPath = path.join(repoRoot, 'apps/mobile/scripts/smoke-ios-bundle.cjs');
+  const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+
+  assert.ok(fs.existsSync(smokeScriptPath), 'expected a committed iOS bundle smoke script');
+  assert.ok(smokeScript.includes("process.env.IOS_BUNDLE_OUTPUT_DIR || 'dist-ios'"), 'expected a stable iOS export output directory');
+  assert.ok(smokeScript.includes('IOS_BUNDLE_TIMEOUT_MS || 300000'), 'expected a configurable iOS bundle timeout');
+  assert.ok(smokeScript.includes("'expo', 'export', '--platform', 'ios'"), 'expected the script to run a native iOS export');
+  assert.ok(smokeScript.includes('metadata.json'), 'expected the script to validate Expo export metadata');
+  assert.ok(smokeScript.includes('/_expo/static/js/ios/'), 'expected the script to validate an iOS JS bundle');
+  assert.ok(smokeScript.includes('iOS bundle export smoke passed.'), 'expected a clear pass marker for hosted fallback logs');
+  assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
+});
+
 test('GitHub CI protects web and mobile quality gates', () => {
   const workflowPath = path.join(repoRoot, '.github/workflows/ci.yml');
 
@@ -279,6 +294,7 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
 
   assert.ok(workflow.includes('workflow_dispatch:'), 'expected iOS smoke to run manually');
   assert.ok(workflow.includes('simulator:'), 'expected iOS smoke to accept a simulator override');
+  assert.ok(workflow.includes('require_simulator:'), 'expected iOS smoke to support strict simulator-only mode');
   assert.ok(workflow.includes('runs-on: macos-latest'), 'expected iOS smoke to use a macOS runner');
   assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
   assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected iOS smoke to run from the Expo app');
@@ -287,8 +303,16 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
   assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 420000'), 'expected hosted iOS smoke to allow first-run Expo Go setup time');
+  assert.ok(workflow.includes('IOS_BUNDLE_TIMEOUT_MS: 420000'), 'expected hosted iOS bundle export to use the same long timeout');
+  assert.ok(workflow.includes('STRICT_IOS_SIMULATOR'), 'expected iOS smoke to allow strict simulator mode');
   assert.ok(workflow.includes('Retrying iOS smoke once'), 'expected hosted iOS smoke to retry first-run Simulator openurl timeouts once');
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
+  assert.ok(
+    workflow.includes('Hosted iOS Simulator launch did not complete; validating the iOS bundle export fallback.'),
+    'expected hosted iOS smoke to explain the fallback'
+  );
+  assert.ok(workflow.includes('IOS_BUNDLE_OUTPUT_DIR=dist-ios npm run smoke:ios-bundle'), 'expected iOS smoke to validate the bundle fallback');
+  assert.ok(workflow.includes('actions/upload-artifact@v4'), 'expected iOS smoke to upload bundle fallback evidence');
 });
 
 test('manual Android native smoke runs on a GitHub emulator host', () => {
