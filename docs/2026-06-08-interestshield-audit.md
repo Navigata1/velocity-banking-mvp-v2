@@ -2844,6 +2844,19 @@ Current blocker:
 
 - The remaining production issue is still Vercel-side alias/promotion/authentication, tracked in issue #59. App source, CI, local smoke, hosted preview checks, and mobile smoke gates are not the blocker.
 
+### Repair Pass 158: GitHub Actions Node 24 Readiness
+
+Local source repairs completed on 2026-06-16:
+
+- Updated `.github/workflows/ci.yml` from `actions/checkout@v4` to `actions/checkout@v5`.
+- Updated `.github/workflows/ci.yml` from `actions/setup-node@v4` to `actions/setup-node@v5`.
+- Kept the app runtime at Node `22`; this pass only updates GitHub-owned action runtimes after hosted CI warned that Node 20 actions are deprecated.
+- Verified official GitHub repository tags exist for `actions/checkout` `v5` and `actions/setup-node` `v5` through the GitHub API before editing the workflow.
+
+Post-repair verification:
+
+- Hosted PR and main CI are required to prove this workflow-only change because the affected behavior is GitHub Actions runtime selection.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
