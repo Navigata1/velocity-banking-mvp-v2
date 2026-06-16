@@ -11,6 +11,32 @@ export interface LOCDetails {
   balance: number;
 }
 
+export type AmortizedPayoffFailureReason = 'payment-below-interest';
+
+export interface AmortizedPayoffMonth {
+  month: number;
+  balance: number;
+  interest: number;
+  principal: number;
+  payment: number;
+}
+
+export interface AmortizedPayoffInputs {
+  principalBalance: number;
+  apr: number;
+  monthlyPayment: number;
+  extraPayment?: number;
+  maxMonths?: number;
+}
+
+export interface AmortizedPayoffResult {
+  payoffMonths: number;
+  totalInterest: number;
+  monthlyData: AmortizedPayoffMonth[];
+  isPayoffPossible: boolean;
+  failureReason?: AmortizedPayoffFailureReason;
+}
+
 export interface MoneyLoopLOC {
   limit: number;
   apr: number;
@@ -285,6 +311,54 @@ export function calculateAmortizationPayment(principal: number, apr: number, ter
   const r = apr / 12;
   if (r === 0) return principal / termMonths;
   return principal * (r * Math.pow(1 + r, termMonths)) / (Math.pow(1 + r, termMonths) - 1);
+}
+
+export function simulateAmortizedPayoff(inputs: AmortizedPayoffInputs): AmortizedPayoffResult {
+  const maxMonths = inputs.maxMonths ?? 600;
+  const monthlyRate = Math.max(0, inputs.apr) / 12;
+  const scheduledPayment = Math.max(0, inputs.monthlyPayment) + Math.max(0, inputs.extraPayment ?? 0);
+  const monthlyData: AmortizedPayoffMonth[] = [];
+  let balance = Math.max(0, inputs.principalBalance);
+  let totalInterest = 0;
+  let month = 0;
+  const firstMonthInterest = balance * monthlyRate;
+
+  if (balance > 0.01 && scheduledPayment <= firstMonthInterest) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      monthlyData,
+      isPayoffPossible: false,
+      failureReason: 'payment-below-interest',
+    };
+  }
+
+  while (balance > 0.01 && month < maxMonths) {
+    month += 1;
+    const interest = balance * monthlyRate;
+    const payment = Math.min(scheduledPayment, balance + interest);
+    const principal = Math.max(0, payment - interest);
+
+    totalInterest += interest;
+    balance = Math.max(0, balance - principal);
+    monthlyData.push({
+      month,
+      balance,
+      interest,
+      principal,
+      payment,
+    });
+  }
+
+  const isPayoffPossible = balance <= 0.01;
+
+  return {
+    payoffMonths: month,
+    totalInterest,
+    monthlyData,
+    isPayoffPossible,
+    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+  };
 }
 
 export function calculateADBInterest(
@@ -674,78 +748,37 @@ function formatMonthsSaved(months: number): string {
 }
 
 function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjection {
-  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
-  let balance = Math.max(0, input.activeDebt.balance);
-  let totalInterest = 0;
-  let month = 0;
-  const firstMonthInterest = balance * monthlyRate;
-
-  if (balance > 0.01 && input.activeDebt.monthlyPayment <= firstMonthInterest) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  while (balance > 0.01 && month < 600) {
-    month += 1;
-    const interest = balance * monthlyRate;
-    const payment = Math.min(input.activeDebt.monthlyPayment, balance + interest);
-    const principal = payment - interest;
-
-    if (principal <= 0) {
-      balance += interest - input.activeDebt.monthlyPayment;
-      totalInterest += interest;
-      continue;
-    }
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - principal);
-  }
+  const projection = simulateAmortizedPayoff({
+    principalBalance: input.activeDebt.balance,
+    apr: input.activeDebt.apr,
+    monthlyPayment: input.activeDebt.monthlyPayment,
+    maxMonths: 600,
+  });
 
   return {
-    payoffMonths: month,
-    totalInterest,
-    isPayoffPossible: balance <= 0.01,
-    failureReason: balance <= 0.01 ? undefined : 'payment-below-interest',
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
   };
 }
 
 function simulateMobileWithExtraPayments(input: MobileDashboardInput, extraPaymentInput: number): MobilePayoffProjection {
-  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
-  let balance = Math.max(0, input.activeDebt.balance);
-  let totalInterest = 0;
-  let month = 0;
   const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
   const extraPayment = Math.min(Math.max(0, extraPaymentInput), Math.max(0, cashFlow));
-  const firstMonthInterest = balance * monthlyRate;
-
-  if (balance > 0.01 && input.activeDebt.monthlyPayment + extraPayment <= firstMonthInterest) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  while (balance > 0.01 && month < 600) {
-    month += 1;
-    const interest = balance * monthlyRate;
-    const totalPayment = Math.min(input.activeDebt.monthlyPayment + extraPayment, balance + interest);
-    const principal = totalPayment - interest;
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - Math.max(0, principal));
-  }
+  const projection = simulateAmortizedPayoff({
+    principalBalance: input.activeDebt.balance,
+    apr: input.activeDebt.apr,
+    monthlyPayment: input.activeDebt.monthlyPayment,
+    extraPayment,
+    maxMonths: 600,
+  });
 
   return {
-    payoffMonths: month,
-    totalInterest,
-    isPayoffPossible: balance <= 0.01,
-    failureReason: balance <= 0.01 ? undefined : 'payment-below-interest',
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
   };
 }
 
