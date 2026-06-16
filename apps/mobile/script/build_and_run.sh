@@ -25,6 +25,8 @@ Modes:
                     Run Android/iOS local smoke readiness checks
   --smoke-android, smoke-android
                     Run bounded Expo Go Android smoke against a booted device
+  --smoke-ios, smoke-ios
+                    Run bounded Expo Go iOS smoke on macOS Simulator
   --help, help       Show this help
 USAGE
 }
@@ -91,6 +93,9 @@ case "$MODE" in
     ;;
   --smoke-android|smoke-android)
     npm run smoke:android
+    ;;
+  --smoke-ios|smoke-ios)
+    npm run smoke:ios
     ;;
   --help|help)
     show_usage

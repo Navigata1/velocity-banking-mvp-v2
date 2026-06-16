@@ -41,6 +41,11 @@ icon = "tool"
 command = "./script/build_and_run.sh --smoke-android"
 
 [[actions]]
+name = "Smoke iOS"
+icon = "tool"
+command = "./script/build_and_run.sh --smoke-ios"
+
+[[actions]]
 name = "Export Web"
 icon = "tool"
 command = "./script/build_and_run.sh --export-web"
