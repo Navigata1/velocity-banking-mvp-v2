@@ -26,3 +26,109 @@ body {
 .animate-shimmer {
   animation: shimmer 1.5s ease-in-out infinite;
 }
+
+@keyframes artifactFloat {
+  0%, 100% {
+    transform: rotateX(58deg) rotateZ(-14deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(58deg) rotateZ(-14deg) translateY(-4px);
+  }
+}
+
+@keyframes artifactSpinSelect {
+  0% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(0deg) translateY(4px) scale(0.96);
+  }
+  55% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(360deg) translateY(-7px) scale(1.04);
+  }
+  100% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(360deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes artifactOrbitSweep {
+  0% {
+    transform: rotateX(62deg) rotateZ(-14deg);
+  }
+  100% {
+    transform: rotateX(62deg) rotateZ(346deg);
+  }
+}
+
+@keyframes artifactOrbitPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--orbit-node-color) 46%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--orbit-node-color) 0%, transparent);
+  }
+}
+
+.artifact-orbit-stage {
+  perspective: 1100px;
+}
+
+.artifact-orbit-ring {
+  border: 1px solid color-mix(in srgb, var(--active-artifact-color) 34%, transparent);
+  box-shadow: inset 0 0 34px rgb(15 23 42 / 0.7);
+  transform: rotateX(62deg) rotateZ(-14deg);
+}
+
+.artifact-orbit-path {
+  border: 1px dashed rgb(226 232 240 / 0.18);
+  transform: rotateX(62deg) rotateZ(-14deg);
+}
+
+.artifact-orbit-sweep {
+  background:
+    conic-gradient(from 0deg, transparent 0deg, color-mix(in srgb, var(--active-artifact-color) 66%, transparent) 28deg, transparent 58deg);
+  mask: radial-gradient(circle, transparent 56%, #000 58%, #000 62%, transparent 64%);
+  transform: rotateX(62deg) rotateZ(-14deg);
+}
+
+.artifact-orbit-node {
+  background:
+    radial-gradient(circle at 35% 28%, rgb(255 255 255 / 0.34), transparent 28%),
+    color-mix(in srgb, var(--orbit-node-color) 23%, rgb(15 23 42));
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.34);
+}
+
+.artifact-orbit-node-active {
+  background:
+    radial-gradient(circle at 35% 28%, rgb(255 255 255 / 0.42), transparent 28%),
+    color-mix(in srgb, var(--orbit-node-color) 58%, rgb(15 23 42));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .artifact-token {
+    animation: artifactFloat 4.8s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  .artifact-carousel-token {
+    animation: artifactSpinSelect 900ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+    transform-style: preserve-3d;
+  }
+
+  .artifact-orbit-sweep {
+    animation: artifactOrbitSweep 9s linear infinite;
+    transform-origin: center;
+  }
+
+  .artifact-orbit-node-active {
+    animation: artifactOrbitPulse 1.8s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifact-token,
+  .artifact-carousel-token {
+    transform: rotateX(58deg) rotateZ(-14deg);
+  }
+
+  .artifact-orbit-sweep {
+    opacity: 0.42;
+  }
+}

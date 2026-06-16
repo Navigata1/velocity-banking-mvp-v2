@@ -1,0 +1,81 @@
+name: Release smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      production_origin:
+        description: Production, preview, or custom-domain origin to smoke
+        required: true
+        default: https://web-islanddevcrew.vercel.app
+      run_mobile_export:
+        description: Build and smoke the Expo web export
+        required: true
+        type: boolean
+        default: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.production_origin }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release-smoke:
+    name: Release deployment smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            apps/web/package-lock.json
+            apps/mobile/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Run web regression tests
+        working-directory: apps/web
+        run: npm test
+
+      - name: Smoke deployed web routes
+        working-directory: apps/web
+        env:
+          PRODUCTION_ORIGIN: ${{ inputs.production_origin }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: npm run smoke:production
+
+      - name: Install mobile dependencies
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        run: npm ci
+
+      - name: Run mobile type-check
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        run: npm run check
+
+      - name: Build Expo web export
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        env:
+          EXPO_NO_TELEMETRY: 1
+        run: npm run build:web
+
+      - name: Smoke Expo web export
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        run: npm run smoke:web-export
+
+      - name: Run mobile contract tests
+        if: ${{ inputs.run_mobile_export }}
+        run: node scripts/mobile-port-contract-tests.cjs

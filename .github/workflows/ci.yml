@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  web-mobile-quality:
+    name: Web and mobile quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            apps/web/package-lock.json
+            apps/mobile/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Run web regression tests
+        working-directory: apps/web
+        run: npm test
+
+      - name: Run web lint
+        working-directory: apps/web
+        run: npm run lint
+
+      - name: Build web app
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Smoke built web routes
+        working-directory: apps/web
+        run: npm run smoke:routes
+
+      - name: Install mobile dependencies
+        working-directory: apps/mobile
+        run: npm ci
+
+      - name: Run mobile type-check
+        working-directory: apps/mobile
+        run: npm run check
+
+      - name: Build Expo web export
+        working-directory: apps/mobile
+        env:
+          EXPO_NO_TELEMETRY: 1
+        run: npm run build:web
+
+      - name: Smoke Expo web export
+        working-directory: apps/mobile
+        run: npm run smoke:web-export
+
+      - name: Run mobile contract tests
+        run: node scripts/mobile-port-contract-tests.cjs
+
+      - name: Verify iOS smoke guard on Linux
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          set +e
+          output="$(npm run smoke:ios 2>&1)"
+          status=$?
+          set -e
+          echo "$output"
+          test "$status" -eq 1
+          grep -F "iOS Expo Go smoke requires macOS with Xcode and Simulator." <<< "$output"

@@ -5,9 +5,28 @@ import { persist } from 'zustand/middleware';
 
 export type Theme = 'original' | 'dark' | 'light';
 
-interface ThemeState {
+export interface ThemeState {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+}
+
+const themes = ['original', 'dark', 'light'] as const satisfies readonly Theme[];
+
+function selectTheme(value: unknown, fallback: Theme): Theme {
+  return typeof value === 'string' && (themes as readonly string[]).includes(value) ? value as Theme : fallback;
+}
+
+export function sanitizePersistedThemeState(
+  persistedState: unknown,
+  currentState: ThemeState
+): Pick<ThemeState, 'theme'> {
+  const persisted = persistedState && typeof persistedState === 'object' && !Array.isArray(persistedState)
+    ? persistedState as Partial<ThemeState>
+    : {};
+
+  return {
+    theme: selectTheme(persisted.theme, currentState.theme),
+  };
 }
 
 export const useThemeStore = create<ThemeState>()(
@@ -18,6 +37,10 @@ export const useThemeStore = create<ThemeState>()(
     }),
     {
       name: 'interestshield-theme',
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...sanitizePersistedThemeState(persistedState, currentState),
+      }),
     }
   )
 );

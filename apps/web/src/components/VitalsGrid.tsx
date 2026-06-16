@@ -1,7 +1,7 @@
 'use client';
 
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
-import { useState, useEffect } from 'react';
+import { useIsClient } from '@/hooks/useIsClient';
 
 interface Vital {
   icon: string;
@@ -16,11 +16,7 @@ interface VitalsGridProps {
 
 export default function VitalsGrid({ vitals }: VitalsGridProps) {
   const { theme } = useThemeStore();
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsClient();
 
   const classes = themeClasses[mounted ? theme : 'original'];
 

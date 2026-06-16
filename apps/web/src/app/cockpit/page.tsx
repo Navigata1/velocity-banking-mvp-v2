@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import DomainTabs from '@/components/DomainTabs';
-import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
+import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
+import { useIsClient } from '@/hooks/useIsClient';
 
 interface Instrument {
   label: string;
@@ -20,16 +21,12 @@ interface Instrument {
 }
 
 export default function CockpitPage() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const [emergency, setEmergency] = useState(false);
   const [turbulence, setTurbulence] = useState(false);
   const store = useFinancialStore();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleEmergency = () => {
     setEmergency(true);
@@ -56,6 +53,7 @@ export default function CockpitPage() {
   const currentDebt = store.debts[debtType];
   const dailyInterest = store.getDailyInterest(debtType);
   const velocity = store.getVelocityPayoff(debtType);
+  const activeDomainLabel = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
   
   const cashFlow = store.getCashFlow();
   const etaMonths = turbulence ? velocity.months + 2 : velocity.months;
@@ -78,7 +76,7 @@ export default function CockpitPage() {
     },
     {
       label: 'Heading',
-      value: store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1),
+      value: activeDomainLabel,
       status: 'normal',
     },
     {
@@ -135,6 +133,7 @@ export default function CockpitPage() {
                   <EditableCurrency 
                     value={instrument.numericValue} 
                     onChange={instrument.onEdit}
+                    ariaLabel="Cockpit airspeed cash flow"
                     size="lg"
                   />
                 ) : (
@@ -302,9 +301,10 @@ export default function CockpitPage() {
                     step="100"
                     value={store.monthlyIncome}
                     onChange={(e) => store.setMonthlyIncome(Number(e.target.value))}
+                    aria-label="Cockpit monthly income slider"
                     className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                   />
-                  <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="sm" />
+                  <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} ariaLabel="Cockpit monthly income" size="sm" />
                 </div>
               </div>
               <div>
@@ -317,9 +317,10 @@ export default function CockpitPage() {
                     step="100"
                     value={store.monthlyExpenses}
                     onChange={(e) => store.setMonthlyExpenses(Number(e.target.value))}
+                    aria-label="Cockpit monthly expenses slider"
                     className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
-                  <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="sm" />
+                  <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} ariaLabel="Cockpit monthly expenses" size="sm" />
                 </div>
               </div>
               <div>
@@ -332,9 +333,10 @@ export default function CockpitPage() {
                     step="100"
                     value={store.chunkAmount}
                     onChange={(e) => store.setChunkAmount(Number(e.target.value))}
+                    aria-label="Cockpit chunk size slider"
                     className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
                   />
-                  <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} size="sm" />
+                  <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} ariaLabel="Cockpit chunk size" size="sm" />
                 </div>
               </div>
             </div>
@@ -342,7 +344,7 @@ export default function CockpitPage() {
 
           <div className={`${classes.glass} rounded-2xl p-6`}>
             <h3 className={`font-semibold mb-4 ${classes.text}`}>
-              {store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1)} Details
+              {activeDomainLabel} Details
             </h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -350,6 +352,7 @@ export default function CockpitPage() {
                 <EditableCurrency 
                   value={currentDebt.balance} 
                   onChange={(val) => store.updateDebt(debtType, { balance: val })}
+                  ariaLabel={`Cockpit ${activeDomainLabel} balance`}
                   size="md"
                 />
               </div>
@@ -358,6 +361,7 @@ export default function CockpitPage() {
                 <EditablePercentage 
                   value={currentDebt.interestRate} 
                   onChange={(val) => store.updateDebt(debtType, { interestRate: val })}
+                  ariaLabel={`Cockpit ${activeDomainLabel} interest rate`}
                   size="md"
                 />
               </div>
@@ -366,6 +370,7 @@ export default function CockpitPage() {
                 <EditableCurrency 
                   value={currentDebt.minimumPayment} 
                   onChange={(val) => store.updateDebt(debtType, { minimumPayment: val })}
+                  ariaLabel={`Cockpit ${activeDomainLabel} minimum payment`}
                   size="md"
                 />
               </div>

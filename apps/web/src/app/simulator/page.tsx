@@ -1,25 +1,22 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { runSimulation, formatCurrency, formatDate, formatMonths, SimulationInputs, simulateMultiDebt, DebtItem, calculateMortgageAnalysis, comparePaymentStrategies } from '@/engine/calculations';
+import { useMemo } from 'react';
+import { runSimulation, formatCurrency, SimulationInputs, calculateMortgageAnalysis, compareSingleDebtStrategies } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
-import { useFinancialStore, Domain, DebtType } from '@/stores/financial-store';
+import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
-import CountUp from '@/components/CountUp';
 import PageTransition from '@/components/PageTransition';
 import StrategyGlassFill from '@/components/StrategyGlassFill';
+import { useIsClient } from '@/hooks/useIsClient';
+import { buildSimulatorStrategyCards, buildSimulatorTimelineStatus, buildSimulatorWarnings } from '@/app/simulator-model';
 
 export default function SimulatorPage() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const store = useFinancialStore();
   const { theme } = useThemeStore();
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const classes = themeClasses[mounted ? theme : 'original'];
 
@@ -45,43 +42,14 @@ export default function SimulatorPage() {
   }, [store]);
 
   const cashFlow = store.getCashFlow();
-  const locUtilization = (store.loc.balance / store.loc.limit) * 100;
+  const simulatorWarnings = buildSimulatorWarnings({ cashFlow, loc: store.loc });
 
   const results = useMemo(() => runSimulation(inputs), [inputs]);
 
-  // Build single-debt item for multi-strategy comparison
+  // Keep visible strategy cards aligned with the single-debt engine.
   const strategyResults = useMemo(() => {
-    const debtType = store.getActiveDebtType();
-    const debt = store.debts[debtType];
-    const domainLabel = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
-    
-    const debtItem: DebtItem = {
-      id: debtType,
-      name: `${domainLabel} Loan`,
-      type: debtType,
-      balance: debt.balance,
-      apr: debt.interestRate,
-      monthlyPayment: debt.minimumPayment,
-      termMonths: Math.ceil(debt.balance / (debt.minimumPayment || 1)),
-    };
-    
-    const loc = store.loc.limit > 0 ? {
-      limit: store.loc.limit,
-      apr: store.loc.interestRate,
-      balance: store.loc.balance,
-    } : undefined;
-    
-    const snowball = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'snowball', store.chunkAmount);
-    const avalanche = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'avalanche', store.chunkAmount);
-    const velocity = simulateMultiDebt([debtItem], store.monthlyIncome, store.monthlyExpenses, loc, 'velocity', store.chunkAmount);
-    
-    return [
-      { name: 'Traditional', months: results.baseline.payoffMonths, totalInterest: results.baseline.totalInterest, color: 'red', icon: '📊' },
-      { name: 'Snowball', months: snowball.totalMonths, totalInterest: snowball.totalInterestPaid, color: 'blue', icon: '☃️' },
-      { name: 'Avalanche', months: avalanche.totalMonths, totalInterest: avalanche.totalInterestPaid, color: 'amber', icon: '🏔️' },
-      { name: 'Velocity', months: velocity.totalMonths, totalInterest: velocity.totalInterestPaid, color: 'emerald', icon: '⚡' },
-    ];
-  }, [store, results]);
+    return buildSimulatorStrategyCards(compareSingleDebtStrategies(inputs));
+  }, [inputs]);
 
   if (!mounted) {
     return (
@@ -97,6 +65,12 @@ export default function SimulatorPage() {
   const debtType = store.getActiveDebtType();
   const currentDebt = store.debts[debtType];
   const domainName = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
+  const timelineMonth = results.velocity.monthlyData[0];
+  const timelineEvents = timelineMonth?.events ?? [];
+  const timelineStatus = buildSimulatorTimelineStatus(timelineEvents.length);
+  const timelineStatusClass = timelineStatus.tone === 'emerald'
+    ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+    : 'border-amber-500/30 bg-amber-500/10 text-amber-200';
 
   return (
     <PageTransition>
@@ -114,21 +88,20 @@ export default function SimulatorPage() {
       </div>
 
       <div className="mt-6 relative z-10">
-        {cashFlow <= 0 && (
-          <div className="mb-6 bg-red-500/20 border border-red-500/50 rounded-xl p-4">
-            <p className="text-red-400 font-medium">
-              Stabilize First: Your expenses exceed your income. Focus on positive cash flow before using velocity banking.
-            </p>
-          </div>
-        )}
+        {simulatorWarnings.map((warning) => {
+          const boxClass = warning.tone === 'rose'
+            ? 'bg-red-500/20 border-red-500/50'
+            : 'bg-amber-500/20 border-amber-500/50';
+          const textClass = warning.tone === 'rose' ? 'text-red-400' : 'text-amber-400';
 
-        {locUtilization > 80 && (
-          <div className="mb-6 bg-amber-500/20 border border-amber-500/50 rounded-xl p-4">
-            <p className="text-amber-400 font-medium">
-              High LOC Utilization: Your line of credit is over 80% utilized. This increases risk.
-            </p>
-          </div>
-        )}
+          return (
+            <div key={warning.kind} className={`mb-6 rounded-xl border p-4 ${boxClass}`}>
+              <p className={`${textClass} font-medium`}>
+                {warning.title}: {warning.body}
+              </p>
+            </div>
+          );
+        })}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <ScrollReveal variant="fadeUp" className="space-y-6" stagger={0.08}>
@@ -141,6 +114,7 @@ export default function SimulatorPage() {
                     value={store.monthlyIncome} 
                     onChange={store.setMonthlyIncome}
                     size="lg"
+                    ariaLabel="Simulator monthly income"
                   />
                 </div>
                 <div className="flex justify-between items-center">
@@ -149,6 +123,7 @@ export default function SimulatorPage() {
                     value={store.monthlyExpenses} 
                     onChange={store.setMonthlyExpenses}
                     size="lg"
+                    ariaLabel="Simulator monthly expenses"
                   />
                 </div>
                 <DualSlider
@@ -177,6 +152,7 @@ export default function SimulatorPage() {
                     value={currentDebt.balance} 
                     onChange={(val) => store.updateDebt(debtType, { balance: val })}
                     size="lg"
+                    ariaLabel={`${domainName} balance`}
                   />
                 </div>
                 <div className="flex justify-between items-center">
@@ -185,6 +161,7 @@ export default function SimulatorPage() {
                     value={currentDebt.interestRate} 
                     onChange={(val) => store.updateDebt(debtType, { interestRate: val })}
                     size="lg"
+                    ariaLabel={`${domainName} APR`}
                   />
                 </div>
                 <div className="flex justify-between items-center">
@@ -193,6 +170,7 @@ export default function SimulatorPage() {
                     value={currentDebt.minimumPayment} 
                     onChange={(val) => store.updateDebt(debtType, { minimumPayment: val })}
                     size="lg"
+                    ariaLabel={`${domainName} monthly payment`}
                   />
                 </div>
               </div>
@@ -207,6 +185,7 @@ export default function SimulatorPage() {
                     value={store.loc.limit} 
                     onChange={(val) => store.updateLOC({ limit: val })}
                     size="lg"
+                    ariaLabel="Simulator line of credit limit"
                   />
                 </div>
                 <div className="flex justify-between items-center">
@@ -215,6 +194,7 @@ export default function SimulatorPage() {
                     value={store.loc.interestRate} 
                     onChange={(val) => store.updateLOC({ interestRate: val })}
                     size="lg"
+                    ariaLabel="Simulator line of credit APR"
                   />
                 </div>
                 <div className="flex justify-between items-center">
@@ -223,6 +203,7 @@ export default function SimulatorPage() {
                     value={store.chunkAmount} 
                     onChange={store.setChunkAmount}
                     size="lg"
+                    ariaLabel="Simulator extra payment chunk"
                   />
                 </div>
               </div>
@@ -253,15 +234,15 @@ export default function SimulatorPage() {
                     <>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Age at Purchase</label>
-                        <EditableNumber value={store.mortgageDetails.purchaseAge} onChange={(v) => store.updateMortgageDetails({ purchaseAge: v })} size="lg" />
+                        <EditableNumber value={store.mortgageDetails.purchaseAge} onChange={(v) => store.updateMortgageDetails({ purchaseAge: v })} size="lg" ariaLabel="Mortgage purchase age" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Purchase Price</label>
-                        <EditableCurrency value={store.mortgageDetails.originalCost} onChange={(v) => store.updateMortgageDetails({ originalCost: v })} size="lg" />
+                        <EditableCurrency value={store.mortgageDetails.originalCost} onChange={(v) => store.updateMortgageDetails({ originalCost: v })} size="lg" ariaLabel="Mortgage purchase price" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Down Payment</label>
-                        <EditableCurrency value={store.mortgageDetails.downPayment} onChange={(v) => store.updateMortgageDetails({ downPayment: v })} size="lg" />
+                        <EditableCurrency value={store.mortgageDetails.downPayment} onChange={(v) => store.updateMortgageDetails({ downPayment: v })} size="lg" ariaLabel="Mortgage down payment" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Term</label>
@@ -278,7 +259,7 @@ export default function SimulatorPage() {
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Original Rate</label>
-                        <EditablePercentage value={store.mortgageDetails.originalRate} onChange={(v) => store.updateMortgageDetails({ originalRate: v })} size="lg" />
+                        <EditablePercentage value={store.mortgageDetails.originalRate} onChange={(v) => store.updateMortgageDetails({ originalRate: v })} size="lg" ariaLabel="Mortgage original rate" />
                       </div>
                     </>
                   )}
@@ -286,19 +267,19 @@ export default function SimulatorPage() {
                     <>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Current Balance</label>
-                        <EditableCurrency value={store.mortgageDetails.currentBalance} onChange={(v) => store.updateMortgageDetails({ currentBalance: v })} size="lg" />
+                        <EditableCurrency value={store.mortgageDetails.currentBalance} onChange={(v) => store.updateMortgageDetails({ currentBalance: v })} size="lg" ariaLabel="Mortgage current balance" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Remaining Months</label>
-                        <EditableNumber value={store.mortgageDetails.remainingTermMonths} onChange={(v) => store.updateMortgageDetails({ remainingTermMonths: v })} size="lg" />
+                        <EditableNumber value={store.mortgageDetails.remainingTermMonths} onChange={(v) => store.updateMortgageDetails({ remainingTermMonths: v })} size="lg" ariaLabel="Mortgage remaining months" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Current Rate</label>
-                        <EditablePercentage value={store.mortgageDetails.currentRate} onChange={(v) => store.updateMortgageDetails({ currentRate: v })} size="lg" />
+                        <EditablePercentage value={store.mortgageDetails.currentRate} onChange={(v) => store.updateMortgageDetails({ currentRate: v })} size="lg" ariaLabel="Mortgage current rate" />
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Monthly Payment</label>
-                        <EditableCurrency value={store.mortgageDetails.currentMonthlyPayment} onChange={(v) => store.updateMortgageDetails({ currentMonthlyPayment: v })} size="lg" />
+                        <EditableCurrency value={store.mortgageDetails.currentMonthlyPayment} onChange={(v) => store.updateMortgageDetails({ currentMonthlyPayment: v })} size="lg" ariaLabel="Mortgage current monthly payment" />
                       </div>
                     </>
                   )}
@@ -334,7 +315,7 @@ export default function SimulatorPage() {
                     {store.mortgageDetails.hasExtraPayments && (
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Extra/payment</label>
-                        <EditableCurrency value={store.mortgageDetails.extraPaymentAmount} onChange={(v) => store.updateMortgageDetails({ extraPaymentAmount: v })} size="lg" />
+                        <EditableCurrency value={store.mortgageDetails.extraPaymentAmount} onChange={(v) => store.updateMortgageDetails({ extraPaymentAmount: v })} size="lg" ariaLabel="Mortgage extra payment amount" />
                       </div>
                     )}
                     <div className="flex justify-between items-center">
@@ -349,7 +330,7 @@ export default function SimulatorPage() {
                     {store.mortgageDetails.hasRefinanced && (
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Times refinanced</label>
-                        <EditableNumber value={store.mortgageDetails.refinanceCount} onChange={(v) => store.updateMortgageDetails({ refinanceCount: v })} size="lg" min={1} max={10} />
+                        <EditableNumber value={store.mortgageDetails.refinanceCount} onChange={(v) => store.updateMortgageDetails({ refinanceCount: v })} size="lg" min={1} max={10} ariaLabel="Mortgage refinance count" />
                       </div>
                     )}
                   </div>
@@ -412,6 +393,51 @@ export default function SimulatorPage() {
               <p className={`text-xs ${classes.textMuted} mb-5`}>Fill level = time to payoff. Less fill = faster. Traditional is always 100%.</p>
               
               <StrategyGlassFill strategies={strategyResults} />
+            </div>
+
+            <div className={`${classes.glass} rounded-2xl p-6`}>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h2 className={`text-xl font-semibold ${classes.text}`}>Money Loop Timeline</h2>
+                  <p className={`text-xs ${classes.textMuted} mt-1`}>
+                    Month {timelineMonth?.month ?? 1} event ledger from the velocity engine.
+                  </p>
+                </div>
+                <span className={`w-fit rounded-lg border px-3 py-1 text-xs font-medium ${timelineStatusClass}`}>
+                  {timelineStatus.label}
+                </span>
+              </div>
+
+              {timelineEvents.length > 0 ? (
+                <div className="mt-5 space-y-3">
+                  {timelineEvents.map((event, index) => (
+                    <div
+                      key={`${event.type}-${index}`}
+                      className={`rounded-xl border ${classes.border} p-4`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className={`text-sm font-semibold ${classes.text}`}>{event.label}</p>
+                          <p className={`mt-1 text-xs leading-5 ${classes.textSecondary}`}>{event.note}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-bold text-emerald-400">{formatCurrency(event.amount)}</p>
+                          <p className={`text-[11px] ${classes.textMuted}`}>
+                            Balance after {formatCurrency(event.balanceAfter)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+                  <p className="text-sm font-medium text-amber-300">Timeline unavailable</p>
+                  <p className={`mt-1 text-xs leading-5 ${classes.textSecondary}`}>
+                    The current inputs do not produce a valid velocity event ledger. Check cash flow, LOC, and payment assumptions.
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className={`${classes.glass} rounded-2xl p-6`}>

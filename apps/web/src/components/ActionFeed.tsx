@@ -1,8 +1,5 @@
 'use client';
 
-import { useThemeStore, themeClasses } from '@/stores/theme-store';
-import { useState, useEffect } from 'react';
-
 interface ActionCard {
   id: string;
   type: 'action' | 'milestone' | 'tip' | 'alert';
@@ -24,15 +21,6 @@ const typeGradients = {
 };
 
 export default function ActionFeed({ cards }: ActionFeedProps) {
-  const { theme } = useThemeStore();
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const classes = themeClasses[mounted ? theme : 'original'];
-
   return (
     <div className="space-y-4">
       {cards.map((card) => (

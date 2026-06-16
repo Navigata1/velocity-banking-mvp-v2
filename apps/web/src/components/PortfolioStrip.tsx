@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
-import { rankDebtsVelocity, getDebtIcon, buildVelocityReason, formatCurrency, estimateDailyInterest } from '@/engine/velocity-targeting';
+import { rankDebtsVelocity, getDebtIcon, buildVelocityReason, formatCurrency, estimateDailyInterest, type VelocityDebt } from '@/engine/velocity-targeting';
 
 export default function PortfolioStrip() {
   const store = useFinancialStore();
@@ -12,7 +12,7 @@ export default function PortfolioStrip() {
   const classes = themeClasses[theme];
 
   const snapshot = useMemo(() => {
-    const all = Object.values(store.debts || {}) as any[];
+    const all = Object.values(store.debts || {}) as VelocityDebt[];
     const debts = all.filter((d) => (d?.balance ?? 0) > 0);
     const ranked = rankDebtsVelocity(debts);
     const top3 = ranked.slice(0, 3);
@@ -64,7 +64,7 @@ export default function PortfolioStrip() {
       </div>
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-        {snapshot.top3.map((d: any) => (
+        {snapshot.top3.map((d) => (
           <div key={d.id} className={`rounded-xl border ${classes.border} bg-black/20 p-3`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">

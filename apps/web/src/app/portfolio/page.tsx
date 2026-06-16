@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { usePortfolioStore } from '@/stores/portfolio-store';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
-import type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
+import type { DebtItem, DebtPriorityRationale, PayoffStrategy } from '@/engine/portfolio';
 import { formatCurrency, formatDate } from '@/engine/calculations';
 import ScrollReveal from '@/components/ScrollReveal';
 import CountUp from '@/components/CountUp';
 import PageTransition from '@/components/PageTransition';
+import { useIsClient } from '@/hooks/useIsClient';
 
 function categoryLabel(cat: DebtItem['category']): string {
   const labels: Record<string, string> = {
@@ -57,13 +58,15 @@ const ALL_CATEGORIES: DebtItem['category'][] = [
 ];
 
 export default function PortfolioPage() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
   const store = usePortfolioStore();
 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importText, setImportText] = useState('');
   const [newDebt, setNewDebt] = useState<Omit<DebtItem, 'id' | 'createdAt'>>({
     name: 'New Debt',
     category: 'auto',
@@ -77,7 +80,6 @@ export default function PortfolioPage() {
   });
 
   useEffect(() => {
-    setMounted(true);
     store.recompute();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -98,8 +100,16 @@ export default function PortfolioPage() {
   const payoffMonths = result?.payoffMonths ?? 0;
   const payoffDateStr = payoffMonths ? formatDate(payoffMonths) : '—';
   const totalInterest = result?.totalInterest ?? 0;
+  const portfolioProjectionValid = result?.isPayoffPossible !== false;
+  const displayedPayoffDateStr = result
+    ? portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'
+    : payoffDateStr;
+  const totalInterestLabel = portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected';
   const payoffOrder = result?.payoffOrder ?? [];
   const warnings = result?.warnings ?? [];
+  const assumptions = result?.assumptions ?? [];
+  const locInterestPaid = result?.locInterestPaid ?? 0;
+  const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
   const totalDebt = store.debts.reduce((s, d) => s + d.balance, 0);
   const cashFlow = store.monthlyIncome - store.monthlyExpenses;
 
@@ -114,10 +124,123 @@ export default function PortfolioPage() {
     URL.revokeObjectURL(url);
   };
 
+  const showImportResult = (res: ReturnType<typeof store.importState>) => {
+    setImportStatus(
+      res.ok
+        ? 'Import complete. This local portfolio plan was replaced by the backup file.'
+        : `Import failed: ${res.error}`
+    );
+    setTimeout(() => setImportStatus(null), 3000);
+  };
+
   const handleImport = async (file: File) => {
     const text = await file.text();
+    showImportResult(store.importState(text));
+  };
+
+  const handleImportText = () => {
+    const text = importText.trim();
+    if (!text) {
+      showImportResult({ ok: false, error: 'Paste backup JSON first.' });
+      return;
+    }
+
     const res = store.importState(text);
-    if (!res.ok) alert(res.error);
+    if (res.ok) setImportText('');
+    showImportResult(res);
+  };
+
+  const renderCategorySelect = (debt: DebtItem, fullWidth = false) => (
+    <select
+      value={debt.category}
+      onChange={(e) => store.updateDebt(debt.id, { category: e.target.value as DebtItem['category'] })}
+      className={`bg-transparent border ${classes.border} rounded-lg px-2 py-2 ${classes.text} text-xs ${fullWidth ? 'w-full' : ''}`}
+    >
+      {ALL_CATEGORIES.map((c) => (
+        <option key={c} value={c} className="bg-slate-900">
+          {categoryLabel(c)}
+        </option>
+      ))}
+    </select>
+  );
+
+  const renderMinimumEditor = (d: DebtItem) => (
+    d.minPaymentRule.type === 'fixed' ? (
+      <EditableCurrency
+        value={d.minPaymentRule.amount}
+        onChange={(v) => store.updateDebt(d.id, { minPaymentRule: { type: 'fixed', amount: v } })}
+        ariaLabel={`${d.name} minimum payment`}
+        size="md"
+      />
+    ) : (
+      <div>
+        <p className={`${classes.textSecondary} text-sm font-mono`}>{formatCurrency(getMinPaymentValue(d))}</p>
+        <p className={`${classes.textMuted} text-[11px]`}>
+          {Math.round(d.minPaymentRule.percent * 100)}% floor {formatCurrency(d.minPaymentRule.floor)}
+        </p>
+      </div>
+    )
+  );
+
+  const renderPaymentSourceSelect = (debt: DebtItem, fullWidth = false) => (
+    <select
+      value={debt.paymentSource}
+      onChange={(e) => store.updateDebt(debt.id, { paymentSource: e.target.value as DebtItem['paymentSource'] })}
+      className={`bg-transparent border ${classes.border} rounded-lg px-2 py-2 ${classes.text} text-xs ${fullWidth ? 'w-full' : ''}`}
+    >
+      {(['checking', 'either', 'loc'] as DebtItem['paymentSource'][]).map((s) => (
+        <option key={s} value={s} className="bg-slate-900">
+          {paymentSourceLabel(s)}
+        </option>
+      ))}
+    </select>
+  );
+
+  const renderPromoControl = (debt: DebtItem) => (
+    debt.promo ? (
+      <div>
+        <p className="text-emerald-300 text-xs font-semibold">
+          {Math.round(debt.promo.introApr * 100)}% for {debt.promo.monthsRemaining} mo
+        </p>
+        <p className={`${classes.textMuted} text-[11px]`}>
+          Then {Math.round(debt.promo.postIntroApr * 100)}%
+        </p>
+      </div>
+    ) : (
+      <button
+        onClick={() =>
+          store.updateDebt(debt.id, {
+            promo: { introApr: 0, monthsRemaining: 6, postIntroApr: debt.apr },
+          })
+        }
+        className="text-xs text-emerald-400 hover:text-emerald-300 underline"
+      >
+        + Add promo
+      </button>
+    )
+  );
+
+  const renderDebtRationale = (rationale?: DebtPriorityRationale, compact = false) => {
+    if (!rationale) return null;
+
+    const visiblePoints = compact ? rationale.points.slice(0, 2) : rationale.points;
+
+    return (
+      <div data-testid="portfolio-debt-rationale" className={`mt-2 space-y-1 text-[11px] leading-relaxed ${classes.textMuted}`}>
+        <p className={`${classes.textSecondary} font-semibold`}>
+          {rationale.isCurrentTarget ? 'Why this is the target' : `Priority #${rationale.rank}`}
+        </p>
+        {!compact && <p>{rationale.summary}</p>}
+        <ul className="space-y-1">
+          {visiblePoints.map((point) => (
+            <li key={point} className="flex gap-1">
+              <span className="text-emerald-400">-</span>
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   return (
@@ -145,18 +268,39 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Monthly Income</p>
-                <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="lg" />
+                <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} ariaLabel="Portfolio monthly income" size="lg" />
               </div>
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Monthly Expenses</p>
-                <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="lg" />
+                <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} ariaLabel="Portfolio monthly expenses" size="lg" />
               </div>
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Extra Toward Debt</p>
-                <EditableCurrency value={store.extraMonthlyPayment} onChange={store.setExtraMonthlyPayment} size="lg" />
+                <EditableCurrency value={store.extraMonthlyPayment} onChange={store.setExtraMonthlyPayment} ariaLabel="Portfolio extra debt payment" size="lg" />
                 <p className={`${classes.textMuted} text-[11px] mt-1`}>Optional, beyond minimums</p>
               </div>
             </div>
+
+            {store.strategy === 'velocity' && (
+              <div data-testid="portfolio-loc-controls" className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className={`${classes.glassButton} rounded-2xl p-4`}>
+                  <p className={`${classes.textMuted} text-xs mb-1`}>LOC Limit</p>
+                  <EditableCurrency value={store.loc.limit} onChange={(value) => store.updateLOC({ limit: value })} ariaLabel="Portfolio line of credit limit" size="md" />
+                </div>
+                <div className={`${classes.glassButton} rounded-2xl p-4`}>
+                  <p className={`${classes.textMuted} text-xs mb-1`}>LOC Balance</p>
+                  <EditableCurrency value={store.loc.balance} onChange={(value) => store.updateLOC({ balance: value })} ariaLabel="Portfolio line of credit balance" size="md" />
+                </div>
+                <div className={`${classes.glassButton} rounded-2xl p-4`}>
+                  <p className={`${classes.textMuted} text-xs mb-1`}>LOC APR</p>
+                  <EditablePercentage value={store.loc.apr} onChange={(value) => store.updateLOC({ apr: value })} ariaLabel="Portfolio line of credit APR" size="md" />
+                </div>
+                <div className={`${classes.glassButton} rounded-2xl p-4`}>
+                  <p className={`${classes.textMuted} text-xs mb-1`}>Velocity Chunk</p>
+                  <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} ariaLabel="Portfolio velocity chunk" size="md" />
+                </div>
+              </div>
+            )}
 
             {/* Strategy + Focus */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -274,6 +418,17 @@ export default function PortfolioPage() {
                 </ul>
               </div>
             )}
+
+            {assumptions.length > 0 && (
+              <div data-testid="portfolio-assumptions" className={`p-4 rounded-2xl border ${classes.border} bg-slate-950/25`}>
+                <p className={`font-semibold ${classes.text}`}>Assumptions</p>
+                <ul className={`mt-2 text-sm ${classes.textSecondary} space-y-1`}>
+                  {assumptions.map((note) => (
+                    <li key={note}>- {note}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Summary sidebar */}
@@ -284,9 +439,9 @@ export default function PortfolioPage() {
             </div>
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Estimated Debt-Free</p>
-              <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{payoffDateStr}</p>
+              <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{displayedPayoffDateStr}</p>
               <p className={`${classes.textSecondary} text-sm mt-1`}>
-                {payoffMonths} mo • Interest est. {formatCurrency(totalInterest)}
+                {portfolioProjectionValid ? `${payoffMonths} mo` : 'Plan needs review'} • Interest est. {totalInterestLabel}
               </p>
             </div>
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
@@ -296,6 +451,15 @@ export default function PortfolioPage() {
               </p>
               <p className={`${classes.textMuted} text-[11px] mt-1`}>Your velocity fuel</p>
             </div>
+            {store.strategy === 'velocity' && (
+              <div data-testid="portfolio-loc-summary" className={`${classes.glassButton} rounded-2xl p-4`}>
+                <p className={`${classes.textMuted} text-xs`}>LOC Interest Est.</p>
+                <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{formatCurrency(locInterestPaid)}</p>
+                <p className={`${classes.textMuted} text-[11px] mt-1`}>
+                  {moneyLoopActive ? 'Money Loop ledger active' : 'Ranking planner only'}
+                </p>
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setShowAdd(true)}
@@ -305,16 +469,27 @@ export default function PortfolioPage() {
               </button>
               <button
                 onClick={handleExport}
+                aria-label="Export local portfolio backup"
+                data-testid="portfolio-export-backup"
                 className={`${classes.glassButton} px-4 py-3 rounded-2xl border ${classes.border} hover:bg-slate-800/40 transition-all text-sm font-semibold ${classes.text}`}
               >
                 Export
               </button>
             </div>
-            <label className={`${classes.glassButton} block px-4 py-3 rounded-2xl border ${classes.border} hover:bg-slate-800/40 transition-all text-sm font-semibold cursor-pointer text-center ${classes.text}`}>
+            <div className={`${classes.textMuted} text-xs leading-5`}>
+              <p>Local backup only. Export your portfolio balances, LOC settings, strategy, and planning inputs as JSON.</p>
+              <p>Import replaces the current local portfolio plan in this browser.</p>
+            </div>
+            <label
+              data-testid="portfolio-import-backup"
+              className={`${classes.glassButton} block px-4 py-3 rounded-2xl border ${classes.border} hover:bg-slate-800/40 transition-all text-sm font-semibold cursor-pointer text-center ${classes.text}`}
+            >
               Import
               <input
                 type="file"
                 accept="application/json"
+                aria-label="Import local portfolio backup JSON"
+                data-testid="portfolio-import-backup-input"
                 className="hidden"
                 onChange={(e) => {
                   const f = e.target.files?.[0];
@@ -323,6 +498,34 @@ export default function PortfolioPage() {
                 }}
               />
             </label>
+            <div className="space-y-2">
+              <label htmlFor="portfolio-import-backup-json" className={`block text-xs font-medium ${classes.textSecondary}`}>
+                Paste backup JSON
+              </label>
+              <textarea
+                id="portfolio-import-backup-json"
+                aria-label="Paste local portfolio backup JSON"
+                data-testid="portfolio-import-backup-json"
+                value={importText}
+                onChange={(e) => setImportText(e.target.value)}
+                rows={3}
+                placeholder='{"version":1,"data":{"debts":[]}}'
+                className={`w-full rounded-xl border ${classes.border} ${classes.bgTertiary} ${classes.text} px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500/70`}
+              />
+              <button
+                type="button"
+                onClick={handleImportText}
+                data-testid="portfolio-import-backup-json-submit"
+                className={`${classes.glassButton} w-full px-4 py-3 rounded-2xl border ${classes.border} hover:bg-slate-800/40 transition-all text-sm font-semibold ${classes.text}`}
+              >
+                Import pasted JSON
+              </button>
+            </div>
+            {importStatus && (
+              <p className={`text-xs ${classes.textSecondary}`} role="status">
+                {importStatus}
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -355,7 +558,77 @@ export default function PortfolioPage() {
             </button>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <>
+          <div className="space-y-4 md:hidden">
+            {store.debts.map((d) => {
+              const isPrimary = payoffOrder.length > 0 && payoffOrder[0]?.id === d.id;
+              return (
+                <div
+                  key={d.id}
+                  data-testid="portfolio-mobile-debt-card"
+                  className={`${classes.glassButton} rounded-2xl p-4 border ${classes.border} space-y-4 ${isPrimary ? 'bg-emerald-500/5 ring-1 ring-emerald-400/30' : ''}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 flex-1 items-start gap-3">
+                      <span className="shrink-0 text-2xl">{categoryIcon(d.category)}</span>
+                      <div className="min-w-0 flex-1">
+                        <input
+                          value={d.name}
+                          aria-label={`Debt name for ${d.name}`}
+                          onChange={(e) => store.updateDebt(d.id, { name: e.target.value })}
+                          className={`w-full bg-transparent border-b ${classes.border} ${classes.text} focus:border-emerald-500 focus:outline-none`}
+                        />
+                        <p className={`${classes.textMuted} mt-1 text-[11px]`}>
+                          {debtKindLabel(d.kind)}
+                          {isPrimary && <span className="ml-2 text-emerald-400">Focus Target</span>}
+                        </p>
+                        {renderDebtRationale(result?.debtRationales?.[d.id])}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => store.removeDebt(d.id)}
+                      aria-label={`Remove ${d.name}`}
+                      className="shrink-0 text-xs text-red-300 hover:text-red-200 underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>Balance</p>
+                      <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
+                    </div>
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>APR</p>
+                      <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} ariaLabel={`${d.name} APR`} size="md" />
+                    </div>
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>Minimum</p>
+                      {renderMinimumEditor(d)}
+                    </div>
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>Pay From</p>
+                      {renderPaymentSourceSelect(d, true)}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>Type</p>
+                      {renderCategorySelect(d, true)}
+                    </div>
+                    <div className={`${classes.glass} rounded-xl p-3`}>
+                      <p className={`${classes.textMuted} text-[11px] mb-1`}>Promo</p>
+                      {renderPromoControl(d)}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className={`${classes.textMuted} text-xs border-b ${classes.border}`}>
@@ -380,6 +653,7 @@ export default function PortfolioPage() {
                           <div>
                             <input
                               value={d.name}
+                              aria-label={`Debt name for ${d.name}`}
                               onChange={(e) => store.updateDebt(d.id, { name: e.target.value })}
                               className={`bg-transparent border-b ${classes.border} ${classes.text} focus:border-emerald-500 focus:outline-none w-full`}
                             />
@@ -387,6 +661,7 @@ export default function PortfolioPage() {
                               {debtKindLabel(d.kind)}
                               {isPrimary && <span className="text-emerald-400 ml-2">⚡ Focus Target</span>}
                             </p>
+                            {renderDebtRationale(result?.debtRationales?.[d.id], true)}
                           </div>
                         </div>
                       </td>
@@ -404,16 +679,17 @@ export default function PortfolioPage() {
                         </select>
                       </td>
                       <td className="py-3 pr-3">
-                        <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} size="md" />
+                        <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                       </td>
                       <td className="py-3 pr-3">
-                        <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} size="md" />
+                        <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} ariaLabel={`${d.name} APR`} size="md" />
                       </td>
                       <td className="py-3 pr-3">
                         {d.minPaymentRule.type === 'fixed' ? (
                           <EditableCurrency
                             value={d.minPaymentRule.amount}
                             onChange={(v) => store.updateDebt(d.id, { minPaymentRule: { type: 'fixed', amount: v } })}
+                            ariaLabel={`${d.name} minimum payment`}
                             size="md"
                           />
                         ) : (
@@ -464,6 +740,7 @@ export default function PortfolioPage() {
                       <td className="py-3 text-right">
                         <button
                           onClick={() => store.removeDebt(d.id)}
+                          aria-label={`Remove ${d.name}`}
                           className="text-xs text-red-300 hover:text-red-200 underline"
                         >
                           Remove
@@ -475,12 +752,13 @@ export default function PortfolioPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </section>
       </ScrollReveal>
 
       {/* Payoff Order */}
-      {payoffOrder.length > 0 && (
+      {portfolioProjectionValid && payoffOrder.length > 0 && (
         <ScrollReveal variant="fadeUp" delay={0.2}>
         <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
           <h2 className={`text-xl font-bold ${classes.text} mb-2`}>Payoff Order</h2>
@@ -557,12 +835,12 @@ export default function PortfolioPage() {
 
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Balance</p>
-                <EditableCurrency value={newDebt.balance} onChange={(v) => setNewDebt({ ...newDebt, balance: v })} size="lg" />
+                <EditableCurrency value={newDebt.balance} onChange={(v) => setNewDebt({ ...newDebt, balance: v })} ariaLabel="New debt balance" size="lg" />
               </div>
 
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>APR</p>
-                <EditablePercentage value={newDebt.apr} onChange={(v) => setNewDebt({ ...newDebt, apr: v })} size="lg" />
+                <EditablePercentage value={newDebt.apr} onChange={(v) => setNewDebt({ ...newDebt, apr: v })} ariaLabel="New debt APR" size="lg" />
               </div>
 
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
@@ -570,6 +848,7 @@ export default function PortfolioPage() {
                 <EditableCurrency
                   value={newDebt.minPaymentRule.type === 'fixed' ? newDebt.minPaymentRule.amount : 0}
                   onChange={(v) => setNewDebt({ ...newDebt, minPaymentRule: { type: 'fixed', amount: v } })}
+                  ariaLabel="New debt minimum payment"
                   size="lg"
                 />
               </div>

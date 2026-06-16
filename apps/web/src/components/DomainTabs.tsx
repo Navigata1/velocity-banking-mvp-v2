@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useFinancialStore, Domain, domainSubcategories } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
+import { useIsClient } from '@/hooks/useIsClient';
 
 interface DomainTabsProps {
   activeTab: string;
@@ -23,14 +24,10 @@ const tabs = [
 
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const store = useFinancialStore();
   const { theme } = useThemeStore();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

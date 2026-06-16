@@ -5,7 +5,7 @@
  * Prioritizes: cash-flow unlock > daily interest burn > promo risk.
  */
 
-import type { DebtAccount, DebtType, LOC } from '@/stores/financial-store';
+import type { DebtAccount, DebtType } from '@/stores/financial-store';
 
 export type PaymentSource = 'checking' | 'loc' | 'either';
 

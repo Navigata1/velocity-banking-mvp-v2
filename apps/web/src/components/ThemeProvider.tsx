@@ -1,15 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useIsClient } from '@/hooks/useIsClient';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { theme } = useThemeStore();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsClient();
 
   const classes = themeClasses[mounted ? theme : 'original'];
 

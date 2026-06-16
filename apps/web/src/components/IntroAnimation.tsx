@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Beat {
@@ -16,40 +16,45 @@ const BEATS: Beat[] = [
     id: 0,
     duration: 7000,
     icon: '🛡️',
-    title: 'Interest Is Invisible',
-    caption: 'Most people don\'t realize 85–90% of early payments go to interest, not principal. Your money drains silently every single day.',
+    title: 'Interest Needs Visibility',
+    caption: 'Early amortized payments can include more interest than principal. This demo makes that cost visible so you can test assumptions calmly.',
   },
   {
     id: 1,
     duration: 7000,
     icon: '💸',
-    title: 'The Daily Drain',
-    caption: 'On a $285K mortgage at 5.75%, you lose $44.90 per day to interest. That\'s $1,347 per month — before a dime touches your balance.',
+    title: 'Daily Interest Estimate',
+    caption: 'On the sample mortgage, daily interest is estimated from the inputs. Use it as a teaching example, not a promise or lender quote.',
   },
   {
     id: 2,
     duration: 7000,
     icon: '🔄',
     title: 'Route Income Through LOC',
-    caption: 'Deposit your paycheck into a Line of Credit first. Your income reduces the LOC balance instantly, slashing daily interest in real-time.',
+    caption: 'In a modeled scenario, depositing income into a LOC can reduce the average daily balance before expenses leave.',
   },
   {
     id: 3,
     duration: 7000,
     icon: '⚡',
-    title: 'Deploy Chunks',
-    caption: 'When the LOC accumulates enough, deploy a chunk payment to your target debt. Watch months fall off your timeline instantly.',
+    title: 'Model Chunks',
+    caption: 'If cash flow and available credit stay healthy, test a chunk payment and watch the projected timeline update.',
   },
   {
     id: 4,
     duration: 7000,
     icon: '🚀',
     title: 'Small Changes, Big Momentum',
-    caption: 'You don\'t need more money — you need a better route. Velocity banking turns your existing income into a debt-crushing engine.',
+    caption: 'The goal is clearer routing: use existing income, expenses, and LOC terms to compare payoff scenarios without promises.',
   },
 ];
 
 const TOTAL_DURATION = BEATS.reduce((sum, b) => sum + b.duration, 0);
+const AMBIENT_PARTICLES = Array.from({ length: 12 }, (_, i) => ({
+  x: `${(i * 37) % 100}%`,
+  duration: 6 + ((i * 17) % 40) / 10,
+  delay: ((i * 11) % 50) / 10,
+}));
 
 interface IntroAnimationProps {
   onComplete: () => void;
@@ -60,45 +65,45 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
   const [currentBeat, setCurrentBeat] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [elapsed, setElapsed] = useState(0);
-  const startRef = useRef<number>(Date.now());
+  const startRef = useRef<number>(0);
   const pausedAtRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
   const [completed, setCompleted] = useState(false);
 
-  const tick = useCallback(() => {
-    if (!playing) return;
-    const now = Date.now();
-    const total = now - startRef.current;
-    setElapsed(total);
+  useEffect(() => {
+    if (!playing || completed) return;
+    if (startRef.current === 0) {
+      startRef.current = Date.now();
+    }
 
-    // Determine beat
-    let acc = 0;
-    for (let i = 0; i < BEATS.length; i++) {
-      acc += BEATS[i].duration;
-      if (total < acc) {
-        setCurrentBeat(i);
-        break;
-      }
-      if (i === BEATS.length - 1 && total >= acc) {
-        setCurrentBeat(BEATS.length - 1);
-        if (!completed) {
+    const tick = () => {
+      const now = Date.now();
+      const total = now - startRef.current;
+      setElapsed(total);
+
+      let acc = 0;
+      for (let i = 0; i < BEATS.length; i++) {
+        acc += BEATS[i].duration;
+        if (total < acc) {
+          setCurrentBeat(i);
+          break;
+        }
+        if (i === BEATS.length - 1 && total >= acc) {
+          setCurrentBeat(BEATS.length - 1);
           setCompleted(true);
           setPlaying(false);
+          return;
         }
-        return;
       }
-    }
-    rafRef.current = requestAnimationFrame(tick);
-  }, [playing, completed]);
-
-  useEffect(() => {
-    if (playing && !completed) {
       rafRef.current = requestAnimationFrame(tick);
-    }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [playing, tick, completed]);
+  }, [playing, completed]);
 
   const togglePlay = () => {
     if (completed) return;
@@ -117,26 +122,26 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
   const progress = Math.min(elapsed / TOTAL_DURATION, 1);
   const beat = BEATS[currentBeat];
 
-  // Tank fill level for beats 0-1 (draining) and 2-4 (filling)
+  // Tank fill level for interest-cost and balance-relief beats.
   const tankLevel = currentBeat <= 1 ? Math.max(20, 80 - currentBeat * 30) : Math.min(95, 40 + (currentBeat - 2) * 20);
 
   return (
     <div className={`relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 aspect-[3/4] sm:aspect-[4/3] md:aspect-video flex flex-col items-center justify-center overflow-hidden ${className}`}>
       {/* Ambient particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {AMBIENT_PARTICLES.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 rounded-full bg-emerald-500/30"
-            initial={{ x: `${Math.random() * 100}%`, y: '110%', opacity: 0 }}
+            initial={{ x: particle.x, y: '110%', opacity: 0 }}
             animate={{
               y: '-10%',
               opacity: [0, 0.6, 0],
             }}
             transition={{
-              duration: 6 + Math.random() * 4,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: particle.delay,
               ease: 'linear',
             }}
           />
@@ -144,7 +149,7 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center justify-center gap-3 sm:gap-6 px-6 sm:px-8 max-w-lg text-center mb-16 sm:mb-12">
+      <div className="absolute left-0 right-0 top-4 z-10 mx-auto flex max-w-lg flex-col items-center justify-start gap-1 px-6 text-center sm:relative sm:left-auto sm:right-auto sm:top-auto sm:mb-12 sm:justify-center sm:gap-6 sm:px-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={beat.id}
@@ -152,11 +157,11 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -20 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col items-center gap-1 sm:gap-4"
           >
             {/* Icon */}
             <motion.div
-              className="text-5xl sm:text-6xl"
+              className="text-3xl sm:text-6xl"
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -164,27 +169,27 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
             </motion.div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+            <h3 className="text-base font-bold leading-tight text-white sm:text-2xl md:text-3xl">
               {beat.title}
             </h3>
 
             {/* Tank visual for beats 1-2 */}
             {(currentBeat === 1 || currentBeat === 2) && (
-              <div className="w-32 h-20 rounded-lg border-2 border-emerald-500/40 relative overflow-hidden">
+              <div className="relative hidden h-20 w-32 overflow-hidden rounded-lg border-2 border-emerald-500/40 sm:block">
                 <motion.div
                   className={`absolute bottom-0 left-0 right-0 ${currentBeat === 1 ? 'bg-red-500/40' : 'bg-emerald-500/40'}`}
                   animate={{ height: `${tankLevel}%` }}
                   transition={{ duration: 1.5, ease: 'easeInOut' }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-white/70 font-medium">
-                  {currentBeat === 1 ? '💸 draining...' : '💰 filling!'}
+                  {currentBeat === 1 ? 'interest estimate' : 'balance relief'}
                 </div>
               </div>
             )}
 
             {/* Progress bar jump for beat 3 */}
             {currentBeat === 3 && (
-              <div className="w-48 h-3 rounded-full bg-slate-700 overflow-hidden">
+              <div className="h-3 w-40 overflow-hidden rounded-full bg-slate-700 sm:w-48">
                 <motion.div
                   className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full"
                   initial={{ width: '15%' }}
@@ -198,7 +203,7 @@ export default function IntroAnimation({ onComplete, className = '' }: IntroAnim
       </div>
 
       {/* Closed captions */}
-      <div className="absolute bottom-16 sm:bottom-14 left-0 right-0 px-4 sm:px-6">
+      <div className="absolute bottom-12 left-0 right-0 px-4 sm:bottom-14 sm:px-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={beat.id}
