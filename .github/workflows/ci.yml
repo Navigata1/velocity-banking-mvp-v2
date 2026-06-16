@@ -61,6 +61,16 @@ jobs:
         working-directory: apps/mobile
         run: npm run check
 
+      - name: Build Expo web export
+        working-directory: apps/mobile
+        env:
+          EXPO_NO_TELEMETRY: 1
+        run: npm run build:web
+
+      - name: Smoke Expo web export
+        working-directory: apps/mobile
+        run: npm run smoke:web-export
+
       - name: Run mobile contract tests
         run: node scripts/mobile-port-contract-tests.cjs
 

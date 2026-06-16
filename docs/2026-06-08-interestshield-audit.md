@@ -2323,6 +2323,29 @@ Post-repair verification:
 - In-app Browser mobile smoke at 390x844: page scroll width matched viewport width, the 760px selector strip stayed inside the rail's internal scroll area, selecting Cash Flow updated the active artifact, `artifactSpinSelect` was applied, and no console warnings/errors were captured.
 - Chrome extension smoke at `http://127.0.0.1:5000/`: 5 artifact selector nodes rendered, selecting LOC updated the active artifact, `artifactSpinSelect` was applied, page overflow stayed at 0, and no console warnings/errors were captured.
 
+### Repair Pass 130: Expo Web Export CI Gate
+
+Local source repairs completed on 2026-06-16:
+
+- Added the existing Expo web export build and route smoke to GitHub Actions CI.
+- The CI workflow now runs `apps/mobile` `npm run build:web` with Expo telemetry disabled, then runs `npm run smoke:web-export` against the exported SPA routes.
+- Extended the mobile contract test so CI must keep the Expo export build and smoke steps wired.
+- This strengthens the Expo port gate by checking the web-exported mobile shell in addition to native type-checks, Android Expo Go smoke, and the explicit iOS macOS/Xcode guard.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first because CI did not include the Expo web export build/smoke steps, then passed after the repair.
+- `apps/mobile` `npm run build:web`: passed and exported `dist-web`.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:ios`: returned the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/mobile` `npm run smoke:android`: passed against `emulator-5554` and captured screenshot evidence at the temp smoke path.
+- `apps/web` `npm test`: passed with 126 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2836,7 +2859,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 5: Mobile Port
 
 - Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
-- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots; expanded in Repair Pass 105 with a shared-engine mobile Vault outcome path; expanded in Repair Pass 106 with shared-engine mobile Learn lessons and unsafe-input learning-mode guardrails; expanded in Repair Pass 107 with a repeatable Expo web export route-smoke command; expanded in Repair Pass 108 with a repeatable native smoke preflight that records local Android/iOS simulator blockers; expanded in Repair Pass 110 with app-scoped Codex Run actions for Expo start, iOS, Android, web, diagnostics, and local export; expanded in Repair Pass 122 with a direct native preflight action; expanded in Repair Pass 123 with repeatable Android Expo Go smoke against a booted emulator; expanded in Repair Pass 127 with repeatable iOS Expo Go smoke wiring that runs on macOS/Xcode hosts and reports a clear Windows blocker.
+- Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots; expanded in Repair Pass 105 with a shared-engine mobile Vault outcome path; expanded in Repair Pass 106 with shared-engine mobile Learn lessons and unsafe-input learning-mode guardrails; expanded in Repair Pass 107 with a repeatable Expo web export route-smoke command; expanded in Repair Pass 108 with a repeatable native smoke preflight that records local Android/iOS simulator blockers; expanded in Repair Pass 110 with app-scoped Codex Run actions for Expo start, iOS, Android, web, diagnostics, and local export; expanded in Repair Pass 122 with a direct native preflight action; expanded in Repair Pass 123 with repeatable Android Expo Go smoke against a booted emulator; expanded in Repair Pass 127 with repeatable iOS Expo Go smoke wiring that runs on macOS/Xcode hosts and reports a clear Windows blocker; expanded in Repair Pass 130 with Expo web export build and route smoke coverage in CI.
 - Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states; expanded in Repair Pass 102 with native LOC balance and LOC APR controls for mobile guardrail testing; expanded in Repair Pass 103 with native active-debt balance, APR, payment, and term controls; expanded in Repair Pass 104 with a native active-debt name control.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke.

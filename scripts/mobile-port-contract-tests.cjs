@@ -224,6 +224,8 @@ test('GitHub CI protects web and mobile quality gates', () => {
   assert.ok(workflow.includes('npm run build'), 'expected workflow to run the production web build');
   assert.ok(workflow.includes('npm run smoke:routes'), 'expected workflow to run built-route smoke');
   assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected workflow to run mobile commands from apps/mobile');
+  assert.ok(workflow.includes('npm run build:web'), 'expected workflow to build the Expo web export');
+  assert.ok(workflow.includes('npm run smoke:web-export'), 'expected workflow to smoke the Expo web export');
   assert.ok(workflow.includes('npm run check'), 'expected workflow to run mobile type-checks');
   assert.ok(
     workflow.includes('node scripts/mobile-port-contract-tests.cjs'),
