@@ -104,6 +104,7 @@ function loadTsFile(filename) {
 
 const calculations = loadTsModule('src/engine/calculations.ts');
 const sharedFinancialEngine = loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/index.ts'));
+const moneyLoop = loadTsModule('src/engine/money-loop.ts');
 const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioPathVisual = loadTsModule('src/engine/portfolio-path-visual.ts');
 const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
@@ -215,6 +216,28 @@ test('web calculations use shared financial-engine primitives', () => {
   for (const exportName of duplicateExports) {
     assert.ok(
       !new RegExp(`export\\s+function\\s+${exportName}\\s*\\(`).test(calculationsSource),
+      `expected ${exportName} to come from @interestshield/financial-engine instead of a web duplicate`
+    );
+  }
+});
+
+test('web Money Loop module re-exports shared financial-engine ledger', () => {
+  const moneyLoopSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/money-loop.ts'), 'utf8');
+  const duplicateExports = [
+    'simulateMoneyLoopMonth',
+    'simulateMoneyLoopPayoff',
+  ];
+
+  assert.equal(moneyLoop.simulateMoneyLoopMonth, sharedFinancialEngine.simulateMoneyLoopMonth);
+  assert.equal(moneyLoop.simulateMoneyLoopPayoff, sharedFinancialEngine.simulateMoneyLoopPayoff);
+  assert.ok(
+    moneyLoopSource.includes("from '@interestshield/financial-engine'"),
+    'expected web Money Loop module to import the shared financial engine package'
+  );
+
+  for (const exportName of duplicateExports) {
+    assert.ok(
+      !new RegExp(`export\\s+function\\s+${exportName}\\s*\\(`).test(moneyLoopSource),
       `expected ${exportName} to come from @interestshield/financial-engine instead of a web duplicate`
     );
   }
