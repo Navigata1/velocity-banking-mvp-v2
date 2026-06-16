@@ -3405,6 +3405,21 @@ test('CountUp hides animated financial ticks from assistive technology', () => {
   assert.ok(source.includes('{stableText}'), 'expected CountUp to render the stable value for screen readers');
 });
 
+test('Learn animated progress counter hides visual ticks from assistive technology', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('function AnimatedCounter'), 'expected Learn page to keep a local animated progress counter');
+  assert.ok(source.includes('useMotionValue(value)'), 'expected Learn counter motion value to initialize from the final value');
+  assert.ok(source.includes('const stableText = String(value)'), 'expected Learn counter to compute stable screen-reader text');
+  assert.ok(source.includes('aria-hidden="true"'), 'expected Learn counter animated text to be visual-only');
+  assert.ok(source.includes('className="sr-only"'), 'expected Learn counter to render a stable screen-reader-only value');
+  assert.ok(source.includes('{stableText}'), 'expected Learn counter to render the stable value for assistive technology');
+  assert.ok(
+    !source.includes('const motionVal = useMotionValue(0);'),
+    'expected Learn counter not to initialize from a zero placeholder'
+  );
+});
+
 test('pre-app preview blocks unstable debt-free date claims', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PreAppPreview.tsx'), 'utf8');
 

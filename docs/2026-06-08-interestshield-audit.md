@@ -2706,6 +2706,19 @@ Post-repair local verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - Chrome-controlled smoke at `http://127.0.0.1:5011`: verified keyboard activation of the Vault stepper, Portfolio add-debt dialog labels/close control, Dashboard domain selector keyboard path, Guardian dialog input/send/close path, and captured no console warnings or errors.
 
+### Repair Pass 150: Learn Progress Counter Stable Value
+
+Local source repairs completed on 2026-06-16:
+
+- Updated the Learn Center `AnimatedCounter` so the visual progress animation is hidden from assistive technology and a stable final value is available to screen readers.
+- Initialized the Learn progress motion value from the supplied value instead of a zero placeholder.
+- Added regression coverage requiring the stable screen-reader text and visual-only animated tick behavior.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed.
+- `apps/web` `npm run lint`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3173,7 +3186,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.
-- Static final values for animated financial numbers. Status: CountUp visual animation now renders a stable screen-reader value in Repair Pass 113; remaining non-CountUp animated learning visuals can be reviewed separately.
+- Static final values for animated financial numbers. Status: CountUp visual animation now renders a stable screen-reader value in Repair Pass 113; the Learn progress counter now follows the same visual-only animation and stable screen-reader value pattern in Repair Pass 150. Remaining decorative non-financial learning animations can be reviewed separately.
 - Modal focus trap. Status: covered in Repair Pass 111 for the replayable intro dialog.
 - Mobile nav reachability. Status: viewport reachability covered in Repair Pass 6; primary navigation landmark and active-page state covered in Repair Pass 111.
 
