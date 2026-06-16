@@ -109,6 +109,7 @@ const themeStore = loadTsModule('src/stores/theme-store.ts');
 const preferencesStore = loadTsModule('src/stores/preferences-store.ts');
 const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
 const settingsBackend = loadTsModule('src/app/settings/backend-readiness.ts');
+const settingsMigration = loadTsModule('src/app/settings/backend-migration-contract.ts');
 const settingsReset = loadTsModule('src/app/settings/local-data-reset.ts');
 const settingsSnapshot = loadTsModule('src/app/settings/local-demo-snapshot.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
@@ -1143,6 +1144,51 @@ test('settings backend readiness model keeps provider choice explicit', () => {
   );
 });
 
+test('settings backend migration contract requires ownership and provider shapes', () => {
+  const contract = settingsMigration.buildBackendMigrationContract();
+  const validation = settingsMigration.validateBackendMigrationContract(contract);
+
+  assert.equal(contract.version, 1);
+  assert.equal(contract.mode, 'contract-only');
+  assert.equal(validation.ok, true);
+  assert.deepEqual(Array.from(contract.targets), Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS));
+  assert.deepEqual(Array.from(contract.localStorageKeys), Array.from(settingsReset.LOCAL_DEMO_STORAGE_KEYS));
+  assert.ok(contract.collections.length >= 4, 'expected user profile, snapshot, run, and learning collections');
+  assert.ok(
+    contract.collections.some((collection) => collection.id === 'financial_snapshots'),
+    'expected financial snapshots collection'
+  );
+  assert.ok(
+    contract.collections.some((collection) => collection.id === 'simulation_runs'),
+    'expected simulation run history collection'
+  );
+  for (const collection of contract.collections) {
+    assert.ok(collection.ownerRule.toLowerCase().includes('owner'), `expected ${collection.id} to define ownership`);
+    assert.ok(collection.requiredFields.includes('owner_id'), `expected ${collection.id} to require owner_id`);
+    for (const target of settingsBackend.BACKEND_HANDOFF_TARGETS) {
+      assert.ok(collection.providerShape[target], `expected ${collection.id} to define ${target} shape`);
+    }
+  }
+  assert.ok(
+    contract.gates.some((gate) => gate.includes('owner-only')),
+    'expected contract to require owner-only access rules'
+  );
+  const missingOwnerId = {
+    ...contract,
+    collections: contract.collections.map((collection) => collection.id === 'user_profiles'
+      ? { ...collection, requiredFields: collection.requiredFields.filter((field) => field !== 'owner_id') }
+      : collection),
+  };
+  assert.deepEqual(
+    settingsMigration.validateBackendMigrationContract(missingOwnerId).error,
+    'Backend collection user_profiles is missing owner_id.'
+  );
+  assert.deepEqual(
+    settingsMigration.validateBackendMigrationContract({ ...contract, mode: 'live-wiring' }).error,
+    'Backend migration contract must be contract-only before live backend wiring.'
+  );
+});
+
 test('backup controls label local-only export and import replacement behavior', () => {
   const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
   const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
@@ -1257,6 +1303,10 @@ test('settings exposes a full local demo backend handoff snapshot path', () => {
     source.includes('data-testid="settings-import-local-snapshot-json"'),
     'expected Settings handoff snapshot import textarea to have a stable hook'
   );
+  assert.ok(
+    source.includes('data-testid="settings-backend-migration-contract"'),
+    'expected Settings to disclose the backend migration contract in the handoff snapshot'
+  );
 });
 
 test('settings local demo data reset clears only InterestShield storage keys', () => {
@@ -1290,6 +1340,9 @@ test('settings full local demo snapshot exports only known InterestShield storag
   assert.equal(parsed.version, 1);
   assert.equal(parsed.mode, 'local-demo');
   assert.deepEqual(parsed.backendTargets, Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS));
+  assert.equal(parsed.backendMigrationContract.version, 1);
+  assert.equal(parsed.backendMigrationContract.mode, 'contract-only');
+  assert.equal(settingsMigration.validateBackendMigrationContract(parsed.backendMigrationContract).ok, true);
   assert.equal(parsed.storage.length, 2);
   assert.deepEqual(
     parsed.storage.map((entry) => entry.key).sort(),
@@ -1312,6 +1365,27 @@ test('settings full local demo snapshot import rejects unknown storage keys with
 
   assert.equal(result.ok, false);
   assert.equal(result.error, 'Snapshot contains an unknown storage key.');
+  assert.equal(storage.getItem('velocity-bank-storage'), 'keep-original');
+});
+
+test('settings full local demo snapshot import rejects an invalid backend migration contract', () => {
+  const storage = createMemoryStorage();
+  storage.setItem('velocity-bank-storage', 'keep-original');
+
+  const contract = settingsMigration.buildBackendMigrationContract();
+  const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({
+    version: 1,
+    backendMigrationContract: {
+      ...contract,
+      targets: ['supabase-postgres-auth-rls'],
+    },
+    storage: [
+      { key: 'velocity-bank-storage', value: '{"state":{"monthlyIncome":6500}}' },
+    ],
+  }), storage);
+
+  assert.equal(result.ok, false);
+  assert.equal(result.error, 'Backend migration contract targets do not match configured handoff targets.');
   assert.equal(storage.getItem('velocity-bank-storage'), 'keep-original');
 });
 

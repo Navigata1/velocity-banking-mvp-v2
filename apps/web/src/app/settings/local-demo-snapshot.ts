@@ -1,5 +1,10 @@
 import { LOCAL_DEMO_STORAGE_KEYS, type StorageLike } from './local-data-reset';
 import { BACKEND_HANDOFF_TARGETS } from './backend-readiness';
+import {
+  buildBackendMigrationContract,
+  validateBackendMigrationContract,
+  type BackendMigrationContract,
+} from './backend-migration-contract';
 
 export const LOCAL_DEMO_SNAPSHOT_VERSION = 1;
 
@@ -11,6 +16,7 @@ interface LocalDemoSnapshotEntry {
 }
 
 interface LocalDemoSnapshotPayload {
+  backendMigrationContract?: Partial<BackendMigrationContract>;
   backendTargets?: readonly string[];
   exportedAt?: string;
   mode?: string;
@@ -53,6 +59,7 @@ export function exportLocalDemoSnapshot(storage: StorageLike | null = browserSto
     exportedAt: new Date().toISOString(),
     mode: 'local-demo',
     backendTargets: BACKEND_HANDOFF_TARGETS,
+    backendMigrationContract: buildBackendMigrationContract(),
     storage: readSnapshotEntries(storage),
   };
 
@@ -77,6 +84,11 @@ export function importLocalDemoSnapshot(
 
     if (!Array.isArray(payload.storage)) {
       return { ok: false, error: 'Snapshot storage entries are missing.' };
+    }
+
+    if (payload.backendMigrationContract) {
+      const contract = validateBackendMigrationContract(payload.backendMigrationContract);
+      if (!contract.ok) return contract;
     }
 
     const entries = payload.storage.map((entry) => {

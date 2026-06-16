@@ -2879,6 +2879,24 @@ Post-repair local verification:
 - `apps/mobile` `npm run smoke:android`: passed on emulator `emulator-5554`.
 - `apps/mobile` `npm run smoke:ios`: blocked with the expected macOS/Xcode Simulator requirement.
 
+### Repair Pass 160: Backend Migration Contract
+
+Local source repairs completed on 2026-06-16:
+
+- Added a typed, provider-neutral backend migration contract for user profiles, financial snapshots, simulation runs, and learning progress.
+- Added owner-rule, provider-shape, local-storage-key, and handoff-target validation before any imported local-demo snapshot can claim a backend migration contract.
+- Included the migration contract in the Settings backend handoff snapshot while keeping the app in truthful local-demo mode with no live auth or database writes.
+- Added visible Settings copy so the exported handoff snapshot names the migration contract it contains.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed with 139 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for the production route smoke set.
+- In-app Browser rendered `/settings`, confirmed the backend migration contract disclosure, financial snapshots, simulation runs, learning progress copy, and no captured console warnings/errors.
+- Installed-Chrome fallback rendered `/settings`, confirmed the migration contract disclosure, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-settings-contract.png`, and captured no console warnings/errors or page errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3381,7 +3399,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 3: Backend
 
 - Add Supabase auth and RLS.
-- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected, and Repair Pass 155 added a provider-neutral backend readiness model for Supabase and Cloudflare candidates before auth or user-owned data storage is implemented.
+- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected, Repair Pass 155 added a provider-neutral backend readiness model for Supabase and Cloudflare candidates before auth or user-owned data storage is implemented, and Repair Pass 160 added a provider-neutral migration contract with owner rules, provider shapes, handoff targets, and validation gates for profiles, snapshots, simulation runs, and learning progress.
 - Add simulation run history.
 - Add learning progress.
 - Add export/import and delete account/data. Status: local portfolio backup, local demo reset, and full local-demo handoff snapshot are available; real account deletion remains blocked until backend auth exists.
