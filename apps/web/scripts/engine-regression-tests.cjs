@@ -43,6 +43,10 @@ function loadTsFile(filename) {
   moduleCache.set(filename, testModule);
 
   const localRequire = (request) => {
+    if (request === '@interestshield/financial-engine') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/index.ts'));
+    }
+
     if (request.startsWith('.')) {
       const resolvedBase = path.resolve(path.dirname(filename), request);
       const candidates = [
@@ -175,6 +179,45 @@ test('LOC ADB interest uses daily closing balances across web and shared engines
   assert.equal(roundCents(sharedInterest), 27.7);
   assert.ok(locInterestEvent, 'expected Money Loop month to expose LOC interest event');
   assert.equal(roundCents(locInterestEvent.amount), 27.7);
+});
+
+test('web calculations use shared financial-engine primitives', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const tsconfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'tsconfig.json'), 'utf8'));
+  const nextConfig = fs.readFileSync(path.resolve(__dirname, '..', 'next.config.ts'), 'utf8');
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const duplicateExports = [
+    'calculateDailyRate',
+    'calculateCashFlow',
+    'calculateAmortizationPayment',
+    'calculateADBInterest',
+    'formatCurrency',
+  ];
+
+  assert.equal(packageJson.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
+  assert.deepEqual(
+    tsconfig.compilerOptions.paths['@interestshield/financial-engine'],
+    ['../../packages/financial-engine/src/index.ts']
+  );
+  assert.ok(
+    nextConfig.includes("transpilePackages: ['@interestshield/financial-engine']"),
+    'expected Next to transpile the local shared financial engine package'
+  );
+  assert.ok(
+    nextConfig.includes('turbopack') && nextConfig.includes('root: workspaceRoot'),
+    'expected Turbopack to resolve shared package files from the workspace root'
+  );
+  assert.ok(
+    calculationsSource.includes("from '@interestshield/financial-engine'"),
+    'expected web calculations to import shared financial engine primitives'
+  );
+
+  for (const exportName of duplicateExports) {
+    assert.ok(
+      !new RegExp(`export\\s+function\\s+${exportName}\\s*\\(`).test(calculationsSource),
+      `expected ${exportName} to come from @interestshield/financial-engine instead of a web duplicate`
+    );
+  }
 });
 
 test('zero APR baseline payoff pays principal without charging interest', () => {

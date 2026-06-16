@@ -1,8 +1,26 @@
 import {
+  calculateADBInterest,
+  calculateAmortizationPayment,
+  calculateCashFlow,
+  calculateDailyRate,
+  formatCurrency,
+  type LOCDetails,
+} from '@interestshield/financial-engine';
+import {
   simulateMoneyLoopMonth,
   simulateMoneyLoopPayoff,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
+
+export {
+  calculateADBInterest,
+  calculateAmortizationPayment,
+  calculateCashFlow,
+  calculateDailyRate,
+  formatCurrency,
+};
+
+export type { LOCDetails };
 
 /**
  * InterestShield Velocity Banking Calculation Engine
@@ -25,12 +43,6 @@ export interface LoanDetails {
   apr: number;         // decimal (e.g. 0.069 for 6.9%)
   monthlyPayment: number;
   termMonths?: number;
-}
-
-export interface LOCDetails {
-  limit: number;
-  apr: number;         // decimal
-  balance: number;
 }
 
 export interface DebtItem {
@@ -152,24 +164,6 @@ export function calculateMonthlyRate(apr: number): number {
   return apr / 12;
 }
 
-export function calculateDailyRate(apr: number): number {
-  return apr / 365;
-}
-
-export function calculateCashFlow(income: number, expenses: number): number {
-  return income - expenses;
-}
-
-/**
- * Calculate the standard amortization monthly payment.
- */
-export function calculateAmortizationPayment(principal: number, apr: number, termMonths: number): number {
-  if (principal <= 0 || termMonths <= 0) return 0;
-  const r = apr / 12;
-  if (r === 0) return principal / termMonths;
-  return principal * (r * Math.pow(1 + r, termMonths)) / (Math.pow(1 + r, termMonths) - 1);
-}
-
 /**
  * Calculate total interest paid over the life of an amortized loan.
  */
@@ -178,36 +172,6 @@ export function calculateTotalAmortizationInterest(principal: number, apr: numbe
   return Math.max(0, payment * termMonths - principal);
 }
 
-/**
- * Average Daily Balance interest calculation for LOC.
- * Models a month where income is deposited on day 1, then expenses are
- * drawn evenly over the remaining days.
- */
-export function calculateADBInterest(
-  startBalance: number,
-  apr: number,
-  monthlyIncome: number,
-  monthlyExpenses: number,
-  daysInMonth: number = 30
-): number {
-  const dayCount = Math.max(1, Math.trunc(daysInMonth));
-  // Day 1: income deposited, reducing balance immediately
-  const balanceAfterDeposit = startBalance - monthlyIncome;
-  
-  // Expenses drawn evenly over the month, sampled as daily closing balances.
-  const dailyExpense = monthlyExpenses / dayCount;
-  
-  let totalDailyBalance = 0;
-  for (let day = 1; day <= dayCount; day++) {
-    const dayBalance = balanceAfterDeposit + (dailyExpense * day);
-    totalDailyBalance += Math.max(0, dayBalance); // can't go below 0 on LOC
-  }
-  
-  const averageDailyBalance = totalDailyBalance / dayCount;
-  const dailyRate = apr / 365;
-  
-  return averageDailyBalance * dailyRate * dayCount;
-}
 
 // ─── Safety Warnings ─────────────────────────────────────────────────
 
@@ -1413,14 +1377,6 @@ export function comparePaymentStrategies(
 }
 
 // ─── Formatting ──────────────────────────────────────────────────────
-
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
 
 export function formatCurrencyPrecise(amount: number): string {
   return new Intl.NumberFormat('en-US', {

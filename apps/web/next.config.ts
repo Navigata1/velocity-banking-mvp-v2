@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
+import path from 'node:path';
+
+const workspaceRoot = path.resolve(process.cwd(), '../..');
 
 const nextConfig: NextConfig = {
+  experimental: {
+    externalDir: true,
+  },
+  turbopack: {
+    root: workspaceRoot,
+  },
+  transpilePackages: ['@interestshield/financial-engine'],
   allowedDevOrigins: [
     '*.replit.dev',
     '*.replit.app',

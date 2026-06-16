@@ -2937,6 +2937,30 @@ Post-repair local verification:
 - App-source phrase search found no remaining `magic`, `trap`, `robbed`, `scam`, `free money`, `costs you`, `double duty`, `powerful cycle`, or `it fails without` matches.
 - Installed-Chrome smoke at `http://127.0.0.1:5029/learn?module=5` and `/learn?module=6`: confirmed the new module copy rendered, confirmed removed phrases stayed absent, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-learn-final-copy-smoke.png`, and captured no console warnings/errors or page errors. Source regression coverage also guards the non-default quiz explanation copy.
 
+### Repair Pass 163: Web Shared Engine Primitives
+
+Local source repairs completed on 2026-06-16:
+
+- Added `@interestshield/financial-engine` as a local web dependency so the web app can consume the same primitive formulas already used by the Expo shell.
+- Refactored the web calculation module to import and re-export shared cash-flow, daily-rate, amortized-payment, LOC average-daily-balance interest, and currency-formatting primitives instead of maintaining duplicate implementations.
+- Configured Next/Turbopack to resolve and transpile the workspace package from the repo root while keeping the app-level import stable.
+- Extended the web regression harness so package-source imports resolve in tests and the suite fails if those primitives are duplicated in the web calculation module again.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed with 142 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+- `apps/mobile` `npm run check`: passed.
+- `scripts/mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/vault`, and `/settings`.
+- `apps/mobile` `npm run smoke:android-bundle`: passed.
+- `apps/mobile` `npm run smoke:ios-bundle`: passed.
+- In-app Browser smoke at `http://127.0.0.1:5031`: rendered the local app, navigated from Dashboard to Simulator, confirmed the Simulator timeline and event ledger, and captured no console warnings/errors. Browser screenshot capture timed out.
+- Installed-Chrome fallback smoke at `http://127.0.0.1:5031/simulator`: confirmed the Simulator timeline and event ledger, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-shared-engine-simulator-smoke.png`, and captured no console warnings/errors or page errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3426,7 +3450,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Define account types: amortized loan, revolving LOC, credit card, simple debt.
 - Define event types: income deposit, expense, minimum payment, chunk payment, interest post.
 - Return monthly rollups and transparent assumptions. Status: expanded through Repair Pass 16 with shared Money Loop ledgers for single-debt and multi-debt Velocity paths. Multi-debt invalid projection flags were added in Repair Pass 30.
-- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Repair Pass 161 aligned web and Expo LOC average-daily-balance interest to daily closing-balance sampling. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
+- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Repair Pass 161 aligned web and Expo LOC average-daily-balance interest to daily closing-balance sampling, and Repair Pass 163 moved web cash-flow, amortized-payment, daily-rate, LOC ADB interest, and currency primitives onto `@interestshield/financial-engine`. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
 
 ### Phase 2: Product UX
 
@@ -3453,9 +3477,9 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 ### Phase 5: Mobile Port
 
-- Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting.
+- Port shared engine to a package. Status: started in Repair Pass 86 with `packages/financial-engine`, a mobile contract test, and shared fixtures for cash flow, amortization, ADB interest, and currency formatting; expanded in Repair Pass 163 by connecting the web app to the same package for the shared primitive formula surface.
 - Build Expo app shell. Status: started in Repair Pass 86 with an Expo SDK 56 app at `apps/mobile`, a native Dashboard/Simulator/Learn/Vault mode shell, Expo Doctor 21/21, and exported-web browser smoke; expanded in Repair Pass 91 with direct Expo Router paths for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`; expanded in Repair Pass 92 with repeatable Expo web export, local SPA fallback smoke server, and Vercel file-based build/output/rewrite config; expanded in Repair Pass 93 with EAS native build profiles, native build scripts, runtime version policy, and Android/iOS icon metadata; expanded in Repair Pass 94 with dashboard four-vitals parity for Expo; expanded in Repair Pass 95 with first-run mobile defaults aligned to the verified web car demo; expanded in Repair Pass 96 with a legacy mobile storage migration for the old standalone Expo defaults; expanded in Repair Pass 97 with distinct over-limit LOC guardrails across mobile snapshots; expanded in Repair Pass 105 with a shared-engine mobile Vault outcome path; expanded in Repair Pass 106 with shared-engine mobile Learn lessons and unsafe-input learning-mode guardrails; expanded in Repair Pass 107 with a repeatable Expo web export route-smoke command; expanded in Repair Pass 108 with a repeatable native smoke preflight that records local Android/iOS simulator blockers; expanded in Repair Pass 110 with app-scoped Codex Run actions for Expo start, iOS, Android, web, diagnostics, and local export; expanded in Repair Pass 122 with a direct native preflight action; expanded in Repair Pass 123 with repeatable Android Expo Go smoke against a booted emulator; expanded in Repair Pass 127 with repeatable iOS Expo Go smoke wiring that runs on macOS/Xcode hosts and reports a clear Windows blocker; expanded in Repair Pass 130 with Expo web export build and route smoke coverage in CI; expanded in Repair Pass 143 with native preflight reporting that Android smoke can auto-boot an available AVD; expanded in Repair Pass 144 with a hosted iOS bundle export fallback gate for macOS runner Simulator launch failures; expanded in Repair Pass 145 with hosted Android AVD path alignment and fail-fast requested-AVD diagnostics; expanded in Repair Pass 146 with a hosted Android bundle export fallback gate for emulator launch failures; expanded in Repair Pass 147 with explicit Android smoke success exit after hosted emulator cleanup; expanded in Repair Pass 154 with native Portfolio payoff path parity, exported-web Chrome render smoke, Android emulator smoke, and iOS host-blocker documentation; expanded in Repair Pass 156 with a direct Expo `/settings` route, mobile backend readiness panel, exported-web Settings route smoke, and Android emulator smoke; expanded in Repair Pass 159 with a native Settings reset action for starter assumptions.
-- Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; full web engine/package migration remains open.
+- Reuse validated domain types and test fixtures. Status: started in Repair Pass 86 for the first mobile dashboard snapshot; expanded in Repair Pass 163 with web primitive-formula package reuse. Full web engine/package migration remains open for larger simulation paths.
 - Adapt dashboard, simulator, portfolio, and cockpit to native controls. Status: started in Repair Pass 87 with editable native assumption controls and a shared Portfolio coverage mode in the Expo shell; expanded in Repair Pass 88 with shared native Simulator strategy projections that match the current web single-debt engine; expanded in Repair Pass 90 with shared Cockpit instruments, flight checks, and unsafe-input review states; expanded in Repair Pass 102 with native LOC balance and LOC APR controls for mobile guardrail testing; expanded in Repair Pass 103 with native active-debt balance, APR, payment, and term controls; expanded in Repair Pass 104 with a native active-debt name control.
 - Add offline-first encrypted local storage. Status: started in Repair Pass 89 with SecureStore-backed native assumption persistence and exported-web localStorage fallback smoke; expanded in Repair Pass 159 with a Settings reset path that restores and persists the verified starter assumptions.
 
