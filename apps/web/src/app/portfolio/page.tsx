@@ -150,9 +150,10 @@ export default function PortfolioPage() {
     showImportResult(res);
   };
 
-  const renderCategorySelect = (debt: DebtItem, fullWidth = false) => (
+  const renderCategorySelect = (debt: DebtItem, fullWidth = false, ariaLabel = `${debt.name} debt type`) => (
     <select
       value={debt.category}
+      aria-label={ariaLabel}
       onChange={(e) => store.updateDebt(debt.id, { category: e.target.value as DebtItem['category'] })}
       className={`bg-transparent border ${classes.border} rounded-lg px-2 py-2 ${classes.text} text-xs ${fullWidth ? 'w-full' : ''}`}
     >
@@ -182,9 +183,10 @@ export default function PortfolioPage() {
     )
   );
 
-  const renderPaymentSourceSelect = (debt: DebtItem, fullWidth = false) => (
+  const renderPaymentSourceSelect = (debt: DebtItem, fullWidth = false, ariaLabel = `${debt.name} payment source`) => (
     <select
       value={debt.paymentSource}
+      aria-label={ariaLabel}
       onChange={(e) => store.updateDebt(debt.id, { paymentSource: e.target.value as DebtItem['paymentSource'] })}
       className={`bg-transparent border ${classes.border} rounded-lg px-2 py-2 ${classes.text} text-xs ${fullWidth ? 'w-full' : ''}`}
     >
@@ -395,6 +397,7 @@ export default function PortfolioPage() {
                             max={0.95}
                             step={0.05}
                             size="md"
+                            ariaLabel="Portfolio primary target share"
                           />
                           <p className={`${classes.textSecondary} text-[11px] mt-1`}>
                             Secondary target receives {Math.round((1 - store.splitRatioPrimary) * 100)}%.
@@ -462,12 +465,14 @@ export default function PortfolioPage() {
             )}
             <div className="grid grid-cols-2 gap-3">
               <button
+                type="button"
                 onClick={() => setShowAdd(true)}
                 className="px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 transition-all text-sm font-semibold text-white"
               >
                 + Add Debt
               </button>
               <button
+                type="button"
                 onClick={handleExport}
                 aria-label="Export local portfolio backup"
                 data-testid="portfolio-export-backup"
@@ -666,17 +671,7 @@ export default function PortfolioPage() {
                         </div>
                       </td>
                       <td className="py-3 pr-3">
-                        <select
-                          value={d.category}
-                          onChange={(e) => store.updateDebt(d.id, { category: e.target.value as DebtItem['category'] })}
-                          className={`bg-transparent border ${classes.border} rounded-lg px-2 py-1 ${classes.text} text-xs`}
-                        >
-                          {ALL_CATEGORIES.map((c) => (
-                            <option key={c} value={c} className="bg-slate-900">
-                              {categoryLabel(c)}
-                            </option>
-                          ))}
-                        </select>
+                        {renderCategorySelect(d)}
                       </td>
                       <td className="py-3 pr-3">
                         <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
@@ -702,17 +697,7 @@ export default function PortfolioPage() {
                         )}
                       </td>
                       <td className="py-3 pr-3">
-                        <select
-                          value={d.paymentSource}
-                          onChange={(e) => store.updateDebt(d.id, { paymentSource: e.target.value as DebtItem['paymentSource'] })}
-                          className={`bg-transparent border ${classes.border} rounded-lg px-2 py-1 ${classes.text} text-xs`}
-                        >
-                          {(['checking', 'either', 'loc'] as DebtItem['paymentSource'][]).map((s) => (
-                            <option key={s} value={s} className="bg-slate-900">
-                              {paymentSourceLabel(s)}
-                            </option>
-                          ))}
-                        </select>
+                        {renderPaymentSourceSelect(d)}
                       </td>
                       <td className="py-3 pr-3">
                         {d.promo ? (
@@ -797,13 +782,23 @@ export default function PortfolioPage() {
       {/* Add Debt Modal */}
       {showAdd && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className={`${classes.glass} w-full max-w-xl rounded-3xl p-6 md:p-8`}>
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="portfolio-add-debt-title"
+            className={`${classes.glass} w-full max-w-xl rounded-3xl p-6 md:p-8`}
+          >
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className={`text-xl font-bold ${classes.text}`}>Add a debt</h3>
+                <h3 id="portfolio-add-debt-title" className={`text-xl font-bold ${classes.text}`}>Add a debt</h3>
                 <p className={`${classes.textSecondary} text-sm`}>Start simple. You can refine details later.</p>
               </div>
-              <button onClick={() => setShowAdd(false)} className={`text-xl ${classes.textSecondary}`}>
+              <button
+                type="button"
+                onClick={() => setShowAdd(false)}
+                aria-label="Close add debt dialog"
+                className={`text-xl ${classes.textSecondary}`}
+              >
                 ✕
               </button>
             </div>
@@ -813,6 +808,7 @@ export default function PortfolioPage() {
                 <p className={`${classes.textMuted} text-xs mb-1`}>Name</p>
                 <input
                   value={newDebt.name}
+                  aria-label="New debt name"
                   onChange={(e) => setNewDebt({ ...newDebt, name: e.target.value })}
                   className={`w-full bg-transparent border ${classes.border} rounded-lg px-3 py-2 ${classes.text}`}
                 />
@@ -822,6 +818,7 @@ export default function PortfolioPage() {
                 <p className={`${classes.textMuted} text-xs mb-1`}>Type</p>
                 <select
                   value={newDebt.category}
+                  aria-label="New debt type"
                   onChange={(e) => setNewDebt({ ...newDebt, category: e.target.value as DebtItem['category'] })}
                   className={`w-full bg-transparent border ${classes.border} rounded-lg px-3 py-2 ${classes.text}`}
                 >
@@ -857,6 +854,7 @@ export default function PortfolioPage() {
                 <p className={`${classes.textMuted} text-xs mb-1`}>Pay From</p>
                 <select
                   value={newDebt.paymentSource}
+                  aria-label="New debt payment source"
                   onChange={(e) => setNewDebt({ ...newDebt, paymentSource: e.target.value as DebtItem['paymentSource'] })}
                   className={`w-full bg-transparent border ${classes.border} rounded-lg px-3 py-2 ${classes.text}`}
                 >
@@ -878,12 +876,14 @@ export default function PortfolioPage() {
 
             <div className="flex items-center justify-end gap-3 mt-6">
               <button
+                type="button"
                 onClick={() => setShowAdd(false)}
                 className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} ${classes.textSecondary}`}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={() => {
                   store.addDebt(newDebt as Omit<DebtItem, 'id' | 'createdAt'>);
                   setShowAdd(false);
