@@ -2731,6 +2731,23 @@ Post-repair local verification:
 - `apps/web` `npm test`: passed.
 - `apps/web` `npm run lint`: passed.
 
+### Repair Pass 152: Portfolio Run-Diff Explanations
+
+Local source repairs completed on 2026-06-16:
+
+- Added `apps/web/src/engine/portfolio-run-diff.ts`, a pure comparison helper that summarizes Portfolio projections and classifies changes as improved, worsened, or neutral.
+- Updated the Portfolio store to remember the previous run summary and expose `lastRunComparison` after each recompute.
+- Added a visible `What changed since last run` panel to the Portfolio summary column with payoff timing, interest, cash-flow, balance, minimum-payment, strategy, focus, and target deltas.
+- Added regression coverage for the comparison helper, store-backed previous-run state, and the visible Portfolio panel smoke hook.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed 134 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke at `http://127.0.0.1:5016/portfolio`: imported a valid one-debt scenario, changed extra payment from `$0` to `$250`, verified the panel reported `2 mo sooner` and `-$219` estimated interest, and captured no console warnings or errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3102,7 +3119,7 @@ Status: first event-ledger transparency repair completed in local source during 
 
 ### Portfolio
 
-Status: first strategy-rationale repair completed in local source during Repair Pass 13. Minimum-coverage invalid projection guard completed during Repair Pass 24. Payment-below-interest projection guard completed during Repair Pass 26.
+Status: first strategy-rationale repair completed in local source during Repair Pass 13. Minimum-coverage invalid projection guard completed during Repair Pass 24. Payment-below-interest projection guard completed during Repair Pass 26. Run-to-run Portfolio diffs completed during Repair Pass 152.
 
 - Turn the debt table into a real planner.
 - Add strategy rationale per debt:
@@ -3113,7 +3130,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - The current local Portfolio engine now emits this rationale per debt, and the page renders it on mobile and desktop.
 - The current local Portfolio route now blocks debt-free dates and payoff-order claims when cash flow cannot cover all minimum payments.
 - The current local Portfolio engine now blocks payoff projections when a debt's minimum payment does not cover estimated monthly interest.
-- Add "what changed since last run" diffs.
+- The current local Portfolio route now shows "what changed since last run" diffs after recomputes, including ETA, interest, cash flow, minimums, strategy, focus mode, and target changes.
 
 ### Vault
 

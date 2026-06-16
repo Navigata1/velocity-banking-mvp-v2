@@ -100,6 +100,7 @@ function loadTsFile(filename) {
 
 const calculations = loadTsModule('src/engine/calculations.ts');
 const portfolio = loadTsModule('src/engine/portfolio.ts');
+const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
@@ -854,6 +855,61 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   assert.ok(source.includes("portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'"));
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
   assert.ok(source.includes('portfolioProjectionValid && payoffOrder.length > 0'));
+});
+
+test('portfolio run comparison explains projection deltas after an edit', () => {
+  const baselineInputs = {
+    monthlyIncome: 5000,
+    monthlyExpenses: 3600,
+    extraMonthlyPayment: 0,
+    debts: [{
+      id: 'card',
+      name: 'Card',
+      category: 'credit_card',
+      kind: 'revolving',
+      balance: 14000,
+      apr: 0.199,
+      minPaymentRule: { type: 'fixed', amount: 320 },
+      paymentSource: 'checking',
+    }],
+    settings: {
+      strategy: 'avalanche',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 120,
+  };
+  const improvedInputs = {
+    ...baselineInputs,
+    extraMonthlyPayment: 250,
+    debts: baselineInputs.debts.map((debt) => ({ ...debt, minPaymentRule: { ...debt.minPaymentRule } })),
+  };
+
+  const baselineResult = portfolio.simulatePortfolio(baselineInputs);
+  const improvedResult = portfolio.simulatePortfolio(improvedInputs);
+  const comparison = portfolioRunDiff.comparePortfolioRuns(
+    portfolioRunDiff.summarizePortfolioRun(baselineInputs, baselineResult),
+    portfolioRunDiff.summarizePortfolioRun(improvedInputs, improvedResult)
+  );
+
+  assert.equal(comparison.status, 'changed');
+  assert.ok(
+    comparison.changes.some((change) => change.id === 'payoff-months' && change.direction === 'improved'),
+    JSON.stringify(comparison.changes)
+  );
+  assert.ok(
+    comparison.changes.some((change) => change.id === 'total-interest' && change.direction === 'improved'),
+    JSON.stringify(comparison.changes)
+  );
+});
+
+test('portfolio page mounts the what-changed-since-last-run panel', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('What changed since last run'), 'expected Portfolio to name the run-diff panel');
+  assert.ok(source.includes('data-testid="portfolio-run-comparison"'), 'expected Portfolio run-diff panel to expose a stable hook');
+  assert.ok(source.includes('data-testid="portfolio-run-change"'), 'expected Portfolio run changes to expose stable hooks');
+  assert.ok(source.includes('store.lastRunComparison'), 'expected Portfolio to render the store-backed run comparison');
 });
 
 test('portfolio debt controls are labeled with the debt name', () => {
@@ -1657,6 +1713,67 @@ test('portfolio store passes LOC and chunk inputs into portfolio simulation', ()
   assert.ok(source.includes('loc: state.loc'), 'expected portfolio store to pass LOC details into simulatePortfolio');
   assert.ok(source.includes('chunkAmount: state.chunkAmount'), 'expected portfolio store to pass chunk amount into simulatePortfolio');
   assert.ok(source.includes('updateLOC:'), 'expected portfolio store to expose LOC editing for the route');
+});
+
+test('portfolio store records a comparison against the previous run', () => {
+  const store = portfolioStore.usePortfolioStore.getState();
+  const original = store.exportState();
+  const scenario = {
+    version: 1,
+    data: {
+      monthlyIncome: 5000,
+      monthlyExpenses: 3600,
+      extraMonthlyPayment: 0,
+      chunkAmount: 1000,
+      loc: { limit: 25000, balance: 0, apr: 0.085 },
+      strategy: 'avalanche',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+      debts: [{
+        id: 'comparison-card',
+        name: 'Comparison Card',
+        category: 'credit_card',
+        kind: 'revolving',
+        balance: 14000,
+        apr: 0.199,
+        minPaymentRule: { type: 'fixed', amount: 320 },
+        paymentSource: 'checking',
+        createdAt: '2026-06-16T00:00:00.000Z',
+      }],
+    },
+  };
+
+  try {
+    portfolioStore.usePortfolioStore.setState({
+      lastResult: undefined,
+      lastRunSummary: undefined,
+      lastRunComparison: undefined,
+    });
+
+    const importResult = portfolioStore.usePortfolioStore.getState().importState(JSON.stringify(scenario));
+    assert.equal(importResult.ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().lastRunComparison.status, 'baseline');
+
+    portfolioStore.usePortfolioStore.getState().setExtraMonthlyPayment(250);
+    const comparison = portfolioStore.usePortfolioStore.getState().lastRunComparison;
+
+    assert.equal(comparison.status, 'changed');
+    assert.ok(
+      comparison.changes.some((change) => change.id === 'payoff-months' && change.direction === 'improved'),
+      JSON.stringify(comparison.changes)
+    );
+    assert.ok(
+      comparison.changes.some((change) => change.id === 'total-interest' && change.direction === 'improved'),
+      JSON.stringify(comparison.changes)
+    );
+  } finally {
+    portfolioStore.usePortfolioStore.getState().importState(original);
+    portfolioStore.usePortfolioStore.setState({
+      lastResult: undefined,
+      lastRunSummary: undefined,
+      lastRunComparison: undefined,
+    });
+  }
 });
 
 test('portfolio backup export and import preserve Money Loop planning inputs', () => {
