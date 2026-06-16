@@ -2062,6 +2062,24 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 117: Financial Store Persisted-State Sanitizer
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage proving corrupted `velocity-bank-storage` data is sanitized before hydrating the Dashboard/Simulator/Vault financial model.
+- Added a financial-store persisted-state sanitizer for monthly cash-flow inputs, active domain/subcategory selections, debt accounts, LOC values, chunk settings, and mortgage details.
+- Replaced the blind persisted-state merge with a sanitized merge so invalid local browser data cannot inject non-finite balances, unknown modes, malformed debts, or invalid mortgage settings into payoff calculations.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing financial-store sanitizer export, then passed with 112 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Chrome rendered smoke against the local production server seeded corrupt `velocity-bank-storage`, loaded `/`, confirmed the Dashboard and Auto Loan rendered, no bad tokens appeared, and no console warnings/errors were captured.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

@@ -1616,6 +1616,70 @@ test('portfolio persisted state sanitizes corrupt browser storage before hydrati
   assert.equal(sanitized.debts[0].name, current.debts[0].name);
 });
 
+test('financial persisted state sanitizes corrupt browser storage before hydration', () => {
+  const store = financialStore.useFinancialStore.getState();
+
+  const sanitized = financialStore.sanitizePersistedFinancialState({
+    monthlyIncome: 'bad-income',
+    monthlyExpenses: -900,
+    currentAge: 'old',
+    activeDomain: 'crypto',
+    activeSubcategories: {
+      car: 'not-a-real-subcategory',
+      house: 'family',
+    },
+    debts: {
+      car: {
+        id: '',
+        type: 'crypto',
+        name: '',
+        balance: 'bad-balance',
+        interestRate: -0.2,
+        minimumPayment: Number.POSITIVE_INFINITY,
+        termMonths: Number.NaN,
+      },
+    },
+    loc: {
+      limit: 'bad-limit',
+      balance: -250,
+      interestRate: 'bad-rate',
+    },
+    chunkAmount: Number.POSITIVE_INFINITY,
+    chunkFrequency: 'hourly',
+    mortgageDetails: {
+      entryMode: 'invalid',
+      originalCost: 'bad-cost',
+      downPayment: -500,
+      currentMonthlyPayment: Number.NaN,
+      paymentFrequency: 'daily',
+      hasExtraPayments: 'yes',
+    },
+  }, store);
+
+  assert.equal(sanitized.monthlyIncome, store.monthlyIncome);
+  assert.equal(sanitized.monthlyExpenses, 0);
+  assert.equal(sanitized.currentAge, store.currentAge);
+  assert.equal(sanitized.activeDomain, store.activeDomain);
+  assert.equal(sanitized.activeSubcategories.car, store.activeSubcategories.car);
+  assert.equal(sanitized.activeSubcategories.house, 'family');
+  assert.equal(sanitized.debts.car.id, store.debts.car.id);
+  assert.equal(sanitized.debts.car.type, 'car');
+  assert.equal(sanitized.debts.car.name, store.debts.car.name);
+  assert.equal(sanitized.debts.car.balance, store.debts.car.balance);
+  assert.equal(sanitized.debts.car.interestRate, 0);
+  assert.equal(sanitized.debts.car.minimumPayment, store.debts.car.minimumPayment);
+  assert.equal(sanitized.debts.car.termMonths, store.debts.car.termMonths);
+  assert.equal(sanitized.loc.limit, store.loc.limit);
+  assert.equal(sanitized.loc.balance, 0);
+  assert.equal(sanitized.loc.interestRate, store.loc.interestRate);
+  assert.equal(sanitized.chunkAmount, store.chunkAmount);
+  assert.equal(sanitized.chunkFrequency, store.chunkFrequency);
+  assert.equal(sanitized.mortgageDetails.entryMode, store.mortgageDetails.entryMode);
+  assert.equal(sanitized.mortgageDetails.downPayment, 0);
+  assert.equal(sanitized.mortgageDetails.paymentFrequency, store.mortgageDetails.paymentFrequency);
+  assert.equal(sanitized.mortgageDetails.hasExtraPayments, store.mortgageDetails.hasExtraPayments);
+});
+
 test('dashboard payoff helpers use the canonical single-debt engine', () => {
   const store = financialStore.useFinancialStore.getState();
   const debt = store.debts.car;

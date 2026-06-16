@@ -192,6 +192,191 @@ export interface FinancialState {
   getVelocityPayoff: (type: DebtType) => VelocityPayoffProjection;
 }
 
+const debtTypes: DebtType[] = [
+  'car',
+  'house',
+  'land',
+  'creditCard',
+  'studentLoan',
+  'medical',
+  'personal',
+  'recreation',
+  'custom',
+];
+const chunkFrequencies = ['weekly', 'biweekly', 'monthly'] as const;
+const mortgageEntryModes = ['purchase', 'current', 'both'] as const satisfies readonly MortgageDetails['entryMode'][];
+const mortgagePaymentFrequencies = ['monthly', 'biweekly', 'weekly'] as const satisfies readonly MortgageDetails['paymentFrequency'][];
+
+function finiteNumber(value: unknown, fallback: number, label: string): number {
+  const number = Number(value ?? fallback);
+  if (!Number.isFinite(number)) {
+    throw new Error(`${label} must be a valid number.`);
+  }
+  return number;
+}
+
+function safeNonNegativeNumber(value: unknown, fallback: number, label: string): number {
+  try {
+    return Math.max(0, finiteNumber(value, fallback, label));
+  } catch {
+    return fallback;
+  }
+}
+
+function safePositiveInteger(value: unknown, fallback: number, label: string): number {
+  try {
+    return Math.max(1, Math.round(finiteNumber(value, fallback, label)));
+  } catch {
+    return fallback;
+  }
+}
+
+function safeBoolean(value: unknown, fallback: boolean): boolean {
+  return typeof value === 'boolean' ? value : fallback;
+}
+
+function selectKnownValue<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
+  return typeof value === 'string' && (allowed as readonly string[]).includes(value)
+    ? value as T
+    : fallback;
+}
+
+function readableString(value: unknown, fallback: string): string {
+  return typeof value === 'string' && value.trim() ? value.trim() : fallback;
+}
+
+function optionalString(value: unknown, fallback?: string): string | undefined {
+  return typeof value === 'string' ? value : fallback;
+}
+
+function sanitizeDebtAccount(raw: unknown, fallback: DebtAccount, type: DebtType): DebtAccount {
+  const debt = raw && typeof raw === 'object' && !Array.isArray(raw)
+    ? raw as Partial<DebtAccount>
+    : {};
+
+  return {
+    ...fallback,
+    id: readableString(debt.id, fallback.id),
+    type,
+    name: readableString(debt.name, fallback.name),
+    balance: safeNonNegativeNumber(debt.balance, fallback.balance, `${fallback.name} balance`),
+    interestRate: safeNonNegativeNumber(debt.interestRate, fallback.interestRate, `${fallback.name} interest rate`),
+    minimumPayment: safeNonNegativeNumber(debt.minimumPayment, fallback.minimumPayment, `${fallback.name} payment`),
+    termMonths: safePositiveInteger(debt.termMonths, fallback.termMonths, `${fallback.name} term`),
+    startDate: optionalString(debt.startDate, fallback.startDate),
+    customIcon: optionalString(debt.customIcon, fallback.customIcon),
+    customImage: optionalString(debt.customImage, fallback.customImage),
+  };
+}
+
+function sanitizeDebtAccounts(raw: unknown, fallback: FinancialState['debts']): FinancialState['debts'] {
+  const persisted = raw && typeof raw === 'object' && !Array.isArray(raw)
+    ? raw as Partial<Record<DebtType, unknown>>
+    : {};
+
+  return debtTypes.reduce((acc, type) => {
+    acc[type] = sanitizeDebtAccount(persisted[type], fallback[type], type);
+    return acc;
+  }, {} as FinancialState['debts']);
+}
+
+function sanitizeActiveSubcategories(
+  raw: unknown,
+  fallback: FinancialState['activeSubcategories']
+): FinancialState['activeSubcategories'] {
+  const persisted = raw && typeof raw === 'object' && !Array.isArray(raw)
+    ? raw as Partial<Record<Domain, unknown>>
+    : {};
+
+  return debtTypes.reduce((acc, domain) => {
+    const allowed = domainSubcategories[domain].map((subcategory) => subcategory.id);
+    const fallbackValue = allowed.includes(fallback[domain])
+      ? fallback[domain]
+      : domainSubcategories[domain][0].id;
+    acc[domain] = selectKnownValue(persisted[domain], allowed, fallbackValue);
+    return acc;
+  }, {} as FinancialState['activeSubcategories']);
+}
+
+function sanitizeMortgageDetails(raw: unknown, fallback: MortgageDetails): MortgageDetails {
+  const details = raw && typeof raw === 'object' && !Array.isArray(raw)
+    ? raw as Partial<MortgageDetails>
+    : {};
+
+  return {
+    entryMode: selectKnownValue(details.entryMode, mortgageEntryModes, fallback.entryMode),
+    purchaseAge: safeNonNegativeNumber(details.purchaseAge, fallback.purchaseAge, 'Purchase age'),
+    originalCost: safeNonNegativeNumber(details.originalCost, fallback.originalCost, 'Original cost'),
+    originalTermYears: safePositiveInteger(details.originalTermYears, fallback.originalTermYears, 'Original term'),
+    originalRate: safeNonNegativeNumber(details.originalRate, fallback.originalRate, 'Original rate'),
+    downPayment: safeNonNegativeNumber(details.downPayment, fallback.downPayment, 'Down payment'),
+    currentAge: safeNonNegativeNumber(details.currentAge, fallback.currentAge, 'Current age'),
+    currentBalance: safeNonNegativeNumber(details.currentBalance, fallback.currentBalance, 'Current balance'),
+    remainingTermMonths: safePositiveInteger(
+      details.remainingTermMonths,
+      fallback.remainingTermMonths,
+      'Remaining term'
+    ),
+    currentRate: safeNonNegativeNumber(details.currentRate, fallback.currentRate, 'Current rate'),
+    currentMonthlyPayment: safeNonNegativeNumber(
+      details.currentMonthlyPayment,
+      fallback.currentMonthlyPayment,
+      'Current monthly payment'
+    ),
+    paymentFrequency: selectKnownValue(
+      details.paymentFrequency,
+      mortgagePaymentFrequencies,
+      fallback.paymentFrequency
+    ),
+    hasExtraPayments: safeBoolean(details.hasExtraPayments, fallback.hasExtraPayments),
+    extraPaymentAmount: safeNonNegativeNumber(details.extraPaymentAmount, fallback.extraPaymentAmount, 'Extra payment'),
+    hasRefinanced: safeBoolean(details.hasRefinanced, fallback.hasRefinanced),
+    refinanceCount: safeNonNegativeNumber(details.refinanceCount, fallback.refinanceCount, 'Refinance count'),
+  };
+}
+
+type PersistedFinancialFields = Pick<
+  FinancialState,
+  | 'monthlyIncome'
+  | 'monthlyExpenses'
+  | 'currentAge'
+  | 'activeDomain'
+  | 'activeSubcategories'
+  | 'mortgageDetails'
+  | 'debts'
+  | 'loc'
+  | 'chunkAmount'
+  | 'chunkFrequency'
+>;
+
+export function sanitizePersistedFinancialState(
+  persistedState: unknown,
+  currentState: FinancialState
+): Partial<PersistedFinancialFields> {
+  if (!persistedState || typeof persistedState !== 'object' || Array.isArray(persistedState)) {
+    return {};
+  }
+
+  const persisted = persistedState as Partial<PersistedFinancialFields>;
+
+  return {
+    monthlyIncome: safeNonNegativeNumber(persisted.monthlyIncome, currentState.monthlyIncome, 'Monthly income'),
+    monthlyExpenses: safeNonNegativeNumber(persisted.monthlyExpenses, currentState.monthlyExpenses, 'Monthly expenses'),
+    currentAge: safeNonNegativeNumber(persisted.currentAge, currentState.currentAge, 'Current age'),
+    activeDomain: selectKnownValue(persisted.activeDomain, debtTypes, currentState.activeDomain),
+    activeSubcategories: sanitizeActiveSubcategories(persisted.activeSubcategories, currentState.activeSubcategories),
+    mortgageDetails: sanitizeMortgageDetails(persisted.mortgageDetails, currentState.mortgageDetails),
+    debts: sanitizeDebtAccounts(persisted.debts, currentState.debts),
+    loc: {
+      limit: safeNonNegativeNumber(persisted.loc?.limit, currentState.loc.limit, 'LOC limit'),
+      balance: safeNonNegativeNumber(persisted.loc?.balance, currentState.loc.balance, 'LOC balance'),
+      interestRate: safeNonNegativeNumber(persisted.loc?.interestRate, currentState.loc.interestRate, 'LOC rate'),
+    },
+    chunkAmount: safeNonNegativeNumber(persisted.chunkAmount, currentState.chunkAmount, 'Velocity chunk'),
+    chunkFrequency: selectKnownValue(persisted.chunkFrequency, chunkFrequencies, currentState.chunkFrequency),
+  };
+}
+
 const createSimulationInputs = (state: FinancialState, type: DebtType): SimulationInputs | null => {
   const debt = state.debts[type];
   if (!debt) return null;
@@ -454,14 +639,9 @@ export const useFinancialStore = create<FinancialState>()(
         mortgageDetails: state.mortgageDetails,
       }),
       merge: (persistedState, currentState) => {
-        const persisted = persistedState as Partial<FinancialState>;
         return {
           ...currentState,
-          ...persisted,
-          debts: {
-            ...currentState.debts,
-            ...(persisted.debts || {}),
-          },
+          ...sanitizePersistedFinancialState(persistedState, currentState),
         };
       },
     }
