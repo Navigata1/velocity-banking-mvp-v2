@@ -2592,7 +2592,9 @@ Local source repairs completed on 2026-06-16:
 - Updated the manual iOS native smoke workflow to select the available Xcode app and warm `simctl` before the Expo smoke command, and increased the iOS smoke script's initial `xcrun simctl` probe timeout for hosted macOS runners.
 - Increased the iOS smoke timeout so first-run hosted macOS jobs have enough time to boot the simulator, fetch/install Expo Go, and bundle the app before declaring the smoke unavailable.
 - Added one hosted iOS smoke retry so a first-run `simctl openurl` timeout after Expo Go installation can reuse the booted simulator and installed Expo Go before the workflow fails.
+- Updated the iOS smoke simulator picker to prefer modern non-SE iPhone simulators before falling back to older/smaller devices, while preserving the `IOS_SMOKE_SIMULATOR` override.
 - Increased the hosted Android smoke timeout so GitHub emulator boot has enough time after SDK image installation and AVD creation.
+- Updated the Android hosted workflow to verify `/dev/kvm` access explicitly, and updated the Android smoke script to include recent emulator output when a hosted emulator does not finish booting.
 - Added mobile contract coverage so the AVD auto-boot readiness behavior remains part of the committed mobile gate.
 
 Post-repair verification:
@@ -2603,9 +2605,11 @@ Post-repair verification:
 - `apps/mobile` `npm run smoke:ios`: correctly reported `iOS Expo Go smoke requires macOS with Xcode and Simulator.` on the Windows host.
 - GitHub manual Android smoke run `27598059003` failed before this repair because `sdkmanager` was not on `PATH`; the workflow now validates the SDK command-line tools path before the install step.
 - GitHub manual Android smoke run `27598285141` then reached AVD creation but timed out during hosted emulator boot at the old 240-second CI timeout; the workflow now gives hosted Android emulator boot a longer smoke window.
+- GitHub manual Android smoke run `27598696767` still timed out during hosted emulator boot after the longer timeout; the workflow now verifies hosted KVM access and the smoke script emits emulator logs on boot timeout.
 - GitHub manual iOS smoke run `27598059032` failed before this repair because the hosted runner did not return `xcrun simctl help` within the old 10-second startup window; the workflow now selects/warmups Xcode and the script allows a longer startup probe.
 - GitHub manual iOS smoke run `27598285153` then reached Expo Go installation and Metro startup but timed out before `iOS Bundled`; the workflow now passes a longer hosted-runner timeout through `IOS_SMOKE_TIMEOUT_MS`.
 - GitHub manual iOS smoke run `27598696739` then reached Expo Go installation but `simctl openurl` timed out after install; the workflow now retries the iOS smoke once to handle that first-run hosted Simulator condition.
+- GitHub manual iOS smoke run `27599041735` retried but still timed out opening the project on the default iPhone SE simulator; the smoke script now prefers modern non-SE iPhone simulators when available.
 - In-app Browser local rendered smoke verified the dashboard current-shell marker, four vitals, Money Loop artifact rail, payoff orbit, zero horizontal overflow, and no console warnings/errors. The Browser screenshot capture path timed out in this session.
 - Chrome local mobile-emulation smoke at 390px verified the current dashboard shell, four vitals, Money Loop artifact rail, payoff orbit, zero horizontal overflow, a navigation click into `/simulator`, the Strategy Comparison and Money Loop Timeline, and no console warnings/errors. The Chrome screenshot capture path timed out in this session.
 

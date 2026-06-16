@@ -260,6 +260,7 @@ async function main() {
   const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx';
   let child;
   let emulatorChild;
+  let emulatorLog = '';
   let startedEmulator = false;
 
   try {
@@ -277,15 +278,27 @@ async function main() {
         {
           cwd: appRoot,
           env,
-          stdio: ['ignore', 'ignore', 'ignore'],
+          stdio: ['ignore', 'pipe', 'pipe'],
           windowsHide: true,
         }
       );
+      emulatorChild.stdout.on('data', (chunk) => {
+        emulatorLog += chunk.toString();
+      });
+      emulatorChild.stderr.on('data', (chunk) => {
+        emulatorLog += chunk.toString();
+      });
       startedEmulator = true;
 
       device = await waitForBootedDevice(adb, Date.now() + timeoutMs);
       if (!device) {
-        throw new Error(`Android emulator ${avdName} did not finish booting before the smoke timeout.`);
+        throw new Error(
+          [
+            `Android emulator ${avdName} did not finish booting before the smoke timeout.`,
+            'Recent emulator log:',
+            emulatorLog.split(/\r?\n/).filter(Boolean).slice(-40).join('\n') || 'no emulator output captured',
+          ].join('\n')
+        );
       }
     }
 

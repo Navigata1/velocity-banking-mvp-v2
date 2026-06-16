@@ -103,8 +103,20 @@ function chooseSimulator() {
   const booted = devices.find((device) => device.state === 'Booted');
   if (booted) return booted;
 
-  const newest = devices[devices.length - 1];
-  if (newest) return newest;
+  const preferredPatterns = [
+    /^iPhone \d+ Pro Max$/i,
+    /^iPhone \d+ Pro$/i,
+    /^iPhone \d+$/i,
+    /^iPhone (?!SE)/i,
+    /^iPhone SE/i,
+  ];
+  for (const pattern of preferredPatterns) {
+    const preferred = devices.find((device) => pattern.test(device.name));
+    if (preferred) return preferred;
+  }
+
+  const fallback = devices[0];
+  if (fallback) return fallback;
 
   throw new Error('No available iPhone Simulator was found for iOS smoke testing.');
 }
