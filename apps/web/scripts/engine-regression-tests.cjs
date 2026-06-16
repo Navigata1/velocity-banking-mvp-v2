@@ -926,6 +926,51 @@ test('intro modal exposes dialog semantics and traps keyboard focus', () => {
   assert.ok(source.includes("event.key !== 'Tab'"), 'expected Tab handling to stay inside the intro dialog');
 });
 
+test('intro copy keeps a coach tone and labels assumptions', () => {
+  const source = [
+    fs.readFileSync(path.resolve(__dirname, '..', 'src/components/IntroModal.tsx'), 'utf8'),
+    fs.readFileSync(path.resolve(__dirname, '..', 'src/components/IntroAnimation.tsx'), 'utf8'),
+  ]
+    .join('\n')
+    .replace(/^\s*\/\/.*$/gm, '')
+    .toLowerCase();
+  const bannedPhrases = [
+    'most people don',
+    '85',
+    '90%',
+    'drains silently',
+    'daily drain',
+    'you lose',
+    'before a dime touches your balance',
+    'this is not a budget app',
+    'slashing daily interest',
+    'watch months fall off',
+    'watch years fall off',
+    'debt-crushing',
+    'crush it',
+  ];
+
+  for (const phrase of bannedPhrases) {
+    assert.ok(!source.includes(phrase), `expected intro copy not to include fear or unsupported phrase: ${phrase}`);
+  }
+
+  assert.ok(source.includes('educational simulator'), 'expected intro copy to label the experience as educational');
+  assert.ok(source.includes('sample mortgage'), 'expected intro animation to label mortgage figures as sample inputs');
+  assert.ok(source.includes('teaching example'), 'expected intro animation to frame examples as teaching examples');
+});
+
+test('intro animation separates mobile beat content from captions', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/IntroAnimation.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('absolute left-0 right-0 top-4'),
+    'expected mobile beat content to be pinned above the caption area'
+  );
+  assert.ok(source.includes('text-base font-bold leading-tight'), 'expected mobile intro headings to use compact type');
+  assert.ok(source.includes('hidden h-20 w-32') && source.includes('sm:block'), 'expected decorative tank to be hidden on compact mobile');
+  assert.ok(source.includes('bottom-12') && source.includes('sm:bottom-14'), 'expected captions to reserve space above controls on mobile');
+});
+
 test('settings exposes controls to restore the pre-app snapshot preview', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
 
@@ -2767,6 +2812,7 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'lasting financial freedom',
     'trust the math',
     "the math works - if it's not working",
+    'debt-crushing ammunition',
   ];
 
   for (const claim of bannedClaims) {

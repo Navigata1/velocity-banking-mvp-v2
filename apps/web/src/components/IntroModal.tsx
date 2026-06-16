@@ -127,7 +127,7 @@ export default function IntroModal() {
           <div className="min-w-0">
             <p className="text-sm text-emerald-300/90">Welcome to InterestShield</p>
             <h2 id="intro-dialog-title" className={`text-xl font-semibold ${classes.text}`}>The Money Loop — How Interest Really Works</h2>
-            <p id="intro-dialog-description" className={`text-sm ${classes.textSecondary}`}>This is NOT a budget app. It&apos;s a velocity banking simulator.</p>
+            <p id="intro-dialog-description" className={`text-sm ${classes.textSecondary}`}>An educational simulator for testing velocity banking assumptions.</p>
           </div>
           <button type="button" onClick={handleSkip} className={`${classes.textSecondary} hover:${classes.text} shrink-0 text-xl p-1`} aria-label="Close intro">
             ✕
@@ -143,7 +143,7 @@ export default function IntroModal() {
             <div className={`${classes.bgTertiary} rounded-xl p-3`}>
               <p className="text-emerald-400 font-semibold text-sm mb-1">📊 See It</p>
               <p className={`text-xs ${classes.textSecondary}`}>
-                Watch your daily interest burn in real-time. Understand where your money actually goes.
+                See estimated interest in plain language and compare how different inputs change the plan.
               </p>
             </div>
             <div className={`${classes.bgTertiary} rounded-xl p-3`}>
@@ -153,9 +153,9 @@ export default function IntroModal() {
               </p>
             </div>
             <div className={`${classes.bgTertiary} rounded-xl p-3`}>
-              <p className="text-emerald-400 font-semibold text-sm mb-1">⚡ Crush It</p>
+              <p className="text-emerald-400 font-semibold text-sm mb-1">⚡ Plan It</p>
               <p className={`text-xs ${classes.textSecondary}`}>
-                Deploy chunks to amortized debt and watch years fall off your timeline.
+                Model chunks against amortized debt and compare how the projected timeline changes.
               </p>
             </div>
           </div>

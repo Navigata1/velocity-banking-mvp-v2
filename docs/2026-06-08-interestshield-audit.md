@@ -2230,6 +2230,31 @@ Post-repair verification:
 - In-app Browser rendered `https://web-islanddevcrew.vercel.app/`, confirmed title `InterestShield - Financial Empowerment`, captured screenshot evidence, found no console warnings/errors, and recorded the live deployment freshness mismatch described above.
 - Chrome rendered the same live URL, confirmed the intro-gated legacy UI and no captured console warnings/errors, then closed the agent-created tab.
 
+### Repair Pass 126: Coach-Tone Intro Copy
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Replaced legacy intro animation copy that used unsupported or fear-leaning phrasing such as `85-90%`, `drains silently`, `you lose`, `daily drain`, `watch months fall off`, and `debt-crushing`.
+- Reframed the intro as an educational simulator for testing assumptions, with the sample mortgage explicitly labeled as a teaching example rather than a promise or lender quote.
+- Renamed the intro action card from `Crush It` to `Plan It` and changed chunk copy to compare projected timeline changes instead of promising years off.
+- Replaced a Guardian answer-bank hype phrase, `debt-crushing ammunition`, with `planned debt-paydown capacity`.
+- Removed a stale engine comment that described early amortized payments with a fixed `85-90%` interest claim.
+- Added regression coverage for the intro copy guard, compact mobile intro layout, and expanded the Guardian answer-bank claim guard.
+- Browser mobile smoke found and repaired an overlap between the compact intro heading and caption area. The final 390x844 check measured an 11px gap between the heading and caption, action buttons ending at `y=810` inside the `844px` viewport, no horizontal overflow, and no captured console warnings/errors.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the old intro copy, failed again on the Guardian hype phrase after expanding the guard, then passed with 124 regression tests after the repair.
+- `apps/web` `npm test`: passed with 125 regression tests after the mobile layout guard was added.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+- `apps/mobile` `npm run check`: passed.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- In-app Browser rendered local `/settings`, replayed the intro, confirmed the educational simulator copy, `Plan It` card, no legacy banned phrases, no horizontal overflow at 390x844, reachable action buttons, and no captured console warnings/errors.
+- Chrome rendered local `/settings`, replayed the intro, confirmed the educational simulator copy and `Plan It` card, found no legacy banned phrases, and captured no console warnings/errors.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

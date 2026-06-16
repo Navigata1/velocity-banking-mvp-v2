@@ -280,7 +280,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What is chunk power?',
     answers: [
       'Chunk power is your available cash flow that can be deployed against debt. Higher income + lower expenses = more chunk power.',
-      'It\'s essentially your monthly surplus translated into debt-crushing ammunition.',
+      'It is your monthly surplus translated into planned debt-paydown capacity.',
       'Your chunk power grows as you: increase income, decrease expenses, or pay off other debts freeing up money.'
     ]
   },

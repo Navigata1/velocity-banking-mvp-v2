@@ -11,7 +11,7 @@ import {
  * Not financial advice.
  * 
  * Key concepts from velocity banking methodology:
- * - Amortized loans front-load interest (85-90% of early payments = interest)
+ * - Amortized loans compute interest before principal each period
  * - Lines of Credit use average daily balance for interest calculation
  * - Income deposited into LOC immediately reduces interest basis
  * - "Chunks" from LOC attack amortized debt principal directly
