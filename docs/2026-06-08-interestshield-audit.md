@@ -2719,6 +2719,18 @@ Post-repair local verification:
 - `apps/web` `npm test`: passed.
 - `apps/web` `npm run lint`: passed.
 
+### Repair Pass 151: Learn Decorative Canvas Accessibility
+
+Local source repairs completed on 2026-06-16:
+
+- Marked Learn Center confetti and grand-finale canvases as `aria-hidden` and `role="presentation"` because they are decorative celebration effects.
+- Added regression coverage requiring the two Learn celebration canvases to stay hidden from assistive technology.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed.
+- `apps/web` `npm run lint`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3186,7 +3198,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.
-- Static final values for animated financial numbers. Status: CountUp visual animation now renders a stable screen-reader value in Repair Pass 113; the Learn progress counter now follows the same visual-only animation and stable screen-reader value pattern in Repair Pass 150. Remaining decorative non-financial learning animations can be reviewed separately.
+- Static final values for animated financial numbers. Status: CountUp visual animation now renders a stable screen-reader value in Repair Pass 113; the Learn progress counter now follows the same visual-only animation and stable screen-reader value pattern in Repair Pass 150. Decorative Learn celebration canvases are hidden from assistive technology in Repair Pass 151.
 - Modal focus trap. Status: covered in Repair Pass 111 for the replayable intro dialog.
 - Mobile nav reachability. Status: viewport reachability covered in Repair Pass 6; primary navigation landmark and active-page state covered in Repair Pass 111.
 

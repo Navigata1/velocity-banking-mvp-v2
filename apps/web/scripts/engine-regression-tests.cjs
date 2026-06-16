@@ -3420,6 +3420,23 @@ test('Learn animated progress counter hides visual ticks from assistive technolo
   );
 });
 
+test('Learn decorative celebration canvases are hidden from assistive technology', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8');
+  const canvasCount = (source.match(/<canvas/g) ?? []).length;
+  const ariaHiddenCanvasCount = (source.match(/aria-hidden="true"/g) ?? []).length;
+  const presentationCanvasCount = (source.match(/role="presentation"/g) ?? []).length;
+
+  assert.equal(canvasCount, 2);
+  assert.ok(
+    ariaHiddenCanvasCount >= canvasCount,
+    'expected each Learn celebration canvas to be hidden from assistive technology'
+  );
+  assert.ok(
+    presentationCanvasCount >= canvasCount,
+    'expected each Learn celebration canvas to be marked as presentation-only'
+  );
+});
+
 test('pre-app preview blocks unstable debt-free date claims', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PreAppPreview.tsx'), 'utf8');
 

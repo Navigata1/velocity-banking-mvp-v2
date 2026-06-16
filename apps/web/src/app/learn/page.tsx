@@ -157,6 +157,8 @@ function ConfettiExplosion({ originX, originY, count = 40, duration = 2000, spre
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
+      role="presentation"
       className="fixed inset-0 pointer-events-none z-[100]"
       style={{ width: '100vw', height: '100vh' }}
     />
@@ -259,6 +261,8 @@ function GrandFinale({ onDone }: { onDone?: () => void }) {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
+      role="presentation"
       className="fixed inset-0 pointer-events-none z-[100]"
       style={{ width: '100vw', height: '100vh' }}
     />
