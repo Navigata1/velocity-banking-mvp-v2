@@ -301,6 +301,13 @@ export function buildMobileDashboardSnapshot(
         detail: 'Deposits start the loop.',
       },
       {
+        label: 'LOC',
+        value: locNeedsSetup ? 'Add LOC limit' : `${formatCurrency(availableLoc)} open`,
+        detail: locNeedsSetup
+          ? 'LOC capacity needs a limit before chunk projections are meaningful.'
+          : `${Math.round(locUtilization * 100)}% used. Capacity is useful only with a comfortable buffer.`,
+      },
+      {
         label: 'Expenses',
         value: formatCurrency(input.monthlyExpenses),
         detail: 'Outflows define pressure.',

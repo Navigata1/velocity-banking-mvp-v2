@@ -2402,6 +2402,31 @@ Post-repair verification:
 - In-app Browser mobile smoke at 390x844: payoff orbit rendered, 5 orbit nodes rendered, selecting Cash Flow updated the active artifact, page overflow stayed contained, and no console warnings/errors were captured.
 - Chrome smoke at `http://127.0.0.1:5000/`: payoff orbit rendered, selecting LOC updated the active artifact, and no console warnings/errors were captured.
 
+### Repair Pass 134: Mobile Dashboard Payoff Orbit Parity
+
+Local source repairs completed on 2026-06-16:
+
+- Added the LOC step to the shared mobile Dashboard Money Loop snapshot so Expo matches the web loop sequence: Income, LOC, Expenses, Cash Flow, and Principal.
+- Added a native Dashboard payoff orbit to the Expo Money Loop card with one selectable node per shared loop step and active-step detail copy.
+- Exposed the orbit as a radio group with checked and selected state for native accessibility and the exported web DOM.
+- Added contract coverage for the five-step mobile loop, LOC utilization context, orbit smoke hooks, and active-node accessibility state.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- In-app Browser smoke at `http://localhost:8110/` with a 390x844 viewport: mobile payoff orbit rendered with 5 nodes, LOC selection exposed `aria-checked="true"` and `aria-selected="true"`, LOC detail copy rendered, no horizontal overflow, and no console warnings/errors were captured.
+- Chrome smoke at `http://localhost:8110/`: mobile payoff orbit rendered with 5 nodes, LOC selection exposed checked/selected state, no horizontal overflow, and no console warnings/errors were captured.
+- `apps/mobile` `npm run smoke:android`: passed on `emulator-5554`.
+- `apps/mobile` `npm run smoke:ios`: reported the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

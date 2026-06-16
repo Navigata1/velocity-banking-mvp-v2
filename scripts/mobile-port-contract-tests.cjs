@@ -381,6 +381,16 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
   assert.equal(unsafeSnapshot.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Stabilize first');
   assert.equal(unsafeSnapshot.nextMove, 'Restore positive cash flow');
   assert.ok(!stableSnapshot.vitals.some((vital) => vital.label === 'LOC Room'));
+  assert.equal(
+    stableSnapshot.loop.map((step) => step.label).join('|'),
+    'Income|LOC|Expenses|Cash Flow|Principal'
+  );
+  assert.equal(stableSnapshot.loop.length, 5);
+  assert.equal(stableSnapshot.loop.find((step) => step.label === 'LOC').value, '$21,800 open');
+  assert.ok(
+    stableSnapshot.loop.find((step) => step.label === 'LOC').detail.includes('13% used'),
+    'expected mobile Money Loop to include LOC utilization context'
+  );
 });
 
 test('shared mobile default assumptions start with the verified web demo Money Loop', () => {
@@ -462,6 +472,23 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(!shellSource.includes('const lessons = ['));
   assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
   assert.ok(shellSource.includes('StorageStatusCard'));
+  assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
+  assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
+  assert.ok(shellSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
+  assert.ok(
+    shellSource.includes('testID={`mobile-payoff-orbit-node-${loopNodeId(step.label)}`}'),
+    'expected one selectable orbit node per shared Money Loop step'
+  );
+  assert.ok(
+    shellSource.includes('accessibilityRole="radio"'),
+    'expected orbit nodes to expose a single-choice role'
+  );
+  assert.ok(
+    shellSource.includes('accessibilityState={{ checked: isActive, selected: isActive }}'),
+    'expected active mobile orbit nodes to expose checked and selected state'
+  );
+  assert.ok(shellSource.includes('aria-checked={isActive}'), 'expected mobile web export to expose checked state');
+  assert.ok(shellSource.includes('aria-selected={isActive}'), 'expected mobile web export to expose selected state');
   assert.equal(typeof sharedEngine.buildMobileCockpitSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
