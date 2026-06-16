@@ -325,6 +325,10 @@ export default function SettingsPage() {
                 or Cloudflare migration. Import replaces only InterestShield demo keys and leaves unrelated browser
                 storage alone.
               </p>
+              <p data-testid="settings-backend-migration-contract" className={`mt-2 text-xs ${classes.textMuted}`}>
+                Includes a provider-neutral migration contract for owner rules, financial snapshots, simulation runs,
+                and learning progress.
+              </p>
             </div>
             <button
               type="button"
