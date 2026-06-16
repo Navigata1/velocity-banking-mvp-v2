@@ -284,6 +284,7 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
   assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 420000'), 'expected hosted iOS smoke to allow first-run Expo Go setup time');
+  assert.ok(workflow.includes('Retrying iOS smoke once'), 'expected hosted iOS smoke to retry first-run Simulator openurl timeouts once');
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
 });
 

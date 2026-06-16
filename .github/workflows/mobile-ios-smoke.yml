@@ -54,4 +54,13 @@ jobs:
           EXPO_NO_TELEMETRY: 1
           IOS_SMOKE_SIMULATOR: ${{ inputs.simulator }}
           IOS_SMOKE_TIMEOUT_MS: 420000
-        run: npm run smoke:ios
+        run: |
+          set +e
+          npm run smoke:ios
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          echo "Retrying iOS smoke once after first-run Simulator/Expo Go setup..."
+          npm run smoke:ios
