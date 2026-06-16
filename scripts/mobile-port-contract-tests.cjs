@@ -489,6 +489,42 @@ test('shared financial engine matches current web engine on core fixtures', () =
   assert.equal(sharedEngine.formatCurrency(3500), webEngine.formatCurrency(3500));
 });
 
+test('shared mobile velocity delegates to the canonical Money Loop payoff engine', () => {
+  const sharedEnginePath = path.join(repoRoot, 'packages/financial-engine/src/index.ts');
+  const sharedEngine = loadTsFile(sharedEnginePath);
+  const sharedEngineSource = fs.readFileSync(sharedEnginePath, 'utf8');
+  const wrapperStart = sharedEngineSource.indexOf('function simulateMobileMoneyLoopPayoff');
+  const wrapperEnd = sharedEngineSource.indexOf('function simulateMobileVelocity', wrapperStart);
+  const wrapperSource = sharedEngineSource.slice(wrapperStart, wrapperEnd);
+  const defaultInput = sharedEngine.defaultMobileDashboardInput;
+  const cashFlowPaydown = defaultInput.monthlyIncome - defaultInput.monthlyExpenses - defaultInput.activeDebt.monthlyPayment;
+  const canonicalProjection = sharedEngine.simulateMoneyLoopPayoff({
+    principalBalance: defaultInput.activeDebt.balance,
+    debtApr: defaultInput.activeDebt.apr,
+    debtPayment: defaultInput.activeDebt.monthlyPayment,
+    loc: {
+      ...defaultInput.loc,
+      balance: Math.max(0, defaultInput.loc.balance),
+    },
+    chunkAmount: defaultInput.chunkAmount,
+    cashFlowPaydown,
+    locDepositAmount: defaultInput.monthlyIncome,
+    locExpenseAmount: defaultInput.monthlyExpenses + defaultInput.activeDebt.monthlyPayment,
+    maxMonths: 600,
+  });
+  const mobileVelocity = sharedEngine
+    .buildMobileSimulatorSnapshot(defaultInput)
+    .strategies.find((strategy) => strategy.name === 'Velocity');
+
+  assert.ok(wrapperSource.includes('simulateMoneyLoopPayoff({'), 'expected mobile wrapper to call the canonical payoff engine');
+  assert.ok(!wrapperSource.includes('while (('), 'expected mobile wrapper not to duplicate the payoff loop');
+  assert.ok(!wrapperSource.includes('calculateADBInterest('), 'expected LOC interest to flow through the canonical payoff engine');
+  assert.ok(mobileVelocity, 'expected Velocity strategy in the mobile simulator snapshot');
+  assert.equal(mobileVelocity.months, canonicalProjection.payoffMonths);
+  assert.equal(mobileVelocity.totalInterest.toFixed(2), canonicalProjection.totalInterest.toFixed(2));
+  assert.equal(mobileVelocity.isPayoffPossible, canonicalProjection.isPayoffPossible);
+});
+
 test('shared mobile dashboard snapshot keeps the required four vitals aligned with web', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const stableSnapshot = sharedEngine.buildMobileDashboardSnapshot({

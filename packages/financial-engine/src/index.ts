@@ -860,83 +860,26 @@ function simulateMobileMoneyLoopPayoff(input: {
   locDepositAmount: number;
   locExpenseAmount: number;
 }): MobilePayoffProjection {
-  if (input.cashFlowPaydown <= 0) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'negative-cashflow',
-    };
-  }
-
-  if (input.loc.limit <= 0 || input.loc.balance >= input.loc.limit) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'loc-overlimit',
-    };
-  }
-
-  const firstMonthInterest = input.principalBalance * input.debtApr / 12;
-  if (input.principalBalance > 0.01 && input.debtPayment <= firstMonthInterest) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  const chunkAmount = Math.max(0, input.chunkAmount);
-  let debtBalance = Math.max(0, input.principalBalance);
-  let locBalance = Math.max(0, input.loc.balance);
-  let totalInterest = 0;
-  let month = 0;
-  let monthsSinceChunk = 0;
-
-  while ((debtBalance > 0.01 || locBalance > 0.01) && month < 600) {
-    month += 1;
-    monthsSinceChunk += 1;
-
-    const locAvailable = Math.max(0, input.loc.limit - locBalance);
-    const effectiveChunkAmount = Math.min(chunkAmount, Math.max(0, debtBalance), locAvailable);
-    const chunkRecoveryMonths = effectiveChunkAmount > 0 && input.cashFlowPaydown > 0
-      ? Math.ceil(effectiveChunkAmount / input.cashFlowPaydown)
-      : 999;
-
-    const debtInterest = debtBalance * input.debtApr / 12;
-    const debtPayment = Math.min(input.debtPayment, debtBalance + debtInterest);
-    const debtPrincipalPaid = Math.max(0, debtPayment - debtInterest);
-    const canChunk =
-      effectiveChunkAmount > 0 &&
-      monthsSinceChunk >= chunkRecoveryMonths &&
-      debtBalance > effectiveChunkAmount * 0.1;
-
-    if (canChunk) {
-      locBalance += effectiveChunkAmount;
-      debtBalance = Math.max(0, debtBalance - effectiveChunkAmount);
-      monthsSinceChunk = 0;
-    }
-
-    debtBalance = Math.max(0, debtBalance - debtPrincipalPaid);
-    const locInterest = calculateADBInterest(
-      locBalance,
-      input.loc.apr,
-      input.locDepositAmount,
-      input.locExpenseAmount
-    );
-    locBalance = Math.max(0, locBalance - input.cashFlowPaydown + locInterest);
-    totalInterest += debtInterest + locInterest;
-  }
-
-  const isPayoffPossible = debtBalance <= 0.01 && locBalance <= 0.01;
+  const projection = simulateMoneyLoopPayoff({
+    principalBalance: Math.max(0, input.principalBalance),
+    debtApr: input.debtApr,
+    debtPayment: input.debtPayment,
+    loc: {
+      ...input.loc,
+      balance: Math.max(0, input.loc.balance),
+    },
+    chunkAmount: input.chunkAmount,
+    cashFlowPaydown: input.cashFlowPaydown,
+    locDepositAmount: input.locDepositAmount,
+    locExpenseAmount: input.locExpenseAmount,
+    maxMonths: 600,
+  });
 
   return {
-    payoffMonths: month,
-    totalInterest,
-    isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
   };
 }
 
