@@ -183,6 +183,14 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
   assert.ok(smokeScript.includes('sys.boot_completed'), 'expected smoke script to wait for emulator boot completion');
   assert.ok(smokeScript.includes('Android Bundled'), 'expected smoke script to wait for bundle completion');
   assert.ok(smokeScript.includes('ExperienceActivity'), 'expected smoke script to reject Expo Go error screens');
+  assert.ok(
+    smokeScript.includes("requiredOrbitText = ['Payoff Orbit', 'LOC orbit step']"),
+    'expected Android smoke to verify the dashboard orbit after launch'
+  );
+  assert.ok(smokeScript.includes('dumpIncludesText'), 'expected Android smoke to match UI dump text case-insensitively');
+  assert.ok(smokeScript.includes('dumpTextExcerpt'), 'expected Android smoke failures to report visible native text');
+  assert.ok(smokeScript.includes('waitForDashboardOrbit'), 'expected Android smoke to scroll to the Dashboard orbit');
+  assert.ok(smokeScript.includes("'input', 'swipe'"), 'expected Android smoke to scroll native dashboard content');
   assert.ok(smokeScript.includes('screencap'), 'expected smoke script to capture visual evidence');
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
   assert.ok(smokeScript.includes('taskkill.exe'), 'expected Windows process-tree cleanup for Metro');

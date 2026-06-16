@@ -10,6 +10,7 @@ const screenshotPath =
   process.env.ANDROID_SMOKE_SCREENSHOT || path.join(os.tmpdir(), 'interestshield-android-smoke.png');
 const windowDumpPath = '/sdcard/interestshield-window.xml';
 const requiredText = ['InterestShield', 'Money Loop Mobile', 'Dashboard'];
+const requiredOrbitText = ['Payoff Orbit', 'LOC orbit step'];
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -134,6 +135,30 @@ function readWindowDump(adb) {
   return result.output;
 }
 
+function dumpTextExcerpt(dump) {
+  const values = [];
+  const pattern = /\b(?:text|content-desc)="([^"]+)"/g;
+  let match;
+
+  while ((match = pattern.exec(dump)) !== null && values.length < 30) {
+    const value = match[1]
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#10;/g, ' ')
+      .trim();
+
+    if (value && !values.includes(value)) {
+      values.push(value);
+    }
+  }
+
+  return values.join(' | ') || 'no readable text in final UI dump';
+}
+
+function dumpIncludesText(dump, text) {
+  return dump.toLowerCase().includes(text.toLowerCase());
+}
+
 function getFocus(adb) {
   const result = run(adb, ['shell', 'dumpsys', 'window'], { timeout: 30000 });
   return result.output
@@ -148,6 +173,46 @@ function dismissExpoMenuIfOpen(adb) {
   if (/This is the developer menu|Toggle performance monitor|Open DevTools|Go home/.test(dump)) {
     run(adb, ['shell', 'input', 'keyevent', '4'], { timeout: 10000 });
   }
+}
+
+function displaySize(adb) {
+  const result = run(adb, ['shell', 'wm', 'size'], { timeout: 10000 });
+  const match = result.output.match(/Physical size:\s*(\d+)x(\d+)/);
+
+  if (!match) {
+    return { height: 1920, width: 1080 };
+  }
+
+  return {
+    height: Number(match[2]),
+    width: Number(match[1]),
+  };
+}
+
+function scrollDashboardDown(adb) {
+  const { height, width } = displaySize(adb);
+  const x = Math.round(width / 2);
+  const startY = Math.round(height * 0.78);
+  const endY = Math.round(height * 0.28);
+  run(adb, ['shell', 'input', 'swipe', String(x), String(startY), String(x), String(endY), '450'], {
+    timeout: 10000,
+  });
+}
+
+async function waitForDashboardOrbit(adb, deadline) {
+  let dump = '';
+
+  while (Date.now() < deadline) {
+    dump = readWindowDump(adb);
+    if (requiredOrbitText.every((text) => dumpIncludesText(dump, text))) {
+      return dump;
+    }
+
+    scrollDashboardDown(adb);
+    await sleep(1000);
+  }
+
+  return dump;
 }
 
 function captureScreenshot(adb) {
@@ -253,13 +318,18 @@ async function main() {
       finalFocus = getFocus(adb);
 
       const bundleReady = expoLog.includes('Android Bundled');
-      const textReady = requiredText.every((text) => finalDump.includes(text));
+      const textReady = requiredText.every((text) => dumpIncludesText(finalDump, text));
       const focusReady = finalFocus.includes('ExperienceActivity') && !finalFocus.includes('ErrorActivity');
 
       if (bundleReady && textReady && focusReady) {
+        finalDump = await waitForDashboardOrbit(adb, deadline);
+        const orbitReady = requiredOrbitText.every((text) => dumpIncludesText(finalDump, text));
+        if (!orbitReady) break;
+
         captureScreenshot(adb);
         console.log('Android Expo Go smoke passed.');
         console.log(`Device: ${device}`);
+        console.log(`Orbit text: ${requiredOrbitText.join(', ')}`);
         console.log(`Screenshot: ${screenshotPath}`);
         return;
       }
@@ -269,7 +339,9 @@ async function main() {
       [
         'Android Expo Go smoke timed out.',
         `Required text: ${requiredText.join(', ')}`,
+        `Required orbit text after scroll: ${requiredOrbitText.join(', ')}`,
         `Focus: ${finalFocus || 'unknown'}`,
+        `Final UI text excerpt: ${dumpTextExcerpt(finalDump)}`,
         'Recent Expo log:',
         expoLog.split(/\r?\n/).filter(Boolean).slice(-30).join('\n'),
       ].join('\n')

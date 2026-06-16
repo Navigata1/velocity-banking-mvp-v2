@@ -2427,6 +2427,28 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 135: Android Dashboard Orbit Smoke Gate
+
+Local source repairs completed on 2026-06-16:
+
+- Strengthened the repeatable Android Expo Go smoke so it scrolls the native Dashboard after launch and verifies the payoff orbit is reachable in the Android UI tree.
+- The Android smoke now requires the orbit heading and LOC orbit-step label, captures a screenshot only after those checks pass, and reports a compact native UI text excerpt when the assertion fails.
+- Added contract coverage so the Android smoke keeps the orbit text gate, native scroll action, case-insensitive UI dump matching, and failure excerpt.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:android`: passed on `emulator-5554` and reported `Orbit text: Payoff Orbit, LOC orbit step`.
+- `apps/mobile` `npm run build:web`: passed.
+- `apps/mobile` `npm run smoke:web-export`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, and `/vault`.
+- `apps/mobile` `npm run smoke:ios`: reported the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
