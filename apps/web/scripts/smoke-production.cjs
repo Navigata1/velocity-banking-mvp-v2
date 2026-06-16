@@ -36,6 +36,17 @@ const failureSignatures = [
   '__next_error__',
 ];
 
+const currentShellSignatures = [
+  'data-testid="primary-navigation"',
+];
+
+const staleProductionSignatures = [
+  'Welcome to InterestShield',
+  'How Interest Really Works',
+  'This is NOT a budget app',
+  'Financial Health',
+];
+
 function normalizeOrigin(value) {
   const url = new URL(value);
   url.pathname = '/';
@@ -148,6 +159,30 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
     throw new Error(
       `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}`
     );
+  }
+
+  const missingCurrentShellSignature = currentShellSignatures.find((signature) => !body.includes(signature));
+
+  if (missingCurrentShellSignature) {
+    throw new Error(
+      `${label} route ${route} did not expose the current InterestShield shell marker: ` +
+        `${missingCurrentShellSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
+        'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
+        'and the four dashboard vitals.'
+    );
+  }
+
+  if (route === '/') {
+    const staleSignature = staleProductionSignatures.find((signature) => body.includes(signature));
+
+    if (staleSignature) {
+      throw new Error(
+        `${label} route ${route} appears to be serving an older intro-gated InterestShield build: ` +
+          `${staleSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
+          'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
+          'and the four dashboard vitals.'
+      );
+    }
   }
 }
 

@@ -3572,6 +3572,29 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
       productionSmokeScript.includes('use `vercel curl`'),
     'expected protected preview failures to produce an actionable release-verification hint'
   );
+  assert.ok(
+    productionSmokeScript.includes('currentShellSignatures') &&
+      productionSmokeScript.includes('data-testid="primary-navigation"'),
+    'expected production smoke to require the current shared navigation shell marker'
+  );
+  assert.ok(
+    productionSmokeScript.includes('did not expose the current InterestShield shell marker'),
+    'expected production smoke to fail clearly when the current shell marker is missing'
+  );
+  assert.ok(
+    productionSmokeScript.includes('staleProductionSignatures') &&
+      productionSmokeScript.includes('Welcome to InterestShield') &&
+      productionSmokeScript.includes('This is NOT a budget app') &&
+      productionSmokeScript.includes('Financial Health'),
+    'expected production smoke to reject the known stale intro-gated production build'
+  );
+  assert.ok(
+    productionSmokeScript.includes('older intro-gated InterestShield build') &&
+      productionSmokeScript.includes('money-loop-artifact-rail') &&
+      productionSmokeScript.includes('money-loop-payoff-orbit') &&
+      productionSmokeScript.includes('four dashboard vitals'),
+    'expected stale production failures to explain the required rendered freshness check'
+  );
 });
 
 test('web app declares Vercel Next deployment configuration', () => {

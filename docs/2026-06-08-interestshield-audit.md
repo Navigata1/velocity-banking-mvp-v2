@@ -2547,11 +2547,26 @@ Required release action:
 
 - After the stacked PRs are merged, promote/deploy the current Next.js web app to the production alias, then rerun both `apps/web` `npm run smoke:production` and a rendered Browser or Chrome smoke that verifies `money-loop-artifact-rail`, `money-loop-payoff-orbit`, and the four dashboard vitals on `https://web-islanddevcrew.vercel.app/`.
 
+### Repair Pass 141: Production Stale-Signature Smoke Guard
+
+Local source repairs completed on 2026-06-16:
+
+- Hardened `apps/web` `npm run smoke:production` so every route must expose the current shared shell marker `data-testid="primary-navigation"`.
+- Kept extra stale-build context for the known old intro-gated build signatures: `Welcome to InterestShield`, `How Interest Really Works`, `This is NOT a budget app`, and `Financial Health`.
+- Kept the smoke dependency-free and HTTP-based so the manual release workflow can still run without a browser automation package or Vercel project metadata.
+- Preserved the Vercel Deployment/Preview Protection diagnostics and bypass-header support added earlier.
+- Added regression coverage requiring the stale-production guard and its release-action message to stay wired.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: passed with 128 regression tests.
+- `apps/web` `npm run smoke:production`: intentionally failed against `https://web-islanddevcrew.vercel.app/` because the production alias does not expose `data-testid="primary-navigation"` from the current shell. This is the expected guard behavior until the current stack is promoted/deployed.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
 - Chrome extension smoke loaded production successfully.
-- Current production HTTP route-shell smoke passes, but rendered Browser and Chrome smoke in Repair Pass 140 confirms `https://web-islanddevcrew.vercel.app` is still serving an older intro-gated deployment rather than the current four-vitals dashboard and payoff orbit surface.
+- Current production route-shell smoke previously passed, but rendered Browser and Chrome smoke in Repair Pass 140 confirms `https://web-islanddevcrew.vercel.app` is still serving an older intro-gated deployment rather than the current four-vitals dashboard and payoff orbit surface. Repair Pass 141 turns the missing current shell marker into a failing `apps/web` `npm run smoke:production` release guard.
 - Production routes rendered a reachable shell with no captured console errors:
   - `/`
   - `/simulator`
@@ -2996,7 +3011,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 - First-run desktop intro.
 - First-run mobile intro.
-- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set. Repair Pass 140 confirmed with both Browser and Chrome that production is still serving an older intro-gated UI and does not expose the current dashboard vitals or payoff orbit hooks.
+- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set. Repair Pass 140 confirmed with both Browser and Chrome that production is still serving an older intro-gated UI and does not expose the current dashboard vitals or payoff orbit hooks. Repair Pass 141 now makes the production smoke fail when the current shared navigation shell marker is missing, with extra stale-signature context for the old intro-gated deployment.
 - Domain switch. Status: covered in Repair Pass 42 for Dashboard Auto/House switching in Browser and Chrome.
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.
