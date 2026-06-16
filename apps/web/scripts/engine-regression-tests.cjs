@@ -99,6 +99,7 @@ function loadTsFile(filename) {
 }
 
 const calculations = loadTsModule('src/engine/calculations.ts');
+const sharedFinancialEngine = loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/index.ts'));
 const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioPathVisual = loadTsModule('src/engine/portfolio-path-visual.ts');
 const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
@@ -143,6 +144,37 @@ test('amortization payment matches a known 30-year fixed-rate fixture', () => {
 
   assert.equal(roundCents(payment), 599.55);
   assert.equal(roundCents(calculations.calculateTotalAmortizationInterest(100000, 0.06, 360)), 115838.19);
+});
+
+test('LOC ADB interest uses daily closing balances across web and shared engines', () => {
+  const moneyLoop = loadTsModule('src/engine/money-loop.ts');
+  const expectedInterest = ((1116.6666666667 + 4500) / 2) * (0.12 / 365) * 30;
+  const webInterest = calculations.calculateADBInterest(5000, 0.12, 4000, 3500, 30);
+  const sharedInterest = sharedFinancialEngine.calculateADBInterest(5000, 0.12, 4000, 3500, 30);
+  const month = moneyLoop.simulateMoneyLoopMonth({
+    month: 1,
+    debtBalance: 0,
+    debtApr: 0,
+    debtPayment: 0,
+    loc: {
+      limit: 10000,
+      apr: 0.12,
+      balance: 5000,
+    },
+    locBalance: 5000,
+    chunkAmount: 0,
+    cashFlowPaydown: 0,
+    locDepositAmount: 4000,
+    locExpenseAmount: 3500,
+    monthsSinceChunk: 999,
+  });
+  const locInterestEvent = month.events.find((event) => event.type === 'loc-interest');
+
+  assert.equal(roundCents(expectedInterest), 27.7);
+  assert.equal(roundCents(webInterest), 27.7);
+  assert.equal(roundCents(sharedInterest), 27.7);
+  assert.ok(locInterestEvent, 'expected Money Loop month to expose LOC interest event');
+  assert.equal(roundCents(locInterestEvent.amount), 27.7);
 });
 
 test('zero APR baseline payoff pays principal without charging interest', () => {
