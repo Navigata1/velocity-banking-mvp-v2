@@ -14,7 +14,7 @@ import {
   type MobileSimulatorSnapshot,
   type MobileVaultSnapshot,
 } from '@interestshield/financial-engine';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
@@ -23,7 +23,7 @@ import {
   type MobileAssumptionStorageStatus,
 } from '@/hooks/use-persisted-mobile-assumptions';
 
-type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault';
+type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault' | 'settings';
 
 const modes: Array<{ id: MobileMode; label: string }> = [
   { id: 'dashboard', label: 'Dashboard' },
@@ -32,15 +32,59 @@ const modes: Array<{ id: MobileMode; label: string }> = [
   { id: 'portfolio', label: 'Portfolio' },
   { id: 'learn', label: 'Learn' },
   { id: 'vault', label: 'Vault' },
+  { id: 'settings', label: 'Settings' },
 ];
 
-const modeRoutes: Record<MobileMode, '/' | '/simulator' | '/cockpit' | '/portfolio' | '/learn' | '/vault'> = {
+const modeRoutes: Record<MobileMode, '/' | '/simulator' | '/cockpit' | '/portfolio' | '/learn' | '/vault' | '/settings'> = {
   dashboard: '/',
   simulator: '/simulator',
   cockpit: '/cockpit',
   portfolio: '/portfolio',
   learn: '/learn',
   vault: '/vault',
+  settings: '/settings',
+};
+
+const mobileBackendReadinessOptions = [
+  {
+    id: 'supabase-postgres-auth-rls',
+    label: 'Supabase Postgres + Auth + RLS',
+    status: 'Candidate',
+    detail: 'Best fit for relational snapshots, user-owned records, and SQL reporting. Next gate: schema plus RLS policy draft.',
+  },
+  {
+    id: 'cloudflare-workers-d1-durable-objects',
+    label: 'Cloudflare Workers + D1/Durable Objects',
+    status: 'Candidate',
+    detail: 'Best fit for edge APIs, D1 records, and future session state. Next gate: server-owned snapshot API prototype.',
+  },
+] as const;
+
+const mobileStorageStatusCopy: Record<MobileAssumptionStorageStatus, { detail: string; value: string }> = {
+  loading: {
+    detail: 'Checking for locally saved assumptions.',
+    value: 'Loading',
+  },
+  'restored-secure-store': {
+    detail: 'Assumptions restored from encrypted native storage on this device.',
+    value: 'Restored securely',
+  },
+  'restored-local-storage': {
+    detail: 'Assumptions restored from localStorage for exported web testing.',
+    value: 'Restored locally',
+  },
+  'saved-secure-store': {
+    detail: 'Assumptions are saved in encrypted native storage on this device.',
+    value: 'Saved securely',
+  },
+  'saved-local-storage': {
+    detail: 'Assumptions are saved in localStorage for exported web testing.',
+    value: 'Saved locally',
+  },
+  unavailable: {
+    detail: 'Local persistence is unavailable, so assumptions reset when this session ends.',
+    value: 'Session only',
+  },
 };
 
 function ModeButton({
@@ -342,33 +386,7 @@ function AssumptionControls({
 }
 
 function StorageStatusCard({ status }: { status: MobileAssumptionStorageStatus }) {
-  const copy: Record<MobileAssumptionStorageStatus, { detail: string; value: string }> = {
-    loading: {
-      detail: 'Checking for locally saved assumptions.',
-      value: 'Loading',
-    },
-    'restored-secure-store': {
-      detail: 'Assumptions restored from encrypted native storage on this device.',
-      value: 'Restored securely',
-    },
-    'restored-local-storage': {
-      detail: 'Assumptions restored from localStorage for exported web testing.',
-      value: 'Restored locally',
-    },
-    'saved-secure-store': {
-      detail: 'Assumptions are saved in encrypted native storage on this device.',
-      value: 'Saved securely',
-    },
-    'saved-local-storage': {
-      detail: 'Assumptions are saved in localStorage for exported web testing.',
-      value: 'Saved locally',
-    },
-    unavailable: {
-      detail: 'Local persistence is unavailable, so assumptions reset when this session ends.',
-      value: 'Session only',
-    },
-  };
-  const statusCopy = copy[status];
+  const statusCopy = mobileStorageStatusCopy[status];
 
   return (
     <FinancialCard
@@ -880,6 +898,39 @@ function VaultPanel({ vault }: { vault: MobileVaultSnapshot }) {
   );
 }
 
+function SettingsPanel({ storageStatus }: { storageStatus: MobileAssumptionStorageStatus }) {
+  const statusCopy = mobileStorageStatusCopy[storageStatus];
+
+  return (
+    <View style={{ gap: 12 }}>
+      <FinancialCard
+        title="Local Demo Storage"
+        value={statusCopy.value}
+        detail={`${statusCopy.detail} No production backend is connected.`}
+      />
+      <View
+        testID="settings-backend-readiness"
+        accessibilityLabel="Backend readiness"
+        style={{ gap: 12 }}
+      >
+        <FinancialCard
+          title="Backend Status"
+          value="Local demo mode"
+          detail="Data stays on this device or exported web browser until auth, access rules, and snapshot migration are selected."
+        />
+        {mobileBackendReadinessOptions.map((option) => (
+          <FinancialCard
+            key={option.id}
+            title={option.label}
+            value={option.status}
+            detail={option.detail}
+          />
+        ))}
+      </View>
+    </View>
+  );
+}
+
 export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: MobileMode }) {
   const router = useRouter();
   const [mode, setMode] = useState<MobileMode>(initialMode);
@@ -891,9 +942,12 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
   const vault = buildMobileVaultSnapshot(input);
   const learn = buildMobileLearnSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
+  const subtitle = mode === 'settings'
+    ? 'Settings keeps native storage and backend readiness explicit before any account backend is connected.'
+    : `${title} runs from the shared financial engine so web and native assumptions stay aligned.`;
   const handleModeChange = (nextMode: MobileMode) => {
     setMode(nextMode);
-    router.push(modeRoutes[nextMode]);
+    router.push(modeRoutes[nextMode] as Href);
   };
 
   return (
@@ -910,7 +964,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
           InterestShield
         </Text>
         <Text selectable style={{ color: '#cbd5e1', fontSize: 15, lineHeight: 22 }}>
-          {title} runs from the shared financial engine so web and native assumptions stay aligned.
+          {subtitle}
         </Text>
       </View>
 
@@ -921,9 +975,10 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
         <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => handleModeChange('portfolio')} />
         <ModeButton active={mode === 'learn'} label="Learn" onPress={() => handleModeChange('learn')} />
         <ModeButton active={mode === 'vault'} label="Vault" onPress={() => handleModeChange('vault')} />
+        <ModeButton active={mode === 'settings'} label="Settings" onPress={() => handleModeChange('settings')} />
       </View>
 
-      <AssumptionControls input={input} onChange={setInput} />
+      {mode === 'settings' ? null : <AssumptionControls input={input} onChange={setInput} />}
       <StorageStatusCard status={storageStatus} />
 
       {mode === 'dashboard' ? <DashboardPanel snapshot={snapshot} /> : null}
@@ -932,6 +987,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
       {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
       {mode === 'learn' ? <LearnPanel learn={learn} /> : null}
       {mode === 'vault' ? <VaultPanel vault={vault} /> : null}
+      {mode === 'settings' ? <SettingsPanel storageStatus={storageStatus} /> : null}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>
         Educational tool. Not financial advice.

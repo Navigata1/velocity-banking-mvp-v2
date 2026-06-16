@@ -15,6 +15,7 @@ const routes = [
   ['/portfolio', 'Portfolio'],
   ['/learn', 'Learn'],
   ['/vault', 'Vault'],
+  ['/settings', 'Settings'],
 ];
 const requiredDashboardBundleText = [
   'mobile-payoff-orbit',
@@ -25,6 +26,9 @@ const requiredDashboardBundleText = [
   'mobile-portfolio-payoff-path-node-',
   'Portfolio payoff path',
   'Portfolio Payoff Path',
+  'settings-backend-readiness',
+  'Supabase Postgres + Auth + RLS',
+  'Cloudflare Workers + D1/Durable Objects',
   'aria-checked',
   'aria-selected',
 ];
