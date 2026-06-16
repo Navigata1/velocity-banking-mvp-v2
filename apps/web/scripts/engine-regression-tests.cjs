@@ -103,6 +103,8 @@ const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
+const themeStore = loadTsModule('src/stores/theme-store.ts');
+const preferencesStore = loadTsModule('src/stores/preferences-store.ts');
 const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
 const settingsReset = loadTsModule('src/app/settings/local-data-reset.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
@@ -3275,6 +3277,58 @@ test('app startup defaults keep the dashboard ungated', () => {
   assert.equal(state.introModalOpen, false);
   assert.equal(state.skipIntroOnStartup, true);
   assert.equal(state.previewDismissed, true);
+});
+
+test('theme persisted state falls back from invalid browser storage', () => {
+  const state = themeStore.useThemeStore.getState();
+  const sanitized = themeStore.sanitizePersistedThemeState({ theme: 'neon' }, state);
+
+  assert.equal(sanitized.theme, 'original');
+  assert.ok(themeStore.themeClasses[sanitized.theme], 'expected sanitized theme to map to theme classes');
+});
+
+test('preferences persisted state sanitizes local UI settings', () => {
+  const state = preferencesStore.usePreferencesStore.getState();
+  const sanitized = preferencesStore.sanitizePersistedPreferencesState({
+    teacherMode: 'yes',
+    skipIntroOnStartup: 'no',
+    landingPreference: 'settings',
+    previewPersistHours: Number.POSITIVE_INFINITY,
+    showPreAppPreview: 'maybe',
+    lastPreviewRefresh: 'bad-date',
+  }, state);
+
+  assert.equal(sanitized.teacherMode, state.teacherMode);
+  assert.equal(sanitized.skipIntroOnStartup, state.skipIntroOnStartup);
+  assert.equal(sanitized.landingPreference, 'dashboard');
+  assert.equal(sanitized.previewPersistHours, state.previewPersistHours);
+  assert.equal(sanitized.showPreAppPreview, state.showPreAppPreview);
+  assert.equal(sanitized.lastPreviewRefresh, state.lastPreviewRefresh);
+});
+
+test('app persisted state sanitizes shell routing and demo user state', () => {
+  const state = appStore.useAppStore.getState();
+  const sanitized = appStore.sanitizePersistedAppState({
+    introSeen: 'true',
+    introModalOpen: true,
+    skipIntroOnStartup: false,
+    setupComplete: 'done',
+    landingPage: 'vault',
+    user: {
+      email: '',
+      name: 123,
+      avatarUrl: [],
+    },
+    previewDismissed: false,
+  }, state);
+
+  assert.equal(sanitized.introSeen, true);
+  assert.equal(sanitized.introModalOpen, false);
+  assert.equal(sanitized.skipIntroOnStartup, true);
+  assert.equal(sanitized.setupComplete, state.setupComplete);
+  assert.equal(sanitized.landingPage, 'dashboard');
+  assert.equal(sanitized.user, null);
+  assert.equal(sanitized.previewDismissed, true);
 });
 
 test('web app exposes a repeatable route smoke command', () => {

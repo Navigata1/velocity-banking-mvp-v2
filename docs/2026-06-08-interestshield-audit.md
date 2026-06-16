@@ -2116,6 +2116,26 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 120: Shell Store Persisted-State Sanitizers
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage proving Theme, Preferences, and App shell persisted state normalize invalid browser storage before hydration.
+- Added a Theme sanitizer so unknown stored theme values fall back to a valid theme class map instead of risking undefined UI classes.
+- Added a Preferences sanitizer for teacher mode, intro behavior, landing preference, preview persistence hours, preview visibility, and preview refresh timestamps.
+- Added an App shell sanitizer for startup gates, landing page, local demo user shape, and preview dismissal so stale storage cannot re-open the gated startup state or inject invalid routing state.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on missing shell-store sanitizer exports, then passed with 118 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke against the local production server loaded `/settings`, confirmed Settings and Backend status rendered, navigated through the shell to `/`, confirmed Money Loop Dashboard and Cash Flow rendered, captured screenshot evidence, and found no console warnings/errors.
+- Chrome rendered smoke against the local production server seeded invalid `interestshield-theme`, `interestshield-preferences-v1`, and `interestshield-app-v1` storage, loaded `/settings`, confirmed Settings, Theme controls, Original theme, and Dashboard landing rendered, found no bad persisted tokens, captured screenshot evidence, and found no console warnings/errors.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
