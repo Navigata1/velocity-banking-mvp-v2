@@ -3563,6 +3563,22 @@ test('web app declares Vercel Next deployment configuration', () => {
   assert.equal(config.devCommand, 'next dev --port $PORT');
 });
 
+test('repository exposes a manual release deployment smoke workflow', () => {
+  const workflowPath = path.resolve(__dirname, '..', '..', '..', '.github', 'workflows', 'release-smoke.yml');
+  const workflow = fs.existsSync(workflowPath) ? fs.readFileSync(workflowPath, 'utf8') : '';
+
+  assert.ok(fs.existsSync(workflowPath), 'expected a manual release smoke workflow');
+  assert.ok(workflow.includes('workflow_dispatch'), 'expected release smoke to run manually');
+  assert.ok(workflow.includes('production_origin'), 'expected release smoke to accept a target deployment origin');
+  assert.ok(
+    workflow.includes('VERCEL_AUTOMATION_BYPASS_SECRET'),
+    'expected release smoke to pass the Vercel automation bypass secret when configured'
+  );
+  assert.ok(workflow.includes('npm run smoke:production'), 'expected release smoke to run deployed web route smoke');
+  assert.ok(workflow.includes('inputs.run_mobile_export'), 'expected release smoke to make Expo export smoke optional');
+  assert.ok(workflow.includes('npm run smoke:web-export'), 'expected release smoke to verify the Expo web export');
+});
+
 test('client mount hook notifies subscribers after hydration', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/hooks/useIsClient.ts'), 'utf8');
 

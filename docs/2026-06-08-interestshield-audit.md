@@ -2368,6 +2368,21 @@ Post-repair verification:
 - `apps/mobile` `npm run smoke:ios`: returned the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
 - `apps/mobile` `npm run smoke:android`: passed against `emulator-5554` and captured screenshot evidence at the temp smoke path.
 
+### Repair Pass 132: Manual Release Smoke Workflow
+
+Local source repairs completed on 2026-06-16:
+
+- Added `.github/workflows/release-smoke.yml` as a manual `workflow_dispatch` release check.
+- The workflow accepts a `production_origin`, passes `VERCEL_AUTOMATION_BYPASS_SECRET` to the deployed route smoke when the secret is configured, and runs `apps/web` `npm run smoke:production` against the selected URL.
+- The workflow can optionally rebuild and smoke the Expo web export so release verification can cover the browser app and the mobile web shell from the same run.
+- Added regression coverage so the release workflow keeps the production smoke command, bypass secret, target-origin input, and optional Expo export smoke wired.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: passed with 127 regression tests after the repair.
+- GitHub workflow syntax check: `.github/workflows/release-smoke.yml` parsed as valid YAML.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
