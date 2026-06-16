@@ -3478,12 +3478,14 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes("process.platform === 'win32' ? 'cmd.exe' : 'npm'"), 'expected smoke script to use a Windows-safe npm wrapper');
   assert.ok(smokeScript.includes("'npm run start'"), 'expected smoke script to start Next through npm');
   assert.ok(smokeScript.includes('taskkill'), 'expected smoke script to clean up Windows child processes');
+  assert.ok(smokeScript.includes('detached: process.platform !=='), 'expected smoke script to isolate non-Windows server process groups');
+  assert.ok(smokeScript.includes('process.kill(-server.pid'), 'expected smoke script to clean up non-Windows process groups');
   assert.ok(smokeScript.includes("'start'"), 'expected smoke script to smoke the built Next server');
   assert.ok(smokeScript.includes('response.statusCode !== 200'), 'expected smoke script to fail non-200 routes');
   assert.ok(smokeScript.includes("content-type") && smokeScript.includes("text/html"), 'expected smoke script to verify HTML responses');
   assert.ok(smokeScript.includes('InterestShield - Financial Empowerment'), 'expected smoke script to verify app metadata');
   assert.ok(smokeScript.includes('/_next/static'), 'expected smoke script to verify Next static assets');
-  assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
+  assert.ok(smokeScript.includes('finally') && smokeScript.includes('stopServer(server)'), 'expected smoke script to clean up the server');
 });
 
 test('web app exposes a repeatable production Vercel smoke command', () => {

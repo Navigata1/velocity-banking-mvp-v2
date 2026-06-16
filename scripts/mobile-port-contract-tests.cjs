@@ -208,6 +208,34 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
 });
 
+test('GitHub CI protects web and mobile quality gates', () => {
+  const workflowPath = path.join(repoRoot, '.github/workflows/ci.yml');
+
+  assert.ok(fs.existsSync(workflowPath), 'expected a committed GitHub Actions workflow');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.ok(workflow.includes('pull_request:'), 'expected CI to run on pull requests');
+  assert.ok(workflow.includes('push:'), 'expected CI to run on pushes');
+  assert.ok(workflow.includes('apps/web/package-lock.json'), 'expected web npm cache to use the web lockfile');
+  assert.ok(workflow.includes('apps/mobile/package-lock.json'), 'expected mobile npm cache to use the mobile lockfile');
+  assert.ok(workflow.includes('working-directory: apps/web'), 'expected workflow to run web commands from apps/web');
+  assert.ok(workflow.includes('npm test'), 'expected workflow to run web regression tests');
+  assert.ok(workflow.includes('npm run lint'), 'expected workflow to run web lint');
+  assert.ok(workflow.includes('npm run build'), 'expected workflow to run the production web build');
+  assert.ok(workflow.includes('npm run smoke:routes'), 'expected workflow to run built-route smoke');
+  assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected workflow to run mobile commands from apps/mobile');
+  assert.ok(workflow.includes('npm run check'), 'expected workflow to run mobile type-checks');
+  assert.ok(
+    workflow.includes('node scripts/mobile-port-contract-tests.cjs'),
+    'expected workflow to run the shared mobile contract tests'
+  );
+  assert.ok(workflow.includes('npm run smoke:ios'), 'expected workflow to verify the iOS smoke guard');
+  assert.ok(
+    workflow.includes('iOS Expo Go smoke requires macOS with Xcode and Simulator.'),
+    'expected workflow to assert the explicit non-macOS iOS smoke blocker'
+  );
+});
+
 test('mobile native release config is explicit for Android and iOS builds', () => {
   const appConfig = readJson('apps/mobile/app.json');
   const easConfig = readJson('apps/mobile/eas.json');

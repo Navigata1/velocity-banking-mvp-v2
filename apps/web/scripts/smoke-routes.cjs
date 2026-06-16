@@ -61,6 +61,19 @@ async function waitForServer(server) {
   throw new Error(`Next route smoke server did not start at ${origin}.`);
 }
 
+function stopServer(server) {
+  if (process.platform === 'win32') {
+    spawnSync('taskkill', ['/pid', String(server.pid), '/t', '/f'], { stdio: 'ignore' });
+    return;
+  }
+
+  try {
+    process.kill(-server.pid, 'SIGTERM');
+  } catch {
+    server.kill('SIGTERM');
+  }
+}
+
 async function run() {
   const buildManifest = path.join(appRoot, '.next', 'build-manifest.json');
   if (!fs.existsSync(buildManifest)) {
@@ -71,6 +84,7 @@ async function run() {
   const startArgs = process.platform === 'win32' ? ['/d', '/s', '/c', 'npm run start'] : ['run', 'start'];
   const server = spawn(startCommand, startArgs, {
     cwd: appRoot,
+    detached: process.platform !== 'win32',
     env: { ...process.env, HOST: host, PORT: String(port) },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -105,11 +119,7 @@ async function run() {
       console.log(`PASS ${label} ${route}`);
     }
   } finally {
-    if (process.platform === 'win32') {
-      spawnSync('taskkill', ['/pid', String(server.pid), '/t', '/f'], { stdio: 'ignore' });
-    } else {
-      server.kill();
-    }
+    stopServer(server);
   }
 
   if (serverOutput.trim()) {

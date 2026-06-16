@@ -2278,6 +2278,30 @@ Post-repair verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - `apps/web` `npm run smoke:production`: passed for the same route set against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 128: GitHub CI Quality Gates
+
+Local source repairs completed on 2026-06-16:
+
+- Added a GitHub Actions CI workflow for pull requests and pushes to `main` or `codex/**` branches.
+- The workflow installs from the committed web and mobile lockfiles, runs web regression tests, lint, production build, and built-route smoke.
+- The workflow installs mobile dependencies, runs the Expo TypeScript check, and runs the shared mobile contract tests.
+- Added a Linux CI guard that runs `npm run smoke:ios` and requires the explicit macOS/Xcode blocker, so iOS simulator coverage remains honest on non-macOS runners.
+- Added contract coverage requiring the CI workflow to keep the web, mobile, route-smoke, and iOS-guard checks wired.
+- The first GitHub CI run exposed that `smoke:routes` killed the `npm` wrapper on Linux without killing the child Next server, leaving the step in progress. The route smoke now starts non-Windows servers in a process group and terminates that group during cleanup.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first because `.github/workflows/ci.yml` was missing; passed after the workflow was added.
+- `apps/web` `npm test`: passed with 125 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm test`: failed first after adding the route-smoke cleanup assertion, then passed with 125 regression tests after the process-group cleanup repair.
+- `apps/web` `npm run smoke:routes`: passed after the cleanup repair and exited normally.
+- `apps/mobile` `npm run check`: passed.
+- `apps/mobile` `npm run smoke:ios`: returned the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
