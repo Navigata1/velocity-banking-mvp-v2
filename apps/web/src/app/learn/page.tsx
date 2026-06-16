@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
+import { readSavedProgress, saveLearnProgress } from './progress-store';
 
 /* ──────────────────────────────────────────────────────────
    TYPES
@@ -488,26 +489,6 @@ const glossary: GlossaryItem[] = [
    PROGRESS STORE (localStorage)
    ────────────────────────────────────────────────────────── */
 
-const STORAGE_KEY = 'interestshield-learn-progress';
-
-function readSavedProgress(): { completed: Set<number>; quizAnswers: Record<number, number | null> } {
-  if (typeof window === 'undefined') {
-    return { completed: new Set(), quizAnswers: {} };
-  }
-
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (!saved) return { completed: new Set(), quizAnswers: {} };
-    const parsed = JSON.parse(saved);
-    return {
-      completed: new Set(parsed.completed || []),
-      quizAnswers: parsed.quizAnswers || {},
-    };
-  } catch {
-    return { completed: new Set(), quizAnswers: {} };
-  }
-}
-
 function parseTargetModule(value: string | null): number | null {
   if (!value) return null;
   const moduleNum = parseInt(value, 10);
@@ -515,13 +496,13 @@ function parseTargetModule(value: string | null): number | null {
 }
 
 function useProgress() {
-  const [completed, setCompleted] = useState<Set<number>>(() => readSavedProgress().completed);
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>(() => readSavedProgress().quizAnswers);
+  const [completed, setCompleted] = useState<Set<number>>(() => readSavedProgress(lessons.length).completed);
+  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>(() => readSavedProgress(lessons.length).quizAnswers);
   const [justCompleted, setJustCompleted] = useState<number | null>(null);
   const [milestone, setMilestone] = useState<'half' | 'full' | null>(null);
 
   const save = (c: Set<number>, q: Record<number, number | null>) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed: [...c], quizAnswers: q }));
+    saveLearnProgress({ completed: c, quizAnswers: q });
   };
 
   const toggleComplete = (id: number) => {

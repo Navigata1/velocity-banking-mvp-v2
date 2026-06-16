@@ -2080,6 +2080,24 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 118: Learn Progress Sanitizer
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green web regression coverage proving corrupt Learn progress storage is sanitized before hydration.
+- Moved Learn progress parsing into `src/app/learn/progress-store.ts`, filtering completed module IDs to the known lesson range and preserving only valid quiz-answer indexes or explicit `null` answers.
+- Replaced raw Learn `localStorage` reads/writes with guarded helpers so failed optional progress writes do not block the educational flow.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing Learn progress store module, then passed with 113 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Chrome rendered smoke against the local production server seeded corrupt `interestshield-learn-progress`, loaded `/learn`, confirmed sanitized `2 of 6 modules complete` progress, no bad tokens appeared, and no console warnings/errors were captured.
+- `node scripts\mobile-port-contract-tests.cjs`: passed.
+- `apps/mobile` `npm run check`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

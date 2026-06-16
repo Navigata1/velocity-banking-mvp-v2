@@ -103,6 +103,7 @@ const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
+const learnProgress = loadTsModule('src/app/learn/progress-store.ts');
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
 const dashboardModel = loadTsModule('src/app/dashboard-model.ts');
 const simulatorModel = loadTsModule('src/app/simulator-model.ts');
@@ -2522,6 +2523,31 @@ test('learn page avoids universal LOC rate-spread rules', () => {
   for (const phrase of bannedPhrases) {
     assert.ok(!source.includes(phrase), `expected Learn copy not to include universal LOC-rate rule: ${phrase}`);
   }
+});
+
+test('learn progress sanitizes corrupt browser storage before hydration', () => {
+  const progress = learnProgress.sanitizeLearnProgress({
+    completed: [1, '2', 0, 99, 'not-a-module', 2],
+    quizAnswers: {
+      1: 0,
+      2: '3',
+      3: -1,
+      4: null,
+      99: 1,
+      nope: 2,
+    },
+  }, 4);
+
+  assert.equal(progress.completed.has(1), true);
+  assert.equal(progress.completed.has(2), true);
+  assert.equal(progress.completed.has(0), false);
+  assert.equal(progress.completed.has(99), false);
+  assert.equal(progress.completed.size, 2);
+  assert.equal(progress.quizAnswers[1], 0);
+  assert.equal(progress.quizAnswers[2], 3);
+  assert.equal(progress.quizAnswers[3], undefined);
+  assert.equal(progress.quizAnswers[4], null);
+  assert.equal(progress.quizAnswers[99], undefined);
 });
 
 test('learn page mistake cascade example keeps LOC availability arithmetic consistent', () => {
