@@ -10,6 +10,8 @@ import { formatCurrency, formatDate } from '@/engine/calculations';
 import ScrollReveal from '@/components/ScrollReveal';
 import CountUp from '@/components/CountUp';
 import PageTransition from '@/components/PageTransition';
+import PortfolioPayoffPath from '@/components/PortfolioPayoffPath';
+import { buildPortfolioPathVisualModel } from '@/engine/portfolio-path-visual';
 import { useIsClient } from '@/hooks/useIsClient';
 
 function categoryLabel(cat: DebtItem['category']): string {
@@ -126,6 +128,7 @@ export default function PortfolioPage() {
   const totalDebt = store.debts.reduce((s, d) => s + d.balance, 0);
   const cashFlow = store.monthlyIncome - store.monthlyExpenses;
   const runComparison = store.lastRunComparison;
+  const payoffPathModel = buildPortfolioPathVisualModel(result, totalDebt);
 
   const handleExport = () => {
     const text = store.exportState();
@@ -446,6 +449,8 @@ export default function PortfolioPage() {
                 </ul>
               </div>
             )}
+
+            <PortfolioPayoffPath model={payoffPathModel} />
           </div>
 
           {/* Summary sidebar */}
