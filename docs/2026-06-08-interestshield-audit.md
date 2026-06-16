@@ -2748,6 +2748,24 @@ Post-repair local verification:
 - `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
 - In-app Browser smoke at `http://127.0.0.1:5016/portfolio`: imported a valid one-debt scenario, changed extra payment from `$0` to `$250`, verified the panel reported `2 mo sooner` and `-$219` estimated interest, and captured no console warnings or errors.
 
+### Repair Pass 153: Portfolio Payoff Path SVG
+
+Local source repairs completed on 2026-06-16:
+
+- Added `apps/web/src/engine/portfolio-path-visual.ts`, a pure visual model that samples Portfolio month results into a bounded payoff path.
+- Added `apps/web/src/components/PortfolioPayoffPath.tsx`, a responsive SVG panel showing balance descent, modeled progress, and total interest estimate.
+- Mounted the path visual on the Portfolio route under the assumptions/warnings area, using the current Portfolio simulation result rather than duplicate page math.
+- Added regression coverage for sampled balance descent, bounded SVG points, and the route-level visual smoke hooks.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed 136 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser smoke at `http://127.0.0.1:5019/portfolio`: imported a valid one-debt scenario, verified the Portfolio payoff path rendered with 9 model-backed nodes, a non-empty SVG path, section width `535px`, SVG width `475px`, projected-path copy, and no console warnings or errors.
+- Browser screenshot capture timed out on this long page, so visual verification used rendered DOM dimensions and path/node probes.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3258,8 +3276,8 @@ Status: first strategy-rationale repair completed in local source during Repair 
 ### Phase 4: Visual Overhaul
 
 - Add 3D artifact carousel hero.
-- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22; full payoff-path visuals remain open.
-- Add SVG charts and report cards.
+- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22 and expanded with the Portfolio payoff path SVG in Repair Pass 153; deeper 3D and animated explainers remain open.
+- Add SVG charts and report cards. Status: first Portfolio SVG payoff-path panel added in Repair Pass 153.
 - Add Remotion/HyperFrames-generated educational media.
 
 ### Phase 5: Mobile Port

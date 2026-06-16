@@ -100,6 +100,7 @@ function loadTsFile(filename) {
 
 const calculations = loadTsModule('src/engine/calculations.ts');
 const portfolio = loadTsModule('src/engine/portfolio.ts');
+const portfolioPathVisual = loadTsModule('src/engine/portfolio-path-visual.ts');
 const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
@@ -910,6 +911,55 @@ test('portfolio page mounts the what-changed-since-last-run panel', () => {
   assert.ok(source.includes('data-testid="portfolio-run-comparison"'), 'expected Portfolio run-diff panel to expose a stable hook');
   assert.ok(source.includes('data-testid="portfolio-run-change"'), 'expected Portfolio run changes to expose stable hooks');
   assert.ok(source.includes('store.lastRunComparison'), 'expected Portfolio to render the store-backed run comparison');
+});
+
+test('portfolio payoff path visual model samples the simulated balance descent', () => {
+  const inputs = {
+    monthlyIncome: 5000,
+    monthlyExpenses: 3600,
+    extraMonthlyPayment: 250,
+    debts: [{
+      id: 'path-card',
+      name: 'Path Card',
+      category: 'credit_card',
+      kind: 'revolving',
+      balance: 14000,
+      apr: 0.199,
+      minPaymentRule: { type: 'fixed', amount: 320 },
+      paymentSource: 'checking',
+    }],
+    settings: {
+      strategy: 'avalanche',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 120,
+  };
+
+  const result = portfolio.simulatePortfolio(inputs);
+  const model = portfolioPathVisual.buildPortfolioPathVisualModel(result, 14000);
+  const firstPoint = model.sampledPoints[0];
+  const finalPoint = model.sampledPoints[model.sampledPoints.length - 1];
+
+  assert.equal(model.isProjected, true);
+  assert.equal(model.statusLabel, 'Projected path');
+  assert.equal(firstPoint.month, 0);
+  assert.equal(firstPoint.balance, 14000);
+  assert.equal(finalPoint.month, result.payoffMonths);
+  assert.equal(roundCents(finalPoint.balance), 0);
+  assert.equal(roundCents(model.totalInterest), roundCents(result.totalInterest));
+  assert.ok(model.sampledPoints.length <= 9, 'expected bounded SVG point sampling');
+});
+
+test('portfolio page mounts the engine-backed payoff path visual', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PortfolioPayoffPath.tsx'), 'utf8');
+
+  assert.ok(source.includes('buildPortfolioPathVisualModel'), 'expected Portfolio page to build the path model outside the component');
+  assert.ok(source.includes('<PortfolioPayoffPath model={payoffPathModel} />'), 'expected Portfolio page to mount the payoff path component');
+  assert.ok(componentSource.includes('data-testid="portfolio-payoff-path-visual"'), 'expected a stable payoff path smoke hook');
+  assert.ok(componentSource.includes('data-testid="portfolio-payoff-path-svg"'), 'expected the payoff path SVG to expose a stable hook');
+  assert.ok(componentSource.includes('data-testid="portfolio-payoff-path-node"'), 'expected model-backed path nodes to expose stable hooks');
 });
 
 test('portfolio debt controls are labeled with the debt name', () => {
