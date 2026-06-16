@@ -89,7 +89,7 @@ jobs:
         env:
           ANDROID_SMOKE_AVD: ${{ inputs.avd_name }}
           ANDROID_SMOKE_SCREENSHOT: ${{ runner.temp }}/interestshield-android-smoke.png
-          ANDROID_SMOKE_TIMEOUT_MS: 240000
+          ANDROID_SMOKE_TIMEOUT_MS: 600000
           EXPO_NO_TELEMETRY: 1
         run: npm run smoke:android
 

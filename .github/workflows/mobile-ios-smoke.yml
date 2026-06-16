@@ -53,4 +53,5 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: 1
           IOS_SMOKE_SIMULATOR: ${{ inputs.simulator }}
+          IOS_SMOKE_TIMEOUT_MS: 420000
         run: npm run smoke:ios

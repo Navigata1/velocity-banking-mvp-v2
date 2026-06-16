@@ -5,7 +5,7 @@ const path = require('node:path');
 
 const appRoot = path.resolve(__dirname, '..');
 const port = process.env.IOS_SMOKE_PORT || '8082';
-const timeoutMs = Number(process.env.IOS_SMOKE_TIMEOUT_MS || 180000);
+const timeoutMs = Number(process.env.IOS_SMOKE_TIMEOUT_MS || 300000);
 const screenshotPath = process.env.IOS_SMOKE_SCREENSHOT || path.join(os.tmpdir(), 'interestshield-ios-smoke.png');
 const macosRequiredMessage = 'iOS Expo Go smoke requires macOS with Xcode and Simulator.';
 

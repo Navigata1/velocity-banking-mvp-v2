@@ -208,6 +208,7 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes("process.platform !== 'darwin'"), 'expected iOS smoke to guard non-macOS hosts');
   assert.ok(smokeScript.includes('xcrun'), 'expected smoke script to use Xcode simulator tooling');
   assert.ok(smokeScript.includes('simctl'), 'expected smoke script to inspect and control iOS simulators');
+  assert.ok(smokeScript.includes('IOS_SMOKE_TIMEOUT_MS || 300000'), 'expected iOS smoke default timeout to allow first-run Expo Go setup');
   assert.ok(smokeScript.includes('timeout: 60000'), 'expected simctl startup probe to allow slow hosted macOS runners');
   assert.ok(smokeScript.includes("'expo', 'start'"), 'expected smoke script to launch Expo CLI');
   assert.ok(smokeScript.includes('--ios'), 'expected smoke script to target iOS');
@@ -282,6 +283,7 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('xcrun simctl list runtimes'), 'expected iOS smoke to warm Simulator tooling before npm smoke');
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
+  assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 420000'), 'expected hosted iOS smoke to allow first-run Expo Go setup time');
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
 });
 
@@ -304,6 +306,7 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('avdmanager create avd'), 'expected Android smoke to create an emulator profile');
   assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
   assert.ok(workflow.includes('ANDROID_SMOKE_SCREENSHOT'), 'expected Android smoke to capture a workflow artifact screenshot');
+  assert.ok(workflow.includes('ANDROID_SMOKE_TIMEOUT_MS: 600000'), 'expected hosted Android smoke to allow slow emulator boot');
   assert.ok(workflow.includes('npm run smoke:android'), 'expected Android smoke to run the committed Expo Go emulator smoke');
   assert.ok(workflow.includes('actions/upload-artifact@v4'), 'expected Android smoke to upload visual evidence');
 });
