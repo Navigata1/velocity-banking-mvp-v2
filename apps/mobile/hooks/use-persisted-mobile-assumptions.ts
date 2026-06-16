@@ -2,7 +2,7 @@ import {
   defaultMobileDashboardInput,
   type MobileDashboardInput,
 } from '@interestshield/financial-engine';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   loadMobileAssumptions,
   saveMobileAssumptions,
@@ -29,23 +29,38 @@ function toSavedStatus(backend: MobileAssumptionStorageBackend): MobileAssumptio
   return 'unavailable';
 }
 
+function cloneDefaultMobileInput(): MobileDashboardInput {
+  return {
+    ...defaultMobileDashboardInput,
+    activeDebt: { ...defaultMobileDashboardInput.activeDebt },
+    loc: { ...defaultMobileDashboardInput.loc },
+  };
+}
+
 export function usePersistedMobileAssumptions() {
   const didLoad = useRef(false);
-  const [input, setInput] = useState<MobileDashboardInput>(defaultMobileDashboardInput);
+  const isMounted = useRef(true);
+  const [input, setInput] = useState<MobileDashboardInput>(() => cloneDefaultMobileInput());
   const [storageStatus, setStorageStatus] = useState<MobileAssumptionStorageStatus>('loading');
 
   useEffect(() => {
-    let isMounted = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let shouldApply = true;
 
     loadMobileAssumptions().then((result) => {
-      if (!isMounted) return;
+      if (!shouldApply || !isMounted.current) return;
       setInput(result.input);
       setStorageStatus(toRestoredStatus(result.backend, result.restored));
       didLoad.current = true;
     });
 
     return () => {
-      isMounted = false;
+      shouldApply = false;
     };
   }, []);
 
@@ -54,17 +69,32 @@ export function usePersistedMobileAssumptions() {
 
     let isMounted = true;
 
-    saveMobileAssumptions(input).then((backend) => {
-      if (isMounted) setStorageStatus(toSavedStatus(backend));
-    });
+    saveMobileAssumptions(input)
+      .then((backend) => {
+        if (isMounted) setStorageStatus(toSavedStatus(backend));
+      })
+      .catch(() => {
+        if (isMounted) setStorageStatus('unavailable');
+      });
 
     return () => {
       isMounted = false;
     };
   }, [input]);
 
+  const resetAssumptions = useCallback(async (): Promise<MobileAssumptionStorageBackend> => {
+    const nextInput = cloneDefaultMobileInput();
+    didLoad.current = true;
+    setInput(nextInput);
+
+    const backend = await saveMobileAssumptions(nextInput);
+    if (isMounted.current) setStorageStatus(toSavedStatus(backend));
+    return backend;
+  }, []);
+
   return {
     input,
+    resetAssumptions,
     setInput,
     storageStatus,
   };

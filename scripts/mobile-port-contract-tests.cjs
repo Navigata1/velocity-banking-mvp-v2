@@ -628,6 +628,14 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('StorageStatusCard'));
   assert.ok(shellSource.includes('SettingsPanel'), 'expected mobile Settings mode to render native readiness status');
   assert.ok(shellSource.includes('testID="settings-backend-readiness"'), 'expected mobile Settings backend readiness smoke hook');
+  assert.ok(shellSource.includes('testID="settings-reset-mobile-assumptions"'), 'expected mobile Settings reset smoke hook');
+  assert.ok(
+    shellSource.includes('testID="settings-reset-mobile-assumptions-status"'),
+    'expected mobile Settings reset status smoke hook'
+  );
+  assert.ok(shellSource.includes('Reset Starter Assumptions'), 'expected mobile Settings to expose a reset action');
+  assert.ok(shellSource.includes('resetAssumptions()'), 'expected mobile Settings reset to use the persisted assumptions hook');
+  assert.ok(shellSource.includes("Reset could not save locally"), 'expected mobile Settings reset to expose save-failure feedback');
   assert.ok(shellSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
@@ -889,6 +897,8 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.ok(hookSource.includes('useEffect'));
   assert.ok(hookSource.includes('loadMobileAssumptions'));
   assert.ok(hookSource.includes('saveMobileAssumptions'));
+  assert.ok(hookSource.includes('resetAssumptions'), 'expected Settings to reset assumptions through the persistence hook');
+  assert.ok(hookSource.includes('cloneDefaultMobileInput'), 'expected reset to clone the starter assumptions');
 
   const storageModule = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/mobile-assumption-storage.ts'));
   const encoded = storageModule.encodeMobileAssumptions({

@@ -898,7 +898,15 @@ function VaultPanel({ vault }: { vault: MobileVaultSnapshot }) {
   );
 }
 
-function SettingsPanel({ storageStatus }: { storageStatus: MobileAssumptionStorageStatus }) {
+function SettingsPanel({
+  onResetAssumptions,
+  resetStatus,
+  storageStatus,
+}: {
+  onResetAssumptions: () => void;
+  resetStatus: string | null;
+  storageStatus: MobileAssumptionStorageStatus;
+}) {
   const statusCopy = mobileStorageStatusCopy[storageStatus];
 
   return (
@@ -923,9 +931,41 @@ function SettingsPanel({ storageStatus }: { storageStatus: MobileAssumptionStora
             key={option.id}
             title={option.label}
             value={option.status}
-            detail={option.detail}
-          />
-        ))}
+          detail={option.detail}
+        />
+      ))}
+      </View>
+      <View style={{ gap: 10 }}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Reset mobile starter assumptions"
+          onPress={onResetAssumptions}
+          testID="settings-reset-mobile-assumptions"
+          style={{
+            alignItems: 'center',
+            backgroundColor: '#047857',
+            borderColor: '#34d399',
+            borderCurve: 'continuous',
+            borderRadius: 14,
+            borderWidth: 1,
+            paddingHorizontal: 14,
+            paddingVertical: 12,
+          }}
+        >
+          <Text selectable style={{ color: '#ecfdf5', fontSize: 14, fontWeight: '900' }}>
+            Reset Starter Assumptions
+          </Text>
+        </Pressable>
+        {resetStatus ? (
+          <Text
+            accessibilityLiveRegion="polite"
+            selectable
+            testID="settings-reset-mobile-assumptions-status"
+            style={{ color: '#bbf7d0', fontSize: 13, lineHeight: 19 }}
+          >
+            {resetStatus}
+          </Text>
+        ) : null}
       </View>
     </View>
   );
@@ -934,7 +974,8 @@ function SettingsPanel({ storageStatus }: { storageStatus: MobileAssumptionStora
 export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: MobileMode }) {
   const router = useRouter();
   const [mode, setMode] = useState<MobileMode>(initialMode);
-  const { input, setInput, storageStatus } = usePersistedMobileAssumptions();
+  const [settingsResetStatus, setSettingsResetStatus] = useState<string | null>(null);
+  const { input, resetAssumptions, setInput, storageStatus } = usePersistedMobileAssumptions();
   const snapshot = buildMobileDashboardSnapshot(input);
   const cockpit = buildMobileCockpitSnapshot(input);
   const portfolio = buildMobilePortfolioSnapshot(input);
@@ -948,6 +989,20 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
   const handleModeChange = (nextMode: MobileMode) => {
     setMode(nextMode);
     router.push(modeRoutes[nextMode] as Href);
+  };
+  const handleResetAssumptions = () => {
+    setSettingsResetStatus('Restoring starter assumptions...');
+    resetAssumptions()
+      .then((backend) => {
+        setSettingsResetStatus(
+          backend === 'unavailable'
+            ? 'Starter assumptions restored for this session. Local persistence is unavailable.'
+            : 'Starter assumptions restored and saved on this device.'
+        );
+      })
+      .catch(() => {
+        setSettingsResetStatus('Reset could not save locally. Review storage permissions and try again.');
+      });
   };
 
   return (
@@ -987,7 +1042,13 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
       {mode === 'portfolio' ? <PortfolioPanel portfolio={portfolio} /> : null}
       {mode === 'learn' ? <LearnPanel learn={learn} /> : null}
       {mode === 'vault' ? <VaultPanel vault={vault} /> : null}
-      {mode === 'settings' ? <SettingsPanel storageStatus={storageStatus} /> : null}
+      {mode === 'settings' ? (
+        <SettingsPanel
+          onResetAssumptions={handleResetAssumptions}
+          resetStatus={settingsResetStatus}
+          storageStatus={storageStatus}
+        />
+      ) : null}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>
         Educational tool. Not financial advice.
