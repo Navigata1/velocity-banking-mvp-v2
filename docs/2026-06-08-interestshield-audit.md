@@ -2383,6 +2383,25 @@ Post-repair verification:
 - GitHub workflow syntax check: `.github/workflows/release-smoke.yml` parsed as valid YAML.
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 133: Dashboard Payoff Orbit Visual
+
+Local source repairs completed on 2026-06-16:
+
+- Enhanced the Dashboard Money Loop artifact carousel with a dependency-free payoff orbit around the selected artifact.
+- The orbit renders one model-backed node for Income, LOC, Expenses, Cash Flow, and Principal, using each artifact's tone color instead of static decoration.
+- Kept the selected artifact spin-on-select behavior while adding a separate orbit sweep and reduced-motion state.
+- Added regression coverage so the payoff orbit hook, five model-backed orbit nodes, tone-driven CSS variables, orbit ring, animated sweep, and reduced-motion handling remain wired.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: passed with 128 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- In-app Browser desktop smoke at `http://127.0.0.1:5000/`: payoff orbit rendered, 5 orbit nodes rendered, selecting Principal updated the active artifact, page overflow stayed contained, and no console warnings/errors were captured.
+- In-app Browser mobile smoke at 390x844: payoff orbit rendered, 5 orbit nodes rendered, selecting Cash Flow updated the active artifact, page overflow stayed contained, and no console warnings/errors were captured.
+- Chrome smoke at `http://127.0.0.1:5000/`: payoff orbit rendered, selecting LOC updated the active artifact, and no console warnings/errors were captured.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

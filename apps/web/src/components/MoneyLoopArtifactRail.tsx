@@ -51,6 +51,14 @@ const toneStyles: Record<DashboardTone, {
   },
 };
 
+const orbitNodePositions: Record<DashboardLoopArtifact['id'], CSSProperties> = {
+  income: { left: '50%', top: '12%', transform: 'translate(-50%, -50%)' },
+  loc: { left: '86%', top: '36%', transform: 'translate(-50%, -50%)' },
+  expenses: { left: '74%', top: '80%', transform: 'translate(-50%, -50%)' },
+  'cash-flow': { left: '26%', top: '80%', transform: 'translate(-50%, -50%)' },
+  principal: { left: '14%', top: '36%', transform: 'translate(-50%, -50%)' },
+};
+
 export default function MoneyLoopArtifactRail({
   artifacts,
   className = '',
@@ -71,6 +79,9 @@ export default function MoneyLoopArtifactRail({
   const activeTokenStyle: CSSProperties = {
     background: `conic-gradient(${activeTone.accent} ${activeArtifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
   };
+  const orbitStageStyle = {
+    '--active-artifact-color': activeTone.accent,
+  } as CSSProperties;
 
   return (
     <section
@@ -86,20 +97,53 @@ export default function MoneyLoopArtifactRail({
         className={`relative overflow-hidden rounded-xl border ${activeTone.border} ${activeTone.surface} p-4`}
       >
         <div className="pointer-events-none absolute inset-x-6 top-1/2 h-px bg-gradient-to-r from-transparent via-sky-300/40 to-transparent" />
-        <div className="relative grid min-h-[238px] gap-5 sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center">
-          <div className="mx-auto h-32 w-32 sm:h-36 sm:w-36" style={{ perspective: '1100px' }}>
-            <div
-              key={activeArtifact.id}
-              className="artifact-carousel-token relative h-full w-full rounded-full border border-white/15 shadow-2xl"
-              style={activeTokenStyle}
-            >
-              <div className="absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
-              <div className="absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
+        <div className="relative grid min-h-[258px] gap-5 sm:grid-cols-[190px_minmax(0,1fr)] sm:items-center">
+          <div
+            data-testid="money-loop-payoff-orbit"
+            className="artifact-orbit-stage relative mx-auto h-44 w-44"
+            aria-hidden="true"
+            style={orbitStageStyle}
+          >
+            <div className="artifact-orbit-ring absolute inset-3 rounded-full" />
+            <div className="artifact-orbit-path absolute inset-[27px] rounded-full" />
+            <div className="artifact-orbit-sweep absolute inset-[18px] rounded-full" />
+
+            <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2">
               <div
-                className="absolute left-1/2 top-5 h-4 w-14 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
-                aria-hidden="true"
-              />
+                key={activeArtifact.id}
+                className="artifact-carousel-token relative h-full w-full rounded-full border border-white/15 shadow-2xl"
+                style={activeTokenStyle}
+              >
+                <div className="absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
+                <div className="absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
+                <div
+                  className="absolute left-1/2 top-5 h-4 w-14 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
+                  aria-hidden="true"
+                />
+              </div>
             </div>
+
+            {artifacts.map((artifact, index) => {
+              const tone = toneStyles[artifact.tone];
+              const isActive = artifact.id === activeArtifact.id;
+              const nodeStyle = {
+                ...orbitNodePositions[artifact.id],
+                '--orbit-node-color': tone.accent,
+              } as CSSProperties;
+
+              return (
+                <div
+                  key={artifact.id}
+                  data-testid={`money-loop-orbit-node-${artifact.id}`}
+                  className={`artifact-orbit-node absolute grid h-9 w-9 place-items-center rounded-full border text-[11px] font-bold ${
+                    isActive ? 'artifact-orbit-node-active border-white/60 text-white' : 'border-white/15 text-slate-300'
+                  }`}
+                  style={nodeStyle}
+                >
+                  {index + 1}
+                </div>
+              );
+            })}
           </div>
 
           <div className="min-w-0">

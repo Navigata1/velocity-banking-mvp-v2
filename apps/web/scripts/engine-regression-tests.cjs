@@ -3342,6 +3342,29 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
 });
 
+test('Money Loop artifact rail renders a model-backed payoff orbit visual', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
+
+  assert.ok(source.includes('orbitNodePositions'), 'expected artifact rail to define stable orbit node positions');
+  assert.ok(source.includes('data-testid="money-loop-payoff-orbit"'), 'expected a stable active orbit smoke hook');
+  assert.ok(
+    source.includes('data-testid={`money-loop-orbit-node-${artifact.id}`}'),
+    'expected the orbit to render one model-backed node per Money Loop artifact'
+  );
+  assert.ok(
+    source.includes('--active-artifact-color') && source.includes('--orbit-node-color'),
+    'expected orbit visuals to use model tone colors instead of static decoration'
+  );
+  assert.ok(css.includes('.artifact-orbit-ring'), 'expected CSS to draw the payoff orbit ring');
+  assert.ok(css.includes('.artifact-orbit-sweep'), 'expected CSS to draw the payoff orbit sweep');
+  assert.ok(css.includes('@keyframes artifactOrbitSweep'), 'expected the orbit sweep to animate when motion is allowed');
+  assert.ok(
+    css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.artifact-orbit-sweep'),
+    'expected the payoff orbit to define a reduced-motion state'
+  );
+});
+
 test('dashboard Money Loop rail is width-contained for mobile layouts', () => {
   const pageSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
   const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
