@@ -2830,6 +2830,20 @@ Post-repair local verification:
 - `apps/mobile` `npm run smoke:android`: passed on emulator `emulator-5554`.
 - `apps/mobile` `npm run smoke:ios`: blocked with the expected macOS/Xcode Simulator requirement.
 
+### Repair Pass 157: Production Alias Diagnostic Refresh
+
+Local source repairs completed on 2026-06-16:
+
+- Re-ran `apps/web` `npm run smoke:production` against `https://web-islanddevcrew.vercel.app` after PRs #68, #69, and #70 merged.
+- Confirmed the public alias still fails because it does not expose `data-testid="primary-navigation"`.
+- Confirmed latest `main` CI run `27612140333` passed for commit `ed08f2912f92aace1901e4e7643314edf770217d`.
+- Confirmed GitHub deployment record `5078173939` exists for the latest commit, with Vercel target URL `https://velocity-banking-mvp-v2-eg615xlt9-islanddevcrew.vercel.app`, but `production_environment: false`.
+- Updated `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` with the current commit, CI run, deployment record, deployment URL, and stale public-alias result.
+
+Current blocker:
+
+- The remaining production issue is still Vercel-side alias/promotion/authentication, tracked in issue #59. App source, CI, local smoke, hosted preview checks, and mobile smoke gates are not the blocker.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
