@@ -267,9 +267,19 @@ async function main() {
     let device = onlineAndroidDevice(adb);
     if (!device) {
       const avds = androidAvds(emulator);
-      const avdName = process.env.ANDROID_SMOKE_AVD || avds[0];
+      const requestedAvdName = process.env.ANDROID_SMOKE_AVD;
+      const avdName = requestedAvdName || avds[0];
       if (!avdName) {
         throw new Error('No online Android device or Android virtual device was found for smoke testing.');
+      }
+      if (requestedAvdName && !avds.includes(requestedAvdName)) {
+        throw new Error(
+          [
+            `Requested Android virtual device was not available: ${requestedAvdName}`,
+            `Available AVDs: ${avds.join(', ') || 'none'}`,
+            'Check ANDROID_AVD_HOME and the AVD creation step before launching the emulator.',
+          ].join('\n')
+        );
       }
 
       emulatorChild = spawn(

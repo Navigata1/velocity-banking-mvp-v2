@@ -55,6 +55,9 @@ jobs:
           ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
           echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
           echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
           echo "$ANDROID_SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
           echo "$ANDROID_SDK_ROOT/emulator" >> "$GITHUB_PATH"
@@ -90,6 +93,8 @@ jobs:
             --name "${{ inputs.avd_name }}" \
             --package "system-images;android-${{ inputs.api_level }};google_apis;x86_64" \
             --device "pixel_5"
+          emulator -list-avds
+          test -f "$ANDROID_AVD_HOME/${{ inputs.avd_name }}.ini"
 
       - name: Smoke Android emulator
         working-directory: apps/mobile

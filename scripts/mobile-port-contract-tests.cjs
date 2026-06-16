@@ -194,6 +194,10 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
   assert.ok(smokeScript.includes("'input', 'swipe'"), 'expected Android smoke to scroll native dashboard content');
   assert.ok(smokeScript.includes('screencap'), 'expected smoke script to capture visual evidence');
   assert.ok(smokeScript.includes('Recent emulator log'), 'expected Android smoke boot failures to include emulator output');
+  assert.ok(
+    smokeScript.includes('Requested Android virtual device was not available'),
+    'expected Android smoke to fail fast when the requested hosted AVD is not visible'
+  );
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
   assert.ok(smokeScript.includes('taskkill.exe'), 'expected Windows process-tree cleanup for Metro');
 });
@@ -302,7 +306,7 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('xcrun simctl list runtimes'), 'expected iOS smoke to warm Simulator tooling before npm smoke');
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
-  assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 420000'), 'expected hosted iOS smoke to allow first-run Expo Go setup time');
+  assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 240000'), 'expected hosted iOS smoke fallback mode to use a bounded simulator attempt');
   assert.ok(workflow.includes('IOS_BUNDLE_TIMEOUT_MS: 420000'), 'expected hosted iOS bundle export to use the same long timeout');
   assert.ok(workflow.includes('STRICT_IOS_SIMULATOR'), 'expected iOS smoke to allow strict simulator mode');
   assert.ok(workflow.includes('Retrying iOS smoke once'), 'expected hosted iOS smoke to retry first-run Simulator openurl timeouts once');
@@ -329,9 +333,13 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('actions/setup-java@v4'), 'expected Android SDK tooling to have Java available');
   assert.ok(workflow.includes('cmdline-tools/latest/bin'), 'expected Android smoke to expose SDK command-line tools on PATH');
   assert.ok(workflow.includes('GITHUB_PATH'), 'expected Android smoke to persist Android SDK tool paths for later steps');
+  assert.ok(workflow.includes('ANDROID_AVD_HOME'), 'expected Android smoke to align AVD creation and launch directories');
+  assert.ok(workflow.includes('mkdir -p "$ANDROID_AVD_HOME"'), 'expected Android smoke to create the shared AVD directory');
   assert.ok(workflow.includes('test -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"'), 'expected Android smoke to fail clearly when sdkmanager is missing');
   assert.ok(workflow.includes('sdkmanager'), 'expected Android smoke to install emulator tooling');
   assert.ok(workflow.includes('avdmanager create avd'), 'expected Android smoke to create an emulator profile');
+  assert.ok(workflow.includes('emulator -list-avds'), 'expected Android smoke to verify the created AVD is visible to the emulator');
+  assert.ok(workflow.includes('test -f "$ANDROID_AVD_HOME/${{ inputs.avd_name }}.ini"'), 'expected Android smoke to verify the AVD ini path');
   assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
   assert.ok(workflow.includes('ANDROID_SMOKE_SCREENSHOT'), 'expected Android smoke to capture a workflow artifact screenshot');
   assert.ok(workflow.includes('ANDROID_SMOKE_TIMEOUT_MS: 600000'), 'expected hosted Android smoke to allow slow emulator boot');

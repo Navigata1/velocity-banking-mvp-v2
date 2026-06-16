@@ -57,7 +57,7 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: 1
           IOS_SMOKE_SIMULATOR: ${{ inputs.simulator }}
-          IOS_SMOKE_TIMEOUT_MS: 420000
+          IOS_SMOKE_TIMEOUT_MS: 240000
           IOS_BUNDLE_TIMEOUT_MS: 420000
           STRICT_IOS_SIMULATOR: ${{ inputs.require_simulator }}
         run: |
@@ -67,17 +67,18 @@ jobs:
           if [ "$status" -eq 0 ]; then
             exit 0
           fi
-          echo "Retrying iOS smoke once after first-run Simulator/Expo Go setup..."
-          npm run smoke:ios
-          retry_status=$?
-          set -e
-          if [ "$retry_status" -eq 0 ]; then
-            exit 0
-          fi
           if [ "$STRICT_IOS_SIMULATOR" = "true" ]; then
+            echo "Retrying iOS smoke once after first-run Simulator/Expo Go setup..."
+            npm run smoke:ios
+            retry_status=$?
+            set -e
+            if [ "$retry_status" -eq 0 ]; then
+              exit 0
+            fi
             echo "Strict iOS Simulator mode is enabled; failing without bundle fallback."
             exit "$retry_status"
           fi
+          set -e
           echo "Hosted iOS Simulator launch did not complete; validating the iOS bundle export fallback."
           IOS_BUNDLE_OUTPUT_DIR=dist-ios npm run smoke:ios-bundle
 
