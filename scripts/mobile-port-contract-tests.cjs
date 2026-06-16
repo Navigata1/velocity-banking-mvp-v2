@@ -184,6 +184,10 @@ test('mobile native release config is explicit for Android and iOS builds', () =
   assert.ok(fs.existsSync(nativePreflightPath), 'expected a repeatable native smoke preflight script');
   assert.ok(nativePreflight.includes('adb'), 'expected Android device bridge check');
   assert.ok(nativePreflight.includes('emulator'), 'expected Android emulator check');
+  assert.ok(nativePreflight.includes('findCommand'), 'expected native preflight to discover tools outside PATH');
+  assert.ok(nativePreflight.includes('ANDROID_HOME'), 'expected native preflight to inspect Android SDK environment paths');
+  assert.ok(nativePreflight.includes('Android connected device'), 'expected native preflight to report device availability separately');
+  assert.ok(nativePreflight.includes('Android virtual device'), 'expected native preflight to report AVD availability separately');
   assert.ok(nativePreflight.includes('xcrun'), 'expected iOS simulator tool check');
   assert.ok(nativePreflight.includes('process.platform'), 'expected host platform awareness');
   assert.ok(nativePreflight.includes('com.islanddevcrew.interestshield'), 'expected app id validation');

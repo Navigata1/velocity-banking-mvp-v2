@@ -2136,6 +2136,23 @@ Post-repair verification:
 - `node scripts\mobile-port-contract-tests.cjs`: passed.
 - `apps/mobile` `npm run check`: passed.
 
+### Repair Pass 121: Mobile Native Preflight SDK Detection
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green mobile contract coverage requiring native preflight to discover Android SDK tools outside PATH, inspect `ANDROID_HOME`/`ANDROID_SDK_ROOT`, and report connected devices and Android virtual devices separately.
+- Updated `apps/mobile/scripts/native-preflight.cjs` so `adb` and `emulator` are discovered from PATH, Android SDK environment variables, or standard SDK install locations.
+- Split Android SDK tool availability from Android smoke readiness: SDK tools can now pass while connected-device and AVD checks remain blocked when no device or virtual device is available.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first on missing SDK discovery coverage, then passed after the repair.
+- `apps/mobile` `npm run preflight:native`: now passes Android app id, iOS bundle id, platform list, preview build scripts, `npx`, Android `adb`, and Android `emulator`; still blocks Android native smoke because no connected Android device is online and no AVD is returned by `emulator -list-avds`; still blocks iOS simulator smoke because the current host is Windows and `xcrun` is unavailable.
+- `apps/mobile` `npm run check`: passed.
+- `apps/web` `npm test`: passed with 118 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
