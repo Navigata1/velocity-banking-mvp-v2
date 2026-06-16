@@ -4,11 +4,13 @@ Last updated: 2026-06-16
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack at merge commit `cebeede30c6b5f52ab5aaa0b58d1114df0ddc284`.
-- GitHub CI passed on `main` run `27596359559`.
-- GitHub recorded a successful Vercel deployment for the merge commit:
-  - `https://velocity-banking-mvp-v2-4jmnl51zf-islanddevcrew.vercel.app`
-- That deployment URL currently returns HTTP `401`, consistent with Vercel Deployment or Preview Protection.
+- `main` contains the InterestShield 2026 release stack through commit `80593472992818e76b8ecb4977a5ed5b6d2826dd` (`Harden hosted mobile smoke gates`).
+- GitHub CI passed on `main` run `27603738467`.
+- GitHub recorded a successful Vercel deployment for the latest merge commit:
+  - deployment record `5076411538`
+  - environment: `Production`
+  - `production_environment: false`
+  - deployment URL: `https://velocity-banking-mvp-v2-fqzvsk7oy-islanddevcrew.vercel.app`
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
 - The public alias does not expose the current release markers:
   - `data-testid="primary-navigation"`
@@ -21,7 +23,9 @@ Last updated: 2026-06-16
 1. Reauthenticate Vercel access.
    - Vercel MCP currently reports reauthentication required.
    - `npx vercel whoami`, `npx vercel inspect`, and `npx vercel ls` time out or wait for authentication in the local Codex environment.
-   - Chrome can open the Vercel project overview, but the Domains and Deployments pages redirect to login.
+   - The local environment is missing `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, and `VERCEL_AUTOMATION_BYPASS_SECRET`.
+   - No `.vercel/project.json` link is present in this checkout.
+   - Chrome redirects `https://vercel.com/islanddevcrew/velocity-banking-mvp-v2/deployments` to Vercel login.
 
 2. Confirm the project that owns the release.
    - Expected team slug: `islanddevcrew`
@@ -34,7 +38,7 @@ Last updated: 2026-06-16
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `cebeede30c6b5f52ab5aaa0b58d1114df0ddc284`, or a newer passing `main` deployment, to the public production alias.
+   - Promote the deployment for `80593472992818e76b8ecb4977a5ed5b6d2826dd`, or a newer passing `main` deployment, to the public production alias.
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
 
@@ -97,3 +101,22 @@ After verification passes:
    - Browser/Chrome rendered freshness result
 2. Close issue #59.
 3. If the final InterestShield custom domain was added, update this runbook with the domain and rerun the same smoke steps against it.
+
+## Latest Codex Diagnostic Commands
+
+These commands were run on 2026-06-16 from the local checkout on `main`:
+
+```powershell
+gh run view 27603738467 --json databaseId,workflowName,status,conclusion,url,jobs
+gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=80593472992818e76b8ecb4977a5ed5b6d2826dd'
+npm run smoke:production
+npx vercel whoami
+```
+
+Result summary:
+
+- `main` CI passed.
+- GitHub has a successful Vercel deployment URL for the latest commit.
+- The deployment record is not marked as the production environment.
+- Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
+- Vercel CLI, Vercel MCP, and Chrome are all unauthenticated from this Codex environment.
