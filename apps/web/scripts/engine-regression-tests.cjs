@@ -2996,6 +2996,39 @@ test('learn page avoids universal LOC rate-spread rules', () => {
   }
 });
 
+test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
+  const learnSource = fs
+    .readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8')
+    .replace(/\\'/g, "'")
+    .toLowerCase();
+  const dashboardSource = fs
+    .readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8')
+    .toLowerCase();
+  const bannedLearnPhrases = [
+    "but here's the magic",
+    "isn't magic",
+    "it's not free money",
+    'every day costs you',
+    'works double-duty',
+    'double duty',
+    'powerful cycle',
+    'it fails without',
+    'when does it not work',
+    "you're just adding debt",
+    'defeats the purpose',
+  ];
+
+  for (const phrase of bannedLearnPhrases) {
+    assert.ok(!learnSource.includes(phrase), `expected Learn copy to avoid hype or fear phrase: ${phrase}`);
+  }
+
+  assert.ok(!dashboardSource.includes('not free money'), 'expected Dashboard LOC copy not to frame credit as free money');
+  assert.ok(
+    dashboardSource.includes('available credit is capacity, not income'),
+    'expected Dashboard LOC copy to frame available credit as capacity'
+  );
+});
+
 test('learn progress sanitizes corrupt browser storage before hydration', () => {
   const progress = learnProgress.sanitizeLearnProgress({
     completed: [1, '2', 0, 99, 'not-a-module', 2],
