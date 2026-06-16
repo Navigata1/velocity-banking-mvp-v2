@@ -2213,6 +2213,23 @@ Post-repair verification:
 - In-app Browser rendered `/settings`, confirmed the backend handoff snapshot section, imported pasted handoff JSON, observed the success status, captured screenshot evidence, and found no console warnings/errors.
 - Chrome rendered `/settings`, confirmed the backend handoff snapshot section and import controls, captured screenshot evidence, and found no console warnings/errors. Chrome extension click interaction timed out on this pass, so the completed import interaction proof came from the in-app Browser.
 
+### Repair Pass 125: Production Vercel Route Smoke
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added `apps/web` `smoke:production`, backed by `apps/web/scripts/smoke-production.cjs`.
+- The production smoke defaults to `https://web-islanddevcrew.vercel.app`, allows override through `PRODUCTION_ORIGIN`, follows redirects, checks all app routes, verifies HTTP 200 HTML responses, verifies the expected InterestShield Next shell, and catches missing/protected/error deployment shells such as `DEPLOYMENT_NOT_FOUND`, `Vercel Authentication`, `Application error`, and `__next_error__`.
+- Added regression coverage that the command exists, covers Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault, and keeps the production origin override explicit.
+- Production Browser and Chrome smoke found the live URL reachable with no captured console warnings/errors, but the rendered app is still serving an older intro-gated UI with legacy copy. The current repo defaults keep the dashboard ungated and has stricter coach-tone copy rules, so production still needs a fresh deployment/promotion after the stacked PRs are merged.
+- The Vercel connector still requires reauthentication, and this checkout has no `.vercel` project metadata or local `vercel` CLI binary available, so deployment/project inspection was not available in this pass.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing production smoke script expectation, then passed with 123 regression tests after the repair.
+- `apps/web` `npm run smoke:production`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault` against `https://web-islanddevcrew.vercel.app`.
+- In-app Browser rendered `https://web-islanddevcrew.vercel.app/`, confirmed title `InterestShield - Financial Empowerment`, captured screenshot evidence, found no console warnings/errors, and recorded the live deployment freshness mismatch described above.
+- Chrome rendered the same live URL, confirmed the intro-gated legacy UI and no captured console warnings/errors, then closed the agent-created tab.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
@@ -2660,7 +2677,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 - First-run desktop intro.
 - First-run mobile intro.
-- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set, with a live Browser freshness mismatch recorded because production is still serving an older intro-gated UI.
 - Domain switch. Status: covered in Repair Pass 42 for Dashboard Auto/House switching in Browser and Chrome.
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.

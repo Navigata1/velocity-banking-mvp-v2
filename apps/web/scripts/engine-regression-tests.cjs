@@ -3440,6 +3440,37 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('server.kill'), 'expected smoke script to clean up the server');
 });
 
+test('web app exposes a repeatable production Vercel smoke command', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const productionSmokeScriptPath = path.resolve(__dirname, 'smoke-production.cjs');
+  const productionSmokeScript = fs.existsSync(productionSmokeScriptPath)
+    ? fs.readFileSync(productionSmokeScriptPath, 'utf8')
+    : '';
+
+  assert.equal(packageJson.scripts['smoke:production'], 'node scripts/smoke-production.cjs');
+  assert.ok(fs.existsSync(productionSmokeScriptPath), 'expected a repeatable production Vercel smoke script');
+  assert.ok(
+    productionSmokeScript.includes("process.env.PRODUCTION_ORIGIN || 'https://web-islanddevcrew.vercel.app'"),
+    'expected production smoke to default to the current Vercel app URL while allowing overrides'
+  );
+  assert.ok(productionSmokeScript.includes("['/', 'Dashboard'"), 'expected production smoke to cover the dashboard route');
+  assert.ok(productionSmokeScript.includes("['/simulator', 'Simulator'"), 'expected production smoke to cover the simulator route');
+  assert.ok(productionSmokeScript.includes("['/cockpit', 'Cockpit'"), 'expected production smoke to cover the cockpit route');
+  assert.ok(productionSmokeScript.includes("['/portfolio', 'Portfolio'"), 'expected production smoke to cover the portfolio route');
+  assert.ok(productionSmokeScript.includes("['/learn', 'Learn'"), 'expected production smoke to cover the learn route');
+  assert.ok(productionSmokeScript.includes("['/settings', 'Settings'"), 'expected production smoke to cover the settings route');
+  assert.ok(productionSmokeScript.includes("['/vault', 'Vault'"), 'expected production smoke to cover the vault route');
+  assert.ok(productionSmokeScript.includes('response.statusCode !== 200'), 'expected production smoke to fail non-200 routes');
+  assert.ok(
+    productionSmokeScript.includes("content-type") && productionSmokeScript.includes("text/html"),
+    'expected production smoke to verify HTML responses'
+  );
+  assert.ok(productionSmokeScript.includes('InterestShield - Financial Empowerment'), 'expected production smoke to verify app metadata');
+  assert.ok(productionSmokeScript.includes('/_next/static'), 'expected production smoke to verify Next static assets');
+  assert.ok(productionSmokeScript.includes('DEPLOYMENT_NOT_FOUND'), 'expected production smoke to catch missing Vercel deployments');
+  assert.ok(productionSmokeScript.includes('Vercel Authentication'), 'expected production smoke to catch protected deployments');
+});
+
 test('web app declares Vercel Next deployment configuration', () => {
   const vercelConfigPath = path.resolve(__dirname, '..', 'vercel.json');
 
