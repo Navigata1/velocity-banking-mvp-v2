@@ -2533,11 +2533,26 @@ Post-repair verification:
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 - True GitHub-hosted Android emulator execution remains pending until the new manual workflow is available to dispatch from GitHub.
 
+### Repair Pass 140: Live Production Rendered Freshness Smoke
+
+Rendered production verification completed on 2026-06-16:
+
+- In-app Browser loaded `https://web-islanddevcrew.vercel.app/` and confirmed the live production page does not expose the current dashboard hooks: `primary-navigation`, `money-loop-artifact-rail`, `money-loop-payoff-orbit`, or the four dashboard vital hooks.
+- Chrome extension smoke loaded `https://web-islanddevcrew.vercel.app/?codexRenderedSmoke=20260616a` and confirmed the same production mismatch with a cache-busting query.
+- Both Browser and Chrome rendered the older intro-gated app surface with title `InterestShield - Financial Empowerment`, legacy emoji navigation, `Welcome to InterestShield`, `The Money Loop - How Interest Really Works`, and `Financial Health` copy.
+- Browser and Chrome captured no console warnings or errors, so the current issue is deployment freshness or production alias promotion, not a client-side crash.
+- `npx vercel --version` reports Vercel CLI `54.14.0`, but `npx vercel whoami` still times out waiting for authentication and no `.vercel` project metadata exists in this checkout. Production deployment metadata, build logs, runtime logs, and alias inspection remain blocked until Vercel authentication/project access is restored.
+
+Required release action:
+
+- After the stacked PRs are merged, promote/deploy the current Next.js web app to the production alias, then rerun both `apps/web` `npm run smoke:production` and a rendered Browser or Chrome smoke that verifies `money-loop-artifact-rail`, `money-loop-payoff-orbit`, and the four dashboard vitals on `https://web-islanddevcrew.vercel.app/`.
+
 ### Browser And Chrome Smoke
 
-- In-app browser loaded local and production pages.
-- Chrome extension smoke test loaded production successfully.
-- Production routes rendered with no captured console errors:
+- In-app Browser loaded local and production pages.
+- Chrome extension smoke loaded production successfully.
+- Current production HTTP route-shell smoke passes, but rendered Browser and Chrome smoke in Repair Pass 140 confirms `https://web-islanddevcrew.vercel.app` is still serving an older intro-gated deployment rather than the current four-vitals dashboard and payoff orbit surface.
+- Production routes rendered a reachable shell with no captured console errors:
   - `/`
   - `/simulator`
   - `/cockpit`
@@ -2547,11 +2562,12 @@ Post-repair verification:
   - `/vault`
 - Guardian chat opens and answers canned/state-aware questions.
 - Domain switching works after the intro and preview gates are dismissed.
+- The current production alias must not be treated as release-fresh until the rendered smoke hooks from Repair Pass 140 pass.
 
 ### Vercel
 
 - The Vercel connector returned `401: Reauthentication required`.
-- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication. Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, and project settings still require Vercel authentication/access.
+- `npx vercel --version` is available, but `npx vercel whoami` timed out waiting for authentication again during Repair Pass 140. Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, alias promotion, and project settings still require Vercel authentication/access.
 - Deployment metadata, build logs, runtime logs, and project settings were not available during this pass.
 
 ## Highest Priority Findings
@@ -2980,7 +2996,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 - First-run desktop intro.
 - First-run mobile intro.
-- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set, with a live Browser freshness mismatch recorded because production is still serving an older intro-gated UI.
+- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set. Repair Pass 140 confirmed with both Browser and Chrome that production is still serving an older intro-gated UI and does not expose the current dashboard vitals or payoff orbit hooks.
 - Domain switch. Status: covered in Repair Pass 42 for Dashboard Auto/House switching in Browser and Chrome.
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.
