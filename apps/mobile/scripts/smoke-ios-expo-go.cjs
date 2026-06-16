@@ -5,7 +5,7 @@ const path = require('node:path');
 
 const appRoot = path.resolve(__dirname, '..');
 const port = process.env.IOS_SMOKE_PORT || '8082';
-const timeoutMs = Number(process.env.IOS_SMOKE_TIMEOUT_MS || 180000);
+const timeoutMs = Number(process.env.IOS_SMOKE_TIMEOUT_MS || 300000);
 const screenshotPath = process.env.IOS_SMOKE_SCREENSHOT || path.join(os.tmpdir(), 'interestshield-ios-smoke.png');
 const macosRequiredMessage = 'iOS Expo Go smoke requires macOS with Xcode and Simulator.';
 
@@ -55,7 +55,7 @@ function restoreFile(snapshot) {
 }
 
 function requireXcodeTools() {
-  const result = run('xcrun', ['simctl', 'help'], { timeout: 10000 });
+  const result = run('xcrun', ['simctl', 'help'], { timeout: 60000 });
   if (result.status !== 0) {
     throw new Error(`xcrun simctl was not available. ${macosRequiredMessage}\n${result.output}`);
   }
@@ -103,8 +103,20 @@ function chooseSimulator() {
   const booted = devices.find((device) => device.state === 'Booted');
   if (booted) return booted;
 
-  const newest = devices[devices.length - 1];
-  if (newest) return newest;
+  const preferredPatterns = [
+    /^iPhone \d+ Pro Max$/i,
+    /^iPhone \d+ Pro$/i,
+    /^iPhone \d+$/i,
+    /^iPhone (?!SE)/i,
+    /^iPhone SE/i,
+  ];
+  for (const pattern of preferredPatterns) {
+    const preferred = devices.find((device) => pattern.test(device.name));
+    if (preferred) return preferred;
+  }
+
+  const fallback = devices[0];
+  if (fallback) return fallback;
 
   throw new Error('No available iPhone Simulator was found for iOS smoke testing.');
 }

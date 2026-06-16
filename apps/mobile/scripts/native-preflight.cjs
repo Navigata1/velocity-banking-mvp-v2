@@ -109,18 +109,24 @@ function androidAvds(emulatorTool) {
     .filter(Boolean);
 }
 
-function pushCheck(checks, label, passed, detail) {
-  checks.push({ detail, label, passed });
+function pushCheck(checks, label, passed, detail, options = {}) {
+  checks.push({
+    blocking: options.blocking ?? true,
+    detail,
+    label,
+    passed,
+  });
 }
 
 function report(checks) {
   console.log('Native smoke preflight');
 
   for (const check of checks) {
-    console.log(`${check.passed ? 'PASS' : 'BLOCKED'} ${check.label}: ${check.detail}`);
+    const status = check.passed ? 'PASS' : check.blocking ? 'BLOCKED' : 'INFO';
+    console.log(`${status} ${check.label}: ${check.detail}`);
   }
 
-  const blocked = checks.filter((check) => !check.passed);
+  const blocked = checks.filter((check) => !check.passed && check.blocking);
   if (blocked.length > 0) {
     console.error(`Native smoke preflight blocked: ${blocked.length} item(s) need attention before Android/iOS smoke.`);
     process.exitCode = 1;
@@ -138,6 +144,8 @@ const emulatorTool = findCommand(
 );
 const connectedDevices = androidDevices(adbTool);
 const avds = androidAvds(emulatorTool);
+const hasConnectedAndroidDevice = connectedDevices.length > 0;
+const hasAndroidAvd = avds.length > 0;
 
 pushCheck(
   checks,
@@ -177,14 +185,27 @@ pushCheck(checks, 'Android emulator', emulatorTool.found, emulatorTool.detail);
 pushCheck(
   checks,
   'Android connected device',
-  connectedDevices.length > 0,
-  connectedDevices.length > 0 ? connectedDevices.join(', ') : 'no adb devices are connected and online'
+  hasConnectedAndroidDevice,
+  hasConnectedAndroidDevice
+    ? connectedDevices.join(', ')
+    : 'no adb devices are connected and online; Android smoke can auto-boot an AVD when one is available',
+  { blocking: !hasAndroidAvd }
 );
 pushCheck(
   checks,
   'Android virtual device',
-  avds.length > 0,
-  avds.length > 0 ? avds.join(', ') : 'no Android virtual devices returned by emulator -list-avds'
+  hasAndroidAvd,
+  hasAndroidAvd ? avds.join(', ') : 'no Android virtual devices returned by emulator -list-avds'
+);
+pushCheck(
+  checks,
+  'Android smoke target',
+  hasConnectedAndroidDevice || hasAndroidAvd,
+  hasConnectedAndroidDevice
+    ? `will use connected device ${connectedDevices.join(', ')}`
+    : hasAndroidAvd
+      ? `will auto-boot AVD ${avds[0]} when smoke:android runs`
+      : 'no connected Android device or bootable AVD is available'
 );
 pushCheck(
   checks,

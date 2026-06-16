@@ -260,15 +260,26 @@ async function main() {
   const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx';
   let child;
   let emulatorChild;
+  let emulatorLog = '';
   let startedEmulator = false;
 
   try {
     let device = onlineAndroidDevice(adb);
     if (!device) {
       const avds = androidAvds(emulator);
-      const avdName = process.env.ANDROID_SMOKE_AVD || avds[0];
+      const requestedAvdName = process.env.ANDROID_SMOKE_AVD;
+      const avdName = requestedAvdName || avds[0];
       if (!avdName) {
         throw new Error('No online Android device or Android virtual device was found for smoke testing.');
+      }
+      if (requestedAvdName && !avds.includes(requestedAvdName)) {
+        throw new Error(
+          [
+            `Requested Android virtual device was not available: ${requestedAvdName}`,
+            `Available AVDs: ${avds.join(', ') || 'none'}`,
+            'Check ANDROID_AVD_HOME and the AVD creation step before launching the emulator.',
+          ].join('\n')
+        );
       }
 
       emulatorChild = spawn(
@@ -277,15 +288,27 @@ async function main() {
         {
           cwd: appRoot,
           env,
-          stdio: ['ignore', 'ignore', 'ignore'],
+          stdio: ['ignore', 'pipe', 'pipe'],
           windowsHide: true,
         }
       );
+      emulatorChild.stdout.on('data', (chunk) => {
+        emulatorLog += chunk.toString();
+      });
+      emulatorChild.stderr.on('data', (chunk) => {
+        emulatorLog += chunk.toString();
+      });
       startedEmulator = true;
 
       device = await waitForBootedDevice(adb, Date.now() + timeoutMs);
       if (!device) {
-        throw new Error(`Android emulator ${avdName} did not finish booting before the smoke timeout.`);
+        throw new Error(
+          [
+            `Android emulator ${avdName} did not finish booting before the smoke timeout.`,
+            'Recent emulator log:',
+            emulatorLog.split(/\r?\n/).filter(Boolean).slice(-40).join('\n') || 'no emulator output captured',
+          ].join('\n')
+        );
       }
     }
 
@@ -358,7 +381,11 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error.message || error);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error(error.message || error);
+    process.exit(1);
+  });

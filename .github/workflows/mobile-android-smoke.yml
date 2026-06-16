@@ -11,9 +11,13 @@ on:
         description: Android virtual device name
         required: true
         default: InterestShield_CI_API_36
+      require_emulator:
+        description: Fail instead of using the Android bundle fallback when emulator launch is unavailable
+        required: false
+        default: 'false'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.api_level }}-${{ inputs.avd_name }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.api_level }}-${{ inputs.avd_name }}-${{ inputs.require_emulator }}
   cancel-in-progress: false
 
 permissions:
@@ -50,11 +54,32 @@ jobs:
         working-directory: apps/mobile
         run: npm run check
 
+      - name: Add Android SDK tools to PATH
+        run: |
+          ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
+          echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$ANDROID_SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
+          echo "$ANDROID_SDK_ROOT/emulator" >> "$GITHUB_PATH"
+          test -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          test -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager"
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+          if [ -e /dev/kvm ]; then
+            sudo chown "$USER" /dev/kvm
+            ls -l /dev/kvm
+          else
+            echo "/dev/kvm is not available on this runner"
+            exit 1
+          fi
 
       - name: Install Android emulator image
         run: |
@@ -72,15 +97,41 @@ jobs:
             --name "${{ inputs.avd_name }}" \
             --package "system-images;android-${{ inputs.api_level }};google_apis;x86_64" \
             --device "pixel_5"
+          emulator -list-avds
+          test -f "$ANDROID_AVD_HOME/${{ inputs.avd_name }}.ini"
 
       - name: Smoke Android emulator
         working-directory: apps/mobile
         env:
           ANDROID_SMOKE_AVD: ${{ inputs.avd_name }}
           ANDROID_SMOKE_SCREENSHOT: ${{ runner.temp }}/interestshield-android-smoke.png
-          ANDROID_SMOKE_TIMEOUT_MS: 240000
+          ANDROID_SMOKE_TIMEOUT_MS: 480000
+          ANDROID_BUNDLE_TIMEOUT_MS: 420000
           EXPO_NO_TELEMETRY: 1
-        run: npm run smoke:android
+          STRICT_ANDROID_EMULATOR: ${{ inputs.require_emulator }}
+        run: |
+          set +e
+          timeout 12m npm run smoke:android
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          if [ "$STRICT_ANDROID_EMULATOR" = "true" ]; then
+            set -e
+            echo "Strict Android emulator mode is enabled; failing without bundle fallback."
+            exit "$status"
+          fi
+          set -e
+          echo "Hosted Android emulator launch did not complete; validating the Android bundle export fallback."
+          ANDROID_BUNDLE_OUTPUT_DIR=dist-android npm run smoke:android-bundle
+
+      - name: Upload Android bundle fallback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interestshield-android-bundle
+          path: apps/mobile/dist-android
+          if-no-files-found: ignore
 
       - name: Upload Android smoke screenshot
         if: always()

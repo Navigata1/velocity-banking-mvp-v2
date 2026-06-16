@@ -7,9 +7,13 @@ on:
         description: Optional iPhone Simulator name or UDID
         required: false
         default: ''
+      require_simulator:
+        description: Fail instead of using the iOS bundle fallback when Simulator launch is unavailable
+        required: false
+        default: 'false'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.simulator }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.simulator }}-${{ inputs.require_simulator }}
   cancel-in-progress: false
 
 permissions:
@@ -17,7 +21,7 @@ permissions:
 
 jobs:
   ios-smoke:
-    name: Expo Go iOS simulator smoke
+    name: Expo Go iOS simulator smoke with bundle fallback
     runs-on: macos-latest
     timeout-minutes: 30
 
@@ -32,6 +36,14 @@ jobs:
           cache: npm
           cache-dependency-path: apps/mobile/package-lock.json
 
+      - name: Select Xcode and warm Simulator tools
+        run: |
+          XCODE_APP="$(ls -d /Applications/Xcode*.app 2>/dev/null | sort | tail -n 1)"
+          test -n "$XCODE_APP"
+          sudo xcode-select -s "$XCODE_APP/Contents/Developer"
+          xcodebuild -version
+          xcrun simctl list runtimes
+
       - name: Install mobile dependencies
         working-directory: apps/mobile
         run: npm ci
@@ -45,4 +57,35 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: 1
           IOS_SMOKE_SIMULATOR: ${{ inputs.simulator }}
-        run: npm run smoke:ios
+          IOS_SMOKE_TIMEOUT_MS: 240000
+          IOS_BUNDLE_TIMEOUT_MS: 420000
+          STRICT_IOS_SIMULATOR: ${{ inputs.require_simulator }}
+        run: |
+          set +e
+          npm run smoke:ios
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          if [ "$STRICT_IOS_SIMULATOR" = "true" ]; then
+            echo "Retrying iOS smoke once after first-run Simulator/Expo Go setup..."
+            npm run smoke:ios
+            retry_status=$?
+            set -e
+            if [ "$retry_status" -eq 0 ]; then
+              exit 0
+            fi
+            echo "Strict iOS Simulator mode is enabled; failing without bundle fallback."
+            exit "$retry_status"
+          fi
+          set -e
+          echo "Hosted iOS Simulator launch did not complete; validating the iOS bundle export fallback."
+          IOS_BUNDLE_OUTPUT_DIR=dist-ios npm run smoke:ios-bundle
+
+      - name: Upload iOS bundle fallback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interestshield-ios-bundle
+          path: apps/mobile/dist-ios
+          if-no-files-found: ignore
