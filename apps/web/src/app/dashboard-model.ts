@@ -479,7 +479,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       {
         label: 'LOC',
         value: `${formatCurrency(availableLoc)} open`,
-        note: 'Available credit is capacity, not free money.',
+        note: 'Available credit is capacity, not income.',
       },
       {
         label: 'Expenses',

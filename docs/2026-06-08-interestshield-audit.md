@@ -2919,6 +2919,24 @@ Post-repair local verification:
 - `apps/mobile` `npm run smoke:ios-bundle`: passed.
 - Installed-Chrome smoke at `http://127.0.0.1:5027`: rendered Dashboard and Simulator, confirmed the daily-accrual Dashboard assumption and Simulator event ledger, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-adb-dashboard-smoke.png`, and captured no console warnings/errors or page errors.
 
+### Repair Pass 162: Learn LOC Coach-Tone Copy
+
+Local source repairs completed on 2026-06-16:
+
+- Replaced Learn module copy that described the Money Loop as `magic`, `powerful`, or `double duty` with plain model-driven language.
+- Replaced the common-mistakes LOC interest warning `It's not free money - every day costs you` with `LOC interest accrues daily in the model`.
+- Updated the Dashboard Money Loop LOC note from a `free money` framing to `Available credit is capacity, not income`.
+- Added regression coverage so Learn and Dashboard LOC copy avoid the removed hype and fear phrases.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed with 141 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+- App-source phrase search found no remaining `magic`, `trap`, `robbed`, `scam`, `free money`, `costs you`, `double duty`, `powerful cycle`, or `it fails without` matches.
+- Installed-Chrome smoke at `http://127.0.0.1:5029/learn?module=5` and `/learn?module=6`: confirmed the new module copy rendered, confirmed removed phrases stayed absent, captured screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-learn-final-copy-smoke.png`, and captured no console warnings/errors or page errors. Source regression coverage also guards the non-default quiz explanation copy.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3416,7 +3434,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94.
 - Rebuild simulator scenario comparison.
 - Rebuild portfolio mobile and desktop planner.
-- Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity.
+- Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity. Repair Pass 162 tightened Learn and Dashboard LOC wording so warnings stay coach-tone instead of hype or fear phrasing.
 
 ### Phase 3: Backend
 

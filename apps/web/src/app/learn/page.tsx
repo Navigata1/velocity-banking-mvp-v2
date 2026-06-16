@@ -340,12 +340,12 @@ const lessons: Lesson[] = [
     color: 'blue',
     simulatorFocus: 'loc',
     content: [
-      'The Money Loop is the heartbeat of velocity banking. It\'s a simple but powerful cycle: your entire paycheck deposits directly into your Line of Credit (LOC), immediately reducing the balance. Then, throughout the month, you pay your living expenses from the LOC. At the end of the month, the net effect is that your LOC balance dropped by your cash flow amount — but the average daily balance was lower the entire month.',
-      'Here\'s the step-by-step: Say your LOC balance is $5,000. On the 1st, your $4,000 paycheck deposits in — balance drops to $1,000. Over 30 days, you draw $3,500 for expenses. End-of-month balance: $4,500 (down $500 — your cash flow). But here\'s the magic: your average daily balance was roughly $2,800 instead of $5,000 because the income sat in the LOC for days before being drawn out.',
-      'Why does the average daily balance matter? Because LOCs charge interest on the average daily balance, not the ending balance. A traditional bank account separates your income from your debt — money sits in checking earning nothing while your LOC accrues interest on the full balance. The Money Loop eliminates that gap.',
-      'This is the core innovation of velocity banking: using the same dollars to both reduce interest-bearing balance AND pay your bills. Your money works double-duty. The cycle repeats every pay period, creating a repeatable interest-management loop powered by your income flow.',
+      'The Money Loop is the core cycle in velocity banking: income deposits directly into your Line of Credit (LOC), immediately reducing the balance. Then, throughout the month, you pay your living expenses from the LOC. At the end of the month, the net effect is that your LOC balance dropped by your cash flow amount — but the average daily balance was lower the entire month.',
+      'Here\'s the step-by-step: Say your LOC balance is $5,000. On the 1st, your $4,000 paycheck deposits in — balance drops to $1,000. Over 30 days, you draw $3,500 for expenses. End-of-month balance: $4,500 (down $500 — your cash flow). The important part: your average daily balance was roughly $2,800 instead of $5,000 because the income sat in the LOC for days before being drawn out.',
+      'Why does the average daily balance matter? Because LOCs charge interest on the average daily balance, not the ending balance. A traditional bank account separates your income from your debt — money sits in checking while your LOC accrues interest on the full balance. The Money Loop narrows that timing gap.',
+      'This is the core mechanic of velocity banking: using the same dollars to both reduce interest-bearing balance and pay your bills. The cycle repeats every pay period, creating a repeatable interest-management loop powered by your income flow.',
     ],
-    keyTakeaway: 'Deposit income into LOC first, pay expenses from LOC. Your money reduces your average daily balance before it gets spent — making every dollar work double duty.',
+    keyTakeaway: 'Deposit income into LOC first, pay expenses from LOC. Your money reduces your average daily balance before it gets spent, then still covers planned bills.',
     deepDive: 'The efficiency of the Money Loop depends on how your expenses are distributed throughout the month. If all expenses hit on day 1, the ADB benefit is minimal. If expenses trickle out evenly (which is typical — rent on the 1st, utilities mid-month, groceries weekly), the ADB stays low for longer. Some advanced practitioners even time bill payments to maximize the ADB reduction effect, though this is an optimization that adds complexity.',
     quiz: {
       question: 'In the Money Loop, why does depositing your paycheck into the LOC reduce interest?',
@@ -431,12 +431,12 @@ const lessons: Lesson[] = [
     color: 'green',
     simulatorFocus: 'overview',
     content: [
-      'Velocity banking isn\'t magic — it\'s math. And the math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, the strategy cannot function.',
+      'Velocity banking is a math model, not a promise. The math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, the strategy cannot function.',
       'Ideal conditions include: a LOC interest rate lower than your primary debt rate, consistent and predictable income, front-loaded amortized debt where early payments are interest-heavy, and financial discipline to avoid increasing spending as credit becomes available.',
       'If your LOC rate is close to or higher than the debt rate, do not assume the strategy works. The ADB benefit, chunk timing, fees, recovery window, and cash-flow stability all need to be modeled together before trusting the spread.',
-      'When does it NOT work? If your cash flow is negative (you\'re spending more than you earn), if your LOC rate is significantly higher than your debt rate with low cash flow, if you can\'t maintain spending discipline (using the LOC for lifestyle inflation defeats the purpose), or if your debt is already near the end of its amortization schedule (most payments are already going to principal, so chunks have less impact).',
+      'When should you pause and review? If cash flow is negative (you\'re spending more than you earn), if your LOC rate is significantly higher than your debt rate with low cash flow, if spending discipline is not stable yet, or if your debt is already near the end of its amortization schedule (most payments are already going to principal, so chunks have less impact).',
     ],
-    keyTakeaway: 'Velocity banking thrives with: positive cash flow, LOC rate lower than debt rate, front-loaded amortized debt, and spending discipline. It fails without positive cash flow or spending control.',
+    keyTakeaway: 'Velocity banking works best with positive cash flow, a LOC rate lower than the target debt rate, front-loaded amortized debt, and spending discipline. It needs positive cash flow and spending control before payoff claims are trustworthy.',
     deepDive: 'Rate comparison nuance: A 10% LOC vs 6% mortgage might seem like a losing proposition. But remember — you\'re paying 10% on the average daily balance, and chunks may hit principal on a front-loaded amortization where early payments are interest-heavy. Run the numbers in the simulator with your actual rates, cash flow, fees, and payoff timing before assuming the spread works in your situation.',
     quiz: {
       question: 'Which of the following would make velocity banking LEAST effective?',
@@ -447,7 +447,7 @@ const lessons: Lesson[] = [
         'Having $300/month cash flow instead of $1,000',
       ],
       correctIndex: 1,
-      explanation: 'Negative cash flow means the LOC balance grows instead of shrinking. The Money Loop requires positive cash flow to function — without it, you\'re just adding debt.',
+      explanation: 'Negative cash flow means the LOC balance can grow instead of shrinking. The Money Loop requires positive cash flow before LOC use can create payoff progress.',
     },
     investopediaUrl: 'https://www.investopedia.com/mortgage/heloc/',
     investopediaLabel: 'HELOC Guide — Investopedia',
@@ -797,7 +797,7 @@ function CommonMistakesViz() {
     { title: 'Over-utilizing LOC', desc: 'Stay under 80% to maintain emergency buffer', icon: '🔴' },
     { title: 'Not tracking expenses', desc: 'Estimated cash flow ≠ real cash flow', icon: '📋' },
     { title: 'Chunks too large', desc: 'Can\'t recover if income dips', icon: '💣' },
-    { title: 'Ignoring LOC interest', desc: 'It\'s not free money — every day costs you', icon: '💸' },
+    { title: 'Ignoring LOC interest', desc: 'LOC interest accrues daily in the model', icon: '💸' },
     { title: 'LOC as spending money', desc: 'Available credit ≠ available income', icon: '🛍️' },
   ];
   return (
