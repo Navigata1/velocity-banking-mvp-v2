@@ -61,7 +61,12 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
   };
 
   return (
-    <div className={`relative flex flex-wrap justify-center gap-1.5 p-1.5 ${classes.glass} rounded-xl`} ref={dropdownRef}>
+    <div
+      role="tablist"
+      aria-label="Financial domain"
+      className={`relative flex flex-wrap justify-center gap-1.5 p-1.5 ${classes.glass} rounded-xl`}
+      ref={dropdownRef}
+    >
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const hasDropdown = dropdownOpen === tab.id;
@@ -71,7 +76,13 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
         return (
           <div key={tab.id} className="relative">
             <button
+              type="button"
+              role="tab"
               onClick={() => handleTabClick(tab.id)}
+              aria-label={isActive ? `${tab.label} domain options` : `Switch to ${tab.label} domain`}
+              aria-controls={isActive ? `domain-options-${tab.id}` : undefined}
+              aria-expanded={isActive ? hasDropdown : undefined}
+              aria-selected={isActive}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
                 isActive
                   ? `${classes.glassButton} text-emerald-400 ring-1 ring-emerald-500/50`
@@ -89,6 +100,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
             
             {hasDropdown && (
               <div 
+                id={`domain-options-${tab.id}`}
                 className={`absolute top-full left-0 mt-2 ${classes.dropdown} rounded-xl shadow-2xl overflow-hidden min-w-[220px] animate-in fade-in slide-in-from-top-2 duration-200`}
                 style={{ zIndex: 9999 }}
               >
@@ -100,8 +112,11 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                     const isSelected = store.getActiveSubcategory(tab.id as Domain)?.id === subcat.id;
                     return (
                       <button
+                        type="button"
                         key={subcat.id}
                         onClick={() => handleSubcategorySelect(tab.id as Domain, subcat.id)}
+                        aria-label={`Use ${subcat.label} for ${tab.label}`}
+                        aria-pressed={isSelected}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
                           isSelected
                             ? 'bg-emerald-500/30 text-emerald-500 font-semibold'

@@ -2687,6 +2687,25 @@ Current blocker:
 
 - The remaining production issue is Vercel-side alias/promotion/authentication, tracked in issue #59. App source, CI, local smoke, and hosted mobile smoke gates are not the blocker.
 
+### Repair Pass 149: Web Route Accessibility Contract
+
+Local source repairs completed on 2026-06-16:
+
+- Added `apps/web/scripts/accessibility-route-contract.cjs`, a dependency-free route accessibility contract that covers Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+- Wired the contract into `apps/web` `npm test` and added `npm run test:a11y` for focused accessibility verification.
+- Fixed the Vault wizard stepper so step indicators are native buttons with accessible names and current-step state instead of mouse-only clickable bars.
+- Added dialog semantics and accessible names to the Guardian chat, the snapshot preview, and the Portfolio add-debt modal.
+- Added accessible names/state to the domain selector, quick-adjust sliders, intro checkbox, Portfolio select controls, Portfolio split allocation editor, and add-debt modal fields.
+- The contract now rejects non-native `onClick` targets and unnamed `input`, `select`, and `textarea` controls across the shared shell and route files.
+
+Post-repair local verification:
+
+- `apps/web` `npm test`: passed 129 regression tests plus the accessibility route contract.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- Chrome-controlled smoke at `http://127.0.0.1:5011`: verified keyboard activation of the Vault stepper, Portfolio add-debt dialog labels/close control, Dashboard domain selector keyboard path, Guardian dialog input/send/close path, and captured no console warnings or errors.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3150,7 +3169,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 ### Accessibility Tests
 
-- Keyboard navigation. Status: intro modal focus containment and Escape close covered in Repair Pass 111; skip-to-main-content access covered in Repair Pass 112; broader route-by-route keyboard traversal still needs a dedicated pass.
+- Keyboard navigation. Status: intro modal focus containment and Escape close covered in Repair Pass 111; skip-to-main-content access covered in Repair Pass 112; broader route-by-route accessibility contract and Chrome-controlled keyboard smoke covered in Repair Pass 149.
 - Screen-reader labels for editable numbers. Status: covered in Repair Pass 45 for the shared editable-number component and Dashboard core financial controls; Simulator route labels expanded in Repair Pass 46; Portfolio route labels expanded in Repair Pass 47; Vault and Cockpit labels expanded in Repair Pass 48.
 - Portfolio debt-name and remove controls. Status: covered in Repair Pass 43 for debt-specific labels.
 - Theme controls. Status: covered in Repair Pass 44 for selected and expanded state labels.

@@ -96,7 +96,9 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-emerald-500 font-medium">Quick Adjust</span>
         <button
+          type="button"
           onClick={() => setLocked(!locked)}
+          aria-pressed={locked}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
             locked 
               ? 'bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30' 
@@ -115,6 +117,7 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
           <div className="flex-1 relative">
             <input
               type="range"
+              aria-label="Quick adjust monthly income"
               min="0"
               max="100"
               step="0.1"
@@ -140,6 +143,7 @@ export default function DualSlider({ incomeValue, expenseValue, onIncomeChange, 
           <div className="flex-1 relative">
             <input
               type="range"
+              aria-label="Quick adjust monthly expenses"
               min="0"
               max="100"
               step="0.1"

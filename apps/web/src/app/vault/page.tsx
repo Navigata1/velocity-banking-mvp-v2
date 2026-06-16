@@ -658,9 +658,14 @@ export default function VaultPage() {
 
       <div className="flex gap-2 mb-8">
         {stepTitles.map((_, i) => (
-          <div key={i}
-            className={`flex-1 h-2 rounded-full cursor-pointer transition-colors ${i <= step ? 'bg-emerald-500' : `${classes.bgSecondary} hover:opacity-80`}`}
-            onClick={() => setStep(i)} />
+          <button
+            key={i}
+            type="button"
+            aria-label={`Go to ${stepTitles[i].title}`}
+            aria-current={i === step ? 'step' : undefined}
+            className={`flex-1 h-2 rounded-full cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950 ${i <= step ? 'bg-emerald-500' : `${classes.bgSecondary} hover:opacity-80`}`}
+            onClick={() => setStep(i)}
+          />
         ))}
       </div>
 
@@ -690,18 +695,18 @@ export default function VaultPage() {
 
       <div className="flex gap-4">
         {step > 0 && (
-          <button onClick={prevStep}
+          <button type="button" onClick={prevStep}
             className={`flex-1 px-6 py-3 ${classes.glassButton} ${classes.text} rounded-xl transition-colors`}>
             Back
           </button>
         )}
         {step < 5 ? (
-          <button onClick={nextStep}
+          <button type="button" onClick={nextStep}
             className="flex-1 px-6 py-3 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-colors">
             {step === 0 ? "Show Me The Truth" : "Continue"}
           </button>
         ) : (
-          <button onClick={restart}
+          <button type="button" onClick={restart}
             className="flex-1 px-6 py-3 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-colors">
             Start Over
           </button>

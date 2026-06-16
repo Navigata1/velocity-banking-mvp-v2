@@ -123,9 +123,11 @@ export default function PreAppPreview() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[90] flex items-start justify-center overflow-y-auto bg-black/70 backdrop-blur-md p-3 sm:items-center sm:p-4"
-        onClick={handleDismiss}
       >
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pre-app-preview-title"
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -137,7 +139,6 @@ export default function PreAppPreview() {
               : 'rgba(15,23,42,0.85)',
             backdropFilter: 'blur(24px)',
           }}
-          onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div className="px-6 pt-6 pb-3">
@@ -148,11 +149,13 @@ export default function PreAppPreview() {
                 </div>
                 <div>
                   <p className="text-emerald-400 text-xs font-medium tracking-wider uppercase">InterestShield</p>
-                  <h2 className={`text-lg font-bold ${classes.text}`}>Your Snapshot</h2>
+                  <h2 id="pre-app-preview-title" className={`text-lg font-bold ${classes.text}`}>Your Snapshot</h2>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={handleDismiss}
+                aria-label="Close snapshot preview"
                 className={`${classes.textSecondary} hover:${classes.text} text-lg p-1`}
               >
                 ✕

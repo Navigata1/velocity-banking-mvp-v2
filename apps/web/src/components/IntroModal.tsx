@@ -164,6 +164,7 @@ export default function IntroModal() {
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
+                aria-label="Do not show the intro again"
                 checked={dontShowAgain}
                 onChange={(e) => setDontShowAgain(e.target.checked)}
                 className="rounded border-gray-500"

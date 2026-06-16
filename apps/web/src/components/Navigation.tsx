@@ -107,6 +107,7 @@ export default function Navigation() {
             ))}
             
             <button
+              type="button"
               onClick={() => setShowAI(true)}
               className="flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800 md:hidden"
               aria-label="Open Velocity Guardian"
@@ -116,7 +117,9 @@ export default function Navigation() {
           </div>
           
           <button
+            type="button"
             onClick={() => setShowAI(true)}
+            aria-label="Open Velocity Guardian"
             className={`hidden md:flex group relative w-full flex-col items-center gap-2 p-3 mt-4 rounded-2xl ${classes.glassButton}`}
             style={{ perspective: '500px' }}
           >
@@ -140,6 +143,7 @@ export default function Navigation() {
           
           <div className="hidden md:block mt-6">
             <button
+              type="button"
               onClick={() => setShowThemes(!showThemes)}
               aria-label="Choose theme"
               aria-expanded={showThemes}
@@ -154,6 +158,7 @@ export default function Navigation() {
               <div className={`mt-2 p-2 rounded-xl ${classes.glass}`}>
                 {themeOptions.map((option) => (
                   <button
+                    type="button"
                     key={option.value}
                     onClick={() => { setTheme(option.value); setShowThemes(false); }}
                     aria-label={`Use ${option.label} theme`}
@@ -194,7 +199,12 @@ export default function Navigation() {
 
       {showAI && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className={`${classes.bgSecondary} rounded-2xl ${classes.border} border w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl`}>
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="velocity-guardian-title"
+            className={`${classes.bgSecondary} rounded-2xl ${classes.border} border w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl`}
+          >
             <div className={`flex items-center justify-between p-4 border-b ${classes.border} bg-gradient-to-r from-emerald-900/30 to-transparent`}>
               <div className="flex items-center gap-4">
                 <div className="relative w-14 h-14">
@@ -211,13 +221,15 @@ export default function Navigation() {
                   />
                 </div>
                 <div>
-                  <h3 className={`${classes.text} font-semibold text-lg`}>Velocity Guardian</h3>
+                  <h3 id="velocity-guardian-title" className={`${classes.text} font-semibold text-lg`}>Velocity Guardian</h3>
                   <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>
                <div className="flex items-center gap-2">
                 <button
+                  type="button"
                   onClick={() => setTeacherMode(!teacherMode)}
+                  aria-pressed={teacherMode}
                   className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${teacherMode ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-transparent text-gray-400 border-slate-600/50 hover:border-slate-500/70'}`}
                   title="Teacher Mode formats answers as: what it means → what to do next → why it works"
                 >
@@ -226,7 +238,9 @@ export default function Navigation() {
               </div>
 
               <button
+                type="button"
                 onClick={() => setShowAI(false)}
+                aria-label="Close Velocity Guardian"
                 className={`${classes.textSecondary} hover:${classes.text} p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
               >
                 ✕
@@ -251,6 +265,7 @@ export default function Navigation() {
               <div className="flex gap-2">
                 <input
                   type="text"
+                  aria-label="Ask Velocity Guardian a question"
                   value={aiQuery}
                   onChange={(e) => setAiQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAISubmit()}
@@ -258,6 +273,7 @@ export default function Navigation() {
                   className={`flex-1 ${classes.bgTertiary} ${classes.border} border rounded-xl px-4 py-3 ${classes.text} placeholder-gray-400 focus:outline-none focus:border-emerald-500`}
                 />
                 <button
+                  type="button"
                   onClick={handleAISubmit}
                   className={`${classes.glassButton} text-emerald-400 px-6 py-3 rounded-xl font-medium`}
                 >

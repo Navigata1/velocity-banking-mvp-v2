@@ -3525,6 +3525,40 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('stopServer(server)'), 'expected smoke script to clean up the server');
 });
 
+test('web app exposes a repeatable accessibility route contract', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const a11yScriptPath = path.resolve(__dirname, 'accessibility-route-contract.cjs');
+  const a11yScript = fs.existsSync(a11yScriptPath) ? fs.readFileSync(a11yScriptPath, 'utf8') : '';
+
+  assert.ok(
+    packageJson.scripts.test.includes('node scripts/accessibility-route-contract.cjs'),
+    'expected npm test to run the accessibility route contract'
+  );
+  assert.equal(packageJson.scripts['test:a11y'], 'node scripts/accessibility-route-contract.cjs');
+  assert.ok(fs.existsSync(a11yScriptPath), 'expected a repeatable accessibility route contract script');
+  assert.ok(a11yScript.includes("route: '/', label: 'Dashboard'"), 'expected dashboard route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/simulator', label: 'Simulator'"), 'expected simulator route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/cockpit', label: 'Cockpit'"), 'expected cockpit route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/portfolio', label: 'Portfolio'"), 'expected portfolio route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/learn', label: 'Learn'"), 'expected learn route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/settings', label: 'Settings'"), 'expected settings route accessibility coverage');
+  assert.ok(a11yScript.includes("route: '/vault', label: 'Vault'"), 'expected vault route accessibility coverage');
+  assert.ok(
+    a11yScript.includes('scanNonInteractiveClickTargets') && a11yScript.includes('onClick on <'),
+    'expected accessibility route contract to reject non-native click targets'
+  );
+  assert.ok(
+    a11yScript.includes('scanUnnamedFormControls') && a11yScript.includes('missing an accessible name'),
+    'expected accessibility route contract to reject unnamed form controls'
+  );
+  assert.ok(
+    a11yScript.includes('aria-label="Primary navigation"') &&
+      a11yScript.includes('aria-label="Ask Velocity Guardian a question"') &&
+      a11yScript.includes('aria-current={i === step ?'),
+    'expected accessibility route contract to cover shared navigation, Guardian, and Vault stepper keyboard markers'
+  );
+});
+
 test('web app exposes a repeatable production Vercel smoke command', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const productionSmokeScriptPath = path.resolve(__dirname, 'smoke-production.cjs');
