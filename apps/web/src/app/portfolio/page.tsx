@@ -5,6 +5,7 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { usePortfolioStore } from '@/stores/portfolio-store';
 import { EditableCurrency, EditablePercentage, EditableNumber } from '@/components/EditableNumber';
 import type { DebtItem, DebtPriorityRationale, PayoffStrategy } from '@/engine/portfolio';
+import type { PortfolioRunChangeDirection, PortfolioRunComparisonStatus } from '@/engine/portfolio-run-diff';
 import { formatCurrency, formatDate } from '@/engine/calculations';
 import ScrollReveal from '@/components/ScrollReveal';
 import CountUp from '@/components/CountUp';
@@ -46,6 +47,18 @@ function strategyDescription(s: PayoffStrategy): string {
 
 function debtKindLabel(k: DebtItem['kind']): string {
   return k === 'amortized' ? 'Amortized' : k === 'revolving' ? 'Revolving' : 'Simple';
+}
+
+function runChangeTone(direction: PortfolioRunChangeDirection): string {
+  if (direction === 'improved') return 'text-emerald-300';
+  if (direction === 'worsened') return 'text-rose-300';
+  return 'text-sky-300';
+}
+
+function runComparisonStatusLabel(status: PortfolioRunComparisonStatus): string {
+  if (status === 'baseline') return 'Baseline';
+  if (status === 'changed') return 'Updated';
+  return 'Stable';
 }
 
 function getMinPaymentValue(debt: DebtItem): number {
@@ -112,6 +125,7 @@ export default function PortfolioPage() {
   const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
   const totalDebt = store.debts.reduce((s, d) => s + d.balance, 0);
   const cashFlow = store.monthlyIncome - store.monthlyExpenses;
+  const runComparison = store.lastRunComparison;
 
   const handleExport = () => {
     const text = store.exportState();
@@ -454,6 +468,37 @@ export default function PortfolioPage() {
               </p>
               <p className={`${classes.textMuted} text-[11px] mt-1`}>Your velocity fuel</p>
             </div>
+            {runComparison && (
+              <div
+                aria-label="Portfolio changes since last run"
+                aria-live="polite"
+                data-testid="portfolio-run-comparison"
+                className={`${classes.glassButton} rounded-2xl p-4 border ${classes.border}`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className={`${classes.textMuted} text-xs`}>What changed since last run</p>
+                    <p className={`mt-1 text-sm ${classes.textSecondary}`}>
+                      Compared against the previous Portfolio projection.
+                    </p>
+                  </div>
+                  <span className={`shrink-0 rounded-full border ${classes.border} px-2 py-1 text-[11px] font-semibold ${classes.textSecondary}`}>
+                    {runComparisonStatusLabel(runComparison.status)}
+                  </span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  {runComparison.changes.slice(0, 5).map((change) => (
+                    <div key={`${change.id}-${change.label}`} data-testid="portfolio-run-change" className={`border-t ${classes.border} pt-3 first:border-t-0 first:pt-0`}>
+                      <div className="flex items-baseline justify-between gap-3">
+                        <p className={`text-xs font-semibold uppercase ${classes.textMuted}`}>{change.label}</p>
+                        <p className={`text-sm font-bold ${runChangeTone(change.direction)}`}>{change.value}</p>
+                      </div>
+                      <p className={`mt-1 text-xs leading-5 ${classes.textSecondary}`}>{change.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {store.strategy === 'velocity' && (
               <div data-testid="portfolio-loc-summary" className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs`}>LOC Interest Est.</p>

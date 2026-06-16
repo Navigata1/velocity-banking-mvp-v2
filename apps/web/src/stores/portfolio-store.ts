@@ -11,6 +11,8 @@ import type {
   PortfolioSimulationResult,
 } from '@/engine/portfolio';
 import { simulatePortfolio } from '@/engine/portfolio';
+import type { PortfolioRunComparison, PortfolioRunSummary } from '@/engine/portfolio-run-diff';
+import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-run-diff';
 
 export type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
 
@@ -31,6 +33,8 @@ export interface PortfolioState {
   focusMode: FocusMode;
   splitRatioPrimary: number;
   lastResult?: PortfolioSimulationResult;
+  lastRunSummary?: PortfolioRunSummary;
+  lastRunComparison?: PortfolioRunComparison;
 
   setMonthlyIncome: (v: number) => void;
   setMonthlyExpenses: (v: number) => void;
@@ -278,6 +282,8 @@ export const usePortfolioStore = create<PortfolioState>()(
       focusMode: 'single' as FocusMode,
       splitRatioPrimary: 0.7,
       lastResult: undefined,
+      lastRunSummary: undefined,
+      lastRunComparison: undefined,
 
       setMonthlyIncome: (v) => { set({ monthlyIncome: Math.max(0, v) }); get().recompute(); },
       setMonthlyExpenses: (v) => { set({ monthlyExpenses: Math.max(0, v) }); get().recompute(); },
@@ -395,7 +401,13 @@ export const usePortfolioStore = create<PortfolioState>()(
           maxMonths: 600,
         };
         const result = simulatePortfolio(inputs);
-        set({ lastResult: result });
+        const summary = summarizePortfolioRun(inputs, result);
+        const comparison = comparePortfolioRuns(state.lastRunSummary, summary);
+        set({
+          lastResult: result,
+          lastRunSummary: summary,
+          lastRunComparison: comparison,
+        });
         return result;
       },
     }),
