@@ -31,6 +31,11 @@ icon = "tool"
 command = "./script/build_and_run.sh --doctor"
 
 [[actions]]
+name = "Native Preflight"
+icon = "tool"
+command = "./script/build_and_run.sh --preflight-native"
+
+[[actions]]
 name = "Export Web"
 icon = "tool"
 command = "./script/build_and_run.sh --export-web"

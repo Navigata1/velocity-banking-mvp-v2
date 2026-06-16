@@ -21,6 +21,8 @@ Modes:
   --export-web, export-web
                     Export the web build locally
   --doctor, doctor   Run Expo diagnostics
+  --preflight-native, preflight-native
+                    Run Android/iOS local smoke readiness checks
   --help, help       Show this help
 USAGE
 }
@@ -81,6 +83,9 @@ case "$MODE" in
     ;;
   --doctor|doctor)
     run_doctor
+    ;;
+  --preflight-native|preflight-native)
+    npm run preflight:native
     ;;
   --help|help)
     show_usage

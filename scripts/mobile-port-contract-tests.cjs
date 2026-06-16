@@ -132,6 +132,8 @@ test('Expo app exposes Codex run actions for local mobile workflows', () => {
   assert.ok(runScript.includes('start --web'), 'expected Expo web start mode');
   assert.ok(runScript.includes('export --platform web'), 'expected local web export mode');
   assert.ok(runScript.includes('expo-doctor'), 'expected diagnostics mode');
+  assert.ok(runScript.includes('--preflight-native, preflight-native'), 'expected native preflight action mode');
+  assert.ok(runScript.includes('npm run preflight:native'), 'expected action to reuse the committed native preflight');
   assert.ok(!runScript.includes('eas build'), 'expected Run actions to avoid authenticated cloud builds');
 
   assert.ok(environment.includes('name = "InterestShield Mobile"'), 'expected the mobile app name in Codex actions');
@@ -141,6 +143,11 @@ test('Expo app exposes Codex run actions for local mobile workflows', () => {
   assert.ok(environment.includes('command = "./script/build_and_run.sh --web"'), 'expected direct Web action');
   assert.ok(environment.includes('command = "./script/build_and_run.sh --doctor"'), 'expected Expo Doctor action');
   assert.ok(environment.includes('command = "./script/build_and_run.sh --export-web"'), 'expected web export action');
+  assert.ok(environment.includes('name = "Native Preflight"'), 'expected native preflight action');
+  assert.ok(
+    environment.includes('command = "./script/build_and_run.sh --preflight-native"'),
+    'expected direct native preflight action'
+  );
   assert.ok(
     gitAttributes.includes('apps/mobile/script/*.sh text eol=lf'),
     'expected mobile shell scripts to stay LF-only'

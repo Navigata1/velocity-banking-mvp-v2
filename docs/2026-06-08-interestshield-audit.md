@@ -2153,6 +2153,25 @@ Post-repair verification:
 - `apps/web` `npm run lint`: passed.
 - `apps/web` `npm run build`: passed with all app routes prerendered.
 
+### Repair Pass 122: Mobile Native Preflight Run Action
+
+Local source repairs and smoke verification completed on 2026-06-15:
+
+- Added red/green mobile contract coverage requiring the Expo run script and Codex mobile environment to expose a direct native preflight action.
+- Updated `apps/mobile/script/build_and_run.sh` with `--preflight-native` / `preflight-native` mode that reuses the committed `npm run preflight:native` check.
+- Added a `Native Preflight` Codex action beside Run, Run iOS, Run Android, Run Web, Expo Doctor, and Export Web so Android/iOS readiness can be checked without starting an Expo server.
+
+Post-repair verification:
+
+- `node scripts\mobile-port-contract-tests.cjs`: failed first on the missing action, then passed after the repair.
+- `bash apps/mobile/script/build_and_run.sh --help`: passed and lists `--preflight-native`.
+- `bash apps/mobile/script/build_and_run.sh --preflight-native`: executes the native preflight; expected exit 1 remains because no Android device is online, no Android virtual device is configured, and iOS simulator smoke requires macOS.
+- `apps/mobile` `npm run check`: passed.
+- `apps/web` `npm test`: passed with 118 regression tests.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.
