@@ -476,6 +476,24 @@ test('mobile web export is configured for Vercel SPA hosting and repeatable smok
 test('shared financial engine matches current web engine on core fixtures', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const webEngine = loadTsFile(path.join(repoRoot, 'apps/web/src/engine/calculations.ts'));
+  const baselineInputs = {
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    carLoan: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 48,
+    },
+    extraPayment: 0,
+  };
+  const webBaseline = webEngine.simulateBaseline(baselineInputs);
+  const sharedBaseline = sharedEngine.simulateAmortizedPayoff({
+    principalBalance: baselineInputs.carLoan.balance,
+    apr: baselineInputs.carLoan.apr,
+    monthlyPayment: baselineInputs.carLoan.monthlyPayment,
+    maxMonths: 600,
+  });
 
   assert.equal(sharedEngine.calculateCashFlow(8000, 4500), webEngine.calculateCashFlow(8000, 4500));
   assert.equal(
@@ -487,6 +505,9 @@ test('shared financial engine matches current web engine on core fixtures', () =
     webEngine.calculateADBInterest(3200, 0.085, 7000, 4500).toFixed(2)
   );
   assert.equal(sharedEngine.formatCurrency(3500), webEngine.formatCurrency(3500));
+  assert.equal(sharedBaseline.payoffMonths, webBaseline.payoffMonths);
+  assert.equal(sharedBaseline.totalInterest.toFixed(2), webBaseline.totalInterest.toFixed(2));
+  assert.equal(sharedBaseline.isPayoffPossible, webBaseline.isPayoffPossible);
 });
 
 test('shared mobile velocity delegates to the canonical Money Loop payoff engine', () => {
@@ -523,6 +544,52 @@ test('shared mobile velocity delegates to the canonical Money Loop payoff engine
   assert.equal(mobileVelocity.months, canonicalProjection.payoffMonths);
   assert.equal(mobileVelocity.totalInterest.toFixed(2), canonicalProjection.totalInterest.toFixed(2));
   assert.equal(mobileVelocity.isPayoffPossible, canonicalProjection.isPayoffPossible);
+});
+
+test('shared mobile amortized strategies delegate to the canonical payoff helper', () => {
+  const sharedEnginePath = path.join(repoRoot, 'packages/financial-engine/src/index.ts');
+  const sharedEngine = loadTsFile(sharedEnginePath);
+  const sharedEngineSource = fs.readFileSync(sharedEnginePath, 'utf8');
+  const baselineStart = sharedEngineSource.indexOf('function simulateMobileBaseline');
+  const baselineEnd = sharedEngineSource.indexOf('function simulateMobileWithExtraPayments', baselineStart);
+  const extraStart = baselineEnd;
+  const extraEnd = sharedEngineSource.indexOf('function formatMobileMonths', extraStart);
+  const baselineWrapper = sharedEngineSource.slice(baselineStart, baselineEnd);
+  const extraWrapper = sharedEngineSource.slice(extraStart, extraEnd);
+  const defaultInput = sharedEngine.defaultMobileDashboardInput;
+  const cashFlow = defaultInput.monthlyIncome - defaultInput.monthlyExpenses;
+  const surplusAfterMinimum = Math.max(0, cashFlow - defaultInput.activeDebt.monthlyPayment);
+  const canonicalBaseline = sharedEngine.simulateAmortizedPayoff({
+    principalBalance: defaultInput.activeDebt.balance,
+    apr: defaultInput.activeDebt.apr,
+    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
+    maxMonths: 600,
+  });
+  const canonicalAccelerated = sharedEngine.simulateAmortizedPayoff({
+    principalBalance: defaultInput.activeDebt.balance,
+    apr: defaultInput.activeDebt.apr,
+    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
+    extraPayment: surplusAfterMinimum,
+    maxMonths: 600,
+  });
+  const strategies = sharedEngine.buildMobileSimulatorSnapshot(defaultInput).strategies;
+  const traditional = strategies.find((strategy) => strategy.name === 'Traditional');
+  const snowball = strategies.find((strategy) => strategy.name === 'Snowball');
+  const avalanche = strategies.find((strategy) => strategy.name === 'Avalanche');
+
+  assert.ok(baselineWrapper.includes('simulateAmortizedPayoff({'), 'expected baseline wrapper to call the shared amortized payoff helper');
+  assert.ok(extraWrapper.includes('simulateAmortizedPayoff({'), 'expected extra-payment wrapper to call the shared amortized payoff helper');
+  assert.ok(!baselineWrapper.includes('while (balance'), 'expected baseline wrapper not to duplicate an amortized payoff loop');
+  assert.ok(!extraWrapper.includes('while (balance'), 'expected extra-payment wrapper not to duplicate an amortized payoff loop');
+  assert.ok(traditional, 'expected Traditional strategy in the mobile simulator snapshot');
+  assert.ok(snowball, 'expected Snowball strategy in the mobile simulator snapshot');
+  assert.ok(avalanche, 'expected Avalanche strategy in the mobile simulator snapshot');
+  assert.equal(traditional.months, canonicalBaseline.payoffMonths);
+  assert.equal(traditional.totalInterest.toFixed(2), canonicalBaseline.totalInterest.toFixed(2));
+  assert.equal(snowball.months, canonicalAccelerated.payoffMonths);
+  assert.equal(snowball.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
+  assert.equal(avalanche.months, canonicalAccelerated.payoffMonths);
+  assert.equal(avalanche.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
 });
 
 test('shared mobile dashboard snapshot keeps the required four vitals aligned with web', () => {
