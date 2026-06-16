@@ -2302,6 +2302,27 @@ Post-repair verification:
 - `apps/mobile` `npm run smoke:ios`: returned the expected Windows blocker, `iOS Expo Go smoke requires macOS with Xcode and Simulator.`
 - `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
 
+### Repair Pass 129: Dashboard Artifact Carousel
+
+Local source repairs completed on 2026-06-16:
+
+- Rebuilt the Dashboard Money Loop artifact rail into an interactive artifact selector with one active showcase token and five selectable loop artifacts.
+- The active artifact spins once on selection, then stops, while reduced-motion users get a stable tilted token.
+- Kept the five-part Money Loop model unchanged: Income, LOC, Expenses, Cash Flow, and Principal.
+- Preserved internal horizontal scrolling for the selector strip so the page remains width-contained on mobile.
+- Added tab semantics, selected state, stable smoke hooks, and regression coverage for the carousel controls and animation class.
+
+Post-repair verification:
+
+- `apps/web` `npm test`: failed first on the missing item-selection carousel assertions, then passed with 126 regression tests after the repair.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed with all app routes prerendered.
+- `apps/web` `npm run smoke:routes`: passed for `/`, `/simulator`, `/cockpit`, `/portfolio`, `/learn`, `/settings`, and `/vault`.
+- `apps/web` `npm run smoke:production`: passed against `https://web-islanddevcrew.vercel.app`.
+- In-app Browser desktop smoke at `http://127.0.0.1:5000/`: 5 artifact selector nodes rendered, one selected artifact rendered, selecting Principal updated the active artifact, `artifactSpinSelect` was applied, page overflow stayed at 0, and no console warnings/errors were captured.
+- In-app Browser mobile smoke at 390x844: page scroll width matched viewport width, the 760px selector strip stayed inside the rail's internal scroll area, selecting Cash Flow updated the active artifact, `artifactSpinSelect` was applied, and no console warnings/errors were captured.
+- Chrome extension smoke at `http://127.0.0.1:5000/`: 5 artifact selector nodes rendered, selecting LOC updated the active artifact, `artifactSpinSelect` was applied, page overflow stayed at 0, and no console warnings/errors were captured.
+
 ### Browser And Chrome Smoke
 
 - In-app browser loaded local and production pages.

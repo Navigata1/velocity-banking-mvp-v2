@@ -3328,6 +3328,20 @@ test('Money Loop artifact rail contains horizontal overflow inside its own frame
   assert.ok(source.includes('grid-cols-5'), 'expected the five Money Loop artifacts to remain a horizontal rail');
 });
 
+test('Money Loop artifact rail exposes an item-selection carousel', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
+
+  assert.ok(source.includes('useState'), 'expected artifact rail to track the selected artifact');
+  assert.ok(source.includes('setActiveArtifactId'), 'expected artifact selector controls to update the active artifact');
+  assert.ok(source.includes('data-testid="money-loop-artifact-active"'), 'expected a stable active artifact smoke hook');
+  assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
+  assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
+  assert.ok(source.includes('artifact-carousel-token'), 'expected active artifact to use the carousel token animation class');
+  assert.ok(css.includes('@keyframes artifactSpinSelect'), 'expected selected artifacts to spin once when chosen');
+  assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
+});
+
 test('dashboard Money Loop rail is width-contained for mobile layouts', () => {
   const pageSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
   const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');

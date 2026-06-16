@@ -36,15 +36,33 @@ body {
   }
 }
 
+@keyframes artifactSpinSelect {
+  0% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(0deg) translateY(4px) scale(0.96);
+  }
+  55% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(360deg) translateY(-7px) scale(1.04);
+  }
+  100% {
+    transform: rotateX(60deg) rotateZ(-18deg) rotateY(360deg) translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .artifact-token {
     animation: artifactFloat 4.8s ease-in-out infinite;
     transform-style: preserve-3d;
   }
+
+  .artifact-carousel-token {
+    animation: artifactSpinSelect 900ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+    transform-style: preserve-3d;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .artifact-token {
+  .artifact-token,
+  .artifact-carousel-token {
     transform: rotateX(58deg) rotateZ(-14deg);
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import type { CSSProperties, HTMLAttributes } from 'react';
+import { useState, type CSSProperties, type HTMLAttributes } from 'react';
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
@@ -59,73 +59,130 @@ export default function MoneyLoopArtifactRail({
   const mounted = useIsClient();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
+  const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(artifacts[0]?.id ?? 'income');
+  const activeArtifact = artifacts.find((artifact) => artifact.id === activeArtifactId) ?? artifacts[0];
+  const activeIndex = Math.max(0, artifacts.findIndex((artifact) => artifact.id === activeArtifact?.id));
+
+  if (!activeArtifact) {
+    return null;
+  }
+
+  const activeTone = toneStyles[activeArtifact.tone];
+  const activeTokenStyle: CSSProperties = {
+    background: `conic-gradient(${activeTone.accent} ${activeArtifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
+  };
 
   return (
     <section
       {...sectionProps}
-      aria-label="Money Loop visual path"
+      aria-label="Money Loop artifact carousel"
       className={`relative min-w-0 rounded-2xl border ${classes.border} bg-slate-950/25 p-4 ${className}`}
     >
-      <div className="-mx-1 overflow-x-auto px-1 pb-2">
-        <div className="relative min-w-[760px]">
-          <div className="pointer-events-none absolute left-8 right-8 top-[5.6rem] h-px bg-gradient-to-r from-transparent via-sky-300/45 to-transparent" />
-          <div className="pointer-events-none absolute left-10 right-10 top-[5.6rem] h-8 bg-[linear-gradient(180deg,rgba(56,189,248,0.12),transparent)]" />
+      <div
+        id="money-loop-artifact-panel"
+        data-testid="money-loop-artifact-active"
+        role="tabpanel"
+        aria-live="polite"
+        className={`relative overflow-hidden rounded-xl border ${activeTone.border} ${activeTone.surface} p-4`}
+      >
+        <div className="pointer-events-none absolute inset-x-6 top-1/2 h-px bg-gradient-to-r from-transparent via-sky-300/40 to-transparent" />
+        <div className="relative grid min-h-[238px] gap-5 sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center">
+          <div className="mx-auto h-32 w-32 sm:h-36 sm:w-36" style={{ perspective: '1100px' }}>
+            <div
+              key={activeArtifact.id}
+              className="artifact-carousel-token relative h-full w-full rounded-full border border-white/15 shadow-2xl"
+              style={activeTokenStyle}
+            >
+              <div className="absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
+              <div className="absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
+              <div
+                className="absolute left-1/2 top-5 h-4 w-14 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
 
-          <div className="grid grid-cols-5 gap-3">
-            {artifacts.map((artifact, index) => {
-              const tone = toneStyles[artifact.tone];
-              const tokenStyle: CSSProperties = {
-                animationDelay: `${index * 120}ms`,
-                background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
-              };
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={`rounded-md border px-2 py-1 text-[11px] font-semibold uppercase ${activeTone.border} ${activeTone.text}`}>
+                Step {String(activeIndex + 1).padStart(2, '0')}
+              </span>
+              <span className={`rounded-md border px-2 py-1 text-[11px] font-medium ${classes.border} ${classes.textSecondary}`}>
+                {activeArtifact.signal}
+              </span>
+            </div>
 
-              return (
-                <article
-                  key={artifact.id}
-                  data-testid={`money-loop-artifact-node-${artifact.id}`}
-                  className={`relative min-h-[224px] rounded-xl border ${tone.border} ${tone.surface} p-4`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className={`text-[11px] font-semibold uppercase ${classes.textSecondary}`}>
-                        {String(index + 1).padStart(2, '0')}
-                      </p>
-                      <h3 className={`mt-1 text-sm font-semibold ${classes.text}`}>{artifact.label}</h3>
-                    </div>
-                    <span className={`h-2.5 w-2.5 rounded-full ${tone.dot}`} />
+            <h3 className={`mt-3 text-2xl font-bold leading-tight ${classes.text}`}>{activeArtifact.label}</h3>
+            <p className={`mt-2 text-3xl font-bold leading-tight ${activeTone.text}`}>{activeArtifact.value}</p>
+            <p className={`mt-3 max-w-xl text-sm leading-6 ${classes.textSecondary}`}>{activeArtifact.note}</p>
+
+            <div className="mt-5 h-2 rounded-full bg-slate-700/60">
+              <div
+                className={`h-full rounded-full ${activeTone.fill}`}
+                style={{ width: `${activeArtifact.fillPercent}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="-mx-1 mt-4 overflow-x-auto px-1 pb-2">
+        <div
+          role="tablist"
+          aria-label="Money Loop artifact selector"
+          className="grid min-w-[760px] grid-cols-5 gap-3"
+        >
+          {artifacts.map((artifact, index) => {
+            const tone = toneStyles[artifact.tone];
+            const isActive = artifact.id === activeArtifact.id;
+            const tokenStyle: CSSProperties = {
+              animationDelay: `${index * 120}ms`,
+              background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
+            };
+
+            return (
+              <button
+                key={artifact.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls="money-loop-artifact-panel"
+                data-testid={`money-loop-artifact-node-${artifact.id}`}
+                onClick={() => setActiveArtifactId(artifact.id)}
+                className={`relative min-h-[132px] rounded-xl border p-3 text-left transition ${
+                  isActive
+                    ? `${tone.border} ${tone.surface} shadow-lg shadow-black/20`
+                    : `${classes.border} bg-slate-950/20 hover:bg-white/5`
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className={`text-[11px] font-semibold uppercase ${classes.textSecondary}`}>
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <p className={`mt-1 text-sm font-semibold leading-tight ${classes.text}`}>{artifact.label}</p>
                   </div>
+                  <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${tone.dot}`} />
+                </div>
 
-                  <div className="relative mx-auto mt-4 h-20 w-20" style={{ perspective: '900px' }}>
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="relative h-11 w-11 shrink-0" style={{ perspective: '900px' }}>
                     <div
                       className="artifact-token relative h-full w-full rounded-full border border-white/15 shadow-xl"
                       style={tokenStyle}
                     >
-                      <div className="absolute inset-[9px] rounded-full bg-slate-950/85 shadow-inner shadow-black/50" />
-                      <div className="absolute inset-[22px] rounded-full border border-white/10 bg-white/10" />
-                      <div
-                        className="absolute left-1/2 top-3 h-3 w-8 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
-                        aria-hidden="true"
-                      />
+                      <div className="absolute inset-[6px] rounded-full bg-slate-950/85 shadow-inner shadow-black/50" />
+                      <div className="absolute inset-[15px] rounded-full border border-white/10 bg-white/10" />
                     </div>
                   </div>
-
-                  <div className="mt-4">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <p className={`text-lg font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
-                      <p className={`text-[11px] font-medium ${classes.textSecondary}`}>{artifact.signal}</p>
-                    </div>
-                    <div className="mt-3 h-1.5 rounded-full bg-slate-700/60">
-                      <div
-                        className={`h-full rounded-full ${tone.fill}`}
-                        style={{ width: `${artifact.fillPercent}%` }}
-                      />
-                    </div>
-                    <p className={`mt-3 text-xs leading-5 ${classes.textSecondary}`}>{artifact.note}</p>
+                  <div className="min-w-0">
+                    <p className={`truncate text-sm font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
+                    <p className={`mt-1 truncate text-[11px] font-medium ${classes.textSecondary}`}>{artifact.signal}</p>
                   </div>
-                </article>
-              );
-            })}
-          </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>
