@@ -61,6 +61,22 @@ export interface MobilePortfolioPriority {
   reason: string;
 }
 
+export interface MobilePortfolioPathPoint {
+  month: number;
+  balance: number;
+  progressPercent: number;
+}
+
+export interface MobilePortfolioPathSnapshot {
+  isProjected: boolean;
+  statusLabel: 'Projected path' | 'Review inputs';
+  startingBalanceLabel: string;
+  payoffMonthsLabel: string;
+  totalInterestLabel: string;
+  progressPercent: number;
+  points: MobilePortfolioPathPoint[];
+}
+
 export interface MobilePortfolioSnapshot {
   totalDebt: number;
   totalDebtLabel: string;
@@ -69,6 +85,7 @@ export interface MobilePortfolioSnapshot {
   cashFlowAfterMinimums: number;
   cashFlowAfterMinimumsLabel: string;
   guardrail: string | null;
+  payoffPath: MobilePortfolioPathSnapshot;
   priorities: MobilePortfolioPriority[];
 }
 
@@ -348,6 +365,8 @@ export function buildMobilePortfolioSnapshot(
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
   }
 
+  const payoffPath = buildMobilePortfolioPathSnapshot(input, guardrail);
+
   return {
     totalDebt,
     totalDebtLabel: formatCurrency(totalDebt),
@@ -356,6 +375,7 @@ export function buildMobilePortfolioSnapshot(
     cashFlowAfterMinimums,
     cashFlowAfterMinimumsLabel: formatCurrency(cashFlowAfterMinimums),
     guardrail,
+    payoffPath,
     priorities: [
       {
         name: input.activeDebtName,
@@ -453,6 +473,107 @@ function simulateMobileWithExtraPayments(input: MobileDashboardInput, extraPayme
     totalInterest,
     isPayoffPossible: balance <= 0.01,
     failureReason: balance <= 0.01 ? undefined : 'payment-below-interest',
+  };
+}
+
+function formatMobileMonths(months: number): string {
+  if (!Number.isFinite(months) || months <= 0) return 'Review inputs';
+
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+
+  if (years === 0) return `${months} mo`;
+  if (remainingMonths === 0) return `${years} yr`;
+  return `${years} yr ${remainingMonths} mo`;
+}
+
+function sampleMobilePortfolioPath(points: MobilePortfolioPathPoint[], maxPoints = 7): MobilePortfolioPathPoint[] {
+  if (points.length <= maxPoints) return points;
+
+  const lastIndex = points.length - 1;
+  const sampledIndexes = new Set<number>([0, lastIndex]);
+
+  for (let index = 1; index < maxPoints - 1; index += 1) {
+    sampledIndexes.add(Math.round((index * lastIndex) / (maxPoints - 1)));
+  }
+
+  return Array.from(sampledIndexes)
+    .sort((a, b) => a - b)
+    .map((index) => points[index]);
+}
+
+function buildMobilePortfolioPathSnapshot(
+  input: MobileDashboardInput,
+  guardrail: string | null
+): MobilePortfolioPathSnapshot {
+  const startingBalance = Math.max(0, input.activeDebt.balance);
+  const reviewPath: MobilePortfolioPathSnapshot = {
+    isProjected: false,
+    statusLabel: 'Review inputs',
+    startingBalanceLabel: formatCurrency(startingBalance),
+    payoffMonthsLabel: 'Review inputs',
+    totalInterestLabel: 'Not projected',
+    progressPercent: 0,
+    points: [
+      {
+        month: 0,
+        balance: startingBalance,
+        progressPercent: 0,
+      },
+    ],
+  };
+
+  if (guardrail || startingBalance <= 0) {
+    return reviewPath;
+  }
+
+  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const extraPayment = Math.max(0, cashFlow - Math.max(0, input.activeDebt.monthlyPayment));
+  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
+  let balance = startingBalance;
+  let totalInterest = 0;
+  let month = 0;
+  const points: MobilePortfolioPathPoint[] = [
+    {
+      month: 0,
+      balance: startingBalance,
+      progressPercent: 0,
+    },
+  ];
+  const firstMonthInterest = balance * monthlyRate;
+
+  if (input.activeDebt.monthlyPayment + extraPayment <= firstMonthInterest) {
+    return reviewPath;
+  }
+
+  while (balance > 0.01 && month < 600) {
+    month += 1;
+    const interest = balance * monthlyRate;
+    const payment = Math.min(input.activeDebt.monthlyPayment + extraPayment, balance + interest);
+    const principal = Math.max(0, payment - interest);
+
+    totalInterest += interest;
+    balance = Math.max(0, balance - principal);
+
+    points.push({
+      month,
+      balance,
+      progressPercent: startingBalance > 0 ? Math.min(100, Math.max(0, ((startingBalance - balance) / startingBalance) * 100)) : 100,
+    });
+  }
+
+  if (balance > 0.01) {
+    return reviewPath;
+  }
+
+  return {
+    isProjected: true,
+    statusLabel: 'Projected path',
+    startingBalanceLabel: formatCurrency(startingBalance),
+    payoffMonthsLabel: formatMobileMonths(month),
+    totalInterestLabel: formatCurrency(totalInterest),
+    progressPercent: 100,
+    points: sampleMobilePortfolioPath(points),
   };
 }
 

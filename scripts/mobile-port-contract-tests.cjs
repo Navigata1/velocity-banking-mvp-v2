@@ -628,6 +628,12 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('StorageStatusCard'));
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
+  assert.ok(shellSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
+  assert.ok(shellSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
+  assert.ok(
+    shellSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
+    'expected mobile Portfolio payoff path to render one node per engine point'
+  );
   assert.ok(shellSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
   assert.ok(
     shellSource.includes('testID={`mobile-payoff-orbit-node-${loopNodeId(step.label)}`}'),
@@ -712,6 +718,43 @@ test('shared mobile portfolio snapshot explains cash-flow coverage and debt prio
   assert.equal(snapshot.priorities[0].name, 'Auto Loan');
   assert.ok(snapshot.priorities[0].reason.includes('daily interest burn'));
   assert.equal(snapshot.guardrail, null);
+  assert.equal(snapshot.payoffPath.isProjected, true);
+  assert.equal(snapshot.payoffPath.statusLabel, 'Projected path');
+  assert.equal(snapshot.payoffPath.startingBalanceLabel, '$18,450');
+  assert.equal(snapshot.payoffPath.progressPercent, 100);
+  assert.ok(snapshot.payoffPath.payoffMonthsLabel.endsWith('mo'));
+  assert.ok(snapshot.payoffPath.totalInterestLabel.startsWith('$'));
+  assert.ok(snapshot.payoffPath.points.length <= 7, 'expected bounded native payoff path points');
+  assert.equal(snapshot.payoffPath.points[0].month, 0);
+  assert.equal(snapshot.payoffPath.points[snapshot.payoffPath.points.length - 1].progressPercent, 100);
+});
+
+test('shared mobile portfolio payoff path stays in review mode when inputs are unsafe', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobilePortfolioSnapshot({
+    monthlyIncome: 4000,
+    monthlyExpenses: 4200,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+
+  assert.equal(snapshot.payoffPath.isProjected, false);
+  assert.equal(snapshot.payoffPath.statusLabel, 'Review inputs');
+  assert.equal(snapshot.payoffPath.payoffMonthsLabel, 'Review inputs');
+  assert.equal(snapshot.payoffPath.totalInterestLabel, 'Not projected');
+  assert.equal(snapshot.payoffPath.points.length, 1);
+  assert.equal(snapshot.payoffPath.points[0].progressPercent, 0);
 });
 
 test('shared mobile simulator snapshot matches current web single-debt strategy comparison', () => {
