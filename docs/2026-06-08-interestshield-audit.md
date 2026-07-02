@@ -3811,6 +3811,16 @@ Status: completed in local source.
 - Browser desktop smoke at `http://127.0.0.1:5000/` verified the Money Loop rail, selected LOC artifact state, model-colored depth token, `preserve-3d`, `artifactSpinSelect`, no horizontal overflow, no framework overlay, and no console warnings/errors.
 - Browser mobile smoke verified four mobile vitals, five Money Loop chips, no horizontal overflow, visible Money Loop rail, selected artifact depth token, no framework overlay, and no console warnings/errors.
 
+### Repair Pass 198: Supabase First-Lane Migration Contract
+
+Status: completed in local source.
+
+- Added `supabase/migrations/202607020001_first_lane_owner_scoped_schema.sql` as a review-ready Supabase/Postgres migration draft for the first authenticated persistence lane.
+- Kept the demo truthfully local-only: no Supabase client dependency, auth UI, API route, or live database write was added.
+- The migration draft includes owner-scoped tables for profiles, financial snapshots, simulation runs, learning progress, export records, and audit events.
+- The migration enables RLS on every private table, grants access only to `authenticated`, avoids `anon` grants, uses `(select auth.uid())` in policies, and indexes owner/foreign-key columns used by access checks and joins.
+- Updated the Supabase handoff doc to point at the checked migration artifact and added regression coverage so the doc, migration, RLS policy shape, and no-live-client boundary cannot drift silently.
+
 ## Priority Roadmap
 
 ### Phase 0: Trust Stabilization
@@ -3842,7 +3852,7 @@ Status: completed in local source.
 ### Phase 3: Backend
 
 - Add Supabase auth and RLS.
-- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected, Repair Pass 155 added a provider-neutral backend readiness model for Supabase and Cloudflare candidates before auth or user-owned data storage is implemented, and Repair Pass 160 added a provider-neutral migration contract with owner rules, provider shapes, handoff targets, and validation gates for profiles, snapshots, simulation runs, and learning progress.
+- Add user-owned financial snapshots. Status: backend not wired yet; Repair Pass 124 added a versioned local-demo handoff snapshot export/import path so known browser data can be migrated deliberately when Supabase/Auth/RLS or Cloudflare persistence is selected, Repair Pass 155 added a provider-neutral backend readiness model for Supabase and Cloudflare candidates before auth or user-owned data storage is implemented, Repair Pass 160 added a provider-neutral migration contract with owner rules, provider shapes, handoff targets, and validation gates for profiles, snapshots, simulation runs, and learning progress, and Repair Pass 198 added a checked Supabase migration draft for the owner-scoped first lane while keeping live auth/database wiring out of the demo.
 - Add simulation run history.
 - Add learning progress.
 - Add export/import and delete account/data. Status: local portfolio backup, local demo reset, and full local-demo handoff snapshot are available; real account deletion remains blocked until backend auth exists.
