@@ -207,6 +207,32 @@ test('single-debt strategy comparison standard path honors the actual monthly pa
   assert.ok(strategies.monthly.months < 360, 'expected a higher actual payment to shorten the standard payoff');
 });
 
+test('biweekly savings compare against the actual monthly payment baseline', () => {
+  const webProjection = calculations.simulateBiweeklyPayments(100000, 0.06, 700, 360);
+  const monthlyProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 100000,
+    apr: 0.06,
+    monthlyPayment: 700,
+    maxMonths: 1440,
+  });
+  const biweeklyProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 100000,
+    apr: 0.06,
+    monthlyPayment: 700,
+    extraPayment: 700 / 12,
+    maxMonths: 1440,
+  });
+
+  assert.equal(webProjection.totalMonths, biweeklyProjection.payoffMonths);
+  assert.equal(roundCents(webProjection.totalInterest), roundCents(biweeklyProjection.totalInterest));
+  assert.equal(webProjection.monthsSavedVsMonthly, monthlyProjection.payoffMonths - biweeklyProjection.payoffMonths);
+  assert.equal(
+    roundCents(webProjection.interestSavedVsMonthly),
+    roundCents(monthlyProjection.totalInterest - biweeklyProjection.totalInterest)
+  );
+  assert.ok(webProjection.monthsSavedVsMonthly > 0, 'expected actual-payment biweekly savings to be positive');
+});
+
 test('LOC ADB interest uses daily closing balances across web and shared engines', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const expectedInterest = ((1116.6666666667 + 4500) / 2) * (0.12 / 365) * 30;
