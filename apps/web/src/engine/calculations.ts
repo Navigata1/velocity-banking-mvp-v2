@@ -829,27 +829,23 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
   }
   monthsElapsed = Math.max(0, Math.min(monthsElapsed, origTermMonths));
 
-  // Simulate elapsed months
-  const monthlyRate = originalRate / 12;
-  let bal = loanAmount;
-  let interestPaidSoFar = 0;
-  let first7YearsInterest = 0;
-  let first7YearsTotal = 0;
-  for (let m = 0; m < Math.max(monthsElapsed, 84) && bal > 0.01; m++) {
-    const interest = bal * monthlyRate;
-    const principal = origPayment - interest;
-    if (m < monthsElapsed) {
-      interestPaidSoFar += interest;
-    }
-    if (m < 84) { // first 7 years
-      first7YearsInterest += interest;
-      first7YearsTotal += origPayment;
-    }
-    bal = Math.max(0, bal - Math.max(0, principal));
-  }
+  const originalSchedule = simulateAmortizedPayoff({
+    principalBalance: loanAmount,
+    apr: originalRate,
+    monthlyPayment: origPayment,
+    maxMonths: origTermMonths,
+  }).monthlyData;
+  const elapsedRows = originalSchedule.slice(0, monthsElapsed);
+  const first7YearRows = originalSchedule.slice(0, 84);
+  const interestPaidSoFar = elapsedRows.reduce((sum, month) => sum + month.interest, 0);
+  const elapsedPrincipalPaid = elapsedRows.reduce((sum, month) => sum + month.principal, 0);
+  const scheduledBalanceAfterElapsed =
+    elapsedRows.length > 0 ? elapsedRows[elapsedRows.length - 1].balance : loanAmount;
+  const first7YearsInterest = first7YearRows.reduce((sum, month) => sum + month.interest, 0);
+  const first7YearsTotal = first7YearRows.reduce((sum, month) => sum + month.payment, 0);
 
   // Current interest vs principal split
-  const currentBalance = input.entryMode === 'purchase' ? bal : input.currentBalance;
+  const currentBalance = input.entryMode === 'purchase' ? scheduledBalanceAfterElapsed : input.currentBalance;
   const currentRate = input.entryMode === 'purchase'
     ? originalRate
     : Number.isFinite(input.currentRate)
@@ -887,7 +883,9 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
     });
   }
 
-  const principalPaidSoFar = loanAmount - currentBalance;
+  const principalPaidSoFar = input.entryMode === 'purchase'
+    ? elapsedPrincipalPaid
+    : loanAmount - currentBalance;
   const interestRemaining = totalInterestLifetime - interestPaidSoFar;
   const equityPercent = originalCost > 0 ? ((downPayment + Math.max(0, principalPaidSoFar)) / originalCost) * 100 : 0;
 

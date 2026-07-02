@@ -2789,6 +2789,51 @@ test('mortgage analysis clamps an overlarge down payment instead of showing a ne
   );
 });
 
+test('mortgage purchase-mode analysis uses shared schedule without advancing unelapsed months', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const analysisStart = calculationsSource.indexOf('export function calculateMortgageAnalysis');
+  const analysisEnd = calculationsSource.indexOf('//', analysisStart + 1);
+  const analysisSource = calculationsSource.slice(analysisStart, analysisEnd);
+  const input = {
+    entryMode: 'purchase',
+    purchaseAge: 32,
+    currentAge: 32,
+    originalCost: 320000,
+    originalTermYears: 30,
+    originalRate: 0.065,
+    downPayment: 64000,
+    currentBalance: 0,
+    remainingTermMonths: 0,
+    currentRate: 0.065,
+    currentMonthlyPayment: 0,
+    paymentFrequency: 'monthly',
+    hasExtraPayments: false,
+    extraPaymentAmount: 0,
+    hasRefinanced: false,
+    refinanceCount: 0,
+  };
+  const analysis = calculations.calculateMortgageAnalysis(input);
+  const strategies = calculations.compareMortgageStrategies(input, 1500, {
+    limit: 50000,
+    apr: 0.08,
+    balance: 0,
+  });
+
+  assert.ok(
+    analysisSource.includes('simulateAmortizedPayoff({') &&
+      analysisSource.includes('originalSchedule') &&
+      analysisSource.includes('elapsedRows'),
+    'expected mortgage analysis to derive history from the shared amortized payoff schedule'
+  );
+  assert.ok(!analysisSource.includes('Math.max(monthsElapsed, 84)'), 'expected first-seven-year math not to advance current purchase balance');
+  assert.equal(analysis.monthsElapsed, 0);
+  assert.equal(analysis.principalPaidSoFar, 0);
+  assert.equal(analysis.interestPaidSoFar, 0);
+  assert.equal(roundCents(analysis.equityPercent), 20);
+  assert.equal(strategies.standard.isPayoffPossible, true);
+  assert.equal(strategies.standard.months, 360);
+});
+
 test('mortgage purchase-mode strategies ignore hidden stale current balance inputs', () => {
   const input = {
     entryMode: 'purchase',
