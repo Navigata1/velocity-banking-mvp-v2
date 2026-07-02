@@ -4,10 +4,10 @@ Last updated: 2026-07-02
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `12ce584c7a27cefec0ba442af2fc6155b28348c8` (`Add keyboard control to artifact carousel`).
-- GitHub recorded a successful Vercel deployment for `12ce584c7a27cefec0ba442af2fc6155b28348c8`:
+- `main` contains the InterestShield 2026 release stack through commit `09e33c9b959a87ebd09dc6d052f434bc859e4d6b` (`Clamp vault comparison bar widths (#128)`).
+- GitHub recorded a successful Vercel deployment for `09e33c9b959a87ebd09dc6d052f434bc859e4d6b`:
   - environment: `Production`
-  - deployment URL: `https://velocity-banking-mvp-v2-oavhulw0q-islanddevcrew.vercel.app`
+  - deployment URL: `https://velocity-banking-mvp-v2-aen4l5s73-islanddevcrew.vercel.app`
   - deployment status observed by `npm run smoke:production`
 - That generated deployment URL is protected by Vercel login/protection and does not render the app shell without a bypass or authenticated Vercel access.
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
@@ -33,6 +33,13 @@ Last updated: 2026-07-02
   - PR #119: Supabase first-lane schema documents owner-scoped tables, RLS, and RPC boundaries.
   - PR #120: Money Loop payment math caps same-month debt payments after LOC chunks.
   - PR #121: Money Loop artifact carousel supports keyboard roving focus and active-panel labeling.
+  - PR #122: release runbook target refresh.
+  - PR #123: Cockpit emergency recovery coach note.
+  - PR #124: Cockpit routing toggles expose state and educational assumptions.
+  - PR #125: Simulator mortgage controls expose selected state.
+  - PR #126: Cockpit progress percentage is bounded.
+  - PR #127: Vault mortgage controls expose selected state.
+  - PR #128: Vault comparison bars clamp invalid and slower payoff widths.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -55,8 +62,8 @@ Last updated: 2026-07-02
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `12ce584c7a27cefec0ba442af2fc6155b28348c8`, or a newer passing `main` deployment, to the public production alias.
-   - Latest observed target URL: `https://velocity-banking-mvp-v2-oavhulw0q-islanddevcrew.vercel.app`
+   - Promote the deployment for `09e33c9b959a87ebd09dc6d052f434bc859e4d6b`, or a newer passing `main` deployment, to the public production alias.
+   - Latest observed target URL: `https://velocity-banking-mvp-v2-aen4l5s73-islanddevcrew.vercel.app`
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
 
@@ -127,9 +134,9 @@ These commands were run on 2026-07-02 from the local checkout on `main`:
 ```powershell
 Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a' -UseBasicParsing
 npm run smoke:production
-$sha = '12ce584c7a27cefec0ba442af2fc6155b28348c8'
+$sha = '09e33c9b959a87ebd09dc6d052f434bc859e4d6b'
 gh api "repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=$sha"
-$env:PRODUCTION_ORIGIN='https://velocity-banking-mvp-v2-oavhulw0q-islanddevcrew.vercel.app'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
+$env:PRODUCTION_ORIGIN='https://velocity-banking-mvp-v2-aen4l5s73-islanddevcrew.vercel.app'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
 ```
 
 Result summary:
@@ -138,6 +145,6 @@ Result summary:
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
 - The smoke script includes observed Vercel deployment diagnostics in freshness failures and classifies Vercel login-shell responses as deployment protection so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
 - The smoke script performs a best-effort GitHub Production deployment lookup and appends the latest deployment target URL, SHA, and status to stale/protected failures.
-- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg` and latest GitHub Production target `https://velocity-banking-mvp-v2-oavhulw0q-islanddevcrew.vercel.app` at `12ce584c7a27cefec0ba442af2fc6155b28348c8`.
-- Current latest-target smoke failure reports Vercel login/protection marker `dpl_8LvvmfrJPMTGx8wuU1adsDnJ1QMG`; configure `VERCEL_AUTOMATION_BYPASS_SECRET` or remove protection before treating that deployment as publicly release-ready.
+- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg` and latest GitHub Production target `https://velocity-banking-mvp-v2-aen4l5s73-islanddevcrew.vercel.app` at `09e33c9b959a87ebd09dc6d052f434bc859e4d6b`.
+- Current latest-target smoke failure reports Vercel login/protection marker `dpl_CbUo6MHHRjVaFDddhMHMqHcJRcjA`; configure `VERCEL_AUTOMATION_BYPASS_SECRET` or remove protection before treating that deployment as publicly release-ready.
 - Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
