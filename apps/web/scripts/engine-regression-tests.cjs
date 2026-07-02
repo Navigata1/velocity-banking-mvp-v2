@@ -301,6 +301,52 @@ test('web single-debt amortized payoff paths use the shared helper', () => {
   assert.equal(roundCents(accelerated.monthlyData[0].carInterest), roundCents(expectedAccelerated.monthlyData[0].interest));
 });
 
+test('web multi-debt baseline comparisons use the shared amortized payoff helper', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const baselineDebtStart = calculationsSource.indexOf('function simulateBaselineDebt');
+  const baselineDebtEnd = calculationsSource.indexOf('export function runSimulation', baselineDebtStart);
+  const baselineDebtSource = calculationsSource.slice(baselineDebtStart, baselineDebtEnd);
+  const debt = defaultCarDebt();
+  const expected = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: debt.balance,
+    apr: debt.apr,
+    monthlyPayment: debt.monthlyPayment,
+    maxMonths: 600,
+  });
+  const result = calculations.simulateMultiDebt([debt], 6500, 5000, undefined, 'snowball');
+  const impossibleDebt = {
+    id: 'interest-heavy',
+    name: 'Interest Heavy Card',
+    type: 'creditCard',
+    balance: 10000,
+    apr: 0.24,
+    monthlyPayment: 100,
+    minimumPayment: 100,
+  };
+  const impossibleExpected = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: impossibleDebt.balance,
+    apr: impossibleDebt.apr,
+    monthlyPayment: impossibleDebt.monthlyPayment,
+    maxMonths: 600,
+  });
+  const impossible = calculations.simulateMultiDebt([impossibleDebt], 6500, 5000, undefined, 'snowball');
+
+  assert.ok(
+    baselineDebtSource.includes('simulateAmortizedPayoff({'),
+    'expected web multi-debt baseline comparison to call the shared amortized payoff helper'
+  );
+  assert.ok(!baselineDebtSource.includes('while (balance > 0.01'), 'expected baseline debt payoff loop to live in the shared helper');
+  assert.equal(result.baselineTotalMonths, expected.payoffMonths);
+  assert.equal(roundCents(result.baselineTotalInterest), roundCents(expected.totalInterest));
+  assert.equal(result.debts[0].baselinePayoffMonths, expected.payoffMonths);
+  assert.equal(roundCents(result.debts[0].baselineInterest), roundCents(expected.totalInterest));
+  assert.equal(impossible.failureReason, 'payment-below-interest');
+  assert.equal(impossible.baselineTotalMonths, impossibleExpected.payoffMonths);
+  assert.equal(roundCents(impossible.baselineTotalInterest), roundCents(impossibleExpected.totalInterest));
+  assert.equal(impossible.debts[0].baselinePayoffMonths, impossibleExpected.payoffMonths);
+  assert.equal(roundCents(impossible.debts[0].baselineInterest), roundCents(impossibleExpected.totalInterest));
+});
+
 test('zero APR baseline payoff pays principal without charging interest', () => {
   const result = calculations.simulateBaseline({
     monthlyIncome: 4000,
