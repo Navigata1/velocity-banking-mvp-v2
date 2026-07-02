@@ -348,16 +348,19 @@ export default function PortfolioPage() {
                           : `${classes.border} hover:bg-slate-800/40`
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className={`font-semibold ${classes.text}`}>{strategyLabel(s)}</p>
-                          <p className={`${classes.textSecondary} text-xs mt-1`}>{strategyDescription(s)}</p>
+                      <div className="flex min-w-0 flex-col gap-2">
+                        <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
+                          <p className={`min-w-0 font-semibold ${classes.text}`}>{strategyLabel(s)}</p>
+                          {s === 'velocity' && (
+                            <span
+                              data-testid="portfolio-velocity-strategy-badge"
+                              className={`${velocityBadgeTone} shrink-0 rounded-md border border-current/25 px-2 py-1 text-[11px] font-semibold leading-none`}
+                            >
+                              {velocityBadgeLabel}
+                            </span>
+                          )}
                         </div>
-                        {s === 'velocity' && (
-                          <span className={`${velocityBadgeTone} text-sm font-semibold flex-shrink-0`}>
-                            {velocityBadgeLabel}
-                          </span>
-                        )}
+                        <p className={`${classes.textSecondary} text-xs leading-5`}>{strategyDescription(s)}</p>
                       </div>
                     </button>
                   ))}
