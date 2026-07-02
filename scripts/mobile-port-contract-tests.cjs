@@ -768,9 +768,13 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   );
   assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
   assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault'"));
-  assert.ok(shellSource.includes("handleModeChange('simulator')"));
-  assert.ok(shellSource.includes("handleModeChange('cockpit')"));
-  assert.ok(shellSource.includes("handleModeChange('portfolio')"));
+  assert.ok(shellSource.includes("const modes: Array<{ id: MobileMode; label: string }>"));
+  assert.ok(shellSource.includes("{ id: 'simulator', label: 'Simulator' }"));
+  assert.ok(shellSource.includes("{ id: 'cockpit', label: 'Cockpit' }"));
+  assert.ok(shellSource.includes("{ id: 'portfolio', label: 'Portfolio' }"));
+  assert.ok(shellSource.includes('{modes.map((mobileMode) => ('));
+  assert.ok(shellSource.includes('onPress={() => handleModeChange(mobileMode.id)}'));
+  assert.ok(shellSource.includes('testID={`mobile-mode-tab-${id}`}'));
   assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
   assert.ok(shellSource.includes('accessibilityLabel="Active debt name"'));
   assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));

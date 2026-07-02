@@ -89,17 +89,21 @@ const mobileStorageStatusCopy: Record<MobileAssumptionStorageStatus, { detail: s
 
 function ModeButton({
   active,
+  id,
   label,
   onPress,
 }: {
   active: boolean;
+  id: MobileMode;
   label: string;
   onPress: () => void;
 }) {
   return (
     <Pressable
-      accessibilityRole="button"
+      accessibilityLabel={`${label} mobile section`}
+      accessibilityRole="tab"
       accessibilityState={{ selected: active }}
+      aria-selected={active}
       onPress={onPress}
       style={{
         backgroundColor: active ? '#047857' : '#111827',
@@ -107,9 +111,12 @@ function ModeButton({
         borderCurve: 'continuous',
         borderRadius: 14,
         borderWidth: 1,
+        justifyContent: 'center',
+        minHeight: 44,
         paddingHorizontal: 12,
         paddingVertical: 10,
       }}
+      testID={`mobile-mode-tab-${id}`}
     >
       <Text selectable style={{ color: active ? '#ecfdf5' : '#cbd5e1', fontSize: 13, fontWeight: '800' }}>
         {label}
@@ -1040,14 +1047,20 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
         </Text>
       </View>
 
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-        <ModeButton active={mode === 'dashboard'} label="Dashboard" onPress={() => handleModeChange('dashboard')} />
-        <ModeButton active={mode === 'simulator'} label="Simulator" onPress={() => handleModeChange('simulator')} />
-        <ModeButton active={mode === 'cockpit'} label="Cockpit" onPress={() => handleModeChange('cockpit')} />
-        <ModeButton active={mode === 'portfolio'} label="Portfolio" onPress={() => handleModeChange('portfolio')} />
-        <ModeButton active={mode === 'learn'} label="Learn" onPress={() => handleModeChange('learn')} />
-        <ModeButton active={mode === 'vault'} label="Vault" onPress={() => handleModeChange('vault')} />
-        <ModeButton active={mode === 'settings'} label="Settings" onPress={() => handleModeChange('settings')} />
+      <View
+        accessibilityLabel="Mobile section navigation"
+        accessibilityRole="tablist"
+        style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}
+      >
+        {modes.map((mobileMode) => (
+          <ModeButton
+            active={mode === mobileMode.id}
+            id={mobileMode.id}
+            key={mobileMode.id}
+            label={mobileMode.label}
+            onPress={() => handleModeChange(mobileMode.id)}
+          />
+        ))}
       </View>
 
       {mode === 'settings' ? null : <AssumptionControls input={input} onChange={setInput} />}
