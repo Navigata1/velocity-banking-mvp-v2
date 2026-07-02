@@ -34,7 +34,8 @@ export type PortfolioFailureReason =
   | 'cashflow-below-minimums'
   | 'payment-below-interest'
   | 'loc-setup'
-  | 'loc-overlimit';
+  | 'loc-overlimit'
+  | 'payoff-horizon-exceeded';
 
 export type MinPaymentRule =
   | { type: 'fixed'; amount: number }
@@ -624,11 +625,13 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   }
 
   const totalInterest = Array.from(totalInterestPaid.values()).reduce((s, v) => s + v, 0) + locInterestPaid;
+  const isPayoffPossible = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01) && (!hasUsableVelocityLoc || locBalance <= 0.01);
 
   return {
     payoffMonths: month,
     totalInterest,
-    isPayoffPossible: debts.every(d => (balances.get(d.id) ?? 0) <= 0.01) && (!hasUsableVelocityLoc || locBalance <= 0.01),
+    isPayoffPossible,
+    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
     payoffOrder,
     monthResults,
     debtRationales,

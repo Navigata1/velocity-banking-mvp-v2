@@ -499,6 +499,29 @@ test('web multi-debt baseline comparisons use the shared amortized payoff helper
   assert.equal(roundCents(impossible.debts[0].baselineInterest), roundCents(impossibleExpected.totalInterest));
 });
 
+test('multi-debt payoff distinguishes horizon misses from under-interest payments', () => {
+  const result = calculations.simulateMultiDebt(
+    [{
+      id: 'long-horizon',
+      name: 'Long Horizon Loan',
+      type: 'mortgage',
+      balance: 1000000,
+      apr: 0.06,
+      monthlyPayment: 5100,
+      termMonths: 360,
+    }],
+    6000,
+    900,
+    undefined,
+    'snowball'
+  );
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'payoff-horizon-exceeded');
+  assert.equal(result.totalMonths, 600);
+  assert.ok(result.debts[0].monthlyData.length > 0, 'expected horizon-limited multi-debt projection to keep reviewed rows');
+});
+
 test('zero APR baseline payoff pays principal without charging interest', () => {
   const result = calculations.simulateBaseline({
     monthlyIncome: 4000,
@@ -536,6 +559,20 @@ test('baseline treats payment equal to monthly interest as an invalid payoff pla
   assert.equal(result.monthlyData.length, 0);
 });
 
+test('shared amortized payoff distinguishes horizon misses from under-interest payments', () => {
+  const result = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 100000,
+    apr: 0.06,
+    monthlyPayment: 700,
+    maxMonths: 12,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'payoff-horizon-exceeded');
+  assert.equal(result.payoffMonths, 12);
+  assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited projection to keep its reviewed schedule');
+});
+
 test('shared Money Loop payoff rejects payments below monthly interest before producing a timeline', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const result = moneyLoop.simulateMoneyLoopPayoff({
@@ -560,6 +597,31 @@ test('shared Money Loop payoff rejects payments below monthly interest before pr
   assert.equal(result.payoffMonths, 0);
   assert.equal(result.totalInterest, 0);
   assert.equal(result.monthlyData.length, 0);
+});
+
+test('shared Money Loop payoff distinguishes horizon misses from under-interest payments', () => {
+  const moneyLoop = loadTsModule('src/engine/money-loop.ts');
+  const result = moneyLoop.simulateMoneyLoopPayoff({
+    principalBalance: 100000,
+    debtApr: 0.06,
+    debtPayment: 700,
+    loc: {
+      limit: 50000,
+      apr: 0.09,
+      balance: 0,
+    },
+    chunkAmount: 0,
+    cashFlowPaydown: 1000,
+    locDepositAmount: 5000,
+    locExpenseAmount: 4000,
+    maxMonths: 12,
+    initialMonthsSinceChunk: 999,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'payoff-horizon-exceeded');
+  assert.equal(result.payoffMonths, 12);
+  assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited Money Loop projection to keep its event ledger');
 });
 
 test('shared Money Loop caps LOC chunk draw to remaining principal', () => {
@@ -1114,6 +1176,37 @@ test('portfolio simulation does not project payoff when a minimum payment is bel
     result.warnings.some((warning) => warning.includes("Interest Heavy Card payment doesn't cover monthly interest")),
     result.warnings.join(' | ')
   );
+});
+
+test('portfolio simulation distinguishes horizon misses from under-interest payments', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 6000,
+    monthlyExpenses: 900,
+    extraMonthlyPayment: 0,
+    debts: [
+      {
+        id: 'long-horizon',
+        name: 'Long Horizon Loan',
+        category: 'mortgage',
+        kind: 'amortized',
+        balance: 1000000,
+        apr: 0.06,
+        minPaymentRule: { type: 'fixed', amount: 5100 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'avalanche',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 12,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'payoff-horizon-exceeded');
+  assert.equal(result.payoffMonths, 12);
+  assert.ok(result.monthResults.length > 0, 'expected horizon-limited portfolio projection to keep reviewed rows');
 });
 
 test('portfolio simulation does not project payoff when cash flow cannot cover minimums', () => {
@@ -2119,7 +2212,7 @@ test('portfolio velocity warns when LOC utilization is high but still available'
         name: 'Auto Loan',
         category: 'auto',
         kind: 'amortized',
-        balance: 14000,
+        balance: 1000,
         apr: 0.08,
         minPaymentRule: { type: 'fixed', amount: 390 },
         paymentSource: 'checking',
@@ -2130,7 +2223,7 @@ test('portfolio velocity warns when LOC utilization is high but still available'
       focusMode: 'single',
       splitRatioPrimary: 0.7,
     },
-    maxMonths: 1,
+    maxMonths: 120,
   });
 
   assert.ok(result.moneyLoopMonthlyData.length > 0, 'expected high-but-available LOC to keep Money Loop math active');
@@ -3160,6 +3253,12 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
     isPayoffPossible: false,
     failureReason: 'cashflow-below-minimums',
   };
+  const horizonProjection = {
+    saved: 0,
+    monthsSaved: 0,
+    isPayoffPossible: false,
+    failureReason: 'payoff-horizon-exceeded',
+  };
 
   assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No interest savings');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(zeroImprovement), 'No faster payoff');
@@ -3167,6 +3266,7 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(positiveImprovement), '7 months faster');
   assert.equal(vaultModel.formatVaultStrategySavings(invalidProjection), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(invalidProjection), 'Cash flow below payment');
+  assert.equal(vaultModel.formatVaultStrategyTimeDelta(horizonProjection), 'Extend projection horizon');
 });
 
 test('mortgage extra-payment strategy does not invent extra cash when cash flow is not positive', () => {
