@@ -47,6 +47,7 @@ function formatFailure(reason?: PayoffFailureReason): string {
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
+  if (reason === 'loc-setup') return 'Add LOC limit';
   if (reason === 'loc-overlimit') return 'LOC over limit';
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
