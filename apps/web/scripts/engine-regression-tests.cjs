@@ -2831,6 +2831,48 @@ test('mortgage standard strategy uses the actual current monthly payment', () =>
   );
 });
 
+test('mortgage strategy payment plans use the shared amortized payoff helper', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const wrapperStart = calculationsSource.indexOf('function simulateMortgagePaymentPlan');
+  const wrapperEnd = calculationsSource.indexOf('export function compareMortgageStrategies', wrapperStart);
+  const wrapperSource = calculationsSource.slice(wrapperStart, wrapperEnd);
+  const input = {
+    entryMode: 'current',
+    purchaseAge: 30,
+    currentAge: 40,
+    originalCost: 125000,
+    originalTermYears: 30,
+    originalRate: 0.07,
+    downPayment: 25000,
+    currentBalance: 100000,
+    remainingTermMonths: 120,
+    currentRate: 0.12,
+    currentMonthlyPayment: 1100,
+    paymentFrequency: 'monthly',
+    hasExtraPayments: false,
+    extraPaymentAmount: 0,
+    hasRefinanced: false,
+    refinanceCount: 0,
+  };
+  const strategies = calculations.compareMortgageStrategies(input, 1200, {
+    limit: 50000,
+    apr: 0.1,
+    balance: 0,
+  });
+  const sharedProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: input.currentBalance,
+    apr: input.currentRate,
+    monthlyPayment: input.currentMonthlyPayment,
+    maxMonths: input.remainingTermMonths * 4,
+  });
+
+  assert.ok(wrapperSource.includes('simulateAmortizedPayoff({'), 'expected mortgage strategy plans to delegate to the shared payoff helper');
+  assert.ok(!wrapperSource.includes('while ('), 'expected mortgage strategy plans not to keep a separate payoff loop');
+  assert.equal(strategies.standard.months, sharedProjection.payoffMonths);
+  assert.equal(roundCents(strategies.standard.totalInterest), roundCents(sharedProjection.totalInterest));
+  assert.equal(strategies.standard.isPayoffPossible, sharedProjection.isPayoffPossible);
+});
+
 test('mortgage strategies do not replace a zero current payment with a derived payment', () => {
   const input = {
     entryMode: 'current',
