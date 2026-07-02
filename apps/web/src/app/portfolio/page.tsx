@@ -42,7 +42,7 @@ function strategyLabel(s: PayoffStrategy): string {
 }
 
 function strategyDescription(s: PayoffStrategy): string {
-  if (s === 'velocity') return 'Targets the debt that frees the most monthly payment next, then reduces daily interest burn — matching the Money Loop mindset.';
+  if (s === 'velocity') return 'Planning default: ranks debts for cash-flow unlock, then daily interest burn. Compare Simulator cards before treating it as fastest or lowest-interest.';
   if (s === 'snowball') return 'Smallest balance first for fast wins and motivation.';
   return 'Highest APR first to minimize total interest (classic math-optimal approach).';
 }
@@ -353,6 +353,9 @@ export default function PortfolioPage() {
                     </button>
                   ))}
                 </div>
+                <p data-testid="portfolio-strategy-alignment-note" className={`${classes.textMuted} mt-3 text-xs leading-5`}>
+                  Velocity Mode is the Portfolio planning default, not a promise that it is the fastest or lowest-interest path. Use the Simulator cards to compare modeled payoff speed and interest cost under the same assumptions.
+                </p>
               </div>
 
               {/* Focus Mode */}
