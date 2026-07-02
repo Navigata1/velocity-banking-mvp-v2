@@ -835,49 +835,39 @@ function buildMobilePortfolioPathSnapshot(
 
   const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
   const extraPayment = Math.max(0, cashFlow - Math.max(0, input.activeDebt.monthlyPayment));
-  const monthlyRate = Math.max(0, input.activeDebt.apr) / 12;
-  let balance = startingBalance;
-  let totalInterest = 0;
-  let month = 0;
+  const projection = simulateAmortizedPayoff({
+    principalBalance: startingBalance,
+    apr: input.activeDebt.apr,
+    monthlyPayment: input.activeDebt.monthlyPayment,
+    extraPayment,
+    maxMonths: 600,
+  });
+
+  if (!projection.isPayoffPossible) {
+    return reviewPath;
+  }
+
   const points: MobilePortfolioPathPoint[] = [
     {
       month: 0,
       balance: startingBalance,
       progressPercent: 0,
     },
+    ...projection.monthlyData.map((month) => ({
+      month: month.month,
+      balance: month.balance,
+      progressPercent: startingBalance > 0
+        ? Math.min(100, Math.max(0, ((startingBalance - month.balance) / startingBalance) * 100))
+        : 100,
+    })),
   ];
-  const firstMonthInterest = balance * monthlyRate;
-
-  if (input.activeDebt.monthlyPayment + extraPayment <= firstMonthInterest) {
-    return reviewPath;
-  }
-
-  while (balance > 0.01 && month < 600) {
-    month += 1;
-    const interest = balance * monthlyRate;
-    const payment = Math.min(input.activeDebt.monthlyPayment + extraPayment, balance + interest);
-    const principal = Math.max(0, payment - interest);
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - principal);
-
-    points.push({
-      month,
-      balance,
-      progressPercent: startingBalance > 0 ? Math.min(100, Math.max(0, ((startingBalance - balance) / startingBalance) * 100)) : 100,
-    });
-  }
-
-  if (balance > 0.01) {
-    return reviewPath;
-  }
 
   return {
     isProjected: true,
     statusLabel: 'Projected path',
     startingBalanceLabel: formatCurrency(startingBalance),
-    payoffMonthsLabel: formatMobileMonths(month),
-    totalInterestLabel: formatCurrency(totalInterest),
+    payoffMonthsLabel: formatMobileMonths(projection.payoffMonths),
+    totalInterestLabel: formatCurrency(projection.totalInterest),
     progressPercent: 100,
     points: sampleMobilePortfolioPath(points),
   };
