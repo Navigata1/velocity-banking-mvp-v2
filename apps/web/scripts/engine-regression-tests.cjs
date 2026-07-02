@@ -3269,6 +3269,33 @@ test('strategy glass copy does not label faster-but-costlier paths as interest s
   assert.equal(strategyGlassModel.getStrategyDeltaTone(1000, 1000), 'sky');
 });
 
+test('strategy glass model suppresses winners and savings when the baseline is invalid', () => {
+  const strategyGlassModel = loadTsModule('src/components/strategy-glass-fill-model.ts');
+  const comparison = strategyGlassModel.buildStrategyGlassComparison([
+    {
+      name: 'Traditional',
+      months: 0,
+      totalInterest: Number.NaN,
+      isPayoffPossible: false,
+    },
+    {
+      name: 'Velocity',
+      months: 1,
+      totalInterest: 100,
+      isPayoffPossible: true,
+    },
+  ]);
+
+  assert.equal(comparison.baselineValid, false);
+  assert.equal(comparison.baselineMonths, 0);
+  assert.equal(comparison.baselineInterest, 0);
+  assert.equal(comparison.winner, null);
+  assert.equal(comparison.cards[0].fillPercent, 0);
+  assert.equal(comparison.cards[1].fillPercent, 0);
+  assert.equal(comparison.cards[1].monthsSaved, 0);
+  assert.equal(comparison.cards[1].isWinner, false);
+});
+
 test('mortgage analysis warns when current balance exceeds original loan amount', () => {
   const analysis = calculations.calculateMortgageAnalysis({
     entryMode: 'both',
