@@ -810,6 +810,35 @@ test('shared Money Loop caps LOC chunk draw to remaining principal', () => {
   );
 });
 
+test('shared Money Loop caps same-month debt payment after a LOC chunk reduces principal', () => {
+  const moneyLoop = loadTsModule('src/engine/money-loop.ts');
+  const month = moneyLoop.simulateMoneyLoopMonth({
+    month: 1,
+    debtBalance: 1000,
+    debtApr: 0.12,
+    debtPayment: 500,
+    loc: {
+      limit: 10000,
+      apr: 0,
+      balance: 0,
+    },
+    locBalance: 0,
+    chunkAmount: 900,
+    cashFlowPaydown: 1500,
+    locDepositAmount: 4000,
+    locExpenseAmount: 2500,
+    monthsSinceChunk: 999,
+  });
+  const paymentEvent = month.events.find((event) => event.type === 'debt-payment');
+
+  assert.equal(month.didChunk, true);
+  assert.ok(paymentEvent, 'expected the same month to include the normal debt payment event');
+  assert.equal(roundCents(month.debtPrincipalPaid), 100);
+  assert.equal(roundCents(month.debtPayment), 110);
+  assert.equal(roundCents(paymentEvent.amount), 110);
+  assert.equal(roundCents(month.debtBalance), 0);
+});
+
 test('shared Money Loop caps LOC chunk draw to available credit', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const result = moneyLoop.simulateMoneyLoopPayoff({
