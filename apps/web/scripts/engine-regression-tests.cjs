@@ -6579,6 +6579,13 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
       productionSmokeScript.includes("process.env.GITHUB_REPOSITORY || 'Navigata1/velocity-banking-mvp-v2'"),
     'expected production smoke failures to include latest GitHub production deployment diagnostics'
   );
+  assert.ok(
+    productionSmokeScript.includes('buildAliasRemediationHint') &&
+      productionSmokeScript.includes('npx vercel promote') &&
+      productionSmokeScript.includes('npx vercel cache purge --yes') &&
+      productionSmokeScript.includes("process.env.VERCEL_TEAM_SLUG || 'islanddevcrew'"),
+    'expected stale production failures to include exact Vercel alias remediation commands'
+  );
 });
 
 test('web app declares Vercel Next deployment configuration', () => {
@@ -6615,7 +6622,7 @@ test('repository documents the current Vercel alias promotion blocker', () => {
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('3463347b44050f11b134943e03e05c27000daa49'),
+    runbook.includes('a34f34888bbd8720eeee9b14d1211632c9bfb526'),
     'expected the runbook to name the current release-stack main commit'
   );
   assert.ok(
@@ -6628,7 +6635,10 @@ test('repository documents the current Vercel alias promotion blocker', () => {
     'expected the runbook to distinguish stale public alias and protected latest deployment markers'
   );
   assert.ok(
-    runbook.includes('VERCEL_AUTOMATION_BYPASS_SECRET') && runbook.includes('Promote or alias the current release build'),
+    runbook.includes('VERCEL_AUTOMATION_BYPASS_SECRET') &&
+      runbook.includes('Promote or alias the current release build') &&
+      runbook.includes('npx vercel promote https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app') &&
+      runbook.includes('npx vercel cache purge --yes --scope islanddevcrew'),
     'expected the runbook to document the required Vercel release action'
   );
 });
