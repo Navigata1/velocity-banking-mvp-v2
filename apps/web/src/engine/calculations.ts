@@ -1202,20 +1202,26 @@ export function simulateBiweeklyPayments(
   termMonths: number
 ): BiweeklyResult {
   // Monthly equivalent for 26 half-payments per year: 13 full payments.
-  const monthlyResult = calculateTotalAmortizationInterest(balance, apr, termMonths);
+  const payoffHorizonMonths = Math.max(termMonths * 4, termMonths, 600);
+  const monthlyProjection = simulateAmortizedPayoff({
+    principalBalance: balance,
+    apr,
+    monthlyPayment,
+    maxMonths: payoffHorizonMonths,
+  });
   const biweeklyProjection = simulateAmortizedPayoff({
     principalBalance: balance,
     apr,
     monthlyPayment,
     extraPayment: monthlyPayment / 12,
-    maxMonths: termMonths,
+    maxMonths: payoffHorizonMonths,
   });
 
   return {
     totalMonths: biweeklyProjection.payoffMonths,
     totalInterest: biweeklyProjection.totalInterest,
-    monthsSavedVsMonthly: Math.max(0, termMonths - biweeklyProjection.payoffMonths),
-    interestSavedVsMonthly: Math.max(0, monthlyResult - biweeklyProjection.totalInterest),
+    monthsSavedVsMonthly: Math.max(0, monthlyProjection.payoffMonths - biweeklyProjection.payoffMonths),
+    interestSavedVsMonthly: Math.max(0, monthlyProjection.totalInterest - biweeklyProjection.totalInterest),
   };
 }
 
