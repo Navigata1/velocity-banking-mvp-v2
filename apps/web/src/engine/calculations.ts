@@ -1201,52 +1201,21 @@ export function simulateBiweeklyPayments(
   monthlyPayment: number,
   termMonths: number
 ): BiweeklyResult {
-  // Bi-weekly = 26 half-payments per year = 13 full payments
-  const biweeklyPayment = monthlyPayment / 2;
-  const dailyRate = apr / 365;
-  let bal = balance;
-  let day = 0;
-  const maxDays = termMonths * 31;
-
-  while (bal > 0.01 && day < maxDays) {
-    // Every 14 days, make a payment
-    for (let d = 0; d < 14 && bal > 0.01; d++) {
-      const interest = bal * dailyRate;
-      bal += interest; // accrue daily (simplified)
-      day++;
-    }
-    // Subtract accrued interest from balance tracking (already added above), apply payment
-    bal = Math.max(0, bal - biweeklyPayment);
-  }
-
-  // Simplified: re-simulate as monthly equivalent (13 payments/year)
-  // More accurate approach:
+  // Monthly equivalent for 26 half-payments per year: 13 full payments.
   const monthlyResult = calculateTotalAmortizationInterest(balance, apr, termMonths);
-  const annualPaymentMonthly = monthlyPayment * 12;
-  const annualPaymentBiweekly = monthlyPayment * 13; // 26 half-payments
-  const extraAnnual = annualPaymentBiweekly - annualPaymentMonthly;
-
-  // Simulate with extra payment each month
-  let bal2 = balance;
-  let totalInt2 = 0;
-  let months2 = 0;
-  const mr = apr / 12;
-  const extraMonthly = extraAnnual / 12;
-
-  while (bal2 > 0.01 && months2 < termMonths) {
-    months2++;
-    const interest = bal2 * mr;
-    const payment = Math.min(monthlyPayment + extraMonthly, bal2 + interest);
-    const principal = payment - interest;
-    totalInt2 += interest;
-    bal2 = Math.max(0, bal2 - Math.max(0, principal));
-  }
+  const biweeklyProjection = simulateAmortizedPayoff({
+    principalBalance: balance,
+    apr,
+    monthlyPayment,
+    extraPayment: monthlyPayment / 12,
+    maxMonths: termMonths,
+  });
 
   return {
-    totalMonths: months2,
-    totalInterest: totalInt2,
-    monthsSavedVsMonthly: termMonths - months2,
-    interestSavedVsMonthly: Math.max(0, monthlyResult - totalInt2),
+    totalMonths: biweeklyProjection.payoffMonths,
+    totalInterest: biweeklyProjection.totalInterest,
+    monthsSavedVsMonthly: Math.max(0, termMonths - biweeklyProjection.payoffMonths),
+    interestSavedVsMonthly: Math.max(0, monthlyResult - biweeklyProjection.totalInterest),
   };
 }
 
