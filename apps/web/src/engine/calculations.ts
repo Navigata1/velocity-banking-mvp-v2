@@ -181,6 +181,39 @@ export function calculateMonthlyRate(apr: number): number {
   return apr / 12;
 }
 
+function safeNonNegative(value: number | undefined, fallback = 0): number {
+  return Number.isFinite(value) ? Math.max(0, value as number) : fallback;
+}
+
+function sanitizeLoc(loc: LOCDetails | undefined): LOCDetails | undefined {
+  if (!loc) return undefined;
+
+  return {
+    limit: safeNonNegative(loc.limit),
+    apr: safeNonNegative(loc.apr),
+    balance: safeNonNegative(loc.balance),
+  };
+}
+
+function sanitizeSimulationInputs(inputs: SimulationInputs): SimulationInputs {
+  return {
+    ...inputs,
+    monthlyIncome: safeNonNegative(inputs.monthlyIncome),
+    monthlyExpenses: safeNonNegative(inputs.monthlyExpenses),
+    carLoan: {
+      ...inputs.carLoan,
+      balance: safeNonNegative(inputs.carLoan.balance),
+      apr: safeNonNegative(inputs.carLoan.apr),
+      monthlyPayment: safeNonNegative(inputs.carLoan.monthlyPayment),
+      termMonths: inputs.carLoan.termMonths == null
+        ? undefined
+        : Math.max(1, Math.round(safeNonNegative(inputs.carLoan.termMonths, 1))),
+    },
+    loc: sanitizeLoc(inputs.loc),
+    extraPayment: safeNonNegative(inputs.extraPayment),
+  };
+}
+
 // ─── Safety Warnings ─────────────────────────────────────────────────
 
 export function generateWarnings(
@@ -281,11 +314,12 @@ export function generateWarnings(
 // ─── Baseline Simulation (Standard Amortization) ─────────────────────
 
 export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
-  const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
+  const safeInputs = sanitizeSimulationInputs(inputs);
+  const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
   const projection = simulateAmortizedPayoff({
-    principalBalance: inputs.carLoan.balance,
-    apr: inputs.carLoan.apr,
-    monthlyPayment: inputs.carLoan.monthlyPayment,
+    principalBalance: safeInputs.carLoan.balance,
+    apr: safeInputs.carLoan.apr,
+    monthlyPayment: safeInputs.carLoan.monthlyPayment,
     maxMonths: 600,
   });
 
@@ -298,7 +332,7 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
       locBalance: 0,
       carInterest: month.interest,
       locInterest: 0,
-      cashFlow: cashFlow - inputs.carLoan.monthlyPayment,
+      cashFlow: cashFlow - safeInputs.carLoan.monthlyPayment,
     })),
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
@@ -319,15 +353,17 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
  * LOC balance increases by chunk amount, then gets paid down by cash flow over time.
  */
 export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
-  if (!inputs.loc) {
+  const safeInputs = sanitizeSimulationInputs(inputs);
+
+  if (!safeInputs.loc) {
     // Without LOC, velocity = baseline + extra payments
-    return simulateWithExtraPayments(inputs);
+    return simulateWithExtraPayments(safeInputs);
   }
 
-  const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
+  const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
 
   if (cashFlow <= 0) {
-    const baseline = simulateBaseline(inputs);
+    const baseline = simulateBaseline(safeInputs);
     return {
       ...baseline,
       isPayoffPossible: false,
@@ -335,7 +371,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (inputs.loc.limit <= 0) {
+  if (safeInputs.loc.limit <= 0) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -345,7 +381,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (inputs.loc.balance > inputs.loc.limit) {
+  if (safeInputs.loc.balance > safeInputs.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -355,7 +391,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (inputs.loc.balance === inputs.loc.limit) {
+  if (safeInputs.loc.balance === safeInputs.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -365,7 +401,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (cashFlow < inputs.carLoan.monthlyPayment) {
+  if (cashFlow < safeInputs.carLoan.monthlyPayment) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -375,21 +411,21 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  const locCashFlowPaydown = Math.max(0, cashFlow - inputs.carLoan.monthlyPayment);
+  const locCashFlowPaydown = Math.max(0, cashFlow - safeInputs.carLoan.monthlyPayment);
   const chunkAmount = Math.max(
     0,
-    inputs.extraPayment > 0 ? inputs.extraPayment : Math.min(locCashFlowPaydown * 3, inputs.loc.limit * 0.4)
+    safeInputs.extraPayment > 0 ? safeInputs.extraPayment : Math.min(locCashFlowPaydown * 3, safeInputs.loc.limit * 0.4)
   );
 
   const moneyLoop = simulateMoneyLoopPayoff({
-    principalBalance: inputs.carLoan.balance,
-    debtApr: inputs.carLoan.apr,
-    debtPayment: inputs.carLoan.monthlyPayment,
-    loc: inputs.loc,
+    principalBalance: safeInputs.carLoan.balance,
+    debtApr: safeInputs.carLoan.apr,
+    debtPayment: safeInputs.carLoan.monthlyPayment,
+    loc: safeInputs.loc,
     chunkAmount,
     cashFlowPaydown: locCashFlowPaydown,
-    locDepositAmount: inputs.monthlyIncome,
-    locExpenseAmount: inputs.monthlyExpenses + inputs.carLoan.monthlyPayment,
+    locDepositAmount: safeInputs.monthlyIncome,
+    locExpenseAmount: safeInputs.monthlyExpenses + safeInputs.carLoan.monthlyPayment,
     maxMonths: 600,
     initialMonthsSinceChunk: 0,
   });
@@ -412,12 +448,13 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
 }
 
 function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
-  const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
-  const extraPayment = Math.min(Math.max(0, inputs.extraPayment), Math.max(0, cashFlow));
+  const safeInputs = sanitizeSimulationInputs(inputs);
+  const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
+  const extraPayment = Math.min(Math.max(0, safeInputs.extraPayment), Math.max(0, cashFlow));
   const projection = simulateAmortizedPayoff({
-    principalBalance: inputs.carLoan.balance,
-    apr: inputs.carLoan.apr,
-    monthlyPayment: inputs.carLoan.monthlyPayment,
+    principalBalance: safeInputs.carLoan.balance,
+    apr: safeInputs.carLoan.apr,
+    monthlyPayment: safeInputs.carLoan.monthlyPayment,
     extraPayment,
     maxMonths: 600,
   });
@@ -431,7 +468,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
       locBalance: 0,
       carInterest: month.interest,
       locInterest: 0,
-      cashFlow: cashFlow - inputs.carLoan.monthlyPayment - extraPayment,
+      cashFlow: cashFlow - safeInputs.carLoan.monthlyPayment - extraPayment,
     })),
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
@@ -748,13 +785,14 @@ function simulateBaselineDebt(debt: DebtItem): {
 // ─── Legacy API (backwards compatible) ───────────────────────────────
 
 export function runSimulation(inputs: SimulationInputs): SimulationResult {
-  const baseline = simulateBaseline(inputs);
-  const velocity = simulateVelocity(inputs);
+  const safeInputs = sanitizeSimulationInputs(inputs);
+  const baseline = simulateBaseline(safeInputs);
+  const velocity = simulateVelocity(safeInputs);
   const canCompareSavings = baseline.isPayoffPossible && velocity.isPayoffPossible;
   const warnings = generateWarnings(
-    inputs.monthlyIncome,
-    inputs.monthlyExpenses,
-    inputs.loc,
+    safeInputs.monthlyIncome,
+    safeInputs.monthlyExpenses,
+    safeInputs.loc,
   );
 
   return {
@@ -769,13 +807,14 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
 }
 
 export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDebtStrategyResult[] {
-  const simulation = runSimulation(inputs);
+  const safeInputs = sanitizeSimulationInputs(inputs);
+  const simulation = runSimulation(safeInputs);
   const surplusAfterMinimum = Math.max(
     0,
-    inputs.monthlyIncome - inputs.monthlyExpenses - inputs.carLoan.monthlyPayment
+    safeInputs.monthlyIncome - safeInputs.monthlyExpenses - safeInputs.carLoan.monthlyPayment
   );
   const acceleratedInputs: SimulationInputs = {
-    ...inputs,
+    ...safeInputs,
     loc: undefined,
     useVelocity: false,
     extraPayment: surplusAfterMinimum,
