@@ -305,7 +305,7 @@ test('daily interest burn uses the shared financial-engine helper', () => {
   assert.equal(velocityTargeting.estimateDailyInterest(18450, 6.9), calculations.calculateDailyInterest(18450, 6.9));
   assert.ok(
     dashboardModelSource.includes('calculateDailyInterest(debt.balance, debt.interestRate)') &&
-      dashboardModelSource.includes('calculateDailyInterest(input.loc.balance, input.loc.interestRate)'),
+      dashboardModelSource.includes('calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate)'),
     'expected dashboard daily burn to use the shared helper for debt and LOC balances'
   );
   assert.ok(
@@ -5241,6 +5241,71 @@ test('dashboard model treats a full LOC as no available room instead of over-lim
   assert.equal(locArtifact.value, '$0 open');
   assert.equal(locArtifact.signal, '100% used');
   assert.equal(locArtifact.tone, 'amber');
+});
+
+test('dashboard model sanitizes non-finite first-screen and artifact inputs', () => {
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: Number.POSITIVE_INFINITY,
+    monthlyExpenses: Number.NaN,
+    chunkAmount: Number.POSITIVE_INFINITY,
+    activeDebt: {
+      name: 'Corrupt Loan',
+      balance: Number.POSITIVE_INFINITY,
+      interestRate: Number.NaN,
+      minimumPayment: Number.NaN,
+    },
+    allDebts: [
+      {
+        name: 'Corrupt Loan',
+        balance: Number.POSITIVE_INFINITY,
+        interestRate: Number.NaN,
+        minimumPayment: Number.NaN,
+      },
+    ],
+    loc: {
+      limit: Number.POSITIVE_INFINITY,
+      balance: Number.NaN,
+      interestRate: Number.NaN,
+    },
+    baseline: {
+      months: Number.POSITIVE_INFINITY,
+      totalInterest: Number.NaN,
+      isPayoffPossible: true,
+    },
+    velocity: {
+      months: Number.POSITIVE_INFINITY,
+      totalInterest: Number.NaN,
+      savings: Number.POSITIVE_INFINITY,
+      isPayoffPossible: true,
+    },
+  });
+  const visibleText = [
+    model.locUtilizationLabel,
+    model.etaValue,
+    model.statusLabel,
+    model.nextMove.title,
+    model.nextMove.value,
+    model.nextMove.caption,
+    ...model.vitals.flatMap((vital) => [vital.value, vital.caption, ...vital.assumptions]),
+    ...model.warnings.flatMap((warning) => [warning.title, warning.body]),
+    ...model.moneyLoopArtifacts.flatMap((artifact) => [artifact.value, artifact.signal, artifact.note]),
+    ...model.changeExplanations.flatMap((explanation) => [explanation.value, explanation.body]),
+    ...model.moneyLoopSteps.flatMap((step) => [step.value, step.note]),
+  ].join(' ');
+
+  assert.equal(model.cashFlow, 0);
+  assert.equal(model.availableLoc, 0);
+  assert.equal(model.locNeedsSetup, true);
+  assert.equal(model.locUtilization, 0);
+  assert.equal(model.locUtilizationLabel, 'No LOC');
+  assert.equal(model.dailyInterestBurn, 0);
+  assert.equal(model.etaValue, 'Stabilize first');
+  assert.equal(model.vitals.length, 4);
+  assert.ok(model.warnings.some((warning) => warning.kind === 'cash-flow'), JSON.stringify(model.warnings));
+  assert.ok(model.warnings.some((warning) => warning.kind === 'loc-setup'), JSON.stringify(model.warnings));
+  assert.ok(model.moneyLoopArtifacts.every((artifact) => Number.isFinite(artifact.fillPercent)), JSON.stringify(model.moneyLoopArtifacts));
+  assert.ok(!visibleText.includes('NaN'), visibleText);
+  assert.ok(!visibleText.includes('Infinity'), visibleText);
 });
 
 test('dashboard model provides a five-part Money Loop artifact rail without adding vitals', () => {
