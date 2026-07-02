@@ -1014,46 +1014,18 @@ function simulateMortgagePaymentPlan(
   monthlyPayment: number,
   maxMonths: number
 ): MortgagePaymentProjection {
-  if (balance <= 0.01) {
-    return { months: 0, totalInterest: 0, isPayoffPossible: true };
-  }
-
-  const monthlyRate = apr / 12;
-  const firstMonthInterest = balance * monthlyRate;
-  if (monthlyPayment <= firstMonthInterest) {
-    return {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  let currentBalance = balance;
-  let totalInterest = 0;
-  let months = 0;
-
-  while (currentBalance > 0.01 && months < maxMonths) {
-    months++;
-    const interest = currentBalance * monthlyRate;
-    const totalPayment = Math.min(monthlyPayment, currentBalance + interest);
-    const principal = totalPayment - interest;
-    if (principal <= 0) {
-      return {
-        months,
-        totalInterest,
-        isPayoffPossible: false,
-        failureReason: 'payment-below-interest',
-      };
-    }
-    totalInterest += interest;
-    currentBalance = Math.max(0, currentBalance - principal);
-  }
+  const projection = simulateAmortizedPayoff({
+    principalBalance: balance,
+    apr,
+    monthlyPayment,
+    maxMonths,
+  });
 
   return {
-    months,
-    totalInterest,
-    isPayoffPossible: currentBalance <= 0.01,
+    months: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
   };
 }
 

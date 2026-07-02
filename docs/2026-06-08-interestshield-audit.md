@@ -3156,6 +3156,23 @@ Verification:
 - `apps/mobile` `npm run check`: passed.
 - `apps/web` `npm run smoke:routes`: passed for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
 
+### Repair Pass 173: Shared Mortgage Strategy Payoff Helper
+
+Changes:
+
+- Replaced the web-local Vault mortgage strategy payment loop with a thin wrapper around the shared `simulateAmortizedPayoff` helper.
+- Kept the existing Vault strategy result shape for Standard, Bi-Weekly, Extra Payment, and Velocity comparisons.
+- Added regression coverage proving the mortgage strategy wrapper delegates to the shared helper and does not keep a separate payoff loop.
+
+Verification:
+
+- `apps/web` `npm test`: passed with 147 regression tests plus the accessibility route contract.
+- `scripts/mobile-port-contract-tests.cjs`: passed.
+- `apps/web` `npm run lint`: passed.
+- `apps/web` `npm run build`: passed.
+- `apps/mobile` `npm run check`: passed.
+- `apps/web` `npm run smoke:routes`: passed for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3645,7 +3662,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 - Define account types: amortized loan, revolving LOC, credit card, simple debt.
 - Define event types: income deposit, expense, minimum payment, chunk payment, interest post.
 - Return monthly rollups and transparent assumptions. Status: expanded through Repair Pass 16 with shared Money Loop ledgers for single-debt and multi-debt Velocity paths. Multi-debt invalid projection flags were added in Repair Pass 30.
-- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Repair Pass 161 aligned web and Expo LOC average-daily-balance interest to daily closing-balance sampling, Repair Pass 163 moved web cash-flow, amortized-payment, daily-rate, LOC ADB interest, and currency primitives onto `@interestshield/financial-engine`, Repair Pass 164 moved the canonical Money Loop month/payoff event ledger into the shared package, Repair Pass 165 routed the mobile Velocity payoff wrapper through that same shared payoff engine, Repair Pass 166 added shared amortized payoff helper coverage for mobile Traditional/Snowball/Avalanche, Repair Pass 167 moved the web single-debt Traditional/no-LOC accelerated payoff paths onto the shared amortized payoff helper, Repair Pass 168 moved the web multi-debt baseline comparison helper onto that shared amortized payoff helper, Repair Pass 169 moved the mobile Portfolio payoff-path projection onto the same helper, Repair Pass 170 moved total amortization interest into the shared package, and Repair Pass 172 moved daily interest burn helpers for web Dashboard/Cockpit/Portfolio/Velocity targeting plus mobile snapshots into the shared package. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
+- Replace dashboard/simulator/portfolio/vault calculations with this engine. Status: partial; dashboard/simulator single-debt, multi-debt Velocity, Vault mortgage Velocity, and Portfolio single-lane Velocity now use shared Money Loop steps. Repair Pass 161 aligned web and Expo LOC average-daily-balance interest to daily closing-balance sampling, Repair Pass 163 moved web cash-flow, amortized-payment, daily-rate, LOC ADB interest, and currency primitives onto `@interestshield/financial-engine`, Repair Pass 164 moved the canonical Money Loop month/payoff event ledger into the shared package, Repair Pass 165 routed the mobile Velocity payoff wrapper through that same shared payoff engine, Repair Pass 166 added shared amortized payoff helper coverage for mobile Traditional/Snowball/Avalanche, Repair Pass 167 moved the web single-debt Traditional/no-LOC accelerated payoff paths onto the shared amortized payoff helper, Repair Pass 168 moved the web multi-debt baseline comparison helper onto that shared amortized payoff helper, Repair Pass 169 moved the mobile Portfolio payoff-path projection onto the same helper, Repair Pass 170 moved total amortization interest into the shared package, Repair Pass 172 moved daily interest burn helpers for web Dashboard/Cockpit/Portfolio/Velocity targeting plus mobile snapshots into the shared package, and Repair Pass 173 routed Vault mortgage strategy payment projections through the shared amortized payoff helper. Portfolio split mode now allocates available extra cash flow correctly, but still acts as a ranking/allocation planner rather than a full LOC event simulation.
 
 ### Phase 2: Product UX
 
