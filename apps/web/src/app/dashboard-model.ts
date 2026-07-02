@@ -47,7 +47,7 @@ export interface DashboardVital {
 }
 
 export interface DashboardWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-overlimit' | 'loc-utilization' | 'payoff';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-no-capacity' | 'loc-overlimit' | 'loc-utilization' | 'payoff';
   title: string;
   body: string;
 }
@@ -253,6 +253,7 @@ function buildNextMove(
   cashFlow: number,
   locUtilization: number,
   locOverLimit: boolean,
+  locNoCapacity: boolean,
   velocityPossible: boolean
 ): DashboardNextMove {
   const availableLoc = Math.max(0, input.loc.limit - input.loc.balance);
@@ -280,6 +281,19 @@ function buildNextMove(
       assumptions: [
         'LOC balance should stay at or below the entered LOC limit before modeling another chunk.',
         'Over-limit state blocks velocity payoff claims until the LOC is back inside usable capacity.',
+      ],
+    };
+  }
+
+  if (locNoCapacity) {
+    return {
+      title: 'Create LOC room',
+      value: 'No LOC room',
+      caption: 'The LOC is at its entered limit. Pay it down before modeling another chunk.',
+      tone: 'amber',
+      assumptions: [
+        'Available LOC room is LOC limit minus LOC balance.',
+        'A full LOC blocks velocity payoff claims until capacity is available again.',
       ],
     };
   }
@@ -356,6 +370,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const locNeedsSetup = input.loc.limit <= 0;
   const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
   const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
+  const locNoCapacity = !locNeedsSetup && input.loc.balance === input.loc.limit;
   const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(input.loc) : `${Math.round(locUtilization * 100)}%`;
   const debtDailyInterest = input.allDebts.reduce(
     (sum, debt) => sum + calculateDailyInterest(debt.balance, debt.interestRate),
@@ -366,7 +381,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(input.velocity);
   const baselinePossible = isProjectedPayoffPossible(input.baseline);
   const etaValue = velocityPossible ? formatMonths(input.velocity.months) : 'Stabilize first';
-  const nextMove = buildNextMove(input, cashFlow, locUtilization, locOverLimit, velocityPossible);
+  const nextMove = buildNextMove(input, cashFlow, locUtilization, locOverLimit, locNoCapacity, velocityPossible);
 
   const warnings: DashboardWarning[] = [];
   if (cashFlow <= 0) {
@@ -387,6 +402,12 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       kind: 'loc-overlimit',
       title: LOC_OVER_LIMIT_TITLE,
       body: LOC_OVER_LIMIT_BODY,
+    });
+  } else if (locNoCapacity) {
+    warnings.push({
+      kind: 'loc-no-capacity',
+      title: 'No LOC room available',
+      body: 'The LOC balance is at the entered limit. Pay it down before modeling another chunk.',
     });
   } else if (locUtilization > 0.8) {
     warnings.push({

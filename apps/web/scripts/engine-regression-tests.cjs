@@ -4391,6 +4391,57 @@ test('dashboard model labels an existing LOC balance without a limit as missing 
   assert.ok(!model.warnings.some((warning) => warning.kind === 'loc-utilization'));
 });
 
+test('dashboard model treats a full LOC as no available room instead of over-limit', () => {
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    chunkAmount: 1000,
+    activeDebt: {
+      name: 'Auto Loan',
+      balance: 18450,
+      interestRate: 0.069,
+      minimumPayment: 425,
+    },
+    allDebts: [
+      {
+        name: 'Auto Loan',
+        balance: 18450,
+        interestRate: 0.069,
+        minimumPayment: 425,
+      },
+    ],
+    loc: {
+      limit: 10000,
+      balance: 10000,
+      interestRate: 0.085,
+    },
+    baseline: {
+      months: 48,
+      totalInterest: 2600,
+      isPayoffPossible: true,
+    },
+    velocity: {
+      months: 0,
+      totalInterest: 0,
+      savings: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-no-capacity',
+    },
+  });
+
+  assert.equal(model.availableLoc, 0);
+  assert.equal(model.locUtilizationLabel, '100%');
+  assert.equal(model.nextMove.title, 'Create LOC room');
+  assert.equal(model.nextMove.value, 'No LOC room');
+  assert.ok(model.warnings.some((warning) => warning.kind === 'loc-no-capacity'));
+  assert.ok(!model.warnings.some((warning) => warning.kind === 'loc-overlimit'));
+  assert.ok(!model.warnings.some((warning) => warning.kind === 'loc-utilization'));
+  const locArtifact = model.moneyLoopArtifacts.find((artifact) => artifact.id === 'loc');
+  assert.equal(locArtifact.value, '$0 open');
+  assert.equal(locArtifact.signal, '100% used');
+  assert.equal(locArtifact.tone, 'amber');
+});
+
 test('dashboard model provides a five-part Money Loop artifact rail without adding vitals', () => {
   const model = dashboardModel.buildDashboardModel({
     monthlyIncome: 6500,
