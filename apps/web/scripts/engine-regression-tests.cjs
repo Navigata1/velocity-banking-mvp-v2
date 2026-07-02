@@ -5711,18 +5711,27 @@ test('Money Loop artifact child hooks do not collide with the rail smoke hook', 
   );
 });
 
-test('Money Loop artifact rail contains horizontal overflow inside its own frame', () => {
+test('Money Loop artifact rail fits desktop while preserving narrow-screen carousel overflow', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
   const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
 
   assert.ok(source.includes('overflow-x-auto'), 'expected artifact rail to scroll internally when the panel is narrow');
+  assert.ok(source.includes('md:overflow-visible'), 'expected desktop artifact selector not to show native horizontal overflow');
   assert.ok(source.includes('artifact-carousel-scroll'), 'expected artifact rail to hide the native scrollbar chrome');
+  assert.ok(source.includes('data-testid="money-loop-artifact-selector-viewport"'), 'expected a stable selector viewport hook for rendered QA');
+  assert.ok(source.includes('data-testid="money-loop-artifact-selector-grid"'), 'expected a stable selector grid hook for rendered QA');
   assert.ok(css.includes('.artifact-carousel-scroll'), 'expected CSS to define the carousel scroll container');
   assert.ok(css.includes('scrollbar-width: none'), 'expected Firefox scrollbar chrome to be hidden');
   assert.ok(css.includes('::-webkit-scrollbar'), 'expected Chromium scrollbar chrome to be hidden');
-  assert.ok(source.includes('min-w-[760px]'), 'expected artifact cards to keep a stable minimum rail width');
-  assert.ok(source.includes('grid-cols-5'), 'expected the five Money Loop artifacts to remain a horizontal rail');
+  assert.ok(source.includes('min-w-[680px]'), 'expected artifact cards to keep a stable narrow-screen minimum rail width');
+  assert.ok(source.includes('md:min-w-0'), 'expected artifact cards to fit the desktop dashboard column');
+  assert.ok(source.includes('grid-cols-5'), 'expected narrow-screen Money Loop artifacts to remain a horizontal rail');
+  assert.ok(
+    source.includes('md:grid-cols-[repeat(auto-fit,minmax(128px,1fr))]'),
+    'expected desktop artifact cards to wrap into readable fitted columns'
+  );
   assert.ok(source.includes('snap-x snap-mandatory'), 'expected artifact cards to snap into centered carousel positions');
+  assert.ok(source.includes('md:snap-none'), 'expected desktop artifact cards to behave as a fitted selector grid');
 });
 
 test('Money Loop artifact rail exposes an item-selection carousel', () => {

@@ -252,11 +252,15 @@ export default function MoneyLoopArtifactRail({
         </div>
       </div>
 
-      <div className="artifact-carousel-scroll -mx-1 mt-3 overflow-x-auto scroll-smooth px-1 pb-1">
+      <div
+        data-testid="money-loop-artifact-selector-viewport"
+        className="artifact-carousel-scroll -mx-1 mt-3 overflow-x-auto scroll-smooth px-1 pb-1 md:overflow-visible"
+      >
         <div
           role="tablist"
           aria-label="Money Loop artifact selector"
-          className="grid min-w-[760px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1"
+          data-testid="money-loop-artifact-selector-grid"
+          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 md:min-w-0 md:grid-cols-[repeat(auto-fit,minmax(128px,1fr))] md:snap-none"
         >
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
