@@ -66,6 +66,18 @@ export function formatVaultStrategyTimeDelta(strategy: VaultStrategyProjection, 
   return strategy.monthsSaved > 0 ? `${strategy.monthsSaved} months faster${suffix}` : 'No faster payoff';
 }
 
+export function buildVaultComparisonWidthPercent(
+  strategyMonths: number,
+  standardMonths: number,
+  isPayoffPossible: boolean
+): number {
+  if (!isPayoffPossible) return 0;
+  if (!Number.isFinite(strategyMonths) || !Number.isFinite(standardMonths)) return 0;
+  if (strategyMonths <= 0 || standardMonths <= 0) return 0;
+
+  return Math.min(100, Math.max(0, (strategyMonths / standardMonths) * 100));
+}
+
 export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultFreedomPathModel {
   const standardYears = Math.ceil(input.standardMonths / 12);
   const canProject =
