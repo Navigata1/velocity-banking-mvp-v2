@@ -682,29 +682,19 @@ function simulateBaselineDebt(debt: DebtItem): {
   id: string;
   name: string;
 } {
-  const monthlyRate = debt.apr / 12;
-  let balance = debt.balance;
-  let totalInterest = 0;
-  let month = 0;
+  const projection = simulateAmortizedPayoff({
+    principalBalance: debt.balance,
+    apr: debt.apr,
+    monthlyPayment: debt.monthlyPayment,
+    maxMonths: 600,
+  });
 
-  while (balance > 0.01 && month < 600) {
-    month++;
-    const interest = balance * monthlyRate;
-    const payment = Math.min(debt.monthlyPayment, balance + interest);
-    const principal = payment - interest;
-
-    if (principal <= 0) {
-      balance += (interest - debt.monthlyPayment);
-      totalInterest += interest;
-      if (month >= 600) break;
-      continue;
-    }
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - principal);
-  }
-
-  return { payoffMonths: month, totalInterest, id: debt.id, name: debt.name };
+  return {
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    id: debt.id,
+    name: debt.name,
+  };
 }
 
 // ─── Legacy API (backwards compatible) ───────────────────────────────
