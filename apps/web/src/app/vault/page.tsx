@@ -112,9 +112,10 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             {/* Entry mode tabs */}
-            <div className="flex gap-2">
+            <div className="flex gap-2" role="group" aria-label="Vault mortgage entry mode">
               {(['purchase', 'current', 'both'] as const).map((mode) => (
                 <button key={mode} onClick={() => updateMD({ entryMode: mode })}
+                  aria-pressed={md.entryMode === mode}
                   className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                     md.entryMode === mode
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
@@ -143,9 +144,10 @@ export default function VaultPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <label className={`text-sm ${classes.textSecondary}`}>Term</label>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" role="group" aria-label="Vault mortgage original term">
                     {[15, 30].map(t => (
                       <button key={t} onClick={() => updateMD({ originalTermYears: t })}
+                        aria-pressed={md.originalTermYears === t}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                           md.originalTermYears === t
                             ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
@@ -195,9 +197,10 @@ export default function VaultPage() {
               <h3 className={`text-sm font-semibold ${classes.textSecondary} uppercase tracking-wide`}>💰 Payment Behavior</h3>
               <div>
                 <label className={`text-sm ${classes.textSecondary} mb-2 block`}>Payment Frequency</label>
-                <div className="flex gap-2">
+                <div className="flex gap-2" role="group" aria-label="Vault mortgage payment frequency">
                   {(['monthly', 'biweekly', 'weekly'] as const).map((freq) => (
                     <button key={freq} onClick={() => updateMD({ paymentFrequency: freq })}
+                      aria-pressed={md.paymentFrequency === freq}
                       className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                         md.paymentFrequency === freq
                           ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
@@ -211,6 +214,7 @@ export default function VaultPage() {
               <div className="flex justify-between items-center">
                 <label className={`text-sm ${classes.textSecondary}`}>Making extra payments?</label>
                 <button onClick={() => updateMD({ hasExtraPayments: !md.hasExtraPayments })}
+                  aria-pressed={md.hasExtraPayments}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     md.hasExtraPayments
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
@@ -228,6 +232,7 @@ export default function VaultPage() {
               <div className="flex justify-between items-center">
                 <label className={`text-sm ${classes.textSecondary}`}>Have you refinanced?</label>
                 <button onClick={() => updateMD({ hasRefinanced: !md.hasRefinanced, refinanceCount: md.hasRefinanced ? 0 : 1 })}
+                  aria-pressed={md.hasRefinanced}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     md.hasRefinanced
                       ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'

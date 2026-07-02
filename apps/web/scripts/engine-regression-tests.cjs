@@ -2395,6 +2395,19 @@ test('vault and cockpit editable controls expose contextual screen-reader labels
   assert.ok(cockpitSource.includes('ariaLabel={`Cockpit ${activeDomainLabel} minimum payment`}'), 'expected Cockpit active debt minimum label');
 });
 
+test('vault mortgage option controls expose selected state', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('role="group" aria-label="Vault mortgage entry mode"'), 'expected Vault entry mode controls to be grouped');
+  assert.ok(source.includes('aria-pressed={md.entryMode === mode}'), 'expected Vault entry mode selected state');
+  assert.ok(source.includes('role="group" aria-label="Vault mortgage original term"'), 'expected Vault term controls to be grouped');
+  assert.ok(source.includes('aria-pressed={md.originalTermYears === t}'), 'expected Vault term selected state');
+  assert.ok(source.includes('role="group" aria-label="Vault mortgage payment frequency"'), 'expected Vault payment frequency controls to be grouped');
+  assert.ok(source.includes('aria-pressed={md.paymentFrequency === freq}'), 'expected Vault payment frequency selected state');
+  assert.ok(source.includes('aria-pressed={md.hasExtraPayments}'), 'expected Vault extra-payment toggle state');
+  assert.ok(source.includes('aria-pressed={md.hasRefinanced}'), 'expected Vault refinance toggle state');
+});
+
 test('cockpit emergency scenario uses recovery-oriented coach copy', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/cockpit/page.tsx'), 'utf8');
 
