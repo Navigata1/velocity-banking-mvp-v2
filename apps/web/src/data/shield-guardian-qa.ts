@@ -75,9 +75,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['money loop', 'velocity banking', 'what is velocity'],
     question: 'What is the Money Loop / Velocity Banking?',
     answers: [
-      'The Money Loop is a strategy where your income flows through a Line of Credit first, reducing its balance before paying bills. The interest savings and cash flow accelerate debt payoff.',
-      'Velocity Banking uses your LOC as a "checking account hub." Income reduces LOC balance, then you pay bills from it. Lower average balance = less interest.',
-      'It\'s using a flexible LOC strategically to minimize interest and make larger "chunk" payments to your main debt faster.'
+      'The Money Loop is an educational model where income is routed through a Line of Credit first, reducing its balance before bills are paid. The result depends on cash flow, LOC cost, fees, and repayment timing.',
+      'Velocity Banking models a LOC as a cash-flow hub: income can reduce the LOC balance, then bills are paid intentionally. Lower average balance can reduce LOC interest when the assumptions hold.',
+      'It is a way to test whether a flexible LOC plus disciplined cash flow can support larger "chunk" payments without straining the buffer.'
     ]
   },
   {
@@ -93,18 +93,18 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['velocity banking safe', 'is it safe', 'risky'],
     question: 'Is velocity banking safe?',
     answers: [
-      'When done correctly with positive cash flow, it\'s a mathematically sound strategy. The risk comes from over-extending or using it with negative cash flow.',
-      'It\'s not risky if you have steady income and positive cash flow. The danger is treating your LOC as extra spending money.',
-      'Safe when: you have stable income, positive cash flow, and discipline. Risky if: irregular income, no cash flow buffer, or tempted to overspend.'
+      'It needs a safety review before action. Positive cash flow, realistic LOC costs, fees, repayment timing, and a buffer all have to line up before the model deserves trust.',
+      'The main risk is treating a LOC like extra spending money or chunking faster than cash flow can recover. Model a smaller chunk first and keep the buffer visible.',
+      'Safer conditions include stable income, positive cash flow after essentials, and a clear repayment plan. Higher-risk conditions include irregular income, no buffer, or a LOC near its limit.'
     ]
   },
   {
     keywords: ['velocity banking work for me', 'right for me', 'should I use'],
     question: 'Is velocity banking right for me?',
     answers: [
-      'It works best if you have: 1) Positive cash flow, 2) Access to a LOC with lower rate than your debt, 3) Discipline to not overspend on the LOC.',
-      'Good fit: stable income, organized finances, high-interest debt. Bad fit: variable income, no emergency fund, spending discipline issues.',
-      'Use the Simulator to compare. If velocity payoff is faster AND you have the discipline for it, it may be right for you.'
+      'Start by checking: positive cash flow, actual LOC terms, fees, collateral risk, minimum-payment pressure, and whether your buffer survives the modeled chunk.',
+      'Potentially stronger fit: stable income, organized finances, and debt where the modeled LOC cost and fees make sense. Higher-risk fit: variable income, no emergency fund, or weak spending controls.',
+      'Use the Simulator to compare. Treat velocity as a review candidate only when it improves the modeled path without weakening cash-flow safety.'
     ]
   },
   {
@@ -410,12 +410,12 @@ export const shieldGuardianQA: QAPair[] = [
 
   // GETTING STARTED (20 Q&As)
   {
-    keywords: ['get started', 'begin', 'first steps', 'start'],
+    keywords: ['get started with velocity banking', 'how do i get started', 'get started', 'begin', 'first steps', 'start'],
     question: 'How do I get started with velocity banking?',
     answers: [
-      'Step 1: Calculate your cash flow. Step 2: Secure a LOC. Step 3: Start routing income through it. Step 4: Make your first chunk.',
+      'Step 1: Calculate cash flow. Step 2: Compare real LOC terms, fees, and risks. Step 3: model routing assumptions. Step 4: only test a chunk when the buffer and recovery timeline still work.',
       'Begin by knowing your numbers - income, expenses, debts, rates. Use the Dashboard to enter everything.',
-      'Start small. Even using the strategy with a $500 chunk teaches you the system before scaling up.'
+      'Start in planning mode. A small modeled chunk can teach the system before any real money movement is considered.'
     ]
   },
   {
@@ -478,9 +478,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['student loans', 'education debt', 'student debt'],
     question: 'Does velocity banking work for student loans?',
     answers: [
-      'Yes, especially for private student loans with higher rates. Federal loans have special rules to consider.',
-      'Some federal loans have income-driven repayment or forgiveness options - evaluate before aggressive payoff.',
-      'If your student loan rate is lower than LOC rate, velocity banking math doesn\'t favor it. Target higher rates first.'
+      'Student loans need careful separation. Private loans and federal loans can have very different protections, repayment options, and payoff tradeoffs.',
+      'Some federal loans have income-driven repayment, deferment, subsidy, or forgiveness considerations. Review those before modeling aggressive payoff.',
+      'Compare the student loan APR, protections, fees, LOC cost, and cash-flow recovery timeline before deciding whether velocity belongs in the plan.'
     ]
   },
 
@@ -638,7 +638,8 @@ type GuardianOptions = {
   context?: GuardianContext;
 };
 
-function classifyIntent(lower: string): 'cashFlow' | 'moneyLoop' | 'chunk' | 'loc' | 'interest' | 'emergency' | 'app' | 'general' {
+function classifyIntent(lower: string): 'cashFlow' | 'moneyLoop' | 'chunk' | 'loc' | 'interest' | 'emergency' | 'app' | 'gettingStarted' | 'general' {
+  if (/(get\s*started|first\s*steps|how\s*do\s*i\s*start|where\s*do\s*i\s*begin)/.test(lower)) return 'gettingStarted';
   if (/(cash\s*flow|surplus|income\s*-\s*expenses)/.test(lower)) return 'cashFlow';
   if (/(money\s*loop|velocity\s*banking)/.test(lower)) return 'moneyLoop';
   if (/(chunk|lump\s*sum|extra\s*payment)/.test(lower)) return 'chunk';
@@ -679,6 +680,12 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
       "Open Simulator → confirm monthly income and monthly expenses.",
       "Aim for positive cash flow first, then test small changes ($100-$300/mo) in Simulator before trusting the timeline.",
       "Pick one target debt and keep paying minimums everywhere else."
+    ];
+  } else if (intent === 'gettingStarted') {
+    nextSteps = [
+      "Calculate cash flow after essentials and minimum payments.",
+      "Compare real LOC terms, fees, collateral risk, and draw rules before modeling any chunk.",
+      "Run a small planning scenario in Simulator and only trust it when the buffer and recovery timeline still work."
     ];
   } else if (intent === 'chunk') {
     nextSteps = [

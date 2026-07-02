@@ -5205,6 +5205,64 @@ test('Guardian LOC and simulator guidance keeps buffer and timeline assumptions 
   );
 });
 
+test('Guardian velocity guidance does not treat LOC use as automatically safe', () => {
+  const answerBank = guardian.shieldGuardianQA
+    .flatMap((qa) => qa.answers)
+    .join('\n')
+    .toLowerCase();
+  const unsafeClaims = [
+    'mathematically sound strategy',
+    "it's not risky if",
+    'safe when: you have stable income',
+    'the interest savings and cash flow accelerate debt payoff',
+    'minimize interest and make larger "chunk" payments to your main debt faster',
+  ];
+
+  for (const claim of unsafeClaims) {
+    assert.ok(!answerBank.includes(claim), `expected Guardian velocity copy not to include overconfident safety claim: ${claim}`);
+  }
+
+  assert.ok(
+    answerBank.includes('positive cash flow, realistic loc costs, fees, repayment timing, and a buffer all have to line up'),
+    'expected Guardian safety copy to require multiple verified assumptions'
+  );
+  assert.ok(
+    answerBank.includes('lower average balance can reduce loc interest when the assumptions hold'),
+    'expected Guardian Money Loop copy to label interest reduction as conditional'
+  );
+});
+
+test('Guardian getting-started prompt routes to planning-first guidance', () => {
+  const originalRandom = Math.random;
+  Math.random = () => 0;
+  try {
+    const directResponse = guardian
+      .getGuardianResponse('How do I get started with velocity banking?')
+      .toLowerCase();
+    const teacherResponse = guardian
+      .getGuardianResponse('How do I get started with velocity banking?', {
+        teacherMode: true,
+        context: { monthlyIncome: 6500, monthlyExpenses: 5000, cashFlow: 1500 },
+      })
+      .toLowerCase();
+
+    assert.ok(
+      directResponse.includes('compare real loc terms, fees, and risks'),
+      `expected direct getting-started prompt to use the planning-first answer, got: ${directResponse}`
+    );
+    assert.ok(
+      teacherResponse.includes('compare real loc terms, fees, collateral risk, and draw rules before modeling any chunk'),
+      `expected Teacher Mode getting-started prompt to use safe setup steps, got: ${teacherResponse}`
+    );
+    assert.ok(
+      !teacherResponse.includes('secure a loc') && !teacherResponse.includes('make your first chunk'),
+      `expected Teacher Mode getting-started prompt not to prescribe opening credit or chunking, got: ${teacherResponse}`
+    );
+  } finally {
+    Math.random = originalRandom;
+  }
+});
+
 test('Guardian routes mixed velocity credit-card prompts to card guidance', () => {
   const response = guardian
     .getGuardianResponse('Should I use velocity banking for credit cards?')
@@ -5242,12 +5300,41 @@ test('Guardian debt-priority guidance uses modeled inputs instead of fixed-rate 
   );
 });
 
+test('Guardian student-loan guidance preserves borrower protections before payoff modeling', () => {
+  const answerBank = guardian.shieldGuardianQA
+    .flatMap((qa) => qa.answers)
+    .join('\n')
+    .toLowerCase();
+  const directiveClaims = [
+    'yes, especially for private student loans',
+    'target higher rates first',
+    "velocity banking math doesn't favor it",
+  ];
+
+  for (const claim of directiveClaims) {
+    assert.ok(!answerBank.includes(claim), `expected Guardian student-loan copy not to include shortcut directive: ${claim}`);
+  }
+
+  assert.ok(
+    answerBank.includes('private loans and federal loans can have very different protections'),
+    'expected Guardian student-loan copy to distinguish loan protections'
+  );
+  assert.ok(
+    answerBank.includes('income-driven repayment, deferment, subsidy, or forgiveness considerations'),
+    'expected Guardian student-loan copy to preserve federal-loan review conditions'
+  );
+});
+
 test('Guardian prerequisite and income guidance avoids universal start/apply claims', () => {
   const answerBank = guardian.shieldGuardianQA
     .flatMap((qa) => qa.answers)
     .join('\n')
     .toLowerCase();
   const universalClaims = [
+    'secure a loc',
+    'start routing income through it',
+    'make your first chunk',
+    'even using the strategy with a $500 chunk',
     'start the application process now',
     'some use credit cards strategically (0% periods)',
     'loc is preferred',
