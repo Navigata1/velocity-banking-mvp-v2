@@ -120,6 +120,52 @@ function isProjectedPayoffPossible(projection: DashboardProjectionInput): boolea
   return projection.isPayoffPossible !== false && Number.isFinite(projection.months) && projection.months > 0;
 }
 
+function safeNonNegative(value: number, fallback = 0): number {
+  return Number.isFinite(value) ? Math.max(0, value) : fallback;
+}
+
+function sanitizeProjection(input: DashboardProjectionInput): DashboardProjectionInput {
+  return {
+    ...input,
+    months: safeNonNegative(input.months),
+    totalInterest: safeNonNegative(input.totalInterest),
+  };
+}
+
+function sanitizeVelocityProjection(input: DashboardVelocityProjectionInput): DashboardVelocityProjectionInput {
+  return {
+    ...sanitizeProjection(input),
+    savings: safeNonNegative(input.savings),
+  };
+}
+
+function sanitizeDebt(input: DashboardDebtInput): DashboardDebtInput {
+  return {
+    ...input,
+    balance: safeNonNegative(input.balance),
+    interestRate: safeNonNegative(input.interestRate),
+    minimumPayment: safeNonNegative(input.minimumPayment),
+  };
+}
+
+function sanitizeDashboardInput(input: DashboardModelInput): DashboardModelInput {
+  return {
+    ...input,
+    monthlyIncome: safeNonNegative(input.monthlyIncome),
+    monthlyExpenses: safeNonNegative(input.monthlyExpenses),
+    chunkAmount: safeNonNegative(input.chunkAmount),
+    activeDebt: sanitizeDebt(input.activeDebt),
+    allDebts: input.allDebts.map(sanitizeDebt),
+    loc: {
+      limit: safeNonNegative(input.loc.limit),
+      balance: safeNonNegative(input.loc.balance),
+      interestRate: safeNonNegative(input.loc.interestRate),
+    },
+    baseline: sanitizeProjection(input.baseline),
+    velocity: sanitizeVelocityProjection(input.velocity),
+  };
+}
+
 const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
 const LOC_OVER_LIMIT_BODY = 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.';
 
@@ -365,23 +411,24 @@ function buildNextMove(
 }
 
 export function buildDashboardModel(input: DashboardModelInput): DashboardModel {
-  const cashFlow = input.monthlyIncome - input.monthlyExpenses;
-  const availableLoc = Math.max(0, input.loc.limit - input.loc.balance);
-  const locNeedsSetup = input.loc.limit <= 0;
-  const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
-  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
-  const locNoCapacity = !locNeedsSetup && input.loc.balance === input.loc.limit;
-  const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(input.loc) : `${Math.round(locUtilization * 100)}%`;
-  const debtDailyInterest = input.allDebts.reduce(
+  const safeInput = sanitizeDashboardInput(input);
+  const cashFlow = safeInput.monthlyIncome - safeInput.monthlyExpenses;
+  const availableLoc = Math.max(0, safeInput.loc.limit - safeInput.loc.balance);
+  const locNeedsSetup = safeInput.loc.limit <= 0;
+  const locUtilization = locNeedsSetup ? 0 : safeInput.loc.balance / safeInput.loc.limit;
+  const locOverLimit = !locNeedsSetup && safeInput.loc.balance > safeInput.loc.limit;
+  const locNoCapacity = !locNeedsSetup && safeInput.loc.balance === safeInput.loc.limit;
+  const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(safeInput.loc) : `${Math.round(locUtilization * 100)}%`;
+  const debtDailyInterest = safeInput.allDebts.reduce(
     (sum, debt) => sum + calculateDailyInterest(debt.balance, debt.interestRate),
     0
   );
-  const locDailyInterest = calculateDailyInterest(input.loc.balance, input.loc.interestRate);
+  const locDailyInterest = calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
-  const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(input.velocity);
-  const baselinePossible = isProjectedPayoffPossible(input.baseline);
-  const etaValue = velocityPossible ? formatMonths(input.velocity.months) : 'Stabilize first';
-  const nextMove = buildNextMove(input, cashFlow, locUtilization, locOverLimit, locNoCapacity, velocityPossible);
+  const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(safeInput.velocity);
+  const baselinePossible = isProjectedPayoffPossible(safeInput.baseline);
+  const etaValue = velocityPossible ? formatMonths(safeInput.velocity.months) : 'Stabilize first';
+  const nextMove = buildNextMove(safeInput, cashFlow, locUtilization, locOverLimit, locNoCapacity, velocityPossible);
 
   const warnings: DashboardWarning[] = [];
   if (cashFlow <= 0) {
@@ -452,7 +499,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       label: 'Debt-Free ETA',
       value: etaValue,
       caption: velocityPossible
-        ? `${formatMonths(input.baseline.months)} baseline, ${formatCurrency(input.velocity.savings)} estimated interest difference.`
+        ? `${formatMonths(safeInput.baseline.months)} baseline, ${formatCurrency(safeInput.velocity.savings)} estimated interest difference.`
         : 'No debt-free date shown until the plan is stable.',
       tone: velocityPossible ? 'sky' : 'rose',
       assumptions: [
@@ -484,13 +531,13 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     statusTone: warnings.length > 0 ? 'amber' : 'emerald',
     nextMove,
     vitals,
-    moneyLoopArtifacts: buildMoneyLoopArtifacts(input, cashFlow, availableLoc, locUtilization),
-    changeExplanations: buildChangeExplanations(input, cashFlow, availableLoc, locUtilization, velocityPossible, baselinePossible),
+    moneyLoopArtifacts: buildMoneyLoopArtifacts(safeInput, cashFlow, availableLoc, locUtilization),
+    changeExplanations: buildChangeExplanations(safeInput, cashFlow, availableLoc, locUtilization, velocityPossible, baselinePossible),
     warnings,
     moneyLoopSteps: [
       {
         label: 'Income',
-        value: formatCurrency(input.monthlyIncome),
+        value: formatCurrency(safeInput.monthlyIncome),
         note: 'Deposits are modeled as the starting pressure in the loop.',
       },
       {
@@ -500,7 +547,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       },
       {
         label: 'Expenses',
-        value: formatCurrency(input.monthlyExpenses),
+        value: formatCurrency(safeInput.monthlyExpenses),
         note: 'Expenses define how much cash flow remains.',
       },
       {
@@ -510,7 +557,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       },
       {
         label: 'Principal',
-        value: input.activeDebt.name,
+        value: safeInput.activeDebt.name,
         note: 'Chunks target principal so future interest has less balance to attach to.',
       },
     ],
