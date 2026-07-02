@@ -3985,6 +3985,39 @@ test('vault comparison bars clamp invalid and slower payoff widths', () => {
   assert.ok(source.includes('buildVaultComparisonWidthPercent('), 'expected Vault bars to use bounded width helper');
 });
 
+test('vault visual percentages clamp invalid and over-range values', () => {
+  let vaultModel;
+  assert.doesNotThrow(() => {
+    vaultModel = loadTsModule('src/app/vault-model.ts');
+  }, 'expected Vault visual percent helper');
+
+  assert.equal(vaultModel.buildVaultVisualPercent(50), 50);
+  assert.equal(vaultModel.buildVaultVisualPercent(250, 200), 100);
+  assert.equal(vaultModel.buildVaultVisualPercent(0), 0);
+  assert.equal(vaultModel.buildVaultVisualPercent(-10), 0);
+  assert.equal(vaultModel.buildVaultVisualPercent(Number.NaN), 0);
+  assert.equal(vaultModel.buildVaultVisualPercent(50, 0), 0);
+  assert.equal(vaultModel.buildVaultVisualPercent(50, Number.POSITIVE_INFINITY), 0);
+
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('const width = buildVaultVisualPercent(progress)'), 'expected Vault progress bars to clamp visual progress');
+  assert.ok(
+    source.includes('buildVaultVisualPercent(analysis.interestPercentOfPayment)'),
+    'expected Vault payment interest bar to clamp visual percent'
+  );
+  assert.ok(
+    source.includes('buildVaultVisualPercent(analysis.principalPercentOfPayment)'),
+    'expected Vault payment principal bar to clamp visual percent'
+  );
+  assert.ok(source.includes('buildVaultVisualPercent(yr.interestPaid, total)'), 'expected Vault amortization split to clamp visual percent');
+  assert.ok(source.includes('buildVaultVisualPercent(total, maxVal)'), 'expected Vault amortization height to clamp visual percent');
+  assert.ok(
+    source.includes('buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)'),
+    'expected Vault freedom timeline to clamp visual percent'
+  );
+  assert.ok(!source.includes('Math.min(progress, 100)'), 'expected Vault progress bars not to use one-sided clamping');
+});
+
 test('mortgage extra-payment strategy does not invent extra cash when cash flow is not positive', () => {
   const input = {
     entryMode: 'current',
