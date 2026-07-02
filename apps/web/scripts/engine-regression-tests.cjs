@@ -3953,6 +3953,24 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(horizonProjection), 'Extend projection horizon');
 });
 
+test('vault comparison bars clamp invalid and slower payoff widths', () => {
+  let vaultModel;
+  assert.doesNotThrow(() => {
+    vaultModel = loadTsModule('src/app/vault-model.ts');
+  }, 'expected Vault comparison width helper');
+
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(120, 240, true), 50);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(360, 240, true), 100);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(120, 240, false), 0);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(0, 240, true), 0);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(-12, 240, true), 0);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(Number.NaN, 240, true), 0);
+  assert.equal(vaultModel.buildVaultComparisonWidthPercent(120, Number.POSITIVE_INFINITY, true), 0);
+
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('buildVaultComparisonWidthPercent('), 'expected Vault bars to use bounded width helper');
+});
+
 test('mortgage extra-payment strategy does not invent extra cash when cash flow is not positive', () => {
   const input = {
     entryMode: 'current',

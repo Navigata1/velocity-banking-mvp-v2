@@ -10,6 +10,7 @@ import PageTransition from '@/components/PageTransition';
 import CountUp from '@/components/CountUp';
 import { useIsClient } from '@/hooks/useIsClient';
 import {
+  buildVaultComparisonWidthPercent,
   buildVaultFreedomPathModel,
   formatVaultProjectionFailure,
   formatVaultStrategySavings,
@@ -460,9 +461,11 @@ export default function VaultPage() {
                 { label: 'Extra $', months: strategies.extraPayment.months, color: 'bg-amber-500', isPayoffPossible: strategies.extraPayment.isPayoffPossible },
                 { label: 'Velocity', months: strategies.velocity.months, color: 'bg-emerald-500', isPayoffPossible: strategies.velocity.isPayoffPossible },
               ].map(s => {
-                const width = s.isPayoffPossible && strategies.standard.months > 0
-                  ? (s.months / strategies.standard.months) * 100
-                  : 0;
+                const width = buildVaultComparisonWidthPercent(
+                  s.months,
+                  strategies.standard.months,
+                  s.isPayoffPossible
+                );
                 return (
                   <div key={s.label} className="flex items-center gap-3">
                     <span className={`text-xs w-16 ${classes.textSecondary}`}>{s.label}</span>
