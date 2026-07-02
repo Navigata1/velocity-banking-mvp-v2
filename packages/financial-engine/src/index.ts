@@ -714,9 +714,9 @@ export function buildMobileDashboardSnapshot(
       ? 'Stabilize first'
       : 'Review inputs';
 
-  let nextMove = 'Model the LOC limit';
+  let nextMove = 'Enter known LOC terms';
   let warning: string | null = locNeedsSetup
-    ? 'Add a LOC limit before trusting velocity chunk projections.'
+    ? 'Enter known LOC limit, APR, fees, and draw rules before trusting velocity chunk projections.'
     : null;
 
   if (cashFlow <= 0) {
@@ -779,9 +779,9 @@ export function buildMobileDashboardSnapshot(
       },
       {
         label: 'LOC',
-        value: locNeedsSetup ? 'Add LOC limit' : `${formatCurrency(availableLoc)} open`,
+        value: locNeedsSetup ? 'Enter LOC terms' : `${formatCurrency(availableLoc)} open`,
         detail: locNeedsSetup
-          ? 'LOC capacity needs a limit before chunk projections are meaningful.'
+          ? 'LOC capacity needs known terms before chunk projections are meaningful.'
           : `${Math.round(locUtilization * 100)}% used. Capacity is useful only with a comfortable buffer.`,
       },
       {
@@ -819,7 +819,7 @@ export function buildMobilePortfolioSnapshot(
   } else if (cashFlowAfterMinimums < 0) {
     guardrail = 'Cash flow does not cover the modeled minimum payment yet.';
   } else if (model.loc.limit <= 0) {
-    guardrail = 'Add a LOC limit before modeling portfolio velocity movement.';
+    guardrail = 'Enter known LOC terms before modeling portfolio velocity movement.';
   } else if (model.loc.balance > model.loc.limit) {
     guardrail = LOC_OVER_LIMIT_WARNING;
   } else if (model.loc.balance === model.loc.limit) {
@@ -859,7 +859,7 @@ function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
-  if (reason === 'loc-setup') return 'Add LOC limit';
+  if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
@@ -1144,7 +1144,7 @@ export function buildMobileSimulatorSnapshot(
   if (cashFlow <= 0) {
     guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
   } else if (model.loc.limit <= 0) {
-    guardrail = 'Add a LOC limit before trusting velocity payoff projections.';
+    guardrail = 'Enter known LOC terms before trusting velocity payoff projections.';
   } else if (model.loc.balance > model.loc.limit) {
     guardrail = LOC_OVER_LIMIT_WARNING;
   } else if (model.loc.balance === model.loc.limit) {
@@ -1239,7 +1239,7 @@ export function buildMobileLearnSnapshot(
       },
       {
         title: 'LOC Room',
-        value: locNeedsSetup ? 'Add LOC limit' : `${formatCurrency(availableLoc)} open`,
+        value: locNeedsSetup ? 'Enter LOC terms' : `${formatCurrency(availableLoc)} open`,
         detail: locNeedsSetup
           ? 'Available credit needs a real limit before velocity chunks are modeled.'
           : locOverLimit
@@ -1309,14 +1309,14 @@ export function buildMobileCockpitSnapshot(
         label: 'LOC capacity loaded',
         passed: !dashboard.locNeedsSetup,
         detail: dashboard.locNeedsSetup
-          ? 'Add a LOC limit before trusting chunk movement.'
+          ? 'Enter known LOC terms before trusting chunk movement.'
           : `${formatCurrency(dashboard.availableLoc)} available capacity.`,
       },
       {
         label: 'Utilization under 80%',
         passed: !dashboard.locNeedsSetup && dashboard.locUtilization <= 0.8,
         detail: dashboard.locNeedsSetup
-          ? 'Utilization needs a LOC limit.'
+          ? 'Utilization needs known LOC terms.'
           : `${Math.round(dashboard.locUtilization * 100)}% current utilization.`,
       },
       {
