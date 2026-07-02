@@ -12,7 +12,7 @@ import {
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
-import { calculateDailyInterest } from '@interestshield/financial-engine';
+import { calculateDailyInterest, formatCurrency } from '@interestshield/financial-engine';
 
 export type DebtCategory =
   | 'mortgage'
@@ -242,7 +242,8 @@ function buildSplitExtraAllocations(
 }
 
 function formatPercent(apr: number): string {
-  return `${(apr * 100).toFixed(apr * 100 >= 10 ? 1 : 2)}%`;
+  const percent = Number.isFinite(apr) ? apr * 100 : 0;
+  return `${percent.toFixed(percent >= 10 ? 1 : 2)}%`;
 }
 
 function buildDebtRationales(
@@ -646,5 +647,5 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 }
 
 function fmt(n: number): string {
-  return n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  return formatCurrency(n);
 }

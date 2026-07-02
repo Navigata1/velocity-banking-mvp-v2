@@ -2329,6 +2329,44 @@ test('portfolio simulation explains each debt priority with money-loop rationale
   assert.ok(rationale.points.some((point) => point.includes('LOC utilization')), rationale.points.join(' | '));
 });
 
+test('portfolio debt rationales do not leak non-finite display values', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 5000,
+    monthlyExpenses: 3500,
+    extraMonthlyPayment: 0,
+    debts: [
+      {
+        id: 'corrupt-card',
+        name: 'Corrupt Card',
+        category: 'credit_card',
+        kind: 'revolving',
+        balance: 5000,
+        apr: Number.NaN,
+        minPaymentRule: { type: 'fixed', amount: Number.POSITIVE_INFINITY },
+        paymentSource: 'checking',
+        promo: { introApr: Number.NaN, monthsRemaining: 2, postIntroApr: Number.POSITIVE_INFINITY },
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 1,
+  });
+
+  const rationale = result.debtRationales['corrupt-card'];
+
+  assert.ok(rationale, 'expected a rationale even when source debt values need review');
+
+  const displayText = [rationale.summary, ...rationale.points, ...result.warnings].join(' | ');
+
+  assert.ok(!displayText.includes('NaN'), displayText);
+  assert.ok(!displayText.includes('Infinity'), displayText);
+  assert.ok(displayText.includes('$0'), displayText);
+  assert.ok(displayText.includes('0.00%'), displayText);
+});
+
 test('portfolio velocity labels its ranking assumptions instead of implying LOC math', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 5000,
