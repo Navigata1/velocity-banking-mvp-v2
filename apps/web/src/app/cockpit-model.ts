@@ -15,6 +15,13 @@ export function buildDebtBalanceGaugeDash(balance: number): string {
   return buildBoundedGaugeDash(balance, 50000);
 }
 
+export function buildDebtFreedomProgressPercent(balance: number, referenceBalance = 50000): number {
+  const safeReference = Number.isFinite(referenceBalance) && referenceBalance > 0 ? referenceBalance : 50000;
+  if (!Number.isFinite(balance)) return 0;
+  const progress = (safeReference - balance) / safeReference;
+  return Math.round(clampRatio(progress) * 100);
+}
+
 export function buildCashFlowGaugeDash(cashFlow: number): string {
   return buildBoundedGaugeDash(cashFlow, 3000);
 }
