@@ -8,6 +8,8 @@ const origin = normalizeOrigin(process.env.PRODUCTION_ORIGIN || 'https://web-isl
 const timeoutMs = Number(process.env.PRODUCTION_SMOKE_TIMEOUT_MS || 20000);
 const protectionBypassSecret =
   process.env.VERCEL_AUTOMATION_BYPASS_SECRET || process.env.VERCEL_PROTECTION_BYPASS_SECRET || '';
+const githubRepository = process.env.GITHUB_REPOSITORY || 'Navigata1/velocity-banking-mvp-v2';
+const githubToken = process.env.GITHUB_TOKEN || '';
 const maxRedirects = 4;
 
 const routes = [
@@ -110,6 +112,75 @@ function requestUrl(url, redirects = 0) {
   });
 }
 
+function requestJson(url) {
+  return new Promise((resolve, reject) => {
+    const headers = {
+      accept: 'application/vnd.github+json',
+      'user-agent': 'InterestShield-production-smoke/1.0',
+      'x-github-api-version': '2022-11-28',
+    };
+
+    if (githubToken) {
+      headers.authorization = `Bearer ${githubToken}`;
+    }
+
+    const request = https.get(url, { headers }, (response) => {
+      let body = '';
+      response.setEncoding('utf8');
+      response.on('data', (chunk) => {
+        body += chunk;
+      });
+      response.on('end', () => {
+        if (response.statusCode !== 200) {
+          reject(new Error(`GitHub API returned HTTP ${response.statusCode}`));
+          return;
+        }
+
+        try {
+          resolve(JSON.parse(body));
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+
+    request.on('error', reject);
+    request.setTimeout(timeoutMs, () => {
+      request.destroy(new Error(`Timed out requesting ${url.toString()}.`));
+    });
+  });
+}
+
+async function fetchLatestGitHubProductionDeployment() {
+  const deploymentsUrl = new URL(`https://api.github.com/repos/${githubRepository}/deployments`);
+  deploymentsUrl.searchParams.set('environment', 'Production');
+  deploymentsUrl.searchParams.set('per_page', '1');
+
+  try {
+    const deployments = await requestJson(deploymentsUrl);
+    const [deployment] = Array.isArray(deployments) ? deployments : [];
+
+    if (!deployment?.statuses_url) {
+      return '';
+    }
+
+    const statuses = await requestJson(new URL(deployment.statuses_url));
+    const latestStatus = Array.isArray(statuses) ? statuses[0] : undefined;
+    const targetUrl = latestStatus?.target_url || latestStatus?.log_url;
+
+    if (!targetUrl) {
+      return ` Latest GitHub Production deployment: ${deployment.sha || deployment.ref || 'unknown sha'} has no target URL.`;
+    }
+
+    return (
+      ` Latest GitHub Production deployment target: ${targetUrl}` +
+      ` (${deployment.sha || deployment.ref || 'unknown sha'}, status: ${latestStatus.state || 'unknown'}).`
+    );
+  } catch (error) {
+    return ` Latest GitHub Production deployment lookup failed: ${error.message}.`;
+  }
+}
+
 function buildDeploymentProtectionHint({ statusCode, signature }) {
   const isProtectedStatus = statusCode === 401 || statusCode === 403;
   const hasProtectedSignature = protectedDeploymentSignatures.includes(signature);
@@ -153,10 +224,10 @@ function buildDeploymentDiagnostics({ body, response }) {
   return diagnostics.length > 0 ? ` Observed Vercel diagnostics: ${diagnostics.join('; ')}.` : '';
 }
 
-function assertCleanProductionShell({ body, response, route, label, url }) {
+function assertCleanProductionShell({ body, response, route, label, url, latestDeploymentDiagnostics }) {
   const contentType = String(response.headers['content-type'] || '');
   const failureSignature = failureSignatures.find((signature) => body.includes(signature));
-  const deploymentDiagnostics = buildDeploymentDiagnostics({ body, response });
+  const deploymentDiagnostics = `${buildDeploymentDiagnostics({ body, response })}${latestDeploymentDiagnostics}`;
 
   if (response.statusCode !== 200) {
     const hint = buildDeploymentProtectionHint({
@@ -219,11 +290,12 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
 
 async function run() {
   console.log(`Production origin: ${origin}`);
+  const latestDeploymentDiagnostics = await fetchLatestGitHubProductionDeployment();
 
   for (const [route, label] of routes) {
     const url = new URL(route, `${origin}/`);
     const result = await requestUrl(url);
-    assertCleanProductionShell({ ...result, route, label });
+    assertCleanProductionShell({ ...result, route, label, latestDeploymentDiagnostics });
     console.log(`PASS ${label} ${route}`);
   }
 }
