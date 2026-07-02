@@ -46,6 +46,23 @@ function hasStablePayoffProjection(baseline: PayoffProjection, velocity: Velocit
   );
 }
 
+function buildDebtFreeDateLabel(currentTime: number, payoffMonths: number): string {
+  if (!Number.isFinite(currentTime) || !Number.isFinite(payoffMonths) || payoffMonths <= 0) {
+    return 'Review inputs';
+  }
+
+  const projectedTime = currentTime + payoffMonths * 30 * 24 * 60 * 60 * 1000;
+  if (!Number.isFinite(projectedTime)) return 'Review inputs';
+
+  const projectedDate = new Date(projectedTime);
+  if (!Number.isFinite(projectedDate.getTime())) return 'Review inputs';
+
+  return projectedDate.toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
 export function buildPreAppPreviewSnapshot(input: PreAppPreviewSnapshotInput): PreAppPreviewSnapshot {
   const debts = input.debts.filter((debt) => finiteNonNegative(debt?.balance) > 0) as VelocityDebt[];
   const ranked = rankDebtsVelocity(debts);
@@ -58,10 +75,7 @@ export function buildPreAppPreviewSnapshot(input: PreAppPreviewSnapshotInput): P
     ? Math.min(100, Math.max(0, Math.round((input.velocity.savings / input.baseline.totalInterest) * 100)))
     : 0;
   const debtFreeDateLabel = payoffProjected
-    ? new Date(input.currentTime + input.velocity.months * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
-        month: 'short',
-        year: 'numeric',
-      })
+    ? buildDebtFreeDateLabel(input.currentTime, input.velocity.months)
     : 'Review inputs';
 
   return {
