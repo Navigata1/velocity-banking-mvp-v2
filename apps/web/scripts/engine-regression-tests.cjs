@@ -156,6 +156,34 @@ test('amortization payment matches a known 30-year fixed-rate fixture', () => {
   );
 });
 
+test('biweekly payoff helper uses the shared amortized payoff engine', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const biweeklyStart = calculationsSource.indexOf('export function simulateBiweeklyPayments');
+  const biweeklyBody = calculationsSource.slice(
+    biweeklyStart,
+    calculationsSource.indexOf('export interface StrategyComparison', biweeklyStart)
+  );
+  const monthlyPayment = calculations.calculateAmortizationPayment(100000, 0.06, 360);
+  const webProjection = calculations.simulateBiweeklyPayments(100000, 0.06, monthlyPayment, 360);
+  const sharedProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 100000,
+    apr: 0.06,
+    monthlyPayment,
+    extraPayment: monthlyPayment / 12,
+    maxMonths: 360,
+  });
+
+  assert.ok(
+    biweeklyBody.includes('simulateAmortizedPayoff({'),
+    'expected biweekly payoff math to delegate to the shared payoff helper'
+  );
+  assert.ok(!biweeklyBody.includes('while ('), 'expected biweekly payoff math not to keep a separate payoff loop');
+  assert.equal(webProjection.totalMonths, sharedProjection.payoffMonths);
+  assert.equal(roundCents(webProjection.totalInterest), roundCents(sharedProjection.totalInterest));
+  assert.equal(webProjection.monthsSavedVsMonthly, 65);
+  assert.equal(roundCents(webProjection.interestSavedVsMonthly), 24555.12);
+});
+
 test('LOC ADB interest uses daily closing balances across web and shared engines', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const expectedInterest = ((1116.6666666667 + 4500) / 2) * (0.12 / 365) * 30;
