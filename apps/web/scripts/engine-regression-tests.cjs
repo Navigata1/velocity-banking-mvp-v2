@@ -4521,6 +4521,8 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'debt-crushing ammunition',
     'velocity saves years',
     'simulator shows years saved',
+    'more surplus = faster freedom',
+    'pay off years faster',
   ];
 
   for (const claim of bannedClaims) {
@@ -4634,6 +4636,14 @@ test('Guardian LOC and simulator guidance keeps buffer and timeline assumptions 
   assert.ok(
     answerBank.includes('compare the timelines to see whether your modeled velocity path improves payoff time under the assumptions'),
     'expected Guardian simulator copy to label timeline improvements as modeled assumptions'
+  );
+  assert.ok(
+    answerBank.includes('your positive cash flow sets the pace of any payoff model'),
+    'expected Guardian cash-flow copy to label payoff speed as modeled'
+  );
+  assert.ok(
+    answerBank.includes('trusted only when cash flow, loc cost, fees, and recovery timing support the result'),
+    'expected Guardian traditional-vs-velocity copy to gate speed claims behind assumptions'
   );
 });
 
