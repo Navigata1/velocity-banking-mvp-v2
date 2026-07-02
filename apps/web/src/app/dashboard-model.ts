@@ -66,6 +66,7 @@ export interface DashboardLoopArtifact {
   note: string;
   tone: DashboardTone;
   fillPercent: number;
+  pressurePercent: number;
 }
 
 export interface DashboardChangeExplanation {
@@ -178,6 +179,11 @@ function clampArtifactFill(value: number): number {
   return Math.min(100, Math.max(12, Math.round(value * 100)));
 }
 
+function clampArtifactPressure(value: number): number {
+  if (!Number.isFinite(value) || value <= 0) return 8;
+  return Math.min(100, Math.max(8, Math.round(value * 100)));
+}
+
 function buildMoneyLoopArtifacts(
   input: DashboardModelInput,
   cashFlow: number,
@@ -199,6 +205,7 @@ function buildMoneyLoopArtifacts(
       note: 'Deposits start the loop and lower the average LOC balance.',
       tone: input.monthlyIncome > input.monthlyExpenses ? 'emerald' : 'amber',
       fillPercent: clampArtifactFill(input.monthlyIncome / monthlyFlowBase),
+      pressurePercent: clampArtifactPressure(input.monthlyIncome / monthlyFlowBase),
     },
     {
       id: 'loc',
@@ -210,6 +217,7 @@ function buildMoneyLoopArtifacts(
         : 'Capacity is useful only when it stays inside a comfortable buffer.',
       tone: locNeedsSetup || locUtilization > 0.8 ? 'amber' : 'sky',
       fillPercent: clampArtifactFill(availableLocRatio),
+      pressurePercent: clampArtifactPressure(locNeedsSetup ? 0 : Math.max(availableLocRatio, locUtilization)),
     },
     {
       id: 'expenses',
@@ -219,6 +227,7 @@ function buildMoneyLoopArtifacts(
       note: 'Planned expenses define how much pressure remains in the loop.',
       tone: input.monthlyExpenses < input.monthlyIncome ? 'sky' : 'rose',
       fillPercent: clampArtifactFill(input.monthlyExpenses / monthlyFlowBase),
+      pressurePercent: clampArtifactPressure(input.monthlyExpenses / monthlyFlowBase),
     },
     {
       id: 'cash-flow',
@@ -230,6 +239,7 @@ function buildMoneyLoopArtifacts(
         : 'Restore positive flow before relying on chunk projections.',
       tone: cashFlow > 0 ? 'emerald' : 'rose',
       fillPercent: clampArtifactFill(cashFlow > 0 ? cashFlow / monthlyFlowBase : 0),
+      pressurePercent: clampArtifactPressure(cashFlow > 0 ? cashFlow / monthlyFlowBase : 0),
     },
     {
       id: 'principal',
@@ -241,6 +251,7 @@ function buildMoneyLoopArtifacts(
         : 'Choose a chunk only after cash flow and LOC room are usable.',
       tone: safeChunk > 0 && cashFlow > 0 ? 'emerald' : 'amber',
       fillPercent: clampArtifactFill(principalImpact),
+      pressurePercent: clampArtifactPressure(principalImpact),
     },
   ];
 }

@@ -5910,6 +5910,12 @@ test('dashboard model provides a five-part Money Loop artifact rail without addi
     ),
     JSON.stringify(model.moneyLoopArtifacts)
   );
+  assert.ok(
+    model.moneyLoopArtifacts.every(
+      (artifact) => Number.isFinite(artifact.pressurePercent) && artifact.pressurePercent >= 8 && artifact.pressurePercent <= 100
+    ),
+    JSON.stringify(model.moneyLoopArtifacts)
+  );
   assert.equal(model.moneyLoopArtifacts.find((artifact) => artifact.id === 'cash-flow').tone, 'emerald');
 });
 
@@ -6128,16 +6134,29 @@ test('Money Loop artifact rail renders a model-backed payoff orbit visual', () =
 
   assert.ok(source.includes('orbitNodePositions'), 'expected artifact rail to define stable orbit node positions');
   assert.ok(source.includes('orbitNodeAngles'), 'expected artifact rail to map active nodes to orbit angles');
+  assert.ok(source.includes('orbitFlowSegments'), 'expected artifact rail to define loop flow segments');
   assert.ok(source.includes("'--active-artifact-angle': orbitNodeAngles[activeArtifact.id]"), 'expected active artifact angle to drive the orbit reticle');
   assert.ok(source.includes('data-testid="money-loop-payoff-orbit"'), 'expected a stable active orbit smoke hook');
+  assert.ok(source.includes('data-testid="money-loop-pressure-path"'), 'expected a stable pressure path smoke hook');
+  assert.ok(
+    source.includes('data-testid={`money-loop-pressure-segment-${segment.from}-${segment.to}`}'),
+    'expected one stable pressure segment hook per Money Loop flow edge'
+  );
   assert.ok(
     source.includes('data-testid={`money-loop-orbit-node-${artifact.id}`}'),
     'expected the orbit to render one model-backed node per Money Loop artifact'
   );
   assert.ok(
+    source.includes('fromArtifact.pressurePercent') && source.includes('strokeDasharray') && source.includes('strokeWidth'),
+    'expected the orbit path to bind visible segment weight to model pressure'
+  );
+  assert.ok(
     source.includes('--active-artifact-color') && source.includes('--orbit-node-color') && source.includes('--active-artifact-angle'),
     'expected orbit visuals to use model tone colors instead of static decoration'
   );
+  assert.ok(css.includes('@keyframes artifactFlowDrift'), 'expected pressure segments to animate when motion is allowed');
+  assert.ok(css.includes('.artifact-flow-path'), 'expected CSS to draw the algorithmic flow path');
+  assert.ok(css.includes('.artifact-flow-segment'), 'expected CSS to draw each algorithmic flow segment');
   assert.ok(css.includes('.artifact-orbit-ring'), 'expected CSS to draw the payoff orbit ring');
   assert.ok(css.includes('.artifact-orbit-sweep'), 'expected CSS to draw the payoff orbit sweep');
   assert.ok(css.includes('.artifact-orbit-reticle'), 'expected CSS to draw the active selection reticle');
