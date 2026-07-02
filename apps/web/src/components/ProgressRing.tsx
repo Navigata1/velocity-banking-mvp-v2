@@ -8,6 +8,16 @@ interface ProgressRingProps {
   sublabel?: string;
 }
 
+function clampProgressPercent(progress: number): number {
+  if (!Number.isFinite(progress)) return 0;
+
+  return Math.min(100, Math.max(0, progress));
+}
+
+function safePositiveDimension(value: number, fallback: number): number {
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
 export default function ProgressRing({ 
   progress, 
   size = 200, 
@@ -15,28 +25,34 @@ export default function ProgressRing({
   label,
   sublabel 
 }: ProgressRingProps) {
-  const radius = (size - strokeWidth) / 2;
+  const safeSize = safePositiveDimension(size, 200);
+  const safeStrokeWidth = Math.min(
+    safeSize,
+    safePositiveDimension(strokeWidth, 12)
+  );
+  const safeProgress = clampProgressPercent(progress);
+  const radius = Math.max(0, (safeSize - safeStrokeWidth) / 2);
   const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (progress / 100) * circumference;
+  const offset = circumference - (safeProgress / 100) * circumference;
 
   return (
     <div className="relative inline-flex items-center justify-center">
-      <svg width={size} height={size} className="transform -rotate-90">
+      <svg width={safeSize} height={safeSize} className="transform -rotate-90">
         <circle
-          cx={size / 2}
-          cy={size / 2}
+          cx={safeSize / 2}
+          cy={safeSize / 2}
           r={radius}
           fill="none"
           stroke="rgba(255,255,255,0.1)"
-          strokeWidth={strokeWidth}
+          strokeWidth={safeStrokeWidth}
         />
         <circle
-          cx={size / 2}
-          cy={size / 2}
+          cx={safeSize / 2}
+          cy={safeSize / 2}
           r={radius}
           fill="none"
           stroke="url(#gradient)"
-          strokeWidth={strokeWidth}
+          strokeWidth={safeStrokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
