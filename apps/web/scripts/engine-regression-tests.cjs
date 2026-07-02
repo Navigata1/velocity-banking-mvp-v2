@@ -4668,6 +4668,30 @@ test('mortgage velocity strategy treats a missing LOC limit as setup needed inst
   assert.equal(strategies.velocity.monthsSaved, 0);
   assert.equal(strategies.velocity.chunkSize, 0);
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(strategies.velocity), 'Enter LOC terms');
+  const setupWarning = vaultModel.buildVaultVelocitySetupWarning(strategies.velocity);
+  assert.equal(setupWarning.title, 'Enter known LOC terms');
+  assert.equal(
+    setupWarning.body,
+    'Vault velocity projections need known LOC or HELOC limit, APR, fees, and draw rules before the mortgage path can be trusted.'
+  );
+  assert.equal(setupWarning.severity, 'warning');
+});
+
+test('vault page surfaces invalid velocity setup before mortgage projections are trusted', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('buildVaultVelocitySetupWarning(strategies.velocity)'),
+    'expected Vault to derive setup warnings from the same Velocity strategy failure state'
+  );
+  assert.ok(
+    source.includes('velocitySetupWarning.title') && source.includes('velocitySetupWarning.body'),
+    'expected Vault to render the invalid Velocity setup warning text'
+  );
+  assert.ok(
+    source.indexOf('velocitySetupWarning.title') < source.indexOf('<ScrollReveal variant="scaleIn">'),
+    'expected Vault setup warning to render before the mortgage projection step card'
+  );
 });
 
 test('mortgage velocity strategy treats a full LOC as no available room instead of over-limit', () => {
