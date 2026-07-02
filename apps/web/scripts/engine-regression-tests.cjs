@@ -4271,6 +4271,46 @@ test('vault freedom path blocks impact claims when velocity is invalid', () => {
   assert.equal(model.investmentGrowth, 0);
 });
 
+test('vault freedom path rejects non-finite inputs before projecting impact claims', () => {
+  const vaultModel = loadTsModule('src/app/vault-model.ts');
+
+  const model = vaultModel.buildVaultFreedomPathModel({
+    currentAge: Number.NaN,
+    standardMonths: Number.POSITIVE_INFINITY,
+    velocity: {
+      months: 180,
+      saved: Number.POSITIVE_INFINITY,
+      isPayoffPossible: true,
+    },
+    monthlyPayment: Number.POSITIVE_INFINITY,
+    investmentRate: Number.POSITIVE_INFINITY,
+  });
+
+  assert.equal(model.isProjected, false);
+  assert.equal(model.standardYears, 0);
+  assert.equal(model.velocityYears, 0);
+  assert.equal(model.freedYears, 0);
+  assert.equal(model.investmentGrowth, 0);
+  assert.equal(model.interestSavedLabel, 'Not projected');
+  assert.equal(model.freedomYearsLabel, 'Review inputs');
+  assert.equal(model.portfolioValueLabel, 'Not projected');
+  assert.equal(model.timelineLabel, 'Velocity path needs usable inputs first');
+  assert.equal(model.standardAgeLabel, 'Review inputs');
+  assert.equal(model.velocityAgeLabel, 'Review inputs');
+  assert.ok(
+    [
+      model.interestSavedLabel,
+      model.freedomYearsLabel,
+      model.portfolioValueLabel,
+      model.timelineLabel,
+      model.standardAgeLabel,
+      model.velocityAgeLabel,
+      model.investmentCaption,
+    ].every((label) => !label.includes('NaN') && !label.includes('Infinity')),
+    'expected Vault freedom labels to suppress non-finite values'
+  );
+});
+
 test('cockpit gauge dashes stay within SVG bounds', () => {
   const cockpitModel = loadTsModule('src/app/cockpit-model.ts');
 
