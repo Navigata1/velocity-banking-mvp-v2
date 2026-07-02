@@ -39,6 +39,17 @@ export interface VaultFreedomPathModel {
   investmentCaption: string;
 }
 
+export interface VaultVelocitySetupWarningInput {
+  isPayoffPossible: boolean;
+  failureReason?: string;
+}
+
+export interface VaultVelocitySetupWarning {
+  title: string;
+  body: string;
+  severity: 'warning' | 'critical';
+}
+
 function calculateFreedPaymentGrowth(monthlyPayment: number, annualRate: number, freedYears: number): number {
   if (!Number.isFinite(monthlyPayment) || !Number.isFinite(annualRate) || !Number.isFinite(freedYears)) return 0;
   if (monthlyPayment <= 0 || annualRate < 0 || freedYears <= 0 || freedYears > MAX_FREED_PAYMENT_YEARS) return 0;
@@ -59,6 +70,66 @@ export function formatVaultProjectionFailure(reason?: string): string {
   if (reason === 'payment-below-interest') return 'Payment below interest';
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
+}
+
+export function buildVaultVelocitySetupWarning(
+  velocity: VaultVelocitySetupWarningInput
+): VaultVelocitySetupWarning | null {
+  if (velocity.isPayoffPossible) return null;
+
+  if (velocity.failureReason === 'loc-setup') {
+    return {
+      title: 'Enter known LOC terms',
+      body: 'Vault velocity projections need known LOC or HELOC limit, APR, fees, and draw rules before the mortgage path can be trusted.',
+      severity: 'warning',
+    };
+  }
+
+  if (velocity.failureReason === 'loc-no-capacity') {
+    return {
+      title: 'No LOC room available',
+      body: 'The entered LOC balance is at the limit. Pay the LOC down or adjust the assumptions before modeling another mortgage chunk.',
+      severity: 'warning',
+    };
+  }
+
+  if (velocity.failureReason === 'loc-overlimit') {
+    return {
+      title: 'LOC balance above limit',
+      body: 'The entered LOC balance is above the limit. Bring it back within the entered terms before relying on Vault velocity projections.',
+      severity: 'critical',
+    };
+  }
+
+  if (velocity.failureReason === 'negative-cashflow' || velocity.failureReason === 'cashflow-below-minimums') {
+    return {
+      title: 'Cash flow needs room first',
+      body: 'Vault velocity projections need enough monthly cash flow to cover the mortgage payment and recover LOC draws.',
+      severity: 'warning',
+    };
+  }
+
+  if (velocity.failureReason === 'payment-below-interest') {
+    return {
+      title: 'Mortgage payment needs review',
+      body: 'The entered mortgage payment does not support a stable payoff projection. Review payment, rate, and remaining balance before comparing strategies.',
+      severity: 'critical',
+    };
+  }
+
+  if (velocity.failureReason === 'payoff-horizon-exceeded') {
+    return {
+      title: 'Projection horizon needs review',
+      body: 'The modeled mortgage path does not finish inside the current projection horizon. Extend the horizon or review the payment assumptions.',
+      severity: 'warning',
+    };
+  }
+
+  return {
+    title: 'Vault projection needs review',
+    body: 'Review mortgage, cash-flow, and LOC assumptions before relying on the velocity path.',
+    severity: 'warning',
+  };
 }
 
 export function formatVaultStrategySavings(strategy: VaultStrategyProjection): string {

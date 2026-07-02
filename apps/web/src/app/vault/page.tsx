@@ -12,6 +12,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import {
   buildVaultComparisonWidthPercent,
   buildVaultFreedomPathModel,
+  buildVaultVelocitySetupWarning,
   buildVaultVisualPercent,
   formatVaultProjectionFailure,
   formatVaultStrategySavings,
@@ -89,6 +90,10 @@ export default function VaultPage() {
       limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance,
     });
   }, [mortgageInput, store.monthlyIncome, store.monthlyExpenses, store.loc]);
+  const velocitySetupWarning = useMemo(
+    () => buildVaultVelocitySetupWarning(strategies.velocity),
+    [strategies.velocity]
+  );
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 5));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 0));
@@ -690,6 +695,25 @@ export default function VaultPage() {
               {warning.message}
             </p>
           ))}
+        </div>
+      )}
+
+      {velocitySetupWarning && (
+        <div
+          className={`${classes.glass} ${
+            velocitySetupWarning.severity === 'critical' ? 'border-red-400/50' : 'border-amber-400/40'
+          } border rounded-xl p-4 mb-6 space-y-2`}
+        >
+          <div
+            className={`text-sm font-semibold ${
+              velocitySetupWarning.severity === 'critical' ? 'text-red-300' : 'text-amber-300'
+            }`}
+          >
+            {velocitySetupWarning.title}
+          </div>
+          <p className={`text-sm ${velocitySetupWarning.severity === 'critical' ? 'text-red-100' : 'text-amber-100'}`}>
+            {velocitySetupWarning.body}
+          </p>
         </div>
       )}
 
