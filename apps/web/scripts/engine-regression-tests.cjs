@@ -1980,6 +1980,34 @@ test('settings backend migration contract requires ownership and provider shapes
   );
 });
 
+test('repository documents a Supabase first-lane schema with explicit owner-scoped RLS', () => {
+  const schemaPath = path.resolve(__dirname, '..', '..', '..', 'docs', '43_SUPABASE_FIRST_LANE_SCHEMA.md');
+  const schema = fs.existsSync(schemaPath) ? fs.readFileSync(schemaPath, 'utf8') : '';
+
+  assert.ok(fs.existsSync(schemaPath), 'expected the Supabase first-lane schema handoff to exist');
+  assert.ok(schema.includes('contract-only'), 'expected schema handoff not to imply live backend wiring');
+  assert.ok(schema.includes('not an applied migration'), 'expected schema handoff to block accidental live migration claims');
+  assert.ok(!schema.includes('create table public.users'), 'expected schema to use auth.users plus public profiles, not a duplicate public users table');
+  assert.ok(schema.includes('references auth.users(id) on delete cascade'), 'expected user-owned rows to cascade from auth.users');
+  assert.ok(schema.includes('grant usage on schema public to authenticated;'), 'expected explicit Data API schema grant for authenticated role');
+  assert.ok(!/grant\s+[^;]+to\s+anon/i.test(schema), 'expected private financial tables not to grant anon access');
+
+  for (const table of ['profiles', 'financial_snapshots', 'simulation_runs', 'learning_progress', 'export_records', 'audit_events']) {
+    assert.ok(schema.includes(`create table public.${table}`), `expected ${table} table draft`);
+    assert.ok(schema.includes(`alter table public.${table} enable row level security;`), `expected ${table} RLS`);
+    assert.ok(schema.includes(`on public.${table}`), `expected ${table} policies`);
+  }
+
+  for (const ownerTable of ['financial_snapshots', 'simulation_runs', 'learning_progress', 'export_records', 'audit_events']) {
+    assert.ok(schema.includes(`${ownerTable}_owner_id_idx`), `expected ${ownerTable} owner_id index`);
+    assert.ok(schema.includes('using ((select auth.uid()) = owner_id)'), `expected owner-scoped USING policies for ${ownerTable}`);
+    assert.ok(schema.includes('with check ((select auth.uid()) = owner_id)'), `expected owner-scoped WITH CHECK policies for ${ownerTable}`);
+  }
+
+  assert.ok(schema.includes('simulation_runs_snapshot_id_idx'), 'expected simulation run snapshot foreign key index');
+  assert.ok(schema.includes('export_records_snapshot_id_idx'), 'expected export snapshot foreign key index');
+});
+
 test('backup controls label local-only export and import replacement behavior', () => {
   const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
   const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
