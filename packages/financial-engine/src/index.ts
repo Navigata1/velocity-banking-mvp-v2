@@ -756,6 +756,8 @@ export function buildMobilePortfolioSnapshot(
     guardrail = 'Add a LOC limit before modeling portfolio velocity movement.';
   } else if (input.loc.balance > input.loc.limit) {
     guardrail = LOC_OVER_LIMIT_WARNING;
+  } else if (input.loc.balance === input.loc.limit) {
+    guardrail = LOC_NO_CAPACITY_WARNING;
   } else if (input.loc.balance / input.loc.limit > 0.8) {
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
   }

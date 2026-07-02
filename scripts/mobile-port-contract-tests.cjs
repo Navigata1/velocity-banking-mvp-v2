@@ -1042,6 +1042,7 @@ test('shared mobile simulator snapshot treats a full LOC as no available room in
     },
   };
   const dashboard = sharedEngine.buildMobileDashboardSnapshot(input);
+  const portfolio = sharedEngine.buildMobilePortfolioSnapshot(input);
   const snapshot = sharedEngine.buildMobileSimulatorSnapshot(input);
   const vault = sharedEngine.buildMobileVaultSnapshot(input);
   const learn = sharedEngine.buildMobileLearnSnapshot(input);
@@ -1052,6 +1053,8 @@ test('shared mobile simulator snapshot treats a full LOC as no available room in
   assert.equal(dashboard.warning, noCapacityWarning);
   assert.equal(dashboard.nextMove, 'Create LOC room');
   assert.equal(dashboard.loop.find((step) => step.label === 'LOC').value, '$0 open');
+  assert.equal(portfolio.guardrail, noCapacityWarning);
+  assert.equal(portfolio.payoffPath.statusLabel, 'Review inputs');
   assert.equal(snapshot.guardrail, noCapacityWarning);
   assert.equal(snapshot.velocity.interestSavedLabel, 'Not projected');
   assert.equal(snapshot.velocity.monthsSavedLabel, 'Review inputs');
