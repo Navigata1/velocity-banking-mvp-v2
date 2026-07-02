@@ -5690,6 +5690,35 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
   assert.ok(source.includes('hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4'), 'expected full-detail vitals to start at tablet width');
 });
 
+test('dashboard home page exposes a compact mobile Money Loop bridge', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('data-testid="dashboard-mobile-money-loop-bridge"'),
+    'expected a stable mobile Money Loop bridge hook'
+  );
+  assert.ok(
+    source.includes('aria-label="Mobile Money Loop summary"'),
+    'expected the mobile bridge to be named for assistive technology'
+  );
+  assert.ok(
+    source.includes('href="#dashboard-money-loop-artifacts"'),
+    'expected the mobile bridge to jump to the full Money Loop artifact rail'
+  );
+  assert.ok(
+    source.includes('id="dashboard-money-loop-artifacts"'),
+    'expected the full Money Loop section to expose a stable anchor target'
+  );
+  assert.ok(
+    source.includes('model.moneyLoopArtifacts.map'),
+    'expected the mobile bridge chips to reuse the dashboard artifact model'
+  );
+  assert.ok(
+    source.includes('data-testid={`dashboard-mobile-loop-chip-${artifact.id}`}'),
+    'expected one stable mobile chip hook per Money Loop artifact'
+  );
+});
+
 test('dashboard home page mounts why-this-changed explanations', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
 
