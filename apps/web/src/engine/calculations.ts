@@ -1349,15 +1349,22 @@ export function formatCurrencyPrecise(amount: number): string {
 }
 
 export function formatDate(monthsFromNow: number): string {
+  if (!Number.isFinite(monthsFromNow) || monthsFromNow < 0) return 'Review inputs';
+
   const date = new Date();
   date.setMonth(date.getMonth() + monthsFromNow);
+  if (!Number.isFinite(date.getTime())) return 'Review inputs';
+
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
 export function formatMonths(months: number): string {
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-  if (years === 0) return `${months} months`;
+  if (!Number.isFinite(months) || months <= 0) return 'Review inputs';
+
+  const wholeMonths = Math.ceil(months);
+  const years = Math.floor(wholeMonths / 12);
+  const remainingMonths = wholeMonths % 12;
+  if (years === 0) return `${wholeMonths} months`;
   if (remainingMonths === 0) return `${years} year${years > 1 ? 's' : ''}`;
   return `${years}y ${remainingMonths}m`;
 }
