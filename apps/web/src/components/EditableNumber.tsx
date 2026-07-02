@@ -18,6 +18,11 @@ interface EditableNumberProps {
   ariaLabel?: string;
 }
 
+function sanitizeValue(value: number, min: number, max: number): number {
+  const finiteValue = Number.isFinite(value) ? value : min;
+  return Math.min(max, Math.max(min, finiteValue));
+}
+
 export function EditableNumber({
   value,
   onChange,
@@ -32,8 +37,9 @@ export function EditableNumber({
   label,
   ariaLabel,
 }: EditableNumberProps) {
+  const safeValue = sanitizeValue(value, min, max);
   const [isEditing, setIsEditing] = useState(false);
-  const [tempValue, setTempValue] = useState(value.toString());
+  const [tempValue, setTempValue] = useState(safeValue.toString());
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -69,14 +75,14 @@ export function EditableNumber({
     if (format === 'percent') {
       parsed = parsed / 100;
     }
-    return Math.min(max, Math.max(min, parsed));
+    return sanitizeValue(parsed, min, max);
   };
 
   const handleClick = () => {
     if (format === 'percent') {
-      setTempValue((value * 100).toFixed(1));
+      setTempValue((safeValue * 100).toFixed(1));
     } else {
-      setTempValue(value.toString());
+      setTempValue(safeValue.toString());
     }
     setIsEditing(true);
   };
@@ -92,7 +98,7 @@ export function EditableNumber({
       handleBlur();
     } else if (e.key === 'Escape') {
       setIsEditing(false);
-      setTempValue(value.toString());
+      setTempValue(safeValue.toString());
     }
   };
 
@@ -123,7 +129,7 @@ export function EditableNumber({
   const textClass = theme === 'light' ? 'text-slate-800' : 'text-white';
   const mutedClass = theme === 'light' ? 'text-slate-500' : 'text-gray-400';
   const controlLabel = ariaLabel ?? label ?? 'Editable number';
-  const editLabel = `Edit ${controlLabel}, current value ${formatDisplay(value)}`;
+  const editLabel = `Edit ${controlLabel}, current value ${formatDisplay(safeValue)}`;
   const inputLabel = `${controlLabel} value`;
 
   if (isEditing) {
@@ -160,7 +166,7 @@ export function EditableNumber({
         title="Click to edit"
       >
         {prefix && <span>{prefix}</span>}
-        <span>{formatDisplay(value)}</span>
+        <span>{formatDisplay(safeValue)}</span>
         {suffix && <span className={mutedClass}>{suffix}</span>}
         <svg 
           className="w-3 h-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity ml-1" 
