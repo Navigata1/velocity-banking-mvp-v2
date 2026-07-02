@@ -4519,6 +4519,8 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'trust the math',
     "the math works - if it's not working",
     'debt-crushing ammunition',
+    'velocity saves years',
+    'simulator shows years saved',
   ];
 
   for (const claim of bannedClaims) {
@@ -4606,6 +4608,32 @@ test('Guardian answer bank avoids directive card and investment advice without m
   assert.ok(
     answerBank.includes('compare debt payoff with investing only after accounting for risk, taxes, liquidity, employer match, and time horizon'),
     'expected Guardian investment guidance to label the broader planning assumptions'
+  );
+});
+
+test('Guardian LOC and simulator guidance keeps buffer and timeline assumptions explicit', () => {
+  const answerBank = guardian.shieldGuardianQA
+    .flatMap((qa) => qa.answers)
+    .join('\n')
+    .toLowerCase();
+
+  const directiveClaims = [
+    'never use 100%',
+    'always maintain breathing room',
+    'watch the two timelines diverge as velocity saves years',
+  ];
+
+  for (const claim of directiveClaims) {
+    assert.ok(!answerBank.includes(claim), `expected Guardian copy not to include directive or promised-timeline claim: ${claim}`);
+  }
+
+  assert.ok(
+    answerBank.includes('a full loc leaves no planning buffer'),
+    'expected Guardian LOC utilization copy to explain buffer risk without absolute language'
+  );
+  assert.ok(
+    answerBank.includes('compare the timelines to see whether your modeled velocity path improves payoff time under the assumptions'),
+    'expected Guardian simulator copy to label timeline improvements as modeled assumptions'
   );
 });
 

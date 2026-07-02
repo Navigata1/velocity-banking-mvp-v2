@@ -187,7 +187,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Keep utilization under 80% to maintain a buffer for emergencies. Going too high is risky if unexpected expenses hit.',
       'Conservative: 50-60% max. Moderate: 70-80%. Aggressive: 80%+. Your comfort with risk determines your approach.',
-      'Never use 100% - always maintain breathing room. If you\'re constantly at the limit, your cash flow may be too tight.'
+      'A full LOC leaves no planning buffer. If you are constantly near the limit, pause new chunks and review cash flow before trusting the payoff model.'
     ]
   },
 
@@ -376,7 +376,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'How do I use the Simulator?',
     answers: [
       'The Simulator shows baseline (minimum payments) vs velocity (with chunks) side by side. Adjust inputs to see impact.',
-      'Enter your debt details, LOC info, and cash flow. Watch the two timelines diverge as velocity saves years.',
+      'Enter your debt details, LOC info, and cash flow. Compare the timelines to see whether your modeled velocity path improves payoff time under the assumptions.',
       'Play with chunk amounts and frequencies. See how each change affects total interest and payoff date.'
     ]
   },
@@ -508,7 +508,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'This feels like it\'s taking forever.',
     answers: [
       'Compare the modeled path to minimum payments. Even a modest timeline improvement may be worth reviewing if the assumptions are realistic.',
-      'Zoom out with the model, not a canned timeline. If the Simulator shows years saved, inspect the assumptions that created that result.',
+      'Zoom out with the model, not a canned timeline. If the Simulator shows time saved, inspect the assumptions that created that result.',
       'Quick wins: check whether principal is falling, interest burn is shrinking, and your buffer is intact. Those signals matter more than a dramatic headline.'
     ]
   },
