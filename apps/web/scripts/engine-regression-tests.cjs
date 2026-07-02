@@ -3794,6 +3794,55 @@ test('mortgage purchase-mode strategies ignore hidden stale current balance inpu
   assert.ok(strategies.standard.totalInterest > 0, `expected visible purchase mortgage to accrue interest, got ${strategies.standard.totalInterest}`);
 });
 
+test('mortgage analysis sanitizes non-finite history and payment split inputs', () => {
+  const input = {
+    entryMode: 'current',
+    purchaseAge: Number.NaN,
+    currentAge: Number.POSITIVE_INFINITY,
+    originalCost: 320000,
+    originalTermYears: 30,
+    originalRate: 0.065,
+    downPayment: 64000,
+    currentBalance: Number.NaN,
+    remainingTermMonths: Number.NaN,
+    currentRate: Number.NaN,
+    currentMonthlyPayment: Number.NaN,
+    paymentFrequency: 'monthly',
+    hasExtraPayments: false,
+    extraPaymentAmount: 0,
+    hasRefinanced: true,
+    refinanceCount: Number.POSITIVE_INFINITY,
+  };
+  const analysis = calculations.calculateMortgageAnalysis(input);
+  const history = calculations.analyzeMortgageHistory(input);
+  const analysisNumbers = [
+    analysis.monthsElapsed,
+    analysis.interestPaidSoFar,
+    analysis.interestRemaining,
+    analysis.principalPaidSoFar,
+    analysis.equityPercent,
+    analysis.interestPercentOfPayment,
+    analysis.principalPercentOfPayment,
+    analysis.first7YearsInterestPercent,
+    analysis.refinancePenalty,
+  ];
+  const historyNumbers = [
+    history.yearsInMortgage,
+    history.totalPaidSoFar,
+    history.principalPaidSoFar,
+    history.interestPaidSoFar,
+    history.equityPercent,
+    history.interestPercentOfPayments,
+    history.principalPercentOfPayments,
+    history.refinancePenalty,
+  ];
+
+  assert.ok(analysisNumbers.every(Number.isFinite), `expected finite mortgage analysis numbers, got ${JSON.stringify(analysis)}`);
+  assert.ok(historyNumbers.every(Number.isFinite), `expected finite mortgage history numbers, got ${JSON.stringify(history)}`);
+  assert.ok(!JSON.stringify(analysis).includes('NaN'));
+  assert.ok(!JSON.stringify(history).includes('Infinity'));
+});
+
 test('mortgage standard strategy uses the actual current monthly payment', () => {
   const input = {
     entryMode: 'current',
