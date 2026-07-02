@@ -34,6 +34,7 @@ export type PortfolioFailureReason =
   | 'cashflow-below-minimums'
   | 'payment-below-interest'
   | 'loc-setup'
+  | 'loc-no-capacity'
   | 'loc-overlimit'
   | 'payoff-horizon-exceeded';
 
@@ -426,7 +427,9 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
             ? 'payment-below-interest'
             : locNeedsSetup
               ? 'loc-setup'
-              : 'loc-overlimit',
+              : locBalanceOverLimit
+                ? 'loc-overlimit'
+                : 'loc-no-capacity',
       payoffOrder,
       monthResults,
       debtRationales,
