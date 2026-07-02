@@ -5295,6 +5295,35 @@ test('CountUp sanitizes non-finite animated values before formatting', () => {
   assert.ok(source.includes('animate(motionVal, safeValue'), 'expected animations to avoid non-finite motion targets');
 });
 
+test('ProgressRing clamps progress and sanitizes SVG geometry inputs', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/ProgressRing.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('function clampProgressPercent(progress: number): number'),
+    'expected ProgressRing to centralize progress clamping'
+  );
+  assert.ok(
+    source.includes('if (!Number.isFinite(progress)) return 0'),
+    'expected ProgressRing to reject non-finite progress before SVG math'
+  );
+  assert.ok(
+    source.includes('return Math.min(100, Math.max(0, progress))'),
+    'expected ProgressRing to clamp progress into 0..100'
+  );
+  assert.ok(
+    source.includes('function safePositiveDimension(value: number, fallback: number): number'),
+    'expected ProgressRing to sanitize size and stroke dimensions'
+  );
+  assert.ok(
+    source.includes('const safeProgress = clampProgressPercent(progress)'),
+    'expected ProgressRing stroke offset to use bounded progress'
+  );
+  assert.ok(
+    !source.includes('const offset = circumference - (progress / 100) * circumference'),
+    'expected ProgressRing not to use raw progress in stroke offset'
+  );
+});
+
 test('Learn animated progress counter hides visual ticks from assistive technology', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8');
 
