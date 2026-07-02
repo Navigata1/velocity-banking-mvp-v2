@@ -4,10 +4,10 @@ Last updated: 2026-07-02
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `35f22c15aa8fe1da11816ece1df701146d11904f` (`Clamp vault visual percentages (#132)`).
-- GitHub recorded a successful Vercel deployment for `35f22c15aa8fe1da11816ece1df701146d11904f`:
+- `main` contains the InterestShield 2026 release stack through commit `fdeac68fbcdd7ee79edaf361be1424e10afb19e2` (`Clarify portfolio velocity strategy default (#152)`).
+- GitHub recorded a successful Vercel deployment for `fdeac68fbcdd7ee79edaf361be1424e10afb19e2`:
   - environment: `Production`
-  - deployment URL: `https://velocity-banking-mvp-v2-lolhjsqzd-islanddevcrew.vercel.app`
+  - deployment URL: `https://velocity-banking-mvp-v2-jw03y0lyf-islanddevcrew.vercel.app`
   - deployment status observed by `npm run smoke:production`
 - That generated deployment URL is protected by Vercel login/protection and does not render the app shell without a bypass or authenticated Vercel access.
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
@@ -44,6 +44,26 @@ Last updated: 2026-07-02
   - PR #130: dashboard Money Loop artifact orbit reticle visual.
   - PR #131: simulator balance chart bars clamp invalid and over-starting balances.
   - PR #132: Vault visual progress, payment split, amortization, and timeline percentages are bounded.
+  - PR #133: release runbook target refresh.
+  - PR #134: Guardian timeline guidance keeps assumptions explicit.
+  - PR #135: Guardian payoff speed claims are gated behind assumptions.
+  - PR #136: Simulator visual percentages are clamped.
+  - PR #137: Vault freedom projections guard against non-finite inputs.
+  - PR #138: ProgressRing geometry inputs are clamped.
+  - PR #139: pre-app preview debt-free dates reject unstable projections.
+  - PR #140: payoff date formatters reject invalid horizons.
+  - PR #141: precise currency formatter rejects non-finite values.
+  - PR #142: mortgage analysis guards against non-finite inputs.
+  - PR #143: mortgage strategy inputs guard against non-finite values.
+  - PR #144: single-debt velocity inputs are guarded.
+  - PR #145: warning inputs are guarded.
+  - PR #146: dashboard model inputs are guarded.
+  - PR #147: mobile snapshot finite contracts are covered.
+  - PR #148: mobile input display values are guarded.
+  - PR #149: rendered audit records app UX risks and gates unstable Portfolio recommendations.
+  - PR #150: dashboard Money Loop artifact carousel has explicit controls.
+  - PR #151: compact mobile dashboard summary exposes all four vitals earlier.
+  - PR #152: Portfolio Velocity copy distinguishes planning default from fastest/lowest-interest claims.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -66,8 +86,8 @@ Last updated: 2026-07-02
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `35f22c15aa8fe1da11816ece1df701146d11904f`, or a newer passing `main` deployment, to the public production alias.
-   - Latest observed target URL: `https://velocity-banking-mvp-v2-lolhjsqzd-islanddevcrew.vercel.app`
+   - Promote the deployment for `fdeac68fbcdd7ee79edaf361be1424e10afb19e2`, or a newer passing `main` deployment, to the public production alias.
+   - Latest observed target URL: `https://velocity-banking-mvp-v2-jw03y0lyf-islanddevcrew.vercel.app`
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
 
@@ -138,9 +158,9 @@ These commands were run on 2026-07-02 from the local checkout on `main`:
 ```powershell
 Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a' -UseBasicParsing
 npm run smoke:production
-$sha = '35f22c15aa8fe1da11816ece1df701146d11904f'
+$sha = 'fdeac68fbcdd7ee79edaf361be1424e10afb19e2'
 gh api "repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=$sha"
-$env:PRODUCTION_ORIGIN='https://velocity-banking-mvp-v2-lolhjsqzd-islanddevcrew.vercel.app'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
+$env:PRODUCTION_ORIGIN='https://velocity-banking-mvp-v2-jw03y0lyf-islanddevcrew.vercel.app'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
 ```
 
 Result summary:
@@ -149,6 +169,6 @@ Result summary:
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
 - The smoke script includes observed Vercel deployment diagnostics in freshness failures and classifies Vercel login-shell responses as deployment protection so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
 - The smoke script performs a best-effort GitHub Production deployment lookup and appends the latest deployment target URL, SHA, and status to stale/protected failures.
-- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg` and latest GitHub Production target `https://velocity-banking-mvp-v2-lolhjsqzd-islanddevcrew.vercel.app` at `35f22c15aa8fe1da11816ece1df701146d11904f`.
-- Current latest-target smoke failure reports Vercel login/protection marker `dpl_7QXo6vWqL835cVLK6hT2NA2skCVy`; configure `VERCEL_AUTOMATION_BYPASS_SECRET` or remove protection before treating that deployment as publicly release-ready.
+- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg` and latest GitHub Production target `https://velocity-banking-mvp-v2-jw03y0lyf-islanddevcrew.vercel.app` at `fdeac68fbcdd7ee79edaf361be1424e10afb19e2`.
+- Current latest-target smoke failure reports Vercel login/protection marker `dpl_EckirtMoGJD4LPcq3tBWhJ2boRLA`; configure `VERCEL_AUTOMATION_BYPASS_SECRET` or remove protection before treating that deployment as publicly release-ready.
 - Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
