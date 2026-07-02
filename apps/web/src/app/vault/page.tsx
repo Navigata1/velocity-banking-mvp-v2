@@ -12,6 +12,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import {
   buildVaultComparisonWidthPercent,
   buildVaultFreedomPathModel,
+  buildVaultVisualPercent,
   formatVaultProjectionFailure,
   formatVaultStrategySavings,
   formatVaultStrategyTimeDelta,
@@ -33,10 +34,11 @@ function ProgressBar({ progress, color = 'green' }: { progress: number; color?: 
   const colors: Record<string, string> = {
     green: 'bg-emerald-500', red: 'bg-red-500', gold: 'bg-amber-500', blue: 'bg-blue-500', emerald: 'bg-emerald-500',
   };
+  const width = buildVaultVisualPercent(progress);
   return (
     <div className="w-full bg-gray-400/30 rounded-full h-3 overflow-hidden">
       <div className={`h-full ${colors[color]} transition-all duration-1000 ease-out rounded-full`}
-        style={{ width: `${Math.min(progress, 100)}%` }} />
+        style={{ width: `${width}%` }} />
     </div>
   );
 }
@@ -291,8 +293,8 @@ export default function VaultPage() {
             <div className={`${classes.glass} rounded-xl p-6`}>
               <p className={`text-sm ${classes.textSecondary} mb-3`}>Where your payment goes RIGHT NOW</p>
               <div className="flex h-8 rounded-lg overflow-hidden mb-2">
-                <div className="bg-red-500 transition-all duration-1000" style={{ width: `${analysis.interestPercentOfPayment}%` }} />
-                <div className="bg-emerald-500 transition-all duration-1000" style={{ width: `${analysis.principalPercentOfPayment}%` }} />
+                <div className="bg-red-500 transition-all duration-1000" style={{ width: `${buildVaultVisualPercent(analysis.interestPercentOfPayment)}%` }} />
+                <div className="bg-emerald-500 transition-all duration-1000" style={{ width: `${buildVaultVisualPercent(analysis.principalPercentOfPayment)}%` }} />
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-red-400">🏦 Interest: {analysis.interestPercentOfPayment.toFixed(0)}%</span>
@@ -330,9 +332,9 @@ export default function VaultPage() {
               <div className="h-48 flex items-end gap-[2px]">
                 {amortBreakdown.map((yr) => {
                   const total = yr.interestPaid + yr.principalPaid;
-                  const intPct = total > 0 ? (yr.interestPaid / total) * 100 : 0;
+                  const intPct = buildVaultVisualPercent(yr.interestPaid, total);
                   const maxVal = amortBreakdown[0].interestPaid + amortBreakdown[0].principalPaid;
-                  const heightPct = maxVal > 0 ? (total / maxVal) * 100 : 0;
+                  const heightPct = buildVaultVisualPercent(total, maxVal);
                   const isCurrentYear = yr.year === Math.ceil(history.yearsInMortgage);
                   return (
                     <div key={yr.year} className="flex-1 flex flex-col justify-end" style={{ height: '100%' }}>
@@ -548,7 +550,7 @@ export default function VaultPage() {
           investmentRate,
         });
         const velocityTimelinePercent = freedomPath.isProjected && freedomPath.standardYears > 0
-          ? Math.min(100, Math.max(0, (freedomPath.velocityYears / freedomPath.standardYears) * 100))
+          ? buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)
           : 0;
 
         return (

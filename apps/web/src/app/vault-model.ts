@@ -72,10 +72,15 @@ export function buildVaultComparisonWidthPercent(
   isPayoffPossible: boolean
 ): number {
   if (!isPayoffPossible) return 0;
-  if (!Number.isFinite(strategyMonths) || !Number.isFinite(standardMonths)) return 0;
-  if (strategyMonths <= 0 || standardMonths <= 0) return 0;
 
-  return Math.min(100, Math.max(0, (strategyMonths / standardMonths) * 100));
+  return buildVaultVisualPercent(strategyMonths, standardMonths);
+}
+
+export function buildVaultVisualPercent(value: number, maxValue = 100): number {
+  if (!Number.isFinite(value) || !Number.isFinite(maxValue)) return 0;
+  if (value <= 0 || maxValue <= 0) return 0;
+
+  return Math.min(100, Math.max(0, (value / maxValue) * 100));
 }
 
 export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultFreedomPathModel {
