@@ -27,10 +27,25 @@ const emergencyRecoverySteps = [
   'Resume the plan when cash flow is positive again.',
 ];
 
+function buildRoutingAssumption(depositIncomeToLoc: boolean, expenseCardOn: boolean): string {
+  if (depositIncomeToLoc && expenseCardOn) {
+    return 'Full Money Loop assumption: income is modeled as reducing the LOC first, while expenses are intentionally routed and tracked.';
+  }
+  if (depositIncomeToLoc) {
+    return 'Deposit-only assumption: income still lowers the LOC balance, but expenses are not modeled as flowing through the expense card lane.';
+  }
+  if (expenseCardOn) {
+    return 'Expense-card-only assumption: expenses are tracked, but income is not modeled as a direct LOC deposit in this cockpit scenario.';
+  }
+  return 'Baseline routing assumption: neither LOC income deposits nor expense-card routing are active in this cockpit scenario.';
+}
+
 export default function CockpitPage() {
   const mounted = useIsClient();
   const [emergency, setEmergency] = useState(false);
   const [turbulence, setTurbulence] = useState(false);
+  const [depositIncomeToLoc, setDepositIncomeToLoc] = useState(true);
+  const [expenseCardOn, setExpenseCardOn] = useState(true);
   const store = useFinancialStore();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
@@ -64,6 +79,7 @@ export default function CockpitPage() {
   
   const cashFlow = store.getCashFlow();
   const etaMonths = turbulence ? velocity.months + 2 : velocity.months;
+  const routingAssumption = buildRoutingAssumption(depositIncomeToLoc, expenseCardOn);
 
   const instruments: Instrument[] = [
     {
@@ -417,15 +433,42 @@ export default function CockpitPage() {
                 Clear Turbulence
               </button>
             )}
-            <button className="px-6 py-3 bg-blue-500/20 border border-blue-500/50 text-blue-400 rounded-xl hover:bg-blue-500/30 transition-colors">
-              Toggle: Deposit Income to LOC
+            <button
+              type="button"
+              aria-pressed={depositIncomeToLoc}
+              data-testid="cockpit-toggle-income-to-loc"
+              onClick={() => setDepositIncomeToLoc((value) => !value)}
+              className={`px-6 py-3 rounded-xl border transition-colors ${
+                depositIncomeToLoc
+                  ? 'border-blue-400/70 bg-blue-500/25 text-blue-200'
+                  : 'border-blue-500/30 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20'
+              }`}
+            >
+              Income to LOC: {depositIncomeToLoc ? 'On' : 'Off'}
             </button>
-            <button className="px-6 py-3 bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 rounded-xl hover:bg-cyan-500/30 transition-colors">
-              Toggle: Expense Card On/Off
+            <button
+              type="button"
+              aria-pressed={expenseCardOn}
+              data-testid="cockpit-toggle-expense-card"
+              onClick={() => setExpenseCardOn((value) => !value)}
+              className={`px-6 py-3 rounded-xl border transition-colors ${
+                expenseCardOn
+                  ? 'border-cyan-400/70 bg-cyan-500/25 text-cyan-200'
+                  : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20'
+              }`}
+            >
+              Expense card: {expenseCardOn ? 'On' : 'Off'}
             </button>
           </div>
-          <p className={`mt-4 text-sm ${classes.textSecondary}`}>
+          <p
+            className={`mt-4 text-sm ${classes.textSecondary}`}
+            data-testid="cockpit-routing-assumption"
+          >
+            {routingAssumption}
+          </p>
+          <p className={`mt-2 text-xs leading-5 ${classes.textSecondary}`}>
             Every slider change updates the gauges in real-time. More cash flow = lower average balance = less interest.
+            These cockpit toggles are educational routing assumptions, not connected banking controls.
           </p>
         </div>
         </ScrollReveal>

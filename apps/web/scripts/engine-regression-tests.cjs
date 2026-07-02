@@ -2394,6 +2394,21 @@ test('cockpit emergency scenario uses recovery-oriented coach copy', () => {
   assert.ok(!source.includes('Turbulence Detected:'), 'expected cockpit copy to avoid alarm-styled warning language');
 });
 
+test('cockpit routing controls are stateful educational toggles', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/cockpit/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('const [depositIncomeToLoc, setDepositIncomeToLoc] = useState(true)'), 'expected income routing state');
+  assert.ok(source.includes('const [expenseCardOn, setExpenseCardOn] = useState(true)'), 'expected expense-card routing state');
+  assert.ok(source.includes('data-testid="cockpit-toggle-income-to-loc"'), 'expected stable income-routing toggle hook');
+  assert.ok(source.includes('data-testid="cockpit-toggle-expense-card"'), 'expected stable expense-card toggle hook');
+  assert.ok(source.includes('aria-pressed={depositIncomeToLoc}'), 'expected income toggle pressed state');
+  assert.ok(source.includes('aria-pressed={expenseCardOn}'), 'expected expense-card toggle pressed state');
+  assert.ok(source.includes('data-testid="cockpit-routing-assumption"'), 'expected visible routing assumption copy');
+  assert.ok(source.includes('These cockpit toggles are educational routing assumptions, not connected banking controls.'), 'expected truthful non-integration copy');
+  assert.ok(!source.includes('Toggle: Deposit Income to LOC'), 'expected old static income toggle copy to be removed');
+  assert.ok(!source.includes('Toggle: Expense Card On/Off'), 'expected old static expense-card toggle copy to be removed');
+});
+
 test('simulator quick adjust sliders sanitize non-finite values before display', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/DualSlider.tsx'), 'utf8');
 
