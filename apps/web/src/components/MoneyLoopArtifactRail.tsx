@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type CSSProperties, type HTMLAttributes } from 'react';
+import { useState, type CSSProperties, type HTMLAttributes, type KeyboardEvent } from 'react';
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
@@ -83,6 +83,39 @@ export default function MoneyLoopArtifactRail({
     '--active-artifact-color': activeTone.accent,
   } as CSSProperties;
 
+  function selectArtifactByIndex(index: number) {
+    const nextArtifact = artifacts[index];
+    if (!nextArtifact) return;
+
+    setActiveArtifactId(nextArtifact.id);
+    window.requestAnimationFrame(() => {
+      document.getElementById(`money-loop-artifact-tab-${nextArtifact.id}`)?.focus();
+    });
+  }
+
+  function handleArtifactKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) {
+    const lastIndex = artifacts.length - 1;
+    let nextIndex: number | null = null;
+
+    if (event.key === 'ArrowRight') {
+      nextIndex = index === lastIndex ? 0 : index + 1;
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = index === 0 ? lastIndex : index - 1;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = lastIndex;
+    }
+
+    if (nextIndex === null) return;
+
+    event.preventDefault();
+    selectArtifactByIndex(nextIndex);
+  }
+
   return (
     <section
       {...sectionProps}
@@ -93,6 +126,7 @@ export default function MoneyLoopArtifactRail({
         id="money-loop-artifact-panel"
         data-testid="money-loop-artifact-active"
         role="tabpanel"
+        aria-labelledby={`money-loop-artifact-tab-${activeArtifact.id}`}
         aria-live="polite"
         className={`relative overflow-hidden rounded-xl border ${activeTone.border} ${activeTone.surface} p-4`}
       >
@@ -187,12 +221,15 @@ export default function MoneyLoopArtifactRail({
             return (
               <button
                 key={artifact.id}
+                id={`money-loop-artifact-tab-${artifact.id}`}
                 type="button"
                 role="tab"
                 aria-selected={isActive}
                 aria-controls="money-loop-artifact-panel"
+                tabIndex={isActive ? 0 : -1}
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
                 onClick={() => setActiveArtifactId(artifact.id)}
+                onKeyDown={(event) => handleArtifactKeyDown(event, index)}
                 className={`relative min-h-[132px] rounded-xl border p-3 text-left transition ${
                   isActive
                     ? `${tone.border} ${tone.surface} shadow-lg shadow-black/20`
