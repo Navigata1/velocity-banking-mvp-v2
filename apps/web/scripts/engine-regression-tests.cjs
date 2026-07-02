@@ -4177,6 +4177,13 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
       productionSmokeScript.includes('four dashboard vitals'),
     'expected stale production failures to explain the required rendered freshness check'
   );
+  assert.ok(
+    productionSmokeScript.includes('buildDeploymentDiagnostics') &&
+      productionSmokeScript.includes('Observed Vercel diagnostics') &&
+      productionSmokeScript.includes('deployment marker(s)') &&
+      productionSmokeScript.includes('x-vercel-id'),
+    'expected production smoke failures to include observed Vercel deployment diagnostics'
+  );
 });
 
 test('web app declares Vercel Next deployment configuration', () => {

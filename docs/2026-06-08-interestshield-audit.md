@@ -3118,6 +3118,25 @@ Post-repair local verification:
 - `apps/mobile` `npm run smoke:ios-bundle`: passed.
 - In-app Browser smoke at `http://127.0.0.1:5036/vault`: confirmed the local Vault route rendered the Wealth Transfer Timeline, mortgage mismatch warning, Bi-Weekly/Velocity strategy surface, footer advice disclaimer, no framework overlay, no browser console warnings/errors, and screenshot evidence at `C:\Users\ISLAND~1\AppData\Local\Temp\interestshield-shared-total-amortization-vault-browser.png`.
 
+### Repair Pass 171: Vercel Alias Freshness Diagnostics
+
+Changes:
+
+- Hardened `apps/web` `npm run smoke:production` diagnostics so freshness failures include observed Vercel deployment markers plus response headers such as `x-vercel-id` and `x-vercel-cache` when present.
+- Added regression coverage requiring the production smoke script to keep those deployment diagnostics.
+- Refreshed `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` with the current `main` commit, GitHub deployment record, deployment URL, stale public alias marker, and current remediation state.
+
+Verification:
+
+- `gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=2f48bbee744c1289f940e6e542b1fab48e9d004d'`: found deployment record `5277662889` for the current `main` commit.
+- `gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments/5277662889/statuses'`: confirmed successful deployment URL `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`; the deployment record is still not marked as the production environment.
+- Direct HTTP fetch of `https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a`: returned HTTP `200`, title `InterestShield - Financial Empowerment`, stale deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, and no current dashboard markers.
+- `apps/web` `npm run smoke:production`: still intentionally fails against the public alias because `/` does not expose `data-testid="primary-navigation"`. After this pass, the failure includes the observed stale deployment marker for faster Vercel alias triage.
+
+Remaining blocker:
+
+- Promote or alias the current Vercel deployment to `https://web-islanddevcrew.vercel.app/`, then rerun `apps/web` `npm run smoke:production` and a rendered Browser/Chrome freshness check for the Money Loop artifact rail, payoff orbit, and four dashboard vitals.
+
 ### Browser And Chrome Smoke
 
 - In-app Browser loaded local and production pages.
@@ -3141,7 +3160,7 @@ Post-repair local verification:
 - `npx vercel --version` is available, but `npx vercel whoami`, `npx vercel inspect`, and `npx vercel ls` timed out waiting for authentication again during Repair Pass 140 and Repair Pass 142.
 - Chrome read-only inspection reached the Vercel project overview, but Domains and Deployments pages redirected to login during Repair Pass 142.
 - Mobile Vercel file-based config was added in Repair Pass 92, and web Vercel file-based config was added in Repair Pass 115, but deployment metadata, build logs, runtime logs, alias promotion, and project settings still require Vercel authentication/access.
-- The Vercel alias/protection handoff is documented in `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` and tracked in issue #59.
+- The Vercel alias/protection handoff is documented in `docs/42_VERCEL_RELEASE_ALIAS_RUNBOOK.md` and tracked in issue #59. Repair Pass 171 refreshed the runbook with the current `main` deployment record and added stale deployment marker diagnostics to the production smoke failure.
 
 ## Highest Priority Findings
 
@@ -3569,7 +3588,7 @@ Status: first strategy-rationale repair completed in local source during Repair 
 
 - First-run desktop intro.
 - First-run mobile intro.
-- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set. Repair Pass 140 confirmed with both Browser and Chrome that production is still serving an older intro-gated UI and does not expose the current dashboard vitals or payoff orbit hooks. Repair Pass 141 now makes the production smoke fail when the current shared navigation shell marker is missing, with extra stale-signature context for the old intro-gated deployment.
+- Open full app. Status: local Browser and Chrome route smoke covered in Repair Pass 41 for Dashboard and Simulator; expanded route interaction smoke covered in Repair Pass 42; repeatable built-server HTTP route-shell smoke added in Repair Pass 109 for Dashboard, Simulator, Cockpit, Portfolio, Learn, Settings, and Vault; repeatable production Vercel HTTP route-shell smoke added in Repair Pass 125 for the same route set. Repair Pass 140 confirmed with both Browser and Chrome that production is still serving an older intro-gated UI and does not expose the current dashboard vitals or payoff orbit hooks. Repair Pass 141 now makes the production smoke fail when the current shared navigation shell marker is missing, with extra stale-signature context for the old intro-gated deployment. Repair Pass 171 adds observed Vercel deployment diagnostics to that failure so stale alias triage can compare the served marker to the current deployment record.
 - Domain switch. Status: covered in Repair Pass 42 for Dashboard Auto/House switching in Browser and Chrome.
 - Edit income, expenses, chunk. Status: covered in Repair Pass 42 for Dashboard income and Simulator expenses/chunk edits.
 - Simulator strategy values update. Status: covered in Repair Pass 42 for visible strategy comparison and Money Loop Timeline updates after edits.

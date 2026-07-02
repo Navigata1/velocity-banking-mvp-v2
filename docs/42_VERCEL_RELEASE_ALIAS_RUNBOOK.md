@@ -1,25 +1,25 @@
 # Vercel Release Alias Runbook
 
-Last updated: 2026-06-16
+Last updated: 2026-07-02
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `ed08f2912f92aace1901e4e7643314edf770217d` (`Merge pull request #70 from Navigata1/codex/mobile-settings-readiness`).
-- GitHub CI passed on `main` run `27612140333`.
+- `main` contains the InterestShield 2026 release stack through commit `2f48bbee744c1289f940e6e542b1fab48e9d004d` (`Merge pull request #84 from Navigata1/codex/shared-total-amortization-interest`).
 - GitHub recorded a successful Vercel deployment for the latest merge commit:
-  - deployment record `5078173939`
+  - deployment record `5277662889`
   - environment: `Production`
   - `production_environment: false`
-  - deployment URL: `https://velocity-banking-mvp-v2-eg615xlt9-islanddevcrew.vercel.app`
+  - deployment URL: `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
 - The public alias does not expose the current release markers:
   - `data-testid="primary-navigation"`
   - `money-loop-artifact-rail`
   - `money-loop-payoff-orbit`
 - The latest source-side release additions now merged into `main` include:
-  - PR #68: mobile Portfolio payoff path visual.
-  - PR #69: provider-neutral backend readiness panel in web Settings.
-  - PR #70: Expo `/settings` route and mobile backend readiness panel.
+  - PR #81: web single-debt baseline and no-LOC accelerated payoff paths use the shared amortized payoff helper.
+  - PR #82: web multi-debt baseline comparison uses the shared amortized payoff helper.
+  - PR #83: mobile Portfolio payoff-path projection uses the shared amortized payoff helper.
+  - PR #84: total amortization interest moved into `@interestshield/financial-engine`.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -42,7 +42,7 @@ Last updated: 2026-06-16
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `ed08f2912f92aace1901e4e7643314edf770217d`, or a newer passing `main` deployment, to the public production alias.
+   - Promote the deployment for `2f48bbee744c1289f940e6e542b1fab48e9d004d`, or a newer passing `main` deployment, to the public production alias.
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
 
@@ -108,20 +108,20 @@ After verification passes:
 
 ## Latest Codex Diagnostic Commands
 
-These commands were run on 2026-06-16 from the local checkout on `main`:
+These commands were run on 2026-07-02 from the local checkout on `main`:
 
 ```powershell
-gh run watch 27612140333 --exit-status
-gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=ed08f2912f92aace1901e4e7643314edf770217d'
-gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments/5078173939/statuses'
+gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=2f48bbee744c1289f940e6e542b1fab48e9d004d'
+gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments/5277662889/statuses'
+Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a' -UseBasicParsing
 npm run smoke:production
-npx vercel whoami
 ```
 
 Result summary:
 
-- `main` CI passed.
-- GitHub has a successful Vercel deployment URL for the latest commit: `https://velocity-banking-mvp-v2-eg615xlt9-islanddevcrew.vercel.app`.
+- GitHub has a successful Vercel deployment URL for the latest commit: `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`.
 - The deployment record is not marked as the production environment.
+- Direct HTTP fetch of the public alias returned HTTP `200`, title `InterestShield - Financial Empowerment`, and stale deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
-- Vercel CLI, Vercel MCP, and Chrome are all unauthenticated from this Codex environment.
+- The smoke script now includes observed Vercel deployment diagnostics in freshness failures so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
+- Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
