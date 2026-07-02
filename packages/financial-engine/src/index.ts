@@ -313,6 +313,11 @@ export function calculateAmortizationPayment(principal: number, apr: number, ter
   return principal * (r * Math.pow(1 + r, termMonths)) / (Math.pow(1 + r, termMonths) - 1);
 }
 
+export function calculateTotalAmortizationInterest(principal: number, apr: number, termMonths: number): number {
+  const payment = calculateAmortizationPayment(principal, apr, termMonths);
+  return Math.max(0, payment * Math.max(0, termMonths) - Math.max(0, principal));
+}
+
 export function simulateAmortizedPayoff(inputs: AmortizedPayoffInputs): AmortizedPayoffResult {
   const maxMonths = inputs.maxMonths ?? 600;
   const monthlyRate = Math.max(0, inputs.apr) / 12;
