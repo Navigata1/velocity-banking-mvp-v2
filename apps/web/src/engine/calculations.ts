@@ -102,6 +102,7 @@ export type PayoffFailureReason =
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
   | 'loc-setup'
+  | 'loc-no-capacity'
   | 'loc-overlimit'
   | 'payoff-horizon-exceeded';
 
@@ -324,13 +325,23 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (inputs.loc.balance >= inputs.loc.limit) {
+  if (inputs.loc.balance > inputs.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
       monthlyData: [],
       isPayoffPossible: false,
       failureReason: 'loc-overlimit',
+    };
+  }
+
+  if (inputs.loc.balance === inputs.loc.limit) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      monthlyData: [],
+      isPayoffPossible: false,
+      failureReason: 'loc-no-capacity',
     };
   }
 
@@ -494,8 +505,12 @@ export function simulateMultiDebt(
       return buildInvalidResult('loc-setup');
     }
 
-    if (loc.balance >= loc.limit) {
+    if (loc.balance > loc.limit) {
       return buildInvalidResult('loc-overlimit');
+    }
+
+    if (loc.balance === loc.limit) {
+      return buildInvalidResult('loc-no-capacity');
     }
   }
 
@@ -1139,9 +1154,10 @@ export function compareMortgageStrategies(
   );
 
   const locNeedsSetup = loc.limit <= 0;
-  const locOverLimit = !locNeedsSetup && loc.balance >= loc.limit;
+  const locOverLimit = !locNeedsSetup && loc.balance > loc.limit;
+  const locNoCapacity = !locNeedsSetup && loc.balance === loc.limit;
   const locCashFlowPaydown = Math.max(0, cashFlow - payment);
-  const chunkSize = locNeedsSetup || locOverLimit || cashFlow <= 0 || locCashFlowPaydown <= 0
+  const chunkSize = locNeedsSetup || locOverLimit || locNoCapacity || cashFlow <= 0 || locCashFlowPaydown <= 0
     ? 0
     : Math.min(loc.limit * 0.4, locCashFlowPaydown * 3, balance * 0.1);
 
@@ -1159,6 +1175,13 @@ export function compareMortgageStrategies(
       totalInterest: 0,
       isPayoffPossible: false,
       failureReason: 'loc-overlimit',
+    };
+  } else if (locNoCapacity) {
+    velocity = {
+      months: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-no-capacity',
     };
   } else if (cashFlow <= 0) {
     velocity = {

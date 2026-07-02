@@ -1031,6 +1031,27 @@ test('shared mobile simulator snapshot treats a missing LOC limit as setup neede
   assert.equal(velocity.statusLabel, 'Add LOC limit');
 });
 
+test('shared mobile simulator snapshot treats a full LOC as no available room instead of over-limit', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const snapshot = sharedEngine.buildMobileSimulatorSnapshot({
+    ...sharedEngine.defaultMobileDashboardInput,
+    loc: {
+      limit: 10000,
+      apr: 0.085,
+      balance: 10000,
+    },
+  });
+  const velocity = snapshot.strategies.find((strategy) => strategy.name === 'Velocity');
+
+  assert.equal(snapshot.guardrail, 'LOC utilization is above the 80% planning guardrail.');
+  assert.equal(snapshot.velocity.interestSavedLabel, 'Not projected');
+  assert.equal(snapshot.velocity.monthsSavedLabel, 'Review inputs');
+  assert.equal(velocity.isPayoffPossible, false);
+  assert.equal(velocity.monthsLabel, 'Review inputs');
+  assert.equal(velocity.interestLabel, 'Not projected');
+  assert.equal(velocity.statusLabel, 'No LOC room');
+});
+
 test('shared mobile snapshots distinguish LOC over limit from high utilization', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const overLimitInput = {

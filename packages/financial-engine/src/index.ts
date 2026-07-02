@@ -47,6 +47,7 @@ export type MoneyLoopFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'loc-setup'
+  | 'loc-no-capacity'
   | 'loc-overlimit'
   | 'payoff-horizon-exceeded';
 
@@ -126,6 +127,7 @@ export type MobilePayoffFailureReason =
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
   | 'loc-setup'
+  | 'loc-no-capacity'
   | 'loc-overlimit'
   | 'payoff-horizon-exceeded';
 
@@ -546,7 +548,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  if (inputs.loc.balance >= inputs.loc.limit) {
+  if (inputs.loc.balance > inputs.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -555,6 +557,18 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
       monthlyData,
       isPayoffPossible: false,
       failureReason: 'loc-overlimit',
+    };
+  }
+
+  if (inputs.loc.balance === inputs.loc.limit) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      debtInterestPaid: 0,
+      locInterestPaid: 0,
+      monthlyData,
+      isPayoffPossible: false,
+      failureReason: 'loc-no-capacity',
     };
   }
 
@@ -769,6 +783,7 @@ function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
   if (reason === 'loc-setup') return 'Add LOC limit';
+  if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
@@ -958,12 +973,21 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (input.loc.balance >= input.loc.limit) {
+  if (input.loc.balance > input.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
       isPayoffPossible: false,
       failureReason: 'loc-overlimit',
+    };
+  }
+
+  if (input.loc.balance === input.loc.limit) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-no-capacity',
     };
   }
 
