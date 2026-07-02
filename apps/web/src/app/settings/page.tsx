@@ -407,8 +407,15 @@ export default function SettingsPage() {
               >
                 <div className="space-y-1">
                   <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>{option.status}</p>
+                  <p className={`text-xs font-semibold ${option.id === 'supabase-postgres-auth-rls' ? 'text-emerald-300' : classes.textSecondary}`}>
+                    {option.lane}
+                  </p>
                   <h3 className={`text-sm font-semibold ${classes.text}`}>{option.label}</h3>
                   <p className={`text-xs ${classes.textSecondary}`}>{option.bestFit}</p>
+                </div>
+                <div className={`rounded-lg border ${classes.border} p-3`}>
+                  <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>When to choose</p>
+                  <p className={`mt-1 text-xs ${classes.textSecondary}`}>{option.chooseWhen}</p>
                 </div>
                 <div>
                   <p className={`text-xs font-semibold uppercase tracking-wide ${classes.textMuted}`}>Strengths</p>

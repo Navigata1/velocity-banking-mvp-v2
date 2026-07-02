@@ -1910,11 +1910,25 @@ test('settings backend readiness model keeps provider choice explicit', () => {
   for (const option of settingsBackend.BACKEND_READINESS_OPTIONS) {
     assert.ok(settingsBackend.BACKEND_HANDOFF_TARGETS.includes(option.id), `expected ${option.id} to be a handoff target`);
     assert.equal(option.status, 'Candidate');
+    assert.ok(option.lane.length > 0, `expected ${option.id} to define a backend lane`);
     assert.ok(option.bestFit.length > 0, `expected ${option.id} to explain best fit`);
+    assert.ok(option.chooseWhen.length > 0, `expected ${option.id} to explain when to choose it`);
     assert.ok(option.strengths.length >= 2, `expected ${option.id} to list strengths`);
     assert.ok(option.openGates.length >= 2, `expected ${option.id} to list open gates`);
     assert.ok(option.nextGate.length > 0, `expected ${option.id} to name the next gate`);
   }
+  const supabase = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'supabase-postgres-auth-rls');
+  const cloudflare = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'cloudflare-workers-d1-durable-objects');
+  assert.equal(supabase.lane, 'Recommended first persistence lane');
+  assert.ok(
+    supabase.chooseWhen.includes('user-owned assumptions, plans, and simulation runs'),
+    'expected Supabase to be recommended first for user-owned financial data'
+  );
+  assert.equal(cloudflare.lane, 'Secondary edge/API lane');
+  assert.ok(
+    cloudflare.chooseWhen.includes('after the owner-scoped data contract is stable'),
+    'expected Cloudflare to be positioned after the owner-scoped contract is stable'
+  );
   assert.ok(
     settingsBackend.BACKEND_STATUS_SUMMARY.nextGate.includes('auth/RLS or equivalent access rules'),
     'expected backend summary to require access-control rules before user data storage'
