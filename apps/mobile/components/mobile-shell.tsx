@@ -133,6 +133,22 @@ function parseWholeNumberInput(value: string): number | null {
   return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : null;
 }
 
+function finiteNonNegativeInputValue(value: number): number {
+  return Number.isFinite(value) ? Math.max(0, value) : 0;
+}
+
+function formatMoneyInputValue(value: number): string {
+  return String(Math.round(finiteNonNegativeInputValue(value)));
+}
+
+function formatWholeNumberInputValue(value: number): string {
+  return String(Math.round(finiteNonNegativeInputValue(value)));
+}
+
+function formatPercentageInputValue(value: number): string {
+  return String(Math.round(finiteNonNegativeInputValue(value) * 10000) / 100);
+}
+
 function MoneyInput({
   accessibilityLabel,
   label,
@@ -171,7 +187,7 @@ function MoneyInput({
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
-        value={String(Math.round(value))}
+        value={formatMoneyInputValue(value)}
       />
     </View>
   );
@@ -254,7 +270,7 @@ function WholeNumberInput({
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
-        value={String(value)}
+        value={formatWholeNumberInputValue(value)}
       />
     </View>
   );
@@ -298,7 +314,7 @@ function PercentageInput({
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
-        value={String(Math.round(value * 10000) / 100)}
+        value={formatPercentageInputValue(value)}
       />
     </View>
   );
