@@ -51,6 +51,9 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 13. Vault zero-LOC rendered smoke, post-fix.
     Health: improved. Setting Line of Credit limit to `$0` from the Dashboard and opening Vault now shows "Enter known LOC terms" and the known-term mortgage-path warning before the mortgage wizard. The old "Add LOC limit" and "Add LOC details" copy is absent.
 
+14. Dashboard artifact selector fit, post-fix.
+    Health: improved. The desktop Money Loop selector now uses five fitted columns with compact stable card spacing, while narrow screens keep the horizontal snap rail.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -66,7 +69,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 
 - Portfolio strategy copy can overstate the current plan if "Recommended" appears while payoff estimates are in review mode.
 - Post-fix Portfolio no longer overstates the current plan, but the strategy picker card becomes narrow enough that "Velocity Mode" and the badge compete for space at the captured viewport.
-- Dashboard artifact rail is visually promising but still feels like a native horizontal scroller at desktop width; the fourth artifact is clipped and the browser scrollbar weakens the game-like carousel effect.
+- Dashboard artifact rail now hides native scrollbar chrome and fits all five selector artifacts on desktop. Remaining visual-overhaul work should focus on richer 3D/artifact presentation rather than clipped selector layout.
 - Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
 - The simulator and portfolio can disagree in tone: simulator shows Snowball as fastest, while Portfolio defaults to Velocity. The app should clearly explain that Portfolio Velocity is a ranking/planning default, not always the mathematically best payoff outcome.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
@@ -91,6 +94,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Portfolio Velocity badge now shows "Default, review first" when the current projection has warnings or cannot support payoff claims. The rendered check confirmed "Recommended" is absent while the cash-flow warning remains visible.
 - Web Dashboard, Simulator, Vault projection labels, and shared warning models now use known LOC terms language instead of limit-only setup copy. Rendered Chrome smoke confirmed Dashboard and Simulator zero-limit states show the revised copy and no console or page errors.
 - Vault now derives a top-level setup warning from the same mortgage Velocity failure state used by strategy cards. Rendered Chrome smoke confirmed the warning appears before the mortgage wizard when LOC terms are missing, with no console or page errors.
+- Dashboard Money Loop selector now uses a five-column fitted desktop grid and compact card dimensions so the artifact rail does not rely on desktop horizontal scrolling.
 
 ## Evidence Limits
 
