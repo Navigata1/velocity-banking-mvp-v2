@@ -129,9 +129,31 @@ function buildDeploymentProtectionHint({ statusCode, signature }) {
   );
 }
 
+function buildDeploymentDiagnostics({ body, response }) {
+  const diagnostics = [];
+  const deploymentMarkers = [...new Set([...body.matchAll(/dpl_[A-Za-z0-9]+/g)].map((match) => match[0]))];
+  const vercelRequestId = response.headers['x-vercel-id'];
+  const cacheStatus = response.headers['x-vercel-cache'];
+
+  if (deploymentMarkers.length > 0) {
+    diagnostics.push(`deployment marker(s): ${deploymentMarkers.join(', ')}`);
+  }
+
+  if (vercelRequestId) {
+    diagnostics.push(`x-vercel-id: ${vercelRequestId}`);
+  }
+
+  if (cacheStatus) {
+    diagnostics.push(`x-vercel-cache: ${cacheStatus}`);
+  }
+
+  return diagnostics.length > 0 ? ` Observed Vercel diagnostics: ${diagnostics.join('; ')}.` : '';
+}
+
 function assertCleanProductionShell({ body, response, route, label, url }) {
   const contentType = String(response.headers['content-type'] || '');
   const failureSignature = failureSignatures.find((signature) => body.includes(signature));
+  const deploymentDiagnostics = buildDeploymentDiagnostics({ body, response });
 
   if (response.statusCode !== 200) {
     const hint = buildDeploymentProtectionHint({
@@ -139,15 +161,21 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
       signature: failureSignature,
     });
 
-    throw new Error(`${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.${hint}`);
+    throw new Error(
+      `${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.${hint}${deploymentDiagnostics}`
+    );
   }
 
   if (!contentType.includes('text/html')) {
-    throw new Error(`${label} route ${route} returned ${contentType || 'no content type'} instead of text/html.`);
+    throw new Error(
+      `${label} route ${route} returned ${contentType || 'no content type'} instead of text/html.${deploymentDiagnostics}`
+    );
   }
 
   if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
-    throw new Error(`${label} route ${route} did not return the expected InterestShield Next shell.`);
+    throw new Error(
+      `${label} route ${route} did not return the expected InterestShield Next shell.${deploymentDiagnostics}`
+    );
   }
 
   if (failureSignature) {
@@ -157,7 +185,7 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
     });
 
     throw new Error(
-      `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}`
+      `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}${deploymentDiagnostics}`
     );
   }
 
@@ -168,7 +196,7 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
       `${label} route ${route} did not expose the current InterestShield shell marker: ` +
         `${missingCurrentShellSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
         'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
-        'and the four dashboard vitals.'
+        `and the four dashboard vitals.${deploymentDiagnostics}`
     );
   }
 
@@ -180,7 +208,7 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
         `${label} route ${route} appears to be serving an older intro-gated InterestShield build: ` +
           `${staleSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
           'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
-          'and the four dashboard vitals.'
+          `and the four dashboard vitals.${deploymentDiagnostics}`
       );
     }
   }
