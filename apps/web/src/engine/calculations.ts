@@ -1235,7 +1235,13 @@ export function comparePaymentStrategies(
   monthlyExpenses: number,
   chunkAmount: number
 ): StrategyComparison {
-  const monthlyInterest = calculateTotalAmortizationInterest(balance, apr, termMonths);
+  const payoffHorizonMonths = Math.max(termMonths * 4, termMonths, 600);
+  const monthlyProjection = simulateAmortizedPayoff({
+    principalBalance: balance,
+    apr,
+    monthlyPayment,
+    maxMonths: payoffHorizonMonths,
+  });
   const biweekly = simulateBiweeklyPayments(balance, apr, monthlyPayment, termMonths);
 
   // Velocity simulation
@@ -1250,7 +1256,7 @@ export function comparePaymentStrategies(
   const velResult = simulateVelocity(velInputs);
 
   return {
-    monthly: { months: termMonths, totalInterest: monthlyInterest },
+    monthly: { months: monthlyProjection.payoffMonths, totalInterest: monthlyProjection.totalInterest },
     biweekly: { months: biweekly.totalMonths, totalInterest: biweekly.totalInterest },
     velocity: { months: velResult.payoffMonths, totalInterest: velResult.totalInterest },
   };

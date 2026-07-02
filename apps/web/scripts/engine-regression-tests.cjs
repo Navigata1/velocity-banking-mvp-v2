@@ -184,6 +184,29 @@ test('biweekly payoff helper uses the shared amortized payoff engine', () => {
   assert.equal(roundCents(webProjection.interestSavedVsMonthly), 24555.12);
 });
 
+test('single-debt strategy comparison standard path honors the actual monthly payment', () => {
+  const strategies = calculations.comparePaymentStrategies(
+    100000,
+    0.06,
+    700,
+    360,
+    undefined,
+    5000,
+    3000,
+    0
+  );
+  const sharedProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 100000,
+    apr: 0.06,
+    monthlyPayment: 700,
+    maxMonths: 1440,
+  });
+
+  assert.equal(strategies.monthly.months, sharedProjection.payoffMonths);
+  assert.equal(roundCents(strategies.monthly.totalInterest), roundCents(sharedProjection.totalInterest));
+  assert.ok(strategies.monthly.months < 360, 'expected a higher actual payment to shorten the standard payoff');
+});
+
 test('LOC ADB interest uses daily closing balances across web and shared engines', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const expectedInterest = ((1116.6666666667 + 4500) / 2) * (0.12 / 365) * 30;
