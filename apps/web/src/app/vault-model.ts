@@ -46,6 +46,7 @@ function calculateFreedPaymentGrowth(monthlyPayment: number, annualRate: number,
 }
 
 export function formatVaultProjectionFailure(reason?: string): string {
+  if (reason === 'loc-setup') return 'Add LOC limit';
   if (reason === 'loc-overlimit') return 'LOC over limit';
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below payment';

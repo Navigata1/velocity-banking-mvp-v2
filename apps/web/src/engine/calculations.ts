@@ -101,6 +101,7 @@ export type PayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
+  | 'loc-setup'
   | 'loc-overlimit'
   | 'payoff-horizon-exceeded';
 
@@ -313,7 +314,17 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (inputs.loc.limit <= 0 || inputs.loc.balance >= inputs.loc.limit) {
+  if (inputs.loc.limit <= 0) {
+    return {
+      payoffMonths: 0,
+      totalInterest: 0,
+      monthlyData: [],
+      isPayoffPossible: false,
+      failureReason: 'loc-setup',
+    };
+  }
+
+  if (inputs.loc.balance >= inputs.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -478,8 +489,14 @@ export function simulateMultiDebt(
     return buildInvalidResult('payment-below-interest');
   }
 
-  if (strategy === 'velocity' && loc && (loc.limit <= 0 || loc.balance >= loc.limit)) {
-    return buildInvalidResult('loc-overlimit');
+  if (strategy === 'velocity' && loc) {
+    if (loc.limit <= 0) {
+      return buildInvalidResult('loc-setup');
+    }
+
+    if (loc.balance >= loc.limit) {
+      return buildInvalidResult('loc-overlimit');
+    }
   }
 
   // Sort debts based on strategy
@@ -1121,14 +1138,22 @@ export function compareMortgageStrategies(
     payoffHorizonMonths
   );
 
-  const locOverLimit = loc.limit <= 0 || loc.balance >= loc.limit;
+  const locNeedsSetup = loc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && loc.balance >= loc.limit;
   const locCashFlowPaydown = Math.max(0, cashFlow - payment);
-  const chunkSize = locOverLimit || cashFlow <= 0 || locCashFlowPaydown <= 0
+  const chunkSize = locNeedsSetup || locOverLimit || cashFlow <= 0 || locCashFlowPaydown <= 0
     ? 0
     : Math.min(loc.limit * 0.4, locCashFlowPaydown * 3, balance * 0.1);
 
   let velocity: MortgagePaymentProjection;
-  if (locOverLimit) {
+  if (locNeedsSetup) {
+    velocity = {
+      months: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-setup',
+    };
+  } else if (locOverLimit) {
     velocity = {
       months: 0,
       totalInterest: 0,

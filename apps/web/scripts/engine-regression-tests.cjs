@@ -599,6 +599,32 @@ test('shared Money Loop payoff rejects payments below monthly interest before pr
   assert.equal(result.monthlyData.length, 0);
 });
 
+test('shared Money Loop payoff treats a missing LOC limit as setup needed instead of over-limit', () => {
+  const moneyLoop = loadTsModule('src/engine/money-loop.ts');
+  const result = moneyLoop.simulateMoneyLoopPayoff({
+    principalBalance: 10000,
+    debtApr: 0.12,
+    debtPayment: 250,
+    loc: {
+      limit: 0,
+      apr: 0.09,
+      balance: 0,
+    },
+    chunkAmount: 0,
+    cashFlowPaydown: 1000,
+    locDepositAmount: 4000,
+    locExpenseAmount: 3000,
+    maxMonths: 12,
+    initialMonthsSinceChunk: 999,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-setup');
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.totalInterest, 0);
+  assert.equal(result.monthlyData.length, 0);
+});
+
 test('shared Money Loop payoff distinguishes horizon misses from under-interest payments', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const result = moneyLoop.simulateMoneyLoopPayoff({
@@ -837,6 +863,25 @@ test('multi-debt velocity refuses over-limit LOC plans instead of returning payo
   );
 });
 
+test('multi-debt velocity treats a missing LOC limit as setup needed instead of over-limit', () => {
+  const velocity = calculations.simulateMultiDebt(
+    [defaultCarDebt()],
+    6500,
+    5000,
+    { limit: 0, apr: 0.085, balance: 0 },
+    'velocity',
+    5000
+  );
+
+  assert.equal(velocity.isPayoffPossible, false);
+  assert.equal(velocity.failureReason, 'loc-setup');
+  assert.equal(velocity.totalMonths, 0);
+  assert.equal(velocity.totalInterestPaid, 0);
+  assert.equal(velocity.totalInterestSaved, 0);
+  assert.equal(velocity.monthsSaved, 0);
+  assert.equal(velocity.moneyLoopMonthlyData.length, 0);
+});
+
 test('shared warnings treat a LOC balance without a limit as setup needed instead of infinity utilization', () => {
   const warnings = calculations.generateWarnings(
     6500,
@@ -972,6 +1017,31 @@ test('velocity refuses over-limit LOC plans instead of chunking against unavaila
     result.monthlyData.every((month) => !month.events?.some((event) => event.type === 'loc-chunk-draw')),
     'expected no LOC chunk draw when the line is already over limit'
   );
+});
+
+test('velocity treats a missing LOC limit as setup needed instead of over-limit', () => {
+  const result = calculations.simulateVelocity({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    carLoan: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+    },
+    loc: {
+      limit: 0,
+      apr: 0.085,
+      balance: 0,
+    },
+    useVelocity: true,
+    extraPayment: 5000,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-setup');
+  assert.equal(result.totalInterest, 0);
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.monthlyData.length, 0);
 });
 
 test('single-debt velocity treats the regular debt payment as a cash outflow for LOC recovery', () => {
@@ -2757,6 +2827,29 @@ test('simulator strategy cards explain over-limit LOC failures plainly', () => {
   assert.equal(velocity.icon, '⚡');
 });
 
+test('simulator strategy cards explain missing LOC limit failures plainly', () => {
+  const cards = simulatorModel.buildSimulatorStrategyCards([
+    {
+      name: 'Traditional',
+      months: 51,
+      totalInterest: 2800,
+      isPayoffPossible: true,
+    },
+    {
+      name: 'Velocity',
+      months: 0,
+      totalInterest: 0,
+      isPayoffPossible: false,
+      failureReason: 'loc-setup',
+    },
+  ]);
+  const velocity = cards.find((card) => card.name === 'Velocity');
+
+  assert.equal(velocity.monthsLabel, 'Review inputs');
+  assert.equal(velocity.interestLabel, 'Not projected');
+  assert.equal(velocity.statusLabel, 'Add LOC limit');
+});
+
 test('simulator warnings treat a missing LOC limit as setup needed instead of high utilization', () => {
   assert.equal(
     typeof simulatorModel.buildSimulatorWarnings,
@@ -3365,6 +3458,41 @@ test('mortgage velocity strategy refuses over-limit LOC savings claims', () => {
   assert.equal(strategies.velocity.saved, 0);
   assert.equal(strategies.velocity.monthsSaved, 0);
   assert.equal(strategies.velocity.chunkSize, 0);
+});
+
+test('mortgage velocity strategy treats a missing LOC limit as setup needed instead of over-limit', () => {
+  const input = {
+    entryMode: 'current',
+    purchaseAge: 30,
+    currentAge: 40,
+    originalCost: 125000,
+    originalTermYears: 30,
+    originalRate: 0.07,
+    downPayment: 25000,
+    currentBalance: 100000,
+    remainingTermMonths: 120,
+    currentRate: 0.12,
+    currentMonthlyPayment: 1100,
+    paymentFrequency: 'monthly',
+    hasExtraPayments: false,
+    extraPaymentAmount: 0,
+    hasRefinanced: false,
+    refinanceCount: 0,
+  };
+
+  const strategies = calculations.compareMortgageStrategies(input, 1200, {
+    limit: 0,
+    apr: 0.1,
+    balance: 0,
+  });
+  const vaultModel = loadTsModule('src/app/vault-model.ts');
+
+  assert.equal(strategies.velocity.isPayoffPossible, false);
+  assert.equal(strategies.velocity.failureReason, 'loc-setup');
+  assert.equal(strategies.velocity.saved, 0);
+  assert.equal(strategies.velocity.monthsSaved, 0);
+  assert.equal(strategies.velocity.chunkSize, 0);
+  assert.equal(vaultModel.formatVaultStrategyTimeDelta(strategies.velocity), 'Add LOC limit');
 });
 
 test('mortgage velocity strategy refuses projections when cash flow cannot cover the mortgage payment', () => {
