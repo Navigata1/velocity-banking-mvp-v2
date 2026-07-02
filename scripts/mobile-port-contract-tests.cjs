@@ -782,7 +782,29 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('accessibilityLabel="Active debt APR"'));
   assert.ok(shellSource.includes('accessibilityLabel="Active debt monthly payment"'));
   assert.ok(shellSource.includes('accessibilityLabel="Active debt term months"'));
-  assert.ok(shellSource.includes('Math.round(value * 10000) / 100'), 'expected LOC APR input to preserve two decimal display precision');
+  assert.ok(
+    shellSource.includes('function finiteNonNegativeInputValue(value: number): number'),
+    'expected native numeric inputs to sanitize non-finite display values'
+  );
+  assert.ok(shellSource.includes('value={formatMoneyInputValue(value)}'), 'expected money inputs to use finite display formatting');
+  assert.ok(
+    shellSource.includes('value={formatWholeNumberInputValue(value)}'),
+    'expected whole-number inputs to use finite display formatting'
+  );
+  assert.ok(
+    shellSource.includes('value={formatPercentageInputValue(value)}'),
+    'expected percentage inputs to use finite display formatting'
+  );
+  assert.ok(
+    shellSource.includes('Math.round(finiteNonNegativeInputValue(value) * 10000) / 100'),
+    'expected APR input to preserve two decimal display precision after sanitizing'
+  );
+  assert.ok(
+    !shellSource.includes('value={String(Math.round(value))}') &&
+      !shellSource.includes('value={String(value)}') &&
+      !shellSource.includes('value={String(Math.round(value * 10000) / 100)}'),
+    'expected native inputs not to render raw numeric state directly'
+  );
   assert.ok(shellSource.includes('buildMobileCockpitSnapshot'));
   assert.ok(shellSource.includes('CockpitPanel'));
   assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));
