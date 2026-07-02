@@ -122,6 +122,7 @@ const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
 const dashboardModel = loadTsModule('src/app/dashboard-model.ts');
 const simulatorModel = loadTsModule('src/app/simulator-model.ts');
 const velocityTargeting = loadTsModule('src/engine/velocity-targeting.ts');
+const preAppPreviewModel = loadTsModule('src/components/pre-app-preview-model.ts');
 
 const tests = [];
 
@@ -4775,13 +4776,14 @@ test('Learn decorative celebration canvases are hidden from assistive technology
 
 test('pre-app preview blocks unstable debt-free date claims', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PreAppPreview.tsx'), 'utf8');
+  const modelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/pre-app-preview-model.ts'), 'utf8');
 
   assert.ok(
-    source.includes('const payoffProjected = baseline.isPayoffPossible && velocity.isPayoffPossible'),
+    modelSource.includes('function hasStablePayoffProjection'),
     'expected preview to derive payoff validity before showing ETA and score claims'
   );
   assert.ok(
-    source.includes('const debtFreeDateLabel = payoffProjected'),
+    modelSource.includes('const debtFreeDateLabel = payoffProjected'),
     'expected preview to store a projection-gated date label'
   );
   assert.ok(
@@ -4789,11 +4791,11 @@ test('pre-app preview blocks unstable debt-free date claims', () => {
     'expected Debt-Free Date card to use the gated label'
   );
   assert.ok(
-    source.includes(": 'Review inputs';"),
+    modelSource.includes(": 'Review inputs';"),
     'expected invalid preview projections to show Review inputs'
   );
   assert.ok(
-    source.includes('const velocityScore = payoffProjected'),
+    modelSource.includes('const velocityScore = payoffProjected'),
     'expected preview velocity score to be gated by payoff validity'
   );
   assert.ok(
@@ -4804,6 +4806,51 @@ test('pre-app preview blocks unstable debt-free date claims', () => {
     !source.includes("value: snapshot.freedomDate.toLocaleDateString"),
     'expected preview not to render a raw date from an unvalidated payoff projection'
   );
+});
+
+test('pre-app preview snapshot ignores non-finite debt values at the model boundary', () => {
+  const snapshot = preAppPreviewModel.buildPreAppPreviewSnapshot({
+    currentTime: Date.UTC(2026, 0, 1),
+    cashFlow: 1500,
+    debts: [
+      {
+        id: 'corrupt',
+        name: 'Corrupt Card',
+        type: 'creditCard',
+        balance: Number.POSITIVE_INFINITY,
+        interestRate: Number.NaN,
+        minimumPayment: Number.POSITIVE_INFINITY,
+      },
+      {
+        id: 'usable',
+        name: 'Usable Card',
+        type: 'creditCard',
+        balance: 5000,
+        interestRate: 0.24,
+        minimumPayment: 125,
+      },
+    ],
+    baseline: {
+      months: 40,
+      totalInterest: Number.POSITIVE_INFINITY,
+      savings: 0,
+      isPayoffPossible: true,
+    },
+    velocity: {
+      months: Number.POSITIVE_INFINITY,
+      totalInterest: 1000,
+      savings: Number.POSITIVE_INFINITY,
+      isPayoffPossible: true,
+    },
+  });
+
+  assert.equal(snapshot.totalDebt, 5000);
+  assert.equal(snapshot.next.id, 'usable');
+  assert.equal(snapshot.top3.length, 1);
+  assert.ok(Number.isFinite(snapshot.dailyBurn));
+  assert.equal(snapshot.velocityScore, 0);
+  assert.equal(snapshot.debtFreeDateLabel, 'Review inputs');
+  assert.equal(snapshot.payoffProjected, false);
 });
 
 test('app startup defaults keep the dashboard ungated', () => {
