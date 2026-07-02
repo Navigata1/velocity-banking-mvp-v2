@@ -4,6 +4,7 @@ import {
   calculateCashFlow,
   calculateDailyRate,
   formatCurrency,
+  simulateAmortizedPayoff,
   type LOCDetails,
 } from '@interestshield/financial-engine';
 import {
@@ -18,6 +19,7 @@ export {
   calculateCashFlow,
   calculateDailyRate,
   formatCurrency,
+  simulateAmortizedPayoff,
 };
 
 export type { LOCDetails };
@@ -261,60 +263,28 @@ export function generateWarnings(
 // ─── Baseline Simulation (Standard Amortization) ─────────────────────
 
 export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
-  const monthlyRate = inputs.carLoan.apr / 12;
-  let balance = inputs.carLoan.balance;
-  let totalInterest = 0;
-  const monthlyData: MonthlyResult[] = [];
-  let month = 0;
   const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
-  const firstMonthInterest = balance * monthlyRate;
+  const projection = simulateAmortizedPayoff({
+    principalBalance: inputs.carLoan.balance,
+    apr: inputs.carLoan.apr,
+    monthlyPayment: inputs.carLoan.monthlyPayment,
+    maxMonths: 600,
+  });
 
-  if (balance > 0.01 && inputs.carLoan.monthlyPayment <= firstMonthInterest) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      monthlyData,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  while (balance > 0.01 && month < 600) {
-    month++;
-    const interest = balance * monthlyRate;
-    const payment = Math.min(inputs.carLoan.monthlyPayment, balance + interest);
-    const principal = payment - interest;
-
-    if (principal <= 0) {
-      // Negative amortization — balance grows
-      balance += (interest - inputs.carLoan.monthlyPayment);
-      totalInterest += interest;
-      monthlyData.push({
-        month,
-        carBalance: balance,
-        locBalance: 0,
-        carInterest: interest,
-        locInterest: 0,
-        cashFlow: cashFlow - inputs.carLoan.monthlyPayment,
-      });
-      if (month >= 600) break;
-      continue;
-    }
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - principal);
-
-    monthlyData.push({
-      month,
-      carBalance: balance,
+  return {
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    monthlyData: projection.monthlyData.map((month) => ({
+      month: month.month,
+      carBalance: month.balance,
       locBalance: 0,
-      carInterest: interest,
+      carInterest: month.interest,
       locInterest: 0,
       cashFlow: cashFlow - inputs.carLoan.monthlyPayment,
-    });
-  }
-
-  return { payoffMonths: month, totalInterest, monthlyData, isPayoffPossible: true };
+    })),
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
+  };
 }
 
 // ─── Velocity Simulation (LOC Chunking + ADB Interest) ───────────────
@@ -404,45 +374,30 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
 }
 
 function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
-  const monthlyRate = inputs.carLoan.apr / 12;
-  let balance = inputs.carLoan.balance;
-  let totalInterest = 0;
-  const monthlyData: MonthlyResult[] = [];
-  let month = 0;
   const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
-  const extraPayment = Math.min(inputs.extraPayment, Math.max(0, cashFlow));
-  const firstMonthInterest = balance * monthlyRate;
+  const extraPayment = Math.min(Math.max(0, inputs.extraPayment), Math.max(0, cashFlow));
+  const projection = simulateAmortizedPayoff({
+    principalBalance: inputs.carLoan.balance,
+    apr: inputs.carLoan.apr,
+    monthlyPayment: inputs.carLoan.monthlyPayment,
+    extraPayment,
+    maxMonths: 600,
+  });
 
-  if (balance > 0.01 && inputs.carLoan.monthlyPayment + extraPayment <= firstMonthInterest) {
-    return {
-      payoffMonths: 0,
-      totalInterest: 0,
-      monthlyData,
-      isPayoffPossible: false,
-      failureReason: 'payment-below-interest',
-    };
-  }
-
-  while (balance > 0.01 && month < 600) {
-    month++;
-    const interest = balance * monthlyRate;
-    const totalPayment = Math.min(inputs.carLoan.monthlyPayment + extraPayment, balance + interest);
-    const principal = totalPayment - interest;
-
-    totalInterest += interest;
-    balance = Math.max(0, balance - Math.max(0, principal));
-
-    monthlyData.push({
-      month,
-      carBalance: balance,
+  return {
+    payoffMonths: projection.payoffMonths,
+    totalInterest: projection.totalInterest,
+    monthlyData: projection.monthlyData.map((month) => ({
+      month: month.month,
+      carBalance: month.balance,
       locBalance: 0,
-      carInterest: interest,
+      carInterest: month.interest,
       locInterest: 0,
       cashFlow: cashFlow - inputs.carLoan.monthlyPayment - extraPayment,
-    });
-  }
-
-  return { payoffMonths: month, totalInterest, monthlyData, isPayoffPossible: true };
+    })),
+    isPayoffPossible: projection.isPayoffPossible,
+    failureReason: projection.failureReason,
+  };
 }
 
 // ─── Multi-Debt Simulation ───────────────────────────────────────────
