@@ -203,10 +203,10 @@ function buildMoneyLoopArtifacts(
     {
       id: 'loc',
       label: 'LOC',
-      value: locNeedsSetup ? 'Add LOC limit' : `${formatCurrency(availableLoc)} open`,
+      value: locNeedsSetup ? 'Enter LOC terms' : `${formatCurrency(availableLoc)} open`,
       signal: locNeedsSetup ? 'Setup needed' : `${Math.round(locUtilization * 100)}% used`,
       note: locNeedsSetup
-        ? 'LOC capacity needs a limit before chunk projections are meaningful.'
+        ? 'LOC capacity needs known terms before chunk projections are meaningful.'
         : 'Capacity is useful only when it stays inside a comfortable buffer.',
       tone: locNeedsSetup || locUtilization > 0.8 ? 'amber' : 'sky',
       fillPercent: clampArtifactFill(availableLocRatio),
@@ -273,7 +273,7 @@ function buildChangeExplanations(
       label: 'LOC Room',
       value: locNeedsSetup ? locUseLabel : `${formatCurrency(availableLoc)} open`,
       body: locNeedsSetup
-        ? 'Add a LOC limit before trusting chunk projections; without a limit, LOC room is treated as setup needed.'
+        ? 'Enter known LOC limit, APR, fees, and draw rules before trusting chunk projections; without known terms, LOC room is treated as setup needed.'
         : `LOC balance and limit set the available room and interest burn. Current utilization is ${locUseLabel}.`,
       tone: locNeedsSetup || locUtilization > 0.8 ? 'amber' : 'sky',
     },
@@ -361,9 +361,9 @@ function buildNextMove(
     const locSetupLabel = formatLocSetupLabel(input.loc);
 
     return {
-      title: 'Add LOC details',
+      title: 'Enter known LOC terms',
       value: locSetupLabel === 'No LOC' ? 'No LOC set' : locSetupLabel,
-      caption: 'Enter a LOC limit before modeling chunk movement.',
+      caption: 'Enter known LOC limit, APR, fees, and draw rules before modeling chunk movement.',
       tone: 'amber',
       assumptions: [
         'Velocity banking projections require available LOC capacity.',
@@ -441,8 +441,8 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   if (locNeedsSetup) {
     warnings.push({
       kind: 'loc-setup',
-      title: 'Add LOC details',
-      body: 'The Money Loop needs a LOC limit before chunk projections can be trusted. Enter a limit or keep the dashboard in baseline mode.',
+      title: 'Enter known LOC terms',
+      body: 'The Money Loop needs known LOC limit, APR, fees, and draw rules before chunk projections can be trusted. Enter known terms or keep the dashboard in baseline mode.',
     });
   } else if (locOverLimit) {
     warnings.push({
