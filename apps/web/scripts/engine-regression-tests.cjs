@@ -6442,7 +6442,7 @@ test('repository documents the current Vercel alias promotion blocker', () => {
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('fdeac68fbcdd7ee79edaf361be1424e10afb19e2'),
+    runbook.includes('3463347b44050f11b134943e03e05c27000daa49'),
     'expected the runbook to name the current release-stack main commit'
   );
   assert.ok(
@@ -6451,7 +6451,7 @@ test('repository documents the current Vercel alias promotion blocker', () => {
     'expected the runbook to document ephemeral Vercel deployment targets'
   );
   assert.ok(
-    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('dpl_EckirtMoGJD4LPcq3tBWhJ2boRLA'),
+    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('dpl_JBAG6QhponBeGDuAqUTe11z8mMXu'),
     'expected the runbook to distinguish stale public alias and protected latest deployment markers'
   );
   assert.ok(
