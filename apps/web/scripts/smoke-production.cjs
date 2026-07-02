@@ -10,6 +10,8 @@ const protectionBypassSecret =
   process.env.VERCEL_AUTOMATION_BYPASS_SECRET || process.env.VERCEL_PROTECTION_BYPASS_SECRET || '';
 const githubRepository = process.env.GITHUB_REPOSITORY || 'Navigata1/velocity-banking-mvp-v2';
 const githubToken = process.env.GITHUB_TOKEN || '';
+const vercelTeamSlug = process.env.VERCEL_TEAM_SLUG || 'islanddevcrew';
+const vercelProjectSlug = process.env.VERCEL_PROJECT_SLUG || 'velocity-banking-mvp-v2';
 const maxRedirects = 4;
 
 const routes = [
@@ -161,7 +163,10 @@ async function fetchLatestGitHubProductionDeployment() {
     const [deployment] = Array.isArray(deployments) ? deployments : [];
 
     if (!deployment?.statuses_url) {
-      return '';
+      return {
+        diagnostics: '',
+        remediation: '',
+      };
     }
 
     const statuses = await requestJson(new URL(deployment.statuses_url));
@@ -169,16 +174,39 @@ async function fetchLatestGitHubProductionDeployment() {
     const targetUrl = latestStatus?.target_url || latestStatus?.log_url;
 
     if (!targetUrl) {
-      return ` Latest GitHub Production deployment: ${deployment.sha || deployment.ref || 'unknown sha'} has no target URL.`;
+      return {
+        diagnostics:
+          ` Latest GitHub Production deployment: ${deployment.sha || deployment.ref || 'unknown sha'} has no target URL.`,
+        remediation: buildAliasRemediationHint(),
+      };
     }
 
-    return (
-      ` Latest GitHub Production deployment target: ${targetUrl}` +
-      ` (${deployment.sha || deployment.ref || 'unknown sha'}, status: ${latestStatus.state || 'unknown'}).`
-    );
+    const sha = deployment.sha || deployment.ref || 'unknown sha';
+    const status = latestStatus?.state || 'unknown';
+
+    return {
+      diagnostics: ` Latest GitHub Production deployment target: ${targetUrl} (${sha}, status: ${status}).`,
+      remediation: buildAliasRemediationHint({ targetUrl, sha, status }),
+    };
   } catch (error) {
-    return ` Latest GitHub Production deployment lookup failed: ${error.message}.`;
+    return {
+      diagnostics: ` Latest GitHub Production deployment lookup failed: ${error.message}.`,
+      remediation: buildAliasRemediationHint(),
+    };
   }
+}
+
+function buildAliasRemediationHint(latestDeployment = {}) {
+  const target = latestDeployment.targetUrl || '<latest GitHub Production deployment target>';
+  const targetStatus = latestDeployment.status ? `, target status: ${latestDeployment.status}` : '';
+  const sha = latestDeployment.sha ? `, sha: ${latestDeployment.sha}` : '';
+
+  return (
+    ` Remediation: authenticate Vercel access for team/project ${vercelTeamSlug}/${vercelProjectSlug}` +
+    `${sha}${targetStatus}; run \`npx vercel promote ${target} --scope ${vercelTeamSlug}\`; ` +
+    `then run \`npx vercel cache purge --yes --scope ${vercelTeamSlug}\`; ` +
+    'then rerun `npm run smoke:production` and a rendered Browser/Chrome freshness check.'
+  );
 }
 
 function buildDeploymentProtectionHint({ statusCode, signature }) {
@@ -224,10 +252,11 @@ function buildDeploymentDiagnostics({ body, response }) {
   return diagnostics.length > 0 ? ` Observed Vercel diagnostics: ${diagnostics.join('; ')}.` : '';
 }
 
-function assertCleanProductionShell({ body, response, route, label, url, latestDeploymentDiagnostics }) {
+function assertCleanProductionShell({ body, response, route, label, url, latestDeployment }) {
   const contentType = String(response.headers['content-type'] || '');
   const failureSignature = failureSignatures.find((signature) => body.includes(signature));
-  const deploymentDiagnostics = `${buildDeploymentDiagnostics({ body, response })}${latestDeploymentDiagnostics}`;
+  const deploymentDiagnostics = `${buildDeploymentDiagnostics({ body, response })}${latestDeployment.diagnostics}`;
+  const remediation = latestDeployment.remediation;
 
   if (response.statusCode !== 200) {
     const hint = buildDeploymentProtectionHint({
@@ -236,13 +265,15 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
     });
 
     throw new Error(
-      `${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.${hint}${deploymentDiagnostics}`
+      `${label} route ${route} returned HTTP ${response.statusCode} from ${url.toString()}.` +
+        `${hint}${deploymentDiagnostics}${remediation}`
     );
   }
 
   if (!contentType.includes('text/html')) {
     throw new Error(
-      `${label} route ${route} returned ${contentType || 'no content type'} instead of text/html.${deploymentDiagnostics}`
+      `${label} route ${route} returned ${contentType || 'no content type'} instead of text/html.` +
+        `${deploymentDiagnostics}${remediation}`
     );
   }
 
@@ -253,13 +284,15 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
     });
 
     throw new Error(
-      `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}${deploymentDiagnostics}`
+      `${label} route ${route} returned a deployment failure signature: ${failureSignature}.` +
+        `${hint}${deploymentDiagnostics}${remediation}`
     );
   }
 
   if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
     throw new Error(
-      `${label} route ${route} did not return the expected InterestShield Next shell.${deploymentDiagnostics}`
+      `${label} route ${route} did not return the expected InterestShield Next shell.` +
+        `${deploymentDiagnostics}${remediation}`
     );
   }
 
@@ -270,7 +303,7 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
       `${label} route ${route} did not expose the current InterestShield shell marker: ` +
         `${missingCurrentShellSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
         'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
-        `and the four dashboard vitals.${deploymentDiagnostics}`
+        `and the four dashboard vitals.${deploymentDiagnostics}${remediation}`
     );
   }
 
@@ -282,7 +315,7 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
         `${label} route ${route} appears to be serving an older intro-gated InterestShield build: ` +
           `${staleSignature}. Promote/deploy the current dashboard build, then rerun this smoke and a ` +
           'rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, ' +
-          `and the four dashboard vitals.${deploymentDiagnostics}`
+          `and the four dashboard vitals.${deploymentDiagnostics}${remediation}`
       );
     }
   }
@@ -290,12 +323,12 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
 
 async function run() {
   console.log(`Production origin: ${origin}`);
-  const latestDeploymentDiagnostics = await fetchLatestGitHubProductionDeployment();
+  const latestDeployment = await fetchLatestGitHubProductionDeployment();
 
   for (const [route, label] of routes) {
     const url = new URL(route, `${origin}/`);
     const result = await requestUrl(url);
-    assertCleanProductionShell({ ...result, route, label, latestDeploymentDiagnostics });
+    assertCleanProductionShell({ ...result, route, label, latestDeployment });
     console.log(`PASS ${label} ${route}`);
   }
 }
