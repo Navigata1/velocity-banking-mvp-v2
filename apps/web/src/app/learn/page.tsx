@@ -372,22 +372,22 @@ const lessons: Lesson[] = [
     content: [
       'Understanding interest timing is what separates velocity banking from simple "pay extra on your mortgage" advice. There are two fundamentally different ways lenders calculate interest: amortized (your mortgage) and average daily balance (your LOC). Exploiting the difference between them is the entire strategy.',
       'Amortized debt (mortgages, auto loans) calculates interest on the scheduled principal balance at each payment. Your mortgage doesn\'t care if you had $10,000 sitting in your checking account all month — it charges the same interest. The balance only changes when your monthly payment is applied. Early in a mortgage, 70-80% of each payment goes to interest.',
-      'LOC interest works on average daily balance (ADB). Let\'s do the math: You have a $5,000 LOC balance at 10% APR. If income of $4,000 deposits on day 1 and $3,500 in expenses draws out evenly over 30 days, your ADB calculation looks like this: Day 1 balance drops to $1,000. Each day, about $117 is drawn. By day 30, you\'re at $4,500. The ADB across the month is roughly $2,750 — meaning you paid interest on $2,750 instead of $5,000. That\'s a 45% reduction in the interest-bearing balance.',
+      'LOC interest works on average daily balance (ADB). Let\'s do the math: You have a $5,000 LOC balance at 10% APR. If income of $4,000 deposits on day 1 and $3,500 in expenses draws out evenly over 30 days, this app samples daily closing balances: day 1 closes near $1,117 after that day\'s expense draw, and day 30 closes at $4,500. The ADB across the month is roughly $2,808 — meaning you paid interest on about $2,808 instead of $5,000. That\'s about a 44% reduction in the interest-bearing balance.',
       'Compare this to the alternative: income goes to checking, LOC stays at $5,000 all month, and you pay interest on the full $5,000. Same money, same expenses, but dramatically different interest charges. This timing advantage is what the Money Loop exploits every single month.',
-      'The monthly interest difference might seem small ($18.75 savings in our example at 10% APR), but it compounds. Over years of cycling, these savings accumulate — and more importantly, they allow the LOC to be paid down faster, creating room for larger "chunks" against your primary debt.',
+      'The monthly interest difference might seem small (about $18 in our example at 10% APR), but it compounds. Over years of cycling, these savings accumulate — and more importantly, they allow the LOC to be paid down faster, creating room for larger "chunks" against your primary debt.',
     ],
     keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — can reduce the average and lower interest when the LOC cost and timing work in your favor.',
-    deepDive: 'Detailed ADB math: Starting balance $5,000. Day 1: deposit $4,000 → $1,000. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 1: $1,000. Day 15: $1,000 + (14 × $116.67) = $2,633. Day 30: $4,500. Sum of daily balances ≈ $82,500. ADB = $82,500 ÷ 30 = $2,750. Monthly interest at 10% APR = $2,750 × (0.10 ÷ 12) = $22.92. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 12) = $41.67. Monthly savings: $18.75. Annual savings: $225. Over 5 years of cycling: $1,125+ in interest saved — just from the timing of your deposits.',
+    deepDive: 'Detailed ADB math using the app engine convention: Starting balance $5,000. Day 1: deposit $4,000, then the first daily expense draw closes the day near $1,117. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 15: $1,000 + (15 × $116.67) = $2,750. Day 30: $4,500. Sum of daily closing balances ≈ $84,250. ADB = $84,250 ÷ 30 = $2,808. Monthly interest at 10% APR with daily accrual = $2,808 × (0.10 ÷ 365) × 30 = $23.08. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 365) × 30 = $41.10. Monthly savings: about $18.01. Annualized teaching example: about $216. Over 5 years of cycling: about $1,081 in interest difference — just from the timing of your deposits.',
     quiz: {
       question: 'If your LOC has a $5,000 balance and you deposit $4,000 income on day 1, what approximately is your average daily balance for the month?',
       options: [
         '$5,000 — the deposit doesn\'t matter',
         '$1,000 — that\'s what it dropped to',
-        '~$2,750 — average of the daily balances as expenses draw back out',
+        '~$2,808 — average of the daily closing balances as expenses draw back out',
         '$4,500 — the ending balance',
       ],
       correctIndex: 2,
-      explanation: 'The ADB is the average of every day\'s balance. It starts at $1,000 after the deposit, then gradually rises as expenses are drawn. The average across 30 days is approximately $2,750.',
+      explanation: 'The ADB is the average of every day\'s balance. With daily closing-balance sampling, it starts near $1,117 after the first expense draw, then gradually rises as expenses are drawn. The average across 30 days is approximately $2,808.',
     },
     investopediaUrl: 'https://www.investopedia.com/terms/a/averagedailybalance.asp',
     investopediaLabel: 'Average Daily Balance — Investopedia',
@@ -657,10 +657,10 @@ function MoneyLoopViz() {
 
 function InterestTimingViz() {
   const withLoop = [
-    { day: '1', bal: 1000, pct: 20 },
-    { day: '8', bal: 1817, pct: 36 },
-    { day: '15', bal: 2633, pct: 53 },
-    { day: '22', bal: 3450, pct: 69 },
+    { day: '1', bal: 1117, pct: 22 },
+    { day: '8', bal: 1933, pct: 39 },
+    { day: '15', bal: 2750, pct: 55 },
+    { day: '22', bal: 3567, pct: 71 },
     { day: '30', bal: 4500, pct: 90 },
   ];
   return (
@@ -681,7 +681,7 @@ function InterestTimingViz() {
               </motion.div>
             ))}
           </div>
-          <p className="text-[10px] text-gray-500 mt-1 text-center">ADB ≈ $2,750</p>
+          <p className="text-[10px] text-gray-500 mt-1 text-center">ADB ≈ $2,808</p>
         </div>
         <div>
           <p className="text-xs text-red-400 font-semibold mb-2 text-center">Without Loop</p>
@@ -705,7 +705,7 @@ function InterestTimingViz() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
         className="text-center bg-purple-500/10 border border-purple-500/20 rounded-lg p-2"
       >
-        <span className="text-xs text-purple-300">Monthly interest saved: <strong>$18.75</strong> at 10% APR</span>
+        <span className="text-xs text-purple-300">Monthly interest saved: <strong>≈ $18.01</strong> at 10% APR</span>
       </motion.div>
     </div>
   );
