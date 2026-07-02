@@ -2311,6 +2311,31 @@ test('vault and cockpit editable controls expose contextual screen-reader labels
   assert.ok(cockpitSource.includes('ariaLabel={`Cockpit ${activeDomainLabel} minimum payment`}'), 'expected Cockpit active debt minimum label');
 });
 
+test('simulator quick adjust sliders sanitize non-finite values before display', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/DualSlider.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('function clampFinite(value: number, min: number, max: number, fallback = min): number'),
+    'expected DualSlider to centralize finite clamping'
+  );
+  assert.ok(
+    source.includes('const finiteValue = Number.isFinite(value) ? value : fallback'),
+    'expected DualSlider to reject non-finite values before formatting'
+  );
+  assert.ok(
+    source.includes('value = clampFinite(value, MIN_SLIDER_VALUE, MAX_SLIDER_VALUE)'),
+    'expected slider values and compact labels to use finite value bounds'
+  );
+  assert.ok(
+    source.includes('sliderPercent = clampFinite(sliderPercent, MIN_SLIDER_PERCENT, MAX_SLIDER_PERCENT)'),
+    'expected slider percentages to use finite percent bounds'
+  );
+  assert.ok(
+    source.includes('formatCompactCurrency(incomeValue)') && source.includes('formatCompactCurrency(expenseValue)'),
+    'expected visible quick-adjust labels to use the guarded formatter'
+  );
+});
+
 test('portfolio simulation explains each debt priority with money-loop rationale', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 5000,

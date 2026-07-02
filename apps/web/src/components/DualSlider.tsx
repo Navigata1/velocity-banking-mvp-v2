@@ -22,8 +22,18 @@ const BREAKPOINTS = [
   { percent: 100, value: 10000000 },
 ];
 
+const MIN_SLIDER_VALUE = 1;
+const MAX_SLIDER_VALUE = 10000000;
+const MIN_SLIDER_PERCENT = 0;
+const MAX_SLIDER_PERCENT = 100;
+
+function clampFinite(value: number, min: number, max: number, fallback = min): number {
+  const finiteValue = Number.isFinite(value) ? value : fallback;
+  return Math.max(min, Math.min(max, finiteValue));
+}
+
 function valueToSlider(value: number): number {
-  value = Math.max(1, Math.min(10000000, value));
+  value = clampFinite(value, MIN_SLIDER_VALUE, MAX_SLIDER_VALUE);
   
   for (let i = 1; i < BREAKPOINTS.length; i++) {
     const prev = BREAKPOINTS[i - 1];
@@ -37,7 +47,7 @@ function valueToSlider(value: number): number {
 }
 
 function sliderToValue(sliderPercent: number): number {
-  sliderPercent = Math.max(0, Math.min(100, sliderPercent));
+  sliderPercent = clampFinite(sliderPercent, MIN_SLIDER_PERCENT, MAX_SLIDER_PERCENT);
   
   for (let i = 1; i < BREAKPOINTS.length; i++) {
     const prev = BREAKPOINTS[i - 1];
@@ -51,6 +61,8 @@ function sliderToValue(sliderPercent: number): number {
 }
 
 function roundToNice(value: number): number {
+  value = clampFinite(value, MIN_SLIDER_VALUE, MAX_SLIDER_VALUE);
+
   if (value <= 100) return Math.round(value);
   if (value <= 1000) return Math.round(value / 10) * 10;
   if (value <= 5000) return Math.round(value / 50) * 50;
@@ -63,6 +75,8 @@ function roundToNice(value: number): number {
 }
 
 function formatCompactCurrency(value: number): string {
+  value = clampFinite(value, MIN_SLIDER_VALUE, MAX_SLIDER_VALUE);
+
   if (value >= 1000000) {
     return `$${(value / 1000000).toFixed(1)}M`;
   } else if (value >= 1000) {
