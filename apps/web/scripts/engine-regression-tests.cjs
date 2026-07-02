@@ -3843,6 +3843,54 @@ test('mortgage analysis sanitizes non-finite history and payment split inputs', 
   assert.ok(!JSON.stringify(history).includes('Infinity'));
 });
 
+test('mortgage strategies sanitize non-finite horizon cash-flow and LOC inputs', () => {
+  const input = {
+    entryMode: 'current',
+    purchaseAge: 30,
+    currentAge: 40,
+    originalCost: 125000,
+    originalTermYears: Number.NaN,
+    originalRate: Number.NaN,
+    downPayment: 25000,
+    currentBalance: 100000,
+    remainingTermMonths: Number.NaN,
+    currentRate: 0.06,
+    currentMonthlyPayment: 1100,
+    paymentFrequency: 'monthly',
+    hasExtraPayments: false,
+    extraPaymentAmount: 0,
+    hasRefinanced: false,
+    refinanceCount: 0,
+  };
+  const strategies = calculations.compareMortgageStrategies(input, Number.NaN, {
+    limit: Number.NaN,
+    apr: Number.NaN,
+    balance: Number.NaN,
+  });
+  const strategyNumbers = [
+    strategies.standard.months,
+    strategies.standard.totalInterest,
+    strategies.biweekly.months,
+    strategies.biweekly.totalInterest,
+    strategies.biweekly.saved,
+    strategies.biweekly.monthsSaved,
+    strategies.extraPayment.months,
+    strategies.extraPayment.totalInterest,
+    strategies.extraPayment.saved,
+    strategies.extraPayment.monthsSaved,
+    strategies.extraPayment.extraAmount,
+    strategies.velocity.months,
+    strategies.velocity.totalInterest,
+    strategies.velocity.saved,
+    strategies.velocity.monthsSaved,
+    strategies.velocity.chunkSize,
+  ];
+
+  assert.ok(strategyNumbers.every(Number.isFinite), `expected finite mortgage strategy numbers, got ${JSON.stringify(strategies)}`);
+  assert.equal(strategies.velocity.failureReason, 'loc-setup');
+  assert.equal(strategies.velocity.chunkSize, 0);
+});
+
 test('mortgage standard strategy uses the actual current monthly payment', () => {
   const input = {
     entryMode: 'current',
