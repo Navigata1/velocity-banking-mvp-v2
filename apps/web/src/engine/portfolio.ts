@@ -339,13 +339,14 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     velocityLoc.limit > 0 &&
     velocityLoc.balance < velocityLoc.limit &&
     velocityLoc.balance / velocityLoc.limit > 0.8;
+  const totalMinimums = debts.reduce((s, d) => s + getMinPayment(d), 0);
   const hasUsableVelocityLoc =
     settings.strategy === 'velocity' &&
     settings.focusMode === 'single' &&
     !!velocityLoc &&
     velocityLoc.limit > 0 &&
     velocityLoc.balance < velocityLoc.limit &&
-    cashFlow > 0;
+    cashFlow >= totalMinimums;
   const assumptions = [
     'Portfolio estimates monthly interest from each debt balance and APR; lender fees, compounding rules, and statement timing can change real totals.',
   ];
@@ -363,9 +364,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   } else {
     assumptions.push('Avalanche Mode ranks active debts by highest APR first.');
   }
-  
-  const totalMinimums = debts.reduce((s, d) => s + getMinPayment(d), 0);
-  
+
   // Warnings
   if (cashFlow <= 0) {
     warnings.push(`Cash flow is negative (${fmt(cashFlow)}/mo). Velocity banking requires positive cash flow.`);

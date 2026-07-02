@@ -1771,8 +1771,20 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
   assert.ok(source.includes('portfolioProjectionValid && payoffOrder.length > 0'));
   assert.ok(
-    source.includes("portfolioProjectionValid && warnings.length === 0 ? 'Recommended' : 'Default, review first'"),
-    'expected Portfolio velocity badge not to recommend unstable plans'
+    source.includes("const velocityNeedsReview = store.strategy === 'velocity' && (!portfolioProjectionValid || warnings.length > 0)"),
+    'expected Portfolio velocity badge to review unstable Velocity plans'
+  );
+  assert.ok(
+    source.includes("? 'LOC modeled'"),
+    'expected Portfolio velocity badge to distinguish modeled LOC plans'
+  );
+  assert.ok(
+    source.includes(": 'Planning default'"),
+    'expected Portfolio velocity badge to distinguish ranking-only plans'
+  );
+  assert.ok(
+    !source.includes("portfolioProjectionValid && warnings.length === 0 ? 'Recommended' : 'Default, review first'"),
+    'expected Portfolio velocity badge not to equate valid projections with recommendations'
   );
   assert.ok(
     !source.includes('>★ Recommended</span>'),
@@ -1802,6 +1814,22 @@ test('portfolio strategy picker distinguishes planning default from fastest payo
   assert.ok(
     source.includes('Use the Simulator cards to compare modeled payoff speed and interest cost'),
     'expected Portfolio to point users back to modeled Simulator comparisons'
+  );
+  assert.ok(
+    source.includes('data-testid="portfolio-velocity-modeling-note"'),
+    'expected a stable hook for the Velocity modeling note'
+  );
+  assert.ok(
+    source.includes('ranking and allocation guidance only; it is not a LOC event ledger'),
+    'expected Portfolio to label non-ledger Velocity planning'
+  );
+  assert.ok(
+    source.includes('single-lane plan includes a LOC event ledger and LOC interest estimate'),
+    'expected Portfolio to label single-lane LOC-modeled Velocity planning'
+  );
+  assert.ok(
+    source.includes('This is planning guidance, not a LOC event ledger.'),
+    'expected Split Mode copy to avoid implying LOC event simulation'
   );
 });
 
@@ -2878,6 +2906,53 @@ test('portfolio velocity uses shared Money Loop LOC math when LOC inputs are pre
   );
   assert.ok(
     result.assumptions.every((note) => !note.includes('does not simulate LOC chunk draws or LOC interest')),
+    result.assumptions.join(' | ')
+  );
+});
+
+test('portfolio velocity does not label LOC math when cash flow cannot cover minimums', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 5000,
+    monthlyExpenses: 3500,
+    extraMonthlyPayment: 0,
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+    chunkAmount: 1000,
+    debts: [
+      {
+        id: 'auto',
+        name: 'Auto Loan',
+        category: 'auto',
+        kind: 'amortized',
+        balance: 14000,
+        apr: 0.08,
+        minPaymentRule: { type: 'fixed', amount: 1700 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 1,
+  });
+
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.ok(
+    result.assumptions.some((note) => note.includes('ranking planner')),
+    result.assumptions.join(' | ')
+  );
+  assert.ok(
+    result.assumptions.some((note) => note.includes('does not simulate LOC chunk draws or LOC interest')),
+    result.assumptions.join(' | ')
+  );
+  assert.ok(
+    result.assumptions.every((note) => !note.includes('simulates LOC chunk draws and LOC interest')),
     result.assumptions.join(' | ')
   );
 });
