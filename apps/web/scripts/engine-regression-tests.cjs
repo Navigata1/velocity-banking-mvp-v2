@@ -157,6 +157,24 @@ test('amortization payment matches a known 30-year fixed-rate fixture', () => {
   );
 });
 
+test('shared date and month formatters reject invalid payoff horizons', () => {
+  const validDate = calculations.formatDate(12);
+
+  assert.ok(!validDate.includes('Invalid'), validDate);
+  assert.notEqual(validDate, 'Review inputs');
+  assert.equal(calculations.formatDate(Number.NaN), 'Review inputs');
+  assert.equal(calculations.formatDate(Number.POSITIVE_INFINITY), 'Review inputs');
+  assert.equal(calculations.formatDate(Number.MAX_VALUE), 'Review inputs');
+  assert.equal(calculations.formatDate(-1), 'Review inputs');
+
+  assert.equal(calculations.formatMonths(Number.NaN), 'Review inputs');
+  assert.equal(calculations.formatMonths(Number.POSITIVE_INFINITY), 'Review inputs');
+  assert.equal(calculations.formatMonths(0), 'Review inputs');
+  assert.equal(calculations.formatMonths(-6), 'Review inputs');
+  assert.equal(calculations.formatMonths(6.2), '7 months');
+  assert.equal(calculations.formatMonths(24), '2 years');
+});
+
 test('biweekly payoff helper uses the shared amortized payoff engine', () => {
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
   const biweeklyStart = calculationsSource.indexOf('export function simulateBiweeklyPayments');
@@ -1600,11 +1618,16 @@ test('portfolio split focus allocates the full available extra payment across bo
 
 test('portfolio page blocks debt-free date claims for invalid projections', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
 
   assert.ok(source.includes('portfolioProjectionValid'), 'expected Portfolio page to derive projection validity');
   assert.ok(source.includes("portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'"));
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
   assert.ok(source.includes('portfolioProjectionValid && payoffOrder.length > 0'));
+  assert.ok(
+    calculationsSource.includes("if (!Number.isFinite(monthsFromNow) || monthsFromNow < 0) return 'Review inputs'"),
+    'expected shared Portfolio date formatter to reject invalid payoff horizons'
+  );
 });
 
 test('portfolio run comparison explains projection deltas after an edit', () => {
