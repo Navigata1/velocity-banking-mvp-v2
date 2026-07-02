@@ -59,6 +59,14 @@ const orbitNodePositions: Record<DashboardLoopArtifact['id'], CSSProperties> = {
   principal: { left: '14%', top: '36%', transform: 'translate(-50%, -50%)' },
 };
 
+const orbitNodeAngles: Record<DashboardLoopArtifact['id'], string> = {
+  income: '0deg',
+  loc: '72deg',
+  expenses: '144deg',
+  'cash-flow': '216deg',
+  principal: '288deg',
+};
+
 export default function MoneyLoopArtifactRail({
   artifacts,
   className = '',
@@ -81,6 +89,7 @@ export default function MoneyLoopArtifactRail({
   };
   const orbitStageStyle = {
     '--active-artifact-color': activeTone.accent,
+    '--active-artifact-angle': orbitNodeAngles[activeArtifact.id],
   } as CSSProperties;
 
   function selectArtifactByIndex(index: number) {
@@ -141,6 +150,7 @@ export default function MoneyLoopArtifactRail({
             <div className="artifact-orbit-ring absolute inset-3 rounded-full" />
             <div className="artifact-orbit-path absolute inset-[27px] rounded-full" />
             <div className="artifact-orbit-sweep absolute inset-[18px] rounded-full" />
+            <div className="artifact-orbit-reticle absolute inset-[13px] rounded-full" />
 
             <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2">
               <div
@@ -228,7 +238,7 @@ export default function MoneyLoopArtifactRail({
                 aria-controls="money-loop-artifact-panel"
                 tabIndex={isActive ? 0 : -1}
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
-                onClick={() => setActiveArtifactId(artifact.id)}
+                onClick={() => selectArtifactByIndex(index)}
                 onKeyDown={(event) => handleArtifactKeyDown(event, index)}
                 className={`relative min-h-[132px] rounded-xl border p-3 text-left transition ${
                   isActive

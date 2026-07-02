@@ -5047,6 +5047,7 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(source.includes('data-testid="money-loop-artifact-active"'), 'expected a stable active artifact smoke hook');
   assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
+  assert.ok(source.includes('onClick={() => selectArtifactByIndex(index)}'), 'expected pointer selection to reuse the roving-focus path');
   assert.ok(source.includes('artifact-carousel-token'), 'expected active artifact to use the carousel token animation class');
   assert.ok(css.includes('@keyframes artifactSpinSelect'), 'expected selected artifacts to spin once when chosen');
   assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
@@ -5070,20 +5071,24 @@ test('Money Loop artifact rail renders a model-backed payoff orbit visual', () =
   const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
 
   assert.ok(source.includes('orbitNodePositions'), 'expected artifact rail to define stable orbit node positions');
+  assert.ok(source.includes('orbitNodeAngles'), 'expected artifact rail to map active nodes to orbit angles');
+  assert.ok(source.includes("'--active-artifact-angle': orbitNodeAngles[activeArtifact.id]"), 'expected active artifact angle to drive the orbit reticle');
   assert.ok(source.includes('data-testid="money-loop-payoff-orbit"'), 'expected a stable active orbit smoke hook');
   assert.ok(
     source.includes('data-testid={`money-loop-orbit-node-${artifact.id}`}'),
     'expected the orbit to render one model-backed node per Money Loop artifact'
   );
   assert.ok(
-    source.includes('--active-artifact-color') && source.includes('--orbit-node-color'),
+    source.includes('--active-artifact-color') && source.includes('--orbit-node-color') && source.includes('--active-artifact-angle'),
     'expected orbit visuals to use model tone colors instead of static decoration'
   );
   assert.ok(css.includes('.artifact-orbit-ring'), 'expected CSS to draw the payoff orbit ring');
   assert.ok(css.includes('.artifact-orbit-sweep'), 'expected CSS to draw the payoff orbit sweep');
+  assert.ok(css.includes('.artifact-orbit-reticle'), 'expected CSS to draw the active selection reticle');
+  assert.ok(css.includes('rotateZ(var(--active-artifact-angle))'), 'expected active reticle rotation to follow the selected artifact');
   assert.ok(css.includes('@keyframes artifactOrbitSweep'), 'expected the orbit sweep to animate when motion is allowed');
   assert.ok(
-    css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.artifact-orbit-sweep'),
+    css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.artifact-orbit-sweep') && css.includes('.artifact-orbit-reticle'),
     'expected the payoff orbit to define a reduced-motion state'
   );
 });
