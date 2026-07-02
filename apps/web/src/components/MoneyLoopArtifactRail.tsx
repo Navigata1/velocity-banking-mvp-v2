@@ -260,7 +260,7 @@ export default function MoneyLoopArtifactRail({
           role="tablist"
           aria-label="Money Loop artifact selector"
           data-testid="money-loop-artifact-selector-grid"
-          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 md:min-w-0 md:grid-cols-[repeat(auto-fit,minmax(128px,1fr))] md:snap-none"
+          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:snap-none"
         >
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
@@ -282,7 +282,7 @@ export default function MoneyLoopArtifactRail({
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
                 onClick={() => selectArtifactByIndex(index)}
                 onKeyDown={(event) => handleArtifactKeyDown(event, index)}
-                className={`relative min-h-[132px] snap-center rounded-xl border p-3 text-left transition ${
+                className={`relative min-h-[132px] snap-center rounded-xl border p-3 text-left transition md:min-h-[104px] md:p-2.5 ${
                   isActive
                     ? `${tone.border} ${tone.surface} shadow-lg shadow-black/20`
                     : `${classes.border} bg-slate-950/20 hover:bg-white/5`
@@ -298,7 +298,11 @@ export default function MoneyLoopArtifactRail({
                   <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${tone.dot}`} />
                 </div>
 
-                <div className="mt-3 flex items-center gap-3">
+                <p className={`mt-2 hidden truncate text-[11px] font-medium ${classes.textSecondary} md:block`}>
+                  {artifact.signal}
+                </p>
+
+                <div className="mt-3 flex items-center gap-3 md:hidden">
                   <div className="relative h-11 w-11 shrink-0" style={{ perspective: '900px' }}>
                     <div
                       className="artifact-token relative h-full w-full rounded-full border border-white/15 shadow-xl"

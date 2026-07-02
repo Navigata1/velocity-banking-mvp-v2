@@ -3699,6 +3699,15 @@ Status: completed in local source.
 - Added regression coverage proving the warning is derived from `strategies.velocity` and renders before the Vault step card.
 - Rendered Chrome smoke set the Dashboard LOC limit to `$0`, opened `/vault`, confirmed "Enter known LOC terms" and the known-term mortgage-path warning render before "Tell Me About Your Home", confirmed old "Add LOC limit/details" copy is absent, and captured no console or page errors.
 
+### Repair Pass 192: Dashboard Artifact Selector Fit
+
+Status: completed in local source.
+
+- Replaced the desktop Money Loop artifact selector's auto-fit minimum-width layout with five fitted columns so all five artifacts stay visible inside the dashboard panel.
+- Kept the narrow-screen selector as a horizontal snap rail with the existing hidden-scrollbar behavior.
+- Tightened desktop selector card height and padding so the rail feels more like a controlled selection surface instead of a clipped native scroller.
+- Added regression coverage for the five-column desktop selector layout and compact card dimensions.
+
 ## Testing Backlog
 
 ### Math Unit Tests
@@ -3780,7 +3789,7 @@ Status: completed in local source.
 ### Phase 2: Product UX
 
 - Redesign first-run flow.
-- Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94.
+- Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94; desktop artifact selector fit tightened in Repair Pass 192 so all five Money Loop artifacts remain visible without desktop horizontal scrolling.
 - Rebuild simulator scenario comparison. Status: Repair Pass 190 moved StrategyGlassFill comparison math into a model helper so invalid Traditional/baseline projections no longer create fallback winner, fill, or savings claims.
 - Rebuild portfolio mobile and desktop planner. Status: Portfolio desktop planner invalid-projection states, run comparison, and payoff path coverage are active; Repair Pass 182 formats Portfolio run-diff projection failure reasons as user-facing labels instead of raw engine codes. Repair Pass 188 keeps Velocity targeting rankings finite and stable when a corrupted/non-finite debt field reaches the preview helper boundary. Repair Pass 189 moves the pre-app preview snapshot math into a tested model helper so corrupted/non-finite debt or projection values cannot leak into preview totals, scores, or debt-free-date claims.
 - Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity. Repair Pass 162 tightened Learn and Dashboard LOC wording so warnings stay coach-tone instead of hype or fear phrasing. Repair Pass 180 kept missing LOC limit payoff failures labeled as setup work instead of over-limit debt. Repair Pass 181 kept exact-100% LOC utilization labeled as no available room rather than over-limit. Repair Pass 183 brought the dashboard no-capacity warning and next move into the same exact-full LOC language. Repair Pass 184 aligned shared mobile dashboard, simulator, vault, learn, and cockpit no-capacity copy with the same exact-full LOC state. Repair Pass 185 extended that exact-full LOC no-capacity copy to the shared mobile Portfolio payoff path. Repair Pass 186 aligned the web Simulator warning card with the same exact-full LOC no-capacity state instead of the generic high-utilization warning. Repair Pass 187 split shared warning output so over-limit and exact-full LOC states no longer masquerade as generic utilization warnings. Repair Pass 191 surfaces Vault mortgage Velocity setup failures before the mortgage wizard so missing known LOC terms are visible before strategy comparison.

@@ -5908,9 +5908,12 @@ test('Money Loop artifact rail fits desktop while preserving narrow-screen carou
   assert.ok(source.includes('md:min-w-0'), 'expected artifact cards to fit the desktop dashboard column');
   assert.ok(source.includes('grid-cols-5'), 'expected narrow-screen Money Loop artifacts to remain a horizontal rail');
   assert.ok(
-    source.includes('md:grid-cols-[repeat(auto-fit,minmax(128px,1fr))]'),
-    'expected desktop artifact cards to wrap into readable fitted columns'
+    source.includes('md:grid-cols-[repeat(5,minmax(0,1fr))]'),
+    'expected desktop artifact cards to fit all five Money Loop artifacts without native carousel overflow'
   );
+  assert.ok(source.includes('md:min-h-[104px]'), 'expected desktop artifact cards to use compact stable heights');
+  assert.ok(source.includes('md:p-2.5'), 'expected desktop artifact cards to use compact spacing');
+  assert.ok(source.includes('md:hidden'), 'expected full selector token/value details to collapse on fitted desktop cards');
   assert.ok(source.includes('snap-x snap-mandatory'), 'expected artifact cards to snap into centered carousel positions');
   assert.ok(source.includes('md:snap-none'), 'expected desktop artifact cards to behave as a fitted selector grid');
 });
