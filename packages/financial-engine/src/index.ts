@@ -476,9 +476,6 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     : 999;
 
   const debtInterest = debtBalance * debtApr / 12;
-  const debtPayment = Math.min(debtPaymentInput, debtBalance + debtInterest);
-  const debtPrincipal = debtPayment - debtInterest;
-  const debtPrincipalPaid = Math.max(0, debtPrincipal);
 
   events.push({
     type: 'debt-interest',
@@ -506,6 +503,10 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
       note: 'Chunk draw increases LOC balance and immediately reduces the active debt principal.',
     });
   }
+
+  const debtPayment = Math.min(debtPaymentInput, debtBalance + debtInterest);
+  const debtPrincipal = debtPayment - debtInterest;
+  const debtPrincipalPaid = Math.min(debtBalance, Math.max(0, debtPrincipal));
 
   debtBalance = Math.max(0, debtBalance - debtPrincipalPaid);
   events.push({
