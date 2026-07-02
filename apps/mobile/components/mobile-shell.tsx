@@ -872,6 +872,7 @@ function PortfolioPanel({ portfolio }: { portfolio: MobilePortfolioSnapshot }) {
           `Cash flow after modeled minimums. Total minimums: ${portfolio.totalMinimumsLabel}.`
         }
       />
+      <FinancialCard title="Modeling Mode" value={portfolio.modelingLabel} detail={portfolio.modelingDetail} />
       <FinancialCard title="Total Modeled Debt" value={portfolio.totalDebtLabel} detail="Current mobile shell starts with the active web demo debt." />
       <MobilePortfolioPath path={portfolio.payoffPath} />
       {portfolio.priorities.map((priority) => (

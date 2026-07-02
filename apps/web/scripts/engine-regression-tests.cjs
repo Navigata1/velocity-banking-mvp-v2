@@ -710,6 +710,52 @@ test('shared mobile snapshots sanitize non-finite planning inputs before display
   assert.equal(dashboard.warning, 'Income needs to exceed expenses before the Money Loop can recover LOC draws.');
 });
 
+test('shared mobile portfolio labels amortized planning separately from LOC ledger math', () => {
+  const portfolioSnapshot = sharedFinancialEngine.buildMobilePortfolioSnapshot({
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    chunkAmount: 1000,
+    activeDebtName: 'Mobile Auto Loan',
+    activeDebt: {
+      balance: 14000,
+      apr: 0.08,
+      monthlyPayment: 390,
+      termMonths: 48,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  });
+  const mobileShellSource = fs.readFileSync(
+    path.resolve(__dirname, '..', '..', 'mobile/components/mobile-shell.tsx'),
+    'utf8'
+  );
+
+  assert.equal(portfolioSnapshot.modelingLabel, 'Amortized planning view');
+  assert.ok(
+    portfolioSnapshot.modelingDetail.includes('shared amortized payoff engine'),
+    portfolioSnapshot.modelingDetail
+  );
+  assert.ok(
+    portfolioSnapshot.modelingDetail.includes('not a LOC event ledger'),
+    portfolioSnapshot.modelingDetail
+  );
+  assert.ok(
+    mobileShellSource.includes('title="Modeling Mode"'),
+    'expected mobile Portfolio to render the modeling-mode contract'
+  );
+  assert.ok(
+    mobileShellSource.includes('value={portfolio.modelingLabel}'),
+    'expected mobile Portfolio to display the modeling label'
+  );
+  assert.ok(
+    mobileShellSource.includes('detail={portfolio.modelingDetail}'),
+    'expected mobile Portfolio to display the modeling detail'
+  );
+});
+
 test('shared amortized payoff sanitizes non-finite inputs before building a schedule', () => {
   const projection = sharedFinancialEngine.simulateAmortizedPayoff({
     principalBalance: 1000,

@@ -198,6 +198,8 @@ export interface MobilePortfolioSnapshot {
   totalMinimumsLabel: string;
   cashFlowAfterMinimums: number;
   cashFlowAfterMinimumsLabel: string;
+  modelingLabel: 'Amortized planning view' | 'Review mode';
+  modelingDetail: string;
   guardrail: string | null;
   payoffPath: MobilePortfolioPathSnapshot;
   priorities: MobilePortfolioPriority[];
@@ -835,6 +837,10 @@ export function buildMobilePortfolioSnapshot(
     totalMinimumsLabel: formatCurrency(totalMinimums),
     cashFlowAfterMinimums,
     cashFlowAfterMinimumsLabel: formatCurrency(cashFlowAfterMinimums),
+    modelingLabel: guardrail ? 'Review mode' : 'Amortized planning view',
+    modelingDetail: guardrail
+      ? 'Resolve the guardrail before trusting a mobile portfolio payoff path.'
+      : 'Mobile Portfolio uses the shared amortized payoff engine with cash flow after minimums; it is not a LOC event ledger.',
     guardrail,
     payoffPath,
     priorities: [
