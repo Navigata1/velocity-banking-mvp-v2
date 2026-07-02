@@ -21,7 +21,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Positive cash flow is essential because it becomes your "chunk power" - the money you use to make extra debt payments and accelerate payoff.',
       'Without positive cash flow, velocity banking won\'t work. You need that surplus to make progress against your debt.',
-      'Your positive cash flow determines how fast you can pay off debt. More surplus = faster freedom.'
+      'Your positive cash flow sets the pace of any payoff model. More surplus can improve the path only when your balances, rates, minimums, LOC cost, and recovery timing support it.'
     ]
   },
   {
@@ -129,7 +129,7 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['velocity banking vs traditional', 'compared to normal', 'vs minimum payments'],
     question: 'How does velocity banking compare to traditional payments?',
     answers: [
-      'Traditional: pay minimums, mostly interest early on, takes decades. Velocity: strategic chunks attack principal, pay off years faster.',
+      'Traditional payments follow the lender schedule. A modeled velocity path uses strategic chunks against principal and should be trusted only when cash flow, LOC cost, fees, and recovery timing support the result.',
       'The Simulator shows both side-by-side. Your projected savings depend on your inputs, rates, cash flow, fees, LOC terms, and consistency.',
       'Traditional is passive (autopay minimums). Velocity is active (strategic chunks). Active can help when the numbers line up, but it requires more effort.'
     ]
