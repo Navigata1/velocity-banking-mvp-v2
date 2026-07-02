@@ -3890,6 +3890,19 @@ test('vault freedom path blocks impact claims when velocity is invalid', () => {
   assert.equal(model.investmentGrowth, 0);
 });
 
+test('cockpit gauge dashes stay within SVG bounds', () => {
+  const cockpitModel = loadTsModule('src/app/cockpit-model.ts');
+
+  assert.equal(cockpitModel.buildCashFlowGaugeDash(-500), '0 251');
+  assert.equal(cockpitModel.buildCashFlowGaugeDash(Number.NaN), '0 251');
+  assert.equal(cockpitModel.buildCashFlowGaugeDash(1500), '126 251');
+  assert.equal(cockpitModel.buildCashFlowGaugeDash(3000), '251 251');
+  assert.equal(cockpitModel.buildCashFlowGaugeDash(12000), '251 251');
+  assert.equal(cockpitModel.buildDebtBalanceGaugeDash(-1), '0 251');
+  assert.equal(cockpitModel.buildDebtBalanceGaugeDash(25000), '126 251');
+  assert.equal(cockpitModel.buildDebtBalanceGaugeDash(125000), '251 251');
+});
+
 test('vault default copy keeps a coach tone instead of fear language', () => {
   const source = fs
     .readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8')

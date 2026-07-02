@@ -9,6 +9,7 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
+import { buildCashFlowGaugeDash, buildDebtBalanceGaugeDash } from '../cockpit-model';
 
 interface Instrument {
   label: string;
@@ -179,7 +180,7 @@ export default function CockpitPage() {
                       fill="none" 
                       stroke="#10b981" 
                       strokeWidth="3" 
-                      strokeDasharray={`${((currentDebt.balance / 50000) * 100) * 2.51} 251`}
+                      strokeDasharray={buildDebtBalanceGaugeDash(currentDebt.balance)}
                       strokeLinecap="round"
                       transform="rotate(-90 50 50)"
                       className="opacity-60"
@@ -269,7 +270,7 @@ export default function CockpitPage() {
                       fill="none" 
                       stroke="#f59e0b" 
                       strokeWidth="3" 
-                      strokeDasharray={`${((cashFlow / 3000) * 100) * 2.51} 251`}
+                      strokeDasharray={buildCashFlowGaugeDash(cashFlow)}
                       strokeLinecap="round"
                       transform="rotate(-90 50 50)"
                       className="opacity-60"
