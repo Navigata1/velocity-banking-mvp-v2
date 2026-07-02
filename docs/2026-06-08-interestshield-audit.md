@@ -3821,6 +3821,17 @@ Status: completed in local source.
 - The migration enables RLS on every private table, grants access only to `authenticated`, avoids `anon` grants, uses `(select auth.uid())` in policies, and indexes owner/foreign-key columns used by access checks and joins.
 - Updated the Supabase handoff doc to point at the checked migration artifact and added regression coverage so the doc, migration, RLS policy shape, and no-live-client boundary cannot drift silently.
 
+### Repair Pass 199: Dashboard Loop Pressure Visual
+
+Status: completed in local source.
+
+- Added a bounded `pressurePercent` field to each dashboard Money Loop artifact so the visual system can represent modeled loop pressure without adding dashboard vitals.
+- Added a model-backed SVG pressure path inside the Money Loop orbit, with five stable flow segments for Income -> LOC -> Expenses -> Cash Flow -> Principal -> Income.
+- The pressure path binds segment stroke dash and width to the artifact model, emphasizes the selected artifact segment, and preserves a reduced-motion path.
+- Added regression coverage for finite pressure values, stable pressure-path smoke hooks, model-bound stroke dash/width, and pressure-path CSS.
+- Browser desktop smoke at `http://127.0.0.1:5000/` verified LOC selection, five pressure segments, active segment emphasis, no horizontal overflow, no framework overlay, and no console warnings/errors.
+- Browser mobile smoke at `http://127.0.0.1:5000/` verified four vitals, five mobile Money Loop chips, five pressure segments, no horizontal overflow, no framework overlay, and no console warnings/errors.
+
 ## Priority Roadmap
 
 ### Phase 0: Trust Stabilization
@@ -3860,7 +3871,7 @@ Status: completed in local source.
 ### Phase 4: Visual Overhaul
 
 - Add 3D artifact carousel hero.
-- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22, expanded with the Portfolio payoff path SVG in Repair Pass 153, and carried into the Expo native Portfolio path in Repair Pass 154. Repair Pass 197 adds selected-artifact depth layers and rendered desktop/mobile smoke for the dashboard Money Loop carousel; deeper full-scene 3D and Remotion/HyperFrames explainers remain open.
+- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22, expanded with the Portfolio payoff path SVG in Repair Pass 153, and carried into the Expo native Portfolio path in Repair Pass 154. Repair Pass 197 adds selected-artifact depth layers and rendered desktop/mobile smoke for the dashboard Money Loop carousel, and Repair Pass 199 adds a model-bound SVG pressure path to the dashboard Money Loop orbit. Deeper full-scene 3D and Remotion/HyperFrames explainers remain open.
 - Add SVG charts and report cards. Status: first Portfolio SVG payoff-path panel added in Repair Pass 153; Expo native view-based payoff path parity added in Repair Pass 154.
 - Add Remotion/HyperFrames-generated educational media.
 

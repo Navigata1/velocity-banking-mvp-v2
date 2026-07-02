@@ -71,6 +71,18 @@ const orbitNodeAngles: Record<DashboardLoopArtifact['id'], string> = {
   principal: '288deg',
 };
 
+const orbitFlowSegments: Array<{
+  from: DashboardLoopArtifact['id'];
+  to: DashboardLoopArtifact['id'];
+  path: string;
+}> = [
+  { from: 'income', to: 'loc', path: 'M88 26 C121 26 146 44 155 74' },
+  { from: 'loc', to: 'expenses', path: 'M157 78 C166 106 153 136 127 151' },
+  { from: 'expenses', to: 'cash-flow', path: 'M121 154 C96 169 63 169 39 154' },
+  { from: 'cash-flow', to: 'principal', path: 'M34 150 C10 135 0 105 10 78' },
+  { from: 'principal', to: 'income', path: 'M13 72 C23 43 51 26 86 26' },
+];
+
 export default function MoneyLoopArtifactRail({
   artifacts,
   className = '',
@@ -96,6 +108,9 @@ export default function MoneyLoopArtifactRail({
     '--active-artifact-color': activeTone.accent,
     '--active-artifact-angle': orbitNodeAngles[activeArtifact.id],
   } as CSSProperties;
+  const artifactById = Object.fromEntries(
+    artifacts.map((artifact) => [artifact.id, artifact])
+  ) as Record<DashboardLoopArtifact['id'], DashboardLoopArtifact>;
 
   function selectArtifactByIndex(index: number) {
     const nextArtifact = artifacts[index];
@@ -166,6 +181,36 @@ export default function MoneyLoopArtifactRail({
             <div className="artifact-orbit-path absolute inset-[27px] rounded-full" />
             <div className="artifact-orbit-sweep absolute inset-[18px] rounded-full" />
             <div className="artifact-orbit-reticle absolute inset-[13px] rounded-full" />
+            <svg
+              viewBox="0 0 176 176"
+              data-testid="money-loop-pressure-path"
+              className="artifact-flow-path absolute inset-0"
+              aria-hidden="true"
+            >
+              {orbitFlowSegments.map((segment) => {
+                const fromArtifact = artifactById[segment.from];
+                const toArtifact = artifactById[segment.to];
+                const segmentTone = toneStyles[fromArtifact.tone];
+                const pressureWidth = Math.max(2, Math.min(8, fromArtifact.pressurePercent / 14));
+                const opacity = fromArtifact.id === activeArtifact.id || toArtifact.id === activeArtifact.id ? 0.9 : 0.42;
+
+                return (
+                  <path
+                    key={`${segment.from}-${segment.to}`}
+                    data-testid={`money-loop-pressure-segment-${segment.from}-${segment.to}`}
+                    className="artifact-flow-segment"
+                    d={segment.path}
+                    pathLength={100}
+                    style={{
+                      stroke: segmentTone.accent,
+                      strokeDasharray: `${Math.max(18, fromArtifact.pressurePercent)} 100`,
+                      strokeWidth: pressureWidth,
+                      opacity,
+                    }}
+                  />
+                );
+              })}
+            </svg>
 
             <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2">
               <div
@@ -273,11 +318,11 @@ export default function MoneyLoopArtifactRail({
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
             const isActive = artifact.id === activeArtifact.id;
-              const tokenStyle: ArtifactTokenStyle = {
-                animationDelay: `${index * 120}ms`,
-                background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
-                '--artifact-depth-color': tone.accent,
-              };
+            const tokenStyle: ArtifactTokenStyle = {
+              animationDelay: `${index * 120}ms`,
+              background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
+              '--artifact-depth-color': tone.accent,
+            };
 
             return (
               <button

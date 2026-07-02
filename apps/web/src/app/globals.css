@@ -66,6 +66,15 @@ body {
   }
 }
 
+@keyframes artifactFlowDrift {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -44;
+  }
+}
+
 .artifact-orbit-stage {
   perspective: 1100px;
   transform-style: preserve-3d;
@@ -110,6 +119,21 @@ body {
   box-shadow:
     0 0 0 4px color-mix(in srgb, var(--active-artifact-color) 16%, transparent),
     0 0 22px color-mix(in srgb, var(--active-artifact-color) 68%, transparent);
+}
+
+.artifact-flow-path {
+  filter: drop-shadow(0 10px 16px rgb(0 0 0 / 0.34));
+  transform: rotateX(62deg) rotateZ(-14deg);
+  transform-origin: center;
+  transform-style: preserve-3d;
+}
+
+.artifact-flow-segment {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 260ms ease, stroke-dasharray 360ms ease, stroke-width 360ms ease;
+  vector-effect: non-scaling-stroke;
 }
 
 .artifact-orbit-node {
@@ -207,6 +231,10 @@ body {
   .artifact-orbit-node-active {
     animation: artifactOrbitPulse 1.8s ease-in-out infinite;
   }
+
+  .artifact-flow-segment {
+    animation: artifactFlowDrift 4.8s linear infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -221,6 +249,10 @@ body {
   }
 
   .artifact-orbit-reticle {
+    transition: none;
+  }
+
+  .artifact-flow-segment {
     transition: none;
   }
 }
