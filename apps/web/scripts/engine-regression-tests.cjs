@@ -134,6 +134,28 @@ function roundCents(value) {
   return Math.round(value * 100) / 100;
 }
 
+function assertFiniteNumbersAndCleanText(value, pathLabel = 'value') {
+  if (typeof value === 'number') {
+    assert.ok(Number.isFinite(value), `expected finite number at ${pathLabel}, got ${value}`);
+    return;
+  }
+
+  if (typeof value === 'string') {
+    assert.ok(!value.includes('NaN'), `expected clean text at ${pathLabel}, got ${value}`);
+    assert.ok(!value.includes('Infinity'), `expected clean text at ${pathLabel}, got ${value}`);
+    return;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => assertFiniteNumbersAndCleanText(item, `${pathLabel}[${index}]`));
+    return;
+  }
+
+  if (value && typeof value === 'object') {
+    Object.entries(value).forEach(([key, item]) => assertFiniteNumbersAndCleanText(item, `${pathLabel}.${key}`));
+  }
+}
+
 function defaultCarDebt() {
   return {
     id: 'car',
@@ -642,6 +664,45 @@ test('shared financial-engine primitives sanitize non-finite inputs', () => {
   assert.equal(sharedFinancialEngine.formatCurrency(Number.POSITIVE_INFINITY), '$0');
   assert.equal(sharedFinancialEngine.formatCurrency(Number.NEGATIVE_INFINITY), '$0');
   assert.equal(sharedFinancialEngine.formatCurrency(-500), '-$500');
+});
+
+test('shared mobile snapshots sanitize non-finite planning inputs before display contracts', () => {
+  const corruptInput = {
+    monthlyIncome: Number.POSITIVE_INFINITY,
+    monthlyExpenses: Number.NaN,
+    chunkAmount: Number.POSITIVE_INFINITY,
+    activeDebtName: 'Corrupt Mobile Debt',
+    activeDebt: {
+      balance: Number.POSITIVE_INFINITY,
+      apr: Number.NaN,
+      monthlyPayment: Number.NaN,
+      termMonths: Number.NaN,
+    },
+    loc: {
+      limit: Number.POSITIVE_INFINITY,
+      apr: Number.NaN,
+      balance: Number.NaN,
+    },
+  };
+  const snapshots = [
+    sharedFinancialEngine.buildMobileDashboardSnapshot(corruptInput),
+    sharedFinancialEngine.buildMobilePortfolioSnapshot(corruptInput),
+    sharedFinancialEngine.buildMobileSimulatorSnapshot(corruptInput),
+    sharedFinancialEngine.buildMobileVaultSnapshot(corruptInput),
+    sharedFinancialEngine.buildMobileLearnSnapshot(corruptInput),
+    sharedFinancialEngine.buildMobileCockpitSnapshot(corruptInput),
+  ];
+
+  snapshots.forEach((snapshot, index) => assertFiniteNumbersAndCleanText(snapshot, `mobileSnapshots[${index}]`));
+
+  const dashboard = snapshots[0];
+  assert.equal(dashboard.cashFlow, 0);
+  assert.equal(dashboard.availableLoc, 0);
+  assert.equal(dashboard.locNeedsSetup, true);
+  assert.equal(dashboard.locUtilization, 0);
+  assert.equal(dashboard.dailyInterestBurn, 0);
+  assert.equal(dashboard.vitals.length, 4);
+  assert.equal(dashboard.warning, 'Income needs to exceed expenses before the Money Loop can recover LOC draws.');
 });
 
 test('shared amortized payoff sanitizes non-finite inputs before building a schedule', () => {
