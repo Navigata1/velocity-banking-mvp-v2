@@ -7,8 +7,9 @@ import { useFinancialStore, type DebtAccount } from '@/stores/financial-store';
 import { useAppStore } from '@/stores/app-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { formatCurrency } from '@/engine/calculations';
-import { rankDebtsVelocity, estimateDailyInterest, type VelocityDebt } from '@/engine/velocity-targeting';
+import type { VelocityDebt } from '@/engine/velocity-targeting';
 import { useClientNow, useIsClient } from '@/hooks/useIsClient';
+import { buildPreAppPreviewSnapshot } from './pre-app-preview-model';
 
 export default function PreAppPreview() {
   const mounted = useIsClient();
@@ -41,42 +42,17 @@ export default function PreAppPreview() {
 
   const snapshot = useMemo(() => {
     const allDebts = Object.values(store.debts || {}) as DebtAccount[];
-    const debts = allDebts.filter((d) => (d?.balance ?? 0) > 0);
-    const ranked = rankDebtsVelocity(debts);
-    const top3 = ranked.slice(0, 3);
-    const next = ranked[0] || null;
-
-    const totalDebt = debts.reduce((sum, d) => sum + (d?.balance || 0), 0);
-    const cashFlow = store.getCashFlow();
-    const dailyBurn = next ? estimateDailyInterest(next.balance, next.interestRate) : 0;
-
-    // Velocity score — savings / baseline interest
     const debtType = store.getActiveDebtType();
     const velocity = store.getVelocityPayoff(debtType);
     const baseline = store.getBaselinePayoff(debtType);
-    const payoffProjected = baseline.isPayoffPossible && velocity.isPayoffPossible;
-    const velocityScore = payoffProjected
-      ? Math.min(100, Math.max(0, Math.round((velocity.savings / Math.max(1, baseline.totalInterest)) * 100)))
-      : 0;
 
-    // Estimated debt-free date
-    const debtFreeDateLabel = payoffProjected
-      ? new Date(currentTime + velocity.months * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
-          month: 'short',
-          year: 'numeric',
-        })
-      : 'Review inputs';
-
-    return {
-      totalDebt,
-      cashFlow,
-      next,
-      dailyBurn,
-      velocityScore,
-      debtFreeDateLabel,
-      payoffProjected,
-      top3,
-    };
+    return buildPreAppPreviewSnapshot({
+      debts: allDebts,
+      cashFlow: store.getCashFlow(),
+      currentTime,
+      baseline,
+      velocity,
+    });
   }, [currentTime, store]);
 
   // Visibility: not during intro, not dismissed, enabled, and only after the refresh window expires.
