@@ -4872,10 +4872,11 @@ test('dashboard Money Loop rail is width-contained for mobile layouts', () => {
 test('CountUp starts from the supplied value instead of a zero placeholder', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/CountUp.tsx'), 'utf8');
 
-  assert.ok(source.includes('useMotionValue(value)'), 'expected CountUp motion value to initialize from the supplied value');
+  assert.ok(source.includes('const safeValue = Number.isFinite(value) ? value : 0'), 'expected CountUp to sanitize non-finite source values');
+  assert.ok(source.includes('useMotionValue(safeValue)'), 'expected CountUp motion value to initialize from the sanitized supplied value');
   assert.ok(
-    source.includes('formatCountUpValue(value, prefix, suffix, decimals)'),
-    'expected CountUp display text to initialize from the supplied value'
+    source.includes('formatCountUpValue(safeValue, prefix, suffix, decimals)'),
+    'expected CountUp display text to initialize from the sanitized supplied value'
   );
   assert.ok(
     !source.includes('useState(`${prefix}0${suffix}`)'),
@@ -4887,12 +4888,23 @@ test('CountUp hides animated financial ticks from assistive technology', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/CountUp.tsx'), 'utf8');
 
   assert.ok(
-    source.includes('const stableText = formatCountUpValue(value, prefix, suffix, decimals)'),
+    source.includes('const stableText = formatCountUpValue(safeValue, prefix, suffix, decimals)'),
     'expected CountUp to compute a stable final value for assistive technology'
   );
   assert.ok(source.includes('aria-hidden="true"'), 'expected the animated text to be visual-only');
   assert.ok(source.includes('className="sr-only"'), 'expected a screen-reader-only stable value');
   assert.ok(source.includes('{stableText}'), 'expected CountUp to render the stable value for screen readers');
+});
+
+test('CountUp sanitizes non-finite animated values before formatting', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/CountUp.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('const safeValue = Number.isFinite(value) ? value : 0;'),
+    'expected CountUp formatter and component to use a finite fallback'
+  );
+  assert.ok(source.includes('motionVal.set(safeValue)'), 'expected offscreen updates to avoid non-finite motion values');
+  assert.ok(source.includes('animate(motionVal, safeValue'), 'expected animations to avoid non-finite motion targets');
 });
 
 test('Learn animated progress counter hides visual ticks from assistive technology', () => {
