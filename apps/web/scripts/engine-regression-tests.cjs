@@ -192,6 +192,7 @@ test('web calculations use shared financial-engine primitives', () => {
     'calculateCashFlow',
     'calculateAmortizationPayment',
     'calculateADBInterest',
+    'simulateAmortizedPayoff',
     'formatCurrency',
   ];
 
@@ -241,6 +242,63 @@ test('web Money Loop module re-exports shared financial-engine ledger', () => {
       `expected ${exportName} to come from @interestshield/financial-engine instead of a web duplicate`
     );
   }
+});
+
+test('web single-debt amortized payoff paths use the shared helper', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const baselineStart = calculationsSource.indexOf('export function simulateBaseline');
+  const baselineEnd = calculationsSource.indexOf('export function simulateVelocity', baselineStart);
+  const extraStart = calculationsSource.indexOf('function simulateWithExtraPayments');
+  const extraEnd = calculationsSource.indexOf('export function simulateMultiDebt', extraStart);
+  const baselineSource = calculationsSource.slice(baselineStart, baselineEnd);
+  const extraSource = calculationsSource.slice(extraStart, extraEnd);
+  const inputs = {
+    monthlyIncome: 6500,
+    monthlyExpenses: 5000,
+    carLoan: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 48,
+    },
+    useVelocity: false,
+    extraPayment: 500,
+  };
+  const cashFlow = inputs.monthlyIncome - inputs.monthlyExpenses;
+  const expectedBaseline = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: inputs.carLoan.balance,
+    apr: inputs.carLoan.apr,
+    monthlyPayment: inputs.carLoan.monthlyPayment,
+    maxMonths: 600,
+  });
+  const expectedAccelerated = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: inputs.carLoan.balance,
+    apr: inputs.carLoan.apr,
+    monthlyPayment: inputs.carLoan.monthlyPayment,
+    extraPayment: Math.min(Math.max(0, inputs.extraPayment), Math.max(0, cashFlow)),
+    maxMonths: 600,
+  });
+  const baseline = calculations.simulateBaseline(inputs);
+  const accelerated = calculations.simulateVelocity({ ...inputs, loc: undefined });
+
+  assert.ok(
+    baselineSource.includes('simulateAmortizedPayoff({'),
+    'expected web baseline payoff to call the shared amortized payoff helper'
+  );
+  assert.ok(
+    extraSource.includes('simulateAmortizedPayoff({'),
+    'expected web no-LOC accelerated payoff to call the shared amortized payoff helper'
+  );
+  assert.ok(!baselineSource.includes('while (balance > 0.01'), 'expected baseline payoff loop to live in the shared helper');
+  assert.ok(!extraSource.includes('while (balance > 0.01'), 'expected extra-payment payoff loop to live in the shared helper');
+  assert.equal(baseline.payoffMonths, expectedBaseline.payoffMonths);
+  assert.equal(roundCents(baseline.totalInterest), roundCents(expectedBaseline.totalInterest));
+  assert.equal(baseline.monthlyData.length, expectedBaseline.monthlyData.length);
+  assert.equal(roundCents(baseline.monthlyData[0].carBalance), roundCents(expectedBaseline.monthlyData[0].balance));
+  assert.equal(accelerated.payoffMonths, expectedAccelerated.payoffMonths);
+  assert.equal(roundCents(accelerated.totalInterest), roundCents(expectedAccelerated.totalInterest));
+  assert.equal(accelerated.monthlyData.length, expectedAccelerated.monthlyData.length);
+  assert.equal(roundCents(accelerated.monthlyData[0].carInterest), roundCents(expectedAccelerated.monthlyData[0].interest));
 });
 
 test('zero APR baseline payoff pays principal without charging interest', () => {
