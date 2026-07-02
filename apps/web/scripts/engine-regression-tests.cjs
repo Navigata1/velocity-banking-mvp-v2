@@ -4221,6 +4221,25 @@ test('learn page mistake cascade example keeps LOC availability arithmetic consi
   );
 });
 
+test('learn page ADB teaching example matches the shared daily closing-balance convention', () => {
+  const source = fs
+    .readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8')
+    .replace(/\\'/g, "'");
+  const expectedInterest = sharedFinancialEngine.calculateADBInterest(5000, 0.1, 4000, 3500, 30);
+  const flatInterest = 5000 * (0.1 / 365) * 30;
+  const monthlySavings = flatInterest - expectedInterest;
+
+  assert.equal(roundCents(expectedInterest), 23.08);
+  assert.equal(roundCents(monthlySavings), 18.01);
+  assert.ok(source.includes('daily closing balances'), 'expected Learn copy to name the engine sampling convention');
+  assert.ok(source.includes('ADB ≈ $2,808'), 'expected Learn visual to match the engine ADB convention');
+  assert.ok(source.includes('≈ $18.01'), 'expected Learn visual savings to match the engine convention');
+  assert.ok(source.includes("{ day: '1', bal: 1117, pct: 22 }"), 'expected Learn visual day 1 to include the first daily expense draw');
+  assert.ok(source.includes("{ day: '15', bal: 2750, pct: 55 }"), 'expected Learn visual midpoint to match closing-balance sampling');
+  assert.ok(!source.includes('ADB ≈ $2,750'), 'expected Learn copy not to use the older opening-balance shortcut');
+  assert.ok(!source.includes('$18.75'), 'expected Learn copy not to use the older monthly-rate shortcut savings');
+});
+
 test('learn page uses neutral examples instead of unsupported named anecdotes', () => {
   const source = fs
     .readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8')
