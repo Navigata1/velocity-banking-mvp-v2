@@ -340,6 +340,42 @@ test('web single-debt amortized payoff paths use the shared helper', () => {
   assert.equal(roundCents(accelerated.monthlyData[0].carInterest), roundCents(expectedAccelerated.monthlyData[0].interest));
 });
 
+test('amortization yearly breakdown uses the shared payoff schedule', () => {
+  const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
+  const breakdownStart = calculationsSource.indexOf('export function generateAmortizationBreakdown');
+  const breakdownEnd = calculationsSource.indexOf('//', breakdownStart + 1);
+  const breakdownSource = calculationsSource.slice(breakdownStart, breakdownEnd);
+  const principal = 100000;
+  const apr = 0.06;
+  const termYears = 30;
+  const payment = calculations.calculateAmortizationPayment(principal, apr, termYears * 12);
+  const sharedProjection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: principal,
+    apr,
+    monthlyPayment: payment,
+    maxMonths: termYears * 12,
+  });
+  const firstYearRows = sharedProjection.monthlyData.slice(0, 12);
+  const breakdown = calculations.generateAmortizationBreakdown(principal, apr, termYears);
+
+  assert.ok(
+    breakdownSource.includes('simulateAmortizedPayoff({') && breakdownSource.includes('projection.monthlyData'),
+    'expected yearly amortization breakdown to aggregate the shared payoff schedule'
+  );
+  assert.ok(!breakdownSource.includes('monthlyRate'), 'expected yearly amortization breakdown not to keep a separate monthly-rate loop');
+  assert.equal(breakdown.length, termYears);
+  assert.equal(
+    roundCents(breakdown[0].interestPaid),
+    roundCents(firstYearRows.reduce((sum, month) => sum + month.interest, 0))
+  );
+  assert.equal(
+    roundCents(breakdown[0].principalPaid),
+    roundCents(firstYearRows.reduce((sum, month) => sum + month.principal, 0))
+  );
+  assert.equal(roundCents(breakdown[0].remainingBalance), roundCents(firstYearRows.at(-1).balance));
+  assert.equal(roundCents(breakdown.at(-1).remainingBalance), 0);
+});
+
 test('web multi-debt baseline comparisons use the shared amortized payoff helper', () => {
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
   const baselineDebtStart = calculationsSource.indexOf('function simulateBaselineDebt');

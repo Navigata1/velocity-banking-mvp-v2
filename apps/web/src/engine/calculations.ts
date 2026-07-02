@@ -963,27 +963,28 @@ export function generateAmortizationBreakdown(
 ): AmortizationYearBreakdown[] {
   const termMonths = termYears * 12;
   const payment = calculateAmortizationPayment(principal, rate, termMonths);
-  const monthlyRate = rate / 12;
-  let bal = principal;
+  const projection = simulateAmortizedPayoff({
+    principalBalance: principal,
+    apr: rate,
+    monthlyPayment: payment,
+    maxMonths: termMonths,
+  });
   const results: AmortizationYearBreakdown[] = [];
 
-  for (let year = 1; year <= termYears && bal > 0.01; year++) {
-    let yearInterest = 0;
-    let yearPrincipal = 0;
-    for (let m = 0; m < 12 && bal > 0.01; m++) {
-      const interest = bal * monthlyRate;
-      const princ = Math.min(payment - interest, bal);
-      yearInterest += interest;
-      yearPrincipal += princ;
-      bal = Math.max(0, bal - princ);
-    }
+  for (let start = 0; start < projection.monthlyData.length; start += 12) {
+    const months = projection.monthlyData.slice(start, start + 12);
+    const yearInterest = months.reduce((sum, month) => sum + month.interest, 0);
+    const yearPrincipal = months.reduce((sum, month) => sum + month.principal, 0);
+    const finalMonth = months[months.length - 1];
+
     results.push({
-      year,
+      year: Math.floor(start / 12) + 1,
       interestPaid: yearInterest,
       principalPaid: yearPrincipal,
-      remainingBalance: bal,
+      remainingBalance: finalMonth?.balance ?? 0,
     });
   }
+
   return results;
 }
 
