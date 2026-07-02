@@ -66,6 +66,9 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 18. Mobile shell token controls, post-fix.
     Health: improved. The mobile bottom navigation and domain selector now render deterministic text tokens instead of corrupted glyph strings, while preserving route/domain accessible labels and stable tap targets.
 
+19. Money Loop artifact depth, post-fix.
+    Health: improved. The dashboard Money Loop carousel selected artifact now renders with model-colored depth layers, a bevel/core/facet treatment, and a preserved reduced-motion path.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -86,6 +89,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Simulator and Portfolio can still produce different emphasis because they answer different questions. The current UI now labels that difference, but deeper user testing should confirm the distinction lands quickly.
 - Simulator LOC setup is now more direct because the route exposes the LOC balance that already drives its projections and warnings.
 - Mobile shell iconography is now deterministic in the local rendered build: the bottom nav shows `DB SIM CK LRN PF WT SET AI`, and the domain selector shows stable domain/subcategory tokens instead of corrupted glyph strings.
+- The Money Loop artifact rail now moves closer to the requested game-like selector: selected artifacts use a model-colored 3D token, one-shot selection spin, and visible depth without adding new dependencies.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
 - Vault now surfaces the zero-limit LOC setup text before the mortgage wizard. Remaining Vault browser work should focus on deeper mortgage input edge cases rather than the missing-LOC warning path.
 
@@ -113,6 +117,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Simulator Strategy Comparison now explains that its active-debt payoff speed/interest comparison is different from Portfolio Velocity's debt-order planning default and links to Portfolio.
 - Simulator Line of Credit controls now include LOC Balance, wired to the same store value used by Simulator projections and warning logic.
 - Mobile shell controls now use deterministic token markers for the bottom navigation, domain selector, domain dropdown, and theme controls instead of relying on corrupted stored glyph strings.
+- Money Loop artifact tokens now include selected-artifact depth layers and rendered Browser smoke coverage at desktop and mobile widths.
 
 ## Evidence Limits
 

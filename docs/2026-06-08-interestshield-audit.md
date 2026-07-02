@@ -3801,6 +3801,16 @@ Status: completed in local source.
 - Kept the mobile shell controls at stable minimum tap-target height and added regression coverage for navigation and domain token rendering.
 - Browser mobile smoke at `http://127.0.0.1:5000/` verified four mobile vitals, five Money Loop chips, stable nav/domain token text, no horizontal overflow, no framework overlay, no console warnings/errors, and successful bottom-nav navigation to `/simulator`.
 
+### Repair Pass 197: Money Loop Artifact Depth
+
+Status: completed in local source.
+
+- Added selected-artifact depth layers to the dashboard Money Loop carousel: model-colored underside, bevel, raised core, and facet highlight.
+- Kept the existing one-shot selection spin and reduced-motion support while making the static selected artifact read more like a rendered object.
+- Added regression coverage for the selected artifact token hook, model-driven depth color, 3D CSS layers, and reduced-motion depth behavior.
+- Browser desktop smoke at `http://127.0.0.1:5000/` verified the Money Loop rail, selected LOC artifact state, model-colored depth token, `preserve-3d`, `artifactSpinSelect`, no horizontal overflow, no framework overlay, and no console warnings/errors.
+- Browser mobile smoke verified four mobile vitals, five Money Loop chips, no horizontal overflow, visible Money Loop rail, selected artifact depth token, no framework overlay, and no console warnings/errors.
+
 ## Priority Roadmap
 
 ### Phase 0: Trust Stabilization
@@ -3840,7 +3850,7 @@ Status: completed in local source.
 ### Phase 4: Visual Overhaul
 
 - Add 3D artifact carousel hero.
-- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22, expanded with the Portfolio payoff path SVG in Repair Pass 153, and carried into the Expo native Portfolio path in Repair Pass 154; deeper 3D and animated explainers remain open.
+- Add algorithmic payoff visuals. Status: started with the dashboard Money Loop artifact rail in Repair Pass 22, expanded with the Portfolio payoff path SVG in Repair Pass 153, and carried into the Expo native Portfolio path in Repair Pass 154. Repair Pass 197 adds selected-artifact depth layers and rendered desktop/mobile smoke for the dashboard Money Loop carousel; deeper full-scene 3D and Remotion/HyperFrames explainers remain open.
 - Add SVG charts and report cards. Status: first Portfolio SVG payoff-path panel added in Repair Pass 153; Expo native view-based payoff path parity added in Repair Pass 154.
 - Add Remotion/HyperFrames-generated educational media.
 
