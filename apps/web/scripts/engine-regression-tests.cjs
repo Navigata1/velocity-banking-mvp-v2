@@ -5369,6 +5369,14 @@ test('pre-app preview blocks unstable debt-free date claims', () => {
     'expected preview to store a projection-gated date label'
   );
   assert.ok(
+    modelSource.includes('function buildDebtFreeDateLabel'),
+    'expected preview date formatting to validate projected dates'
+  );
+  assert.ok(
+    modelSource.includes('Number.isFinite(projectedDate.getTime())'),
+    'expected preview date formatting to reject invalid Date values'
+  );
+  assert.ok(
     source.includes("value: snapshot.debtFreeDateLabel"),
     'expected Debt-Free Date card to use the gated label'
   );
@@ -5433,6 +5441,53 @@ test('pre-app preview snapshot ignores non-finite debt values at the model bound
   assert.equal(snapshot.velocityScore, 0);
   assert.equal(snapshot.debtFreeDateLabel, 'Review inputs');
   assert.equal(snapshot.payoffProjected, false);
+});
+
+test('pre-app preview rejects corrupted debt-free date inputs after payoff validity passes', () => {
+  const baseInput = {
+    cashFlow: 1500,
+    debts: [
+      {
+        id: 'usable',
+        name: 'Usable Card',
+        type: 'creditCard',
+        balance: 5000,
+        interestRate: 0.24,
+        minimumPayment: 125,
+      },
+    ],
+    baseline: {
+      months: 40,
+      totalInterest: 3000,
+      isPayoffPossible: true,
+    },
+    velocity: {
+      months: 24,
+      totalInterest: 1000,
+      savings: 2000,
+      isPayoffPossible: true,
+    },
+  };
+
+  const invalidCurrentTime = preAppPreviewModel.buildPreAppPreviewSnapshot({
+    ...baseInput,
+    currentTime: Number.NaN,
+  });
+  const overflowingDate = preAppPreviewModel.buildPreAppPreviewSnapshot({
+    ...baseInput,
+    currentTime: Number.MAX_VALUE,
+  });
+  const validDate = preAppPreviewModel.buildPreAppPreviewSnapshot({
+    ...baseInput,
+    currentTime: Date.UTC(2026, 0, 1),
+  });
+
+  assert.equal(invalidCurrentTime.payoffProjected, true);
+  assert.equal(invalidCurrentTime.debtFreeDateLabel, 'Review inputs');
+  assert.equal(overflowingDate.payoffProjected, true);
+  assert.equal(overflowingDate.debtFreeDateLabel, 'Review inputs');
+  assert.ok(!validDate.debtFreeDateLabel.includes('Invalid'), validDate.debtFreeDateLabel);
+  assert.notEqual(validDate.debtFreeDateLabel, 'Review inputs');
 });
 
 test('app startup defaults keep the dashboard ungated', () => {
