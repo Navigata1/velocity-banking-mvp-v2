@@ -5312,6 +5312,29 @@ test('repository exposes a manual release deployment smoke workflow', () => {
   assert.ok(workflow.includes('npm run smoke:web-export'), 'expected release smoke to verify the Expo web export');
 });
 
+test('repository documents the current Vercel alias promotion blocker', () => {
+  const runbookPath = path.resolve(__dirname, '..', '..', '..', 'docs', '42_VERCEL_RELEASE_ALIAS_RUNBOOK.md');
+  const runbook = fs.existsSync(runbookPath) ? fs.readFileSync(runbookPath, 'utf8') : '';
+
+  assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
+  assert.ok(
+    runbook.includes('9c30cbbb108a1ec20e3e034066fa055d50f54557'),
+    'expected the runbook to name the current smoke-diagnostics main commit'
+  );
+  assert.ok(
+    runbook.includes('https://velocity-banking-mvp-v2-69m1z28d3-islanddevcrew.vercel.app'),
+    'expected the runbook to name the latest observed GitHub Production deployment target'
+  );
+  assert.ok(
+    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('dpl_8LvvmfrJPMTGx8wuU1adsDnJ1QMG'),
+    'expected the runbook to distinguish stale public alias and protected latest deployment markers'
+  );
+  assert.ok(
+    runbook.includes('VERCEL_AUTOMATION_BYPASS_SECRET') && runbook.includes('Promote or alias the current release build'),
+    'expected the runbook to document the required Vercel release action'
+  );
+});
+
 test('client mount hook notifies subscribers after hydration', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/hooks/useIsClient.ts'), 'utf8');
 
