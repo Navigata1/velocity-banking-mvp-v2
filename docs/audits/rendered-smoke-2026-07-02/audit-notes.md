@@ -60,6 +60,9 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 16. Simulator Portfolio alignment note, post-fix.
     Health: improved. The Simulator Strategy Comparison now explains that active-debt payoff speed/interest comparisons differ from Portfolio Velocity's debt-order planning default.
 
+17. Simulator LOC balance control, post-fix.
+    Health: improved. The Simulator Line of Credit card now exposes the LOC balance input used by projections, LOC interest math, and utilization warnings.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -78,6 +81,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Dashboard artifact rail now hides native scrollbar chrome and fits all five selector artifacts on desktop. Remaining visual-overhaul work should focus on richer 3D/artifact presentation rather than clipped selector layout.
 - Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
 - Simulator and Portfolio can still produce different emphasis because they answer different questions. The current UI now labels that difference, but deeper user testing should confirm the distinction lands quickly.
+- Simulator LOC setup is now more direct because the route exposes the LOC balance that already drives its projections and warnings.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
 - Vault now surfaces the zero-limit LOC setup text before the mortgage wizard. Remaining Vault browser work should focus on deeper mortgage input edge cases rather than the missing-LOC warning path.
 
@@ -103,6 +107,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Dashboard Money Loop selector now uses a five-column fitted desktop grid and compact card dimensions so the artifact rail does not rely on desktop horizontal scrolling.
 - Portfolio strategy cards now use a compact wrapped header for the Velocity status badge and keep strategy description copy on a separate line.
 - Simulator Strategy Comparison now explains that its active-debt payoff speed/interest comparison is different from Portfolio Velocity's debt-order planning default and links to Portfolio.
+- Simulator Line of Credit controls now include LOC Balance, wired to the same store value used by Simulator projections and warning logic.
 
 ## Evidence Limits
 

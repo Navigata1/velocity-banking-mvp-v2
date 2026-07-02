@@ -195,6 +195,15 @@ export default function SimulatorPage() {
                   />
                 </div>
                 <div className="flex justify-between items-center">
+                  <label className={`text-sm ${classes.textSecondary}`}>Balance</label>
+                  <EditableCurrency
+                    value={store.loc.balance}
+                    onChange={(val) => store.updateLOC({ balance: val })}
+                    size="lg"
+                    ariaLabel="Simulator line of credit balance"
+                  />
+                </div>
+                <div className="flex justify-between items-center">
                   <label className={`text-sm ${classes.textSecondary}`}>APR</label>
                   <EditablePercentage 
                     value={store.loc.interestRate} 

@@ -2703,10 +2703,40 @@ test('simulator editable controls expose contextual screen-reader labels', () =>
   assert.ok(source.includes('ariaLabel={`${domainName} APR`}'), 'expected Simulator active debt APR label');
   assert.ok(source.includes('ariaLabel={`${domainName} monthly payment`}'), 'expected Simulator active debt payment label');
   assert.ok(source.includes('ariaLabel="Simulator line of credit limit"'), 'expected Simulator LOC limit label');
+  assert.ok(source.includes('ariaLabel="Simulator line of credit balance"'), 'expected Simulator LOC balance label');
   assert.ok(source.includes('ariaLabel="Simulator line of credit APR"'), 'expected Simulator LOC APR label');
   assert.ok(source.includes('ariaLabel="Simulator extra payment chunk"'), 'expected Simulator chunk label');
   assert.ok(source.includes('ariaLabel="Mortgage purchase price"'), 'expected mortgage purchase detail label');
   assert.ok(source.includes('ariaLabel="Mortgage current balance"'), 'expected mortgage current balance label');
+});
+
+test('simulator LOC balance is editable where LOC math and warnings are shown', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('balance: store.loc.balance'),
+    'expected Simulator engine inputs to use the current LOC balance'
+  );
+  assert.ok(
+    source.includes('loc: store.loc'),
+    'expected Simulator warnings to receive the current LOC balance'
+  );
+  assert.ok(
+    source.includes('<label className={`text-sm ${classes.textSecondary}`}>Balance</label>'),
+    'expected the Simulator LOC panel to render a visible balance label'
+  );
+  assert.ok(
+    source.includes('value={store.loc.balance}') &&
+      source.includes('onChange={(val) => store.updateLOC({ balance: val })}'),
+    'expected the Simulator LOC balance control to update the same store value used by projections'
+  );
+  assert.ok(
+    source.indexOf('ariaLabel="Simulator line of credit limit"') <
+      source.indexOf('ariaLabel="Simulator line of credit balance"') &&
+      source.indexOf('ariaLabel="Simulator line of credit balance"') <
+        source.indexOf('ariaLabel="Simulator line of credit APR"'),
+    'expected LOC balance to sit between limit and APR in the Simulator LOC setup flow'
+  );
 });
 
 test('simulator mortgage option controls expose selected state', () => {
