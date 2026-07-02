@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
+  calculateDailyInterest,
   simulateBaseline,
   simulateVelocity,
   type PayoffFailureReason,
@@ -584,7 +585,7 @@ export const useFinancialStore = create<FinancialState>()(
         const state = get();
         const debt = state.debts[type];
         if (!debt) return 0;
-        return (debt.balance * debt.interestRate) / 365;
+        return calculateDailyInterest(debt.balance, debt.interestRate);
       },
       
       getTotalDebt: () => {

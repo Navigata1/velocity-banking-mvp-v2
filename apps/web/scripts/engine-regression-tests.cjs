@@ -121,6 +121,7 @@ const settingsSnapshot = loadTsModule('src/app/settings/local-demo-snapshot.ts')
 const guardian = loadTsModule('src/data/shield-guardian-qa.ts');
 const dashboardModel = loadTsModule('src/app/dashboard-model.ts');
 const simulatorModel = loadTsModule('src/app/simulator-model.ts');
+const velocityTargeting = loadTsModule('src/engine/velocity-targeting.ts');
 
 const tests = [];
 
@@ -186,12 +187,45 @@ test('LOC ADB interest uses daily closing balances across web and shared engines
   assert.equal(roundCents(locInterestEvent.amount), 27.7);
 });
 
+test('daily interest burn uses the shared financial-engine helper', () => {
+  const dashboardModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8');
+  const financialStoreSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/stores/financial-store.ts'), 'utf8');
+  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/portfolio.ts'), 'utf8');
+  const velocityTargetingSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/velocity-targeting.ts'), 'utf8');
+
+  assert.equal(roundCents(sharedFinancialEngine.calculateDailyInterest(18450, 0.069)), 3.49);
+  assert.equal(roundCents(sharedFinancialEngine.calculateDailyInterest(18450, 6.9)), 3.49);
+  assert.equal(roundCents(calculations.calculateDailyInterest(18450, 0.069)), 3.49);
+  assert.equal(roundCents(calculations.calculateDailyInterest(-18450, 0.069)), 0);
+  assert.equal(roundCents(calculations.calculateDailyInterest(18450, -0.069)), 0);
+  assert.equal(velocityTargeting.estimateDailyInterest(18450, 6.9), calculations.calculateDailyInterest(18450, 6.9));
+  assert.ok(
+    dashboardModelSource.includes('calculateDailyInterest(debt.balance, debt.interestRate)') &&
+      dashboardModelSource.includes('calculateDailyInterest(input.loc.balance, input.loc.interestRate)'),
+    'expected dashboard daily burn to use the shared helper for debt and LOC balances'
+  );
+  assert.ok(
+    financialStoreSource.includes('calculateDailyInterest(debt.balance, debt.interestRate)'),
+    'expected cockpit/store daily interest to use the shared helper'
+  );
+  assert.ok(
+    portfolioSource.includes('calculateDailyInterest(balance, debt.apr)') &&
+      portfolioSource.includes('calculateDailyInterest(balance, aprUsedForBurn)'),
+    'expected portfolio priority burn math to use the shared helper'
+  );
+  assert.ok(
+    velocityTargetingSource.includes('return calculateDailyInterest(balance, apr);'),
+    'expected velocity targeting daily burn to delegate to the shared helper'
+  );
+});
+
 test('web calculations use shared financial-engine primitives', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const tsconfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'tsconfig.json'), 'utf8'));
   const nextConfig = fs.readFileSync(path.resolve(__dirname, '..', 'next.config.ts'), 'utf8');
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
   const duplicateExports = [
+    'calculateDailyInterest',
     'calculateDailyRate',
     'calculateCashFlow',
     'calculateAmortizationPayment',
