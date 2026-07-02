@@ -1,31 +1,10 @@
-# Supabase First-Lane Schema Handoff
+-- InterestShield first-lane persistence contract.
+--
+-- This migration is a review-ready Supabase/Postgres draft for the future
+-- authenticated persistence lane. It is intentionally not wired into the app
+-- yet. Apply only after a dedicated Supabase project, advisors, and release
+-- smoke gates are ready.
 
-Last updated: 2026-07-02
-
-## Scope
-
-This is a contract-only Supabase/Postgres handoff for the first production persistence lane. It is not an applied migration and does not wire auth, client keys, API routes, or live database writes into the demo.
-
-Checked migration artifact: `supabase/migrations/202607020001_first_lane_owner_scoped_schema.sql`
-
-That SQL file is review-ready source control evidence for the future Supabase lane. It should still be treated as unapplied until a dedicated Supabase project, advisors, and production release gates are ready.
-
-Use this after the current local-demo mode is ready to move user-owned financial data out of browser storage.
-
-## Source Decisions
-
-- Supabase Postgres + Auth + RLS is the first persistence lane for user-owned assumptions, plans, simulation runs, learning progress, exports, and account data.
-- Cloudflare Workers/D1/Durable Objects remains a secondary edge/API lane after this owner-scoped data contract is stable.
-- Public browser clients must never receive a `service_role` key.
-- Do not expose tables to `anon`. The first authenticated application path should use explicit grants plus RLS.
-- New Supabase projects in 2026 may require explicit Data API grants for public tables; do not rely on implicit public-schema exposure.
-- Supabase guidance: create public profile tables for API-safe user data, reference `auth.users(id)` with `on delete cascade`, enable RLS on exposed public tables, and use explicit privileges.
-
-## First Migration Draft
-
-Review the checked migration SQL with Supabase advisors before applying it. The SQL uses `gen_random_uuid()`; confirm the target project has `pgcrypto` available before running.
-
-```sql
 create extension if not exists pgcrypto;
 
 create table public.profiles (
@@ -214,13 +193,3 @@ create policy "audit_events_delete_own"
   on public.audit_events for delete
   to authenticated
   using ((select auth.uid()) = owner_id);
-```
-
-## Before Applying
-
-1. Create a Supabase project dedicated to InterestShield.
-2. Run this SQL in a local Supabase branch or disposable project first.
-3. Run Supabase advisors and fix RLS, grants, or index warnings.
-4. Confirm no `anon` role grants are needed for these private tables.
-5. Confirm account deletion cascades through profiles, snapshots, runs, progress, exports, and audit events.
-6. Only then add client/server code that imports the existing local-demo handoff snapshot into authenticated owner-owned rows.
