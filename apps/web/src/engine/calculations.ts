@@ -870,15 +870,20 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
   const originalTermYears = Number.isFinite(input.originalTermYears) ? Math.max(0, input.originalTermYears) : 0;
   const originalRate = Number.isFinite(input.originalRate) ? Math.max(0, input.originalRate) : 0;
   const origTermMonths = originalTermYears * 12;
+  const purchaseAge = Number.isFinite(input.purchaseAge) ? input.purchaseAge : 0;
+  const currentAge = Number.isFinite(input.currentAge) ? input.currentAge : purchaseAge;
+  const remainingTermMonths = Number.isFinite(input.remainingTermMonths)
+    ? Math.max(0, input.remainingTermMonths)
+    : origTermMonths;
   const origPayment = calculateAmortizationPayment(loanAmount, originalRate, origTermMonths);
   const totalInterestLifetime = calculateTotalAmortizationInterest(loanAmount, originalRate, origTermMonths);
   const totalPaidLifetime = origPayment * origTermMonths;
 
   let monthsElapsed: number;
   if (input.entryMode === 'purchase') {
-    monthsElapsed = (input.currentAge - input.purchaseAge) * 12;
+    monthsElapsed = (currentAge - purchaseAge) * 12;
   } else {
-    monthsElapsed = origTermMonths - input.remainingTermMonths;
+    monthsElapsed = origTermMonths - remainingTermMonths;
   }
   monthsElapsed = Math.max(0, Math.min(monthsElapsed, origTermMonths));
 
@@ -898,12 +903,16 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
   const first7YearsTotal = first7YearRows.reduce((sum, month) => sum + month.payment, 0);
 
   // Current interest vs principal split
-  const currentBalance = input.entryMode === 'purchase' ? scheduledBalanceAfterElapsed : input.currentBalance;
+  const currentBalance = input.entryMode === 'purchase'
+    ? scheduledBalanceAfterElapsed
+    : Number.isFinite(input.currentBalance)
+    ? Math.max(0, input.currentBalance)
+    : scheduledBalanceAfterElapsed;
   const currentRate = input.entryMode === 'purchase'
     ? originalRate
     : Number.isFinite(input.currentRate)
     ? Math.max(0, input.currentRate)
-    : input.originalRate;
+    : originalRate;
   const currentMonthlyInterest = currentBalance * (currentRate / 12);
   const currentPayment = input.entryMode === 'purchase'
     ? origPayment
@@ -943,8 +952,9 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
   const equityPercent = originalCost > 0 ? ((downPayment + Math.max(0, principalPaidSoFar)) / originalCost) * 100 : 0;
 
   // Refinance penalty estimate: each refinance resets ~2 years of amortization front-loading
+  const refinanceCount = Number.isFinite(input.refinanceCount) ? Math.max(0, input.refinanceCount) : 0;
   const refinancePenalty = input.hasRefinanced
-    ? input.refinanceCount * loanAmount * originalRate * 0.15 // ~15% of first-year interest per refi
+    ? refinanceCount * loanAmount * originalRate * 0.15 // ~15% of first-year interest per refi
     : 0;
 
   return {
