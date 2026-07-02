@@ -2110,6 +2110,10 @@ test('settings makes demo backend status explicit', () => {
     'expected Settings backend readiness panel to expose a stable smoke hook'
   );
   assert.ok(
+    source.includes('data-testid="settings-backend-decision-gates"'),
+    'expected Settings backend decision gates to expose a stable smoke hook'
+  );
+  assert.ok(
     !source.includes('Next backend step: Supabase Postgres + Auth + RLS'),
     'expected Settings not to hard-code Supabase as the selected backend'
   );
@@ -2154,6 +2158,39 @@ test('settings backend readiness model keeps provider choice explicit', () => {
   assert.ok(
     settingsBackend.BACKEND_STATUS_SUMMARY.nextGate.includes('auth/RLS or equivalent access rules'),
     'expected backend summary to require access-control rules before user data storage'
+  );
+});
+
+test('settings backend decision gates block premature production persistence', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
+  const gates = settingsBackend.BACKEND_DECISION_GATES;
+
+  assert.equal(gates.length, 4);
+  assert.ok(source.includes('BACKEND_DECISION_GATES'), 'expected Settings to render backend decision gates from the model');
+  assert.ok(source.includes('before InterestShield stores user-owned financial data outside this browser'));
+
+  for (const gate of gates) {
+    assert.ok(gate.id.length > 0, 'expected each backend gate to have a stable id');
+    assert.ok(gate.label.length > 0, `expected ${gate.id} to have a label`);
+    assert.ok(gate.requiredBefore.length > 0, `expected ${gate.id} to name the blocked milestone`);
+    assert.ok(gate.whyItMatters.length > 0, `expected ${gate.id} to explain the risk`);
+  }
+
+  assert.ok(
+    gates.some((gate) => gate.id === 'owned-identity' && gate.whyItMatters.includes('verified owner id')),
+    'expected backend gates to require verified ownership before cross-device data'
+  );
+  assert.ok(
+    gates.some((gate) => gate.id === 'access-policy' && gate.whyItMatters.includes('RLS or equivalent server-side rules')),
+    'expected backend gates to require access-control policy before financial writes'
+  );
+  assert.ok(
+    gates.some((gate) => gate.id === 'snapshot-migration' && gate.whyItMatters.includes('versioned handoff snapshot')),
+    'expected backend gates to require deliberate local-demo migration'
+  );
+  assert.ok(
+    gates.some((gate) => gate.id === 'deletion-path' && gate.whyItMatters.includes('Account deletion')),
+    'expected backend gates to require account deletion coverage'
   );
 });
 

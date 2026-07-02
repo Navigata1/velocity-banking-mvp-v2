@@ -17,12 +17,46 @@ export interface BackendReadinessOption {
   nextGate: string;
 }
 
+export interface BackendDecisionGate {
+  id: string;
+  label: string;
+  requiredBefore: string;
+  whyItMatters: string;
+}
+
 export const BACKEND_STATUS_SUMMARY = {
   mode: 'Local demo mode',
   headline: 'No production backend is connected.',
   detail: 'Data is stored in this browser for the demo until auth, ownership rules, and snapshot migration are chosen.',
   nextGate: 'Choose one persistence lane, then add auth/RLS or equivalent access rules before storing user-owned financial data.',
 } as const;
+
+export const BACKEND_DECISION_GATES: BackendDecisionGate[] = [
+  {
+    id: 'owned-identity',
+    label: 'Owned identity',
+    requiredBefore: 'Any cross-device save',
+    whyItMatters: 'Every profile, assumption snapshot, simulation run, and learning record needs a verified owner id.',
+  },
+  {
+    id: 'access-policy',
+    label: 'Access policy',
+    requiredBefore: 'Financial data writes',
+    whyItMatters: 'User-owned financial records must be private by default through RLS or equivalent server-side rules.',
+  },
+  {
+    id: 'snapshot-migration',
+    label: 'Snapshot migration',
+    requiredBefore: 'Moving browser data',
+    whyItMatters: 'Local demo storage should migrate through the versioned handoff snapshot, not ad hoc key copying.',
+  },
+  {
+    id: 'deletion-path',
+    label: 'Deletion path',
+    requiredBefore: 'Real accounts',
+    whyItMatters: 'Account deletion must remove snapshots, runs, preferences, progress, and export records owned by that user.',
+  },
+];
 
 export const BACKEND_READINESS_OPTIONS: BackendReadinessOption[] = [
   {

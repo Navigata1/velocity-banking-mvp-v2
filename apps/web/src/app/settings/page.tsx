@@ -8,7 +8,7 @@ import { usePortfolioStore } from '@/stores/portfolio-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
-import { BACKEND_READINESS_OPTIONS, BACKEND_STATUS_SUMMARY } from './backend-readiness';
+import { BACKEND_DECISION_GATES, BACKEND_READINESS_OPTIONS, BACKEND_STATUS_SUMMARY } from './backend-readiness';
 import { clearLocalDemoData } from './local-data-reset';
 import { exportLocalDemoSnapshot, importLocalDemoSnapshot } from './local-demo-snapshot';
 
@@ -436,6 +436,25 @@ export default function SettingsPage() {
                 <p className={`text-xs ${classes.textMuted}`}>{option.nextGate}</p>
               </article>
             ))}
+          </div>
+          <div data-testid="settings-backend-decision-gates" className={`rounded-xl border ${classes.border} p-4`}>
+            <div className="space-y-1">
+              <p className={`text-sm font-semibold ${classes.text}`}>Backend decision gates</p>
+              <p className={`text-xs ${classes.textSecondary}`}>
+                These gates must be cleared before InterestShield stores user-owned financial data outside this browser.
+              </p>
+            </div>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              {BACKEND_DECISION_GATES.map((gate) => (
+                <div key={gate.id} className={`rounded-lg border ${classes.border} p-3`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <p className={`text-xs font-semibold ${classes.text}`}>{gate.label}</p>
+                    <p className={`shrink-0 text-[11px] font-medium ${classes.textMuted}`}>{gate.requiredBefore}</p>
+                  </div>
+                  <p className={`mt-2 text-xs ${classes.textSecondary}`}>{gate.whyItMatters}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
