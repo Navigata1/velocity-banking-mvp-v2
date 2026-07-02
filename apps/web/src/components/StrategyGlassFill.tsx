@@ -2,7 +2,12 @@
 
 import { useMemo } from 'react';
 import { formatCurrency } from '@/engine/calculations';
-import { formatStrategyDeltaBadge, formatStrategyInterestDelta, getStrategyDeltaTone } from './strategy-glass-fill-model';
+import {
+  buildStrategyGlassComparison,
+  formatStrategyDeltaBadge,
+  formatStrategyInterestDelta,
+  getStrategyDeltaTone,
+} from './strategy-glass-fill-model';
 
 interface StrategyResult {
   name: string;
@@ -29,18 +34,8 @@ interface StrategyGlassFillProps {
  * The empty space at the top IS the savings — visually.
  */
 export default function StrategyGlassFill({ strategies, className = '' }: StrategyGlassFillProps) {
-  const baseline = strategies[0]; // Traditional is always first
-  const baselineMonths = baseline?.months || 1;
-  const baselineInterest = baseline?.totalInterest || 1;
-
-  // Find the winner (lowest months, excluding traditional)
-  const winner = useMemo(() => {
-    const nonTraditional = strategies
-      .slice(1)
-      .filter(s => s.isPayoffPossible !== false && s.months > 0 && s.months < baselineMonths);
-    if (nonTraditional.length === 0) return null;
-    return nonTraditional.reduce((best, s) => s.months < best.months ? s : best);
-  }, [baselineMonths, strategies]);
+  const comparison = useMemo(() => buildStrategyGlassComparison(strategies), [strategies]);
+  const { baselineMonths, baselineInterest, baselineValid, winner } = comparison;
 
   // Color maps for tailwind classes
   const colorMap: Record<string, { bg: string; border: string; text: string; fill: string; glow: string }> = {
@@ -72,12 +67,12 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
       <div className="grid grid-cols-2 gap-4">
         {strategies.map((strategy, i) => {
           const colors = colorMap[strategy.color] || colorMap.red;
-          const isValid = strategy.isPayoffPossible !== false && strategy.months > 0;
-          const baselineValid = baseline?.isPayoffPossible !== false && baselineMonths > 0;
-          const fillPercent = isValid && baselineValid ? Math.min(100, (strategy.months / baselineMonths) * 100) : 0;
-          const monthsSaved = baselineMonths - strategy.months;
-          const isThisWinner = winner && strategy.name === winner.name;
-          const isBaseline = i === 0;
+          const card = comparison.cards[i];
+          const isValid = card.isValid;
+          const fillPercent = card.fillPercent;
+          const monthsSaved = card.monthsSaved;
+          const isThisWinner = card.isWinner;
+          const isBaseline = card.isBaseline;
 
           return (
             <div
@@ -151,7 +146,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
       </div>
 
       {/* Velocity Advantage summary — only if velocity wins */}
-      {winner && baseline?.isPayoffPossible !== false && winner.months < baselineMonths && (() => {
+      {winner && baselineValid && winner.months < baselineMonths && (() => {
         const summaryTone = getStrategyDeltaTone(baselineInterest, winner.totalInterest);
         const summaryToneClasses = summaryToneMap[summaryTone];
 
