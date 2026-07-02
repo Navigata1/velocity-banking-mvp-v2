@@ -175,6 +175,14 @@ test('shared date and month formatters reject invalid payoff horizons', () => {
   assert.equal(calculations.formatMonths(24), '2 years');
 });
 
+test('precise currency formatter rejects non-finite amounts', () => {
+  assert.equal(calculations.formatCurrencyPrecise(Number.NaN), '$0.00');
+  assert.equal(calculations.formatCurrencyPrecise(Number.POSITIVE_INFINITY), '$0.00');
+  assert.equal(calculations.formatCurrencyPrecise(Number.NEGATIVE_INFINITY), '$0.00');
+  assert.equal(calculations.formatCurrencyPrecise(12.345), '$12.35');
+  assert.equal(calculations.formatCurrencyPrecise(-12.345), '-$12.35');
+});
+
 test('biweekly payoff helper uses the shared amortized payoff engine', () => {
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
   const biweeklyStart = calculationsSource.indexOf('export function simulateBiweeklyPayments');

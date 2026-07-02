@@ -1340,12 +1340,14 @@ export function comparePaymentStrategies(
 // ─── Formatting ──────────────────────────────────────────────────────
 
 export function formatCurrencyPrecise(amount: number): string {
+  const safeAmount = Number.isFinite(amount) ? amount : 0;
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(safeAmount);
 }
 
 export function formatDate(monthsFromNow: number): string {
