@@ -1766,6 +1766,14 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
   assert.ok(source.includes('portfolioProjectionValid && payoffOrder.length > 0'));
   assert.ok(
+    source.includes("portfolioProjectionValid && warnings.length === 0 ? 'Recommended' : 'Default, review first'"),
+    'expected Portfolio velocity badge not to recommend unstable plans'
+  );
+  assert.ok(
+    !source.includes('>★ Recommended</span>'),
+    'expected Portfolio not to render an unconditional velocity recommendation badge'
+  );
+  assert.ok(
     calculationsSource.includes("if (!Number.isFinite(monthsFromNow) || monthsFromNow < 0) return 'Review inputs'"),
     'expected shared Portfolio date formatter to reject invalid payoff horizons'
   );

@@ -123,6 +123,8 @@ export default function PortfolioPage() {
   const payoffOrder = result?.payoffOrder ?? [];
   const warnings = result?.warnings ?? [];
   const assumptions = result?.assumptions ?? [];
+  const velocityBadgeLabel = portfolioProjectionValid && warnings.length === 0 ? 'Recommended' : 'Default, review first';
+  const velocityBadgeTone = portfolioProjectionValid && warnings.length === 0 ? 'text-emerald-400' : 'text-amber-300';
   const locInterestPaid = result?.locInterestPaid ?? 0;
   const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
   const totalDebt = store.debts.reduce((s, d) => s + d.balance, 0);
@@ -343,7 +345,9 @@ export default function PortfolioPage() {
                           <p className={`${classes.textSecondary} text-xs mt-1`}>{strategyDescription(s)}</p>
                         </div>
                         {s === 'velocity' && (
-                          <span className="text-emerald-400 text-sm font-semibold flex-shrink-0">★ Recommended</span>
+                          <span className={`${velocityBadgeTone} text-sm font-semibold flex-shrink-0`}>
+                            {velocityBadgeLabel}
+                          </span>
                         )}
                       </div>
                     </button>
