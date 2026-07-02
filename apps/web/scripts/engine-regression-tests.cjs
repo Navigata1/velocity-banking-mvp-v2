@@ -5031,6 +5031,12 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
   assert.ok(productionSmokeScript.includes('DEPLOYMENT_NOT_FOUND'), 'expected production smoke to catch missing Vercel deployments');
   assert.ok(productionSmokeScript.includes('Vercel Authentication'), 'expected production smoke to catch protected deployments');
   assert.ok(
+    productionSmokeScript.includes('data-testid="login/email-button"') &&
+      productionSmokeScript.includes('Continue with Email') &&
+      productionSmokeScript.includes('sso-api?url='),
+    'expected production smoke to catch Vercel login-shell protection pages'
+  );
+  assert.ok(
     productionSmokeScript.includes('VERCEL_AUTOMATION_BYPASS_SECRET'),
     'expected production smoke to support the Vercel automation bypass secret'
   );

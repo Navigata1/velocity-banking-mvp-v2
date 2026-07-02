@@ -4,22 +4,25 @@ Last updated: 2026-07-02
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `2f48bbee744c1289f940e6e542b1fab48e9d004d` (`Merge pull request #84 from Navigata1/codex/shared-total-amortization-interest`).
+- `main` contains the InterestShield 2026 release stack through commit `663345bda68d0b5cd4de26d98c415367ecb59b7e` (`Merge pull request #104 from Navigata1/codex/strategy-glass-baseline`).
 - GitHub recorded a successful Vercel deployment for the latest merge commit:
-  - deployment record `5277662889`
+  - deployment record `5278736069`
   - environment: `Production`
   - `production_environment: false`
-  - deployment URL: `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`
+  - deployment URL: `https://velocity-banking-mvp-v2-dq4f0fhnh-islanddevcrew.vercel.app`
+  - deployment status created at `2026-07-02T03:29:33Z`
+- That generated deployment URL is protected by Vercel login/protection and does not render the app shell without a bypass or authenticated Vercel access.
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
 - The public alias does not expose the current release markers:
   - `data-testid="primary-navigation"`
   - `money-loop-artifact-rail`
   - `money-loop-payoff-orbit`
 - The latest source-side release additions now merged into `main` include:
-  - PR #81: web single-debt baseline and no-LOC accelerated payoff paths use the shared amortized payoff helper.
-  - PR #82: web multi-debt baseline comparison uses the shared amortized payoff helper.
-  - PR #83: mobile Portfolio payoff-path projection uses the shared amortized payoff helper.
-  - PR #84: total amortization interest moved into `@interestshield/financial-engine`.
+  - PR #100: simulator exact-full LOC warning now uses `loc-no-capacity`.
+  - PR #101: shared warnings split `loc-overlimit` from `loc-no-capacity`.
+  - PR #102: velocity targeting sanitizes non-finite debt inputs.
+  - PR #103: pre-app preview snapshot math is extracted and sanitized.
+  - PR #104: Strategy Glass baseline validation and model helpers are centralized.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -115,13 +118,18 @@ gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=2f48bbee744c1289
 gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments/5277662889/statuses'
 Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a' -UseBasicParsing
 npm run smoke:production
+$sha = '663345bda68d0b5cd4de26d98c415367ecb59b7e'
+gh api "repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=$sha"
+gh api 'repos/Navigata1/velocity-banking-mvp-v2/deployments/5278736069/statuses'
+$env:PRODUCTION_ORIGIN='https://velocity-banking-mvp-v2-dq4f0fhnh-islanddevcrew.vercel.app'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
 ```
 
 Result summary:
 
-- GitHub has a successful Vercel deployment URL for the latest commit: `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`.
-- The deployment record is not marked as the production environment.
+- Earlier diagnostics for commit `2f48bbee744c1289f940e6e542b1fab48e9d004d` found a successful Vercel deployment URL: `https://velocity-banking-mvp-v2-n31t811vi-islanddevcrew.vercel.app`.
+- The deployment records are not marked as the production environment.
 - Direct HTTP fetch of the public alias returned HTTP `200`, title `InterestShield - Financial Empowerment`, and stale deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
-- The smoke script now includes observed Vercel deployment diagnostics in freshness failures so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
+- The newer GitHub deployment record for commit `663345bda68d0b5cd4de26d98c415367ecb59b7e` points to `https://velocity-banking-mvp-v2-dq4f0fhnh-islanddevcrew.vercel.app`, which currently returns a Vercel login/protection page with marker `dpl_8LvvmfrJPMTGx8wuU1adsDnJ1QMG`.
+- The smoke script now includes observed Vercel deployment diagnostics in freshness failures and classifies Vercel login-shell responses as deployment protection so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
 - Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
