@@ -124,7 +124,15 @@ export interface SimulationResult {
 }
 
 export interface Warning {
-  type: 'negative-cashflow' | 'cashflow-below-minimums' | 'loc-overutilization' | 'negative-amortization' | 'payment-too-low' | 'no-loc';
+  type:
+    | 'negative-cashflow'
+    | 'cashflow-below-minimums'
+    | 'loc-overlimit'
+    | 'loc-no-capacity'
+    | 'loc-overutilization'
+    | 'negative-amortization'
+    | 'payment-too-low'
+    | 'no-loc';
   severity: 'info' | 'warning' | 'critical';
   message: string;
 }
@@ -209,7 +217,19 @@ export function generateWarnings(
       });
     } else {
       const utilization = loc.balance / loc.limit;
-      if (utilization > 0.8) {
+      if (loc.balance > loc.limit) {
+        warnings.push({
+          type: 'loc-overlimit',
+          severity: 'critical',
+          message: `Your LOC balance (${formatCurrency(loc.balance)}) is above the entered limit (${formatCurrency(loc.limit)}). Bring it back under the limit before modeling another chunk.`,
+        });
+      } else if (loc.balance === loc.limit) {
+        warnings.push({
+          type: 'loc-no-capacity',
+          severity: 'critical',
+          message: 'Your LOC balance is at the entered limit. Pay it down before modeling another chunk.',
+        });
+      } else if (utilization > 0.8) {
         warnings.push({
           type: 'loc-overutilization',
           severity: 'critical',

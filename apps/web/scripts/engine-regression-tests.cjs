@@ -884,9 +884,15 @@ test('multi-debt velocity refuses over-limit LOC plans instead of returning payo
   assert.equal(velocity.monthsSaved, 0);
   assert.equal(velocity.moneyLoopMonthlyData.length, 0);
   assert.ok(
-    velocity.warnings.some((warning) => warning.type === 'loc-overutilization' && warning.severity === 'critical'),
+    velocity.warnings.some(
+      (warning) =>
+        warning.type === 'loc-overlimit' &&
+        warning.severity === 'critical' &&
+        warning.message.includes('above the entered limit')
+    ),
     JSON.stringify(velocity.warnings)
   );
+  assert.ok(!velocity.warnings.some((warning) => warning.type === 'loc-overutilization'), JSON.stringify(velocity.warnings));
 });
 
 test('multi-debt velocity treats a missing LOC limit as setup needed instead of over-limit', () => {
@@ -949,6 +955,27 @@ test('shared warnings treat a LOC balance without a limit as setup needed instea
     warnings.every((warning) => !warning.message.includes('Infinity') && !warning.message.includes('NaN')),
     JSON.stringify(warnings)
   );
+});
+
+test('shared warnings treat a full LOC as no available room instead of high utilization', () => {
+  const warnings = calculations.generateWarnings(
+    6500,
+    5000,
+    { limit: 10000, apr: 0.085, balance: 10000 },
+    [defaultCarDebt()]
+  );
+
+  assert.ok(
+    warnings.some(
+      (warning) =>
+        warning.type === 'loc-no-capacity' &&
+        warning.severity === 'critical' &&
+        warning.message.includes('at the entered limit')
+    ),
+    JSON.stringify(warnings)
+  );
+  assert.ok(!warnings.some((warning) => warning.type === 'loc-overlimit'), JSON.stringify(warnings));
+  assert.ok(!warnings.some((warning) => warning.type === 'loc-overutilization'), JSON.stringify(warnings));
 });
 
 test('multi-debt velocity refuses under-interest debt plans instead of dropping unpaid interest', () => {
