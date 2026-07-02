@@ -9,7 +9,9 @@ export interface BackendReadinessOption {
   id: BackendHandoffTarget;
   label: string;
   status: 'Candidate';
+  lane: 'Recommended first persistence lane' | 'Secondary edge/API lane';
   bestFit: string;
+  chooseWhen: string;
   strengths: string[];
   openGates: string[];
   nextGate: string;
@@ -27,7 +29,9 @@ export const BACKEND_READINESS_OPTIONS: BackendReadinessOption[] = [
     id: 'supabase-postgres-auth-rls',
     label: 'Supabase Postgres + Auth + RLS',
     status: 'Candidate',
+    lane: 'Recommended first persistence lane',
     bestFit: 'Relational financial snapshots, user accounts, row-level ownership, and SQL reporting.',
+    chooseWhen: 'Use first when InterestShield starts saving user-owned assumptions, plans, and simulation runs across devices.',
     strengths: ['Postgres schema clarity', 'Auth and RLS path', 'SQL-friendly run history'],
     openGates: ['Project keys', 'RLS policy design', 'Snapshot migration plan'],
     nextGate: 'Draft the financial snapshot schema and RLS policies before wiring the client.',
@@ -36,7 +40,9 @@ export const BACKEND_READINESS_OPTIONS: BackendReadinessOption[] = [
     id: 'cloudflare-workers-d1-durable-objects',
     label: 'Cloudflare Workers + D1/Durable Objects',
     status: 'Candidate',
+    lane: 'Secondary edge/API lane',
     bestFit: 'Edge-hosted APIs, lightweight persistence, background jobs, and future interactive calculation sessions.',
+    chooseWhen: 'Use after the owner-scoped data contract is stable, especially for edge APIs, exports, report jobs, or interactive calculation sessions.',
     strengths: ['Edge API control', 'D1 for durable records', 'Durable Objects for session state'],
     openGates: ['Auth provider choice', 'D1 schema limits', 'Local-to-edge migration path'],
     nextGate: 'Prototype a server-owned snapshot API before moving any browser storage into D1.',
