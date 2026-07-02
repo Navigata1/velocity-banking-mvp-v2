@@ -1,0 +1,86 @@
+# InterestShield Rendered Smoke Audit - 2026-07-02
+
+## Audit Scope
+
+Target: local production build at `http://127.0.0.1:5000`.
+
+Reason: the public Vercel alias is stale and the latest direct Vercel target is protected, so local production render is the current inspectable build.
+
+Flow captured: dashboard, simulator, cockpit, portfolio, learn, vault, settings, mobile-width dashboard, plus a Chrome dashboard smoke.
+
+Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
+
+## Captured Steps
+
+1. `01-dashboard-desktop.png` - Dashboard, desktop viewport.
+   Health: mostly strong. Four vitals, primary navigation, Money Loop artifact rail, payoff orbit, and change explanations are present.
+
+2. `02-simulator-desktop.png` - Simulator, desktop viewport.
+   Health: strong for comparison clarity. Strategy cards show Traditional, Snowball, Avalanche, and Velocity with visible payoff and interest differences.
+
+3. `03-cockpit-desktop.png` - Cockpit, desktop viewport.
+   Health: adequate. Routing toggles and cockpit assumption copy are present.
+
+4. `04-portfolio-desktop.png` - Portfolio, desktop viewport.
+   Health: needs copy alignment. The visible math guardrail says cash flow does not cover all minimums, while the Velocity strategy badge previously said "Recommended."
+
+5. `05-learn-desktop.png` - Learn, desktop viewport.
+   Health: adequate. Learning route renders without a blocked state.
+
+6. `06-vault-desktop.png` - Vault, desktop viewport.
+   Health: adequate. Wealth timeline route renders without a blocked state.
+
+7. `07-settings-desktop.png` - Settings, desktop viewport.
+   Health: strong for backend transparency. Local export/import, backend handoff, Supabase, and Cloudflare readiness surfaces are visible.
+
+8. `08-dashboard-mobile.png` - Dashboard, mobile-width viewport.
+   Health: usable with tradeoffs. No horizontal overflow was detected, but the first viewport only reaches two of four vitals before the bottom nav.
+
+9. `09-dashboard-chrome-smoke.png` - Dashboard, Chrome-controlled smoke.
+   Health: pass for required dashboard hooks. Chrome confirmed the shell, four dashboard vitals, Money Loop artifact rail, and payoff orbit in the DOM.
+
+10. `10-portfolio-badge-fixed.png` - Portfolio, post-fix rendered check.
+    Health: improved. Velocity is labeled "Default, review first" while the cash-flow warning and "Review inputs" state are visible.
+
+## Strengths
+
+- Dashboard keeps the first screen focused on the required four vitals.
+- The dashboard shows the current Money Loop visually with a model-backed artifact rail and orbit.
+- Simulator comparison is truth-forward: the default scenario visibly shows Snowball outperforming Velocity in the strategy cards.
+- Portfolio shows a blocking cash-flow guardrail before showing payoff-order results.
+- Settings makes backend readiness explicit instead of implying Supabase or Cloudflare is already connected.
+- Mobile-width dashboard avoids horizontal page overflow.
+- Chrome and the in-app browser both render the current dashboard shell and required dashboard hooks locally.
+
+## UX Risks
+
+- Portfolio strategy copy can overstate the current plan if "Recommended" appears while payoff estimates are in review mode.
+- Post-fix Portfolio no longer overstates the current plan, but the strategy picker card becomes narrow enough that "Velocity Mode" and the badge compete for space at the captured viewport.
+- Dashboard artifact rail is visually promising but still feels like a native horizontal scroller at desktop width; the fourth artifact is clipped and the browser scrollbar weakens the game-like carousel effect.
+- Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
+- The simulator and portfolio can disagree in tone: simulator shows Snowball as fastest, while Portfolio defaults to Velocity. The app should clearly explain that Portfolio Velocity is a ranking/planning default, not always the mathematically best payoff outcome.
+- Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
+
+## Accessibility Risks
+
+- Screenshots confirm visible structure only; they do not prove full keyboard or screen-reader behavior.
+- The dashboard carousel has visible scroll behavior; it needs keyboard and focus checks whenever the visual carousel is redesigned.
+- Mobile bottom navigation is visually clear, but touch target size and screen-reader order still need device-level verification.
+
+## Recommendations
+
+1. Gate "Recommended" labels behind stable, warning-free projections.
+2. Replace or refine the dashboard artifact rail scrollbar with explicit carousel controls or a centered selected artifact layout.
+3. Add a compact mobile dashboard summary that exposes all four vitals before deeper panels.
+4. Explain the difference between "Velocity as planning default" and "fastest/least-interest strategy" wherever both concepts appear together.
+5. Continue keeping backend status explicit until Supabase or Cloudflare persistence is actually wired and verified.
+
+## Fix Applied In This Pass
+
+- Portfolio Velocity badge now shows "Default, review first" when the current projection has warnings or cannot support payoff claims. The rendered check confirmed "Recommended" is absent while the cash-flow warning remains visible.
+
+## Evidence Limits
+
+- Public production was not visually audited because `https://web-islanddevcrew.vercel.app` serves a stale deployment and the latest direct Vercel target is behind protection.
+- This audit used viewport screenshots, not full-page screenshots, because the browser full-page capture duplicated fixed viewport content.
+- Screenshots do not prove WCAG compliance, calculation correctness, or complete device behavior.
