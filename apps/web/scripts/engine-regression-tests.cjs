@@ -5421,11 +5421,11 @@ test('repository documents the current Vercel alias promotion blocker', () => {
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('9c30cbbb108a1ec20e3e034066fa055d50f54557'),
-    'expected the runbook to name the current smoke-diagnostics main commit'
+    runbook.includes('12ce584c7a27cefec0ba442af2fc6155b28348c8'),
+    'expected the runbook to name the current release-stack main commit'
   );
   assert.ok(
-    runbook.includes('https://velocity-banking-mvp-v2-69m1z28d3-islanddevcrew.vercel.app'),
+    runbook.includes('https://velocity-banking-mvp-v2-oavhulw0q-islanddevcrew.vercel.app'),
     'expected the runbook to name the latest observed GitHub Production deployment target'
   );
   assert.ok(
