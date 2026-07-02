@@ -123,10 +123,19 @@ export default function PortfolioPage() {
   const payoffOrder = result?.payoffOrder ?? [];
   const warnings = result?.warnings ?? [];
   const assumptions = result?.assumptions ?? [];
-  const velocityBadgeLabel = portfolioProjectionValid && warnings.length === 0 ? 'Recommended' : 'Default, review first';
-  const velocityBadgeTone = portfolioProjectionValid && warnings.length === 0 ? 'text-emerald-400' : 'text-amber-300';
   const locInterestPaid = result?.locInterestPaid ?? 0;
   const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
+  const velocityNeedsReview = store.strategy === 'velocity' && (!portfolioProjectionValid || warnings.length > 0);
+  const velocityBadgeLabel = velocityNeedsReview
+    ? 'Review first'
+    : moneyLoopActive
+      ? 'LOC modeled'
+      : 'Planning default';
+  const velocityBadgeTone = velocityNeedsReview
+    ? 'text-amber-300'
+    : moneyLoopActive
+      ? 'text-emerald-400'
+      : 'text-sky-300';
   const totalDebt = store.debts.reduce((s, d) => s + d.balance, 0);
   const cashFlow = store.monthlyIncome - store.monthlyExpenses;
   const runComparison = store.lastRunComparison;
@@ -356,6 +365,13 @@ export default function PortfolioPage() {
                 <p data-testid="portfolio-strategy-alignment-note" className={`${classes.textMuted} mt-3 text-xs leading-5`}>
                   Velocity Mode is the Portfolio planning default, not a promise that it is the fastest or lowest-interest path. Use the Simulator cards to compare modeled payoff speed and interest cost under the same assumptions.
                 </p>
+                {store.strategy === 'velocity' && (
+                  <p data-testid="portfolio-velocity-modeling-note" className={`${classes.textSecondary} mt-2 text-xs leading-5`}>
+                    {moneyLoopActive
+                      ? 'This single-lane plan includes a LOC event ledger and LOC interest estimate.'
+                      : 'This Portfolio view is ranking and allocation guidance only; it is not a LOC event ledger.'}
+                  </p>
+                )}
               </div>
 
               {/* Focus Mode */}
@@ -401,7 +417,7 @@ export default function PortfolioPage() {
                           <div>
                             <p className={`font-semibold ${classes.text}`}>Split Mode</p>
                             <p className={`${classes.textSecondary} text-xs mt-1`}>
-                              Allocate extra budget across the top two targets.
+                              Allocate extra budget across the top two targets. This is planning guidance, not a LOC event ledger.
                             </p>
                           </div>
                           <span className={`text-sm ${classes.text}`}>
