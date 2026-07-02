@@ -1257,10 +1257,11 @@ test('shared warnings treat a LOC balance without a limit as setup needed instea
       (warning) =>
         warning.type === 'no-loc' &&
         warning.severity === 'warning' &&
-        warning.message.includes('LOC balance is present, but the limit is missing')
+        warning.message.includes('LOC balance is present, but known LOC terms are incomplete')
     ),
     JSON.stringify(warnings)
   );
+  assert.ok(!warnings.some((warning) => warning.message.includes('the limit is missing')), JSON.stringify(warnings));
   assert.ok(!warnings.some((warning) => warning.type === 'loc-overutilization'), JSON.stringify(warnings));
   assert.ok(
     warnings.every((warning) => !warning.message.includes('Infinity') && !warning.message.includes('NaN')),
@@ -3762,7 +3763,7 @@ test('simulator strategy cards explain missing LOC limit failures plainly', () =
 
   assert.equal(velocity.monthsLabel, 'Review inputs');
   assert.equal(velocity.interestLabel, 'Not projected');
-  assert.equal(velocity.statusLabel, 'Add LOC limit');
+  assert.equal(velocity.statusLabel, 'Enter LOC terms');
 });
 
 test('simulator strategy cards explain full LOC failures without calling them over-limit', () => {
@@ -3805,10 +3806,10 @@ test('simulator warnings treat a missing LOC limit as setup needed instead of hi
 
   assert.ok(warnings.some((warning) => warning.kind === 'loc-setup'));
   assert.ok(!warnings.some((warning) => warning.kind === 'loc-utilization'));
-  assert.equal(warnings.find((warning) => warning.kind === 'loc-setup').title, 'Add LOC limit');
+  assert.equal(warnings.find((warning) => warning.kind === 'loc-setup').title, 'Enter known LOC terms');
   assert.equal(
     warnings.find((warning) => warning.kind === 'loc-setup').body,
-    'A LOC balance is present, but the limit is missing. Enter a limit before trusting utilization or chunk projections.'
+    'A LOC balance is present, but known LOC terms are incomplete. Enter the limit, APR, fees, and draw rules before trusting utilization or chunk projections.'
   );
 });
 
@@ -4666,7 +4667,7 @@ test('mortgage velocity strategy treats a missing LOC limit as setup needed inst
   assert.equal(strategies.velocity.saved, 0);
   assert.equal(strategies.velocity.monthsSaved, 0);
   assert.equal(strategies.velocity.chunkSize, 0);
-  assert.equal(vaultModel.formatVaultStrategyTimeDelta(strategies.velocity), 'Add LOC limit');
+  assert.equal(vaultModel.formatVaultStrategyTimeDelta(strategies.velocity), 'Enter LOC terms');
 });
 
 test('mortgage velocity strategy treats a full LOC as no available room instead of over-limit', () => {
@@ -5513,14 +5514,14 @@ test('dashboard model treats a missing LOC limit as setup needed instead of maxe
 
   assert.equal(model.locUtilization, 0);
   assert.equal(model.locUtilizationLabel, 'No LOC');
-  assert.equal(model.nextMove.title, 'Add LOC details');
+  assert.equal(model.nextMove.title, 'Enter known LOC terms');
   assert.equal(model.nextMove.value, 'No LOC set');
   assert.ok(model.warnings.some((warning) => warning.kind === 'loc-setup'));
   assert.ok(!model.warnings.some((warning) => warning.kind === 'loc-utilization'));
   const locArtifact = model.moneyLoopArtifacts.find((artifact) => artifact.id === 'loc');
-  assert.equal(locArtifact.value, 'Add LOC limit');
+  assert.equal(locArtifact.value, 'Enter LOC terms');
   assert.equal(locArtifact.signal, 'Setup needed');
-  assert.equal(locArtifact.note, 'LOC capacity needs a limit before chunk projections are meaningful.');
+  assert.equal(locArtifact.note, 'LOC capacity needs known terms before chunk projections are meaningful.');
   assert.equal(locArtifact.tone, 'amber');
   assert.equal(locArtifact.fillPercent, 12);
 });
@@ -5566,7 +5567,7 @@ test('dashboard model labels an existing LOC balance without a limit as missing 
   assert.equal(model.locNeedsSetup, true);
   assert.equal(model.locUtilization, 0);
   assert.equal(model.locUtilizationLabel, 'Missing limit');
-  assert.equal(model.nextMove.title, 'Add LOC details');
+  assert.equal(model.nextMove.title, 'Enter known LOC terms');
   assert.equal(model.nextMove.value, 'Missing limit');
   assert.ok(model.warnings.some((warning) => warning.kind === 'loc-setup'));
   assert.ok(!model.warnings.some((warning) => warning.kind === 'loc-utilization'));

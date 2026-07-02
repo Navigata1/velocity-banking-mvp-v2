@@ -47,7 +47,7 @@ function formatFailure(reason?: PayoffFailureReason): string {
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
-  if (reason === 'loc-setup') return 'Add LOC limit';
+  if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
@@ -70,10 +70,10 @@ export function buildSimulatorWarnings(input: SimulatorWarningInput): SimulatorW
     const hasLocBalance = input.loc.balance > 0;
     warnings.push({
       kind: 'loc-setup',
-      title: hasLocBalance ? 'Add LOC limit' : 'Add LOC details',
+      title: 'Enter known LOC terms',
       body: hasLocBalance
-        ? 'A LOC balance is present, but the limit is missing. Enter a limit before trusting utilization or chunk projections.'
-        : 'Enter a LOC limit before trusting utilization or chunk projections.',
+        ? 'A LOC balance is present, but known LOC terms are incomplete. Enter the limit, APR, fees, and draw rules before trusting utilization or chunk projections.'
+        : 'Enter known LOC limit, APR, fees, and draw rules before trusting utilization or chunk projections.',
       tone: 'amber',
     });
 

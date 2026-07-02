@@ -255,8 +255,8 @@ export function generateWarnings(
         type: 'no-loc',
         severity: safeLoc.balance > 0 ? 'warning' : 'info',
         message: safeLoc.balance > 0
-          ? 'LOC balance is present, but the limit is missing. Enter a LOC limit before trusting utilization or chunk projections.'
-          : 'No line of credit limit is set. Enter a LOC or HELOC limit before trusting velocity chunk projections.',
+          ? 'LOC balance is present, but known LOC terms are incomplete. Enter the limit, APR, fees, and draw rules before trusting utilization or chunk projections.'
+          : 'No line of credit terms are set. Enter known LOC or HELOC limit, APR, fees, and draw rules before trusting velocity chunk projections.',
       });
     } else {
       const utilization = safeLoc.balance / safeLoc.limit;
@@ -290,7 +290,7 @@ export function generateWarnings(
     warnings.push({
       type: 'no-loc',
       severity: 'info',
-      message: 'No line of credit set up. Velocity banking works best with a LOC or HELOC to cycle income through.',
+      message: 'No LOC terms are entered. Keep this in education mode until known LOC or HELOC limit, APR, fees, and draw rules are available.',
     });
   }
 
