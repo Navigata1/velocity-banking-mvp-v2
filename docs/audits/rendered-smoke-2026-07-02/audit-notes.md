@@ -57,6 +57,9 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 15. Portfolio strategy badge fit, post-fix.
     Health: improved. The Portfolio strategy picker now gives the Velocity status badge a compact wrapping header row and keeps strategy explanation copy on its own line.
 
+16. Simulator Portfolio alignment note, post-fix.
+    Health: improved. The Simulator Strategy Comparison now explains that active-debt payoff speed/interest comparisons differ from Portfolio Velocity's debt-order planning default.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -70,11 +73,11 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 
 ## UX Risks
 
-- Portfolio strategy semantics still need cross-route reinforcement so users understand why Portfolio defaults to Velocity planning while Simulator may show another path as fastest.
+- Portfolio strategy semantics now have cross-route reinforcement from both sides: Portfolio explains its Velocity planning default, and Simulator explains why its fastest/least-interest comparison can differ.
 - Post-fix Portfolio no longer overstates the current plan. The strategy picker now separates the Velocity status badge from description copy so narrow card widths do not force the badge to compete with explanatory text.
 - Dashboard artifact rail now hides native scrollbar chrome and fits all five selector artifacts on desktop. Remaining visual-overhaul work should focus on richer 3D/artifact presentation rather than clipped selector layout.
 - Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
-- The simulator and portfolio can disagree in tone: simulator shows Snowball as fastest, while Portfolio defaults to Velocity. The app should clearly explain that Portfolio Velocity is a ranking/planning default, not always the mathematically best payoff outcome.
+- Simulator and Portfolio can still produce different emphasis because they answer different questions. The current UI now labels that difference, but deeper user testing should confirm the distinction lands quickly.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
 - Vault now surfaces the zero-limit LOC setup text before the mortgage wizard. Remaining Vault browser work should focus on deeper mortgage input edge cases rather than the missing-LOC warning path.
 
@@ -99,6 +102,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Vault now derives a top-level setup warning from the same mortgage Velocity failure state used by strategy cards. Rendered Chrome smoke confirmed the warning appears before the mortgage wizard when LOC terms are missing, with no console or page errors.
 - Dashboard Money Loop selector now uses a five-column fitted desktop grid and compact card dimensions so the artifact rail does not rely on desktop horizontal scrolling.
 - Portfolio strategy cards now use a compact wrapped header for the Velocity status badge and keep strategy description copy on a separate line.
+- Simulator Strategy Comparison now explains that its active-debt payoff speed/interest comparison is different from Portfolio Velocity's debt-order planning default and links to Portfolio.
 
 ## Evidence Limits
 

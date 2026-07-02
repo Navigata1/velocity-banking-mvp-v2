@@ -420,6 +420,18 @@ export default function SimulatorPage() {
             <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
               <h2 className={`text-xl font-semibold mb-2 ${classes.text}`}>Strategy Comparison</h2>
               <p className={`text-xs ${classes.textMuted} mb-5`}>Fill level = time to payoff. Less fill = faster. Traditional is always 100%.</p>
+              <div
+                data-testid="simulator-portfolio-alignment-note"
+                className={`mb-5 rounded-xl border ${classes.border} bg-slate-950/25 p-4`}
+              >
+                <p className={`text-xs font-semibold uppercase ${classes.textMuted}`}>How this differs from Portfolio</p>
+                <p className={`mt-2 text-sm leading-6 ${classes.textSecondary}`}>
+                  Simulator compares modeled payoff speed and interest cost for the active debt. Portfolio Velocity is a planning default for ordering debts by cash-flow unlock and daily interest burn, not a promise that Velocity is always fastest or lowest-interest.
+                </p>
+                <a href="/portfolio" className="mt-3 inline-block text-xs font-semibold text-emerald-400 hover:underline">
+                  Review Portfolio planning order
+                </a>
+              </div>
               
               <StrategyGlassFill strategies={strategyResults} />
             </div>
