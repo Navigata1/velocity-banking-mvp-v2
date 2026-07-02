@@ -3069,6 +3069,28 @@ test('simulator warnings treat a missing LOC limit as setup needed instead of hi
   );
 });
 
+test('simulator warnings treat an exact-full LOC as no available room', () => {
+  const warnings = simulatorModel.buildSimulatorWarnings({
+    cashFlow: 1500,
+    loc: {
+      limit: 10000,
+      balance: 10000,
+    },
+  });
+
+  assert.ok(
+    warnings.some(
+      (warning) =>
+        warning.kind === 'loc-no-capacity' &&
+        warning.title === 'No LOC room available' &&
+        warning.body.includes('at the entered limit')
+    ),
+    JSON.stringify(warnings)
+  );
+  assert.ok(!warnings.some((warning) => warning.kind === 'loc-overlimit'), JSON.stringify(warnings));
+  assert.ok(!warnings.some((warning) => warning.kind === 'loc-utilization'), JSON.stringify(warnings));
+});
+
 test('web warning models distinguish LOC over limit from high utilization', () => {
   const simulatorWarnings = simulatorModel.buildSimulatorWarnings({
     cashFlow: 1500,
