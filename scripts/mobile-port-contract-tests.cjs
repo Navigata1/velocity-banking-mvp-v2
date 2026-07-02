@@ -1033,23 +1033,40 @@ test('shared mobile simulator snapshot treats a missing LOC limit as setup neede
 
 test('shared mobile simulator snapshot treats a full LOC as no available room instead of over-limit', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
-  const snapshot = sharedEngine.buildMobileSimulatorSnapshot({
+  const input = {
     ...sharedEngine.defaultMobileDashboardInput,
     loc: {
       limit: 10000,
       apr: 0.085,
       balance: 10000,
     },
-  });
+  };
+  const dashboard = sharedEngine.buildMobileDashboardSnapshot(input);
+  const snapshot = sharedEngine.buildMobileSimulatorSnapshot(input);
+  const vault = sharedEngine.buildMobileVaultSnapshot(input);
+  const learn = sharedEngine.buildMobileLearnSnapshot(input);
+  const cockpit = sharedEngine.buildMobileCockpitSnapshot(input);
   const velocity = snapshot.strategies.find((strategy) => strategy.name === 'Velocity');
+  const noCapacityWarning = 'LOC balance is at the entered limit. Pay it down before modeling another chunk.';
 
-  assert.equal(snapshot.guardrail, 'LOC utilization is above the 80% planning guardrail.');
+  assert.equal(dashboard.warning, noCapacityWarning);
+  assert.equal(dashboard.nextMove, 'Create LOC room');
+  assert.equal(dashboard.loop.find((step) => step.label === 'LOC').value, '$0 open');
+  assert.equal(snapshot.guardrail, noCapacityWarning);
   assert.equal(snapshot.velocity.interestSavedLabel, 'Not projected');
   assert.equal(snapshot.velocity.monthsSavedLabel, 'Review inputs');
   assert.equal(velocity.isPayoffPossible, false);
   assert.equal(velocity.monthsLabel, 'Review inputs');
   assert.equal(velocity.interestLabel, 'Not projected');
   assert.equal(velocity.statusLabel, 'No LOC room');
+  assert.equal(vault.guardrail, noCapacityWarning);
+  assert.equal(learn.guardrail, noCapacityWarning);
+  assert.equal(
+    learn.lessons.find((lesson) => lesson.title === 'LOC Room').detail,
+    'The LOC is at the limit, so create room before modeling another chunk.'
+  );
+  assert.equal(cockpit.warning, noCapacityWarning);
+  assert.equal(cockpit.flightStatusLabel, 'Review inputs');
 });
 
 test('shared mobile snapshots distinguish LOC over limit from high utilization', () => {
