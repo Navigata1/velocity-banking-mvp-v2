@@ -9,7 +9,7 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
-import { buildCashFlowGaugeDash, buildDebtBalanceGaugeDash } from '../cockpit-model';
+import { buildCashFlowGaugeDash, buildDebtBalanceGaugeDash, buildDebtFreedomProgressPercent } from '../cockpit-model';
 
 interface Instrument {
   label: string;
@@ -80,6 +80,7 @@ export default function CockpitPage() {
   const cashFlow = store.getCashFlow();
   const etaMonths = turbulence ? velocity.months + 2 : velocity.months;
   const routingAssumption = buildRoutingAssumption(depositIncomeToLoc, expenseCardOn);
+  const freedomProgressPercent = buildDebtFreedomProgressPercent(currentDebt.balance);
 
   const instruments: Instrument[] = [
     {
@@ -218,7 +219,7 @@ export default function CockpitPage() {
                     />
                     <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">ALTITUDE</text>
                     <text x="50" y="58" textAnchor="middle" fill="#10b981" fontSize="12" fontFamily="monospace">
-                      {(((50000 - currentDebt.balance) / 50000) * 100).toFixed(0)}%
+                      {freedomProgressPercent}%
                     </text>
                   </svg>
                 </div>

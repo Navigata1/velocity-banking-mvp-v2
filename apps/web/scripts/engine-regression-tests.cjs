@@ -4179,6 +4179,11 @@ test('cockpit gauge dashes stay within SVG bounds', () => {
   assert.equal(cockpitModel.buildDebtBalanceGaugeDash(-1), '0 251');
   assert.equal(cockpitModel.buildDebtBalanceGaugeDash(25000), '126 251');
   assert.equal(cockpitModel.buildDebtBalanceGaugeDash(125000), '251 251');
+  assert.equal(cockpitModel.buildDebtFreedomProgressPercent(Number.NaN), 0);
+  assert.equal(cockpitModel.buildDebtFreedomProgressPercent(125000), 0);
+  assert.equal(cockpitModel.buildDebtFreedomProgressPercent(50000), 0);
+  assert.equal(cockpitModel.buildDebtFreedomProgressPercent(25000), 50);
+  assert.equal(cockpitModel.buildDebtFreedomProgressPercent(0), 100);
 });
 
 test('vault default copy keeps a coach tone instead of fear language', () => {
