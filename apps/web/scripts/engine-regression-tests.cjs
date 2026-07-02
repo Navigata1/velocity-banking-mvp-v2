@@ -2154,6 +2154,47 @@ test('navigation exposes active page and mobile landmark state', () => {
   );
 });
 
+test('navigation renders deterministic mobile icon tokens with stable tap targets', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/Navigation.tsx'), 'utf8');
+
+  assert.ok(source.includes('function NavIconToken'), 'expected navigation to use deterministic shell icon tokens');
+  assert.ok(source.includes("'/simulator': 'SIM'"), 'expected Simulator to have a stable mobile token');
+  assert.ok(source.includes("'/portfolio': 'PF'"), 'expected Portfolio to have a stable mobile token');
+  assert.ok(source.includes("'/vault': 'WT'"), 'expected Vault to have a stable mobile token');
+  assert.ok(
+    source.includes('<NavIconToken token={navIconTokens[item.href]} />'),
+    'expected route links to render token icons instead of raw glyph strings'
+  );
+  assert.ok(
+    source.includes('min-h-12 min-w-0 items-center justify-center'),
+    'expected mobile nav controls to keep a stable minimum touch target'
+  );
+  assert.ok(source.includes('<NavIconToken token="AI" />'), 'expected Guardian to render a deterministic mobile token');
+  assert.ok(
+    source.includes('<NavIconToken token={themeIconTokens[theme]} />') &&
+      source.includes('<NavIconToken token={themeIconTokens[option.value]} />'),
+    'expected theme controls to render deterministic tokens'
+  );
+});
+
+test('domain controls render deterministic tokens instead of stored glyph strings', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/DomainTabs.tsx'), 'utf8');
+
+  assert.ok(source.includes('function DomainIconToken'), 'expected domain controls to use deterministic tokens');
+  assert.ok(source.includes("creditCard: 'CC'"), 'expected credit-card domain to have a stable token');
+  assert.ok(source.includes("studentLoan: 'SL'"), 'expected student-loan domain to have a stable token');
+  assert.ok(
+    source.includes('<DomainIconToken token={currentToken} />'),
+    'expected top-level domain tabs to render a token instead of the raw icon field'
+  );
+  assert.ok(
+    source.includes('<DomainIconToken token={buildSubcategoryToken(subcat.label)} />'),
+    'expected subcategory options to derive readable tokens from their labels'
+  );
+  assert.ok(source.includes('>On</span>'), 'expected selected subcategories to use ASCII-safe selected text');
+  assert.ok(source.includes('[&>span:last-child]:hidden'), 'expected legacy glyph fallback markers to stay hidden');
+});
+
 test('root layout exposes a keyboard skip link to main content', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/layout.tsx'), 'utf8');
 

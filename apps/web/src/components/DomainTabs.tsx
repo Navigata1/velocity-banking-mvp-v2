@@ -22,6 +22,41 @@ const tabs = [
   { id: 'custom', label: 'Custom', defaultIcon: '➕' },
 ];
 
+const domainIconTokens: Record<string, string> = {
+  car: 'AU',
+  house: 'HM',
+  land: 'LD',
+  creditCard: 'CC',
+  studentLoan: 'SL',
+  medical: 'MD',
+  personal: 'PL',
+  recreation: 'RC',
+  custom: 'CU',
+};
+
+function DomainIconToken({ token }: { token: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/10 px-1.5 text-[10px] font-bold leading-none tracking-normal"
+    >
+      {token}
+    </span>
+  );
+}
+
+function buildSubcategoryToken(label: string): string {
+  const words = label
+    .replace(/[^A-Za-z0-9 ]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (words.length === 0) return 'DM';
+  if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
+
+  return words.map((word) => word[0]).join('').slice(0, 3).toUpperCase();
+}
+
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const mounted = useIsClient();
@@ -55,9 +90,8 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
     setDropdownOpen(null);
   };
 
-  const getTabIcon = (tabId: string, defaultIcon: string) => {
-    const subcat = store.getActiveSubcategory(tabId as Domain);
-    return subcat?.icon || defaultIcon;
+  const getTabToken = (tabId: string) => {
+    return domainIconTokens[tabId] ?? 'DM';
   };
 
   return (
@@ -70,7 +104,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const hasDropdown = dropdownOpen === tab.id;
-        const currentIcon = getTabIcon(tab.id, tab.defaultIcon);
+        const currentToken = getTabToken(tab.id);
         const subcategories = domainSubcategories[tab.id as Domain];
         
         return (
@@ -89,10 +123,15 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                   : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-700/30`
               }`}
             >
-              <span className="text-base">{currentIcon}</span>
+              <DomainIconToken token={currentToken} />
               <span className="hidden sm:inline">{tab.label}</span>
               {isActive && (
-                <span className={`ml-1 text-xs transition-transform ${hasDropdown ? 'rotate-180' : ''}`}>
+                <span aria-hidden="true" className={`ml-1 text-[10px] transition-transform ${hasDropdown ? 'rotate-180' : ''}`}>
+                  v
+                </span>
+              )}
+              {isActive && (
+                <span className="hidden">
                   ▼
                 </span>
               )}
@@ -117,17 +156,20 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                         onClick={() => handleSubcategorySelect(tab.id as Domain, subcat.id)}
                         aria-label={`Use ${subcat.label} for ${tab.label}`}
                         aria-pressed={isSelected}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all [&>span:last-child]:hidden ${
                           isSelected
                             ? 'bg-emerald-500/30 text-emerald-500 font-semibold'
                             : `${classes.text} hover:bg-emerald-500/10`
                         }`}
                       >
-                        <span className="text-xl">{subcat.icon}</span>
+                        <DomainIconToken token={buildSubcategoryToken(subcat.label)} />
                         <div className="flex-1">
                           <p className={`font-medium text-sm ${isSelected ? 'text-emerald-500' : classes.text}`}>{subcat.label}</p>
                           <p className={`text-xs ${classes.textSecondary}`}>{subcat.description}</p>
                         </div>
+                        {isSelected && (
+                          <span className="text-xs font-semibold text-emerald-500">On</span>
+                        )}
                         {isSelected && (
                           <span className="text-emerald-500">✓</span>
                         )}
