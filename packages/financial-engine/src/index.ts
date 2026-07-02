@@ -11,7 +11,7 @@ export interface LOCDetails {
   balance: number;
 }
 
-export type AmortizedPayoffFailureReason = 'payment-below-interest';
+export type AmortizedPayoffFailureReason = 'payment-below-interest' | 'payoff-horizon-exceeded';
 
 export interface AmortizedPayoffMonth {
   month: number;
@@ -43,7 +43,11 @@ export interface MoneyLoopLOC {
   balance: number;
 }
 
-export type MoneyLoopFailureReason = 'payment-below-interest' | 'negative-cashflow' | 'loc-overlimit';
+export type MoneyLoopFailureReason =
+  | 'payment-below-interest'
+  | 'negative-cashflow'
+  | 'loc-overlimit'
+  | 'payoff-horizon-exceeded';
 
 export type MoneyLoopEventType =
   | 'debt-interest'
@@ -120,7 +124,8 @@ export type MobilePayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
-  | 'loc-overlimit';
+  | 'loc-overlimit'
+  | 'payoff-horizon-exceeded';
 
 export type MobileSimulatorStrategyName = 'Traditional' | 'Snowball' | 'Avalanche' | 'Velocity';
 
@@ -367,7 +372,7 @@ export function simulateAmortizedPayoff(inputs: AmortizedPayoffInputs): Amortize
     totalInterest,
     monthlyData,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
   };
 }
 
@@ -591,7 +596,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     locInterestPaid,
     monthlyData,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
   };
 }
 
@@ -750,6 +755,7 @@ function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
 }
 

@@ -101,7 +101,8 @@ export type PayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
-  | 'loc-overlimit';
+  | 'loc-overlimit'
+  | 'payoff-horizon-exceeded';
 
 export interface PayoffSimulation {
   payoffMonths: number;
@@ -657,7 +658,7 @@ export function simulateMultiDebt(
     strategy,
     debts: debtResults,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payment-below-interest',
+    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
     totalInterestPaid: totalInterest,
     locInterestPaid: strategy === 'velocity' ? locInterestPaid : 0,
     moneyLoopMonthlyData: strategy === 'velocity' ? moneyLoopMonthlyData : [],

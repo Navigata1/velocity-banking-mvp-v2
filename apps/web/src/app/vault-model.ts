@@ -50,6 +50,7 @@ export function formatVaultProjectionFailure(reason?: string): string {
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below payment';
   if (reason === 'payment-below-interest') return 'Payment below interest';
+  if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
 }
 
