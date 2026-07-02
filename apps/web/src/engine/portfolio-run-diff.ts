@@ -89,6 +89,17 @@ function focusLabel(focusMode: FocusMode): string {
   return focusMode === 'single' ? 'Single Lane' : 'Split Mode';
 }
 
+function failureReasonLabel(reason?: PortfolioFailureReason): string {
+  if (reason === 'negative-cashflow') return 'negative cash flow';
+  if (reason === 'cashflow-below-minimums') return 'cash flow below minimums';
+  if (reason === 'payment-below-interest') return 'payment below interest';
+  if (reason === 'loc-setup') return 'LOC setup needed';
+  if (reason === 'loc-no-capacity') return 'no LOC room';
+  if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'payoff-horizon-exceeded') return 'projection horizon exceeded';
+  return 'review the warnings';
+}
+
 function findPrimaryTargetName(
   inputs: PortfolioSimulationInputs,
   result: PortfolioSimulationResult
@@ -156,8 +167,8 @@ export function comparePortfolioRuns(
       label: 'Projection status',
       value: current.isPayoffPossible ? 'Projection restored' : 'Needs review',
       body: current.isPayoffPossible
-        ? `The plan moved from ${previous.failureReason ?? 'an invalid state'} back to a projected payoff.`
-        : `The latest inputs stopped the payoff projection: ${current.failureReason ?? 'review the warnings'}.`,
+        ? `The plan moved from ${failureReasonLabel(previous.failureReason)} back to a projected payoff.`
+        : `The latest inputs stopped the payoff projection: ${failureReasonLabel(current.failureReason)}.`,
       direction: current.isPayoffPossible ? 'improved' : 'worsened',
     });
   }

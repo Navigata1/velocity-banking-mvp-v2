@@ -1493,6 +1493,65 @@ test('portfolio run comparison explains projection deltas after an edit', () => 
   );
 });
 
+test('portfolio run comparison formats invalid projection reasons for users', () => {
+  const previous = {
+    cashFlow: 1500,
+    totalDebt: 14000,
+    totalMinimums: 390,
+    payoffMonths: 24,
+    totalInterest: 1200,
+    isPayoffPossible: true,
+    strategy: 'velocity',
+    focusMode: 'single',
+    primaryTargetName: 'Auto Loan',
+    debtCount: 1,
+  };
+  const current = {
+    ...previous,
+    payoffMonths: 0,
+    totalInterest: 0,
+    isPayoffPossible: false,
+    failureReason: 'loc-no-capacity',
+  };
+
+  const comparison = portfolioRunDiff.comparePortfolioRuns(previous, current);
+  const projectionChange = comparison.changes.find((change) => change.id === 'projection');
+
+  assert.equal(projectionChange.value, 'Needs review');
+  assert.equal(projectionChange.body, 'The latest inputs stopped the payoff projection: no LOC room.');
+  assert.ok(!projectionChange.body.includes('loc-no-capacity'), projectionChange.body);
+});
+
+test('portfolio run comparison formats restored projection reasons for users', () => {
+  const previous = {
+    cashFlow: 1500,
+    totalDebt: 14000,
+    totalMinimums: 390,
+    payoffMonths: 0,
+    totalInterest: 0,
+    isPayoffPossible: false,
+    failureReason: 'loc-setup',
+    strategy: 'velocity',
+    focusMode: 'single',
+    primaryTargetName: 'Auto Loan',
+    debtCount: 1,
+  };
+  const current = {
+    ...previous,
+    payoffMonths: 24,
+    totalInterest: 1200,
+    isPayoffPossible: true,
+    failureReason: undefined,
+  };
+
+  const comparison = portfolioRunDiff.comparePortfolioRuns(previous, current);
+  const projectionChange = comparison.changes.find((change) => change.id === 'projection');
+
+  assert.equal(projectionChange.value, 'Projection restored');
+  assert.equal(projectionChange.body, 'The plan moved from LOC setup needed back to a projected payoff.');
+  assert.ok(!projectionChange.body.includes('loc-setup'), projectionChange.body);
+});
+
 test('portfolio page mounts the what-changed-since-last-run panel', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
 
