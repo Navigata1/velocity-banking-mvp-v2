@@ -112,6 +112,7 @@ function runShellContract() {
   assertIncludes('src/app/layout.tsx', layout, 'href="#main-content"', 'skip link targets main content');
   assertIncludes('src/app/layout.tsx', layout, 'id="main-content"', 'main content exposes a skip-link target');
   assertIncludes('src/app/layout.tsx', layout, 'tabIndex={-1}', 'main content can receive programmatic focus');
+  assertIncludes('src/app/layout.tsx', layout, 'Educational tool. Not financial advice.', 'mobile shell exposes the required educational footer copy');
   assertIncludes('src/components/Navigation.tsx', navigation, 'aria-label="Primary navigation"', 'primary navigation has a landmark label');
   assertIncludes('src/components/Navigation.tsx', navigation, 'data-testid="primary-navigation"', 'primary navigation keeps the production freshness marker');
   assertIncludes('src/components/Navigation.tsx', navigation, 'aria-current={pathname === item.href ? \'page\' : undefined}', 'active route is announced');

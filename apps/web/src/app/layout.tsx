@@ -57,6 +57,9 @@ export default function RootLayout({
               <IntroModal />
               <PreAppPreview />
               {children}
+              <p className="px-4 pb-6 pt-2 text-center text-xs text-gray-500 md:hidden">
+                Educational tool. Not financial advice.
+              </p>
             </main>
           </div>
         </ThemeProvider>
