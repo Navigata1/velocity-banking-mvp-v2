@@ -602,6 +602,39 @@ test('shared amortized payoff distinguishes horizon misses from under-interest p
   assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited projection to keep its reviewed schedule');
 });
 
+test('shared financial-engine primitives sanitize non-finite inputs', () => {
+  assert.equal(sharedFinancialEngine.calculateMonthlyRate(Number.NaN), 0);
+  assert.equal(sharedFinancialEngine.calculateDailyRate(Number.POSITIVE_INFINITY), 0);
+  assert.equal(sharedFinancialEngine.calculateDailyInterest(Number.NaN, 0.12), 0);
+  assert.equal(sharedFinancialEngine.calculateDailyInterest(1000, Number.NaN), 0);
+  assert.equal(sharedFinancialEngine.calculateCashFlow(Number.NaN, 500), -500);
+  assert.equal(sharedFinancialEngine.calculateCashFlow(500, Number.NaN), 500);
+  assert.equal(sharedFinancialEngine.calculateAmortizationPayment(Number.NaN, 0.06, 360), 0);
+  assert.equal(sharedFinancialEngine.calculateAmortizationPayment(100000, Number.NaN, 360).toFixed(2), '277.78');
+  assert.equal(sharedFinancialEngine.calculateADBInterest(Number.NaN, 0.12, 5000, 4000), 0);
+});
+
+test('shared amortized payoff sanitizes non-finite inputs before building a schedule', () => {
+  const projection = sharedFinancialEngine.simulateAmortizedPayoff({
+    principalBalance: 1000,
+    apr: Number.NaN,
+    monthlyPayment: 250,
+    extraPayment: Number.NaN,
+    maxMonths: Number.NaN,
+  });
+
+  assert.equal(projection.isPayoffPossible, true);
+  assert.equal(projection.payoffMonths, 4);
+  assert.equal(projection.totalInterest, 0);
+  assert.equal(projection.monthlyData.length, 4);
+  assert.ok(
+    projection.monthlyData.every((month) =>
+      [month.balance, month.interest, month.principal, month.payment].every(Number.isFinite)
+    ),
+    `expected finite amortized rows, got ${JSON.stringify(projection.monthlyData)}`
+  );
+});
+
 test('shared Money Loop payoff rejects payments below monthly interest before producing a timeline', () => {
   const moneyLoop = loadTsModule('src/engine/money-loop.ts');
   const result = moneyLoop.simulateMoneyLoopPayoff({
@@ -703,6 +736,44 @@ test('shared Money Loop payoff distinguishes horizon misses from under-interest 
   assert.equal(result.failureReason, 'payoff-horizon-exceeded');
   assert.equal(result.payoffMonths, 12);
   assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited Money Loop projection to keep its event ledger');
+});
+
+test('shared Money Loop payoff sanitizes non-finite inputs before building an event ledger', () => {
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 1000,
+    debtApr: Number.NaN,
+    debtPayment: 250,
+    loc: {
+      limit: 5000,
+      apr: Number.NaN,
+      balance: Number.NaN,
+    },
+    chunkAmount: Number.NaN,
+    cashFlowPaydown: 1000,
+    locDepositAmount: Number.NaN,
+    locExpenseAmount: Number.NaN,
+    maxMonths: Number.NaN,
+    initialMonthsSinceChunk: Number.NaN,
+  });
+
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 4);
+  assert.equal(result.totalInterest, 0);
+  assert.ok(result.monthlyData.length > 0, 'expected sanitized Money Loop rows');
+  for (const month of result.monthlyData) {
+    assert.ok(
+      [month.debtBalance, month.locBalance, month.debtInterest, month.locInterest, month.cashFlowPaydown].every(
+        Number.isFinite
+      ),
+      `expected finite Money Loop month, got ${JSON.stringify(month)}`
+    );
+    for (const event of month.events) {
+      assert.ok(
+        [event.amount, event.balanceAfter].every(Number.isFinite),
+        `expected finite Money Loop event, got ${JSON.stringify(event)}`
+      );
+    }
+  }
 });
 
 test('shared Money Loop caps LOC chunk draw to remaining principal', () => {
