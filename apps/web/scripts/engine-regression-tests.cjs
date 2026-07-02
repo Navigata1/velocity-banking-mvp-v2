@@ -2219,6 +2219,35 @@ test('editable financial controls expose contextual screen-reader labels', () =>
   );
 });
 
+test('editable financial controls sanitize non-finite display values', () => {
+  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
+
+  assert.ok(
+    componentSource.includes('function sanitizeValue(value: number, min: number, max: number): number'),
+    'expected EditableNumber to centralize finite display sanitization'
+  );
+  assert.ok(
+    componentSource.includes('const finiteValue = Number.isFinite(value) ? value : min'),
+    'expected EditableNumber to fall back from non-finite values before formatting'
+  );
+  assert.ok(
+    componentSource.includes('const safeValue = sanitizeValue(value, min, max)'),
+    'expected EditableNumber to sanitize the incoming value prop'
+  );
+  assert.ok(
+    componentSource.includes('formatDisplay(safeValue)'),
+    'expected EditableNumber display and aria labels to use sanitized values'
+  );
+  assert.ok(
+    componentSource.includes('setTempValue((safeValue * 100).toFixed(1))'),
+    'expected percent editing to avoid non-finite temp values'
+  );
+  assert.ok(
+    componentSource.includes('setTempValue(safeValue.toString())'),
+    'expected edit and escape flows to reset to sanitized values'
+  );
+});
+
 test('simulator editable controls expose contextual screen-reader labels', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
 
