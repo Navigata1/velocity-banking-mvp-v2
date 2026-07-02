@@ -6117,8 +6117,9 @@ test('repository documents the current Vercel alias promotion blocker', () => {
     'expected the runbook to name the current release-stack main commit'
   );
   assert.ok(
-    runbook.includes('https://velocity-banking-mvp-v2-jw03y0lyf-islanddevcrew.vercel.app'),
-    'expected the runbook to name the latest observed GitHub Production deployment target'
+    runbook.includes('https://velocity-banking-mvp-v2-<deployment-suffix>-islanddevcrew.vercel.app') &&
+      runbook.includes('Latest GitHub Production deployment target'),
+    'expected the runbook to document ephemeral Vercel deployment targets'
   );
   assert.ok(
     runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('dpl_EckirtMoGJD4LPcq3tBWhJ2boRLA'),
