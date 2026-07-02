@@ -3726,6 +3726,14 @@ Status: completed in local source.
 - Linked the note to `/portfolio` so users can move from active-debt what-if comparisons into debt-order planning without treating Velocity as universally fastest or lowest-interest.
 - Added regression coverage for the note hook, cross-route explanation, no-universal-Velocity claim, and Portfolio link.
 
+### Repair Pass 195: Simulator LOC Balance Control
+
+Status: completed in local source.
+
+- Added a visible LOC Balance editor to the Simulator Line of Credit card, between Limit and APR.
+- Wired the control to `store.updateLOC({ balance })`, matching the same LOC balance already used by Simulator projections, LOC interest math, and warning states.
+- Added regression coverage proving the Simulator exposes a screen-reader label for LOC balance and keeps the editable control aligned with the projection/warning input.
+
 ## Testing Backlog
 
 ### Math Unit Tests
@@ -3808,7 +3816,7 @@ Status: completed in local source.
 
 - Redesign first-run flow.
 - Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94; desktop artifact selector fit tightened in Repair Pass 192 so all five Money Loop artifacts remain visible without desktop horizontal scrolling.
-- Rebuild simulator scenario comparison. Status: Repair Pass 190 moved StrategyGlassFill comparison math into a model helper so invalid Traditional/baseline projections no longer create fallback winner, fill, or savings claims. Repair Pass 194 adds a Simulator-side explanation that modeled payoff speed/interest comparisons are not the same as Portfolio Velocity's debt-order planning default.
+- Rebuild simulator scenario comparison. Status: Repair Pass 190 moved StrategyGlassFill comparison math into a model helper so invalid Traditional/baseline projections no longer create fallback winner, fill, or savings claims. Repair Pass 194 adds a Simulator-side explanation that modeled payoff speed/interest comparisons are not the same as Portfolio Velocity's debt-order planning default. Repair Pass 195 exposes the LOC balance input on Simulator so users can directly edit the balance that drives LOC interest, utilization warnings, and Velocity projections.
 - Rebuild portfolio mobile and desktop planner. Status: Portfolio desktop planner invalid-projection states, run comparison, and payoff path coverage are active; Repair Pass 182 formats Portfolio run-diff projection failure reasons as user-facing labels instead of raw engine codes. Repair Pass 188 keeps Velocity targeting rankings finite and stable when a corrupted/non-finite debt field reaches the preview helper boundary. Repair Pass 189 moves the pre-app preview snapshot math into a tested model helper so corrupted/non-finite debt or projection values cannot leak into preview totals, scores, or debt-free-date claims. Repair Pass 193 keeps the Portfolio strategy picker readable by wrapping the Velocity status badge separately from strategy explanation copy, and Repair Pass 194 reinforces the same planning-vs-fastest distinction from the Simulator side.
 - Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity. Repair Pass 162 tightened Learn and Dashboard LOC wording so warnings stay coach-tone instead of hype or fear phrasing. Repair Pass 180 kept missing LOC limit payoff failures labeled as setup work instead of over-limit debt. Repair Pass 181 kept exact-100% LOC utilization labeled as no available room rather than over-limit. Repair Pass 183 brought the dashboard no-capacity warning and next move into the same exact-full LOC language. Repair Pass 184 aligned shared mobile dashboard, simulator, vault, learn, and cockpit no-capacity copy with the same exact-full LOC state. Repair Pass 185 extended that exact-full LOC no-capacity copy to the shared mobile Portfolio payoff path. Repair Pass 186 aligned the web Simulator warning card with the same exact-full LOC no-capacity state instead of the generic high-utilization warning. Repair Pass 187 split shared warning output so over-limit and exact-full LOC states no longer masquerade as generic utilization warnings. Repair Pass 191 surfaces Vault mortgage Velocity setup failures before the mortgage wizard so missing known LOC terms are visible before strategy comparison.
 
