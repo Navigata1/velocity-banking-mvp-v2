@@ -14,6 +14,8 @@ interface VaultStrategyProjection {
   failureReason?: string;
 }
 
+const MAX_FREED_PAYMENT_YEARS = 100;
+
 export interface VaultFreedomPathInput {
   currentAge: number;
   standardMonths: number;
@@ -38,6 +40,9 @@ export interface VaultFreedomPathModel {
 }
 
 function calculateFreedPaymentGrowth(monthlyPayment: number, annualRate: number, freedYears: number): number {
+  if (!Number.isFinite(monthlyPayment) || !Number.isFinite(annualRate) || !Number.isFinite(freedYears)) return 0;
+  if (monthlyPayment <= 0 || annualRate < 0 || freedYears <= 0 || freedYears > MAX_FREED_PAYMENT_YEARS) return 0;
+
   let investmentGrowth = 0;
   for (let i = 0; i < freedYears * 12; i++) {
     investmentGrowth = (investmentGrowth + monthlyPayment) * (1 + annualRate / 12);
@@ -84,12 +89,23 @@ export function buildVaultVisualPercent(value: number, maxValue = 100): number {
 }
 
 export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultFreedomPathModel {
-  const standardYears = Math.ceil(input.standardMonths / 12);
+  const standardYears = Number.isFinite(input.standardMonths) && input.standardMonths > 0
+    ? Math.ceil(input.standardMonths / 12)
+    : 0;
+  const safeCurrentAge = Number.isFinite(input.currentAge) && input.currentAge >= 0 ? input.currentAge : 0;
   const canProject =
     input.velocity.isPayoffPossible &&
+    Number.isFinite(input.velocity.months) &&
+    Number.isFinite(input.velocity.saved) &&
+    Number.isFinite(input.standardMonths) &&
+    Number.isFinite(input.monthlyPayment) &&
+    Number.isFinite(input.investmentRate) &&
     input.velocity.months > 0 &&
     input.standardMonths > 0 &&
-    input.velocity.months <= input.standardMonths;
+    input.monthlyPayment >= 0 &&
+    input.investmentRate >= 0 &&
+    input.velocity.months <= input.standardMonths &&
+    standardYears <= MAX_FREED_PAYMENT_YEARS;
 
   if (!canProject) {
     return {
@@ -102,7 +118,7 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
       freedomYearsLabel: 'Review inputs',
       portfolioValueLabel: 'Not projected',
       timelineLabel: 'Velocity path needs usable inputs first',
-      standardAgeLabel: `Age ${input.currentAge + standardYears}`,
+      standardAgeLabel: standardYears > 0 ? `Age ${safeCurrentAge + standardYears}` : 'Review inputs',
       velocityAgeLabel: 'Review inputs',
       investmentCaption: 'Velocity payoff needs usable inputs before freed-payment growth can be estimated.',
     };
@@ -126,8 +142,8 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
     freedomYearsLabel: `${freedYears} years`,
     portfolioValueLabel: formatCurrency(investmentGrowth),
     timelineLabel: 'Velocity path projected',
-    standardAgeLabel: `Age ${input.currentAge + standardYears}`,
-    velocityAgeLabel: `Free at ${input.currentAge + velocityYears}`,
+    standardAgeLabel: `Age ${safeCurrentAge + standardYears}`,
+    velocityAgeLabel: `Free at ${safeCurrentAge + velocityYears}`,
     investmentCaption: `By investing your freed ${formatCurrency(input.monthlyPayment)}/mo for ${freedYears} years @ ${(input.investmentRate * 100).toFixed(0)}% return`,
   };
 }
