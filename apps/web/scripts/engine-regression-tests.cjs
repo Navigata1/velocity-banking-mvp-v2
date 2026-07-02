@@ -612,6 +612,10 @@ test('shared financial-engine primitives sanitize non-finite inputs', () => {
   assert.equal(sharedFinancialEngine.calculateAmortizationPayment(Number.NaN, 0.06, 360), 0);
   assert.equal(sharedFinancialEngine.calculateAmortizationPayment(100000, Number.NaN, 360).toFixed(2), '277.78');
   assert.equal(sharedFinancialEngine.calculateADBInterest(Number.NaN, 0.12, 5000, 4000), 0);
+  assert.equal(sharedFinancialEngine.formatCurrency(Number.NaN), '$0');
+  assert.equal(sharedFinancialEngine.formatCurrency(Number.POSITIVE_INFINITY), '$0');
+  assert.equal(sharedFinancialEngine.formatCurrency(Number.NEGATIVE_INFINITY), '$0');
+  assert.equal(sharedFinancialEngine.formatCurrency(-500), '-$500');
 });
 
 test('shared amortized payoff sanitizes non-finite inputs before building a schedule', () => {
