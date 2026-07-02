@@ -102,6 +102,16 @@ export default function MoneyLoopArtifactRail({
     });
   }
 
+  function selectRelativeArtifact(direction: -1 | 1) {
+    const lastIndex = artifacts.length - 1;
+    const nextIndex =
+      direction === 1
+        ? activeIndex === lastIndex ? 0 : activeIndex + 1
+        : activeIndex === 0 ? lastIndex : activeIndex - 1;
+
+    selectArtifactByIndex(nextIndex);
+  }
+
   function handleArtifactKeyDown(
     event: KeyboardEvent<HTMLButtonElement>,
     index: number
@@ -214,11 +224,39 @@ export default function MoneyLoopArtifactRail({
         </div>
       </div>
 
-      <div className="-mx-1 mt-4 overflow-x-auto px-1 pb-2">
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>
+          Artifact {activeIndex + 1} of {artifacts.length}
+        </p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Previous Money Loop artifact"
+            aria-controls="money-loop-artifact-panel"
+            data-testid="money-loop-artifact-previous"
+            onClick={() => selectRelativeArtifact(-1)}
+            className={`min-h-10 rounded-lg border px-3 text-sm font-semibold transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
+          >
+            Prev
+          </button>
+          <button
+            type="button"
+            aria-label="Next Money Loop artifact"
+            aria-controls="money-loop-artifact-panel"
+            data-testid="money-loop-artifact-next"
+            onClick={() => selectRelativeArtifact(1)}
+            className={`min-h-10 rounded-lg border px-3 text-sm font-semibold transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div className="artifact-carousel-scroll -mx-1 mt-3 overflow-x-auto scroll-smooth px-1 pb-1">
         <div
           role="tablist"
           aria-label="Money Loop artifact selector"
-          className="grid min-w-[760px] grid-cols-5 gap-3"
+          className="grid min-w-[760px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1"
         >
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
@@ -240,7 +278,7 @@ export default function MoneyLoopArtifactRail({
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
                 onClick={() => selectArtifactByIndex(index)}
                 onKeyDown={(event) => handleArtifactKeyDown(event, index)}
-                className={`relative min-h-[132px] rounded-xl border p-3 text-left transition ${
+                className={`relative min-h-[132px] snap-center rounded-xl border p-3 text-left transition ${
                   isActive
                     ? `${tone.border} ${tone.surface} shadow-lg shadow-black/20`
                     : `${classes.border} bg-slate-950/20 hover:bg-white/5`

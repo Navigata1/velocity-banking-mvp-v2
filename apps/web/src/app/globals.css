@@ -124,6 +124,15 @@ body {
     color-mix(in srgb, var(--orbit-node-color) 58%, rgb(15 23 42));
 }
 
+.artifact-carousel-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.artifact-carousel-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .artifact-token {
     animation: artifactFloat 4.8s ease-in-out infinite;

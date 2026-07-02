@@ -5516,10 +5516,16 @@ test('Money Loop artifact child hooks do not collide with the rail smoke hook', 
 
 test('Money Loop artifact rail contains horizontal overflow inside its own frame', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
 
   assert.ok(source.includes('overflow-x-auto'), 'expected artifact rail to scroll internally when the panel is narrow');
+  assert.ok(source.includes('artifact-carousel-scroll'), 'expected artifact rail to hide the native scrollbar chrome');
+  assert.ok(css.includes('.artifact-carousel-scroll'), 'expected CSS to define the carousel scroll container');
+  assert.ok(css.includes('scrollbar-width: none'), 'expected Firefox scrollbar chrome to be hidden');
+  assert.ok(css.includes('::-webkit-scrollbar'), 'expected Chromium scrollbar chrome to be hidden');
   assert.ok(source.includes('min-w-[760px]'), 'expected artifact cards to keep a stable minimum rail width');
   assert.ok(source.includes('grid-cols-5'), 'expected the five Money Loop artifacts to remain a horizontal rail');
+  assert.ok(source.includes('snap-x snap-mandatory'), 'expected artifact cards to snap into centered carousel positions');
 });
 
 test('Money Loop artifact rail exposes an item-selection carousel', () => {
@@ -5532,6 +5538,9 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
   assert.ok(source.includes('onClick={() => selectArtifactByIndex(index)}'), 'expected pointer selection to reuse the roving-focus path');
+  assert.ok(source.includes('selectRelativeArtifact'), 'expected explicit carousel controls to reuse the artifact selection model');
+  assert.ok(source.includes('data-testid="money-loop-artifact-previous"'), 'expected a stable previous-control smoke hook');
+  assert.ok(source.includes('data-testid="money-loop-artifact-next"'), 'expected a stable next-control smoke hook');
   assert.ok(source.includes('artifact-carousel-token'), 'expected active artifact to use the carousel token animation class');
   assert.ok(css.includes('@keyframes artifactSpinSelect'), 'expected selected artifacts to spin once when chosen');
   assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
