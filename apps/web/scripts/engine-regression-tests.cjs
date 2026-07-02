@@ -394,6 +394,11 @@ test('web calculations use shared financial-engine primitives', () => {
     tsconfig.compilerOptions.paths['@interestshield/financial-engine'],
     ['../../packages/financial-engine/src/index.ts']
   );
+  assert.equal(
+    packageJson.scripts.dev,
+    'next dev --webpack -H 0.0.0.0 -p 5000',
+    'expected local dev to use webpack until Turbopack resolves Windows monorepo package and CSS roots together'
+  );
   assert.ok(
     nextConfig.includes("transpilePackages: ['@interestshield/financial-engine']"),
     'expected Next to transpile the local shared financial engine package'
