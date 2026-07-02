@@ -11,7 +11,12 @@ import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import StrategyGlassFill from '@/components/StrategyGlassFill';
 import { useIsClient } from '@/hooks/useIsClient';
-import { buildSimulatorStrategyCards, buildSimulatorTimelineStatus, buildSimulatorWarnings } from '@/app/simulator-model';
+import {
+  buildSimulatorBalanceBarHeightPercent,
+  buildSimulatorStrategyCards,
+  buildSimulatorTimelineStatus,
+  buildSimulatorWarnings,
+} from '@/app/simulator-model';
 
 export default function SimulatorPage() {
   const mounted = useIsClient();
@@ -470,7 +475,7 @@ export default function SimulatorPage() {
                   <div key={i} className="flex-1 flex flex-col gap-1">
                     <div 
                       className="bg-red-500/50 rounded-t"
-                      style={{ height: `${(month.carBalance / (currentDebt.balance || 1)) * 100}%` }}
+                      style={{ height: `${buildSimulatorBalanceBarHeightPercent(month.carBalance, currentDebt.balance)}%` }}
                     />
                   </div>
                 ))}

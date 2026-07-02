@@ -3527,6 +3527,20 @@ test('simulator timeline status does not claim LOC interest visibility without e
   assert.equal(available.tone, 'emerald');
 });
 
+test('simulator balance chart bars clamp invalid and over-starting balances', () => {
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(5000, 10000), 50);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(12000, 10000), 100);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(0, 10000), 0);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(-100, 10000), 0);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(5000, 0), 0);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(Number.NaN, 10000), 0);
+  assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(5000, Number.POSITIVE_INFINITY), 0);
+
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
+  assert.ok(source.includes('buildSimulatorBalanceBarHeightPercent(month.carBalance, currentDebt.balance)'), 'expected Simulator chart to use bounded height helper');
+  assert.ok(!source.includes('(month.carBalance / (currentDebt.balance || 1)) * 100'), 'expected Simulator chart not to use raw ratio CSS height');
+});
+
 test('strategy glass copy does not label faster-but-costlier paths as interest savings', () => {
   let strategyGlassModel;
   assert.doesNotThrow(() => {

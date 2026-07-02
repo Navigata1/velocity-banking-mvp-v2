@@ -120,6 +120,13 @@ export function buildSimulatorTimelineStatus(eventCount: number): SimulatorTimel
     : { label: 'Review inputs', tone: 'amber' };
 }
 
+export function buildSimulatorBalanceBarHeightPercent(balance: number, startingBalance: number): number {
+  if (!Number.isFinite(balance) || !Number.isFinite(startingBalance)) return 0;
+  if (balance <= 0 || startingBalance <= 0) return 0;
+
+  return Math.min(100, Math.max(0, (balance / startingBalance) * 100));
+}
+
 export function buildSimulatorStrategyCards(strategies: SingleDebtStrategyResult[]): SimulatorStrategyCard[] {
   return strategies.map((strategy) => {
     const isPayoffPossible = strategy.isPayoffPossible !== false && strategy.months > 0;
