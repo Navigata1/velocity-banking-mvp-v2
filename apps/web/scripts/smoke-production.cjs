@@ -25,6 +25,9 @@ const protectedDeploymentSignatures = [
   'Vercel Authentication',
   'Password Protection',
   'Deployment Protection',
+  'data-testid="login/email-button"',
+  'Continue with Email',
+  'sso-api?url=',
 ];
 
 const failureSignatures = [
@@ -172,12 +175,6 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
     );
   }
 
-  if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
-    throw new Error(
-      `${label} route ${route} did not return the expected InterestShield Next shell.${deploymentDiagnostics}`
-    );
-  }
-
   if (failureSignature) {
     const hint = buildDeploymentProtectionHint({
       statusCode: response.statusCode,
@@ -186,6 +183,12 @@ function assertCleanProductionShell({ body, response, route, label, url }) {
 
     throw new Error(
       `${label} route ${route} returned a deployment failure signature: ${failureSignature}.${hint}${deploymentDiagnostics}`
+    );
+  }
+
+  if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
+    throw new Error(
+      `${label} route ${route} did not return the expected InterestShield Next shell.${deploymentDiagnostics}`
     );
   }
 
