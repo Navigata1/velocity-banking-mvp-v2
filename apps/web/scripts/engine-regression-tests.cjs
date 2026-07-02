@@ -756,6 +756,46 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
   );
 });
 
+test('mobile mode navigation exposes native tab semantics and stable touch targets', () => {
+  const mobileShellSource = fs.readFileSync(
+    path.resolve(__dirname, '..', '..', 'mobile/components/mobile-shell.tsx'),
+    'utf8'
+  );
+
+  assert.ok(
+    mobileShellSource.includes('accessibilityLabel="Mobile section navigation"'),
+    'expected mobile mode navigation to expose a named control group'
+  );
+  assert.ok(
+    mobileShellSource.includes('accessibilityRole="tablist"'),
+    'expected mobile mode navigation to expose tablist semantics'
+  );
+  assert.ok(
+    mobileShellSource.includes('accessibilityRole="tab"'),
+    'expected each mobile mode control to expose tab semantics'
+  );
+  assert.ok(
+    mobileShellSource.includes('accessibilityState={{ selected: active }}'),
+    'expected active mobile mode state to be announced'
+  );
+  assert.ok(
+    mobileShellSource.includes('aria-selected={active}'),
+    'expected React Native Web to expose active tab state through aria-selected'
+  );
+  assert.ok(
+    mobileShellSource.includes('minHeight: 44'),
+    'expected mobile mode controls to preserve a 44px minimum touch target'
+  );
+  assert.ok(
+    mobileShellSource.includes('testID={`mobile-mode-tab-${id}`}'),
+    'expected each mobile mode control to expose a stable smoke hook'
+  );
+  assert.ok(
+    mobileShellSource.includes('{modes.map((mobileMode) => ('),
+    'expected mobile mode controls to be generated from the shared route list'
+  );
+});
+
 test('shared amortized payoff sanitizes non-finite inputs before building a schedule', () => {
   const projection = sharedFinancialEngine.simulateAmortizedPayoff({
     principalBalance: 1000,
