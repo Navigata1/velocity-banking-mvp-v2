@@ -5276,6 +5276,12 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
       productionSmokeScript.includes('x-vercel-id'),
     'expected production smoke failures to include observed Vercel deployment diagnostics'
   );
+  assert.ok(
+    productionSmokeScript.includes('fetchLatestGitHubProductionDeployment') &&
+      productionSmokeScript.includes('Latest GitHub Production deployment target') &&
+      productionSmokeScript.includes("process.env.GITHUB_REPOSITORY || 'Navigata1/velocity-banking-mvp-v2'"),
+    'expected production smoke failures to include latest GitHub production deployment diagnostics'
+  );
 });
 
 test('web app declares Vercel Next deployment configuration', () => {
