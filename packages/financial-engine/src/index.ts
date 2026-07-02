@@ -317,6 +317,28 @@ function finitePositiveInteger(value: number, fallback: number): number {
   return Math.max(1, Math.trunc(value));
 }
 
+function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashboardInput {
+  return {
+    monthlyIncome: finiteNonNegative(input.monthlyIncome),
+    monthlyExpenses: finiteNonNegative(input.monthlyExpenses),
+    chunkAmount: finiteNonNegative(input.chunkAmount),
+    activeDebtName: input.activeDebtName || defaultMobileDashboardInput.activeDebtName,
+    activeDebt: {
+      balance: finiteNonNegative(input.activeDebt.balance),
+      apr: finiteNonNegative(input.activeDebt.apr),
+      monthlyPayment: finiteNonNegative(input.activeDebt.monthlyPayment),
+      termMonths: input.activeDebt.termMonths === undefined
+        ? undefined
+        : finitePositiveInteger(input.activeDebt.termMonths, defaultMobileDashboardInput.activeDebt.termMonths ?? 1),
+    },
+    loc: {
+      limit: finiteNonNegative(input.loc.limit),
+      apr: finiteNonNegative(input.loc.apr),
+      balance: finiteNonNegative(input.loc.balance),
+    },
+  };
+}
+
 export function calculateMonthlyRate(apr: number): number {
   return finiteNumber(apr) / 12;
 }
@@ -669,17 +691,18 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
 export function buildMobileDashboardSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileDashboardSnapshot {
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
-  const locNeedsSetup = input.loc.limit <= 0;
-  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
-  const locNoCapacity = !locNeedsSetup && input.loc.balance === input.loc.limit;
-  const availableLoc = locNeedsSetup ? 0 : Math.max(0, input.loc.limit - input.loc.balance);
-  const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
-  const debtDailyInterest = calculateDailyInterest(input.activeDebt.balance, input.activeDebt.apr);
-  const locDailyInterest = calculateDailyInterest(input.loc.balance, input.loc.apr);
+  const model = normalizeMobileDashboardInput(input);
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
+  const locNeedsSetup = model.loc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && model.loc.balance > model.loc.limit;
+  const locNoCapacity = !locNeedsSetup && model.loc.balance === model.loc.limit;
+  const availableLoc = locNeedsSetup ? 0 : Math.max(0, model.loc.limit - model.loc.balance);
+  const locUtilization = locNeedsSetup ? 0 : model.loc.balance / model.loc.limit;
+  const debtDailyInterest = calculateDailyInterest(model.activeDebt.balance, model.activeDebt.apr);
+  const locDailyInterest = calculateDailyInterest(model.loc.balance, model.loc.apr);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
-  const safeChunk = Math.min(Math.max(0, input.chunkAmount), Math.max(0, input.activeDebt.balance), availableLoc);
-  const velocityProjection = simulateMobileVelocity(input);
+  const safeChunk = Math.min(model.chunkAmount, model.activeDebt.balance, availableLoc);
+  const velocityProjection = simulateMobileVelocity(model);
   const etaValue = velocityProjection.isPayoffPossible
     ? `${velocityProjection.payoffMonths} mo`
     : cashFlow <= 0
@@ -746,7 +769,7 @@ export function buildMobileDashboardSnapshot(
     loop: [
       {
         label: 'Income',
-        value: formatCurrency(input.monthlyIncome),
+        value: formatCurrency(model.monthlyIncome),
         detail: 'Deposits start the loop.',
       },
       {
@@ -758,7 +781,7 @@ export function buildMobileDashboardSnapshot(
       },
       {
         label: 'Expenses',
-        value: formatCurrency(input.monthlyExpenses),
+        value: formatCurrency(model.monthlyExpenses),
         detail: 'Outflows define pressure.',
       },
       {
@@ -768,7 +791,7 @@ export function buildMobileDashboardSnapshot(
       },
       {
         label: 'Principal',
-        value: input.activeDebtName,
+        value: model.activeDebtName,
         detail: 'Chunks target balance reduction after setup checks.',
       },
     ],
@@ -778,28 +801,29 @@ export function buildMobileDashboardSnapshot(
 export function buildMobilePortfolioSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobilePortfolioSnapshot {
-  const totalDebt = Math.max(0, input.activeDebt.balance);
-  const totalMinimums = Math.max(0, input.activeDebt.monthlyPayment);
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const model = normalizeMobileDashboardInput(input);
+  const totalDebt = model.activeDebt.balance;
+  const totalMinimums = model.activeDebt.monthlyPayment;
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
   const cashFlowAfterMinimums = cashFlow - totalMinimums;
-  const dailyInterestBurn = calculateDailyInterest(totalDebt, input.activeDebt.apr);
+  const dailyInterestBurn = calculateDailyInterest(totalDebt, model.activeDebt.apr);
 
   let guardrail: string | null = null;
   if (cashFlow <= 0) {
     guardrail = 'Cash flow is not positive, so portfolio payoff claims stay in review mode.';
   } else if (cashFlowAfterMinimums < 0) {
     guardrail = 'Cash flow does not cover the modeled minimum payment yet.';
-  } else if (input.loc.limit <= 0) {
+  } else if (model.loc.limit <= 0) {
     guardrail = 'Add a LOC limit before modeling portfolio velocity movement.';
-  } else if (input.loc.balance > input.loc.limit) {
+  } else if (model.loc.balance > model.loc.limit) {
     guardrail = LOC_OVER_LIMIT_WARNING;
-  } else if (input.loc.balance === input.loc.limit) {
+  } else if (model.loc.balance === model.loc.limit) {
     guardrail = LOC_NO_CAPACITY_WARNING;
-  } else if (input.loc.balance / input.loc.limit > 0.8) {
+  } else if (model.loc.balance / model.loc.limit > 0.8) {
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
   }
 
-  const payoffPath = buildMobilePortfolioPathSnapshot(input, guardrail);
+  const payoffPath = buildMobilePortfolioPathSnapshot(model, guardrail);
 
   return {
     totalDebt,
@@ -812,7 +836,7 @@ export function buildMobilePortfolioSnapshot(
     payoffPath,
     priorities: [
       {
-        name: input.activeDebtName,
+        name: model.activeDebtName,
         balanceLabel: formatCurrency(totalDebt),
         minimumPaymentLabel: formatCurrency(totalMinimums),
         dailyInterestBurnLabel: `${formatCurrency(dailyInterestBurn)}/day`,
@@ -838,10 +862,11 @@ function formatMonthsSaved(months: number): string {
 }
 
 function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjection {
+  const model = normalizeMobileDashboardInput(input);
   const projection = simulateAmortizedPayoff({
-    principalBalance: input.activeDebt.balance,
-    apr: input.activeDebt.apr,
-    monthlyPayment: input.activeDebt.monthlyPayment,
+    principalBalance: model.activeDebt.balance,
+    apr: model.activeDebt.apr,
+    monthlyPayment: model.activeDebt.monthlyPayment,
     maxMonths: 600,
   });
 
@@ -854,12 +879,13 @@ function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjec
 }
 
 function simulateMobileWithExtraPayments(input: MobileDashboardInput, extraPaymentInput: number): MobilePayoffProjection {
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
-  const extraPayment = Math.min(Math.max(0, extraPaymentInput), Math.max(0, cashFlow));
+  const model = normalizeMobileDashboardInput(input);
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
+  const extraPayment = Math.min(finiteNonNegative(extraPaymentInput), Math.max(0, cashFlow));
   const projection = simulateAmortizedPayoff({
-    principalBalance: input.activeDebt.balance,
-    apr: input.activeDebt.apr,
-    monthlyPayment: input.activeDebt.monthlyPayment,
+    principalBalance: model.activeDebt.balance,
+    apr: model.activeDebt.apr,
+    monthlyPayment: model.activeDebt.monthlyPayment,
     extraPayment,
     maxMonths: 600,
   });
@@ -902,7 +928,8 @@ function buildMobilePortfolioPathSnapshot(
   input: MobileDashboardInput,
   guardrail: string | null
 ): MobilePortfolioPathSnapshot {
-  const startingBalance = Math.max(0, input.activeDebt.balance);
+  const model = normalizeMobileDashboardInput(input);
+  const startingBalance = model.activeDebt.balance;
   const reviewPath: MobilePortfolioPathSnapshot = {
     isProjected: false,
     statusLabel: 'Review inputs',
@@ -923,12 +950,12 @@ function buildMobilePortfolioPathSnapshot(
     return reviewPath;
   }
 
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
-  const extraPayment = Math.max(0, cashFlow - Math.max(0, input.activeDebt.monthlyPayment));
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
+  const extraPayment = Math.max(0, cashFlow - model.activeDebt.monthlyPayment);
   const projection = simulateAmortizedPayoff({
     principalBalance: startingBalance,
-    apr: input.activeDebt.apr,
-    monthlyPayment: input.activeDebt.monthlyPayment,
+    apr: model.activeDebt.apr,
+    monthlyPayment: model.activeDebt.monthlyPayment,
     extraPayment,
     maxMonths: 600,
   });
@@ -974,17 +1001,17 @@ function simulateMobileMoneyLoopPayoff(input: {
   locExpenseAmount: number;
 }): MobilePayoffProjection {
   const projection = simulateMoneyLoopPayoff({
-    principalBalance: Math.max(0, input.principalBalance),
+    principalBalance: finiteNonNegative(input.principalBalance),
     debtApr: input.debtApr,
     debtPayment: input.debtPayment,
     loc: {
       ...input.loc,
-      balance: Math.max(0, input.loc.balance),
+      balance: finiteNonNegative(input.loc.balance),
     },
-    chunkAmount: input.chunkAmount,
-    cashFlowPaydown: input.cashFlowPaydown,
-    locDepositAmount: input.locDepositAmount,
-    locExpenseAmount: input.locExpenseAmount,
+    chunkAmount: finiteNonNegative(input.chunkAmount),
+    cashFlowPaydown: finiteNumber(input.cashFlowPaydown),
+    locDepositAmount: finiteNonNegative(input.locDepositAmount),
+    locExpenseAmount: finiteNonNegative(input.locExpenseAmount),
     maxMonths: 600,
   });
 
@@ -997,10 +1024,11 @@ function simulateMobileMoneyLoopPayoff(input: {
 }
 
 function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjection {
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
+  const model = normalizeMobileDashboardInput(input);
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
 
   if (cashFlow <= 0) {
-    const baseline = simulateMobileBaseline(input);
+    const baseline = simulateMobileBaseline(model);
     return {
       ...baseline,
       isPayoffPossible: false,
@@ -1008,7 +1036,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (input.loc.limit <= 0) {
+  if (model.loc.limit <= 0) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -1017,7 +1045,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (input.loc.balance > input.loc.limit) {
+  if (model.loc.balance > model.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -1026,7 +1054,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (input.loc.balance === input.loc.limit) {
+  if (model.loc.balance === model.loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -1035,7 +1063,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (cashFlow < input.activeDebt.monthlyPayment) {
+  if (cashFlow < model.activeDebt.monthlyPayment) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -1044,21 +1072,21 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  const locCashFlowPaydown = Math.max(0, cashFlow - input.activeDebt.monthlyPayment);
+  const locCashFlowPaydown = Math.max(0, cashFlow - model.activeDebt.monthlyPayment);
   const chunkAmount = Math.max(
     0,
-    input.chunkAmount > 0 ? input.chunkAmount : Math.min(locCashFlowPaydown * 3, input.loc.limit * 0.4)
+    model.chunkAmount > 0 ? model.chunkAmount : Math.min(locCashFlowPaydown * 3, model.loc.limit * 0.4)
   );
 
   return simulateMobileMoneyLoopPayoff({
-    principalBalance: Math.max(0, input.activeDebt.balance),
-    debtApr: Math.max(0, input.activeDebt.apr),
-    debtPayment: Math.max(0, input.activeDebt.monthlyPayment),
-    loc: input.loc,
+    principalBalance: model.activeDebt.balance,
+    debtApr: model.activeDebt.apr,
+    debtPayment: model.activeDebt.monthlyPayment,
+    loc: model.loc,
     chunkAmount,
     cashFlowPaydown: locCashFlowPaydown,
-    locDepositAmount: Math.max(0, input.monthlyIncome),
-    locExpenseAmount: Math.max(0, input.monthlyExpenses + input.activeDebt.monthlyPayment),
+    locDepositAmount: model.monthlyIncome,
+    locExpenseAmount: model.monthlyExpenses + model.activeDebt.monthlyPayment,
   });
 }
 
@@ -1084,11 +1112,12 @@ function toMobileSimulatorStrategy(
 export function buildMobileSimulatorSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileSimulatorSnapshot {
-  const baseline = simulateMobileBaseline(input);
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
-  const surplusAfterMinimum = Math.max(0, cashFlow - input.activeDebt.monthlyPayment);
-  const accelerated = simulateMobileWithExtraPayments(input, surplusAfterMinimum);
-  const velocityProjection = simulateMobileVelocity(input);
+  const model = normalizeMobileDashboardInput(input);
+  const baseline = simulateMobileBaseline(model);
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
+  const surplusAfterMinimum = Math.max(0, cashFlow - model.activeDebt.monthlyPayment);
+  const accelerated = simulateMobileWithExtraPayments(model, surplusAfterMinimum);
+  const velocityProjection = simulateMobileVelocity(model);
   const strategies = [
     toMobileSimulatorStrategy('Traditional', baseline),
     toMobileSimulatorStrategy('Snowball', accelerated),
@@ -1105,15 +1134,15 @@ export function buildMobileSimulatorSnapshot(
   let guardrail: string | null = null;
   if (cashFlow <= 0) {
     guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
-  } else if (input.loc.limit <= 0) {
+  } else if (model.loc.limit <= 0) {
     guardrail = 'Add a LOC limit before trusting velocity payoff projections.';
-  } else if (input.loc.balance > input.loc.limit) {
+  } else if (model.loc.balance > model.loc.limit) {
     guardrail = LOC_OVER_LIMIT_WARNING;
-  } else if (input.loc.balance === input.loc.limit) {
+  } else if (model.loc.balance === model.loc.limit) {
     guardrail = LOC_NO_CAPACITY_WARNING;
-  } else if (input.loc.balance / input.loc.limit > 0.8) {
+  } else if (model.loc.balance / model.loc.limit > 0.8) {
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
-  } else if (cashFlow < input.activeDebt.monthlyPayment) {
+  } else if (cashFlow < model.activeDebt.monthlyPayment) {
     guardrail = 'Cash flow does not cover the active debt minimum payment yet.';
   }
 
@@ -1135,8 +1164,9 @@ export function buildMobileSimulatorSnapshot(
 export function buildMobileVaultSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileVaultSnapshot {
-  const dashboard = buildMobileDashboardSnapshot(input);
-  const simulator = buildMobileSimulatorSnapshot(input);
+  const model = normalizeMobileDashboardInput(input);
+  const dashboard = buildMobileDashboardSnapshot(model);
+  const simulator = buildMobileSimulatorSnapshot(model);
   const guardrail = simulator.guardrail ?? dashboard.warning;
   const hasModeledPath = !guardrail && simulator.velocity.months > 0;
   const freedomPathLabel = hasModeledPath ? `${simulator.velocity.months} mo` : 'Review inputs';
@@ -1156,7 +1186,7 @@ export function buildMobileVaultSnapshot(
         title: 'Debt Freedom',
         value: freedomPathLabel,
         detail: hasModeledPath
-          ? `${input.activeDebtName} has a modeled Velocity path using the current chunk, LOC recovery, and daily interest assumptions.`
+          ? `${model.activeDebtName} has a modeled Velocity path using the current chunk, LOC recovery, and daily interest assumptions.`
           : 'No debt-free date is shown until the Money Loop inputs support a stable projection.',
       },
       {
@@ -1173,13 +1203,14 @@ export function buildMobileVaultSnapshot(
 export function buildMobileLearnSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileLearnSnapshot {
-  const dashboard = buildMobileDashboardSnapshot(input);
-  const simulator = buildMobileSimulatorSnapshot(input);
-  const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
-  const locNeedsSetup = input.loc.limit <= 0;
-  const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
-  const locNoCapacity = !locNeedsSetup && input.loc.balance === input.loc.limit;
-  const availableLoc = locNeedsSetup ? 0 : Math.max(0, input.loc.limit - input.loc.balance);
+  const model = normalizeMobileDashboardInput(input);
+  const dashboard = buildMobileDashboardSnapshot(model);
+  const simulator = buildMobileSimulatorSnapshot(model);
+  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
+  const locNeedsSetup = model.loc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && model.loc.balance > model.loc.limit;
+  const locNoCapacity = !locNeedsSetup && model.loc.balance === model.loc.limit;
+  const availableLoc = locNeedsSetup ? 0 : Math.max(0, model.loc.limit - model.loc.balance);
   const guardrail = simulator.guardrail ?? dashboard.warning;
 
   return {
@@ -1188,7 +1219,7 @@ export function buildMobileLearnSnapshot(
       {
         title: 'Money Loop',
         value: dashboard.nextMove,
-        detail: `${input.activeDebtName} is the current modeled target. The loop connects income, expenses, LOC room, and principal movement before any payoff claim is shown.`,
+        detail: `${model.activeDebtName} is the current modeled target. The loop connects income, expenses, LOC room, and principal movement before any payoff claim is shown.`,
       },
       {
         title: 'Cash Flow',
@@ -1220,8 +1251,9 @@ export function buildMobileLearnSnapshot(
 export function buildMobileCockpitSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileCockpitSnapshot {
-  const dashboard = buildMobileDashboardSnapshot(input);
-  const simulator = buildMobileSimulatorSnapshot(input);
+  const model = normalizeMobileDashboardInput(input);
+  const dashboard = buildMobileDashboardSnapshot(model);
+  const simulator = buildMobileSimulatorSnapshot(model);
   const warning = simulator.guardrail ?? dashboard.warning;
   const etaLabel = simulator.velocity.months > 0 ? `${simulator.velocity.months} mo` : 'Review inputs';
 
@@ -1243,7 +1275,7 @@ export function buildMobileCockpitSnapshot(
       },
       {
         label: 'Heading',
-        value: input.activeDebtName,
+        value: model.activeDebtName,
         detail: 'Current modeled debt focus.',
         status: 'normal',
       },
