@@ -5493,6 +5493,19 @@ test('dashboard home page mounts the Money Loop artifact rail', () => {
   assert.ok(source.includes('data-testid="money-loop-artifact-rail"'), 'expected a stable smoke-test hook');
 });
 
+test('dashboard home page exposes a compact mobile four-vital summary', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('data-testid="dashboard-mobile-vitals"'), 'expected a stable mobile vitals hook');
+  assert.ok(source.includes('grid grid-cols-2 gap-3 md:hidden'), 'expected mobile vitals to show as a compact two-column summary');
+  assert.ok(
+    source.includes('data-testid={`dashboard-mobile-vital-${vital.id}`}'),
+    'expected each mobile vital to be backed by the dashboard model'
+  );
+  assert.ok(source.includes('model.vitals.map'), 'expected mobile and desktop vitals to reuse the same model data');
+  assert.ok(source.includes('hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4'), 'expected full-detail vitals to start at tablet width');
+});
+
 test('dashboard home page mounts why-this-changed explanations', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
 

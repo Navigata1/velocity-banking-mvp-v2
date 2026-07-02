@@ -158,7 +158,37 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label="Dashboard vitals">
+        <section
+          data-testid="dashboard-mobile-vitals"
+          className="grid grid-cols-2 gap-3 md:hidden"
+          aria-label="Dashboard vitals"
+        >
+          {model.vitals.map((vital) => {
+            const style = toneStyles[vital.tone];
+            return (
+              <article
+                key={vital.id}
+                data-testid={`dashboard-mobile-vital-${vital.id}`}
+                className={`${classes.glass} ${style.card} min-h-[112px] rounded-xl border p-3`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <p className={`text-[10px] font-semibold uppercase leading-4 ${classes.textSecondary}`}>
+                    {vital.label}
+                  </p>
+                  <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${style.dot}`} />
+                </div>
+                <p className={`mt-2 text-lg font-bold leading-tight break-words ${style.value}`}>
+                  {vital.value}
+                </p>
+                <p className={`mt-2 line-clamp-2 text-[11px] leading-4 ${classes.textSecondary}`}>
+                  {vital.caption}
+                </p>
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4" aria-label="Dashboard vitals">
           {model.vitals.map((vital) => {
             const style = toneStyles[vital.tone];
             return (
