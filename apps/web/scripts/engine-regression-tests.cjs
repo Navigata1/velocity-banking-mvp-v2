@@ -149,6 +149,10 @@ test('amortization payment matches a known 30-year fixed-rate fixture', () => {
 
   assert.equal(roundCents(payment), 599.55);
   assert.equal(roundCents(calculations.calculateTotalAmortizationInterest(100000, 0.06, 360)), 115838.19);
+  assert.equal(
+    roundCents(calculations.calculateTotalAmortizationInterest(100000, 0.06, 360)),
+    roundCents(sharedFinancialEngine.calculateTotalAmortizationInterest(100000, 0.06, 360))
+  );
 });
 
 test('LOC ADB interest uses daily closing balances across web and shared engines', () => {
@@ -191,6 +195,7 @@ test('web calculations use shared financial-engine primitives', () => {
     'calculateDailyRate',
     'calculateCashFlow',
     'calculateAmortizationPayment',
+    'calculateTotalAmortizationInterest',
     'calculateADBInterest',
     'simulateAmortizedPayoff',
     'formatCurrency',

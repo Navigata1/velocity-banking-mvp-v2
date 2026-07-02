@@ -3,6 +3,7 @@ import {
   calculateAmortizationPayment,
   calculateCashFlow,
   calculateDailyRate,
+  calculateTotalAmortizationInterest,
   formatCurrency,
   simulateAmortizedPayoff,
   type LOCDetails,
@@ -18,6 +19,7 @@ export {
   calculateAmortizationPayment,
   calculateCashFlow,
   calculateDailyRate,
+  calculateTotalAmortizationInterest,
   formatCurrency,
   simulateAmortizedPayoff,
 };
@@ -165,15 +167,6 @@ export interface SingleDebtStrategyResult {
 export function calculateMonthlyRate(apr: number): number {
   return apr / 12;
 }
-
-/**
- * Calculate total interest paid over the life of an amortized loan.
- */
-export function calculateTotalAmortizationInterest(principal: number, apr: number, termMonths: number): number {
-  const payment = calculateAmortizationPayment(principal, apr, termMonths);
-  return Math.max(0, payment * termMonths - principal);
-}
-
 
 // ─── Safety Warnings ─────────────────────────────────────────────────
 
