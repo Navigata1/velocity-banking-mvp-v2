@@ -296,6 +296,34 @@ test('daily interest burn uses the shared financial-engine helper', () => {
   );
 });
 
+test('velocity targeting sanitizes non-finite debt inputs before scoring and ranking', () => {
+  const corruptDebt = {
+    id: 'corrupt',
+    name: 'Corrupt Card',
+    type: 'creditCard',
+    balance: Number.POSITIVE_INFINITY,
+    interestRate: Number.NaN,
+    minimumPayment: Number.POSITIVE_INFINITY,
+  };
+  const usableDebt = {
+    id: 'usable',
+    name: 'Usable Card',
+    type: 'creditCard',
+    balance: 5000,
+    interestRate: 0.24,
+    minimumPayment: 125,
+  };
+
+  const ranked = velocityTargeting.rankDebtsVelocity([corruptDebt, usableDebt]);
+  const corruptReason = velocityTargeting.buildVelocityReason(corruptDebt);
+
+  assert.equal(ranked[0].id, 'usable');
+  assert.equal(velocityTargeting.velocityScore(corruptDebt), 0);
+  assert.ok(Number.isFinite(velocityTargeting.velocityScore(usableDebt)));
+  assert.ok(!corruptReason.includes('Infinity'), corruptReason);
+  assert.ok(!corruptReason.includes('NaN'), corruptReason);
+});
+
 test('web calculations use shared financial-engine primitives', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const tsconfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'tsconfig.json'), 'utf8'));
