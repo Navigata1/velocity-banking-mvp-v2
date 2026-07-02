@@ -748,7 +748,7 @@ test('shared mobile snapshots sanitize non-finite assumptions before rendering l
   assert.equal(cockpit.instruments.find((instrument) => instrument.label === 'Heading').value, 'Auto Loan');
   assert.equal(cockpit.flightStatusLabel, 'Review inputs');
   assert.equal(vault.freedomPathLabel, 'Review inputs');
-  assert.equal(learn.lessons.find((lesson) => lesson.title === 'LOC Room').value, 'Add LOC limit');
+  assert.equal(learn.lessons.find((lesson) => lesson.title === 'LOC Room').value, 'Enter LOC terms');
 });
 
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
@@ -1093,6 +1093,14 @@ test('shared mobile simulator snapshot suppresses velocity payoff claims when ca
 
 test('shared mobile simulator snapshot treats a missing LOC limit as setup needed instead of over-limit', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const dashboard = sharedEngine.buildMobileDashboardSnapshot({
+    ...sharedEngine.defaultMobileDashboardInput,
+    loc: {
+      limit: 0,
+      apr: 0.085,
+      balance: 0,
+    },
+  });
   const snapshot = sharedEngine.buildMobileSimulatorSnapshot({
     ...sharedEngine.defaultMobileDashboardInput,
     loc: {
@@ -1103,13 +1111,20 @@ test('shared mobile simulator snapshot treats a missing LOC limit as setup neede
   });
   const velocity = snapshot.strategies.find((strategy) => strategy.name === 'Velocity');
 
-  assert.equal(snapshot.guardrail, 'Add a LOC limit before trusting velocity payoff projections.');
+  assert.equal(dashboard.nextMove, 'Enter known LOC terms');
+  assert.equal(dashboard.warning, 'Enter known LOC limit, APR, fees, and draw rules before trusting velocity chunk projections.');
+  assert.equal(dashboard.loop.find((step) => step.label === 'LOC').value, 'Enter LOC terms');
+  assert.equal(
+    dashboard.loop.find((step) => step.label === 'LOC').detail,
+    'LOC capacity needs known terms before chunk projections are meaningful.'
+  );
+  assert.equal(snapshot.guardrail, 'Enter known LOC terms before trusting velocity payoff projections.');
   assert.equal(snapshot.velocity.interestSavedLabel, 'Not projected');
   assert.equal(snapshot.velocity.monthsSavedLabel, 'Review inputs');
   assert.equal(velocity.isPayoffPossible, false);
   assert.equal(velocity.monthsLabel, 'Review inputs');
   assert.equal(velocity.interestLabel, 'Not projected');
-  assert.equal(velocity.statusLabel, 'Add LOC limit');
+  assert.equal(velocity.statusLabel, 'Enter LOC terms');
 });
 
 test('shared mobile simulator snapshot treats a full LOC as no available room instead of over-limit', () => {
@@ -1338,6 +1353,14 @@ test('shared mobile cockpit snapshot stays in review mode when cash flow or LOC 
   assert.equal(snapshot.instruments.find((instrument) => instrument.label === 'ETA').value, 'Review inputs');
   assert.equal(snapshot.flightChecks.find((check) => check.label === 'Positive cash flow').passed, false);
   assert.equal(snapshot.flightChecks.find((check) => check.label === 'LOC capacity loaded').passed, false);
+  assert.equal(
+    snapshot.flightChecks.find((check) => check.label === 'LOC capacity loaded').detail,
+    'Enter known LOC terms before trusting chunk movement.'
+  );
+  assert.equal(
+    snapshot.flightChecks.find((check) => check.label === 'Utilization under 80%').detail,
+    'Utilization needs known LOC terms.'
+  );
 });
 
 test('shared mobile vault snapshot turns the active debt model into an outcome path', () => {
