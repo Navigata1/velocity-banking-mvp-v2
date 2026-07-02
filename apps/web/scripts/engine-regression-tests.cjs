@@ -1300,6 +1300,55 @@ test('velocity treats a full LOC as no available room instead of over-limit', ()
   assert.equal(result.monthlyData.length, 0);
 });
 
+test('single-debt legacy simulation sanitizes non-finite inputs before payoff math', () => {
+  const input = {
+    monthlyIncome: 2000,
+    monthlyExpenses: Number.NaN,
+    carLoan: {
+      balance: 10000,
+      apr: Number.NaN,
+      monthlyPayment: 100,
+      termMonths: Number.NaN,
+    },
+    loc: {
+      limit: Number.POSITIVE_INFINITY,
+      apr: Number.NaN,
+      balance: Number.NaN,
+    },
+    useVelocity: true,
+    extraPayment: Number.POSITIVE_INFINITY,
+  };
+  const baseline = calculations.simulateBaseline(input);
+  const velocity = calculations.simulateVelocity(input);
+  const simulation = calculations.runSimulation(input);
+  const strategies = calculations.compareSingleDebtStrategies(input);
+  const baselineNumbers = baseline.monthlyData.flatMap((month) => [
+    month.month,
+    month.carBalance,
+    month.locBalance,
+    month.carInterest,
+    month.locInterest,
+    month.cashFlow,
+  ]);
+  const strategyNumbers = strategies.flatMap((strategy) => [
+    strategy.months,
+    strategy.totalInterest,
+  ]);
+
+  assert.ok(baseline.monthlyData.length > 0, 'expected baseline to still project from sanitized loan inputs');
+  assert.ok(baselineNumbers.every(Number.isFinite), `expected finite baseline rows, got ${JSON.stringify(baseline.monthlyData.slice(0, 3))}`);
+  assert.equal(velocity.isPayoffPossible, false);
+  assert.equal(velocity.failureReason, 'loc-setup');
+  assert.equal(velocity.totalInterest, 0);
+  assert.equal(velocity.payoffMonths, 0);
+  assert.equal(simulation.velocity.failureReason, 'loc-setup');
+  assert.ok(strategyNumbers.every(Number.isFinite), `expected finite strategy rows, got ${JSON.stringify(strategies)}`);
+  assert.ok(
+    simulation.warnings.every((warning) => !warning.message.includes('Infinity') && !warning.message.includes('NaN')),
+    JSON.stringify(simulation.warnings)
+  );
+});
+
 test('single-debt velocity treats the regular debt payment as a cash outflow for LOC recovery', () => {
   const result = calculations.simulateVelocity({
     monthlyIncome: 1000,
