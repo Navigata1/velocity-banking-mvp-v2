@@ -3541,6 +3541,31 @@ test('simulator balance chart bars clamp invalid and over-starting balances', ()
   assert.ok(!source.includes('(month.carBalance / (currentDebt.balance || 1)) * 100'), 'expected Simulator chart not to use raw ratio CSS height');
 });
 
+test('simulator visual percentages clamp payment split widths', () => {
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(50), 50);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(250, 200), 100);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(0), 0);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(-10), 0);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(Number.NaN), 0);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(50, 0), 0);
+  assert.equal(simulatorModel.buildSimulatorVisualPercent(50, Number.POSITIVE_INFINITY), 0);
+
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
+  assert.ok(
+    source.includes('buildSimulatorVisualPercent(analysis.interestPercentOfPayment)'),
+    'expected Simulator payment interest bar to clamp visual percent'
+  );
+  assert.ok(
+    source.includes('buildSimulatorVisualPercent(analysis.principalPercentOfPayment)'),
+    'expected Simulator payment principal bar to clamp visual percent'
+  );
+  assert.ok(
+    !source.includes('style={{ width: `${analysis.interestPercentOfPayment}%` }}') &&
+      !source.includes('style={{ width: `${analysis.principalPercentOfPayment}%` }}'),
+    'expected Simulator payment split bars not to use raw percentage widths'
+  );
+});
+
 test('strategy glass copy does not label faster-but-costlier paths as interest savings', () => {
   let strategyGlassModel;
   assert.doesNotThrow(() => {

@@ -15,6 +15,7 @@ import {
   buildSimulatorBalanceBarHeightPercent,
   buildSimulatorStrategyCards,
   buildSimulatorTimelineStatus,
+  buildSimulatorVisualPercent,
   buildSimulatorWarnings,
 } from '@/app/simulator-model';
 
@@ -383,8 +384,8 @@ export default function SimulatorPage() {
                       </div>
                       {/* Interest vs Principal bar */}
                       <div className="flex h-4 rounded-lg overflow-hidden">
-                        <div className="bg-red-500" style={{ width: `${analysis.interestPercentOfPayment}%` }} />
-                        <div className="bg-emerald-500" style={{ width: `${analysis.principalPercentOfPayment}%` }} />
+                        <div className="bg-red-500" style={{ width: `${buildSimulatorVisualPercent(analysis.interestPercentOfPayment)}%` }} />
+                        <div className="bg-emerald-500" style={{ width: `${buildSimulatorVisualPercent(analysis.principalPercentOfPayment)}%` }} />
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-red-400">Interest: {analysis.interestPercentOfPayment.toFixed(0)}%</span>
