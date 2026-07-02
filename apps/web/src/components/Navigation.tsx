@@ -16,6 +16,33 @@ const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'light', label: 'Light', icon: '☀️' },
 ];
 
+const navIconTokens: Record<string, string> = {
+  '/': 'DB',
+  '/simulator': 'SIM',
+  '/cockpit': 'CK',
+  '/learn': 'LRN',
+  '/portfolio': 'PF',
+  '/vault': 'WT',
+  '/settings': 'SET',
+};
+
+const themeIconTokens: Record<Theme, string> = {
+  original: 'OR',
+  dark: 'DK',
+  light: 'LT',
+};
+
+function NavIconToken({ token }: { token: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/10 text-[11px] font-bold leading-none tracking-normal"
+    >
+      {token}
+    </span>
+  );
+}
+
 export default function Navigation() {
   const pathname = usePathname();
   const mounted = useIsClient();
@@ -93,15 +120,13 @@ export default function Navigation() {
                 href={item.href}
                 aria-label={item.label}
                 aria-current={pathname === item.href ? 'page' : undefined}
-                className={`flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all md:justify-start md:px-4 ${
+                className={`flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-xl px-2 py-3 transition-all md:justify-start md:px-4 ${
                   pathname === item.href
                     ? 'bg-emerald-500/20 text-emerald-400'
                     : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-800/50`
                 } ${item.isDynamic ? 'relative' : ''}`}
               >
-                <span className={`text-xl ${item.isDynamic ? 'transition-transform duration-200' : ''}`}>
-                  {item.icon}
-                </span>
+                <NavIconToken token={navIconTokens[item.href]} />
                 <span className="hidden md:inline">{item.label}</span>
               </Link>
             ))}
@@ -109,9 +134,10 @@ export default function Navigation() {
             <button
               type="button"
               onClick={() => setShowAI(true)}
-              className="flex min-w-0 items-center justify-center gap-3 px-2 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-gray-800 md:hidden"
+              className="flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-xl px-2 py-3 text-gray-400 transition-all hover:bg-gray-800 hover:text-white md:hidden [&>span:last-child]:hidden"
               aria-label="Open Velocity Guardian"
             >
+              <NavIconToken token="AI" />
               <span className="text-xl">🛡️</span>
             </button>
           </div>
@@ -151,7 +177,7 @@ export default function Navigation() {
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl ${classes.glassButton}`}
             >
               <span className={`text-sm ${classes.textSecondary}`}>Theme</span>
-              <span className="text-lg">{themeOptions.find(t => t.value === theme)?.icon}</span>
+              <NavIconToken token={themeIconTokens[theme]} />
             </button>
             
             {showThemes && (
@@ -169,7 +195,7 @@ export default function Navigation() {
                         : `${classes.textSecondary} hover:bg-slate-700/50`
                     }`}
                   >
-                    <span>{option.icon}</span>
+                    <NavIconToken token={themeIconTokens[option.value]} />
                     <span className="text-sm">{option.label}</span>
                   </button>
                 ))}

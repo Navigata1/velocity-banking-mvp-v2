@@ -63,6 +63,9 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 17. Simulator LOC balance control, post-fix.
     Health: improved. The Simulator Line of Credit card now exposes the LOC balance input used by projections, LOC interest math, and utilization warnings.
 
+18. Mobile shell token controls, post-fix.
+    Health: improved. The mobile bottom navigation and domain selector now render deterministic text tokens instead of corrupted glyph strings, while preserving route/domain accessible labels and stable tap targets.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -82,6 +85,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
 - Simulator and Portfolio can still produce different emphasis because they answer different questions. The current UI now labels that difference, but deeper user testing should confirm the distinction lands quickly.
 - Simulator LOC setup is now more direct because the route exposes the LOC balance that already drives its projections and warnings.
+- Mobile shell iconography is now deterministic in the local rendered build: the bottom nav shows `DB SIM CK LRN PF WT SET AI`, and the domain selector shows stable domain/subcategory tokens instead of corrupted glyph strings.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
 - Vault now surfaces the zero-limit LOC setup text before the mortgage wizard. Remaining Vault browser work should focus on deeper mortgage input edge cases rather than the missing-LOC warning path.
 
@@ -108,6 +112,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Portfolio strategy cards now use a compact wrapped header for the Velocity status badge and keep strategy description copy on a separate line.
 - Simulator Strategy Comparison now explains that its active-debt payoff speed/interest comparison is different from Portfolio Velocity's debt-order planning default and links to Portfolio.
 - Simulator Line of Credit controls now include LOC Balance, wired to the same store value used by Simulator projections and warning logic.
+- Mobile shell controls now use deterministic token markers for the bottom navigation, domain selector, domain dropdown, and theme controls instead of relying on corrupted stored glyph strings.
 
 ## Evidence Limits
 
