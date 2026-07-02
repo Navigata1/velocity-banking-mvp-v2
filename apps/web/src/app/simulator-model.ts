@@ -127,6 +127,13 @@ export function buildSimulatorBalanceBarHeightPercent(balance: number, startingB
   return Math.min(100, Math.max(0, (balance / startingBalance) * 100));
 }
 
+export function buildSimulatorVisualPercent(value: number, maxValue = 100): number {
+  if (!Number.isFinite(value) || !Number.isFinite(maxValue)) return 0;
+  if (value <= 0 || maxValue <= 0) return 0;
+
+  return Math.min(100, Math.max(0, (value / maxValue) * 100));
+}
+
 export function buildSimulatorStrategyCards(strategies: SingleDebtStrategyResult[]): SimulatorStrategyCard[] {
   return strategies.map((strategy) => {
     const isPayoffPossible = strategy.isPayoffPossible !== false && strategy.months > 0;
