@@ -1096,6 +1096,12 @@ export function compareMortgageStrategies(
   cashFlow: number,
   loc: LOCDetails
 ): StrategyComparisonResult {
+  const safeCashFlow = Number.isFinite(cashFlow) ? cashFlow : 0;
+  const safeLoc: LOCDetails = {
+    limit: Number.isFinite(loc.limit) ? Math.max(0, loc.limit) : 0,
+    apr: Number.isFinite(loc.apr) ? Math.max(0, loc.apr) : 0,
+    balance: Number.isFinite(loc.balance) ? Math.max(0, loc.balance) : 0,
+  };
   const originalTermMonths = (Number.isFinite(input.originalTermYears) ? Math.max(0, input.originalTermYears) : 0) * 12;
   const purchaseAnalysis = input.entryMode === 'purchase' ? calculateMortgageAnalysis(input) : null;
   const balance = purchaseAnalysis
@@ -1114,13 +1120,15 @@ export function compareMortgageStrategies(
         : 0;
   const remainingMonths = purchaseAnalysis
     ? Math.max(0, originalTermMonths - purchaseAnalysis.monthsElapsed)
-    : input.remainingTermMonths || originalTermMonths;
+    : Number.isFinite(input.remainingTermMonths) && input.remainingTermMonths > 0
+      ? input.remainingTermMonths
+      : originalTermMonths;
   const payment = purchaseAnalysis
     ? purchaseAnalysis.originalPayment
     : Number.isFinite(input.currentMonthlyPayment)
       ? Math.max(0, input.currentMonthlyPayment)
       : calculateAmortizationPayment(balance, rate, remainingMonths);
-  const payoffHorizonMonths = Math.max(remainingMonths * 4, input.originalTermYears * 12, 1200);
+  const payoffHorizonMonths = Math.max(remainingMonths * 4, originalTermMonths, 1200);
 
   const standard = simulateMortgagePaymentPlan(balance, rate, payment, payoffHorizonMonths);
   const standardMonths = standard.isPayoffPossible ? standard.months : remainingMonths;
@@ -1165,7 +1173,7 @@ export function compareMortgageStrategies(
       : 0,
   });
 
-  const extraMonthlyFromBiweekly = cashFlow > 0 ? Math.min(payment / 12, cashFlow) : 0;
+  const extraMonthlyFromBiweekly = safeCashFlow > 0 ? Math.min(payment / 12, safeCashFlow) : 0;
   const biweekly = simulateMortgagePaymentPlan(
     balance,
     rate,
@@ -1173,8 +1181,8 @@ export function compareMortgageStrategies(
     payoffHorizonMonths
   );
 
-  const extraAmt = cashFlow > 0
-    ? Math.min(cashFlow, Math.max(cashFlow * 0.5, 200), 1000)
+  const extraAmt = safeCashFlow > 0
+    ? Math.min(safeCashFlow, Math.max(safeCashFlow * 0.5, 200), 1000)
     : 0;
   const extraPayment = simulateMortgagePaymentPlan(
     balance,
@@ -1183,13 +1191,13 @@ export function compareMortgageStrategies(
     payoffHorizonMonths
   );
 
-  const locNeedsSetup = loc.limit <= 0;
-  const locOverLimit = !locNeedsSetup && loc.balance > loc.limit;
-  const locNoCapacity = !locNeedsSetup && loc.balance === loc.limit;
-  const locCashFlowPaydown = Math.max(0, cashFlow - payment);
-  const chunkSize = locNeedsSetup || locOverLimit || locNoCapacity || cashFlow <= 0 || locCashFlowPaydown <= 0
+  const locNeedsSetup = safeLoc.limit <= 0;
+  const locOverLimit = !locNeedsSetup && safeLoc.balance > safeLoc.limit;
+  const locNoCapacity = !locNeedsSetup && safeLoc.balance === safeLoc.limit;
+  const locCashFlowPaydown = Math.max(0, safeCashFlow - payment);
+  const chunkSize = locNeedsSetup || locOverLimit || locNoCapacity || safeCashFlow <= 0 || locCashFlowPaydown <= 0
     ? 0
-    : Math.min(loc.limit * 0.4, locCashFlowPaydown * 3, balance * 0.1);
+    : Math.min(safeLoc.limit * 0.4, locCashFlowPaydown * 3, balance * 0.1);
 
   let velocity: MortgagePaymentProjection;
   if (locNeedsSetup) {
@@ -1213,7 +1221,7 @@ export function compareMortgageStrategies(
       isPayoffPossible: false,
       failureReason: 'loc-no-capacity',
     };
-  } else if (cashFlow <= 0) {
+  } else if (safeCashFlow <= 0) {
     velocity = {
       months: 0,
       totalInterest: 0,
@@ -1232,10 +1240,10 @@ export function compareMortgageStrategies(
       principalBalance: balance,
       debtApr: rate,
       debtPayment: payment,
-      loc,
+      loc: safeLoc,
       chunkAmount: chunkSize,
       cashFlowPaydown: locCashFlowPaydown,
-      locDepositAmount: cashFlow,
+      locDepositAmount: safeCashFlow,
       locExpenseAmount: payment,
       maxMonths: payoffHorizonMonths,
       initialMonthsSinceChunk: 999,
