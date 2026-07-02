@@ -696,6 +696,61 @@ test('shared mobile default assumptions start with the verified web demo Money L
   assert.ok(learn.lessons.find((lesson) => lesson.title === 'Cash Flow').value.includes('$'));
 });
 
+test('shared mobile snapshots sanitize non-finite assumptions before rendering labels', () => {
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const corruptedInput = {
+    monthlyIncome: Number.NaN,
+    monthlyExpenses: Number.POSITIVE_INFINITY,
+    chunkAmount: Number.NaN,
+    activeDebtName: '',
+    activeDebt: {
+      balance: Number.NaN,
+      apr: Number.NaN,
+      monthlyPayment: Number.NaN,
+      termMonths: Number.NaN,
+    },
+    loc: {
+      limit: Number.NaN,
+      apr: Number.NaN,
+      balance: Number.NaN,
+    },
+  };
+  const snapshots = [
+    sharedEngine.buildMobileDashboardSnapshot(corruptedInput),
+    sharedEngine.buildMobilePortfolioSnapshot(corruptedInput),
+    sharedEngine.buildMobileSimulatorSnapshot(corruptedInput),
+    sharedEngine.buildMobileCockpitSnapshot(corruptedInput),
+    sharedEngine.buildMobileVaultSnapshot(corruptedInput),
+    sharedEngine.buildMobileLearnSnapshot(corruptedInput),
+  ];
+  const stringified = JSON.stringify(snapshots);
+  const dashboard = snapshots[0];
+  const portfolio = snapshots[1];
+  const simulator = snapshots[2];
+  const cockpit = snapshots[3];
+  const vault = snapshots[4];
+  const learn = snapshots[5];
+
+  assert.ok(!stringified.includes('NaN'), stringified);
+  assert.ok(!stringified.includes('Infinity'), stringified);
+  assert.equal(dashboard.cashFlow, 0);
+  assert.equal(dashboard.locNeedsSetup, true);
+  assert.equal(dashboard.locUtilization, 0);
+  assert.equal(dashboard.availableLoc, 0);
+  assert.equal(dashboard.dailyInterestBurn, 0);
+  assert.equal(dashboard.loop.find((step) => step.label === 'Principal').value, 'Auto Loan');
+  assert.equal(portfolio.totalDebt, 0);
+  assert.equal(portfolio.totalMinimums, 0);
+  assert.equal(portfolio.payoffPath.points[0].balance, 0);
+  assert.equal(simulator.guardrail, 'Income needs to exceed expenses before velocity payoff claims are projected.');
+  assert.equal(simulator.velocity.interestSaved, 0);
+  assert.equal(simulator.velocity.monthsSaved, 0);
+  assert.equal(cockpit.instruments.find((instrument) => instrument.label === 'Heading').value, 'Auto Loan');
+  assert.equal(cockpit.flightStatusLabel, 'Review inputs');
+  assert.equal(vault.freedomPathLabel, 'Review inputs');
+  assert.equal(learn.lessons.find((lesson) => lesson.title === 'LOC Room').value, 'Add LOC limit');
+});
+
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
   const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
