@@ -873,6 +873,53 @@ test('shared mobile portfolio payoff path stays in review mode when inputs are u
   assert.equal(snapshot.payoffPath.points[0].progressPercent, 0);
 });
 
+test('shared mobile portfolio payoff path delegates to the canonical amortized helper', () => {
+  const sharedEnginePath = path.join(repoRoot, 'packages/financial-engine/src/index.ts');
+  const sharedEngine = loadTsFile(sharedEnginePath);
+  const sharedEngineSource = fs.readFileSync(sharedEnginePath, 'utf8');
+  const pathStart = sharedEngineSource.indexOf('function buildMobilePortfolioPathSnapshot');
+  const pathEnd = sharedEngineSource.indexOf('function simulateMobileMoneyLoopPayoff', pathStart);
+  const pathSource = sharedEngineSource.slice(pathStart, pathEnd);
+  const input = {
+    monthlyIncome: 8000,
+    monthlyExpenses: 4500,
+    chunkAmount: 1500,
+    activeDebtName: 'Auto Loan',
+    activeDebt: {
+      balance: 18450,
+      apr: 0.069,
+      monthlyPayment: 425,
+      termMonths: 60,
+    },
+    loc: {
+      limit: 25000,
+      apr: 0.085,
+      balance: 3200,
+    },
+  };
+  const extraPayment = Math.max(0, input.monthlyIncome - input.monthlyExpenses - input.activeDebt.monthlyPayment);
+  const canonical = sharedEngine.simulateAmortizedPayoff({
+    principalBalance: input.activeDebt.balance,
+    apr: input.activeDebt.apr,
+    monthlyPayment: input.activeDebt.monthlyPayment,
+    extraPayment,
+    maxMonths: 600,
+  });
+  const snapshot = sharedEngine.buildMobilePortfolioSnapshot(input);
+  const payoffPath = snapshot.payoffPath;
+  const finalPoint = payoffPath.points[payoffPath.points.length - 1];
+
+  assert.ok(pathSource.includes('simulateAmortizedPayoff({'), 'expected mobile Portfolio payoff path to call the shared helper');
+  assert.ok(!pathSource.includes('while (balance'), 'expected mobile Portfolio payoff path not to duplicate an amortized payoff loop');
+  assert.equal(payoffPath.isProjected, canonical.isPayoffPossible);
+  assert.equal(payoffPath.payoffMonthsLabel, `${canonical.payoffMonths} mo`);
+  assert.equal(payoffPath.totalInterestLabel, sharedEngine.formatCurrency(canonical.totalInterest));
+  assert.ok(finalPoint, 'expected sampled payoff path to include a final point');
+  assert.equal(finalPoint.month, canonical.payoffMonths);
+  assert.equal(finalPoint.balance.toFixed(2), canonical.monthlyData.at(-1).balance.toFixed(2));
+  assert.equal(finalPoint.progressPercent, 100);
+});
+
 test('shared mobile simulator snapshot matches current web single-debt strategy comparison', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const webEngine = loadTsFile(path.join(repoRoot, 'apps/web/src/engine/calculations.ts'));
