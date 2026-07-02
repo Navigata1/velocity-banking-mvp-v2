@@ -1920,6 +1920,31 @@ test('portfolio strategy picker distinguishes planning default from fastest payo
   );
 });
 
+test('portfolio velocity strategy badge uses a wrapping compact header instead of competing with description copy', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('data-testid="portfolio-velocity-strategy-badge"'),
+    'expected a stable hook for rendered strategy badge fit checks'
+  );
+  assert.ok(
+    source.includes('flex min-w-0 flex-col gap-2'),
+    'expected strategy cards to give the description its own row'
+  );
+  assert.ok(
+    source.includes('flex min-w-0 flex-wrap items-center justify-between gap-2'),
+    'expected the strategy label and badge to wrap instead of colliding'
+  );
+  assert.ok(
+    source.includes('shrink-0 rounded-md border border-current/25 px-2 py-1 text-[11px]'),
+    'expected the Velocity badge to render as a compact wrapped badge'
+  );
+  assert.ok(
+    source.includes('text-xs leading-5') && source.includes('{strategyDescription(s)}'),
+    'expected strategy description copy to keep readable line height below the wrapped header'
+  );
+});
+
 test('portfolio run comparison explains projection deltas after an edit', () => {
   const baselineInputs = {
     monthlyIncome: 5000,
