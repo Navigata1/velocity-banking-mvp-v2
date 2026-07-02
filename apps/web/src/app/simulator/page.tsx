@@ -214,10 +214,12 @@ export default function SimulatorPage() {
             {store.activeDomain === 'house' && (
               <div className={`${classes.glass} rounded-2xl p-6`}>
                 <h2 className={`text-xl font-semibold mb-4 ${classes.text}`}>🏠 Mortgage Details</h2>
-                <div className="flex gap-2 mb-4">
+                <div className="flex gap-2 mb-4" role="group" aria-label="Mortgage entry mode">
                   {(['purchase', 'current', 'both'] as const).map((mode) => (
                     <button
                       key={mode}
+                      type="button"
+                      aria-pressed={store.mortgageDetails.entryMode === mode}
                       onClick={() => store.updateMortgageDetails({ entryMode: mode })}
                       className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                         store.mortgageDetails.entryMode === mode
@@ -246,14 +248,21 @@ export default function SimulatorPage() {
                       </div>
                       <div className="flex justify-between items-center">
                         <label className={`text-sm ${classes.textSecondary}`}>Term</label>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2" role="group" aria-label="Mortgage original term">
                           {[15, 30].map(t => (
-                            <button key={t} onClick={() => store.updateMortgageDetails({ originalTermYears: t })}
+                            <button
+                              key={t}
+                              type="button"
+                              aria-pressed={store.mortgageDetails.originalTermYears === t}
+                              onClick={() => store.updateMortgageDetails({ originalTermYears: t })}
                               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                                 store.mortgageDetails.originalTermYears === t
                                   ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
                                   : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
-                              }`}>{t} yr</button>
+                              }`}
+                            >
+                              {t} yr
+                            </button>
                           ))}
                         </div>
                       </div>
@@ -285,10 +294,12 @@ export default function SimulatorPage() {
                   )}
                   <div className="pt-2 border-t border-gray-400/30">
                     <label className={`text-sm ${classes.textSecondary} mb-2 block`}>Payment Frequency</label>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2" role="group" aria-label="Mortgage payment frequency">
                       {(['monthly', 'biweekly', 'weekly'] as const).map((freq) => (
                         <button
                           key={freq}
+                          type="button"
+                          aria-pressed={store.mortgageDetails.paymentFrequency === freq}
                           onClick={() => store.updateMortgageDetails({ paymentFrequency: freq })}
                           className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors ${
                             store.mortgageDetails.paymentFrequency === freq
@@ -305,12 +316,18 @@ export default function SimulatorPage() {
                   <div className="pt-2 border-t border-gray-400/30 space-y-3">
                     <div className="flex justify-between items-center">
                       <label className={`text-sm ${classes.textSecondary}`}>Extra payments?</label>
-                      <button onClick={() => store.updateMortgageDetails({ hasExtraPayments: !store.mortgageDetails.hasExtraPayments })}
+                      <button
+                        type="button"
+                        aria-pressed={store.mortgageDetails.hasExtraPayments}
+                        onClick={() => store.updateMortgageDetails({ hasExtraPayments: !store.mortgageDetails.hasExtraPayments })}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                           store.mortgageDetails.hasExtraPayments
                             ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
                             : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
-                        }`}>{store.mortgageDetails.hasExtraPayments ? 'Yes' : 'No'}</button>
+                        }`}
+                      >
+                        {store.mortgageDetails.hasExtraPayments ? 'Yes' : 'No'}
+                      </button>
                     </div>
                     {store.mortgageDetails.hasExtraPayments && (
                       <div className="flex justify-between items-center">
@@ -320,12 +337,18 @@ export default function SimulatorPage() {
                     )}
                     <div className="flex justify-between items-center">
                       <label className={`text-sm ${classes.textSecondary}`}>Refinanced?</label>
-                      <button onClick={() => store.updateMortgageDetails({ hasRefinanced: !store.mortgageDetails.hasRefinanced, refinanceCount: store.mortgageDetails.hasRefinanced ? 0 : 1 })}
+                      <button
+                        type="button"
+                        aria-pressed={store.mortgageDetails.hasRefinanced}
+                        onClick={() => store.updateMortgageDetails({ hasRefinanced: !store.mortgageDetails.hasRefinanced, refinanceCount: store.mortgageDetails.hasRefinanced ? 0 : 1 })}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                           store.mortgageDetails.hasRefinanced
                             ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
                             : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
-                        }`}>{store.mortgageDetails.hasRefinanced ? 'Yes' : 'No'}</button>
+                        }`}
+                      >
+                        {store.mortgageDetails.hasRefinanced ? 'Yes' : 'No'}
+                      </button>
                     </div>
                     {store.mortgageDetails.hasRefinanced && (
                       <div className="flex justify-between items-center">

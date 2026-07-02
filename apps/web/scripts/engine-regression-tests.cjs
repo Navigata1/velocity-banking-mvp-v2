@@ -2334,6 +2334,19 @@ test('simulator editable controls expose contextual screen-reader labels', () =>
   assert.ok(source.includes('ariaLabel="Mortgage current balance"'), 'expected mortgage current balance label');
 });
 
+test('simulator mortgage option controls expose selected state', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('role="group" aria-label="Mortgage entry mode"'), 'expected entry mode controls to be grouped');
+  assert.ok(source.includes('aria-pressed={store.mortgageDetails.entryMode === mode}'), 'expected entry mode selected state');
+  assert.ok(source.includes('role="group" aria-label="Mortgage original term"'), 'expected term controls to be grouped');
+  assert.ok(source.includes('aria-pressed={store.mortgageDetails.originalTermYears === t}'), 'expected term selected state');
+  assert.ok(source.includes('role="group" aria-label="Mortgage payment frequency"'), 'expected payment frequency controls to be grouped');
+  assert.ok(source.includes('aria-pressed={store.mortgageDetails.paymentFrequency === freq}'), 'expected payment frequency selected state');
+  assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasExtraPayments}'), 'expected extra-payment toggle state');
+  assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasRefinanced}'), 'expected refinance toggle state');
+});
+
 test('portfolio editable controls expose contextual screen-reader labels', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
 
