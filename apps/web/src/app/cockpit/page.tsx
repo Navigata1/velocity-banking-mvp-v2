@@ -21,6 +21,12 @@ interface Instrument {
   numericValue?: number;
 }
 
+const emergencyRecoverySteps = [
+  'Pause new chunks until the emergency cost is absorbed.',
+  'Protect essentials and minimum payments before chasing payoff speed.',
+  'Resume the plan when cash flow is positive again.',
+];
+
 export default function CockpitPage() {
   const mounted = useIsClient();
   const [emergency, setEmergency] = useState(false);
@@ -114,10 +120,19 @@ export default function CockpitPage() {
 
       <div className="mt-6 relative z-10">
         {turbulence && (
-          <div className="mb-6 bg-amber-500/20 border border-amber-500/50 rounded-xl p-4 animate-pulse">
-            <p className="text-amber-400 font-medium">
-              Turbulence Detected: Emergency expense impacting your trajectory. ETA extended by 2 months.
+          <div
+            className="mb-6 rounded-xl border border-amber-500/50 bg-amber-500/20 p-4"
+            data-testid="cockpit-emergency-coach-note"
+          >
+            <p className="font-medium text-amber-300">Emergency scenario active</p>
+            <p className={`mt-1 text-sm leading-6 ${classes.textSecondary}`}>
+              A $600 expense extends the estimate by 2 months. Recovery is part of the plan.
             </p>
+            <ul className={`mt-3 list-disc space-y-1 pl-5 text-sm leading-6 ${classes.textSecondary}`}>
+              {emergencyRecoverySteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ul>
           </div>
         )}
 
