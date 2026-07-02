@@ -4976,6 +4976,19 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
 });
 
+test('Money Loop artifact carousel supports keyboard roving focus', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+
+  assert.ok(source.includes('handleArtifactKeyDown'), 'expected a keyboard handler for artifact tabs');
+  assert.ok(source.includes("event.key === 'ArrowRight'"), 'expected right arrow to move to the next artifact');
+  assert.ok(source.includes("event.key === 'ArrowLeft'"), 'expected left arrow to move to the previous artifact');
+  assert.ok(source.includes("event.key === 'Home'"), 'expected Home to move to the first artifact');
+  assert.ok(source.includes("event.key === 'End'"), 'expected End to move to the last artifact');
+  assert.ok(source.includes('tabIndex={isActive ? 0 : -1}'), 'expected roving tab focus on the active artifact');
+  assert.ok(source.includes('aria-labelledby={`money-loop-artifact-tab-${activeArtifact.id}`}'), 'expected panel to be labelled by the active tab');
+  assert.ok(source.includes('id={`money-loop-artifact-tab-${artifact.id}`}'), 'expected each tab to expose a stable label id');
+});
+
 test('Money Loop artifact rail renders a model-backed payoff orbit visual', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
   const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
