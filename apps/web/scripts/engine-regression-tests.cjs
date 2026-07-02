@@ -1779,6 +1779,27 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   );
 });
 
+test('portfolio strategy picker distinguishes planning default from fastest payoff', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('Planning default: ranks debts for cash-flow unlock'),
+    'expected Velocity strategy copy to label portfolio ranking as a planning default'
+  );
+  assert.ok(
+    source.includes('data-testid="portfolio-strategy-alignment-note"'),
+    'expected a stable hook for the strategy alignment note'
+  );
+  assert.ok(
+    source.includes('not a promise that it is the fastest or lowest-interest path'),
+    'expected Portfolio to avoid implying Velocity is always fastest or lowest-interest'
+  );
+  assert.ok(
+    source.includes('Use the Simulator cards to compare modeled payoff speed and interest cost'),
+    'expected Portfolio to point users back to modeled Simulator comparisons'
+  );
+});
+
 test('portfolio run comparison explains projection deltas after an edit', () => {
   const baselineInputs = {
     monthlyIncome: 5000,
