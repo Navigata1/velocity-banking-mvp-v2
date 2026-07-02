@@ -22,7 +22,7 @@ export interface SimulatorWarningInput {
 }
 
 export interface SimulatorWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-overlimit' | 'loc-utilization';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-overlimit' | 'loc-no-capacity' | 'loc-utilization';
   title: string;
   body: string;
   tone: 'rose' | 'amber';
@@ -86,6 +86,17 @@ export function buildSimulatorWarnings(input: SimulatorWarningInput): SimulatorW
       title: LOC_OVER_LIMIT_TITLE,
       body: LOC_OVER_LIMIT_BODY,
       tone: 'rose',
+    });
+
+    return warnings;
+  }
+
+  if (input.loc.balance === input.loc.limit) {
+    warnings.push({
+      kind: 'loc-no-capacity',
+      title: 'No LOC room available',
+      body: 'The LOC balance is at the entered limit. Pay it down before modeling another chunk.',
+      tone: 'amber',
     });
 
     return warnings;
