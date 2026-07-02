@@ -3744,6 +3744,31 @@ test('simulator strategy cards preserve invalid payoff states instead of claimin
   assert.equal(velocity.statusLabel, 'Needs positive cash flow');
 });
 
+test('simulator strategy comparison explains how Portfolio Velocity differs from fastest payoff', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
+
+  assert.ok(
+    source.includes('data-testid="simulator-portfolio-alignment-note"'),
+    'expected a stable hook for the Simulator-to-Portfolio alignment note'
+  );
+  assert.ok(
+    source.includes('Simulator compares modeled payoff speed and interest cost for the active debt'),
+    'expected Simulator to define its strategy comparison scope'
+  );
+  assert.ok(
+    source.includes('Portfolio Velocity is a planning default for ordering debts by cash-flow unlock and daily interest burn'),
+    'expected Simulator to distinguish Portfolio Velocity from fastest-payoff comparison'
+  );
+  assert.ok(
+    source.includes('not a promise that Velocity is always fastest or lowest-interest'),
+    'expected Simulator to avoid universal Velocity claims'
+  );
+  assert.ok(
+    source.includes('href="/portfolio"') && source.includes('Review Portfolio planning order'),
+    'expected Simulator to route users to Portfolio for debt-order planning'
+  );
+});
+
 test('simulator strategy cards explain over-limit LOC failures plainly', () => {
   const cards = simulatorModel.buildSimulatorStrategyCards([
     {
