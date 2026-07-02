@@ -13,13 +13,14 @@ interface CountUpProps {
 }
 
 function formatCountUpValue(value: number, prefix: string, suffix: string, decimals: number): string {
-  const formatted = Math.abs(value) >= 1
-    ? value.toLocaleString('en-US', {
+  const safeValue = Number.isFinite(value) ? value : 0;
+  const formatted = Math.abs(safeValue) >= 1
+    ? safeValue.toLocaleString('en-US', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
       })
     : decimals > 0
-    ? value.toFixed(decimals)
+    ? safeValue.toFixed(decimals)
     : '0';
   return `${prefix}${formatted}${suffix}`;
 }
@@ -32,11 +33,12 @@ export default function CountUp({
   decimals = 0,
   className = '',
 }: CountUpProps) {
+  const safeValue = Number.isFinite(value) ? value : 0;
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const motionVal = useMotionValue(value);
+  const motionVal = useMotionValue(safeValue);
   const display = useTransform(motionVal, (v) => formatCountUpValue(v, prefix, suffix, decimals));
-  const stableText = formatCountUpValue(value, prefix, suffix, decimals);
+  const stableText = formatCountUpValue(safeValue, prefix, suffix, decimals);
   const [text, setText] = useState(() => stableText);
 
   useEffect(() => {
@@ -46,16 +48,16 @@ export default function CountUp({
 
   useEffect(() => {
     if (!isInView) {
-      motionVal.set(value);
+      motionVal.set(safeValue);
       return;
     }
 
-    const controls = animate(motionVal, value, {
+    const controls = animate(motionVal, safeValue, {
       duration,
       ease: 'easeOut',
     });
     return () => controls.stop();
-  }, [isInView, value, duration, motionVal, prefix, suffix, decimals]);
+  }, [isInView, safeValue, duration, motionVal, prefix, suffix, decimals]);
 
   return (
     <span ref={ref} className={className}>
