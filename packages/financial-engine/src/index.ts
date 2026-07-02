@@ -304,41 +304,57 @@ const LOC_HIGH_UTILIZATION_WARNING = 'LOC utilization is above the 80% planning 
 const LOC_NO_CAPACITY_WARNING = 'LOC balance is at the entered limit. Pay it down before modeling another chunk.';
 const LOC_OVER_LIMIT_WARNING = 'LOC balance is above the available limit. Pay the LOC down before modeling velocity chunks.';
 
+function finiteNumber(value: number, fallback = 0): number {
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function finiteNonNegative(value: number): number {
+  return Math.max(0, finiteNumber(value));
+}
+
+function finitePositiveInteger(value: number, fallback: number): number {
+  if (!Number.isFinite(value) || value <= 0) return fallback;
+  return Math.max(1, Math.trunc(value));
+}
+
 export function calculateMonthlyRate(apr: number): number {
-  return apr / 12;
+  return finiteNumber(apr) / 12;
 }
 
 export function calculateDailyRate(apr: number): number {
-  return apr / 365;
+  return finiteNumber(apr) / 365;
 }
 
 export function calculateDailyInterest(balance: number, apr: number): number {
-  const normalizedApr = apr > 1 ? apr / 100 : apr;
-  return Math.max(0, balance) * calculateDailyRate(Math.max(0, normalizedApr));
+  const safeApr = finiteNumber(apr);
+  const normalizedApr = safeApr > 1 ? safeApr / 100 : safeApr;
+  return finiteNonNegative(balance) * calculateDailyRate(finiteNonNegative(normalizedApr));
 }
 
 export function calculateCashFlow(income: number, expenses: number): number {
-  return income - expenses;
+  return finiteNumber(income) - finiteNumber(expenses);
 }
 
 export function calculateAmortizationPayment(principal: number, apr: number, termMonths: number): number {
-  if (principal <= 0 || termMonths <= 0) return 0;
-  const r = apr / 12;
-  if (r === 0) return principal / termMonths;
-  return principal * (r * Math.pow(1 + r, termMonths)) / (Math.pow(1 + r, termMonths) - 1);
+  const safePrincipal = finiteNonNegative(principal);
+  const safeTermMonths = finitePositiveInteger(termMonths, 0);
+  if (safePrincipal <= 0 || safeTermMonths <= 0) return 0;
+  const r = finiteNonNegative(apr) / 12;
+  if (r === 0) return safePrincipal / safeTermMonths;
+  return safePrincipal * (r * Math.pow(1 + r, safeTermMonths)) / (Math.pow(1 + r, safeTermMonths) - 1);
 }
 
 export function calculateTotalAmortizationInterest(principal: number, apr: number, termMonths: number): number {
   const payment = calculateAmortizationPayment(principal, apr, termMonths);
-  return Math.max(0, payment * Math.max(0, termMonths) - Math.max(0, principal));
+  return Math.max(0, payment * finiteNonNegative(termMonths) - finiteNonNegative(principal));
 }
 
 export function simulateAmortizedPayoff(inputs: AmortizedPayoffInputs): AmortizedPayoffResult {
-  const maxMonths = inputs.maxMonths ?? 600;
-  const monthlyRate = Math.max(0, inputs.apr) / 12;
-  const scheduledPayment = Math.max(0, inputs.monthlyPayment) + Math.max(0, inputs.extraPayment ?? 0);
+  const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
+  const monthlyRate = finiteNonNegative(inputs.apr) / 12;
+  const scheduledPayment = finiteNonNegative(inputs.monthlyPayment) + finiteNonNegative(inputs.extraPayment ?? 0);
   const monthlyData: AmortizedPayoffMonth[] = [];
-  let balance = Math.max(0, inputs.principalBalance);
+  let balance = finiteNonNegative(inputs.principalBalance);
   let totalInterest = 0;
   let month = 0;
   const firstMonthInterest = balance * monthlyRate;
@@ -388,9 +404,9 @@ export function calculateADBInterest(
   monthlyExpenses: number,
   daysInMonth: number = 30
 ): number {
-  const dayCount = Math.max(1, Math.trunc(daysInMonth));
-  const balanceAfterDeposit = startBalance - monthlyIncome;
-  const dailyExpense = monthlyExpenses / dayCount;
+  const dayCount = finitePositiveInteger(daysInMonth, 30);
+  const balanceAfterDeposit = finiteNonNegative(startBalance) - finiteNonNegative(monthlyIncome);
+  const dailyExpense = finiteNonNegative(monthlyExpenses) / dayCount;
 
   let totalDailyBalance = 0;
   for (let day = 1; day <= dayCount; day += 1) {
@@ -399,7 +415,7 @@ export function calculateADBInterest(
   }
 
   const averageDailyBalance = totalDailyBalance / dayCount;
-  const dailyRate = apr / 365;
+  const dailyRate = finiteNonNegative(apr) / 365;
 
   return averageDailyBalance * dailyRate * dayCount;
 }
@@ -413,20 +429,30 @@ export function formatCurrency(amount: number): string {
 }
 
 export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopMonthResult {
-  const chunkAmount = Math.max(0, inputs.chunkAmount);
+  const chunkAmount = finiteNonNegative(inputs.chunkAmount);
   const events: MoneyLoopEvent[] = [];
-  let debtBalance = inputs.debtBalance;
-  let locBalance = inputs.locBalance;
-  let monthsSinceChunk = inputs.monthsSinceChunk + 1;
+  const loc = {
+    limit: finiteNonNegative(inputs.loc.limit),
+    apr: finiteNonNegative(inputs.loc.apr),
+    balance: finiteNonNegative(inputs.loc.balance),
+  };
+  const debtApr = finiteNonNegative(inputs.debtApr);
+  const debtPaymentInput = finiteNonNegative(inputs.debtPayment);
+  const cashFlowPaydown = finiteNonNegative(inputs.cashFlowPaydown);
+  const locDepositAmount = finiteNonNegative(inputs.locDepositAmount);
+  const locExpenseAmount = finiteNonNegative(inputs.locExpenseAmount);
+  let debtBalance = finiteNonNegative(inputs.debtBalance);
+  let locBalance = finiteNonNegative(inputs.locBalance);
+  let monthsSinceChunk = finitePositiveInteger(inputs.monthsSinceChunk, 0) + 1;
   let didChunk = false;
-  const locAvailable = Math.max(0, inputs.loc.limit - locBalance);
-  const effectiveChunkAmount = Math.min(chunkAmount, Math.max(0, inputs.debtBalance), locAvailable);
-  const chunkRecoveryMonths = effectiveChunkAmount > 0 && inputs.cashFlowPaydown > 0
-    ? Math.ceil(effectiveChunkAmount / inputs.cashFlowPaydown)
+  const locAvailable = Math.max(0, loc.limit - locBalance);
+  const effectiveChunkAmount = Math.min(chunkAmount, debtBalance, locAvailable);
+  const chunkRecoveryMonths = effectiveChunkAmount > 0 && cashFlowPaydown > 0
+    ? Math.ceil(effectiveChunkAmount / cashFlowPaydown)
     : 999;
 
-  const debtInterest = debtBalance * inputs.debtApr / 12;
-  const debtPayment = Math.min(inputs.debtPayment, debtBalance + debtInterest);
+  const debtInterest = debtBalance * debtApr / 12;
+  const debtPayment = Math.min(debtPaymentInput, debtBalance + debtInterest);
   const debtPrincipal = debtPayment - debtInterest;
   const debtPrincipalPaid = Math.max(0, debtPrincipal);
 
@@ -469,24 +495,24 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   events.push({
     type: 'income-to-loc',
     label: 'Income enters LOC',
-    amount: inputs.locDepositAmount,
-    balanceAfter: Math.max(0, locBalance - inputs.locDepositAmount),
+    amount: locDepositAmount,
+    balanceAfter: Math.max(0, locBalance - locDepositAmount),
     note: 'Income is modeled as entering the LOC first, lowering the average daily balance.',
   });
 
   events.push({
     type: 'expenses-from-loc',
     label: 'Expenses leave LOC',
-    amount: inputs.locExpenseAmount,
-    balanceAfter: Math.max(0, locBalance - inputs.locDepositAmount + inputs.locExpenseAmount),
+    amount: locExpenseAmount,
+    balanceAfter: Math.max(0, locBalance - locDepositAmount + locExpenseAmount),
     note: 'Expenses are modeled as flowing back out across the month.',
   });
 
   const locInterest = calculateADBInterest(
     locBalance,
-    inputs.loc.apr,
-    inputs.locDepositAmount,
-    inputs.locExpenseAmount
+    loc.apr,
+    locDepositAmount,
+    locExpenseAmount
   );
   events.push({
     type: 'loc-interest',
@@ -496,11 +522,11 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     note: 'LOC interest uses the average daily balance estimate for this month.',
   });
 
-  locBalance = Math.max(0, locBalance - inputs.cashFlowPaydown + locInterest);
+  locBalance = Math.max(0, locBalance - cashFlowPaydown + locInterest);
   events.push({
     type: 'loc-cashflow-paydown',
     label: 'Cash flow pays down LOC',
-    amount: inputs.cashFlowPaydown,
+    amount: cashFlowPaydown,
     balanceAfter: locBalance,
     note: 'Positive cash flow is applied after expenses to pull the LOC balance back down.',
   });
@@ -511,7 +537,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     locBalance,
     debtInterest,
     locInterest,
-    cashFlowPaydown: inputs.cashFlowPaydown,
+    cashFlowPaydown,
     events,
     debtPayment,
     debtPrincipalPaid,
@@ -521,11 +547,22 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
 }
 
 export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoopPayoffResult {
-  const maxMonths = inputs.maxMonths ?? 600;
-  const chunkAmount = Math.max(0, inputs.chunkAmount);
+  const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
+  const chunkAmount = finiteNonNegative(inputs.chunkAmount);
+  const principalBalance = finiteNonNegative(inputs.principalBalance);
+  const debtApr = finiteNonNegative(inputs.debtApr);
+  const debtPayment = finiteNonNegative(inputs.debtPayment);
+  const loc = {
+    limit: finiteNonNegative(inputs.loc.limit),
+    apr: finiteNonNegative(inputs.loc.apr),
+    balance: finiteNonNegative(inputs.loc.balance),
+  };
+  const cashFlowPaydown = finiteNumber(inputs.cashFlowPaydown);
+  const locDepositAmount = finiteNonNegative(inputs.locDepositAmount);
+  const locExpenseAmount = finiteNonNegative(inputs.locExpenseAmount);
   const monthlyData: MoneyLoopMonthlyResult[] = [];
 
-  if (inputs.cashFlowPaydown <= 0) {
+  if (cashFlowPaydown <= 0) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -537,7 +574,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  if (inputs.loc.limit <= 0) {
+  if (loc.limit <= 0) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -549,7 +586,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  if (inputs.loc.balance > inputs.loc.limit) {
+  if (loc.balance > loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -561,7 +598,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  if (inputs.loc.balance === inputs.loc.limit) {
+  if (loc.balance === loc.limit) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -573,8 +610,8 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  const firstMonthInterest = inputs.principalBalance * inputs.debtApr / 12;
-  if (inputs.principalBalance > 0.01 && inputs.debtPayment <= firstMonthInterest) {
+  const firstMonthInterest = principalBalance * debtApr / 12;
+  if (principalBalance > 0.01 && debtPayment <= firstMonthInterest) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -586,26 +623,26 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  let debtBalance = inputs.principalBalance;
-  let locBalance = inputs.loc.balance;
+  let debtBalance = principalBalance;
+  let locBalance = loc.balance;
   let debtInterestPaid = 0;
   let locInterestPaid = 0;
   let month = 0;
-  let monthsSinceChunk = inputs.initialMonthsSinceChunk ?? 0;
+  let monthsSinceChunk = finitePositiveInteger(inputs.initialMonthsSinceChunk ?? 0, 0);
 
   while ((debtBalance > 0.01 || locBalance > 0.01) && month < maxMonths) {
     month += 1;
     const monthResult = simulateMoneyLoopMonth({
       month,
       debtBalance,
-      debtApr: inputs.debtApr,
-      debtPayment: inputs.debtPayment,
-      loc: inputs.loc,
+      debtApr,
+      debtPayment,
+      loc,
       locBalance,
       chunkAmount,
-      cashFlowPaydown: inputs.cashFlowPaydown,
-      locDepositAmount: inputs.locDepositAmount,
-      locExpenseAmount: inputs.locExpenseAmount,
+      cashFlowPaydown,
+      locDepositAmount,
+      locExpenseAmount,
       monthsSinceChunk,
     });
     debtBalance = monthResult.debtBalance;
