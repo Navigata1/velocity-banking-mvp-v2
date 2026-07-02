@@ -42,6 +42,12 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 10. `10-portfolio-badge-fixed.png` - Portfolio, post-fix rendered check.
     Health: improved. Velocity is labeled "Default, review first" while the cash-flow warning and "Review inputs" state are visible.
 
+11. Dashboard zero-LOC rendered smoke, post-fix.
+    Health: improved. Setting Line of Credit limit to `$0` while a LOC balance remains shows "Enter known LOC terms", "Enter LOC terms", and known-term warnings for limit, APR, fees, and draw rules. The old "Add LOC limit" and "Add LOC details" copy is absent.
+
+12. Simulator zero-LOC rendered smoke, post-fix.
+    Health: improved. The persisted zero-limit state shows the known-terms warning and the Velocity strategy card reports "Enter LOC terms" instead of presenting a projection.
+
 ## Strengths
 
 - Dashboard keeps the first screen focused on the required four vitals.
@@ -51,6 +57,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Settings makes backend readiness explicit instead of implying Supabase or Cloudflare is already connected.
 - Mobile-width dashboard avoids horizontal page overflow.
 - Chrome and the in-app browser both render the current dashboard shell and required dashboard hooks locally.
+- Missing LOC setup states now ask for known LOC terms instead of implying a limit alone is enough.
 
 ## UX Risks
 
@@ -60,6 +67,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 - Mobile dashboard first viewport does not show the full four-vital set or the Money Loop artifact rail, so the educational "click" may require more scrolling than intended.
 - The simulator and portfolio can disagree in tone: simulator shows Snowball as fastest, while Portfolio defaults to Velocity. The app should clearly explain that Portfolio Velocity is a ranking/planning default, not always the mathematically best payoff outcome.
 - Chrome wraps the dashboard domain selector and vital cards differently than the in-app browser at similar desktop widths. The layout still works, but this should be included in future responsive QA.
+- Vault did not surface the zero-limit LOC setup text in the persisted auto-loan flow during the cross-route check. That is not a regression from this pass, but the Vault mortgage-specific LOC warning path should receive a targeted browser state fixture later.
 
 ## Accessibility Risks
 
@@ -78,6 +86,7 @@ Evidence folder: `docs/audits/rendered-smoke-2026-07-02/`.
 ## Fix Applied In This Pass
 
 - Portfolio Velocity badge now shows "Default, review first" when the current projection has warnings or cannot support payoff claims. The rendered check confirmed "Recommended" is absent while the cash-flow warning remains visible.
+- Web Dashboard, Simulator, Vault projection labels, and shared warning models now use known LOC terms language instead of limit-only setup copy. Rendered Chrome smoke confirmed Dashboard and Simulator zero-limit states show the revised copy and no console or page errors.
 
 ## Evidence Limits
 
