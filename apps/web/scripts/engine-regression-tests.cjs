@@ -6057,6 +6057,31 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(css.includes('.artifact-carousel-token'), 'expected CSS to define the active carousel token');
 });
 
+test('Money Loop artifact carousel renders selected artifact depth layers', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
+
+  assert.ok(
+    source.includes("data-testid=\"money-loop-active-artifact-token\""),
+    'expected a stable active artifact token smoke hook'
+  );
+  assert.ok(
+    source.includes("'--artifact-depth-color': activeTone.accent"),
+    'expected the active artifact depth color to follow the selected model tone'
+  );
+  assert.ok(source.includes('artifact-token-bevel'), 'expected active artifact to render a bevel layer');
+  assert.ok(source.includes('artifact-token-core'), 'expected active artifact to render a raised core layer');
+  assert.ok(source.includes('artifact-token-facet'), 'expected active artifact to render a facet highlight layer');
+  assert.ok(css.includes('.artifact-carousel-token::before'), 'expected selected token to draw a depth underside');
+  assert.ok(css.includes('.artifact-carousel-token::after'), 'expected selected token to draw a glossy face layer');
+  assert.ok(css.includes('translateZ(-22px)'), 'expected selected token underside to use 3D depth');
+  assert.ok(css.includes('translateZ(22px)'), 'expected selected token core to lift above the bevel');
+  assert.ok(
+    css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('transform-style: preserve-3d'),
+    'expected reduced-motion users to keep static depth without selection animation'
+  );
+});
+
 test('Money Loop artifact carousel supports keyboard roving focus', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
 

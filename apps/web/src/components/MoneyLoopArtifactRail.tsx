@@ -9,6 +9,10 @@ interface MoneyLoopArtifactRailProps extends HTMLAttributes<HTMLElement> {
   artifacts: DashboardLoopArtifact[];
 }
 
+type ArtifactTokenStyle = CSSProperties & {
+  '--artifact-depth-color': string;
+};
+
 const toneStyles: Record<DashboardTone, {
   accent: string;
   border: string;
@@ -84,8 +88,9 @@ export default function MoneyLoopArtifactRail({
   }
 
   const activeTone = toneStyles[activeArtifact.tone];
-  const activeTokenStyle: CSSProperties = {
+  const activeTokenStyle: ArtifactTokenStyle = {
     background: `conic-gradient(${activeTone.accent} ${activeArtifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
+    '--artifact-depth-color': activeTone.accent,
   };
   const orbitStageStyle = {
     '--active-artifact-color': activeTone.accent,
@@ -165,11 +170,14 @@ export default function MoneyLoopArtifactRail({
             <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2">
               <div
                 key={activeArtifact.id}
-                className="artifact-carousel-token relative h-full w-full rounded-full border border-white/15 shadow-2xl"
+                data-testid="money-loop-active-artifact-token"
+                className="artifact-carousel-token relative isolate h-full w-full rounded-full border border-white/15 shadow-2xl"
                 style={activeTokenStyle}
+                aria-hidden="true"
               >
-                <div className="absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
-                <div className="absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
+                <div className="artifact-token-bevel absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
+                <div className="artifact-token-core absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
+                <div className="artifact-token-facet absolute inset-[22px] rounded-full" />
                 <div
                   className="absolute left-1/2 top-5 h-4 w-14 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
                   aria-hidden="true"
@@ -265,10 +273,11 @@ export default function MoneyLoopArtifactRail({
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
             const isActive = artifact.id === activeArtifact.id;
-            const tokenStyle: CSSProperties = {
-              animationDelay: `${index * 120}ms`,
-              background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
-            };
+              const tokenStyle: ArtifactTokenStyle = {
+                animationDelay: `${index * 120}ms`,
+                background: `conic-gradient(${tone.accent} ${artifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
+                '--artifact-depth-color': tone.accent,
+              };
 
             return (
               <button
