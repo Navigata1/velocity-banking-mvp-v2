@@ -1137,6 +1137,29 @@ test('shared warnings treat a full LOC as no available room instead of high util
   assert.ok(!warnings.some((warning) => warning.type === 'loc-overutilization'), JSON.stringify(warnings));
 });
 
+test('shared warnings sanitize non-finite cash-flow LOC and debt inputs', () => {
+  const warnings = calculations.generateWarnings(
+    Number.POSITIVE_INFINITY,
+    Number.NaN,
+    { limit: Number.POSITIVE_INFINITY, apr: Number.NaN, balance: Number.NaN },
+    [{
+      id: 'corrupt',
+      name: 'Corrupt Debt',
+      type: 'credit_card',
+      balance: Number.POSITIVE_INFINITY,
+      apr: Number.NaN,
+      monthlyPayment: Number.NaN,
+      termMonths: Number.NaN,
+    }]
+  );
+  const messages = warnings.map((warning) => warning.message).join(' ');
+
+  assert.ok(warnings.some((warning) => warning.type === 'negative-cashflow'), JSON.stringify(warnings));
+  assert.ok(warnings.some((warning) => warning.type === 'no-loc'), JSON.stringify(warnings));
+  assert.ok(!messages.includes('Infinity'), messages);
+  assert.ok(!messages.includes('NaN'), messages);
+});
+
 test('multi-debt velocity refuses under-interest debt plans instead of dropping unpaid interest', () => {
   const velocity = calculations.simulateMultiDebt(
     [

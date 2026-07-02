@@ -223,13 +223,23 @@ export function generateWarnings(
   debts?: DebtItem[]
 ): Warning[] {
   const warnings: Warning[] = [];
-  const cashFlow = monthlyIncome - monthlyExpenses;
+  const safeMonthlyIncome = safeNonNegative(monthlyIncome);
+  const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
+  const safeLoc = sanitizeLoc(loc);
+  const safeDebts = debts?.map((debt) => ({
+    ...debt,
+    balance: safeNonNegative(debt.balance),
+    apr: safeNonNegative(debt.apr),
+    monthlyPayment: safeNonNegative(debt.monthlyPayment),
+    termMonths: Math.max(1, Math.round(safeNonNegative(debt.termMonths, 1))),
+  }));
+  const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
 
   if (cashFlow <= 0) {
     warnings.push({
       type: 'negative-cashflow',
       severity: 'critical',
-      message: `Your expenses (${formatCurrency(monthlyExpenses)}) exceed your income (${formatCurrency(monthlyIncome)}). Velocity banking requires positive cash flow to work. Let's focus on increasing income or reducing expenses first.`,
+      message: `Your expenses (${formatCurrency(safeMonthlyExpenses)}) exceed your income (${formatCurrency(safeMonthlyIncome)}). Velocity banking requires positive cash flow to work. Let's focus on increasing income or reducing expenses first.`,
     });
   } else if (cashFlow < 200) {
     warnings.push({
@@ -239,24 +249,24 @@ export function generateWarnings(
     });
   }
 
-  if (loc) {
-    if (loc.limit <= 0) {
+  if (safeLoc) {
+    if (safeLoc.limit <= 0) {
       warnings.push({
         type: 'no-loc',
-        severity: loc.balance > 0 ? 'warning' : 'info',
-        message: loc.balance > 0
+        severity: safeLoc.balance > 0 ? 'warning' : 'info',
+        message: safeLoc.balance > 0
           ? 'LOC balance is present, but the limit is missing. Enter a LOC limit before trusting utilization or chunk projections.'
           : 'No line of credit limit is set. Enter a LOC or HELOC limit before trusting velocity chunk projections.',
       });
     } else {
-      const utilization = loc.balance / loc.limit;
-      if (loc.balance > loc.limit) {
+      const utilization = safeLoc.balance / safeLoc.limit;
+      if (safeLoc.balance > safeLoc.limit) {
         warnings.push({
           type: 'loc-overlimit',
           severity: 'critical',
-          message: `Your LOC balance (${formatCurrency(loc.balance)}) is above the entered limit (${formatCurrency(loc.limit)}). Bring it back under the limit before modeling another chunk.`,
+          message: `Your LOC balance (${formatCurrency(safeLoc.balance)}) is above the entered limit (${formatCurrency(safeLoc.limit)}). Bring it back under the limit before modeling another chunk.`,
         });
-      } else if (loc.balance === loc.limit) {
+      } else if (safeLoc.balance === safeLoc.limit) {
         warnings.push({
           type: 'loc-no-capacity',
           severity: 'critical',
@@ -284,8 +294,8 @@ export function generateWarnings(
     });
   }
 
-  if (debts) {
-    const totalMinimums = debts.reduce((sum, debt) => sum + debt.monthlyPayment, 0);
+  if (safeDebts) {
+    const totalMinimums = safeDebts.reduce((sum, debt) => sum + debt.monthlyPayment, 0);
     if (cashFlow > 0 && cashFlow < totalMinimums) {
       warnings.push({
         type: 'cashflow-below-minimums',
@@ -295,8 +305,8 @@ export function generateWarnings(
     }
   }
 
-  if (debts) {
-    for (const debt of debts) {
+  if (safeDebts) {
+    for (const debt of safeDebts) {
       const monthlyInterest = debt.balance * debt.apr / 12;
       if (debt.monthlyPayment <= monthlyInterest && debt.balance > 0) {
         warnings.push({
