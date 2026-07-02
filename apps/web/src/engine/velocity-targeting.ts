@@ -5,6 +5,7 @@
  * Prioritizes: cash-flow unlock > daily interest burn > promo risk.
  */
 
+import { calculateDailyInterest } from '@interestshield/financial-engine';
 import type { DebtAccount, DebtType } from '@/stores/financial-store';
 
 export type PaymentSource = 'checking' | 'loc' | 'either';
@@ -26,9 +27,7 @@ export function formatCurrency(n: number): string {
 }
 
 export function estimateDailyInterest(balance: number, apr: number): number {
-  // apr can be decimal (0.069) or percentage (6.9) — normalize
-  const rate = apr > 1 ? apr / 100 : apr;
-  return Math.max(0, balance) * rate / 365;
+  return calculateDailyInterest(balance, apr);
 }
 
 /**

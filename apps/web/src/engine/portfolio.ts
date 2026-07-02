@@ -12,6 +12,7 @@ import {
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
+import { calculateDailyInterest } from '@interestshield/financial-engine';
 
 export type DebtCategory =
   | 'mortgage'
@@ -153,7 +154,7 @@ function getEffectiveApr(debt: DebtItem): number {
  */
 function velocityScore(debt: DebtItem, balance: number): number {
   const unlock = getMinPayment(debt);
-  const burn = balance * debt.apr / 365;
+  const burn = calculateDailyInterest(balance, debt.apr);
   const promoMonths = debt.promo?.monthsRemaining ?? null;
   const promoRisk =
     promoMonths === null ? 0 :
@@ -256,7 +257,7 @@ function buildDebtRationales(
     const balance = balances.get(debt.id) ?? debt.balance;
     const monthlyPaymentUnlock = getMinPayment(debt);
     const aprUsedForBurn = debt.promo?.postIntroApr ?? debt.apr;
-    const dailyInterestBurn = balance * aprUsedForBurn / 365;
+    const dailyInterestBurn = calculateDailyInterest(balance, aprUsedForBurn);
     const rank = ranks.get(debt.id) ?? debts.length;
     const isCurrentTarget = targetIds.includes(debt.id);
     const strategyIntro =

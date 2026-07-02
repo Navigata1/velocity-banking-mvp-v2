@@ -302,6 +302,11 @@ export function calculateDailyRate(apr: number): number {
   return apr / 365;
 }
 
+export function calculateDailyInterest(balance: number, apr: number): number {
+  const normalizedApr = apr > 1 ? apr / 100 : apr;
+  return Math.max(0, balance) * calculateDailyRate(Math.max(0, normalizedApr));
+}
+
 export function calculateCashFlow(income: number, expenses: number): number {
   return income - expenses;
 }
@@ -598,8 +603,8 @@ export function buildMobileDashboardSnapshot(
   const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
   const availableLoc = locNeedsSetup ? 0 : Math.max(0, input.loc.limit - input.loc.balance);
   const locUtilization = locNeedsSetup ? 0 : input.loc.balance / input.loc.limit;
-  const debtDailyInterest = Math.max(0, input.activeDebt.balance) * calculateDailyRate(Math.max(0, input.activeDebt.apr));
-  const locDailyInterest = Math.max(0, input.loc.balance) * calculateDailyRate(Math.max(0, input.loc.apr));
+  const debtDailyInterest = calculateDailyInterest(input.activeDebt.balance, input.activeDebt.apr);
+  const locDailyInterest = calculateDailyInterest(input.loc.balance, input.loc.apr);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
   const safeChunk = Math.min(Math.max(0, input.chunkAmount), Math.max(0, input.activeDebt.balance), availableLoc);
   const velocityProjection = simulateMobileVelocity(input);
@@ -702,7 +707,7 @@ export function buildMobilePortfolioSnapshot(
   const totalMinimums = Math.max(0, input.activeDebt.monthlyPayment);
   const cashFlow = calculateCashFlow(input.monthlyIncome, input.monthlyExpenses);
   const cashFlowAfterMinimums = cashFlow - totalMinimums;
-  const dailyInterestBurn = totalDebt * calculateDailyRate(Math.max(0, input.activeDebt.apr));
+  const dailyInterestBurn = calculateDailyInterest(totalDebt, input.activeDebt.apr);
 
   let guardrail: string | null = null;
   if (cashFlow <= 0) {

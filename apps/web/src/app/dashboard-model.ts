@@ -1,4 +1,4 @@
-import { formatCurrency } from '../engine/calculations';
+import { calculateDailyInterest, formatCurrency } from '../engine/calculations';
 
 export type DashboardTone = 'emerald' | 'sky' | 'amber' | 'rose';
 
@@ -118,10 +118,6 @@ function formatMonths(months: number): string {
 
 function isProjectedPayoffPossible(projection: DashboardProjectionInput): boolean {
   return projection.isPayoffPossible !== false && Number.isFinite(projection.months) && projection.months > 0;
-}
-
-function dailyInterest(balance: number, apr: number): number {
-  return (Math.max(0, balance) * Math.max(0, apr)) / 365;
 }
 
 const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
@@ -362,10 +358,10 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const locOverLimit = !locNeedsSetup && input.loc.balance > input.loc.limit;
   const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(input.loc) : `${Math.round(locUtilization * 100)}%`;
   const debtDailyInterest = input.allDebts.reduce(
-    (sum, debt) => sum + dailyInterest(debt.balance, debt.interestRate),
+    (sum, debt) => sum + calculateDailyInterest(debt.balance, debt.interestRate),
     0
   );
-  const locDailyInterest = dailyInterest(input.loc.balance, input.loc.interestRate);
+  const locDailyInterest = calculateDailyInterest(input.loc.balance, input.loc.interestRate);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
   const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(input.velocity);
   const baselinePossible = isProjectedPayoffPossible(input.baseline);
