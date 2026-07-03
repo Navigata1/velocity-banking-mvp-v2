@@ -285,18 +285,34 @@ export const usePortfolioStore = create<PortfolioState>()(
       lastRunSummary: undefined,
       lastRunComparison: undefined,
 
-      setMonthlyIncome: (v) => { set({ monthlyIncome: Math.max(0, v) }); get().recompute(); },
-      setMonthlyExpenses: (v) => { set({ monthlyExpenses: Math.max(0, v) }); get().recompute(); },
-      setExtraMonthlyPayment: (v) => { set({ extraMonthlyPayment: v }); get().recompute(); },
-      setChunkAmount: (v) => { set({ chunkAmount: Math.max(0, v) }); get().recompute(); },
+      setMonthlyIncome: (v) => {
+        const fallback = get().monthlyIncome;
+        set({ monthlyIncome: safeNonNegativeNumber(v, fallback, 'Monthly income') });
+        get().recompute();
+      },
+      setMonthlyExpenses: (v) => {
+        const fallback = get().monthlyExpenses;
+        set({ monthlyExpenses: safeNonNegativeNumber(v, fallback, 'Monthly expenses') });
+        get().recompute();
+      },
+      setExtraMonthlyPayment: (v) => {
+        const fallback = get().extraMonthlyPayment;
+        set({ extraMonthlyPayment: safeNonNegativeNumber(v, fallback, 'Extra monthly payment') });
+        get().recompute();
+      },
+      setChunkAmount: (v) => {
+        const fallback = get().chunkAmount;
+        set({ chunkAmount: safeNonNegativeNumber(v, fallback, 'Velocity chunk') });
+        get().recompute();
+      },
       updateLOC: (patch) => {
         set((state) => ({
           loc: {
             ...state.loc,
             ...patch,
-            limit: Math.max(0, patch.limit ?? state.loc.limit),
-            balance: Math.max(0, patch.balance ?? state.loc.balance),
-            apr: Math.max(0, patch.apr ?? state.loc.apr),
+            limit: safeNonNegativeNumber(patch.limit, state.loc.limit, 'LOC limit'),
+            balance: safeNonNegativeNumber(patch.balance, state.loc.balance, 'LOC balance'),
+            apr: safeNonNegativeNumber(patch.apr, state.loc.apr, 'LOC APR'),
           },
         }));
         get().recompute();
@@ -304,7 +320,11 @@ export const usePortfolioStore = create<PortfolioState>()(
 
       setStrategy: (s) => { set({ strategy: s }); get().recompute(); },
       setFocusMode: (m) => { set({ focusMode: m }); get().recompute(); },
-      setSplitRatioPrimary: (r) => { set({ splitRatioPrimary: Math.min(1, Math.max(0, r)) }); get().recompute(); },
+      setSplitRatioPrimary: (r) => {
+        const fallback = get().splitRatioPrimary;
+        set({ splitRatioPrimary: safeRatio(r, fallback, 'Split ratio') });
+        get().recompute();
+      },
 
       addDebt: (debt) => {
         const id = debt.id ?? uid();

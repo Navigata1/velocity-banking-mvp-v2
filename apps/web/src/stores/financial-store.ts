@@ -531,11 +531,17 @@ export const useFinancialStore = create<FinancialState>()(
       chunkAmount: 1000,
       chunkFrequency: 'monthly',
       
-      setMonthlyIncome: (income) => set({ monthlyIncome: income }),
+      setMonthlyIncome: (income) => set((state) => ({
+        monthlyIncome: safeNonNegativeNumber(income, state.monthlyIncome, 'Monthly income'),
+      })),
       
-      setMonthlyExpenses: (expenses) => set({ monthlyExpenses: expenses }),
+      setMonthlyExpenses: (expenses) => set((state) => ({
+        monthlyExpenses: safeNonNegativeNumber(expenses, state.monthlyExpenses, 'Monthly expenses'),
+      })),
       
-      setCurrentAge: (age) => set({ currentAge: age }),
+      setCurrentAge: (age) => set((state) => ({
+        currentAge: safeNonNegativeNumber(age, state.currentAge, 'Current age'),
+      })),
       
       setActiveDomain: (domain) => set({ activeDomain: domain }),
       
@@ -560,20 +566,29 @@ export const useFinancialStore = create<FinancialState>()(
       updateDebt: (type, updates) => set((state) => ({
         debts: {
           ...state.debts,
-          [type]: { ...state.debts[type], ...updates },
+          [type]: sanitizeDebtAccount({ ...state.debts[type], ...updates }, state.debts[type], type),
         },
       })),
       
       updateLOC: (updates) => set((state) => ({
-        loc: { ...state.loc, ...updates },
+        loc: {
+          limit: safeNonNegativeNumber(updates.limit, state.loc.limit, 'LOC limit'),
+          balance: safeNonNegativeNumber(updates.balance, state.loc.balance, 'LOC balance'),
+          interestRate: safeNonNegativeNumber(updates.interestRate, state.loc.interestRate, 'LOC rate'),
+        },
       })),
       
-      setChunkAmount: (amount) => set({ chunkAmount: amount }),
+      setChunkAmount: (amount) => set((state) => ({
+        chunkAmount: safeNonNegativeNumber(amount, state.chunkAmount, 'Velocity chunk'),
+      })),
       
       setChunkFrequency: (frequency) => set({ chunkFrequency: frequency }),
       
       updateMortgageDetails: (updates) => set((state) => ({
-        mortgageDetails: { ...state.mortgageDetails, ...updates },
+        mortgageDetails: sanitizeMortgageDetails(
+          { ...state.mortgageDetails, ...updates },
+          state.mortgageDetails
+        ),
       })),
       
       getCashFlow: () => {

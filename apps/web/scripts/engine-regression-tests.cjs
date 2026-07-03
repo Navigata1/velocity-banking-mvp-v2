@@ -3815,6 +3815,99 @@ test('financial persisted state sanitizes corrupt browser storage before hydrati
   assert.equal(sanitized.mortgageDetails.hasExtraPayments, store.mortgageDetails.hasExtraPayments);
 });
 
+test('portfolio live setters sanitize non-finite money inputs before recompute', () => {
+  const store = portfolioStore.usePortfolioStore.getState();
+  const original = store.exportState();
+  const originalData = JSON.parse(original).data;
+
+  try {
+    store.setMonthlyIncome(Number.NaN);
+    store.setMonthlyExpenses(-50);
+    store.setExtraMonthlyPayment(Number.POSITIVE_INFINITY);
+    store.setChunkAmount(-25);
+    store.updateLOC({
+      limit: Number.POSITIVE_INFINITY,
+      balance: -400,
+      apr: Number.NaN,
+    });
+    store.setSplitRatioPrimary(Number.NaN);
+
+    const current = portfolioStore.usePortfolioStore.getState();
+    const serialized = current.exportState();
+
+    assert.equal(current.monthlyIncome, originalData.monthlyIncome);
+    assert.equal(current.monthlyExpenses, 0);
+    assert.equal(current.extraMonthlyPayment, originalData.extraMonthlyPayment);
+    assert.equal(current.chunkAmount, 0);
+    assert.equal(current.loc.limit, originalData.loc.limit);
+    assert.equal(current.loc.balance, 0);
+    assert.equal(current.loc.apr, originalData.loc.apr);
+    assert.equal(current.splitRatioPrimary, originalData.splitRatioPrimary);
+    assert.ok(!serialized.includes('NaN'), serialized);
+    assert.ok(!serialized.includes('Infinity'), serialized);
+  } finally {
+    portfolioStore.usePortfolioStore.getState().importState(original);
+  }
+});
+
+test('financial live setters sanitize non-finite dashboard inputs before payoff helpers read them', () => {
+  const original = financialStore.useFinancialStore.getState();
+  const originalSnapshot = {
+    monthlyIncome: original.monthlyIncome,
+    monthlyExpenses: original.monthlyExpenses,
+    currentAge: original.currentAge,
+    debts: original.debts,
+    loc: original.loc,
+    chunkAmount: original.chunkAmount,
+    mortgageDetails: original.mortgageDetails,
+  };
+
+  try {
+    original.setMonthlyIncome(Number.NaN);
+    original.setMonthlyExpenses(-10);
+    original.setCurrentAge(Number.POSITIVE_INFINITY);
+    original.updateDebt('car', {
+      balance: Number.POSITIVE_INFINITY,
+      interestRate: -0.12,
+      minimumPayment: Number.NaN,
+      termMonths: Number.NaN,
+    });
+    original.updateLOC({
+      limit: Number.NaN,
+      balance: -700,
+      interestRate: Number.POSITIVE_INFINITY,
+    });
+    original.setChunkAmount(Number.NaN);
+    original.updateMortgageDetails({
+      currentMonthlyPayment: Number.POSITIVE_INFINITY,
+      currentBalance: -1,
+      remainingTermMonths: Number.NaN,
+    });
+
+    const current = financialStore.useFinancialStore.getState();
+    const baseline = current.getBaselinePayoff('car');
+    const velocity = current.getVelocityPayoff('car');
+
+    assert.equal(current.monthlyIncome, originalSnapshot.monthlyIncome);
+    assert.equal(current.monthlyExpenses, 0);
+    assert.equal(current.currentAge, originalSnapshot.currentAge);
+    assert.equal(current.debts.car.balance, originalSnapshot.debts.car.balance);
+    assert.equal(current.debts.car.interestRate, 0);
+    assert.equal(current.debts.car.minimumPayment, originalSnapshot.debts.car.minimumPayment);
+    assert.equal(current.debts.car.termMonths, originalSnapshot.debts.car.termMonths);
+    assert.equal(current.loc.limit, originalSnapshot.loc.limit);
+    assert.equal(current.loc.balance, 0);
+    assert.equal(current.loc.interestRate, originalSnapshot.loc.interestRate);
+    assert.equal(current.chunkAmount, originalSnapshot.chunkAmount);
+    assert.equal(current.mortgageDetails.currentMonthlyPayment, originalSnapshot.mortgageDetails.currentMonthlyPayment);
+    assert.equal(current.mortgageDetails.currentBalance, 0);
+    assert.equal(current.mortgageDetails.remainingTermMonths, originalSnapshot.mortgageDetails.remainingTermMonths);
+    assert.ok([baseline.months, baseline.totalInterest, velocity.months, velocity.totalInterest, velocity.savings].every(Number.isFinite));
+  } finally {
+    financialStore.useFinancialStore.setState(originalSnapshot);
+  }
+});
+
 test('dashboard payoff helpers use the canonical single-debt engine', () => {
   const store = financialStore.useFinancialStore.getState();
   const debt = store.debts.car;
