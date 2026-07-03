@@ -587,6 +587,103 @@ function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
   );
 }
 
+function MobileMoneyLoopPressureStrip({ steps }: { steps: MobileLoopStep[] }) {
+  return (
+    <View
+      testID="mobile-money-loop-pressure"
+      accessibilityLabel="Money Loop pressure strip"
+      style={{
+        backgroundColor: '#020617',
+        borderColor: '#1e293b',
+        borderCurve: 'continuous',
+        borderRadius: 18,
+        borderWidth: 1,
+        gap: 12,
+        padding: 14,
+      }}
+    >
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10 }}>
+        <View style={{ flex: 1, gap: 3 }}>
+          <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+            Loop Pressure
+          </Text>
+          <Text selectable style={{ color: '#f8fafc', fontSize: 18, fontWeight: '900', lineHeight: 24 }}>
+            Model-backed flow intensity
+          </Text>
+        </View>
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            backgroundColor: '#0f172a',
+            borderColor: '#334155',
+            borderCurve: 'continuous',
+            borderRadius: 10,
+            borderWidth: 1,
+            paddingHorizontal: 10,
+            paddingVertical: 7,
+          }}
+        >
+          <Text selectable style={{ color: '#cbd5e1', fontSize: 12, fontWeight: '900' }}>
+            8-100%
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ gap: 10 }}>
+        {steps.map((step) => {
+          const tone = getLoopTone(step);
+          const pressurePercent = Math.min(100, Math.max(8, Math.round(step.pressurePercent)));
+
+          return (
+            <View
+              key={step.label}
+              testID={`mobile-money-loop-pressure-segment-${loopNodeId(step.label)}`}
+              accessibilityLabel={`${step.label} loop pressure ${pressurePercent}%`}
+              accessibilityRole="progressbar"
+              accessibilityValue={{ min: 0, max: 100, now: pressurePercent }}
+              style={{ gap: 6 }}
+            >
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10 }}>
+                <Text selectable style={{ color: '#f8fafc', flex: 1, fontSize: 13, fontWeight: '900' }}>
+                  {step.label}
+                </Text>
+                <Text selectable style={{ color: tone.text, fontSize: 13, fontWeight: '900' }}>
+                  {pressurePercent}%
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: '#0f172a',
+                  borderColor: '#1e293b',
+                  borderCurve: 'continuous',
+                  borderRadius: 999,
+                  borderWidth: 1,
+                  height: 12,
+                  overflow: 'hidden',
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: tone.accent,
+                    borderRadius: 999,
+                    height: '100%',
+                    opacity: 0.88,
+                    width: `${pressurePercent}%`,
+                  }}
+                />
+              </View>
+            </View>
+          );
+        })}
+      </View>
+
+      <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18 }}>
+        Educational estimate. Pressure shows relative intensity, not a guarantee.
+      </Text>
+    </View>
+  );
+}
+
 function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapshot }) {
   const tone = path.isProjected
     ? { accent: '#34d399', surface: '#064e3b', text: '#bbf7d0' }
@@ -734,6 +831,7 @@ function DashboardPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
       <FinancialCard title="Money Loop">
         <View style={{ gap: 12 }}>
           <MobileMoneyLoopOrbit steps={snapshot.loop} />
+          <MobileMoneyLoopPressureStrip steps={snapshot.loop} />
 
           {snapshot.loop.map((step) => (
             <View key={step.label} style={{ gap: 2 }}>
