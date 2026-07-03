@@ -408,7 +408,7 @@ export default function CockpitPage() {
                 />
               </div>
               <div className={`pt-2 border-t ${classes.border} flex justify-between`}>
-                <span className={classes.textSecondary}>Potential Savings</span>
+                <span className={classes.textSecondary}>Modeled Interest Delta</span>
                 <span className="text-emerald-500 font-bold">{formatCurrency(velocity.savings)}</span>
               </div>
             </div>

@@ -99,10 +99,10 @@ export function formatStrategyInterestDelta(baselineInterest: number, strategyIn
   if (!Number.isFinite(baselineInterest) || !Number.isFinite(strategyInterest)) return 'Interest not projected';
 
   const interestDelta = baselineInterest - strategyInterest;
-  if (Math.abs(interestDelta) < 0.005) return 'same interest';
+  if (Math.abs(interestDelta) < 0.005) return 'same modeled interest';
 
   return interestDelta > 0
-    ? `${formatCurrency(interestDelta)} interest saved`
+    ? `${formatCurrency(interestDelta)} modeled interest difference`
     : `${formatCurrency(Math.abs(interestDelta))} more interest`;
 }
 
