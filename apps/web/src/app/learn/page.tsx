@@ -310,12 +310,12 @@ const lessons: Lesson[] = [
     color: 'emerald',
     simulatorFocus: 'cashflow',
     content: [
-      'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number — however small — is the fuel that drives the entire velocity banking engine. Without positive cash flow, a LOC-based payoff plan should stay in learning mode rather than active strategy.',
-      'Here\'s what most people miss: even $200/month of cash flow can change a modeled payoff timeline when the debt rate, LOC cost, fees, timing, and discipline line up. That\'s because velocity banking doesn\'t just make extra payments — it changes when balances are reduced and how much interest-bearing balance remains.',
+      'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number, however small, is the fuel the model uses to test whether a LOC-based payoff plan can recover safely.',
+      'A small surplus is not a guarantee, but it can change a modeled payoff timeline when the debt rate, LOC cost, fees, timing, and spending control line up. Velocity banking does more than model extra payments: it changes when balances are reduced and how much interest-bearing balance remains.',
       'The "Cash Flow Multiplier" effect is where the model can show momentum. As debts are paid off, minimum payments that are no longer required can become available cash flow. Pay off a $300/month car payment? The modeled cash flow can move from $200 to $500 when that payment truly disappears from the budget. Each debt eliminated can feed the next cycle faster when the freed-up cash flow is preserved.',
-      'Think of cash flow as water pressure in a hose. The more pressure (cash flow), the faster you can fill the bucket (pay off debt). But even a trickle will get there — it just takes more cycles. The key is knowing your exact number, checking it consistently, and protecting it from lifestyle creep.',
+      'Think of cash flow as water pressure in a hose. More pressure gives the model more room to work. A smaller surplus can still be modeled, but it takes more cycles and may keep LOC moves in review mode until the recovery path is stable.',
     ],
-    keyTakeaway: 'Positive cash flow is the first gate. Know your exact monthly surplus. Even $200/month may help in the velocity banking cycle, but the payoff impact depends on your actual inputs.',
+    keyTakeaway: 'Positive cash flow is the first gate. Know your exact monthly surplus. A $200/month surplus may help in the velocity banking cycle, but the payoff impact depends on your actual inputs.',
     deepDive: 'To calculate your true cash flow: add up every recurring income source (net pay, side income, dividends). Then subtract every expense — fixed (rent, insurance, subscriptions) and variable (groceries, gas, entertainment). Review recent statements or spending records so the number is grounded. The number you get is your "velocity fuel." If it\'s negative, keep a LOC-based payoff plan in learning mode while you work on expense reduction or income increase.',
     quiz: {
       question: 'What happens to your cash flow when you pay off a debt using velocity banking?',
@@ -348,7 +348,7 @@ const lessons: Lesson[] = [
     keyTakeaway: 'When real account terms support it, the Money Loop models income entering the LOC and planned expenses leaving it so the average daily balance can fall before bills clear.',
     deepDive: 'The efficiency of the Money Loop depends on how your expenses are distributed throughout the month. If all expenses hit on day 1, the ADB benefit is minimal. If expenses trickle out evenly (which is typical — rent on the 1st, utilities mid-month, groceries weekly), the ADB stays low for longer. Some advanced practitioners even time bill payments to maximize the ADB reduction effect, though this is an optimization that adds complexity.',
     quiz: {
-      question: 'In the Money Loop, why does depositing your paycheck into the LOC reduce interest?',
+      question: 'In the Money Loop, why can modeled income-to-LOC routing reduce LOC interest?',
       options: [
         'Because the LOC has a lower interest rate than your mortgage',
         'Because it reduces the average daily balance the LOC charges interest on',
@@ -356,7 +356,7 @@ const lessons: Lesson[] = [
         'Because you earn interest on the deposited money',
       ],
       correctIndex: 1,
-      explanation: 'LOCs charge interest based on average daily balance. Depositing income immediately drops the balance, keeping the average lower throughout the month even as you draw expenses back out.',
+      explanation: 'LOCs may charge interest based on average daily balance. Income-to-LOC routing can lower the modeled average when expense timing, fees, and repayment rules support the plan.',
     },
     investopediaUrl: 'https://www.investopedia.com/terms/l/lineofcredit.asp',
     investopediaLabel: 'Line of Credit — Investopedia',
@@ -376,7 +376,7 @@ const lessons: Lesson[] = [
       'Compare this to the alternative: income goes to checking, LOC stays at $5,000 all month, and you pay interest on the full $5,000. Same money, same expenses, but different modeled interest charges. This timing advantage is what the Money Loop tries to use when the LOC cost and cash-flow timing are favorable.',
       'The monthly interest difference might seem small (about $18 in this example at 10% APR), but repeated timing differences can matter when the assumptions hold. Over years of cycling, the model can show cumulative interest differences and LOC recovery room for tested chunks against the primary debt.',
     ],
-    keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — can reduce the average and lower interest when the LOC cost and timing work in your favor.',
+    keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Modeled income-to-LOC routing can reduce the average and lower interest when the LOC cost and timing work in your favor.',
     deepDive: 'Detailed ADB math using the app engine convention: Starting balance $5,000. Day 1: deposit $4,000, then the first daily expense draw closes the day near $1,117. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 15: $1,000 + (15 × $116.67) = $2,750. Day 30: $4,500. Sum of daily closing balances ≈ $84,250. ADB = $84,250 ÷ 30 = $2,808. Monthly interest at 10% APR with daily accrual = $2,808 × (0.10 ÷ 365) × 30 = $23.08. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 365) × 30 = $41.10. Monthly modeled interest difference: about $18.01. Annualized teaching example: about $216. Over 5 years of cycling: about $1,081 in modeled interest difference — just from the timing of your deposits.',
     quiz: {
       question: 'If your LOC has a $5,000 balance and you deposit $4,000 income on day 1, what approximately is your average daily balance for the month?',
@@ -407,7 +407,7 @@ const lessons: Lesson[] = [
       'The cycle can repeat in the model: after the chunk, the LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with positive cash flow. When there is enough room, the plan can evaluate another chunk. Each cycle can improve the timeline when the chunk size, LOC recovery time, and interest spread remain healthy.',
     ],
     keyTakeaway: 'Chunks are large lump-sum payments toward principal using LOC credit. A sample $3,000 chunk may save more than the chunk amount in interest, but only when the debt rate, LOC cost, timing, and recovery plan support it.',
-    deepDive: 'Chunk sizing is critical. A chunk should leave enough LOC capacity for emergencies (keep at least 20% available) and should be recoverable by your cash flow within a reasonable timeframe. If your monthly cash flow is $500, a $5,000 chunk takes 10 months to recover. That may be workable only when income, expenses, and emergency buffer stay stable. But a $12,000 chunk with $500/month cash flow takes 24 months — you might need that LOC capacity for emergencies during that time. A general rule: chunk size should be recoverable in 6-12 months of cash flow cycling.',
+    deepDive: 'Chunk sizing is a recovery-window test. A modeled chunk needs enough LOC capacity for emergencies and enough cash flow to recover the LOC without crowding bills. If monthly cash flow is $500, a $5,000 chunk takes about 10 months to recover before interest and fees. A $12,000 chunk at the same cash flow takes about 24 months, which can leave less room for emergencies. Compare chunk sizes by recovery time, LOC headroom, fees, and cash-flow stability before trusting the plan.',
     quiz: {
       question: 'Why does a $3,000 principal chunk on a 30-year mortgage save more than $3,000 in interest?',
       options: [
@@ -432,11 +432,11 @@ const lessons: Lesson[] = [
     simulatorFocus: 'overview',
     content: [
       'Velocity banking is a math model, not a promise. The math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, keep LOC-based payoff moves in review mode.',
-      'Ideal conditions include: a LOC interest rate lower than your primary debt rate, consistent and predictable income, front-loaded amortized debt where early payments are interest-heavy, and financial discipline to avoid increasing spending as credit becomes available.',
+      'Useful conditions include: a LOC interest rate lower than your primary debt rate, consistent and predictable income, front-loaded amortized debt where early payments are interest-heavy, and spending control as credit becomes available.',
       'If your LOC rate is close to or higher than the debt rate, do not assume the strategy works. The ADB benefit, chunk timing, fees, recovery window, and cash-flow stability all need to be modeled together before trusting the spread.',
-      'When should you pause and review? If cash flow is negative (you\'re spending more than you earn), if your LOC rate is significantly higher than your debt rate with low cash flow, if spending discipline is not stable yet, or if your debt is already near the end of its amortization schedule (most payments are already going to principal, so chunks have less impact).',
+      'Pause and review when cash flow is negative, when LOC cost is meaningfully higher than the debt rate with low cash flow, when spending control is not stable yet, or when the debt is already near the end of its amortization schedule.',
     ],
-    keyTakeaway: 'Velocity banking models best with positive cash flow, a LOC rate lower than the target debt rate, front-loaded amortized debt, and spending discipline. It needs positive cash flow and spending control before payoff claims are trustworthy.',
+    keyTakeaway: 'Velocity banking models best with positive cash flow, a LOC rate lower than the target debt rate, front-loaded amortized debt, and spending control. Positive cash flow and stable spending control are required before payoff claims are trustworthy.',
     deepDive: 'Rate comparison nuance: A 10% LOC vs 6% mortgage might seem like a losing proposition. But remember — you\'re paying 10% on the average daily balance, and chunks may hit principal on a front-loaded amortization where early payments are interest-heavy. Run the numbers in the simulator with your actual rates, cash flow, fees, and payoff timing before assuming the spread works in your situation.',
     quiz: {
       question: 'Which of the following would make velocity banking LEAST effective?',
@@ -462,7 +462,7 @@ const lessons: Lesson[] = [
     simulatorFocus: 'loc',
     content: [
       'A common LOC mistake is using too much of the available line at once. If utilization moves above 80%, the plan has less emergency room and may affect credit. Keep at least 20% available credit as a planning buffer before making another chunk.',
-      'Not tracking expenses accurately can make the plan look stronger than it is. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs can erase the modeled difference. Track spending long enough to trust the surplus before modeling chunks.',
+      'Not tracking expenses accurately can make the plan look stronger than it is. Velocity banking math assumes your cash flow is real and consistent. If estimated $500/month cash flow is actually $200 after subscriptions and unplanned spending, chunks take 2.5x longer to recover and LOC interest can erase the modeled difference. Track spending long enough to trust the surplus before modeling chunks.',
       'Large chunks can feel encouraging because the mortgage balance falls quickly. The tradeoff is recovery risk: if income dips or an emergency hits before LOC recovery, the plan can strain cash flow. Size chunks to leave 20% LOC headroom and a recovery window you can sustain.',
       'Two more checks: include LOC interest in the plan, and avoid treating LOC credit as spendable income. The LOC is a planning tool for a modeled debt strategy, not extra monthly income.',
     ],
@@ -761,7 +761,7 @@ function WhenItWorksViz() {
     { label: 'Positive cash flow', good: true, icon: '💰' },
     { label: 'LOC rate < debt rate', good: true, icon: '📊' },
     { label: 'Consistent income', good: true, icon: '💼' },
-    { label: 'Spending discipline', good: true, icon: '🎯' },
+    { label: 'Spending control', good: true, icon: '🎯' },
     { label: 'Front-loaded amortized debt', good: true, icon: '🏠' },
     { label: 'Negative cash flow', good: false, icon: '🚫' },
     { label: 'LOC rate much higher', good: false, icon: '📈' },
