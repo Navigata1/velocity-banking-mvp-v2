@@ -4,12 +4,12 @@ Last updated: 2026-07-03
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `2390116af89abf0af1978da6f28dae523e94b73f` (`Document Cloudflare edge lane contract (#185)`).
-- GitHub Actions CI run `28634274371` completed successfully for `2390116af89abf0af1978da6f28dae523e94b73f`.
-- GitHub recorded deployment `5293848428` for `2390116af89abf0af1978da6f28dae523e94b73f`:
+- `main` contains the InterestShield 2026 release stack through commit `e15482abf2a0448a557155cdd0060f8fd9dbf6ad` (`Tone down absolute Money Loop claims (#195)`).
+- GitHub Actions CI run `28636369882` completed successfully for `e15482abf2a0448a557155cdd0060f8fd9dbf6ad`.
+- GitHub recorded deployment `5294296887` for `e15482abf2a0448a557155cdd0060f8fd9dbf6ad`:
   - environment: `Production`
   - deployment URL pattern: `https://velocity-banking-mvp-v2-<deployment-suffix>-islanddevcrew.vercel.app`
-  - latest target URL observed by production smoke: `https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app`
+  - latest target URL observed by production smoke: `https://velocity-banking-mvp-v2-mxhnh9zn0-islanddevcrew.vercel.app`
   - deployment status observed by `npm run smoke:production`: `success`
   - GitHub deployment record still reports `production_environment: false`
 - The generated deployment URL is ephemeral: every successful `main` deployment can create a new suffix. Rerun `apps/web` `npm run smoke:production` to read the current `Latest GitHub Production deployment target` before promoting or testing a direct deployment URL.
@@ -101,6 +101,16 @@ Last updated: 2026-07-03
   - PR #183: live Portfolio debt edits sanitize invalid money inputs.
   - PR #184: Portfolio percentage labels guard invalid values.
   - PR #185: Cloudflare edge lane contract documents Worker/D1/Durable Objects release boundaries without live backend wiring.
+  - PR #186: release runbook handoff refreshes the current main target.
+  - PR #187: mobile dashboard first screen is tightened.
+  - PR #188: selected mobile loop artifacts are centered.
+  - PR #189: mobile Cloudflare readiness copy is aligned.
+  - PR #190: LOC ADB APR units are normalized.
+  - PR #191: Guardian goodbye copy is calmed.
+  - PR #192: amortized APR units are normalized.
+  - PR #193: Portfolio APR display is normalized.
+  - PR #194: Portfolio payoff APR math is normalized.
+  - PR #195: absolute Money Loop claims are toned down and model-labeled.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -123,21 +133,14 @@ Last updated: 2026-07-03
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `2390116af89abf0af1978da6f28dae523e94b73f`, or a newer passing `main` deployment, to the public production alias.
+   - Promote the latest passing `main` deployment reported by `npm run smoke:production` to the public production alias.
    - Latest observed target URL: rerun `npm run smoke:production` and use the reported `Latest GitHub Production deployment target`.
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
-   - Current observed promotion command:
+   - Current observed command after PR #195:
 
 ```powershell
-npx vercel promote https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app --scope islanddevcrew
-npx vercel cache purge --yes --scope islanddevcrew
-```
-
-   - Current observed command after PR #185:
-
-```powershell
-npx vercel promote https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app --scope islanddevcrew
+npx vercel promote https://velocity-banking-mvp-v2-mxhnh9zn0-islanddevcrew.vercel.app --scope islanddevcrew
 npx vercel cache purge --yes --scope islanddevcrew
 ```
 
@@ -210,7 +213,7 @@ These commands were run on 2026-07-03 from the local checkout on `main`:
 ```powershell
 Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260703a' -UseBasicParsing
 npm run smoke:production
-$sha = '2390116af89abf0af1978da6f28dae523e94b73f'
+$sha = 'e15482abf2a0448a557155cdd0060f8fd9dbf6ad'
 gh api "repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=$sha"
 $env:PRODUCTION_ORIGIN='<latest GitHub Production deployment target>'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
 ```
@@ -221,6 +224,6 @@ Result summary:
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
 - The smoke script includes observed Vercel deployment diagnostics in freshness failures and classifies Vercel login-shell responses as deployment protection so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
 - The smoke script performs a best-effort GitHub Production deployment lookup and appends the latest deployment target URL, SHA, and status to stale/protected failures.
-- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, latest GitHub Production deployment target `https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app` for `2390116af89abf0af1978da6f28dae523e94b73f`, and remediation commands for `npx vercel promote` plus `npx vercel cache purge`.
-- Current public alias smoke failure reports `x-vercel-id: iad1::dqc4w-1783045557334-137c072922da` and `x-vercel-cache: HIT`.
+- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, latest GitHub Production deployment target `https://velocity-banking-mvp-v2-mxhnh9zn0-islanddevcrew.vercel.app` for `e15482abf2a0448a557155cdd0060f8fd9dbf6ad`, and remediation commands for `npx vercel promote` plus `npx vercel cache purge`.
+- Current public alias smoke failure reports `x-vercel-id: iad1::hj28m-1783049271361-1bcaba93985c` and `x-vercel-cache: HIT`.
 - The Vercel app connector still reports `Reauthentication required`; Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
