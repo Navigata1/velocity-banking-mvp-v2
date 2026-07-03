@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InterestShield Plan of Attack - July 3, 2026</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --paper: #ffffff;
+      --ink: #102033;
+      --muted: #5c6d80;
+      --line: #d8e1ec;
+      --accent: #0d8f72;
+      --blue: #2268d8;
+      --amber: #9c6812;
+      --red: #b53b45;
+      --soft: #edf7f4;
+      --soft-blue: #eef5ff;
+      --soft-amber: #fff7e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(135deg, rgba(13, 143, 114, 0.12), transparent 36%),
+        linear-gradient(315deg, rgba(34, 104, 216, 0.1), transparent 42%),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.12; }
+
+    h1 {
+      max-width: 920px;
+      margin-top: 10px;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    p { margin: 0; }
+
+    a { color: var(--blue); }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 26px;
+      align-items: end;
+      padding: 26px 0 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero p.summary {
+      max-width: 780px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .decision-card, .phase, .task, .panel, .lane {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 46px rgba(37, 56, 84, 0.1);
+    }
+
+    .decision-card {
+      padding: 20px;
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+    }
+
+    .decision-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .decision-card span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    section { padding-top: 34px; }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 18px;
+      padding: 20px;
+    }
+
+    .phase-number {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      background: var(--soft);
+      color: var(--accent);
+      font-weight: 950;
+      font-size: 1.4rem;
+    }
+
+    .phase.blocker .phase-number { background: #fff1f2; color: var(--red); }
+    .phase.polish .phase-number { background: var(--soft-blue); color: var(--blue); }
+    .phase.backend .phase-number { background: var(--soft-amber); color: var(--amber); }
+
+    .phase p, .task p, .panel p, .lane p, li {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: #eef3f8;
+      color: #34465b;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .tag.green { background: var(--soft); color: var(--accent); }
+    .tag.blue { background: var(--soft-blue); color: var(--blue); }
+    .tag.amber { background: var(--soft-amber); color: var(--amber); }
+    .tag.red { background: #fff1f2; color: var(--red); }
+
+    .task, .panel, .lane {
+      padding: 20px;
+    }
+
+    .task {
+      min-height: 216px;
+    }
+
+    .task .priority {
+      display: inline-flex;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #eef3f8;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .task.p0 .priority { background: #fff1f2; color: var(--red); }
+    .task.p1 .priority { background: var(--soft-amber); color: var(--amber); }
+    .task.p2 .priority { background: var(--soft-blue); color: var(--blue); }
+    .task.p3 .priority { background: var(--soft); color: var(--accent); }
+
+    ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li { margin-top: 8px; }
+
+    .swimlane {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 16px;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .swimlane-title {
+      display: grid;
+      align-content: center;
+      border-radius: 12px;
+      padding: 16px;
+      background: var(--ink);
+      color: white;
+      font-weight: 900;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 12px 12px 38px;
+      background: white;
+    }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 14px;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    .code {
+      display: block;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #0d1b2f;
+      color: #dff7ef;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.86rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .footer-note {
+      margin-top: 34px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      main { width: min(100% - 24px, 760px); padding-top: 24px; }
+      .hero, .grid.two, .grid.three, .swimlane { grid-template-columns: 1fr; }
+      .phase { grid-template-columns: 1fr; }
+      .phase-number { width: 58px; height: 58px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">InterestShield Plan of Attack</p>
+        <h1>What to do next, in the order that reduces risk fastest.</h1>
+        <p class="summary">
+          The app has moved from unstable MVP to a locally verified, truth-first demo with strong math
+          guardrails. The next phase should not scatter effort. Ship the current build publicly first,
+          then complete deeper engine convergence, backend selection, richer visual explainers, and native app validation.
+        </p>
+      </div>
+      <aside class="decision-card">
+        <strong>Do first</strong>
+        <span>Fix Vercel production alias issue #59, then run rendered Browser or Chrome freshness against the public domain.</span>
+      </aside>
+    </header>
+
+    <section aria-labelledby="north-star">
+      <h2 id="north-star">Execution Rules</h2>
+      <div class="grid three">
+        <article class="panel">
+          <h3>Truth Before Flash</h3>
+          <p>Do not add stronger visuals that imply stronger results than the model supports. Every estimate stays labeled.</p>
+        </article>
+        <article class="panel">
+          <h3>Small Merged Slices</h3>
+          <p>Continue using narrow PRs with local tests, CI, and production smoke diagnostics after each merge.</p>
+        </article>
+        <article class="panel">
+          <h3>No Live Backend Until Ready</h3>
+          <p>Keep Supabase/Cloudflare contract-only until auth, RLS, deletion, migration, and provider ownership are verified.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="phases">
+      <h2 id="phases">Recommended Phase Order</h2>
+      <div class="grid">
+        <article class="phase blocker">
+          <div class="phase-number">0</div>
+          <div>
+            <h3>Release Freshness and Domain Recovery</h3>
+            <p>Resolve the public alias first. Until the current app is visible at the production alias or custom domain, every visual and business decision is harder to validate.</p>
+            <div class="tags">
+              <span class="tag red">Blocked on Vercel auth</span>
+              <span class="tag">Issue #59</span>
+              <span class="tag">Smoke required</span>
+            </div>
+          </div>
+        </article>
+        <article class="phase">
+          <div class="phase-number">1</div>
+          <div>
+            <h3>Engine Convergence and Scenario Depth</h3>
+            <p>Finish the remaining shared-engine migration. Priority target: Portfolio split mode should become a real LOC event simulation or stay clearly labeled as allocation planning.</p>
+            <div class="tags">
+              <span class="tag green">Tests first</span>
+              <span class="tag">Math correctness</span>
+              <span class="tag">No false payoff claims</span>
+            </div>
+          </div>
+        </article>
+        <article class="phase polish">
+          <div class="phase-number">2</div>
+          <div>
+            <h3>Rendered QA and UX Polish</h3>
+            <p>After production freshness passes, run full rendered desktop/mobile smoke. Then polish spacing, route transitions, carousel keyboard/focus behavior, and route-level readability.</p>
+            <div class="tags">
+              <span class="tag blue">Browser</span>
+              <span class="tag blue">Chrome</span>
+              <span class="tag">Accessibility</span>
+            </div>
+          </div>
+        </article>
+        <article class="phase backend">
+          <div class="phase-number">3</div>
+          <div>
+            <h3>Backend First Lane</h3>
+            <p>Choose and wire the first serious persistence lane. Recommendation: Supabase Postgres/Auth/RLS first, with Cloudflare as a later edge/API lane unless a stronger operational reason emerges.</p>
+            <div class="tags">
+              <span class="tag amber">Supabase first</span>
+              <span class="tag">RLS required</span>
+              <span class="tag">Deletion required</span>
+            </div>
+          </div>
+        </article>
+        <article class="phase polish">
+          <div class="phase-number">4</div>
+          <div>
+            <h3>Visual Overhaul and Educational Media</h3>
+            <p>Add the game-like artifact selector, deeper algorithmic visuals, and short Remotion/HyperFrames explainers after the current model surfaces are stable.</p>
+            <div class="tags">
+              <span class="tag blue">3D artifacts</span>
+              <span class="tag blue">Remotion</span>
+              <span class="tag blue">HyperFrames</span>
+            </div>
+          </div>
+        </article>
+        <article class="phase">
+          <div class="phase-number">5</div>
+          <div>
+            <h3>Native Mobile Productization</h3>
+            <p>Move from Expo web/export confidence to real Android and iOS device confidence: native builds, store-ready metadata, device smoke, and persistence verification.</p>
+            <div class="tags">
+              <span class="tag green">Expo</span>
+              <span class="tag">Android</span>
+              <span class="tag">iOS</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="immediate">
+      <h2 id="immediate">Immediate Task Board</h2>
+      <div class="grid three">
+        <article class="task p0">
+          <span class="priority">P0</span>
+          <h3>Promote Current Vercel Deployment</h3>
+          <p>Authenticate Vercel and promote the latest successful target to the public alias.</p>
+          <code class="code">npx vercel promote https://velocity-banking-mvp-v2-78l3t4zuy-islanddevcrew.vercel.app --scope islanddevcrew
+npx vercel cache purge --yes --scope islanddevcrew</code>
+        </article>
+        <article class="task p0">
+          <span class="priority">P0</span>
+          <h3>Run Production Freshness Smoke</h3>
+          <p>After alias promotion, verify HTTP routes and rendered dashboard markers.</p>
+          <code class="code">cd apps/web
+npm run smoke:production</code>
+        </article>
+        <article class="task p1">
+          <span class="priority">P1</span>
+          <h3>Close Issue #59 With Evidence</h3>
+          <p>Close only after the public alias exposes current shell markers and Browser/Chrome confirms the dashboard visuals.</p>
+          <ul>
+            <li>primary-navigation</li>
+            <li>money-loop-artifact-rail</li>
+            <li>money-loop-payoff-orbit</li>
+            <li>four dashboard vitals</li>
+          </ul>
+        </article>
+        <article class="task p1">
+          <span class="priority">P1</span>
+          <h3>Engine Gap: Portfolio Split Mode</h3>
+          <p>Either implement full LOC event simulation for split mode or make the planner boundary even more explicit in UI and docs.</p>
+        </article>
+        <article class="task p1">
+          <span class="priority">P1</span>
+          <h3>Rendered QA Refresh</h3>
+          <p>Capture fresh desktop and mobile screenshots for all routes after production serves the current build.</p>
+        </article>
+        <article class="task p2">
+          <span class="priority">P2</span>
+          <h3>Vault Edge-Case Sweep</h3>
+          <p>Exercise mortgage entry modes, hidden stale fields, refinance assumptions, overlarge down payments, and invalid payment states in rendered smoke.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="backend">
+      <h2 id="backend">Backend Plan</h2>
+      <div class="grid two">
+        <article class="lane">
+          <h3>Recommended First Lane: Supabase</h3>
+          <p>Best fit for serious user-owned app state: Auth, Postgres, RLS, migrations, row ownership, simulation history, learning progress, and account deletion.</p>
+          <ul>
+            <li>Create dedicated Supabase project for InterestShield.</li>
+            <li>Apply reviewed owner-scoped schema in a controlled environment.</li>
+            <li>Wire Auth only after RLS policies and migration tests are reviewed.</li>
+            <li>Add user-owned snapshots, simulation runs, learning progress, export, import, and deletion.</li>
+          </ul>
+        </article>
+        <article class="lane">
+          <h3>Secondary Lane: Cloudflare</h3>
+          <p>Keep Cloudflare for edge/API value after ownership rules are stable, not as a shortcut around data security.</p>
+          <ul>
+            <li>Use Workers for API boundaries if needed.</li>
+            <li>Use D1 only through server-side owner verification.</li>
+            <li>Use Durable Objects only where coordination or session-state semantics justify them.</li>
+            <li>Do not let browser clients write directly to D1.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="visuals">
+      <h2 id="visuals">Visual and Media Plan</h2>
+      <div class="grid three">
+        <article class="task p2">
+          <span class="priority">Visual 1</span>
+          <h3>Artifact Selector Upgrade</h3>
+          <p>Turn the existing Money Loop artifact rail into a richer game-like selector: centered selection, one-shot spin, visible depth, stable keyboard controls, and reduced-motion fallback.</p>
+        </article>
+        <article class="task p2">
+          <span class="priority">Visual 2</span>
+          <h3>Algorithmic Payoff Visuals</h3>
+          <p>Expand payoff path, LOC pressure, and interest burn visuals using model-bound data only. Every chart must disclose assumptions.</p>
+        </article>
+        <article class="task p2">
+          <span class="priority">Visual 3</span>
+          <h3>Remotion / HyperFrames Explainers</h3>
+          <p>Build short educational pieces: Money Loop intro, daily interest burn, chunk meter, and recovery window. Ship as muted/captioned video or lightweight in-app animation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="native">
+      <h2 id="native">Expo Native Plan</h2>
+      <div class="swimlane">
+        <div class="swimlane-title">Native Validation</div>
+        <ul class="checklist">
+          <li>Run Android emulator smoke on a host with Android SDK, AVD, and adb available.</li>
+          <li>Run iOS simulator smoke on macOS with Xcode and xcrun available.</li>
+          <li>Verify SecureStore persistence and localStorage fallback behavior separately.</li>
+          <li>Confirm touch targets, screen-reader order, and bottom navigation behavior on real mobile viewports.</li>
+          <li>Prepare EAS build profiles, app icons, splash assets, privacy text, and store metadata after backend posture is chosen.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="definition">
+      <h2 id="definition">Definition of Done for the Next Release</h2>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Release Done</h3>
+          <ul>
+            <li>Public alias serves latest main build.</li>
+            <li>Custom InterestShield domain points to the current app.</li>
+            <li>Production smoke passes for all routes.</li>
+            <li>Rendered Browser/Chrome freshness passes with no unexplained console errors.</li>
+            <li>Issue #59 is closed with evidence.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h3>Product Done</h3>
+          <ul>
+            <li>No payoff, interest, or savings claim appears without model/assumption framing.</li>
+            <li>Warnings exist for non-positive cash flow and high LOC utilization.</li>
+            <li>LOC setup requires known terms, not just a limit.</li>
+            <li>Mobile first screen exposes all four dashboard vitals.</li>
+            <li>Backend status remains explicit until live auth and persistence are verified.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Built from the current repository state after PR #215, the rendered smoke audit, the Vercel release runbook,
+      and the open production alias blocker. Educational tool. Not financial advice.
+    </p>
+  </main>
+</body>
+</html>
