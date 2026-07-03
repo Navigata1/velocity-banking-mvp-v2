@@ -56,7 +56,7 @@ const mobileBackendReadinessOptions = [
     id: 'cloudflare-workers-d1-durable-objects',
     label: 'Cloudflare Workers + D1/Durable Objects',
     status: 'Candidate',
-    detail: 'Best fit for edge APIs, D1 records, and future session state. Next gate: server-owned snapshot API prototype.',
+    detail: 'Best fit for edge APIs, D1 owner-scoped records, and future session state. Next gate: authenticated Worker snapshot API plus D1 owner indexes.',
   },
 ] as const;
 
