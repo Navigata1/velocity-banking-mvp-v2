@@ -7133,8 +7133,10 @@ test('repository documents the current Vercel alias promotion blocker', () => {
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('e15482abf2a0448a557155cdd0060f8fd9dbf6ad'),
-    'expected the runbook to name the current release-stack main commit'
+    runbook.includes('Use issue #59') &&
+      runbook.includes('npm run smoke:production') &&
+      runbook.includes('Do not rely on a hard-coded runbook SHA after new PRs merge'),
+    'expected the runbook to avoid pinning the live release state to a stale commit'
   );
   assert.ok(
     runbook.includes('https://velocity-banking-mvp-v2-<deployment-suffix>-islanddevcrew.vercel.app') &&
