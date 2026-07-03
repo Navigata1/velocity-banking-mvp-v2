@@ -1849,6 +1849,43 @@ test('portfolio split focus allocates the full available extra payment across bo
   );
 });
 
+test('portfolio percent minimum payments recalculate from the current simulated balance', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 1000,
+    monthlyExpenses: 500,
+    extraMonthlyPayment: 0,
+    debts: [
+      {
+        id: 'percent-card',
+        name: 'Percent Card',
+        category: 'credit_card',
+        kind: 'revolving',
+        balance: 1000,
+        apr: 0,
+        minPaymentRule: { type: 'percent', percent: 0.1, floor: 0 },
+        paymentSource: 'checking',
+      },
+      {
+        id: 'fixed-loan',
+        name: 'Fixed Loan',
+        category: 'personal_loan',
+        kind: 'simple',
+        balance: 1000,
+        apr: 0.01,
+        minPaymentRule: { type: 'fixed', amount: 100 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: { strategy: 'avalanche', focusMode: 'single', splitRatioPrimary: 0.7 },
+    maxMonths: 2,
+  });
+
+  assert.equal(roundCents(result.monthResults[0].payments['percent-card']), 100);
+  assert.equal(roundCents(result.monthResults[1].payments['percent-card']), 90);
+  assert.equal(roundCents(result.monthResults[1].payments['fixed-loan']), 410);
+  assert.equal(roundCents(result.monthResults[1].payments['percent-card'] + result.monthResults[1].payments['fixed-loan']), 500);
+});
+
 test('portfolio page blocks debt-free date claims for invalid projections', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
