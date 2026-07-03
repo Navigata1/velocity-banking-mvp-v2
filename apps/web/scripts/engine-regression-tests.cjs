@@ -335,7 +335,7 @@ test('daily interest burn uses the shared financial-engine helper', () => {
     'expected cockpit/store daily interest to use the shared helper'
   );
   assert.ok(
-    portfolioSource.includes('calculateDailyInterest(balance, debt.apr)') &&
+    portfolioSource.includes('calculateDailyInterest(balance, getEffectiveApr(debt))') &&
       portfolioSource.includes('calculateDailyInterest(balance, aprUsedForBurn)'),
     'expected portfolio priority burn math to use the shared helper'
   );
@@ -3016,6 +3016,63 @@ test('portfolio debt rationales do not leak non-finite display values', () => {
   assert.ok(!displayText.includes('Infinity'), displayText);
   assert.ok(displayText.includes('$0'), displayText);
   assert.ok(displayText.includes('0.00%'), displayText);
+});
+
+test('portfolio simulation sanitizes non-finite inputs before payoff math', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: Number.NaN,
+    monthlyExpenses: Number.POSITIVE_INFINITY,
+    extraMonthlyPayment: Number.NaN,
+    debts: [
+      {
+        id: 'corrupt-card',
+        name: 'Corrupt Card',
+        category: 'credit_card',
+        kind: 'revolving',
+        balance: Number.NaN,
+        apr: Number.POSITIVE_INFINITY,
+        minPaymentRule: { type: 'fixed', amount: Number.NaN },
+        paymentSource: 'checking',
+        promo: { introApr: Number.NaN, monthsRemaining: Number.NaN, postIntroApr: Number.POSITIVE_INFINITY },
+      },
+      {
+        id: 'corrupt-percent',
+        name: 'Corrupt Percent Loan',
+        category: 'personal_loan',
+        kind: 'simple',
+        balance: Number.POSITIVE_INFINITY,
+        apr: Number.NaN,
+        minPaymentRule: { type: 'percent', percent: Number.NaN, floor: Number.POSITIVE_INFINITY },
+        paymentSource: 'either',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: Number.NaN,
+    },
+    loc: {
+      limit: Number.NaN,
+      apr: Number.NaN,
+      balance: Number.POSITIVE_INFINITY,
+    },
+    chunkAmount: Number.NaN,
+    maxMonths: Number.NaN,
+  });
+
+  const serialized = JSON.stringify(result);
+
+  assert.ok(!serialized.includes('NaN'), serialized);
+  assert.ok(!serialized.includes('Infinity'), serialized);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'negative-cashflow');
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.totalInterest, 0);
+  assert.equal(result.locInterestPaid, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.equal(result.debtRationales['corrupt-card'].monthlyPaymentUnlock, 0);
+  assert.equal(result.debtRationales['corrupt-percent'].dailyInterestBurn, 0);
+  assert.ok(result.warnings.every((warning) => !warning.includes('NaN') && !warning.includes('Infinity')));
 });
 
 test('portfolio velocity labels its ranking assumptions instead of implying LOC math', () => {

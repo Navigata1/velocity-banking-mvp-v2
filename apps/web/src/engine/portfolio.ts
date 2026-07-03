@@ -128,24 +128,37 @@ export interface PortfolioSimulationResult {
 
 // ─── Helpers ─────────────────────────────────────────────────────────
 
+function finiteNumber(value: number, fallback = 0): number {
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function finiteNonNegative(value: number): number {
+  return Math.max(0, finiteNumber(value));
+}
+
+function finitePositiveInteger(value: number, fallback: number): number {
+  if (!Number.isFinite(value) || value <= 0) return fallback;
+  return Math.max(1, Math.trunc(value));
+}
+
 function getMinPayment(debt: DebtItem): number {
   if (debt.minPaymentRule.type === 'fixed') {
-    return debt.minPaymentRule.amount;
+    return finiteNonNegative(debt.minPaymentRule.amount);
   }
   return Math.max(
-    debt.minPaymentRule.floor,
-    debt.balance * debt.minPaymentRule.percent
+    finiteNonNegative(debt.minPaymentRule.floor),
+    finiteNonNegative(debt.balance) * finiteNonNegative(debt.minPaymentRule.percent)
   );
 }
 
 function getEffectiveApr(debt: DebtItem): number {
   if (debt.promo && debt.promo.monthsRemaining > 0) {
-    return debt.promo.introApr;
+    return finiteNonNegative(debt.promo.introApr);
   }
   if (debt.promo) {
-    return debt.promo.postIntroApr;
+    return finiteNonNegative(debt.promo.postIntroApr);
   }
-  return debt.apr;
+  return finiteNonNegative(debt.apr);
 }
 
 /**
@@ -156,7 +169,7 @@ function getEffectiveApr(debt: DebtItem): number {
  */
 function velocityScore(debt: DebtItem, balance: number): number {
   const unlock = getMinPayment(debt);
-  const burn = calculateDailyInterest(balance, debt.apr);
+  const burn = calculateDailyInterest(balance, getEffectiveApr(debt));
   const promoMonths = debt.promo?.monthsRemaining ?? null;
   const promoRisk =
     promoMonths === null ? 0 :
@@ -259,7 +272,7 @@ function buildDebtRationales(
   for (const debt of debts) {
     const balance = balances.get(debt.id) ?? debt.balance;
     const monthlyPaymentUnlock = getMinPayment(debt);
-    const aprUsedForBurn = debt.promo?.postIntroApr ?? debt.apr;
+    const aprUsedForBurn = debt.promo?.postIntroApr ?? finiteNonNegative(debt.apr);
     const dailyInterestBurn = calculateDailyInterest(balance, aprUsedForBurn);
     const rank = ranks.get(debt.id) ?? debts.length;
     const isCurrentTarget = targetIds.includes(debt.id);
@@ -311,16 +324,46 @@ function buildDebtRationales(
 }
 
 export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioSimulationResult {
-  const { monthlyIncome, monthlyExpenses, extraMonthlyPayment, settings, maxMonths = 600 } = inputs;
+  const monthlyIncome = finiteNonNegative(inputs.monthlyIncome);
+  const monthlyExpenses = finiteNonNegative(inputs.monthlyExpenses);
+  const extraMonthlyPayment = finiteNonNegative(inputs.extraMonthlyPayment);
+  const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
+  const settings: PortfolioPlanSettings = {
+    strategy: inputs.settings.strategy,
+    focusMode: inputs.settings.focusMode,
+    splitRatioPrimary: Math.min(1, Math.max(0, finiteNumber(inputs.settings.splitRatioPrimary, 0.7))),
+  };
   const debts = inputs.debts.map((debt) => ({
     ...debt,
-    minPaymentRule: { ...debt.minPaymentRule },
-    promo: debt.promo ? { ...debt.promo } : undefined,
+    balance: finiteNonNegative(debt.balance),
+    apr: finiteNonNegative(debt.apr),
+    minPaymentRule: debt.minPaymentRule.type === 'fixed'
+      ? { type: 'fixed' as const, amount: finiteNonNegative(debt.minPaymentRule.amount) }
+      : {
+          type: 'percent' as const,
+          percent: finiteNonNegative(debt.minPaymentRule.percent),
+          floor: finiteNonNegative(debt.minPaymentRule.floor),
+        },
+    termMonths: debt.termMonths === undefined ? undefined : finitePositiveInteger(debt.termMonths, 0),
+    promo: debt.promo
+      ? {
+          introApr: finiteNonNegative(debt.promo.introApr),
+          monthsRemaining: finitePositiveInteger(debt.promo.monthsRemaining, 0),
+          postIntroApr: finiteNonNegative(debt.promo.postIntroApr),
+        }
+      : undefined,
   }));
+  const sanitizedLoc = inputs.loc
+    ? {
+        limit: finiteNonNegative(inputs.loc.limit),
+        apr: finiteNonNegative(inputs.loc.apr),
+        balance: finiteNonNegative(inputs.loc.balance),
+      }
+    : undefined;
   const warnings: string[] = [];
   const cashFlow = monthlyIncome - monthlyExpenses;
   const velocityLoc = settings.strategy === 'velocity' && settings.focusMode === 'single'
-    ? inputs.loc
+    ? sanitizedLoc
     : undefined;
   const locNeedsSetup =
     !!velocityLoc &&
@@ -440,12 +483,14 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     };
   }
 
-  let locBalance = inputs.loc?.balance ?? 0;
+  let locBalance = sanitizedLoc?.balance ?? 0;
   let locInterestPaid = 0;
   let monthsSinceChunk = 999;
   const effectiveChunk = Math.max(
     0,
-    inputs.chunkAmount ?? Math.min(Math.max(0, cashFlow) * 3, (inputs.loc?.limit ?? 0) * 0.4)
+    inputs.chunkAmount === undefined
+      ? Math.min(Math.max(0, cashFlow) * 3, (sanitizedLoc?.limit ?? 0) * 0.4)
+      : finiteNonNegative(inputs.chunkAmount)
   );
   let month = 0;
 
@@ -488,9 +533,9 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
 
       const effectiveApr = getEffectiveApr(d);
-      const isMoneyLoopTarget = hasUsableVelocityLoc && targetIds.length === 1 && targetIds[0] === d.id && !!inputs.loc;
+      const isMoneyLoopTarget = hasUsableVelocityLoc && targetIds.length === 1 && targetIds[0] === d.id && !!sanitizedLoc;
 
-      if (isMoneyLoopTarget && inputs.loc) {
+      if (isMoneyLoopTarget && sanitizedLoc) {
         const minimumPayment = getMinPayment(d);
         const debtInterest = bal * effectiveApr / 12;
         let payment = Math.min(minimumPayment, bal + debtInterest);
@@ -516,7 +561,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           debtBalance: bal,
           debtApr: effectiveApr,
           debtPayment: payment,
-          loc: inputs.loc,
+          loc: sanitizedLoc,
           locBalance,
           chunkAmount: effectiveChunk,
           cashFlowPaydown: locCashFlowPaydown,
@@ -582,13 +627,13 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
     }
 
-    if (hasUsableVelocityLoc && inputs.loc && locBalance > 0.01 && !usedMoneyLoopThisMonth) {
+    if (hasUsableVelocityLoc && sanitizedLoc && locBalance > 0.01 && !usedMoneyLoopThisMonth) {
       const locRecoveryMonth = simulateMoneyLoopMonth({
         month,
         debtBalance: 0,
         debtApr: 0,
         debtPayment: 0,
-        loc: inputs.loc,
+        loc: sanitizedLoc,
         locBalance,
         chunkAmount: 0,
         cashFlowPaydown: cashFlow,

@@ -3842,12 +3842,22 @@ Status: completed in local source.
 - Added mobile contract coverage for bounded pressure values, model-bound segment widths, one pressure segment per Money Loop step, and Expo web export bundle hooks.
 - Expo verification passed with `node scripts/mobile-port-contract-tests.cjs`, `npm run check`, `npm run build:web`, and `npm run smoke:web-export`.
 
+### Repair Pass 201: Portfolio Simulation Non-Finite Boundary Guard
+
+Status: completed in local source.
+
+- Hardened the web Portfolio simulation boundary so non-finite income, expense, extra-payment, debt balance, APR, minimum-payment, promo, LOC, chunk, split-ratio, and max-month inputs are sanitized before payoff math runs.
+- Kept Portfolio payoff claims blocked for corrupted inputs instead of allowing `NaN` or `Infinity` to leak into totals, warnings, rationales, Money Loop ledgers, or serialized results.
+- Updated Portfolio priority burn scoring to continue using the shared daily-interest helper through sanitized APR values.
+- Added regression coverage proving a directly corrupted Portfolio simulation result serializes without `NaN` or `Infinity` and returns an invalid payoff state.
+- Verification passed with `npm run test` in `apps/web`.
+
 ## Priority Roadmap
 
 ### Phase 0: Trust Stabilization
 
-- Add math tests.
-- Fix invalid/negative cash-flow handling.
+- Add math tests. Status: broad route and engine regression coverage exists; Repair Pass 201 added a direct Portfolio simulation corruption fixture.
+- Fix invalid/negative cash-flow handling. Status: expanded across Dashboard, Simulator, Vault, mobile snapshots, and Portfolio; Repair Pass 201 hardens Portfolio against non-finite/corrupt inputs before cash-flow and payoff math.
 - Include LOC interest in velocity totals.
 - Remove duplicate calculation paths.
 - Make engines pure.
@@ -3867,7 +3877,7 @@ Status: completed in local source.
 - Redesign first-run flow.
 - Rebuild dashboard vitals. Status: completed for the local dashboard in Repair Pass 9, with a Money Loop artifact rail added in Repair Pass 22; Expo mobile dashboard vital parity added in Repair Pass 94; desktop artifact selector fit tightened in Repair Pass 192 so all five Money Loop artifacts remain visible without desktop horizontal scrolling. Repair Pass 196 stabilizes the mobile shell/domain selector token rendering so the first mobile dashboard flow is not dependent on corrupted glyph strings.
 - Rebuild simulator scenario comparison. Status: Repair Pass 190 moved StrategyGlassFill comparison math into a model helper so invalid Traditional/baseline projections no longer create fallback winner, fill, or savings claims. Repair Pass 194 adds a Simulator-side explanation that modeled payoff speed/interest comparisons are not the same as Portfolio Velocity's debt-order planning default. Repair Pass 195 exposes the LOC balance input on Simulator so users can directly edit the balance that drives LOC interest, utilization warnings, and Velocity projections.
-- Rebuild portfolio mobile and desktop planner. Status: Portfolio desktop planner invalid-projection states, run comparison, and payoff path coverage are active; Repair Pass 182 formats Portfolio run-diff projection failure reasons as user-facing labels instead of raw engine codes. Repair Pass 188 keeps Velocity targeting rankings finite and stable when a corrupted/non-finite debt field reaches the preview helper boundary. Repair Pass 189 moves the pre-app preview snapshot math into a tested model helper so corrupted/non-finite debt or projection values cannot leak into preview totals, scores, or debt-free-date claims. Repair Pass 193 keeps the Portfolio strategy picker readable by wrapping the Velocity status badge separately from strategy explanation copy, and Repair Pass 194 reinforces the same planning-vs-fastest distinction from the Simulator side.
+- Rebuild portfolio mobile and desktop planner. Status: Portfolio desktop planner invalid-projection states, run comparison, and payoff path coverage are active; Repair Pass 182 formats Portfolio run-diff projection failure reasons as user-facing labels instead of raw engine codes. Repair Pass 188 keeps Velocity targeting rankings finite and stable when a corrupted/non-finite debt field reaches the preview helper boundary. Repair Pass 189 moves the pre-app preview snapshot math into a tested model helper so corrupted/non-finite debt or projection values cannot leak into preview totals, scores, or debt-free-date claims. Repair Pass 193 keeps the Portfolio strategy picker readable by wrapping the Velocity status badge separately from strategy explanation copy, Repair Pass 194 reinforces the same planning-vs-fastest distinction from the Simulator side, and Repair Pass 201 hardens direct Portfolio simulation inputs before payoff math.
 - Add assumptions and warnings everywhere. Status: expanded through Repair Pass 101 with distinct over-limit LOC warnings on web Dashboard/Simulator, Portfolio invalid-projection warnings, missing-limit setup warnings, high-utilization Portfolio warnings, and Repair Pass 97 mobile snapshot parity. Repair Pass 162 tightened Learn and Dashboard LOC wording so warnings stay coach-tone instead of hype or fear phrasing. Repair Pass 180 kept missing LOC limit payoff failures labeled as setup work instead of over-limit debt. Repair Pass 181 kept exact-100% LOC utilization labeled as no available room rather than over-limit. Repair Pass 183 brought the dashboard no-capacity warning and next move into the same exact-full LOC language. Repair Pass 184 aligned shared mobile dashboard, simulator, vault, learn, and cockpit no-capacity copy with the same exact-full LOC state. Repair Pass 185 extended that exact-full LOC no-capacity copy to the shared mobile Portfolio payoff path. Repair Pass 186 aligned the web Simulator warning card with the same exact-full LOC no-capacity state instead of the generic high-utilization warning. Repair Pass 187 split shared warning output so over-limit and exact-full LOC states no longer masquerade as generic utilization warnings. Repair Pass 191 surfaces Vault mortgage Velocity setup failures before the mortgage wizard so missing known LOC terms are visible before strategy comparison.
 
 ### Phase 3: Backend
