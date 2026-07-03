@@ -429,7 +429,9 @@ export default function SimulatorPage() {
             {/* 4-Way Strategy Comparison */}
             <div className={`${classes.glass} rounded-2xl p-6 border border-gray-400/30`}>
               <h2 className={`text-xl font-semibold mb-2 ${classes.text}`}>Strategy Comparison</h2>
-              <p className={`text-xs ${classes.textMuted} mb-5`}>Fill level = time to payoff. Less fill = faster. Traditional is always 100%.</p>
+              <p className={`text-xs ${classes.textMuted} mb-5`}>
+                Fill level = time to payoff. Less fill = faster. Traditional is the baseline at 100%.
+              </p>
               <div
                 data-testid="simulator-portfolio-alignment-note"
                 className={`mb-5 rounded-xl border ${classes.border} bg-slate-950/25 p-4`}

@@ -370,10 +370,10 @@ const lessons: Lesson[] = [
     color: 'purple',
     simulatorFocus: 'results',
     content: [
-      'Understanding interest timing is what separates velocity banking from simple "pay extra on your mortgage" advice. There are two fundamentally different ways lenders calculate interest: amortized (your mortgage) and average daily balance (your LOC). Exploiting the difference between them is the entire strategy.',
+      'Understanding interest timing is what separates velocity banking from simple "pay extra on your mortgage" advice. There are two fundamentally different ways lenders calculate interest: amortized (your mortgage) and average daily balance (your LOC). Working with that timing difference is the entire strategy.',
       'Amortized debt (mortgages, auto loans) calculates interest on the scheduled principal balance at each payment. Your mortgage doesn\'t care if you had $10,000 sitting in your checking account all month — it charges the same interest. The balance only changes when your monthly payment is applied. Early in a mortgage, 70-80% of each payment goes to interest.',
       'LOC interest works on average daily balance (ADB). Let\'s do the math: You have a $5,000 LOC balance at 10% APR. If income of $4,000 deposits on day 1 and $3,500 in expenses draws out evenly over 30 days, this app samples daily closing balances: day 1 closes near $1,117 after that day\'s expense draw, and day 30 closes at $4,500. The ADB across the month is roughly $2,808 — meaning you paid interest on about $2,808 instead of $5,000. That\'s about a 44% reduction in the interest-bearing balance.',
-      'Compare this to the alternative: income goes to checking, LOC stays at $5,000 all month, and you pay interest on the full $5,000. Same money, same expenses, but dramatically different interest charges. This timing advantage is what the Money Loop exploits every single month.',
+      'Compare this to the alternative: income goes to checking, LOC stays at $5,000 all month, and you pay interest on the full $5,000. Same money, same expenses, but different modeled interest charges. This timing advantage is what the Money Loop tries to use when the LOC cost and cash-flow timing are favorable.',
       'The monthly interest difference might seem small (about $18 in our example at 10% APR), but it compounds. Over years of cycling, these savings accumulate — and more importantly, they allow the LOC to be paid down faster, creating room for larger "chunks" against your primary debt.',
     ],
     keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — can reduce the average and lower interest when the LOC cost and timing work in your favor.',
@@ -488,11 +488,11 @@ const glossary: GlossaryItem[] = [
   { term: 'Principal', definition: 'The original amount borrowed, not including interest. In velocity banking, reducing principal through chunks is the primary goal.', url: 'https://www.investopedia.com/terms/p/principal.asp' },
   { term: 'Interest', definition: 'The cost of borrowing money, expressed as APR. Different debt types calculate interest differently — this difference is key to velocity banking.', url: 'https://www.investopedia.com/terms/i/interest.asp' },
   { term: 'Cash Flow', definition: 'Monthly income minus expenses. The "fuel" for velocity banking. Must be positive for the strategy to work.', url: 'https://www.investopedia.com/terms/c/cashflow.asp' },
-  { term: 'Amortization', definition: 'A payment schedule where early payments are mostly interest. Velocity banking exploits this front-loading by attacking principal early.', url: 'https://www.investopedia.com/terms/a/amortization.asp' },
+  { term: 'Amortization', definition: 'A payment schedule where early payments are mostly interest. Velocity banking compares whether earlier principal reduction can improve the payoff path.', url: 'https://www.investopedia.com/terms/a/amortization.asp' },
   { term: 'LOC / HELOC', definition: 'Line of Credit / Home Equity Line of Credit. The vehicle for the Money Loop — charges interest on average daily balance, not the fixed balance.', url: 'https://www.investopedia.com/mortgage/heloc/' },
   { term: 'Average Daily Balance', definition: 'The average of your account balance across each day of the billing period. LOCs use this to calculate interest — the core of why velocity banking works.', url: 'https://www.investopedia.com/terms/a/averagedailybalance.asp' },
   { term: 'Chunk', definition: 'A large lump-sum payment from your LOC to your primary debt\'s principal. It needs enough cash flow to recover the LOC safely.', url: '#' },
-  { term: 'Money Loop', definition: 'The cycle of depositing income into LOC and paying expenses from it, keeping the average daily balance low and minimizing interest.', url: '#' },
+  { term: 'Money Loop', definition: 'The cycle of depositing income into LOC and paying expenses from it, aiming to lower the average daily balance when the timing and LOC terms are favorable.', url: '#' },
 ];
 
 /* ──────────────────────────────────────────────────────────

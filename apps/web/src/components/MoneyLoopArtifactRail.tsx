@@ -354,7 +354,7 @@ export default function MoneyLoopArtifactRail({
                   <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${tone.dot}`} />
                 </div>
 
-                <p className={`mt-2 hidden truncate text-[11px] font-medium ${classes.textSecondary} md:block`}>
+                <p className={`mt-2 hidden text-[11px] font-medium leading-4 ${classes.textSecondary} md:block`}>
                   {artifact.signal}
                 </p>
 
@@ -369,8 +369,8 @@ export default function MoneyLoopArtifactRail({
                     </div>
                   </div>
                   <div className="min-w-0">
-                    <p className={`truncate text-sm font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
-                    <p className={`mt-1 truncate text-[11px] font-medium ${classes.textSecondary}`}>{artifact.signal}</p>
+                    <p className={`text-sm font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
+                    <p className={`mt-1 text-[11px] font-medium leading-4 ${classes.textSecondary}`}>{artifact.signal}</p>
                   </div>
                 </div>
               </button>

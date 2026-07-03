@@ -218,7 +218,7 @@ export default function Dashboard() {
                   className={`min-h-[46px] rounded-lg border ${style.border} bg-slate-950/25 p-1.5`}
                 >
                   <p className={`text-[10px] font-bold ${style.value}`}>{String(index + 1).padStart(2, '0')}</p>
-                  <p className={`mt-0.5 truncate text-[10px] font-semibold leading-3 ${classes.text}`}>{artifact.label}</p>
+                  <p className={`mt-0.5 text-[10px] font-semibold leading-3 ${classes.text}`}>{artifact.label}</p>
                   <p className={`sr-only`}>{artifact.signal}</p>
                 </div>
               );
