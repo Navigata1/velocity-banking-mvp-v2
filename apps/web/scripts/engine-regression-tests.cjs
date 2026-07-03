@@ -5566,6 +5566,10 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
     'where it gets exciting',
     'that acceleration compounds',
     'deposit income into loc first, pay expenses from loc',
+    'income deposits directly into your line of credit',
+    'you pay your living expenses from the loc',
+    'the cycle repeats every pay period',
+    'these savings accumulate',
     'you deploy a chunk',
     'deploy another chunk',
     "that's fine for a steady income",
@@ -5580,6 +5584,10 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
   assert.ok(
     learnSource.includes('when real account terms support it'),
     'expected Learn Money Loop takeaway to label account-term dependency'
+  );
+  assert.ok(
+    learnSource.includes('the strategy tests whether that timing difference helps'),
+    'expected Learn interest timing copy to frame velocity banking as assumption-tested modeling'
   );
   assert.ok(
     learnSource.includes('the plan can test a chunk'),
