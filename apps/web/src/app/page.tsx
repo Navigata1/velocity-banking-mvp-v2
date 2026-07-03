@@ -160,7 +160,7 @@ export default function Dashboard() {
 
         <section
           data-testid="dashboard-mobile-vitals"
-          className="grid grid-cols-2 gap-2 md:hidden"
+          className="grid grid-cols-4 gap-1.5 md:hidden"
           aria-label="Dashboard vitals"
         >
           {model.vitals.map((vital) => {
@@ -169,18 +169,18 @@ export default function Dashboard() {
               <article
                 key={vital.id}
                 data-testid={`dashboard-mobile-vital-${vital.id}`}
-                className={`${classes.glass} ${style.card} min-h-[112px] rounded-xl border p-2.5`}
+                className={`${classes.glass} ${style.card} min-h-[82px] rounded-xl border p-2`}
               >
-                <div className="flex items-start justify-between gap-2">
-                  <p className={`text-[10px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
+                <div className="flex items-start justify-between gap-1">
+                  <p className={`text-[9px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
                     {vital.label}
                   </p>
-                  <span className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${style.dot}`} />
+                  <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
                 </div>
-                <p className={`mt-1.5 text-base font-bold leading-tight break-words ${style.value}`}>
+                <p className={`mt-1.5 text-sm font-bold leading-tight break-words ${style.value}`}>
                   {vital.value}
                 </p>
-                <p className={`mt-1.5 text-[10px] leading-4 ${classes.textSecondary}`}>
+                <p className="sr-only">
                   {vital.caption}
                 </p>
               </article>
@@ -190,24 +190,24 @@ export default function Dashboard() {
 
         <section
           data-testid="dashboard-mobile-money-loop-bridge"
-          className={`${classes.glass} mt-2 rounded-xl border ${classes.border} p-3 md:hidden`}
+          className={`${classes.glass} mt-1.5 rounded-xl border ${classes.border} p-2.5 md:hidden`}
           aria-label="Mobile Money Loop summary"
         >
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className={`text-[10px] font-semibold uppercase tracking-wide ${classes.textSecondary}`}>Money Loop</p>
-              <p className={`mt-1 text-base font-semibold leading-tight ${classes.text}`}>
+              <p className={`mt-1 text-sm font-semibold leading-tight ${classes.text}`}>
                 Income - LOC - expenses - cash flow - principal
               </p>
             </div>
             <a
               href="#dashboard-money-loop-artifacts"
-              className={`shrink-0 rounded-lg border px-2.5 py-1.5 text-xs font-semibold ${nextMoveStyle.chip}`}
+              className={`shrink-0 rounded-lg border px-2 py-1 text-xs font-semibold ${nextMoveStyle.chip}`}
             >
               Open loop
             </a>
           </div>
-          <div className="mt-2 grid grid-cols-5 gap-1">
+          <div className="mt-1.5 grid grid-cols-5 gap-1">
             {model.moneyLoopArtifacts.map((artifact, index) => {
               const style = toneStyles[artifact.tone];
 
@@ -215,7 +215,7 @@ export default function Dashboard() {
                 <div
                   key={artifact.id}
                   data-testid={`dashboard-mobile-loop-chip-${artifact.id}`}
-                  className={`min-h-[46px] rounded-lg border ${style.border} bg-slate-950/25 p-1.5`}
+                  className={`min-h-[40px] rounded-lg border ${style.border} bg-slate-950/25 p-1.5`}
                 >
                   <p className={`text-[10px] font-bold ${style.value}`}>{String(index + 1).padStart(2, '0')}</p>
                   <p className={`mt-0.5 text-[10px] font-semibold leading-3 ${classes.text}`}>{artifact.label}</p>
