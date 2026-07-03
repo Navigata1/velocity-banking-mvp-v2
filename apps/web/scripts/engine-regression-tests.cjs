@@ -4856,6 +4856,11 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
     isPayoffPossible: false,
     failureReason: 'payoff-horizon-exceeded',
   };
+  const corruptPossibleProjection = {
+    saved: Number.NaN,
+    monthsSaved: Number.POSITIVE_INFINITY,
+    isPayoffPossible: true,
+  };
 
   assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No interest savings');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(zeroImprovement), 'No faster payoff');
@@ -4864,6 +4869,16 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategySavings(invalidProjection), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(invalidProjection), 'Cash flow below payment');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(horizonProjection), 'Extend projection horizon');
+  assert.equal(vaultModel.formatVaultStrategySavings(corruptPossibleProjection), 'Not projected');
+  assert.equal(vaultModel.formatVaultStrategyTimeDelta(corruptPossibleProjection), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 240, isPayoffPossible: true }), '240 mo');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.NaN, isPayoffPossible: true }), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.POSITIVE_INFINITY, isPayoffPossible: true }), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyInterest(12345, true), '$12,345 interest');
+  assert.equal(vaultModel.formatVaultStrategyInterest(Number.NaN, true), 'Not projected');
+  assert.equal(vaultModel.formatVaultStrategyInterest(Number.POSITIVE_INFINITY, true), 'Not projected');
+  assert.equal(vaultModel.formatVaultStrategyInterest(12345, false), 'Not projected');
 });
 
 test('vault comparison bars clamp invalid and slower payoff widths', () => {

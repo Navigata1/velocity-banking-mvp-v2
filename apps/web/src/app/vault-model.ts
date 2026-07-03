@@ -14,6 +14,11 @@ interface VaultStrategyProjection {
   failureReason?: string;
 }
 
+interface VaultMonthsProjection {
+  months: number;
+  isPayoffPossible: boolean;
+}
+
 const MAX_FREED_PAYMENT_YEARS = 100;
 
 export interface VaultFreedomPathInput {
@@ -133,13 +138,27 @@ export function buildVaultVelocitySetupWarning(
 }
 
 export function formatVaultStrategySavings(strategy: VaultStrategyProjection): string {
-  if (!strategy.isPayoffPossible) return 'Not projected';
+  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.saved)) return 'Not projected';
   return strategy.saved > 0.005 ? `Saves ${formatCurrency(strategy.saved)}` : 'No interest savings';
 }
 
 export function formatVaultStrategyTimeDelta(strategy: VaultStrategyProjection, suffix = ''): string {
-  if (!strategy.isPayoffPossible) return formatVaultProjectionFailure(strategy.failureReason);
+  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.monthsSaved)) {
+    return formatVaultProjectionFailure(strategy.failureReason);
+  }
   return strategy.monthsSaved > 0 ? `${strategy.monthsSaved} months faster${suffix}` : 'No faster payoff';
+}
+
+export function formatVaultStrategyMonths(strategy: VaultMonthsProjection): string {
+  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.months) || strategy.months <= 0) {
+    return 'Review inputs';
+  }
+  return `${strategy.months} mo`;
+}
+
+export function formatVaultStrategyInterest(totalInterest: number, isPayoffPossible: boolean): string {
+  if (!isPayoffPossible || !Number.isFinite(totalInterest)) return 'Not projected';
+  return `${formatCurrency(totalInterest)} interest`;
 }
 
 export function buildVaultComparisonWidthPercent(
