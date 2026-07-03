@@ -1313,6 +1313,51 @@ test('shared warnings sanitize non-finite cash-flow LOC and debt inputs', () => 
   assert.ok(!messages.includes('NaN'), messages);
 });
 
+test('multi-debt simulation sanitizes non-finite inputs before payoff math', () => {
+  const result = calculations.simulateMultiDebt(
+    [
+      {
+        id: 'corrupt',
+        name: 'Corrupt Debt',
+        type: 'credit_card',
+        balance: Number.POSITIVE_INFINITY,
+        apr: Number.NaN,
+        monthlyPayment: Number.POSITIVE_INFINITY,
+        termMonths: Number.NaN,
+      },
+      {
+        id: 'stable',
+        name: 'Stable Debt',
+        type: 'auto',
+        balance: 5000,
+        apr: 0.08,
+        monthlyPayment: 250,
+        termMonths: 24,
+      },
+    ],
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    { limit: Number.NaN, apr: Number.NaN, balance: Number.POSITIVE_INFINITY },
+    'velocity',
+    Number.NaN
+  );
+  const serialized = JSON.stringify(result);
+
+  assert.ok(!serialized.includes('NaN'), serialized);
+  assert.ok(!serialized.includes('Infinity'), serialized);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'negative-cashflow');
+  assert.equal(result.totalMonths, 0);
+  assert.equal(result.totalInterestPaid, 0);
+  assert.equal(result.locInterestPaid, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  const corruptDebt = result.debts.find((debt) => debt.id === 'corrupt');
+
+  assert.ok(corruptDebt, 'expected sanitized corrupt debt result');
+  assert.equal(corruptDebt.originalBalance, 0);
+  assert.ok(result.warnings.every((warning) => !warning.message.includes('NaN') && !warning.message.includes('Infinity')));
+});
+
 test('multi-debt velocity refuses under-interest debt plans instead of dropping unpaid interest', () => {
   const velocity = calculations.simulateMultiDebt(
     [
