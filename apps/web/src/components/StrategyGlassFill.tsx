@@ -31,7 +31,7 @@ interface StrategyGlassFillProps {
  * 4-strategy glass-fill comparison cards.
  * Traditional = 100% filled. Others fill proportionally.
  * Less fill = faster payoff = better.
- * The empty space at the top IS the savings — visually.
+ * The empty space at the top shows the modeled time difference visually.
  */
 export default function StrategyGlassFill({ strategies, className = '' }: StrategyGlassFillProps) {
   const comparison = useMemo(() => buildStrategyGlassComparison(strategies), [strategies]);
@@ -123,7 +123,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
                   )}
                 </div>
 
-                {/* Savings badge — in the empty space */}
+                {/* Modeled difference badge in the empty space. */}
                 {!isBaseline && isValid && baselineValid && monthsSaved > 0 && (
                   <div className={`mt-2 text-xs font-medium ${colors.text} bg-black/30 rounded-lg px-2 py-1 inline-block w-fit`}>
                     {formatStrategyDeltaBadge({
@@ -136,7 +136,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
                 )}
                 {!isBaseline && isValid && baselineValid && monthsSaved <= 0 && (
                   <div className="mt-2 text-xs text-gray-500 bg-black/20 rounded-lg px-2 py-1 inline-block w-fit">
-                    No time savings
+                    No modeled time difference
                   </div>
                 )}
               </div>

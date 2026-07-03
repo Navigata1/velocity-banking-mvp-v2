@@ -4546,7 +4546,7 @@ test('simulator visual percentages clamp payment split widths', () => {
   assert.ok(!source.includes('analysis.equityPercent.toFixed'), 'expected Simulator not to format equity percent directly');
 });
 
-test('strategy glass copy does not label faster-but-costlier paths as interest savings', () => {
+test('strategy glass copy labels comparison deltas as modeled outcomes', () => {
   let strategyGlassModel;
   assert.doesNotThrow(() => {
     strategyGlassModel = loadTsModule('src/components/strategy-glass-fill-model.ts');
@@ -4572,11 +4572,19 @@ test('strategy glass copy does not label faster-but-costlier paths as interest s
       strategyMonths: 8,
       strategyInterest: 700,
     }),
-    '4 mo faster - $300 interest saved'
+    '4 mo faster - $300 modeled interest difference'
   );
+  assert.equal(strategyGlassModel.formatStrategyInterestDelta(1000, 1000), 'same modeled interest');
   assert.equal(strategyGlassModel.getStrategyDeltaTone(1000, 1200), 'amber');
   assert.equal(strategyGlassModel.getStrategyDeltaTone(1000, 700), 'emerald');
   assert.equal(strategyGlassModel.getStrategyDeltaTone(1000, 1000), 'sky');
+
+  const cockpitSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/cockpit/page.tsx'), 'utf8');
+  const strategyGlassSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/StrategyGlassFill.tsx'), 'utf8');
+  const strategyGlassModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/strategy-glass-fill-model.ts'), 'utf8');
+  assert.ok(!cockpitSource.includes('Potential Savings'), 'expected Cockpit to avoid promise-like savings labels');
+  assert.ok(!strategyGlassSource.includes('No time savings'), 'expected time comparison labels to avoid savings framing');
+  assert.ok(!strategyGlassModelSource.includes('interest saved'), 'expected interest deltas to be modeled differences');
 });
 
 test('strategy glass model suppresses winners and savings when the baseline is invalid', () => {
