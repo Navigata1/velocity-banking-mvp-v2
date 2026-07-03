@@ -178,7 +178,9 @@ export interface SingleDebtStrategyResult {
 // ─── Core Math ───────────────────────────────────────────────────────
 
 export function calculateMonthlyRate(apr: number): number {
-  return apr / 12;
+  if (!Number.isFinite(apr)) return 0;
+  const normalizedApr = apr > 1 ? apr / 100 : apr;
+  return Math.max(0, normalizedApr) / 12;
 }
 
 function safeNonNegative(value: number | undefined, fallback = 0): number {
@@ -311,7 +313,7 @@ export function generateWarnings(
 
   if (safeDebts) {
     for (const debt of safeDebts) {
-      const monthlyInterest = debt.balance * debt.apr / 12;
+      const monthlyInterest = debt.balance * calculateMonthlyRate(debt.apr);
       if (debt.monthlyPayment <= monthlyInterest && debt.balance > 0) {
         warnings.push({
           type: 'negative-amortization',
@@ -560,7 +562,7 @@ export function simulateMultiDebt(
   };
 
   const underInterestDebt = safeDebts.find((debt) => {
-    const monthlyInterest = debt.balance * debt.apr / 12;
+    const monthlyInterest = debt.balance * calculateMonthlyRate(debt.apr);
     return debt.balance > 0.01 && debt.monthlyPayment <= monthlyInterest;
   });
 
@@ -645,14 +647,14 @@ export function simulateMultiDebt(
       }
 
       if (strategy === 'velocity' && safeLoc && focusDebt && d.id === focusDebt.id && cashFlow > 0) {
-        const focusInterest = bal * d.apr / 12;
+        const focusInterest = bal * calculateMonthlyRate(d.apr);
         const focusPayment = Math.min(d.monthlyPayment + surplus + freedPayments, bal + focusInterest);
         const otherActivePayments = safeDebts.reduce((sum, otherDebt) => {
           if (otherDebt.id === d.id) return sum;
           const otherBalance = balances.get(otherDebt.id) ?? 0;
           if (otherBalance <= 0.01) return sum;
 
-          const otherInterest = otherBalance * otherDebt.apr / 12;
+          const otherInterest = otherBalance * calculateMonthlyRate(otherDebt.apr);
           return sum + Math.min(otherDebt.monthlyPayment, otherBalance + otherInterest);
         }, 0);
         const locCashFlowPaydown = Math.max(0, cashFlow - focusPayment - otherActivePayments);
@@ -699,7 +701,7 @@ export function simulateMultiDebt(
         continue;
       }
 
-      const monthlyRate = d.apr / 12;
+      const monthlyRate = calculateMonthlyRate(d.apr);
       const interest = bal * monthlyRate;
       let payment = d.monthlyPayment;
 
@@ -971,7 +973,7 @@ export function calculateMortgageAnalysis(input: MortgageAnalysisInput): Mortgag
     : Number.isFinite(input.currentRate)
     ? Math.max(0, input.currentRate)
     : originalRate;
-  const currentMonthlyInterest = currentBalance * (currentRate / 12);
+  const currentMonthlyInterest = currentBalance * calculateMonthlyRate(currentRate);
   const currentPayment = input.entryMode === 'purchase'
     ? origPayment
     : Number.isFinite(input.currentMonthlyPayment)

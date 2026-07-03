@@ -353,16 +353,15 @@ function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashb
 }
 
 export function calculateMonthlyRate(apr: number): number {
-  return finiteNumber(apr) / 12;
+  return finiteNonNegative(normalizeApr(apr)) / 12;
 }
 
 export function calculateDailyRate(apr: number): number {
-  return finiteNumber(apr) / 365;
+  return finiteNonNegative(normalizeApr(apr)) / 365;
 }
 
 export function calculateDailyInterest(balance: number, apr: number): number {
-  const normalizedApr = normalizeApr(apr);
-  return finiteNonNegative(balance) * calculateDailyRate(finiteNonNegative(normalizedApr));
+  return finiteNonNegative(balance) * calculateDailyRate(apr);
 }
 
 export function calculateCashFlow(income: number, expenses: number): number {
@@ -373,7 +372,7 @@ export function calculateAmortizationPayment(principal: number, apr: number, ter
   const safePrincipal = finiteNonNegative(principal);
   const safeTermMonths = finitePositiveInteger(termMonths, 0);
   if (safePrincipal <= 0 || safeTermMonths <= 0) return 0;
-  const r = finiteNonNegative(apr) / 12;
+  const r = calculateMonthlyRate(apr);
   if (r === 0) return safePrincipal / safeTermMonths;
   return safePrincipal * (r * Math.pow(1 + r, safeTermMonths)) / (Math.pow(1 + r, safeTermMonths) - 1);
 }
@@ -385,7 +384,7 @@ export function calculateTotalAmortizationInterest(principal: number, apr: numbe
 
 export function simulateAmortizedPayoff(inputs: AmortizedPayoffInputs): AmortizedPayoffResult {
   const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
-  const monthlyRate = finiteNonNegative(inputs.apr) / 12;
+  const monthlyRate = calculateMonthlyRate(inputs.apr);
   const scheduledPayment = finiteNonNegative(inputs.monthlyPayment) + finiteNonNegative(inputs.extraPayment ?? 0);
   const monthlyData: AmortizedPayoffMonth[] = [];
   let balance = finiteNonNegative(inputs.principalBalance);
@@ -449,7 +448,7 @@ export function calculateADBInterest(
   }
 
   const averageDailyBalance = totalDailyBalance / dayCount;
-  const dailyRate = finiteNonNegative(normalizeApr(apr)) / 365;
+  const dailyRate = calculateDailyRate(apr);
 
   return averageDailyBalance * dailyRate * dayCount;
 }
@@ -487,7 +486,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     ? Math.ceil(effectiveChunkAmount / cashFlowPaydown)
     : 999;
 
-  const debtInterest = debtBalance * debtApr / 12;
+  const debtInterest = debtBalance * calculateMonthlyRate(debtApr);
 
   events.push({
     type: 'debt-interest',
@@ -647,7 +646,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     };
   }
 
-  const firstMonthInterest = principalBalance * debtApr / 12;
+  const firstMonthInterest = principalBalance * calculateMonthlyRate(debtApr);
   if (principalBalance > 0.01 && debtPayment <= firstMonthInterest) {
     return {
       payoffMonths: 0,

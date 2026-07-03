@@ -170,11 +170,20 @@ function defaultCarDebt() {
 
 test('amortization payment matches a known 30-year fixed-rate fixture', () => {
   const payment = calculations.calculateAmortizationPayment(100000, 0.06, 360);
+  const wholePercentPayment = calculations.calculateAmortizationPayment(100000, 6, 360);
 
   assert.equal(roundCents(payment), 599.55);
+  assert.equal(roundCents(wholePercentPayment), 599.55);
+  assert.equal(roundCents(calculations.calculateMonthlyRate(6)), roundCents(calculations.calculateMonthlyRate(0.06)));
+  assert.equal(roundCents(sharedFinancialEngine.calculateMonthlyRate(6)), roundCents(sharedFinancialEngine.calculateMonthlyRate(0.06)));
   assert.equal(roundCents(calculations.calculateTotalAmortizationInterest(100000, 0.06, 360)), 115838.19);
+  assert.equal(roundCents(calculations.calculateTotalAmortizationInterest(100000, 6, 360)), 115838.19);
   assert.equal(
     roundCents(calculations.calculateTotalAmortizationInterest(100000, 0.06, 360)),
+    roundCents(sharedFinancialEngine.calculateTotalAmortizationInterest(100000, 0.06, 360))
+  );
+  assert.equal(
+    roundCents(sharedFinancialEngine.calculateTotalAmortizationInterest(100000, 6, 360)),
     roundCents(sharedFinancialEngine.calculateTotalAmortizationInterest(100000, 0.06, 360))
   );
 });
