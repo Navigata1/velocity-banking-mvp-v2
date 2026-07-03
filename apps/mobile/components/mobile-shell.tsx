@@ -50,13 +50,13 @@ const mobileBackendReadinessOptions = [
     id: 'supabase-postgres-auth-rls',
     label: 'Supabase Postgres + Auth + RLS',
     status: 'Candidate',
-    detail: 'Best fit for relational snapshots, user-owned records, and SQL reporting. Next gate: schema plus RLS policy draft.',
+    detail: 'Best fit for relational snapshots, run history, exports, audit events, and SQL reporting. Next gate: six-collection schema plus RLS policy review.',
   },
   {
     id: 'cloudflare-workers-d1-durable-objects',
     label: 'Cloudflare Workers + D1/Durable Objects',
     status: 'Candidate',
-    detail: 'Best fit for edge APIs, D1 owner-scoped records, and future session state. Next gate: authenticated Worker snapshot API plus D1 owner indexes.',
+    detail: 'Best fit for edge APIs, D1 owner-scoped records, export jobs, audit events, and future session state. Next gate: authenticated Worker snapshot API plus D1 owner indexes for all owner tables.',
   },
 ] as const;
 
