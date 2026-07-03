@@ -6437,7 +6437,9 @@ test('Money Loop artifact rail fits desktop while preserving narrow-screen carou
   assert.ok(css.includes('scrollbar-width: none'), 'expected Firefox scrollbar chrome to be hidden');
   assert.ok(css.includes('::-webkit-scrollbar'), 'expected Chromium scrollbar chrome to be hidden');
   assert.ok(source.includes('min-w-[680px]'), 'expected artifact cards to keep a stable narrow-screen minimum rail width');
+  assert.ok(source.includes('px-[calc(50vw-68px)]'), 'expected mobile selector track padding so first and last artifacts can center');
   assert.ok(source.includes('md:min-w-0'), 'expected artifact cards to fit the desktop dashboard column');
+  assert.ok(source.includes('md:px-0'), 'expected mobile centering padding to be removed on desktop');
   assert.ok(source.includes('grid-cols-5'), 'expected narrow-screen Money Loop artifacts to remain a horizontal rail');
   assert.ok(
     source.includes('md:grid-cols-[repeat(5,minmax(0,1fr))]'),
@@ -6461,6 +6463,7 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
   assert.ok(source.includes('onClick={() => selectArtifactByIndex(index)}'), 'expected pointer selection to reuse the roving-focus path');
   assert.ok(source.includes('selectRelativeArtifact'), 'expected explicit carousel controls to reuse the artifact selection model');
+  assert.ok(source.includes("scrollIntoView({ block: 'nearest', inline: 'center' })"), 'expected selected artifact tabs to center inside the narrow carousel viewport');
   assert.ok(source.includes('data-testid="money-loop-artifact-previous"'), 'expected a stable previous-control smoke hook');
   assert.ok(source.includes('data-testid="money-loop-artifact-next"'), 'expected a stable next-control smoke hook');
   assert.ok(source.includes('artifact-carousel-token'), 'expected active artifact to use the carousel token animation class');

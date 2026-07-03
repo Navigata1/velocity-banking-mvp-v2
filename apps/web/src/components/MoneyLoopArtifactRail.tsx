@@ -118,7 +118,9 @@ export default function MoneyLoopArtifactRail({
 
     setActiveArtifactId(nextArtifact.id);
     window.requestAnimationFrame(() => {
-      document.getElementById(`money-loop-artifact-tab-${nextArtifact.id}`)?.focus();
+      const nextTab = document.getElementById(`money-loop-artifact-tab-${nextArtifact.id}`);
+      nextTab?.focus();
+      nextTab?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
 
@@ -313,7 +315,7 @@ export default function MoneyLoopArtifactRail({
           role="tablist"
           aria-label="Money Loop artifact selector"
           data-testid="money-loop-artifact-selector-grid"
-          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:snap-none"
+          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 px-[calc(50vw-68px)] md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
         >
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
