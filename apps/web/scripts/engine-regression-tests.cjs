@@ -6361,7 +6361,9 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
 
   assert.ok(source.includes('data-testid="dashboard-mobile-vitals"'), 'expected a stable mobile vitals hook');
-  assert.ok(source.includes('grid grid-cols-2 gap-3 md:hidden'), 'expected mobile vitals to show as a compact two-column summary');
+  assert.ok(source.includes('grid grid-cols-2 gap-2 md:hidden'), 'expected mobile vitals to show as a dense two-column summary');
+  assert.ok(source.includes('min-h-[88px]'), 'expected mobile vital cards to stay compact enough for the first viewport');
+  assert.ok(source.includes('line-clamp-1 text-[10px]'), 'expected mobile vital captions not to push the Money Loop below the first viewport');
   assert.ok(
     source.includes('data-testid={`dashboard-mobile-vital-${vital.id}`}'),
     'expected each mobile vital to be backed by the dashboard model'
@@ -6393,6 +6395,8 @@ test('dashboard home page exposes a compact mobile Money Loop bridge', () => {
     source.includes('model.moneyLoopArtifacts.map'),
     'expected the mobile bridge chips to reuse the dashboard artifact model'
   );
+  assert.ok(source.includes('min-h-[46px]'), 'expected mobile Money Loop chips to stay compact');
+  assert.ok(source.includes('<p className={`sr-only`}>{artifact.signal}</p>'), 'expected compact mobile chips to keep artifact signals available to assistive technology');
   assert.ok(
     source.includes('data-testid={`dashboard-mobile-loop-chip-${artifact.id}`}'),
     'expected one stable mobile chip hook per Money Loop artifact'
