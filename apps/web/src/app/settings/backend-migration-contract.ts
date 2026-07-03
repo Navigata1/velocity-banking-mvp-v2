@@ -76,6 +76,28 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
       'cloudflare-workers-d1-durable-objects': 'D1 learning_progress table updated through an authenticated Worker.',
     },
   },
+  {
+    id: 'export_records',
+    label: 'Export records',
+    sourceKeys: ['velocity-bank-storage', 'interestshield-portfolio-v1'],
+    requiredFields: ['id', 'owner_id', 'snapshot_id', 'export_kind', 'metadata_json', 'created_at'],
+    ownerRule: 'Export records belong to the owner and store metadata only; generated files are never shared across owners.',
+    providerShape: {
+      'supabase-postgres-auth-rls': 'export_records table with owner_id RLS and optional snapshot linkage.',
+      'cloudflare-workers-d1-durable-objects': 'D1 export_records table written through an authenticated Worker with owner-filtered queries.',
+    },
+  },
+  {
+    id: 'audit_events',
+    label: 'Audit events',
+    sourceKeys: ['velocity-bank-storage', 'interestshield-portfolio-v1', 'interestshield-learn-progress'],
+    requiredFields: ['id', 'owner_id', 'event_type', 'event_json', 'created_at'],
+    ownerRule: 'Audit events are owner-scoped activity records used for import, export, deletion, and calculation traceability.',
+    providerShape: {
+      'supabase-postgres-auth-rls': 'audit_events table with owner_id RLS and append-oriented authenticated inserts.',
+      'cloudflare-workers-d1-durable-objects': 'D1 audit_events table written by the Worker after token verification and owner derivation.',
+    },
+  },
 ];
 
 export function buildBackendMigrationContract(): BackendMigrationContract {
@@ -112,7 +134,7 @@ export function validateBackendMigrationContract(contract: Partial<BackendMigrat
     return { ok: false, error: 'Backend migration contract local storage keys do not match the demo handoff keys.' };
   }
 
-  if (!Array.isArray(contract.collections) || contract.collections.length < 4) {
+  if (!Array.isArray(contract.collections) || contract.collections.length < BACKEND_MIGRATION_COLLECTIONS.length) {
     return { ok: false, error: 'Backend migration contract collections are incomplete.' };
   }
 
