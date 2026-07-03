@@ -176,9 +176,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['loc interest', 'how loc interest works', 'loc rate'],
     question: 'How is LOC interest calculated?',
     answers: [
-      'LOC interest is typically calculated daily on your average daily balance. Lower average balance = less interest.',
-      'Daily rate = Annual rate ÷ 365. Multiply by your balance each day. This is why depositing income first helps.',
-      'Interest accrues daily. If you deposit your paycheck immediately and draw down slowly for bills, your average balance stays lower.'
+      'LOC interest is often calculated daily on average daily balance. Lower average balance can mean less LOC interest when the lender uses that method.',
+      'Daily rate = annual rate / 365. Multiply by your balance each day. This is why account timing matters.',
+      'Interest may accrue daily. Model income timing, bill timing, fees, and repayment rules before assuming a lower average balance will help.'
     ]
   },
   {
@@ -206,7 +206,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What is average daily balance?',
     answers: [
       'It\'s the sum of each day\'s balance divided by the number of days. Lenders use this to calculate your interest charges.',
-      'Example: $10,000 for 15 days + $5,000 for 15 days = ($150,000 + $75,000) ÷ 30 = $7,500 average daily balance.',
+      'Example: $10,000 for 15 days + $5,000 for 15 days = ($150,000 + $75,000) / 30 = $7,500 average daily balance.',
       'Your daily balance is tracked every day. At month end, they average all 30 days to calculate interest. Lower average = less interest.'
     ]
   },
@@ -291,7 +291,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What mistakes should I avoid?',
     answers: [
       'Top 3: Starting without positive cash flow, over-utilizing your LOC (past 80%), and treating LOC as extra spending money.',
-      'Don\'t forget to track expenses. Many fail because they think they have more cash flow than they actually do.',
+      'Track expenses against real transactions. Hidden spending can make modeled cash flow look stronger than the account can actually support.',
       'Avoid: making chunks too large (no emergency buffer), inconsistency (stopping when "busy"), ignoring rising rates.'
     ]
   },
@@ -308,9 +308,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['loc overspend', 'spending too much loc', 'loc spending'],
     question: 'What if I overspend on my LOC?',
     answers: [
-      'Stop making chunks temporarily. Focus on paying down the LOC before resuming the strategy.',
-      'This is the #1 failure mode. The LOC is a tool, not extra money. Treat it like a checking account with a negative balance.',
-      'Create a separate account for discretionary spending. Don\'t use the LOC card for anything except strategic bills.'
+      'Pause new chunks temporarily. Focus on paying down the LOC before resuming the strategy.',
+      'Treat overspending as a recovery signal. The LOC is a tool, not extra money, so rebuild room before modeling another chunk.',
+      'A separate discretionary account can help keep LOC activity limited to planned bills and modeled payoff moves.'
     ]
   },
   {

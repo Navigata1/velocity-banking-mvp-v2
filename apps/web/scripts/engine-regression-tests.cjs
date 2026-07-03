@@ -5834,6 +5834,38 @@ test('Guardian answer bank avoids unsupported population stats and named anecdot
   }
 });
 
+test('Guardian answer bank keeps mistake and recovery copy coach-toned', () => {
+  const answerBank = guardian.shieldGuardianQA
+    .flatMap((qa) => qa.answers)
+    .join('\n')
+    .toLowerCase();
+  const guardianSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/data/shield-guardian-qa.ts'), 'utf8').toLowerCase();
+  const discouragedPhrases = [
+    'many fail',
+    '#1 failure mode',
+    'deposit your paycheck immediately',
+    'annual rate \u00f7 365',
+    '\u00f7 30',
+  ];
+
+  for (const phrase of discouragedPhrases) {
+    assert.ok(!guardianSource.includes(phrase), `expected Guardian source not to include shame-toned or non-ASCII copy: ${phrase}`);
+  }
+
+  assert.ok(
+    answerBank.includes('hidden spending can make modeled cash flow look stronger than the account can actually support'),
+    'expected Guardian mistake copy to frame expense tracking as model accuracy'
+  );
+  assert.ok(
+    answerBank.includes('treat overspending as a recovery signal'),
+    'expected Guardian LOC overspending copy to keep a recovery tone'
+  );
+  assert.ok(
+    answerBank.includes('model income timing, bill timing, fees, and repayment rules before assuming a lower average balance will help'),
+    'expected Guardian LOC interest copy to keep routing assumptions conditional'
+  );
+});
+
 test('Guardian answer bank avoids hard-coded LOC rate and qualification thresholds', () => {
   const answerBank = guardian.shieldGuardianQA
     .flatMap((qa) => qa.answers)
