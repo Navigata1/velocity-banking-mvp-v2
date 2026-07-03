@@ -5628,6 +5628,7 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'trust the math',
     "the math works - if it's not working",
     'debt-crushing ammunition',
+    'crushing that debt',
     'velocity saves years',
     'simulator shows years saved',
     'more surplus = faster freedom',

@@ -620,7 +620,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'Goodbye!',
     answers: [
       'Take care! Remember, every chunk brings you closer to freedom. See you next time!',
-      'Goodbye! Keep crushing that debt. I\'ll be here when you need me!',
+      'Goodbye! Keep working the plan. I\'ll be here when you need me!',
       'See you later! Stay consistent with your strategy. You\'re doing great!'
     ]
   },
