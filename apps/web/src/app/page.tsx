@@ -169,7 +169,7 @@ export default function Dashboard() {
               <article
                 key={vital.id}
                 data-testid={`dashboard-mobile-vital-${vital.id}`}
-                className={`${classes.glass} ${style.card} min-h-[88px] rounded-xl border p-2.5`}
+                className={`${classes.glass} ${style.card} min-h-[112px] rounded-xl border p-2.5`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <p className={`text-[10px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
@@ -180,7 +180,7 @@ export default function Dashboard() {
                 <p className={`mt-1.5 text-base font-bold leading-tight break-words ${style.value}`}>
                   {vital.value}
                 </p>
-                <p className={`mt-1.5 line-clamp-1 text-[10px] leading-3 ${classes.textSecondary}`}>
+                <p className={`mt-1.5 text-[10px] leading-4 ${classes.textSecondary}`}>
                   {vital.caption}
                 </p>
               </article>
