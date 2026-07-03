@@ -2515,14 +2515,10 @@ test('settings backend migration contract requires ownership and provider shapes
   assert.equal(validation.ok, true);
   assert.deepEqual(Array.from(contract.targets), Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS));
   assert.deepEqual(Array.from(contract.localStorageKeys), Array.from(settingsReset.LOCAL_DEMO_STORAGE_KEYS));
-  assert.ok(contract.collections.length >= 4, 'expected user profile, snapshot, run, and learning collections');
-  assert.ok(
-    contract.collections.some((collection) => collection.id === 'financial_snapshots'),
-    'expected financial snapshots collection'
-  );
-  assert.ok(
-    contract.collections.some((collection) => collection.id === 'simulation_runs'),
-    'expected simulation run history collection'
+  assert.equal(
+    JSON.stringify(contract.collections.map((collection) => collection.id)),
+    JSON.stringify(['user_profiles', 'financial_snapshots', 'simulation_runs', 'learning_progress', 'export_records', 'audit_events']),
+    'expected backend handoff to match the Supabase/Cloudflare owner-scoped collection set'
   );
   for (const collection of contract.collections) {
     assert.ok(collection.ownerRule.toLowerCase().includes('owner'), `expected ${collection.id} to define ownership`);
@@ -2620,6 +2616,10 @@ test('repository documents a Cloudflare edge lane without live D1 wiring', () =>
   assert.ok(contract.includes('Idempotency-Key'), 'expected snapshot imports to be idempotent');
   assert.ok(contract.includes('financial_snapshots_owner_id_idx'), 'expected D1 snapshots to have an owner index');
   assert.ok(contract.includes('simulation_runs_owner_id_idx'), 'expected D1 runs to have an owner index');
+  assert.ok(contract.includes('learning_progress_owner_id_idx'), 'expected D1 learning progress to have an owner index');
+  assert.ok(contract.includes('export_records_owner_id_idx'), 'expected D1 exports to have an owner index');
+  assert.ok(contract.includes('audit_events_owner_id_idx'), 'expected D1 audit events to have an owner index');
+  assert.ok(contract.includes('route text not null'), 'expected D1 run summaries to preserve route context');
   assert.ok(contract.includes('D1 does not provide Supabase-style RLS'), 'expected the doc to name the Worker access-control responsibility');
   assert.ok(contract.includes('Account deletion removes owner-scoped D1 records'), 'expected deletion to be a release gate');
   assert.ok(!packageJson.dependencies['wrangler'], 'expected demo app not to wire Cloudflare tooling as a runtime dependency');

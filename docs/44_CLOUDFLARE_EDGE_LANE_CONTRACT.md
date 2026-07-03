@@ -58,12 +58,45 @@ create table simulation_runs (
   owner_id text not null,
   snapshot_id text not null,
   engine_version text not null,
+  route text not null,
   result_summary_json text not null,
   created_at text not null
 );
 
 create index simulation_runs_owner_id_idx on simulation_runs(owner_id);
 create index simulation_runs_snapshot_id_idx on simulation_runs(snapshot_id);
+
+create table learning_progress (
+  id text primary key,
+  owner_id text not null,
+  completed_lessons_json text not null,
+  quiz_answers_json text not null,
+  updated_at text not null
+);
+
+create unique index learning_progress_owner_id_idx on learning_progress(owner_id);
+
+create table export_records (
+  id text primary key,
+  owner_id text not null,
+  snapshot_id text,
+  export_kind text not null,
+  metadata_json text not null,
+  created_at text not null
+);
+
+create index export_records_owner_id_idx on export_records(owner_id);
+create index export_records_snapshot_id_idx on export_records(snapshot_id);
+
+create table audit_events (
+  id text primary key,
+  owner_id text not null,
+  event_type text not null,
+  event_json text not null,
+  created_at text not null
+);
+
+create index audit_events_owner_id_idx on audit_events(owner_id);
 ```
 
 Production D1 access must be owner-filtered in every Worker query because D1 does not provide Supabase-style RLS. The Worker is the access-control boundary.
