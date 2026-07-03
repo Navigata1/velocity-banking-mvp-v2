@@ -5540,6 +5540,8 @@ test('learn page labels sample savings instead of presenting them as universal o
     'can shave years off a 30-year mortgage',
     'positive cash flow is non-negotiable',
     'even $200/month can accelerate debt payoff by years',
+    'even $200/month of cash flow can change a modeled payoff timeline',
+    "here's what most people miss",
     'a single $3,000 chunk can save $6,000+',
     'each $3k chunk saves ~$6,400',
     'repeat the cycle for exponential acceleration',
@@ -5557,6 +5559,10 @@ test('learn page labels sample savings instead of presenting them as universal o
     assert.ok(!source.includes(phrase), `expected Learn copy not to include unqualified sample outcome: ${phrase}`);
   }
   assert.ok(source.includes('monthly modeled interest difference'), 'expected Learn examples to label timing deltas as modeled interest differences');
+  assert.ok(
+    source.includes('a $200/month surplus may help in the velocity banking cycle, but the payoff impact depends on your actual inputs'),
+    'expected Learn cash-flow copy to keep small-surplus examples input-dependent'
+  );
 });
 
 test('learn page avoids universal LOC rate-spread rules', () => {
@@ -5615,6 +5621,12 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
     'deploy another chunk',
     "that's fine for a steady income",
     'creating savings far exceeding the chunk amount',
+    'parking income in the loc',
+    'depositing your paycheck into the loc',
+    'depositing income immediately drops the balance',
+    'a general rule: chunk size should be recoverable',
+    'financial discipline',
+    'spending discipline',
   ];
 
   for (const phrase of bannedLearnPhrases) {
@@ -5633,6 +5645,18 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
   assert.ok(
     learnSource.includes('the plan can test a chunk'),
     'expected Learn chunk lesson to frame chunks as model-tested planning moves'
+  );
+  assert.ok(
+    learnSource.includes('chunk sizing is a recovery-window test'),
+    'expected Learn chunk guidance to frame sizing as a modeled recovery test'
+  );
+  assert.ok(
+    learnSource.includes('compare chunk sizes by recovery time, loc headroom, fees, and cash-flow stability'),
+    'expected Learn chunk guidance to compare sizing inputs instead of universal rules'
+  );
+  assert.ok(
+    learnSource.includes('modeled income-to-loc routing can reduce the average and lower interest when the loc cost and timing work in your favor'),
+    'expected Learn ADB takeaway to keep income routing conditional'
   );
   assert.ok(
     dashboardSource.includes('available credit is capacity, not income'),
