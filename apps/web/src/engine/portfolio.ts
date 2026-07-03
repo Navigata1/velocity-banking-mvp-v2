@@ -12,7 +12,7 @@ import {
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
-import { calculateDailyInterest, formatCurrency } from '@interestshield/financial-engine';
+import { calculateDailyInterest, calculateMonthlyRate, formatCurrency } from '@interestshield/financial-engine';
 
 export type DebtCategory =
   | 'mortgage'
@@ -165,6 +165,10 @@ function getEffectiveApr(debt: DebtItem): number {
   return finiteNonNegative(debt.apr);
 }
 
+function estimateMonthlyInterest(balance: number, apr: number): number {
+  return finiteNonNegative(balance) * calculateMonthlyRate(apr);
+}
+
 /**
  * Velocity scoring — teacher-aligned:
  * 1) Cash-flow unlock (monthly payment freed) is primary
@@ -233,7 +237,7 @@ function buildSplitExtraAllocations(
   targetIds.slice(0, 2).forEach((targetId, index) => {
     const debt = debts.find((item) => item.id === targetId);
     const balance = debt ? balances.get(debt.id) ?? 0 : 0;
-    const interest = debt ? balance * getEffectiveApr(debt) / 12 : 0;
+    const interest = debt ? estimateMonthlyInterest(balance, getEffectiveApr(debt)) : 0;
     const minimumPayment = debt ? Math.min(getMinPaymentForBalance(debt, balance), balance + interest) : 0;
     const capacity = Math.max(0, balance + interest - minimumPayment);
     const preferred = availableExtra * ratios[index];
@@ -422,11 +426,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   }
 
   const underInterestDebt = debts.find((debt) => {
-    const monthlyInterest = debt.balance * getEffectiveApr(debt) / 12;
+    const monthlyInterest = estimateMonthlyInterest(debt.balance, getEffectiveApr(debt));
     return debt.balance > 0.01 && getMinPayment(debt) <= monthlyInterest;
   });
   if (underInterestDebt) {
-    const monthlyInterest = underInterestDebt.balance * getEffectiveApr(underInterestDebt) / 12;
+    const monthlyInterest = estimateMonthlyInterest(underInterestDebt.balance, getEffectiveApr(underInterestDebt));
     warnings.push(
       `${underInterestDebt.name} payment doesn't cover monthly interest (${fmt(monthlyInterest)}). Raise the payment or reduce principal before trusting a payoff estimate.`
     );
@@ -516,7 +520,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       const bal = balances.get(d.id) ?? 0;
       if (bal <= 0.01) return sum;
 
-      const interest = bal * getEffectiveApr(d) / 12;
+      const interest = estimateMonthlyInterest(bal, getEffectiveApr(d));
       return sum + Math.min(getMinPaymentForBalance(d, bal), bal + interest);
     }, 0);
     let availableExtra = Math.max(0, cashFlow - currentMinimums) + extraMonthlyPayment;
@@ -542,7 +546,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 
       if (isMoneyLoopTarget && sanitizedLoc) {
         const minimumPayment = getMinPaymentForBalance(d, bal);
-        const debtInterest = bal * effectiveApr / 12;
+        const debtInterest = estimateMonthlyInterest(bal, effectiveApr);
         let payment = Math.min(minimumPayment, bal + debtInterest);
 
         if (availableExtra > 0) {
@@ -556,7 +560,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           const otherBalance = balances.get(otherDebt.id) ?? 0;
           if (otherBalance <= 0.01) return sum;
 
-          const otherInterest = otherBalance * getEffectiveApr(otherDebt) / 12;
+          const otherInterest = estimateMonthlyInterest(otherBalance, getEffectiveApr(otherDebt));
           return sum + Math.min(getMinPaymentForBalance(otherDebt, otherBalance), otherBalance + otherInterest);
         }, 0);
         const locCashFlowPaydown = Math.max(0, cashFlow - payment - otherActivePayments);
@@ -601,7 +605,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         continue;
       }
 
-      const interest = bal * effectiveApr / 12;
+      const interest = estimateMonthlyInterest(bal, effectiveApr);
       let payment = Math.min(getMinPaymentForBalance(d, bal), bal + interest);
 
       // Apply extra to target debts

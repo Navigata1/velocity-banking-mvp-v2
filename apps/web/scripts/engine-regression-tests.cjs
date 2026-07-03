@@ -3158,6 +3158,44 @@ test('portfolio debt rationales display whole-percent APR inputs as percentages,
   assert.ok(!displayText.includes('650.0%'), displayText);
 });
 
+test('portfolio payoff math treats whole-percent APR inputs like decimal APR inputs', () => {
+  const baseInput = {
+    monthlyIncome: 5000,
+    monthlyExpenses: 3500,
+    extraMonthlyPayment: 0,
+    debts: [
+      {
+        id: 'whole-percent-loan',
+        name: 'Whole Percent Loan',
+        category: 'personal_loan',
+        kind: 'amortized',
+        balance: 5000,
+        apr: 0.065,
+        minPaymentRule: { type: 'fixed', amount: 250 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'avalanche',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 3,
+  };
+  const decimalResult = portfolio.simulatePortfolio(baseInput);
+  const wholePercentResult = portfolio.simulatePortfolio({
+    ...baseInput,
+    debts: baseInput.debts.map((debt) => ({ ...debt, apr: 6.5 })),
+  });
+
+  assert.equal(roundCents(wholePercentResult.totalInterest), roundCents(decimalResult.totalInterest));
+  assert.equal(wholePercentResult.payoffMonths, decimalResult.payoffMonths);
+  assert.deepEqual(
+    wholePercentResult.monthResults.map((month) => roundCents(month.interestCharges['whole-percent-loan'])),
+    decimalResult.monthResults.map((month) => roundCents(month.interestCharges['whole-percent-loan']))
+  );
+});
+
 test('portfolio debt rationales do not leak non-finite display values', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 5000,
