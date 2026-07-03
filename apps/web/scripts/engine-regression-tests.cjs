@@ -5563,6 +5563,13 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
     'when does it not work',
     "you're just adding debt",
     'defeats the purpose',
+    'where it gets exciting',
+    'that acceleration compounds',
+    'deposit income into loc first, pay expenses from loc',
+    'you deploy a chunk',
+    'deploy another chunk',
+    "that's fine for a steady income",
+    'creating savings far exceeding the chunk amount',
   ];
 
   for (const phrase of bannedLearnPhrases) {
@@ -5570,6 +5577,14 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
   }
 
   assert.ok(!dashboardSource.includes('not free money'), 'expected Dashboard LOC copy not to frame credit as free money');
+  assert.ok(
+    learnSource.includes('when real account terms support it'),
+    'expected Learn Money Loop takeaway to label account-term dependency'
+  );
+  assert.ok(
+    learnSource.includes('the plan can test a chunk'),
+    'expected Learn chunk lesson to frame chunks as model-tested planning moves'
+  );
   assert.ok(
     dashboardSource.includes('available credit is capacity, not income'),
     'expected Dashboard LOC copy to frame available credit as capacity'
