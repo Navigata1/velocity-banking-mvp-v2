@@ -214,6 +214,16 @@ function sanitizeSimulationInputs(inputs: SimulationInputs): SimulationInputs {
   };
 }
 
+function sanitizeDebtItem(debt: DebtItem): DebtItem {
+  return {
+    ...debt,
+    balance: safeNonNegative(debt.balance),
+    apr: safeNonNegative(debt.apr),
+    monthlyPayment: safeNonNegative(debt.monthlyPayment),
+    termMonths: Math.max(1, Math.round(safeNonNegative(debt.termMonths, 1))),
+  };
+}
+
 // ─── Safety Warnings ─────────────────────────────────────────────────
 
 export function generateWarnings(
@@ -226,13 +236,7 @@ export function generateWarnings(
   const safeMonthlyIncome = safeNonNegative(monthlyIncome);
   const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
   const safeLoc = sanitizeLoc(loc);
-  const safeDebts = debts?.map((debt) => ({
-    ...debt,
-    balance: safeNonNegative(debt.balance),
-    apr: safeNonNegative(debt.apr),
-    monthlyPayment: safeNonNegative(debt.monthlyPayment),
-    termMonths: Math.max(1, Math.round(safeNonNegative(debt.termMonths, 1))),
-  }));
+  const safeDebts = debts?.map(sanitizeDebtItem);
   const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
 
   if (cashFlow <= 0) {
@@ -503,20 +507,25 @@ export function simulateMultiDebt(
   strategy: 'velocity' | 'snowball' | 'avalanche',
   chunkAmount?: number
 ): MultiDebtResult {
-  const warnings = generateWarnings(monthlyIncome, monthlyExpenses, loc, debts);
-  const cashFlow = monthlyIncome - monthlyExpenses;
-  const totalMinPayments = debts.reduce((sum, d) => sum + d.monthlyPayment, 0);
+  const safeDebts = debts.map(sanitizeDebtItem);
+  const safeMonthlyIncome = safeNonNegative(monthlyIncome);
+  const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
+  const safeLoc = sanitizeLoc(loc);
+  const safeChunkAmount = chunkAmount === undefined ? undefined : safeNonNegative(chunkAmount);
+  const warnings = generateWarnings(safeMonthlyIncome, safeMonthlyExpenses, safeLoc, safeDebts);
+  const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
+  const totalMinPayments = safeDebts.reduce((sum, d) => sum + d.monthlyPayment, 0);
   const surplus = Math.max(0, cashFlow - totalMinPayments);
 
   // Calculate baseline for each debt
-  const baselineResults = debts.map(d => {
+  const baselineResults = safeDebts.map(d => {
     const result = simulateBaselineDebt(d);
     return { ...result, id: d.id, name: d.name };
   });
   const baselineTotal = baselineResults.reduce((s, d) => s + d.totalInterest, 0);
   const baselineMaxMonths = baselineResults.length > 0 ? Math.max(...baselineResults.map(b => b.payoffMonths)) : 0;
   const buildInvalidResult = (failureReason: PayoffFailureReason): MultiDebtResult => {
-    const invalidDebtResults: DebtPayoffResult[] = debts.map((debt) => {
+    const invalidDebtResults: DebtPayoffResult[] = safeDebts.map((debt) => {
       const baseline = baselineResults.find(b => b.id === debt.id)!;
       return {
         id: debt.id,
@@ -550,7 +559,7 @@ export function simulateMultiDebt(
     };
   };
 
-  const underInterestDebt = debts.find((debt) => {
+  const underInterestDebt = safeDebts.find((debt) => {
     const monthlyInterest = debt.balance * debt.apr / 12;
     return debt.balance > 0.01 && debt.monthlyPayment <= monthlyInterest;
   });
@@ -567,22 +576,22 @@ export function simulateMultiDebt(
     return buildInvalidResult('payment-below-interest');
   }
 
-  if (strategy === 'velocity' && loc) {
-    if (loc.limit <= 0) {
+  if (strategy === 'velocity' && safeLoc) {
+    if (safeLoc.limit <= 0) {
       return buildInvalidResult('loc-setup');
     }
 
-    if (loc.balance > loc.limit) {
+    if (safeLoc.balance > safeLoc.limit) {
       return buildInvalidResult('loc-overlimit');
     }
 
-    if (loc.balance === loc.limit) {
+    if (safeLoc.balance === safeLoc.limit) {
       return buildInvalidResult('loc-no-capacity');
     }
   }
 
   // Sort debts based on strategy
-  const sortedDebts = [...debts];
+  const sortedDebts = [...safeDebts];
   if (strategy === 'snowball') {
     sortedDebts.sort((a, b) => a.balance - b.balance);
   } else {
@@ -596,26 +605,26 @@ export function simulateMultiDebt(
   const monthlyDetails = new Map<string, { month: number; balance: number; interestPaid: number; principalPaid: number }[]>();
   const payoffMonths = new Map<string, number>();
 
-  for (const d of debts) {
+  for (const d of safeDebts) {
     balances.set(d.id, d.balance);
     interestPaid.set(d.id, 0);
     monthlyDetails.set(d.id, []);
     payoffMonths.set(d.id, 0);
   }
 
-  let locBalance = loc?.balance ?? 0;
+  let locBalance = safeLoc?.balance ?? 0;
   let locInterestPaid = 0;
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
   let month = 0;
   let monthsSinceChunk = 999; // allow first chunk immediately
   const effectiveChunk = Math.max(
     0,
-    chunkAmount ?? Math.min(Math.max(0, cashFlow) * 3, (loc?.limit ?? 0) * 0.4)
+    safeChunkAmount ?? Math.min(Math.max(0, cashFlow) * 3, (safeLoc?.limit ?? 0) * 0.4)
   );
 
   while (month < 600) {
     const allPaidOff = sortedDebts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
-    const hasOutstandingVelocityLoc = strategy === 'velocity' && !!loc && locBalance > 0.01;
+    const hasOutstandingVelocityLoc = strategy === 'velocity' && !!safeLoc && locBalance > 0.01;
     if (allPaidOff && !hasOutstandingVelocityLoc) break;
 
     month++;
@@ -627,7 +636,7 @@ export function simulateMultiDebt(
     const focusDebt = sortedDebts.find(d => (balances.get(d.id) ?? 0) > 0.01);
 
     // Process each debt
-    for (const d of debts) {
+    for (const d of safeDebts) {
       const bal = balances.get(d.id) ?? 0;
       if (bal <= 0.01) {
         // Already paid off — freed payment goes to surplus
@@ -635,10 +644,10 @@ export function simulateMultiDebt(
         continue;
       }
 
-      if (strategy === 'velocity' && loc && focusDebt && d.id === focusDebt.id && cashFlow > 0) {
+      if (strategy === 'velocity' && safeLoc && focusDebt && d.id === focusDebt.id && cashFlow > 0) {
         const focusInterest = bal * d.apr / 12;
         const focusPayment = Math.min(d.monthlyPayment + surplus + freedPayments, bal + focusInterest);
-        const otherActivePayments = debts.reduce((sum, otherDebt) => {
+        const otherActivePayments = safeDebts.reduce((sum, otherDebt) => {
           if (otherDebt.id === d.id) return sum;
           const otherBalance = balances.get(otherDebt.id) ?? 0;
           if (otherBalance <= 0.01) return sum;
@@ -653,12 +662,12 @@ export function simulateMultiDebt(
           debtBalance: bal,
           debtApr: d.apr,
           debtPayment: focusPayment,
-          loc,
+          loc: safeLoc,
           locBalance,
           chunkAmount: effectiveChunk,
           cashFlowPaydown: locCashFlowPaydown,
-          locDepositAmount: monthlyIncome,
-          locExpenseAmount: monthlyExpenses + focusPayment + otherActivePayments,
+          locDepositAmount: safeMonthlyIncome,
+          locExpenseAmount: safeMonthlyExpenses + focusPayment + otherActivePayments,
           monthsSinceChunk,
         });
 
@@ -720,15 +729,15 @@ export function simulateMultiDebt(
     }
 
     // LOC: ADB interest + cash flow paydown (for velocity)
-    if (strategy === 'velocity' && loc && locBalance > 0 && !usedMoneyLoopThisMonth) {
-      const locInterest = calculateADBInterest(locBalance, loc.apr, monthlyIncome, monthlyExpenses);
+    if (strategy === 'velocity' && safeLoc && locBalance > 0 && !usedMoneyLoopThisMonth) {
+      const locInterest = calculateADBInterest(locBalance, safeLoc.apr, safeMonthlyIncome, safeMonthlyExpenses);
       locInterestPaid += locInterest;
       locBalance = Math.max(0, locBalance - cashFlow + locInterest);
     }
   }
 
   // Compile results
-  const debtResults: DebtPayoffResult[] = debts.map(d => {
+  const debtResults: DebtPayoffResult[] = safeDebts.map(d => {
     const baseline = baselineResults.find(b => b.id === d.id)!;
     const totalInt = interestPaid.get(d.id) ?? 0;
     return {
