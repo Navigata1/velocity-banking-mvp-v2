@@ -259,7 +259,8 @@ function buildSplitExtraAllocations(
 }
 
 function formatPercent(apr: number): string {
-  const percent = Number.isFinite(apr) ? apr * 100 : 0;
+  const normalizedApr = Number.isFinite(apr) ? (apr > 1 ? apr / 100 : apr) : 0;
+  const percent = normalizedApr * 100;
   return `${percent.toFixed(percent >= 10 ? 1 : 2)}%`;
 }
 

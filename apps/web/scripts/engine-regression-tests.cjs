@@ -3126,6 +3126,38 @@ test('portfolio simulation explains each debt priority with money-loop rationale
   assert.ok(rationale.points.some((point) => point.includes('LOC utilization')), rationale.points.join(' | '));
 });
 
+test('portfolio debt rationales display whole-percent APR inputs as percentages, not multipliers', () => {
+  const result = portfolio.simulatePortfolio({
+    monthlyIncome: 5000,
+    monthlyExpenses: 3500,
+    extraMonthlyPayment: 0,
+    debts: [
+      {
+        id: 'whole-percent-card',
+        name: 'Whole Percent Card',
+        category: 'credit_card',
+        kind: 'revolving',
+        balance: 5000,
+        apr: 6.5,
+        minPaymentRule: { type: 'fixed', amount: 150 },
+        paymentSource: 'checking',
+      },
+    ],
+    settings: {
+      strategy: 'velocity',
+      focusMode: 'single',
+      splitRatioPrimary: 0.7,
+    },
+    maxMonths: 1,
+  });
+
+  const rationale = result.debtRationales['whole-percent-card'];
+  const displayText = [rationale.summary, ...rationale.points, ...result.warnings].join(' | ');
+
+  assert.ok(displayText.includes('6.50% APR'), displayText);
+  assert.ok(!displayText.includes('650.0%'), displayText);
+});
+
 test('portfolio debt rationales do not leak non-finite display values', () => {
   const result = portfolio.simulatePortfolio({
     monthlyIncome: 5000,
