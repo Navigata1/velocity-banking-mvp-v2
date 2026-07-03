@@ -403,7 +403,7 @@ const lessons: Lesson[] = [
     content: [
       'While the Money Loop handles the LOC efficiently, the Chunk Strategy is where principal reduction becomes visible. A "chunk" is a large lump-sum payment from your LOC directly to your primary amortized debt\'s principal. Treat it as a planning move that needs enough cash flow to recover the LOC safely.',
       'Here\'s how it works in the model: as income and planned expenses cycle through the Money Loop, positive cash flow can gradually pay down the LOC. When the LOC balance drops enough to leave meaningful headroom, the plan can test a chunk. For example, if a $15,000 LOC has been paid down to $5,000 through income cycling, the model has $10,000 of available credit to evaluate. A planner might test an $8,000 chunk to mortgage principal only if the recovery path and buffer still look healthy.',
-      'The impact of a chunk on amortized debt depends on timing and rate. In one sample $200,000 mortgage at 6% interest, a $3,000 chunk payment in year 3 saves approximately $6,400 in interest over the life of the loan and removes roughly 4 months from the end of the term. Why? Because every dollar of principal reduction means less interest is calculated at the next payment — and that compounds for the remaining 27 years.',
+      'The impact of a chunk on amortized debt depends on timing and rate. In one sample $200,000 mortgage at 6% interest, a $3,000 chunk payment in year 3 is modeled to reduce lifetime interest by approximately $6,400 and remove roughly 4 months from the end of the term. Why? Because every modeled dollar of principal reduction means less interest is calculated at the next payment — and that timing difference can extend across the remaining 27 years.',
       'The cycle can repeat in the model: after the chunk, the LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with positive cash flow. When there is enough room, the plan can evaluate another chunk. Each cycle can improve the timeline when the chunk size, LOC recovery time, and interest spread remain healthy.',
     ],
     keyTakeaway: 'Chunks are large lump-sum payments toward principal using LOC credit. A sample $3,000 chunk may save more than the chunk amount in interest, but only when the debt rate, LOC cost, timing, and recovery plan support it.',
@@ -649,7 +649,7 @@ function MoneyLoopViz() {
         transition={{ delay: 1.8 }}
         className="w-full text-center mt-3"
       >
-        <span className="text-xs text-blue-400/70 italic">↻ Cycle repeats every pay period</span>
+        <span className="text-xs text-blue-400/70 italic">↻ Model can repeat each pay period</span>
       </motion.div>
     </div>
   );
