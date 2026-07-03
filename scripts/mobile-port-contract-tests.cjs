@@ -876,8 +876,12 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes("Reset could not save locally"), 'expected mobile Settings reset to expose save-failure feedback');
   assert.ok(shellSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
   assert.ok(
+    shellSource.includes('six-collection schema plus RLS policy review'),
+    'expected mobile Supabase readiness to match the six-collection backend contract'
+  );
+  assert.ok(
     shellSource.includes('D1 owner-scoped records') &&
-      shellSource.includes('authenticated Worker snapshot API plus D1 owner indexes'),
+      shellSource.includes('authenticated Worker snapshot API plus D1 owner indexes for all owner tables'),
     'expected mobile Cloudflare readiness to match the web owner-scoped Worker/D1 gate'
   );
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');

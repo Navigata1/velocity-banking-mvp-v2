@@ -2443,8 +2443,16 @@ test('settings backend readiness model keeps provider choice explicit', () => {
   const cloudflare = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'cloudflare-workers-d1-durable-objects');
   assert.equal(supabase.lane, 'Recommended first persistence lane');
   assert.ok(
-    supabase.chooseWhen.includes('user-owned assumptions, plans, and simulation runs'),
+    supabase.chooseWhen.includes('user-owned assumptions, plans, simulation runs, learning progress, exports, and audit history'),
     'expected Supabase to be recommended first for user-owned financial data'
+  );
+  assert.ok(
+    supabase.bestFit.includes('export metadata') && supabase.bestFit.includes('audit events'),
+    'expected Supabase readiness to include export metadata and audit events'
+  );
+  assert.ok(
+    supabase.nextGate.includes('six-collection schema'),
+    'expected Supabase next gate to point to the full six-collection schema'
   );
   assert.equal(cloudflare.lane, 'Secondary edge/API lane');
   assert.ok(
@@ -2460,12 +2468,12 @@ test('settings backend readiness model keeps provider choice explicit', () => {
     'expected Cloudflare readiness to block D1 writes until auth tokens are verified'
   );
   assert.ok(
-    cloudflare.openGates.includes('D1 owner indexes'),
-    'expected Cloudflare readiness to require owner indexes before D1 migration'
+    cloudflare.openGates.includes('D1 owner indexes for all owner tables'),
+    'expected Cloudflare readiness to require owner indexes for all D1 owner tables before migration'
   );
   assert.ok(
-    cloudflare.nextGate.includes('authenticated Worker snapshot API'),
-    'expected Cloudflare next gate to name the authenticated Worker snapshot API'
+    cloudflare.nextGate.includes('authenticated Worker snapshot API') && cloudflare.nextGate.includes('six-table D1 owner contract'),
+    'expected Cloudflare next gate to name the authenticated Worker API and six-table D1 owner contract'
   );
   assert.ok(
     settingsBackend.BACKEND_STATUS_SUMMARY.nextGate.includes('auth/RLS or equivalent access rules'),
