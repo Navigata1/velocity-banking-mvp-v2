@@ -1965,6 +1965,21 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   );
 });
 
+test('portfolio page guards percent labels before display', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+
+  assert.ok(source.includes('function formatPortfolioPercentLabel(value: number): string'), 'expected Portfolio percent label helper');
+  assert.ok(source.includes("if (!Number.isFinite(value)) return 'Review inputs'"), 'expected Portfolio percent helper to reject non-finite values');
+  assert.ok(source.includes('formatPortfolioPercentLabel(d.minPaymentRule.percent)'), 'expected Portfolio percent minimum labels to use the helper');
+  assert.ok(source.includes('formatPortfolioPercentLabel(debt.promo.introApr)'), 'expected Portfolio promo intro labels to use the helper');
+  assert.ok(source.includes('formatPortfolioPercentLabel(debt.promo.postIntroApr)'), 'expected Portfolio promo post-intro labels to use the helper');
+  assert.ok(source.includes('formatPortfolioPercentLabel(1 - store.splitRatioPrimary)'), 'expected Portfolio split ratio text to use the helper');
+  assert.ok(!source.includes('Math.round(d.minPaymentRule.percent * 100)'), 'expected Portfolio not to format minimum percent labels directly');
+  assert.ok(!source.includes('Math.round(debt.promo.introApr * 100)'), 'expected Portfolio not to format promo intro labels directly');
+  assert.ok(!source.includes('Math.round(debt.promo.postIntroApr * 100)'), 'expected Portfolio not to format promo post-intro labels directly');
+  assert.ok(!source.includes('Math.round((1 - store.splitRatioPrimary) * 100)'), 'expected Portfolio not to format split ratio text directly');
+});
+
 test('portfolio strategy picker distinguishes planning default from fastest payoff', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
 

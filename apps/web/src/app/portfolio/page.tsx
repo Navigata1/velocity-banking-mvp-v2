@@ -68,6 +68,11 @@ function getMinPaymentValue(debt: DebtItem): number {
   return Math.max(debt.minPaymentRule.floor, debt.balance * debt.minPaymentRule.percent);
 }
 
+function formatPortfolioPercentLabel(value: number): string {
+  if (!Number.isFinite(value)) return 'Review inputs';
+  return `${Math.round(value * 100)}%`;
+}
+
 const ALL_CATEGORIES: DebtItem['category'][] = [
   'mortgage', 'auto', 'credit_card', 'student_loan', 'personal_loan', 'medical', 'land', 'purchase_plan', 'custom',
 ];
@@ -205,7 +210,7 @@ export default function PortfolioPage() {
       <div>
         <p className={`${classes.textSecondary} text-sm font-mono`}>{formatCurrency(getMinPaymentValue(d))}</p>
         <p className={`${classes.textMuted} text-[11px]`}>
-          {Math.round(d.minPaymentRule.percent * 100)}% floor {formatCurrency(d.minPaymentRule.floor)}
+          {formatPortfolioPercentLabel(d.minPaymentRule.percent)} floor {formatCurrency(d.minPaymentRule.floor)}
         </p>
       </div>
     )
@@ -230,10 +235,10 @@ export default function PortfolioPage() {
     debt.promo ? (
       <div>
         <p className="text-emerald-300 text-xs font-semibold">
-          {Math.round(debt.promo.introApr * 100)}% for {debt.promo.monthsRemaining} mo
+          {formatPortfolioPercentLabel(debt.promo.introApr)} for {debt.promo.monthsRemaining} mo
         </p>
         <p className={`${classes.textMuted} text-[11px]`}>
-          Then {Math.round(debt.promo.postIntroApr * 100)}%
+          Then {formatPortfolioPercentLabel(debt.promo.postIntroApr)}
         </p>
       </div>
     ) : (
@@ -443,7 +448,7 @@ export default function PortfolioPage() {
                             ariaLabel="Portfolio primary target share"
                           />
                           <p className={`${classes.textSecondary} text-[11px] mt-1`}>
-                            Secondary target receives {Math.round((1 - store.splitRatioPrimary) * 100)}%.
+                            Secondary target receives {formatPortfolioPercentLabel(1 - store.splitRatioPrimary)}.
                           </p>
                         </div>
                       )}
@@ -767,7 +772,7 @@ export default function PortfolioPage() {
                           <div>
                             <p className={`${classes.textSecondary} text-xs`}>{formatCurrency(getMinPaymentValue(d))}</p>
                             <p className={`${classes.textMuted} text-[11px]`}>
-                              {Math.round(d.minPaymentRule.percent * 100)}% • floor {formatCurrency(d.minPaymentRule.floor)}
+                              {formatPortfolioPercentLabel(d.minPaymentRule.percent)} • floor {formatCurrency(d.minPaymentRule.floor)}
                             </p>
                           </div>
                         )}
@@ -779,10 +784,10 @@ export default function PortfolioPage() {
                         {d.promo ? (
                           <div>
                             <p className="text-emerald-300 text-xs font-semibold">
-                              {Math.round(d.promo.introApr * 100)}% for {d.promo.monthsRemaining} mo
+                              {formatPortfolioPercentLabel(d.promo.introApr)} for {d.promo.monthsRemaining} mo
                             </p>
                             <p className={`${classes.textMuted} text-[11px]`}>
-                              Then {Math.round(d.promo.postIntroApr * 100)}%
+                              Then {formatPortfolioPercentLabel(d.promo.postIntroApr)}
                             </p>
                           </div>
                         ) : (
