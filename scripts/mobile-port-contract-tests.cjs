@@ -509,6 +509,14 @@ test('shared financial engine matches current web engine on core fixtures', () =
     webEngine.calculateADBInterest(3200, 0.085, 7000, 4500).toFixed(2)
   );
   assert.equal(
+    sharedEngine.calculateADBInterest(3200, 8.5, 7000, 4500).toFixed(2),
+    sharedEngine.calculateADBInterest(3200, 0.085, 7000, 4500).toFixed(2)
+  );
+  assert.equal(
+    webEngine.calculateADBInterest(3200, 8.5, 7000, 4500).toFixed(2),
+    webEngine.calculateADBInterest(3200, 0.085, 7000, 4500).toFixed(2)
+  );
+  assert.equal(
     sharedEngine.calculateDailyInterest(18450, 0.069).toFixed(2),
     webEngine.calculateDailyInterest(18450, 0.069).toFixed(2)
   );
