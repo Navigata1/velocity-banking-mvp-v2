@@ -134,6 +134,12 @@ export function buildSimulatorVisualPercent(value: number, maxValue = 100): numb
   return Math.min(100, Math.max(0, (value / maxValue) * 100));
 }
 
+export function formatSimulatorPercentLabel(value: number, decimals = 0): string {
+  if (!Number.isFinite(value)) return 'Review inputs';
+  const safeDecimals = Number.isFinite(decimals) ? Math.min(2, Math.max(0, Math.round(decimals))) : 0;
+  return `${value.toFixed(safeDecimals)}%`;
+}
+
 export function buildSimulatorStrategyCards(strategies: SingleDebtStrategyResult[]): SimulatorStrategyCard[] {
   return strategies.map((strategy) => {
     const isPayoffPossible = strategy.isPayoffPossible !== false && strategy.months > 0;

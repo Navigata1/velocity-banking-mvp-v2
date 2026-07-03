@@ -4326,6 +4326,10 @@ test('simulator visual percentages clamp payment split widths', () => {
   assert.equal(simulatorModel.buildSimulatorVisualPercent(Number.NaN), 0);
   assert.equal(simulatorModel.buildSimulatorVisualPercent(50, 0), 0);
   assert.equal(simulatorModel.buildSimulatorVisualPercent(50, Number.POSITIVE_INFINITY), 0);
+  assert.equal(simulatorModel.formatSimulatorPercentLabel(43.4), '43%');
+  assert.equal(simulatorModel.formatSimulatorPercentLabel(43.45, 1), '43.5%');
+  assert.equal(simulatorModel.formatSimulatorPercentLabel(Number.NaN), 'Review inputs');
+  assert.equal(simulatorModel.formatSimulatorPercentLabel(Number.POSITIVE_INFINITY, 1), 'Review inputs');
 
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
   assert.ok(
@@ -4341,6 +4345,12 @@ test('simulator visual percentages clamp payment split widths', () => {
       !source.includes('style={{ width: `${analysis.principalPercentOfPayment}%` }}'),
     'expected Simulator payment split bars not to use raw percentage widths'
   );
+  assert.ok(source.includes('formatSimulatorPercentLabel(analysis.interestPercentOfPayment)'), 'expected Simulator interest text to use safe percent labels');
+  assert.ok(source.includes('formatSimulatorPercentLabel(analysis.principalPercentOfPayment)'), 'expected Simulator principal text to use safe percent labels');
+  assert.ok(source.includes('formatSimulatorPercentLabel(analysis.equityPercent, 1)'), 'expected Simulator equity text to use safe percent labels');
+  assert.ok(!source.includes('analysis.interestPercentOfPayment.toFixed'), 'expected Simulator not to format interest percent directly');
+  assert.ok(!source.includes('analysis.principalPercentOfPayment.toFixed'), 'expected Simulator not to format principal percent directly');
+  assert.ok(!source.includes('analysis.equityPercent.toFixed'), 'expected Simulator not to format equity percent directly');
 });
 
 test('strategy glass copy does not label faster-but-costlier paths as interest savings', () => {
@@ -4912,6 +4922,13 @@ test('vault visual percentages clamp invalid and over-range values', () => {
   assert.equal(vaultModel.buildVaultVisualPercent(Number.NaN), 0);
   assert.equal(vaultModel.buildVaultVisualPercent(50, 0), 0);
   assert.equal(vaultModel.buildVaultVisualPercent(50, Number.POSITIVE_INFINITY), 0);
+  assert.equal(vaultModel.formatVaultPercentLabel(43.4), '43%');
+  assert.equal(vaultModel.formatVaultPercentLabel(43.45, 1), '43.5%');
+  assert.equal(vaultModel.formatVaultPercentLabel(Number.NaN), 'Review inputs');
+  assert.equal(vaultModel.formatVaultPercentLabel(Number.POSITIVE_INFINITY, 1), 'Review inputs');
+  assert.equal(vaultModel.formatVaultYearsLabel(4.25), '4.3 years');
+  assert.equal(vaultModel.formatVaultYearsLabel(Number.NaN), 'Review inputs');
+  assert.equal(vaultModel.formatVaultYearsLabel(-1), 'Review inputs');
 
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
   assert.ok(source.includes('const width = buildVaultVisualPercent(progress)'), 'expected Vault progress bars to clamp visual progress');
@@ -4929,6 +4946,14 @@ test('vault visual percentages clamp invalid and over-range values', () => {
     source.includes('buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)'),
     'expected Vault freedom timeline to clamp visual percent'
   );
+  assert.ok(source.includes('formatVaultPercentLabel(analysis.interestPercentOfPayment)'), 'expected Vault interest text to use safe percent labels');
+  assert.ok(source.includes('formatVaultPercentLabel(analysis.principalPercentOfPayment)'), 'expected Vault principal text to use safe percent labels');
+  assert.ok(source.includes('formatVaultPercentLabel(history.equityPercent, 1)'), 'expected Vault equity text to use safe percent labels');
+  assert.ok(source.includes('formatVaultYearsLabel(history.yearsInMortgage)'), 'expected Vault year text to use safe year labels');
+  assert.ok(source.includes('formatVaultPercentLabel(investmentRate * 100)'), 'expected Vault investment-rate text to use safe percent labels');
+  assert.ok(!source.includes('analysis.interestPercentOfPayment.toFixed'), 'expected Vault not to format interest percent directly');
+  assert.ok(!source.includes('analysis.principalPercentOfPayment.toFixed'), 'expected Vault not to format principal percent directly');
+  assert.ok(!source.includes('history.equityPercent.toFixed'), 'expected Vault not to format equity percent directly');
   assert.ok(!source.includes('Math.min(progress, 100)'), 'expected Vault progress bars not to use one-sided clamping');
 });
 

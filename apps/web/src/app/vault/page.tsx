@@ -14,11 +14,13 @@ import {
   buildVaultFreedomPathModel,
   buildVaultVelocitySetupWarning,
   buildVaultVisualPercent,
+  formatVaultPercentLabel,
   formatVaultProjectionFailure,
   formatVaultStrategyInterest,
   formatVaultStrategyMonths,
   formatVaultStrategySavings,
   formatVaultStrategyTimeDelta,
+  formatVaultYearsLabel,
 } from '@/app/vault-model';
 import {
   calculateMortgageAnalysis,
@@ -304,8 +306,8 @@ export default function VaultPage() {
                 <div className="bg-emerald-500 transition-all duration-1000" style={{ width: `${buildVaultVisualPercent(analysis.principalPercentOfPayment)}%` }} />
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-red-400">🏦 Interest: {analysis.interestPercentOfPayment.toFixed(0)}%</span>
-                <span className="text-emerald-400">🏠 Your Equity: {analysis.principalPercentOfPayment.toFixed(0)}%</span>
+                <span className="text-red-400">🏦 Interest: {formatVaultPercentLabel(analysis.interestPercentOfPayment)}</span>
+                <span className="text-emerald-400">🏠 Your Equity: {formatVaultPercentLabel(analysis.principalPercentOfPayment)}</span>
               </div>
             </div>
 
@@ -370,7 +372,7 @@ export default function VaultPage() {
             {/* Your progress so far */}
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 text-center space-y-3">
               <p className={classes.textSecondary}>
-                You&apos;ve been paying for <span className="text-white font-bold">{history.yearsInMortgage.toFixed(1)} years</span>
+                You&apos;ve been paying for <span className="text-white font-bold">{formatVaultYearsLabel(history.yearsInMortgage)}</span>
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -391,11 +393,11 @@ export default function VaultPage() {
             <div>
               <div className="flex justify-between text-sm mb-2">
                 <span className={classes.textSecondary}>Equity Built</span>
-                <span className="text-emerald-400 font-bold">{history.equityPercent.toFixed(1)}%</span>
+                <span className="text-emerald-400 font-bold">{formatVaultPercentLabel(history.equityPercent, 1)}</span>
               </div>
               <ProgressBar progress={history.equityPercent} color="emerald" />
               <p className={`text-xs ${classes.textMuted} mt-1 text-center`}>
-                After {history.yearsInMortgage.toFixed(1)} years of payments, you own {history.equityPercent.toFixed(1)}% of your home
+                After {formatVaultYearsLabel(history.yearsInMortgage)} of payments, you own {formatVaultPercentLabel(history.equityPercent, 1)} of your home
               </p>
             </div>
           </div>
@@ -533,7 +535,7 @@ export default function VaultPage() {
             </div>
 
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 text-center">
-              <div className={`${classes.textSecondary} mb-2`}>If invested instead (50 years @ {(investmentRate * 100).toFixed(0)}%)</div>
+              <div className={`${classes.textSecondary} mb-2`}>If invested instead (50 years @ {formatVaultPercentLabel(investmentRate * 100)})</div>
               <div className="text-4xl font-bold text-amber-500">
                 <CountUp value={generationalFutureValue} />
               </div>

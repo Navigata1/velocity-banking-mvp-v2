@@ -17,6 +17,7 @@ import {
   buildSimulatorTimelineStatus,
   buildSimulatorVisualPercent,
   buildSimulatorWarnings,
+  formatSimulatorPercentLabel,
 } from '@/app/simulator-model';
 
 export default function SimulatorPage() {
@@ -397,12 +398,12 @@ export default function SimulatorPage() {
                         <div className="bg-emerald-500" style={{ width: `${buildSimulatorVisualPercent(analysis.principalPercentOfPayment)}%` }} />
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-red-400">Interest: {analysis.interestPercentOfPayment.toFixed(0)}%</span>
-                        <span className="text-emerald-400">Principal: {analysis.principalPercentOfPayment.toFixed(0)}%</span>
+                        <span className="text-red-400">Interest: {formatSimulatorPercentLabel(analysis.interestPercentOfPayment)}</span>
+                        <span className="text-emerald-400">Principal: {formatSimulatorPercentLabel(analysis.principalPercentOfPayment)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className={classes.textSecondary}>Equity Built</span>
-                        <span className="text-emerald-400 font-medium">{analysis.equityPercent.toFixed(1)}%</span>
+                        <span className="text-emerald-400 font-medium">{formatSimulatorPercentLabel(analysis.equityPercent, 1)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className={classes.textSecondary}>Total Lifetime Interest</span>
