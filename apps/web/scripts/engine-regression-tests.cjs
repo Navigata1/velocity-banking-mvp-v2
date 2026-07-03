@@ -287,6 +287,8 @@ test('LOC ADB interest uses daily closing balances across web and shared engines
   const expectedInterest = ((1116.6666666667 + 4500) / 2) * (0.12 / 365) * 30;
   const webInterest = calculations.calculateADBInterest(5000, 0.12, 4000, 3500, 30);
   const sharedInterest = sharedFinancialEngine.calculateADBInterest(5000, 0.12, 4000, 3500, 30);
+  const webWholePercentInterest = calculations.calculateADBInterest(5000, 12, 4000, 3500, 30);
+  const sharedWholePercentInterest = sharedFinancialEngine.calculateADBInterest(5000, 12, 4000, 3500, 30);
   const month = moneyLoop.simulateMoneyLoopMonth({
     month: 1,
     debtBalance: 0,
@@ -309,6 +311,8 @@ test('LOC ADB interest uses daily closing balances across web and shared engines
   assert.equal(roundCents(expectedInterest), 27.7);
   assert.equal(roundCents(webInterest), 27.7);
   assert.equal(roundCents(sharedInterest), 27.7);
+  assert.equal(roundCents(webWholePercentInterest), 27.7);
+  assert.equal(roundCents(sharedWholePercentInterest), 27.7);
   assert.ok(locInterestEvent, 'expected Money Loop month to expose LOC interest event');
   assert.equal(roundCents(locInterestEvent.amount), 27.7);
 });

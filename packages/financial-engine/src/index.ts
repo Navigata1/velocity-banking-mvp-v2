@@ -315,6 +315,11 @@ function finiteNonNegative(value: number): number {
   return Math.max(0, finiteNumber(value));
 }
 
+function normalizeApr(apr: number): number {
+  const safeApr = finiteNumber(apr);
+  return safeApr > 1 ? safeApr / 100 : safeApr;
+}
+
 function clampLoopPressure(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 8;
   return Math.min(100, Math.max(8, Math.round(value * 100)));
@@ -356,8 +361,7 @@ export function calculateDailyRate(apr: number): number {
 }
 
 export function calculateDailyInterest(balance: number, apr: number): number {
-  const safeApr = finiteNumber(apr);
-  const normalizedApr = safeApr > 1 ? safeApr / 100 : safeApr;
+  const normalizedApr = normalizeApr(apr);
   return finiteNonNegative(balance) * calculateDailyRate(finiteNonNegative(normalizedApr));
 }
 
@@ -445,7 +449,7 @@ export function calculateADBInterest(
   }
 
   const averageDailyBalance = totalDailyBalance / dayCount;
-  const dailyRate = finiteNonNegative(apr) / 365;
+  const dailyRate = finiteNonNegative(normalizeApr(apr)) / 365;
 
   return averageDailyBalance * dailyRate * dayCount;
 }
