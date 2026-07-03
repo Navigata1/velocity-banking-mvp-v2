@@ -178,6 +178,18 @@ export function buildVaultVisualPercent(value: number, maxValue = 100): number {
   return Math.min(100, Math.max(0, (value / maxValue) * 100));
 }
 
+export function formatVaultPercentLabel(value: number, decimals = 0): string {
+  if (!Number.isFinite(value)) return 'Review inputs';
+  const safeDecimals = Number.isFinite(decimals) ? Math.min(2, Math.max(0, Math.round(decimals))) : 0;
+  return `${value.toFixed(safeDecimals)}%`;
+}
+
+export function formatVaultYearsLabel(value: number, decimals = 1): string {
+  if (!Number.isFinite(value) || value < 0) return 'Review inputs';
+  const safeDecimals = Number.isFinite(decimals) ? Math.min(2, Math.max(0, Math.round(decimals))) : 1;
+  return `${value.toFixed(safeDecimals)} years`;
+}
+
 export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultFreedomPathModel {
   const standardYears = Number.isFinite(input.standardMonths) && input.standardMonths > 0
     ? Math.ceil(input.standardMonths / 12)
@@ -234,6 +246,6 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
     timelineLabel: 'Velocity path projected',
     standardAgeLabel: `Age ${safeCurrentAge + standardYears}`,
     velocityAgeLabel: `Free at ${safeCurrentAge + velocityYears}`,
-    investmentCaption: `By investing your freed ${formatCurrency(input.monthlyPayment)}/mo for ${freedYears} years @ ${(input.investmentRate * 100).toFixed(0)}% return`,
+    investmentCaption: `By investing your freed ${formatCurrency(input.monthlyPayment)}/mo for ${freedYears} years @ ${formatVaultPercentLabel(input.investmentRate * 100)} return`,
   };
 }
