@@ -5543,6 +5543,11 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
     "isn't magic",
     "it's not free money",
     'every day costs you',
+    'exploiting the difference',
+    'money loop exploits',
+    'exploits this front-loading',
+    'every single month',
+    'dramatically different interest charges',
     'works double-duty',
     'double duty',
     'powerful cycle',
@@ -5560,6 +5565,16 @@ test('learn and dashboard LOC copy avoids hype and fear phrasing', () => {
   assert.ok(
     dashboardSource.includes('available credit is capacity, not income'),
     'expected Dashboard LOC copy to frame available credit as capacity'
+  );
+});
+
+test('simulator comparison copy labels traditional as a baseline instead of an absolute rule', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8').toLowerCase();
+
+  assert.ok(!source.includes('traditional is always 100%'), 'expected Simulator copy not to use always-language for the baseline');
+  assert.ok(
+    source.includes('traditional is the baseline at 100%'),
+    'expected Simulator copy to frame Traditional as the comparison baseline'
   );
 });
 
@@ -6480,6 +6495,7 @@ test('dashboard home page exposes a compact mobile Money Loop bridge', () => {
     'expected the mobile bridge chips to reuse the dashboard artifact model'
   );
   assert.ok(source.includes('min-h-[46px]'), 'expected mobile Money Loop chips to stay compact');
+  assert.ok(!source.includes('mt-0.5 truncate text-[10px]'), 'expected compact mobile chip labels to wrap instead of truncate');
   assert.ok(source.includes('<p className={`sr-only`}>{artifact.signal}</p>'), 'expected compact mobile chips to keep artifact signals available to assistive technology');
   assert.ok(
     source.includes('data-testid={`dashboard-mobile-loop-chip-${artifact.id}`}'),
