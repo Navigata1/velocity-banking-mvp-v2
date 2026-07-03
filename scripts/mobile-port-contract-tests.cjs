@@ -688,6 +688,22 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
   );
 });
 
+test('native dashboard renders the four vitals before coach or review cards', () => {
+  const source = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const dashboardPanelStart = source.indexOf('function DashboardPanel');
+  const simulatorPanelStart = source.indexOf('function SimulatorStrategyPanel');
+  const dashboardPanel = source.slice(dashboardPanelStart, simulatorPanelStart);
+  const vitalsIndex = dashboardPanel.indexOf('snapshot.vitals.map');
+  const reviewIndex = dashboardPanel.indexOf('Review Before Modeling');
+  const coachIndex = dashboardPanel.indexOf('Coach Note');
+
+  assert.ok(dashboardPanelStart >= 0 && simulatorPanelStart > dashboardPanelStart, 'expected to isolate the native DashboardPanel source');
+  assert.ok(vitalsIndex >= 0, 'expected native DashboardPanel to render snapshot vitals');
+  assert.ok(reviewIndex > vitalsIndex, 'expected review guardrail card after the four vitals');
+  assert.ok(coachIndex > vitalsIndex, 'expected coach note after the four vitals');
+  assert.ok(!dashboardPanel.includes('title="Next Move"'), 'expected native DashboardPanel not to duplicate Next Move outside the four vitals');
+});
+
 test('shared mobile default assumptions start with the verified web demo Money Loop', () => {
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
   const webStoreSource = fs.readFileSync(path.join(repoRoot, 'apps/web/src/stores/financial-store.ts'), 'utf8');

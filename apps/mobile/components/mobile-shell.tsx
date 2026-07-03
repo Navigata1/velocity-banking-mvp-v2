@@ -818,15 +818,15 @@ function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapshot }) {
 function DashboardPanel({ snapshot }: { snapshot: MobileDashboardSnapshot }) {
   return (
     <View style={{ gap: 12 }}>
-      {snapshot.warning ? (
-        <FinancialCard title="Review Before Modeling" value={snapshot.nextMove} detail={snapshot.warning} />
-      ) : (
-        <FinancialCard title="Next Move" value={snapshot.nextMove} detail="Educational estimate. Not financial advice." />
-      )}
-
       {snapshot.vitals.map((vital) => (
         <FinancialCard key={vital.label} title={vital.label} value={vital.value} detail={vital.detail} />
       ))}
+
+      {snapshot.warning ? (
+        <FinancialCard title="Review Before Modeling" value={snapshot.nextMove} detail={snapshot.warning} />
+      ) : (
+        <FinancialCard title="Coach Note" value={snapshot.nextMove} detail="Educational estimate. Not financial advice." />
+      )}
 
       <FinancialCard title="Money Loop">
         <View style={{ gap: 12 }}>
