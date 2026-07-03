@@ -84,9 +84,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['how velocity works', 'explain velocity', 'velocity banking work'],
     question: 'How does velocity banking work step by step?',
     answers: [
-      '1) Deposit paycheck into LOC, 2) Pay bills from LOC, 3) Your positive cash flow lowers average LOC balance, 4) Make "chunk" payments to main debt.',
-      'Income goes into LOC (reducing balance) → Bills paid from LOC → Surplus accumulates → Chunk payment to primary debt → Repeat.',
-      'The loop: Paycheck drops LOC balance → You pay bills gradually → Average daily balance stays low → Interest minimized → Chunk attacks debt.'
+      'In the model: 1) income can enter the LOC when real account terms support it, 2) planned expenses draw back out, 3) positive cash flow can lower the average LOC balance, 4) a tested chunk may target principal if recovery and buffer stay healthy.',
+      'Modeled flow: income reduces LOC balance → planned expenses clear → surplus supports LOC recovery → a chunk can be evaluated for primary debt → repeat only when the assumptions still hold.',
+      'The loop is a planning model: income timing may lower average daily balance, planned bills still need coverage, LOC interest is estimated, and chunks are tested before being trusted.'
     ]
   },
   {
@@ -112,8 +112,8 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What are the benefits of velocity banking?',
     answers: [
       'Potentially faster debt payoff, less total interest paid, and stronger financial awareness when the assumptions hold. Your timeline depends on your balance, rates, cash flow, fees, and consistency.',
-      'Benefits: reduces interest, accelerates payoff, creates a system for your money, and helps develop financial discipline.',
-      'The main benefit is using your cash flow more efficiently - making your money work harder against debt instead of sitting idle.'
+      'Potential benefits include clearer cash-flow awareness, a structured debt plan, and modeled interest reduction when LOC costs, fees, timing, and recovery assumptions support it.',
+      'The main benefit is testing whether cash flow can be used more intentionally against debt without weakening the emergency buffer.'
     ]
   },
   {
@@ -122,7 +122,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Requires discipline, more active money management, and if you overspend on the LOC, you can make things worse.',
       'Complexity is a downside - it\'s more work than autopay minimum payments. Some people prefer set-it-and-forget-it.',
-      'If you lose income or have an emergency, having your LOC heavily utilized can be stressful. Always maintain a buffer.'
+      'If you lose income or have an emergency, having your LOC heavily utilized can be stressful. Keep a buffer visible before trusting modeled chunks.'
     ]
   },
   {
@@ -196,9 +196,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['interest timing', 'when interest', 'timing matters'],
     question: 'Why does interest timing matter?',
     answers: [
-      'Interest is calculated on your average daily balance. By reducing that average, you pay less interest over time.',
-      'Depositing income immediately lowers your balance for more days, reducing the average and saving money.',
-      'The earlier in the month you reduce your balance, the more days of lower balance you get - meaning less interest.'
+      'LOC interest is often calculated from average daily balance. If a model lowers that average while bills still clear safely, estimated LOC interest can fall.',
+      'Income timing can lower a modeled LOC balance for more days only when the account terms, bill timing, and cash-flow plan support that routing.',
+      'Earlier balance reduction creates more modeled low-balance days, but fees, APR, repayment rules, and expense timing decide whether that helps.'
     ]
   },
   {
@@ -214,9 +214,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['reduce average balance', 'lower balance', 'decrease average'],
     question: 'How do I reduce my average daily balance?',
     answers: [
-      'Deposit income immediately when received. Pay bills at the last possible moment (within due dates). This keeps balance lower longer.',
-      'Front-load deposits, back-load expenses. Money in early, money out late = lower average daily balance.',
-      'Every day your balance is lower counts. Deposit paycheck on day 1, schedule bills for day 25 - maximize low-balance days.'
+      'Model income-to-LOC routing only if it matches real account terms and planned expense timing. The goal is lower average balance without missed bills, extra fees, or buffer strain.',
+      'Test the timing: earlier income, planned expense draws, LOC APR, fees, and repayment rules together determine whether the average daily balance improves.',
+      'Every modeled low-balance day can matter, but the plan should preserve due dates, emergency cash, and LOC headroom before treating the result as useful.'
     ]
   },
   {

@@ -5908,6 +5908,17 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
     'minimize interest and make larger "chunk" payments to your main debt faster',
     'when a chunk is ready, deploy it',
     'route income to the loc first',
+    'deposit paycheck into loc',
+    'pay bills from loc',
+    'bills paid from loc',
+    'interest minimized',
+    'chunk attacks debt',
+    'deposit income immediately when received',
+    'pay bills at the last possible moment',
+    'front-load deposits, back-load expenses',
+    'maximize low-balance days',
+    'benefits: reduces interest',
+    'always maintain a buffer',
     'works best when you can recover without abandoning the strategy',
   ];
 
@@ -5930,6 +5941,14 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
   assert.ok(
     fullGuardianCopy.includes('model income-to-loc routing only if it matches the real account terms and expense timing'),
     'expected Guardian LOC guidance to gate routing behind real account terms'
+  );
+  assert.ok(
+    answerBank.includes('the loop is a planning model'),
+    'expected Guardian step-by-step copy to frame Money Loop routing as a planning model'
+  );
+  assert.ok(
+    answerBank.includes('loc apr, fees, and repayment rules together determine whether the average daily balance improves'),
+    'expected Guardian ADB copy to include terms and fees before recommending timing changes'
   );
 });
 
