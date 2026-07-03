@@ -431,12 +431,12 @@ const lessons: Lesson[] = [
     color: 'green',
     simulatorFocus: 'overview',
     content: [
-      'Velocity banking is a math model, not a promise. The math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, the strategy cannot function.',
+      'Velocity banking is a math model, not a promise. The math works best under specific conditions. Understanding these conditions helps you set realistic expectations and avoid frustration. The single most important factor is positive cash flow. Without it, keep LOC-based payoff moves in review mode.',
       'Ideal conditions include: a LOC interest rate lower than your primary debt rate, consistent and predictable income, front-loaded amortized debt where early payments are interest-heavy, and financial discipline to avoid increasing spending as credit becomes available.',
       'If your LOC rate is close to or higher than the debt rate, do not assume the strategy works. The ADB benefit, chunk timing, fees, recovery window, and cash-flow stability all need to be modeled together before trusting the spread.',
       'When should you pause and review? If cash flow is negative (you\'re spending more than you earn), if your LOC rate is significantly higher than your debt rate with low cash flow, if spending discipline is not stable yet, or if your debt is already near the end of its amortization schedule (most payments are already going to principal, so chunks have less impact).',
     ],
-    keyTakeaway: 'Velocity banking works best with positive cash flow, a LOC rate lower than the target debt rate, front-loaded amortized debt, and spending discipline. It needs positive cash flow and spending control before payoff claims are trustworthy.',
+    keyTakeaway: 'Velocity banking models best with positive cash flow, a LOC rate lower than the target debt rate, front-loaded amortized debt, and spending discipline. It needs positive cash flow and spending control before payoff claims are trustworthy.',
     deepDive: 'Rate comparison nuance: A 10% LOC vs 6% mortgage might seem like a losing proposition. But remember — you\'re paying 10% on the average daily balance, and chunks may hit principal on a front-loaded amortization where early payments are interest-heavy. Run the numbers in the simulator with your actual rates, cash flow, fees, and payoff timing before assuming the spread works in your situation.',
     quiz: {
       question: 'Which of the following would make velocity banking LEAST effective?',
@@ -447,7 +447,7 @@ const lessons: Lesson[] = [
         'Having $300/month cash flow instead of $1,000',
       ],
       correctIndex: 1,
-      explanation: 'Negative cash flow means the LOC balance can grow instead of shrinking. The Money Loop requires positive cash flow before LOC use can create payoff progress.',
+      explanation: 'Negative cash flow means the LOC balance can grow instead of shrinking. Keep the Money Loop in review mode until positive cash flow can support payoff progress.',
     },
     investopediaUrl: 'https://www.investopedia.com/mortgage/heloc/',
     investopediaLabel: 'HELOC Guide — Investopedia',
