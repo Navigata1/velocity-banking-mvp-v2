@@ -3831,9 +3831,39 @@ test('portfolio live setters sanitize non-finite money inputs before recompute',
       apr: Number.NaN,
     });
     store.setSplitRatioPrimary(Number.NaN);
+    store.updateDebt(originalData.debts[0].id, {
+      category: 'not-real',
+      kind: 'not-real',
+      balance: Number.POSITIVE_INFINITY,
+      apr: Number.NaN,
+      minPaymentRule: {
+        type: 'percent',
+        percent: Number.NaN,
+        floor: Number.POSITIVE_INFINITY,
+      },
+      termMonths: Number.NaN,
+      paymentSource: 'nowhere',
+      promo: {
+        introApr: Number.NaN,
+        monthsRemaining: Number.POSITIVE_INFINITY,
+        postIntroApr: Number.NaN,
+      },
+    });
+    store.addDebt({
+      name: '',
+      category: 'not-real',
+      kind: 'not-real',
+      balance: Number.NaN,
+      apr: Number.POSITIVE_INFINITY,
+      minPaymentRule: { type: 'fixed', amount: Number.NaN },
+      termMonths: Number.NaN,
+      paymentSource: 'nowhere',
+    });
 
     const current = portfolioStore.usePortfolioStore.getState();
     const serialized = current.exportState();
+    const updatedDebt = current.debts.find((debt) => debt.id === originalData.debts[0].id);
+    const addedDebt = current.debts[current.debts.length - 1];
 
     assert.equal(current.monthlyIncome, originalData.monthlyIncome);
     assert.equal(current.monthlyExpenses, 0);
@@ -3843,6 +3873,27 @@ test('portfolio live setters sanitize non-finite money inputs before recompute',
     assert.equal(current.loc.balance, 0);
     assert.equal(current.loc.apr, originalData.loc.apr);
     assert.equal(current.splitRatioPrimary, originalData.splitRatioPrimary);
+    assert.ok(updatedDebt, 'expected updated debt to remain present');
+    assert.equal(updatedDebt.category, originalData.debts[0].category);
+    assert.equal(updatedDebt.kind, originalData.debts[0].kind);
+    assert.equal(updatedDebt.balance, originalData.debts[0].balance);
+    assert.equal(updatedDebt.apr, originalData.debts[0].apr);
+    assert.equal(updatedDebt.minPaymentRule.type, 'percent');
+    assert.equal(updatedDebt.minPaymentRule.percent, 0);
+    assert.equal(updatedDebt.minPaymentRule.floor, 0);
+    assert.equal(updatedDebt.termMonths, originalData.debts[0].termMonths);
+    assert.equal(updatedDebt.paymentSource, originalData.debts[0].paymentSource);
+    assert.equal(updatedDebt.promo.introApr, 0);
+    assert.equal(updatedDebt.promo.monthsRemaining, 0);
+    assert.equal(updatedDebt.promo.postIntroApr, originalData.debts[0].apr);
+    assert.equal(addedDebt.name, 'New Debt');
+    assert.equal(addedDebt.category, 'custom');
+    assert.equal(addedDebt.kind, 'amortized');
+    assert.equal(addedDebt.balance, 0);
+    assert.equal(addedDebt.apr, 0);
+    assert.equal(addedDebt.minPaymentRule.amount, 0);
+    assert.equal(addedDebt.termMonths, 1);
+    assert.equal(addedDebt.paymentSource, 'checking');
     assert.ok(!serialized.includes('NaN'), serialized);
     assert.ok(!serialized.includes('Infinity'), serialized);
   } finally {

@@ -211,6 +211,69 @@ function sanitizeImportedDebt(raw: unknown, index: number): DebtItem {
   };
 }
 
+function sanitizeLiveDebt(raw: Partial<DebtItem>, fallback: DebtItem): DebtItem {
+  const label = typeof raw.name === 'string' && raw.name.trim()
+    ? raw.name.trim()
+    : fallback.name;
+  const rawRule = raw.minPaymentRule;
+  let minPaymentRule: DebtItem['minPaymentRule'];
+
+  if (rawRule?.type === 'percent') {
+    const fallbackRule = fallback.minPaymentRule.type === 'percent'
+      ? fallback.minPaymentRule
+      : { type: 'percent' as const, percent: 0, floor: 0 };
+    minPaymentRule = {
+      type: 'percent',
+      percent: safeNonNegativeNumber(rawRule.percent, fallbackRule.percent, `${label} minimum percent`),
+      floor: safeNonNegativeNumber(rawRule.floor, fallbackRule.floor, `${label} minimum floor`),
+    };
+  } else if (rawRule?.type === 'fixed') {
+    const fallbackAmount = fallback.minPaymentRule.type === 'fixed' ? fallback.minPaymentRule.amount : 0;
+    minPaymentRule = {
+      type: 'fixed',
+      amount: safeNonNegativeNumber(rawRule.amount, fallbackAmount, `${label} minimum payment`),
+    };
+  } else {
+    minPaymentRule = fallback.minPaymentRule;
+  }
+
+  const rawPromo = raw.promo;
+  let promo: DebtItem['promo'];
+  if (rawPromo && typeof rawPromo === 'object') {
+    const fallbackPromo = fallback.promo;
+    promo = {
+      introApr: safeNonNegativeNumber(rawPromo.introApr, fallbackPromo?.introApr ?? 0, `${label} promo intro APR`),
+      monthsRemaining: Math.max(0, Math.round(safeNonNegativeNumber(
+        rawPromo.monthsRemaining,
+        fallbackPromo?.monthsRemaining ?? 0,
+        `${label} promo months`
+      ))),
+      postIntroApr: safeNonNegativeNumber(rawPromo.postIntroApr, fallbackPromo?.postIntroApr ?? fallback.apr, `${label} promo post-intro APR`),
+    };
+  }
+
+  const termMonths = raw.termMonths == null
+    ? fallback.termMonths
+    : Math.max(1, Math.round(safeNonNegativeNumber(raw.termMonths, fallback.termMonths ?? 1, `${label} term months`)));
+
+  return {
+    ...fallback,
+    ...raw,
+    id: typeof raw.id === 'string' && raw.id ? raw.id : fallback.id,
+    name: label,
+    category: selectKnownValue(raw.category, debtCategories, fallback.category),
+    kind: selectKnownValue(raw.kind, debtKinds, fallback.kind),
+    balance: safeNonNegativeNumber(raw.balance, fallback.balance, `${label} balance`),
+    apr: safeNonNegativeNumber(raw.apr, fallback.apr, `${label} APR`),
+    minPaymentRule,
+    termMonths,
+    paymentSource: selectKnownValue(raw.paymentSource, paymentSources, fallback.paymentSource),
+    promo,
+    createdAt: typeof raw.createdAt === 'string' && raw.createdAt ? raw.createdAt : fallback.createdAt,
+    notes: typeof raw.notes === 'string' ? raw.notes : fallback.notes,
+  };
+}
+
 function sanitizePersistedDebts(raw: unknown, fallback: DebtItem[]): DebtItem[] {
   if (!Array.isArray(raw)) return fallback;
 
@@ -330,14 +393,31 @@ export const usePortfolioStore = create<PortfolioState>()(
         const id = debt.id ?? uid();
         const createdAt = new Date().toISOString();
         set((state) => ({
-          debts: [...state.debts, { ...debt, id, createdAt } as DebtItem],
+          debts: [
+            ...state.debts,
+            sanitizeLiveDebt(
+              { ...debt, id, createdAt } as Partial<DebtItem>,
+              {
+                id,
+                name: 'New Debt',
+                category: 'custom',
+                kind: 'amortized',
+                balance: 0,
+                apr: 0,
+                minPaymentRule: { type: 'fixed', amount: 0 },
+                termMonths: 1,
+                paymentSource: 'checking',
+                createdAt,
+              }
+            ),
+          ],
         }));
         get().recompute();
       },
 
       updateDebt: (id, patch) => {
         set((state) => ({
-          debts: state.debts.map((d) => (d.id === id ? { ...d, ...patch } : d)),
+          debts: state.debts.map((d) => (d.id === id ? sanitizeLiveDebt({ ...d, ...patch }, d) : d)),
         }));
         get().recompute();
       },
