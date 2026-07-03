@@ -15,6 +15,8 @@ import {
   buildVaultVelocitySetupWarning,
   buildVaultVisualPercent,
   formatVaultProjectionFailure,
+  formatVaultStrategyInterest,
+  formatVaultStrategyMonths,
   formatVaultStrategySavings,
   formatVaultStrategyTimeDelta,
 } from '@/app/vault-model';
@@ -49,11 +51,11 @@ function formatProjectionFailure(reason?: string): string {
 }
 
 function formatMortgageMonths(strategy: { months: number; isPayoffPossible: boolean }): string {
-  return strategy.isPayoffPossible ? `${strategy.months} mo` : 'Review inputs';
+  return formatVaultStrategyMonths(strategy);
 }
 
 function formatMortgageInterest(totalInterest: number, isPayoffPossible: boolean): string {
-  return isPayoffPossible ? `${formatCurrency(totalInterest)} interest` : 'Not projected';
+  return formatVaultStrategyInterest(totalInterest, isPayoffPossible);
 }
 
 function formatMortgageSavings(strategy: { saved: number; isPayoffPossible: boolean }): string {
