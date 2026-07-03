@@ -1181,7 +1181,7 @@ export function buildMobileSimulatorSnapshot(
       totalInterest: velocityProjection.isPayoffPossible ? velocityProjection.totalInterest : 0,
       interestSaved,
       monthsSaved,
-      interestSavedLabel: canCompareVelocity ? `Saves ${formatCurrency(interestSaved)}` : 'Not projected',
+      interestSavedLabel: canCompareVelocity ? `${formatCurrency(interestSaved)} modeled interest difference` : 'Not projected',
       monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
     },
   };

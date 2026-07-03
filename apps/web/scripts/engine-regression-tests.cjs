@@ -5065,9 +5065,9 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
     isPayoffPossible: true,
   };
 
-  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No interest savings');
+  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No modeled interest difference');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(zeroImprovement), 'No faster payoff');
-  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), 'Saves $1,250');
+  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), '$1,250 modeled interest difference');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(positiveImprovement), '7 months faster');
   assert.equal(vaultModel.formatVaultStrategySavings(invalidProjection), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(invalidProjection), 'Cash flow below payment');
@@ -5082,6 +5082,19 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.NaN, true), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.POSITIVE_INFINITY, true), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyInterest(12345, false), 'Not projected');
+});
+
+test('modeled payoff comparison labels do not promise savings', () => {
+  const vaultModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault-model.ts'), 'utf8');
+  const sharedEngineSource = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/index.ts'), 'utf8');
+  const combined = `${vaultModelSource}\n${sharedEngineSource}`.toLowerCase();
+
+  assert.ok(!combined.includes('`saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
+  assert.ok(!combined.includes('saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
+  assert.ok(
+    combined.includes('modeled interest difference'),
+    'expected payoff result labels to frame deltas as modeled interest differences'
+  );
 });
 
 test('vault comparison bars clamp invalid and slower payoff widths', () => {

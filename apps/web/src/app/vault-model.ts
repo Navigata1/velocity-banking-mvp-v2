@@ -139,7 +139,7 @@ export function buildVaultVelocitySetupWarning(
 
 export function formatVaultStrategySavings(strategy: VaultStrategyProjection): string {
   if (!strategy.isPayoffPossible || !Number.isFinite(strategy.saved)) return 'Not projected';
-  return strategy.saved > 0.005 ? `Saves ${formatCurrency(strategy.saved)}` : 'No interest savings';
+  return strategy.saved > 0.005 ? `${formatCurrency(strategy.saved)} modeled interest difference` : 'No modeled interest difference';
 }
 
 export function formatVaultStrategyTimeDelta(strategy: VaultStrategyProjection, suffix = ''): string {

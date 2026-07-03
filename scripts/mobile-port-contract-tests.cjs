@@ -1117,7 +1117,8 @@ test('shared mobile simulator snapshot matches current web single-debt strategy 
     .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
   assert.equal(snapshot.guardrail, null);
   assert.equal(snapshot.velocity.months, velocity.months);
-  assert.equal(snapshot.velocity.interestSavedLabel.startsWith('Saves $'), true);
+  assert.equal(snapshot.velocity.interestSavedLabel.includes('modeled interest difference'), true);
+  assert.equal(snapshot.velocity.interestSavedLabel.startsWith('Saves $'), false);
   assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('faster'), true);
   assert.equal(snapshot.fastestStrategyName, fastestWebStrategy.name);
 });
@@ -1446,7 +1447,8 @@ test('shared mobile vault snapshot turns the active debt model into an outcome p
 
   assert.equal(vault.guardrail, null);
   assert.ok(vault.freedomPathLabel.endsWith('mo'));
-  assert.ok(vault.interestFreedLabel.startsWith('Saves $'));
+  assert.ok(vault.interestFreedLabel.includes('modeled interest difference'));
+  assert.equal(vault.interestFreedLabel.startsWith('Saves $'), false);
   assert.equal(vault.stages.length, 3);
   assert.equal(vault.stages[1].title, 'Debt Freedom');
   assert.ok(vault.stages[1].detail.includes('Credit Card'));
