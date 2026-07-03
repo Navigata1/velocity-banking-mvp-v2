@@ -377,7 +377,7 @@ const lessons: Lesson[] = [
       'The monthly interest difference might seem small (about $18 in this example at 10% APR), but repeated timing differences can matter when the assumptions hold. Over years of cycling, the model can show cumulative interest differences and LOC recovery room for tested chunks against the primary debt.',
     ],
     keyTakeaway: 'Amortized debt charges interest on scheduled balance regardless of your cash position. LOC charges on average daily balance. Parking income in the LOC — even temporarily — can reduce the average and lower interest when the LOC cost and timing work in your favor.',
-    deepDive: 'Detailed ADB math using the app engine convention: Starting balance $5,000. Day 1: deposit $4,000, then the first daily expense draw closes the day near $1,117. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 15: $1,000 + (15 × $116.67) = $2,750. Day 30: $4,500. Sum of daily closing balances ≈ $84,250. ADB = $84,250 ÷ 30 = $2,808. Monthly interest at 10% APR with daily accrual = $2,808 × (0.10 ÷ 365) × 30 = $23.08. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 365) × 30 = $41.10. Monthly savings: about $18.01. Annualized teaching example: about $216. Over 5 years of cycling: about $1,081 in interest difference — just from the timing of your deposits.',
+    deepDive: 'Detailed ADB math using the app engine convention: Starting balance $5,000. Day 1: deposit $4,000, then the first daily expense draw closes the day near $1,117. Daily expenses: $3,500 ÷ 30 = $116.67/day. Day 15: $1,000 + (15 × $116.67) = $2,750. Day 30: $4,500. Sum of daily closing balances ≈ $84,250. ADB = $84,250 ÷ 30 = $2,808. Monthly interest at 10% APR with daily accrual = $2,808 × (0.10 ÷ 365) × 30 = $23.08. Without the loop (flat $5,000): $5,000 × (0.10 ÷ 365) × 30 = $41.10. Monthly modeled interest difference: about $18.01. Annualized teaching example: about $216. Over 5 years of cycling: about $1,081 in modeled interest difference — just from the timing of your deposits.',
     quiz: {
       question: 'If your LOC has a $5,000 balance and you deposit $4,000 income on day 1, what approximately is your average daily balance for the month?',
       options: [
@@ -462,7 +462,7 @@ const lessons: Lesson[] = [
     simulatorFocus: 'loc',
     content: [
       'A common LOC mistake is using too much of the available line at once. If utilization moves above 80%, the plan has less emergency room and may affect credit. Keep at least 20% available credit as a planning buffer before making another chunk.',
-      'Not tracking expenses accurately can make the plan look stronger than it is. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs eat into the savings. Track spending long enough to trust the surplus before modeling chunks.',
+      'Not tracking expenses accurately can make the plan look stronger than it is. Velocity banking math assumes your cash flow is real and consistent. If you estimate $500/month cash flow but actually only have $200 because of forgotten subscriptions and impulse purchases, your chunks take 2.5x longer to recover and your LOC interest costs can erase the modeled difference. Track spending long enough to trust the surplus before modeling chunks.',
       'Large chunks can feel encouraging because the mortgage balance falls quickly. The tradeoff is recovery risk: if income dips or an emergency hits before LOC recovery, the plan can strain cash flow. Size chunks to leave 20% LOC headroom and a recovery window you can sustain.',
       'Two more checks: include LOC interest in the plan, and avoid treating LOC credit as spendable income. The LOC is a planning tool for a modeled debt strategy, not extra monthly income.',
     ],
@@ -705,7 +705,7 @@ function InterestTimingViz() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
         className="text-center bg-purple-500/10 border border-purple-500/20 rounded-lg p-2"
       >
-        <span className="text-xs text-purple-300">Monthly interest saved: <strong>≈ $18.01</strong> at 10% APR</span>
+        <span className="text-xs text-purple-300">Monthly modeled interest difference: <strong>≈ $18.01</strong> at 10% APR</span>
       </motion.div>
     </div>
   );

@@ -900,7 +900,7 @@ function SimulatorPanel({
       <FinancialCard
         title="Interest Visibility"
         value={snapshot.vitals[1].value}
-        detail="LOC interest and debt interest stay visible before any savings claim is shown."
+        detail="LOC interest and debt interest stay visible before any modeled payoff difference is shown."
       />
       <SimulatorStrategyPanel simulator={simulator} />
     </View>
