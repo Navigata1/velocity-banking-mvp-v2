@@ -245,7 +245,7 @@ export function generateWarnings(
     warnings.push({
       type: 'negative-cashflow',
       severity: 'critical',
-      message: `Your expenses (${formatCurrency(safeMonthlyExpenses)}) exceed your income (${formatCurrency(safeMonthlyIncome)}). Velocity banking requires positive cash flow to work. Let's focus on increasing income or reducing expenses first.`,
+      message: `Your expenses (${formatCurrency(safeMonthlyExpenses)}) exceed your income (${formatCurrency(safeMonthlyIncome)}). Keep the Money Loop in review mode until income is higher than expenses.`,
     });
   } else if (cashFlow < 200) {
     warnings.push({

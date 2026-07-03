@@ -419,7 +419,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 
   // Warnings
   if (cashFlow <= 0) {
-    warnings.push(`Cash flow is negative (${fmt(cashFlow)}/mo). Velocity banking requires positive cash flow.`);
+    warnings.push(`Cash flow is negative (${fmt(cashFlow)}/mo). Keep the Money Loop in review mode until income is higher than expenses.`);
   }
   if (cashFlow < totalMinimums) {
     warnings.push(`Cash flow (${fmt(cashFlow)}/mo) doesn't cover all minimums (${fmt(totalMinimums)}/mo). Some payments may be missed.`);

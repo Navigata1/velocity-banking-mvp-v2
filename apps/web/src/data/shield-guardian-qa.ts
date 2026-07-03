@@ -20,7 +20,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'Why is positive cash flow important?',
     answers: [
       'Positive cash flow is essential because it becomes your "chunk power" - the money you use to make extra debt payments and accelerate payoff.',
-      'Without positive cash flow, velocity banking won\'t work. You need that surplus to make progress against your debt.',
+      'Without positive cash flow, this model should stay in review mode. You need surplus after essentials before a LOC-based payoff plan deserves trust.',
       'Your positive cash flow sets the pace of any payoff model. More surplus can improve the path only when your balances, rates, minimums, LOC cost, and recovery timing support it.'
     ]
   },
@@ -28,8 +28,8 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['negative cash flow', 'spending more', 'deficit'],
     question: 'What if I have negative cash flow?',
     answers: [
-      'If expenses exceed income, focus on reducing spending or increasing income first. Velocity banking requires positive cash flow to work.',
-      'Negative cash flow means you\'re going deeper into debt each month. Address this before starting any debt payoff strategy.',
+      'If expenses exceed income, focus on reducing spending or increasing income first. The Money Loop needs positive cash flow before LOC use can support payoff progress.',
+      'Negative cash flow can push balances higher instead of lower. Address this before modeling an aggressive debt payoff strategy.',
       'First step: track all spending for 30 days. Look for recurring charges, timing gaps, and categories you can trim without destabilizing essentials.'
     ]
   },
@@ -234,7 +234,7 @@ export const shieldGuardianQA: QAPair[] = [
     answers: [
       'Each row shows a payment split into principal and interest. Early rows = more interest. Later rows = more principal.',
       'Look at your loan statement or use an online calculator. See how little goes to principal in year 1 vs year 20.',
-      'The schedule reveals the "hidden cost" of loans - you pay interest on interest for years before really denting principal.'
+      'The schedule makes the cost visible: early payments may lean heavily toward interest before principal starts falling faster.'
     ]
   },
 
@@ -243,8 +243,8 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['chunk', 'what is chunk', 'chunk payment'],
     question: 'What is a chunk payment?',
     answers: [
-      'A chunk is a lump-sum payment from your LOC to your primary debt. It immediately reduces principal, saving future interest.',
-      'Think of chunks as "principal attacks." Regular payments mostly cover interest. Chunks go straight to reducing what you owe.',
+      'A chunk is a lump-sum payment from your LOC to your primary debt. It reduces principal, which can lower future interest when the recovery plan holds.',
+      'Think of chunks as focused principal payments. Regular payments may cover more interest early in the loan; chunks reduce what you owe directly.',
       'A chunk bypasses the amortization schedule, directly reducing principal and shortening your payoff timeline.'
     ]
   },
@@ -490,7 +490,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'How do I stay motivated?',
     answers: [
       'Use the Cockpit view - visualizing progress helps. Celebrate milestones. Remember the "why" behind your effort.',
-      'Track every win: each chunk made, each dollar of principal reduced. Small wins compound into freedom.',
+      'Track every win: each chunk made, each dollar of principal reduced, and each month the buffer stays intact.',
       'Connect with others on the journey. Share progress. Accountability and community keep motivation high.'
     ]
   },
@@ -498,8 +498,8 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['debt shame', 'embarrassed', 'feel bad'],
     question: 'I feel ashamed about my debt. Is that normal?',
     answers: [
-      'Very normal, but unhelpful. Debt is common - focus on the solution, not the problem. You\'re here, taking action.',
-      'Shame keeps people stuck. Pride in taking control is the antidote. Every chunk is a victory.',
+      'Very normal, and it can make clear thinking harder. Debt is common; focus on the next useful number, not self-blame.',
+      'Shame is not a planning tool. Use the numbers to choose the next safe action, even if it is a small one.',
       'Debt is common, and shame makes it harder to think clearly. You are not alone, and you are taking a practical step by looking at the numbers.'
     ]
   },
@@ -517,8 +517,8 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'Is all this effort really worth it?',
     answers: [
       'Some mortgage scenarios show meaningful interest reduction, but your range depends entirely on your actual balance, rate, cash flow, fees, and LOC terms.',
-      'Beyond money: the financial confidence, reduced stress, and freedom from debt payments. Priceless.',
-      'Think 10 years ahead: debt-free, investing what used to be payments. That\'s worth the effort today.'
+      'Beyond money, lower payment pressure can reduce stress when the plan is realistic and the buffer stays protected.',
+      'Think several years ahead: compare debt payoff, investing, and emergency reserves side by side before choosing where surplus goes.'
     ]
   },
 
@@ -527,17 +527,17 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['multiple debts', 'several loans', 'many debts'],
     question: 'How do I handle multiple debts?',
     answers: [
-      'Focus chunks on one debt at a time (highest rate or smallest balance). Pay minimums on others.',
-      'Once one debt is gone, roll that payment + chunk power into the next. This is the "debt avalanche."',
-      'Don\'t spread chunks thin across all debts. Concentrated attacks finish debts faster, building momentum.'
+      'Focus chunks on one debt at a time when the model supports it: highest rate for avalanche, smallest balance for snowball, or cash-flow unlock for the Portfolio default.',
+      'Once one debt is gone, test rolling that freed payment into the next debt while keeping minimums and LOC recovery visible.',
+      'Avoid spreading chunks so thin that no balance moves meaningfully. Concentrated payments can help, but compare the modeled result before acting.'
     ]
   },
   {
     keywords: ['variable income', 'irregular income', 'freelance'],
     question: 'Can I use velocity banking with variable income?',
     answers: [
-      'Yes, but requires more careful management. Base chunks on your lowest expected month, bonus when you exceed.',
-      'Build a buffer in your LOC for low-income months. Don\'t chunk so aggressively that you can\'t cover slow periods.',
+      'Possibly, but it requires more conservative assumptions. Base chunks on a low-income month, not your best month.',
+      'Build a buffer for low-income months. Do not chunk so aggressively that slow periods force new high-cost debt.',
       'Track your average income over 6-12 months. Use that as your planning baseline, not your best month.'
     ]
   },
@@ -545,9 +545,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['recession', 'job loss', 'emergency'],
     question: 'What if I lose my job or income drops?',
     answers: [
-      'Pause chunks immediately. The LOC becomes your bridge. Focus on minimums until income stabilizes.',
-      'This is why we don\'t use 100% of LOC capacity. That buffer is your emergency cushion.',
-      'Having used velocity banking, you\'re likely ahead of schedule. That progress isn\'t lost - resume when stable.'
+      'Pause chunks immediately. Focus on essentials and minimums until income stabilizes.',
+      'This is why the model avoids using 100% of LOC capacity. The unused room is part of the safety plan.',
+      'Any principal progress still counts. Resume only when income, expenses, and the buffer are stable again.'
     ]
   },
   {
@@ -555,7 +555,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'Are there tax implications to velocity banking?',
     answers: [
       'HELOC interest may be deductible if used for home improvements (consult a tax pro). Mortgage interest often is.',
-      'Paying off mortgage faster means less interest deduction, but also less interest paid. Net is positive.',
+      'Paying off a mortgage faster may reduce deductible interest and total interest paid. The net depends on your tax situation, rate, and alternatives.',
       'Always consult a tax professional for your specific situation. Rules vary by location and circumstances.'
     ]
   },
@@ -584,7 +584,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'Hello!',
     answers: [
       'Hi there! I\'m your Shield Guardian. I can help explain velocity banking concepts or guide you through the app. What would you like to know?',
-      'Hello! Ready to protect your finances? Ask me anything about debt payoff, cash flow, or how to use InterestShield.',
+      'Hello! Ask me anything about debt payoff, cash flow, or how to use InterestShield.',
       'Hey! Great to see you. I\'m here to help you understand and use velocity banking effectively.'
     ]
   },
@@ -592,9 +592,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['thank', 'thanks', 'appreciate'],
     question: 'Thank you!',
     answers: [
-      'You\'re welcome! Keep up the great work on your financial journey. I\'m here if you need anything.',
-      'Happy to help! Remember, every step forward is progress. You\'ve got this!',
-      'Anytime! Your commitment to financial freedom is inspiring. Keep going!'
+      'You\'re welcome. I\'m here if you want to review cash flow, chunks, LOCs, or payoff assumptions.',
+      'Happy to help. The next useful step is usually checking the numbers behind the plan.',
+      'Anytime. Keep the assumptions visible and protect the buffer.'
     ]
   },
   {
