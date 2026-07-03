@@ -312,7 +312,7 @@ const lessons: Lesson[] = [
     content: [
       'Cash flow is simply your income minus your expenses each month. If you earn $5,000 and spend $4,800, your cash flow is $200. That number — however small — is the fuel that drives the entire velocity banking engine. Without positive cash flow, a LOC-based payoff plan should stay in learning mode rather than active strategy.',
       'Here\'s what most people miss: even $200/month of cash flow can change a modeled payoff timeline when the debt rate, LOC cost, fees, timing, and discipline line up. That\'s because velocity banking doesn\'t just make extra payments — it changes when balances are reduced and how much interest-bearing balance remains.',
-      'The "Cash Flow Multiplier" effect is where it gets exciting. As you pay off debts using velocity banking, those minimum payments you were making become available cash flow. Pay off a $300/month car payment? Your cash flow just jumped from $200 to $500. That acceleration compounds — each debt eliminated feeds the next cycle faster.',
+      'The "Cash Flow Multiplier" effect is where the model can show momentum. As debts are paid off, minimum payments that are no longer required can become available cash flow. Pay off a $300/month car payment? The modeled cash flow can move from $200 to $500 when that payment truly disappears from the budget. Each debt eliminated can feed the next cycle faster when the freed-up cash flow is preserved.',
       'Think of cash flow as water pressure in a hose. The more pressure (cash flow), the faster you can fill the bucket (pay off debt). But even a trickle will get there — it just takes more cycles. The key is knowing your exact number, checking it consistently, and protecting it from lifestyle creep.',
     ],
     keyTakeaway: 'Positive cash flow is the first gate. Know your exact monthly surplus. Even $200/month may help in the velocity banking cycle, but the payoff impact depends on your actual inputs.',
@@ -345,7 +345,7 @@ const lessons: Lesson[] = [
       'Why does the average daily balance matter? Because LOCs charge interest on the average daily balance, not the ending balance. A traditional bank account separates your income from your debt — money sits in checking while your LOC accrues interest on the full balance. The Money Loop narrows that timing gap.',
       'This is the core mechanic of velocity banking: using the same dollars to both reduce interest-bearing balance and pay your bills. The cycle repeats every pay period, creating a repeatable interest-management loop powered by your income flow.',
     ],
-    keyTakeaway: 'Deposit income into LOC first, pay expenses from LOC. Your money reduces your average daily balance before it gets spent, then still covers planned bills.',
+    keyTakeaway: 'When real account terms support it, the Money Loop models income entering the LOC and planned expenses leaving it so the average daily balance can fall before bills clear.',
     deepDive: 'The efficiency of the Money Loop depends on how your expenses are distributed throughout the month. If all expenses hit on day 1, the ADB benefit is minimal. If expenses trickle out evenly (which is typical — rent on the 1st, utilities mid-month, groceries weekly), the ADB stays low for longer. Some advanced practitioners even time bill payments to maximize the ADB reduction effect, though this is an optimization that adds complexity.',
     quiz: {
       question: 'In the Money Loop, why does depositing your paycheck into the LOC reduce interest?',
@@ -402,12 +402,12 @@ const lessons: Lesson[] = [
     simulatorFocus: 'chunk',
     content: [
       'While the Money Loop handles the LOC efficiently, the Chunk Strategy is where principal reduction becomes visible. A "chunk" is a large lump-sum payment from your LOC directly to your primary amortized debt\'s principal. Treat it as a planning move that needs enough cash flow to recover the LOC safely.',
-      'Here\'s how it works: As you cycle income through the Money Loop, your cash flow gradually pays down the LOC. When the LOC balance drops enough to have significant available credit, you deploy a chunk. For example, if your $15,000 LOC has been paid down to $5,000 through income cycling, you have $10,000 of available credit. You might deploy a $8,000 chunk to your mortgage principal.',
+      'Here\'s how it works in the model: as income and planned expenses cycle through the Money Loop, positive cash flow can gradually pay down the LOC. When the LOC balance drops enough to leave meaningful headroom, the plan can test a chunk. For example, if a $15,000 LOC has been paid down to $5,000 through income cycling, the model has $10,000 of available credit to evaluate. A planner might test an $8,000 chunk to mortgage principal only if the recovery path and buffer still look healthy.',
       'The impact of a chunk on amortized debt depends on timing and rate. In one sample $200,000 mortgage at 6% interest, a $3,000 chunk payment in year 3 saves approximately $6,400 in interest over the life of the loan and removes roughly 4 months from the end of the term. Why? Because every dollar of principal reduction means less interest is calculated at the next payment — and that compounds for the remaining 27 years.',
-      'The cycle then repeats: after the chunk, your LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with your cash flow. When there\'s room, you deploy another chunk. Each cycle can improve the timeline when the chunk size, LOC recovery time, and interest spread remain healthy.',
+      'The cycle can repeat in the model: after the chunk, the LOC balance is back up ($13,000 in our example). The Money Loop begins paying it down again with positive cash flow. When there is enough room, the plan can evaluate another chunk. Each cycle can improve the timeline when the chunk size, LOC recovery time, and interest spread remain healthy.',
     ],
     keyTakeaway: 'Chunks are large lump-sum payments toward principal using LOC credit. A sample $3,000 chunk may save more than the chunk amount in interest, but only when the debt rate, LOC cost, timing, and recovery plan support it.',
-    deepDive: 'Chunk sizing is critical. A chunk should leave enough LOC capacity for emergencies (keep at least 20% available) and should be recoverable by your cash flow within a reasonable timeframe. If your monthly cash flow is $500, a $5,000 chunk takes 10 months to recover. That\'s fine for a steady income. But a $12,000 chunk with $500/month cash flow takes 24 months — you might need that LOC capacity for emergencies during that time. A general rule: chunk size should be recoverable in 6-12 months of cash flow cycling.',
+    deepDive: 'Chunk sizing is critical. A chunk should leave enough LOC capacity for emergencies (keep at least 20% available) and should be recoverable by your cash flow within a reasonable timeframe. If your monthly cash flow is $500, a $5,000 chunk takes 10 months to recover. That may be workable only when income, expenses, and emergency buffer stay stable. But a $12,000 chunk with $500/month cash flow takes 24 months — you might need that LOC capacity for emergencies during that time. A general rule: chunk size should be recoverable in 6-12 months of cash flow cycling.',
     quiz: {
       question: 'Why does a $3,000 principal chunk on a 30-year mortgage save more than $3,000 in interest?',
       options: [
@@ -417,7 +417,7 @@ const lessons: Lesson[] = [
         'It doesn\'t — you only save exactly $3,000',
       ],
       correctIndex: 1,
-      explanation: 'When you reduce principal, every future payment has less interest to cover and more going to principal. This compounds over the remaining life of the loan, creating savings far exceeding the chunk amount.',
+      explanation: 'When principal is reduced, future payments can have less interest to cover and more going to principal. That can create interest differences beyond the chunk amount when rate, timing, and recovery assumptions support it.',
     },
     investopediaUrl: 'https://www.investopedia.com/terms/p/principal.asp',
     investopediaLabel: 'Principal vs Interest — Investopedia',
