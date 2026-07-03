@@ -653,6 +653,15 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
   );
   assert.equal(stableSnapshot.loop.length, 5);
   assert.equal(stableSnapshot.loop.find((step) => step.label === 'LOC').value, '$21,800 open');
+  assert.equal(stableSnapshot.loop.find((step) => step.label === 'Income').pressurePercent, 100);
+  assert.equal(stableSnapshot.loop.find((step) => step.label === 'Expenses').pressurePercent, 56);
+  assert.equal(stableSnapshot.loop.find((step) => step.label === 'Cash Flow').pressurePercent, 44);
+  assert.equal(stableSnapshot.loop.find((step) => step.label === 'Principal').pressurePercent, 8);
+  assert.equal(unsafeSnapshot.loop.find((step) => step.label === 'Cash Flow').pressurePercent, 8);
+  assert.ok(
+    stableSnapshot.loop.every((step) => step.pressurePercent >= 8 && step.pressurePercent <= 100),
+    'expected mobile Money Loop pressure values to stay bounded'
+  );
   assert.ok(
     stableSnapshot.loop.find((step) => step.label === 'LOC').detail.includes('13% used'),
     'expected mobile Money Loop to include LOC utilization context'
@@ -832,6 +841,17 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
+  assert.ok(shellSource.includes('MobileMoneyLoopPressureStrip'), 'expected dashboard to render the native pressure strip');
+  assert.ok(shellSource.includes('testID="mobile-money-loop-pressure"'), 'expected mobile pressure strip smoke hook');
+  assert.ok(
+    shellSource.includes('testID={`mobile-money-loop-pressure-segment-${loopNodeId(step.label)}`}'),
+    'expected one pressure segment per shared Money Loop step'
+  );
+  assert.ok(shellSource.includes('accessibilityRole="progressbar"'), 'expected pressure segments to expose progress values');
+  assert.ok(
+    shellSource.includes('width: `${pressurePercent}%`'),
+    'expected pressure segment width to be model-bound'
+  );
   assert.ok(shellSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
   assert.ok(shellSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
   assert.ok(

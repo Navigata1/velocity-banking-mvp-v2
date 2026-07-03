@@ -164,6 +164,7 @@ export interface MobileDashboardSnapshot {
     label: string;
     value: string;
     detail: string;
+    pressurePercent: number;
   }>;
 }
 
@@ -312,6 +313,11 @@ function finiteNumber(value: number, fallback = 0): number {
 
 function finiteNonNegative(value: number): number {
   return Math.max(0, finiteNumber(value));
+}
+
+function clampLoopPressure(value: number): number {
+  if (!Number.isFinite(value) || value <= 0) return 8;
+  return Math.min(100, Math.max(8, Math.round(value * 100)));
 }
 
 function finitePositiveInteger(value: number, fallback: number): number {
@@ -703,10 +709,13 @@ export function buildMobileDashboardSnapshot(
   const locNoCapacity = !locNeedsSetup && model.loc.balance === model.loc.limit;
   const availableLoc = locNeedsSetup ? 0 : Math.max(0, model.loc.limit - model.loc.balance);
   const locUtilization = locNeedsSetup ? 0 : model.loc.balance / model.loc.limit;
+  const availableLocRatio = locNeedsSetup ? 0 : availableLoc / model.loc.limit;
   const debtDailyInterest = calculateDailyInterest(model.activeDebt.balance, model.activeDebt.apr);
   const locDailyInterest = calculateDailyInterest(model.loc.balance, model.loc.apr);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
   const safeChunk = Math.min(model.chunkAmount, model.activeDebt.balance, availableLoc);
+  const monthlyFlowBase = Math.max(model.monthlyIncome, model.monthlyExpenses, 1);
+  const principalImpact = model.activeDebt.balance > 0 ? safeChunk / model.activeDebt.balance : 0;
   const velocityProjection = simulateMobileVelocity(model);
   const etaValue = velocityProjection.isPayoffPossible
     ? `${velocityProjection.payoffMonths} mo`
@@ -776,6 +785,7 @@ export function buildMobileDashboardSnapshot(
         label: 'Income',
         value: formatCurrency(model.monthlyIncome),
         detail: 'Deposits start the loop.',
+        pressurePercent: clampLoopPressure(model.monthlyIncome / monthlyFlowBase),
       },
       {
         label: 'LOC',
@@ -783,21 +793,25 @@ export function buildMobileDashboardSnapshot(
         detail: locNeedsSetup
           ? 'LOC capacity needs known terms before chunk projections are meaningful.'
           : `${Math.round(locUtilization * 100)}% used. Capacity is useful only with a comfortable buffer.`,
+        pressurePercent: clampLoopPressure(locNeedsSetup ? 0 : Math.max(availableLocRatio, locUtilization)),
       },
       {
         label: 'Expenses',
         value: formatCurrency(model.monthlyExpenses),
         detail: 'Outflows define pressure.',
+        pressurePercent: clampLoopPressure(model.monthlyExpenses / monthlyFlowBase),
       },
       {
         label: 'Cash Flow',
         value: formatCurrency(cashFlow),
         detail: 'Positive flow can recover the LOC.',
+        pressurePercent: clampLoopPressure(cashFlow > 0 ? cashFlow / monthlyFlowBase : 0),
       },
       {
         label: 'Principal',
         value: model.activeDebtName,
         detail: 'Chunks target balance reduction after setup checks.',
+        pressurePercent: clampLoopPressure(principalImpact),
       },
     ],
   };
