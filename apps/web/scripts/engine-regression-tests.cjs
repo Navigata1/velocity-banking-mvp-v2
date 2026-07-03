@@ -5719,6 +5719,8 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'wealth created',
     'multi-generational impact',
     'lasting financial freedom',
+    'flying toward financial freedom',
+    'closer to freedom',
     'trust the math',
     "the math works - if it's not working",
     'debt-crushing ammunition',
@@ -5727,6 +5729,7 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'simulator shows years saved',
     'more surplus = faster freedom',
     'pay off years faster',
+    'every chunk brings you closer to freedom',
   ];
 
   for (const claim of bannedClaims) {
@@ -5763,6 +5766,7 @@ test('Guardian answer bank avoids hard-coded LOC rate and qualification threshol
     '8-12%) vs credit cards (15-25%',
     'good credit (680+)',
     'usually 15-20% minimum',
+    'always compare aprs',
   ];
 
   for (const threshold of unsupportedThresholds) {
@@ -5772,6 +5776,10 @@ test('Guardian answer bank avoids hard-coded LOC rate and qualification threshol
   assert.ok(
     answerBank.includes('compare the actual apr, fees, draw rules, repayment terms, and collateral risk'),
     'expected Guardian copy to point users back to actual LOC terms instead of generic threshold advice'
+  );
+  assert.ok(
+    answerBank.includes('review apr alongside fees, draw rules, repayment terms, and collateral risk'),
+    'expected Guardian APR copy to compare full borrowing terms instead of APR alone'
   );
 });
 
@@ -5856,16 +5864,21 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
     .flatMap((qa) => qa.answers)
     .join('\n')
     .toLowerCase();
+  const guardianSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/data/shield-guardian-qa.ts'), 'utf8').toLowerCase();
+  const fullGuardianCopy = `${answerBank}\n${guardianSource}`;
   const unsafeClaims = [
     'mathematically sound strategy',
     "it's not risky if",
     'safe when: you have stable income',
     'the interest savings and cash flow accelerate debt payoff',
     'minimize interest and make larger "chunk" payments to your main debt faster',
+    'when a chunk is ready, deploy it',
+    'route income to the loc first',
+    'works best when you can recover without abandoning the strategy',
   ];
 
   for (const claim of unsafeClaims) {
-    assert.ok(!answerBank.includes(claim), `expected Guardian velocity copy not to include overconfident safety claim: ${claim}`);
+    assert.ok(!fullGuardianCopy.includes(claim), `expected Guardian velocity copy not to include overconfident safety claim: ${claim}`);
   }
 
   assert.ok(
@@ -5875,6 +5888,14 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
   assert.ok(
     answerBank.includes('lower average balance can reduce loc interest when the assumptions hold'),
     'expected Guardian Money Loop copy to label interest reduction as conditional'
+  );
+  assert.ok(
+    fullGuardianCopy.includes('choose a chunk size your cash flow can recover while preserving loc headroom'),
+    'expected Guardian chunk guidance to size chunks from recoverable cash flow and LOC headroom'
+  );
+  assert.ok(
+    fullGuardianCopy.includes('model income-to-loc routing only if it matches the real account terms and expense timing'),
+    'expected Guardian LOC guidance to gate routing behind real account terms'
   );
 });
 

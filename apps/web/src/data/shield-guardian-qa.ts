@@ -346,9 +346,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['apr', 'annual percentage rate', 'what is apr'],
     question: 'What is APR?',
     answers: [
-      'APR (Annual Percentage Rate) is the yearly cost of borrowing, including fees. It\'s how to compare loan costs.',
+      'APR (Annual Percentage Rate) is the yearly cost of borrowing, including fees. Use it with fees, draw rules, repayment terms, and collateral risk when comparing loan costs.',
       'A 7% APR means you pay about 7% of your balance per year in interest costs.',
-      'APR standardizes comparison - always compare APRs when shopping for loans or LOCs.'
+      'APR helps standardize comparisons. Review APR alongside fees, draw rules, repayment terms, and collateral risk before modeling a loan or LOC.'
     ]
   },
   {
@@ -384,7 +384,7 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['cockpit', 'use cockpit', 'flight simulator'],
     question: 'What is the Cockpit view?',
     answers: [
-      'The Cockpit is a gamified visualization of your debt payoff journey - like flying toward financial freedom.',
+      'The Cockpit is a gamified visualization of your modeled debt payoff path - like flying toward a clearer destination.',
       'It makes tracking progress engaging. Watch your "altitude" (debt level) decrease as you fly toward the destination.',
       'Visual motivation helps many people stay consistent. The Cockpit turns numbers into an experience.'
     ]
@@ -619,9 +619,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['bye', 'goodbye', 'see you', 'later'],
     question: 'Goodbye!',
     answers: [
-      'Take care! Remember, every chunk brings you closer to freedom. See you next time!',
-      'Goodbye! Keep working the plan. I\'ll be here when you need me!',
-      'See you later! Stay consistent with your strategy. You\'re doing great!'
+      'Take care. Keep checking cash flow, utilization, and recovery timing before the next chunk.',
+      'Goodbye. Keep the plan grounded in your actual numbers; I\'ll be here when you need me.',
+      'See you later. Stay consistent with the inputs you can verify.'
     ]
   },
 ];
@@ -689,14 +689,14 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
     ];
   } else if (intent === 'chunk') {
     nextSteps = [
-      "Choose a chunk size you can repeat (start smaller if you’re nervous).",
+      "Choose a chunk size your cash flow can recover while preserving LOC headroom.",
       "Run the simulation with $100 / $200 / $400 extra to see how payoff time changes.",
-      "When a chunk is ready, deploy it—then rebuild the next chunk."
+      "When the model shows the chunk is recoverable, record the assumptions and rebuild capacity before the next one."
     ];
   } else if (intent === 'loc') {
     nextSteps = [
       "Confirm your LOC rate + limit, and set a utilization safety line (ideally stay under ~80%).",
-      "Route income to the LOC first (if that matches your plan), then pay expenses intentionally.",
+      "Model income-to-LOC routing only if it matches the real account terms and expense timing.",
       "Use the dashboard’s Next Move panel to time your next chunk."
     ];
   } else if (intent === 'interest') {
@@ -712,7 +712,7 @@ function formatTeacherMode(baseAnswer: string, input: string, context?: Guardian
       "You didn’t fail. Recovery is part of the plan."
     ];
     why = [
-      "Life happens—velocity banking works best when you can recover without abandoning the strategy.",
+      "Life happens; LOC-based planning is more resilient when the recovery path survives interruptions.",
       "Keeping the plan simple reduces stress during emergencies.",
       "Even a small restart keeps momentum alive."
     ];
