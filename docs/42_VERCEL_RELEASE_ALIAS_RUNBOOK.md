@@ -1,15 +1,17 @@
 # Vercel Release Alias Runbook
 
-Last updated: 2026-07-02
+Last updated: 2026-07-03
 
 ## Current Release State
 
-- `main` contains the InterestShield 2026 release stack through commit `a34f34888bbd8720eeee9b14d1211632c9bfb526` (`Add Money Loop artifact depth layers (#172)`).
-- GitHub Actions CI run `28587985161` completed successfully for `a34f34888bbd8720eeee9b14d1211632c9bfb526`.
-- GitHub recorded a successful Vercel deployment for `a34f34888bbd8720eeee9b14d1211632c9bfb526`:
+- `main` contains the InterestShield 2026 release stack through commit `2390116af89abf0af1978da6f28dae523e94b73f` (`Document Cloudflare edge lane contract (#185)`).
+- GitHub Actions CI run `28634274371` completed successfully for `2390116af89abf0af1978da6f28dae523e94b73f`.
+- GitHub recorded deployment `5293848428` for `2390116af89abf0af1978da6f28dae523e94b73f`:
   - environment: `Production`
   - deployment URL pattern: `https://velocity-banking-mvp-v2-<deployment-suffix>-islanddevcrew.vercel.app`
-  - deployment status observed by `npm run smoke:production`
+  - latest target URL observed by production smoke: `https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app`
+  - deployment status observed by `npm run smoke:production`: `success`
+  - GitHub deployment record still reports `production_environment: false`
 - The generated deployment URL is ephemeral: every successful `main` deployment can create a new suffix. Rerun `apps/web` `npm run smoke:production` to read the current `Latest GitHub Production deployment target` before promoting or testing a direct deployment URL.
 - That generated deployment URL is protected by Vercel login/protection and does not render the app shell without a bypass or authenticated Vercel access.
 - The public alias `https://web-islanddevcrew.vercel.app/` still serves the older app deployment marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`.
@@ -86,6 +88,19 @@ Last updated: 2026-07-02
   - PR #170: simulator LOC balance controls expose clear reset and selected state.
   - PR #171: mobile dashboard shell token controls are easier to smoke test.
   - PR #172: Money Loop artifact selector renders selected-token depth layers.
+  - PR #173: production smoke prints exact Vercel promote/cache-purge remediation commands.
+  - PR #174: Supabase first-lane migration contract records the owner-scoped schema handoff.
+  - PR #175: dashboard Money Loop pressure visual improves the artifact rail.
+  - PR #176: mobile dashboard Money Loop pressure parity keeps Expo aligned with web.
+  - PR #177: portfolio simulation input boundaries are hardened.
+  - PR #178: portfolio percent minimum payments recalculate from current simulated balance.
+  - PR #179: multi-debt simulation input boundaries are hardened.
+  - PR #180: live financial store money setters sanitize non-finite inputs.
+  - PR #181: Vault strategy labels guard against non-finite values.
+  - PR #182: Simulator and Vault percentage labels guard invalid values.
+  - PR #183: live Portfolio debt edits sanitize invalid money inputs.
+  - PR #184: Portfolio percentage labels guard invalid values.
+  - PR #185: Cloudflare edge lane contract documents Worker/D1/Durable Objects release boundaries without live backend wiring.
 - Tracking issue: `https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59`
 
 ## Required Vercel Actions
@@ -108,7 +123,7 @@ Last updated: 2026-07-02
    - Confirm production builds trigger from `main`.
 
 4. Promote or alias the current release build.
-   - Promote the deployment for `a34f34888bbd8720eeee9b14d1211632c9bfb526`, or a newer passing `main` deployment, to the public production alias.
+   - Promote the deployment for `2390116af89abf0af1978da6f28dae523e94b73f`, or a newer passing `main` deployment, to the public production alias.
    - Latest observed target URL: rerun `npm run smoke:production` and use the reported `Latest GitHub Production deployment target`.
    - Public alias to update first: `https://web-islanddevcrew.vercel.app/`
    - Add or update the final InterestShield custom domain after the alias smoke passes.
@@ -116,6 +131,13 @@ Last updated: 2026-07-02
 
 ```powershell
 npx vercel promote https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app --scope islanddevcrew
+npx vercel cache purge --yes --scope islanddevcrew
+```
+
+   - Current observed command after PR #185:
+
+```powershell
+npx vercel promote https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app --scope islanddevcrew
 npx vercel cache purge --yes --scope islanddevcrew
 ```
 
@@ -183,12 +205,12 @@ After verification passes:
 
 ## Latest Codex Diagnostic Commands
 
-These commands were run on 2026-07-02 from the local checkout on `main`:
+These commands were run on 2026-07-03 from the local checkout on `main`:
 
 ```powershell
-Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260702a' -UseBasicParsing
+Invoke-WebRequest -Uri 'https://web-islanddevcrew.vercel.app/?codexFreshness=20260703a' -UseBasicParsing
 npm run smoke:production
-$sha = 'a34f34888bbd8720eeee9b14d1211632c9bfb526'
+$sha = '2390116af89abf0af1978da6f28dae523e94b73f'
 gh api "repos/Navigata1/velocity-banking-mvp-v2/deployments?sha=$sha"
 $env:PRODUCTION_ORIGIN='<latest GitHub Production deployment target>'; npm run smoke:production; Remove-Item Env:\PRODUCTION_ORIGIN
 ```
@@ -199,7 +221,6 @@ Result summary:
 - Public production smoke fails because the alias still lacks `data-testid="primary-navigation"`.
 - The smoke script includes observed Vercel deployment diagnostics in freshness failures and classifies Vercel login-shell responses as deployment protection so the served deployment marker and response headers can be compared against GitHub/Vercel deployment records.
 - The smoke script performs a best-effort GitHub Production deployment lookup and appends the latest deployment target URL, SHA, and status to stale/protected failures.
-- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, latest GitHub Production deployment target `https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app` for `a34f34888bbd8720eeee9b14d1211632c9bfb526`, and remediation commands for `npx vercel promote` plus `npx vercel cache purge`.
-- Current latest-target smoke failure reports Vercel login/protection marker `dpl_JBAG6QhponBeGDuAqUTe11z8mMXu`, `data-testid="login/email-button"`, `x-vercel-id: iad1::mnh6g-1782988669387-937dd83f07ce`, and `x-vercel-cache: HIT`; configure `VERCEL_AUTOMATION_BYPASS_SECRET` or remove protection before treating that deployment as publicly release-ready.
-- Current PR #172 production smoke failure reports stale public alias marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, latest target `https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app`, `x-vercel-id: iad1::hdh8k-1782993352098-9e60c3e03f77`, and `x-vercel-cache: HIT`.
-- Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.
+- Current default-origin smoke failure reports stale marker `dpl_FfPyuRhZM8G4pTofYifoajjVDpLg`, latest GitHub Production deployment target `https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app` for `2390116af89abf0af1978da6f28dae523e94b73f`, and remediation commands for `npx vercel promote` plus `npx vercel cache purge`.
+- Current public alias smoke failure reports `x-vercel-id: iad1::dqc4w-1783045557334-137c072922da` and `x-vercel-cache: HIT`.
+- The Vercel app connector still reports `Reauthentication required`; Vercel CLI and Vercel project auth remain required before this environment can promote or alias the current deployment.

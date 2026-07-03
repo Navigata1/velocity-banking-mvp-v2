@@ -7042,7 +7042,7 @@ test('repository documents the current Vercel alias promotion blocker', () => {
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('a34f34888bbd8720eeee9b14d1211632c9bfb526'),
+    runbook.includes('2390116af89abf0af1978da6f28dae523e94b73f'),
     'expected the runbook to name the current release-stack main commit'
   );
   assert.ok(
@@ -7051,13 +7051,13 @@ test('repository documents the current Vercel alias promotion blocker', () => {
     'expected the runbook to document ephemeral Vercel deployment targets'
   );
   assert.ok(
-    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('dpl_JBAG6QhponBeGDuAqUTe11z8mMXu'),
-    'expected the runbook to distinguish stale public alias and protected latest deployment markers'
+    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('x-vercel-cache: HIT'),
+    'expected the runbook to distinguish stale public alias and Vercel cache diagnostics'
   );
   assert.ok(
     runbook.includes('VERCEL_AUTOMATION_BYPASS_SECRET') &&
       runbook.includes('Promote or alias the current release build') &&
-      runbook.includes('npx vercel promote https://velocity-banking-mvp-v2-l8ca7dla3-islanddevcrew.vercel.app') &&
+      runbook.includes('npx vercel promote https://velocity-banking-mvp-v2-i00s821z4-islanddevcrew.vercel.app') &&
       runbook.includes('npx vercel cache purge --yes --scope islanddevcrew'),
     'expected the runbook to document the required Vercel release action'
   );
