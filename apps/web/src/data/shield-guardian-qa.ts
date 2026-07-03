@@ -261,18 +261,18 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['chunk frequency', 'how often chunk', 'when to chunk'],
     question: 'How often should I make chunks?',
     answers: [
-      'Monthly is common, but some do bi-weekly or whenever their LOC reaches a certain level. Consistency matters most.',
-      'Find a rhythm that works: after each paycheck, monthly, or when your LOC balance hits a target.',
-      'More frequent smaller chunks vs less frequent larger chunks - math is similar. Choose what fits your discipline style.'
+      'Use the Simulator to test frequency. Monthly, bi-weekly, or balance-triggered chunks only deserve trust when LOC recovery, fees, and buffer headroom still pass.',
+      'A rhythm should come from modeled cash flow and real account timing, not from a calendar rule. If the LOC cannot recover safely, pause the chunk plan.',
+      'Compare smaller frequent chunks with larger less-frequent chunks in the model, then choose the version that preserves due dates, LOC headroom, and cash-flow stability.'
     ]
   },
   {
     keywords: ['chunk strategy', 'best chunk approach', 'optimal chunk'],
     question: 'What\'s the optimal chunk strategy?',
     answers: [
-      'Make chunks when your LOC balance is lowest (after income deposits). This maximizes the interest differential.',
-      'Some prefer regular schedule (1st of month). Others prefer balance-triggered (chunk when LOC hits $X).',
-      'The optimal strategy is the one you\'ll actually stick to. Consistency beats optimization every time.'
+      'The best chunk strategy is the one the model can recover safely. Test timing after income, LOC balance triggers, fees, and debt APR together before trusting a chunk.',
+      'Regular schedules and balance triggers are planning options, not rules. Compare them only after the LOC buffer and recovery window stay healthy.',
+      'Optimization is secondary to safety: positive cash flow, known LOC terms, and emergency headroom should survive every modeled chunk.'
     ]
   },
   {
@@ -299,8 +299,8 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['not working', 'why not working', 'velocity failing'],
     question: 'Why isn\'t velocity banking working for me?',
     answers: [
-      'Check: Do you have positive cash flow? Are you making regular chunks? Is your LOC rate lower than your debt rate?',
-      'Common issues: hidden expenses reducing cash flow, irregular chunk timing, or using LOC for new spending.',
+      'Check: do you have positive cash flow, known LOC terms, a recoverable chunk size, and enough buffer after the modeled draw?',
+      'Common issues: hidden expenses reducing cash flow, chunk timing that the LOC cannot recover from, fees, rate changes, or using LOC for new spending.',
       'Review your numbers honestly. If the projection does not match real life, revisit cash flow, chunk timing, rates, fees, and new spending before trusting the plan.'
     ]
   },

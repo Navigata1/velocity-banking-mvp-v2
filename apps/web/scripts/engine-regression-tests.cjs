@@ -5919,6 +5919,11 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
     'maximize low-balance days',
     'benefits: reduces interest',
     'always maintain a buffer',
+    'make chunks when your loc balance is lowest',
+    'this maximizes the interest differential',
+    'find a rhythm that works: after each paycheck',
+    'choose what fits your discipline style',
+    'are you making regular chunks',
     'works best when you can recover without abandoning the strategy',
   ];
 
@@ -5949,6 +5954,14 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
   assert.ok(
     answerBank.includes('loc apr, fees, and repayment rules together determine whether the average daily balance improves'),
     'expected Guardian ADB copy to include terms and fees before recommending timing changes'
+  );
+  assert.ok(
+    answerBank.includes('use the simulator to test frequency'),
+    'expected Guardian chunk-frequency copy to route timing choices through model testing'
+  );
+  assert.ok(
+    answerBank.includes('optimization is secondary to safety'),
+    'expected Guardian chunk strategy copy to prioritize safety over optimization'
   );
 });
 
