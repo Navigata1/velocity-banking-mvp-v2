@@ -141,14 +141,18 @@ function finitePositiveInteger(value: number, fallback: number): number {
   return Math.max(1, Math.trunc(value));
 }
 
-function getMinPayment(debt: DebtItem): number {
+function getMinPaymentForBalance(debt: DebtItem, balance: number = debt.balance): number {
   if (debt.minPaymentRule.type === 'fixed') {
     return finiteNonNegative(debt.minPaymentRule.amount);
   }
   return Math.max(
     finiteNonNegative(debt.minPaymentRule.floor),
-    finiteNonNegative(debt.balance) * finiteNonNegative(debt.minPaymentRule.percent)
+    finiteNonNegative(balance) * finiteNonNegative(debt.minPaymentRule.percent)
   );
+}
+
+function getMinPayment(debt: DebtItem): number {
+  return getMinPaymentForBalance(debt, debt.balance);
 }
 
 function getEffectiveApr(debt: DebtItem): number {
@@ -168,7 +172,7 @@ function getEffectiveApr(debt: DebtItem): number {
  * 3) Promo expiration risk adds urgency
  */
 function velocityScore(debt: DebtItem, balance: number): number {
-  const unlock = getMinPayment(debt);
+  const unlock = getMinPaymentForBalance(debt, balance);
   const burn = calculateDailyInterest(balance, getEffectiveApr(debt));
   const promoMonths = debt.promo?.monthsRemaining ?? null;
   const promoRisk =
@@ -230,7 +234,7 @@ function buildSplitExtraAllocations(
     const debt = debts.find((item) => item.id === targetId);
     const balance = debt ? balances.get(debt.id) ?? 0 : 0;
     const interest = debt ? balance * getEffectiveApr(debt) / 12 : 0;
-    const minimumPayment = debt ? Math.min(getMinPayment(debt), balance + interest) : 0;
+    const minimumPayment = debt ? Math.min(getMinPaymentForBalance(debt, balance), balance + interest) : 0;
     const capacity = Math.max(0, balance + interest - minimumPayment);
     const preferred = availableExtra * ratios[index];
     const amount = Math.min(preferred, capacity, remaining);
@@ -271,7 +275,7 @@ function buildDebtRationales(
 
   for (const debt of debts) {
     const balance = balances.get(debt.id) ?? debt.balance;
-    const monthlyPaymentUnlock = getMinPayment(debt);
+    const monthlyPaymentUnlock = getMinPaymentForBalance(debt, balance);
     const aprUsedForBurn = debt.promo?.postIntroApr ?? finiteNonNegative(debt.apr);
     const dailyInterestBurn = calculateDailyInterest(balance, aprUsedForBurn);
     const rank = ranks.get(debt.id) ?? debts.length;
@@ -507,14 +511,14 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     const targetIds = selectTargetIds(sorted, settings);
 
     // Calculate available extra payment
-    let availableExtra = Math.max(0, cashFlow - totalMinimums) + extraMonthlyPayment;
-    
-    // Add freed payments from paid-off debts
-    for (const d of debts) {
-      if ((balances.get(d.id) ?? 0) <= 0.01) {
-        availableExtra += getMinPayment(d);
-      }
-    }
+    const currentMinimums = debts.reduce((sum, d) => {
+      const bal = balances.get(d.id) ?? 0;
+      if (bal <= 0.01) return sum;
+
+      const interest = bal * getEffectiveApr(d) / 12;
+      return sum + Math.min(getMinPaymentForBalance(d, bal), bal + interest);
+    }, 0);
+    let availableExtra = Math.max(0, cashFlow - currentMinimums) + extraMonthlyPayment;
 
     const splitExtraAllocations = buildSplitExtraAllocations(debts, balances, targetIds, availableExtra, settings);
 
@@ -536,7 +540,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       const isMoneyLoopTarget = hasUsableVelocityLoc && targetIds.length === 1 && targetIds[0] === d.id && !!sanitizedLoc;
 
       if (isMoneyLoopTarget && sanitizedLoc) {
-        const minimumPayment = getMinPayment(d);
+        const minimumPayment = getMinPaymentForBalance(d, bal);
         const debtInterest = bal * effectiveApr / 12;
         let payment = Math.min(minimumPayment, bal + debtInterest);
 
@@ -552,7 +556,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           if (otherBalance <= 0.01) return sum;
 
           const otherInterest = otherBalance * getEffectiveApr(otherDebt) / 12;
-          return sum + Math.min(getMinPayment(otherDebt), otherBalance + otherInterest);
+          return sum + Math.min(getMinPaymentForBalance(otherDebt, otherBalance), otherBalance + otherInterest);
         }, 0);
         const locCashFlowPaydown = Math.max(0, cashFlow - payment - otherActivePayments);
 
@@ -597,7 +601,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
 
       const interest = bal * effectiveApr / 12;
-      let payment = Math.min(getMinPayment(d), bal + interest);
+      let payment = Math.min(getMinPaymentForBalance(d, bal), bal + interest);
 
       // Apply extra to target debts
       if (targetIds.includes(d.id) && availableExtra > 0) {
