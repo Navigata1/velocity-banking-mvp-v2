@@ -3050,6 +3050,14 @@ test('cockpit routing controls are stateful educational toggles', () => {
   assert.ok(source.includes('aria-pressed={expenseCardOn}'), 'expected expense-card toggle pressed state');
   assert.ok(source.includes('data-testid="cockpit-routing-assumption"'), 'expected visible routing assumption copy');
   assert.ok(source.includes('These cockpit toggles are educational routing assumptions, not connected banking controls.'), 'expected truthful non-integration copy');
+  assert.ok(
+    source.includes('More cash flow can lower the modeled average balance when routing, LOC terms, and expense timing support it.'),
+    'expected Cockpit copy to label cash-flow effects as conditional on routing and LOC assumptions'
+  );
+  assert.ok(
+    !source.includes('More cash flow = lower average balance = less interest.'),
+    'expected Cockpit copy not to present cash flow as an automatic interest reduction'
+  );
   assert.ok(!source.includes('Toggle: Deposit Income to LOC'), 'expected old static income toggle copy to be removed');
   assert.ok(!source.includes('Toggle: Expense Card On/Off'), 'expected old static expense-card toggle copy to be removed');
 });

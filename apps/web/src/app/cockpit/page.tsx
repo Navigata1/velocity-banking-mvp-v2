@@ -468,7 +468,7 @@ export default function CockpitPage() {
             {routingAssumption}
           </p>
           <p className={`mt-2 text-xs leading-5 ${classes.textSecondary}`}>
-            Every slider change updates the gauges in real-time. More cash flow = lower average balance = less interest.
+            Every slider change updates the gauges in real-time. More cash flow can lower the modeled average balance when routing, LOC terms, and expense timing support it.
             These cockpit toggles are educational routing assumptions, not connected banking controls.
           </p>
         </div>
