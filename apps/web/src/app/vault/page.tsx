@@ -566,7 +566,7 @@ export default function VaultPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-5 text-center">
-                <div className={`${classes.textSecondary} text-sm mb-2`}>Interest Saved</div>
+                <div className={`${classes.textSecondary} text-sm mb-2`}>Modeled Interest Difference</div>
                 <div className="text-2xl font-bold text-emerald-500">
                   {freedomPath.isProjected ? (
                     <CountUp value={strategies.velocity.saved} />

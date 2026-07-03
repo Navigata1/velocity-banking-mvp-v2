@@ -884,6 +884,11 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
   assert.ok(shellSource.includes('MobileMoneyLoopPressureStrip'), 'expected dashboard to render the native pressure strip');
   assert.ok(shellSource.includes('testID="mobile-money-loop-pressure"'), 'expected mobile pressure strip smoke hook');
+  assert.ok(!shellSource.includes('savings claim'), 'expected mobile simulator copy to avoid savings-claim framing');
+  assert.ok(
+    shellSource.includes('before any modeled payoff difference is shown'),
+    'expected mobile simulator copy to frame payoff deltas as modeled differences'
+  );
   assert.ok(
     shellSource.includes('testID={`mobile-money-loop-pressure-segment-${loopNodeId(step.label)}`}'),
     'expected one pressure segment per shared Money Loop step'

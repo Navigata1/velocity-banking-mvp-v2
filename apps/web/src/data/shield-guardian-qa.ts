@@ -130,7 +130,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'How does velocity banking compare to traditional payments?',
     answers: [
       'Traditional payments follow the lender schedule. A modeled velocity path uses strategic chunks against principal and should be trusted only when cash flow, LOC cost, fees, and recovery timing support the result.',
-      'The Simulator shows both side-by-side. Your projected savings depend on your inputs, rates, cash flow, fees, LOC terms, and consistency.',
+      'The Simulator shows both side-by-side. Your modeled interest difference depends on your inputs, rates, cash flow, fees, LOC terms, and consistency.',
       'Traditional is passive (autopay minimums). Velocity is active (strategic chunks). Active can help when the numbers line up, but it requires more effort.'
     ]
   },
@@ -394,7 +394,7 @@ export const shieldGuardianQA: QAPair[] = [
     question: 'What is the Vault / Wealth Timeline?',
     answers: [
       'The Vault models how reducing interest can change your long-term options - money that may stay in your household instead of going to interest.',
-      'It combines projected interest savings with redirected payments so you can inspect the assumptions behind the long-term impact.',
+      'It combines modeled interest differences with redirected payments so you can inspect the assumptions behind the long-term impact.',
       'It\'s the "why" behind debt payoff: not just getting out of debt, but understanding the choices your cash flow may create.'
     ]
   },

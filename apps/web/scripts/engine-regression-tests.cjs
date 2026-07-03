@@ -5511,6 +5511,11 @@ test('vault generation screen labels multiplier-based family scenarios as assump
     .replace(/^\s*\/\/.*$/gm, '')
     .toLowerCase();
 
+  assert.ok(!source.includes('interest saved'), 'expected Vault UI to avoid promise-like interest saved labels');
+  assert.ok(
+    source.includes('modeled interest difference'),
+    'expected Vault UI to label projected interest deltas as modeled interest differences'
+  );
   assert.ok(!source.includes('your parents&apos; mortgage interest'), 'expected prior-generation estimate not to be labeled as actual parent data');
   assert.ok(!source.includes('your child&apos;s projected interest'), 'expected next-generation estimate not to be labeled as a child forecast');
   assert.ok(source.includes('illustrative multipliers'), 'expected Vault to label generation estimates as illustrative multipliers');
@@ -5535,11 +5540,15 @@ test('learn page labels sample savings instead of presenting them as universal o
     'offensive weapon',
     'silent killer',
     'for many people, even a higher-rate loc provides net savings',
+    'monthly interest saved',
+    'monthly savings',
+    'eat into the savings',
   ];
 
   for (const phrase of bannedPhrases) {
     assert.ok(!source.includes(phrase), `expected Learn copy not to include unqualified sample outcome: ${phrase}`);
   }
+  assert.ok(source.includes('monthly modeled interest difference'), 'expected Learn examples to label timing deltas as modeled interest differences');
 });
 
 test('learn page avoids universal LOC rate-spread rules', () => {
@@ -5785,11 +5794,17 @@ test('Guardian answer bank avoids unqualified savings promises', () => {
     'more surplus = faster freedom',
     'pay off years faster',
     'every chunk brings you closer to freedom',
+    'projected savings',
+    'projected interest savings',
   ];
 
   for (const claim of bannedClaims) {
     assert.ok(!answerBank.includes(claim), `expected Guardian copy not to include unqualified claim: ${claim}`);
   }
+  assert.ok(
+    answerBank.includes('modeled interest difference') || answerBank.includes('modeled interest differences'),
+    'expected Guardian savings-adjacent copy to use modeled interest difference framing'
+  );
 });
 
 test('Guardian answer bank avoids unsupported population stats and named anecdotes', () => {
