@@ -6698,6 +6698,10 @@ test('dashboard model treats a full LOC as no available room instead of over-lim
   assert.equal(locArtifact.value, '$0 open');
   assert.equal(locArtifact.signal, '100% used');
   assert.equal(locArtifact.tone, 'amber');
+  assert.equal(locArtifact.operationalState, 'blocked');
+  const visualContract = loadTsModule('src/app/artifact-visual-contract.ts').buildMoneyLoopVisualContract(model.moneyLoopArtifacts);
+  assert.equal(visualContract.artifacts.find((artifact) => artifact.id === 'loc').state, 'blocked');
+  assert.equal(visualContract.artifacts.find((artifact) => artifact.id === 'loc').selectionMotion, 'settle-only');
 });
 
 test('dashboard model sanitizes non-finite first-screen and artifact inputs', () => {
@@ -6821,6 +6825,124 @@ test('dashboard model provides a five-part Money Loop artifact rail without addi
     JSON.stringify(model.moneyLoopArtifacts)
   );
   assert.equal(model.moneyLoopArtifacts.find((artifact) => artifact.id === 'cash-flow').tone, 'emerald');
+});
+
+test('Money Loop visual contract binds the five financial artifacts to stable 3D grammar', () => {
+  const visualContract = loadTsModule('src/app/artifact-visual-contract.ts');
+  const artifacts = [
+    { id: 'income', label: 'Income', value: '$6,500', signal: 'Fuel', note: 'Deposits start the loop.', tone: 'emerald', operationalState: 'stable', fillPercent: 100, pressurePercent: 100 },
+    { id: 'loc', label: 'LOC', value: '$21,800 open', signal: '13% used', note: 'Capacity is not income.', tone: 'sky', operationalState: 'stable', fillPercent: 87, pressurePercent: 87 },
+    { id: 'expenses', label: 'Expenses', value: '$5,000', signal: 'Outflow', note: 'Expenses shape the loop.', tone: 'sky', operationalState: 'stable', fillPercent: 77, pressurePercent: 77 },
+    { id: 'cash-flow', label: 'Cash Flow', value: '$1,500', signal: 'Surplus', note: 'Positive flow recovers the LOC.', tone: 'emerald', operationalState: 'stable', fillPercent: 23, pressurePercent: 23 },
+    { id: 'principal', label: 'Principal', value: '$1,000', signal: 'Auto Loan', note: 'The chunk targets principal.', tone: 'emerald', operationalState: 'stable', fillPercent: 12, pressurePercent: 8 },
+  ];
+
+  const contract = visualContract.buildMoneyLoopVisualContract(artifacts);
+
+  assert.equal(contract.version, 1);
+  assert.equal(contract.isComplete, true);
+  assert.equal(contract.fallbackReason, null);
+  assert.equal(contract.artifacts.map((artifact) => artifact.id).join('|'), 'income|loc|expenses|cash-flow|principal');
+  assert.equal(
+    contract.artifacts.map((artifact) => artifact.geometry).join('|'),
+    'deposit-reservoir|credit-aperture|outflow-gate|flow-core|principal-shield'
+  );
+  assert.ok(contract.artifacts.every((artifact) => artifact.selectionMotion === 'spin-once'));
+  assert.ok(contract.artifacts.every((artifact) => artifact.accessibleLabel.includes(artifact.label)));
+});
+
+test('Money Loop visual contract clamps every render channel and keeps warnings restrained', () => {
+  const visualContract = loadTsModule('src/app/artifact-visual-contract.ts');
+  const artifacts = [
+    { id: 'income', label: 'Income', value: '$0', signal: 'Review', note: 'Review inputs.', tone: 'amber', operationalState: 'caution', fillPercent: Number.POSITIVE_INFINITY, pressurePercent: Number.NaN },
+    { id: 'loc', label: 'LOC', value: '$0 open', signal: 'Setup needed', note: 'Enter terms.', tone: 'amber', operationalState: 'caution', fillPercent: -20, pressurePercent: 500 },
+    { id: 'expenses', label: 'Expenses', value: '$7,000', signal: 'Outflow', note: 'Stabilize.', tone: 'rose', operationalState: 'blocked', fillPercent: 500, pressurePercent: 500 },
+    { id: 'cash-flow', label: 'Cash Flow', value: '-$500', signal: 'Stabilize', note: 'Restore positive flow.', tone: 'rose', operationalState: 'blocked', fillPercent: 0, pressurePercent: 0 },
+    { id: 'principal', label: 'Principal', value: 'Set chunk', signal: 'Auto Loan', note: 'Choose a safe chunk.', tone: 'amber', operationalState: 'caution', fillPercent: 12, pressurePercent: 8 },
+  ];
+
+  const contract = visualContract.buildMoneyLoopVisualContract(artifacts);
+  const channels = contract.artifacts.flatMap((artifact) => Object.values(artifact.channels));
+
+  assert.ok(channels.every((value) => Number.isFinite(value) && value >= 0 && value <= 1), JSON.stringify(contract));
+  assert.equal(contract.artifacts.find((artifact) => artifact.id === 'expenses').state, 'blocked');
+  assert.equal(contract.artifacts.find((artifact) => artifact.id === 'cash-flow').selectionMotion, 'settle-only');
+  assert.equal(contract.artifacts.find((artifact) => artifact.id === 'loc').state, 'caution');
+  assert.equal(contract.artifacts.find((artifact) => artifact.id === 'loc').selectionMotion, 'restrained-turn');
+});
+
+test('Money Loop visual capability policy fails closed before the Three.js stage loads', () => {
+  const visualContract = loadTsModule('src/app/artifact-visual-contract.ts');
+
+  assert.equal(visualContract.selectMoneyLoopRenderMode({ supportsWebgl: false, contractComplete: true }), 'static');
+  assert.equal(visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: false }), 'static');
+  assert.equal(visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: true, prefersReducedMotion: true }), 'static');
+  assert.equal(visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: true, saveData: true }), 'static');
+  assert.equal(
+    visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: true, deviceMemoryGb: 2, hardwareConcurrency: 2, viewportWidth: 390 }),
+    'efficient'
+  );
+  assert.equal(
+    visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: true, deviceMemoryGb: 8, hardwareConcurrency: 8 }),
+    'efficient'
+  );
+  assert.equal(
+    visualContract.selectMoneyLoopRenderMode({ supportsWebgl: true, contractComplete: true, deviceMemoryGb: 8, hardwareConcurrency: 8, viewportWidth: 1440 }),
+    'full'
+  );
+});
+
+test('Money Loop visual contract rejects incomplete duplicate and malformed runtime records', () => {
+  const visualContract = loadTsModule('src/app/artifact-visual-contract.ts');
+  const stableArtifact = (id, overrides = {}) => ({
+    id,
+    label: id,
+    value: '$1',
+    signal: 'Modeled',
+    note: 'Modeled value.',
+    tone: 'emerald',
+    operationalState: 'stable',
+    fillPercent: 50,
+    pressurePercent: 50,
+    ...overrides,
+  });
+  const complete = ['income', 'loc', 'expenses', 'cash-flow', 'principal'].map((id) => stableArtifact(id));
+  const incomplete = visualContract.buildMoneyLoopVisualContract(complete.slice(0, 4));
+  const duplicate = visualContract.buildMoneyLoopVisualContract([...complete.slice(0, 4), stableArtifact('income')]);
+  const malformed = visualContract.buildMoneyLoopVisualContract(
+    complete.map((artifact) => artifact.id === 'loc' ? { ...artifact, tone: 'purple' } : artifact)
+  );
+
+  for (const contract of [incomplete, duplicate, malformed]) {
+    assert.equal(contract.isComplete, false);
+    assert.equal(contract.artifacts.length, 0);
+    assert.ok(contract.fallbackReason);
+  }
+
+  const duplicateDomArtifacts = visualContract.selectSafeMoneyLoopDomArtifacts([
+    ...complete.slice(0, 4),
+    stableArtifact('income', { value: '$2' }),
+  ]);
+  const malformedDomArtifacts = visualContract.selectSafeMoneyLoopDomArtifacts(
+    complete.map((artifact) => artifact.id === 'loc' ? { ...artifact, tone: 'purple' } : artifact)
+  );
+  assert.equal(duplicateDomArtifacts.map((artifact) => artifact.id).join('|'), 'income|loc|expenses|cash-flow');
+  assert.equal(duplicateDomArtifacts.find((artifact) => artifact.id === 'income').value, '$1');
+  assert.equal(malformedDomArtifacts.map((artifact) => artifact.id).join('|'), 'income|expenses|cash-flow|principal');
+});
+
+test('Money Loop artifact rail consumes the versioned visual contract without replacing DOM controls', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+
+  assert.ok(source.includes("from '@/app/artifact-visual-contract'"));
+  assert.ok(source.includes('buildMoneyLoopVisualContract(artifacts)'));
+  assert.ok(source.includes('data-visual-contract-version={visualContract.version}'));
+  assert.ok(source.includes('data-visual-contract-complete={visualContract.isComplete}'));
+  assert.ok(source.includes('data-active-geometry={activeVisualArtifact?.geometry}'));
+  assert.ok(source.includes('if (!fromArtifact || !toArtifact) return null'));
+  assert.ok(source.includes('selectSafeMoneyLoopDomArtifacts(artifacts)'));
+  assert.ok(source.includes('displayArtifacts.map('));
+  assert.ok(source.includes('role="tablist"'), 'expected the DOM tab controls to remain authoritative');
 });
 
 test('dashboard model explains why edited inputs change the plan without adding vitals', () => {

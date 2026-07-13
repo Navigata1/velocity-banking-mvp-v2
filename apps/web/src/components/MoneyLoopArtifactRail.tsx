@@ -1,6 +1,10 @@
 'use client';
 
 import { useState, type CSSProperties, type HTMLAttributes, type KeyboardEvent } from 'react';
+import {
+  buildMoneyLoopVisualContract,
+  selectSafeMoneyLoopDomArtifacts,
+} from '@/app/artifact-visual-contract';
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
@@ -91,15 +95,18 @@ export default function MoneyLoopArtifactRail({
   const mounted = useIsClient();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
-  const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(artifacts[0]?.id ?? 'income');
-  const activeArtifact = artifacts.find((artifact) => artifact.id === activeArtifactId) ?? artifacts[0];
-  const activeIndex = Math.max(0, artifacts.findIndex((artifact) => artifact.id === activeArtifact?.id));
+  const visualContract = buildMoneyLoopVisualContract(artifacts);
+  const displayArtifacts = selectSafeMoneyLoopDomArtifacts(artifacts);
+  const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(displayArtifacts[0]?.id ?? 'income');
+  const activeArtifact = displayArtifacts.find((artifact) => artifact.id === activeArtifactId) ?? displayArtifacts[0];
+  const activeVisualArtifact = visualContract.artifacts.find((artifact) => artifact.id === activeArtifact?.id);
+  const activeIndex = Math.max(0, displayArtifacts.findIndex((artifact) => artifact.id === activeArtifact?.id));
 
   if (!activeArtifact) {
     return null;
   }
 
-  const activeTone = toneStyles[activeArtifact.tone];
+  const activeTone = toneStyles[activeArtifact.tone] ?? toneStyles.amber;
   const activeTokenStyle: ArtifactTokenStyle = {
     background: `conic-gradient(${activeTone.accent} ${activeArtifact.fillPercent}%, rgba(148, 163, 184, 0.18) 0)`,
     '--artifact-depth-color': activeTone.accent,
@@ -109,11 +116,11 @@ export default function MoneyLoopArtifactRail({
     '--active-artifact-angle': orbitNodeAngles[activeArtifact.id],
   } as CSSProperties;
   const artifactById = Object.fromEntries(
-    artifacts.map((artifact) => [artifact.id, artifact])
-  ) as Record<DashboardLoopArtifact['id'], DashboardLoopArtifact>;
+    displayArtifacts.map((artifact) => [artifact.id, artifact])
+  ) as Partial<Record<DashboardLoopArtifact['id'], DashboardLoopArtifact>>;
 
   function selectArtifactByIndex(index: number) {
-    const nextArtifact = artifacts[index];
+    const nextArtifact = displayArtifacts[index];
     if (!nextArtifact) return;
 
     setActiveArtifactId(nextArtifact.id);
@@ -125,7 +132,7 @@ export default function MoneyLoopArtifactRail({
   }
 
   function selectRelativeArtifact(direction: -1 | 1) {
-    const lastIndex = artifacts.length - 1;
+    const lastIndex = displayArtifacts.length - 1;
     const nextIndex =
       direction === 1
         ? activeIndex === lastIndex ? 0 : activeIndex + 1
@@ -138,7 +145,7 @@ export default function MoneyLoopArtifactRail({
     event: KeyboardEvent<HTMLButtonElement>,
     index: number
   ) {
-    const lastIndex = artifacts.length - 1;
+    const lastIndex = displayArtifacts.length - 1;
     let nextIndex: number | null = null;
 
     if (event.key === 'ArrowRight') {
@@ -161,11 +168,14 @@ export default function MoneyLoopArtifactRail({
     <section
       {...sectionProps}
       aria-label="Money Loop artifact carousel"
+      data-visual-contract-version={visualContract.version}
+      data-visual-contract-complete={visualContract.isComplete}
       className={`relative min-w-0 ${className}`}
     >
       <div
         id="money-loop-artifact-panel"
         data-testid="money-loop-artifact-active"
+        data-active-geometry={activeVisualArtifact?.geometry}
         role="tabpanel"
         aria-labelledby={`money-loop-artifact-tab-${activeArtifact.id}`}
         aria-live="polite"
@@ -192,7 +202,8 @@ export default function MoneyLoopArtifactRail({
               {orbitFlowSegments.map((segment) => {
                 const fromArtifact = artifactById[segment.from];
                 const toArtifact = artifactById[segment.to];
-                const segmentTone = toneStyles[fromArtifact.tone];
+                if (!fromArtifact || !toArtifact) return null;
+                const segmentTone = toneStyles[fromArtifact.tone] ?? toneStyles.amber;
                 const pressureWidth = Math.max(2, Math.min(8, fromArtifact.pressurePercent / 14));
                 const opacity = fromArtifact.id === activeArtifact.id || toArtifact.id === activeArtifact.id ? 0.9 : 0.42;
 
@@ -235,8 +246,8 @@ export default function MoneyLoopArtifactRail({
               </div>
             </div>
 
-            {artifacts.map((artifact, index) => {
-              const tone = toneStyles[artifact.tone];
+            {displayArtifacts.map((artifact, index) => {
+              const tone = toneStyles[artifact.tone] ?? toneStyles.amber;
               const isActive = artifact.id === activeArtifact.id;
               const nodeStyle = {
                 ...orbitNodePositions[artifact.id],
@@ -288,7 +299,7 @@ export default function MoneyLoopArtifactRail({
 
       <div className="mt-3 flex items-center justify-between gap-3">
         <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>
-          Artifact {activeIndex + 1} of {artifacts.length}
+          Artifact {activeIndex + 1} of {displayArtifacts.length}
         </p>
         <div className="flex items-center gap-2">
           <button
@@ -326,8 +337,8 @@ export default function MoneyLoopArtifactRail({
           data-testid="money-loop-artifact-selector-grid"
           className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-1 scroll-px-1 px-[calc(50vw-68px)] md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
         >
-          {artifacts.map((artifact, index) => {
-            const tone = toneStyles[artifact.tone];
+          {displayArtifacts.map((artifact, index) => {
+            const tone = toneStyles[artifact.tone] ?? toneStyles.amber;
             const isActive = artifact.id === activeArtifact.id;
             const tokenStyle: ArtifactTokenStyle = {
               animationDelay: `${index * 120}ms`,

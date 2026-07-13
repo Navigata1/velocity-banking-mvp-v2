@@ -1,0 +1,54 @@
+P4-T1 five-artifact visual contract evidence
+Recorded: 2026-07-13 UTC
+
+DESIGN
+- Contract-first design selected over component-local formulas or a duplicate scene store.
+- Financial source of truth remains DashboardLoopArtifact from dashboard-model.ts.
+- DOM tablist, previous/next controls, copy, values, and focus remain authoritative.
+- Design: docs/superpowers/specs/2026-07-12-money-loop-3d-stage-design.md
+- Plan: docs/superpowers/plans/2026-07-12-money-loop-3d-stage.md
+
+RED
+- Three behavior tests failed with ENOENT for artifact-visual-contract.ts.
+- The rail reachability test then failed because MoneyLoopArtifactRail did not import
+  or expose the versioned contract.
+
+GREEN
+- Added contract version 1 for Income, LOC, Expenses, Cash Flow, and Principal.
+- Exact geometries: deposit-reservoir, credit-aperture, outflow-gate, flow-core,
+  and principal-shield.
+- Render channels are finite and normalized to 0..1.
+- Stable, caution, and blocked states map to spin-once, restrained-turn, and
+  settle-only selection intent, respectively.
+- Incomplete, duplicate, extra, or malformed artifact sets fail closed with no
+  render artifacts and a static-fallback reason.
+- The authoritative DOM fallback canonicalizes unique runtime-valid artifacts,
+  preventing duplicate keys, tab IDs, selected states, and roving tab stops.
+- Dashboard artifacts carry explicit operational state, so full and over-limit
+  LOC conditions are blocked and settle-only independently of amber tone.
+- WebGL unavailable, incomplete contract, reduced motion, and save-data select
+  static mode; unknown width, narrow viewport, or constrained hardware selects
+  efficient mode; only known capable hardware and width select full mode.
+- The live rail exposes contract version, completeness, and active geometry while
+  retaining its semantic DOM tablist.
+
+GATES
+- npm --prefix apps/web test
+  PASS 249 regression tests.
+  PASS 2 independent anonymized financial reference scenarios.
+  PASS accessibility, metadata, and public asset contracts.
+- npm --prefix apps/web run lint
+  PASS ESLint, exit 0.
+- npm --prefix apps/web run build
+  PASS Next.js 16.2.10 production build with 14 static pages.
+- npm --prefix apps/web run smoke:rendered:built
+  PASS all seven routes at 1440x900 and 390x844 plus LOC interaction.
+- git diff --check
+  PASS.
+- Design and plan placeholder scan
+  PASS: no TBD, TODO, implement-later, fill-in, or similar-task placeholders.
+- Independent adversarial review
+  Found incomplete-contract rail crashes, malformed runtime records, unknown-width
+  full mode, tone-derived blocked LOC state, and duplicate DOM tab identities.
+  Each finding received a failing regression and a verified correction.
+  Final re-review: no findings.

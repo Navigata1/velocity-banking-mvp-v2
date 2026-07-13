@@ -177,3 +177,11 @@
 - Fresh merged-main tests, lint, production build, all 14 desktop/mobile rendered route cases, the LOC interaction, and the 0.13 MiB public asset budget pass.
 - P3 closes with the four-vital dashboard, model-backed Money Loop stage, bounded product modules, semantic icons, complete metadata surfaces, and standing rendered CI coverage.
 - P4-T1 is active on codex/mission/p4-artifact-visual-contract. The first slice defines real model-to-visual bindings and capability/fallback policy before introducing Three.js.
+
+## 2026-07-13T06:10Z - P4 artifact visual contract verified locally
+- Added a versioned pure contract for the five canonical geometries, normalized model channels, warning-aware selection motion, complete-set fallback, and static/efficient/full capability policy.
+- The live Money Loop rail consumes the contract and exposes version, completeness, and active geometry without replacing its semantic DOM controls.
+- The written stage design and four-task implementation plan prohibit new financial claims, canvas-only navigation, ambient animation, and first-paint Three.js loading.
+- Red evidence captured the missing contract and missing rail wiring. Two adversarial review rounds then exposed incomplete and malformed runtime models, fail-open capability selection, tone-derived blocked LOC state, and duplicate DOM tab identities; each received a failing regression and correction.
+- Green gates include 249 regressions, fixtures, accessibility, metadata, assets, lint, 14-page build, and all rendered desktop/mobile routes plus the LOC interaction.
+- Final independent re-review reports no findings after the runtime and DOM fallback corrections.
