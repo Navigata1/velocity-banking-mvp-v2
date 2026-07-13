@@ -52,7 +52,7 @@ export default function RootLayout({
               id="main-content"
               tabIndex={-1}
               aria-label="Main content"
-              className="flex-1 pb-20 md:pb-0"
+              className="min-w-0 flex-1 pb-20 md:pb-0"
             >
               <IntroModal />
               <PreAppPreview />

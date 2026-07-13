@@ -2448,6 +2448,7 @@ test('root layout exposes a keyboard skip link to main content', () => {
   assert.ok(source.includes('id="main-content"'), 'expected the main region to expose the skip-link target id');
   assert.ok(source.includes('tabIndex={-1}'), 'expected the main region to be programmatically focusable');
   assert.ok(source.includes('aria-label="Main content"'), 'expected the main region to have a readable landmark label');
+  assert.ok(source.includes('className="min-w-0 flex-1'), 'expected the shared flex shell to contain route-level horizontal overflow');
 });
 
 test('intro modal exposes dialog semantics and traps keyboard focus', () => {
@@ -6857,7 +6858,10 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
     'expected each mobile vital to be backed by the dashboard model'
   );
   assert.ok(source.includes('model.vitals.map'), 'expected mobile and desktop vitals to reuse the same model data');
-  assert.ok(source.includes('hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4'), 'expected full-detail vitals to start at tablet width');
+  assert.ok(
+    source.includes('hidden overflow-hidden') && source.includes('md:grid md:grid-cols-2 xl:grid-cols-4'),
+    'expected full-detail vitals to start at tablet width in one contained instrument strip'
+  );
 });
 
 test('dashboard home page exposes a compact mobile Money Loop bridge', () => {
@@ -6949,8 +6953,8 @@ test('Money Loop artifact rail fits desktop while preserving narrow-screen carou
     source.includes('md:grid-cols-[repeat(5,minmax(0,1fr))]'),
     'expected desktop artifact cards to fit all five Money Loop artifacts without native carousel overflow'
   );
-  assert.ok(source.includes('md:min-h-[104px]'), 'expected desktop artifact cards to use compact stable heights');
-  assert.ok(source.includes('md:p-2.5'), 'expected desktop artifact cards to use compact spacing');
+  assert.ok(source.includes('md:min-h-[78px]'), 'expected desktop artifact tabs to use compact stable heights');
+  assert.ok(source.includes('md:p-3'), 'expected desktop artifact tabs to use compact spacing');
   assert.ok(source.includes('md:hidden'), 'expected full selector token/value details to collapse on fitted desktop cards');
   assert.ok(source.includes('snap-x snap-mandatory'), 'expected artifact cards to snap into centered carousel positions');
   assert.ok(source.includes('md:snap-none'), 'expected desktop artifact cards to behave as a fitted selector grid');
@@ -7058,11 +7062,11 @@ test('dashboard Money Loop rail is width-contained for mobile layouts', () => {
   const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
 
   assert.ok(
-    pageSource.includes('${classes.glass} min-w-0 rounded-2xl'),
-    'expected the dashboard loop panel to allow child overflow containment'
+    pageSource.includes('<div className="min-w-0">'),
+    'expected the dashboard loop stage to allow child overflow containment'
   );
   assert.ok(
-    railSource.includes('relative min-w-0 rounded-2xl'),
+    railSource.includes('relative min-w-0 ${className}'),
     'expected the artifact rail itself to be min-width contained'
   );
 });

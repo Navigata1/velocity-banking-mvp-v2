@@ -111,3 +111,17 @@
 - Seven Worker tests prove fail-closed placeholders, exact-origin CORS, owner namespacing, rollback, actual streamed size limits, cross-owner 404, and metadata deletion.
 - Wrangler-generated types, TypeScript, zero dependency findings, and deployment dry-run pass with one R2 binding and no D1 binding.
 - No Cloudflare resource was created or deployed; private buckets and final vars remain an explicit resource/cost gate.
+
+## 2026-07-13T04:06Z - P2 complete; P3 dashboard overhaul begins
+- PR #232 merged at c63e89d after both GitHub quality workflows and the Vercel preview passed.
+- Cloudflare is now a report-only Worker + private R2 lane; Supabase is the sole financial migration target and system of record.
+- P2 is complete with all four gates passing and all five tasks merged. No paid Supabase or Cloudflare resource was created.
+- P3-T1 is active on codex/mission/p3-dashboard-first-viewport, beginning with current first-viewport and responsive-shell inspection before implementation.
+
+## 2026-07-13T04:26Z - P3 dashboard first viewport verified locally
+- Reframed the dashboard as an instrument panel: compact header and domain strip, exactly four vitals, then a dominant model-backed Money Loop stage.
+- Reworked the artifact selector into a larger CSS 3D orbit with arrow controls, five stable tabs, modeled pressure, roving keyboard focus, and reduced-motion coverage.
+- Slimmed the desktop rail and replaced the slate shell with a graphite base while preserving the existing route and account surfaces.
+- Browser smoke at 1440 x 900 and 390 x 844 proves no document overflow; the Next control selects LOC and updates the active tabpanel.
+- The shared main flex region now uses min-width containment, fixing a route-wide horizontal overflow risk exposed by the complete domain strip.
+- All 243 web regressions, independent fixtures, accessibility, lint, production build, and seven built routes pass. Photoreal 3D objects remain a P4 deliverable.

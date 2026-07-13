@@ -61,17 +61,17 @@ export const themeClasses: Record<Theme, {
   accent?: string;
 }> = {
   original: {
-    bg: 'bg-slate-900',
-    bgSecondary: 'bg-slate-800',
-    bgTertiary: 'bg-slate-700',
+    bg: 'bg-[#090d12]',
+    bgSecondary: 'bg-[#10161d]',
+    bgTertiary: 'bg-[#17202a]',
     text: 'text-white',
     textSecondary: 'text-gray-400',
     textMuted: 'text-gray-500',
-    border: 'border-slate-700',
-    glass: 'bg-slate-800/60 backdrop-blur-xl border border-slate-600/40 shadow-lg shadow-emerald-500/5',
+    border: 'border-white/10',
+    glass: 'bg-white/[0.035] border border-white/10 shadow-lg shadow-black/15',
     glassButton: 'bg-gradient-to-br from-slate-700/80 via-slate-800/60 to-slate-900/80 backdrop-blur-xl border border-slate-500/30 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300',
     glassHero: 'bg-gradient-to-br from-slate-800/40 via-slate-900/60 to-slate-800/40 backdrop-blur-xl border border-slate-600/30 shadow-2xl shadow-emerald-500/10',
-    nav: 'bg-gray-900/95 backdrop-blur border-gray-800',
+    nav: 'bg-[#080c10]/98 backdrop-blur border-white/10',
     dropdown: 'bg-slate-800/95 backdrop-blur-xl border border-slate-600/50',
   },
   dark: {
