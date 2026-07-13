@@ -1,0 +1,20 @@
+﻿
+> web@0.1.0 smoke:routes
+> node scripts/smoke-routes.cjs
+
+PASS Dashboard /
+PASS Simulator /simulator
+PASS Cockpit /cockpit
+PASS Portfolio /portfolio
+PASS Learn /learn
+PASS Settings /settings
+PASS Vault /vault
+> web@0.1.0 start
+> next start -H 0.0.0.0 -p 5000
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:5000
+- Network:       http://0.0.0.0:5000
+
+✓ Starting...
+✓ Ready in 855ms

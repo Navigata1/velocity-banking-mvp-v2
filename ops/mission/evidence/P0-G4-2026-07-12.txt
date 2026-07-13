@@ -1,0 +1,6 @@
+﻿
+> web@0.1.0 smoke:production
+> node scripts/smoke-production.cjs
+
+Production origin: https://web-islanddevcrew.vercel.app
+Dashboard route / did not expose the current InterestShield shell marker: data-testid="primary-navigation". Promote/deploy the current dashboard build, then rerun this smoke and a rendered Browser or Chrome check for `money-loop-artifact-rail`, `money-loop-payoff-orbit`, and the four dashboard vitals. Observed Vercel diagnostics: deployment marker(s): dpl_FfPyuRhZM8G4pTofYifoajjVDpLg; x-vercel-id: iad1::f9c7l-1783906894072-a1e1117d1f3f; x-vercel-cache: HIT. Latest GitHub Production deployment target: https://velocity-banking-mvp-v2-78l3t4zuy-islanddevcrew.vercel.app (dfb4d911da63556f4880ebade9a03af0afc94e0b, status: success). Remediation: authenticate Vercel access for team/project islanddevcrew/velocity-banking-mvp-v2, sha: dfb4d911da63556f4880ebade9a03af0afc94e0b, target status: success; run `npx vercel promote https://velocity-banking-mvp-v2-78l3t4zuy-islanddevcrew.vercel.app --scope islanddevcrew`; then run `npx vercel cache purge --yes --scope islanddevcrew`; then rerun `npm run smoke:production` and a rendered Browser/Chrome freshness check.

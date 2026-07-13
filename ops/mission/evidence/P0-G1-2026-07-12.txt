@@ -1,0 +1,286 @@
+﻿
+> web@0.1.0 test
+> node scripts/engine-regression-tests.cjs && node scripts/accessibility-route-contract.cjs
+
+PASS amortization payment matches a known 30-year fixed-rate fixture
+PASS shared date and month formatters reject invalid payoff horizons
+PASS precise currency formatter rejects non-finite amounts
+PASS biweekly payoff helper uses the shared amortized payoff engine
+PASS single-debt strategy comparison standard path honors the actual monthly payment
+PASS biweekly savings compare against the actual monthly payment baseline
+PASS LOC ADB interest uses daily closing balances across web and shared engines
+PASS daily interest burn uses the shared financial-engine helper
+PASS velocity targeting sanitizes non-finite debt inputs before scoring and ranking
+PASS web calculations use shared financial-engine primitives
+PASS web Money Loop module re-exports shared financial-engine ledger
+PASS web single-debt amortized payoff paths use the shared helper
+PASS amortization yearly breakdown uses the shared payoff schedule
+PASS web multi-debt baseline comparisons use the shared amortized payoff helper
+PASS multi-debt payoff distinguishes horizon misses from under-interest payments
+PASS zero APR baseline payoff pays principal without charging interest
+PASS baseline treats payment equal to monthly interest as an invalid payoff plan
+PASS shared amortized payoff distinguishes horizon misses from under-interest payments
+PASS shared financial-engine primitives sanitize non-finite inputs
+PASS shared mobile snapshots sanitize non-finite planning inputs before display contracts
+PASS shared mobile portfolio labels amortized planning separately from LOC ledger math
+PASS mobile mode navigation exposes native tab semantics and stable touch targets
+PASS shared amortized payoff sanitizes non-finite inputs before building a schedule
+PASS shared Money Loop payoff rejects payments below monthly interest before producing a timeline
+PASS shared Money Loop payoff treats a missing LOC limit as setup needed instead of over-limit
+PASS shared Money Loop payoff treats a full LOC as no available room instead of over-limit
+PASS shared Money Loop payoff distinguishes horizon misses from under-interest payments
+PASS shared Money Loop payoff sanitizes non-finite inputs before building an event ledger
+PASS shared Money Loop caps LOC chunk draw to remaining principal
+PASS shared Money Loop caps same-month debt payment after a LOC chunk reduces principal
+PASS shared Money Loop caps LOC chunk draw to available credit
+PASS shared Money Loop payoff includes LOC recovery after the target debt is cleared
+PASS multi-debt velocity includes LOC interest in its total interest
+PASS multi-debt velocity exposes the shared Money Loop event ledger
+PASS multi-debt velocity treats the focus payment as a cash outflow for LOC recovery
+PASS multi-debt velocity includes LOC recovery after the final debt payoff
+PASS multi-debt velocity refuses over-limit LOC plans instead of returning payoff claims
+PASS multi-debt velocity treats a missing LOC limit as setup needed instead of over-limit
+PASS multi-debt velocity treats a full LOC as no available room instead of over-limit
+PASS shared warnings treat a LOC balance without a limit as setup needed instead of infinity utilization
+PASS shared warnings treat a full LOC as no available room instead of high utilization
+PASS shared warnings sanitize non-finite cash-flow LOC and debt inputs
+PASS multi-debt simulation sanitizes non-finite inputs before payoff math
+PASS multi-debt velocity refuses under-interest debt plans instead of dropping unpaid interest
+PASS multi-debt velocity refuses projections when cash flow cannot cover minimum payments
+PASS negative cash flow does not deploy a negative velocity chunk
+PASS velocity refuses over-limit LOC plans instead of chunking against unavailable credit
+PASS velocity treats a missing LOC limit as setup needed instead of over-limit
+PASS velocity treats a full LOC as no available room instead of over-limit
+PASS single-debt legacy simulation sanitizes non-finite inputs before payoff math
+PASS single-debt velocity treats the regular debt payment as a cash outflow for LOC recovery
+PASS single-debt velocity auto-sizes chunks from recoverable LOC cash flow
+PASS single-debt velocity refuses projections when cash flow cannot cover the regular debt payment
+PASS baseline marks payments below monthly interest as impossible payoff plans
+PASS portfolio simulation does not mutate promo terms on input debts
+PASS portfolio promo APR lasts for the full remaining-month window before post-intro APR starts
+PASS portfolio simulation does not project payoff when a minimum payment is below monthly interest
+PASS portfolio simulation distinguishes horizon misses from under-interest payments
+PASS portfolio simulation does not project payoff when cash flow cannot cover minimums
+PASS portfolio split focus allocates the full available extra payment across both targets
+PASS portfolio percent minimum payments recalculate from the current simulated balance
+PASS portfolio page blocks debt-free date claims for invalid projections
+PASS portfolio page guards percent labels before display
+PASS portfolio strategy picker distinguishes planning default from fastest payoff
+PASS portfolio velocity strategy badge uses a wrapping compact header instead of competing with description copy
+PASS portfolio run comparison explains projection deltas after an edit
+PASS portfolio run comparison formats invalid projection reasons for users
+PASS portfolio run comparison formats restored projection reasons for users
+PASS portfolio page mounts the what-changed-since-last-run panel
+PASS portfolio payoff path visual model samples the simulated balance descent
+PASS portfolio page mounts the engine-backed payoff path visual
+PASS portfolio debt controls are labeled with the debt name
+PASS theme controls expose selected state to assistive technology
+PASS navigation exposes active page and mobile landmark state
+PASS navigation renders deterministic mobile icon tokens with stable tap targets
+PASS domain controls render deterministic tokens instead of stored glyph strings
+PASS root layout exposes a keyboard skip link to main content
+PASS intro modal exposes dialog semantics and traps keyboard focus
+PASS intro copy keeps a coach tone and labels assumptions
+PASS intro animation separates mobile beat content from captions
+PASS settings exposes controls to restore the pre-app snapshot preview
+PASS settings makes demo backend status explicit
+PASS settings backend readiness model keeps provider choice explicit
+PASS settings backend decision gates block premature production persistence
+PASS settings backend migration contract requires ownership and provider shapes
+PASS repository documents a Supabase first-lane schema with explicit owner-scoped RLS
+PASS repository documents a Cloudflare edge lane without live D1 wiring
+PASS backup controls label local-only export and import replacement behavior
+PASS backup controls expose a pasted JSON import path
+PASS settings exposes a local demo data reset path
+PASS settings exposes a full local demo backend handoff snapshot path
+PASS settings local demo data reset clears only InterestShield storage keys
+PASS settings full local demo snapshot exports only known InterestShield storage keys
+PASS settings full local demo snapshot import rejects unknown storage keys without mutating storage
+PASS settings full local demo snapshot import rejects an invalid backend migration contract
+PASS settings full local demo snapshot import replaces only known InterestShield storage keys
+PASS editable financial controls expose contextual screen-reader labels
+PASS editable financial controls sanitize non-finite display values
+PASS simulator editable controls expose contextual screen-reader labels
+PASS simulator LOC balance is editable where LOC math and warnings are shown
+PASS simulator mortgage option controls expose selected state
+PASS portfolio editable controls expose contextual screen-reader labels
+PASS vault and cockpit editable controls expose contextual screen-reader labels
+PASS vault mortgage option controls expose selected state
+PASS cockpit emergency scenario uses recovery-oriented coach copy
+PASS cockpit routing controls are stateful educational toggles
+PASS simulator quick adjust sliders sanitize non-finite values before display
+PASS portfolio simulation explains each debt priority with money-loop rationale
+PASS portfolio debt rationales display whole-percent APR inputs as percentages, not multipliers
+PASS portfolio payoff math treats whole-percent APR inputs like decimal APR inputs
+PASS portfolio debt rationales do not leak non-finite display values
+PASS portfolio simulation sanitizes non-finite inputs before payoff math
+PASS portfolio velocity labels its ranking assumptions instead of implying LOC math
+PASS portfolio velocity uses shared Money Loop LOC math when LOC inputs are present
+PASS portfolio velocity does not label LOC math when cash flow cannot cover minimums
+PASS portfolio velocity refuses over-limit LOC projections instead of ignoring the line
+PASS portfolio velocity treats a full LOC as no available room instead of over-limit
+PASS portfolio velocity treats an existing LOC balance without a limit as setup needed
+PASS portfolio velocity warns when LOC utilization is high but still available
+PASS portfolio velocity treats target debt payments as cash outflows for LOC recovery
+PASS portfolio velocity includes LOC recovery after the final debt payoff
+PASS portfolio store passes LOC and chunk inputs into portfolio simulation
+PASS portfolio store records a comparison against the previous run
+PASS portfolio backup export and import preserve Money Loop planning inputs
+PASS portfolio backup import rejects non-finite money inputs without corrupting state
+PASS portfolio persisted state sanitizes corrupt browser storage before hydration
+PASS financial persisted state sanitizes corrupt browser storage before hydration
+PASS portfolio live setters sanitize non-finite money inputs before recompute
+PASS financial live setters sanitize non-finite dashboard inputs before payoff helpers read them
+PASS dashboard payoff helpers use the canonical single-debt engine
+PASS single-debt strategy comparison keeps velocity aligned with runSimulation
+PASS single-debt velocity exposes a transparent monthly event ledger
+PASS shared money-loop payoff engine emits the canonical LOC event ledger
+PASS simulator strategy cards preserve invalid payoff states instead of claiming zero-month wins
+PASS simulator strategy comparison explains how Portfolio Velocity differs from fastest payoff
+PASS simulator strategy cards explain over-limit LOC failures plainly
+PASS simulator strategy cards explain missing LOC limit failures plainly
+PASS simulator strategy cards explain full LOC failures without calling them over-limit
+PASS simulator warnings treat a missing LOC limit as setup needed instead of high utilization
+PASS simulator warnings treat an exact-full LOC as no available room
+PASS web warning models distinguish LOC over limit from high utilization
+PASS simulator timeline status does not claim LOC interest visibility without events
+PASS simulator balance chart bars clamp invalid and over-starting balances
+PASS simulator visual percentages clamp payment split widths
+PASS strategy glass copy labels comparison deltas as modeled outcomes
+PASS strategy glass model suppresses winners and savings when the baseline is invalid
+PASS mortgage analysis warns when current balance exceeds original loan amount
+PASS mortgage analysis clamps an overlarge down payment instead of showing a negative loan
+PASS mortgage purchase-mode analysis uses shared schedule without advancing unelapsed months
+PASS mortgage purchase-mode strategies ignore hidden stale current balance inputs
+PASS mortgage analysis sanitizes non-finite history and payment split inputs
+PASS mortgage strategies sanitize non-finite horizon cash-flow and LOC inputs
+PASS mortgage standard strategy uses the actual current monthly payment
+PASS mortgage strategy payment plans use the shared amortized payoff helper
+PASS mortgage strategies do not replace a zero current payment with a derived payment
+PASS vault freedom path does not replace an explicit zero current payment
+PASS mortgage analysis and strategies preserve an explicit zero current rate
+PASS vault strategy cards block invalid non-velocity mortgage projections
+PASS vault strategy labels do not frame zero improvement as savings
+PASS modeled payoff comparison labels do not promise savings
+PASS vault comparison bars clamp invalid and slower payoff widths
+PASS vault visual percentages clamp invalid and over-range values
+PASS mortgage extra-payment strategy does not invent extra cash when cash flow is not positive
+PASS mortgage biweekly strategy does not invent an extra annual payment when cash flow is not positive
+PASS mortgage velocity strategy refuses over-limit LOC savings claims
+PASS mortgage velocity strategy treats a missing LOC limit as setup needed instead of over-limit
+PASS vault page surfaces invalid velocity setup before mortgage projections are trusted
+PASS mortgage velocity strategy treats a full LOC as no available room instead of over-limit
+PASS mortgage velocity strategy refuses projections when cash flow cannot cover the mortgage payment
+PASS vault freedom path blocks impact claims when velocity is invalid
+PASS vault freedom path rejects non-finite inputs before projecting impact claims
+PASS cockpit gauge dashes stay within SVG bounds
+PASS vault default copy keeps a coach tone instead of fear language
+PASS vault generation screen labels multiplier-based family scenarios as assumptions
+PASS learn page labels sample savings instead of presenting them as universal outcomes
+PASS learn page avoids universal LOC rate-spread rules
+PASS learn and dashboard LOC copy avoids hype and fear phrasing
+PASS simulator comparison copy labels traditional as a baseline instead of an absolute rule
+PASS learn progress sanitizes corrupt browser storage before hydration
+PASS learn page mistake cascade example keeps LOC availability arithmetic consistent
+PASS learn page ADB teaching example matches the shared daily closing-balance convention
+PASS learn page uses neutral examples instead of unsupported named anecdotes
+PASS learn page common mistakes uses coach tone instead of fear directives
+PASS Guardian teacher responses render as clean plain text
+PASS Guardian answer bank avoids unqualified savings promises
+PASS Guardian answer bank avoids unsupported population stats and named anecdotes
+PASS Guardian answer bank keeps mistake and recovery copy coach-toned
+PASS Guardian answer bank avoids hard-coded LOC rate and qualification thresholds
+PASS Guardian prioritizes HELOC intent over generic LOC matching
+PASS Guardian answer bank avoids directive card and investment advice without modeling
+PASS Guardian LOC and simulator guidance keeps buffer and timeline assumptions explicit
+PASS Guardian velocity guidance does not treat LOC use as automatically safe
+PASS Guardian getting-started prompt routes to planning-first guidance
+PASS Guardian routes mixed velocity credit-card prompts to card guidance
+PASS Guardian debt-priority guidance uses modeled inputs instead of fixed-rate directives
+PASS Guardian student-loan guidance preserves borrower protections before payoff modeling
+PASS Guardian prerequisite and income guidance avoids universal start/apply claims
+PASS Guardian answer bank avoids fixed mortgage and refinance shortcuts
+PASS Guardian cash-flow examples state income minus expenses correctly
+PASS dashboard model keeps the first screen to four vitals and blocks unstable payoff claims
+PASS dashboard model treats a missing LOC limit as setup needed instead of maxed out
+PASS dashboard model labels an existing LOC balance without a limit as missing limit
+PASS dashboard model treats a full LOC as no available room instead of over-limit
+PASS dashboard model sanitizes non-finite first-screen and artifact inputs
+PASS dashboard model provides a five-part Money Loop artifact rail without adding vitals
+PASS dashboard model explains why edited inputs change the plan without adding vitals
+PASS dashboard home page mounts the Money Loop artifact rail
+PASS dashboard home page exposes a compact mobile four-vital summary
+PASS dashboard home page exposes a compact mobile Money Loop bridge
+PASS dashboard mobile vital cards keep coach copy available without first-screen crowding
+PASS dashboard home page mounts why-this-changed explanations
+PASS Money Loop artifact child hooks do not collide with the rail smoke hook
+PASS Money Loop artifact rail fits desktop while preserving narrow-screen carousel overflow
+PASS Money Loop artifact rail exposes an item-selection carousel
+PASS Money Loop artifact carousel renders selected artifact depth layers
+PASS Money Loop artifact carousel supports keyboard roving focus
+PASS Money Loop artifact rail renders a model-backed payoff orbit visual
+PASS dashboard Money Loop rail is width-contained for mobile layouts
+PASS CountUp starts from the supplied value instead of a zero placeholder
+PASS CountUp hides animated financial ticks from assistive technology
+PASS CountUp sanitizes non-finite animated values before formatting
+PASS ProgressRing clamps progress and sanitizes SVG geometry inputs
+PASS Learn animated progress counter hides visual ticks from assistive technology
+PASS Learn decorative celebration canvases are hidden from assistive technology
+PASS pre-app preview blocks unstable debt-free date claims
+PASS pre-app preview snapshot ignores non-finite debt values at the model boundary
+PASS pre-app preview rejects corrupted debt-free date inputs after payoff validity passes
+PASS app startup defaults keep the dashboard ungated
+PASS theme persisted state falls back from invalid browser storage
+PASS preferences persisted state sanitizes local UI settings
+PASS app persisted state sanitizes shell routing and demo user state
+PASS web app exposes a repeatable route smoke command
+PASS web app exposes a repeatable accessibility route contract
+PASS web app exposes a repeatable production Vercel smoke command
+PASS web app declares Vercel Next deployment configuration
+PASS repository exposes a manual release deployment smoke workflow
+PASS repository documents the current Vercel alias promotion blocker
+PASS client mount hook notifies subscribers after hydration
+238 regression tests passed.
+PASS src/app/layout.tsx: skip link targets main content
+PASS src/app/layout.tsx: main content exposes a skip-link target
+PASS src/app/layout.tsx: main content can receive programmatic focus
+PASS src/app/layout.tsx: mobile shell exposes the required educational footer copy
+PASS src/components/Navigation.tsx: primary navigation has a landmark label
+PASS src/components/Navigation.tsx: primary navigation keeps the production freshness marker
+PASS src/components/Navigation.tsx: active route is announced
+PASS src/components/Navigation.tsx: Guardian chat opens as a dialog
+PASS src/components/Navigation.tsx: Guardian dialog is labelled
+PASS src/components/Navigation.tsx: Guardian chat input is named
+PASS src/components/Navigation.tsx: Guardian close button is named
+PASS src/components/DomainTabs.tsx: domain controls expose a grouped navigation control
+PASS src/components/DomainTabs.tsx: domain controls expose tab semantics
+PASS src/components/DomainTabs.tsx: domain controls expose selected state
+PASS src/components/DomainTabs.tsx: domain dropdown state is announced
+PASS scripts/smoke-routes.cjs: Dashboard is covered by built-route smoke
+PASS src/app/page.tsx: Dashboard exposes keyboard-smoke marker "Money Loop Dashboard"
+PASS src/app/page.tsx: Dashboard exposes keyboard-smoke marker "Dashboard vitals"
+PASS scripts/smoke-routes.cjs: Simulator is covered by built-route smoke
+PASS src/app/simulator/page.tsx: Simulator exposes keyboard-smoke marker "What-If Simulator"
+PASS src/app/simulator/page.tsx: Simulator exposes keyboard-smoke marker "Money Loop Timeline"
+PASS scripts/smoke-routes.cjs: Cockpit is covered by built-route smoke
+PASS src/app/cockpit/page.tsx: Cockpit exposes keyboard-smoke marker "Cockpit Mode"
+PASS src/app/cockpit/page.tsx: Cockpit exposes keyboard-smoke marker "Flight Controls"
+PASS scripts/smoke-routes.cjs: Portfolio is covered by built-route smoke
+PASS src/app/portfolio/page.tsx: Portfolio exposes keyboard-smoke marker "Portfolio"
+PASS src/app/portfolio/page.tsx: Portfolio exposes keyboard-smoke marker "Your Debts"
+PASS scripts/smoke-routes.cjs: Learn is covered by built-route smoke
+PASS src/app/learn/page.tsx: Learn exposes keyboard-smoke marker "Learn Center"
+PASS src/app/learn/page.tsx: Learn exposes keyboard-smoke marker "Glossary"
+PASS scripts/smoke-routes.cjs: Settings is covered by built-route smoke
+PASS src/app/settings/page.tsx: Settings exposes keyboard-smoke marker "Settings"
+PASS src/app/settings/page.tsx: Settings exposes keyboard-smoke marker "Backend status"
+PASS scripts/smoke-routes.cjs: Vault is covered by built-route smoke
+PASS src/app/vault/page.tsx: Vault exposes keyboard-smoke marker "Wealth Transfer Timeline"
+PASS src/app/vault/page.tsx: Vault exposes keyboard-smoke marker "Go to ${stepTitles[i].title}"
+PASS src/app/portfolio/page.tsx: add-debt modal is a dialog
+PASS src/app/portfolio/page.tsx: add-debt modal is labelled
+PASS src/app/portfolio/page.tsx: debt table selects are named through shared helpers
+PASS src/app/portfolio/page.tsx: split allocation editor is named
+PASS src/app/vault/page.tsx: Vault stepper announces the current step
+PASS src/app/vault/page.tsx: Vault stepper buttons are named
+Accessibility route contract passed.

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InterestShield State of the Union v2 - July 12, 2026</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#07101b; --paper:#0d1b2a; --paper2:#102538; --ink:#eef7f7; --muted:#a8bdc8;
+      --line:rgba(168,189,200,.19); --accent:#55d6a9; --blue:#77b7ff; --amber:#ffd166;
+      --red:#ff9292; --good:#8ef2c0; --violet:#c4a7ff; --cyan:#7de2ef;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:
+      radial-gradient(circle at 8% 0%,rgba(85,214,169,.15),transparent 28rem),
+      radial-gradient(circle at 92% 8%,rgba(119,183,255,.12),transparent 30rem),
+      var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+    a{color:var(--blue)} code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#dff7ef;font-size:.9em;overflow-wrap:anywhere;word-break:break-word}
+    main{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:34px 0 68px}
+    .jump{display:flex;gap:8px;overflow:auto;padding:8px 0 18px;position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 70%,transparent)}
+    .jump a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#0b1725;color:var(--muted);font-size:.76rem;font-weight:800}
+    h1,h2,h3{margin:0;line-height:1.12} h1{margin-top:10px;max-width:920px;font-size:clamp(2.25rem,5.2vw,4.35rem);letter-spacing:-.04em}
+    h2{margin-bottom:14px;font-size:clamp(1.5rem,3vw,2.15rem)} h3{margin-bottom:8px;font-size:1.03rem;color:#fff}
+    p{margin:0} section{padding-top:40px;scroll-margin-top:54px}
+    .eyebrow{color:var(--accent);font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:26px;align-items:end;padding:18px 0 34px;border-bottom:1px solid var(--line)}
+    .summary{max-width:790px;margin-top:18px;color:var(--muted);font-size:1.06rem}
+    .card,.metric,.finding,.phase,.task,.verdict,.system{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,var(--paper2),var(--paper));box-shadow:0 18px 46px rgba(0,0,0,.23)}
+    .verdict{padding:22px}.verdict strong{display:block;color:var(--accent);font-size:1.72rem;line-height:1.15}.verdict span{display:block;margin-top:11px;color:var(--muted);font-size:.94rem}
+    .chips{margin-top:16px}.chip{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:2px 4px 2px 0;background:rgba(255,255,255,.04);font-size:.75rem;font-weight:850;color:var(--muted)}
+    .chip.red{color:var(--red);border-color:rgba(255,146,146,.4)}.chip.amber{color:var(--amber);border-color:rgba(255,209,102,.4)}
+    .chip.green{color:var(--good);border-color:rgba(142,242,192,.4)}.chip.blue{color:var(--blue);border-color:rgba(119,183,255,.4)}.chip.violet{color:var(--violet);border-color:rgba(196,167,255,.4)}
+    .grid{display:grid;gap:15px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .metric,.card,.task{padding:18px}.metric strong{display:block;margin-bottom:7px;color:#fff;font-size:1.85rem;line-height:1}.muted,.card p,.task p,li,td{color:var(--muted)}
+    .kicker{max-width:880px;margin-bottom:15px;color:var(--muted)} ul{margin:9px 0 0;padding-left:20px}li+li{margin-top:7px}
+    .finding{padding:17px 18px;margin-top:10px}.sev{margin-right:8px;font-size:.7rem;font-weight:950;letter-spacing:.09em;text-transform:uppercase}.sev.high{color:var(--red)}.sev.medium{color:var(--amber)}.sev.low{color:var(--blue)}
+    .finding h3{display:inline;font-size:.99rem}.finding p{margin-top:7px;font-size:.92rem}.proof{display:block;margin-top:8px;color:var(--cyan);font-size:.82rem}
+    .table-wrap{overflow-x:auto;border-radius:12px}table{width:100%;border-collapse:collapse;margin-top:7px;font-size:.9rem;min-width:720px}th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}th{background:rgba(255,255,255,.05);color:#fff;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}td strong{color:#fff}
+    .phase{display:grid;grid-template-columns:78px 1fr;gap:18px;padding:21px;margin-top:13px}.phase-num{display:grid;place-items:center;width:68px;height:68px;border-radius:12px;background:rgba(85,214,169,.12);color:var(--accent);font-size:1.35rem;font-weight:950}.phase.p0 .phase-num{background:rgba(255,146,146,.12);color:var(--red)}.phase.p1 .phase-num{background:rgba(255,209,102,.12);color:var(--amber)}.phase.p3 .phase-num{background:rgba(119,183,255,.12);color:var(--blue)}.phase.p4 .phase-num{background:rgba(196,167,255,.12);color:var(--violet)}
+    .phase-meta{color:var(--accent);font-size:.83rem;font-weight:850}.task h3{margin-top:9px}.system{padding:22px;overflow:hidden}.system-map{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:center;gap:10px}.node{min-height:132px;border:1px solid var(--line);border-radius:10px;padding:16px;background:rgba(255,255,255,.035)}.node strong{display:block;color:#fff}.node span{display:block;margin-top:6px;color:var(--muted);font-size:.87rem}.arrow{text-align:center;color:var(--accent);font-size:1.7rem;font-weight:900}
+    .math{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.math .card code{display:block;margin-top:9px;color:var(--good)}
+    .footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}.footer p+p{margin-top:8px}
+    @media(max-width:900px){main{width:min(100% - 24px,760px);padding-top:22px}.hero,.two,.three,.four,.math{grid-template-columns:1fr}.phase{grid-template-columns:1fr}.system-map{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}h1{letter-spacing:0}.jump{margin-inline:-12px;padding-inline:12px}}
+    @media print{.jump{display:none}body{background:#fff;color:#111}.card,.metric,.finding,.phase,.task,.verdict,.system{box-shadow:none;break-inside:avoid}a{color:#0645ad}}
+  </style>
+</head>
+<body>
+<main>
+  <nav class="jump" aria-label="Report sections">
+    <a href="#verdict">Verdict</a><a href="#scoreboard">Scoreboard</a><a href="#findings">Findings</a><a href="#math">Math</a><a href="#backend">Backend</a><a href="#experience">Experience</a><a href="#phases">Phases</a><a href="#ladder">Targets</a><a href="#evidence">Evidence</a>
+  </nav>
+
+  <header class="hero" id="verdict">
+    <div>
+      <p class="eyebrow">InterestShield / State of the Union v2 / July 12, 2026</p>
+      <h1>The engine is credible. The release and the model contract are not finished.</h1>
+      <p class="summary">InterestShield has moved beyond a Replit prototype: it has a shared financial engine, seven web routes, an Expo application, 238 passing regression tests, and a current truth-first dashboard design. The public URL does not serve that product. It serves an older build with offscreen mobile navigation and copy the repository has already corrected. Two core modeling gaps also remain before the app should hold real financial data or present lender-specific projections.</p>
+      <div class="chips">
+        <span class="chip green">238 regressions pass</span><span class="chip green">7 local routes pass</span>
+        <span class="chip red">production alias stale</span><span class="chip red">3 launch gates open</span>
+        <span class="chip amber">backend contract-only</span><span class="chip blue">Expo exists and builds</span>
+      </div>
+    </div>
+    <aside class="verdict">
+      <strong>Verdict: repair truth before spectacle.</strong>
+      <span>Promote the current build, correct the canonical LOC event ledger, and make lender terms executable inputs. Then adopt Supabase as the system of record, use Cloudflare selectively at the edge, and build one model-driven Three.js show stage instead of spreading 3D across the application.</span>
+    </aside>
+  </header>
+
+  <section id="scoreboard" aria-labelledby="scoreboard-title">
+    <h2 id="scoreboard-title">Executive Scoreboard</h2>
+    <div class="grid four">
+      <article class="metric"><strong>215</strong><span class="muted">Latest merged PR number on GitHub main; the final CI run passed.</span></article>
+      <article class="metric"><strong>79.8 MiB</strong><span class="muted">Current web public assets across 75 files, mostly large PNG artwork.</span></article>
+      <article class="metric"><strong>0</strong><span class="muted">Live InterestShield backends found: no Supabase project wiring and no Cloudflare Worker or D1 database.</span></article>
+      <article class="metric"><strong>2 + 1</strong><span class="muted">Two confirmed high logic defects plus one high production release defect.</span></article>
+    </div>
+  </section>
+
+  <section id="findings" aria-labelledby="findings-title">
+    <h2 id="findings-title">What Survived Adversarial Review</h2>
+    <p class="kicker">Each high finding was challenged with a second pass using fresh runtime evidence or an independent calculation. No unverified claim drives the verdict.</p>
+
+    <article class="finding">
+      <span class="sev high">High / confirmed</span><h3>The public URL serves the wrong application release.</h3>
+      <p>Local tests and builds pass on GitHub main at <code>dfb4d91</code>, but <code>web-islanddevcrew.vercel.app</code> still serves deployment <code>dpl_FfPyuRhZM8G4pTofYifoajjVDpLg</code>. Browser and Chrome both found the old shell, no <code>primary-navigation</code> marker, no Money Loop artifact rail, and old fear-toned intro copy. At a 375px requested viewport, the browser content width was 360px while the bottom navigation was 492px wide, pushing Wealth Timeline, Settings, and Guardian controls offscreen on every route.</p>
+      <span class="proof">Refutation attempt: seven desktop routes and seven mobile routes were rendered; all loaded without console errors, but all exposed the stale shell. GitHub issue #59 independently tracks the same marker.</span>
+    </article>
+
+    <article class="finding">
+      <span class="sev high">High / confirmed</span><h3>The canonical Money Loop event ledger contradicts its own ending balance.</h3>
+      <p>With the default month, the ledger shows LOC balances of <code>$4,200 -> $0 -> $3,125 -> $4,206.66 -> $3,131.66</code>. Interest should post onto <code>$3,125</code>, producing <code>$3,131.66</code>; instead the interest event adds onto the pre-routing balance, then a second cash-flow event repairs the total. The Simulator renders every <code>event.balanceAfter</code>, so this is visible educational math, not an internal bookkeeping detail. See <code>packages/financial-engine/src/index.ts:531-567</code> and <code>apps/web/src/app/simulator/page.tsx:454-479</code>.</p>
+      <span class="proof">Refutation attempt: the shared engine was executed with default inputs. Final LOC balance and total interest are correct; only the event sequence is false. Existing tests assert event order and finite values, not ledger continuity.</span>
+    </article>
+
+    <article class="finding">
+      <span class="sev high">High / confirmed</span><h3>The app requires lender terms in its copy but cannot model them in its inputs.</h3>
+      <p>The current copy correctly says users need LOC fees, draw rules, repayment timing, and real terms before trusting a projection. The shared <code>LOCDetails</code> model accepts only limit, APR, and balance; there are no fee, variable-rate, draw-period, minimum-draw, minimum-payment, or repayment-period inputs. With only the three defaults present, the Simulator returns <code>guardrail: null</code> and a 16-month Velocity projection. The CFPB notes that HELOCs can include fees, minimum draws, changing payments, draw periods, repayment periods, and variable rates.</p>
+      <span class="proof">Refutation attempt: repository-wide search found fee and draw-rule language but no corresponding engine field. The default engine snapshot was executed and green-lit the projection.</span>
+    </article>
+
+    <article class="finding">
+      <span class="sev medium">Medium / confirmed</span><h3>The Supabase draft has two ownership-contract mismatches.</h3>
+      <p>The migration contract requires <code>owner_id</code> for every collection, including profiles, while <code>public.profiles</code> uses only <code>id</code>. In addition, <code>simulation_runs(snapshot_id, owner_id)</code> does not enforce that the referenced snapshot belongs to the same owner. Fix the contract or schema, then add a composite unique key and composite foreign key before applying the draft. See <code>backend-migration-contract.ts:34-44</code> and <code>202607020001_first_lane_owner_scoped_schema.sql:10-37</code>.</p>
+    </article>
+
+    <article class="finding">
+      <span class="sev medium">Medium / confirmed</span><h3>The LOC model is an estimate, not a transaction calendar.</h3>
+      <p>ADB uses a 30-day default, deposits all income first, and spreads expenses evenly. This is well labeled in many screens, but it cannot reproduce real paydays, statement periods, bill dates, rate changes, or lender posting conventions. It is suitable for education and sensitivity analysis, not a lender-statement promise.</p>
+    </article>
+
+    <article class="finding">
+      <span class="sev medium">Medium / confirmed</span><h3>The visual system is expressive but not yet a real 3D experience.</h3>
+      <p>The current artifact rail uses CSS perspective, conic gradients, SVG paths, and PNG heroes. There is no Three.js, React Three Fiber, Remotion, HyperFrames, GSAP, GLTF, or WebGL runtime. That is a useful prototype, but it cannot deliver the requested selectable rendered object stage. Adding 3D without first shrinking the existing 79.8 MiB image library would create a performance problem.</p>
+    </article>
+
+    <div class="grid two" style="margin-top:18px">
+      <article class="card"><h3>Strengths to preserve</h3><ul><li>Shared web/mobile financial engine with finite-input guards and explicit failure reasons.</li><li>Four-vital dashboard contract: Cash Flow, Interest Burn, Debt-Free ETA, Next Move.</li><li>Coach tone, educational disclaimer, LOC utilization warnings, and local-demo transparency.</li><li>Strong regression breadth across amortization, ADB, portfolio, accessibility, copy, and release smoke.</li><li>Existing Expo routes already share the engine instead of duplicating financial logic.</li></ul></article>
+      <article class="card"><h3>Structural debt to reduce</h3><ul><li><code>learn/page.tsx</code> is 1,284 lines; <code>portfolio/page.tsx</code> is 931; <code>mobile-shell.tsx</code> is 1,128.</li><li>Seventy-five PNG-heavy public assets total 79.8 MiB before a 3D asset pipeline exists.</li><li>No production observability or authenticated persistence is wired.</li><li>The protected latest Vercel artifact could not be rendered without reauthentication.</li><li>iOS simulator smoke cannot run on the current Windows host.</li></ul></article>
+    </div>
+  </section>
+
+  <section id="math" aria-labelledby="math-title">
+    <h2 id="math-title">Math State: Mostly Sound, One Visible Ledger Defect</h2>
+    <p class="kicker">The strongest result of this audit is what did not fail. The core amortization and ADB primitives reconcile independently.</p>
+    <div class="math">
+      <article class="card"><h3>Baseline payoff</h3><p>For <code>B=$18,450</code>, <code>APR=6.9%</code>, <code>P=$425</code>, the closed form gives 50.09 payment periods. The engine returns 51 scheduled months.</p><code>PASS: independent formula agrees</code></article>
+      <article class="card"><h3>Daily burn</h3><p>Debt daily interest is <code>$3.4878</code>. Adding the current LOC daily interest produces <code>$4.2330/day</code>, displayed as <code>$4/day</code>.</p><code>PASS: inputs and rounding agree</code></article>
+      <article class="card"><h3>ADB teaching fixture</h3><p>The 30-day <code>$5,000 / 10% / $4,000 income / $3,500 expenses</code> fixture produces <code>$23.08</code> interest.</p><code>PASS: source, test, and recomputation agree</code></article>
+    </div>
+    <div class="grid two" style="margin-top:15px">
+      <article class="card"><h3>Refuted concern: APR units</h3><p>Whole-percent and decimal inputs are normalized, and regression coverage checks portfolio display and payoff math. No active percent-vs-decimal defect was reproduced.</p></article>
+      <article class="card"><h3>Refuted concern: Velocity is always fastest</h3><p>The default shared simulator reports Snowball/Avalanche at 13 months and Velocity at 16 months. The current code does not force Velocity to win, which is the right truth-first behavior.</p></article>
+    </div>
+  </section>
+
+  <section id="backend" aria-labelledby="backend-title">
+    <h2 id="backend-title">Backend Decision, Scored Against This Product</h2>
+    <p class="kicker">InterestShield needs private owner-scoped financial scenarios, relational history, deletion, auditability, mobile parity, and a low-drama path to production. Those needs favor Postgres first and edge services second.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criterion</th><th>Supabase Postgres + Auth + RLS</th><th>Cloudflare D1 primary</th><th>Supabase + Cloudflare edge</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Owner security</strong></td><td>Native Postgres RLS plus Auth; current schema already targets it.</td><td>Requires a Worker API and custom owner enforcement for every query.</td><td><strong>RLS remains the source of truth; Worker verifies tokens for edge endpoints.</strong></td></tr>
+          <tr><td><strong>Relational integrity</strong></td><td>Full Postgres constraints, JSONB, SQL reporting, and mature tooling.</td><td>SQLite-based and capable, but would require rewriting the existing Postgres draft.</td><td><strong>Keep Postgres integrity; add Workers only where latency or jobs justify it.</strong></td></tr>
+          <tr><td><strong>Web + Expo fit</strong></td><td>One auth/data contract for both clients.</td><td>Custom API client and auth integration required.</td><td><strong>Shared Supabase identity; optional Worker endpoints for exports and public content.</strong></td></tr>
+          <tr><td><strong>Recovery</strong></td><td>Managed daily backups; paid PITR is available.</td><td>Time Travel is automatic, with 7- or 30-day windows by plan.</td><td>Postgres backup policy plus R2 exports gives defense in depth.</td></tr>
+          <tr><td><strong>Current readiness</strong></td><td>Migration draft exists; no project or client wiring.</td><td>No InterestShield Worker or D1 database exists in the connected account.</td><td>Requires Supabase first, then a deliberately scoped Worker.</td></tr>
+          <tr><td><strong>Verdict</strong></td><td><strong>FOUNDATION</strong></td><td>DO NOT USE AS FIRST SYSTEM OF RECORD</td><td><strong>TARGET ARCHITECTURE AFTER FOUNDATION</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="system" style="margin-top:16px">
+      <div class="system-map" aria-label="Recommended architecture flow">
+        <div class="node"><strong>Web + Expo clients</strong><span>Next.js and Expo render the same versioned engine outputs. No service-role keys in either client.</span></div>
+        <div class="arrow" aria-hidden="true">&rarr;</div>
+        <div class="node"><strong>Supabase foundation</strong><span>Auth, Postgres, owner RLS, snapshots, runs, progress, exports, audit events, deletion.</span></div>
+        <div class="arrow" aria-hidden="true">&rarr;</div>
+        <div class="node"><strong>Cloudflare selective lane</strong><span>Workers for signed export/report jobs, R2 for generated files, Hyperdrive only if Worker-to-Postgres traffic needs it.</span></div>
+      </div>
+    </div>
+    <p class="kicker" style="margin-top:14px">Current-platform note: Supabase changed Data API exposure defaults in 2026, so grants and RLS must both be tested. A new project should also account for the July 2026 logging and self-hosted auth URL changes documented in its changelog.</p>
+  </section>
+
+  <section id="experience" aria-labelledby="experience-title">
+    <h2 id="experience-title">The 10x Experience Has Distinct Jobs</h2>
+    <p class="kicker">Three.js, algorithmic art, HyperFrames, and Remotion should not compete inside one runtime. Each gets a clear boundary.</p>
+    <div class="grid three">
+      <article class="card"><span class="chip violet">Runtime</span><h3>Three.js show stage</h3><p>Build one lazy-loaded React Three Fiber stage on the dashboard. Five selectable artifacts represent Income, LOC, Expenses, Cash Flow, and Principal. Selection triggers one controlled rotation and settles. Real engine values drive material fill, orbit pressure, and warning state. DOM vitals remain outside the canvas.</p></article>
+      <article class="card"><span class="chip blue">Generated media</span><h3>Remotion explainers</h3><p>Render deterministic scenario videos from versioned engine JSON: baseline vs modeled plan, the first Money Loop month, and why a projection was blocked. Videos become shareable education and onboarding, not a dependency required to calculate a result.</p></article>
+      <article class="card"><span class="chip green">Motion system</span><h3>HyperFrames campaign assets</h3><p>Use branded HTML/GSAP compositions for launch films, tutorial chapters, captions, and data-in-motion cutdowns. Keep its validation, contrast, overflow, and deterministic-timeline gates in a separate media workspace.</p></article>
+    </div>
+    <div class="grid two" style="margin-top:15px">
+      <article class="card"><h3>Algorithmic art rule</h3><p>Every visual parameter must explain a modeled state: utilization changes shield aperture, cash flow changes pulse cadence, interest burn changes heat, and projection confidence changes focus. Decoration that cannot be traced to data stays out.</p></article>
+      <article class="card"><h3>Performance and access rule</h3><p>Load 3D after the four vitals, cap initial compressed GLB assets, pause offscreen rendering, honor reduced motion, provide a static PNG fallback, keep all controls in accessible DOM, and gate desktop/mobile screenshots plus nonblank canvas-pixel checks.</p></article>
+    </div>
+  </section>
+
+  <section id="phases" aria-labelledby="phases-title">
+    <h2 id="phases-title">Plan of Attack</h2>
+    <p class="kicker">The sequence reduces financial and release risk before investing in spectacle. Estimates are focused engineering sessions, not calendar promises.</p>
+
+    <article class="phase p0"><div class="phase-num">0</div><div><h3>Release truth - make the public URL match main</h3><p class="phase-meta">1-2 sessions / blocks every public claim</p><ul><li>Reauthenticate Vercel, verify project ownership, promote the latest successful main artifact, purge cache, and attach the custom InterestShield domain.</li><li>Run production route smoke, Browser and Chrome checks, 375px overflow checks, and freshness-marker checks.</li><li>Document protection and rollback behavior; close GitHub issue #59 only after the public alias passes.</li></ul></div></article>
+
+    <article class="phase p0"><div class="phase-num">1</div><div><h3>Calculation contract - repair the ledger and model the terms that matter</h3><p class="phase-meta">4-7 sessions / required before real-data launch</p><ul><li>Make event balances continuous and add a ledger invariant: previous balance plus signed event amount equals next balance.</li><li>Add transaction-calendar inputs, actual month length, payday and bill dates, rate mode, fees, draw period, repayment period, minimum draw, minimum payment, and optional lender posting rules.</li><li>Version assumptions and engine outputs. Add golden fixtures from anonymized lender statements and an independent reference-calculator test lane.</li></ul></div></article>
+
+    <article class="phase p1"><div class="phase-num">2</div><div><h3>Supabase foundation - private, recoverable, deletable data</h3><p class="phase-meta">5-8 sessions / starts after schema review</p><ul><li>Create a dedicated project, update the migration for ownership consistency, run advisors, and test every RLS policy as owner A, owner B, and anonymous.</li><li>Wire web and Expo auth, snapshot sync, simulation history, learning progress, export metadata, account deletion, and local-demo migration idempotency.</li><li>Define retention, backups, restore drill, incident logging, and secret handling before inviting real users.</li></ul></div></article>
+
+    <article class="phase"><div class="phase-num">3</div><div><h3>Site and dashboard overhaul - quiet clarity first</h3><p class="phase-meta">6-10 sessions / can overlap backend after contracts freeze</p><ul><li>Keep the first screen to the four vitals, then stage the Money Loop artifact selector and evidence drawer below it.</li><li>Break the 1,284-line Learn page, 931-line Portfolio page, and 1,128-line mobile shell into bounded feature modules.</li><li>Replace emoji navigation with icon components, improve metadata and share previews, compress/convert PNGs, and set route-level performance budgets.</li></ul></div></article>
+
+    <article class="phase p3"><div class="phase-num">4</div><div><h3>Immersive layer - one real 3D artifact stage</h3><p class="phase-meta">6-9 sessions / performance-gated</p><ul><li>Prototype the five-artifact selector with React Three Fiber and optimized GLB assets.</li><li>Bind visuals to versioned engine outputs, implement one-spin-and-settle motion, touch/keyboard parity, static fallback, and reduced motion.</li><li>Gate with desktop/mobile screenshots, canvas pixel checks, interaction tests, memory checks, and Core Web Vitals.</li></ul></div></article>
+
+    <article class="phase p4"><div class="phase-num">5</div><div><h3>Media pipeline - HyperFrames and Remotion as publishing tools</h3><p class="phase-meta">3-6 sessions / after visual identity is frozen</p><ul><li>Create a shared visual identity document, data schema, and first three educational stories.</li><li>Build deterministic 16:9, 9:16, and square compositions; validate contrast, overflow, timing, and captions.</li><li>Publish rendered assets through the app and campaign surfaces without importing either renderer into the core calculator bundle.</li></ul></div></article>
+
+    <article class="phase p3"><div class="phase-num">6</div><div><h3>Expo hardening - turn the existing port into a native product</h3><p class="phase-meta">6-10 sessions / follows backend and engine contracts</p><ul><li>Use Expo Go first; preserve shared engine parity and build native route components instead of growing the monolithic shell.</li><li>Run the configured Android emulator smoke, establish a macOS iOS simulator/CI lane, and test SecureStore, deep links, offline recovery, and accessibility.</li><li>Only add custom development builds when a native dependency actually requires them.</li></ul></div></article>
+  </section>
+
+  <section id="ladder" aria-labelledby="ladder-title">
+    <h2 id="ladder-title">Improvement Ladder - Measured Gates</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Baseline on July 12</th><th>Target gate</th><th>Phase</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Production freshness</strong></td><td>Public alias lacks current shell markers; production smoke fails.</td><td><code>npm run smoke:production</code> plus Browser and Chrome freshness checks pass.</td><td>0</td></tr>
+          <tr><td><strong>Public mobile navigation</strong></td><td>492px nav inside 360px content viewport on all seven routes.</td><td>No offscreen controls or page-level overflow at 320, 375, 390, and 430px.</td><td>0 / 3</td></tr>
+          <tr><td><strong>Ledger continuity</strong></td><td>Default interest event is wrong by <code>$1,075</code>.</td><td>Invariant tests pass for every event, month, zero-balance clamp, and chunk boundary.</td><td>1</td></tr>
+          <tr><td><strong>Lender-term fidelity</strong></td><td>Limit, APR, and balance only.</td><td>Fees, calendar timing, variable rate, draw/repayment rules, and minimums are versioned inputs.</td><td>1</td></tr>
+          <tr><td><strong>Persistence</strong></td><td>Browser-local demo; zero live backends.</td><td>Owner-isolation tests, migration round trip, deletion, backup, and restore drill pass.</td><td>2</td></tr>
+          <tr><td><strong>Frontend structure</strong></td><td>Three feature files exceed 900 lines.</td><td>Route orchestration is thin; engine, models, controls, and panels have bounded ownership and focused tests.</td><td>3</td></tr>
+          <tr><td><strong>Asset weight</strong></td><td>79.8 MiB across 75 public files.</td><td>Measured route image budgets; compressed modern formats; 3D assets lazy and capped by explicit budget.</td><td>3 / 4</td></tr>
+          <tr><td><strong>Native evidence</strong></td><td>TypeScript and web export pass; Android ready but not executed; iOS blocked on Windows.</td><td>Android and iOS device/simulator smoke pass from CI with the shared engine fixture set.</td><td>6</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="board-title">
+    <h2 id="board-title">First Two Weeks</h2>
+    <div class="grid three">
+      <article class="task"><span class="chip red">P0</span><h3>Promote production</h3><p>Resolve Vercel auth, project ownership, alias, custom domain, cache, protection, and rollback. Rerun every smoke gate.</p></article>
+      <article class="task"><span class="chip red">P0</span><h3>Fix ledger continuity</h3><p>Correct balance-after semantics and add signed-event invariant tests across web and shared engine consumers.</p></article>
+      <article class="task"><span class="chip red">P0</span><h3>Freeze lender input v2</h3><p>Define fees, timing, variable rates, periods, minimums, and missing-data confidence states before backend schema work.</p></article>
+      <article class="task"><span class="chip amber">P1</span><h3>Repair Supabase schema draft</h3><p>Align profile ownership, add owner-consistent foreign keys, tighten audit-event privileges, and run RLS adversarial tests.</p></article>
+      <article class="task"><span class="chip amber">P1</span><h3>Compress the visual library</h3><p>Inventory actual route use, remove dead assets, convert suitable PNGs, and establish image and GLB budgets.</p></article>
+      <article class="task"><span class="chip amber">P1</span><h3>Prototype one 3D artifact</h3><p>Build only the LOC artifact with real utilization and warning states, then measure mobile fallback and interaction cost before scaling to five.</p></article>
+    </div>
+  </section>
+
+  <section id="evidence" aria-labelledby="evidence-title">
+    <h2 id="evidence-title">Evidence and Confidence</h2>
+    <div class="grid two">
+      <article class="card"><h3>Confirmed today</h3><ul><li>Local web test: 238 regression tests plus the accessibility route contract passed.</li><li>Local web production build passed and statically generated all seven product routes.</li><li>Expo TypeScript check and web export passed; Expo web smoke passed all seven routes.</li><li>Browser rendered 14 public route/viewport combinations; Chrome independently rendered the stale dashboard and Simulator.</li><li>GitHub main CI run <a href="https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/28641204256">28641204256</a> passed at <code>dfb4d91</code>.</li><li>Cloudflare account inspection found two unrelated empty D1 databases and no InterestShield Worker.</li></ul></article>
+      <article class="card"><h3>Still unverified</h3><ul><li>The latest protected Vercel deployment could not be rendered; both direct Browser access and the Vercel connector reached authentication gates.</li><li>No Android device smoke was executed in this audit; preflight found an available emulator.</li><li>No iOS simulator smoke was possible on Windows.</li><li>No Supabase project or live database was connected, so the migration draft was inspected but not applied or advisor-tested.</li><li>No custom InterestShield domain ownership or DNS mapping was visible from the repository.</li></ul></article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><strong>Primary evidence:</strong> repository at <a href="https://github.com/Navigata1/velocity-banking-mvp-v2">Navigata1/velocity-banking-mvp-v2</a>; GitHub issue <a href="https://github.com/Navigata1/velocity-banking-mvp-v2/issues/59">#59</a>; local tests, builds, route smoke, executed financial-engine reproductions, Browser and Chrome rendered smoke, Vercel response diagnostics, and read-only Cloudflare account inspection.</p>
+    <p><strong>External references:</strong> <a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-home-equity-line-of-credit-heloc-en-107/">CFPB HELOC terms</a>; <a href="https://www.consumerfinance.gov/ask-cfpb/what-fees-can-my-lender-charge-if-i-take-out-a-heloc-en-249/">CFPB HELOC fees</a>; <a href="https://www.consumerfinance.gov/ask-cfpb/how-does-paying-down-a-mortgage-work-en-1943/">CFPB amortization</a>; <a href="https://supabase.com/docs/guides/database/postgres/row-level-security">Supabase RLS</a>; <a href="https://supabase.com/docs/guides/platform/backups">Supabase backups</a>; <a href="https://supabase.com/changelog">Supabase changelog</a>; <a href="https://developers.cloudflare.com/d1/platform/limits/">Cloudflare D1 limits</a>; <a href="https://developers.cloudflare.com/d1/reference/time-travel/">D1 Time Travel</a>; <a href="https://developers.cloudflare.com/hyperdrive/">Cloudflare Hyperdrive</a>.</p>
+    <p><strong>Supersedes:</strong> <code>interestshield-state-of-the-union-2026-07-03.html</code> for current-state conclusions. The July 3 file remains historical evidence.</p>
+    <p>Educational tool. Not financial advice.</p>
+  </footer>
+</main>
+</body>
+</html>
