@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "sourceDigest": "d4fc3d65b8f401927e6e1bf2d78ff6f9b2c606a1efb872cb9c1aa1ab103cab10",
+  "sourceMode": "parse5-html-and-acorn-javascript-after-hyperframes-runtime-check",
+  "composition": {
+    "id": "interestshield-media-reel",
+    "duration": 30,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "file": "index.html"
+  },
+  "requiredTimelineIds": [
+    "interestshield-launch",
+    "interestshield-media-reel",
+    "money-loop-tutorial"
+  ],
+  "timelines": [
+    {
+      "id": "interestshield-launch",
+      "file": "compositions/launch.html",
+      "paused": true,
+      "duration": 12,
+      "finite": true,
+      "tweens": [
+        {
+          "method": "fromTo",
+          "target": "#launch-visible .scene-content",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 0.2,
+          "end": 0.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-visible .shield",
+          "properties": [
+            "opacity",
+            "rotationY",
+            "scale"
+          ],
+          "start": 0.2,
+          "end": 0.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-visible .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 0.4,
+          "end": 0.8,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-separate",
+          "properties": [
+            "clipPath"
+          ],
+          "start": 4,
+          "end": 4.7,
+          "duration": 0.7,
+          "ease": "power3.inOut",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-separate .metric:first-child",
+          "properties": [
+            "opacity",
+            "x"
+          ],
+          "start": 4.2,
+          "end": 4.75,
+          "duration": 0.55,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-separate .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 4.35,
+          "end": 4.75,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-separate .metric:last-child",
+          "properties": [
+            "opacity",
+            "x"
+          ],
+          "start": 4.38,
+          "end": 4.93,
+          "duration": 0.55,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-agency",
+          "properties": [
+            "clipPath"
+          ],
+          "start": 8,
+          "end": 8.7,
+          "duration": 0.7,
+          "ease": "power3.inOut",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-agency .aperture",
+          "properties": [
+            "opacity",
+            "rotation",
+            "scale"
+          ],
+          "start": 8.2,
+          "end": 8.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-agency .scene-content",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 8.2,
+          "end": 8.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#launch-agency .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 8.4,
+          "end": 8.8,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "to",
+          "target": "#launch-agency",
+          "properties": [
+            "opacity"
+          ],
+          "start": 11.6,
+          "end": 12,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        }
+      ]
+    },
+    {
+      "id": "interestshield-media-reel",
+      "file": "index.html",
+      "paused": true,
+      "duration": 0,
+      "finite": true,
+      "tweens": []
+    },
+    {
+      "id": "money-loop-tutorial",
+      "file": "compositions/money-loop-tutorial.html",
+      "paused": true,
+      "duration": 18,
+      "finite": true,
+      "tweens": [
+        {
+          "method": "fromTo",
+          "target": "#loop-income .scene-content",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 0.2,
+          "end": 0.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-income .flow-dot",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 0.3,
+          "end": 1,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-income .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 0.45,
+          "end": 0.85,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-expenses",
+          "properties": [
+            "clipPath"
+          ],
+          "start": 4.5,
+          "end": 5.2,
+          "duration": 0.7,
+          "ease": "power3.inOut",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-expenses .flow-dot",
+          "properties": [
+            "opacity",
+            "x",
+            "y"
+          ],
+          "start": 4.7,
+          "end": 5.4,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-expenses .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 4.85,
+          "end": 5.25,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-cash-flow",
+          "properties": [
+            "clipPath"
+          ],
+          "start": 9,
+          "end": 9.7,
+          "duration": 0.7,
+          "ease": "power3.inOut",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-cash-flow .flow-dot",
+          "properties": [
+            "opacity",
+            "x"
+          ],
+          "start": 9.2,
+          "end": 9.9,
+          "duration": 0.7,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-cash-flow .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 9.35,
+          "end": 9.75,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-interest",
+          "properties": [
+            "clipPath"
+          ],
+          "start": 13.5,
+          "end": 14.2,
+          "duration": 0.7,
+          "ease": "power3.inOut",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-interest .balance-fill:not(.lower)",
+          "properties": [
+            "scaleX"
+          ],
+          "start": 13.7,
+          "end": 14.35,
+          "duration": 0.65,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-interest .caption",
+          "properties": [
+            "opacity",
+            "y"
+          ],
+          "start": 13.85,
+          "end": 14.25,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "fromTo",
+          "target": "#loop-interest .balance-fill.lower",
+          "properties": [
+            "scaleX"
+          ],
+          "start": 13.88,
+          "end": 14.53,
+          "duration": 0.65,
+          "ease": "power3.out",
+          "repeat": 0,
+          "yoyo": false
+        },
+        {
+          "method": "to",
+          "target": "#loop-interest",
+          "properties": [
+            "opacity"
+          ],
+          "start": 17.6,
+          "end": 18,
+          "duration": 0.4,
+          "ease": "default",
+          "repeat": 0,
+          "yoyo": false
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "timelines": 3,
+    "animatedTimelines": 2,
+    "tweens": 26
+  },
+  "assertions": {
+    "allTimelinesPaused": true,
+    "allTimelinesFinite": true,
+    "firstActionSeconds": 0.2,
+    "firstActionAtOrBeforeSeconds": true,
+    "missingTimelineIds": []
+  }
+}

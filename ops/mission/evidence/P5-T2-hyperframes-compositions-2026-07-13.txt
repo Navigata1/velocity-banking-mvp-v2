@@ -1,0 +1,54 @@
+InterestShield mission evidence
+Phase/task: P5-T2 - HyperFrames launch and tutorial compositions
+Branch: codex/mission/p5-hyperframes-compositions
+Base heartbeat: ebcd900
+Verified: 2026-07-13
+
+COMPOSITION CONTRACT
+- Parent reel: interestshield-media-reel, 30 seconds, 1920x1080, 30 fps.
+- Child compositions: interestshield-launch (12 seconds) and money-loop-tutorial (18 seconds).
+- Launch story separates LOC utilization from available capacity and closes with model-first agency.
+- Tutorial story shows income, planned expenses, positive cash flow recovery, and the average-balance relationship to interest.
+- Captions, educational disclaimers, modeled assumptions, reduced motion, and local exact fonts are included.
+- Renderer dependencies remain isolated in apps/media and are rejected from web/mobile runtime manifests by the standing identity contract.
+
+DETERMINISM AND VALIDATION
+- `npm --prefix apps/media run check`: PASS, 24 contract tests.
+- HyperFrames lint: PASS, 0 errors and 0 warnings.
+- Strict runtime/layout/motion check: PASS, 0 errors and 0 warnings.
+- The boundary at 12 seconds produces three informational persistence findings and no gate failures.
+- Contrast: PASS, 40 of 40 checks.
+- Parsed animation map: PASS, 26 explicit tweens across two animated timelines; stagger is forbidden and repeat/yoyo metadata is finite-checked.
+- Source digest: d4fc3d65b8f401927e6e1bf2d78ff6f9b2c606a1efb872cb9c1aa1ab103cab10.
+- All seek-sensitive entrances use explicit fromTo states; no Math.random, wall-clock timing, timers, Promises, remote assets, or GSAP from calls are present.
+
+ENCODED ARTIFACT
+- Render command: `node node_modules/hyperframes/dist/cli.js render hyperframes --output=hyperframes/output/interestshield-media-reel.mp4 --format=mp4 --fps=30 --quality=draft --workers=1 --strict-all --no-browser-gpu`.
+- Render: PASS in 49.9 seconds, 900 frames, 30.000 seconds.
+- Video: H.264, yuv420p, 1920x1080, constant 30 fps.
+- File size: 1,873,457 bytes.
+- SHA-256: BA07F805F4EE8C3BE8250B9D9A874660596CF78E704309A8DA7A4472CB325B7F.
+- Local Literata, Geist, and Geist Mono fonts were embedded; generic font fallbacks were removed so compilation performs no remote font fetch, and no audio or external video tracks were used.
+
+VISUAL VERIFICATION
+- Extracted and inspected encoded frames at 0.5, 5, 10, 15, 22.5, and 29 seconds.
+- Launch title, utilization/capacity distinction, agency close, Money Loop income, cash-flow recovery, and ending interest comparison are nonblank and correctly framed.
+- No settled-frame clipping, overlap, offscreen text, caption collision, disclosure loss, or illegible financial label was observed.
+- Chrome smoke testing caught and drove fixes for transported-template CSS/scripts, subcomposition IDs, asset paths, iris coverage, stale preview caching, and seek-safe entrance states before the final render.
+- Adversarial review drove complete CSS reduced-motion overrides, globally unique Studio IDs, exact non-stagger timing evidence, caption sidecar binding, and qualitative equal-width interest relationship lines.
+
+INDEPENDENT REVIEW
+- Reduced-motion runtime replay: PASS, zero X/Y translation for metrics, captions, scene content, and scenes while normal motion remains active.
+- Studio mutation IDs: PASS, 131 unique values across transported templates.
+- Prior Important findings: all resolved.
+- Prior Minor findings: all resolved.
+- Spec Compliance: APPROVED.
+- Code Quality: APPROVED.
+
+SECURITY AND SCOPE
+- `npm --prefix apps/media ci`: PASS, 128 packages installed from the lockfile; CI now uses `--ignore-scripts` for this renderer-only workspace.
+- `npm --prefix apps/media audit`: PASS, 0 vulnerabilities.
+- Generated output, snapshots, and vendored renderer assets are ignored; source compositions, captions, evidence map, and validation scripts are reviewable.
+- A contract test protects all generated-directory ignore rules, including Studio `.thumbnails/`.
+- The temporary @hyperframes/producer experiment was removed and is absent from package.json and package-lock.json.
+- Nested scaffold scripts use the pinned parent install and do not invoke npx or approve network installs.
