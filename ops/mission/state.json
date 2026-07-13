@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T09:50:00Z",
+    "updated": "2026-07-13T10:12:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -471,7 +471,7 @@
           "status": "pending",
           "evidence": null,
           "lastRun": null,
-          "notes": "Command will combine HyperFrames and Remotion checks."
+          "notes": "P5-T1 identity, contrast-pair, deterministic timing, financial semantics, runtime-boundary, document-sync, and CI checks pass on the task branch. Gate remains pending until T2/T3 add real HyperFrames and Remotion overflow, contrast, and composition validation."
         },
         {
           "id": "P5-G2",
@@ -490,7 +490,7 @@
           "status": "in_progress",
           "dependsOn": ["P4-T1"],
           "pr": null,
-          "notes": "Active on codex/mission/p5-visual-identity-contract: define one deterministic palette, typography, motion language, accessibility contract, aspect-ratio rules, and explicit anti-patterns before media code."
+          "notes": "Ready for PR on codex/mission/p5-visual-identity-contract: renderer-neutral identity version 1, portable timing/seed vectors, fail-closed LOC display channels, three format/caption contracts, anti-patterns, package-family isolation, synchronized human specification, and 14 focused tests are independently approved. Evidence: ops/mission/evidence/P5-T1-visual-identity-contract-2026-07-13.txt."
         },
         {
           "id": "P5-T2",
@@ -853,8 +853,8 @@
   "resume": {
     "activePhase": "P5",
     "nextActions": [
-      "Implement P5-T1 test-first on codex/mission/p5-visual-identity-contract: create the visual identity and motion contract before adding HyperFrames or Remotion runtime code.",
-      "Define deterministic 16:9, 9:16, and square composition rules, caption safe areas, contrast thresholds, reduced-motion behavior, and prohibited hype/fear patterns.",
+      "Publish and merge P5-T1 from codex/mission/p5-visual-identity-contract after GitHub CI and Vercel pass, then rerun the media identity check on current main.",
+      "Start P5-T2 on a fresh branch: add the HyperFrames workspace and launch/tutorial compositions against identity contract version 1, with deterministic GSAP timelines, captions, contrast, overflow, and animation-map gates.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

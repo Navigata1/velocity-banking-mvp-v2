@@ -32,6 +32,7 @@ jobs:
           cache-dependency-path: |
             apps/web/package-lock.json
             apps/mobile/package-lock.json
+            apps/media/package-lock.json
 
       - name: Install web dependencies
         working-directory: apps/web
@@ -68,6 +69,14 @@ jobs:
       - name: Smoke rendered web routes
         working-directory: apps/web
         run: npm run smoke:rendered:built
+
+      - name: Install media workspace dependencies
+        working-directory: apps/media
+        run: npm ci
+
+      - name: Check media identity contracts
+        working-directory: apps/media
+        run: npm run check
 
       - name: Install report Worker dependencies
         working-directory: apps/report-worker
