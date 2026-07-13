@@ -49,6 +49,18 @@ jobs:
         working-directory: apps/web
         run: npm run build
 
+      - name: Verify built Money Loop Three stage
+        working-directory: apps/web
+        run: npm run test:3d:built
+
+      - name: Upload Money Loop Three stage proof
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-loop-three-stage
+          path: apps/web/test-results/three-stage
+          if-no-files-found: error
+
       - name: Smoke built web routes
         working-directory: apps/web
         run: npm run smoke:routes

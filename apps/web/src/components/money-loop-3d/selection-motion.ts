@@ -3,7 +3,22 @@ import type {
   MoneyLoopVisualArtifact,
 } from '@/app/artifact-visual-contract';
 
-export const MONEY_LOOP_SELECTION_DURATION_SECONDS = 0.65;
+export const MONEY_LOOP_SELECTION_DURATION_SECONDS = 0.45;
+
+export function getSelectionMotionElapsedSeconds(selectionStartedAtMs: number, nowMs: number): number {
+  if (!Number.isFinite(selectionStartedAtMs) || !Number.isFinite(nowMs)) return 0;
+  return Math.max(0, (nowMs - selectionStartedAtMs) / 1000);
+}
+
+export function createSelectionSettledNotifier(onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => void) {
+  let lastSettledId: MoneyLoopVisualArtifact['id'] | null = null;
+  return (id: MoneyLoopVisualArtifact['id']) => {
+    if (lastSettledId === id) return false;
+    lastSettledId = id;
+    onSelectionSettled(id);
+    return true;
+  };
+}
 
 export function getSelectionRotationRadians(motion: MoneyLoopSelectionMotion): number {
   if (motion === 'spin-once') return Math.PI * 2;

@@ -7215,6 +7215,7 @@ test('Money Loop artifact rail consumes the versioned visual contract without re
   assert.ok(source.includes('selectSafeMoneyLoopDomArtifacts(artifacts)'));
   assert.ok(source.includes('displayArtifacts.map('));
   assert.ok(source.includes('role="tablist"'), 'expected the DOM tab controls to remain authoritative');
+  assert.ok(!source.includes('handleRelativeArtifactKeyDown') && !source.includes('onKeyDown={(event) => handleRelativeArtifactKeyDown'), 'expected native button Enter and Space activation semantics');
 });
 
 test('Money Loop lazy Three stage remains a client-only visual enhancement behind DOM controls', () => {
@@ -7242,11 +7243,16 @@ test('Money Loop lazy Three stage remains a client-only visual enhancement behin
   assert.ok(railSource.includes('role="tablist"'), 'expected the DOM tablist to remain authoritative');
 
   const stageSource = fs.existsSync(stagePath) ? fs.readFileSync(stagePath, 'utf8') : '';
+  const sceneSource = fs.existsSync(scenePath) ? fs.readFileSync(scenePath, 'utf8') : '';
   assert.ok(stageSource.includes('data-testid="money-loop-three-stage"'));
   assert.ok(stageSource.includes('data-render-mode={renderMode}'));
+  assert.ok(stageSource.includes('data-active-artifact={activeArtifactId}'));
+  assert.ok(stageSource.includes("data-selection-state={settledArtifactId === activeArtifactId ? 'settled' : 'transitioning'}"));
   assert.ok(stageSource.includes('aria-hidden="true"'));
   assert.ok(stageSource.includes('h-64 w-64 md:h-72 md:w-72'));
   assert.ok(stageSource.includes('<Canvas'));
+  assert.ok(stageSource.includes('onSelectionSettled={onSelectionSettled}'));
+  assert.ok(sceneSource.includes('onSelectionSettled(activeArtifact.id)') && sceneSource.includes('onFirstFrame()'), 'expected first-frame and terminal Three callbacks to settle the active artifact');
 
   const meshesSource = fs.existsSync(meshesPath) ? fs.readFileSync(meshesPath, 'utf8') : '';
   assert.ok(meshesSource.includes('DepositReservoirMesh'));
@@ -7287,20 +7293,35 @@ test('Money Loop Three selection runtime contracts preserve exact selection and 
 
   assert.deepEqual(selectedIds, ['cash-flow']);
   assert.equal(focusCalls, 0, 'mesh selection must not move keyboard focus from DOM controls');
-  assert.equal(selectionMotion.MONEY_LOOP_SELECTION_DURATION_SECONDS, 0.65);
+  assert.equal(selectionMotion.MONEY_LOOP_SELECTION_DURATION_SECONDS, 0.45);
   assert.ok(selectionMotion.MONEY_LOOP_SELECTION_DURATION_SECONDS <= 0.7);
   assert.equal(selectionMotion.getSelectionRotationRadians('spin-once'), Math.PI * 2);
   assert.ok(selectionMotion.getSelectionRotationRadians('restrained-turn') <= Math.PI);
   assert.equal(selectionMotion.getSelectionRotationRadians('settle-only'), 0);
 
-  const beforeCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.64);
-  const atCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.65);
+  const beforeCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.44);
+  const atCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.45);
   const afterCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.7);
 
   assert.equal(beforeCompletion.shouldRequestFrame, true);
   assert.equal(atCompletion.shouldRequestFrame, false);
   assert.equal(afterCompletion.shouldRequestFrame, false);
   assert.equal(afterCompletion.rotationRadians, Math.PI * 2);
+  assert.ok(Math.abs(selectionMotion.getSelectionMotionElapsedSeconds(1000, 1040) - 0.04) < 0.000001, 'expected the Three timeline to use pure wall elapsed time without an initial presentation jump');
+  assert.equal(selectionMotion.getSelectionMotionElapsedSeconds(Number.NaN, 2000), 0, 'expected an invalid selection timestamp to stay bounded');
+  const settledIds = [];
+  const notifySettled = selectionMotion.createSelectionSettledNotifier((id) => settledIds.push(id));
+  assert.equal(notifySettled('loc'), true);
+  assert.equal(notifySettled('loc'), false, 'expected one terminal notification per active artifact');
+  assert.equal(notifySettled('expenses'), true);
+  assert.deepEqual(settledIds, ['loc', 'expenses']);
+
+  const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
+  assert.ok(railSource.includes('activeTokenSelectionMotion') && railSource.includes('artifact-carousel-token--${activeTokenSelectionMotion}'), 'expected the selected DOM token to bind the active artifact selection-motion class');
+  assert.ok(css.includes('.artifact-carousel-token--spin-once') && css.includes('650ms'), 'expected full-turn DOM token motion to complete within the 700ms budget');
+  assert.ok(css.includes('.artifact-carousel-token--restrained-turn') && css.includes('artifactSpinSelectHalf') && css.includes('650ms'), 'expected caution DOM token motion to use a bounded half-turn');
+  assert.ok(css.includes('.artifact-carousel-token--settle-only') && css.includes('animation: none'), 'expected blocked DOM token motion to remain still');
 });
 
 test('dashboard model explains why edited inputs change the plan without adding vitals', () => {
@@ -7465,11 +7486,11 @@ test('Money Loop artifact rail fits desktop while preserving narrow-screen carou
   assert.ok(css.includes('.artifact-carousel-scroll'), 'expected CSS to define the carousel scroll container');
   assert.ok(css.includes('scrollbar-width: none'), 'expected Firefox scrollbar chrome to be hidden');
   assert.ok(css.includes('::-webkit-scrollbar'), 'expected Chromium scrollbar chrome to be hidden');
-  assert.ok(source.includes('min-w-[680px]'), 'expected artifact cards to keep a stable narrow-screen minimum rail width');
+  assert.ok(source.includes('w-max') && source.includes('grid-cols-[repeat(5,136px)]'), 'expected artifact cards to use stable 136px narrow-screen tracks rather than shrinking inside a minimum rail');
   assert.ok(source.includes('px-[calc(50vw-68px)]'), 'expected mobile selector track padding so first and last artifacts can center');
-  assert.ok(source.includes('md:min-w-0'), 'expected artifact cards to fit the desktop dashboard column');
+  assert.ok(source.includes('md:w-full'), 'expected the fixed mobile grid to hand off to a full-width desktop selector');
   assert.ok(source.includes('md:px-0'), 'expected mobile centering padding to be removed on desktop');
-  assert.ok(source.includes('grid-cols-5'), 'expected narrow-screen Money Loop artifacts to remain a horizontal rail');
+  assert.ok(source.includes('grid-cols-[repeat(5,136px)]'), 'expected narrow-screen Money Loop artifacts to remain a five-track horizontal rail');
   assert.ok(
     source.includes('md:grid-cols-[repeat(5,minmax(0,1fr))]'),
     'expected desktop artifact cards to fit all five Money Loop artifacts without native carousel overflow'
@@ -7490,7 +7511,7 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   assert.ok(source.includes('data-testid="money-loop-artifact-active"'), 'expected a stable active artifact smoke hook');
   assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
-  assert.ok(source.includes('onClick={() => selectArtifactByIndex(index)}'), 'expected pointer selection to reuse the roving-focus path');
+  assert.ok(source.includes('onClick={(event) => selectArtifactByIndex(index, true, event.timeStamp)}'), 'expected pointer selection to reuse the roving-focus path with its wall-clock event timestamp');
   assert.ok(source.includes('selectRelativeArtifact'), 'expected explicit carousel controls to reuse the artifact selection model');
   assert.ok(source.includes("scrollIntoView({ block: 'nearest', inline: 'center' })"), 'expected selected artifact tabs to center inside the narrow carousel viewport');
   assert.ok(source.includes('data-testid="money-loop-artifact-previous"'), 'expected a stable previous-control smoke hook');
@@ -7889,8 +7910,10 @@ test('web app exposes a repeatable route smoke command', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const smokeScriptPath = path.resolve(__dirname, 'smoke-routes.cjs');
   const renderedSmokePath = path.resolve(__dirname, 'smoke-rendered.cjs');
+  const serverHarnessPath = path.resolve(__dirname, 'built-server-harness.cjs');
   const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
   const renderedSmoke = fs.readFileSync(renderedSmokePath, 'utf8');
+  const serverHarness = fs.readFileSync(serverHarnessPath, 'utf8');
 
   assert.equal(packageJson.scripts['smoke:routes'], 'node scripts/smoke-routes.cjs');
   assert.ok(fs.existsSync(smokeScriptPath), 'expected a repeatable web route smoke script');
@@ -7919,7 +7942,81 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(renderedSmoke.includes("page.getByTestId('money-loop-artifact-node-loc')"));
   assert.ok(renderedSmoke.includes('main?.innerText.includes(expectedMarker)'));
   assert.ok(renderedSmoke.includes('page.waitForFunction(') && renderedSmoke.includes('{ timeout: 15000 }'));
-  assert.ok(renderedSmoke.includes('allocatePort()') && renderedSmoke.includes("process.once('SIGTERM'"));
+  assert.ok(renderedSmoke.includes('startBuiltServer(appRoot)') && renderedSmoke.includes('createGracefulShutdown'));
+  assert.ok(serverHarness.includes('taskkill') && serverHarness.includes('process.kill(-server.pid') && serverHarness.includes('hardExitDelayMs = 5000'));
+});
+
+test('web app exposes a built Three stage visual verification gate', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const threeStagePath = path.resolve(__dirname, 'test-three-stage.cjs');
+  const helperTestsPath = path.resolve(__dirname, 'three-stage-helpers-tests.cjs');
+  const pngHelperPath = path.resolve(__dirname, 'png-pixel-proof.cjs');
+  const serverHelperPath = path.resolve(__dirname, 'built-server-harness.cjs');
+  const railPath = path.resolve(__dirname, '..', 'src', 'components', 'MoneyLoopArtifactRail.tsx');
+  const workflowPath = path.resolve(__dirname, '..', '..', '..', '.github', 'workflows', 'ci.yml');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.equal(packageJson.scripts['test:3d'], 'npm run build && npm run test:3d:built');
+  assert.equal(packageJson.scripts['test:3d:built'], 'node scripts/test-three-stage.cjs');
+  assert.ok(packageJson.scripts.test.includes('node scripts/three-stage-helpers-tests.cjs'), 'expected direct Three-stage helper behavior tests in npm test');
+  assert.ok(fs.existsSync(threeStagePath), 'expected a repeatable built Three-stage visual verification script');
+  assert.ok(fs.existsSync(helperTestsPath), 'expected direct Three-stage helper behavior tests');
+  assert.ok(fs.existsSync(pngHelperPath), 'expected focused PNG proof helper');
+  assert.ok(fs.existsSync(serverHelperPath), 'expected shared built-server lifecycle helper');
+
+  const threeStage = fs.readFileSync(threeStagePath, 'utf8');
+  for (const artifactId of ['income', 'loc', 'expenses', 'cash-flow', 'principal']) {
+    assert.ok(threeStage.includes(`['${artifactId}',`), `expected ${artifactId} tab coverage`);
+  }
+  assert.ok(threeStage.includes('money-loop-artifact-node-${artifactId}'), 'expected tab selection to use the canonical artifact list');
+  assert.ok(threeStage.includes('data-render-mode'), 'expected active Three render-mode coverage');
+  assert.ok(threeStage.includes('webgl2'), 'expected a genuine WebGL2 capability check');
+  assert.ok(threeStage.includes("expectedRenderMode: 'full'") && threeStage.includes("expectedRenderMode: 'efficient'"), 'expected deterministic desktop full and mobile efficient lanes');
+  assert.ok(threeStage.includes('addInitScript') && threeStage.includes('hardwareConcurrency') && threeStage.includes('deviceMemory'), 'expected capability lanes to report capable hardware without mocking WebGL');
+  assert.ok(threeStage.includes('scrollIntoViewIfNeeded') && threeStage.includes('waitForNormalStage(page, viewportLabel, expectedRenderMode)'), 'expected each artifact capture to resettle the offscreen-aware stage');
+  assert.ok(threeStage.includes('prepareStageAndTargetForClick') && threeStage.includes('selectionStartedAt = Date.now()'), 'expected real clicks to keep the stage and target control visible before the 700ms selection clock starts');
+  assert.ok(threeStage.includes('() => tab.click()') && !threeStage.includes('tab.click({ force: true })'), 'expected visible DOM tabs to use normal browser clicks');
+  assert.ok(threeStage.includes('captureSelectionCanvasState') && threeStage.includes('SELECTION_SETTLE_BUDGET_MS = 700') && threeStage.includes('waitForStageSettled'), 'expected selection settlement to start at the real DOM click and finish within 700ms');
+  assert.ok(threeStage.includes('STABILITY_CONFIRMATION_BUDGET_MS = 300') && threeStage.includes('const settledAt = Date.now()') && threeStage.includes('if (settledAt > deadline)') && threeStage.includes('const confirmationDeadline = settledAt + STABILITY_CONFIRMATION_BUDGET_MS'), 'expected the decoded material candidate to settle under 700ms before a separately bounded stability confirmation begins');
+  assert.ok(threeStage.includes('captureIsolatedCanvasPng') && threeStage.includes('hideCanvasOverlaysForPixelCapture') && threeStage.includes('restoreCanvasOverlaysAfterPixelCapture') && threeStage.includes('SVGElement') && threeStage.includes('isolatedSvgOverlayCount') && threeStage.includes('assertCanvasProofRejectsHiddenWebgl'), 'expected canvas proof to isolate DOM orbit overlays including SVG and reject an adversarial hidden WebGL canvas');
+  assert.ok(threeStage.includes('candidateCapture') && threeStage.includes('confirmationCapture') && threeStage.includes('settledAtMs') && threeStage.includes('stableThroughMs') && threeStage.includes('captureCanvasElementPng') && !threeStage.includes("locator('canvas').screenshot") && !threeStage.includes('stableCaptureStartedAt + 5000'), 'expected two real canvas PNG captures to prove the candidate under the selection deadline and stability shortly afterward');
+  assert.ok(threeStage.includes('compareSpatialDescriptors') && threeStage.includes('MAX_SETTLED_SPATIAL_CELL_DISTANCE') && threeStage.includes('MAX_SETTLED_SPATIAL_MEAN_DISTANCE'), 'expected numeric position-sensitive settled canvas distance proof');
+  assert.ok(threeStage.includes('deviceScaleFactor: 2') && threeStage.includes('effectiveDpr'), 'expected DPR policy proof at device scale factor 2');
+  assert.ok(threeStage.includes('context instanceof WebGL2RenderingContext') && threeStage.includes('context.canvas === canvas') && threeStage.includes('drawingBufferWidth') && threeStage.includes('!context.isContextLost()'), 'expected WebGL2 proof to reject truthy mocks and lost or zero-sized contexts');
+  assert.ok(threeStage.includes('assertResponsiveGeometry') && threeStage.includes('money-loop-artifact-detail') && threeStage.includes("overlaps(result.mobileNav, result.selector)"), 'expected responsive no-overlap assertions around the detail region and mobile selector');
+  assert.ok(threeStage.includes('assertDomTokenSelectionMotion') && threeStage.includes('artifactSpinSelectHalf') && threeStage.includes('animationDuration'), 'expected browser runtime coverage for full-turn, restrained-turn, and no-turn DOM token motion');
+  assert.ok(threeStage.includes("page.keyboard.press(key)") && threeStage.includes("['money-loop-artifact-next', 'Enter'") && threeStage.includes("['money-loop-artifact-previous', 'Space'"), 'expected keyboard Previous and Next control coverage');
+  assert.ok(threeStage.includes('captureSelectionCanvasState') && threeStage.includes('canvas PNG capture') && !threeStage.includes('Page.startScreencast') && !threeStage.includes('Page.screencastFrameAck'), 'expected nonblank direct canvas PNG sampling without a CDP frame stream');
+  assert.ok(threeStage.includes('transparent') && threeStage.includes('single-color'), 'expected pixel test failure diagnostics');
+  assert.ok(threeStage.includes('captureSelectionCanvasState') && threeStage.includes('selectionFingerprints'), 'expected stable post-selection canvas fingerprint proof');
+  assert.ok(threeStage.includes('fs.rmSync(evidenceDirectory') && threeStage.includes("recursive: true") && threeStage.includes("force: true"), 'expected stale Three stage screenshot cleanup');
+  assert.ok(threeStage.includes("reducedMotion: 'reduce'"), 'expected reduced-motion static fallback coverage');
+  assert.ok(threeStage.includes('screenshot'), 'expected durable desktop and mobile screenshots');
+  assert.ok(threeStage.includes("page.screenshot({ scale: 'css' })") && threeStage.includes('fs.writeFileSync(screenshotPath, screenshot)'), 'expected screenshot dimensions to be validated before writing evidence');
+  assert.ok(threeStage.includes('scrollWidth') && threeStage.includes('getBoundingClientRect'), 'expected overflow and containment checks');
+  assert.ok(threeStage.includes('Math.abs(tab.rect.width - 136) > 1'), 'expected mobile artifact tracks to remain within one pixel of 136px');
+  assert.ok(threeStage.includes('aria-selected') && threeStage.includes('document.activeElement'), 'expected DOM authority and focus checks');
+  assert.ok(threeStage.includes('finally') && threeStage.includes('stopServer'), 'expected browser and server cleanup');
+
+  const pngHelper = fs.readFileSync(pngHelperPath, 'utf8');
+  assert.ok(pngHelper.includes('maxOutputLength: expectedLength + 1'), 'expected PNG inflation to be bounded before decoded bytes allocate');
+  assert.ok(pngHelper.includes('inflateSync') && pngHelper.includes('info: true') && pngHelper.includes('bytesWritten') && pngHelper.includes('compressedInput.length'), 'expected PNG decoding to reject unused compressed IDAT bytes');
+
+  const railSource = fs.readFileSync(railPath, 'utf8');
+  assert.ok(railSource.includes('data-testid="money-loop-artifact-detail"'), 'expected a stable Money Loop detail region hook');
+  assert.ok(railSource.includes('selectArtifactByIndex(nextIndex, false, selectionStartedAt)'), 'expected Previous and Next controls to retain keyboard focus');
+
+  const buildIndex = workflow.indexOf('run: npm run build');
+  const threeStageIndex = workflow.indexOf('run: npm run test:3d:built');
+  const threeStageArtifactIndex = workflow.indexOf('actions/upload-artifact@v4');
+  const renderedSmokeIndex = workflow.indexOf('run: npm run smoke:rendered:built');
+  assert.ok(buildIndex >= 0 && threeStageIndex > buildIndex, 'expected Three stage verification after the web build');
+  assert.ok(threeStageArtifactIndex > threeStageIndex, 'expected durable Three stage screenshot artifact upload after verification');
+  assert.ok(workflow.includes('apps/web/test-results/three-stage'), 'expected CI to collect durable Three stage screenshots');
+  assert.ok(renderedSmokeIndex > threeStageIndex, 'expected the standing rendered smoke after the Three stage verification');
+
+  const rootIgnore = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '.gitignore'), 'utf8');
+  assert.ok(rootIgnore.includes('/apps/web/test-results/'), 'expected generated Three stage screenshots to stay out of git status');
 });
 
 test('web app exposes a repeatable accessibility route contract', () => {

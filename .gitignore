@@ -41,6 +41,7 @@ yarn-error.log*
 
 # Testing
 coverage/
+/apps/web/test-results/
 
 # TypeScript
 *.tsbuildinfo
