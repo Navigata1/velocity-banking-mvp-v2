@@ -2702,8 +2702,10 @@ test('repository documents a Supabase first-lane schema with explicit owner-scop
     '202607020001_first_lane_owner_scoped_schema.sql'
   );
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const supabaseConfigPath = path.resolve(__dirname, '..', 'src', 'lib', 'supabase', 'config.ts');
   const schema = fs.existsSync(schemaPath) ? fs.readFileSync(schemaPath, 'utf8') : '';
   const migration = fs.existsSync(migrationPath) ? fs.readFileSync(migrationPath, 'utf8') : '';
+  const supabaseConfig = fs.existsSync(supabaseConfigPath) ? fs.readFileSync(supabaseConfigPath, 'utf8') : '';
   const privateTables = [
     'profiles',
     'financial_snapshots',
@@ -2724,7 +2726,10 @@ test('repository documents a Supabase first-lane schema with explicit owner-scop
   assert.ok(migration.includes('references auth.users(id) on delete cascade'), 'expected user-owned rows to cascade from auth.users');
   assert.ok(migration.includes('grant usage on schema public to authenticated;'), 'expected explicit Data API schema grant for authenticated role');
   assert.ok(!/grant\s+[^;]+to\s+anon/i.test(migration), 'expected private financial tables not to grant anon access');
-  assert.ok(!packageJson.dependencies['@supabase/supabase-js'], 'expected demo app not to wire a Supabase client yet');
+  assert.equal(packageJson.dependencies['@supabase/supabase-js'], '2.110.2', 'expected pinned Supabase client');
+  assert.equal(packageJson.dependencies['@supabase/ssr'], '0.12.0', 'expected pinned Supabase SSR adapter');
+  assert.ok(supabaseConfig.includes('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY'), 'expected browser-safe publishable key config');
+  assert.ok(!/service.role|service_role|secret.key/i.test(supabaseConfig), 'expected no service credential path in browser config');
 
   for (const table of privateTables) {
     assert.ok(migration.includes(`create table public.${table}`), `expected ${table} migration table`);
