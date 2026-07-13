@@ -106,13 +106,31 @@ function createGracefulShutdown({ closeBrowser, stopServer: stop, exit, hardExit
     const hardExitTimer = setTimeoutFn(() => hardExit(exitCode), hardExitDelayMs);
     hardExitTimer?.unref?.();
     shutdownPromise = (async () => {
+      let failure;
       try {
         await closeBrowser();
+      } catch (error) {
+        failure = error;
       } finally {
-        await stop();
-        clearTimeoutFn(hardExitTimer);
-        exit(exitCode);
+        try {
+          await stop();
+        } catch (error) {
+          failure ??= error;
+        } finally {
+          try {
+            clearTimeoutFn(hardExitTimer);
+          } catch (error) {
+            failure ??= error;
+          } finally {
+            try {
+              await exit(exitCode);
+            } catch (error) {
+              failure ??= error;
+            }
+          }
+        }
       }
+      if (failure) throw failure;
     })();
     return shutdownPromise;
   };

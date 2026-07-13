@@ -109,6 +109,7 @@ export default function MoneyLoopArtifactRail({
   const [renderMode, setRenderMode] = useState<MoneyLoopRenderMode>('static');
   const activeArtifact = displayArtifacts.find((artifact) => artifact.id === activeArtifactId) ?? displayArtifacts[0];
   const activeVisualArtifact = visualContract.artifacts.find((artifact) => artifact.id === activeArtifact?.id);
+  const activeTokenSelectionMotion = activeVisualArtifact?.selectionMotion ?? 'settle-only';
   const activeIndex = Math.max(0, displayArtifacts.findIndex((artifact) => artifact.id === activeArtifact?.id));
 
   if (!activeArtifact) {
@@ -254,7 +255,7 @@ export default function MoneyLoopArtifactRail({
               <div
                 key={activeArtifact.id}
                 data-testid="money-loop-active-artifact-token"
-                className="artifact-carousel-token relative isolate h-full w-full rounded-full border border-white/15 shadow-2xl"
+                className={`artifact-carousel-token artifact-carousel-token--${activeTokenSelectionMotion} relative isolate h-full w-full rounded-full border border-white/15 shadow-2xl`}
                 style={activeTokenStyle}
                 aria-hidden="true"
               >

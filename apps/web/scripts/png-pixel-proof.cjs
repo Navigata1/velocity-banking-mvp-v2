@@ -92,13 +92,16 @@ function decodePngRgba(input) {
 
   const stride = width * bytesPerPixel;
   const expectedLength = height * (stride + 1);
-  let source;
+  const compressedInput = Buffer.concat(compressed);
+  let inflated;
   try {
-    source = zlib.inflateSync(Buffer.concat(compressed), { maxOutputLength: expectedLength + 1 });
+    inflated = zlib.inflateSync(compressedInput, { info: true, maxOutputLength: expectedLength + 1 });
   } catch (error) {
     if (error && error.code === 'ERR_BUFFER_TOO_LARGE') throw new Error('PNG IDAT data exceeded bounded output.');
     throw new Error(`PNG IDAT data could not be inflated: ${error.message}`);
   }
+  const source = inflated.buffer;
+  if (inflated.engine.bytesWritten !== compressedInput.length) throw new Error('PNG IDAT contains trailing compressed bytes.');
   if (source.length !== expectedLength) throw new Error(`PNG inflated data length ${source.length} did not match expected ${expectedLength}.`);
 
   const pixels = Buffer.alloc(stride * height);

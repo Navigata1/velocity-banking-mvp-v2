@@ -74,7 +74,12 @@ async function assertGenuineWebgl2(page, viewportLabel) {
     const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
     if (!(canvas instanceof HTMLCanvasElement)) return null;
     const context = canvas.getContext('webgl2');
-    if (!context) return null;
+    const isGenuineWebgl2 = context instanceof WebGL2RenderingContext &&
+      context.canvas === canvas &&
+      context.drawingBufferWidth > 0 &&
+      context.drawingBufferHeight > 0 &&
+      !context.isContextLost();
+    if (!isGenuineWebgl2) return null;
     return {
       renderer: context.getParameter(context.RENDERER),
       vendor: context.getParameter(context.VENDOR),
@@ -178,9 +183,71 @@ async function captureCanvasElementPng(page, viewportLabel, deadline, clip = nul
   return { canvasClip, completedAt, screenshot };
 }
 
+async function hideCanvasOverlaysForPixelCapture(page) {
+  return page.evaluate(() => {
+    const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
+    const stage = document.querySelector('[data-testid="money-loop-three-stage"]');
+    const orbit = document.querySelector('[data-testid="money-loop-payoff-orbit"]');
+    if (!(canvas instanceof HTMLCanvasElement) || !(stage instanceof HTMLElement) || !(orbit instanceof HTMLElement)) {
+      throw new Error('Money Loop canvas isolation could not find the canvas, stage, and orbit.');
+    }
+    const canvasRect = canvas.getBoundingClientRect();
+    const overlapsCanvas = (rect) => rect.left < canvasRect.right && rect.right > canvasRect.left && rect.top < canvasRect.bottom && rect.bottom > canvasRect.top;
+    const hidden = [];
+    let isolatedSvgOverlayCount = 0;
+    const stageBackground = {
+      priority: stage.style.getPropertyPriority('background-color'),
+      value: stage.style.getPropertyValue('background-color'),
+    };
+    stage.style.setProperty('background-color', 'rgb(0 0 0)', 'important');
+    for (const node of orbit.children) {
+      if (!(node instanceof HTMLElement || node instanceof SVGElement) || node === stage || node.contains(stage)) continue;
+      const rect = node.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0 || !overlapsCanvas(rect)) continue;
+      hidden.push({ node, priority: node.style.getPropertyPriority('visibility'), value: node.style.getPropertyValue('visibility') });
+      if (node instanceof SVGElement) isolatedSvgOverlayCount += 1;
+      node.style.setProperty('visibility', 'hidden', 'important');
+    }
+    window.__moneyLoopPixelCaptureOverlays = { hidden, stageBackground };
+    return { hiddenOverlayCount: hidden.length, isolatedSvgOverlayCount };
+  });
+}
+
+async function restoreCanvasOverlaysAfterPixelCapture(page) {
+  await page.evaluate(() => {
+    const { hidden = [], stageBackground } = window.__moneyLoopPixelCaptureOverlays ?? {};
+    for (const { node, priority, value } of hidden) {
+      if (!(node instanceof Element)) continue;
+      if (value) node.style.setProperty('visibility', value, priority);
+      else node.style.removeProperty('visibility');
+    }
+    const stage = document.querySelector('[data-testid="money-loop-three-stage"]');
+    if (stage instanceof HTMLElement && stageBackground) {
+      if (stageBackground.value) stage.style.setProperty('background-color', stageBackground.value, stageBackground.priority);
+      else stage.style.removeProperty('background-color');
+    }
+    delete window.__moneyLoopPixelCaptureOverlays;
+  });
+}
+
+async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null) {
+  const isolation = await hideCanvasOverlaysForPixelCapture(page);
+  try {
+    if (isolation.isolatedSvgOverlayCount < 1) throw new Error(`${viewportLabel} canvas isolation did not hide an overlapping SVG orbit overlay.`);
+    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, clip), isolation };
+  } finally {
+    await restoreCanvasOverlaysAfterPixelCapture(page);
+  }
+}
+
 async function captureCanvasElementPngProof(page, viewportLabel, deadline, clip = null) {
-  const capture = await captureCanvasElementPng(page, viewportLabel, deadline, clip);
-  return { ...capture, ...proveCanvasPng(capture.screenshot, viewportLabel) };
+  const capture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, clip);
+  try {
+    return { ...capture, ...proveCanvasPng(capture.screenshot, viewportLabel) };
+  } catch (error) {
+    error.isolation = capture.isolation;
+    throw error;
+  }
 }
 
 async function restoreOrResolveCanvasClip(page, viewportLabel, previousClip) {
@@ -216,7 +283,7 @@ function formatSpatialDistance(distance) {
 async function captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, preClickFingerprint, preClickDescriptor, preClickClip) {
   const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
   const canvasClip = await restoreOrResolveCanvasClip(page, viewportLabel, preClickClip);
-  const candidateCapture = await captureCanvasElementPng(page, viewportLabel, deadline, canvasClip);
+  const candidateCapture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, canvasClip);
   const candidatePixels = { ...candidateCapture, ...proveCanvasPng(candidateCapture.screenshot, viewportLabel) };
   const candidateMaterialDistance = compareSpatialDescriptors(preClickDescriptor, candidatePixels.stabilityDescriptor);
   if (candidatePixels.identitySignature === preClickFingerprint || !hasMaterialSpatialChange(candidateMaterialDistance)) {
@@ -230,7 +297,7 @@ async function captureSelectionCanvasState(page, viewportLabel, selectionStarted
   const confirmationDeadline = settledAt + STABILITY_CONFIRMATION_BUDGET_MS;
   let confirmationCapture;
   try {
-    confirmationCapture = await captureCanvasElementPng(page, viewportLabel, confirmationDeadline, canvasClip);
+    confirmationCapture = await captureIsolatedCanvasPng(page, viewportLabel, confirmationDeadline, canvasClip);
   } catch (error) {
     throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation missed its ${STABILITY_CONFIRMATION_BUDGET_MS}ms bound: ${error.message}`);
   }
@@ -284,6 +351,90 @@ async function waitForArtifact(page, artifactId, geometry, viewportLabel, expect
   if (matchingArtifact) throw new Error(`${viewportLabel} ${artifactId} canvas fingerprint did not change after selection; it matches ${matchingArtifact}.`);
   selectionFingerprints.set(result.pixels.identitySignature, artifactId);
   console.log(`PASS ${viewportLabel} ${artifactId} ${geometry} ${result.pngProof.colorCount} PNG canvas colors; settled in ${result.settledAtMs}ms; stable through ${result.stableThroughMs}ms`);
+}
+
+async function assertDomTokenSelectionMotion(page, viewportLabel, expectedRenderMode) {
+  const assertMotion = async (artifactId, geometry, motion, animationName) => {
+    await prepareStageAndTargetForClick(page, artifactId);
+    const tab = page.getByTestId(`money-loop-artifact-node-${artifactId}`);
+    await tab.click();
+    await waitForArtifactSelection(page, artifactId, geometry, 5000);
+    const tokenMotion = await page.evaluate(() => {
+      const token = document.querySelector('[data-testid="money-loop-active-artifact-token"]');
+      if (!(token instanceof HTMLElement)) return null;
+      const style = getComputedStyle(token);
+      const animationDuration = style.animationDuration;
+      const duration = Number.parseFloat(animationDuration);
+      const durationMs = animationDuration.endsWith('ms') ? duration : duration * 1000;
+      return { animationName: style.animationName, durationMs, classNames: [...token.classList] };
+    });
+    if (!tokenMotion || !tokenMotion.classNames.includes(`artifact-carousel-token--${motion}`)) {
+      throw new Error(`${viewportLabel} ${artifactId} DOM token did not expose the ${motion} selection-motion class.`);
+    }
+    if (motion === 'settle-only') {
+      if (tokenMotion.animationName !== 'none') throw new Error(`${viewportLabel} ${artifactId} blocked DOM token animated with ${tokenMotion.animationName}.`);
+    } else if (tokenMotion.animationName !== animationName || tokenMotion.durationMs <= 0 || tokenMotion.durationMs > SELECTION_SETTLE_BUDGET_MS) {
+      throw new Error(`${viewportLabel} ${artifactId} DOM token expected ${animationName} within ${SELECTION_SETTLE_BUDGET_MS}ms, received ${JSON.stringify(tokenMotion)}.`);
+    }
+    await waitForStageSettled(page, artifactId, Date.now() + 5000);
+  };
+
+  await assertMotion('income', 'deposit-reservoir', 'spin-once', 'artifactSpinSelect');
+  await page.evaluate(() => {
+    localStorage.setItem('velocity-bank-storage', JSON.stringify({
+      state: {
+        monthlyIncome: 5000,
+        monthlyExpenses: 6000,
+        loc: { balance: 22000, interestRate: 0.085, limit: 25000 },
+      },
+      version: 0,
+    }));
+  });
+  await page.reload({ waitUntil: 'networkidle' });
+  await waitForNormalStage(page, viewportLabel, expectedRenderMode);
+  await waitForStageSettled(page, 'income', Date.now() + 15000);
+  await assertMotion('loc', 'credit-aperture', 'restrained-turn', 'artifactSpinSelectHalf');
+  await assertMotion('expenses', 'outflow-gate', 'settle-only', 'none');
+  console.log(`PASS ${viewportLabel} DOM token selection motion follows full, restrained, and blocked states`);
+}
+
+async function assertCanvasProofRejectsHiddenWebgl(page, viewportLabel, expectedRenderMode) {
+  const deadline = Date.now() + 5000;
+  await restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline);
+  await page.evaluate(() => {
+    const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
+    if (!(canvas instanceof HTMLCanvasElement)) throw new Error('Money Loop adversarial canvas lane could not find the canvas.');
+    window.__moneyLoopAdversarialCanvasVisibility = {
+      priority: canvas.style.getPropertyPriority('visibility'),
+      value: canvas.style.getPropertyValue('visibility'),
+    };
+    canvas.style.setProperty('visibility', 'hidden', 'important');
+  });
+  try {
+    let proofFailure;
+    let unexpectedProof;
+    try {
+      unexpectedProof = await captureCanvasElementPngProof(page, viewportLabel, deadline);
+    } catch (error) {
+      proofFailure = error;
+    }
+    if (!proofFailure || proofFailure.isolation?.isolatedSvgOverlayCount < 1 || !/(transparent|blank|single-color)/i.test(proofFailure.message)) {
+      if (unexpectedProof) fs.writeFileSync(path.join(evidenceDirectory, `${viewportLabel}-adversarial-hidden.png`), unexpectedProof.screenshot);
+      throw new Error(`${viewportLabel} adversarial hidden WebGL canvas unexpectedly passed isolated pixel proof${proofFailure ? `: ${proofFailure.message}` : ` with ${unexpectedProof.colorCount} colors and ${unexpectedProof.isolation.isolatedSvgOverlayCount} isolated SVG overlays.`}`);
+    }
+  } finally {
+    await page.evaluate(() => {
+      const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
+      const saved = window.__moneyLoopAdversarialCanvasVisibility;
+      if (canvas instanceof HTMLCanvasElement && saved) {
+        if (saved.value) canvas.style.setProperty('visibility', saved.value, saved.priority);
+        else canvas.style.removeProperty('visibility');
+      }
+      delete window.__moneyLoopAdversarialCanvasVisibility;
+    });
+  }
+  await restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, Date.now() + 5000);
+  console.log(`PASS ${viewportLabel} isolated canvas proof rejects a hidden WebGL canvas`);
 }
 
 async function assertStageContainment(page, viewportLabel) {
@@ -425,7 +576,7 @@ async function assertResponsiveGeometry(page, viewportLabel) {
   if (viewportLabel === 'mobile') {
     if (result.tabs.length !== 5) throw new Error(`mobile expected five artifact tabs, received ${result.tabs.length}.`);
     for (const tab of result.tabs) {
-      if (tab.rect.width < 135) throw new Error(`mobile ${tab.id ?? 'artifact tab'} is too narrow at ${tab.rect.width.toFixed(1)}px; expected a stable 136px track.`);
+      if (Math.abs(tab.rect.width - 136) > 1) throw new Error(`mobile ${tab.id ?? 'artifact tab'} measured ${tab.rect.width.toFixed(1)}px; expected a stable 136px track within one pixel.`);
       for (const textNode of tab.textNodes.filter((node) => node.visible)) {
         if (textNode.left < tab.rect.left - 1 || textNode.right > tab.rect.right + 1 || textNode.top < tab.rect.top - 1 || textNode.bottom > tab.rect.bottom + 1) {
           throw new Error(`mobile ${tab.id ?? 'artifact tab'} text escapes its card: ${JSON.stringify(textNode)}.`);
@@ -503,6 +654,8 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
     await waitForStageSettled(page, 'income', Date.now() + 15000);
     const webgl2 = await assertGenuineWebgl2(page, viewportLabel);
     await assertCanvasDpr(page, viewportLabel, expectedDpr);
+    if (viewportLabel === 'desktop') await assertCanvasProofRejectsHiddenWebgl(page, viewportLabel, expectedRenderMode);
+    await assertDomTokenSelectionMotion(page, viewportLabel, expectedRenderMode);
     const selectionFingerprints = new Map();
     for (const [artifactId, geometry] of artifacts) await waitForArtifact(page, artifactId, geometry, viewportLabel, expectedRenderMode, selectionFingerprints);
     await assertStepControls(page, viewportLabel, expectedRenderMode);

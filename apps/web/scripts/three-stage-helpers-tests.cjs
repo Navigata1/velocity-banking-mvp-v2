@@ -35,13 +35,13 @@ function chunk(type, data) {
   return result;
 }
 
-function makePng({ width = 1, height = 1, raw = Buffer.from([0, 20, 120, 220, 255]), chunks = null } = {}) {
+function makePng({ width = 1, height = 1, raw = Buffer.from([0, 20, 120, 220, 255]), chunks = null, compressedIdat = null } = {}) {
   const header = Buffer.alloc(13);
   header.writeUInt32BE(width, 0);
   header.writeUInt32BE(height, 4);
   header[8] = 8;
   header[9] = 6;
-  const body = chunks ?? [chunk('IHDR', header), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))];
+  const body = chunks ?? [chunk('IHDR', header), chunk('IDAT', compressedIdat ?? zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))];
   return Buffer.concat([Buffer.from('89504e470d0a1a0a', 'hex'), ...body]);
 }
 
@@ -79,6 +79,46 @@ async function testGracefulShutdown() {
   await first;
   assert.deepEqual(calls, ['browser', 'server', 'clear-timeout', 'exit:130']);
   assert.equal(hardExit, undefined);
+}
+
+async function testGracefulShutdownBrowserFailure() {
+  const calls = [];
+  const shutdown = createGracefulShutdown({
+    closeBrowser: async () => {
+      calls.push('browser');
+      throw new Error('browser close failed');
+    },
+    stopServer: async () => calls.push('server'),
+    exit: (code) => calls.push(`exit:${code}`),
+    hardExit: () => {},
+    setTimeoutFn: () => ({ unref() {} }),
+    clearTimeoutFn: () => calls.push('clear-timeout'),
+  });
+
+  const first = shutdown(143);
+  assert.strictEqual(shutdown(130), first, 'expected rejected signal shutdown to remain idempotent');
+  await assert.rejects(first, /browser close failed/);
+  assert.deepEqual(calls, ['browser', 'server', 'clear-timeout', 'exit:143']);
+}
+
+async function testGracefulShutdownServerFailure() {
+  const calls = [];
+  const shutdown = createGracefulShutdown({
+    closeBrowser: async () => calls.push('browser'),
+    stopServer: async () => {
+      calls.push('server');
+      throw new Error('server stop failed');
+    },
+    exit: (code) => calls.push(`exit:${code}`),
+    hardExit: () => {},
+    setTimeoutFn: () => ({ unref() {} }),
+    clearTimeoutFn: () => calls.push('clear-timeout'),
+  });
+
+  const first = shutdown(143);
+  assert.strictEqual(shutdown(130), first, 'expected server-rejected signal shutdown to remain idempotent');
+  await assert.rejects(first, /server stop failed/);
+  assert.deepEqual(calls, ['browser', 'server', 'clear-timeout', 'exit:143']);
 }
 
 async function run() {
@@ -119,6 +159,11 @@ async function run() {
   assert.throws(() => decodePngRgba(badCrc), /CRC/i);
   assert.throws(() => decodePngRgba(valid.subarray(0, -12)), /IEND/i);
   assert.throws(() => decodePngRgba(Buffer.concat([valid, Buffer.from([0])])), /trailing/i);
+  assert.throws(
+    () => decodePngRgba(makePng({ compressedIdat: Buffer.concat([zlib.deflateSync(Buffer.from([0, 20, 120, 220, 255])), Buffer.from([0xde, 0xad, 0xbe, 0xef])]) })),
+    /trailing compressed/i,
+    'expected CRC-valid unused zlib bytes inside IDAT to be rejected'
+  );
   assert.throws(() => decodePngRgba(makePng({ raw: Buffer.from([0, 10, 20]) })), /inflated/i);
   assert.throws(() => decodePngRgba(makePng({ raw: Buffer.alloc(256 * 1024) })), /bounded output/i);
   assert.throws(() => decodePngRgba(makePng({ chunks: [chunk('IHDR', Buffer.alloc(12)), chunk('IEND', Buffer.alloc(0))] })), /IHDR/i);
@@ -139,6 +184,8 @@ async function run() {
   ] })), /consecutive/i);
 
   await testGracefulShutdown();
+  await testGracefulShutdownBrowserFailure();
+  await testGracefulShutdownServerFailure();
   console.log('Three stage PNG and lifecycle helper tests passed.');
 }
 
