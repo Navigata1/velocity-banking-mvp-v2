@@ -27,3 +27,8 @@ Independent review
 - Initial findings: child routes dropped inherited social image/card fields; manifest forced portrait; source contract did not catch rendered metadata loss.
 - Resolution: route helper now carries complete social fields, orientation lock is removed, contract coverage is strengthened, and rendered child-route head was verified.
 - Re-review: no remaining findings.
+
+Managed CI follow-up
+- Both first GitHub quality runs correctly rejected the old route smoke assertion because it expected the root title on every route.
+- The seven-route smoke now verifies each route-specific rendered title plus the Next static shell.
+- npm --prefix apps/web run smoke:routes: PASS for all seven routes after the contract update.

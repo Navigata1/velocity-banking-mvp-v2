@@ -10,13 +10,13 @@ const host = '127.0.0.1';
 const port = 5000;
 const origin = `http://${host}:${port}`;
 const routes = [
-  ['/', 'Dashboard'],
-  ['/simulator', 'Simulator'],
-  ['/cockpit', 'Cockpit'],
-  ['/portfolio', 'Portfolio'],
-  ['/learn', 'Learn'],
-  ['/settings', 'Settings'],
-  ['/vault', 'Vault'],
+  ['/', 'Dashboard', 'InterestShield - Financial Empowerment'],
+  ['/simulator', 'Simulator', 'What-If Simulator | InterestShield'],
+  ['/cockpit', 'Cockpit', 'Cockpit | InterestShield'],
+  ['/portfolio', 'Portfolio', 'Debt Portfolio | InterestShield'],
+  ['/learn', 'Learn', 'Learn Velocity Banking | InterestShield'],
+  ['/settings', 'Settings', 'Settings | InterestShield'],
+  ['/vault', 'Vault', 'Wealth Timeline | InterestShield'],
 ];
 
 function requestRoute(route) {
@@ -100,7 +100,7 @@ async function run() {
   try {
     await waitForServer(server);
 
-    for (const [route, label] of routes) {
+    for (const [route, label, expectedTitle] of routes) {
       const { body, response } = await requestRoute(route);
       const contentType = String(response.headers['content-type'] || '');
 
@@ -112,7 +112,7 @@ async function run() {
         throw new Error(`${label} route ${route} returned ${contentType || 'no content type'} instead of text/html.`);
       }
 
-      if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
+      if (!body.includes(`<title>${expectedTitle}</title>`) || !body.includes('/_next/static')) {
         throw new Error(`${label} route ${route} did not return the expected InterestShield Next shell.`);
       }
 

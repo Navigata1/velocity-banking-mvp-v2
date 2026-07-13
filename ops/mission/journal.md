@@ -152,3 +152,4 @@
 - Browser smoke proves desktop and mobile width containment, accessible route labels, nine rendered shell SVGs, no fresh console errors, and all metadata endpoints returning 200.
 - Independent review caught child-route social metadata replacement, an unnecessary portrait install lock, and shallow contract coverage. All three are fixed and re-review reports no remaining findings.
 - Web tests, fixtures, accessibility, metadata contract, lint, 14-page production build, zero production audit findings, and diff checks pass. P3-T3 is ready for PR publication.
+- PR #235's first GitHub quality runs caught the old seven-route smoke expecting the dashboard title everywhere. It now verifies each route-specific title and all seven built routes pass locally.

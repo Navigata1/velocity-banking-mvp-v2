@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T05:12:37Z",
+    "updated": "2026-07-13T05:15:23Z",
     "sessionCount": 1
   },
   "policies": {
@@ -359,7 +359,7 @@
           "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
-          "notes": "Lucide navigation and domain controls, route-specific metadata, manifest, robots, sitemap, and generated social image pass local and browser verification. Independent review findings are resolved; PR publication remains."
+          "notes": "Lucide navigation and domain controls, route-specific metadata, manifest, robots, sitemap, and generated social image pass local and browser verification. PR #235 is open; its first managed runs exposed and repaired the stale root-title route smoke assertion."
         },
         {
           "id": "P3-T4",
