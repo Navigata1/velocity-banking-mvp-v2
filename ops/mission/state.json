@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T05:15:23Z",
+    "updated": "2026-07-13T05:17:55Z",
     "sessionCount": 1
   },
   "policies": {
@@ -356,15 +356,19 @@
         {
           "id": "P3-T3",
           "title": "Replace emoji navigation and complete metadata surfaces",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P3-T1"],
-          "pr": null,
-          "notes": "Lucide navigation and domain controls, route-specific metadata, manifest, robots, sitemap, and generated social image pass local and browser verification. PR #235 is open; its first managed runs exposed and repaired the stale root-title route smoke assertion."
+          "pr": {
+            "number": 235,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/235",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #235 delivers Lucide shell icons plus route-specific metadata, manifest, robots, sitemap, and generated social image. Both GitHub quality runs and Vercel passed after route smoke was aligned with route-specific titles."
         },
         {
           "id": "P3-T4",
           "title": "Compress the 79.8 MiB visual library and enforce budgets",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
           "notes": "Remove dead assets, convert suitable images, and add route and asset budget checks."
@@ -790,13 +794,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/234",
       "phase": "P3 Web Product Overhaul",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 235,
+      "title": "Add semantic icons and metadata surfaces",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/235",
+      "phase": "P3 Web Product Overhaul",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P3",
     "nextActions": [
-      "Inventory every user-visible emoji token and existing icon dependency before changing navigation ownership.",
-      "Complete the web manifest, Open Graph and social metadata, robots, and sitemap surfaces with route contracts.",
+      "Inventory public assets by size, source references, route ownership, and duplicate content before deleting or converting anything.",
+      "Set enforceable total and per-asset budgets, compress referenced visuals, remove proven-dead files, and rerun route/browser smoke.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

@@ -153,3 +153,8 @@
 - Independent review caught child-route social metadata replacement, an unnecessary portrait install lock, and shallow contract coverage. All three are fixed and re-review reports no remaining findings.
 - Web tests, fixtures, accessibility, metadata contract, lint, 14-page production build, zero production audit findings, and diff checks pass. P3-T3 is ready for PR publication.
 - PR #235's first GitHub quality runs caught the old seven-route smoke expecting the dashboard title everywhere. It now verifies each route-specific title and all seven built routes pass locally.
+
+## 2026-07-13T05:17Z - P3 icon and metadata surfaces merged; asset budgets begin
+- PR #235 merged at 844415b after both GitHub quality runs and the refreshed Vercel preview passed.
+- P3-T3 is done with semantic shell icons, route-specific share metadata, install and crawl surfaces, and rendered browser evidence.
+- P3-T4 starts on codex/mission/p3-asset-budgets with a reference-aware inventory before any deletion or conversion.
