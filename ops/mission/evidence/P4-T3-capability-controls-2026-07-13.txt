@@ -1,0 +1,26 @@
+P4-T3 Three.js capability and lifecycle evidence
+Recorded: 2026-07-13 UTC
+
+- Static mode: incomplete contract, reduced motion, save-data, unavailable/lost
+  WebGL2, renderer construction failure, offscreen stage, or hidden document.
+- Efficient mode: unknown/constrained hardware or viewport under 640px; DPR 1,
+  reduced geometry, no shadows. Full mode requires known capable hardware and
+  viewport; DPR capped at 1.5.
+- WebGL2 probes release temporary contexts. Custom R3F gl factory catches startup
+  failure before onCreated; live context loss/error also downgrades static.
+- Common-ancestor static CSS freezes fallback sweep, pulse, flow, reticle, and
+  selection motion without hiding DOM controls.
+- Dependency-injected runtime tests prove observer transitions, hidden/offscreen
+  pause, first-frame reveal, listener cleanup, context downgrade, and probe release.
+- Red cycles captured missing controller APIs, static CSS gap, WebGL1 fail-open,
+  and renderer-startup ordering before each correction.
+
+GATES
+- npm --prefix apps/web test: PASS 262 regression tests plus fixtures,
+  accessibility, metadata, and asset budget lanes.
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run build: PASS 14 static pages.
+- npm --prefix apps/web run smoke:rendered:built: PASS 14 route cases plus LOC.
+- npm --prefix apps/web audit --omit=dev: PASS zero vulnerabilities.
+- git diff --check: PASS.
+- Final review: Spec Compliance APPROVED; Code Quality APPROVED.

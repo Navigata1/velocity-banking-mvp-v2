@@ -71,12 +71,12 @@
 - Consumes: `selectMoneyLoopRenderMode`, media-query state, network data-saving state, navigator capacity hints, viewport width, intersection state, and document visibility.
 - Produces: stable `static`, `efficient`, or `full` mode plus a `shouldRender` flag that pauses offscreen and hidden-document work.
 
-- [ ] **Step 1: Add failing tests for reduced motion, save-data, missing WebGL, unknown hardware, narrow viewports, offscreen pause, and hidden-document pause.**
-- [ ] **Step 2: Run `npm --prefix apps/web test`; expect capability-hook source and behavior contracts to fail.**
-- [ ] **Step 3: Implement the hook with `matchMedia`, guarded navigator hints, `IntersectionObserver`, `visibilitychange`, and cleanup for every listener.**
-- [ ] **Step 4: Cap DPR and geometry segments by mode, disable shadows in efficient mode, invalidate rendering only on selection/visibility changes, and keep static fallback mounted until the first nonblank frame.**
-- [ ] **Step 5: Run tests, lint, production build, and rendered smoke; expect no route overflow or browser errors at 1440x900 and 390x844.**
-- [ ] **Step 6: Commit capability and lifecycle controls as P4-T3 after independent code review.**
+- [x] **Step 1: Add failing tests for reduced motion, save-data, missing WebGL, unknown hardware, narrow viewports, offscreen pause, and hidden-document pause.**
+- [x] **Step 2: Run `npm --prefix apps/web test`; expect capability-hook source and behavior contracts to fail.**
+- [x] **Step 3: Implement the hook with `matchMedia`, guarded navigator hints, `IntersectionObserver`, `visibilitychange`, and cleanup for every listener.**
+- [x] **Step 4: Cap DPR and geometry segments by mode, disable shadows in efficient mode, invalidate rendering only on selection/visibility changes, and keep static fallback mounted until the first nonblank frame.**
+- [x] **Step 5: Run tests, lint, production build, and rendered smoke; expect no route overflow or browser errors at 1440x900 and 390x844.**
+- [x] **Step 6: Commit capability and lifecycle controls as P4-T3 after independent code review.**
 
 ### Task 4: Nonblank Canvas And Responsive Interaction Gate
 

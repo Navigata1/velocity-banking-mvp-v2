@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T07:20:00Z",
+    "updated": "2026-07-13T07:55:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -391,9 +391,9 @@
           "title": "Web tests",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T2-lazy-three-stage-2026-07-13.txt",
-          "lastRun": "2026-07-13T07:05:00Z",
-          "notes": "252 regressions plus independent financial fixtures, accessibility, metadata, and asset contracts pass with the lazy Three.js stage and pure selection-motion contracts."
+          "evidence": "ops/mission/evidence/P4-T3-capability-controls-2026-07-13.txt",
+          "lastRun": "2026-07-13T07:55:00Z",
+          "notes": "262 regressions plus fixtures, accessibility, metadata, and assets pass with capability and lifecycle runtime contracts."
         },
         {
           "id": "P4-G2",
@@ -409,9 +409,9 @@
           "title": "Web production build within asset budgets",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T2-lazy-three-stage-2026-07-13.txt",
-          "lastRun": "2026-07-13T07:05:00Z",
-          "notes": "Next.js 16.2.10 builds 14 static pages with the client-only Three.js chunk; public assets remain 0.13 MiB and production audit is zero."
+          "evidence": "ops/mission/evidence/P4-T3-capability-controls-2026-07-13.txt",
+          "lastRun": "2026-07-13T07:55:00Z",
+          "notes": "Build, rendered smoke, asset budget, and zero production audit pass with static/efficient/full controls."
         }
       ],
       "tasks": [
@@ -445,7 +445,7 @@
           "status": "in_progress",
           "dependsOn": ["P4-T2"],
           "pr": null,
-          "notes": "Active on codex/mission/p4-three-capability-controls: implement reduced-motion/save-data/WebGL fallback, known full versus conservative efficient mode, DPR and geometry budgets, intersection and document-visibility pause, and listener cleanup."
+          "notes": "Ready for PR: static/efficient/full policy, WebGL2 and renderer fail-closed paths, DPR/geometry budgets, offscreen/hidden pause, first-frame reveal, and cleanup are runtime-tested; final reviews approved."
         },
         {
           "id": "P4-T4",
@@ -608,7 +608,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "252",
+      "current": "262",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -839,8 +839,8 @@
   "resume": {
     "activePhase": "P4",
     "nextActions": [
-      "Implement P4-T3 test-first with runtime capability detection, reduced-motion and save-data static mode, full/efficient DPR and geometry budgets, and offscreen/hidden-document pause behavior.",
-      "Keep the static orbit mounted until the canvas is capable and visible; clean up every media, network, visibility, and intersection observer subscription.",
+      "Publish P4-T3 and merge after duplicate GitHub quality and Vercel gates pass.",
+      "Begin P4-T4 with nonblank canvas pixels, all-five selection interaction, desktop/mobile screenshots, static fallback checks, and CI wiring.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
