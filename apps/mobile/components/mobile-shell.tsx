@@ -18,6 +18,7 @@ import { useRouter, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
+import { MobileSupabaseAccount } from '@/components/mobile-supabase-account';
 import {
   usePersistedMobileAssumptions,
   type MobileAssumptionStorageStatus,
@@ -1021,10 +1022,12 @@ function VaultPanel({ vault }: { vault: MobileVaultSnapshot }) {
 }
 
 function SettingsPanel({
+  assumptions,
   onResetAssumptions,
   resetStatus,
   storageStatus,
 }: {
+  assumptions: MobileDashboardInput;
   onResetAssumptions: () => void;
   resetStatus: string | null;
   storageStatus: MobileAssumptionStorageStatus;
@@ -1089,6 +1092,7 @@ function SettingsPanel({
           </Text>
         ) : null}
       </View>
+      <MobileSupabaseAccount assumptions={assumptions} />
     </View>
   );
 }
@@ -1106,7 +1110,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
   const learn = buildMobileLearnSnapshot(input);
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
   const subtitle = mode === 'settings'
-    ? 'Settings keeps native storage and backend readiness explicit before any account backend is connected.'
+    ? 'Settings keeps encrypted local storage, backend readiness, and optional private account sync explicit.'
     : `${title} runs from the shared financial engine so web and native assumptions stay aligned.`;
   const handleModeChange = (nextMode: MobileMode) => {
     setMode(nextMode);
@@ -1172,6 +1176,7 @@ export function MobileShell({ initialMode = 'dashboard' }: { initialMode?: Mobil
       {mode === 'vault' ? <VaultPanel vault={vault} /> : null}
       {mode === 'settings' ? (
         <SettingsPanel
+          assumptions={input}
           onResetAssumptions={handleResetAssumptions}
           resetStatus={settingsResetStatus}
           storageStatus={storageStatus}

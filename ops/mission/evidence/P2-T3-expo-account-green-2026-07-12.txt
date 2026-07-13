@@ -1,0 +1,14 @@
+Gate: P2-T3 Expo account and explicit sync verification
+Result: PASS
+
+- Deep-link contract: explicit PKCE flow, code exchange, token-fragment session exchange, and expired-link error handling passed
+- Account controls: passwordless email, observed session, explicit sync, sign-out, and offline-safe local retention are present
+- Supabase mobile adapter contract: secure chunking, process lock, durable install identity, verified claims, and ordered owner-scoped sync passed
+- TypeScript and Expo SDK dependency compatibility passed
+- Expo web export and all 7 product route smoke checks passed
+- Android Hermes release bundle export passed with expo-network and auth deep-link modules
+- Web: 242 regressions, independent reference fixtures, accessibility, lint, and Next.js production build passed
+
+Production gate:
+- No real email or financial data was transmitted during verification.
+- A dedicated Supabase project remains behind the explicit $10 monthly cost confirmation.

@@ -167,6 +167,7 @@ async function main() {
   assert.ok(source.includes('EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY'));
   assert.ok(!/service.role|service_role|secret.key/i.test(source));
   assert.ok(clientSource.includes('lock: processLock'));
+  assert.ok(clientSource.includes("flowType: 'pkce'"));
   assert.ok(layoutSource.includes('registerMobileAuthLifecycle(client)'));
   console.log('Expo Supabase contract passed secure chunking, durable identity, and ordered owner-scoped sync.');
 }

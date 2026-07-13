@@ -1,0 +1,5 @@
+Gate: P2-T3 Expo account and explicit sync red test
+Command: npm run test:supabase:account
+Exit: 1
+Observed failure: Missing script test:supabase:account
+Result: Expo had secure client/session infrastructure but no user-facing auth, deep-link exchange, or explicit sync controls.
