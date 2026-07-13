@@ -171,3 +171,9 @@
 - PR #236's first duplicate GitHub quality run reached the new rendered step and caught the client-mounted dashboard while its intentional hydration skeleton was still visible.
 - Route smoke now waits explicitly for each expected marker inside main before evaluating images, overflow, overlays, and browser errors; a regression contract protects the wait.
 - All 244 web regressions, lint, 14 desktop/mobile rendered routes, and the Money Loop LOC interaction pass again locally before republishing.
+
+## 2026-07-13T05:55Z - P3 complete; P4 visual contract begins
+- PR #236 merged at aff9c8c after both refreshed GitHub quality runs and the Vercel preview passed.
+- Fresh merged-main tests, lint, production build, all 14 desktop/mobile rendered route cases, the LOC interaction, and the 0.13 MiB public asset budget pass.
+- P3 closes with the four-vital dashboard, model-backed Money Loop stage, bounded product modules, semantic icons, complete metadata surfaces, and standing rendered CI coverage.
+- P4-T1 is active on codex/mission/p4-artifact-visual-contract. The first slice defines real model-to-visual bindings and capability/fallback policy before introducing Three.js.

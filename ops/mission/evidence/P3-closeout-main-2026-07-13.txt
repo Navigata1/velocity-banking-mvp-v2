@@ -1,0 +1,31 @@
+P3 Web Product Overhaul closeout evidence
+Merged main: aff9c8c (PR #236)
+Recorded: 2026-07-13 UTC
+
+GitHub and deployment gates
+- PR #236 merged after both duplicate Web and mobile quality gates passed.
+- Vercel preview deployment passed.
+- The first Linux run caught a dashboard hydration-marker race; the explicit
+  client-mounted marker wait was fixed, republished, and passed in both workflows.
+
+Fresh merged-main gates
+- npm --prefix apps/web test
+  PASS 244 regression tests.
+  PASS 2 independent anonymized financial reference scenarios.
+  PASS accessibility route contract.
+  PASS metadata contract.
+  PASS public asset budget: 5 files, 0.13 MiB total, 0.08 MiB largest.
+- npm --prefix apps/web run lint
+  PASS ESLint, exit 0.
+- npm --prefix apps/web run smoke:rendered
+  PASS Next.js 16.2.10 production build with 14 static pages.
+  PASS all seven routes at 1440x900.
+  PASS all seven routes at 390x844.
+  PASS Money Loop Next selects LOC with no interaction-time browser errors.
+
+P3 result
+- Four truthful dashboard vitals lead into a model-backed Money Loop stage.
+- Oversized Learn, Portfolio, and Expo shell modules have bounded ownership.
+- Semantic Lucide navigation and complete route metadata surfaces are live.
+- Public assets fell from 79.83 MiB to 0.13 MiB with enforceable budgets.
+- Rendered responsive smoke is now a standing GitHub CI gate.
