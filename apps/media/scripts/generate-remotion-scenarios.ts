@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import {
   buildLenderTermsContract,
@@ -11,9 +13,11 @@ import {
 } from '../../../packages/financial-engine/src/index.ts';
 
 const mediaRoot = new URL('../', import.meta.url);
-const outputUrl = new URL('remotion/data/scenarios.v1.json', mediaRoot);
-const engineUrl = new URL('../../../packages/financial-engine/src/index.ts', import.meta.url);
 const checkOnly = process.argv.includes('--check');
+const outputUrl = checkOnly && process.env.REMOTION_SCENARIO_OUTPUT
+  ? pathToFileURL(resolve(process.env.REMOTION_SCENARIO_OUTPUT))
+  : new URL('remotion/data/scenarios.v1.json', mediaRoot);
+const engineUrl = new URL('../../../packages/financial-engine/src/index.ts', import.meta.url);
 const roundMoney = (value: number) => Math.round(value * 100) / 100;
 
 const baselineInputs = {
@@ -189,7 +193,7 @@ const bundle = {
 
 const serialized = `${JSON.stringify(bundle, null, 2)}\n`;
 if (checkOnly) {
-  const existing = await readFile(outputUrl, 'utf8').catch(() => '');
+  const existing = (await readFile(outputUrl, 'utf8').catch(() => '')).replace(/\r\n/g, '\n');
   if (existing !== serialized) {
     console.error('Remotion scenario JSON is stale. Run npm run generate:scenarios.');
     process.exit(1);

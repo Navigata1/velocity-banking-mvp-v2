@@ -1,11 +1,17 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 const mediaRoot = new URL('../', import.meta.url);
 const remotionRoot = new URL('../remotion/', import.meta.url);
 const engineSource = new URL('../../../packages/financial-engine/src/index.ts', import.meta.url);
+const require = createRequire(import.meta.url);
 
 async function text(relativePath) {
   return readFile(new URL(relativePath, remotionRoot), 'utf8');
@@ -64,6 +70,27 @@ test('commits deterministic scenario JSON generated from the shared financial en
   assert.match(generator, /simulateMoneyLoopMonth/);
   assert.match(generator, /buildLenderTermsContract/);
   assert.match(generator, /--check/);
+});
+
+test('accepts a CRLF scenario checkout when generated financial data is unchanged', async () => {
+  const temporaryRoot = await mkdtemp(join(tmpdir(), 'interestshield-remotion-'));
+  const temporaryScenario = join(temporaryRoot, 'scenarios.v1.json');
+  try {
+    const committed = await text('data/scenarios.v1.json');
+    await writeFile(temporaryScenario, committed.replace(/\r?\n/g, '\r\n'));
+    const result = spawnSync(process.execPath, [
+      require.resolve('tsx/cli'),
+      fileURLToPath(new URL('scripts/generate-remotion-scenarios.ts', mediaRoot)),
+      '--check',
+    ], {
+      cwd: fileURLToPath(mediaRoot),
+      encoding: 'utf8',
+      env: { ...process.env, REMOTION_SCENARIO_OUTPUT: temporaryScenario },
+    });
+    assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  } finally {
+    await rm(temporaryRoot, { recursive: true, force: true });
+  }
 });
 
 test('validates every scenario through a strict discriminated runtime schema', async () => {
