@@ -1,17 +1,19 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import type { Group, Vector3Tuple } from 'three';
 import type { MoneyLoopVisualArtifact } from '@/app/artifact-visual-contract';
 import { artifactMeshFactories } from './artifact-meshes';
-import { getSelectionMotionFrame } from './selection-motion';
+import { createSelectionSettledNotifier, getSelectionMotionElapsedSeconds, getSelectionMotionFrame } from './selection-motion';
 import type { MoneyLoopCanvasSettings } from './useMoneyLoopRenderMode';
 
 interface MoneyLoopThreeSceneProps {
   artifacts: MoneyLoopVisualArtifact[];
   activeArtifactId: MoneyLoopVisualArtifact['id'];
+  selectionStartedAt: number;
   onSelect: (id: MoneyLoopVisualArtifact['id']) => void;
+  onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => void;
   canvasSettings: MoneyLoopCanvasSettings;
   onFirstFrame: () => void;
 }
@@ -32,36 +34,30 @@ const cameraPositions: Record<MoneyLoopVisualArtifact['id'], Vector3Tuple> = {
   principal: [-0.58, 0.22, 7.2],
 };
 
-function SelectionRig({ activeArtifact, children }: { activeArtifact: MoneyLoopVisualArtifact; children: ReactNode }) {
+function SelectionRig({ activeArtifact, children, onSelectionSettled, selectionStartedAt }: { activeArtifact: MoneyLoopVisualArtifact; children: ReactNode; onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => boolean; selectionStartedAt: number }) {
   const groupRef = useRef<Group>(null);
   const previousArtifactId = useRef(activeArtifact.id);
   const transitionStartedAt = useRef<number | null>(null);
-  const pendingTransition = useRef(false);
   const startingCameraPosition = useRef<Vector3Tuple>([0, 0, 7.2]);
   const startingRotation = useRef(0);
-  const { invalidate } = useThree();
+  const { camera, invalidate } = useThree();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (previousArtifactId.current === activeArtifact.id) return;
 
     previousArtifactId.current = activeArtifact.id;
-    pendingTransition.current = true;
+    transitionStartedAt.current = selectionStartedAt || performance.now();
+    startingCameraPosition.current = [camera.position.x, camera.position.y, camera.position.z];
+    startingRotation.current = groupRef.current?.rotation.y ?? 0;
     invalidate();
-  }, [activeArtifact.id, invalidate]);
+  }, [activeArtifact.id, camera, invalidate, selectionStartedAt]);
 
-  useFrame(({ camera, clock, invalidate: requestFrame }) => {
-    if (pendingTransition.current) {
-      pendingTransition.current = false;
-      transitionStartedAt.current = clock.elapsedTime;
-      startingCameraPosition.current = [camera.position.x, camera.position.y, camera.position.z];
-      startingRotation.current = groupRef.current?.rotation.y ?? 0;
-    }
-
+  useFrame(({ camera, invalidate: requestFrame }) => {
     if (transitionStartedAt.current === null) return;
 
     const frame = getSelectionMotionFrame(
       activeArtifact.selectionMotion,
-      clock.elapsedTime - transitionStartedAt.current
+      getSelectionMotionElapsedSeconds(transitionStartedAt.current, performance.now())
     );
     const targetCameraPosition = cameraPositions[activeArtifact.id];
 
@@ -77,7 +73,10 @@ function SelectionRig({ activeArtifact, children }: { activeArtifact: MoneyLoopV
     }
 
     if (frame.shouldRequestFrame) requestFrame();
-    else transitionStartedAt.current = null;
+    else {
+      transitionStartedAt.current = null;
+      onSelectionSettled(activeArtifact.id);
+    }
   });
 
   return <group ref={groupRef}>{children}</group>;
@@ -86,12 +85,18 @@ function SelectionRig({ activeArtifact, children }: { activeArtifact: MoneyLoopV
 export default function MoneyLoopThreeScene({
   artifacts,
   activeArtifactId,
+  selectionStartedAt,
   onSelect,
+  onSelectionSettled,
   canvasSettings,
   onFirstFrame,
 }: MoneyLoopThreeSceneProps) {
   const activeArtifact = artifacts.find((artifact) => artifact.id === activeArtifactId) ?? artifacts[0];
   const firstFrameReported = useRef(false);
+  const notifySelectionSettled = useMemo(
+    () => createSelectionSettledNotifier(onSelectionSettled),
+    [onSelectionSettled]
+  );
   const { invalidate } = useThree();
 
   useEffect(() => {
@@ -102,6 +107,7 @@ export default function MoneyLoopThreeScene({
     if (firstFrameReported.current) return;
     firstFrameReported.current = true;
     onFirstFrame();
+    notifySelectionSettled(activeArtifact.id);
   });
 
   if (!activeArtifact) return null;
@@ -115,7 +121,7 @@ export default function MoneyLoopThreeScene({
         <planeGeometry args={[8, 8]} />
         <meshStandardMaterial color="#172033" roughness={0.92} metalness={0.1} />
       </mesh>
-      <SelectionRig activeArtifact={activeArtifact}>
+      <SelectionRig activeArtifact={activeArtifact} onSelectionSettled={notifySelectionSettled} selectionStartedAt={selectionStartedAt}>
         {artifacts.map((artifact) => {
           const ArtifactMesh = artifactMeshFactories[artifact.geometry];
 

@@ -105,6 +105,7 @@ export default function MoneyLoopArtifactRail({
   const visualContract = buildMoneyLoopVisualContract(artifacts);
   const displayArtifacts = selectSafeMoneyLoopDomArtifacts(artifacts);
   const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(displayArtifacts[0]?.id ?? 'income');
+  const [selectionStartedAt, setSelectionStartedAt] = useState(0);
   const [renderMode, setRenderMode] = useState<MoneyLoopRenderMode>('static');
   const activeArtifact = displayArtifacts.find((artifact) => artifact.id === activeArtifactId) ?? displayArtifacts[0];
   const activeVisualArtifact = visualContract.artifacts.find((artifact) => artifact.id === activeArtifact?.id);
@@ -127,11 +128,12 @@ export default function MoneyLoopArtifactRail({
     displayArtifacts.map((artifact) => [artifact.id, artifact])
   ) as Partial<Record<DashboardLoopArtifact['id'], DashboardLoopArtifact>>;
 
-  function selectArtifactByIndex(index: number) {
+  function selectArtifactByIndex(index: number, focusTab = true, selectionStartedAt = 0) {
     const nextArtifact = displayArtifacts[index];
     if (!nextArtifact) return;
 
-    selectArtifactById(nextArtifact.id);
+    selectArtifactById(nextArtifact.id, selectionStartedAt);
+    if (!focusTab) return;
     window.requestAnimationFrame(() => {
       const nextTab = document.getElementById(`money-loop-artifact-tab-${nextArtifact.id}`);
       nextTab?.focus();
@@ -139,20 +141,21 @@ export default function MoneyLoopArtifactRail({
     });
   }
 
-  function selectArtifactById(id: DashboardLoopArtifact['id']) {
-    if (!displayArtifacts.some((artifact) => artifact.id === id)) return;
+  function selectArtifactById(id: DashboardLoopArtifact['id'], selectionStartedAt = 0) {
+    if (!displayArtifacts.some((artifact) => artifact.id === id) || id === activeArtifactId) return;
 
+    setSelectionStartedAt(selectionStartedAt);
     setActiveArtifactId(id);
   }
 
-  function selectRelativeArtifact(direction: -1 | 1) {
+  function selectRelativeArtifact(direction: -1 | 1, selectionStartedAt = 0) {
     const lastIndex = displayArtifacts.length - 1;
     const nextIndex =
       direction === 1
         ? activeIndex === lastIndex ? 0 : activeIndex + 1
         : activeIndex === 0 ? lastIndex : activeIndex - 1;
 
-    selectArtifactByIndex(nextIndex);
+    selectArtifactByIndex(nextIndex, false, selectionStartedAt);
   }
 
   function handleArtifactKeyDown(
@@ -175,7 +178,7 @@ export default function MoneyLoopArtifactRail({
     if (nextIndex === null) return;
 
     event.preventDefault();
-    selectArtifactByIndex(nextIndex);
+    selectArtifactByIndex(nextIndex, true, event.timeStamp);
   }
 
   return (
@@ -207,6 +210,7 @@ export default function MoneyLoopArtifactRail({
             <MoneyLoopThreeStage
               visualContract={visualContract}
               activeArtifactId={activeArtifact.id}
+              selectionStartedAt={selectionStartedAt}
               onSelect={selectArtifactById}
               onRenderModeChange={setRenderMode}
             />
@@ -290,7 +294,7 @@ export default function MoneyLoopArtifactRail({
             })}
           </div>
 
-          <div className="min-w-0 border-t border-white/10 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <div data-testid="money-loop-artifact-detail" className="min-w-0 border-t border-white/10 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
             <div className="flex flex-wrap items-center gap-2">
               <span className={`rounded-md border px-2 py-1 text-[11px] font-semibold uppercase ${activeTone.border} ${activeTone.text}`}>
                 Step {String(activeIndex + 1).padStart(2, '0')}
@@ -328,7 +332,7 @@ export default function MoneyLoopArtifactRail({
             aria-label="Previous Money Loop artifact"
             aria-controls="money-loop-artifact-panel"
             data-testid="money-loop-artifact-previous"
-            onClick={() => selectRelativeArtifact(-1)}
+            onClick={(event) => selectRelativeArtifact(-1, event.timeStamp)}
             title="Previous artifact"
             className={`grid h-10 w-10 place-items-center rounded-md border text-lg transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
           >
@@ -339,7 +343,7 @@ export default function MoneyLoopArtifactRail({
             aria-label="Next Money Loop artifact"
             aria-controls="money-loop-artifact-panel"
             data-testid="money-loop-artifact-next"
-            onClick={() => selectRelativeArtifact(1)}
+            onClick={(event) => selectRelativeArtifact(1, event.timeStamp)}
             title="Next artifact"
             className={`grid h-10 w-10 place-items-center rounded-md border text-lg transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
           >
@@ -356,7 +360,7 @@ export default function MoneyLoopArtifactRail({
           role="tablist"
           aria-label="Money Loop artifact selector"
           data-testid="money-loop-artifact-selector-grid"
-          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-1 scroll-px-1 px-[calc(50vw-68px)] md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
+          className="grid w-max snap-x snap-mandatory grid-cols-[repeat(5,136px)] gap-1 scroll-px-1 px-[calc(50vw-68px)] md:w-full md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
         >
           {displayArtifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone] ?? toneStyles.amber;
@@ -377,9 +381,9 @@ export default function MoneyLoopArtifactRail({
                 aria-controls="money-loop-artifact-panel"
                 tabIndex={isActive ? 0 : -1}
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
-                onClick={() => selectArtifactByIndex(index)}
+                onClick={(event) => selectArtifactByIndex(index, true, event.timeStamp)}
                 onKeyDown={(event) => handleArtifactKeyDown(event, index)}
-                className={`relative min-h-[120px] snap-center border-b-2 border-x-0 border-t-0 p-3 text-left transition md:min-h-[78px] md:p-3 ${
+                className={`relative min-h-[120px] min-w-0 snap-center border-b-2 border-x-0 border-t-0 p-3 text-left transition md:min-h-[78px] md:p-3 ${
                   isActive
                     ? `${tone.border} ${tone.surface}`
                     : `border-transparent bg-transparent hover:bg-white/5`
@@ -390,7 +394,7 @@ export default function MoneyLoopArtifactRail({
                     <p className={`text-[11px] font-semibold uppercase ${classes.textSecondary}`}>
                       {String(index + 1).padStart(2, '0')}
                     </p>
-                    <p className={`mt-1 text-sm font-semibold leading-tight ${classes.text}`}>{artifact.label}</p>
+                    <p className={`mt-1 break-words text-sm font-semibold leading-tight ${classes.text}`}>{artifact.label}</p>
                   </div>
                   <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${tone.dot}`} />
                 </div>
@@ -399,7 +403,7 @@ export default function MoneyLoopArtifactRail({
                   {artifact.signal}
                 </p>
 
-                <div className="mt-3 flex items-center gap-3 md:hidden">
+                <div className="mt-3 flex items-center gap-2 md:hidden">
                   <div className="relative h-11 w-11 shrink-0" style={{ perspective: '900px' }}>
                     <div
                       className="artifact-token relative h-full w-full rounded-full border border-white/15 shadow-xl"
@@ -409,9 +413,9 @@ export default function MoneyLoopArtifactRail({
                       <div className="absolute inset-[15px] rounded-full border border-white/10 bg-white/10" />
                     </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className={`text-sm font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
-                    <p className={`mt-1 text-[11px] font-medium leading-4 ${classes.textSecondary}`}>{artifact.signal}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className={`break-words text-sm font-bold leading-tight ${tone.text}`}>{artifact.value}</p>
+                    <p className={`mt-1 break-words text-[11px] font-medium leading-4 ${classes.textSecondary}`}>{artifact.signal}</p>
                   </div>
                 </div>
               </button>

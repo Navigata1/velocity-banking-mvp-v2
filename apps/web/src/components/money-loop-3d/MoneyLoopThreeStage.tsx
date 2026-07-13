@@ -2,7 +2,7 @@
 
 import { Canvas, type GLProps } from '@react-three/fiber';
 import { WebGLRenderer } from 'three';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { MoneyLoopRenderMode, MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
 import MoneyLoopThreeScene from './MoneyLoopThreeScene';
 import {
@@ -17,11 +17,13 @@ import {
 interface MoneyLoopThreeStageProps {
   visualContract: MoneyLoopVisualContract;
   activeArtifactId: MoneyLoopVisualArtifact['id'];
+  selectionStartedAt: number;
   onSelect: (id: MoneyLoopVisualArtifact['id']) => void;
   onRenderModeChange: (renderMode: MoneyLoopRenderMode) => void;
 }
 
-interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'visualContract' | 'activeArtifactId' | 'onSelect'> {
+interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'visualContract' | 'activeArtifactId' | 'selectionStartedAt' | 'onSelect'> {
+  onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => void;
   renderMode: 'efficient' | 'full';
   canvasSettings: MoneyLoopCanvasSettings;
   canvasVisible: boolean;
@@ -33,7 +35,9 @@ type MoneyLoopRendererDefaults = Parameters<Extract<GLProps, (defaultProps: neve
 function ActiveMoneyLoopCanvas({
   visualContract,
   activeArtifactId,
+  selectionStartedAt,
   onSelect,
+  onSelectionSettled,
   renderMode,
   canvasSettings,
   canvasVisible,
@@ -71,7 +75,9 @@ function ActiveMoneyLoopCanvas({
       <MoneyLoopThreeScene
         artifacts={visualContract.artifacts}
         activeArtifactId={activeArtifactId}
+        selectionStartedAt={selectionStartedAt}
         onSelect={onSelect}
+        onSelectionSettled={onSelectionSettled}
         canvasSettings={canvasSettings}
         onFirstFrame={controller.markFirstFrame}
       />
@@ -82,12 +88,15 @@ function ActiveMoneyLoopCanvas({
 export default function MoneyLoopThreeStage({
   visualContract,
   activeArtifactId,
+  selectionStartedAt,
   onSelect,
   onRenderModeChange,
 }: MoneyLoopThreeStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
+  const [settledArtifactId, setSettledArtifactId] = useState<MoneyLoopVisualArtifact['id'] | null>(null);
   const { renderMode, shouldRender, canvasVisible, controller } = useMoneyLoopRenderMode(visualContract.isComplete, stageRef);
   const canvasSettings = getMoneyLoopCanvasSettings(renderMode);
+  const onSelectionSettled = useCallback((id: MoneyLoopVisualArtifact['id']) => setSettledArtifactId(id), []);
 
   useEffect(() => onRenderModeChange(renderMode), [onRenderModeChange, renderMode]);
 
@@ -98,13 +107,17 @@ export default function MoneyLoopThreeStage({
       data-testid="money-loop-three-stage"
       data-render-mode={renderMode}
       data-should-render={shouldRender}
+      data-active-artifact={activeArtifactId}
+      data-selection-state={settledArtifactId === activeArtifactId ? 'settled' : 'transitioning'}
       className="pointer-events-auto absolute left-1/2 top-1/2 h-64 w-64 md:h-72 md:w-72 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
     >
       {shouldRender && renderMode !== 'static' ? (
         <ActiveMoneyLoopCanvas
           visualContract={visualContract}
           activeArtifactId={activeArtifactId}
+          selectionStartedAt={selectionStartedAt}
           onSelect={onSelect}
+          onSelectionSettled={onSelectionSettled}
           renderMode={renderMode}
           canvasSettings={canvasSettings}
           canvasVisible={canvasVisible}
