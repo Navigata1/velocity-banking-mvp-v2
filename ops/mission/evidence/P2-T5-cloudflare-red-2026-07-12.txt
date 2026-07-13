@@ -12,3 +12,7 @@ Resolution:
 - use Wrangler-generated runtime types as the sole Worker platform source.
 - await every async route inside the error boundary.
 - stream and cap the actual body rather than trusting Content-Length.
+
+Initial CI contract:
+- the root mobile-port contract still required the superseded D1 snapshot lane copy.
+- replace that expectation with the report-only private R2 boundary used by web and mobile Settings.
