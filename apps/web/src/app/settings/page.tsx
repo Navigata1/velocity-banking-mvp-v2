@@ -11,6 +11,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import { BACKEND_DECISION_GATES, BACKEND_READINESS_OPTIONS, BACKEND_STATUS_SUMMARY } from './backend-readiness';
 import { clearLocalDemoData } from './local-data-reset';
 import { exportLocalDemoSnapshot, importLocalDemoSnapshot } from './local-demo-snapshot';
+import SupabaseAccountPanel from './SupabaseAccountPanel';
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
   { value: 'original', label: 'Original', icon: '🌙' },
@@ -460,50 +461,11 @@ export default function SettingsPage() {
       </section>
       </ScrollReveal>
 
-      {/* Demo Auth */}
+      {/* Account sync */}
       <ScrollReveal variant="fadeUp" delay={0.25}>
       <section className={`${classes.glass} rounded-2xl p-6`}>
-        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account (Local demo)</h2>
-        {appStore.user ? (
-          <div className="space-y-3">
-            <div className={`${classes.bgTertiary} rounded-xl p-4`}>
-              <p className={`text-sm ${classes.textSecondary}`}>Signed in as</p>
-              <p className={`font-medium ${classes.text}`}>{appStore.user.name || appStore.user.email}</p>
-              <p className={`text-xs ${classes.textMuted}`}>{appStore.user.email}</p>
-            </div>
-            <button
-              onClick={() => appStore.signOut()}
-              className="px-4 py-2 bg-red-500/20 text-red-400 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-colors"
-            >
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className={`text-sm ${classes.textSecondary}`}>
-              Demo login for class presentation. No real authentication yet.
-            </p>
-            <button
-              onClick={() => appStore.signInLocal('demo@interestshield.app', 'Demo User')}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors"
-            >
-              Sign In as Demo User
-            </button>
-            <div className="flex gap-2">
-              {['Google', 'Microsoft', 'Apple'].map((provider) => (
-                <button
-                  key={provider}
-                  disabled
-                  aria-label={`${provider} sign-in unavailable: backend not connected`}
-                  title={`${provider} sign-in unavailable until backend keys are configured`}
-                  className={`flex-1 px-3 py-2 rounded-xl ${classes.bgTertiary} ${classes.textMuted} text-xs cursor-not-allowed`}
-                >
-                  {provider} (requires keys)
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Account and private sync</h2>
+        <SupabaseAccountPanel />
       </section>
       </ScrollReveal>
 
