@@ -7036,13 +7036,38 @@ test('Money Loop render lifecycle binds and cleans listeners while forwarding ob
   assert.deepEqual(cleanups.sort(), ['connection', 'motion', 'observer', 'resize', 'visibility']);
 });
 
-test('Money Loop releases probe contexts and context failures downgrade the active controller', () => {
+test('Money Loop requires WebGL2 before canvas work can mount', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const requestedContexts = [];
+  const supportsWebgl = renderMode.probeMoneyLoopWebglSupport(() => ({
+    getContext: (contextId) => {
+      requestedContexts.push(contextId);
+      return contextId === 'webgl' ? { getExtension: () => null } : null;
+    },
+  }));
+  const controller = renderMode.createMoneyLoopRenderController({
+    supportsWebgl,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  });
+
+  assert.equal(supportsWebgl, false);
+  assert.deepEqual(requestedContexts, ['webgl2']);
+  assert.equal(controller.getState().renderMode, 'static');
+  assert.equal(controller.getState().shouldRender, false);
+});
+
+test('Money Loop releases WebGL2 probe contexts and context failures downgrade the active controller', () => {
   const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
   let loseContextCalls = 0;
   const supportsWebgl = renderMode.probeMoneyLoopWebglSupport(() => ({
-    getContext: () => ({
+    getContext: (contextId) => contextId === 'webgl2' ? ({
       getExtension: (name) => name === 'WEBGL_lose_context' ? { loseContext: () => { loseContextCalls += 1; } } : null,
-    }),
+    }) : null,
   }));
   const controller = renderMode.createMoneyLoopRenderController({
     supportsWebgl,

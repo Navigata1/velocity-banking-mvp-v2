@@ -16,7 +16,7 @@ interface WebglProbeContext {
 }
 
 interface WebglProbeCanvas {
-  getContext: (contextId: 'webgl2' | 'webgl') => WebglProbeContext | null;
+  getContext: (contextId: 'webgl2') => WebglProbeContext | null;
 }
 
 interface CanvasContextEventTarget {
@@ -88,7 +88,7 @@ export function probeMoneyLoopWebglSupport(
 ): boolean {
   try {
     const canvas = createCanvas();
-    const context = canvas?.getContext('webgl2') ?? canvas?.getContext('webgl');
+    const context = canvas?.getContext('webgl2');
     if (!context) return false;
 
     try {
