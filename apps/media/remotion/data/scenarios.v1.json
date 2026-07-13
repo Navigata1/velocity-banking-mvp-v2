@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "engineContractVersion": "source-sha256:995c9a4deec4",
+  "lenderTermsContractVersion": "2.0.0",
+  "engineSourceDigest": "995c9a4deec471201f19251ef555c5755e077e3296dea7d20fe26387f7b91413",
+  "generatedBy": [
+    "simulateAmortizedPayoff",
+    "simulateMoneyLoopMonth",
+    "calculateLOCInterestAccrual",
+    "buildLenderTermsContract"
+  ],
+  "scenarios": [
+    {
+      "id": "baseline-comparison",
+      "status": "modeled",
+      "visual": "baseline-comparison",
+      "kicker": "Baseline / compatible paths",
+      "title": "Compare two valid paths.",
+      "summary": "Same balance and APR. Only the modeled monthly payment changes.",
+      "inputs": {
+        "principalBalance": 18500,
+        "apr": 7.9,
+        "baselineMonthlyPayment": 450,
+        "modeledMonthlyPayment": 750,
+        "maxMonths": 360
+      },
+      "output": {
+        "compatible": true,
+        "baseline": {
+          "monthlyPayment": 450,
+          "payoffMonths": 49,
+          "totalInterest": 3143.65,
+          "isPayoffPossible": true,
+          "failureReason": null
+        },
+        "modeledPlan": {
+          "monthlyPayment": 750,
+          "payoffMonths": 28,
+          "totalInterest": 1753.89,
+          "isPayoffPossible": true,
+          "failureReason": null
+        }
+      },
+      "cards": [
+        {
+          "label": "Fixed-payment path",
+          "value": "49 months",
+          "detail": "$3,144 modeled interest",
+          "tone": "information"
+        },
+        {
+          "label": "Higher-payment path",
+          "value": "28 months",
+          "detail": "$1,754 modeled interest",
+          "tone": "progress"
+        }
+      ],
+      "assumption": "Assumption: fixed 7.9% APR, no new charges or fees; payment changes from $450 to $750.",
+      "closing": "Comparison only, not a recommendation."
+    },
+    {
+      "id": "money-loop-month",
+      "status": "modeled",
+      "visual": "money-loop",
+      "kicker": "Money Loop / month 01",
+      "title": "Follow month one in order.",
+      "summary": "A principal chunk, four dated LOC moves, and both interest charges stay visible.",
+      "inputs": {
+        "month": 1,
+        "debtBalance": 18500,
+        "debtApr": 7.9,
+        "debtPayment": 450,
+        "loc": {
+          "limit": 10000,
+          "apr": 10.5,
+          "balance": 2000
+        },
+        "locBalance": 2000,
+        "chunkAmount": 4000,
+        "cashFlowPaydown": 750,
+        "locDepositAmount": 6400,
+        "locExpenseAmount": 5650,
+        "monthlyIncome": 6400,
+        "monthlyExpenses": 5650,
+        "locAccrualCalendar": {
+          "year": 2026,
+          "month": 7,
+          "transactions": [
+            {
+              "day": 1,
+              "type": "deposit",
+              "amount": 3200
+            },
+            {
+              "day": 3,
+              "type": "expense",
+              "amount": 1000
+            },
+            {
+              "day": 15,
+              "type": "deposit",
+              "amount": 3200
+            },
+            {
+              "day": 20,
+              "type": "expense",
+              "amount": 4650
+            }
+          ]
+        },
+        "monthsSinceChunk": 999
+      },
+      "output": {
+        "cashFlow": 750,
+        "debtBalance": 14171.79,
+        "locBalance": 5283.72,
+        "debtInterest": 121.79,
+        "locInterest": 33.72,
+        "locInterestMethod": "transaction-calendar",
+        "didChunk": true,
+        "dailyEvents": [
+          {
+            "day": 1,
+            "type": "deposit",
+            "amount": 3200,
+            "closingBalance": 2800
+          },
+          {
+            "day": 3,
+            "type": "expense",
+            "amount": 1000,
+            "closingBalance": 3800
+          },
+          {
+            "day": 15,
+            "type": "deposit",
+            "amount": 3200,
+            "closingBalance": 600
+          },
+          {
+            "day": 20,
+            "type": "expense",
+            "amount": 4650,
+            "closingBalance": 5250
+          }
+        ],
+        "storySteps": [
+          {
+            "id": "debt-interest",
+            "label": "Debt interest",
+            "value": "$122",
+            "detail": "Posts before principal movement.",
+            "tone": "caution"
+          },
+          {
+            "id": "principal-chunk",
+            "label": "Principal chunk",
+            "value": "$4,000",
+            "detail": "Drawn from LOC to target debt.",
+            "tone": "progress"
+          },
+          {
+            "id": "debt-payment",
+            "label": "Debt payment",
+            "value": "$450",
+            "detail": "Applies after the chunk.",
+            "tone": "information"
+          },
+          {
+            "id": "early-calendar",
+            "label": "July 1 then July 3",
+            "value": "$2,800 to $3,800",
+            "detail": "Deposit, then expense.",
+            "tone": "information"
+          },
+          {
+            "id": "late-calendar",
+            "label": "July 15 then July 20",
+            "value": "$600 to $5,250",
+            "detail": "Deposit, then expense.",
+            "tone": "information"
+          },
+          {
+            "id": "loc-interest",
+            "label": "LOC interest",
+            "value": "$34",
+            "detail": "Posts after dated closing balances.",
+            "tone": "caution"
+          }
+        ]
+      },
+      "cards": [
+        {
+          "label": "Debt after month 1",
+          "value": "$14,172",
+          "detail": "After interest, chunk, and payment",
+          "tone": "progress"
+        },
+        {
+          "label": "LOC after month 1",
+          "value": "$5,284",
+          "detail": "After routed cash flow and interest",
+          "tone": "information"
+        }
+      ],
+      "assumption": "Modeled from July 2026 dated transactions; LOC interest uses each day's closing balance.",
+      "closing": "Timing changes the balance path. Expenses still count."
+    },
+    {
+      "id": "blocked-plan",
+      "status": "blocked",
+      "visual": "blocked",
+      "kicker": "Guardrail / terms incomplete",
+      "title": "Projection blocked on purpose.",
+      "summary": "Missing lender terms and negative cash flow stop the app from inventing a payoff date.",
+      "inputs": {
+        "monthlyIncome": 5200,
+        "monthlyExpenses": 5450,
+        "lenderTerms": {
+          "rateMode": "variable"
+        }
+      },
+      "output": {
+        "projectionReady": false,
+        "payoffMonths": null,
+        "cashFlow": -250,
+        "confidence": "incomplete",
+        "failureReason": "missing-lender-terms-and-negative-cash-flow",
+        "missingFields": [
+          "annualFee",
+          "transactionFeePercent",
+          "drawPeriodMonths",
+          "repaymentPeriodMonths",
+          "minimumDraw",
+          "minimumPayment"
+        ],
+        "assumptions": [
+          "annualFee is missing; lender-specific projections are blocked.",
+          "transactionFeePercent is missing; lender-specific projections are blocked.",
+          "drawPeriodMonths is missing; lender-specific projections are blocked.",
+          "repaymentPeriodMonths is missing; lender-specific projections are blocked.",
+          "minimumDraw is missing; lender-specific projections are blocked.",
+          "minimumPayment is missing; lender-specific projections are blocked.",
+          "rateMode is user provided and must be verified against lender documents."
+        ]
+      },
+      "cards": [
+        {
+          "label": "Payoff date",
+          "value": "Not projected",
+          "detail": "Known terms required",
+          "tone": "blocked"
+        },
+        {
+          "label": "Monthly cash flow",
+          "value": "-$250",
+          "detail": "Income minus expenses",
+          "tone": "blocked"
+        }
+      ],
+      "assumption": "Enter verified fees, rate mode, draw rules, repayment period, minimum draw, and minimum payment.",
+      "closing": "Fix the inputs first. Keep the decision yours."
+    }
+  ]
+}

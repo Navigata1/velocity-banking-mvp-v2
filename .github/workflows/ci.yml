@@ -74,8 +74,21 @@ jobs:
         working-directory: apps/media
         run: npm ci --ignore-scripts
 
+      - name: Read pinned Remotion Chrome version
+        id: remotion-chrome-version
+        shell: bash
+        run: echo "version=$(cat apps/media/remotion/chrome.version)" >> "$GITHUB_OUTPUT"
+
+      - name: Install pinned Remotion Chrome
+        id: remotion-chrome
+        uses: browser-actions/setup-chrome@e574b4b3a21156ab45dd6b5f67e884fd26eed829 # v2.1.2
+        with:
+          chrome-version: ${{ steps.remotion-chrome-version.outputs.version }}
+
       - name: Check media identity contracts
         working-directory: apps/media
+        env:
+          CHROME_PATH: ${{ steps.remotion-chrome.outputs.chrome-path }}
         run: npm run check
 
       - name: Install report Worker dependencies
