@@ -13,6 +13,11 @@ const migrationPath = path.resolve(
   '202607020001_first_lane_owner_scoped_schema.sql'
 );
 const sql = fs.readFileSync(migrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
+const idempotencyMigrationPath = path.resolve(
+  path.dirname(migrationPath),
+  '20260713024039_snapshot_sync_idempotency.sql'
+);
+const idempotencySql = fs.readFileSync(idempotencyMigrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
 
 const tables = [
   'profiles',
@@ -64,6 +69,17 @@ assert.match(
 );
 assert.doesNotMatch(sql, /audit_events_delete_own/, 'clients must not delete audit history');
 assert.doesNotMatch(sql, /security definer|auth\.role\(|user_metadata/, 'migration contains an unsafe authorization primitive');
+assert.match(idempotencySql, /add column idempotency_key text/, 'snapshot sync needs a stable idempotency key');
+assert.match(
+  idempotencySql,
+  /unique \(owner_id, idempotency_key\)/,
+  'snapshot idempotency must be scoped to the authenticated owner'
+);
+assert.match(
+  idempotencySql,
+  /source = 'local-demo-handoff'.*idempotency_key is not null/,
+  'local demo handoffs must always carry an idempotency key'
+);
 
 for (const table of ['profiles', 'financial_snapshots', 'learning_progress']) {
   const policy = `${table}_update_own`;

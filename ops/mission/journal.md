@@ -50,3 +50,9 @@
 - Added 19 pgTAP checks with synthetic owner A, owner B, and anon contexts against local Supabase PostgreSQL 17.
 - The suite proves owner isolation, cross-owner write rejection, composite snapshot ownership, append-only audit history, export retention, and deletion cascades.
 - Supabase schema lint and security advisors remain clean; web tests, lint, build, and Expo TypeScript pass.
+
+## 2026-07-13T02:44Z - P2 snapshot idempotency verified locally
+- PR #223 merged at f324aed after both GitHub quality workflows and the Vercel preview passed; P2-T2 is done.
+- Added an owner-scoped snapshot idempotency key and a database check requiring it for local-demo handoffs.
+- Clean reset and 21 pgTAP checks prove same-owner retries cannot duplicate rows while different owners remain independent.
+- A dedicated cloud project is a $10 monthly cost, so local Auth/RLS remains the implementation lane until the production cost gate is explicitly approved.

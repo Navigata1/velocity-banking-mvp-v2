@@ -1,0 +1,6 @@
+Gate: P2-T3 idempotent sync red test
+Command: node apps/web/scripts/supabase-schema-contract.cjs
+Exit: 1
+Observed failure:
+  AssertionError: snapshot sync needs a stable idempotency key.
+Result: local-demo snapshot retries had no database uniqueness contract before this migration.

@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(19);
+SELECT plan(21);
 
 INSERT INTO auth.users (id, email)
 VALUES
@@ -11,10 +11,10 @@ VALUES
   ('00000000-0000-0000-0000-00000000000a', 'Owner A', 'active'),
   ('00000000-0000-0000-0000-00000000000b', 'Owner B', 'active');
 
-INSERT INTO public.financial_snapshots (id, owner_id, assumptions_json)
+INSERT INTO public.financial_snapshots (id, owner_id, idempotency_key, assumptions_json)
 VALUES
-  ('00000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-00000000000a', '{"owner":"a"}'),
-  ('00000000-0000-0000-0000-000000000102', '00000000-0000-0000-0000-00000000000b', '{"owner":"b"}');
+  ('00000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-00000000000a', 'owner-a-fixture-001', '{"owner":"a"}'),
+  ('00000000-0000-0000-0000-000000000102', '00000000-0000-0000-0000-00000000000b', 'owner-b-fixture-001', '{"owner":"b"}');
 
 INSERT INTO public.simulation_runs (id, owner_id, snapshot_id, engine_version, route, result_summary_json)
 VALUES
@@ -43,13 +43,13 @@ SELECT is(
   'owner A cannot see owner B profile'
 );
 SELECT lives_ok(
-  $$INSERT INTO public.financial_snapshots (id, owner_id, assumptions_json)
-    VALUES ('00000000-0000-0000-0000-000000000103', '00000000-0000-0000-0000-00000000000a', '{}')$$,
+  $$INSERT INTO public.financial_snapshots (id, owner_id, idempotency_key, assumptions_json)
+    VALUES ('00000000-0000-0000-0000-000000000103', '00000000-0000-0000-0000-00000000000a', 'owner-a-fixture-002', '{}')$$,
   'owner A can insert their own snapshot'
 );
 SELECT throws_ok(
-  $$INSERT INTO public.financial_snapshots (id, owner_id, assumptions_json)
-    VALUES ('00000000-0000-0000-0000-000000000104', '00000000-0000-0000-0000-00000000000b', '{}')$$,
+  $$INSERT INTO public.financial_snapshots (id, owner_id, idempotency_key, assumptions_json)
+    VALUES ('00000000-0000-0000-0000-000000000104', '00000000-0000-0000-0000-00000000000b', 'owner-b-fixture-002', '{}')$$,
   '42501',
   NULL,
   'owner A cannot insert a snapshot for owner B'
@@ -69,6 +69,13 @@ SELECT throws_ok(
   NULL,
   'owner A cannot transfer snapshot ownership'
 );
+SELECT throws_ok(
+  $$INSERT INTO public.financial_snapshots (owner_id, idempotency_key, assumptions_json)
+    VALUES ('00000000-0000-0000-0000-00000000000a', 'owner-a-fixture-001', '{}')$$,
+  '23505',
+  NULL,
+  'retrying the same owner idempotency key cannot duplicate a snapshot'
+);
 SELECT is((SELECT count(*) FROM public.simulation_runs), 1::bigint, 'owner A cannot see owner B runs');
 SELECT lives_ok(
   $$INSERT INTO public.audit_events (owner_id, event_type) VALUES ('00000000-0000-0000-0000-00000000000a', 'owner-action')$$,
@@ -83,6 +90,12 @@ SELECT throws_ok(
 
 RESET ROLE;
 SELECT set_config('request.jwt.claim.sub', '', true);
+
+SELECT lives_ok(
+  $$INSERT INTO public.financial_snapshots (id, owner_id, idempotency_key, assumptions_json)
+    VALUES ('00000000-0000-0000-0000-000000000105', '00000000-0000-0000-0000-00000000000b', 'owner-a-fixture-001', '{}')$$,
+  'different owners may use the same client idempotency key'
+);
 
 SELECT throws_ok(
   $$INSERT INTO public.simulation_runs (owner_id, snapshot_id, engine_version, route, result_summary_json)
