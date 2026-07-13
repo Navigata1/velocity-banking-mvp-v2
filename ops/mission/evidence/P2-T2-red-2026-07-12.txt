@@ -1,0 +1,6 @@
+Gate: P2-T2 red pgTAP test
+Command: npx supabase test db --local supabase/tests/owner_isolation_test.sql
+Exit: 1
+Observed failure:
+  No tests run. Planned 1 test but ran 0.
+Result: the generated pgTAP harness proved no adversarial RLS behavior had been implemented yet.

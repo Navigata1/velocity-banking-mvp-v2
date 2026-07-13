@@ -44,3 +44,9 @@
 - Revoked automatic and anon Data API privileges; client audit events are now append-only.
 - A clean local PostgreSQL 17 reset, six-table source contract, catalog inspection, schema lint, and Supabase security advisors pass.
 - The connected Supabase organization has no InterestShield project, so no unrelated cloud project was changed.
+
+## 2026-07-13T02:32Z - P2 adversarial RLS verified locally
+- PR #222 merged at 1ee9a10 after both GitHub quality workflows and the Vercel preview passed; P2-T1 is done.
+- Added 19 pgTAP checks with synthetic owner A, owner B, and anon contexts against local Supabase PostgreSQL 17.
+- The suite proves owner isolation, cross-owner write rejection, composite snapshot ownership, append-only audit history, export retention, and deletion cascades.
+- Supabase schema lint and security advisors remain clean; web tests, lint, build, and Expo TypeScript pass.

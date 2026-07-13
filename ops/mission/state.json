@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T02:25:00Z",
+    "updated": "2026-07-13T02:32:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -190,8 +190,8 @@
           "command": "npm --prefix apps/web run test:supabase",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:25:00Z",
-          "notes": "Static contract, clean PostgreSQL 17 reset, catalog inspection, schema lint, and security advisors pass."
+          "lastRun": "2026-07-13T02:32:00Z",
+          "notes": "Static contract and 19 pgTAP owner-isolation tests pass; PostgreSQL 17 schema lint and security advisors remain clean."
         },
         {
           "id": "P2-G2",
@@ -199,7 +199,7 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:25:00Z",
+          "lastRun": "2026-07-13T02:32:00Z",
           "notes": ""
         },
         {
@@ -208,7 +208,7 @@
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:25:00Z",
+          "lastRun": "2026-07-13T02:32:00Z",
           "notes": ""
         }
       ],
@@ -216,18 +216,22 @@
         {
           "id": "P2-T1",
           "title": "Repair and apply the owner-scoped Supabase schema",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P1-T2"],
-          "pr": null,
+          "pr": {
+            "number": 222,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/222",
+            "mergedAt": "2026-07-12"
+          },
           "notes": "Align profile ownership, add owner-consistent foreign keys, and use least-privilege grants. Red evidence: ops/mission/evidence/P2-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P2-G1-2026-07-12.txt."
         },
         {
           "id": "P2-T2",
           "title": "Adversarially test RLS, Data API grants, and deletion",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P2-T1"],
           "pr": null,
-          "notes": "Test anonymous, owner A, owner B, update ownership, exports, audit events, and account deletion."
+          "notes": "Test anonymous, owner A, owner B, update ownership, exports, audit events, and account deletion. Red evidence: ops/mission/evidence/P2-T2-red-2026-07-12.txt; green evidence: ops/mission/evidence/P2-G1-2026-07-12.txt."
         },
         {
           "id": "P2-T3",
@@ -652,13 +656,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/221",
       "phase": "P1 Calculation Contract v2",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 222,
+      "title": "Repair owner-scoped Supabase schema",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/222",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge P2-T1 after GitHub CI and Vercel preview pass, then mark the repaired local schema done.",
-      "Create an isolated InterestShield Supabase project or branch and run owner-A, owner-B, anon, ownership-transfer, audit, and deletion adversarial tests for P2-T2.",
+      "Merge P2-T2 after GitHub CI and Vercel preview pass, then mark adversarial RLS verification done.",
+      "Create a dedicated InterestShield Supabase project and begin P2-T3 web and Expo authentication plus idempotent snapshot sync.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
