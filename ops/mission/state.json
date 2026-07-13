@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T04:52:11Z",
+    "updated": "2026-07-13T04:54:24Z",
     "sessionCount": 1
   },
   "policies": {
@@ -344,15 +344,19 @@
         {
           "id": "P3-T2",
           "title": "Split oversized Learn, Portfolio, and mobile shell modules",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P3-T1"],
-          "pr": null,
-          "notes": "Learn, Portfolio, and Expo shell orchestration are reduced to 494, 63, and 207 lines with bounded modules. All local gates pass; PR #234 is open, Vercel is green, and the root mobile-port contract was repaired after its first managed run exposed stale monolith assumptions."
+          "pr": {
+            "number": 234,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/234",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #234 reduces Learn, Portfolio, and Expo shell orchestration to 494, 63, and 207 lines with bounded modules. Both GitHub quality runs and Vercel passed after the root mobile-port contract was updated to follow extracted ownership."
         },
         {
           "id": "P3-T3",
           "title": "Replace emoji navigation and complete metadata surfaces",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
           "notes": "Use the existing icon system or Lucide; add manifest, share metadata, robots, and sitemap where appropriate."
@@ -779,13 +783,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/233",
       "phase": "P3 Web Product Overhaul",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 234,
+      "title": "Split oversized product modules",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/234",
+      "phase": "P3 Web Product Overhaul",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P3",
     "nextActions": [
-      "Publish and merge P3-T2 after GitHub quality and Vercel preview gates pass.",
-      "Begin P3-T3 by replacing stored emoji navigation tokens with the existing icon system and completing metadata surfaces.",
+      "Inventory every user-visible emoji token and existing icon dependency before changing navigation ownership.",
+      "Complete the web manifest, Open Graph and social metadata, robots, and sitemap surfaces with route contracts.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
