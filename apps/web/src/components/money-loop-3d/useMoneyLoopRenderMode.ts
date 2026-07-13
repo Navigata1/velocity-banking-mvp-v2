@@ -71,6 +71,20 @@ export interface MoneyLoopRenderController {
   updateCapabilities: (capabilities: MoneyLoopCapabilityHints) => void;
 }
 
+export function createMoneyLoopGlFactory<TDefaultProps, TRenderer>(
+  controller: MoneyLoopRenderController,
+  createRenderer: (defaultProps: TDefaultProps) => TRenderer
+): (defaultProps: TDefaultProps) => TRenderer {
+  return (defaultProps) => {
+    try {
+      return createRenderer(defaultProps);
+    } catch (error) {
+      controller.markWebglUnavailable();
+      throw error;
+    }
+  };
+}
+
 function getConnection(): NetworkConnection | undefined {
   if (typeof navigator === 'undefined') return undefined;
 

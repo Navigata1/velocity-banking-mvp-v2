@@ -1,11 +1,13 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { Canvas, type GLProps } from '@react-three/fiber';
+import { WebGLRenderer } from 'three';
+import { useEffect, useMemo, useRef } from 'react';
 import type { MoneyLoopRenderMode, MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
 import MoneyLoopThreeScene from './MoneyLoopThreeScene';
 import {
   bindMoneyLoopCanvasContextEvents,
+  createMoneyLoopGlFactory,
   getMoneyLoopCanvasSettings,
   useMoneyLoopRenderMode,
   type MoneyLoopCanvasSettings,
@@ -26,6 +28,8 @@ interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'vis
   controller: MoneyLoopRenderController;
 }
 
+type MoneyLoopRendererDefaults = Parameters<Extract<GLProps, (defaultProps: never) => unknown>>[0];
+
 function ActiveMoneyLoopCanvas({
   visualContract,
   activeArtifactId,
@@ -36,6 +40,17 @@ function ActiveMoneyLoopCanvas({
   controller,
 }: ActiveMoneyLoopCanvasProps) {
   const contextCleanupRef = useRef<(() => void) | null>(null);
+  const gl = useMemo(
+    () => createMoneyLoopGlFactory(
+      controller,
+      (defaultProps: MoneyLoopRendererDefaults) => new WebGLRenderer({
+        ...defaultProps,
+        antialias: renderMode === 'full',
+        powerPreference: renderMode === 'full' ? 'high-performance' : 'low-power',
+      })
+    ),
+    [controller, renderMode]
+  );
 
   useEffect(() => () => contextCleanupRef.current?.(), []);
 
@@ -46,7 +61,7 @@ function ActiveMoneyLoopCanvas({
       dpr={[1, canvasSettings.dpr]}
       frameloop="demand"
       shadows={canvasSettings.shadows}
-      gl={{ antialias: renderMode === 'full', powerPreference: renderMode === 'full' ? 'high-performance' : 'low-power' }}
+      gl={gl}
       style={{ opacity: canvasVisible ? 1 : 0 }}
       onCreated={({ gl }) => {
         contextCleanupRef.current?.();

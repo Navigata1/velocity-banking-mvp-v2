@@ -7116,6 +7116,38 @@ test('Money Loop releases WebGL2 probe contexts and context failures downgrade t
   assert.equal(creationListeners.size, 0);
 });
 
+test('Money Loop renderer factory downgrades once before rethrowing a startup failure', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const controller = renderMode.createMoneyLoopRenderController({
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  });
+  const markWebglUnavailable = controller.markWebglUnavailable;
+  let downgradeCalls = 0;
+  controller.markWebglUnavailable = () => {
+    downgradeCalls += 1;
+    markWebglUnavailable();
+  };
+  const startupError = new Error('WebGLRenderer creation failed');
+  const createRenderer = renderMode.createMoneyLoopGlFactory(controller, () => {
+    assert.equal(controller.getState().renderMode, 'full');
+    throw startupError;
+  });
+
+  assert.throws(() => createRenderer({ canvas: {} }), (error) => {
+    assert.equal(downgradeCalls, 1);
+    assert.equal(controller.getState().renderMode, 'static');
+    assert.equal(controller.getState().shouldRender, false);
+    return error === startupError;
+  });
+  assert.equal(downgradeCalls, 1);
+});
+
 test('Money Loop static fallback policy disables decorative motion without hiding DOM controls', () => {
   const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
 
