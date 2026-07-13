@@ -63,8 +63,14 @@
 - The contract validates owner UUID, durable idempotency key, known storage keys, duplicate entries, deterministic ordering, and explicit Supabase upsert targets.
 - Web regression 242, Supabase 21-test gate, lint, build, and Expo TypeScript pass.
 
-## 2026-07-13T03:00Z - P2 web Supabase adapter verified
-- PR #225 merged at 238f751 after both GitHub quality workflows and the Vercel preview passed.
+## 2026-07-13T03:05Z - P2 web Supabase adapter verified
+- PR #226 merged at 5680560 after both GitHub quality workflows and the Vercel preview passed.
 - Pinned supabase-js 2.110.2 and Supabase SSR 0.12.0, with browser configuration limited to URL and publishable key.
 - The web adapter derives ownership from getClaims, then performs profile, idempotent snapshot, and audit mutations in order.
 - npm audit exposed high-severity Next.js 16.1.6 advisories with a non-major 16.2.10 fix; upgrade is queued as a separate security PR.
+
+## 2026-07-13T03:12Z - Next.js production advisories cleared locally
+- Upgraded Next.js and its ESLint config from 16.1.6 to 16.2.10 and forced the nested PostCSS dependency to patched 8.5.10.
+- Production audit moved from one high plus one moderate vulnerable package to zero vulnerabilities.
+- The first build exposed stale .next/dev type artifacts from 16.1.6; a verified clean-cache rebuild passed all eight static routes on 16.2.10.
+- Web regression 242, independent reference fixtures, accessibility contracts, lint, production build, and seven-route HTTP smoke pass; GitHub and Vercel review remain.
