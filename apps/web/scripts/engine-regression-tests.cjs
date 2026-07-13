@@ -350,6 +350,52 @@ test('Money Loop LOC event balances stay continuous after income and expense rou
   assert.equal(roundCents(month.locBalance), roundCents(expectedEndingBalance));
 });
 
+test('lender terms contract versions confidence and blocks projections with missing terms', () => {
+  const missing = sharedFinancialEngine.buildLenderTermsContract({});
+
+  assert.equal(missing.version, '2.0.0');
+  assert.equal(missing.confidence, 'incomplete');
+  assert.equal(missing.projectionReady, false);
+  assert.deepEqual(Array.from(missing.missingFields), [
+    'annualFee',
+    'transactionFeePercent',
+    'rateMode',
+    'drawPeriodMonths',
+    'repaymentPeriodMonths',
+    'minimumDraw',
+    'minimumPayment',
+  ]);
+
+  const input = {
+    annualFee: 75,
+    transactionFeePercent: 0.01,
+    rateMode: 'variable',
+    drawPeriodMonths: 120,
+    repaymentPeriodMonths: 180,
+    minimumDraw: 500,
+    minimumPayment: { mode: 'percent-of-balance', value: 0.02 },
+  };
+  const estimated = sharedFinancialEngine.buildLenderTermsContract(input);
+  assert.equal(estimated.confidence, 'estimated');
+  assert.equal(estimated.projectionReady, true);
+  assert.deepEqual(Array.from(estimated.estimatedFields), Array.from(missing.missingFields));
+
+  const verified = sharedFinancialEngine.buildLenderTermsContract({
+    ...input,
+    sources: Object.fromEntries(missing.missingFields.map((field) => [field, 'lender-document'])),
+  });
+  assert.equal(verified.confidence, 'complete');
+  assert.equal(verified.projectionReady, true);
+  assert.deepEqual(Array.from(verified.estimatedFields), []);
+
+  const invalidMinimum = sharedFinancialEngine.buildLenderTermsContract({
+    ...input,
+    minimumPayment: { mode: 'fixed', value: 0 },
+  });
+  assert.equal(invalidMinimum.confidence, 'incomplete');
+  assert.deepEqual(Array.from(invalidMinimum.missingFields), ['minimumPayment']);
+});
+
 test('daily interest burn uses the shared financial-engine helper', () => {
   const dashboardModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8');
   const financialStoreSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/stores/financial-store.ts'), 'utf8');
