@@ -196,3 +196,8 @@
 - The demand-rendered selection rig uses a 650 ms bound: stable turns once, caution at most half a turn, and blocked state settles without a turn.
 - Initial task review caught CSS orbit layers intercepting canvas input and source-only test coverage. Pointer-safe layering and production-consumed runtime contracts now prove exact selection, focus preservation, bounded motion, frame settlement, and incomplete static fallback.
 - Final task review approves both spec compliance and code quality with no findings. All 252 regressions, fixtures, accessibility, metadata, assets, lint, 14-page build, rendered desktop/mobile routes, LOC interaction, and zero production audit pass.
+
+## 2026-07-13T07:20Z - P4 lazy Three.js stage merged; capability controls begin
+- PR #238 merged at 8eb7bc0 after both GitHub quality workflows and the Vercel preview passed.
+- P4-T2 is done with five procedural contract-driven meshes, reachable pointer selection, DOM focus ownership, demand-rendered bounded motion, and static first paint/fallback.
+- P4-T3 starts on codex/mission/p4-three-capability-controls with reduced-motion, save-data, WebGL, device, viewport, intersection, document visibility, DPR, geometry, and cleanup policy.
