@@ -1,0 +1,46 @@
+P5-T3 WINDOWS CRLF PORTABILITY EVIDENCE
+Date: 2026-07-13
+Branch: codex/mission/p5-remotion-portable-generator
+
+MERGED-MAIN RED
+Commit: 3415d16
+Command:
+  npm --prefix apps/media run check
+
+Result: FAIL after 33/33 contracts and HyperFrames passed.
+  Remotion scenario JSON is stale. Run npm run generate:scenarios.
+
+Cause:
+- The committed financial JSON was current.
+- A Windows checkout converted its LF line endings to CRLF.
+- The generator normalized the financial-engine source digest but compared the
+  generated JSON and checked-out JSON as raw text.
+
+REGRESSION RED
+Command:
+  node --test --test-name-pattern "accepts a CRLF scenario checkout" \
+    scripts/remotion-compositions-contract.test.mjs
+
+Result: FAIL. The real generator rejected a temporary CRLF copy containing the
+same scenario data.
+
+FIX
+- The generator accepts a test-scoped REMOTION_SCENARIO_OUTPUT path and
+  normalizes CRLF to LF only for freshness comparison.
+- Generation output and financial values are unchanged.
+- The regression invokes the real TypeScript generator against a temporary
+  CRLF scenario file, so it passes on Windows and Ubuntu only when the behavior
+  is portable.
+
+GREEN
+- Focused CRLF regression: PASS.
+- `npm --prefix apps/media run check`: PASS.
+  - 34/34 media contracts.
+  - HyperFrames: zero errors or warnings and 40/40 contrast checks.
+  - Remotion generator freshness, TypeScript, pinned Chrome enumeration, and
+    all 27 browser-rendered keyframes passed.
+- `npm --prefix apps/media run render:still`: PASS under Chrome for Testing
+  150.0.7871.115.
+
+VERDICT
+The P5 freshness gate now behaves identically across LF and CRLF checkouts.
