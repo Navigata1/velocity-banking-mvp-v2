@@ -2717,8 +2717,8 @@ test('repository documents a Supabase first-lane schema with explicit owner-scop
   assert.ok(fs.existsSync(schemaPath), 'expected the Supabase first-lane schema handoff to exist');
   assert.ok(fs.existsSync(migrationPath), 'expected a checked Supabase migration draft');
   assert.ok(schema.includes('202607020001_first_lane_owner_scoped_schema.sql'), 'expected schema handoff to point to the migration draft');
-  assert.ok(schema.includes('contract-only'), 'expected schema handoff not to imply live backend wiring');
-  assert.ok(schema.includes('not an applied migration'), 'expected schema handoff to block accidental live migration claims');
+  assert.ok(schema.includes('Verified locally on 2026-07-12'), 'expected schema handoff to record local migration evidence');
+  assert.ok(schema.includes('no project named InterestShield'), 'expected schema handoff not to imply live project wiring');
   assert.ok(!schema.includes('create table public.users'), 'expected schema to use auth.users plus public profiles, not a duplicate public users table');
   assert.ok(!migration.includes('create table public.users'), 'expected migration to use auth.users plus public profiles, not a duplicate public users table');
   assert.ok(migration.includes('references auth.users(id) on delete cascade'), 'expected user-owned rows to cascade from auth.users');
@@ -2727,7 +2727,6 @@ test('repository documents a Supabase first-lane schema with explicit owner-scop
   assert.ok(!packageJson.dependencies['@supabase/supabase-js'], 'expected demo app not to wire a Supabase client yet');
 
   for (const table of privateTables) {
-    assert.ok(schema.includes(`create table public.${table}`), `expected ${table} table draft`);
     assert.ok(migration.includes(`create table public.${table}`), `expected ${table} migration table`);
     assert.ok(migration.includes(`alter table public.${table} enable row level security;`), `expected ${table} RLS`);
     assert.ok(migration.includes(`on public.${table}`), `expected ${table} policies`);

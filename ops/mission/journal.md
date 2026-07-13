@@ -37,3 +37,10 @@
 - Added two synthetic, anonymized lender scenarios explicitly labeled as software fixtures rather than lender quotes.
 - A separate CommonJS reference lane compares production outputs against closed-form amortization and an independently implemented dated daily-balance ledger.
 - P1 gates pass with 241 regressions, two independent reference scenarios, web lint, the Next.js production build, and Expo TypeScript.
+
+## 2026-07-13T02:25Z - P1 closed and P2 owner schema verified locally
+- PR #221 merged at 6435909 after both GitHub quality workflows and the Vercel preview passed; Calculation Contract v2 is complete.
+- Repaired child ownership through profiles and added owner-consistent composite snapshot foreign keys for simulation runs and exports.
+- Revoked automatic and anon Data API privileges; client audit events are now append-only.
+- A clean local PostgreSQL 17 reset, six-table source contract, catalog inspection, schema lint, and Supabase security advisors pass.
+- The connected Supabase organization has no InterestShield project, so no unrelated cloud project was changed.
