@@ -1,0 +1,63 @@
+P3-T4 asset budgets and rendered smoke evidence
+Recorded: 2026-07-13 UTC
+
+ASSET INVENTORY AND RED GATE
+- Baseline apps/web/public: 75 files, 83,703,244 bytes (79.83 MiB).
+- 54 unmounted subcategory PNGs: 66.56 MiB.
+- 9 unmounted generic hero PNGs: 11.53 MiB.
+- Both sets were referenced only by HeroVisual.tsx, which had no importer.
+- Dead starter assets, duplicate public favicon, and logo.jpg were also unreferenced.
+- Before cleanup, node apps/web/scripts/public-asset-budget.cjs failed as designed:
+  public assets use 79.83 MiB; budget is 2.00 MiB.
+
+ASSET RESULT
+- Removed the unmounted HeroVisual component and its 63 unreachable hero PNGs.
+- Removed proven-dead starter and duplicate public assets.
+- Converted shield-guardian.png from 1024x1024 / 1,186,328 bytes to
+  shield-guardian.webp at 512x512 / 28,590 bytes and visually inspected it.
+- Final apps/web/public: 5 files, 139,628 bytes (0.13 MiB).
+- Reduction: 79.69 MiB, or 99.83 percent.
+- Enforced budgets: 2 MiB total, 1.25 MiB per file, at most 8 files, and no
+  unreferenced public asset string or CSS URL references.
+- PASS Public asset budget passed 5 files, 0.13 MiB total, 0.08 MiB largest.
+
+RENDERED AUTOMATION
+- Added Playwright-core smoke against a fresh Next.js production build and an
+  automatically allocated local port using an installed Chrome, Chromium, or Edge.
+- Covers seven routes at 1440x900 and 390x844, main-scoped route markers,
+  stepped full-page scrolling, loaded and broken image checks, overflow, framework
+  error overlays, console/page errors, and Money Loop Next selecting LOC.
+- Initial red run found real mobile simulator overflow: 452px document width at a
+  390px viewport. DomainTabs mobile spacing was corrected while retaining all nine
+  controls and a regression assertion now protects the width-safe classes.
+- CI runs smoke:rendered:built after the production build.
+
+FINAL LOCAL GATES
+- npm --prefix apps/web test
+  PASS 244 regression tests.
+  PASS 2 independent anonymized financial reference scenarios.
+  PASS accessibility route contract.
+  PASS metadata contract.
+  PASS public asset budget.
+- npm --prefix apps/web run lint
+  PASS ESLint, exit 0.
+- npm --prefix apps/web run smoke:rendered
+  PASS Next.js 16.2.10 production build, 14 static pages.
+  PASS desktop routes: /, /simulator, /cockpit, /portfolio, /learn, /settings, /vault.
+  PASS mobile routes: /, /simulator, /cockpit, /portfolio, /learn, /settings, /vault.
+  PASS desktop Money Loop Next selects LOC with interaction-time error capture.
+- node scripts/mobile-port-contract-tests.cjs
+  PASS mobile port contracts, including CI rendered-smoke wiring.
+- Independent adversarial review
+  Initial findings covered stale builds, fixed browser/port assumptions, broad markers,
+  lazy-image coverage, child cleanup, stale asset references, and interaction errors.
+  All findings were fixed. Final re-review: no remaining issue.
+
+GITHUB LINUX FOLLOW-UP
+- GitHub run 29227025338 initially failed on the dashboard marker before the
+  client-mounted route replaced its intentional hydration skeleton.
+- The rendered gate now waits up to 15 seconds for the expected marker inside main
+  before image, overflow, and browser-error inspection. A source contract protects
+  that explicit hydration wait.
+- After the repair, 244 tests, lint, and all 14 local rendered route cases plus the
+  LOC interaction passed again. The branch was republished for fresh GitHub gates.

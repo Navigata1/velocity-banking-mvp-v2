@@ -151,7 +151,7 @@ export default function Navigation() {
               style={{ animation: 'float 3s ease-in-out infinite' }}
             >
               <Image
-                src="/shield-guardian.png"
+                src="/shield-guardian.webp"
                 alt="Velocity Guardian"
                 fill
                 sizes="44px"
@@ -237,7 +237,7 @@ export default function Navigation() {
               <div className="flex items-center gap-4">
                 <div className="relative w-14 h-14">
                   <Image
-                    src="/shield-guardian.png"
+                    src="/shield-guardian.webp"
                     alt="Velocity Guardian"
                     fill
                     sizes="56px"
