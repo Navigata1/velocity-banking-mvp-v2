@@ -19,15 +19,19 @@
     "build:android:preview": "npx eas-cli@latest build --platform android --profile preview",
     "build:ios:preview": "npx eas-cli@latest build --platform ios --profile preview",
     "build:native:production": "npx eas-cli@latest build --profile production",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test:supabase:mobile": "node scripts/supabase-mobile-contract.cjs"
   },
   "dependencies": {
     "@expo/metro-runtime": "~56.0.15",
     "@interestshield/financial-engine": "file:../../packages/financial-engine",
-    "expo": "^56.0.12",
+    "@interestshield/persistence-contract": "file:../../packages/persistence-contract",
+    "@supabase/supabase-js": "2.110.2",
+    "expo": "~56.0.15",
     "expo-constants": "~56.0.18",
-    "expo-linking": "~56.0.14",
-    "expo-router": "^56.2.11",
+    "expo-crypto": "~56.0.4",
+    "expo-linking": "~56.0.15",
+    "expo-router": "~56.2.14",
     "expo-secure-store": "~56.0.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",

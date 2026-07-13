@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T03:12:00Z",
+    "updated": "2026-07-13T03:16:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -199,8 +199,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:00:00Z",
-          "notes": ""
+          "lastRun": "2026-07-13T03:16:00Z",
+          "notes": "Web 242 regressions, independent fixtures, accessibility, lint, build, and verified-identity adapter contract pass."
         },
         {
           "id": "P2-G3",
@@ -208,8 +208,8 @@
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:00:00Z",
-          "notes": ""
+          "lastRun": "2026-07-13T03:16:00Z",
+          "notes": "Expo Supabase adapter contract, TypeScript, seven-route web export smoke, and Android Hermes bundle export pass."
         }
       ],
       "tasks": [
@@ -243,7 +243,7 @@
           "status": "in_progress",
           "dependsOn": ["P2-T2"],
           "pr": null,
-          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224, shared mutation contract in PR #225, and the web verified-identity adapter in PR #226; Expo SecureStore sync remains."
+          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224, shared mutation contract in PR #225, and web adapter in PR #226. Expo SecureStore adapter is in review; user-facing auth/sync controls and offline recovery remain."
         },
         {
           "id": "P2-T4",
@@ -613,6 +613,11 @@
       "note": "The repaired migration passes local PostgreSQL 17, lint, and security advisors, but no dedicated InterestShield cloud project exists yet."
     },
     {
+      "title": "Expo SDK 56 inherits moderate CLI and config audit advisories",
+      "severity": "medium",
+      "note": "npm reports ten moderate findings in Expo CLI/config tooling and proposes an invalid Expo 46 downgrade; track upstream SDK updates and do not force the downgrade."
+    },
+    {
       "title": "iOS simulator smoke requires macOS",
       "severity": "medium",
       "note": "Use the existing GitHub Actions macOS lane when P6 becomes active."
@@ -695,13 +700,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/226",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 227,
+      "title": "Patch Next.js production advisories",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/227",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge the audited Next.js 16.2.10 and PostCSS 8.5.10 security patch after GitHub CI and Vercel preview pass.",
-      "Continue P2-T3 with the Expo SecureStore auth adapter; reserve the $10/month cloud project for an explicit production cost gate.",
+      "Merge the Expo SecureStore Supabase adapter after GitHub CI and Vercel preview pass.",
+      "Continue P2-T3 with user-facing web and Expo sign-in, sync status, conflict recovery, and offline retry controls; reserve the $10/month cloud project for an explicit production cost gate.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

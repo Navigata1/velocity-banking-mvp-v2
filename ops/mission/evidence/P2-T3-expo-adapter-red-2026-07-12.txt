@@ -1,0 +1,5 @@
+Gate: P2-T3 Expo Supabase adapter red test
+Command: npm run test:supabase:mobile
+Exit: 1
+Observed failure: Missing script test:supabase:mobile
+Result: Expo had encrypted local assumptions but no Supabase auth storage or owner-scoped sync contract.

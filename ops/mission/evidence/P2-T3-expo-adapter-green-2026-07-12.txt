@@ -1,0 +1,15 @@
+Gate: P2-T3 Expo Supabase adapter verification
+Result: PASS
+
+- test:supabase:mobile: secure token chunking, generation cleanup, durable install identity, verified claims, and ordered profile/snapshot/audit mutations passed
+- check: TypeScript passed
+- build:web and smoke:web-export: Expo export and all 7 product routes passed
+- smoke:android-bundle: Android Hermes release bundle export passed
+- web test: 242 regressions, independent reference fixtures, and accessibility contract passed
+- web lint, Next.js 16.2.10 production build, and web Supabase adapter contract passed
+
+Security posture:
+- Only EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY are accepted.
+- Native auth sessions use versioned SecureStore chunks and process-locked mutations; browser sessions use localStorage.
+- Owner identity comes from Supabase getClaims, never caller input.
+- Expo SDK 56 dependency audit has 10 moderate inherited CLI/config findings, 0 high, and 0 critical findings.

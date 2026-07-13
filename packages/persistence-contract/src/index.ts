@@ -7,6 +7,7 @@ export const INTERESTSHIELD_STORAGE_KEYS = [
   'interestshield-preferences-v1',
   'interestshield-theme',
   'interestshield-app-v1',
+  'interestshield-mobile-assumptions-v1',
 ] as const;
 
 export type InterestShieldStorageKey = typeof INTERESTSHIELD_STORAGE_KEYS[number];
