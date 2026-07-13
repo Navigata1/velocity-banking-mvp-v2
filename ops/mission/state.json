@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T03:16:00Z",
+    "updated": "2026-07-13T03:28:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -199,8 +199,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:16:00Z",
-          "notes": "Web 242 regressions, independent fixtures, accessibility, lint, build, and verified-identity adapter contract pass."
+          "lastRun": "2026-07-13T03:28:00Z",
+          "notes": "Web 242 regressions, account and adapter contracts, independent fixtures, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke pass."
         },
         {
           "id": "P2-G3",
@@ -243,7 +243,7 @@
           "status": "in_progress",
           "dependsOn": ["P2-T2"],
           "pr": null,
-          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224, shared mutation contract in PR #225, and web adapter in PR #226. Expo SecureStore adapter is in review; user-facing auth/sync controls and offline recovery remain."
+          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224, shared mutation contract in PR #225, web adapter in PR #226, and Expo SecureStore adapter in PR #228. Web account and explicit sync UI are in review; Expo controls and offline recovery remain."
         },
         {
           "id": "P2-T4",
@@ -707,13 +707,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/227",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 228,
+      "title": "Add secure Expo Supabase adapter",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/228",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge the Expo SecureStore Supabase adapter after GitHub CI and Vercel preview pass.",
-      "Continue P2-T3 with user-facing web and Expo sign-in, sync status, conflict recovery, and offline retry controls; reserve the $10/month cloud project for an explicit production cost gate.",
+      "Merge the web passwordless account and explicit private-sync workflow after GitHub CI and Vercel preview pass.",
+      "Continue P2-T3 with Expo sign-in and sync controls plus cross-platform conflict recovery and offline retry; reserve the $10/month cloud project for an explicit production cost gate.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

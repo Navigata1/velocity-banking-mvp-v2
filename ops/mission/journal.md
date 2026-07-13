@@ -81,3 +81,11 @@
 - Mobile snapshot sync derives the owner from verified claims, reuses a durable install idempotency key, and appends the same owner-scoped audit contract as web.
 - Expo adapter tests, TypeScript, seven-route web export smoke, Android Hermes bundle export, web 242 regressions, lint, build, and web adapter contract pass.
 - Expo SDK 56 still inherits ten moderate CLI/config audit findings; npm's suggested Expo 46 downgrade is not viable and is tracked as an upstream risk.
+
+## 2026-07-13T03:28Z - P2 web account and explicit sync verified locally
+- PR #228 merged at ec6918d after both GitHub quality workflows and the Vercel preview passed.
+- Replaced the unused fake demo identity with passwordless email auth, observed session state, explicit local snapshot sync, and sign-out.
+- A missing Supabase configuration renders a calm local-only state; no network write occurs until the user signs in and presses sync.
+- Browser install identity is durable, mobile-only storage is excluded, sync still derives owner identity from getClaims, and offline attempts preserve local data.
+- Web account contract, 242 regressions, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke at 1440px and 390px pass with no horizontal overflow or console errors.
+- In-app browser control was unavailable during this pass; Chrome and automated smoke are the recorded browser evidence.

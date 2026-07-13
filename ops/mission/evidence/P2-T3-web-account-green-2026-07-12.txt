@@ -1,0 +1,15 @@
+Gate: P2-T3 web account and explicit sync verification
+Result: PASS
+
+- Account contract: stable browser install identity, web-only snapshot collection, passwordless auth, explicit sync, and fake-demo removal passed
+- Web suite: 242 regressions, 2 independent financial fixtures, and accessibility route contract passed
+- Lint and Next.js 16.2.10 production build passed
+- HTTP smoke: all 7 product routes passed
+- Chrome desktop: 1425px content viewport and 1425px scroll width; no horizontal overflow
+- Chrome mobile: 375px content viewport and 375px scroll width; account panel width 308px above fixed navigation
+- Browser console: no warnings or errors
+- Unconfigured build: local-only account state rendered; no Supabase request was attempted
+
+Browser limitation:
+- Codex in-app browser tab control was unavailable during this pass.
+- Chrome and automated HTTP smoke are the valid browser evidence for this slice.

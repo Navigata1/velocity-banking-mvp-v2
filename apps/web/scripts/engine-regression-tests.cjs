@@ -2523,6 +2523,7 @@ test('settings exposes controls to restore the pre-app snapshot preview', () => 
 
 test('settings makes demo backend status explicit', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
+  const accountSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/SupabaseAccountPanel.tsx'), 'utf8');
 
   assert.ok(source.includes('Backend status'), 'expected Settings to include a backend status section');
   assert.equal(settingsBackend.BACKEND_STATUS_SUMMARY.mode, 'Local demo mode');
@@ -2549,13 +2550,15 @@ test('settings makes demo backend status explicit', () => {
     'expected Settings not to hard-code Supabase as the selected backend'
   );
   assert.ok(
-    source.includes('aria-label={`${provider} sign-in unavailable: backend not connected`}'),
-    'expected disabled OAuth buttons to explain why sign-in is unavailable'
+    accountSource.includes('settings-supabase-account-unconfigured'),
+    'expected account sync to expose a stable unconfigured state'
   );
   assert.ok(
-    source.includes('title={`${provider} sign-in unavailable until backend keys are configured`}'),
-    'expected disabled OAuth buttons to expose unavailable reason on hover'
+    accountSource.includes('Nothing leaves this browser until you press sync.'),
+    'expected account sync to remain explicit and opt-in'
   );
+  assert.ok(accountSource.includes('signInWithOtp'), 'expected passwordless Supabase sign-in');
+  assert.ok(accountSource.includes('syncLocalSnapshot'), 'expected explicit owner-scoped snapshot sync');
 });
 
 test('settings backend readiness model keeps provider choice explicit', () => {

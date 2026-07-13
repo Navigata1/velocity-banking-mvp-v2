@@ -1,8 +1,16 @@
 import { createBrowserClient } from '@supabase/ssr';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { readPublicSupabaseConfig } from './config';
 
-export function createSupabaseBrowserClient() {
+let client: SupabaseClient | null | undefined;
+
+export function createSupabaseBrowserClient(): SupabaseClient | null {
+  if (client !== undefined) return client;
   const config = readPublicSupabaseConfig();
-  if (!config) return null;
-  return createBrowserClient(config.url, config.publishableKey);
+  if (!config) {
+    client = null;
+    return client;
+  }
+  client = createBrowserClient(config.url, config.publishableKey);
+  return client;
 }

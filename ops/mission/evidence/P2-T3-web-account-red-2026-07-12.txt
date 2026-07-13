@@ -1,0 +1,5 @@
+Gate: P2-T3 web account and explicit sync red test
+Command: npm --prefix apps/web run test:supabase:account
+Exit: 1
+Observed failure: Missing script test:supabase:account
+Result: Settings only exposed an unused fake demo identity and no real authenticated sync workflow.
