@@ -2752,6 +2752,22 @@ test('repository documents a Supabase first-lane schema with explicit owner-scop
   assert.ok(!migration.includes('profiles_id_idx'), 'expected migration not to duplicate the profiles primary-key index');
 });
 
+test('repository proves an isolated Supabase backup restore and retention contract', () => {
+  const drillPath = path.resolve(__dirname, '..', '..', '..', 'scripts', 'supabase-backup-restore-drill.ps1');
+  const runbookPath = path.resolve(__dirname, '..', '..', '..', 'docs', 'runbooks', 'supabase-recovery-and-retention.md');
+  const drill = fs.readFileSync(drillPath, 'utf8');
+  const runbook = fs.readFileSync(runbookPath, 'utf8');
+
+  assert.ok(drill.includes("$restoreDatabase = 'interestshield_restore_drill'"));
+  assert.ok(drill.includes("-t', 'auth.users'") && drill.includes("-n', 'public'"));
+  assert.ok(drill.includes("'auth_users'") && drill.includes("'rls_tables'") && drill.includes("'policies'"));
+  assert.ok(drill.includes('finally {'), 'expected deterministic cleanup even after a failed drill');
+  assert.ok(runbook.includes('## Production Recovery Gate'));
+  assert.ok(runbook.includes('## Retention Policy'));
+  assert.ok(runbook.includes('## Incident Procedure'));
+  assert.ok(runbook.includes('dedicated InterestShield Supabase project'));
+});
+
 test('repository documents a Cloudflare edge lane without live D1 wiring', () => {
   const contractPath = path.resolve(__dirname, '..', '..', '..', 'docs', '44_CLOUDFLARE_EDGE_LANE_CONTRACT.md');
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));

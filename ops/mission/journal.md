@@ -96,3 +96,10 @@
 - Native callbacks exchange either PKCE codes or access/refresh token fragments through the process-locked SecureStore client.
 - Expo account and adapter contracts, TypeScript, SDK compatibility, seven-route web export smoke, Android Hermes bundle export, and the complete web test/lint/build chain pass.
 - P2-T3 is ready to close after this focused Expo workflow PR merges; no dedicated cloud project is created without the known $10 monthly cost gate.
+
+## 2026-07-13T03:45Z - P2 restore and retention drill verified locally
+- PR #230 merged at e86eac8 after both GitHub quality workflows and the Vercel preview passed; P2-T3 is done.
+- The first archive attempts exposed missing auth schema, role ownership, filter-intersection, public schema collision, and managed auth.uid dependencies; each failure informed the final deterministic drill.
+- The passing drill restores separate auth identity and public application archives into an isolated database, with one synthetic row in every owned table.
+- Verification proves the exact snapshot payload, six tables, six RLS-enabled tables, and twenty policies; finally cleanup leaves zero synthetic owners, temporary databases, or archives.
+- Added an explicit retention schedule, deletion boundaries, managed production recovery gate, and incident procedure. No cloud backup is claimed before a dedicated project exists.

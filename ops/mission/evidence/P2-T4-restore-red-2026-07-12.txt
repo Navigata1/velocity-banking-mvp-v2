@@ -1,0 +1,8 @@
+Gate: P2-T4 isolated backup/restore red evidence
+
+Attempt 1: combined schema/table pg_dump restored only auth.users; public tables were absent.
+Attempt 2: auth schema ownership assignment failed because local postgres cannot SET ROLE supabase_auth_admin.
+Attempt 3: public restore collided with the empty target database's default public schema.
+Attempt 4: policy restore required the managed auth.uid() signature absent from the narrow archive.
+
+Result: naive archive and restore procedures were proven incomplete before the final drill was codified.
