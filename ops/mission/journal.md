@@ -74,3 +74,10 @@
 - Production audit moved from one high plus one moderate vulnerable package to zero vulnerabilities.
 - The first build exposed stale .next/dev type artifacts from 16.1.6; a verified clean-cache rebuild passed all eight static routes on 16.2.10.
 - Web regression 242, independent reference fixtures, accessibility contracts, lint, production build, and seven-route HTTP smoke pass; GitHub and Vercel review remain.
+
+## 2026-07-13T03:16Z - P2 Expo Supabase adapter verified locally
+- PR #227 merged at 30eba5b after both GitHub quality workflows and the Vercel preview passed; the web production audit is zero.
+- Added publishable-key-only Expo configuration, native chunked SecureStore session persistence, web localStorage fallback, and AppState-aware token refresh.
+- Mobile snapshot sync derives the owner from verified claims, reuses a durable install idempotency key, and appends the same owner-scoped audit contract as web.
+- Expo adapter tests, TypeScript, seven-route web export smoke, Android Hermes bundle export, web 242 regressions, lint, build, and web adapter contract pass.
+- Expo SDK 56 still inherits ten moderate CLI/config audit findings; npm's suggested Expo 46 downgrade is not viable and is tracked as an upstream risk.

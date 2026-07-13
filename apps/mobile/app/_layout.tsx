@@ -1,6 +1,14 @@
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
+import { registerMobileAuthLifecycle } from '@/lib/supabase/auth-lifecycle';
+import { createMobileSupabaseClient } from '@/lib/supabase/client';
 
 export default function RootLayout() {
+  useEffect(() => {
+    const client = createMobileSupabaseClient();
+    return client ? registerMobileAuthLifecycle(client) : undefined;
+  }, []);
+
   return (
     <Stack
       screenOptions={{
