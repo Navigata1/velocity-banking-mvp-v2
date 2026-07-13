@@ -14,3 +14,8 @@
 - PR #216 merged at b73e773 after two GitHub CI runs and Vercel preview checks passed.
 - P0-T1 is parked as an external auth blocker: connector OAuth grant expired and CLI has no local credentials.
 - Activated P1 so the independent financial correctness work continues; next is the canonical LOC ledger continuity fix under TDD.
+
+## 2026-07-13T01:54Z - P1 ledger continuity verified locally
+- Added a regression that failed on the discontinuous LOC interest event: $4,206.66 was reported where the routed balance plus interest was $3,131.66.
+- Rebased the interest and summary events on the post-income, post-expense LOC balance without changing the average-daily-balance interest calculation.
+- P1-G1 through P1-G3 pass: 239 regressions and accessibility contracts, the Next.js production build, and Expo TypeScript.

@@ -63,17 +63,17 @@ button.copy:hover{background:rgba(88,215,179,.2)}
 <body>
 <main>
   <header class="hero">
-    <p class="eyebrow">Mission Control &middot; State of the Union &middot; generated 2026-07-13 01:49Z</p>
+    <p class="eyebrow">Mission Control &middot; State of the Union &middot; generated 2026-07-13 01:54Z</p>
     <h1>InterestShield July 2026 Rebuild</h1>
     <p class="tagline">Make the financial truth executable, then make the experience unforgettable.</p>
     <div style="margin-top:14px">
       <span class="chip blue">mission: active</span>
       <span class="chip green">active phase: P1</span>
       <span class="chip blue">0/27 tasks</span>
-      <span class="chip amber">3/23 gates passed</span>
-      <span class="chip ">1 PRs merged</span>
+      <span class="chip amber">6/23 gates passed</span>
+      <span class="chip ">2 PRs merged</span>
       <span class="chip ">sessions: 1</span>
-      <span class="chip ">updated: 2026-07-13T01:50:00Z</span>
+      <span class="chip ">updated: 2026-07-13T01:54:00Z</span>
     </div>
     <div class="bar big" role="img" aria-label="Overall progress 0%"><div class="fill" style="width:0%"></div></div>
     <p class="small muted" style="margin-top:6px">Overall: 0% of tasks complete &middot; repo Navigata1/velocity-banking-mvp-v2 &middot; plan: C:/Users/IslandDevCrew/Documents/Interest Shield/docs/reports/InterestShield-State-of-the-Union-v2-2026-07-12.html</p>
@@ -105,7 +105,7 @@ Operating procedure:
   </section>
 
   <section aria-labelledby="metrics"><h2 id="metrics">Scoreboard: Baseline &rarr; Current &rarr; Target</h2>
-  <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Baseline</th><th>Current</th><th>Target</th></tr></thead><tbody><tr><td><b>Confirmed high defects open</b></td><td>3</td><td><span class="chip amber">3</span></td><td>0</td></tr><tr><td><b>Production routes on current shell</b></td><td>0/7</td><td><span class="chip amber">0/7</span></td><td>7/7</td></tr><tr><td><b>Web regression tests</b></td><td>238</td><td><span class="chip amber">238</span></td><td>300+ focused</td></tr><tr><td><b>Live InterestShield persistence backends</b></td><td>0</td><td><span class="chip amber">0</span></td><td>1 audited system of record</td></tr><tr><td><b>Public web assets</b></td><td>79.8 MiB</td><td><span class="chip amber">79.8 MiB</span></td><td>budgeted per route</td></tr><tr><td><b>Native platforms with device evidence</b></td><td>0/2</td><td><span class="chip amber">0/2</span></td><td>2/2</td></tr></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Baseline</th><th>Current</th><th>Target</th></tr></thead><tbody><tr><td><b>Confirmed high defects open</b></td><td>3</td><td><span class="chip blue">2</span></td><td>0</td></tr><tr><td><b>Production routes on current shell</b></td><td>0/7</td><td><span class="chip amber">0/7</span></td><td>7/7</td></tr><tr><td><b>Web regression tests</b></td><td>238</td><td><span class="chip blue">239</span></td><td>300+ focused</td></tr><tr><td><b>Live InterestShield persistence backends</b></td><td>0</td><td><span class="chip amber">0</span></td><td>1 audited system of record</td></tr><tr><td><b>Public web assets</b></td><td>79.8 MiB</td><td><span class="chip amber">79.8 MiB</span></td><td>budgeted per route</td></tr><tr><td><b>Native platforms with device evidence</b></td><td>0/2</td><td><span class="chip amber">0/2</span></td><td>2/2</td></tr></tbody></table></div>
   <p class="small muted" style="margin-top:6px">green = at/past target &middot; blue = moving toward target &middot; amber = unchanged &middot; red = moving away</p></section>
   <section aria-labelledby="risks"><h2 id="risks">Risks &amp; Blockers</h2><div class="panel"><ul class="bare"><li><span class="chip red">blocker</span> P0-T1 is externally blocked: the Vercel connector requires reauthentication and CLI 55.0.0 has no local credentials; the latest deployment is protected.</li><li><span class="chip red">blocker</span> The InterestShield custom-domain hostname is not recorded in the repository and must be discovered from Vercel project state.</li><li><span class="chip red">high</span> <b>Vercel authentication and alias ownership are unresolved</b> &mdash; <span class="muted">GitHub issue #59; the public URL still serves a stale deployment.</span></li><li><span class="chip red">high</span> <b>Lender-specific terms are discussed but not executable</b> &mdash; <span class="muted">Do not persist or market lender-specific projections until P1 closes.</span></li><li><span class="chip amber">medium</span> <b>The Supabase migration is an unapplied draft</b> &mdash; <span class="muted">RLS, Data API grants, ownership consistency, deletion, and restore are unverified.</span></li><li><span class="chip amber">medium</span> <b>iOS simulator smoke requires macOS</b> &mdash; <span class="muted">Use the existing GitHub Actions macOS lane when P6 becomes active.</span></li></ul></div></section>
 
@@ -180,23 +180,23 @@ Operating procedure:
       <p class="muted">Every displayed balance is ledger-continuous and lender-dependent assumptions are explicit, versioned, and executable.</p>
       <div class="bar"><div class="fill" style="width:0%"></div></div>
       <p class="small muted">0/4 tasks &middot; 0%</p>
-      <ul class="tasks"><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T1</b> Fix canonical Money Loop ledger continuity<br><span class="muted small">Correct LOC event balanceAfter semantics and add signed-event continuity tests.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T2</b> Define lender terms and confidence contract<br><span class="muted small">Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T3</b> Add transaction-calendar LOC accrual<br><span class="muted small">Model actual month length, paydays, bill dates, and daily closing balances with a labeled estimate fallback.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T4</b> Add lender fixture and independent reference lane<br><span class="muted small">Use anonymized fixtures and compare core outputs against closed forms or an independent reference implementation.</span></li></ul>
+      <ul class="tasks"><li class="task-in_progress"><span class="mark">&#9689;</span> <b>P1-T1</b> Fix canonical Money Loop ledger continuity<br><span class="muted small">Corrected LOC event balanceAfter semantics. Red evidence: ops/mission/evidence/P1-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T2</b> Define lender terms and confidence contract<br><span class="muted small">Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T3</b> Add transaction-calendar LOC accrual<br><span class="muted small">Model actual month length, paydays, bill dates, and daily closing balances with a labeled estimate fallback.</span></li><li class="task-pending"><span class="mark">&#9675;</span> <b>P1-T4</b> Add lender fixture and independent reference lane<br><span class="muted small">Use anonymized fixtures and compare core outputs against closed forms or an independent reference implementation.</span></li></ul>
       <div class="table-wrap"><table><thead><tr><th>Gate</th><th>Check</th><th>Command</th><th>Evidence</th><th>Last run</th></tr></thead><tbody><tr>
-      <td><span class="chip ">pending</span></td>
+      <td><span class="chip green">passed</span></td>
       <td><b>Financial engine regression suite</b><br><span class="small">Includes ledger invariants and lender-term boundary fixtures.</span></td>
       <td><code>npm --prefix apps/web test</code></td>
-      <td>&mdash;</td>
-      <td>&mdash;</td></tr><tr>
-      <td><span class="chip ">pending</span></td>
+      <td>ops/mission/evidence/P1-G1-2026-07-12.txt</td>
+      <td>2026-07-13T01:54:00Z</td></tr><tr>
+      <td><span class="chip green">passed</span></td>
       <td><b>Web build consumes the versioned contract</b></td>
       <td><code>npm --prefix apps/web run build</code></td>
-      <td>&mdash;</td>
-      <td>&mdash;</td></tr><tr>
-      <td><span class="chip ">pending</span></td>
+      <td>ops/mission/evidence/P1-G2-2026-07-12.txt</td>
+      <td>2026-07-13T01:54:00Z</td></tr><tr>
+      <td><span class="chip green">passed</span></td>
       <td><b>Expo TypeScript consumes the shared contract</b></td>
       <td><code>npm --prefix apps/mobile run check</code></td>
-      <td>&mdash;</td>
-      <td>&mdash;</td></tr></tbody></table></div>
+      <td>ops/mission/evidence/P1-G3-2026-07-12.txt</td>
+      <td>2026-07-13T01:54:00Z</td></tr></tbody></table></div>
       <details class="resume"><summary>Resume prompt for P1 (copy into a fresh session)</summary>
         <div class="prompt-box"><button class="copy" type="button">Copy</button><pre>You are resuming the &quot;InterestShield July 2026 Rebuild&quot; mission at phase P1: Calculation Contract v2.
 
@@ -207,17 +207,14 @@ Governing plan: C:/Users/IslandDevCrew/Documents/Interest Shield/docs/reports/In
 
 Phase goal: Every displayed balance is ledger-continuous and lender-dependent assumptions are explicit, versioned, and executable.
 Remaining tasks:
-  - [pending] P1-T1: Fix canonical Money Loop ledger continuity (Correct LOC event balanceAfter semantics and add signed-event continuity tests.)
+  - [in_progress] P1-T1: Fix canonical Money Loop ledger continuity (Corrected LOC event balanceAfter semantics. Red evidence: ops/mission/evidence/P1-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt.)
   - [pending] P1-T2: Define lender terms and confidence contract (Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence.)
   - [pending] P1-T3: Add transaction-calendar LOC accrual (Model actual month length, paydays, bill dates, and daily closing balances with a labeled estimate fallback.)
   - [pending] P1-T4: Add lender fixture and independent reference lane (Use anonymized fixtures and compare core outputs against closed forms or an independent reference implementation.)
-Gates not yet passed:
-  - [pending] Financial engine regression suite  -&gt;  npm --prefix apps/web test
-  - [pending] Web build consumes the versioned contract  -&gt;  npm --prefix apps/web run build
-  - [pending] Expo TypeScript consumes the shared contract  -&gt;  npm --prefix apps/mobile run check
+All gates passed — close the phase and advance.
 Next actions (from last session):
-  - Implement P1-T1 test-first: add a default-input regression proving LOC event balanceAfter continuity, watch it fail, then repair packages/financial-engine/src/index.ts:531-567.
-  - After P1-T1 merges, define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.
+  - Merge P1-T1 after GitHub CI and Vercel preview pass, then mark the continuity task done.
+  - Define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.
   - When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke.
 Known blockers:
   - P0-T1 is externally blocked: the Vercel connector requires reauthentication and CLI 55.0.0 has no local credentials; the latest deployment is protected.
@@ -535,8 +532,8 @@ Operating procedure:
     </article>
   </section>
 
-<section aria-labelledby="prs"><h2 id="prs">Merged Work (1 PRs)</h2><div class="timeline"><article class="tl-item"><time>#216</time><p><b>Bootstrap InterestShield mission control</b> &mdash; Mission bootstrap, merged 2026-07-12 &middot; <a href="https://github.com/Navigata1/velocity-banking-mvp-v2/pull/216">view</a></p></article></div></section>
-<section aria-labelledby="journal"><h2 id="journal">Journal (latest first)</h2><div class="timeline"><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:50Z - bootstrap PR merged, P1 activated</b><br>- PR #216 merged at b73e773 after two GitHub CI runs and Vercel preview checks passed.<br>- P0-T1 is parked as an external auth blocker: connector OAuth grant expired and CLI has no local credentials.<br>- Activated P1 so the independent financial correctness work continues; next is the canonical LOC ledger continuity fix under TDD.</p></article><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:45Z - P0 baseline gates recorded</b><br>- Passed P0-G1 through P0-G3: 238 regressions, accessibility contract, production build, and seven local routes.<br>- P0-G4 failed on the expected stale public marker; evidence names the green dfb4d91 deployment target and exact promotion commands.<br>- No production state was changed before the target and rollback facts were recorded.</p></article><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:38Z - session 1 kickoff</b><br>- Bootstrapped Mission Control from the July 12 State of the Union using inline execution with a cooling-off refutation pass.<br>- Confirmed the mission starts at P0 Release Truth; Vercel authentication and domain ownership are the first external gates.<br>- Next: merge this heartbeat, then inspect Vercel project state and promote only the verified green main artifact.</p></article></div></section>
+<section aria-labelledby="prs"><h2 id="prs">Merged Work (2 PRs)</h2><div class="timeline"><article class="tl-item"><time>#217</time><p><b>Record mission bootstrap heartbeat</b> &mdash; P0 Release Truth, merged 2026-07-12 &middot; <a href="https://github.com/Navigata1/velocity-banking-mvp-v2/pull/217">view</a></p></article><article class="tl-item"><time>#216</time><p><b>Bootstrap InterestShield mission control</b> &mdash; Mission bootstrap, merged 2026-07-12 &middot; <a href="https://github.com/Navigata1/velocity-banking-mvp-v2/pull/216">view</a></p></article></div></section>
+<section aria-labelledby="journal"><h2 id="journal">Journal (latest first)</h2><div class="timeline"><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:54Z - P1 ledger continuity verified locally</b><br>- Added a regression that failed on the discontinuous LOC interest event: $4,206.66 was reported where the routed balance plus interest was $3,131.66.<br>- Rebased the interest and summary events on the post-income, post-expense LOC balance without changing the average-daily-balance interest calculation.<br>- P1-G1 through P1-G3 pass: 239 regressions and accessibility contracts, the Next.js production build, and Expo TypeScript.</p></article><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:50Z - bootstrap PR merged, P1 activated</b><br>- PR #216 merged at b73e773 after two GitHub CI runs and Vercel preview checks passed.<br>- P0-T1 is parked as an external auth blocker: connector OAuth grant expired and CLI has no local credentials.<br>- Activated P1 so the independent financial correctness work continues; next is the canonical LOC ledger continuity fix under TDD.</p></article><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:45Z - P0 baseline gates recorded</b><br>- Passed P0-G1 through P0-G3: 238 regressions, accessibility contract, production build, and seven local routes.<br>- P0-G4 failed on the expected stale public marker; evidence names the green dfb4d91 deployment target and exact promotion commands.<br>- No production state was changed before the target and rollback facts were recorded.</p></article><article class="tl-item"><time>&#9998;</time><p><b>2026-07-13T01:38Z - session 1 kickoff</b><br>- Bootstrapped Mission Control from the July 12 State of the Union using inline execution with a cooling-off refutation pass.<br>- Confirmed the mission starts at P0 Release Truth; Vercel authentication and domain ownership are the first external gates.<br>- Next: merge this heartbeat, then inspect Vercel project state and promote only the verified green main artifact.</p></article></div></section>
 
   <p class="footer">GENERATED by ops/mission/render-sotu.mjs from state.json — do not hand-edit.
   To update: edit state.json, run <code>node ops/mission/render-sotu.mjs</code>, commit both.</p>

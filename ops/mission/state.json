@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T01:50:00Z",
+    "updated": "2026-07-13T01:54:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -102,27 +102,27 @@
           "id": "P1-G1",
           "title": "Financial engine regression suite",
           "command": "npm --prefix apps/web test",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P1-G1-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:54:00Z",
           "notes": "Includes ledger invariants and lender-term boundary fixtures."
         },
         {
           "id": "P1-G2",
           "title": "Web build consumes the versioned contract",
           "command": "npm --prefix apps/web run build",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P1-G2-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:54:00Z",
           "notes": ""
         },
         {
           "id": "P1-G3",
           "title": "Expo TypeScript consumes the shared contract",
           "command": "npm --prefix apps/mobile run check",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P1-G3-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:54:00Z",
           "notes": ""
         }
       ],
@@ -130,10 +130,10 @@
         {
           "id": "P1-T1",
           "title": "Fix canonical Money Loop ledger continuity",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Correct LOC event balanceAfter semantics and add signed-event continuity tests."
+          "notes": "Corrected LOC event balanceAfter semantics. Red evidence: ops/mission/evidence/P1-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
         },
         {
           "id": "P1-T2",
@@ -525,7 +525,7 @@
     {
       "label": "Confirmed high defects open",
       "baseline": "3",
-      "current": "3",
+      "current": "2",
       "target": "0",
       "direction": "down"
     },
@@ -539,7 +539,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "238",
+      "current": "239",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -594,13 +594,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/216",
       "phase": "Mission bootstrap",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 217,
+      "title": "Record mission bootstrap heartbeat",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/217",
+      "phase": "P0 Release Truth",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P1",
     "nextActions": [
-      "Implement P1-T1 test-first: add a default-input regression proving LOC event balanceAfter continuity, watch it fail, then repair packages/financial-engine/src/index.ts:531-567.",
-      "After P1-T1 merges, define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.",
+      "Merge P1-T1 after GitHub CI and Vercel preview pass, then mark the continuity task done.",
+      "Define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
