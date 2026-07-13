@@ -1,0 +1,50 @@
+P4-T4 Three.js visual verification evidence
+Recorded: 2026-07-13 UTC
+Branch head: 333f2cd
+
+BEHAVIOR PROVED
+- Fresh production build launches a genuine, owned, non-lost WebGL2 context.
+- Desktop uses full mode at effective DPR 1.5; mobile uses efficient mode at DPR 1.
+- Income, LOC, Expenses, Cash Flow, and Principal each produce a distinct,
+  materially changed, nonblank isolated WebGL frame from the authoritative DOM tabs.
+- The terminal frame and decoded candidate settle within 700 ms; a separately
+  bounded second capture confirms the candidate remains spatially stable.
+- Pixel capture suppresses overlapping DOM and SVG orbit siblings. A real-browser
+  adversarial lane hides only WebGL while keeping overlays present and correctly
+  rejects the resulting single-color isolated frame.
+- DOM token motion follows visual state: full turn, half turn, or no turn, all at
+  or below 700 ms. Previous/Next support Enter and Space without losing focus.
+- All five mobile tabs measure 136 +/- 1 px, contain visible text, and avoid the
+  fixed navigation. Canvas, detail, controls, and selector do not overlap.
+- Reduced motion selects the static fallback, mounts no canvas, and retains tabs.
+
+STRICT HELPERS
+- PNG signature, CRC, IHDR/order, dimensions, color mode, consecutive IDAT,
+  bounded inflate, complete zlib consumption, filter reconstruction, IEND, and
+  trailing-byte validation pass adversarial behavior tests.
+- Browser close and server stop rejection paths still clear the hard-exit timer,
+  attempt remaining cleanup, preserve idempotence, and call orderly exit.
+
+FRESH CONTROLLER GATES
+- node apps/web/scripts/three-stage-helpers-tests.cjs: PASS.
+- npm --prefix apps/web run test:3d: PASS; fresh 14-page build plus visual gate.
+- npm --prefix apps/web run test:3d:built: PASS on an independent repeat.
+- Slowest final repeat candidate: 600 ms; stable through 650 ms.
+- npm --prefix apps/web test: PASS, 263 regressions plus companion lanes.
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run smoke:rendered:built: PASS, 14 route cases plus LOC.
+- npm --prefix apps/web audit --omit=dev: PASS, zero vulnerabilities.
+- git diff --check: PASS; only repository line-ending notices.
+
+REVIEW
+- Independent review cycle 1 rejected fail-open PNG and timing proof.
+- Independent review cycle 2 rejected DOM-composited pixels, incomplete zlib
+  consumption, unconditional DOM spin, mockable WebGL, and cleanup failures.
+- Final re-review at 333f2cd: no findings.
+- Spec Compliance: APPROVED.
+- Code Quality: APPROVED.
+
+DURABLE SCREENSHOTS
+- ops/mission/evidence/P4-T4-three-stage/desktop.png (1440x900)
+- ops/mission/evidence/P4-T4-three-stage/mobile.png (390x844)
+- ops/mission/evidence/P4-T4-three-stage/reduced-motion-static.png (1440x900)

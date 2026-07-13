@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T08:05:00Z",
+    "updated": "2026-07-13T09:44:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -391,27 +391,27 @@
           "title": "Web tests",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T3-capability-controls-2026-07-13.txt",
-          "lastRun": "2026-07-13T07:55:00Z",
-          "notes": "262 regressions plus fixtures, accessibility, metadata, and assets pass with capability and lifecycle runtime contracts."
+          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:44:00Z",
+          "notes": "263 regressions plus fixtures, strict PNG and lifecycle helpers, accessibility, metadata, and assets pass."
         },
         {
           "id": "P4-G2",
           "title": "3D rendered, interaction, and nonblank canvas checks",
           "command": "npm --prefix apps/web run test:3d",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": "Command will be introduced with the Three.js stage."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:44:00Z",
+          "notes": "Fresh build plus repeated full/efficient all-five pixel, motion, focus, responsive, adversarial hidden-WebGL, and reduced-motion fallback lanes pass."
         },
         {
           "id": "P4-G3",
           "title": "Web production build within asset budgets",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T3-capability-controls-2026-07-13.txt",
-          "lastRun": "2026-07-13T07:55:00Z",
-          "notes": "Build, rendered smoke, asset budget, and zero production audit pass with static/efficient/full controls."
+          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:44:00Z",
+          "notes": "Fourteen-page build, rendered smoke, 0.13 MiB asset budget, and zero production audit pass with the reviewed visual gate."
         }
       ],
       "tasks": [
@@ -453,7 +453,7 @@
           "status": "in_progress",
           "dependsOn": ["P4-T3"],
           "pr": null,
-          "notes": "Active on codex/mission/p4-three-visual-verification: add fresh-build all-five interaction, nonblank canvas pixels, desktop/mobile screenshots, static fallback and focus-order proof, and CI wiring."
+          "notes": "Reviewed branch head 333f2cd passes fresh-build all-five isolated pixels, under-700-ms settlement, DOM motion, desktop/mobile screenshots, exact responsive geometry, static fallback, focus order, adversarial failure lanes, CI wiring, and final independent spec/quality approval. Awaiting PR merge and fresh-main closeout."
         }
       ]
     },
@@ -608,7 +608,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "262",
+      "current": "263",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -846,8 +846,8 @@
   "resume": {
     "activePhase": "P4",
     "nextActions": [
-      "Implement P4-T4 test-first with nonblank canvas pixels, all-five selection interaction, desktop/mobile screenshots, static fallback checks, focus order, and CI wiring.",
-      "After P4-T4 merges, rerun all P4 gates on current main and close the Three.js phase before beginning P5 motion storytelling.",
+      "Push reviewed P4-T4 head 333f2cd, merge only after GitHub quality and Vercel checks pass, and retain the uploaded Three-stage screenshots.",
+      "After P4-T4 merges, rerun tests, test:3d, and build on current main; close P4 only from that fresh evidence, then begin P5 motion storytelling.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

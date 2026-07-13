@@ -211,3 +211,10 @@
 - PR #239 merged at a51c877 after both GitHub quality workflows and the Vercel preview passed.
 - P4-T3 is done with fail-closed WebGL2 startup and loss, static fallback motion, conservative capability policy, bounded GPU settings, visibility pause, and cleaned subscriptions.
 - P4-T4 starts on codex/mission/p4-three-visual-verification with all-five interaction, nonblank pixels, desktop/mobile screenshots, static fallback, focus order, and CI coverage.
+
+## 2026-07-13T09:44Z - P4 visual verification approved locally
+- The fresh-build Playwright gate proves genuine WebGL2, full/efficient DPR policy, all five material and stable isolated canvas states, under-700-ms settlement, DOM-owned keyboard controls, exact responsive geometry, and reduced-motion static fallback.
+- Two adversarial review rounds exposed fail-open PNG parsing, composited DOM pixels, incomplete zlib consumption, unconditional 900 ms token spin, weak WebGL identity, cleanup rejection gaps, and shrinking mobile tracks. Each received a failing behavior test and correction.
+- A hidden-WebGL browser lane now leaves colorful overlays present yet fails isolated single-color proof; DOM tokens demonstrate full, half, and no-spin contract states.
+- Fresh controller gates pass a 14-page build, repeated 3D visual runs, 263 regressions, lint, all rendered routes, 0.13 MiB assets, and zero production vulnerabilities.
+- Final independent re-review reports no findings and approves both spec compliance and code quality. P4-T4 is ready for PR; P4 remains open until merge and fresh-main reruns.

@@ -91,9 +91,9 @@
 - Consumes: the built dashboard, system Chrome discovery, DOM artifact controls, canvas pixels, and render-mode attributes.
 - Produces: repeatable `npm --prefix apps/web run test:3d` evidence for desktop, mobile, full-capability, and static fallback states.
 
-- [ ] **Step 1: Add failing package and CI contracts requiring `test:3d`, all five artifact selections, reduced-motion fallback, screenshots, and canvas pixel sampling.**
-- [ ] **Step 2: Run `npm --prefix apps/web test`; expect missing script and CI wiring failures.**
-- [ ] **Step 3: Implement a fresh-build Playwright gate that selects each DOM tab, waits for the matching active geometry, samples a central canvas grid, and rejects transparent or single-color output.**
-- [ ] **Step 4: Capture 1440x900 and 390x844 screenshots, assert canvas containment and no document overflow, and verify reduced motion exposes the static fallback without a WebGL canvas.**
-- [ ] **Step 5: Add `test:3d:built` after build in CI, run `npm --prefix apps/web run test:3d`, the standing rendered smoke, tests, lint, build, asset budget, and production audit.**
+- [x] **Step 1: Add failing package and CI contracts requiring `test:3d`, all five artifact selections, reduced-motion fallback, screenshots, and canvas pixel sampling.**
+- [x] **Step 2: Run `npm --prefix apps/web test`; expect missing script and CI wiring failures.**
+- [x] **Step 3: Implement a fresh-build Playwright gate that selects each DOM tab, waits for the matching active geometry, samples a central canvas grid, and rejects transparent or single-color output.**
+- [x] **Step 4: Capture 1440x900 and 390x844 screenshots, assert canvas containment and no document overflow, and verify reduced motion exposes the static fallback without a WebGL canvas.**
+- [x] **Step 5: Add `test:3d:built` after build in CI, run `npm --prefix apps/web run test:3d`, the standing rendered smoke, tests, lint, build, asset budget, and production audit.**
 - [ ] **Step 6: Record P4 gate evidence, merge P4-T4, rerun all P4 gates on current main, and close P4.**
