@@ -31,3 +31,9 @@
 - Added dated LOC deposits and expenses using the actual calendar month and each day's closing balance, without daily interest compounding.
 - Leap-year, 31-day-month, invalid-calendar fallback, ending-balance, and simulator method-label fixtures pass.
 - P1 gates pass with 241 regressions, web lint, the Next.js production build, and Expo TypeScript.
+
+## 2026-07-13T02:13Z - P1 independent reference lane verified locally
+- PR #220 merged at 5df5e43 after both GitHub quality workflows and the Vercel preview passed; P1-T3 is done.
+- Added two synthetic, anonymized lender scenarios explicitly labeled as software fixtures rather than lender quotes.
+- A separate CommonJS reference lane compares production outputs against closed-form amortization and an independently implemented dated daily-balance ledger.
+- P1 gates pass with 241 regressions, two independent reference scenarios, web lint, the Next.js production build, and Expo TypeScript.
