@@ -1,0 +1,45 @@
+P4-T2 lazy procedural Three.js stage evidence
+Recorded: 2026-07-13 UTC
+
+SCOPE
+- Added pinned Three.js 0.185.1, React Three Fiber 9.6.1, and @types/three 0.185.1.
+- Added a Next client-only dynamic import with ssr false from the Money Loop rail.
+- The semantic DOM tablist, previous/next controls, values, notes, and focus remain
+  authoritative; the canvas is aria-hidden and cannot add financial claims.
+- The existing CSS orbit remains first paint and incomplete-contract fallback.
+- Added five procedural mesh factories matching visual contract version 1:
+  deposit reservoir, credit aperture, outflow gate, flow core, principal shield.
+- Added a demand-rendered selection rig with a 650 ms bounded camera transition.
+  Stable turns 2pi, caution at most pi, and blocked state does not turn.
+
+TDD RED / GREEN
+- Initial red: the lazy-stage contract failed because stage, scene, and mesh files
+  did not exist.
+- First review red: pointer-layer and runtime-contract tests failed because CSS
+  decorations still intercepted the canvas and pure selection-motion logic was absent.
+- Green: static orbit decorations are pointer-events-none, the canvas remains
+  pointer-interactive, and production consumes pure runtime helpers for selection,
+  motion frames, frame-stop behavior, and incomplete static fallback.
+
+GATES
+- npm --prefix apps/web test
+  PASS 252 regression tests.
+  PASS 2 independent anonymized financial reference scenarios.
+  PASS accessibility, metadata, and public asset contracts.
+- npm --prefix apps/web run lint
+  PASS ESLint, exit 0.
+- npm --prefix apps/web run build
+  PASS Next.js 16.2.10 production build with 14 static pages.
+- npm --prefix apps/web run smoke:rendered:built
+  PASS all seven routes at 1440x900 and 390x844 plus LOC interaction.
+- npm --prefix apps/web audit --omit=dev
+  PASS zero production vulnerabilities.
+- git diff --check
+  PASS.
+
+REVIEWS
+- Initial task review: changes required because orbit decorations intercepted mesh
+  pointer input and source-text-only tests could not prove runtime behavior.
+- Fix review: Spec Compliance APPROVED; Code Quality APPROVED; no findings.
+- Capability, reduced-motion, data-saving, offscreen lifecycle, DPR policy, and
+  pixel/screenshot CI remain the explicitly separate P4-T3 and P4-T4 work.
