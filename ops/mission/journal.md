@@ -158,3 +158,11 @@
 - PR #235 merged at 844415b after both GitHub quality runs and the refreshed Vercel preview passed.
 - P3-T3 is done with semantic shell icons, route-specific share metadata, install and crawl surfaces, and rendered browser evidence.
 - P3-T4 starts on codex/mission/p3-asset-budgets with a reference-aware inventory before any deletion or conversion.
+
+## 2026-07-13T05:42Z - P3 asset budgets and rendered smoke verified locally
+- Removed 79.69 MiB of proven-unreachable visual assets and converted the live Guardian from a 1.13 MiB PNG to a 28.6 KiB WebP; public assets are now 0.13 MiB, down 99.83 percent.
+- Added reference-aware 2 MiB total, 1.25 MiB per-file, and eight-file budgets to the standing web test suite.
+- Added fresh-production rendered smoke for all seven routes at 1440x900 and 390x844, plus the Money Loop LOC selection interaction and error capture.
+- The first rendered run found a real 452px-wide simulator document at a 390px viewport. Compact DomainTabs spacing fixes the overflow while preserving all nine controls.
+- An adversarial review produced eight automation and asset-reference findings across two rounds; all are resolved and the final re-review is clean.
+- Web 244 regressions, independent fixtures, accessibility, metadata, asset budget, lint, production build, 14 rendered route cases, LOC interaction, and mobile-port CI contracts pass. P3-T4 is ready for PR publication.

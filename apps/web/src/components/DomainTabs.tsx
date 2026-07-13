@@ -73,7 +73,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
     <div
       role="tablist"
       aria-label="Financial domain"
-      className={`relative flex w-max min-w-full flex-nowrap justify-start gap-1 p-1 ${classes.glass} rounded-md`}
+      className={`relative flex w-full min-w-0 flex-nowrap justify-between gap-0.5 p-1 sm:w-max sm:min-w-full sm:justify-start sm:gap-1 ${classes.glass} rounded-md`}
       ref={dropdownRef}
     >
       {tabs.map((tab) => {
@@ -92,7 +92,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
               aria-controls={isActive ? `domain-options-${tab.id}` : undefined}
               aria-expanded={isActive ? hasDropdown : undefined}
               aria-selected={isActive}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
+              className={`flex items-center gap-1 px-2 py-1.5 sm:gap-1.5 sm:px-3 rounded-lg font-medium transition-all text-sm ${
                 isActive
                   ? `${classes.glassButton} text-emerald-400 ring-1 ring-emerald-500/50`
                   : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-700/30`

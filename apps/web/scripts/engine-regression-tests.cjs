@@ -2454,6 +2454,10 @@ test('domain controls render semantic Lucide icons instead of stored glyph strin
   );
   assert.ok(source.includes('<ChevronDown') && source.includes('<Check aria-hidden="true"'));
   assert.ok(!source.includes('DomainIconToken') && !source.includes('buildSubcategoryToken'));
+  assert.ok(
+    source.includes('w-full min-w-0') && source.includes('gap-1 px-2 py-1.5 sm:gap-1.5 sm:px-3'),
+    'expected all nine icon-only domain controls to fit narrow viewports without document overflow'
+  );
 });
 
 test('root layout exposes a keyboard skip link to main content', () => {
@@ -7404,7 +7408,9 @@ test('app persisted state sanitizes shell routing and demo user state', () => {
 test('web app exposes a repeatable route smoke command', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const smokeScriptPath = path.resolve(__dirname, 'smoke-routes.cjs');
+  const renderedSmokePath = path.resolve(__dirname, 'smoke-rendered.cjs');
   const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+  const renderedSmoke = fs.readFileSync(renderedSmokePath, 'utf8');
 
   assert.equal(packageJson.scripts['smoke:routes'], 'node scripts/smoke-routes.cjs');
   assert.ok(fs.existsSync(smokeScriptPath), 'expected a repeatable web route smoke script');
@@ -7426,6 +7432,13 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes('InterestShield - Financial Empowerment'), 'expected smoke script to verify app metadata');
   assert.ok(smokeScript.includes('/_next/static'), 'expected smoke script to verify Next static assets');
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('stopServer(server)'), 'expected smoke script to clean up the server');
+  assert.equal(packageJson.scripts['smoke:rendered'], 'npm run build && npm run smoke:rendered:built');
+  assert.equal(packageJson.scripts['smoke:rendered:built'], 'node scripts/smoke-rendered.cjs');
+  assert.ok(renderedSmoke.includes("['mobile', { width: 390, height: 844 }]"));
+  assert.ok(renderedSmoke.includes("['desktop', { width: 1440, height: 900 }]"));
+  assert.ok(renderedSmoke.includes("page.getByTestId('money-loop-artifact-node-loc')"));
+  assert.ok(renderedSmoke.includes('main?.innerText.includes(expectedMarker)'));
+  assert.ok(renderedSmoke.includes('allocatePort()') && renderedSmoke.includes("process.once('SIGTERM'"));
 });
 
 test('web app exposes a repeatable accessibility route contract', () => {

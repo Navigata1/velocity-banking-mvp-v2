@@ -53,6 +53,10 @@ jobs:
         working-directory: apps/web
         run: npm run smoke:routes
 
+      - name: Smoke rendered web routes
+        working-directory: apps/web
+        run: npm run smoke:rendered:built
+
       - name: Install report Worker dependencies
         working-directory: apps/report-worker
         run: npm ci

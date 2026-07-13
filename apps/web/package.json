@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 5000",
     "lint": "eslint",
-    "test": "node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs && node scripts/metadata-contract.cjs",
+    "test": "node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs && node scripts/metadata-contract.cjs && node scripts/public-asset-budget.cjs",
     "test:reference": "node scripts/financial-reference-tests.cjs",
     "test:supabase": "node scripts/supabase-schema-contract.cjs && node scripts/supabase-client-contract.cjs && node scripts/supabase-account-contract.cjs && cd ../.. && npx --yes supabase test db --local supabase/tests",
     "test:supabase:client": "node scripts/supabase-client-contract.cjs",
     "test:supabase:account": "node scripts/supabase-account-contract.cjs",
     "test:a11y": "node scripts/accessibility-route-contract.cjs",
+    "test:assets": "node scripts/public-asset-budget.cjs",
     "smoke:routes": "node scripts/smoke-routes.cjs",
+    "smoke:rendered": "npm run build && npm run smoke:rendered:built",
+    "smoke:rendered:built": "node scripts/smoke-rendered.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"
   },
   "dependencies": {
@@ -35,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "playwright-core": "^1.61.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
