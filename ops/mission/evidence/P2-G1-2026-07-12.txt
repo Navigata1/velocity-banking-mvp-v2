@@ -1,13 +1,10 @@
-Gate: P2-G1 Supabase local schema verification
-Commands:
-  npm --prefix apps/web run test:supabase
-  npx supabase db reset --local
-  npx supabase db lint --local --schema public --level warning --fail-on error
-  npx supabase db advisors --local --type security --level warn --fail-on error
-Results:
-  Supabase schema contract passed 6 owner-scoped tables.
-  Migration applied successfully to local PostgreSQL 17.6 after a clean reset.
-  Schema lint: no errors.
-  Security advisors: no issues.
-  Catalog query: RLS enabled on 6/6 tables; anon SELECT false on 6/6; authenticated SELECT true on 6/6.
-  Catalog query: child ownership references profiles; simulation and export snapshot references include owner_id.
+
+> web@0.1.0 test:supabase
+> node scripts/supabase-schema-contract.cjs && cd ../.. && npx --yes supabase test db --local supabase/tests
+
+Supabase schema contract passed 6 owner-scoped tables.
+Connecting to local database...
+/Users/IslandDevCrew/Documents/Interest Shield/supabase/tests/owner_isolation_test.sql .. ok
+All tests successful.
+Files=1, Tests=19,  0 wallclock secs ( 0.02 usr +  0.01 sys =  0.03 CPU)
+Result: PASS
