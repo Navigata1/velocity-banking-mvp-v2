@@ -1,0 +1,30 @@
+P4 Model-Driven 3D Experience merged-main closeout
+Recorded: 2026-07-13 UTC
+Main commit: c7b9705
+Merged PR: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240
+
+REMOTE GATES
+- GitHub CI push run 29240258100: PASS, Web and mobile quality gates, 2m14s.
+- GitHub CI pull-request run 29240246291: PASS, Web and mobile quality gates, 2m10s.
+- Vercel preview deployment: PASS.
+- CI executed the new built Three-stage gate on Ubuntu and uploaded the
+  money-loop-three-stage screenshot artifact.
+
+FRESH CURRENT-MAIN GATES
+- npm --prefix apps/web test: PASS, 263 regressions plus financial references,
+  accessibility, metadata, and public asset budgets.
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run test:3d: PASS after a fresh production build.
+  - Desktop full DPR 1.5 and mobile efficient DPR 1 passed.
+  - Hidden-WebGL adversarial isolation rejected the false composite.
+  - Full-turn, half-turn, and blocked/no-spin DOM states passed.
+  - All five artifacts settled materially under 700 ms and remained stable.
+  - Keyboard, focus, exact mobile tracks, containment, and reduced motion passed.
+- npm --prefix apps/web run build: PASS separately, 14 static pages.
+
+P4 RESULT
+- P4-T1 PR #237: visual contract and data bindings.
+- P4-T2 PR #238: lazy procedural Three.js stage.
+- P4-T3 PR #239: fail-closed capability and lifecycle controls.
+- P4-T4 PR #240: isolated visual, interaction, timing, accessibility, and CI proof.
+- P4 gates P4-G1, P4-G2, and P4-G3 pass on current main.
