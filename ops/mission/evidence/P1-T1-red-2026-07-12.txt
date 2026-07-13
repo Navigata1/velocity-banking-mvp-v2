@@ -1,0 +1,8 @@
+Gate: P1-T1 red test
+Command: npm --prefix apps/web test
+Exit: 1
+Observed failure:
+  Money Loop LOC event balances stay continuous after income and expense routing
+  actual loc-interest.balanceAfter: 4206.66
+  expected routed ending balance: 3131.66
+Result: the new regression failed for the confirmed ledger discontinuity before the engine fix.

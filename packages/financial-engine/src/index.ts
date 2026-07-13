@@ -544,6 +544,8 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     note: 'Expenses are modeled as flowing back out across the month.',
   });
 
+  const routedLocBalance = Math.max(0, locBalance - locDepositAmount + locExpenseAmount);
+
   const locInterest = calculateADBInterest(
     locBalance,
     loc.apr,
@@ -554,17 +556,17 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     type: 'loc-interest',
     label: 'LOC interest posts',
     amount: locInterest,
-    balanceAfter: locBalance + locInterest,
+    balanceAfter: routedLocBalance + locInterest,
     note: 'LOC interest uses the average daily balance estimate for this month.',
   });
 
-  locBalance = Math.max(0, locBalance - cashFlowPaydown + locInterest);
+  locBalance = routedLocBalance + locInterest;
   events.push({
     type: 'loc-cashflow-paydown',
     label: 'Cash flow pays down LOC',
     amount: cashFlowPaydown,
     balanceAfter: locBalance,
-    note: 'Positive cash flow is applied after expenses to pull the LOC balance back down.',
+    note: 'The routed income and expenses above already reflect this net cash-flow paydown.',
   });
 
   return {

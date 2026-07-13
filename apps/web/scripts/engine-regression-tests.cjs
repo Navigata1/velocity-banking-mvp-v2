@@ -326,6 +326,30 @@ test('LOC ADB interest uses daily closing balances across web and shared engines
   assert.equal(roundCents(locInterestEvent.amount), 27.7);
 });
 
+test('Money Loop LOC event balances stay continuous after income and expense routing', () => {
+  const month = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1,
+    debtBalance: 18450,
+    debtApr: 0.069,
+    debtPayment: 425,
+    loc: { limit: 25000, apr: 0.085, balance: 3200 },
+    locBalance: 3200,
+    chunkAmount: 1000,
+    cashFlowPaydown: 1075,
+    locDepositAmount: 6500,
+    locExpenseAmount: 5425,
+    monthsSinceChunk: 999,
+  });
+  const eventByType = Object.fromEntries(month.events.map((event) => [event.type, event]));
+  const routedBalance = Math.max(0, 3200 + 1000 - 6500 + 5425);
+  const expectedEndingBalance = routedBalance + month.locInterest;
+
+  assert.equal(roundCents(eventByType['expenses-from-loc'].balanceAfter), roundCents(routedBalance));
+  assert.equal(roundCents(eventByType['loc-interest'].balanceAfter), roundCents(expectedEndingBalance));
+  assert.equal(roundCents(eventByType['loc-cashflow-paydown'].balanceAfter), roundCents(expectedEndingBalance));
+  assert.equal(roundCents(month.locBalance), roundCents(expectedEndingBalance));
+});
+
 test('daily interest burn uses the shared financial-engine helper', () => {
   const dashboardModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8');
   const financialStoreSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/stores/financial-store.ts'), 'utf8');
