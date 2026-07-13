@@ -11,6 +11,19 @@ interface NetworkConnection extends EventTarget {
   saveData?: boolean;
 }
 
+interface WebglProbeContext {
+  getExtension?: (name: string) => { loseContext?: () => void } | null;
+}
+
+interface WebglProbeCanvas {
+  getContext: (contextId: 'webgl2' | 'webgl') => WebglProbeContext | null;
+}
+
+interface CanvasContextEventTarget {
+  addEventListener: (type: 'webglcontextlost' | 'webglcontextcreationerror', listener: (event: Event) => void) => void;
+  removeEventListener: (type: 'webglcontextlost' | 'webglcontextcreationerror', listener: (event: Event) => void) => void;
+}
+
 export interface MoneyLoopRenderRuntime extends MoneyLoopRenderCapabilities {
   isIntersecting: boolean;
   isDocumentVisible: boolean;
@@ -26,6 +39,36 @@ export interface MoneyLoopCanvasSettings {
 export interface MoneyLoopRenderState {
   renderMode: MoneyLoopRenderMode;
   shouldRender: boolean;
+  canvasVisible: boolean;
+}
+
+export interface MoneyLoopFallbackAnimationPolicy {
+  flow: boolean;
+  pulse: boolean;
+  selection: boolean;
+  sweep: boolean;
+}
+
+type MoneyLoopCapabilityHints = Omit<MoneyLoopRenderCapabilities, 'supportsWebgl'>;
+
+export interface MoneyLoopRenderLifecycleAdapter {
+  readCapabilities: () => MoneyLoopCapabilityHints;
+  readDocumentVisible: () => boolean;
+  subscribeReducedMotion: (listener: () => void) => () => void;
+  subscribeConnection: (listener: () => void) => () => void;
+  subscribeResize: (listener: () => void) => () => void;
+  subscribeVisibility: (listener: (visible: boolean) => void) => () => void;
+  observeIntersection: (listener: (intersecting: boolean) => void) => () => void;
+}
+
+export interface MoneyLoopRenderController {
+  getState: () => MoneyLoopRenderState;
+  markFirstFrame: () => void;
+  markWebglUnavailable: () => void;
+  setDocumentVisible: (isDocumentVisible: boolean) => void;
+  setIntersecting: (isIntersecting: boolean) => void;
+  subscribe: (listener: (state: MoneyLoopRenderState) => void) => () => void;
+  updateCapabilities: (capabilities: MoneyLoopCapabilityHints) => void;
 }
 
 function getConnection(): NetworkConnection | undefined {
@@ -40,27 +83,33 @@ function getConnection(): NetworkConnection | undefined {
   return networkNavigator.connection ?? networkNavigator.mozConnection ?? networkNavigator.webkitConnection;
 }
 
-function detectWebglSupport(): boolean {
-  if (typeof document === 'undefined') return false;
-
+export function probeMoneyLoopWebglSupport(
+  createCanvas: () => WebglProbeCanvas | null = () => document.createElement('canvas') as unknown as WebglProbeCanvas
+): boolean {
   try {
-    const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'));
+    const canvas = createCanvas();
+    const context = canvas?.getContext('webgl2') ?? canvas?.getContext('webgl');
+    if (!context) return false;
+
+    try {
+      return true;
+    } finally {
+      context.getExtension?.('WEBGL_lose_context')?.loseContext?.();
+    }
   } catch {
     return false;
   }
 }
 
-function readCapabilities(contractComplete: boolean): MoneyLoopRenderCapabilities {
+function readBrowserCapabilityHints(contractComplete: boolean): MoneyLoopCapabilityHints {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-    return { supportsWebgl: false, contractComplete };
+    return { contractComplete };
   }
 
   const connection = getConnection();
   const deviceNavigator = navigator as Navigator & { deviceMemory?: number };
 
   return {
-    supportsWebgl: detectWebglSupport(),
     contractComplete,
     prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     saveData: connection?.saveData === true,
@@ -70,17 +119,31 @@ function readCapabilities(contractComplete: boolean): MoneyLoopRenderCapabilitie
   };
 }
 
-export function deriveMoneyLoopRenderState(runtime: MoneyLoopRenderRuntime): MoneyLoopRenderState {
-  const renderMode = selectMoneyLoopRenderMode(runtime);
+function getInitialRuntime(contractComplete: boolean): MoneyLoopRenderRuntime {
+  const supportsWebgl = typeof document !== 'undefined' && probeMoneyLoopWebglSupport();
 
   return {
-    renderMode,
-    shouldRender: renderMode !== 'static' && runtime.isIntersecting && runtime.isDocumentVisible,
+    supportsWebgl,
+    ...readBrowserCapabilityHints(contractComplete),
+    isIntersecting: typeof IntersectionObserver === 'undefined',
+    isDocumentVisible: typeof document === 'undefined' || document.visibilityState !== 'hidden',
   };
 }
 
-export function getInitialMoneyLoopIntersectionState(intersectionObserverSupported: boolean): boolean {
-  return !intersectionObserverSupported;
+export function deriveMoneyLoopRenderState(runtime: MoneyLoopRenderRuntime, hasFirstFrame = false): MoneyLoopRenderState {
+  const renderMode = selectMoneyLoopRenderMode(runtime);
+  const shouldRender = renderMode !== 'static' && runtime.isIntersecting && runtime.isDocumentVisible;
+
+  return {
+    renderMode,
+    shouldRender,
+    canvasVisible: shouldRender && hasFirstFrame,
+  };
+}
+
+export function getMoneyLoopFallbackAnimationPolicy(renderMode: MoneyLoopRenderMode): MoneyLoopFallbackAnimationPolicy {
+  const enabled = renderMode !== 'static';
+  return { flow: enabled, pulse: enabled, selection: enabled, sweep: enabled };
 }
 
 export function getMoneyLoopCanvasSettings(renderMode: MoneyLoopRenderMode): MoneyLoopCanvasSettings {
@@ -91,49 +154,144 @@ export function getMoneyLoopCanvasSettings(renderMode: MoneyLoopRenderMode): Mon
   return { dpr: 1, shadows: false, radialSegments: 12, detail: 1 };
 }
 
+export function createMoneyLoopRenderController(initialRuntime: MoneyLoopRenderRuntime): MoneyLoopRenderController {
+  let runtime = initialRuntime;
+  let hasFirstFrame = false;
+  const listeners = new Set<(state: MoneyLoopRenderState) => void>();
+
+  function getState() {
+    return deriveMoneyLoopRenderState(runtime, hasFirstFrame);
+  }
+
+  function notify() {
+    const state = getState();
+    if (!state.shouldRender) hasFirstFrame = false;
+    const nextState = getState();
+    listeners.forEach((listener) => listener(nextState));
+  }
+
+  return {
+    getState,
+    markFirstFrame() {
+      if (!getState().shouldRender || hasFirstFrame) return;
+      hasFirstFrame = true;
+      notify();
+    },
+    markWebglUnavailable() {
+      runtime = { ...runtime, supportsWebgl: false };
+      notify();
+    },
+    setDocumentVisible(isDocumentVisible) {
+      if (runtime.isDocumentVisible === isDocumentVisible) return;
+      runtime = { ...runtime, isDocumentVisible };
+      notify();
+    },
+    setIntersecting(isIntersecting) {
+      if (runtime.isIntersecting === isIntersecting) return;
+      runtime = { ...runtime, isIntersecting };
+      notify();
+    },
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+    updateCapabilities(capabilities) {
+      runtime = { ...runtime, ...capabilities };
+      notify();
+    },
+  };
+}
+
+export function bindMoneyLoopRenderLifecycle(
+  controller: MoneyLoopRenderController,
+  adapter: MoneyLoopRenderLifecycleAdapter
+): () => void {
+  const refreshCapabilities = () => controller.updateCapabilities(adapter.readCapabilities());
+  const cleanups = [
+    adapter.subscribeReducedMotion(refreshCapabilities),
+    adapter.subscribeConnection(refreshCapabilities),
+    adapter.subscribeResize(refreshCapabilities),
+    adapter.subscribeVisibility((visible) => controller.setDocumentVisible(visible)),
+    adapter.observeIntersection((intersecting) => controller.setIntersecting(intersecting)),
+  ];
+
+  refreshCapabilities();
+  controller.setDocumentVisible(adapter.readDocumentVisible());
+
+  return () => cleanups.forEach((cleanup) => cleanup());
+}
+
+export function bindMoneyLoopCanvasContextEvents(
+  canvas: CanvasContextEventTarget,
+  controller: MoneyLoopRenderController
+): () => void {
+  const handleContextFailure = (event: Event) => {
+    event.preventDefault();
+    controller.markWebglUnavailable();
+  };
+
+  canvas.addEventListener('webglcontextlost', handleContextFailure);
+  canvas.addEventListener('webglcontextcreationerror', handleContextFailure);
+
+  return () => {
+    canvas.removeEventListener('webglcontextlost', handleContextFailure);
+    canvas.removeEventListener('webglcontextcreationerror', handleContextFailure);
+  };
+}
+
+function createBrowserLifecycleAdapter(
+  contractComplete: boolean,
+  stageRef: RefObject<HTMLElement | null>
+): MoneyLoopRenderLifecycleAdapter {
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const connection = getConnection();
+
+  return {
+    readCapabilities: () => readBrowserCapabilityHints(contractComplete),
+    readDocumentVisible: () => document.visibilityState !== 'hidden',
+    subscribeReducedMotion(listener) {
+      motionQuery.addEventListener('change', listener);
+      return () => motionQuery.removeEventListener('change', listener);
+    },
+    subscribeConnection(listener) {
+      if (!connection) return () => {};
+      connection.addEventListener('change', listener);
+      return () => connection.removeEventListener('change', listener);
+    },
+    subscribeResize(listener) {
+      window.addEventListener('resize', listener);
+      return () => window.removeEventListener('resize', listener);
+    },
+    subscribeVisibility(listener) {
+      const handleVisibilityChange = () => listener(document.visibilityState !== 'hidden');
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    },
+    observeIntersection(listener) {
+      if (typeof IntersectionObserver === 'undefined') return () => {};
+      const observer = new IntersectionObserver(([entry]) => listener(entry?.isIntersecting ?? false));
+      if (stageRef.current) observer.observe(stageRef.current);
+      return () => observer.disconnect();
+    },
+  };
+}
+
+export interface UseMoneyLoopRenderModeResult extends MoneyLoopRenderState {
+  controller: MoneyLoopRenderController;
+}
+
 export function useMoneyLoopRenderMode(
   contractComplete: boolean,
   stageRef: RefObject<HTMLElement | null>
-): MoneyLoopRenderState {
-  const [capabilities, setCapabilities] = useState<MoneyLoopRenderCapabilities>(() => readCapabilities(contractComplete));
-  const [isIntersecting, setIsIntersecting] = useState(() => getInitialMoneyLoopIntersectionState(
-    typeof IntersectionObserver !== 'undefined'
-  ));
-  const [isDocumentVisible, setIsDocumentVisible] = useState(
-    () => typeof document === 'undefined' || document.visibilityState !== 'hidden'
+): UseMoneyLoopRenderModeResult {
+  const [controller] = useState(() => createMoneyLoopRenderController(getInitialRuntime(contractComplete)));
+  const [state, setState] = useState<MoneyLoopRenderState>(() => controller.getState());
+
+  useEffect(() => controller.subscribe(setState), [controller]);
+  useEffect(
+    () => bindMoneyLoopRenderLifecycle(controller, createBrowserLifecycleAdapter(contractComplete, stageRef)),
+    [contractComplete, controller, stageRef]
   );
 
-  useEffect(() => {
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const connection = getConnection();
-    const updateCapabilities = () => setCapabilities(readCapabilities(contractComplete));
-    const updateVisibility = () => setIsDocumentVisible(document.visibilityState !== 'hidden');
-    const observer = typeof IntersectionObserver === 'undefined'
-      ? null
-      : new IntersectionObserver(([entry]) => setIsIntersecting(entry?.isIntersecting ?? false));
-
-    updateCapabilities();
-    updateVisibility();
-    if (stageRef.current) observer?.observe(stageRef.current);
-
-    motionQuery.addEventListener('change', updateCapabilities);
-    if (connection) connection.addEventListener('change', updateCapabilities);
-    window.addEventListener('resize', updateCapabilities);
-    document.addEventListener('visibilitychange', updateVisibility);
-
-    return () => {
-      motionQuery.removeEventListener('change', updateCapabilities);
-      if (connection) connection.removeEventListener('change', updateCapabilities);
-      window.removeEventListener('resize', updateCapabilities);
-      document.removeEventListener('visibilitychange', updateVisibility);
-      if (observer) observer.disconnect();
-    };
-  }, [contractComplete, stageRef]);
-
-  return deriveMoneyLoopRenderState({
-    ...capabilities,
-    contractComplete,
-    isIntersecting,
-    isDocumentVisible,
-  });
+  return { ...state, controller };
 }

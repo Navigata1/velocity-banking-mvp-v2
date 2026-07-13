@@ -6963,26 +6963,148 @@ test('Money Loop render controls unmount active rendering while offscreen or hid
   assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, isDocumentVisible: false }).shouldRender, false);
 });
 
-test('Money Loop render controls wait for supported intersection observers before mounting canvas work', () => {
+test('Money Loop render controller pauses and reveals canvas work across observer and visibility transitions', () => {
   const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const controller = renderMode.createMoneyLoopRenderController({
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: false,
+    isDocumentVisible: true,
+  });
 
-  assert.equal(renderMode.getInitialMoneyLoopIntersectionState(true), false);
-  assert.equal(renderMode.getInitialMoneyLoopIntersectionState(false), true);
+  assert.equal(controller.getState().renderMode, 'full');
+  assert.equal(controller.getState().shouldRender, false);
+  controller.setIntersecting(true);
+  assert.equal(controller.getState().shouldRender, true);
+  assert.equal(controller.getState().canvasVisible, false);
+  controller.markFirstFrame();
+  assert.equal(controller.getState().canvasVisible, true);
+  controller.setDocumentVisible(false);
+  assert.equal(controller.getState().shouldRender, false);
+  assert.equal(controller.getState().canvasVisible, false);
+  controller.setDocumentVisible(true);
+  assert.equal(controller.getState().shouldRender, true);
+  assert.equal(controller.getState().canvasVisible, false);
 });
 
-test('Money Loop render hook cleans up browser capability and lifecycle subscriptions', () => {
-  const hookPath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
-  const source = fs.readFileSync(hookPath, 'utf8');
+test('Money Loop render lifecycle binds and cleans listeners while forwarding observer callbacks', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const controller = renderMode.createMoneyLoopRenderController({
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: false,
+    isDocumentVisible: true,
+  });
+  const cleanups = [];
+  let intersectionCallback;
+  let visibilityCallback;
 
-  assert.ok(source.includes("matchMedia('(prefers-reduced-motion: reduce)')"));
-  assert.ok(source.includes("window.addEventListener('resize'"));
-  assert.ok(source.includes("window.removeEventListener('resize'"));
-  assert.ok(source.includes("document.addEventListener('visibilitychange'"));
-  assert.ok(source.includes("document.removeEventListener('visibilitychange'"));
-  assert.ok(source.includes('connection.addEventListener'));
-  assert.ok(source.includes('connection.removeEventListener'));
-  assert.ok(source.includes('IntersectionObserver'));
-  assert.ok(source.includes('observer.disconnect()'));
+  const cleanup = renderMode.bindMoneyLoopRenderLifecycle(controller, {
+    readCapabilities: () => ({
+      contractComplete: true,
+      prefersReducedMotion: false,
+      saveData: false,
+      deviceMemoryGb: 8,
+      hardwareConcurrency: 8,
+      viewportWidth: 1440,
+    }),
+    readDocumentVisible: () => true,
+    subscribeReducedMotion: () => () => cleanups.push('motion'),
+    subscribeConnection: () => () => cleanups.push('connection'),
+    subscribeResize: () => () => cleanups.push('resize'),
+    subscribeVisibility: (listener) => {
+      visibilityCallback = listener;
+      return () => cleanups.push('visibility');
+    },
+    observeIntersection: (listener) => {
+      intersectionCallback = listener;
+      return () => cleanups.push('observer');
+    },
+  });
+
+  intersectionCallback(true);
+  assert.equal(controller.getState().shouldRender, true);
+  visibilityCallback(false);
+  assert.equal(controller.getState().shouldRender, false);
+  cleanup();
+  assert.deepEqual(cleanups.sort(), ['connection', 'motion', 'observer', 'resize', 'visibility']);
+});
+
+test('Money Loop releases probe contexts and context failures downgrade the active controller', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  let loseContextCalls = 0;
+  const supportsWebgl = renderMode.probeMoneyLoopWebglSupport(() => ({
+    getContext: () => ({
+      getExtension: (name) => name === 'WEBGL_lose_context' ? { loseContext: () => { loseContextCalls += 1; } } : null,
+    }),
+  }));
+  const controller = renderMode.createMoneyLoopRenderController({
+    supportsWebgl,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  });
+  const listeners = new Map();
+  const canvas = {
+    addEventListener: (type, listener) => listeners.set(type, listener),
+    removeEventListener: (type) => listeners.delete(type),
+  };
+  const cleanup = renderMode.bindMoneyLoopCanvasContextEvents(canvas, controller);
+  let prevented = 0;
+
+  listeners.get('webglcontextlost')({ preventDefault: () => { prevented += 1; } });
+  assert.equal(loseContextCalls, 1);
+  assert.equal(prevented, 1);
+  assert.equal(controller.getState().renderMode, 'static');
+  assert.equal(controller.getState().shouldRender, false);
+  cleanup();
+  assert.equal(listeners.size, 0);
+
+  const creationController = renderMode.createMoneyLoopRenderController({
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  });
+  const creationListeners = new Map();
+  const creationCleanup = renderMode.bindMoneyLoopCanvasContextEvents({
+    addEventListener: (type, listener) => creationListeners.set(type, listener),
+    removeEventListener: (type) => creationListeners.delete(type),
+  }, creationController);
+
+  creationListeners.get('webglcontextcreationerror')({ preventDefault: () => { prevented += 1; } });
+  assert.equal(prevented, 2);
+  assert.equal(creationController.getState().renderMode, 'static');
+  creationCleanup();
+  assert.equal(creationListeners.size, 0);
+});
+
+test('Money Loop static fallback policy disables decorative motion without hiding DOM controls', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+
+  const staticPolicy = renderMode.getMoneyLoopFallbackAnimationPolicy('static');
+  const fullPolicy = renderMode.getMoneyLoopFallbackAnimationPolicy('full');
+
+  assert.equal(staticPolicy.flow, false);
+  assert.equal(staticPolicy.pulse, false);
+  assert.equal(staticPolicy.selection, false);
+  assert.equal(staticPolicy.sweep, false);
+  assert.equal(fullPolicy.flow, true);
+  assert.equal(fullPolicy.pulse, true);
+  assert.equal(fullPolicy.selection, true);
+  assert.equal(fullPolicy.sweep, true);
 });
 
 test('Money Loop visual contract rejects incomplete duplicate and malformed runtime records', () => {
@@ -7122,7 +7244,6 @@ test('Money Loop Three selection runtime contracts preserve exact selection and 
   assert.equal(atCompletion.shouldRequestFrame, false);
   assert.equal(afterCompletion.shouldRequestFrame, false);
   assert.equal(afterCompletion.rotationRadians, Math.PI * 2);
-  assert.equal(selectionMotion.resolveMoneyLoopStageRenderMode({ isComplete: false }), 'static');
 });
 
 test('dashboard model explains why edited inputs change the plan without adding vitals', () => {

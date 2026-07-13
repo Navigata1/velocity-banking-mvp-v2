@@ -1,24 +1,29 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { useRef, useState } from 'react';
-import type { MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
+import { useEffect, useRef } from 'react';
+import type { MoneyLoopRenderMode, MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
 import MoneyLoopThreeScene from './MoneyLoopThreeScene';
 import {
+  bindMoneyLoopCanvasContextEvents,
   getMoneyLoopCanvasSettings,
   useMoneyLoopRenderMode,
   type MoneyLoopCanvasSettings,
+  type MoneyLoopRenderController,
 } from './useMoneyLoopRenderMode';
 
 interface MoneyLoopThreeStageProps {
   visualContract: MoneyLoopVisualContract;
   activeArtifactId: MoneyLoopVisualArtifact['id'];
   onSelect: (id: MoneyLoopVisualArtifact['id']) => void;
+  onRenderModeChange: (renderMode: MoneyLoopRenderMode) => void;
 }
 
 interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'visualContract' | 'activeArtifactId' | 'onSelect'> {
   renderMode: 'efficient' | 'full';
   canvasSettings: MoneyLoopCanvasSettings;
+  canvasVisible: boolean;
+  controller: MoneyLoopRenderController;
 }
 
 function ActiveMoneyLoopCanvas({
@@ -27,8 +32,12 @@ function ActiveMoneyLoopCanvas({
   onSelect,
   renderMode,
   canvasSettings,
+  canvasVisible,
+  controller,
 }: ActiveMoneyLoopCanvasProps) {
-  const [hasFirstFrame, setHasFirstFrame] = useState(false);
+  const contextCleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => () => contextCleanupRef.current?.(), []);
 
   return (
     <Canvas
@@ -38,14 +47,18 @@ function ActiveMoneyLoopCanvas({
       frameloop="demand"
       shadows={canvasSettings.shadows}
       gl={{ antialias: renderMode === 'full', powerPreference: renderMode === 'full' ? 'high-performance' : 'low-power' }}
-      style={{ opacity: hasFirstFrame ? 1 : 0 }}
+      style={{ opacity: canvasVisible ? 1 : 0 }}
+      onCreated={({ gl }) => {
+        contextCleanupRef.current?.();
+        contextCleanupRef.current = bindMoneyLoopCanvasContextEvents(gl.domElement, controller);
+      }}
     >
       <MoneyLoopThreeScene
         artifacts={visualContract.artifacts}
         activeArtifactId={activeArtifactId}
         onSelect={onSelect}
         canvasSettings={canvasSettings}
-        onFirstFrame={() => setHasFirstFrame(true)}
+        onFirstFrame={controller.markFirstFrame}
       />
     </Canvas>
   );
@@ -55,10 +68,13 @@ export default function MoneyLoopThreeStage({
   visualContract,
   activeArtifactId,
   onSelect,
+  onRenderModeChange,
 }: MoneyLoopThreeStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const { renderMode, shouldRender } = useMoneyLoopRenderMode(visualContract.isComplete, stageRef);
+  const { renderMode, shouldRender, canvasVisible, controller } = useMoneyLoopRenderMode(visualContract.isComplete, stageRef);
   const canvasSettings = getMoneyLoopCanvasSettings(renderMode);
+
+  useEffect(() => onRenderModeChange(renderMode), [onRenderModeChange, renderMode]);
 
   return (
     <div
@@ -76,6 +92,8 @@ export default function MoneyLoopThreeStage({
           onSelect={onSelect}
           renderMode={renderMode}
           canvasSettings={canvasSettings}
+          canvasVisible={canvasVisible}
+          controller={controller}
         />
       ) : null}
     </div>
