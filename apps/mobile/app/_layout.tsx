@@ -1,12 +1,19 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { registerMobileAuthLifecycle } from '@/lib/supabase/auth-lifecycle';
+import { registerMobileAuthDeepLinks } from '@/lib/supabase/auth-deep-link';
 import { createMobileSupabaseClient } from '@/lib/supabase/client';
 
 export default function RootLayout() {
   useEffect(() => {
     const client = createMobileSupabaseClient();
-    return client ? registerMobileAuthLifecycle(client) : undefined;
+    if (!client) return undefined;
+    const unregisterLifecycle = registerMobileAuthLifecycle(client);
+    const unregisterDeepLinks = registerMobileAuthDeepLinks(client);
+    return () => {
+      unregisterDeepLinks();
+      unregisterLifecycle();
+    };
   }, []);
 
   return (

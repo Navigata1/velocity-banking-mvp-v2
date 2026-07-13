@@ -17,6 +17,7 @@ export function createMobileSupabaseClient(): SupabaseClient | null {
     auth: {
       autoRefreshToken: true,
       detectSessionInUrl: Platform.OS === 'web',
+      flowType: 'pkce',
       lock: processLock,
       persistSession: true,
       storage: createMobileAuthStorage(),

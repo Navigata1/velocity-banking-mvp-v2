@@ -89,3 +89,10 @@
 - Browser install identity is durable, mobile-only storage is excluded, sync still derives owner identity from getClaims, and offline attempts preserve local data.
 - Web account contract, 242 regressions, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke at 1440px and 390px pass with no horizontal overflow or console errors.
 - In-app browser control was unavailable during this pass; Chrome and automated smoke are the recorded browser evidence.
+
+## 2026-07-13T03:36Z - P2 Expo account and deep-link sync verified locally
+- PR #229 merged at 46aeb10 after both GitHub quality workflows and the Vercel preview passed.
+- Added passwordless email sign-in, observed session state, explicit encrypted-local snapshot sync, sign-out, and offline-safe status copy to Expo Settings.
+- Native callbacks exchange either PKCE codes or access/refresh token fragments through the process-locked SecureStore client.
+- Expo account and adapter contracts, TypeScript, SDK compatibility, seven-route web export smoke, Android Hermes bundle export, and the complete web test/lint/build chain pass.
+- P2-T3 is ready to close after this focused Expo workflow PR merges; no dedicated cloud project is created without the known $10 monthly cost gate.
