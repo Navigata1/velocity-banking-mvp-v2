@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState, type CSSProperties, type HTMLAttributes, type KeyboardEvent } from 'react';
 import {
   buildMoneyLoopVisualContract,
@@ -8,6 +9,11 @@ import {
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
+
+const MoneyLoopThreeStage = dynamic(
+  () => import('@/components/money-loop-3d/MoneyLoopThreeStage'),
+  { ssr: false }
+);
 
 interface MoneyLoopArtifactRailProps extends HTMLAttributes<HTMLElement> {
   artifacts: DashboardLoopArtifact[];
@@ -123,12 +129,18 @@ export default function MoneyLoopArtifactRail({
     const nextArtifact = displayArtifacts[index];
     if (!nextArtifact) return;
 
-    setActiveArtifactId(nextArtifact.id);
+    selectArtifactById(nextArtifact.id);
     window.requestAnimationFrame(() => {
       const nextTab = document.getElementById(`money-loop-artifact-tab-${nextArtifact.id}`);
       nextTab?.focus();
       nextTab?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
+  }
+
+  function selectArtifactById(id: DashboardLoopArtifact['id']) {
+    if (!displayArtifacts.some((artifact) => artifact.id === id)) return;
+
+    setActiveArtifactId(id);
   }
 
   function selectRelativeArtifact(direction: -1 | 1) {
@@ -189,6 +201,11 @@ export default function MoneyLoopArtifactRail({
             aria-hidden="true"
             style={orbitStageStyle}
           >
+            <MoneyLoopThreeStage
+              visualContract={visualContract}
+              activeArtifactId={activeArtifact.id}
+              onSelect={selectArtifactById}
+            />
             <div className="artifact-orbit-ring absolute inset-3 rounded-full" />
             <div className="artifact-orbit-path absolute inset-[27px] rounded-full" />
             <div className="artifact-orbit-sweep absolute inset-[18px] rounded-full" />

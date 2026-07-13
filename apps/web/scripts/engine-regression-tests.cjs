@@ -6945,6 +6945,45 @@ test('Money Loop artifact rail consumes the versioned visual contract without re
   assert.ok(source.includes('role="tablist"'), 'expected the DOM tab controls to remain authoritative');
 });
 
+test('Money Loop lazy Three stage remains a client-only visual enhancement behind DOM controls', () => {
+  const railPath = path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx');
+  const stagePath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/MoneyLoopThreeStage.tsx');
+  const scenePath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/MoneyLoopThreeScene.tsx');
+  const meshesPath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/artifact-meshes.tsx');
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const railSource = fs.readFileSync(railPath, 'utf8');
+
+  assert.ok(fs.existsSync(stagePath), 'expected a lazy Money Loop Three stage');
+  assert.ok(fs.existsSync(scenePath), 'expected a procedural Money Loop Three scene');
+  assert.ok(fs.existsSync(meshesPath), 'expected canonical procedural artifact meshes');
+  assert.equal(packageJson.dependencies.three, '0.185.1');
+  assert.equal(packageJson.dependencies['@react-three/fiber'], '9.6.1');
+  assert.equal(packageJson.devDependencies['@types/three'], '0.185.1');
+  assert.ok(railSource.includes("import dynamic from 'next/dynamic'"));
+  assert.ok(railSource.includes("() => import('@/components/money-loop-3d/MoneyLoopThreeStage')"));
+  assert.ok(railSource.includes('{ ssr: false }'));
+  assert.ok(railSource.includes('<MoneyLoopThreeStage'));
+  assert.ok(railSource.includes('activeArtifactId={activeArtifact.id}'));
+  assert.ok(railSource.includes('onSelect={selectArtifactById}'));
+  assert.ok(railSource.includes('role="tablist"'), 'expected the DOM tablist to remain authoritative');
+
+  const stageSource = fs.existsSync(stagePath) ? fs.readFileSync(stagePath, 'utf8') : '';
+  assert.ok(stageSource.includes('data-testid="money-loop-three-stage"'));
+  assert.ok(stageSource.includes('data-render-mode={renderMode}'));
+  assert.ok(stageSource.includes('aria-hidden="true"'));
+  assert.ok(stageSource.includes('h-64 w-64 md:h-72 md:w-72'));
+  assert.ok(stageSource.includes('<Canvas'));
+
+  const meshesSource = fs.existsSync(meshesPath) ? fs.readFileSync(meshesPath, 'utf8') : '';
+  assert.ok(meshesSource.includes('DepositReservoirMesh'));
+  assert.ok(meshesSource.includes('CreditApertureMesh'));
+  assert.ok(meshesSource.includes('OutflowGateMesh'));
+  assert.ok(meshesSource.includes('FlowCoreMesh'));
+  assert.ok(meshesSource.includes('PrincipalShieldMesh'));
+  assert.ok(meshesSource.includes("'deposit-reservoir'"));
+  assert.ok(meshesSource.includes("'principal-shield'"));
+});
+
 test('dashboard model explains why edited inputs change the plan without adding vitals', () => {
   const model = dashboardModel.buildDashboardModel({
     monthlyIncome: 6500,
