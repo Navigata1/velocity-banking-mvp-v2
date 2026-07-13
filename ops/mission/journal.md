@@ -253,3 +253,10 @@
 - Fresh current-main P5 gates pass 34/34 media contracts, zero HyperFrames errors or warnings, 40/40 contrast checks, 26 finite tweens, ten Remotion registrations, all 27 browser keyframes, and the representative still.
 - P5 closes with identity version 1, deterministic HyperFrames launch/tutorial compositions, and engine-backed Remotion explainers that remain isolated from web and Expo runtime manifests.
 - P6-T1 starts on codex/mission/p6-native-route-modules to split the Expo shell into bounded native route modules without changing shared-engine ownership or behavior.
+
+## 2026-07-13T13:21Z - Expo route modules merged; native auth and offline recovery begin
+- PR #245 merged at e60e136 after Vercel and both Ubuntu quality workflows passed. It replaces the monolithic MobileShell with seven direct route owners and a shared route frame.
+- Independent review found retained Stack routes could diverge through separate persistence hooks. One MobileAssumptionsProvider now owns state above Stack; Chrome proved edit, push, edit, browser back, calculated output, and Settings reset propagation across retained screens.
+- Fresh merged-main validation passes 35 native contracts, Expo TypeScript, both Supabase suites, 263 web regressions and companion lanes, a fresh seven-route export, and Android/iOS Hermes bundle exports.
+- P6-G1 and P6-G2 pass. Android emulator and macOS Simulator evidence remain pending for P6-T4, so P6-G3 and P6-G4 stay open honestly.
+- P6-T2 starts on codex/mission/p6-native-auth-offline to harden auth lifecycle, SecureStore persistence, owner-scoped sync ordering, and offline recovery.
