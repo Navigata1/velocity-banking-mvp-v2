@@ -206,3 +206,8 @@
 - Static, efficient, and full policies now fail closed across motion, data, WebGL2, renderer startup/loss, visibility, intersection, hardware, and viewport boundaries.
 - Review cycles caught fallback CSS motion, leaked probes, source-only lifecycle tests, WebGL1 acceptance, and R3F creation ordering; runtime contracts now cover every correction.
 - All 262 regressions and companion lanes, lint, build, rendered smoke, zero production audit, and final spec/quality approvals pass. P4-T3 is ready for PR.
+
+## 2026-07-13T08:05Z - P4 capability controls merged; visual verification begins
+- PR #239 merged at a51c877 after both GitHub quality workflows and the Vercel preview passed.
+- P4-T3 is done with fail-closed WebGL2 startup and loss, static fallback motion, conservative capability policy, bounded GPU settings, visibility pause, and cleaned subscriptions.
+- P4-T4 starts on codex/mission/p4-three-visual-verification with all-five interaction, nonblank pixels, desktop/mobile screenshots, static fallback, focus order, and CI coverage.
