@@ -7,14 +7,14 @@
   ✓ externalDir
 
   Creating an optimized production build ...
-✓ Compiled successfully in 4.0s
+✓ Compiled successfully in 4.4s
   Running TypeScript ...
   Collecting page data using 7 workers ...
   Generating static pages using 7 workers (0/10) ...
   Generating static pages using 7 workers (2/10)
   Generating static pages using 7 workers (4/10)
   Generating static pages using 7 workers (7/10)
-✓ Generating static pages using 7 workers (10/10) in 444.6ms
+✓ Generating static pages using 7 workers (10/10) in 582.1ms
   Finalizing page optimization ...
 
 Route (app)

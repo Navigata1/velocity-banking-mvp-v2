@@ -11,6 +11,7 @@ PASS biweekly savings compare against the actual monthly payment baseline
 PASS LOC ADB interest uses daily closing balances across web and shared engines
 PASS Money Loop LOC event balances stay continuous after income and expense routing
 PASS lender terms contract versions confidence and blocks projections with missing terms
+PASS LOC transaction calendar accrues from dated closing balances and labels fallback estimates
 PASS daily interest burn uses the shared financial-engine helper
 PASS velocity targeting sanitizes non-finite debt inputs before scoring and ranking
 PASS web calculations use shared financial-engine primitives
@@ -242,7 +243,7 @@ PASS web app declares Vercel Next deployment configuration
 PASS repository exposes a manual release deployment smoke workflow
 PASS repository documents the current Vercel alias promotion blocker
 PASS client mount hook notifies subscribers after hydration
-240 regression tests passed.
+241 regression tests passed.
 PASS src/app/layout.tsx: skip link targets main content
 PASS src/app/layout.tsx: main content exposes a skip-link target
 PASS src/app/layout.tsx: main content can receive programmatic focus

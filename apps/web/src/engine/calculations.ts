@@ -690,6 +690,7 @@ export function simulateMultiDebt(
           locBalance: monthResult.locBalance,
           debtInterest: monthResult.debtInterest,
           locInterest: monthResult.locInterest,
+          locInterestMethod: monthResult.locInterestMethod,
           cashFlowPaydown: monthResult.cashFlowPaydown,
           events: monthResult.events,
         });

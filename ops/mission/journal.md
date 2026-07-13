@@ -25,3 +25,9 @@
 - Added lender terms contract v2.0.0 for fees, rate mode, draw and repayment periods, minimum draw, minimum payment, provenance, and confidence.
 - Missing terms block projection readiness; user and model values remain estimated until every required field is sourced from lender documents.
 - P1 gates pass with 240 regressions, web lint, the Next.js production build, and Expo TypeScript.
+
+## 2026-07-13T02:07Z - P1 transaction calendar verified locally
+- PR #219 merged at ab98490 after both GitHub quality workflows and the Vercel preview passed; P1-T2 is done.
+- Added dated LOC deposits and expenses using the actual calendar month and each day's closing balance, without daily interest compounding.
+- Leap-year, 31-day-month, invalid-calendar fallback, ending-balance, and simulator method-label fixtures pass.
+- P1 gates pass with 241 regressions, web lint, the Next.js production build, and Expo TypeScript.
