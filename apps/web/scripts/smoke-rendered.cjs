@@ -175,6 +175,15 @@ async function verifyRoute(page, origin, route, marker, viewportLabel) {
     if (!response || response.status() !== 200) {
       throw new Error(`${viewportLabel} ${route} returned HTTP ${response?.status() ?? 'no response'}.`);
     }
+    try {
+      await page.waitForFunction(
+        (expectedMarker) => document.querySelector('main')?.innerText.includes(expectedMarker),
+        marker,
+        { timeout: 15000 }
+      );
+    } catch {
+      throw new Error(`${viewportLabel} ${route} did not hydrate main-content marker ${marker} within 15 seconds.`);
+    }
     await settleImages(page);
 
     const result = await page.evaluate((expectedMarker) => {

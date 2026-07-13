@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T05:42:00Z",
+    "updated": "2026-07-13T05:48:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -297,7 +297,7 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:42:00Z",
+          "lastRun": "2026-07-13T05:48:00Z",
           "notes": "Web 244 regressions, two independent fixtures, accessibility, metadata, and public asset contracts pass."
         },
         {
@@ -306,7 +306,7 @@
           "command": "npm --prefix apps/web run lint",
           "status": "passed",
           "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:42:00Z",
+          "lastRun": "2026-07-13T05:48:00Z",
           "notes": "ESLint passes across the asset cleanup, responsive tab fix, and browser automation."
         },
         {
@@ -315,7 +315,7 @@
           "command": "npm --prefix apps/web run build",
           "status": "passed",
           "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:42:00Z",
+          "lastRun": "2026-07-13T05:48:00Z",
           "notes": "Next.js 16.2.10 builds 14 static pages from the final 0.13 MiB public asset set."
         },
         {
@@ -324,8 +324,8 @@
           "command": "npm --prefix apps/web run smoke:rendered",
           "status": "passed",
           "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:42:00Z",
-          "notes": "Playwright-core checks all seven routes at 1440x900 and 390x844 plus the Money Loop LOC interaction against a fresh production build."
+          "lastRun": "2026-07-13T05:48:00Z",
+          "notes": "Playwright-core checks all seven routes at 1440x900 and 390x844 plus the Money Loop LOC interaction against a fresh production build, with an explicit wait for client-mounted route markers."
         }
       ],
       "tasks": [

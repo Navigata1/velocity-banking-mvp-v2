@@ -52,3 +52,12 @@ FINAL LOCAL GATES
   Initial findings covered stale builds, fixed browser/port assumptions, broad markers,
   lazy-image coverage, child cleanup, stale asset references, and interaction errors.
   All findings were fixed. Final re-review: no remaining issue.
+
+GITHUB LINUX FOLLOW-UP
+- GitHub run 29227025338 initially failed on the dashboard marker before the
+  client-mounted route replaced its intentional hydration skeleton.
+- The rendered gate now waits up to 15 seconds for the expected marker inside main
+  before image, overflow, and browser-error inspection. A source contract protects
+  that explicit hydration wait.
+- After the repair, 244 tests, lint, and all 14 local rendered route cases plus the
+  LOC interaction passed again. The branch was republished for fresh GitHub gates.

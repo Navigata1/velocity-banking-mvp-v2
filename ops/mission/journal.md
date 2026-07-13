@@ -166,3 +166,8 @@
 - The first rendered run found a real 452px-wide simulator document at a 390px viewport. Compact DomainTabs spacing fixes the overflow while preserving all nine controls.
 - An adversarial review produced eight automation and asset-reference findings across two rounds; all are resolved and the final re-review is clean.
 - Web 244 regressions, independent fixtures, accessibility, metadata, asset budget, lint, production build, 14 rendered route cases, LOC interaction, and mobile-port CI contracts pass. P3-T4 is ready for PR publication.
+
+## 2026-07-13T05:48Z - P3 rendered smoke hardened for Linux hydration timing
+- PR #236's first duplicate GitHub quality run reached the new rendered step and caught the client-mounted dashboard while its intentional hydration skeleton was still visible.
+- Route smoke now waits explicitly for each expected marker inside main before evaluating images, overflow, overlays, and browser errors; a regression contract protects the wait.
+- All 244 web regressions, lint, 14 desktop/mobile rendered routes, and the Money Loop LOC interaction pass again locally before republishing.

@@ -7438,6 +7438,7 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(renderedSmoke.includes("['desktop', { width: 1440, height: 900 }]"));
   assert.ok(renderedSmoke.includes("page.getByTestId('money-loop-artifact-node-loc')"));
   assert.ok(renderedSmoke.includes('main?.innerText.includes(expectedMarker)'));
+  assert.ok(renderedSmoke.includes('page.waitForFunction(') && renderedSmoke.includes('{ timeout: 15000 }'));
   assert.ok(renderedSmoke.includes('allocatePort()') && renderedSmoke.includes("process.once('SIGTERM'"));
 });
 
