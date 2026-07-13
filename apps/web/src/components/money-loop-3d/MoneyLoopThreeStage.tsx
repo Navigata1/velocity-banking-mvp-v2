@@ -1,8 +1,9 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import type { MoneyLoopVisualArtifact, MoneyLoopVisualContract, MoneyLoopRenderMode } from '@/app/artifact-visual-contract';
+import type { MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
 import MoneyLoopThreeScene from './MoneyLoopThreeScene';
+import { resolveMoneyLoopStageRenderMode } from './selection-motion';
 
 interface MoneyLoopThreeStageProps {
   visualContract: MoneyLoopVisualContract;
@@ -15,14 +16,14 @@ export default function MoneyLoopThreeStage({
   activeArtifactId,
   onSelect,
 }: MoneyLoopThreeStageProps) {
-  const renderMode: MoneyLoopRenderMode = visualContract.isComplete ? 'full' : 'static';
+  const renderMode = resolveMoneyLoopStageRenderMode(visualContract);
 
   return (
     <div
       aria-hidden="true"
       data-testid="money-loop-three-stage"
       data-render-mode={renderMode}
-      className="absolute left-1/2 top-1/2 h-64 w-64 md:h-72 md:w-72 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+      className="pointer-events-auto absolute left-1/2 top-1/2 h-64 w-64 md:h-72 md:w-72 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
     >
       {renderMode !== 'static' ? (
         <Canvas

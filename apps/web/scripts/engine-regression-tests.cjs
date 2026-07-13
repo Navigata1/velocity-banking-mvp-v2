@@ -6950,12 +6950,14 @@ test('Money Loop lazy Three stage remains a client-only visual enhancement behin
   const stagePath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/MoneyLoopThreeStage.tsx');
   const scenePath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/MoneyLoopThreeScene.tsx');
   const meshesPath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/artifact-meshes.tsx');
+  const selectionMotionPath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/selection-motion.ts');
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const railSource = fs.readFileSync(railPath, 'utf8');
 
   assert.ok(fs.existsSync(stagePath), 'expected a lazy Money Loop Three stage');
   assert.ok(fs.existsSync(scenePath), 'expected a procedural Money Loop Three scene');
   assert.ok(fs.existsSync(meshesPath), 'expected canonical procedural artifact meshes');
+  assert.ok(fs.existsSync(selectionMotionPath), 'expected focused Three-stage selection runtime logic');
   assert.equal(packageJson.dependencies.three, '0.185.1');
   assert.equal(packageJson.dependencies['@react-three/fiber'], '9.6.1');
   assert.equal(packageJson.devDependencies['@types/three'], '0.185.1');
@@ -6982,6 +6984,52 @@ test('Money Loop lazy Three stage remains a client-only visual enhancement behin
   assert.ok(meshesSource.includes('PrincipalShieldMesh'));
   assert.ok(meshesSource.includes("'deposit-reservoir'"));
   assert.ok(meshesSource.includes("'principal-shield'"));
+});
+
+test('Money Loop Three stage keeps CSS orbit overlays transparent to canvas selection', () => {
+  const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
+  const stageSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/money-loop-3d/MoneyLoopThreeStage.tsx'), 'utf8');
+  const nonInteractiveDecorations = [
+    'artifact-orbit-ring pointer-events-none',
+    'artifact-orbit-path pointer-events-none',
+    'artifact-orbit-sweep pointer-events-none',
+    'artifact-orbit-reticle pointer-events-none',
+    'artifact-flow-path pointer-events-none',
+    'pointer-events-none absolute left-1/2 top-1/2 h-36 w-36',
+    'artifact-orbit-node pointer-events-none absolute',
+  ];
+
+  nonInteractiveDecorations.forEach((decoration) => {
+    assert.ok(railSource.includes(decoration), `expected ${decoration} to pass pointer input through to the canvas`);
+  });
+  assert.ok(!stageSource.includes('pointer-events-none'), 'expected the Three stage to remain pointer-interactive');
+});
+
+test('Money Loop Three selection runtime contracts preserve exact selection and bounded motion', () => {
+  const selectionMotion = loadTsModule('src/components/money-loop-3d/selection-motion.ts');
+  const selectedIds = [];
+  let focusCalls = 0;
+  const handler = selectionMotion.createArtifactSelectionHandler('cash-flow', (id) => selectedIds.push(id));
+
+  handler({ currentTarget: { focus: () => { focusCalls += 1; } } });
+
+  assert.deepEqual(selectedIds, ['cash-flow']);
+  assert.equal(focusCalls, 0, 'mesh selection must not move keyboard focus from DOM controls');
+  assert.equal(selectionMotion.MONEY_LOOP_SELECTION_DURATION_SECONDS, 0.65);
+  assert.ok(selectionMotion.MONEY_LOOP_SELECTION_DURATION_SECONDS <= 0.7);
+  assert.equal(selectionMotion.getSelectionRotationRadians('spin-once'), Math.PI * 2);
+  assert.ok(selectionMotion.getSelectionRotationRadians('restrained-turn') <= Math.PI);
+  assert.equal(selectionMotion.getSelectionRotationRadians('settle-only'), 0);
+
+  const beforeCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.64);
+  const atCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.65);
+  const afterCompletion = selectionMotion.getSelectionMotionFrame('spin-once', 0.7);
+
+  assert.equal(beforeCompletion.shouldRequestFrame, true);
+  assert.equal(atCompletion.shouldRequestFrame, false);
+  assert.equal(afterCompletion.shouldRequestFrame, false);
+  assert.equal(afterCompletion.rotationRadians, Math.PI * 2);
+  assert.equal(selectionMotion.resolveMoneyLoopStageRenderMode({ isComplete: false }), 'static');
 });
 
 test('dashboard model explains why edited inputs change the plan without adding vitals', () => {

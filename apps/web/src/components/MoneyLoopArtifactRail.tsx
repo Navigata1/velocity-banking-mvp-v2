@@ -206,14 +206,14 @@ export default function MoneyLoopArtifactRail({
               activeArtifactId={activeArtifact.id}
               onSelect={selectArtifactById}
             />
-            <div className="artifact-orbit-ring absolute inset-3 rounded-full" />
-            <div className="artifact-orbit-path absolute inset-[27px] rounded-full" />
-            <div className="artifact-orbit-sweep absolute inset-[18px] rounded-full" />
-            <div className="artifact-orbit-reticle absolute inset-[13px] rounded-full" />
+            <div className="artifact-orbit-ring pointer-events-none absolute inset-3 rounded-full" />
+            <div className="artifact-orbit-path pointer-events-none absolute inset-[27px] rounded-full" />
+            <div className="artifact-orbit-sweep pointer-events-none absolute inset-[18px] rounded-full" />
+            <div className="artifact-orbit-reticle pointer-events-none absolute inset-[13px] rounded-full" />
             <svg
               viewBox="0 0 176 176"
               data-testid="money-loop-pressure-path"
-              className="artifact-flow-path absolute inset-0"
+              className="artifact-flow-path pointer-events-none absolute inset-0"
               aria-hidden="true"
             >
               {orbitFlowSegments.map((segment) => {
@@ -242,7 +242,7 @@ export default function MoneyLoopArtifactRail({
               })}
             </svg>
 
-            <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 md:h-40 md:w-40">
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 md:h-40 md:w-40">
               <div
                 key={activeArtifact.id}
                 data-testid="money-loop-active-artifact-token"
@@ -275,7 +275,7 @@ export default function MoneyLoopArtifactRail({
                 <div
                   key={artifact.id}
                   data-testid={`money-loop-orbit-node-${artifact.id}`}
-                  className={`artifact-orbit-node absolute grid h-9 w-9 place-items-center rounded-full border text-[11px] font-bold ${
+                  className={`artifact-orbit-node pointer-events-none absolute grid h-9 w-9 place-items-center rounded-full border text-[11px] font-bold ${
                     isActive ? 'artifact-orbit-node-active border-white/60 text-white' : 'border-white/15 text-slate-300'
                   }`}
                   style={nodeStyle}

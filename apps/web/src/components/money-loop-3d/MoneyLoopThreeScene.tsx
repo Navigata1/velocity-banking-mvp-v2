@@ -5,6 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import type { Group, Vector3Tuple } from 'three';
 import type { MoneyLoopVisualArtifact } from '@/app/artifact-visual-contract';
 import { artifactMeshFactories } from './artifact-meshes';
+import { getSelectionMotionFrame } from './selection-motion';
 
 interface MoneyLoopThreeSceneProps {
   artifacts: MoneyLoopVisualArtifact[];
@@ -55,25 +56,24 @@ function SelectionRig({ activeArtifact, children }: { activeArtifact: MoneyLoopV
 
     if (transitionStartedAt.current === null) return;
 
-    const elapsed = Math.min((clock.elapsedTime - transitionStartedAt.current) / 0.65, 1);
-    const progress = 1 - (1 - Math.max(0, elapsed)) ** 3;
+    const frame = getSelectionMotionFrame(
+      activeArtifact.selectionMotion,
+      clock.elapsedTime - transitionStartedAt.current
+    );
     const targetCameraPosition = cameraPositions[activeArtifact.id];
 
     camera.position.set(
-      startingCameraPosition.current[0] + (targetCameraPosition[0] - startingCameraPosition.current[0]) * progress,
-      startingCameraPosition.current[1] + (targetCameraPosition[1] - startingCameraPosition.current[1]) * progress,
-      startingCameraPosition.current[2] + (targetCameraPosition[2] - startingCameraPosition.current[2]) * progress
+      startingCameraPosition.current[0] + (targetCameraPosition[0] - startingCameraPosition.current[0]) * frame.progress,
+      startingCameraPosition.current[1] + (targetCameraPosition[1] - startingCameraPosition.current[1]) * frame.progress,
+      startingCameraPosition.current[2] + (targetCameraPosition[2] - startingCameraPosition.current[2]) * frame.progress
     );
     camera.lookAt(0, 0, 0);
 
     if (groupRef.current) {
-      const turn = activeArtifact.selectionMotion === 'spin-once'
-        ? Math.PI * 2
-        : activeArtifact.selectionMotion === 'restrained-turn' ? Math.PI : 0;
-      groupRef.current.rotation.y = startingRotation.current + turn * progress;
+      groupRef.current.rotation.y = startingRotation.current + frame.rotationRadians;
     }
 
-    if (elapsed < 1) requestFrame();
+    if (frame.shouldRequestFrame) requestFrame();
     else transitionStartedAt.current = null;
   });
 
