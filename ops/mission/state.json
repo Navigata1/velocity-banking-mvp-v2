@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T10:12:00Z",
+    "updated": "2026-07-13T10:17:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -471,7 +471,7 @@
           "status": "pending",
           "evidence": null,
           "lastRun": null,
-          "notes": "P5-T1 identity, contrast-pair, deterministic timing, financial semantics, runtime-boundary, document-sync, and CI checks pass on the task branch. Gate remains pending until T2/T3 add real HyperFrames and Remotion overflow, contrast, and composition validation."
+          "notes": "P5-T1 identity, contrast-pair, deterministic timing, financial semantics, runtime-boundary, document-sync, and CI checks pass on current main at 0ba48e4. Gate remains pending until T2/T3 add real HyperFrames and Remotion overflow, contrast, and composition validation."
         },
         {
           "id": "P5-G2",
@@ -487,18 +487,18 @@
         {
           "id": "P5-T1",
           "title": "Create the InterestShield visual identity and motion contract",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P4-T1"],
-          "pr": null,
-          "notes": "Ready for PR on codex/mission/p5-visual-identity-contract: renderer-neutral identity version 1, portable timing/seed vectors, fail-closed LOC display channels, three format/caption contracts, anti-patterns, package-family isolation, synchronized human specification, and 14 focused tests are independently approved. Evidence: ops/mission/evidence/P5-T1-visual-identity-contract-2026-07-13.txt."
+          "pr": 241,
+          "notes": "PR #241 merged at 0ba48e4 after duplicate Ubuntu quality runs and Vercel passed. Fresh main passes 14 media identity tests, zero media vulnerabilities, 263 web regressions, lint, and the 14-page build. Evidence: ops/mission/evidence/P5-T1-closeout-main-2026-07-13.txt."
         },
         {
           "id": "P5-T2",
           "title": "Build HyperFrames launch and tutorial compositions",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P5-T1"],
           "pr": null,
-          "notes": "Use deterministic GSAP timelines, transitions, captions, contrast, and overflow checks."
+          "notes": "Active on codex/mission/p5-hyperframes-compositions: build renderer-isolated launch/tutorial compositions against identity version 1 with deterministic GSAP timelines, captions, contrast, overflow, animation-map, and reduced-motion checks."
         },
         {
           "id": "P5-T3",
@@ -848,13 +848,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240",
       "phase": "P4 Model-Driven 3D Experience",
       "mergedAt": "2026-07-13"
+    },
+    {
+      "number": 241,
+      "title": "Freeze the InterestShield media identity contract",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/241",
+      "phase": "P5 Educational Media Pipeline",
+      "mergedAt": "2026-07-13"
     }
   ],
   "resume": {
     "activePhase": "P5",
     "nextActions": [
-      "Publish and merge P5-T1 from codex/mission/p5-visual-identity-contract after GitHub CI and Vercel pass, then rerun the media identity check on current main.",
-      "Start P5-T2 on a fresh branch: add the HyperFrames workspace and launch/tutorial compositions against identity contract version 1, with deterministic GSAP timelines, captions, contrast, overflow, and animation-map gates.",
+      "Implement P5-T2 test-first on codex/mission/p5-hyperframes-compositions: add the renderer-isolated HyperFrames workspace without changing web/mobile runtime manifests.",
+      "Build deterministic launch and Money Loop tutorial compositions against identity contract version 1, then add caption, contrast, overflow, reduced-motion, animation-map, and exact-frame validation to npm --prefix apps/media run check.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
