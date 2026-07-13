@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { PortfolioRoute } from '@/components/mobile-routes/portfolio-route';
 
 export default function PortfolioScreen() {
-  return <MobileShell initialMode="portfolio" />;
+  return <PortfolioRoute />;
 }

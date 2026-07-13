@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { SettingsRoute } from '@/components/mobile-routes/settings-route';
 
 export default function SettingsScreen() {
-  return <MobileShell initialMode="settings" />;
+  return <SettingsRoute />;
 }

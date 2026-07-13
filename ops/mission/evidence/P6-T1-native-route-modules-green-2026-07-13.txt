@@ -1,0 +1,52 @@
+P6-T1 NATIVE ROUTE MODULES - GREEN EVIDENCE
+Date: 2026-07-13
+Branch: codex/mission/p6-native-route-modules
+
+IMPLEMENTATION
+- Removed the stateful aggregate MobileShell and aggregate route-panels module.
+- Added a shared MobileRouteScreen for navigation, assumption controls,
+  storage state, and educational disclosure.
+- Moved persisted assumption ownership above the retained Expo Stack into one
+  MobileAssumptionsProvider consumed by every route.
+- Added direct Dashboard, Simulator, Cockpit, Portfolio, Learn, Vault, and
+  Settings route owners.
+- Fixed route/content identity to each mounted Expo route and restricted each
+  owner to its required shared-engine snapshot builders.
+- Preserved Settings reset, backend-readiness, and optional Supabase account
+  sync behavior.
+
+AUTOMATED GATES
+- node scripts/mobile-port-contract-tests.cjs: PASS, 35/35 contracts.
+- npm --prefix apps/mobile run check: PASS.
+- npm --prefix apps/mobile run test:supabase:mobile: PASS.
+- npm --prefix apps/mobile run build:web: PASS.
+- npm --prefix apps/mobile run smoke:web-export: PASS, all seven routes.
+- npm --prefix apps/mobile run smoke:android-bundle: PASS.
+  Bundle: entry-55065c8133dc30cc83e5c13499cfbde9.hbc
+- npm --prefix apps/mobile run smoke:ios-bundle: PASS.
+  Bundle: entry-170c28cf0ae6eae0943862c57b129d9d.hbc
+- git diff --check: PASS.
+
+CHROME SMOKE
+- Chrome loaded the local Expo web export with no console warnings or errors.
+- Dashboard -> Simulator navigation changed the URL and visible content while
+  preserving route-owned selection. Expo retained the prior screen at zero
+  size, but the visible navigation correctly selected Simulator.
+- Direct checks passed for /, /simulator, /cockpit, /portfolio, /learn,
+  /vault, and /settings.
+- Every route exposed seven visible tabs, exactly one selected tab matching the
+  mounted route, route-specific explanatory copy, and the educational
+  disclaimer.
+- At 390x844, Settings selected the correct tab and rendered with
+  scrollWidth=clientWidth=390 (no horizontal overflow).
+- Shared-state regression: Dashboard income 6500 -> 7000 appeared as 7000 after
+  pushing Simulator; editing Simulator to 7200 returned through browser back as
+  7200 on the retained Dashboard, with Cash Flow recalculated to $2,200.
+- Settings reset reported success and the retained Dashboard immediately
+  returned to income 6500 and Cash Flow $1,500.
+
+VERDICT
+P6-T1 satisfies its native route ownership, shared-engine, persistence,
+accessibility, web-export, and native-bundle contracts locally.
+Independent review reported no remaining findings and approved both spec
+compliance and code quality after the shared-provider correction.

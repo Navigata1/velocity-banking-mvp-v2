@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { CockpitRoute } from '@/components/mobile-routes/cockpit-route';
 
 export default function CockpitScreen() {
-  return <MobileShell initialMode="cockpit" />;
+  return <CockpitRoute />;
 }

@@ -7,10 +7,18 @@ const { readReachableSource } = require('./source-contract-helpers.cjs');
 const repoRoot = path.resolve(__dirname, '..');
 const moduleCache = new Map();
 const ts = require(path.join(repoRoot, 'apps/web/node_modules/typescript'));
-const mobileShellEntry = path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx');
+const mobileRouteEntries = [
+  'dashboard-route.tsx',
+  'simulator-route.tsx',
+  'cockpit-route.tsx',
+  'portfolio-route.tsx',
+  'learn-route.tsx',
+  'vault-route.tsx',
+  'settings-route.tsx',
+].map((filename) => path.join(repoRoot, 'apps/mobile/components/mobile-routes', filename));
 
-function readMobileShellSource() {
-  return readReachableSource(mobileShellEntry);
+function readMobileRoutesSource() {
+  return mobileRouteEntries.map((entry) => readReachableSource(entry)).join('\n');
 }
 
 function loadTsFile(filename) {
@@ -696,22 +704,18 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
 });
 
 test('native dashboard renders the four vitals before coach or review cards', () => {
-  const source = fs.readFileSync(
-    path.join(repoRoot, 'apps/mobile/components/mobile-shell/route-panels.tsx'),
+  const dashboardRoute = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-routes/dashboard-route.tsx'),
     'utf8'
   );
-  const dashboardPanelStart = source.indexOf('function DashboardPanel');
-  const simulatorPanelStart = source.indexOf('function SimulatorStrategyPanel');
-  const dashboardPanel = source.slice(dashboardPanelStart, simulatorPanelStart);
-  const vitalsIndex = dashboardPanel.indexOf('snapshot.vitals.map');
-  const reviewIndex = dashboardPanel.indexOf('Review Before Modeling');
-  const coachIndex = dashboardPanel.indexOf('Coach Note');
+  const vitalsIndex = dashboardRoute.indexOf('snapshot.vitals.map');
+  const reviewIndex = dashboardRoute.indexOf('Review Before Modeling');
+  const coachIndex = dashboardRoute.indexOf('Coach Note');
 
-  assert.ok(dashboardPanelStart >= 0 && simulatorPanelStart > dashboardPanelStart, 'expected to isolate the native DashboardPanel source');
-  assert.ok(vitalsIndex >= 0, 'expected native DashboardPanel to render snapshot vitals');
+  assert.ok(vitalsIndex >= 0, 'expected native DashboardRoute to render snapshot vitals');
   assert.ok(reviewIndex > vitalsIndex, 'expected review guardrail card after the four vitals');
   assert.ok(coachIndex > vitalsIndex, 'expected coach note after the four vitals');
-  assert.ok(!dashboardPanel.includes('title="Next Move"'), 'expected native DashboardPanel not to duplicate Next Move outside the four vitals');
+  assert.ok(!dashboardRoute.includes('title="Next Move"'), 'expected native DashboardRoute not to duplicate Next Move outside the four vitals');
 });
 
 test('shared mobile default assumptions start with the verified web demo Money Loop', () => {
@@ -806,138 +810,171 @@ test('shared mobile snapshots sanitize non-finite assumptions before rendering l
   assert.equal(learn.lessons.find((lesson) => lesson.title === 'LOC Room').value, 'Enter LOC terms');
 });
 
-test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
+test('Expo app uses dedicated shared-engine route modules instead of a monolithic shell', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
-  const shellRootSource = fs.readFileSync(mobileShellEntry, 'utf8');
-  const shellSource = readMobileShellSource();
+  const layoutSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/_layout.tsx'), 'utf8');
+  const routeFrameSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-routes/route-screen.tsx'),
+    'utf8'
+  );
+  const assumptionsProviderPath = path.join(
+    repoRoot,
+    'apps/mobile/components/mobile-assumptions-provider.tsx'
+  );
+  const routesSource = readMobileRoutesSource();
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
 
-  assert.ok(routeSource.includes("from '@/components/mobile-shell'"), 'expected route to delegate UI to a component');
-  assert.ok(shellRootSource.includes('<MobileModeNavigation'), 'expected MobileShell to mount extracted navigation');
+  assert.ok(routeSource.includes("from '@/components/mobile-routes/dashboard-route'"), 'expected route to import its owning module directly');
+  assert.ok(routeFrameSource.includes('<MobileModeNavigation'), 'expected route frame to mount extracted navigation');
+  assert.ok(fs.existsSync(assumptionsProviderPath), 'expected one assumptions provider above the retained route stack');
+  const assumptionsProviderSource = fs.readFileSync(assumptionsProviderPath, 'utf8');
+  assert.ok(routeFrameSource.includes('useMobileAssumptions'), 'expected retained routes to consume shared assumptions');
+  assert.ok(!routeFrameSource.includes('usePersistedMobileAssumptions'), 'expected retained routes not to own persistence');
+  assert.equal(
+    (assumptionsProviderSource.match(/usePersistedMobileAssumptions\(\)/g) ?? []).length,
+    1,
+    'expected exactly one persisted assumptions owner'
+  );
+  const providerOpenIndex = layoutSource.indexOf('<MobileAssumptionsProvider>');
+  const stackIndex = layoutSource.indexOf('<Stack');
+  const providerCloseIndex = layoutSource.indexOf('</MobileAssumptionsProvider>');
+  assert.ok(
+    providerOpenIndex >= 0 && stackIndex > providerOpenIndex && providerCloseIndex > stackIndex,
+    'expected the assumptions provider to enclose the retained route stack'
+  );
+  assert.ok(!routeFrameSource.includes('buildMobile'), 'expected shared route frame to remain free of financial snapshot builders');
+  assert.ok(!routeFrameSource.includes('useState<MobileMode>'), 'expected route identity to come from the mounted Expo route');
+  assert.ok(!routeFrameSource.includes('setMode'), 'expected navigation not to mutate retained route content');
+  assert.ok(routeFrameSource.includes('activeMode={mode}'), 'expected navigation selection to match the mounted route');
+  assert.ok(
+    !fs.existsSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx')),
+    'expected the monolithic MobileShell entry to be removed'
+  );
 
   assert.ok(
-    shellSource.includes("@interestshield/financial-engine"),
-    'expected mobile shell to import the shared financial engine package'
+    routesSource.includes("@interestshield/financial-engine"),
+    'expected route modules to import the shared financial engine package'
   );
   assert.ok(
-    shellSource.includes('buildMobileDashboardSnapshot'),
-    'expected mobile shell to render the shared dashboard snapshot'
+    routesSource.includes('buildMobileDashboardSnapshot'),
+    'expected dashboard route to render the shared dashboard snapshot'
   );
-  assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
+  assert.ok(!routesSource.includes('8000 - 4500'), 'expected routes not to inline cash-flow arithmetic');
   for (const mode of ['dashboard', 'simulator', 'cockpit', 'portfolio', 'learn', 'vault', 'settings']) {
-    assert.ok(shellSource.includes(`| '${mode}'`), `expected MobileMode to include ${mode}`);
+    assert.ok(routesSource.includes(`| '${mode}'`), `expected MobileMode to include ${mode}`);
   }
-  assert.ok(shellSource.includes("const modes: Array<{ id: MobileMode; label: string }>"));
-  assert.ok(shellSource.includes("{ id: 'simulator', label: 'Simulator' }"));
-  assert.ok(shellSource.includes("{ id: 'cockpit', label: 'Cockpit' }"));
-  assert.ok(shellSource.includes("{ id: 'portfolio', label: 'Portfolio' }"));
-  assert.ok(shellSource.includes('{modes.map((mobileMode) => ('));
-  assert.ok(shellSource.includes('onPress={() => onModeChange(mobileMode.id)}'));
-  assert.ok(shellRootSource.includes('onModeChange={handleModeChange}'));
-  assert.ok(shellSource.includes('testID={`mobile-mode-tab-${id}`}'));
-  assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
-  assert.ok(shellSource.includes('accessibilityLabel="Active debt name"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Monthly income"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Monthly expenses"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Line of credit limit"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Line of credit balance"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Line of credit APR"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Active debt balance"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Active debt APR"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Active debt monthly payment"'));
-  assert.ok(shellSource.includes('accessibilityLabel="Active debt term months"'));
+  assert.ok(routesSource.includes("const modes: Array<{ id: MobileMode; label: string }>"));
+  assert.ok(routesSource.includes("{ id: 'simulator', label: 'Simulator' }"));
+  assert.ok(routesSource.includes("{ id: 'cockpit', label: 'Cockpit' }"));
+  assert.ok(routesSource.includes("{ id: 'portfolio', label: 'Portfolio' }"));
+  assert.ok(routesSource.includes('{modes.map((mobileMode) => ('));
+  assert.ok(routesSource.includes('onPress={() => onModeChange(mobileMode.id)}'));
+  assert.ok(routeFrameSource.includes('onModeChange={handleModeChange}'));
+  assert.ok(routesSource.includes('testID={`mobile-mode-tab-${id}`}'));
+  assert.ok(routesSource.includes('TextInput'), 'expected native editable assumption controls');
+  assert.ok(routesSource.includes('accessibilityLabel="Active debt name"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Monthly income"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Monthly expenses"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Line of credit limit"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Line of credit balance"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Line of credit APR"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Active debt balance"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Active debt APR"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Active debt monthly payment"'));
+  assert.ok(routesSource.includes('accessibilityLabel="Active debt term months"'));
   assert.ok(
-    shellSource.includes('function finiteNonNegativeInputValue(value: number): number'),
+    routesSource.includes('function finiteNonNegativeInputValue(value: number): number'),
     'expected native numeric inputs to sanitize non-finite display values'
   );
-  assert.ok(shellSource.includes('value={formatMoneyInputValue(value)}'), 'expected money inputs to use finite display formatting');
+  assert.ok(routesSource.includes('value={formatMoneyInputValue(value)}'), 'expected money inputs to use finite display formatting');
   assert.ok(
-    shellSource.includes('value={formatWholeNumberInputValue(value)}'),
+    routesSource.includes('value={formatWholeNumberInputValue(value)}'),
     'expected whole-number inputs to use finite display formatting'
   );
   assert.ok(
-    shellSource.includes('value={formatPercentageInputValue(value)}'),
+    routesSource.includes('value={formatPercentageInputValue(value)}'),
     'expected percentage inputs to use finite display formatting'
   );
   assert.ok(
-    shellSource.includes('Math.round(finiteNonNegativeInputValue(value) * 10000) / 100'),
+    routesSource.includes('Math.round(finiteNonNegativeInputValue(value) * 10000) / 100'),
     'expected APR input to preserve two decimal display precision after sanitizing'
   );
   assert.ok(
-    !shellSource.includes('value={String(Math.round(value))}') &&
-      !shellSource.includes('value={String(value)}') &&
-      !shellSource.includes('value={String(Math.round(value * 10000) / 100)}'),
+    !routesSource.includes('value={String(Math.round(value))}') &&
+      !routesSource.includes('value={String(value)}') &&
+      !routesSource.includes('value={String(Math.round(value * 10000) / 100)}'),
     'expected native inputs not to render raw numeric state directly'
   );
-  assert.ok(shellSource.includes('buildMobileCockpitSnapshot'));
-  assert.ok(shellSource.includes('CockpitPanel'));
-  assert.ok(shellSource.includes('buildMobileSimulatorSnapshot'));
-  assert.ok(shellSource.includes('SimulatorStrategyPanel'));
-  assert.ok(shellSource.includes('buildMobileVaultSnapshot'));
-  assert.ok(!shellSource.includes('until scenarios are editable'));
-  assert.ok(shellSource.includes('buildMobileLearnSnapshot'));
-  assert.ok(!shellSource.includes('const lessons = ['));
-  assert.ok(shellSource.includes('usePersistedMobileAssumptions'));
-  assert.ok(shellSource.includes('StorageStatusCard'));
-  assert.ok(shellSource.includes('SettingsPanel'), 'expected mobile Settings mode to render native readiness status');
-  assert.ok(shellSource.includes('testID="settings-backend-readiness"'), 'expected mobile Settings backend readiness smoke hook');
-  assert.ok(shellSource.includes('testID="settings-reset-mobile-assumptions"'), 'expected mobile Settings reset smoke hook');
+  assert.ok(routesSource.includes('buildMobileCockpitSnapshot'));
+  assert.ok(routesSource.includes('CockpitRoute'));
+  assert.ok(routesSource.includes('buildMobileSimulatorSnapshot'));
+  assert.ok(routesSource.includes('SimulatorStrategyPanel'));
+  assert.ok(routesSource.includes('buildMobileVaultSnapshot'));
+  assert.ok(!routesSource.includes('until scenarios are editable'));
+  assert.ok(routesSource.includes('buildMobileLearnSnapshot'));
+  assert.ok(!routesSource.includes('const lessons = ['));
+  assert.ok(assumptionsProviderSource.includes('usePersistedMobileAssumptions'));
+  assert.ok(!routesSource.includes('usePersistedMobileAssumptions'));
+  assert.ok(routesSource.includes('StorageStatusCard'));
+  assert.ok(routesSource.includes('SettingsPanel'), 'expected mobile Settings route to render native readiness status');
+  assert.ok(routesSource.includes('testID="settings-backend-readiness"'), 'expected mobile Settings backend readiness smoke hook');
+  assert.ok(routesSource.includes('testID="settings-reset-mobile-assumptions"'), 'expected mobile Settings reset smoke hook');
   assert.ok(
-    shellSource.includes('testID="settings-reset-mobile-assumptions-status"'),
+    routesSource.includes('testID="settings-reset-mobile-assumptions-status"'),
     'expected mobile Settings reset status smoke hook'
   );
-  assert.ok(shellSource.includes('Reset Starter Assumptions'), 'expected mobile Settings to expose a reset action');
-  assert.ok(shellSource.includes('resetAssumptions()'), 'expected mobile Settings reset to use the persisted assumptions hook');
-  assert.ok(shellSource.includes("Reset could not save locally"), 'expected mobile Settings reset to expose save-failure feedback');
-  assert.ok(shellSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
+  assert.ok(routesSource.includes('Reset Starter Assumptions'), 'expected mobile Settings to expose a reset action');
+  assert.ok(routesSource.includes('resetAssumptions()'), 'expected mobile Settings reset to use the persisted assumptions hook');
+  assert.ok(routesSource.includes("Reset could not save locally"), 'expected mobile Settings reset to expose save-failure feedback');
+  assert.ok(routesSource.includes('mobileBackendReadinessOptions'), 'expected mobile Settings to list backend candidates explicitly');
   assert.ok(
-    shellSource.includes('six-collection schema plus RLS policy review'),
+    routesSource.includes('six-collection schema plus RLS policy review'),
     'expected mobile Supabase readiness to match the six-collection backend contract'
   );
   assert.ok(
-    shellSource.includes('explicit report export, download, and deletion') &&
-      shellSource.includes('dedicated R2 buckets and deployed owner-isolation smoke'),
+    routesSource.includes('explicit report export, download, and deletion') &&
+      routesSource.includes('dedicated R2 buckets and deployed owner-isolation smoke'),
     'expected mobile Cloudflare readiness to match the report-only private R2 gate'
   );
-  assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
-  assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
-  assert.ok(shellSource.includes('MobileMoneyLoopPressureStrip'), 'expected dashboard to render the native pressure strip');
-  assert.ok(shellSource.includes('testID="mobile-money-loop-pressure"'), 'expected mobile pressure strip smoke hook');
-  assert.ok(!shellSource.includes('savings claim'), 'expected mobile simulator copy to avoid savings-claim framing');
+  assert.ok(routesSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
+  assert.ok(routesSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
+  assert.ok(routesSource.includes('MobileMoneyLoopPressureStrip'), 'expected dashboard to render the native pressure strip');
+  assert.ok(routesSource.includes('testID="mobile-money-loop-pressure"'), 'expected mobile pressure strip smoke hook');
+  assert.ok(!routesSource.includes('savings claim'), 'expected mobile simulator copy to avoid savings-claim framing');
   assert.ok(
-    shellSource.includes('before any modeled payoff difference is shown'),
+    routesSource.includes('before any modeled payoff difference is shown'),
     'expected mobile simulator copy to frame payoff deltas as modeled differences'
   );
   assert.ok(
-    shellSource.includes('testID={`mobile-money-loop-pressure-segment-${loopNodeId(step.label)}`}'),
+    routesSource.includes('testID={`mobile-money-loop-pressure-segment-${loopNodeId(step.label)}`}'),
     'expected one pressure segment per shared Money Loop step'
   );
-  assert.ok(shellSource.includes('accessibilityRole="progressbar"'), 'expected pressure segments to expose progress values');
+  assert.ok(routesSource.includes('accessibilityRole="progressbar"'), 'expected pressure segments to expose progress values');
   assert.ok(
-    shellSource.includes('width: `${pressurePercent}%`'),
+    routesSource.includes('width: `${pressurePercent}%`'),
     'expected pressure segment width to be model-bound'
   );
-  assert.ok(shellSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
-  assert.ok(shellSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
+  assert.ok(routesSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
+  assert.ok(routesSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
   assert.ok(
-    shellSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
+    routesSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
     'expected mobile Portfolio payoff path to render one node per engine point'
   );
-  assert.ok(shellSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
+  assert.ok(routesSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
   assert.ok(
-    shellSource.includes('testID={`mobile-payoff-orbit-node-${loopNodeId(step.label)}`}'),
+    routesSource.includes('testID={`mobile-payoff-orbit-node-${loopNodeId(step.label)}`}'),
     'expected one selectable orbit node per shared Money Loop step'
   );
   assert.ok(
-    shellSource.includes('accessibilityRole="radio"'),
+    routesSource.includes('accessibilityRole="radio"'),
     'expected orbit nodes to expose a single-choice role'
   );
   assert.ok(
-    shellSource.includes('accessibilityState={{ checked: isActive, selected: isActive }}'),
+    routesSource.includes('accessibilityState={{ checked: isActive, selected: isActive }}'),
     'expected active mobile orbit nodes to expose checked and selected state'
   );
-  assert.ok(shellSource.includes('aria-checked={isActive}'), 'expected mobile web export to expose checked state');
-  assert.ok(shellSource.includes('aria-selected={isActive}'), 'expected mobile web export to expose selected state');
+  assert.ok(routesSource.includes('aria-checked={isActive}'), 'expected mobile web export to expose checked state');
+  assert.ok(routesSource.includes('aria-selected={isActive}'), 'expected mobile web export to expose selected state');
   assert.equal(typeof sharedEngine.buildMobileCockpitSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobilePortfolioSnapshot, 'function');
   assert.equal(typeof sharedEngine.buildMobileSimulatorSnapshot, 'function');
@@ -951,31 +988,62 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
 
 test('Expo mobile app exposes direct route parity for every demo mode', () => {
   const layoutSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/_layout.tsx'), 'utf8');
-  const shellSource = readMobileShellSource();
+  const routeFrameSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-routes/route-screen.tsx'),
+    'utf8'
+  );
   const routeExpectations = [
-    ['index.tsx', 'dashboard', 'index', 'InterestShield'],
-    ['simulator.tsx', 'simulator', 'simulator', 'Simulator'],
-    ['cockpit.tsx', 'cockpit', 'cockpit', 'Cockpit'],
-    ['portfolio.tsx', 'portfolio', 'portfolio', 'Portfolio'],
-    ['learn.tsx', 'learn', 'learn', 'Learn'],
-    ['vault.tsx', 'vault', 'vault', 'Vault'],
-    ['settings.tsx', 'settings', 'settings', 'Settings'],
+    ['index.tsx', 'DashboardRoute', 'dashboard-route.tsx', ['buildMobileDashboardSnapshot'], 'index', 'InterestShield'],
+    ['simulator.tsx', 'SimulatorRoute', 'simulator-route.tsx', ['buildMobileDashboardSnapshot', 'buildMobileSimulatorSnapshot'], 'simulator', 'Simulator'],
+    ['cockpit.tsx', 'CockpitRoute', 'cockpit-route.tsx', ['buildMobileCockpitSnapshot'], 'cockpit', 'Cockpit'],
+    ['portfolio.tsx', 'PortfolioRoute', 'portfolio-route.tsx', ['buildMobilePortfolioSnapshot'], 'portfolio', 'Portfolio'],
+    ['learn.tsx', 'LearnRoute', 'learn-route.tsx', ['buildMobileLearnSnapshot'], 'learn', 'Learn'],
+    ['vault.tsx', 'VaultRoute', 'vault-route.tsx', ['buildMobileVaultSnapshot'], 'vault', 'Vault'],
+    ['settings.tsx', 'SettingsRoute', 'settings-route.tsx', [], 'settings', 'Settings'],
   ];
 
-  assert.ok(shellSource.includes("import { useRouter, type Href } from 'expo-router'"));
-  assert.ok(shellSource.includes("type Href"), 'expected mobile navigation to use Expo Href at the route boundary');
-  assert.ok(shellSource.includes("initialMode = 'dashboard'"));
-  assert.ok(shellSource.includes('modeRoutes'));
-  assert.ok(shellSource.includes('router.push(modeRoutes[nextMode] as Href)'));
+  assert.ok(routeFrameSource.includes("import { useRouter, type Href } from 'expo-router'"));
+  assert.ok(routeFrameSource.includes("type Href"), 'expected mobile navigation to use Expo Href at the route boundary');
+  assert.ok(routeFrameSource.includes('modeRoutes'));
+  assert.ok(routeFrameSource.includes('router.push(modeRoutes[nextMode] as Href)'));
 
-  for (const [filename, mode, routeName, title] of routeExpectations) {
+  for (const [filename, component, moduleName, expectedBuilders, routeName, title] of routeExpectations) {
     const routeFile = path.join(repoRoot, 'apps/mobile/app', filename);
     assert.ok(fs.existsSync(routeFile), `expected direct Expo route file ${filename}`);
     const routeSource = fs.readFileSync(routeFile, 'utf8');
     assert.ok(
-      routeSource.includes(`<MobileShell initialMode="${mode}" />`),
-      `expected ${filename} to render MobileShell in ${mode} mode`
+      routeSource.includes(`<${component} />`),
+      `expected ${filename} to render its dedicated ${component}`
     );
+    const moduleImport = moduleName.replace(/\.tsx$/, '');
+    assert.ok(
+      routeSource.includes(`from '@/components/mobile-routes/${moduleImport}'`),
+      `expected ${filename} to import ${moduleImport} directly`
+    );
+    const moduleSource = fs.readFileSync(
+      path.join(repoRoot, 'apps/mobile/components/mobile-routes', moduleName),
+      'utf8'
+    );
+    const expectedMode = routeName === 'index' ? 'dashboard' : routeName;
+    assert.ok(
+      moduleSource.includes(`mode="${expectedMode}"`),
+      `expected ${moduleName} content identity to remain fixed to ${expectedMode}`
+    );
+    for (const builder of expectedBuilders) {
+      assert.ok(moduleSource.includes(builder), `expected ${moduleName} to own ${builder}`);
+    }
+    for (const otherBuilder of [
+      'buildMobileDashboardSnapshot',
+      'buildMobileSimulatorSnapshot',
+      'buildMobileCockpitSnapshot',
+      'buildMobilePortfolioSnapshot',
+      'buildMobileLearnSnapshot',
+      'buildMobileVaultSnapshot',
+    ]) {
+      if (!expectedBuilders.includes(otherBuilder)) {
+        assert.ok(!moduleSource.includes(otherBuilder), `expected ${moduleName} not to import ${otherBuilder}`);
+      }
+    }
     assert.ok(
       layoutSource.includes(`<Stack.Screen name="${routeName}" options={{ title: '${title}' }} />`),
       `expected layout to register ${routeName} with ${title} title`

@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { VaultRoute } from '@/components/mobile-routes/vault-route';
 
 export default function VaultScreen() {
-  return <MobileShell initialMode="vault" />;
+  return <VaultRoute />;
 }

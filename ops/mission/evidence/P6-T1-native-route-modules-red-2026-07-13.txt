@@ -1,0 +1,33 @@
+P6-T1 NATIVE ROUTE MODULES - RED EVIDENCE
+Date: 2026-07-13
+
+BASELINE
+- npm --prefix apps/mobile run check: PASS.
+- node scripts/mobile-port-contract-tests.cjs: PASS (35 contracts).
+
+FIRST RED CONTRACT
+The mobile port contract was changed to require:
+- removal of the aggregate MobileShell entry;
+- one immutable module per Expo route;
+- a shared route frame with no financial snapshot builders;
+- direct route imports with no aggregate barrel;
+- route-owned engine builders; and
+- route identity derived from the mounted Expo route rather than mutable state.
+
+Result: FAIL as expected. The new contract could not read
+apps/mobile/components/mobile-routes/route-screen.tsx because the route modules
+did not exist yet. A second red pass rejected the temporary aggregate import
+surface before every app route imported its owner directly.
+
+REVIEW RED CONTRACT
+Independent review identified a second architecture gap: one persistence hook
+per retained Stack route could diverge after edit, push, edit, and native back,
+and Settings could sync or reset stale assumptions. The contract was extended
+to require one MobileAssumptionsProvider above Stack and forbid route-local
+persistence ownership.
+
+Result: FAIL as expected with:
+  expected one assumptions provider above the retained route stack
+
+VERDICT
+Both contracts failed for their intended architecture gaps before implementation.
