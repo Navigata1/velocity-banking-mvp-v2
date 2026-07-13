@@ -16,6 +16,8 @@ IMPLEMENTATION
   sync behavior.
 
 AUTOMATED GATES
+- npm test (apps/web): PASS, including 263 engine regressions and all
+  accessibility, metadata, financial-reference, and asset-budget contracts.
 - node scripts/mobile-port-contract-tests.cjs: PASS, 35/35 contracts.
 - npm --prefix apps/mobile run check: PASS.
 - npm --prefix apps/mobile run test:supabase:mobile: PASS.
