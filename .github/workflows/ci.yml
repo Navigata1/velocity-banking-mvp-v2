@@ -53,6 +53,18 @@ jobs:
         working-directory: apps/web
         run: npm run smoke:routes
 
+      - name: Install report Worker dependencies
+        working-directory: apps/report-worker
+        run: npm ci
+
+      - name: Check and test report Worker
+        working-directory: apps/report-worker
+        run: |
+          npm run check
+          npm test
+          npm audit --omit=dev
+          npm run build:dry-run
+
       - name: Install mobile dependencies
         working-directory: apps/mobile
         run: npm ci

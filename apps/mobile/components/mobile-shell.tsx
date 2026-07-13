@@ -54,10 +54,10 @@ const mobileBackendReadinessOptions = [
     detail: 'Best fit for relational snapshots, run history, exports, audit events, and SQL reporting. Next gate: six-collection schema plus RLS policy review.',
   },
   {
-    id: 'cloudflare-workers-d1-durable-objects',
-    label: 'Cloudflare Workers + D1/Durable Objects',
+    id: 'cloudflare-worker-r2-reports',
+    label: 'Cloudflare Worker + private R2 reports',
     status: 'Candidate',
-    detail: 'Best fit for edge APIs, D1 owner-scoped records, export jobs, audit events, and future session state. Next gate: authenticated Worker snapshot API plus D1 owner indexes for all owner tables.',
+    detail: 'Best fit for explicit report export, download, and deletion while Supabase remains the private system of record. Next gate: dedicated R2 buckets and deployed owner-isolation smoke.',
   },
 ] as const;
 

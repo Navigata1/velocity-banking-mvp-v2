@@ -1,0 +1,29 @@
+Gate: P2-G4 Cloudflare report Worker security and deployment dry-run
+Result: PASS
+
+Worker behavior tests: 7/7
+- placeholder configuration refuses data
+- foreign browser origin rejected
+- verified owner namespaces private R2 key
+- Supabase metadata failure rolls back R2 object
+- actual streamed body above 512 KiB rejected despite spoofed Content-Length
+- cross-owner download returns 404
+- owner deletion removes R2 object and Supabase metadata
+
+Toolchain:
+- wrangler 4.110.0
+- TypeScript 7.0.2
+- Wrangler-generated runtime and Env bindings
+- npm audit --omit=dev: 0 vulnerabilities
+
+Deployment dry-run:
+- bundle upload: 9.77 KiB
+- gzip: 2.97 KiB
+- bindings: one private R2 REPORTS binding and three environment variables
+- D1 bindings: 0
+- live deployment: not performed
+
+Architecture:
+- Supabase remains the owner-scoped system of record.
+- Cloudflare stores only explicit user-requested report objects.
+- Placeholder vars fail closed until dedicated resources receive approval.

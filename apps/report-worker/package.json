@@ -1,0 +1,17 @@
+{
+  "name": "@interestshield/report-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "wrangler types && tsc --noEmit",
+    "test": "npm run build:test && node --test test/report-worker.test.mjs",
+    "build:test": "wrangler types && tsc -p tsconfig.test.json",
+    "build:dry-run": "wrangler deploy --dry-run --outdir dist-worker"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.1",
+    "typescript": "7.0.2",
+    "wrangler": "4.110.0"
+  }
+}

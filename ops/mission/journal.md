@@ -103,3 +103,11 @@
 - The passing drill restores separate auth identity and public application archives into an isolated database, with one synthetic row in every owned table.
 - Verification proves the exact snapshot payload, six tables, six RLS-enabled tables, and twenty policies; finally cleanup leaves zero synthetic owners, temporary databases, or archives.
 - Added an explicit retention schedule, deletion boundaries, managed production recovery gate, and incident procedure. No cloud backup is claimed before a dedicated project exists.
+
+## 2026-07-13T03:58Z - P2 Cloudflare report lane verified locally
+- PR #231 merged at 587ec18 after both GitHub quality workflows and the Vercel preview passed; P2-T4 is done.
+- Replaced the prior D1 snapshot-mirror proposal with an authenticated Worker and private R2 report-object lane; Supabase remains the financial system of record.
+- The Worker verifies Supabase sessions, derives owner keys, streams and caps uploads, records export metadata through RLS, hardens downloads as attachments, and coordinates deletion.
+- Seven Worker tests prove fail-closed placeholders, exact-origin CORS, owner namespacing, rollback, actual streamed size limits, cross-owner 404, and metadata deletion.
+- Wrangler-generated types, TypeScript, zero dependency findings, and deployment dry-run pass with one R2 binding and no D1 binding.
+- No Cloudflare resource was created or deployed; private buckets and final vars remain an explicit resource/cost gate.

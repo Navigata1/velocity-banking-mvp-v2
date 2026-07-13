@@ -1,0 +1,14 @@
+Gate: P2-T5 Cloudflare report Worker red evidence
+
+Initial type check:
+- Wrangler generated runtime types superseded the legacy workers-types package.
+- Loading both produced duplicate Worker global declarations.
+
+Initial behavior tests:
+- async route promises were returned without await inside the handler try block.
+- metadata rollback and cross-owner misses escaped as uncaught exceptions.
+
+Resolution:
+- use Wrangler-generated runtime types as the sole Worker platform source.
+- await every async route inside the error boundary.
+- stream and cap the actual body rather than trusting Content-Length.

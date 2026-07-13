@@ -40,7 +40,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'One profile row per authenticated owner; demo login data never becomes a shared account.',
     providerShape: {
       'supabase-postgres-auth-rls': 'profiles table keyed by auth.users.id with RLS owner policies.',
-      'cloudflare-workers-d1-durable-objects': 'D1 profiles table or KV-like account metadata behind an authenticated Worker.',
     },
   },
   {
@@ -51,7 +50,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'Snapshots are private to the owner and store assumptions separately from calculated outputs.',
     providerShape: {
       'supabase-postgres-auth-rls': 'financial_snapshots table with JSONB assumptions and owner_id RLS.',
-      'cloudflare-workers-d1-durable-objects': 'D1 snapshots table with JSON assumptions written through a Worker API.',
     },
   },
   {
@@ -62,7 +60,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'Runs belong to the same owner as the source snapshot and are append-only unless the owner deletes data.',
     providerShape: {
       'supabase-postgres-auth-rls': 'simulation_runs table joined to financial_snapshots through owner-scoped foreign keys.',
-      'cloudflare-workers-d1-durable-objects': 'D1 simulation_runs table; Durable Objects may coordinate long-running sessions later.',
     },
   },
   {
@@ -73,7 +70,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'Learning progress is private owner state and can be deleted independently of demo content.',
     providerShape: {
       'supabase-postgres-auth-rls': 'learning_progress table keyed by owner_id with owner-only RLS.',
-      'cloudflare-workers-d1-durable-objects': 'D1 learning_progress table updated through an authenticated Worker.',
     },
   },
   {
@@ -84,7 +80,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'Export records belong to the owner and store metadata only; generated files are never shared across owners.',
     providerShape: {
       'supabase-postgres-auth-rls': 'export_records table with owner_id RLS and optional snapshot linkage.',
-      'cloudflare-workers-d1-durable-objects': 'D1 export_records table written through an authenticated Worker with owner-filtered queries.',
     },
   },
   {
@@ -95,7 +90,6 @@ export const BACKEND_MIGRATION_COLLECTIONS: readonly BackendMigrationCollection[
     ownerRule: 'Audit events are owner-scoped activity records used for import, export, deletion, and calculation traceability.',
     providerShape: {
       'supabase-postgres-auth-rls': 'audit_events table with owner_id RLS and append-oriented authenticated inserts.',
-      'cloudflare-workers-d1-durable-objects': 'D1 audit_events table written by the Worker after token verification and owner derivation.',
     },
   },
 ];

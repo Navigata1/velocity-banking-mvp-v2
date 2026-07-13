@@ -2564,11 +2564,10 @@ test('settings makes demo backend status explicit', () => {
 test('settings backend readiness model keeps provider choice explicit', () => {
   assert.deepEqual(
     Array.from(settingsBackend.BACKEND_HANDOFF_TARGETS),
-    ['supabase-postgres-auth-rls', 'cloudflare-workers-d1-durable-objects']
+    ['supabase-postgres-auth-rls']
   );
   assert.equal(settingsBackend.BACKEND_READINESS_OPTIONS.length, 2);
   for (const option of settingsBackend.BACKEND_READINESS_OPTIONS) {
-    assert.ok(settingsBackend.BACKEND_HANDOFF_TARGETS.includes(option.id), `expected ${option.id} to be a handoff target`);
     assert.equal(option.status, 'Candidate');
     assert.ok(option.lane.length > 0, `expected ${option.id} to define a backend lane`);
     assert.ok(option.bestFit.length > 0, `expected ${option.id} to explain best fit`);
@@ -2577,8 +2576,16 @@ test('settings backend readiness model keeps provider choice explicit', () => {
     assert.ok(option.openGates.length >= 2, `expected ${option.id} to list open gates`);
     assert.ok(option.nextGate.length > 0, `expected ${option.id} to name the next gate`);
   }
+  assert.ok(
+    settingsBackend.BACKEND_HANDOFF_TARGETS.includes('supabase-postgres-auth-rls'),
+    'expected Supabase to remain the only financial handoff target'
+  );
   const supabase = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'supabase-postgres-auth-rls');
-  const cloudflare = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'cloudflare-workers-d1-durable-objects');
+  const cloudflare = settingsBackend.BACKEND_READINESS_OPTIONS.find((option) => option.id === 'cloudflare-worker-r2-reports');
+  assert.ok(
+    !settingsBackend.BACKEND_HANDOFF_TARGETS.includes(cloudflare.id),
+    'expected the Cloudflare report lane to stay outside the financial migration contract'
+  );
   assert.equal(supabase.lane, 'Recommended first persistence lane');
   assert.ok(
     supabase.chooseWhen.includes('user-owned assumptions, plans, simulation runs, learning progress, exports, and audit history'),
@@ -2594,25 +2601,18 @@ test('settings backend readiness model keeps provider choice explicit', () => {
   );
   assert.equal(cloudflare.lane, 'Secondary edge/API lane');
   assert.ok(
-    cloudflare.chooseWhen.includes('after the owner-scoped data contract is stable'),
-    'expected Cloudflare to be positioned after the owner-scoped contract is stable'
+    cloudflare.chooseWhen.includes('explicit report export') && cloudflare.chooseWhen.includes('private R2 key by owner'),
+    'expected Cloudflare to be limited to explicit owner-scoped report objects'
   );
   assert.ok(
-    cloudflare.chooseWhen.includes('signed Worker API') || cloudflare.chooseWhen.includes('Worker API'),
-    'expected Cloudflare readiness to require a Worker API access-control boundary'
+    cloudflare.chooseWhen.includes('Worker verifies the Supabase session'),
+    'expected Cloudflare readiness to require verified Supabase identity at the Worker boundary'
   );
   assert.ok(
-    cloudflare.openGates.includes('Auth token verification'),
-    'expected Cloudflare readiness to block D1 writes until auth tokens are verified'
+    cloudflare.openGates.includes('Dedicated R2 buckets') && cloudflare.openGates.includes('R2 retention lifecycle and deployed smoke'),
+    'expected Cloudflare readiness to block deployment until private storage and retention are verified'
   );
-  assert.ok(
-    cloudflare.openGates.includes('D1 owner indexes for all owner tables'),
-    'expected Cloudflare readiness to require owner indexes for all D1 owner tables before migration'
-  );
-  assert.ok(
-    cloudflare.nextGate.includes('authenticated Worker snapshot API') && cloudflare.nextGate.includes('six-table D1 owner contract'),
-    'expected Cloudflare next gate to name the authenticated Worker API and six-table D1 owner contract'
-  );
+  assert.ok(cloudflare.nextGate.includes('dedicated private R2 buckets'), 'expected Cloudflare next gate to stay report-specific');
   assert.ok(
     settingsBackend.BACKEND_STATUS_SUMMARY.nextGate.includes('auth/RLS or equivalent access rules'),
     'expected backend summary to require access-control rules before user data storage'
@@ -2768,28 +2768,23 @@ test('repository proves an isolated Supabase backup restore and retention contra
   assert.ok(runbook.includes('dedicated InterestShield Supabase project'));
 });
 
-test('repository documents a Cloudflare edge lane without live D1 wiring', () => {
+test('repository implements a secondary Cloudflare report lane without a D1 financial mirror', () => {
   const contractPath = path.resolve(__dirname, '..', '..', '..', 'docs', '44_CLOUDFLARE_EDGE_LANE_CONTRACT.md');
-  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const workerPath = path.resolve(__dirname, '..', '..', 'report-worker', 'src', 'index.ts');
+  const workerConfigPath = path.resolve(__dirname, '..', '..', 'report-worker', 'wrangler.jsonc');
   const contract = fs.existsSync(contractPath) ? fs.readFileSync(contractPath, 'utf8') : '';
+  const worker = fs.existsSync(workerPath) ? fs.readFileSync(workerPath, 'utf8') : '';
+  const workerConfig = fs.existsSync(workerConfigPath) ? fs.readFileSync(workerConfigPath, 'utf8') : '';
 
   assert.ok(fs.existsSync(contractPath), 'expected the Cloudflare edge lane contract to exist');
-  assert.ok(contract.includes('contract-only'), 'expected Cloudflare handoff not to imply live backend wiring');
   assert.ok(contract.includes('Supabase Postgres + Auth + RLS remains the first persistence lane'), 'expected Cloudflare to stay secondary to the first persistence lane');
-  assert.ok(contract.includes('Browser clients must never write directly to D1'), 'expected D1 writes to be server-boundary only');
-  assert.ok(contract.includes('POST /api/snapshots/import'), 'expected a first Worker API contract');
-  assert.ok(contract.includes('Authorization: Bearer'), 'expected Worker API to require authenticated requests');
-  assert.ok(contract.includes('Idempotency-Key'), 'expected snapshot imports to be idempotent');
-  assert.ok(contract.includes('financial_snapshots_owner_id_idx'), 'expected D1 snapshots to have an owner index');
-  assert.ok(contract.includes('simulation_runs_owner_id_idx'), 'expected D1 runs to have an owner index');
-  assert.ok(contract.includes('learning_progress_owner_id_idx'), 'expected D1 learning progress to have an owner index');
-  assert.ok(contract.includes('export_records_owner_id_idx'), 'expected D1 exports to have an owner index');
-  assert.ok(contract.includes('audit_events_owner_id_idx'), 'expected D1 audit events to have an owner index');
-  assert.ok(contract.includes('route text not null'), 'expected D1 run summaries to preserve route context');
-  assert.ok(contract.includes('D1 does not provide Supabase-style RLS'), 'expected the doc to name the Worker access-control responsibility');
-  assert.ok(contract.includes('Account deletion removes owner-scoped D1 records'), 'expected deletion to be a release gate');
-  assert.ok(!packageJson.dependencies['wrangler'], 'expected demo app not to wire Cloudflare tooling as a runtime dependency');
-  assert.ok(!packageJson.dependencies['@cloudflare/workers-types'], 'expected demo app not to add live Cloudflare bindings yet');
+  assert.ok(contract.includes('No D1 financial mirror'), 'expected the edge lane to reject duplicate financial persistence');
+  assert.ok(worker.includes('/auth/v1/user'), 'expected Supabase session verification');
+  assert.ok(worker.includes('env.REPORTS.put') && worker.includes('env.REPORTS.delete'), 'expected private report object lifecycle');
+  assert.ok(worker.includes('ownerId, reportId') && worker.includes('objectKey(ownerId'), 'expected owner-namespaced object keys');
+  assert.ok(worker.includes('Content-Disposition') && worker.includes('attachment; filename='), 'expected hardened attachment downloads');
+  assert.ok(workerConfig.includes('"binding": "REPORTS"'), 'expected generated R2 binding configuration');
+  assert.ok(!workerConfig.includes('d1_databases'), 'expected no D1 database binding');
 });
 
 test('backup controls label local-only export and import replacement behavior', () => {
@@ -2980,7 +2975,7 @@ test('settings full local demo snapshot import rejects an invalid backend migrat
     version: 1,
     backendMigrationContract: {
       ...contract,
-      targets: ['supabase-postgres-auth-rls'],
+      targets: ['cloudflare-worker-r2-reports'],
     },
     storage: [
       { key: 'velocity-bank-storage', value: '{"state":{"monthlyIncome":6500}}' },

@@ -1,115 +1,64 @@
 # Cloudflare Edge Lane Contract
 
-Last updated: 2026-07-02
+Last updated: 2026-07-12
 
-## Scope
+## Decision
 
-This is a contract-only Cloudflare Workers, D1, and Durable Objects handoff for a secondary edge/API lane. It is not an applied migration and does not wire Workers, D1 bindings, Durable Objects, API routes, secrets, or live database writes into the demo.
+Supabase Postgres + Auth + RLS remains the first persistence lane and system of record for profiles, financial snapshots, simulations, learning progress, export metadata, and owner-scoped audit events.
 
-Use this only after the Supabase/Postgres first-lane owner-scoped contract is reviewed, or when InterestShield needs edge APIs that can enforce the same owner rules before any financial data leaves browser-local demo storage.
+Cloudflare is a secondary report-object lane only:
 
-## Source Decisions
+- Worker: authenticated report upload, download, and deletion boundary.
+- Private R2: user-requested HTML or JSON report objects.
+- Supabase: verified identity and authoritative export_records metadata.
+- No D1 financial mirror.
+- No Durable Object financial history.
+- No browser access to R2 bindings.
 
-- Supabase Postgres + Auth + RLS remains the first persistence lane for user-owned financial records.
-- Cloudflare Workers can become the server boundary for exports, report jobs, calculation sessions, and eventually D1 writes.
-- D1 records must keep `owner_id`, `snapshot_version`, and audited timestamps at the same conceptual boundary as the Supabase contract.
-- Durable Objects are for interactive session coordination, not the source of record for long-lived financial history.
-- Browser clients must never write directly to D1. All writes go through an authenticated Worker that verifies the owner.
-- Local demo data migrates through the existing Settings handoff snapshot only; do not copy arbitrary browser storage keys into edge storage.
+This avoids two databases disagreeing about balances, deletion, retention, and owner access. D1 and Hyperdrive should not be added without measured requirements that this lane cannot meet.
 
-## Candidate Worker API
+## Implemented API
 
-The first Cloudflare prototype should be a server-owned snapshot import API, not a general database client.
+The dry-run-verified Worker lives at apps/report-worker.
 
-```txt
-POST /api/snapshots/import
-Authorization: Bearer <verified application token>
-Idempotency-Key: <stable import id>
-Content-Type: application/json
-```
+    POST /v1/reports
+    GET /v1/reports/:reportId.html
+    GET /v1/reports/:reportId.json
+    DELETE /v1/reports/:reportId.html
+    DELETE /v1/reports/:reportId.json
+    Authorization: Bearer <Supabase access token>
 
-Required checks:
+The Worker verifies the token through Supabase Auth, derives the trusted owner id, and builds the R2 key as ownerId/reportId.format. Callers cannot submit an owner id.
 
-- Verify the token and derive the trusted `owner_id` on the server.
-- Validate the local-demo handoff snapshot version and known InterestShield storage keys.
-- Reject payloads that already claim live backend ownership.
-- Write financial snapshots and simulation runs with `owner_id` indexes.
-- Record an audit event with the contract version and import idempotency key.
-- Return an import summary; do not return raw financial payloads that are not needed by the client.
+Uploads are capped at 512 KiB, accept only UUID report ids and HTML/JSON formats, and roll back the R2 object if Supabase export_records metadata cannot be written. Downloads are attachment-only with nosniff, no-store, no-referrer, and sandbox headers. Deletes remove the owner-namespaced object and its RLS-protected metadata record.
 
-## D1 Table Shape
+The Worker does not accept a financial snapshot import and does not expose a list endpoint. Report content may contain financial values, so upload must remain an explicit user command.
 
-Cloudflare D1 should mirror the contract language, even if the SQL differs from Postgres.
+## Configuration
 
-```sql
-create table financial_snapshots (
-  id text primary key,
-  owner_id text not null,
-  snapshot_version integer not null,
-  assumptions_json text not null,
-  created_at text not null,
-  updated_at text not null
-);
+wrangler.jsonc intentionally contains values that fail closed:
 
-create index financial_snapshots_owner_id_idx on financial_snapshots(owner_id);
+- SUPABASE_URL points to configure-before-deploy.
+- SUPABASE_PUBLISHABLE_KEY is configure-before-deploy.
+- ALLOWED_ORIGIN is localhost-only.
+- Named private R2 production and preview buckets do not yet exist.
 
-create table simulation_runs (
-  id text primary key,
-  owner_id text not null,
-  snapshot_id text not null,
-  engine_version text not null,
-  route text not null,
-  result_summary_json text not null,
-  created_at text not null
-);
+Before deployment:
 
-create index simulation_runs_owner_id_idx on simulation_runs(owner_id);
-create index simulation_runs_snapshot_id_idx on simulation_runs(snapshot_id);
-
-create table learning_progress (
-  id text primary key,
-  owner_id text not null,
-  completed_lessons_json text not null,
-  quiz_answers_json text not null,
-  updated_at text not null
-);
-
-create unique index learning_progress_owner_id_idx on learning_progress(owner_id);
-
-create table export_records (
-  id text primary key,
-  owner_id text not null,
-  snapshot_id text,
-  export_kind text not null,
-  metadata_json text not null,
-  created_at text not null
-);
-
-create index export_records_owner_id_idx on export_records(owner_id);
-create index export_records_snapshot_id_idx on export_records(snapshot_id);
-
-create table audit_events (
-  id text primary key,
-  owner_id text not null,
-  event_type text not null,
-  event_json text not null,
-  created_at text not null
-);
-
-create index audit_events_owner_id_idx on audit_events(owner_id);
-```
-
-Production D1 access must be owner-filtered in every Worker query because D1 does not provide Supabase-style RLS. The Worker is the access-control boundary.
-
-## Durable Object Boundary
-
-Durable Objects may coordinate temporary simulator sessions, export job state, or collaborative review sessions later. They should not be used as the durable source of record for user-owned financial history until a deletion path, export path, and owner verification model are tested.
+1. Create dedicated private interestshield-reports and interestshield-reports-preview R2 buckets.
+2. Replace placeholder Supabase URL and publishable key with the dedicated project values. Never use a service-role or secret key.
+3. Set the exact production/preview browser origin; do not use wildcard CORS.
+4. Configure an R2 lifecycle that matches the 90-day export metadata target or the final approved retention policy.
+5. Run npm run check, npm test, npm audit --omit=dev, and npm run build:dry-run from apps/report-worker.
+6. Deploy only after the dedicated Supabase project and R2 resources receive explicit cost approval.
 
 ## Release Gates
 
-- A dedicated Cloudflare account/project exists for InterestShield.
-- Worker token verification is implemented and tested before any D1 write.
-- D1 schema includes owner indexes for snapshots, runs, exports, and audit events.
-- Snapshot imports are idempotent and validate the provider-neutral migration contract.
-- Account deletion removes owner-scoped D1 records and clears related Durable Object session state.
-- Vercel and Cloudflare deployment boundaries are documented before using both in production.
+- Worker tests prove placeholder refusal, origin rejection, owner namespacing, metadata rollback, cross-owner 404, attachment hardening, and coordinated deletion.
+- Wrangler-generated runtime and binding types compile without hand-written Env declarations.
+- The dependency audit reports zero vulnerabilities.
+- Wrangler deployment dry-run reports one R2 binding and no D1 binding.
+- A deployed smoke test creates owner A and owner B sessions, proves each owner can access only its own object, deletes both objects, and confirms Supabase metadata cleanup.
+- Account deletion invokes report deletion before the Supabase profile cascade, then confirms no owner prefix remains in R2.
+
+No live Cloudflare resource or deployment is claimed by this repository state.

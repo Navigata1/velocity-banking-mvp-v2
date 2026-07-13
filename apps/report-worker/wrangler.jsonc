@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "interestshield-report-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "ALLOWED_ORIGIN": "http://localhost:5000",
+    "SUPABASE_URL": "https://configure-before-deploy.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "configure-before-deploy"
+  },
+  "r2_buckets": [
+    {
+      "binding": "REPORTS",
+      "bucket_name": "interestshield-reports",
+      "preview_bucket_name": "interestshield-reports-preview"
+    }
+  ]
+}
