@@ -146,6 +146,7 @@ export default function SupabaseAccountPanel() {
             <input
               id="supabase-account-email"
               type="email"
+              aria-label="Supabase account email address"
               autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}

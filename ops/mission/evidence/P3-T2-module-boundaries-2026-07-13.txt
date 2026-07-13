@@ -1,0 +1,29 @@
+InterestShield P3-T2 module-boundary evidence
+Run: 2026-07-13T04:47:12Z
+Base: 524109865f29a9646238b7f884a2fbfc2b2b043f
+
+Scope
+- Learn route: page.tsx reduced from 1,299 measured lines to 494.
+- Portfolio route: page.tsx reduced from 1,017 measured lines to 63.
+- Expo mobile shell: mobile-shell.tsx reduced from 1,215 measured lines to 207.
+- Financial engine, persistence contracts, routes, copy, and styling were not changed.
+
+Verification
+- npm --prefix apps/web test: PASS (244 regressions, 2 independent financial fixtures, accessibility route contract).
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run build: PASS (Next.js 16.2.10; all eight static app routes generated).
+- npm --prefix apps/mobile run check: PASS.
+- npm --prefix apps/mobile run test:supabase:mobile: PASS.
+- npm --prefix apps/mobile run build:web: PASS.
+- npm --prefix apps/mobile run smoke:web-export: PASS (7 routes).
+- npm --prefix apps/mobile run smoke:android-bundle: PASS (Hermes bundle generated).
+- git diff --check: PASS.
+
+Independent review
+- Initial P2 finding: directory-wide source concatenation could let dead modules satisfy static contracts.
+- Resolution: source contracts now follow only reachable relative imports, root orchestrators assert extracted component wiring, and route accessibility scans follow reachable modules.
+- The stronger scan exposed and fixed an explicit accessible name on the Supabase account email input.
+- Re-review: resolved with no remaining finding.
+
+Residual boundary
+- Native iOS and physical Android interaction/persistence flows were not exercised in this refactor slice; Android bundle generation and Expo web route smoke passed.

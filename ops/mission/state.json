@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T04:26:00Z",
+    "updated": "2026-07-13T04:47:12Z",
     "sessionCount": 1
   },
   "policies": {
@@ -296,27 +296,27 @@
           "title": "Web tests and accessibility contract",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
-          "lastRun": "2026-07-13T04:26:00Z",
-          "notes": "Web 243 regressions, two independent fixtures, accessibility route contract, and responsive browser smoke pass."
+          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
+          "lastRun": "2026-07-13T04:47:12Z",
+          "notes": "Web 244 regressions, two independent fixtures, reachable-module accessibility contracts, and independent code review pass."
         },
         {
           "id": "P3-G2",
           "title": "Web lint",
           "command": "npm --prefix apps/web run lint",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
-          "lastRun": "2026-07-13T04:26:00Z",
-          "notes": "ESLint passes after the first-viewport and shared-shell changes."
+          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
+          "lastRun": "2026-07-13T04:47:12Z",
+          "notes": "ESLint passes across the extracted web modules and reachable-source contract helper."
         },
         {
           "id": "P3-G3",
           "title": "Web production build",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
-          "lastRun": "2026-07-13T04:26:00Z",
-          "notes": "Next.js 16.2.10 production build and seven-route built HTTP smoke pass."
+          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
+          "lastRun": "2026-07-13T04:47:12Z",
+          "notes": "Next.js 16.2.10 production build passes with all eight static app routes generated; Expo web export and seven-route smoke also pass."
         },
         {
           "id": "P3-G4",
@@ -332,18 +332,22 @@
         {
           "id": "P3-T1",
           "title": "Freeze information architecture and dashboard first viewport",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P1-T2"],
-          "pr": null,
-          "notes": "Implementation is locally verified: compact four-vital instrument strip, model-backed Money Loop stage, graphite shell, chrome-free domain scroller, and desktop/mobile width containment. PR pending. Red evidence: ops/mission/evidence/P3-T1-red-2026-07-12.txt."
+          "pr": {
+            "number": 233,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/233",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #233 delivers the compact four-vital instrument strip, model-backed Money Loop stage, graphite shell, chrome-free domain scroller, and desktop/mobile width containment. Red evidence: ops/mission/evidence/P3-T1-red-2026-07-12.txt."
         },
         {
           "id": "P3-T2",
           "title": "Split oversized Learn, Portfolio, and mobile shell modules",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
-          "notes": "Preserve behavior while creating bounded feature ownership and focused tests."
+          "notes": "Learn, Portfolio, and Expo shell orchestration are reduced to 494, 63, and 207 lines with bounded modules. All web, mobile, build, export, Android bundle, and independent review gates pass; PR publication remains."
         },
         {
           "id": "P3-T3",
@@ -584,7 +588,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "242",
+      "current": "244",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -768,13 +772,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/232",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 233,
+      "title": "Overhaul dashboard first viewport",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/233",
+      "phase": "P3 Web Product Overhaul",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P3",
     "nextActions": [
-      "Complete P3-T1 with a dashboard information-architecture and responsive first-viewport overhaul while preserving the four-vital truth contract.",
-      "Run rendered desktop and mobile browser smoke against the new first viewport and record overflow, keyboard, and console evidence.",
+      "Publish and merge P3-T2 after GitHub quality and Vercel preview gates pass.",
+      "Begin P3-T3 by replacing stored emoji navigation tokens with the existing icon system and completing metadata surfaces.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
