@@ -3,45 +3,50 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useFinancialStore, Domain } from '@/stores/financial-store';
+import {
+  Bot,
+  ChartNoAxesCombined,
+  Circle,
+  Gauge,
+  GraduationCap,
+  Landmark,
+  MoonStar,
+  PanelsTopLeft,
+  Send,
+  Settings,
+  Sun,
+  WalletCards,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
+import { useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
 import { useState, useCallback } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 
-const themeOptions: { value: Theme; label: string; icon: string }[] = [
-  { value: 'original', label: 'Original', icon: '🌙' },
-  { value: 'dark', label: 'Dark', icon: '⚫' },
-  { value: 'light', label: 'Light', icon: '☀️' },
+const themeOptions: { value: Theme; label: string }[] = [
+  { value: 'original', label: 'Original' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'light', label: 'Light' },
 ];
 
-const navIconTokens: Record<string, string> = {
-  '/': 'DB',
-  '/simulator': 'SIM',
-  '/cockpit': 'CK',
-  '/learn': 'LRN',
-  '/portfolio': 'PF',
-  '/vault': 'WT',
-  '/settings': 'SET',
+const themeIcons: Record<Theme, LucideIcon> = {
+  original: MoonStar,
+  dark: Circle,
+  light: Sun,
 };
 
-const themeIconTokens: Record<Theme, string> = {
-  original: 'OR',
-  dark: 'DK',
-  light: 'LT',
-};
-
-function NavIconToken({ token }: { token: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/10 text-[11px] font-bold leading-none tracking-normal"
-    >
-      {token}
-    </span>
-  );
-}
+const navItems: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: '/', label: 'Dashboard', icon: Gauge },
+  { href: '/simulator', label: 'Simulator', icon: ChartNoAxesCombined },
+  { href: '/cockpit', label: 'Cockpit', icon: PanelsTopLeft },
+  { href: '/learn', label: 'Learn', icon: GraduationCap },
+  { href: '/portfolio', label: 'Portfolio', icon: WalletCards },
+  { href: '/vault', label: 'Wealth Timeline', icon: Landmark },
+  { href: '/settings', label: 'Settings', icon: Settings },
+];
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -53,7 +58,6 @@ export default function Navigation() {
     { role: 'ai', text: "Hi! I'm your Velocity Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
   ]);
   const store = useFinancialStore();
-  const activeDomain = store.activeDomain;
   const { theme, setTheme } = useThemeStore();
   const { teacherMode, setTeacherMode } = usePreferencesStore();
 
@@ -76,19 +80,8 @@ export default function Navigation() {
     }, 300);
   }, [aiQuery, teacherMode, store]);
 
-  const activeSubcat = mounted ? store.getActiveSubcategory(activeDomain as Domain) : null;
-  const dashboardIcon = activeSubcat?.icon || '🚗';
   const classes = themeClasses[mounted ? theme : 'original'];
-
-  const navItems = [
-    { href: '/', label: 'Dashboard', icon: dashboardIcon, isDynamic: true },
-    { href: '/simulator', label: 'Simulator', icon: '📊' },
-    { href: '/cockpit', label: 'Cockpit', icon: '✈️' },
-    { href: '/learn', label: 'Learn', icon: '📚' },
-    { href: '/portfolio', label: 'Portfolio', icon: '📋' },
-    { href: '/vault', label: 'Wealth Timeline', icon: '🏆' },
-    { href: '/settings', label: 'Settings', icon: '⚙️' },
-  ];
+  const ActiveThemeIcon = themeIcons[theme];
 
   return (
     <>
@@ -114,31 +107,35 @@ export default function Navigation() {
             </div>
           </div>
           <div className="grid grid-cols-8 gap-1 md:flex md:flex-col md:space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-label={item.label}
-                aria-current={pathname === item.href ? 'page' : undefined}
-                className={`flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-md border-l-2 px-2 py-3 transition-all md:justify-start md:px-3 ${
-                  pathname === item.href
-                    ? 'border-emerald-400 bg-white/[0.05] text-emerald-300'
-                    : `border-transparent ${classes.textSecondary} hover:${classes.text} hover:bg-white/[0.035]`
-                } ${item.isDynamic ? 'relative' : ''}`}
-              >
-                <NavIconToken token={navIconTokens[item.href]} />
-                <span className="hidden md:inline">{item.label}</span>
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-label={item.label}
+                  aria-current={pathname === item.href ? 'page' : undefined}
+                  title={item.label}
+                  className={`flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-md border-l-2 px-2 py-3 transition-all md:justify-start md:px-3 ${
+                    pathname === item.href
+                      ? 'border-emerald-400 bg-white/[0.05] text-emerald-300'
+                      : `border-transparent ${classes.textSecondary} hover:${classes.text} hover:bg-white/[0.035]`
+                  }`}
+                >
+                  <Icon aria-hidden="true" className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+                  <span className="hidden md:inline">{item.label}</span>
+                </Link>
+              );
+            })}
             
             <button
               type="button"
               onClick={() => setShowAI(true)}
-              className="flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-xl px-2 py-3 text-gray-400 transition-all hover:bg-gray-800 hover:text-white md:hidden [&>span:last-child]:hidden"
+              className="flex min-h-12 min-w-0 items-center justify-center rounded-md px-2 py-3 text-gray-400 transition-all hover:bg-gray-800 hover:text-white md:hidden"
               aria-label="Open Velocity Guardian"
+              title="Velocity Guardian"
             >
-              <NavIconToken token="AI" />
-              <span className="text-xl">🛡️</span>
+              <Bot aria-hidden="true" className="h-5 w-5" strokeWidth={1.8} />
             </button>
           </div>
           
@@ -179,28 +176,31 @@ export default function Navigation() {
               className="flex w-full items-center justify-between rounded-md border border-white/10 bg-white/[0.025] px-3 py-2.5"
             >
               <span className={`text-sm ${classes.textSecondary}`}>Theme</span>
-              <NavIconToken token={themeIconTokens[theme]} />
+              <ActiveThemeIcon aria-hidden="true" className="h-5 w-5" strokeWidth={1.8} />
             </button>
             
             {showThemes && (
               <div className={`mt-2 p-2 rounded-xl ${classes.glass}`}>
-                {themeOptions.map((option) => (
-                  <button
-                    type="button"
-                    key={option.value}
-                    onClick={() => { setTheme(option.value); setShowThemes(false); }}
-                    aria-label={`Use ${option.label} theme`}
-                    aria-pressed={theme === option.value}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
-                      theme === option.value 
-                        ? 'bg-emerald-500/20 text-emerald-400' 
-                        : `${classes.textSecondary} hover:bg-slate-700/50`
-                    }`}
-                  >
-                    <NavIconToken token={themeIconTokens[option.value]} />
-                    <span className="text-sm">{option.label}</span>
-                  </button>
-                ))}
+                {themeOptions.map((option) => {
+                  const Icon = themeIcons[option.value];
+                  return (
+                    <button
+                      type="button"
+                      key={option.value}
+                      onClick={() => { setTheme(option.value); setShowThemes(false); }}
+                      aria-label={`Use ${option.label} theme`}
+                      aria-pressed={theme === option.value}
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
+                        theme === option.value
+                          ? 'bg-emerald-500/20 text-emerald-400'
+                          : `${classes.textSecondary} hover:bg-slate-700/50`
+                      }`}
+                    >
+                      <Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.8} />
+                      <span className="text-sm">{option.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -269,9 +269,10 @@ export default function Navigation() {
                 type="button"
                 onClick={() => setShowAI(false)}
                 aria-label="Close Velocity Guardian"
+                title="Close Velocity Guardian"
                 className={`${classes.textSecondary} hover:${classes.text} p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
               >
-                ✕
+                <X aria-hidden="true" className="h-5 w-5" />
               </button>
             </div>
             
@@ -303,9 +304,11 @@ export default function Navigation() {
                 <button
                   type="button"
                   onClick={handleAISubmit}
-                  className={`${classes.glassButton} text-emerald-400 px-6 py-3 rounded-xl font-medium`}
+                  aria-label="Send question"
+                  title="Send question"
+                  className={`${classes.glassButton} flex h-12 w-12 items-center justify-center rounded-md text-emerald-400`}
                 >
-                  Send
+                  <Send aria-hidden="true" className="h-5 w-5" />
                 </button>
               </div>
             </div>

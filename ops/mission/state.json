@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T04:54:24Z",
+    "updated": "2026-07-13T05:12:37Z",
     "sessionCount": 1
   },
   "policies": {
@@ -296,27 +296,27 @@
           "title": "Web tests and accessibility contract",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
-          "lastRun": "2026-07-13T04:47:12Z",
-          "notes": "Web 244 regressions, two independent fixtures, reachable-module accessibility contracts, and independent code review pass."
+          "evidence": "ops/mission/evidence/P3-T3-icons-metadata-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:12:37Z",
+          "notes": "Web 244 regressions, two independent fixtures, accessibility and metadata contracts, responsive browser smoke, and independent review pass."
         },
         {
           "id": "P3-G2",
           "title": "Web lint",
           "command": "npm --prefix apps/web run lint",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
-          "lastRun": "2026-07-13T04:47:12Z",
-          "notes": "ESLint passes across the extracted web modules and reachable-source contract helper."
+          "evidence": "ops/mission/evidence/P3-T3-icons-metadata-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:12:37Z",
+          "notes": "ESLint passes across Lucide icon surfaces, metadata routes, and route metadata layouts."
         },
         {
           "id": "P3-G3",
           "title": "Web production build",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T2-module-boundaries-2026-07-13.txt",
-          "lastRun": "2026-07-13T04:47:12Z",
-          "notes": "Next.js 16.2.10 production build passes with all eight static app routes generated; Expo web export and seven-route smoke also pass."
+          "evidence": "ops/mission/evidence/P3-T3-icons-metadata-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:12:37Z",
+          "notes": "Next.js 16.2.10 builds 14 static pages including the install, crawl, sitemap, and 1200x630 social image surfaces."
         },
         {
           "id": "P3-G4",
@@ -359,7 +359,7 @@
           "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
-          "notes": "Use the existing icon system or Lucide; add manifest, share metadata, robots, and sitemap where appropriate."
+          "notes": "Lucide navigation and domain controls, route-specific metadata, manifest, robots, sitemap, and generated social image pass local and browser verification. Independent review findings are resolved; PR publication remains."
         },
         {
           "id": "P3-T4",

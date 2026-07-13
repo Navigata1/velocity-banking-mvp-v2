@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import ThemeProvider from "@/components/ThemeProvider";
 import IntroModal from "@/components/IntroModal";
 import PreAppPreview from "@/components/PreAppPreview";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./site-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +18,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "InterestShield - Financial Empowerment",
-  description: "Truth-first, hope-forward financial empowerment through Velocity Banking",
+  metadataBase: SITE_URL,
+  applicationName: SITE_NAME,
+  title: {
+    default: "InterestShield - Financial Empowerment",
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  category: "finance",
+  keywords: [
+    "Velocity Banking",
+    "debt payoff education",
+    "cash flow planning",
+    "interest modeling",
+    "financial education",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    title: "InterestShield - Financial Empowerment",
+    description: SITE_DESCRIPTION,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${SITE_NAME} Money Loop dashboard` }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "InterestShield - Financial Empowerment",
+    description: SITE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
+  robots: { index: true, follow: true },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -27,6 +57,7 @@ export const metadata: Metadata = {
     ],
     apple: { url: '/icon-192.png', sizes: '192x192' },
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
