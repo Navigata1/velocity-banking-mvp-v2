@@ -265,3 +265,16 @@ body {
     transition: none;
   }
 }
+
+.money-loop-render-static .artifact-token,
+.money-loop-render-static .artifact-carousel-token,
+.money-loop-render-static .artifact-orbit-sweep,
+.money-loop-render-static .artifact-orbit-node-active,
+.money-loop-render-static .artifact-flow-segment {
+  animation: none !important;
+}
+
+.money-loop-render-static .artifact-orbit-reticle,
+.money-loop-render-static .artifact-flow-segment {
+  transition: none;
+}

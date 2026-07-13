@@ -5,6 +5,7 @@ import { useState, type CSSProperties, type HTMLAttributes, type KeyboardEvent }
 import {
   buildMoneyLoopVisualContract,
   selectSafeMoneyLoopDomArtifacts,
+  type MoneyLoopRenderMode,
 } from '@/app/artifact-visual-contract';
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -104,6 +105,7 @@ export default function MoneyLoopArtifactRail({
   const visualContract = buildMoneyLoopVisualContract(artifacts);
   const displayArtifacts = selectSafeMoneyLoopDomArtifacts(artifacts);
   const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(displayArtifacts[0]?.id ?? 'income');
+  const [renderMode, setRenderMode] = useState<MoneyLoopRenderMode>('static');
   const activeArtifact = displayArtifacts.find((artifact) => artifact.id === activeArtifactId) ?? displayArtifacts[0];
   const activeVisualArtifact = visualContract.artifacts.find((artifact) => artifact.id === activeArtifact?.id);
   const activeIndex = Math.max(0, displayArtifacts.findIndex((artifact) => artifact.id === activeArtifact?.id));
@@ -182,7 +184,8 @@ export default function MoneyLoopArtifactRail({
       aria-label="Money Loop artifact carousel"
       data-visual-contract-version={visualContract.version}
       data-visual-contract-complete={visualContract.isComplete}
-      className={`relative min-w-0 ${className}`}
+      data-money-loop-render-mode={renderMode}
+      className={`money-loop-render-${renderMode} relative min-w-0 ${className}`}
     >
       <div
         id="money-loop-artifact-panel"
@@ -205,6 +208,7 @@ export default function MoneyLoopArtifactRail({
               visualContract={visualContract}
               activeArtifactId={activeArtifact.id}
               onSelect={selectArtifactById}
+              onRenderModeChange={setRenderMode}
             />
             <div className="artifact-orbit-ring pointer-events-none absolute inset-3 rounded-full" />
             <div className="artifact-orbit-path pointer-events-none absolute inset-[27px] rounded-full" />

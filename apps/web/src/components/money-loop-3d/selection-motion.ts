@@ -1,16 +1,9 @@
 import type {
-  MoneyLoopRenderMode,
   MoneyLoopSelectionMotion,
   MoneyLoopVisualArtifact,
 } from '@/app/artifact-visual-contract';
 
 export const MONEY_LOOP_SELECTION_DURATION_SECONDS = 0.65;
-
-export function resolveMoneyLoopStageRenderMode(
-  contract: Pick<{ isComplete: boolean }, 'isComplete'>
-): MoneyLoopRenderMode {
-  return contract.isComplete ? 'full' : 'static';
-}
 
 export function getSelectionRotationRadians(motion: MoneyLoopSelectionMotion): number {
   if (motion === 'spin-once') return Math.PI * 2;
