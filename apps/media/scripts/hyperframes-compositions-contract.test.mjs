@@ -41,7 +41,9 @@ test('ignores every generated HyperFrames workspace directory', async () => {
 test('keeps a runtime animation map synchronized with every composition source', async () => {
   const files = ['index.html', 'compositions/launch.html', 'compositions/money-loop-tutorial.html'];
   const digest = createHash('sha256');
-  for (const file of files) digest.update(file).update('\0').update(await text(file)).update('\0');
+  for (const file of files) {
+    digest.update(file).update('\0').update((await text(file)).replace(/\r\n/g, '\n')).update('\0');
+  }
 
   const map = JSON.parse(await text('evidence/animation-map.json'));
   assert.equal(map.version, 1);

@@ -156,7 +156,7 @@ const digest = createHash('sha256');
 const parsed = [];
 for (const file of sourceFiles) {
   const html = await readFile(new URL(file, projectRoot), 'utf8');
-  digest.update(file).update('\0').update(html).update('\0');
+  digest.update(file).update('\0').update(html.replace(/\r\n/g, '\n')).update('\0');
   parsed.push(parseTimeline(file, html));
 }
 

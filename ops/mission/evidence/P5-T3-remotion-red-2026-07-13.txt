@@ -1,0 +1,67 @@
+P5-T3 RED EVIDENCE - REMOTION SCENARIO EXPLAINERS
+Date: 2026-07-13
+Branch: codex/mission/p5-remotion-scenario-explainers
+
+Command:
+  npm --prefix apps/media run test:contracts
+
+Initial result: FAIL
+
+The first contract run failed six P5-T3 requirements before implementation:
+1. pinned Remotion dependencies and standing scripts were absent;
+2. versioned scenario JSON generated from the shared financial engine was absent;
+3. the Remotion root and nine aspect-ratio story registrations were absent;
+4. frame-driven, local, truth-first composition source was absent;
+5. Remotion output and browser-bundle ignore rules were absent; and
+6. the existing HyperFrames animation-map digest drifted on Windows because
+   committed LF bytes were compared with a CRLF checkout.
+
+The behavior contract was kept red while the renderer workspace, engine-backed
+scenario generator, compositions, output protections, and portable digest
+normalization were implemented.
+
+Visual red discovered after the source contracts first passed:
+  The frame-150 square Money Loop render showed result cards overlapping the
+  scenario visual and footer. Remotion Sequence layout="none" had removed the
+  result grid from normal flex flow. The composition was corrected by keeping
+  phase content in stable layout zones and using frame-driven opacity.
+
+Independent review red discovered after the first green claim:
+1. scenario validation used an unrestricted z.custom() cast instead of a strict
+   runtime schema;
+2. the baseline and Money Loop visuals did not tell the complete contracted
+   stories;
+3. aggregated Money Loop events were presented as ledger-continuous even though
+   they did not preserve the dated transaction order;
+4. visible financial values were hardcoded in React rather than sourced from
+   generated engine data;
+5. safe areas and type sizes were below the visual-identity minimums;
+6. motion started at frame zero and used durations outside the shared contract;
+7. the standing gate did not prove browser overflow, safe-area bounds, or zone
+   collisions; and
+8. the renderer could auto-download a browser executable into an unignored
+   cache. The review also found inconsistent precision and an overloaded engine
+   contract-version label.
+
+Runtime red discovered while closing those findings:
+- The first full 240-frame video failed at frame 2 because entrance translation
+  moved the intro layout zone outside its safe area.
+- The stable zone now remains fixed while only an inner marked content wrapper
+  moves. Runtime probes cover both layout zones and marked moving content.
+
+Second independent review red:
+1. the representative reduced-motion still preserved order labels and final
+   balances but omitted the six intermediate values and explanations; and
+2. the system-browser wrapper prevented automatic downloads but accepted any
+   installed Chrome patch, so local and CI rasterization could drift.
+
+The reduced-motion still is now a complete ordered six-step fact sheet, and an
+exact Chrome for Testing version is committed, validated by the wrapper, and
+installed in CI through a commit-pinned setup action. The explicit local browser
+preparation command is separate from the offline render gate.
+
+These failures remain recorded because the final green gate is meaningful only
+after the strict schema, complete stories, exact dated events, data-bound copy,
+identity geometry, contractual motion, browser assertions, system-Chrome
+wrapper, exact browser pin, complete reduced-motion substitute, cache ignores,
+and version/precision policies were implemented.

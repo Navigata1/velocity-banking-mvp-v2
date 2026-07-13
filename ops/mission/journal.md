@@ -239,3 +239,10 @@
 - Fresh current-main verification passes all 14 media tests, zero media vulnerabilities, 263 web regressions and companion lanes, lint, and the 14-page production build.
 - P5-T1 is done with identity version 1, deterministic cross-renderer time and seed rules, fail-closed LOC channels, complete contract digest, package-family isolation, and a standing CI lane.
 - P5-T2 starts on codex/mission/p5-hyperframes-compositions. It will add launch/tutorial compositions and real HyperFrames validation while keeping renderer dependencies out of web and Expo.
+
+## 2026-07-13T11:13Z - HyperFrames compositions merged; Remotion explainers begin
+- PR #242 merged at a1277b3 after Vercel and both Ubuntu quality workflows passed the lifecycle-script-disabled media install and full HyperFrames browser gate.
+- The verified 30-second reel contains a launch story and Money Loop tutorial at 1920x1080 and 30 fps; its final H.264 artifact has 900 frames and was inspected from encoded frame captures.
+- Adversarial review closed reduced-motion translation, duplicate Studio IDs, ambiguous stagger evidence, unsupported percentage bars, caption drift, generated thumbnails, and install-script exposure. Final spec and code-quality verdicts are approved.
+- Fresh media validation passes 24 contracts, zero lint/runtime/motion errors or warnings, 40/40 contrast checks, 26 explicit finite tweens, clean-install checks, and zero vulnerabilities.
+- P5-T3 starts on codex/mission/p5-remotion-scenario-explainers to render shared-engine baseline, first-month, and blocked-plan scenario stories in landscape, portrait, and square formats.

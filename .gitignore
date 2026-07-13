@@ -47,6 +47,12 @@ coverage/
 /apps/media/hyperframes/output/
 /apps/media/hyperframes/.hyperframes/
 /apps/media/hyperframes/.thumbnails/
+/apps/media/remotion/out/
+/apps/media/remotion/bundle/
+/apps/media/remotion/public/fonts/
+/apps/media/remotion/.chrome-for-testing/
+/apps/media/.remotion/
+/apps/media/node_modules/.remotion/
 
 # TypeScript
 *.tsbuildinfo
