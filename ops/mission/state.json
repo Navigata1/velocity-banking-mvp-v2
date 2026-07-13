@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T01:45:00Z",
+    "updated": "2026-07-13T01:50:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -24,7 +24,7 @@
       "id": "P0",
       "title": "Release Truth",
       "goal": "The public Vercel alias and InterestShield custom domain serve the current main artifact and pass production smoke at desktop and mobile widths.",
-      "status": "in_progress",
+      "status": "blocked",
       "sessionsEstimate": "1-2",
       "gates": [
         {
@@ -68,10 +68,10 @@
         {
           "id": "P0-T1",
           "title": "Resolve Vercel authentication and confirm project ownership",
-          "status": "pending",
+          "status": "blocked",
           "dependsOn": [],
           "pr": null,
-          "notes": "Verify which Vercel project owns web-islanddevcrew.vercel.app and the custom InterestShield domain."
+          "notes": "Vercel connector reports oauth_token_invalid_grant and CLI 55.0.0 has no local credentials. Verify which project owns web-islanddevcrew.vercel.app and the custom InterestShield domain after reauthentication."
         },
         {
           "id": "P0-T2",
@@ -95,7 +95,7 @@
       "id": "P1",
       "title": "Calculation Contract v2",
       "goal": "Every displayed balance is ledger-continuous and lender-dependent assumptions are explicit, versioned, and executable.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "4-7",
       "gates": [
         {
@@ -587,16 +587,24 @@
       "note": "Use the existing GitHub Actions macOS lane when P6 becomes active."
     }
   ],
-  "prLog": [],
+  "prLog": [
+    {
+      "number": 216,
+      "title": "Bootstrap InterestShield mission control",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/216",
+      "phase": "Mission bootstrap",
+      "mergedAt": "2026-07-12"
+    }
+  ],
   "resume": {
-    "activePhase": "P0",
+    "activePhase": "P1",
     "nextActions": [
-      "Merge the mission bootstrap and State of the Union v2 report from codex/state-union-plan-html, then update ops/mission/state.json with the bootstrap PR.",
-      "Resolve P0-T1 using the Vercel connector and CLI: identify the project and domain owner for web-islanddevcrew.vercel.app without changing aliases until the target artifact is confirmed.",
-      "After authentication succeeds, promote the dfb4d91 main deployment, purge cache, and run all four P0 gates plus Browser and Chrome responsive smoke."
+      "Implement P1-T1 test-first: add a default-input regression proving LOC event balanceAfter continuity, watch it fail, then repair packages/financial-engine/src/index.ts:531-567.",
+      "After P1-T1 merges, define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.",
+      "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
-      "The Vercel connector currently requires reauthentication; the latest deployment is protected and cannot be rendered anonymously.",
+      "P0-T1 is externally blocked: the Vercel connector requires reauthentication and CLI 55.0.0 has no local credentials; the latest deployment is protected.",
       "The InterestShield custom-domain hostname is not recorded in the repository and must be discovered from Vercel project state."
     ],
     "conventions": [
