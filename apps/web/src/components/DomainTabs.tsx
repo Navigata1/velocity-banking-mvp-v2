@@ -1,6 +1,20 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import {
+  CarFront,
+  Check,
+  ChevronDown,
+  CircleDollarSign,
+  CreditCard,
+  GraduationCap,
+  HeartPulse,
+  House,
+  Map,
+  Sailboat,
+  Shapes,
+  type LucideIcon,
+} from 'lucide-react';
 import { useFinancialStore, Domain, domainSubcategories } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -10,52 +24,17 @@ interface DomainTabsProps {
   onTabChange: (tab: string) => void;
 }
 
-const tabs = [
-  { id: 'car', label: 'Auto', defaultIcon: '🚗' },
-  { id: 'house', label: 'House', defaultIcon: '🏠' },
-  { id: 'land', label: 'Land', defaultIcon: '🏞️' },
-  { id: 'creditCard', label: 'Credit Card', defaultIcon: '💳' },
-  { id: 'studentLoan', label: 'Student Loan', defaultIcon: '🎓' },
-  { id: 'medical', label: 'Medical', defaultIcon: '🏥' },
-  { id: 'personal', label: 'Personal', defaultIcon: '💵' },
-  { id: 'recreation', label: 'Recreation', defaultIcon: '🚤' },
-  { id: 'custom', label: 'Custom', defaultIcon: '➕' },
+const tabs: { id: Domain; label: string; icon: LucideIcon }[] = [
+  { id: 'car', label: 'Auto', icon: CarFront },
+  { id: 'house', label: 'House', icon: House },
+  { id: 'land', label: 'Land', icon: Map },
+  { id: 'creditCard', label: 'Credit Card', icon: CreditCard },
+  { id: 'studentLoan', label: 'Student Loan', icon: GraduationCap },
+  { id: 'medical', label: 'Medical', icon: HeartPulse },
+  { id: 'personal', label: 'Personal', icon: CircleDollarSign },
+  { id: 'recreation', label: 'Recreation', icon: Sailboat },
+  { id: 'custom', label: 'Custom', icon: Shapes },
 ];
-
-const domainIconTokens: Record<string, string> = {
-  car: 'AU',
-  house: 'HM',
-  land: 'LD',
-  creditCard: 'CC',
-  studentLoan: 'SL',
-  medical: 'MD',
-  personal: 'PL',
-  recreation: 'RC',
-  custom: 'CU',
-};
-
-function DomainIconToken({ token }: { token: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/10 px-1.5 text-[10px] font-bold leading-none tracking-normal"
-    >
-      {token}
-    </span>
-  );
-}
-
-function buildSubcategoryToken(label: string): string {
-  const words = label
-    .replace(/[^A-Za-z0-9 ]/g, ' ')
-    .split(/\s+/)
-    .filter(Boolean);
-
-  if (words.length === 0) return 'DM';
-  if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
-
-  return words.map((word) => word[0]).join('').slice(0, 3).toUpperCase();
-}
 
 export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) {
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
@@ -90,10 +69,6 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
     setDropdownOpen(null);
   };
 
-  const getTabToken = (tabId: string) => {
-    return domainIconTokens[tabId] ?? 'DM';
-  };
-
   return (
     <div
       role="tablist"
@@ -104,8 +79,8 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const hasDropdown = dropdownOpen === tab.id;
-        const currentToken = getTabToken(tab.id);
-        const subcategories = domainSubcategories[tab.id as Domain];
+        const Icon = tab.icon;
+        const subcategories = domainSubcategories[tab.id];
         
         return (
           <div key={tab.id} className="relative">
@@ -123,17 +98,13 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                   : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-700/30`
               }`}
             >
-              <DomainIconToken token={currentToken} />
+              <Icon aria-hidden="true" className="h-4 w-4 shrink-0" strokeWidth={1.8} />
               <span className="hidden sm:inline">{tab.label}</span>
               {isActive && (
-                <span aria-hidden="true" className={`ml-1 text-[10px] transition-transform ${hasDropdown ? 'rotate-180' : ''}`}>
-                  v
-                </span>
-              )}
-              {isActive && (
-                <span className="hidden">
-                  ▼
-                </span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className={`ml-1 h-3.5 w-3.5 transition-transform ${hasDropdown ? 'rotate-180' : ''}`}
+                />
               )}
             </button>
             
@@ -148,31 +119,26 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
                 </div>
                 <div className="p-2 max-h-[300px] overflow-y-auto">
                   {subcategories.map((subcat) => {
-                    const isSelected = store.getActiveSubcategory(tab.id as Domain)?.id === subcat.id;
+                    const isSelected = store.getActiveSubcategory(tab.id)?.id === subcat.id;
                     return (
                       <button
                         type="button"
                         key={subcat.id}
-                        onClick={() => handleSubcategorySelect(tab.id as Domain, subcat.id)}
+                        onClick={() => handleSubcategorySelect(tab.id, subcat.id)}
                         aria-label={`Use ${subcat.label} for ${tab.label}`}
                         aria-pressed={isSelected}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all [&>span:last-child]:hidden ${
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
                           isSelected
                             ? 'bg-emerald-500/30 text-emerald-500 font-semibold'
                             : `${classes.text} hover:bg-emerald-500/10`
                         }`}
                       >
-                        <DomainIconToken token={buildSubcategoryToken(subcat.label)} />
+                        <Icon aria-hidden="true" className="h-5 w-5 shrink-0" strokeWidth={1.8} />
                         <div className="flex-1">
                           <p className={`font-medium text-sm ${isSelected ? 'text-emerald-500' : classes.text}`}>{subcat.label}</p>
                           <p className={`text-xs ${classes.textSecondary}`}>{subcat.description}</p>
                         </div>
-                        {isSelected && (
-                          <span className="text-xs font-semibold text-emerald-500">On</span>
-                        )}
-                        {isSelected && (
-                          <span className="text-emerald-500">✓</span>
-                        )}
+                        {isSelected && <Check aria-hidden="true" className="h-4 w-4 text-emerald-500" />}
                       </button>
                     );
                   })}

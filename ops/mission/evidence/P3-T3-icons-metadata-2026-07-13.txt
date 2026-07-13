@@ -1,0 +1,34 @@
+InterestShield P3-T3 icon and metadata evidence
+Run: 2026-07-13T05:12:37Z
+Base: 590b3e0 Split oversized product modules (#234)
+
+Scope
+- Replaced text-token and emoji-backed primary navigation, domain tabs, theme controls, Settings heading, landing choices, and backup commands with Lucide icons.
+- Added stable icon dimensions, accessible labels, selected state, and familiar icon tooltips where compact controls hide text.
+- Added canonical site configuration, route-specific titles and canonicals, Open Graph and Twitter metadata, install manifest, robots policy, sitemap, and generated 1200x630 social image.
+- Settings is intentionally noindex/nofollow and excluded from the public sitemap.
+
+Verification
+- npm --prefix apps/web test: PASS (244 regressions, 2 independent fixtures, accessibility, metadata contract).
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run build: PASS (14 static pages including manifest, Open Graph image, robots, and sitemap).
+- npm audit --omit=dev --json: PASS (0 production vulnerabilities).
+- git diff --check: PASS.
+
+Browser and HTTP smoke
+- Desktop: 1265px client width equals 1265px scroll width; primary navigation renders 9 SVG icons; no error overlay.
+- Mobile 390x844 override: 375px client width equals 375px scroll width; 9 nav SVGs; all seven route labels remain accessible; no fresh console errors.
+- Generated social image renders at natural size 1200x630 and visibly includes Income, LOC, Expenses, Cash Flow, and Principal.
+- manifest.webmanifest, robots.txt, sitemap.xml, and opengraph-image all return HTTP 200 with expected content types.
+- Rendered /simulator head: route canonical, og:type website, InterestShield site name, 1200x630 og:image, summary_large_image Twitter card, and Twitter image all present.
+- Rendered /settings head: route canonical with noindex,nofollow.
+
+Independent review
+- Initial findings: child routes dropped inherited social image/card fields; manifest forced portrait; source contract did not catch rendered metadata loss.
+- Resolution: route helper now carries complete social fields, orientation lock is removed, contract coverage is strengthened, and rendered child-route head was verified.
+- Re-review: no remaining findings.
+
+Managed CI follow-up
+- Both first GitHub quality runs correctly rejected the old route smoke assertion because it expected the root title on every route.
+- The seven-route smoke now verifies each route-specific rendered title plus the Next static shell.
+- npm --prefix apps/web run smoke:routes: PASS for all seven routes after the contract update.

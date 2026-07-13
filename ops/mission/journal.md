@@ -139,3 +139,17 @@
 - The stronger accessibility traversal exposed and fixed the Supabase account email input's explicit accessible name.
 - Web 244 regressions, fixtures, accessibility, lint, production build, Expo typecheck and account contracts, web export smoke, Android Hermes bundle, and diff checks pass. P3-T2 is ready for PR publication.
 - PR #234's first managed quality run caught stale root mobile-port source assumptions. The repaired contract now follows reachable modules and proves root navigation callback wiring; the complete mobile-port suite passes locally.
+
+## 2026-07-13T04:54Z - P3 module boundaries merged; icon and metadata pass begins
+- PR #234 merged at 590b3e0 after both duplicate GitHub quality runs and the refreshed Vercel preview passed.
+- P3-T2 is done with bounded Learn, Portfolio, and Expo shell ownership plus reachable-module source contracts shared at repository scope.
+- P3-T3 starts on codex/mission/p3-icons-metadata with a user-visible emoji inventory and metadata-surface audit before implementation.
+
+## 2026-07-13T05:12Z - P3 icon and metadata surfaces verified locally
+- Replaced the shell's text tokens and emoji-backed navigation chrome with semantic Lucide route, domain, theme, dialog, landing, and backup icons.
+- Added route-specific titles and canonicals, full Open Graph and Twitter cards, install manifest, robots policy, indexable sitemap, and a generated 1200x630 Money Loop social image.
+- Settings is intentionally noindex/nofollow and omitted from the public sitemap; indexable routes keep their own canonical and share URL.
+- Browser smoke proves desktop and mobile width containment, accessible route labels, nine rendered shell SVGs, no fresh console errors, and all metadata endpoints returning 200.
+- Independent review caught child-route social metadata replacement, an unnecessary portrait install lock, and shallow contract coverage. All three are fixed and re-review reports no remaining findings.
+- Web tests, fixtures, accessibility, metadata contract, lint, 14-page production build, zero production audit findings, and diff checks pass. P3-T3 is ready for PR publication.
+- PR #235's first GitHub quality runs caught the old seven-route smoke expecting the dashboard title everywhere. It now verifies each route-specific title and all seven built routes pass locally.

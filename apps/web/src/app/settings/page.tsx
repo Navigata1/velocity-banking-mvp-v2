@@ -1,6 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import {
+  Circle,
+  Download,
+  LayoutDashboard,
+  ListChecks,
+  MoonStar,
+  RotateCcw,
+  Settings as SettingsIcon,
+  Sun,
+  Upload,
+  type LucideIcon,
+} from 'lucide-react';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { useAppStore, LandingPage } from '@/stores/app-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
@@ -13,10 +25,10 @@ import { clearLocalDemoData } from './local-data-reset';
 import { exportLocalDemoSnapshot, importLocalDemoSnapshot } from './local-demo-snapshot';
 import SupabaseAccountPanel from './SupabaseAccountPanel';
 
-const themeOptions: { value: Theme; label: string; icon: string }[] = [
-  { value: 'original', label: 'Original', icon: '🌙' },
-  { value: 'dark', label: 'Dark', icon: '⚫' },
-  { value: 'light', label: 'Light', icon: '☀️' },
+const themeOptions: { value: Theme; label: string; icon: LucideIcon }[] = [
+  { value: 'original', label: 'Original', icon: MoonStar },
+  { value: 'dark', label: 'Dark', icon: Circle },
+  { value: 'light', label: 'Light', icon: Sun },
 ];
 
 export default function SettingsPage() {
@@ -131,7 +143,10 @@ export default function SettingsPage() {
     <PageTransition>
     <div className="p-4 md:p-8 max-w-3xl mx-auto space-y-6">
       <ScrollReveal as="header">
-        <h1 className={`text-3xl font-bold ${classes.text}`}>⚙️ Settings</h1>
+        <h1 className={`flex items-center gap-3 text-3xl font-bold ${classes.text}`}>
+          <SettingsIcon aria-hidden="true" className="h-7 w-7" strokeWidth={1.8} />
+          Settings
+        </h1>
         <p className={`text-sm ${classes.textSecondary} mt-1`}>
           Customize your InterestShield experience.
         </p>
@@ -142,22 +157,25 @@ export default function SettingsPage() {
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Theme</h2>
         <div className="grid grid-cols-3 gap-3">
-          {themeOptions.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setTheme(opt.value)}
-              aria-label={`Use ${opt.label} theme`}
-              aria-pressed={theme === opt.value}
-              className={`p-4 rounded-xl text-center transition-all border ${
-                theme === opt.value
-                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
-                  : `${classes.bgTertiary} border-transparent ${classes.textSecondary} hover:border-slate-600`
-              }`}
-            >
-              <div className="text-2xl mb-1">{opt.icon}</div>
-              <div className="text-sm font-medium">{opt.label}</div>
-            </button>
-          ))}
+          {themeOptions.map((opt) => {
+            const Icon = opt.icon;
+            return (
+              <button
+                key={opt.value}
+                onClick={() => setTheme(opt.value)}
+                aria-label={`Use ${opt.label} theme`}
+                aria-pressed={theme === opt.value}
+                className={`flex min-h-24 flex-col items-center justify-center gap-2 rounded-md border p-4 text-center transition-all ${
+                  theme === opt.value
+                    ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
+                    : `${classes.bgTertiary} border-transparent ${classes.textSecondary} hover:border-slate-600`
+                }`}
+              >
+                <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={1.8} />
+                <span className="text-sm font-medium">{opt.label}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
       </ScrollReveal>
@@ -190,9 +208,10 @@ export default function SettingsPage() {
 
           <button
             onClick={() => appStore.openIntro()}
-            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm ${classes.textSecondary} hover:${classes.text}`}
+            className={`${classes.glassButton} flex items-center gap-2 rounded-md border px-4 py-2 ${classes.border} text-sm ${classes.textSecondary} hover:${classes.text}`}
           >
-            🎬 Replay Intro
+            <RotateCcw aria-hidden="true" className="h-4 w-4" />
+            Replay Intro
           </button>
 
           <label className="flex items-center justify-between cursor-pointer">
@@ -237,20 +256,24 @@ export default function SettingsPage() {
       <section className={`${classes.glass} rounded-2xl p-6`}>
         <h2 className={`text-lg font-semibold ${classes.text} mb-3`}>Default Landing Page</h2>
         <div className="grid grid-cols-2 gap-3">
-          {(['dashboard', 'portfolio'] as LandingPage[]).map((page) => (
-            <button
-              key={page}
-              onClick={() => appStore.setLandingPage(page)}
-              className={`p-4 rounded-xl text-center transition-all border ${
-                appStore.landingPage === page
-                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
-                  : `${classes.bgTertiary} border-transparent ${classes.textSecondary}`
-              }`}
-            >
-              <div className="text-2xl mb-1">{page === 'dashboard' ? '📊' : '📋'}</div>
-              <div className="text-sm font-medium capitalize">{page}</div>
-            </button>
-          ))}
+          {(['dashboard', 'portfolio'] as LandingPage[]).map((page) => {
+            const Icon = page === 'dashboard' ? LayoutDashboard : ListChecks;
+            return (
+              <button
+                key={page}
+                onClick={() => appStore.setLandingPage(page)}
+                aria-pressed={appStore.landingPage === page}
+                className={`flex min-h-24 flex-col items-center justify-center gap-2 rounded-md border p-4 text-center transition-all ${
+                  appStore.landingPage === page
+                    ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
+                    : `${classes.bgTertiary} border-transparent ${classes.textSecondary}`
+                }`}
+              >
+                <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={1.8} />
+                <span className="text-sm font-medium capitalize">{page}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
       </ScrollReveal>
@@ -268,15 +291,17 @@ export default function SettingsPage() {
             onClick={handleExport}
             aria-label="Export local portfolio backup"
             data-testid="settings-export-backup"
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors"
+            className="flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-500"
           >
-            📤 Export Backup
+            <Download aria-hidden="true" className="h-4 w-4" />
+            Export Backup
           </button>
           <label
             data-testid="settings-import-backup"
-            className={`${classes.glassButton} px-4 py-2 rounded-xl border ${classes.border} text-sm font-medium cursor-pointer ${classes.textSecondary} hover:${classes.text}`}
+            className={`${classes.glassButton} flex cursor-pointer items-center gap-2 rounded-md border px-4 py-2 ${classes.border} text-sm font-medium ${classes.textSecondary} hover:${classes.text}`}
           >
-            📥 Import Backup
+            <Upload aria-hidden="true" className="h-4 w-4" />
+            Import Backup
             <input
               type="file"
               accept="application/json"

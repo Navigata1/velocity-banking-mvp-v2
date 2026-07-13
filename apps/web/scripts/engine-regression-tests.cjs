@@ -2415,45 +2415,45 @@ test('navigation exposes active page and mobile landmark state', () => {
   );
 });
 
-test('navigation renders deterministic mobile icon tokens with stable tap targets', () => {
+test('navigation renders semantic Lucide icons with stable tap targets', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/Navigation.tsx'), 'utf8');
 
-  assert.ok(source.includes('function NavIconToken'), 'expected navigation to use deterministic shell icon tokens');
-  assert.ok(source.includes("'/simulator': 'SIM'"), 'expected Simulator to have a stable mobile token');
-  assert.ok(source.includes("'/portfolio': 'PF'"), 'expected Portfolio to have a stable mobile token');
-  assert.ok(source.includes("'/vault': 'WT'"), 'expected Vault to have a stable mobile token');
+  assert.ok(source.includes("from 'lucide-react'"), 'expected navigation to use the shared Lucide icon system');
+  assert.ok(source.includes("{ href: '/simulator', label: 'Simulator', icon: ChartNoAxesCombined }"));
+  assert.ok(source.includes("{ href: '/portfolio', label: 'Portfolio', icon: WalletCards }"));
+  assert.ok(source.includes("{ href: '/vault', label: 'Wealth Timeline', icon: Landmark }"));
   assert.ok(
-    source.includes('<NavIconToken token={navIconTokens[item.href]} />'),
-    'expected route links to render token icons instead of raw glyph strings'
+    source.includes('<Icon aria-hidden="true" className="h-5 w-5 shrink-0"'),
+    'expected route links to render fixed-size semantic icons'
   );
   assert.ok(
     source.includes('min-h-12 min-w-0 items-center justify-center'),
     'expected mobile nav controls to keep a stable minimum touch target'
   );
-  assert.ok(source.includes('<NavIconToken token="AI" />'), 'expected Guardian to render a deterministic mobile token');
+  assert.ok(source.includes('<Bot aria-hidden="true"'), 'expected Guardian to render a semantic bot icon');
   assert.ok(
-    source.includes('<NavIconToken token={themeIconTokens[theme]} />') &&
-      source.includes('<NavIconToken token={themeIconTokens[option.value]} />'),
-    'expected theme controls to render deterministic tokens'
+    source.includes('<ActiveThemeIcon aria-hidden="true"') && source.includes('const Icon = themeIcons[option.value]'),
+    'expected theme controls to render semantic theme icons'
   );
+  assert.ok(!source.includes('NavIconToken'), 'expected the text-token icon shim to be removed');
 });
 
-test('domain controls render deterministic tokens instead of stored glyph strings', () => {
+test('domain controls render semantic Lucide icons instead of stored glyph strings', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/DomainTabs.tsx'), 'utf8');
 
-  assert.ok(source.includes('function DomainIconToken'), 'expected domain controls to use deterministic tokens');
-  assert.ok(source.includes("creditCard: 'CC'"), 'expected credit-card domain to have a stable token');
-  assert.ok(source.includes("studentLoan: 'SL'"), 'expected student-loan domain to have a stable token');
+  assert.ok(source.includes("from 'lucide-react'"), 'expected domains to use the shared Lucide icon system');
+  assert.ok(source.includes("{ id: 'creditCard', label: 'Credit Card', icon: CreditCard }"));
+  assert.ok(source.includes("{ id: 'studentLoan', label: 'Student Loan', icon: GraduationCap }"));
   assert.ok(
-    source.includes('<DomainIconToken token={currentToken} />'),
-    'expected top-level domain tabs to render a token instead of the raw icon field'
+    source.includes('<Icon aria-hidden="true" className="h-4 w-4 shrink-0"'),
+    'expected top-level domain tabs to render fixed-size semantic icons'
   );
   assert.ok(
-    source.includes('<DomainIconToken token={buildSubcategoryToken(subcat.label)} />'),
-    'expected subcategory options to derive readable tokens from their labels'
+    source.includes('<Icon aria-hidden="true" className="h-5 w-5 shrink-0"'),
+    'expected subcategory options to inherit their domain icon'
   );
-  assert.ok(source.includes('>On</span>'), 'expected selected subcategories to use ASCII-safe selected text');
-  assert.ok(source.includes('[&>span:last-child]:hidden'), 'expected legacy glyph fallback markers to stay hidden');
+  assert.ok(source.includes('<ChevronDown') && source.includes('<Check aria-hidden="true"'));
+  assert.ok(!source.includes('DomainIconToken') && !source.includes('buildSubcategoryToken'));
 });
 
 test('root layout exposes a keyboard skip link to main content', () => {
