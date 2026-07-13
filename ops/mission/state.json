@@ -1,0 +1,610 @@
+{
+  "version": 1,
+  "mission": {
+    "name": "InterestShield July 2026 Rebuild",
+    "tagline": "Make the financial truth executable, then make the experience unforgettable.",
+    "repo": "Navigata1/velocity-banking-mvp-v2",
+    "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
+    "defaultBranch": "main",
+    "planDoc": "C:/Users/IslandDevCrew/Documents/Interest Shield/docs/reports/InterestShield-State-of-the-Union-v2-2026-07-12.html",
+    "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
+    "status": "active",
+    "started": "2026-07-12",
+    "updated": "2026-07-13T01:45:00Z",
+    "sessionCount": 1
+  },
+  "policies": {
+    "merge": "auto",
+    "branchPrefix": "codex/mission/",
+    "maxPrLines": 400,
+    "notes": "Merge each focused task only after local gates and GitHub CI pass. Split work beyond roughly 400 changed implementation lines."
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "title": "Release Truth",
+      "goal": "The public Vercel alias and InterestShield custom domain serve the current main artifact and pass production smoke at desktop and mobile widths.",
+      "status": "in_progress",
+      "sessionsEstimate": "1-2",
+      "gates": [
+        {
+          "id": "P0-G1",
+          "title": "Web regression and accessibility suite",
+          "command": "npm --prefix apps/web test",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P0-G1-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:42:00Z",
+          "notes": ""
+        },
+        {
+          "id": "P0-G2",
+          "title": "Web production build",
+          "command": "npm --prefix apps/web run build",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P0-G2-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:42:00Z",
+          "notes": ""
+        },
+        {
+          "id": "P0-G3",
+          "title": "All seven local routes answer",
+          "command": "npm --prefix apps/web run smoke:routes",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P0-G3-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:44:00Z",
+          "notes": ""
+        },
+        {
+          "id": "P0-G4",
+          "title": "Public production alias serves current markers",
+          "command": "npm --prefix apps/web run smoke:production",
+          "status": "failed",
+          "evidence": "ops/mission/evidence/P0-G4-2026-07-12.txt",
+          "lastRun": "2026-07-13T01:45:00Z",
+          "notes": "Public alias still serves dpl_FfPyuRhZM8G4pTofYifoajjVDpLg. Latest green target is dfb4d91 at velocity-banking-mvp-v2-78l3t4zuy-islanddevcrew.vercel.app."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P0-T1",
+          "title": "Resolve Vercel authentication and confirm project ownership",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Verify which Vercel project owns web-islanddevcrew.vercel.app and the custom InterestShield domain."
+        },
+        {
+          "id": "P0-T2",
+          "title": "Promote the latest green main artifact and attach production domains",
+          "status": "pending",
+          "dependsOn": ["P0-T1"],
+          "pr": null,
+          "notes": "Promote without rebuilding, purge cache, preserve a documented rollback target."
+        },
+        {
+          "id": "P0-T3",
+          "title": "Run production Browser and Chrome responsive smoke",
+          "status": "pending",
+          "dependsOn": ["P0-T2"],
+          "pr": null,
+          "notes": "Verify freshness markers, four vitals, artifact rail, no console errors, and no offscreen controls at 375px."
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "title": "Calculation Contract v2",
+      "goal": "Every displayed balance is ledger-continuous and lender-dependent assumptions are explicit, versioned, and executable.",
+      "status": "pending",
+      "sessionsEstimate": "4-7",
+      "gates": [
+        {
+          "id": "P1-G1",
+          "title": "Financial engine regression suite",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Includes ledger invariants and lender-term boundary fixtures."
+        },
+        {
+          "id": "P1-G2",
+          "title": "Web build consumes the versioned contract",
+          "command": "npm --prefix apps/web run build",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P1-G3",
+          "title": "Expo TypeScript consumes the shared contract",
+          "command": "npm --prefix apps/mobile run check",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "title": "Fix canonical Money Loop ledger continuity",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Correct LOC event balanceAfter semantics and add signed-event continuity tests."
+        },
+        {
+          "id": "P1-T2",
+          "title": "Define lender terms and confidence contract",
+          "status": "pending",
+          "dependsOn": ["P1-T1"],
+          "pr": null,
+          "notes": "Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence."
+        },
+        {
+          "id": "P1-T3",
+          "title": "Add transaction-calendar LOC accrual",
+          "status": "pending",
+          "dependsOn": ["P1-T2"],
+          "pr": null,
+          "notes": "Model actual month length, paydays, bill dates, and daily closing balances with a labeled estimate fallback."
+        },
+        {
+          "id": "P1-T4",
+          "title": "Add lender fixture and independent reference lane",
+          "status": "pending",
+          "dependsOn": ["P1-T3"],
+          "pr": null,
+          "notes": "Use anonymized fixtures and compare core outputs against closed forms or an independent reference implementation."
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "title": "Supabase Foundation",
+      "goal": "Web and Expo can persist private, owner-scoped, recoverable, deletable financial state through one audited data contract.",
+      "status": "pending",
+      "sessionsEstimate": "5-8",
+      "gates": [
+        {
+          "id": "P2-G1",
+          "title": "Supabase local schema and RLS integration tests",
+          "command": "npm --prefix apps/web run test:supabase",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Command will be introduced with the backend test harness."
+        },
+        {
+          "id": "P2-G2",
+          "title": "Web regression suite with persistence adapters",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P2-G3",
+          "title": "Expo shared persistence types compile",
+          "command": "npm --prefix apps/mobile run check",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "title": "Repair and apply the owner-scoped Supabase schema",
+          "status": "pending",
+          "dependsOn": ["P1-T2"],
+          "pr": null,
+          "notes": "Align profile ownership, add owner-consistent foreign keys, and use least-privilege grants."
+        },
+        {
+          "id": "P2-T2",
+          "title": "Adversarially test RLS, Data API grants, and deletion",
+          "status": "pending",
+          "dependsOn": ["P2-T1"],
+          "pr": null,
+          "notes": "Test anonymous, owner A, owner B, update ownership, exports, audit events, and account deletion."
+        },
+        {
+          "id": "P2-T3",
+          "title": "Wire web and Expo authentication and snapshot sync",
+          "status": "pending",
+          "dependsOn": ["P2-T2"],
+          "pr": null,
+          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently."
+        },
+        {
+          "id": "P2-T4",
+          "title": "Prove backup, restore, retention, and incident logging",
+          "status": "pending",
+          "dependsOn": ["P2-T3"],
+          "pr": null,
+          "notes": "Document and execute a restore drill before real-user launch."
+        },
+        {
+          "id": "P2-T5",
+          "title": "Add selective Cloudflare export and report lane",
+          "status": "pending",
+          "dependsOn": ["P2-T3"],
+          "pr": null,
+          "notes": "Workers and R2 only after Postgres ownership is stable; evaluate Hyperdrive from measured Worker traffic."
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "title": "Web Product Overhaul",
+      "goal": "The site and dashboard are calm, fast, accessible, modular, and centered on four truthful vitals plus the Money Loop experience.",
+      "status": "pending",
+      "sessionsEstimate": "6-10",
+      "gates": [
+        {
+          "id": "P3-G1",
+          "title": "Web tests and accessibility contract",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P3-G2",
+          "title": "Web lint",
+          "command": "npm --prefix apps/web run lint",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P3-G3",
+          "title": "Web production build",
+          "command": "npm --prefix apps/web run build",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P3-G4",
+          "title": "Seven-route rendered smoke and responsive overflow",
+          "command": "npm --prefix apps/web run smoke:rendered",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Command will be introduced with rendered browser automation."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P3-T1",
+          "title": "Freeze information architecture and dashboard first viewport",
+          "status": "pending",
+          "dependsOn": ["P1-T2"],
+          "pr": null,
+          "notes": "Four vitals first, model-backed Money Loop stage second, detail drawers after."
+        },
+        {
+          "id": "P3-T2",
+          "title": "Split oversized Learn, Portfolio, and mobile shell modules",
+          "status": "pending",
+          "dependsOn": ["P3-T1"],
+          "pr": null,
+          "notes": "Preserve behavior while creating bounded feature ownership and focused tests."
+        },
+        {
+          "id": "P3-T3",
+          "title": "Replace emoji navigation and complete metadata surfaces",
+          "status": "pending",
+          "dependsOn": ["P3-T1"],
+          "pr": null,
+          "notes": "Use the existing icon system or Lucide; add manifest, share metadata, robots, and sitemap where appropriate."
+        },
+        {
+          "id": "P3-T4",
+          "title": "Compress the 79.8 MiB visual library and enforce budgets",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Remove dead assets, convert suitable images, and add route and asset budget checks."
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "title": "Model-Driven 3D Experience",
+      "goal": "A single performant Three.js show stage lets users select five data-bound artifacts with accessible controls and graceful fallbacks.",
+      "status": "pending",
+      "sessionsEstimate": "6-9",
+      "gates": [
+        {
+          "id": "P4-G1",
+          "title": "Web tests",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P4-G2",
+          "title": "3D rendered, interaction, and nonblank canvas checks",
+          "command": "npm --prefix apps/web run test:3d",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Command will be introduced with the Three.js stage."
+        },
+        {
+          "id": "P4-G3",
+          "title": "Web production build within asset budgets",
+          "command": "npm --prefix apps/web run build",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P4-T1",
+          "title": "Define the five-artifact visual grammar and data bindings",
+          "status": "pending",
+          "dependsOn": ["P3-T1"],
+          "pr": null,
+          "notes": "Income, LOC, Expenses, Cash Flow, and Principal each encode real model state."
+        },
+        {
+          "id": "P4-T2",
+          "title": "Build the lazy-loaded Three.js selection stage",
+          "status": "pending",
+          "dependsOn": ["P4-T1", "P3-T4"],
+          "pr": null,
+          "notes": "One spin then settle; DOM controls remain authoritative."
+        },
+        {
+          "id": "P4-T3",
+          "title": "Add reduced motion, static fallback, and mobile GPU controls",
+          "status": "pending",
+          "dependsOn": ["P4-T2"],
+          "pr": null,
+          "notes": "Pause offscreen rendering and preserve the four-vital first paint."
+        },
+        {
+          "id": "P4-T4",
+          "title": "Verify screenshots, pixels, interaction, performance, and accessibility",
+          "status": "pending",
+          "dependsOn": ["P4-T3"],
+          "pr": null,
+          "notes": "Desktop and mobile screenshots plus nonblank canvas-pixel and focus-order checks."
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "title": "Educational Media Pipeline",
+      "goal": "HyperFrames and Remotion produce deterministic, branded explainers without entering the calculator runtime bundle.",
+      "status": "pending",
+      "sessionsEstimate": "3-6",
+      "gates": [
+        {
+          "id": "P5-G1",
+          "title": "Media lint, validation, overflow, and contrast",
+          "command": "npm --prefix apps/media run check",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Command will combine HyperFrames and Remotion checks."
+        },
+        {
+          "id": "P5-G2",
+          "title": "Representative Remotion still render",
+          "command": "npm --prefix apps/media run render:still",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P5-T1",
+          "title": "Create the InterestShield visual identity and motion contract",
+          "status": "pending",
+          "dependsOn": ["P4-T1"],
+          "pr": null,
+          "notes": "One palette, typography, motion language, accessibility rules, and explicit anti-patterns."
+        },
+        {
+          "id": "P5-T2",
+          "title": "Build HyperFrames launch and tutorial compositions",
+          "status": "pending",
+          "dependsOn": ["P5-T1"],
+          "pr": null,
+          "notes": "Use deterministic GSAP timelines, transitions, captions, contrast, and overflow checks."
+        },
+        {
+          "id": "P5-T3",
+          "title": "Build Remotion scenario explainers from engine JSON",
+          "status": "pending",
+          "dependsOn": ["P5-T1", "P1-T2"],
+          "pr": null,
+          "notes": "Render baseline, first Money Loop month, and blocked-plan stories in 16:9, 9:16, and square."
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "title": "Expo Native Hardening",
+      "goal": "The existing Expo app becomes a tested native product with shared-engine parity, secure persistence, and Android/iOS release evidence.",
+      "status": "pending",
+      "sessionsEstimate": "6-10",
+      "gates": [
+        {
+          "id": "P6-G1",
+          "title": "Expo TypeScript",
+          "command": "npm --prefix apps/mobile run check",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P6-G2",
+          "title": "Expo web export and route smoke",
+          "command": "npm --prefix apps/mobile run smoke:web-export",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Run build:web first when dist-web is stale."
+        },
+        {
+          "id": "P6-G3",
+          "title": "Android bundle and emulator smoke",
+          "command": "npm --prefix apps/mobile run smoke:android-bundle",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "P6-G4",
+          "title": "iOS bundle and simulator smoke through macOS CI",
+          "command": "npm --prefix apps/mobile run smoke:ios-bundle",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": "Requires the existing macOS GitHub Actions lane or another macOS host."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P6-T1",
+          "title": "Split the monolithic mobile shell into native route modules",
+          "status": "pending",
+          "dependsOn": ["P3-T2"],
+          "pr": null,
+          "notes": "Preserve Expo Router and shared financial-engine ownership."
+        },
+        {
+          "id": "P6-T2",
+          "title": "Wire native auth, SecureStore, sync, and offline recovery",
+          "status": "pending",
+          "dependsOn": ["P2-T3", "P6-T1"],
+          "pr": null,
+          "notes": "Use Expo Go first and add a development build only for a demonstrated native requirement."
+        },
+        {
+          "id": "P6-T3",
+          "title": "Complete native accessibility and responsive UI",
+          "status": "pending",
+          "dependsOn": ["P6-T1"],
+          "pr": null,
+          "notes": "Safe areas, tab semantics, screen readers, reduced motion, and selectable financial data."
+        },
+        {
+          "id": "P6-T4",
+          "title": "Prove Android and iOS release candidates",
+          "status": "pending",
+          "dependsOn": ["P6-T2", "P6-T3"],
+          "pr": null,
+          "notes": "Record device and simulator evidence, bundle checks, deep links, and shared-engine fixtures."
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Confirmed high defects open",
+      "baseline": "3",
+      "current": "3",
+      "target": "0",
+      "direction": "down"
+    },
+    {
+      "label": "Production routes on current shell",
+      "baseline": "0/7",
+      "current": "0/7",
+      "target": "7/7",
+      "direction": "up"
+    },
+    {
+      "label": "Web regression tests",
+      "baseline": "238",
+      "current": "238",
+      "target": "300+ focused",
+      "direction": "up"
+    },
+    {
+      "label": "Live InterestShield persistence backends",
+      "baseline": "0",
+      "current": "0",
+      "target": "1 audited system of record",
+      "direction": "up"
+    },
+    {
+      "label": "Public web assets",
+      "baseline": "79.8 MiB",
+      "current": "79.8 MiB",
+      "target": "budgeted per route",
+      "direction": "down"
+    },
+    {
+      "label": "Native platforms with device evidence",
+      "baseline": "0/2",
+      "current": "0/2",
+      "target": "2/2",
+      "direction": "up"
+    }
+  ],
+  "risks": [
+    {
+      "title": "Vercel authentication and alias ownership are unresolved",
+      "severity": "high",
+      "note": "GitHub issue #59; the public URL still serves a stale deployment."
+    },
+    {
+      "title": "Lender-specific terms are discussed but not executable",
+      "severity": "high",
+      "note": "Do not persist or market lender-specific projections until P1 closes."
+    },
+    {
+      "title": "The Supabase migration is an unapplied draft",
+      "severity": "medium",
+      "note": "RLS, Data API grants, ownership consistency, deletion, and restore are unverified."
+    },
+    {
+      "title": "iOS simulator smoke requires macOS",
+      "severity": "medium",
+      "note": "Use the existing GitHub Actions macOS lane when P6 becomes active."
+    }
+  ],
+  "prLog": [],
+  "resume": {
+    "activePhase": "P0",
+    "nextActions": [
+      "Merge the mission bootstrap and State of the Union v2 report from codex/state-union-plan-html, then update ops/mission/state.json with the bootstrap PR.",
+      "Resolve P0-T1 using the Vercel connector and CLI: identify the project and domain owner for web-islanddevcrew.vercel.app without changing aliases until the target artifact is confirmed.",
+      "After authentication succeeds, promote the dfb4d91 main deployment, purge cache, and run all four P0 gates plus Browser and Chrome responsive smoke."
+    ],
+    "blockers": [
+      "The Vercel connector currently requires reauthentication; the latest deployment is protected and cannot be rendered anonymously.",
+      "The InterestShield custom-domain hostname is not recorded in the repository and must be discovered from Vercel project state."
+    ],
+    "conventions": [
+      "Use codex/mission/<phase>-<task> branches and one focused PR per task.",
+      "Write a failing regression test before every behavior fix and record red/green evidence.",
+      "Keep financial calculations in packages/financial-engine and share them with web and Expo.",
+      "Never hand-edit ops/mission/state-of-the-union.html; render it from state.json.",
+      "Educational tool. Not financial advice."
+    ]
+  }
+}
