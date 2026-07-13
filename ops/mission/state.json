@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T05:48:00Z",
+    "updated": "2026-07-13T06:25:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -288,7 +288,7 @@
       "id": "P3",
       "title": "Web Product Overhaul",
       "goal": "The site and dashboard are calm, fast, accessible, modular, and centered on four truthful vitals plus the Money Loop experience.",
-      "status": "in_progress",
+      "status": "done",
       "sessionsEstimate": "6-10",
       "gates": [
         {
@@ -296,8 +296,8 @@
           "title": "Web tests and accessibility contract",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:48:00Z",
+          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:55:00Z",
           "notes": "Web 244 regressions, two independent fixtures, accessibility, metadata, and public asset contracts pass."
         },
         {
@@ -305,8 +305,8 @@
           "title": "Web lint",
           "command": "npm --prefix apps/web run lint",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:48:00Z",
+          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:55:00Z",
           "notes": "ESLint passes across the asset cleanup, responsive tab fix, and browser automation."
         },
         {
@@ -314,8 +314,8 @@
           "title": "Web production build",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:48:00Z",
+          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:55:00Z",
           "notes": "Next.js 16.2.10 builds 14 static pages from the final 0.13 MiB public asset set."
         },
         {
@@ -323,8 +323,8 @@
           "title": "Seven-route rendered smoke and responsive overflow",
           "command": "npm --prefix apps/web run smoke:rendered",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P3-T4-asset-budgets-rendered-smoke-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:48:00Z",
+          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T05:55:00Z",
           "notes": "Playwright-core checks all seven routes at 1440x900 and 390x844 plus the Money Loop LOC interaction against a fresh production build, with an explicit wait for client-mounted route markers."
         }
       ],
@@ -368,10 +368,14 @@
         {
           "id": "P3-T4",
           "title": "Compress the 79.8 MiB visual library and enforce budgets",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "Ready for PR: removed 79.69 MiB of unreachable visuals, converted the live Guardian to 28.6 KiB WebP, added reference-aware asset budgets, and introduced fresh-build rendered smoke that found and fixed a real 390px simulator overflow."
+          "pr": {
+            "number": 236,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/236",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #236 removed 79.69 MiB of unreachable visuals, converted the live Guardian to 28.6 KiB WebP, enforced reference-aware asset budgets, and added fresh-build rendered smoke that found and fixed a real 390px simulator overflow and a Linux hydration race."
         }
       ]
     },
@@ -379,17 +383,17 @@
       "id": "P4",
       "title": "Model-Driven 3D Experience",
       "goal": "A single performant Three.js show stage lets users select five data-bound artifacts with accessible controls and graceful fallbacks.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "6-9",
       "gates": [
         {
           "id": "P4-G1",
           "title": "Web tests",
           "command": "npm --prefix apps/web test",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P4-T1-artifact-visual-contract-2026-07-13.txt",
+          "lastRun": "2026-07-13T06:25:00Z",
+          "notes": "249 regressions plus independent financial fixtures, accessibility, metadata, and asset contracts pass with the versioned visual contract wired into the live rail."
         },
         {
           "id": "P4-G2",
@@ -404,20 +408,20 @@
           "id": "P4-G3",
           "title": "Web production build within asset budgets",
           "command": "npm --prefix apps/web run build",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P4-T1-artifact-visual-contract-2026-07-13.txt",
+          "lastRun": "2026-07-13T06:25:00Z",
+          "notes": "Next.js 16.2.10 builds 14 static pages and the standing 0.13 MiB public asset budget passes."
         }
       ],
       "tasks": [
         {
           "id": "P4-T1",
           "title": "Define the five-artifact visual grammar and data bindings",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
-          "notes": "Income, LOC, Expenses, Cash Flow, and Principal each encode real model state."
+          "notes": "Ready for PR: version 1 binds five canonical geometries to normalized model channels, warning-aware selection motion, complete-set fallback, and static/efficient/full capability policy; the DOM rail consumes the contract and remains authoritative."
         },
         {
           "id": "P4-T2",
@@ -596,7 +600,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "244",
+      "current": "249",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -801,13 +805,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/235",
       "phase": "P3 Web Product Overhaul",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 236,
+      "title": "Enforce asset budgets and rendered browser smoke",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/236",
+      "phase": "P3 Web Product Overhaul",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
-    "activePhase": "P3",
+    "activePhase": "P4",
     "nextActions": [
-      "Publish P3-T4, wait for duplicate GitHub quality and Vercel preview gates, then merge when green.",
-      "On current main, rerun all P3 gates, close P3, and begin P4 with a capability and reduced-motion architecture for the WebGL hero stage.",
+      "Publish P4-T1, wait for duplicate GitHub quality and Vercel preview gates, then merge when green.",
+      "Begin P4-T2 from the committed stage spec and plan: add a lazy client-only Three.js renderer that consumes visual contract version 1 while DOM controls remain authoritative.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

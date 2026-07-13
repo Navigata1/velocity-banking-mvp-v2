@@ -65,6 +65,7 @@ export interface DashboardLoopArtifact {
   signal: string;
   note: string;
   tone: DashboardTone;
+  operationalState: 'stable' | 'caution' | 'blocked';
   fillPercent: number;
   pressurePercent: number;
 }
@@ -204,6 +205,7 @@ function buildMoneyLoopArtifacts(
       signal: 'Fuel',
       note: 'Deposits start the loop and lower the average LOC balance.',
       tone: input.monthlyIncome > input.monthlyExpenses ? 'emerald' : 'amber',
+      operationalState: input.monthlyIncome > input.monthlyExpenses ? 'stable' : 'caution',
       fillPercent: clampArtifactFill(input.monthlyIncome / monthlyFlowBase),
       pressurePercent: clampArtifactPressure(input.monthlyIncome / monthlyFlowBase),
     },
@@ -216,6 +218,11 @@ function buildMoneyLoopArtifacts(
         ? 'LOC capacity needs known terms before chunk projections are meaningful.'
         : 'Capacity is useful only when it stays inside a comfortable buffer.',
       tone: locNeedsSetup || locUtilization > 0.8 ? 'amber' : 'sky',
+      operationalState: !locNeedsSetup && availableLoc <= 0
+        ? 'blocked'
+        : locNeedsSetup || locUtilization > 0.8
+          ? 'caution'
+          : 'stable',
       fillPercent: clampArtifactFill(availableLocRatio),
       pressurePercent: clampArtifactPressure(locNeedsSetup ? 0 : Math.max(availableLocRatio, locUtilization)),
     },
@@ -226,6 +233,7 @@ function buildMoneyLoopArtifacts(
       signal: 'Outflow',
       note: 'Planned expenses define how much pressure remains in the loop.',
       tone: input.monthlyExpenses < input.monthlyIncome ? 'sky' : 'rose',
+      operationalState: input.monthlyExpenses < input.monthlyIncome ? 'stable' : 'blocked',
       fillPercent: clampArtifactFill(input.monthlyExpenses / monthlyFlowBase),
       pressurePercent: clampArtifactPressure(input.monthlyExpenses / monthlyFlowBase),
     },
@@ -238,6 +246,7 @@ function buildMoneyLoopArtifacts(
         ? 'Positive flow is what pulls the LOC balance back down after chunks.'
         : 'Restore positive flow before relying on chunk projections.',
       tone: cashFlow > 0 ? 'emerald' : 'rose',
+      operationalState: cashFlow > 0 ? 'stable' : 'blocked',
       fillPercent: clampArtifactFill(cashFlow > 0 ? cashFlow / monthlyFlowBase : 0),
       pressurePercent: clampArtifactPressure(cashFlow > 0 ? cashFlow / monthlyFlowBase : 0),
     },
@@ -250,6 +259,11 @@ function buildMoneyLoopArtifacts(
         ? 'The starter chunk targets principal so future interest has less balance to attach to.'
         : 'Choose a chunk only after cash flow and LOC room are usable.',
       tone: safeChunk > 0 && cashFlow > 0 ? 'emerald' : 'amber',
+      operationalState: cashFlow <= 0 || (!locNeedsSetup && availableLoc <= 0)
+        ? 'blocked'
+        : safeChunk > 0
+          ? 'stable'
+          : 'caution',
       fillPercent: clampArtifactFill(principalImpact),
       pressurePercent: clampArtifactPressure(principalImpact),
     },
