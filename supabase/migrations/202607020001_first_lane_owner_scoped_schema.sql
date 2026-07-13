@@ -1,9 +1,6 @@
 -- InterestShield first-lane persistence contract.
 --
--- This migration is a review-ready Supabase/Postgres draft for the future
--- authenticated persistence lane. It is intentionally not wired into the app
--- yet. Apply only after a dedicated Supabase project, advisors, and release
--- smoke gates are ready.
+-- Apply only to a dedicated InterestShield project or isolated database branch.
 
 create extension if not exists pgcrypto;
 
@@ -18,28 +15,31 @@ create table public.profiles (
 
 create table public.financial_snapshots (
   id uuid primary key default gen_random_uuid(),
-  owner_id uuid not null references auth.users(id) on delete cascade,
+  owner_id uuid not null references public.profiles(id) on delete cascade,
   snapshot_version integer not null default 1,
   source text not null default 'local-demo-handoff'
     check (source in ('local-demo-handoff', 'manual-entry', 'import')),
   assumptions_json jsonb not null,
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  unique (id, owner_id)
 );
 
 create table public.simulation_runs (
   id uuid primary key default gen_random_uuid(),
-  owner_id uuid not null references auth.users(id) on delete cascade,
-  snapshot_id uuid not null references public.financial_snapshots(id) on delete cascade,
+  owner_id uuid not null references public.profiles(id) on delete cascade,
+  snapshot_id uuid not null,
   engine_version text not null,
   route text not null check (route in ('dashboard', 'simulator', 'cockpit', 'portfolio', 'learn', 'vault')),
   result_summary_json jsonb not null,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  foreign key (snapshot_id, owner_id)
+    references public.financial_snapshots(id, owner_id) on delete cascade
 );
 
 create table public.learning_progress (
   id uuid primary key default gen_random_uuid(),
-  owner_id uuid not null references auth.users(id) on delete cascade,
+  owner_id uuid not null references public.profiles(id) on delete cascade,
   completed_lessons_json jsonb not null default '[]'::jsonb,
   quiz_answers_json jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now(),
@@ -48,16 +48,18 @@ create table public.learning_progress (
 
 create table public.export_records (
   id uuid primary key default gen_random_uuid(),
-  owner_id uuid not null references auth.users(id) on delete cascade,
-  snapshot_id uuid references public.financial_snapshots(id) on delete set null,
+  owner_id uuid not null references public.profiles(id) on delete cascade,
+  snapshot_id uuid,
   export_kind text not null check (export_kind in ('local-demo-snapshot', 'portfolio-backup', 'report')),
   metadata_json jsonb not null default '{}'::jsonb,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  foreign key (snapshot_id, owner_id)
+    references public.financial_snapshots(id, owner_id) on delete set null (snapshot_id)
 );
 
 create table public.audit_events (
   id uuid primary key default gen_random_uuid(),
-  owner_id uuid not null references auth.users(id) on delete cascade,
+  owner_id uuid not null references public.profiles(id) on delete cascade,
   event_type text not null,
   event_json jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now()
@@ -78,13 +80,29 @@ alter table public.learning_progress enable row level security;
 alter table public.export_records enable row level security;
 alter table public.audit_events enable row level security;
 
+alter default privileges for role postgres in schema public
+  revoke select, insert, update, delete on tables from anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  revoke usage, select on sequences from anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  revoke execute on functions from anon, authenticated, service_role, public;
+
+revoke all on table
+  public.profiles,
+  public.financial_snapshots,
+  public.simulation_runs,
+  public.learning_progress,
+  public.export_records,
+  public.audit_events
+from anon, public;
+
 grant usage on schema public to authenticated;
 grant select, insert, update, delete on public.profiles to authenticated;
 grant select, insert, update, delete on public.financial_snapshots to authenticated;
 grant select, insert, delete on public.simulation_runs to authenticated;
 grant select, insert, update, delete on public.learning_progress to authenticated;
 grant select, insert, delete on public.export_records to authenticated;
-grant select, insert, delete on public.audit_events to authenticated;
+grant select, insert on public.audit_events to authenticated;
 
 create policy "profiles_select_own"
   on public.profiles for select
@@ -188,8 +206,3 @@ create policy "audit_events_insert_own"
   on public.audit_events for insert
   to authenticated
   with check ((select auth.uid()) = owner_id);
-
-create policy "audit_events_delete_own"
-  on public.audit_events for delete
-  to authenticated
-  using ((select auth.uid()) = owner_id);

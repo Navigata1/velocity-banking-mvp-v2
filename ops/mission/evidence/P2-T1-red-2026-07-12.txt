@@ -1,0 +1,6 @@
+Gate: P2-T1 red test
+Command: npm --prefix apps/web run test:supabase
+Exit: 1
+Observed failure:
+  Error: Cannot find module apps/web/scripts/supabase-schema-contract.cjs
+Result: the owner-scoped schema contract did not exist before implementation.

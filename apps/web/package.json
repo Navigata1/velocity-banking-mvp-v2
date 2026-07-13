@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test": "node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs",
     "test:reference": "node scripts/financial-reference-tests.cjs",
+    "test:supabase": "node scripts/supabase-schema-contract.cjs",
     "test:a11y": "node scripts/accessibility-route-contract.cjs",
     "smoke:routes": "node scripts/smoke-routes.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"
