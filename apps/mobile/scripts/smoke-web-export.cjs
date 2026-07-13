@@ -35,7 +35,7 @@ const requiredDashboardBundleText = [
   'Reset Starter Assumptions',
   'Starter assumptions restored',
   'Supabase Postgres + Auth + RLS',
-  'Cloudflare Workers + D1/Durable Objects',
+  'Cloudflare Worker + private R2 reports',
   'aria-checked',
   'aria-selected',
 ];

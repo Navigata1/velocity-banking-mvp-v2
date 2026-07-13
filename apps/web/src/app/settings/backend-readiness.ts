@@ -1,12 +1,12 @@
 export const BACKEND_HANDOFF_TARGETS = [
   'supabase-postgres-auth-rls',
-  'cloudflare-workers-d1-durable-objects',
 ] as const;
 
 export type BackendHandoffTarget = typeof BACKEND_HANDOFF_TARGETS[number];
+export type BackendReadinessOptionId = BackendHandoffTarget | 'cloudflare-worker-r2-reports';
 
 export interface BackendReadinessOption {
-  id: BackendHandoffTarget;
+  id: BackendReadinessOptionId;
   label: string;
   status: 'Candidate';
   lane: 'Recommended first persistence lane' | 'Secondary edge/API lane';
@@ -71,14 +71,14 @@ export const BACKEND_READINESS_OPTIONS: BackendReadinessOption[] = [
     nextGate: 'Review the six-collection schema and RLS policies before wiring the client.',
   },
   {
-    id: 'cloudflare-workers-d1-durable-objects',
-    label: 'Cloudflare Workers + D1/Durable Objects',
+    id: 'cloudflare-worker-r2-reports',
+    label: 'Cloudflare Worker + private R2 reports',
     status: 'Candidate',
     lane: 'Secondary edge/API lane',
-    bestFit: 'Edge-hosted APIs, report/export jobs, audit logging, and future interactive calculation sessions after the core financial data contract is stable.',
-    chooseWhen: 'Use after the owner-scoped data contract is stable, especially when a signed Worker API can enforce owner access before D1 writes for snapshots, runs, exports, and audit events.',
-    strengths: ['Worker API control', 'D1 for owner-scoped records', 'Durable Objects for session state'],
-    openGates: ['Auth token verification', 'D1 owner indexes for all owner tables', 'Snapshot import idempotency'],
-    nextGate: 'Draft an authenticated Worker snapshot API and six-table D1 owner contract before moving any browser storage into D1.',
+    bestFit: 'User-requested HTML/JSON report objects at the edge while Supabase remains the owner-scoped system of record.',
+    chooseWhen: 'Use only for explicit report export, download, and deletion after the Worker verifies the Supabase session and namespaces the private R2 key by owner.',
+    strengths: ['Worker API control', 'Private R2 report objects', 'No duplicate financial database'],
+    openGates: ['Dedicated R2 buckets', 'Production origins and Supabase vars', 'R2 retention lifecycle and deployed smoke'],
+    nextGate: 'Create dedicated private R2 buckets, replace placeholder vars, deploy the dry-run-verified Worker, and smoke owner isolation.',
   },
 ];

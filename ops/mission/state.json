@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T03:45:00Z",
+    "updated": "2026-07-13T03:58:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -210,6 +210,15 @@
           "evidence": "ops/mission/evidence/P2-G3-2026-07-12.txt",
           "lastRun": "2026-07-13T03:36:00Z",
           "notes": "Expo adapter and account/deep-link contracts, TypeScript, SDK compatibility, seven-route web export smoke, and Android Hermes bundle export pass."
+        },
+        {
+          "id": "P2-G4",
+          "title": "Cloudflare report Worker security and dry-run bundle",
+          "command": "npm --prefix apps/report-worker run check && npm --prefix apps/report-worker test && npm --prefix apps/report-worker run build:dry-run",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P2-G4-cloudflare-report-worker-2026-07-12.txt",
+          "lastRun": "2026-07-13T03:58:00Z",
+          "notes": "Seven Worker behavior/security tests, generated bindings, zero dependency findings, and deployment dry-run pass with one R2 binding and no D1 binding."
         }
       ],
       "tasks": [
@@ -252,18 +261,22 @@
         {
           "id": "P2-T4",
           "title": "Prove backup, restore, retention, and incident logging",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P2-T3"],
-          "pr": null,
-          "notes": "Local two-archive synthetic restore, retention schedule, deletion boundaries, and incident procedure are in review. A managed provider restore remains a production project gate."
+          "pr": {
+            "number": 231,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/231",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #231 proves a two-archive synthetic restore with all six owned tables, RLS and policy counts, cleanup, retention schedule, deletion boundaries, and incident procedure. Managed provider restore remains a production project gate."
         },
         {
           "id": "P2-T5",
           "title": "Add selective Cloudflare export and report lane",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P2-T3"],
           "pr": null,
-          "notes": "Workers and R2 only after Postgres ownership is stable; evaluate Hyperdrive from measured Worker traffic."
+          "notes": "Authenticated Worker + private R2 report-object lane is in review. Supabase remains the system of record; no D1 mirror or live Cloudflare resource is created."
         }
       ]
     },
@@ -617,6 +630,11 @@
       "note": "The repaired migration passes local PostgreSQL 17, lint, and security advisors, but no dedicated InterestShield cloud project exists yet."
     },
     {
+      "title": "Cloudflare report Worker has no live R2 resources or deployment",
+      "severity": "medium",
+      "note": "The Worker passes tests and deployment dry-run but intentionally refuses placeholder configuration; create private buckets and deploy only after explicit resource/cost approval."
+    },
+    {
       "title": "Expo SDK 56 inherits moderate CLI and config audit advisories",
       "severity": "medium",
       "note": "npm reports ten moderate findings in Expo CLI/config tooling and proposes an invalid Expo 46 downgrade; track upstream SDK updates and do not force the downgrade."
@@ -732,13 +750,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/230",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 231,
+      "title": "Prove Supabase backup and restore recovery",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/231",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge the P2-T4 backup/restore drill, retention policy, incident procedure, and cleanup evidence after GitHub CI and Vercel preview pass.",
-      "Begin P2-T5 with a selective Cloudflare Worker export/report lane that leaves Supabase Postgres as the system of record; reserve the $10/month cloud project for an explicit production cost gate.",
+      "Merge the P2-T5 Cloudflare Worker + private R2 report lane after GitHub CI and Vercel preview pass, then close P2.",
+      "Begin P3-T1 with a dashboard information-architecture and responsive shell overhaul while preserving the four-vital contract.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

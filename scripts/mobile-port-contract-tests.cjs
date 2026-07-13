@@ -880,9 +880,9 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
     'expected mobile Supabase readiness to match the six-collection backend contract'
   );
   assert.ok(
-    shellSource.includes('D1 owner-scoped records') &&
-      shellSource.includes('authenticated Worker snapshot API plus D1 owner indexes for all owner tables'),
-    'expected mobile Cloudflare readiness to match the web owner-scoped Worker/D1 gate'
+    shellSource.includes('explicit report export, download, and deletion') &&
+      shellSource.includes('dedicated R2 buckets and deployed owner-isolation smoke'),
+    'expected mobile Cloudflare readiness to match the report-only private R2 gate'
   );
   assert.ok(shellSource.includes('MobileMoneyLoopOrbit'), 'expected dashboard to render the native payoff orbit');
   assert.ok(shellSource.includes('testID="mobile-payoff-orbit"'), 'expected mobile payoff orbit smoke hook');
