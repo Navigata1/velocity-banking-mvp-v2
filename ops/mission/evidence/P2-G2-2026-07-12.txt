@@ -101,6 +101,7 @@ PASS settings full local demo snapshot exports only known InterestShield storage
 PASS settings full local demo snapshot import rejects unknown storage keys without mutating storage
 PASS settings full local demo snapshot import rejects an invalid backend migration contract
 PASS settings full local demo snapshot import replaces only known InterestShield storage keys
+PASS shared persistence contract builds deterministic owner-scoped snapshot upserts
 PASS editable financial controls expose contextual screen-reader labels
 PASS editable financial controls sanitize non-finite display values
 PASS simulator editable controls expose contextual screen-reader labels
@@ -243,7 +244,7 @@ PASS web app declares Vercel Next deployment configuration
 PASS repository exposes a manual release deployment smoke workflow
 PASS repository documents the current Vercel alias promotion blocker
 PASS client mount hook notifies subscribers after hydration
-241 regression tests passed.
+242 regression tests passed.
 Independent financial reference lane passed 2 anonymized scenarios.
 PASS src/app/layout.tsx: skip link targets main content
 PASS src/app/layout.tsx: main content exposes a skip-link target

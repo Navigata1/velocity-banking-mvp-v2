@@ -2991,6 +2991,55 @@ test('settings full local demo snapshot import replaces only known InterestShiel
   assert.equal(storage.getItem('unrelated-app-key'), 'keep-me');
 });
 
+test('shared persistence contract builds deterministic owner-scoped snapshot upserts', () => {
+  const persistence = loadTsFile(path.resolve(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'packages',
+    'persistence-contract',
+    'src',
+    'index.ts'
+  ));
+  const input = {
+    ownerId: '00000000-0000-4000-8000-00000000000a',
+    idempotencyKey: 'browser-install-0001',
+    displayName: 'Demo Owner',
+    syncedAt: '2026-07-13T02:45:00.000Z',
+    storage: [
+      { key: 'interestshield-learn-progress', value: '{"done":true}' },
+      { key: 'velocity-bank-storage', value: '{"balance":1000}' },
+    ],
+  };
+  const plan = persistence.buildSnapshotSyncPlan(input);
+  const reversed = persistence.buildSnapshotSyncPlan({ ...input, storage: [...input.storage].reverse() });
+
+  assert.equal(plan.version, 1);
+  assert.equal(plan.profile.table, 'profiles');
+  assert.equal(plan.profile.row.id, input.ownerId);
+  assert.equal(plan.snapshot.table, 'financial_snapshots');
+  assert.equal(plan.snapshot.onConflict, 'owner_id,idempotency_key');
+  assert.equal(plan.snapshot.row.owner_id, input.ownerId);
+  assert.equal(plan.snapshot.row.idempotency_key, input.idempotencyKey);
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(plan.snapshot.row.assumptions_json)),
+    JSON.parse(JSON.stringify(reversed.snapshot.row.assumptions_json))
+  );
+  assert.deepEqual(
+    Array.from(plan.snapshot.row.assumptions_json.storage, (entry) => entry.key),
+    ['interestshield-learn-progress', 'velocity-bank-storage']
+  );
+  assert.throws(
+    () => persistence.buildSnapshotSyncPlan({ ...input, storage: [{ key: 'unknown-key', value: '{}' }] }),
+    /unknown storage key/i
+  );
+  assert.throws(
+    () => persistence.buildSnapshotSyncPlan({ ...input, idempotencyKey: 'short' }),
+    /idempotency key/i
+  );
+});
+
 test('editable financial controls expose contextual screen-reader labels', () => {
   const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
   const dashboardSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');

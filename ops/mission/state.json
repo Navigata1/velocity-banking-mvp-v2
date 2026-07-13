@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T02:44:00Z",
+    "updated": "2026-07-13T02:50:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -190,7 +190,7 @@
           "command": "npm --prefix apps/web run test:supabase",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:44:00Z",
+          "lastRun": "2026-07-13T02:50:00Z",
           "notes": "Static contract and 21 pgTAP owner-isolation/idempotency tests pass; PostgreSQL 17 schema lint and security advisors remain clean."
         },
         {
@@ -199,7 +199,7 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:44:00Z",
+          "lastRun": "2026-07-13T02:50:00Z",
           "notes": ""
         },
         {
@@ -208,7 +208,7 @@
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:44:00Z",
+          "lastRun": "2026-07-13T02:50:00Z",
           "notes": ""
         }
       ],
@@ -243,7 +243,7 @@
           "status": "in_progress",
           "dependsOn": ["P2-T2"],
           "pr": null,
-          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency substep is in review; red evidence: ops/mission/evidence/P2-T3-red-2026-07-12.txt."
+          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224; shared mutation contract is in review. Evidence: ops/mission/evidence/P2-T3-red-2026-07-12.txt and ops/mission/evidence/P2-T3-sync-contract-red-2026-07-12.txt."
         },
         {
           "id": "P2-T4",
@@ -563,7 +563,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "241",
+      "current": "242",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -674,13 +674,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/223",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 224,
+      "title": "Add idempotent snapshot sync constraint",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/224",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge the P2-T3 idempotency migration after GitHub CI and Vercel preview pass.",
-      "Continue P2-T3 with the shared sync mutation contract, then web and Expo local-auth adapters; reserve the $10/month cloud project for an explicit production cost gate.",
+      "Merge the P2-T3 shared snapshot mutation contract after GitHub CI and Vercel preview pass.",
+      "Continue P2-T3 with web and Expo local-auth adapters; reserve the $10/month cloud project for an explicit production cost gate.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

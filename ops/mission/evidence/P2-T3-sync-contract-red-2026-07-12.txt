@@ -1,0 +1,6 @@
+Gate: P2-T3 shared sync mutation red test
+Command: npm --prefix apps/web test
+Exit: 1
+Observed failure:
+  ENOENT: packages/persistence-contract/src/index.ts did not exist.
+Result: web and Expo had no shared owner-scoped snapshot mutation contract before implementation.
