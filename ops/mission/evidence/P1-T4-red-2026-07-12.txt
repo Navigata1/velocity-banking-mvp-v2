@@ -1,0 +1,6 @@
+Gate: P1-T4 red test
+Command: npm --prefix apps/web run test:reference
+Exit: 1
+Observed failure:
+  Error: Cannot find module apps/web/scripts/financial-reference-tests.cjs
+Result: the mandatory independent reference lane did not exist before implementation.

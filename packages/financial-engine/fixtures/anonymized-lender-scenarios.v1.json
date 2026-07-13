@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "provenance": "Synthetic composite fixtures for software verification. They are not lender quotes, offers, or financial advice.",
+  "scenarios": [
+    {
+      "id": "composite-home-line-a",
+      "lenderTerms": {
+        "annualFee": 75,
+        "transactionFeePercent": 0,
+        "rateMode": "variable",
+        "drawPeriodMonths": 120,
+        "repaymentPeriodMonths": 180,
+        "minimumDraw": 500,
+        "minimumPayment": { "mode": "percent-of-balance", "value": 0.02 }
+      },
+      "amortizedLoan": { "principal": 240000, "apr": 0.06, "termMonths": 360 },
+      "locMonth": {
+        "startBalance": 12000,
+        "apr": 0.0875,
+        "year": 2024,
+        "month": 2,
+        "transactions": [
+          { "day": 1, "type": "deposit", "amount": 4500 },
+          { "day": 3, "type": "expense", "amount": 1500 },
+          { "day": 12, "type": "expense", "amount": 1200 },
+          { "day": 18, "type": "expense", "amount": 900 },
+          { "day": 24, "type": "expense", "amount": 700 }
+        ]
+      }
+    },
+    {
+      "id": "composite-credit-line-b",
+      "lenderTerms": {
+        "annualFee": 0,
+        "transactionFeePercent": 0.01,
+        "rateMode": "fixed",
+        "drawPeriodMonths": 60,
+        "repaymentPeriodMonths": 120,
+        "minimumDraw": 250,
+        "minimumPayment": { "mode": "fixed", "value": 175 }
+      },
+      "amortizedLoan": { "principal": 28500, "apr": 0.071, "termMonths": 60 },
+      "locMonth": {
+        "startBalance": 4800,
+        "apr": 0.1025,
+        "year": 2026,
+        "month": 7,
+        "transactions": [
+          { "day": 1, "type": "deposit", "amount": 2600 },
+          { "day": 2, "type": "expense", "amount": 1800 },
+          { "day": 6, "type": "expense", "amount": 950 },
+          { "day": 14, "type": "expense", "amount": 1200 },
+          { "day": 15, "type": "deposit", "amount": 2600 },
+          { "day": 22, "type": "expense", "amount": 700 },
+          { "day": 28, "type": "expense", "amount": 300 }
+        ]
+      }
+    }
+  ]
+}

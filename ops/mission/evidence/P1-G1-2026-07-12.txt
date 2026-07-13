@@ -1,6 +1,6 @@
 
 > web@0.1.0 test
-> node scripts/engine-regression-tests.cjs && node scripts/accessibility-route-contract.cjs
+> node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs
 
 PASS amortization payment matches a known 30-year fixed-rate fixture
 PASS shared date and month formatters reject invalid payoff horizons
@@ -244,6 +244,7 @@ PASS repository exposes a manual release deployment smoke workflow
 PASS repository documents the current Vercel alias promotion blocker
 PASS client mount hook notifies subscribers after hydration
 241 regression tests passed.
+Independent financial reference lane passed 2 anonymized scenarios.
 PASS src/app/layout.tsx: skip link targets main content
 PASS src/app/layout.tsx: main content exposes a skip-link target
 PASS src/app/layout.tsx: main content can receive programmatic focus
