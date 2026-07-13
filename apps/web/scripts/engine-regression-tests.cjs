@@ -396,6 +396,71 @@ test('lender terms contract versions confidence and blocks projections with miss
   assert.deepEqual(Array.from(invalidMinimum.missingFields), ['minimumPayment']);
 });
 
+test('LOC transaction calendar accrues from dated closing balances and labels fallback estimates', () => {
+  const transactions = [
+    { day: 1, type: 'deposit', amount: 4000 },
+    { day: 15, type: 'expense', amount: 3500 },
+  ];
+  const february = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 5000,
+    apr: 0.12,
+    monthlyIncome: 4000,
+    monthlyExpenses: 3500,
+    calendar: { year: 2024, month: 2, transactions },
+  });
+  const january = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 5000,
+    apr: 0.12,
+    monthlyIncome: 4000,
+    monthlyExpenses: 3500,
+    calendar: { year: 2024, month: 1, transactions },
+  });
+
+  assert.equal(february.method, 'transaction-calendar');
+  assert.equal(february.daysInMonth, 29);
+  assert.equal(roundCents(february.averageDailyBalance), roundCents(81500 / 29));
+  assert.equal(roundCents(february.interest), roundCents(81500 * (0.12 / 365)));
+  assert.equal(roundCents(february.endingBalanceBeforeInterest), 4500);
+  assert.ok(january.interest > february.interest);
+
+  const fallback = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 5000,
+    apr: 0.12,
+    monthlyIncome: 4000,
+    monthlyExpenses: 3500,
+  });
+  assert.equal(fallback.method, 'average-daily-balance-estimate');
+  assert.equal(roundCents(fallback.interest), roundCents(sharedFinancialEngine.calculateADBInterest(5000, 0.12, 4000, 3500)));
+
+  const invalidCalendar = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 5000,
+    apr: 0.12,
+    monthlyIncome: 4000,
+    monthlyExpenses: 3500,
+    calendar: { year: 2024, month: 2, transactions: [{ day: 30, type: 'expense', amount: 100 }] },
+  });
+  assert.equal(invalidCalendar.method, 'average-daily-balance-estimate');
+  assert.equal(invalidCalendar.fallbackReason, 'invalid-calendar');
+
+  const month = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1,
+    debtBalance: 0,
+    debtApr: 0,
+    debtPayment: 0,
+    loc: { limit: 25000, apr: 0.12, balance: 5000 },
+    locBalance: 5000,
+    chunkAmount: 0,
+    cashFlowPaydown: 500,
+    locDepositAmount: 4000,
+    locExpenseAmount: 3500,
+    locAccrualCalendar: { year: 2024, month: 2, transactions },
+    monthsSinceChunk: 999,
+  });
+  assert.equal(month.locInterestMethod, 'transaction-calendar');
+  assert.equal(roundCents(month.locInterest), roundCents(february.interest));
+  assert.equal(roundCents(month.locBalance), roundCents(february.endingBalance));
+});
+
 test('daily interest burn uses the shared financial-engine helper', () => {
   const dashboardModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8');
   const financialStoreSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/stores/financial-store.ts'), 'utf8');

@@ -1,0 +1,7 @@
+Gate: P1-T3 red test
+Command: npm --prefix apps/web test
+Exit: 1
+Observed failure:
+  LOC transaction calendar accrues from dated closing balances and labels fallback estimates
+  TypeError: sharedFinancialEngine.calculateLOCInterestAccrual is not a function
+Result: the test proved transaction-calendar LOC accrual did not exist before implementation.

@@ -594,6 +594,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           locBalance: monthResult.locBalance,
           debtInterest: monthResult.debtInterest,
           locInterest: monthResult.locInterest,
+          locInterestMethod: monthResult.locInterestMethod,
           cashFlowPaydown: monthResult.cashFlowPaydown,
           events: monthResult.events,
         });
@@ -660,6 +661,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         locBalance: locRecoveryMonth.locBalance,
         debtInterest: locRecoveryMonth.debtInterest,
         locInterest: locRecoveryMonth.locInterest,
+        locInterestMethod: locRecoveryMonth.locInterestMethod,
         cashFlowPaydown: locRecoveryMonth.cashFlowPaydown,
         events: locRecoveryMonth.events,
       });
