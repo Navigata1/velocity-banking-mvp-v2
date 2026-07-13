@@ -233,3 +233,9 @@
 - Three adversarial review rounds found and closed package-boundary, determinism, LOC unit, malformed balance, YAML, registry, and document-sync gaps. Final review reports no findings and approves spec compliance and code quality.
 - Fresh media, web, mobile, report-worker, build, browser, and rendered-route gates pass. One Three.js proof failed at 704 ms under simultaneous Expo compilation; the required isolated rerun passed every selection at 614 ms or faster with no waiver.
 - P5-T1 is ready for PR. P5-G1 remains pending until T2/T3 add renderer-specific overflow, contrast, and composition validation.
+
+## 2026-07-13T10:17Z - P5 visual identity merged; HyperFrames compositions begin
+- PR #241 merged at 0ba48e4 after Vercel and both Ubuntu quality workflows passed, including the new media clean-install and identity checks.
+- Fresh current-main verification passes all 14 media tests, zero media vulnerabilities, 263 web regressions and companion lanes, lint, and the 14-page production build.
+- P5-T1 is done with identity version 1, deterministic cross-renderer time and seed rules, fail-closed LOC channels, complete contract digest, package-family isolation, and a standing CI lane.
+- P5-T2 starts on codex/mission/p5-hyperframes-compositions. It will add launch/tutorial compositions and real HyperFrames validation while keeping renderer dependencies out of web and Expo.

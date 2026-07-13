@@ -1,0 +1,11 @@
+{
+  "name": "interestshield-hyperframes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "hyperframes preview .",
+    "check": "npm --prefix .. run check:hyperframes",
+    "render": "hyperframes render .",
+    "publish": "hyperframes publish ."
+  }
+}

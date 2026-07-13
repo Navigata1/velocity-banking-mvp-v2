@@ -42,6 +42,11 @@ yarn-error.log*
 # Testing
 coverage/
 /apps/web/test-results/
+/apps/media/hyperframes/vendor/
+/apps/media/hyperframes/snapshots/
+/apps/media/hyperframes/output/
+/apps/media/hyperframes/.hyperframes/
+/apps/media/hyperframes/.thumbnails/
 
 # TypeScript
 *.tsbuildinfo

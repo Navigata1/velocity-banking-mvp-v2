@@ -72,7 +72,7 @@ jobs:
 
       - name: Install media workspace dependencies
         working-directory: apps/media
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Check media identity contracts
         working-directory: apps/media

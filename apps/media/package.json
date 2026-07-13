@@ -4,10 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --test scripts/*.test.mjs",
+    "check": "npm run test:contracts && npm run check:hyperframes",
+    "test:contracts": "node --test scripts/*.test.mjs",
+    "check:hyperframes": "node scripts/check-hyperframes.mjs",
+    "map:hyperframes": "node scripts/map-hyperframes.mjs",
+    "prepare:hyperframes": "node scripts/prepare-hyperframes-assets.mjs",
     "sync:identity-doc": "node scripts/sync-identity-doc.mjs"
   },
   "devDependencies": {
+    "@fontsource-variable/geist": "5.2.9",
+    "@fontsource-variable/geist-mono": "5.2.8",
+    "@fontsource-variable/literata": "5.2.8",
+    "acorn": "8.17.0",
+    "acorn-walk": "8.3.5",
+    "gsap": "3.15.0",
+    "hyperframes": "0.7.56",
+    "parse5": "8.0.1",
     "yaml": "2.9.0"
   }
 }

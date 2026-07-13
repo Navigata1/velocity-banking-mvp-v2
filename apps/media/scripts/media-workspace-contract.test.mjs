@@ -66,7 +66,9 @@ test('keeps media checks in the standing GitHub quality workflow', async () => {
   const steps = job.steps;
   const checkoutIndex = steps.findIndex((step) => step.uses?.startsWith('actions/checkout@'));
   const installIndex = steps.findIndex((step) =>
-    step['working-directory'] === 'apps/media' && step.run === 'npm ci' && step.if !== false);
+    step['working-directory'] === 'apps/media'
+      && step.run === 'npm ci --ignore-scripts'
+      && step.if !== false);
   const checkIndex = steps.findIndex((step) =>
     step['working-directory'] === 'apps/media' && step.run === 'npm run check' && step.if !== false);
 

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+  </head>
+  <body>
+    <template id="money-loop-tutorial-template">
+      <script src="vendor/gsap.min.js"></script>
+      <style>
+      @font-face { font-family: "Literata Variable"; src: url("vendor/fonts/literata-variable.woff2") format("woff2"); font-weight: 200 900; }
+      @font-face { font-family: "Geist Variable"; src: url("vendor/fonts/geist-variable.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Geist Mono Variable"; src: url("vendor/fonts/geist-mono-variable.woff2") format("woff2"); font-weight: 100 900; }
+      * { box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; background: #07111F; color: #F5F7F2; }
+      body { font-family: "Geist Variable"; }
+      #money-loop { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #07111F; }
+      .scene { position: absolute; inset: 0; padding: 100px 96px; background: #07111F; }
+      .scene-content { display: grid; grid-template-columns: 650px minmax(0, 1fr); align-items: center; gap: 110px; height: 760px; }
+      .eyebrow { color: #38BDF8; font-size: 32px; font-weight: 700; text-transform: uppercase; }
+      h2 { margin: 18px 0 26px; max-width: 930px; font-family: "Literata Variable"; font-size: 84px; line-height: 1.04; letter-spacing: 0; }
+      .support { max-width: 900px; margin: 0; color: #C6D0D8; font-size: 42px; line-height: 1.45; }
+      .loop-stage { position: relative; display: grid; place-items: center; width: 620px; height: 620px; }
+      .loop-ring { position: absolute; inset: 60px; border: 22px solid #183247; border-radius: 50%; }
+      .flow-core { position: relative; display: grid; place-items: center; width: 260px; height: 260px; border: 4px solid #38BDF8; border-radius: 50%; background: #102235; text-align: center; }
+      .flow-core strong { display: block; font-family: "Geist Mono Variable"; font-size: 48px; font-variant-numeric: tabular-nums; }
+      .flow-core span { display: block; margin-top: 8px; color: #C6D0D8; font-size: 30px; }
+      .node { position: absolute; z-index: 2; min-width: 172px; padding: 20px 24px; background: #183247; border: 3px solid #38BDF8; color: #F5F7F2; font-size: 32px; font-weight: 700; text-align: center; }
+      .income { top: 18px; left: 224px; border-color: #34D399; }
+      .loc { top: 230px; right: -4px; }
+      .expenses { bottom: 22px; left: 214px; border-color: #FBBF24; }
+      .recovery { top: 230px; left: -28px; border-color: #34D399; }
+      .flow-dot { position: absolute; z-index: 1; width: 34px; height: 34px; border-radius: 50%; background: #34D399; box-shadow: 0 0 28px rgba(52, 211, 153, .55); }
+      .dot-income { top: 130px; left: 293px; }
+      .dot-expense { right: 82px; bottom: 137px; background: #FBBF24; }
+      .dot-recovery { left: 90px; top: 275px; }
+      .interest-panel { display: grid; gap: 24px; width: 620px; }
+      .balance-bar { position: relative; height: 130px; background: #102235; overflow: hidden; }
+      .balance-fill { position: absolute; left: 0; bottom: 0; width: 100%; height: 18px; background: #FBBF24; transform-origin: left center; }
+      .balance-fill.lower { background: #34D399; }
+      .bar-label { position: absolute; z-index: 1; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 34px; font-size: 32px; font-weight: 700; color: #F5F7F2; }
+      .bar-label span:last-child { font-family: "Geist Mono Variable"; }
+      .assumption { color: #C6D0D8; font-size: 30px; line-height: 1.4; }
+      .caption-group { position: absolute; left: 120px; right: 120px; bottom: 110px; display: flex; justify-content: center; min-height: 74px; }
+      .caption { padding: 10px 24px; background: #F5F7F2; color: #07111F; font-size: 46px; font-weight: 700; line-height: 1.2; text-align: center; }
+      .disclaimer { position: absolute; right: 96px; top: 46px; color: #C6D0D8; font-size: 26px; }
+      @media (prefers-reduced-motion: reduce) {
+        .scene { clip-path: none !important; }
+        .scene-content, .caption, .flow-dot, .loop-ring, .flow-core, .balance-fill { transform: none !important; }
+      }
+      </style>
+      <main data-hf-id="loop-nasq" id="money-loop" class="clip composition" data-composition-id="money-loop-tutorial" data-identity-version="1" data-fps="30" data-start="0" data-duration="18" data-track-index="0" data-width="1920" data-height="1080">
+        <section data-hf-id="loop-bhec" id="loop-income" class="clip scene" data-start="0" data-duration="4.5" data-track-index="1">
+          <span data-hf-id="loop-1bsj" class="disclaimer">Educational tool. Not financial advice.</span>
+          <div data-hf-id="loop-cn5c" class="scene-content"><div data-hf-id="loop-7xjv" class="loop-stage"><div data-hf-id="loop-fhb1" class="loop-ring"></div><div data-hf-id="loop-is6m" class="node income">Income</div><div data-hf-id="loop-guf4" class="node loc">LOC</div><div data-hf-id="loop-ng2e" class="node expenses">Expenses</div><div data-hf-id="loop-ulq2" class="node recovery">Recovery</div><div data-hf-id="loop-wec4" class="flow-core"><div data-hf-id="loop-yeow"><strong data-hf-id="loop-3y38">$6,400</strong><span data-hf-id="loop-e2wd">monthly income</span></div></div><div data-hf-id="loop-452x" class="flow-dot dot-income"></div></div><div data-hf-id="loop-y7yw"><div data-hf-id="loop-69dq" class="eyebrow">The Money Loop / 01</div><h2 data-hf-id="loop-xqpy">Income enters the line of credit.</h2><p data-hf-id="loop-pleb" class="support">Deposits can reduce the balance before planned expenses leave.</p></div></div>
+          <div data-hf-id="loop-6xl0" class="caption-group"><div data-hf-id="loop-xj7n" class="caption">Income enters the loop.</div></div>
+        </section>
+        <section data-hf-id="loop-uhp4" id="loop-expenses" class="clip scene" data-start="4.5" data-duration="4.5" data-track-index="2">
+          <span data-hf-id="loop-433i" class="disclaimer">Illustrative inputs shown</span>
+          <div data-hf-id="loop-o0eg" class="scene-content"><div data-hf-id="loop-j74r" class="loop-stage"><div data-hf-id="loop-r4vl" class="loop-ring"></div><div data-hf-id="loop-5ovm" class="node income">Income</div><div data-hf-id="loop-l6uw" class="node loc">LOC</div><div data-hf-id="loop-ymey" class="node expenses">Expenses</div><div data-hf-id="loop-ulum" class="node recovery">Recovery</div><div data-hf-id="loop-8o8c" class="flow-core"><div data-hf-id="loop-x11t"><strong data-hf-id="loop-mn6y">$5,650</strong><span data-hf-id="loop-kqt2">planned expenses</span></div></div><div data-hf-id="loop-zxsc" class="flow-dot dot-expense"></div></div><div data-hf-id="loop-xfcu"><div data-hf-id="loop-6nor" class="eyebrow">The Money Loop / 02</div><h2 data-hf-id="loop-cs9v">Expenses still count.</h2><p data-hf-id="loop-v7mz" class="support">Routing changes timing. It does not make spending disappear.</p></div></div>
+          <div data-hf-id="loop-bh6k" class="caption-group"><div data-hf-id="loop-xeu8" class="caption">Expenses leave intentionally.</div></div>
+        </section>
+        <section data-hf-id="loop-8xr8" id="loop-cash-flow" class="clip scene" data-start="9" data-duration="4.5" data-track-index="3">
+          <span data-hf-id="loop-4dow" class="disclaimer">Income minus expenses</span>
+          <div data-hf-id="loop-mthd" class="scene-content"><div data-hf-id="loop-istq" class="loop-stage"><div data-hf-id="loop-sbso" class="loop-ring"></div><div data-hf-id="loop-636n" class="node income">Income</div><div data-hf-id="loop-jzxt" class="node loc">LOC</div><div data-hf-id="loop-z0pz" class="node expenses">Expenses</div><div data-hf-id="loop-v05n" class="node recovery">Recovery</div><div data-hf-id="loop-7hb9" class="flow-core"><div data-hf-id="loop-w8fr"><strong data-hf-id="loop-i09e">$750</strong><span data-hf-id="loop-3dhy">cash flow</span></div></div><div data-hf-id="loop-0059" class="flow-dot dot-recovery"></div></div><div data-hf-id="loop-wmqs"><div data-hf-id="loop-71zs" class="eyebrow">The Money Loop / 03</div><h2 data-hf-id="loop-xnf2">Cash flow drives recovery.</h2><p data-hf-id="loop-jfju" class="support">Positive cash flow can create room to recover the LOC after expenses.</p></div></div>
+          <div data-hf-id="loop-aa9h" class="caption-group"><div data-hf-id="loop-6n3w" class="caption">Cash flow helps recover the LOC.</div></div>
+        </section>
+        <section data-hf-id="loop-62f9" id="loop-interest" class="clip scene" data-start="13.5" data-duration="4.5" data-track-index="4">
+          <span data-hf-id="loop-vjmh" class="disclaimer">Modeled relationship, not a promise</span>
+          <div data-hf-id="loop-n7se" class="scene-content"><div data-hf-id="loop-hh3j" class="interest-panel"><div data-hf-id="loop-wax8" class="balance-bar"><div data-hf-id="loop-oio6" class="balance-fill"></div><div data-hf-id="loop-90o2" class="bar-label"><span data-hf-id="loop-dhcd">Higher average balance</span><span data-hf-id="loop-m166">More interest</span></div></div><div data-hf-id="loop-uusk" class="balance-bar"><div data-hf-id="loop-rn5d" class="balance-fill lower"></div><div data-hf-id="loop-50g6" class="bar-label"><span data-hf-id="loop-ctop">Lower average balance</span><span data-hf-id="loop-jida">Less interest</span></div></div><div data-hf-id="loop-aj6y" class="assumption">Assumption: the rate and daily balance method stay the same.</div></div><div data-hf-id="loop-vftp"><div data-hf-id="loop-49ul" class="eyebrow">The Money Loop / 04</div><h2 data-hf-id="loop-ct3o">Average balance shapes interest.</h2><p data-hf-id="loop-xzrj" class="support">A lower average balance can reduce interest accrual under the same rate.</p></div></div>
+          <div data-hf-id="loop-aoki" class="caption-group"><div data-hf-id="loop-fmhr" class="caption">Lower balance can mean less interest.</div></div>
+        </section>
+      </main>
+      <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#loop-income .scene-content", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.fromTo("#loop-income .flow-dot", { opacity: 0, y: -92 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.3);
+      tl.fromTo("#loop-income .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 0.45);
+      tl.fromTo("#loop-expenses", { clipPath: "circle(0% at 32% 72%)" }, { clipPath: "circle(220% at 32% 72%)", duration: 0.7, ease: "power3.inOut" }, 4.5);
+      tl.fromTo("#loop-expenses .flow-dot", { opacity: 0, x: -92, y: -70 }, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: "power3.out" }, 4.7);
+      tl.fromTo("#loop-expenses .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 4.85);
+      tl.fromTo("#loop-cash-flow", { clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)" }, { clipPath: "polygon(50% -150%, 200% 50%, 50% 250%, -100% 50%)", duration: 0.7, ease: "power3.inOut" }, 9);
+      tl.fromTo("#loop-cash-flow .flow-dot", { opacity: 0, x: 94 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 9.2);
+      tl.fromTo("#loop-cash-flow .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 9.35);
+      tl.fromTo("#loop-interest", { clipPath: "circle(0% at 34% 50%)" }, { clipPath: "circle(220% at 34% 50%)", duration: 0.7, ease: "power3.inOut" }, 13.5);
+      tl.fromTo("#loop-interest .balance-fill:not(.lower)", { scaleX: 0 }, { scaleX: 1, duration: 0.65, ease: "power3.out" }, 13.7);
+      tl.fromTo("#loop-interest .balance-fill.lower", { scaleX: 0 }, { scaleX: 1, duration: 0.65, ease: "power3.out" }, 13.88);
+      tl.fromTo("#loop-interest .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 13.85);
+      tl.to("#loop-interest", { opacity: 0, duration: 0.4 }, 17.6);
+      window.__timelines["money-loop-tutorial"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

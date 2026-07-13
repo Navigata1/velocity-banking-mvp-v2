@@ -1,0 +1,6 @@
+[
+  { "text": "Income enters the loop.", "startMs": 450, "endMs": 4100, "timestampMs": null, "confidence": null },
+  { "text": "Expenses leave intentionally.", "startMs": 4850, "endMs": 8600, "timestampMs": null, "confidence": null },
+  { "text": "Cash flow helps recover the LOC.", "startMs": 9350, "endMs": 13100, "timestampMs": null, "confidence": null },
+  { "text": "Lower balance can mean less interest.", "startMs": 13850, "endMs": 17600, "timestampMs": null, "confidence": null }
+]

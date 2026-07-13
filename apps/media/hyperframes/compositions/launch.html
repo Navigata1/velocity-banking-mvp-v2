@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+  </head>
+  <body>
+    <template id="launch-template">
+      <script src="vendor/gsap.min.js"></script>
+      <style>
+      @font-face { font-family: "Literata Variable"; src: url("vendor/fonts/literata-variable.woff2") format("woff2"); font-weight: 200 900; }
+      @font-face { font-family: "Geist Variable"; src: url("vendor/fonts/geist-variable.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Geist Mono Variable"; src: url("vendor/fonts/geist-mono-variable.woff2") format("woff2"); font-weight: 100 900; }
+      * { box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; background: #07111F; color: #F5F7F2; }
+      body { font-family: "Geist Variable"; }
+      #launch { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #07111F; }
+      .scene { position: absolute; inset: 0; padding: 100px 96px; background: #07111F; }
+      .scene-content { display: grid; grid-template-columns: minmax(0, 1fr) 680px; align-items: center; gap: 96px; height: 760px; }
+      .eyebrow { color: #38BDF8; font-size: 32px; font-weight: 700; text-transform: uppercase; }
+      h1, h2 { margin: 18px 0 26px; max-width: 920px; font-family: "Literata Variable"; font-size: 94px; line-height: 1.02; letter-spacing: 0; }
+      h2 { font-size: 84px; }
+      .support { max-width: 830px; margin: 0; color: #C6D0D8; font-size: 44px; line-height: 1.45; }
+      .stage { position: relative; display: grid; place-items: center; width: 620px; height: 620px; perspective: 1200px; }
+      .stage-ring { position: absolute; inset: 34px; border: 3px solid #183247; border-radius: 50%; box-shadow: inset 0 0 90px rgba(56, 189, 248, .08); }
+      .shield { position: relative; display: grid; place-items: center; width: 330px; height: 390px; clip-path: polygon(50% 0, 91% 16%, 84% 72%, 50% 100%, 16% 72%, 9% 16%); background: #183247; border: 4px solid #38BDF8; filter: drop-shadow(0 30px 42px rgba(0,0,0,.38)); transform-style: preserve-3d; }
+      .shield::before { content: ""; position: absolute; inset: 22px; clip-path: inherit; background: #102235; }
+      .shield-mark { position: relative; z-index: 1; font-family: "Literata Variable"; font-size: 120px; font-weight: 900; color: #F5F7F2; }
+      .data-stage { display: grid; gap: 24px; width: 620px; }
+      .metric { display: grid; grid-template-columns: 1fr auto; align-items: end; padding: 30px 34px; background: #102235; border-left: 8px solid #FBBF24; }
+      .metric.room { border-left-color: #38BDF8; }
+      .metric-label { color: #C6D0D8; font-size: 32px; }
+      .metric-value { font-family: "Geist Mono Variable"; font-size: 58px; font-weight: 700; font-variant-numeric: tabular-nums; }
+      .metric-note { grid-column: 1 / -1; margin-top: 14px; color: #C6D0D8; font-size: 30px; }
+      .promise-stage { display: grid; place-items: center; width: 620px; height: 620px; }
+      .aperture { display: grid; place-items: center; width: 480px; height: 480px; border: 4px solid #34D399; border-radius: 50%; box-shadow: inset 0 0 0 46px #102235, inset 0 0 0 50px #183247; }
+      .aperture div { max-width: 310px; text-align: center; font-family: "Geist Mono Variable"; font-size: 38px; color: #34D399; }
+      .aperture span { display: block; }
+      .caption-group { position: absolute; left: 120px; right: 120px; bottom: 110px; display: flex; justify-content: center; min-height: 74px; }
+      .caption { padding: 10px 24px; background: #F5F7F2; color: #07111F; font-size: 46px; font-weight: 700; line-height: 1.2; text-align: center; }
+      .disclaimer { position: absolute; right: 96px; top: 46px; color: #C6D0D8; font-size: 26px; }
+      @media (prefers-reduced-motion: reduce) {
+        .scene-content, .metric, .caption, .shield, .stage-ring, .aperture { transform: none !important; }
+        .scene { clip-path: none !important; }
+      }
+      </style>
+      <main data-hf-id="launch-6dzr" id="launch" class="clip composition" data-composition-id="interestshield-launch" data-identity-version="1" data-fps="30" data-start="0" data-duration="12" data-track-index="0" data-width="1920" data-height="1080">
+        <section data-hf-id="launch-wnk5" id="launch-visible" class="clip scene" data-start="0" data-duration="4" data-track-index="1">
+          <span data-hf-id="launch-1bsj" class="disclaimer">Educational tool. Not financial advice.</span>
+          <div data-hf-id="launch-cn5c" class="scene-content">
+            <div data-hf-id="launch-yeow"><div data-hf-id="launch-9o8u" class="eyebrow">InterestShield</div><h1 data-hf-id="launch-dm5a">See what interest is doing.</h1><p data-hf-id="launch-m5bf" class="support">Turn an invisible cost into a calm, inspectable model.</p></div>
+            <div data-hf-id="launch-tan6" class="stage"><div data-hf-id="launch-9cc5" class="stage-ring"></div><div data-hf-id="launch-1soj" class="shield"><span data-hf-id="launch-xn0f" class="shield-mark">I</span></div></div>
+          </div>
+          <div data-hf-id="launch-6xl0" class="caption-group"><div data-hf-id="launch-jcp2" class="caption">Interest becomes visible.</div></div>
+        </section>
+        <section data-hf-id="launch-xqcu" id="launch-separate" class="clip scene" data-start="4" data-duration="4" data-track-index="1">
+          <span data-hf-id="launch-433i" class="disclaimer">Illustrative inputs shown</span>
+          <div data-hf-id="launch-o0eg" class="scene-content">
+            <div data-hf-id="launch-y7yw"><div data-hf-id="launch-qhbh" class="eyebrow">Two honest signals</div><h2 data-hf-id="launch-3u6d">Pressure is not available room.</h2><p data-hf-id="launch-wapz" class="support">Utilization and capacity answer different questions.</p></div>
+            <div data-hf-id="launch-6rn5" class="data-stage">
+              <div data-hf-id="launch-dq4c" class="metric"><span data-hf-id="launch-jcja" class="metric-label">LOC utilization</span><strong data-hf-id="launch-o5zq" class="metric-value">80% used</strong><span data-hf-id="launch-yapr" class="metric-note">Higher means more balance pressure.</span></div>
+              <div data-hf-id="launch-y5md" class="metric room"><span data-hf-id="launch-zg05" class="metric-label">Available capacity</span><strong data-hf-id="launch-vivg" class="metric-value">$2,000 open</strong><span data-hf-id="launch-kw75" class="metric-note">Credit capacity is not income.</span></div>
+            </div>
+          </div>
+          <div data-hf-id="launch-bh6k" class="caption-group"><div data-hf-id="launch-dv9t" class="caption">Pressure and room stay separate.</div></div>
+        </section>
+        <section data-hf-id="launch-8w5o" id="launch-agency" class="clip scene" data-start="8" data-duration="4" data-track-index="1">
+          <span data-hf-id="launch-vbnt" class="disclaimer">Modeled, never promised</span>
+          <div data-hf-id="launch-mthd" class="scene-content">
+            <div data-hf-id="launch-x11t"><div data-hf-id="launch-t4h6" class="eyebrow">Keep your agency</div><h2 data-hf-id="launch-u6x4">Model the tradeoffs before you move.</h2><p data-hf-id="launch-1icm" class="support">Change assumptions, compare compatible paths, and choose with context.</p></div>
+            <div data-hf-id="launch-1z4u" class="promise-stage"><div data-hf-id="launch-j6k0" class="aperture"><div data-hf-id="launch-xfcu"><span data-hf-id="launch-8275">truth-first</span><span data-hf-id="launch-3ow7">hope-forward</span></div></div></div>
+          </div>
+          <div data-hf-id="launch-aa9h" class="caption-group"><div data-hf-id="launch-qpwg" class="caption">Model the tradeoffs. Keep agency.</div></div>
+        </section>
+      </main>
+      <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#launch-visible .scene-content", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.fromTo("#launch-visible .shield", { opacity: 0, rotationY: -360, scale: 0.72 }, { opacity: 1, rotationY: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.fromTo("#launch-visible .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 0.4);
+      tl.fromTo("#launch-separate", { clipPath: "circle(0% at 72% 50%)" }, { clipPath: "circle(220% at 72% 50%)", duration: 0.7, ease: "power3.inOut" }, 4);
+      tl.fromTo("#launch-separate .metric:first-child", { opacity: 0, x: 56 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 4.2);
+      tl.fromTo("#launch-separate .metric:last-child", { opacity: 0, x: 56 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 4.38);
+      tl.fromTo("#launch-separate .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 4.35);
+      tl.fromTo("#launch-agency", { clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)" }, { clipPath: "polygon(50% -150%, 200% 50%, 50% 250%, -100% 50%)", duration: 0.7, ease: "power3.inOut" }, 8);
+      tl.fromTo("#launch-agency .scene-content", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 8.2);
+      tl.fromTo("#launch-agency .aperture", { opacity: 0, rotation: 180, scale: 0.72 }, { opacity: 1, rotation: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 8.2);
+      tl.fromTo("#launch-agency .caption", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 8.4);
+      tl.to("#launch-agency", { opacity: 0, duration: 0.4 }, 11.6);
+      window.__timelines["interestshield-launch"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
