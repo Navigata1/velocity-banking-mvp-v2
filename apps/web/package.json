@@ -17,6 +17,8 @@
     "smoke:routes": "node scripts/smoke-routes.cjs",
     "smoke:rendered": "npm run build && npm run smoke:rendered:built",
     "smoke:rendered:built": "node scripts/smoke-rendered.cjs",
+    "test:3d": "npm run build && npm run test:3d:built",
+    "test:3d:built": "node scripts/test-three-stage.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"
   },
   "dependencies": {

@@ -7922,6 +7922,49 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(renderedSmoke.includes('allocatePort()') && renderedSmoke.includes("process.once('SIGTERM'"));
 });
 
+test('web app exposes a built Three stage visual verification gate', () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
+  const threeStagePath = path.resolve(__dirname, 'test-three-stage.cjs');
+  const workflowPath = path.resolve(__dirname, '..', '..', '..', '.github', 'workflows', 'ci.yml');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+
+  assert.equal(packageJson.scripts['test:3d'], 'npm run build && npm run test:3d:built');
+  assert.equal(packageJson.scripts['test:3d:built'], 'node scripts/test-three-stage.cjs');
+  assert.ok(fs.existsSync(threeStagePath), 'expected a repeatable built Three-stage visual verification script');
+
+  const threeStage = fs.readFileSync(threeStagePath, 'utf8');
+  for (const artifactId of ['income', 'loc', 'expenses', 'cash-flow', 'principal']) {
+    assert.ok(threeStage.includes(`['${artifactId}',`), `expected ${artifactId} tab coverage`);
+  }
+  assert.ok(threeStage.includes('money-loop-artifact-node-${artifactId}'), 'expected tab selection to use the canonical artifact list');
+  assert.ok(threeStage.includes('data-render-mode'), 'expected active Three render-mode coverage');
+  assert.ok(threeStage.includes('webgl2'), 'expected a genuine WebGL2 capability check');
+  assert.ok(threeStage.includes("expectedRenderMode: 'full'") && threeStage.includes("expectedRenderMode: 'efficient'"), 'expected deterministic desktop full and mobile efficient lanes');
+  assert.ok(threeStage.includes('addInitScript') && threeStage.includes('hardwareConcurrency') && threeStage.includes('deviceMemory'), 'expected capability lanes to report capable hardware without mocking WebGL');
+  assert.ok(threeStage.includes('scrollIntoViewIfNeeded') && threeStage.includes('waitForNormalStage(page, viewportLabel, expectedRenderMode)'), 'expected each artifact capture to resettle the offscreen-aware stage');
+  assert.ok(threeStage.includes('decodePngRgba') && threeStage.includes('canvas.screenshot'), 'expected nonblank canvas pixel sampling');
+  assert.ok(threeStage.includes('transparent') && threeStage.includes('single-color'), 'expected pixel test failure diagnostics');
+  assert.ok(threeStage.includes('waitForTimeout(800)') && threeStage.includes('selectionFingerprints'), 'expected stable post-selection canvas fingerprint proof');
+  assert.ok(threeStage.includes('fs.rmSync(evidenceDirectory') && threeStage.includes("recursive: true") && threeStage.includes("force: true"), 'expected stale Three stage screenshot cleanup');
+  assert.ok(threeStage.includes("reducedMotion: 'reduce'"), 'expected reduced-motion static fallback coverage');
+  assert.ok(threeStage.includes('screenshot'), 'expected durable desktop and mobile screenshots');
+  assert.ok(threeStage.includes('scrollWidth') && threeStage.includes('getBoundingClientRect'), 'expected overflow and containment checks');
+  assert.ok(threeStage.includes('aria-selected') && threeStage.includes('document.activeElement'), 'expected DOM authority and focus checks');
+  assert.ok(threeStage.includes('finally') && threeStage.includes('stopServer'), 'expected browser and server cleanup');
+
+  const buildIndex = workflow.indexOf('run: npm run build');
+  const threeStageIndex = workflow.indexOf('run: npm run test:3d:built');
+  const threeStageArtifactIndex = workflow.indexOf('actions/upload-artifact@v4');
+  const renderedSmokeIndex = workflow.indexOf('run: npm run smoke:rendered:built');
+  assert.ok(buildIndex >= 0 && threeStageIndex > buildIndex, 'expected Three stage verification after the web build');
+  assert.ok(threeStageArtifactIndex > threeStageIndex, 'expected durable Three stage screenshot artifact upload after verification');
+  assert.ok(workflow.includes('apps/web/test-results/three-stage'), 'expected CI to collect durable Three stage screenshots');
+  assert.ok(renderedSmokeIndex > threeStageIndex, 'expected the standing rendered smoke after the Three stage verification');
+
+  const rootIgnore = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '.gitignore'), 'utf8');
+  assert.ok(rootIgnore.includes('/apps/web/test-results/'), 'expected generated Three stage screenshots to stay out of git status');
+});
+
 test('web app exposes a repeatable accessibility route contract', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf8'));
   const a11yScriptPath = path.resolve(__dirname, 'accessibility-route-contract.cjs');
