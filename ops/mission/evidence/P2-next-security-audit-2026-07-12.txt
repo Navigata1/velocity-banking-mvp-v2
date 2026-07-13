@@ -1,0 +1,13 @@
+Gate: P2 Next.js production dependency audit
+Before: next 16.1.6; 2 vulnerable production packages (1 high, 1 moderate)
+After: next 16.2.10; eslint-config-next 16.2.10; postcss 8.5.10
+Command: npm audit --omit=dev --json
+Exit: 0
+Result: 0 production vulnerabilities
+
+Compatibility verification:
+- npm test: 242 regressions, 2 independent financial fixtures, accessibility route contract passed
+- npm run lint: passed
+- clean-cache npm run build: passed all 8 static routes on Next.js 16.2.10
+- npm run smoke:routes: passed HTTP checks for all 7 product routes
+- first post-upgrade build failure was isolated to stale generated .next/dev types from 16.1.6
