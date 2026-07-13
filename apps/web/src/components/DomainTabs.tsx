@@ -98,7 +98,7 @@ export default function DomainTabs({ activeTab, onTabChange }: DomainTabsProps) 
     <div
       role="tablist"
       aria-label="Financial domain"
-      className={`relative flex flex-wrap justify-center gap-1.5 p-1.5 ${classes.glass} rounded-xl`}
+      className={`relative flex w-max min-w-full flex-nowrap justify-start gap-1 p-1 ${classes.glass} rounded-md`}
       ref={dropdownRef}
     >
       {tabs.map((tab) => {

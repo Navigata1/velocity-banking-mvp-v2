@@ -161,7 +161,7 @@ export default function MoneyLoopArtifactRail({
     <section
       {...sectionProps}
       aria-label="Money Loop artifact carousel"
-      className={`relative min-w-0 rounded-2xl border ${classes.border} bg-slate-950/25 p-4 ${className}`}
+      className={`relative min-w-0 ${className}`}
     >
       <div
         id="money-loop-artifact-panel"
@@ -169,13 +169,13 @@ export default function MoneyLoopArtifactRail({
         role="tabpanel"
         aria-labelledby={`money-loop-artifact-tab-${activeArtifact.id}`}
         aria-live="polite"
-        className={`relative overflow-hidden rounded-xl border ${activeTone.border} ${activeTone.surface} p-4`}
+        className={`relative overflow-hidden border-y ${activeTone.border} bg-black/20 py-5 md:px-6`}
       >
-        <div className="pointer-events-none absolute inset-x-6 top-1/2 h-px bg-gradient-to-r from-transparent via-sky-300/40 to-transparent" />
-        <div className="relative grid min-h-[258px] gap-5 sm:grid-cols-[190px_minmax(0,1fr)] sm:items-center">
+        <div className="pointer-events-none absolute inset-x-6 top-1/2 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="relative grid min-h-[330px] gap-6 lg:grid-cols-[minmax(320px,0.95fr)_minmax(300px,0.65fr)] lg:items-center">
           <div
             data-testid="money-loop-payoff-orbit"
-            className="artifact-orbit-stage relative mx-auto h-44 w-44"
+            className="artifact-orbit-stage relative mx-auto h-64 w-64 md:h-72 md:w-72"
             aria-hidden="true"
             style={orbitStageStyle}
           >
@@ -214,7 +214,7 @@ export default function MoneyLoopArtifactRail({
               })}
             </svg>
 
-            <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 md:h-40 md:w-40">
               <div
                 key={activeArtifact.id}
                 data-testid="money-loop-active-artifact-token"
@@ -225,6 +225,9 @@ export default function MoneyLoopArtifactRail({
                 <div className="artifact-token-bevel absolute inset-[13px] rounded-full bg-slate-950/88 shadow-inner shadow-black/60" />
                 <div className="artifact-token-core absolute inset-[34px] rounded-full border border-white/10 bg-white/10" />
                 <div className="artifact-token-facet absolute inset-[22px] rounded-full" />
+                <div className="absolute inset-0 grid place-items-center px-7 text-center">
+                  <span className="text-sm font-semibold text-white/90 md:text-base">{activeArtifact.label}</span>
+                </div>
                 <div
                   className="absolute left-1/2 top-5 h-4 w-14 -translate-x-1/2 rounded-full bg-white/45 blur-[1px]"
                   aria-hidden="true"
@@ -255,7 +258,7 @@ export default function MoneyLoopArtifactRail({
             })}
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 border-t border-white/10 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
             <div className="flex flex-wrap items-center gap-2">
               <span className={`rounded-md border px-2 py-1 text-[11px] font-semibold uppercase ${activeTone.border} ${activeTone.text}`}>
                 Step {String(activeIndex + 1).padStart(2, '0')}
@@ -265,11 +268,15 @@ export default function MoneyLoopArtifactRail({
               </span>
             </div>
 
-            <h3 className={`mt-3 text-2xl font-bold leading-tight ${classes.text}`}>{activeArtifact.label}</h3>
-            <p className={`mt-2 text-3xl font-bold leading-tight ${activeTone.text}`}>{activeArtifact.value}</p>
+            <h3 className={`mt-4 text-2xl font-semibold leading-tight md:text-3xl ${classes.text}`}>{activeArtifact.label}</h3>
+            <p className={`mt-2 text-3xl font-semibold leading-tight md:text-4xl ${activeTone.text}`}>{activeArtifact.value}</p>
             <p className={`mt-3 max-w-xl text-sm leading-6 ${classes.textSecondary}`}>{activeArtifact.note}</p>
 
-            <div className="mt-5 h-2 rounded-full bg-slate-700/60">
+            <div className="mt-6 flex items-center justify-between text-xs">
+              <span className={classes.textSecondary}>Modeled pressure</span>
+              <span className={`font-semibold ${activeTone.text}`}>{activeArtifact.fillPercent}%</span>
+            </div>
+            <div className="mt-2 h-1.5 rounded-full bg-slate-700/60">
               <div
                 className={`h-full rounded-full ${activeTone.fill}`}
                 style={{ width: `${activeArtifact.fillPercent}%` }}
@@ -279,7 +286,7 @@ export default function MoneyLoopArtifactRail({
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3">
+      <div className="mt-3 flex items-center justify-between gap-3">
         <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>
           Artifact {activeIndex + 1} of {artifacts.length}
         </p>
@@ -290,9 +297,10 @@ export default function MoneyLoopArtifactRail({
             aria-controls="money-loop-artifact-panel"
             data-testid="money-loop-artifact-previous"
             onClick={() => selectRelativeArtifact(-1)}
-            className={`min-h-10 rounded-lg border px-3 text-sm font-semibold transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
+            title="Previous artifact"
+            className={`grid h-10 w-10 place-items-center rounded-md border text-lg transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
           >
-            Prev
+            <span aria-hidden="true">&larr;</span>
           </button>
           <button
             type="button"
@@ -300,9 +308,10 @@ export default function MoneyLoopArtifactRail({
             aria-controls="money-loop-artifact-panel"
             data-testid="money-loop-artifact-next"
             onClick={() => selectRelativeArtifact(1)}
-            className={`min-h-10 rounded-lg border px-3 text-sm font-semibold transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
+            title="Next artifact"
+            className={`grid h-10 w-10 place-items-center rounded-md border text-lg transition ${classes.border} ${classes.text} bg-slate-950/35 hover:bg-white/5`}
           >
-            Next
+            <span aria-hidden="true">&rarr;</span>
           </button>
         </div>
       </div>
@@ -315,7 +324,7 @@ export default function MoneyLoopArtifactRail({
           role="tablist"
           aria-label="Money Loop artifact selector"
           data-testid="money-loop-artifact-selector-grid"
-          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-3 scroll-px-1 px-[calc(50vw-68px)] md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
+          className="grid min-w-[680px] snap-x snap-mandatory grid-cols-5 gap-1 scroll-px-1 px-[calc(50vw-68px)] md:min-w-0 md:grid-cols-[repeat(5,minmax(0,1fr))] md:px-0 md:snap-none"
         >
           {artifacts.map((artifact, index) => {
             const tone = toneStyles[artifact.tone];
@@ -338,10 +347,10 @@ export default function MoneyLoopArtifactRail({
                 data-testid={`money-loop-artifact-node-${artifact.id}`}
                 onClick={() => selectArtifactByIndex(index)}
                 onKeyDown={(event) => handleArtifactKeyDown(event, index)}
-                className={`relative min-h-[132px] snap-center rounded-xl border p-3 text-left transition md:min-h-[104px] md:p-2.5 ${
+                className={`relative min-h-[120px] snap-center border-b-2 border-x-0 border-t-0 p-3 text-left transition md:min-h-[78px] md:p-3 ${
                   isActive
-                    ? `${tone.border} ${tone.surface} shadow-lg shadow-black/20`
-                    : `${classes.border} bg-slate-950/20 hover:bg-white/5`
+                    ? `${tone.border} ${tone.surface}`
+                    : `border-transparent bg-transparent hover:bg-white/5`
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">

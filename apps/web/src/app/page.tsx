@@ -2,11 +2,9 @@
 
 import Link from 'next/link';
 import DomainTabs from '@/components/DomainTabs';
-import HeroVisual from '@/components/HeroVisual';
 import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import MoneyLoopArtifactRail from '@/components/MoneyLoopArtifactRail';
 import PageTransition from '@/components/PageTransition';
-import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -49,22 +47,6 @@ const toneStyles: Record<DashboardTone, {
   },
 };
 
-function dashboardDomainLabel(domain: Domain): string {
-  const labels: Record<Domain, string> = {
-    car: 'Auto',
-    house: 'Mortgage',
-    land: 'Land',
-    creditCard: 'Credit Card',
-    studentLoan: 'Student Loan',
-    medical: 'Medical',
-    personal: 'Personal Loan',
-    recreation: 'Recreation',
-    custom: 'Custom',
-  };
-
-  return labels[domain];
-}
-
 export default function Dashboard() {
   const mounted = useIsClient();
   const store = useFinancialStore();
@@ -104,57 +86,28 @@ export default function Dashboard() {
   });
   const statusStyle = toneStyles[model.statusTone];
   const nextMoveStyle = toneStyles[model.nextMove.tone];
-  const heroHotspots = [
-    {
-      label: 'Active target',
-      value: formatCurrency(activeDebt.balance),
-      position: { top: '18%', left: '72%' },
-      color: 'bg-sky-500',
-    },
-    {
-      label: 'Interest burn',
-      value: `${formatCurrency(model.dailyInterestBurn)}/day`,
-      position: { top: '56%', left: '8%' },
-      color: 'bg-amber-500',
-    },
-    {
-      label: 'ETA',
-      value: model.etaValue,
-      position: { top: '78%', left: '68%' },
-      color: 'bg-emerald-500',
-    },
-    {
-      label: 'LOC use',
-      value: model.locUtilizationLabel,
-      position: { top: '36%', left: '8%' },
-      color: 'bg-rose-500',
-    },
-  ];
-
   return (
     <PageTransition>
-      <div className="p-3 md:p-8 max-w-[1500px] mx-auto">
-        <header className="mb-4 md:mb-6">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <p className={`text-sm font-medium ${classes.textSecondary}`}>Money Loop Dashboard</p>
-              <h1 className={`mt-1 text-2xl font-bold md:text-3xl ${classes.text}`}>InterestShield</h1>
-              <p className={`mt-2 hidden max-w-2xl text-sm leading-6 sm:block ${classes.textSecondary}`}>
-                Income enters the loop, expenses leave the loop, and positive cash flow becomes the fuel that reduces principal and future interest.
-              </p>
+      <div className="mx-auto max-w-[1680px] p-3 md:p-5 xl:p-6">
+        <header className="mb-3 border-b border-white/10 pb-3 md:mb-4 md:pb-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex min-w-0 items-center gap-4">
+              <div>
+                <p className={`text-xs font-medium ${classes.textSecondary}`}>Money Loop Dashboard</p>
+                <h1 className={`mt-0.5 text-xl font-semibold md:text-2xl ${classes.text}`}>Dashboard</h1>
+              </div>
+              <div className={`hidden items-center gap-2 border-l border-white/10 pl-4 text-xs font-medium sm:inline-flex ${statusStyle.value}`}>
+                <span className={`h-2 w-2 rounded-full ${statusStyle.dot}`} />
+                {model.statusLabel}
+              </div>
             </div>
 
-            <div className={`inline-flex w-fit items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-medium md:px-4 md:py-2 md:text-sm ${statusStyle.chip}`}>
-              <span className={`h-2.5 w-2.5 rounded-full ${statusStyle.dot}`} />
-              {model.statusLabel}
+            <div className="domain-tab-scroll min-w-0 overflow-x-auto">
+              <DomainTabs
+                activeTab={domain}
+                onTabChange={(tab) => store.setActiveDomain(tab as Domain)}
+              />
             </div>
-          </div>
-
-          <div className="mt-3 flex justify-center md:mt-5 lg:justify-start">
-            <DomainTabs
-              activeTab={domain}
-              onTabChange={(tab) => store.setActiveDomain(tab as Domain)}
-            />
           </div>
         </header>
 
@@ -226,29 +179,29 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4" aria-label="Dashboard vitals">
+        <section className={`hidden overflow-hidden rounded-md border ${classes.border} bg-black/10 md:grid md:grid-cols-2 xl:grid-cols-4`} aria-label="Dashboard vitals">
           {model.vitals.map((vital) => {
             const style = toneStyles[vital.tone];
             return (
               <article
                 key={vital.id}
                 data-testid={`dashboard-vital-${vital.id}`}
-                className={`${classes.glass} ${style.card} rounded-2xl p-5 min-h-[210px] border`}
+                className={`min-h-[148px] border-b border-white/10 p-4 last:border-b-0 md:[&:nth-child(odd)]:border-r xl:border-b-0 xl:border-r xl:last:border-r-0 ${style.card}`}
               >
                 <div className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>{vital.label}</p>
-                      <p className={`mt-3 text-2xl font-bold leading-tight break-words ${style.value}`}>
+                      <p className={`mt-2 text-2xl font-semibold leading-tight break-words ${style.value}`}>
                         {vital.value}
                       </p>
                     </div>
-                    <span className={`mt-1 h-3 w-3 rounded-full ${style.dot}`} />
+                    <span className={`mt-1 h-2 w-2 rounded-full ${style.dot}`} />
                   </div>
 
-                  <p className={`mt-3 text-sm leading-5 ${classes.textSecondary}`}>{vital.caption}</p>
+                  <p className={`mt-2 text-xs leading-5 ${classes.textSecondary}`}>{vital.caption}</p>
 
-                  <details className={`mt-auto pt-4 text-xs ${classes.textSecondary}`}>
+                  <details className={`mt-auto pt-3 text-xs ${classes.textSecondary}`}>
                     <summary className={`cursor-pointer font-medium ${classes.text}`}>Assumptions</summary>
                     <ul className="mt-2 space-y-1.5">
                       {vital.assumptions.map((assumption) => (
@@ -264,40 +217,43 @@ export default function Dashboard() {
           })}
         </section>
 
-        <section id="dashboard-money-loop-artifacts" className="mt-6 scroll-mt-4 grid gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
-          <div className={`${classes.glass} min-w-0 rounded-2xl p-5 md:p-6`}>
-            <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+        <section id="dashboard-money-loop-artifacts" className="mt-4 scroll-mt-4 border-y border-white/10 py-4 md:mt-5 md:py-5">
+          <div className="min-w-0">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className={`text-sm font-medium ${classes.textSecondary}`}>How the loop reads today</p>
-                <h2 className={`mt-1 text-xl font-semibold ${classes.text}`}>Income - LOC - Expenses - Cash Flow - Principal</h2>
+                <p className={`text-xs font-medium ${classes.textSecondary}`}>How the loop reads today</p>
+                <h2 className={`mt-1 text-xl font-semibold md:text-2xl ${classes.text}`}>Money Loop</h2>
               </div>
-              <span className={`w-fit rounded-lg border px-3 py-1 text-xs font-medium ${nextMoveStyle.chip}`}>
-                {model.nextMove.value}
-              </span>
+              <p className={`max-w-2xl text-sm leading-6 ${classes.textSecondary}`}>
+                Income enters the LOC, expenses leave intentionally, and positive cash flow drives principal down.
+              </p>
             </div>
 
             <MoneyLoopArtifactRail
               data-testid="money-loop-artifact-rail"
               artifacts={model.moneyLoopArtifacts}
-              className="mt-5"
+              className="mt-4"
             />
+          </div>
+        </section>
 
-            <div data-testid="dashboard-change-explanations" className={`mt-5 rounded-xl border ${classes.border} p-4`}>
+        <section className="grid gap-4 border-b border-white/10 py-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
+          <div data-testid="dashboard-change-explanations" className="min-w-0">
               <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>Why this changed</p>
+                  <p className={`text-xs font-semibold ${classes.textSecondary}`}>Why this changed</p>
                   <p className={`mt-1 text-sm leading-6 ${classes.textSecondary}`}>
                     Each edit updates the plan through these assumptions.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <div className="mt-3 grid gap-3 md:grid-cols-2">
                 {model.changeExplanations.map((explanation) => {
                   const style = toneStyles[explanation.tone];
 
                   return (
-                    <div key={explanation.id} className={`rounded-xl border ${style.border} p-3`}>
+                    <div key={explanation.id} className={`border-l-2 ${style.border} bg-white/[0.025] p-3`}>
                       <div className="flex items-start justify-between gap-3">
                         <p className={`text-sm font-semibold ${classes.text}`}>{explanation.label}</p>
                         <span className={`rounded-md border px-2 py-0.5 text-[11px] font-medium ${style.chip}`}>
@@ -309,21 +265,19 @@ export default function Dashboard() {
                   );
                 })}
               </div>
-            </div>
-
-            <div className={`mt-5 rounded-xl border ${nextMoveStyle.border} p-4`}>
-              <p className={`text-xs font-semibold uppercase ${classes.textSecondary}`}>Coach note</p>
-              <p className={`mt-2 text-lg font-semibold ${classes.text}`}>{model.nextMove.title}</p>
-              <p className={`mt-1 text-sm leading-6 ${classes.textSecondary}`}>{model.nextMove.caption}</p>
-            </div>
           </div>
 
-          <HeroVisual
-            domain={domain}
-            hotspots={heroHotspots}
-            trendValue={formatCurrency(activeDebt.balance)}
-            trendLabel={`${dashboardDomainLabel(domain)} balance`}
-          />
+          <aside className={`border-l-2 ${nextMoveStyle.border} bg-white/[0.025] p-4`}>
+            <p className={`text-xs font-semibold ${classes.textSecondary}`}>Next Move</p>
+            <p className={`mt-2 text-xl font-semibold ${nextMoveStyle.value}`}>{model.nextMove.title}</p>
+            <p className={`mt-2 text-sm leading-6 ${classes.textSecondary}`}>{model.nextMove.caption}</p>
+            <Link
+              href="/simulator"
+              className={`mt-5 inline-flex min-h-10 items-center justify-center rounded-md border px-4 text-sm font-semibold ${nextMoveStyle.chip}`}
+            >
+              Review plan
+            </Link>
+          </aside>
         </section>
 
         <section className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -477,7 +431,7 @@ export default function Dashboard() {
             </div>
 
             <p className={`mt-5 text-xs leading-5 ${classes.textSecondary}`}>
-              Active target: {dashboardDomainLabel(domain)}. LOC daily interest is estimated from the current balance; real lenders may calculate and post interest differently.
+              Active target: {activeDebt.name}. LOC daily interest is estimated from the current balance; real lenders may calculate and post interest differently.
             </p>
           </div>
         </section>

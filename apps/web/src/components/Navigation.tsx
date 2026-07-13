@@ -95,10 +95,10 @@ export default function Navigation() {
       <nav
         aria-label="Primary navigation"
         data-testid="primary-navigation"
-        className={`fixed bottom-0 left-0 right-0 z-50 ${classes.nav} border-t md:relative md:border-t-0 md:border-r md:w-64 md:min-h-screen`}
+        className={`fixed bottom-0 left-0 right-0 z-50 ${classes.nav} border-t md:sticky md:top-0 md:h-screen md:w-56 md:border-r md:border-t-0`}
       >
-        <div className="px-4 py-2 md:p-6">
-          <div className="hidden md:block mb-8">
+        <div className="px-4 py-2 md:p-4">
+          <div className="mb-7 hidden md:block">
             <div className="flex items-center gap-3">
               <Image 
                 src="/logo-64.png" 
@@ -108,22 +108,22 @@ export default function Navigation() {
                 className="w-10 h-10 flex-shrink-0"
               />
               <div>
-                <h1 className={`text-xl font-bold ${classes.text}`}>InterestShield</h1>
-                <p className={`text-[10px] ${classes.textSecondary} tracking-wide uppercase`}>Powered by Velocity Banking</p>
+                <h1 className={`text-lg font-semibold ${classes.text}`}>InterestShield</h1>
+                <p className={`text-[10px] ${classes.textSecondary}`}>Velocity Banking</p>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-8 gap-1 md:flex md:flex-col md:space-y-2">
+          <div className="grid grid-cols-8 gap-1 md:flex md:flex-col md:space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-label={item.label}
                 aria-current={pathname === item.href ? 'page' : undefined}
-                className={`flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-xl px-2 py-3 transition-all md:justify-start md:px-4 ${
+                className={`flex min-h-12 min-w-0 items-center justify-center gap-3 rounded-md border-l-2 px-2 py-3 transition-all md:justify-start md:px-3 ${
                   pathname === item.href
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : `${classes.textSecondary} hover:${classes.text} hover:bg-slate-800/50`
+                    ? 'border-emerald-400 bg-white/[0.05] text-emerald-300'
+                    : `border-transparent ${classes.textSecondary} hover:${classes.text} hover:bg-white/[0.035]`
                 } ${item.isDynamic ? 'relative' : ''}`}
               >
                 <NavIconToken token={navIconTokens[item.href]} />
@@ -146,35 +146,37 @@ export default function Navigation() {
             type="button"
             onClick={() => setShowAI(true)}
             aria-label="Open Velocity Guardian"
-            className={`hidden md:flex group relative w-full flex-col items-center gap-2 p-3 mt-4 rounded-2xl ${classes.glassButton}`}
+            className={`group relative mt-5 hidden w-full items-center gap-3 rounded-md border border-white/10 bg-white/[0.025] p-3 text-left md:flex`}
             style={{ perspective: '500px' }}
           >
             <div 
-              className="relative w-16 h-16 group-hover:scale-110 transition-transform duration-300"
+              className="relative h-11 w-11 shrink-0 transition-transform duration-300 group-hover:scale-105"
               style={{ animation: 'float 3s ease-in-out infinite' }}
             >
               <Image
                 src="/shield-guardian.png"
                 alt="Velocity Guardian"
                 fill
-                sizes="64px"
+                sizes="44px"
                 loading="eager"
                 className="object-contain drop-shadow-lg"
                 style={{ filter: 'drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3))' }}
               />
             </div>
-            <span className="text-sm font-medium text-emerald-400 group-hover:text-emerald-300">Velocity Guardian</span>
-            <span className={`text-xs ${classes.textSecondary}`}>Ask me anything</span>
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-emerald-300">Velocity Guardian</span>
+              <span className={`mt-0.5 block text-xs ${classes.textSecondary}`}>Ask a question</span>
+            </span>
           </button>
           
-          <div className="hidden md:block mt-6">
+          <div className="mt-4 hidden md:block">
             <button
               type="button"
               onClick={() => setShowThemes(!showThemes)}
               aria-label="Choose theme"
               aria-expanded={showThemes}
               aria-haspopup="true"
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl ${classes.glassButton}`}
+              className="flex w-full items-center justify-between rounded-md border border-white/10 bg-white/[0.025] px-3 py-2.5"
             >
               <span className={`text-sm ${classes.textSecondary}`}>Theme</span>
               <NavIconToken token={themeIconTokens[theme]} />

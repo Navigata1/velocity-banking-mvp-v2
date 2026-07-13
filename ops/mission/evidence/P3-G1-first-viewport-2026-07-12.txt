@@ -1,0 +1,31 @@
+Gate: P3 dashboard first viewport and responsive shell
+Result: PASS
+
+Automated verification:
+- web regression tests: 243 passed
+- independent financial reference fixtures: 2 passed
+- accessibility route contract: passed
+- ESLint: passed
+- Next.js 16.2.10 production build: passed, 8 static routes
+- built-route smoke: 7/7 passed
+
+Browser verification:
+- Codex in-app browser at 1440 x 900 and 390 x 844
+- desktop document width: 1425, scroll width: 1425
+- mobile document width: 375, scroll width: 375
+- four vitals remain the only first-screen metrics
+- Money Loop stage is visible in the desktop first viewport
+- mobile keeps four vitals and the five-step bridge above the full stage
+- artifact Next control selected LOC and updated the active tabpanel
+- reduced-motion behavior remains covered by the existing CSS contract
+
+Visual review:
+- concept: docs/design/p3-dashboard-first-viewport-concept.png
+- latest browser captures compared directly against the concept
+- P3 matches hierarchy, instrument strip, graphite shell, stage dominance, and responsive rhythm
+- photoreal 3D object assets remain intentionally deferred to P4
+
+Architecture:
+- financial model, editable assumptions, warning logic, route map, and accessibility hooks are unchanged
+- main shell now uses min-width containment so long controls cannot widen the document
+- domain tabs remain complete and horizontally scroll inside their own chrome-free viewport

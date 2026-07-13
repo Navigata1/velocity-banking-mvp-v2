@@ -1,0 +1,19 @@
+Gate: P3-T1 red evidence
+
+Initial layout compile:
+- moving the domain control left one dashboard header wrapper unclosed.
+- corrected the JSX hierarchy before visual verification.
+
+Initial runtime smoke:
+- a downstream note still called the removed dashboardDomainLabel helper.
+- replaced it with the already selected activeDebt.name value.
+
+Initial desktop responsive smoke:
+- the flex main region retained intrinsic content width.
+- at a 1440 browser viewport, document scroll width reached 1525 pixels.
+- added min-w-0 to the shared main shell and contained the complete domain list in its own horizontal scroller.
+- final desktop document width and scroll width both equal 1425 pixels.
+
+Initial mobile smoke:
+- the domain strip exposed native scrollbar chrome.
+- retained scrolling while hiding native scrollbar chrome across Chromium and Firefox.

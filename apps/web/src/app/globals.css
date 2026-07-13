@@ -211,6 +211,15 @@ body {
   display: none;
 }
 
+.domain-tab-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.domain-tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .artifact-token {
     animation: artifactFloat 4.8s ease-in-out infinite;

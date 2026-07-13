@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T03:58:00Z",
+    "updated": "2026-07-13T04:26:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -181,7 +181,7 @@
       "id": "P2",
       "title": "Supabase Foundation",
       "goal": "Web and Expo can persist private, owner-scoped, recoverable, deletable financial state through one audited data contract.",
-      "status": "in_progress",
+      "status": "done",
       "sessionsEstimate": "5-8",
       "gates": [
         {
@@ -199,8 +199,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:28:00Z",
-          "notes": "Web 242 regressions, account and adapter contracts, independent fixtures, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke pass."
+          "lastRun": "2026-07-13T04:06:40Z",
+          "notes": "Web 243 regressions, account and adapter contracts, independent fixtures, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke pass."
         },
         {
           "id": "P2-G3",
@@ -273,10 +273,14 @@
         {
           "id": "P2-T5",
           "title": "Add selective Cloudflare export and report lane",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P2-T3"],
-          "pr": null,
-          "notes": "Authenticated Worker + private R2 report-object lane is in review. Supabase remains the system of record; no D1 mirror or live Cloudflare resource is created."
+          "pr": {
+            "number": 232,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/232",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #232 adds an authenticated Worker + private R2 report-object lane. Supabase remains the sole financial handoff target and system of record; no D1 mirror or live Cloudflare resource was created."
         }
       ]
     },
@@ -284,35 +288,35 @@
       "id": "P3",
       "title": "Web Product Overhaul",
       "goal": "The site and dashboard are calm, fast, accessible, modular, and centered on four truthful vitals plus the Money Loop experience.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "6-10",
       "gates": [
         {
           "id": "P3-G1",
           "title": "Web tests and accessibility contract",
           "command": "npm --prefix apps/web test",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
+          "lastRun": "2026-07-13T04:26:00Z",
+          "notes": "Web 243 regressions, two independent fixtures, accessibility route contract, and responsive browser smoke pass."
         },
         {
           "id": "P3-G2",
           "title": "Web lint",
           "command": "npm --prefix apps/web run lint",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
+          "lastRun": "2026-07-13T04:26:00Z",
+          "notes": "ESLint passes after the first-viewport and shared-shell changes."
         },
         {
           "id": "P3-G3",
           "title": "Web production build",
           "command": "npm --prefix apps/web run build",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P3-G1-first-viewport-2026-07-12.txt",
+          "lastRun": "2026-07-13T04:26:00Z",
+          "notes": "Next.js 16.2.10 production build and seven-route built HTTP smoke pass."
         },
         {
           "id": "P3-G4",
@@ -328,10 +332,10 @@
         {
           "id": "P3-T1",
           "title": "Freeze information architecture and dashboard first viewport",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P1-T2"],
           "pr": null,
-          "notes": "Four vitals first, model-backed Money Loop stage second, detail drawers after."
+          "notes": "Implementation is locally verified: compact four-vital instrument strip, model-backed Money Loop stage, graphite shell, chrome-free domain scroller, and desktop/mobile width containment. PR pending. Red evidence: ops/mission/evidence/P3-T1-red-2026-07-12.txt."
         },
         {
           "id": "P3-T2",
@@ -757,13 +761,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/231",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 232,
+      "title": "Add selective Cloudflare report lane",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/232",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
-    "activePhase": "P2",
+    "activePhase": "P3",
     "nextActions": [
-      "Merge the P2-T5 Cloudflare Worker + private R2 report lane after GitHub CI and Vercel preview pass, then close P2.",
-      "Begin P3-T1 with a dashboard information-architecture and responsive shell overhaul while preserving the four-vital contract.",
+      "Complete P3-T1 with a dashboard information-architecture and responsive first-viewport overhaul while preserving the four-vital truth contract.",
+      "Run rendered desktop and mobile browser smoke against the new first viewport and record overflow, keyboard, and console evidence.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
