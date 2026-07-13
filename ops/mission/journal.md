@@ -56,3 +56,9 @@
 - Added an owner-scoped snapshot idempotency key and a database check requiring it for local-demo handoffs.
 - Clean reset and 21 pgTAP checks prove same-owner retries cannot duplicate rows while different owners remain independent.
 - A dedicated cloud project is a $10 monthly cost, so local Auth/RLS remains the implementation lane until the production cost gate is explicitly approved.
+
+## 2026-07-13T02:50Z - P2 shared snapshot mutation verified
+- PR #224 merged at 46b2425 after both GitHub quality workflows and the Vercel preview passed.
+- Added a dependency-free persistence contract shared by future web and Expo adapters.
+- The contract validates owner UUID, durable idempotency key, known storage keys, duplicate entries, deterministic ordering, and explicit Supabase upsert targets.
+- Web regression 242, Supabase 21-test gate, lint, build, and Expo TypeScript pass.
