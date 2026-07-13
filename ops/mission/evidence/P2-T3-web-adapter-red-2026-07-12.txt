@@ -1,0 +1,6 @@
+Gate: P2-T3 web Supabase adapter red test
+Command: npm --prefix apps/web run test:supabase:client
+Exit: 1
+Observed failure:
+  Error: Cannot find module apps/web/scripts/supabase-client-contract.cjs
+Result: the web app had no verified-identity snapshot sync adapter before implementation.

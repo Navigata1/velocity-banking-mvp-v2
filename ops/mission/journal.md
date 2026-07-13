@@ -62,3 +62,9 @@
 - Added a dependency-free persistence contract shared by future web and Expo adapters.
 - The contract validates owner UUID, durable idempotency key, known storage keys, duplicate entries, deterministic ordering, and explicit Supabase upsert targets.
 - Web regression 242, Supabase 21-test gate, lint, build, and Expo TypeScript pass.
+
+## 2026-07-13T03:00Z - P2 web Supabase adapter verified
+- PR #225 merged at 238f751 after both GitHub quality workflows and the Vercel preview passed.
+- Pinned supabase-js 2.110.2 and Supabase SSR 0.12.0, with browser configuration limited to URL and publishable key.
+- The web adapter derives ownership from getClaims, then performs profile, idempotent snapshot, and audit mutations in order.
+- npm audit exposed high-severity Next.js 16.1.6 advisories with a non-major 16.2.10 fix; upgrade is queued as a separate security PR.
