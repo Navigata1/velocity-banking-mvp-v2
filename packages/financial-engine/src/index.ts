@@ -122,6 +122,62 @@ export interface MoneyLoopPayoffResult {
   failureReason?: MoneyLoopFailureReason;
 }
 
+export const LENDER_TERMS_CONTRACT_VERSION = '2.0.0' as const;
+
+export type LenderTermField =
+  | 'annualFee'
+  | 'transactionFeePercent'
+  | 'rateMode'
+  | 'drawPeriodMonths'
+  | 'repaymentPeriodMonths'
+  | 'minimumDraw'
+  | 'minimumPayment';
+
+export type LenderTermSource = 'lender-document' | 'user-provided' | 'model-default';
+export type LenderTermsConfidence = 'complete' | 'estimated' | 'incomplete';
+export type LenderRateMode = 'fixed' | 'variable';
+export type LenderMinimumPaymentMode = 'fixed' | 'percent-of-balance' | 'interest-only';
+
+export interface LenderMinimumPaymentInput {
+  mode?: LenderMinimumPaymentMode;
+  value?: number;
+}
+
+export interface LenderMinimumPayment {
+  mode: LenderMinimumPaymentMode;
+  value: number | null;
+}
+
+export interface LenderTermsInput {
+  annualFee?: number;
+  transactionFeePercent?: number;
+  rateMode?: LenderRateMode;
+  drawPeriodMonths?: number;
+  repaymentPeriodMonths?: number;
+  minimumDraw?: number;
+  minimumPayment?: LenderMinimumPaymentInput;
+  sources?: Partial<Record<LenderTermField, LenderTermSource>>;
+}
+
+export interface LenderTermsContract {
+  version: typeof LENDER_TERMS_CONTRACT_VERSION;
+  confidence: LenderTermsConfidence;
+  projectionReady: boolean;
+  missingFields: LenderTermField[];
+  estimatedFields: LenderTermField[];
+  assumptions: string[];
+  sources: Partial<Record<LenderTermField, LenderTermSource>>;
+  terms: {
+    annualFee: number | null;
+    transactionFeePercent: number | null;
+    rateMode: LenderRateMode | null;
+    drawPeriodMonths: number | null;
+    repaymentPeriodMonths: number | null;
+    minimumDraw: number | null;
+    minimumPayment: LenderMinimumPayment | null;
+  };
+}
+
 export type MobilePayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
@@ -328,6 +384,80 @@ function clampLoopPressure(value: number): number {
 function finitePositiveInteger(value: number, fallback: number): number {
   if (!Number.isFinite(value) || value <= 0) return fallback;
   return Math.max(1, Math.trunc(value));
+}
+
+const LENDER_TERM_FIELDS: LenderTermField[] = [
+  'annualFee',
+  'transactionFeePercent',
+  'rateMode',
+  'drawPeriodMonths',
+  'repaymentPeriodMonths',
+  'minimumDraw',
+  'minimumPayment',
+];
+
+function optionalNonNegative(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function optionalPositiveInteger(value: unknown): number | null {
+  return typeof value === 'number' && Number.isInteger(value) && value > 0 ? value : null;
+}
+
+function normalizeMinimumPayment(value: LenderMinimumPaymentInput | undefined): LenderMinimumPayment | null {
+  if (!value) return null;
+  const mode = value.mode;
+  if (mode !== 'fixed' && mode !== 'percent-of-balance' && mode !== 'interest-only') return null;
+  if (mode === 'interest-only') return { mode, value: null };
+  if (typeof value.value !== 'number' || !Number.isFinite(value.value) || value.value <= 0) return null;
+  if (mode === 'percent-of-balance' && value.value > 1) return null;
+  return { mode, value: value.value };
+}
+
+export function buildLenderTermsContract(input: LenderTermsInput): LenderTermsContract {
+  const terms: LenderTermsContract['terms'] = {
+    annualFee: optionalNonNegative(input.annualFee),
+    transactionFeePercent: optionalNonNegative(input.transactionFeePercent),
+    rateMode: input.rateMode === 'fixed' || input.rateMode === 'variable' ? input.rateMode : null,
+    drawPeriodMonths: optionalPositiveInteger(input.drawPeriodMonths),
+    repaymentPeriodMonths: optionalPositiveInteger(input.repaymentPeriodMonths),
+    minimumDraw: optionalNonNegative(input.minimumDraw),
+    minimumPayment: normalizeMinimumPayment(input.minimumPayment),
+  };
+  const missingFields = LENDER_TERM_FIELDS.filter((field) => terms[field] === null);
+  const sources: LenderTermsContract['sources'] = {};
+  const estimatedFields: LenderTermField[] = [];
+
+  for (const field of LENDER_TERM_FIELDS) {
+    if (missingFields.includes(field)) continue;
+    const requestedSource = input.sources?.[field];
+    const source: LenderTermSource = requestedSource === 'lender-document' || requestedSource === 'model-default'
+      ? requestedSource
+      : 'user-provided';
+    sources[field] = source;
+    if (source !== 'lender-document') estimatedFields.push(field);
+  }
+
+  const confidence: LenderTermsConfidence = missingFields.length > 0
+    ? 'incomplete'
+    : estimatedFields.length > 0
+      ? 'estimated'
+      : 'complete';
+  const assumptions = [
+    ...missingFields.map((field) => `${field} is missing; lender-specific projections are blocked.`),
+    ...estimatedFields.map((field) => `${field} is ${sources[field] === 'model-default' ? 'a model default' : 'user provided'} and must be verified against lender documents.`),
+  ];
+
+  return {
+    version: LENDER_TERMS_CONTRACT_VERSION,
+    confidence,
+    projectionReady: missingFields.length === 0,
+    missingFields,
+    estimatedFields,
+    assumptions,
+    sources,
+    terms,
+  };
 }
 
 function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashboardInput {

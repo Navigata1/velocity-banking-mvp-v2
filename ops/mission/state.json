@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T01:54:00Z",
+    "updated": "2026-07-13T02:00:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -104,8 +104,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/P1-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:54:00Z",
-          "notes": "Includes ledger invariants and lender-term boundary fixtures."
+          "lastRun": "2026-07-13T02:00:00Z",
+          "notes": "240 regressions include ledger invariants and lender-term boundary fixtures."
         },
         {
           "id": "P1-G2",
@@ -113,7 +113,7 @@
           "command": "npm --prefix apps/web run build",
           "status": "passed",
           "evidence": "ops/mission/evidence/P1-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:54:00Z",
+          "lastRun": "2026-07-13T02:00:00Z",
           "notes": ""
         },
         {
@@ -122,7 +122,7 @@
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
           "evidence": "ops/mission/evidence/P1-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:54:00Z",
+          "lastRun": "2026-07-13T02:00:00Z",
           "notes": ""
         }
       ],
@@ -130,18 +130,18 @@
         {
           "id": "P1-T1",
           "title": "Fix canonical Money Loop ledger continuity",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
+          "pr": 218,
           "notes": "Corrected LOC event balanceAfter semantics. Red evidence: ops/mission/evidence/P1-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
         },
         {
           "id": "P1-T2",
           "title": "Define lender terms and confidence contract",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P1-T1"],
           "pr": null,
-          "notes": "Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence."
+          "notes": "Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence. Red evidence: ops/mission/evidence/P1-T2-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
         },
         {
           "id": "P1-T3",
@@ -539,7 +539,7 @@
     {
       "label": "Web regression tests",
       "baseline": "238",
-      "current": "239",
+      "current": "240",
       "target": "300+ focused",
       "direction": "up"
     },
@@ -601,13 +601,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/217",
       "phase": "P0 Release Truth",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 218,
+      "title": "Fix Money Loop ledger continuity",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/218",
+      "phase": "P1 Calculation Contract v2",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P1",
     "nextActions": [
-      "Merge P1-T1 after GitHub CI and Vercel preview pass, then mark the continuity task done.",
-      "Define the versioned lender terms and confidence contract for P1-T2 without wiring persistence yet.",
+      "Merge P1-T2 after GitHub CI and Vercel preview pass, then mark the lender terms contract done.",
+      "Implement transaction-calendar LOC accrual for P1-T3 using actual month length, paydays, bill dates, and an explicitly labeled estimate fallback.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

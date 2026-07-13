@@ -1,0 +1,7 @@
+Gate: P1-T2 red test
+Command: npm --prefix apps/web test
+Exit: 1
+Observed failure:
+  lender terms contract versions confidence and blocks projections with missing terms
+  TypeError: sharedFinancialEngine.buildLenderTermsContract is not a function
+Result: the test proved the lender terms and confidence contract did not exist before implementation.

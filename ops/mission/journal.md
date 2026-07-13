@@ -19,3 +19,9 @@
 - Added a regression that failed on the discontinuous LOC interest event: $4,206.66 was reported where the routed balance plus interest was $3,131.66.
 - Rebased the interest and summary events on the post-income, post-expense LOC balance without changing the average-daily-balance interest calculation.
 - P1-G1 through P1-G3 pass: 239 regressions and accessibility contracts, the Next.js production build, and Expo TypeScript.
+
+## 2026-07-13T02:00Z - P1 lender terms contract verified locally
+- PR #218 merged at 8371089 after both GitHub quality workflows and the Vercel preview passed; P1-T1 is done.
+- Added lender terms contract v2.0.0 for fees, rate mode, draw and repayment periods, minimum draw, minimum payment, provenance, and confidence.
+- Missing terms block projection readiness; user and model values remain estimated until every required field is sourced from lender documents.
+- P1 gates pass with 240 regressions, web lint, the Next.js production build, and Expo TypeScript.
