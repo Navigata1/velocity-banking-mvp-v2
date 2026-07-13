@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T06:25:00Z",
+    "updated": "2026-07-13T06:35:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -418,18 +418,22 @@
         {
           "id": "P4-T1",
           "title": "Define the five-artifact visual grammar and data bindings",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P3-T1"],
-          "pr": null,
-          "notes": "Ready for PR: version 1 binds five canonical geometries to normalized model channels, warning-aware selection motion, complete-set fallback, and static/efficient/full capability policy; the DOM rail consumes the contract and remains authoritative."
+          "pr": {
+            "number": 237,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/237",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "PR #237 binds five canonical geometries to normalized model channels, explicit operational state, fail-closed runtime validation, canonical DOM fallback, and static/efficient/full capability policy. Both GitHub quality runs and Vercel passed after three adversarial review rounds closed every finding."
         },
         {
           "id": "P4-T2",
           "title": "Build the lazy-loaded Three.js selection stage",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P4-T1", "P3-T4"],
           "pr": null,
-          "notes": "One spin then settle; DOM controls remain authoritative."
+          "notes": "Active on codex/mission/p4-lazy-three-stage from the committed stage design: add a client-only procedural Three.js renderer, keep the current static orbit as first paint and fallback, and route every selection through the DOM-owned state."
         },
         {
           "id": "P4-T3",
@@ -812,13 +816,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/236",
       "phase": "P3 Web Product Overhaul",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 237,
+      "title": "Define the Money Loop 3D visual contract",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/237",
+      "phase": "P4 Model-Driven 3D Experience",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P4",
     "nextActions": [
-      "Publish P4-T1, wait for duplicate GitHub quality and Vercel preview gates, then merge when green.",
-      "Begin P4-T2 from the committed stage spec and plan: add a lazy client-only Three.js renderer that consumes visual contract version 1 while DOM controls remain authoritative.",
+      "Implement P4-T2 test-first from the committed stage spec: add a lazy client-only Three.js renderer that consumes visual contract version 1 while DOM controls remain authoritative.",
+      "Verify all five procedural artifacts select and settle without changing first paint, reduced-motion fallback, route overflow, or public asset budgets.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

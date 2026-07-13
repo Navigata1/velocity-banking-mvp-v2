@@ -185,3 +185,8 @@
 - Red evidence captured the missing contract and missing rail wiring. Two adversarial review rounds then exposed incomplete and malformed runtime models, fail-open capability selection, tone-derived blocked LOC state, and duplicate DOM tab identities; each received a failing regression and correction.
 - Green gates include 249 regressions, fixtures, accessibility, metadata, assets, lint, 14-page build, and all rendered desktop/mobile routes plus the LOC interaction.
 - Final independent re-review reports no findings after the runtime and DOM fallback corrections.
+
+## 2026-07-13T06:35Z - P4 visual contract merged; lazy Three.js stage begins
+- PR #237 merged at f47ca1d after both GitHub quality workflows and the Vercel preview passed.
+- P4-T1 is done with explicit operational state, versioned geometry and channel bindings, fail-closed runtime validation, canonical DOM fallback, and a committed stage design and plan.
+- P4-T2 starts on codex/mission/p4-lazy-three-stage. The existing static orbit remains first paint and fallback while a procedural Three.js renderer is added behind the same DOM-owned selection state.
