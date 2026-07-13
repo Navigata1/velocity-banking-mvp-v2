@@ -2,7 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { collectReachableSources, readReachableSource } = require('./source-contract-helpers.cjs');
+const { collectReachableSources, readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 

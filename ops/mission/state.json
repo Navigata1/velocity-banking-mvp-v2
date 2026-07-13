@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T04:47:12Z",
+    "updated": "2026-07-13T04:52:11Z",
     "sessionCount": 1
   },
   "policies": {
@@ -347,7 +347,7 @@
           "status": "in_progress",
           "dependsOn": ["P3-T1"],
           "pr": null,
-          "notes": "Learn, Portfolio, and Expo shell orchestration are reduced to 494, 63, and 207 lines with bounded modules. All web, mobile, build, export, Android bundle, and independent review gates pass; PR publication remains."
+          "notes": "Learn, Portfolio, and Expo shell orchestration are reduced to 494, 63, and 207 lines with bounded modules. All local gates pass; PR #234 is open, Vercel is green, and the root mobile-port contract was repaired after its first managed run exposed stale monolith assumptions."
         },
         {
           "id": "P3-T3",

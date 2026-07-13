@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
-const { readReachableSource } = require('./source-contract-helpers.cjs');
+const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');

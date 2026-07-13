@@ -138,3 +138,4 @@
 - An independent review found directory-wide source aggregation could let dead files satisfy static contracts. Reachable-import traversal and explicit root wiring assertions resolve that test gap.
 - The stronger accessibility traversal exposed and fixed the Supabase account email input's explicit accessible name.
 - Web 244 regressions, fixtures, accessibility, lint, production build, Expo typecheck and account contracts, web export smoke, Android Hermes bundle, and diff checks pass. P3-T2 is ready for PR publication.
+- PR #234's first managed quality run caught stale root mobile-port source assumptions. The repaired contract now follows reachable modules and proves root navigation callback wiring; the complete mobile-port suite passes locally.

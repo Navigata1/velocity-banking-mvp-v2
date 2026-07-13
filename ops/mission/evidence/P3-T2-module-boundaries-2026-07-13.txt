@@ -25,5 +25,10 @@ Independent review
 - The stronger scan exposed and fixed an explicit accessible name on the Supabase account email input.
 - Re-review: resolved with no remaining finding.
 
+Managed CI follow-up
+- The first GitHub quality run exposed two root mobile-port assertions that still assumed DashboardPanel and MobileMode lived inside mobile-shell.tsx.
+- The shared reachable-import helper moved to repository scope; the standing mobile-port contract now reads the extracted route-panel and navigation ownership while asserting root callback wiring.
+- node scripts/mobile-port-contract-tests.cjs: PASS after the contract repair.
+
 Residual boundary
 - Native iOS and physical Android interaction/persistence flows were not exercised in this refactor slice; Android bundle generation and Expo web route smoke passed.
