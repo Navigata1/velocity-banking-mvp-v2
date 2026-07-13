@@ -2,10 +2,16 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const { readReachableSource } = require('./source-contract-helpers.cjs');
 
 const repoRoot = path.resolve(__dirname, '..');
 const moduleCache = new Map();
 const ts = require(path.join(repoRoot, 'apps/web/node_modules/typescript'));
+const mobileShellEntry = path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx');
+
+function readMobileShellSource() {
+  return readReachableSource(mobileShellEntry);
+}
 
 function loadTsFile(filename) {
   if (moduleCache.has(filename)) return moduleCache.get(filename).exports;
@@ -689,7 +695,10 @@ test('shared mobile dashboard snapshot keeps the required four vitals aligned wi
 });
 
 test('native dashboard renders the four vitals before coach or review cards', () => {
-  const source = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const source = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-shell/route-panels.tsx'),
+    'utf8'
+  );
   const dashboardPanelStart = source.indexOf('function DashboardPanel');
   const simulatorPanelStart = source.indexOf('function SimulatorStrategyPanel');
   const dashboardPanel = source.slice(dashboardPanelStart, simulatorPanelStart);
@@ -798,10 +807,12 @@ test('shared mobile snapshots sanitize non-finite assumptions before rendering l
 
 test('Expo app uses a shared-engine native shell instead of local math or broken static tabs', () => {
   const routeSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/index.tsx'), 'utf8');
-  const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const shellRootSource = fs.readFileSync(mobileShellEntry, 'utf8');
+  const shellSource = readMobileShellSource();
   const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
 
   assert.ok(routeSource.includes("from '@/components/mobile-shell'"), 'expected route to delegate UI to a component');
+  assert.ok(shellRootSource.includes('<MobileModeNavigation'), 'expected MobileShell to mount extracted navigation');
 
   assert.ok(
     shellSource.includes("@interestshield/financial-engine"),
@@ -812,13 +823,16 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
     'expected mobile shell to render the shared dashboard snapshot'
   );
   assert.ok(!shellSource.includes('8000 - 4500'), 'expected dashboard not to inline cash-flow arithmetic');
-  assert.ok(shellSource.includes("type MobileMode = 'dashboard' | 'simulator' | 'cockpit' | 'portfolio' | 'learn' | 'vault'"));
+  for (const mode of ['dashboard', 'simulator', 'cockpit', 'portfolio', 'learn', 'vault', 'settings']) {
+    assert.ok(shellSource.includes(`| '${mode}'`), `expected MobileMode to include ${mode}`);
+  }
   assert.ok(shellSource.includes("const modes: Array<{ id: MobileMode; label: string }>"));
   assert.ok(shellSource.includes("{ id: 'simulator', label: 'Simulator' }"));
   assert.ok(shellSource.includes("{ id: 'cockpit', label: 'Cockpit' }"));
   assert.ok(shellSource.includes("{ id: 'portfolio', label: 'Portfolio' }"));
   assert.ok(shellSource.includes('{modes.map((mobileMode) => ('));
-  assert.ok(shellSource.includes('onPress={() => handleModeChange(mobileMode.id)}'));
+  assert.ok(shellSource.includes('onPress={() => onModeChange(mobileMode.id)}'));
+  assert.ok(shellRootSource.includes('onModeChange={handleModeChange}'));
   assert.ok(shellSource.includes('testID={`mobile-mode-tab-${id}`}'));
   assert.ok(shellSource.includes('TextInput'), 'expected native editable assumption controls');
   assert.ok(shellSource.includes('accessibilityLabel="Active debt name"'));
@@ -936,7 +950,7 @@ test('Expo app uses a shared-engine native shell instead of local math or broken
 
 test('Expo mobile app exposes direct route parity for every demo mode', () => {
   const layoutSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/_layout.tsx'), 'utf8');
-  const shellSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/mobile-shell.tsx'), 'utf8');
+  const shellSource = readMobileShellSource();
   const routeExpectations = [
     ['index.tsx', 'dashboard', 'index', 'InterestShield'],
     ['simulator.tsx', 'simulator', 'simulator', 'Simulator'],

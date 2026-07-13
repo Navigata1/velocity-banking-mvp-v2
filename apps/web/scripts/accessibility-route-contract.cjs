@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { collectReachableSources, readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 
@@ -31,6 +32,10 @@ let failures = 0;
 
 function read(relativePath) {
   return fs.readFileSync(path.join(appRoot, relativePath), 'utf8');
+}
+
+function readRoute(relativePath) {
+  return readReachableSource(path.join(appRoot, relativePath));
 }
 
 function fail(message) {
@@ -130,7 +135,7 @@ function runRouteContract() {
   const smokeRoutes = read('scripts/smoke-routes.cjs');
 
   for (const contract of routeContracts) {
-    const source = read(contract.file);
+    const source = readRoute(contract.file);
     assertIncludes('scripts/smoke-routes.cjs', smokeRoutes, `['${contract.route}', '${contract.label}'`, `${contract.label} is covered by built-route smoke`);
 
     for (const marker of contract.markers) {
@@ -140,7 +145,7 @@ function runRouteContract() {
 }
 
 function runFocusedControlContract() {
-  const portfolio = read('src/app/portfolio/page.tsx');
+  const portfolio = readRoute('src/app/portfolio/page.tsx');
   const vault = read('src/app/vault/page.tsx');
 
   assertIncludes('src/app/portfolio/page.tsx', portfolio, 'role="dialog"', 'add-debt modal is a dialog');
@@ -152,8 +157,15 @@ function runFocusedControlContract() {
 }
 
 function runStaticScans() {
+  const files = new Map();
   for (const relativePath of scannedFiles) {
-    const source = read(relativePath);
+    for (const [filename, source] of collectReachableSources(path.join(appRoot, relativePath))) {
+      files.set(filename, source);
+    }
+  }
+
+  for (const [filename, source] of files) {
+    const relativePath = path.relative(appRoot, filename).replaceAll('\\', '/');
     scanNonInteractiveClickTargets(relativePath, source);
     scanUnnamedFormControls(relativePath, source);
   }

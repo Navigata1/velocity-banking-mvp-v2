@@ -4,8 +4,19 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
+const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 
 const moduleCache = new Map();
+const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
+
+function readPortfolioRouteSource() {
+  return readReachableSource(path.join(portfolioRouteDir, 'page.tsx'));
+}
+
+function readMobileShellSource() {
+  const mobileComponentsPath = path.resolve(__dirname, '..', '..', 'mobile/components');
+  return readReachableSource(path.join(mobileComponentsPath, 'mobile-shell.tsx'));
+}
 
 function createMemoryStorage() {
   const items = new Map();
@@ -876,10 +887,7 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
       balance: 3200,
     },
   });
-  const mobileShellSource = fs.readFileSync(
-    path.resolve(__dirname, '..', '..', 'mobile/components/mobile-shell.tsx'),
-    'utf8'
-  );
+  const mobileShellSource = readMobileShellSource();
 
   assert.equal(portfolioSnapshot.modelingLabel, 'Amortized planning view');
   assert.ok(
@@ -905,11 +913,16 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
 });
 
 test('mobile mode navigation exposes native tab semantics and stable touch targets', () => {
-  const mobileShellSource = fs.readFileSync(
+  const mobileShellRoot = fs.readFileSync(
     path.resolve(__dirname, '..', '..', 'mobile/components/mobile-shell.tsx'),
     'utf8'
   );
+  const mobileShellSource = readMobileShellSource();
 
+  assert.ok(
+    mobileShellRoot.includes('<MobileModeNavigation'),
+    'expected MobileShell to mount the extracted mode navigation'
+  );
   assert.ok(
     mobileShellSource.includes('accessibilityLabel="Mobile section navigation"'),
     'expected mobile mode navigation to expose a named control group'
@@ -2080,13 +2093,16 @@ test('portfolio percent minimum payments recalculate from the current simulated 
 });
 
 test('portfolio page blocks debt-free date claims for invalid projections', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
 
   assert.ok(source.includes('portfolioProjectionValid'), 'expected Portfolio page to derive projection validity');
   assert.ok(source.includes("portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'"));
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
-  assert.ok(source.includes('portfolioProjectionValid && payoffOrder.length > 0'));
+  assert.ok(
+    source.includes('if (!portfolioProjectionValid || payoffOrder.length === 0) return null;'),
+    'expected the payoff-order module to suppress invalid or empty projections'
+  );
   assert.ok(
     source.includes("const velocityNeedsReview = store.strategy === 'velocity' && (!portfolioProjectionValid || warnings.length > 0)"),
     'expected Portfolio velocity badge to review unstable Velocity plans'
@@ -2114,7 +2130,7 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
 });
 
 test('portfolio page guards percent labels before display', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(source.includes('function formatPortfolioPercentLabel(value: number): string'), 'expected Portfolio percent label helper');
   assert.ok(source.includes("if (!Number.isFinite(value)) return 'Review inputs'"), 'expected Portfolio percent helper to reject non-finite values');
@@ -2129,7 +2145,7 @@ test('portfolio page guards percent labels before display', () => {
 });
 
 test('portfolio strategy picker distinguishes planning default from fastest payoff', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(
     source.includes('Planning default: ranks debts for cash-flow unlock'),
@@ -2166,7 +2182,7 @@ test('portfolio strategy picker distinguishes planning default from fastest payo
 });
 
 test('portfolio velocity strategy badge uses a wrapping compact header instead of competing with description copy', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(
     source.includes('data-testid="portfolio-velocity-strategy-badge"'),
@@ -2296,7 +2312,7 @@ test('portfolio run comparison formats restored projection reasons for users', (
 });
 
 test('portfolio page mounts the what-changed-since-last-run panel', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(source.includes('What changed since last run'), 'expected Portfolio to name the run-diff panel');
   assert.ok(source.includes('data-testid="portfolio-run-comparison"'), 'expected Portfolio run-diff panel to expose a stable hook');
@@ -2343,7 +2359,7 @@ test('portfolio payoff path visual model samples the simulated balance descent',
 });
 
 test('portfolio page mounts the engine-backed payoff path visual', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
   const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/PortfolioPayoffPath.tsx'), 'utf8');
 
   assert.ok(source.includes('buildPortfolioPathVisualModel'), 'expected Portfolio page to build the path model outside the component');
@@ -2354,7 +2370,7 @@ test('portfolio page mounts the engine-backed payoff path visual', () => {
 });
 
 test('portfolio debt controls are labeled with the debt name', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(
     source.includes('aria-label={`Debt name for ${d.name}`}'),
@@ -2790,7 +2806,7 @@ test('repository implements a secondary Cloudflare report lane without a D1 fina
 
 test('backup controls label local-only export and import replacement behavior', () => {
   const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
-  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const portfolioSource = readPortfolioRouteSource();
 
   for (const [name, source] of [
     ['Settings', settingsSource],
@@ -2847,7 +2863,7 @@ test('backup controls label local-only export and import replacement behavior', 
 
 test('backup controls expose a pasted JSON import path', () => {
   const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/settings/page.tsx'), 'utf8');
-  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const portfolioSource = readPortfolioRouteSource();
 
   for (const [name, source, prefix] of [
     ['Settings', settingsSource, 'settings'],
@@ -3178,7 +3194,7 @@ test('simulator mortgage option controls expose selected state', () => {
 });
 
 test('portfolio editable controls expose contextual screen-reader labels', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/portfolio/page.tsx'), 'utf8');
+  const source = readPortfolioRouteSource();
 
   assert.ok(source.includes('ariaLabel="Portfolio monthly income"'), 'expected Portfolio income editor label');
   assert.ok(source.includes('ariaLabel="Portfolio monthly expenses"'), 'expected Portfolio expenses editor label');
@@ -3193,6 +3209,22 @@ test('portfolio editable controls expose contextual screen-reader labels', () =>
   assert.ok(source.includes('ariaLabel="New debt balance"'), 'expected add-debt balance label');
   assert.ok(source.includes('ariaLabel="New debt APR"'), 'expected add-debt APR label');
   assert.ok(source.includes('ariaLabel="New debt minimum payment"'), 'expected add-debt minimum payment label');
+});
+
+test('portfolio route keeps page orchestration small and feature ownership local', () => {
+  const pageSource = fs.readFileSync(path.join(portfolioRouteDir, 'page.tsx'), 'utf8');
+  const expectedComponents = [
+    'AddDebtDialog',
+    'PortfolioDebtsSection',
+    'PortfolioPayoffOrder',
+    'PortfolioPlanSection',
+  ];
+
+  assert.ok(pageSource.split(/\r?\n/).length < 150, 'expected Portfolio page.tsx to remain a small route orchestrator');
+  for (const component of expectedComponents) {
+    assert.ok(fs.existsSync(path.join(portfolioRouteDir, `${component}.tsx`)), `expected local ${component} module`);
+    assert.ok(pageSource.includes(`<${component}`), `expected Portfolio page to mount ${component}`);
+  }
 });
 
 test('vault and cockpit editable controls expose contextual screen-reader labels', () => {
@@ -5918,22 +5950,27 @@ test('learn page mistake cascade example keeps LOC availability arithmetic consi
 });
 
 test('learn page ADB teaching example matches the shared daily closing-balance convention', () => {
-  const source = fs
+  const pageSource = fs
     .readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8')
     .replace(/\\'/g, "'");
+  const visualizationSource = fs.readFileSync(
+    path.resolve(__dirname, '..', 'src/app/learn/lesson-card.tsx'),
+    'utf8'
+  );
+  const combinedSource = `${pageSource}\n${visualizationSource}`;
   const expectedInterest = sharedFinancialEngine.calculateADBInterest(5000, 0.1, 4000, 3500, 30);
   const flatInterest = 5000 * (0.1 / 365) * 30;
   const monthlySavings = flatInterest - expectedInterest;
 
   assert.equal(roundCents(expectedInterest), 23.08);
   assert.equal(roundCents(monthlySavings), 18.01);
-  assert.ok(source.includes('daily closing balances'), 'expected Learn copy to name the engine sampling convention');
-  assert.ok(source.includes('ADB ≈ $2,808'), 'expected Learn visual to match the engine ADB convention');
-  assert.ok(source.includes('≈ $18.01'), 'expected Learn visual savings to match the engine convention');
-  assert.ok(source.includes("{ day: '1', bal: 1117, pct: 22 }"), 'expected Learn visual day 1 to include the first daily expense draw');
-  assert.ok(source.includes("{ day: '15', bal: 2750, pct: 55 }"), 'expected Learn visual midpoint to match closing-balance sampling');
-  assert.ok(!source.includes('ADB ≈ $2,750'), 'expected Learn copy not to use the older opening-balance shortcut');
-  assert.ok(!source.includes('$18.75'), 'expected Learn copy not to use the older monthly-rate shortcut savings');
+  assert.ok(pageSource.includes('daily closing balances'), 'expected Learn copy to name the engine sampling convention');
+  assert.ok(visualizationSource.includes('ADB ≈ $2,808'), 'expected Learn visual to match the engine ADB convention');
+  assert.ok(visualizationSource.includes('≈ $18.01'), 'expected Learn visual savings to match the engine convention');
+  assert.ok(visualizationSource.includes("{ day: '1', bal: 1117, pct: 22 }"), 'expected Learn visual day 1 to include the first daily expense draw');
+  assert.ok(visualizationSource.includes("{ day: '15', bal: 2750, pct: 55 }"), 'expected Learn visual midpoint to match closing-balance sampling');
+  assert.ok(!combinedSource.includes('ADB ≈ $2,750'), 'expected Learn copy not to use the older opening-balance shortcut');
+  assert.ok(!combinedSource.includes('$18.75'), 'expected Learn copy not to use the older monthly-rate shortcut savings');
 });
 
 test('learn page uses neutral examples instead of unsupported named anecdotes', () => {
@@ -7139,9 +7176,9 @@ test('ProgressRing clamps progress and sanitizes SVG geometry inputs', () => {
 });
 
 test('Learn animated progress counter hides visual ticks from assistive technology', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8');
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/animated-counter.tsx'), 'utf8');
 
-  assert.ok(source.includes('function AnimatedCounter'), 'expected Learn page to keep a local animated progress counter');
+  assert.ok(source.includes('function AnimatedCounter'), 'expected Learn to keep an animated progress counter');
   assert.ok(source.includes('useMotionValue(value)'), 'expected Learn counter motion value to initialize from the final value');
   assert.ok(source.includes('const stableText = String(value)'), 'expected Learn counter to compute stable screen-reader text');
   assert.ok(source.includes('aria-hidden="true"'), 'expected Learn counter animated text to be visual-only');
@@ -7154,7 +7191,7 @@ test('Learn animated progress counter hides visual ticks from assistive technolo
 });
 
 test('Learn decorative celebration canvases are hidden from assistive technology', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/page.tsx'), 'utf8');
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/learn/celebration-canvases.tsx'), 'utf8');
   const canvasCount = (source.match(/<canvas/g) ?? []).length;
   const ariaHiddenCanvasCount = (source.match(/aria-hidden="true"/g) ?? []).length;
   const presentationCanvasCount = (source.match(/role="presentation"/g) ?? []).length;

@@ -125,3 +125,17 @@
 - Browser smoke at 1440 x 900 and 390 x 844 proves no document overflow; the Next control selects LOC and updates the active tabpanel.
 - The shared main flex region now uses min-width containment, fixing a route-wide horizontal overflow risk exposed by the complete domain strip.
 - All 243 web regressions, independent fixtures, accessibility, lint, production build, and seven built routes pass. Photoreal 3D objects remain a P4 deliverable.
+
+## 2026-07-13T04:27Z - P3 first viewport merged; module boundaries begin
+- PR #233 merged at 5241098 after both GitHub quality workflows and the Vercel preview passed; P3-T1 is done.
+- P3-T2 starts with measured hotspots: Learn 1,284 lines, Portfolio 931 lines, and the Expo mobile shell 1,133 lines.
+- The first extraction target is Learn because its celebration canvas, progress store, lesson visuals, and page composition already form clear behavior-preserving boundaries.
+
+## 2026-07-13T04:47Z - P3 module boundaries verified locally
+- Learn now delegates progress, celebration canvases, animated counters, and lesson composition; its route page is 494 lines.
+- Portfolio now delegates plan, debt editor, payoff order, dialog, formatters, and shared types; its route page is 63 lines.
+- The Expo shell now delegates controls, navigation, Money Loop visuals, payoff path, and route panels; its orchestrator is 207 lines.
+- An independent review found directory-wide source aggregation could let dead files satisfy static contracts. Reachable-import traversal and explicit root wiring assertions resolve that test gap.
+- The stronger accessibility traversal exposed and fixed the Supabase account email input's explicit accessible name.
+- Web 244 regressions, fixtures, accessibility, lint, production build, Expo typecheck and account contracts, web export smoke, Android Hermes bundle, and diff checks pass. P3-T2 is ready for PR publication.
+- PR #234's first managed quality run caught stale root mobile-port source assumptions. The repaired contract now follows reachable modules and proves root navigation callback wiring; the complete mobile-port suite passes locally.
