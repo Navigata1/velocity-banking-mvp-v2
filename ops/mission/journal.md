@@ -185,3 +185,14 @@
 - Red evidence captured the missing contract and missing rail wiring. Two adversarial review rounds then exposed incomplete and malformed runtime models, fail-open capability selection, tone-derived blocked LOC state, and duplicate DOM tab identities; each received a failing regression and correction.
 - Green gates include 249 regressions, fixtures, accessibility, metadata, assets, lint, 14-page build, and all rendered desktop/mobile routes plus the LOC interaction.
 - Final independent re-review reports no findings after the runtime and DOM fallback corrections.
+
+## 2026-07-13T06:35Z - P4 visual contract merged; lazy Three.js stage begins
+- PR #237 merged at f47ca1d after both GitHub quality workflows and the Vercel preview passed.
+- P4-T1 is done with explicit operational state, versioned geometry and channel bindings, fail-closed runtime validation, canonical DOM fallback, and a committed stage design and plan.
+- P4-T2 starts on codex/mission/p4-lazy-three-stage. The existing static orbit remains first paint and fallback while a procedural Three.js renderer is added behind the same DOM-owned selection state.
+
+## 2026-07-13T07:05Z - P4 lazy Three.js stage verified locally
+- Added a client-only React Three Fiber stage with five procedural meshes that consume visual contract version 1; no GLB or public model asset was introduced.
+- The demand-rendered selection rig uses a 650 ms bound: stable turns once, caution at most half a turn, and blocked state settles without a turn.
+- Initial task review caught CSS orbit layers intercepting canvas input and source-only test coverage. Pointer-safe layering and production-consumed runtime contracts now prove exact selection, focus preservation, bounded motion, frame settlement, and incomplete static fallback.
+- Final task review approves both spec compliance and code quality with no findings. All 252 regressions, fixtures, accessibility, metadata, assets, lint, 14-page build, rendered desktop/mobile routes, LOC interaction, and zero production audit pass.

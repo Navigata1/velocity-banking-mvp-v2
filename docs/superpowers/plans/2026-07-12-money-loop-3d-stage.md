@@ -52,12 +52,12 @@
 - Consumes: `MoneyLoopVisualContract`, active artifact id, and `onSelect(id)` from the rail.
 - Produces: an `aria-hidden` canvas with `data-testid="money-loop-three-stage"`, `data-render-mode`, and one selectable mesh per canonical artifact.
 
-- [ ] **Step 1: Add a failing source contract requiring a Next dynamic import with `ssr: false`, an `aria-hidden` canvas boundary, stable canvas dimensions, and the unchanged DOM tablist.**
-- [ ] **Step 2: Run `npm --prefix apps/web test`; expect the lazy-stage contract to fail because the stage files and dependencies do not exist.**
-- [ ] **Step 3: Add pinned `three`, `@types/three`, and `@react-three/fiber` versions, then implement the client stage and five procedural mesh factories named by the visual contract.**
-- [ ] **Step 4: Bind active selection to one camera framing transition and one bounded rotation; route mesh pointer selection through `onSelect` without moving keyboard focus from the DOM controls.**
-- [ ] **Step 5: Run `npm --prefix apps/web test`, `npm --prefix apps/web run lint`, `npm --prefix apps/web run build`, and `npm --prefix apps/web audit --omit=dev`; expect all gates and zero production vulnerabilities.**
-- [ ] **Step 6: Commit the lazy stage as P4-T2 after independent code review.**
+- [x] **Step 1: Add a failing source contract requiring a Next dynamic import with `ssr: false`, an `aria-hidden` canvas boundary, stable canvas dimensions, and the unchanged DOM tablist.**
+- [x] **Step 2: Run `npm --prefix apps/web test`; expect the lazy-stage contract to fail because the stage files and dependencies do not exist.**
+- [x] **Step 3: Add pinned `three`, `@types/three`, and `@react-three/fiber` versions, then implement the client stage and five procedural mesh factories named by the visual contract.**
+- [x] **Step 4: Bind active selection to one camera framing transition and one bounded rotation; route mesh pointer selection through `onSelect` without moving keyboard focus from the DOM controls.**
+- [x] **Step 5: Run `npm --prefix apps/web test`, `npm --prefix apps/web run lint`, `npm --prefix apps/web run build`, and `npm --prefix apps/web audit --omit=dev`; expect all gates and zero production vulnerabilities.**
+- [x] **Step 6: Commit the lazy stage as P4-T2 after independent code review.**
 
 ### Task 3: Capability, Motion, And Lifecycle Controls
 
