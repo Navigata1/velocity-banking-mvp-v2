@@ -1,0 +1,36 @@
+InterestShield mission closeout evidence
+Phase/task: P5-T2 - HyperFrames launch and tutorial compositions
+Current main: a1277b3
+Merged PR: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/242
+Merged at: 2026-07-13T11:12:46Z
+Verified: 2026-07-13T11:13Z
+
+PULL REQUEST GATES
+- Vercel preview deployment: PASS.
+- GitHub run 29245223310 / job 86800375309: PASS in 2m50s.
+- GitHub run 29245278216 / job 86800552448: PASS in 2m41s.
+- Both Ubuntu runs installed apps/media with lifecycle scripts disabled and passed all standing web, mobile, browser, and media gates.
+
+MERGED CAPABILITY
+- Deterministic 12-second InterestShield launch composition.
+- Deterministic 18-second Money Loop tutorial composition.
+- Local pinned fonts and GSAP; no render-time font, script, media, or data fetches.
+- Bound caption sidecars, complete reduced-motion overrides, globally unique Studio IDs, exact finite animation-map evidence, and qualitative truth-first financial visuals.
+- Renderer dependencies remain absent from web and Expo manifests and lockfiles.
+
+FRESH MAIN EVIDENCE
+- Media clean install with `--ignore-scripts`: PASS, 128 packages.
+- Media contracts: PASS, 24 tests.
+- HyperFrames lint/runtime/layout/motion: PASS, 0 errors and 0 warnings; 3 informational findings at the intentional 12-second handoff.
+- Contrast: PASS, 40/40.
+- Animation map: PASS, 26 explicit tweens across two animated timelines.
+- Dependency audit: PASS, 0 vulnerabilities.
+- Full render: PASS, H.264 yuv420p, 1920x1080, 30 fps, 900 frames, 30.000 seconds.
+- Encoded artifact SHA-256: BA07F805F4EE8C3BE8250B9D9A874660596CF78E704309A8DA7A4472CB325B7F.
+- Independent review: no remaining findings; Spec Compliance APPROVED; Code Quality APPROVED.
+
+STATE DECISION
+- P5-T2 is done on current main.
+- P5-T3 begins on codex/mission/p5-remotion-scenario-explainers.
+- P5-G1 remains pending until Remotion validation joins the standing media check.
+- P5-G2 remains pending until the representative Remotion still exists.
