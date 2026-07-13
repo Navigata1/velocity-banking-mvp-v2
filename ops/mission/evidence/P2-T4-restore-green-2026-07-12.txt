@@ -1,0 +1,27 @@
+Gate: P2-T4 isolated backup/restore and cleanup drill
+Command: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/supabase-backup-restore-drill.ps1
+Exit: 0
+
+PASS InterestShield Supabase backup/restore drill
+Recovered:
+- auth_users: 1
+- profiles: 1
+- snapshots: 1
+- simulation runs: 1
+- learning progress: 1
+- export records: 1
+- audit events: 1
+- snapshot payload marker: backup-restore
+- application tables: 6
+- RLS-enabled application tables: 6
+- public policies: 20
+
+Cleanup verification:
+- synthetic source users: 0
+- temporary restore databases: 0
+- source public policies: 20
+- temporary container archives: 0
+
+Production boundary:
+- This proves local application recovery mechanics.
+- A managed provider backup restore is still required after a dedicated InterestShield Supabase project is approved.

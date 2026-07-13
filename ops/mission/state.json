@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T03:36:00Z",
+    "updated": "2026-07-13T03:45:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -190,8 +190,8 @@
           "command": "npm --prefix apps/web run test:supabase",
           "status": "passed",
           "evidence": "ops/mission/evidence/P2-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:00:00Z",
-          "notes": "Static contract and 21 pgTAP owner-isolation/idempotency tests pass; PostgreSQL 17 schema lint and security advisors remain clean."
+          "lastRun": "2026-07-13T03:45:00Z",
+          "notes": "Static contract, 21 pgTAP owner-isolation/idempotency tests, and isolated backup/restore drill pass; PostgreSQL 17 schema lint and security advisors remain clean."
         },
         {
           "id": "P2-G2",
@@ -240,18 +240,22 @@
         {
           "id": "P2-T3",
           "title": "Wire web and Expo authentication and snapshot sync",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P2-T2"],
-          "pr": null,
-          "notes": "Keep service credentials server-only and migrate local demo snapshots idempotently. Database idempotency merged in PR #224, shared mutation contract in PR #225, web adapter in PR #226, Expo SecureStore adapter in PR #228, and web account UI in PR #229. Expo account, deep-link, and explicit sync controls are in review; merge closes this task."
+          "pr": {
+            "number": 230,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/230",
+            "mergedAt": "2026-07-12"
+          },
+          "notes": "Database idempotency PR #224, shared mutation contract #225, web adapter #226, Expo SecureStore adapter #228, web account UI #229, and Expo account/deep-link UI #230 are merged. Ownership comes from verified claims and no service credential enters either client."
         },
         {
           "id": "P2-T4",
           "title": "Prove backup, restore, retention, and incident logging",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P2-T3"],
           "pr": null,
-          "notes": "Document and execute a restore drill before real-user launch."
+          "notes": "Local two-archive synthetic restore, retention schedule, deletion boundaries, and incident procedure are in review. A managed provider restore remains a production project gate."
         },
         {
           "id": "P2-T5",
@@ -721,13 +725,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/229",
       "phase": "P2 Supabase Foundation",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 230,
+      "title": "Add Expo account and private snapshot sync",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/230",
+      "phase": "P2 Supabase Foundation",
+      "mergedAt": "2026-07-12"
     }
   ],
   "resume": {
     "activePhase": "P2",
     "nextActions": [
-      "Merge the Expo passwordless account, deep-link callback, and explicit private-sync workflow after GitHub CI and Vercel preview pass, then close P2-T3.",
-      "Begin P2-T4 with a local backup/restore drill, retention policy, incident log procedure, and deletion evidence; reserve the $10/month cloud project for an explicit production cost gate.",
+      "Merge the P2-T4 backup/restore drill, retention policy, incident procedure, and cleanup evidence after GitHub CI and Vercel preview pass.",
+      "Begin P2-T5 with a selective Cloudflare Worker export/report lane that leaves Supabase Postgres as the system of record; reserve the $10/month cloud project for an explicit production cost gate.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
