@@ -49,13 +49,16 @@ async function main() {
   );
 
   const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'components', 'mobile-supabase-account.tsx'), 'utf8');
-  const shellSource = fs.readFileSync(path.resolve(__dirname, '..', 'components', 'mobile-shell.tsx'), 'utf8');
+  const settingsSource = fs.readFileSync(
+    path.resolve(__dirname, '..', 'components', 'mobile-routes', 'settings-route.tsx'),
+    'utf8'
+  );
   const layoutSource = fs.readFileSync(path.resolve(__dirname, '..', 'app', '_layout.tsx'), 'utf8');
   assert.ok(componentSource.includes('signInWithOtp'));
   assert.ok(componentSource.includes('syncMobileSnapshot'));
   assert.ok(componentSource.includes('getNetworkStateAsync'));
   assert.ok(componentSource.includes('Nothing leaves this device until you press sync.'));
-  assert.ok(shellSource.includes('<MobileSupabaseAccount assumptions={assumptions} />'));
+  assert.ok(settingsSource.includes('<MobileSupabaseAccount assumptions={assumptions} />'));
   assert.ok(layoutSource.includes('registerMobileAuthDeepLinks(client)'));
   console.log('Expo account contract passed deep-link exchange, explicit sync, and offline-safe controls.');
 }

@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { LearnRoute } from '@/components/mobile-routes/learn-route';
 
 export default function LearnScreen() {
-  return <MobileShell initialMode="learn" />;
+  return <LearnRoute />;
 }

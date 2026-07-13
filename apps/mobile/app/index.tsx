@@ -1,5 +1,5 @@
-import { MobileShell } from '@/components/mobile-shell';
+import { DashboardRoute } from '@/components/mobile-routes/dashboard-route';
 
 export default function IndexScreen() {
-  return <MobileShell initialMode="dashboard" />;
+  return <DashboardRoute />;
 }

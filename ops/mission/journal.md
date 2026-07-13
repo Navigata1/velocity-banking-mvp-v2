@@ -246,3 +246,10 @@
 - Adversarial review closed reduced-motion translation, duplicate Studio IDs, ambiguous stagger evidence, unsupported percentage bars, caption drift, generated thumbnails, and install-script exposure. Final spec and code-quality verdicts are approved.
 - Fresh media validation passes 24 contracts, zero lint/runtime/motion errors or warnings, 40/40 contrast checks, 26 explicit finite tweens, clean-install checks, and zero vulnerabilities.
 - P5-T3 starts on codex/mission/p5-remotion-scenario-explainers to render shared-engine baseline, first-month, and blocked-plan scenario stories in landscape, portrait, and square formats.
+
+## 2026-07-13T12:47Z - Educational media pipeline complete; Expo hardening begins
+- PR #243 merged at 3415d16 after both Ubuntu quality workflows and Vercel passed. It adds three strict shared-engine Remotion stories across landscape, portrait, and square, a full reduced-motion fact sheet, runtime geometry assertions, and Chrome for Testing 150.0.7871.115 as an exact render contract.
+- Fresh merged-main validation exposed a Windows CRLF false-stale result. A real-generator regression reproduced it; PR #244 merged the normalized comparison at 82c4890 after independent approval, duplicate CI, and Vercel passed.
+- Fresh current-main P5 gates pass 34/34 media contracts, zero HyperFrames errors or warnings, 40/40 contrast checks, 26 finite tweens, ten Remotion registrations, all 27 browser keyframes, and the representative still.
+- P5 closes with identity version 1, deterministic HyperFrames launch/tutorial compositions, and engine-backed Remotion explainers that remain isolated from web and Expo runtime manifests.
+- P6-T1 starts on codex/mission/p6-native-route-modules to split the Expo shell into bounded native route modules without changing shared-engine ownership or behavior.

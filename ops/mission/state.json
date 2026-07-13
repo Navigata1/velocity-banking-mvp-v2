@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T11:13:47Z",
+    "updated": "2026-07-13T12:47:17Z",
     "sessionCount": 1
   },
   "policies": {
@@ -461,26 +461,26 @@
       "id": "P5",
       "title": "Educational Media Pipeline",
       "goal": "HyperFrames and Remotion produce deterministic, branded explainers without entering the calculator runtime bundle.",
-      "status": "in_progress",
+      "status": "done",
       "sessionsEstimate": "3-6",
       "gates": [
         {
           "id": "P5-G1",
           "title": "Media lint, validation, overflow, and contrast",
           "command": "npm --prefix apps/media run check",
-          "status": "pending",
-          "notes": "P5-T2 HyperFrames validation passes on current main at a1277b3 with 24 contracts, zero lint/runtime/layout/motion warnings or errors, 40/40 contrast, 26 exact finite tweens, reduced-motion runtime proof, and a verified 900-frame render. Gate remains pending until T3 adds Remotion composition validation.",
-          "evidence": "ops/mission/evidence/P5-T2-hyperframes-compositions-2026-07-13.txt",
-          "lastRun": "2026-07-13T11:13:00Z"
+          "status": "passed",
+          "notes": "Fresh merged main at 82c4890 passes 34/34 media contracts, portable engine-data freshness, zero HyperFrames errors or warnings, 40/40 contrast, 26 finite tweens, pinned Chrome enumeration, and all 27 browser-rendered Remotion keyframes with runtime safe-area, overflow, and collision assertions.",
+          "evidence": "ops/mission/evidence/P5-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T12:47:00Z"
         },
         {
           "id": "P5-G2",
           "title": "Representative Remotion still render",
           "command": "npm --prefix apps/media run render:still",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P5-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T12:47:00Z",
+          "notes": "Fresh merged main rendered the complete 1920x1080 reduced-motion Money Loop fact sheet under pinned Chrome for Testing 150.0.7871.115."
         }
       ],
       "tasks": [
@@ -503,10 +503,10 @@
         {
           "id": "P5-T3",
           "title": "Build Remotion scenario explainers from engine JSON",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P5-T1", "P1-T2"],
-          "pr": null,
-          "notes": "Active on codex/mission/p5-remotion-scenario-explainers: render engine-backed baseline, first Money Loop month, and blocked-plan stories in 16:9, 9:16, and square without entering web/mobile runtime manifests."
+          "pr": {"number": 243, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/243", "mergedAt": "2026-07-13"},
+          "notes": "PR #243 merged at 3415d16 with three strict shared-engine stories across landscape, portrait, and square, a complete reduced-motion substitute, exact pinned browser rendering, and independent spec/code approval. PR #244 merged the Windows CRLF freshness regression at 82c4890; both duplicate CI runs and Vercel passed for both PRs."
         }
       ]
     },
@@ -514,7 +514,7 @@
       "id": "P6",
       "title": "Expo Native Hardening",
       "goal": "The existing Expo app becomes a tested native product with shared-engine parity, secure persistence, and Android/iOS release evidence.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "6-10",
       "gates": [
         {
@@ -558,10 +558,10 @@
         {
           "id": "P6-T1",
           "title": "Split the monolithic mobile shell into native route modules",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P3-T2"],
           "pr": null,
-          "notes": "Preserve Expo Router and shared financial-engine ownership."
+          "notes": "Active on codex/mission/p6-native-route-modules. Preserve Expo Router and shared financial-engine ownership while extracting bounded native route modules test-first."
         },
         {
           "id": "P6-T2",
@@ -862,13 +862,27 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/242",
       "phase": "P5 Educational Media Pipeline",
       "mergedAt": "2026-07-13"
+    },
+    {
+      "number": 243,
+      "title": "Add engine-backed Remotion scenario explainers",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/243",
+      "phase": "P5 Educational Media Pipeline",
+      "mergedAt": "2026-07-13"
+    },
+    {
+      "number": 244,
+      "title": "Make Remotion freshness CRLF portable",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/244",
+      "phase": "P5 Educational Media Pipeline",
+      "mergedAt": "2026-07-13"
     }
   ],
   "resume": {
-    "activePhase": "P5",
+    "activePhase": "P6",
     "nextActions": [
-      "Implement P5-T3 test-first on codex/mission/p5-remotion-scenario-explainers: add a pinned renderer-isolated Remotion workspace without changing web/mobile runtime manifests.",
-      "Generate versioned scenario JSON from the shared financial engine, then render baseline, first Money Loop month, and blocked-plan stories across 16:9, 9:16, and square with a representative still gate.",
+      "Audit apps/mobile route ownership and the current Expo shell on codex/mission/p6-native-route-modules, then add a failing contract for the next bounded extraction.",
+      "Implement P6-T1 test-first while preserving Expo Router, shared financial-engine ownership, route behavior, web export, and current native smoke guards.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

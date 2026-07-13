@@ -1,0 +1,39 @@
+P5 CLOSEOUT - FRESH MERGED MAIN
+Date: 2026-07-13
+Commit: 82c4890
+
+MERGED DELIVERY
+- PR #243: engine-backed Remotion scenario explainers; merged at 3415d16.
+- PR #244: Windows CRLF scenario-freshness portability; merged at 82c4890.
+- Both duplicate Ubuntu quality workflows and both Vercel checks passed on each
+  PR. Independent review approved spec compliance and code quality with no
+  remaining findings.
+
+P5-G1
+Command:
+  npm --prefix apps/media run check
+
+Result: PASS on merged main.
+- 34/34 media contracts pass, including the real-generator CRLF regression.
+- HyperFrames reports zero lint, runtime, layout, or motion errors or warnings;
+  40/40 contrast checks pass and 26 finite tweens are mapped.
+- Generated financial scenarios match the shared engine.
+- Remotion TypeScript and browser bundling pass.
+- Ten compositions enumerate under Chrome for Testing 150.0.7871.115.
+- Intro, story, and resolve frames render for all nine video compositions: 27
+  browser-verified PNGs across 1920x1080, 1080x1920, and 1080x1080.
+- Runtime assertions cover safe areas, overflow, direct-zone collisions, and
+  moving marked content.
+
+P5-G2
+Command:
+  npm --prefix apps/media run render:still
+
+Result: PASS on merged main.
+- The 1920x1080 still renders under the exact pinned browser.
+- It contains all six ordered Money Loop values and explanations, both final
+  balances, the dated-transaction assumption, and the educational disclaimer.
+
+VERDICT
+P5-T1, P5-T2, P5-T3, P5-G1, and P5-G2 are complete on current main. P5 may
+close and P6 may begin.

@@ -8,14 +8,14 @@ const { readReachableSource } = require('../../../scripts/source-contract-helper
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
+const mobileRoutesDir = path.resolve(__dirname, '..', '..', 'mobile/components/mobile-routes');
 
 function readPortfolioRouteSource() {
   return readReachableSource(path.join(portfolioRouteDir, 'page.tsx'));
 }
 
-function readMobileShellSource() {
-  const mobileComponentsPath = path.resolve(__dirname, '..', '..', 'mobile/components');
-  return readReachableSource(path.join(mobileComponentsPath, 'mobile-shell.tsx'));
+function readMobileRouteSource(filename) {
+  return readReachableSource(path.join(mobileRoutesDir, filename));
 }
 
 function createMemoryStorage() {
@@ -887,7 +887,7 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
       balance: 3200,
     },
   });
-  const mobileShellSource = readMobileShellSource();
+  const mobilePortfolioSource = readMobileRouteSource('portfolio-route.tsx');
 
   assert.equal(portfolioSnapshot.modelingLabel, 'Amortized planning view');
   assert.ok(
@@ -899,60 +899,60 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
     portfolioSnapshot.modelingDetail
   );
   assert.ok(
-    mobileShellSource.includes('title="Modeling Mode"'),
+    mobilePortfolioSource.includes('title="Modeling Mode"'),
     'expected mobile Portfolio to render the modeling-mode contract'
   );
   assert.ok(
-    mobileShellSource.includes('value={portfolio.modelingLabel}'),
+    mobilePortfolioSource.includes('value={portfolio.modelingLabel}'),
     'expected mobile Portfolio to display the modeling label'
   );
   assert.ok(
-    mobileShellSource.includes('detail={portfolio.modelingDetail}'),
+    mobilePortfolioSource.includes('detail={portfolio.modelingDetail}'),
     'expected mobile Portfolio to display the modeling detail'
   );
 });
 
 test('mobile mode navigation exposes native tab semantics and stable touch targets', () => {
-  const mobileShellRoot = fs.readFileSync(
-    path.resolve(__dirname, '..', '..', 'mobile/components/mobile-shell.tsx'),
+  const mobileRouteFrame = fs.readFileSync(
+    path.join(mobileRoutesDir, 'route-screen.tsx'),
     'utf8'
   );
-  const mobileShellSource = readMobileShellSource();
+  const mobileNavigationSource = readMobileRouteSource('route-screen.tsx');
 
   assert.ok(
-    mobileShellRoot.includes('<MobileModeNavigation'),
-    'expected MobileShell to mount the extracted mode navigation'
+    mobileRouteFrame.includes('<MobileModeNavigation'),
+    'expected the shared mobile route frame to mount mode navigation'
   );
   assert.ok(
-    mobileShellSource.includes('accessibilityLabel="Mobile section navigation"'),
+    mobileNavigationSource.includes('accessibilityLabel="Mobile section navigation"'),
     'expected mobile mode navigation to expose a named control group'
   );
   assert.ok(
-    mobileShellSource.includes('accessibilityRole="tablist"'),
+    mobileNavigationSource.includes('accessibilityRole="tablist"'),
     'expected mobile mode navigation to expose tablist semantics'
   );
   assert.ok(
-    mobileShellSource.includes('accessibilityRole="tab"'),
+    mobileNavigationSource.includes('accessibilityRole="tab"'),
     'expected each mobile mode control to expose tab semantics'
   );
   assert.ok(
-    mobileShellSource.includes('accessibilityState={{ selected: active }}'),
+    mobileNavigationSource.includes('accessibilityState={{ selected: active }}'),
     'expected active mobile mode state to be announced'
   );
   assert.ok(
-    mobileShellSource.includes('aria-selected={active}'),
+    mobileNavigationSource.includes('aria-selected={active}'),
     'expected React Native Web to expose active tab state through aria-selected'
   );
   assert.ok(
-    mobileShellSource.includes('minHeight: 44'),
+    mobileNavigationSource.includes('minHeight: 44'),
     'expected mobile mode controls to preserve a 44px minimum touch target'
   );
   assert.ok(
-    mobileShellSource.includes('testID={`mobile-mode-tab-${id}`}'),
+    mobileNavigationSource.includes('testID={`mobile-mode-tab-${id}`}'),
     'expected each mobile mode control to expose a stable smoke hook'
   );
   assert.ok(
-    mobileShellSource.includes('{modes.map((mobileMode) => ('),
+    mobileNavigationSource.includes('{modes.map((mobileMode) => ('),
     'expected mobile mode controls to be generated from the shared route list'
   );
 });
