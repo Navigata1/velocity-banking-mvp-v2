@@ -6,11 +6,14 @@ import type { Group, Vector3Tuple } from 'three';
 import type { MoneyLoopVisualArtifact } from '@/app/artifact-visual-contract';
 import { artifactMeshFactories } from './artifact-meshes';
 import { getSelectionMotionFrame } from './selection-motion';
+import type { MoneyLoopCanvasSettings } from './useMoneyLoopRenderMode';
 
 interface MoneyLoopThreeSceneProps {
   artifacts: MoneyLoopVisualArtifact[];
   activeArtifactId: MoneyLoopVisualArtifact['id'];
   onSelect: (id: MoneyLoopVisualArtifact['id']) => void;
+  canvasSettings: MoneyLoopCanvasSettings;
+  onFirstFrame: () => void;
 }
 
 const artifactPositions: Record<MoneyLoopVisualArtifact['id'], Vector3Tuple> = {
@@ -80,8 +83,26 @@ function SelectionRig({ activeArtifact, children }: { activeArtifact: MoneyLoopV
   return <group ref={groupRef}>{children}</group>;
 }
 
-export default function MoneyLoopThreeScene({ artifacts, activeArtifactId, onSelect }: MoneyLoopThreeSceneProps) {
+export default function MoneyLoopThreeScene({
+  artifacts,
+  activeArtifactId,
+  onSelect,
+  canvasSettings,
+  onFirstFrame,
+}: MoneyLoopThreeSceneProps) {
   const activeArtifact = artifacts.find((artifact) => artifact.id === activeArtifactId) ?? artifacts[0];
+  const firstFrameReported = useRef(false);
+  const { invalidate } = useThree();
+
+  useEffect(() => {
+    invalidate();
+  }, [activeArtifactId, invalidate]);
+
+  useFrame(() => {
+    if (firstFrameReported.current) return;
+    firstFrameReported.current = true;
+    onFirstFrame();
+  });
 
   if (!activeArtifact) return null;
 
@@ -89,8 +110,8 @@ export default function MoneyLoopThreeScene({ artifacts, activeArtifactId, onSel
     <>
       <color attach="background" args={['#111827']} />
       <ambientLight intensity={0.72} />
-      <directionalLight position={[2.5, 3.5, 4]} intensity={1.45} />
-      <mesh position={[0, -2.15, -0.45]} rotation={[-Math.PI / 2, 0, 0]}>
+      <directionalLight castShadow={canvasSettings.shadows} position={[2.5, 3.5, 4]} intensity={1.45} />
+      <mesh receiveShadow={canvasSettings.shadows} position={[0, -2.15, -0.45]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[8, 8]} />
         <meshStandardMaterial color="#172033" roughness={0.92} metalness={0.1} />
       </mesh>
@@ -105,6 +126,7 @@ export default function MoneyLoopThreeScene({ artifacts, activeArtifactId, onSel
               isActive={artifact.id === activeArtifact.id}
               position={artifactPositions[artifact.id]}
               onSelect={onSelect}
+              canvasSettings={canvasSettings}
             />
           );
         })}

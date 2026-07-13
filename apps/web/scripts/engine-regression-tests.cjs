@@ -6892,6 +6892,99 @@ test('Money Loop visual capability policy fails closed before the Three.js stage
   );
 });
 
+test('Money Loop render controls choose static mode for motion, data, WebGL, and contract stops', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const completeCapabilities = {
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  };
+
+  for (const override of [
+    { prefersReducedMotion: true },
+    { saveData: true },
+    { supportsWebgl: false },
+    { contractComplete: false },
+  ]) {
+    assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, ...override }).renderMode, 'static');
+  }
+});
+
+test('Money Loop render controls reserve full rendering for known capable wide viewports', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const completeCapabilities = {
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  };
+
+  assert.equal(renderMode.deriveMoneyLoopRenderState(completeCapabilities).renderMode, 'full');
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, deviceMemoryGb: undefined }).renderMode, 'efficient');
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, hardwareConcurrency: undefined }).renderMode, 'efficient');
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, viewportWidth: undefined }).renderMode, 'efficient');
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, viewportWidth: 639 }).renderMode, 'efficient');
+});
+
+test('Money Loop render controls constrain canvas cost by render mode', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const full = renderMode.getMoneyLoopCanvasSettings('full');
+  const efficient = renderMode.getMoneyLoopCanvasSettings('efficient');
+
+  assert.equal(full.dpr, 1.5);
+  assert.equal(full.shadows, true);
+  assert.equal(efficient.dpr, 1);
+  assert.equal(efficient.shadows, false);
+  assert.ok(efficient.radialSegments < full.radialSegments);
+  assert.ok(efficient.detail < full.detail);
+});
+
+test('Money Loop render controls unmount active rendering while offscreen or hidden', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const completeCapabilities = {
+    supportsWebgl: true,
+    contractComplete: true,
+    deviceMemoryGb: 8,
+    hardwareConcurrency: 8,
+    viewportWidth: 1440,
+    isIntersecting: true,
+    isDocumentVisible: true,
+  };
+
+  assert.equal(renderMode.deriveMoneyLoopRenderState(completeCapabilities).shouldRender, true);
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, isIntersecting: false }).shouldRender, false);
+  assert.equal(renderMode.deriveMoneyLoopRenderState({ ...completeCapabilities, isDocumentVisible: false }).shouldRender, false);
+});
+
+test('Money Loop render controls wait for supported intersection observers before mounting canvas work', () => {
+  const renderMode = loadTsModule('src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+
+  assert.equal(renderMode.getInitialMoneyLoopIntersectionState(true), false);
+  assert.equal(renderMode.getInitialMoneyLoopIntersectionState(false), true);
+});
+
+test('Money Loop render hook cleans up browser capability and lifecycle subscriptions', () => {
+  const hookPath = path.resolve(__dirname, '..', 'src/components/money-loop-3d/useMoneyLoopRenderMode.ts');
+  const source = fs.readFileSync(hookPath, 'utf8');
+
+  assert.ok(source.includes("matchMedia('(prefers-reduced-motion: reduce)')"));
+  assert.ok(source.includes("window.addEventListener('resize'"));
+  assert.ok(source.includes("window.removeEventListener('resize'"));
+  assert.ok(source.includes("document.addEventListener('visibilitychange'"));
+  assert.ok(source.includes("document.removeEventListener('visibilitychange'"));
+  assert.ok(source.includes('connection.addEventListener'));
+  assert.ok(source.includes('connection.removeEventListener'));
+  assert.ok(source.includes('IntersectionObserver'));
+  assert.ok(source.includes('observer.disconnect()'));
+});
+
 test('Money Loop visual contract rejects incomplete duplicate and malformed runtime records', () => {
   const visualContract = loadTsModule('src/app/artifact-visual-contract.ts');
   const stableArtifact = (id, overrides = {}) => ({
