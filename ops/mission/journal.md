@@ -218,3 +218,18 @@
 - A hidden-WebGL browser lane now leaves colorful overlays present yet fails isolated single-color proof; DOM tokens demonstrate full, half, and no-spin contract states.
 - Fresh controller gates pass a 14-page build, repeated 3D visual runs, 263 regressions, lint, all rendered routes, 0.13 MiB assets, and zero production vulnerabilities.
 - Final independent re-review reports no findings and approves both spec compliance and code quality. P4-T4 is ready for PR; P4 remains open until merge and fresh-main reruns.
+
+## 2026-07-13T09:50Z - P4 complete; P5 visual identity begins
+- PR #240 merged at c7b9705 after both Ubuntu quality workflows executed the new browser gate successfully and Vercel passed.
+- Fresh current-main reruns pass all 263 regressions, lint, the complete fresh-build 3D proof, and a separate 14-page production build.
+- P4 closes with four merged slices: versioned model bindings, a lazy procedural stage, fail-closed capability/lifecycle controls, and isolated visual/interaction/timing/accessibility proof.
+- Durable screenshots and merged-main evidence live under ops/mission/evidence/P4-T4-three-stage and P4-closeout-main-2026-07-13.txt.
+- P5-T1 starts on codex/mission/p5-visual-identity-contract. The identity and motion contract comes first so HyperFrames and Remotion share one deterministic visual language without entering the calculator bundle.
+
+## 2026-07-13T10:12Z - P5 visual identity contract approved locally
+- Created an isolated apps/media workspace with executable identity version 1 and a human visual/motion specification for palette, typography, 16:9/9:16/1:1 geometry, captions, reduced motion, coach tone, five artifact meanings, and the first three stories.
+- Portable frame conversion, FNV-1a plus xorshift32 vectors, and fail-closed LOC display channels prevent HyperFrames and Remotion from interpreting the same inputs differently.
+- Manifest and lockfile guards reject exact, scoped, aliased, legacy, transitive, and encoded registry references to media renderers in web/mobile; the complete contract digest and parsed CI workflow prevent silent drift.
+- Three adversarial review rounds found and closed package-boundary, determinism, LOC unit, malformed balance, YAML, registry, and document-sync gaps. Final review reports no findings and approves spec compliance and code quality.
+- Fresh media, web, mobile, report-worker, build, browser, and rendered-route gates pass. One Three.js proof failed at 704 ms under simultaneous Expo compilation; the required isolated rerun passed every selection at 614 ms or faster with no waiver.
+- P5-T1 is ready for PR. P5-G1 remains pending until T2/T3 add renderer-specific overflow, contrast, and composition validation.

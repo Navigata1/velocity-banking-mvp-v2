@@ -96,4 +96,4 @@
 - [x] **Step 3: Implement a fresh-build Playwright gate that selects each DOM tab, waits for the matching active geometry, samples a central canvas grid, and rejects transparent or single-color output.**
 - [x] **Step 4: Capture 1440x900 and 390x844 screenshots, assert canvas containment and no document overflow, and verify reduced motion exposes the static fallback without a WebGL canvas.**
 - [x] **Step 5: Add `test:3d:built` after build in CI, run `npm --prefix apps/web run test:3d`, the standing rendered smoke, tests, lint, build, asset budget, and production audit.**
-- [ ] **Step 6: Record P4 gate evidence, merge P4-T4, rerun all P4 gates on current main, and close P4.**
+- [x] **Step 6: Record P4 gate evidence, merge P4-T4, rerun all P4 gates on current main, and close P4.**

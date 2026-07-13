@@ -1,0 +1,44 @@
+InterestShield mission evidence
+Phase/task: P5-T1 - visual identity and motion contract
+Branch: codex/mission/p5-visual-identity-contract
+Base heartbeat: 04c9e5b
+Verified: 2026-07-13T10:12Z
+
+RED/GREEN EVIDENCE
+- Initial `npm --prefix apps/media run check` failed because `src/visual-identity.mjs` did not exist.
+- Workspace/document cycle failed because VISUAL-IDENTITY.md, package lock, and CI wiring did not exist.
+- Adversarial review cycles produced failing tests for package-family aliases and lockfiles, portable timing/seed vectors, LOC display conversion, complete spec synchronization, and malformed LOC balances.
+- Final `npm --prefix apps/media run check`: PASS, 14 tests, 0 failures.
+- Final `npm --prefix apps/media audit`: PASS, 0 vulnerabilities.
+
+CONTRACT PROOF
+- Immutable contract version 1 defines palette, contrast pairs, Literata/Geist/Geist Mono roles, 16:9/9:16/1:1 frames, safe areas, caption reserves, reduced motion, frame timing, coach-tone rules, five artifact meanings, three educational stories, and explicit anti-patterns.
+- FNV-1a UTF-8 seed normalization plus xorshift32 has fixed cross-renderer vectors; HyperFrames time is exactly frame / 30 and Remotion consumes integer frames.
+- LOC presentation proves $8,000 / $10,000 as 80% used and $2,000 open; missing, non-finite, and negative balances fail closed as Balance needed.
+- Web/mobile manifests and lockfiles reject HyperFrames, GSAP, and Remotion exact names, scoped families, npm aliases, legacy entries, and encoded registry resolutions.
+- The human specification carries a generated SHA-256 digest of the complete executable identity object.
+- GitHub CI parses structurally and runs media npm ci then npm run check after checkout.
+
+INDEPENDENT REVIEW
+- Three adversarial review rounds resolved all reported findings.
+- Final verdict: no Critical, Important, or Minor findings.
+- Spec Compliance: APPROVED.
+- Code Quality: APPROVED.
+
+FRESH STANDING GATES
+- Media clean install/check/audit: PASS.
+- Web regressions: PASS, 263 tests plus reference, accessibility, metadata, and asset lanes.
+- Web lint: PASS.
+- Web production build: PASS, 14 static pages.
+- Web Three.js isolated proof: PASS alone, desktop selections 558-614 ms and mobile selections 551-561 ms, all below 700 ms.
+- Web built routes and rendered desktop/mobile smoke: PASS, 7 routes plus Money Loop interaction.
+- Mobile type-check, web export, 7-route smoke, and shared port contracts: PASS.
+- Report Worker check, 7 tests, audit, and dry-run build: PASS.
+
+TIMING NOTE
+- One Three.js run under simultaneous Expo bundling settled at 704 ms and failed the 700 ms gate. The required isolated rerun, matching CI execution, passed every selection at 614 ms or faster. No threshold was changed or waived.
+
+PHASE-GATE NOTE
+- `npm --prefix apps/media run check` now proves the P5-T1 identity subset.
+- P5-G1 remains pending until T2/T3 add real HyperFrames/Remotion lint, overflow, contrast, and composition validation.
+- P5-G2 remains pending until the representative Remotion still exists.

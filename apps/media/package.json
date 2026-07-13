@@ -1,0 +1,13 @@
+{
+  "name": "@interestshield/media",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --test scripts/*.test.mjs",
+    "sync:identity-doc": "node scripts/sync-identity-doc.mjs"
+  },
+  "devDependencies": {
+    "yaml": "2.9.0"
+  }
+}

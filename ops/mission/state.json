@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T09:44:00Z",
+    "updated": "2026-07-13T10:12:00Z",
     "sessionCount": 1
   },
   "policies": {
@@ -383,7 +383,7 @@
       "id": "P4",
       "title": "Model-Driven 3D Experience",
       "goal": "A single performant Three.js show stage lets users select five data-bound artifacts with accessible controls and graceful fallbacks.",
-      "status": "in_progress",
+      "status": "done",
       "sessionsEstimate": "6-9",
       "gates": [
         {
@@ -391,27 +391,27 @@
           "title": "Web tests",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:44:00Z",
-          "notes": "263 regressions plus fixtures, strict PNG and lifecycle helpers, accessibility, metadata, and assets pass."
+          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:49:00Z",
+          "notes": "Current main c7b9705 passes 263 regressions plus fixtures, strict PNG and lifecycle helpers, accessibility, metadata, and assets."
         },
         {
           "id": "P4-G2",
           "title": "3D rendered, interaction, and nonblank canvas checks",
           "command": "npm --prefix apps/web run test:3d",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:44:00Z",
-          "notes": "Fresh build plus repeated full/efficient all-five pixel, motion, focus, responsive, adversarial hidden-WebGL, and reduced-motion fallback lanes pass."
+          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:49:00Z",
+          "notes": "Current main c7b9705 passes a fresh build plus full/efficient all-five pixel, motion, focus, responsive, adversarial hidden-WebGL, and reduced-motion fallback lanes."
         },
         {
           "id": "P4-G3",
           "title": "Web production build within asset budgets",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P4-T4-three-visual-verification-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:44:00Z",
-          "notes": "Fourteen-page build, rendered smoke, 0.13 MiB asset budget, and zero production audit pass with the reviewed visual gate."
+          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T09:49:00Z",
+          "notes": "Current main c7b9705 passes a separate 14-page production build after the merged visual gate."
         }
       ],
       "tasks": [
@@ -450,10 +450,10 @@
         {
           "id": "P4-T4",
           "title": "Verify screenshots, pixels, interaction, performance, and accessibility",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P4-T3"],
-          "pr": null,
-          "notes": "Reviewed branch head 333f2cd passes fresh-build all-five isolated pixels, under-700-ms settlement, DOM motion, desktop/mobile screenshots, exact responsive geometry, static fallback, focus order, adversarial failure lanes, CI wiring, and final independent spec/quality approval. Awaiting PR merge and fresh-main closeout."
+          "pr": {"number": 240, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240", "mergedAt": "2026-07-13"},
+          "notes": "PR #240 merged at c7b9705 after duplicate GitHub Ubuntu quality runs and Vercel passed. Fresh main reruns prove all-five isolated pixels, under-700-ms settlement, DOM motion, responsive geometry, static fallback, focus order, adversarial failure lanes, and the 14-page build."
         }
       ]
     },
@@ -461,7 +461,7 @@
       "id": "P5",
       "title": "Educational Media Pipeline",
       "goal": "HyperFrames and Remotion produce deterministic, branded explainers without entering the calculator runtime bundle.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "3-6",
       "gates": [
         {
@@ -471,7 +471,7 @@
           "status": "pending",
           "evidence": null,
           "lastRun": null,
-          "notes": "Command will combine HyperFrames and Remotion checks."
+          "notes": "P5-T1 identity, contrast-pair, deterministic timing, financial semantics, runtime-boundary, document-sync, and CI checks pass on the task branch. Gate remains pending until T2/T3 add real HyperFrames and Remotion overflow, contrast, and composition validation."
         },
         {
           "id": "P5-G2",
@@ -487,10 +487,10 @@
         {
           "id": "P5-T1",
           "title": "Create the InterestShield visual identity and motion contract",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P4-T1"],
           "pr": null,
-          "notes": "One palette, typography, motion language, accessibility rules, and explicit anti-patterns."
+          "notes": "Ready for PR on codex/mission/p5-visual-identity-contract: renderer-neutral identity version 1, portable timing/seed vectors, fail-closed LOC display channels, three format/caption contracts, anti-patterns, package-family isolation, synchronized human specification, and 14 focused tests are independently approved. Evidence: ops/mission/evidence/P5-T1-visual-identity-contract-2026-07-13.txt."
         },
         {
           "id": "P5-T2",
@@ -841,13 +841,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/239",
       "phase": "P4 Model-Driven 3D Experience",
       "mergedAt": "2026-07-12"
+    },
+    {
+      "number": 240,
+      "title": "Verify the Money Loop Three.js experience",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240",
+      "phase": "P4 Model-Driven 3D Experience",
+      "mergedAt": "2026-07-13"
     }
   ],
   "resume": {
-    "activePhase": "P4",
+    "activePhase": "P5",
     "nextActions": [
-      "Push reviewed P4-T4 head 333f2cd, merge only after GitHub quality and Vercel checks pass, and retain the uploaded Three-stage screenshots.",
-      "After P4-T4 merges, rerun tests, test:3d, and build on current main; close P4 only from that fresh evidence, then begin P5 motion storytelling.",
+      "Publish and merge P5-T1 from codex/mission/p5-visual-identity-contract after GitHub CI and Vercel pass, then rerun the media identity check on current main.",
+      "Start P5-T2 on a fresh branch: add the HyperFrames workspace and launch/tutorial compositions against identity contract version 1, with deterministic GSAP timelines, captions, contrast, overflow, and animation-map gates.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
