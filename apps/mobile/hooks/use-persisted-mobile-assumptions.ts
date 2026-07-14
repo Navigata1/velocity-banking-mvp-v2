@@ -2,10 +2,12 @@ import {
   defaultMobileDashboardInput,
   type MobileDashboardInput,
 } from '@interestshield/financial-engine';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  loadMobileAssumptions,
-  saveMobileAssumptions,
+  loadMobileAssumptionsForOwner,
+  mobileAssumptionsStorageKey,
+  saveMobileAssumptionsForOwner,
+  type MobileAssumptionOwnerId,
   type MobileAssumptionStorageBackend,
 } from '@/lib/mobile-assumption-storage';
 
@@ -37,11 +39,23 @@ function cloneDefaultMobileInput(): MobileDashboardInput {
   };
 }
 
-export function usePersistedMobileAssumptions() {
-  const didLoad = useRef(false);
+export function usePersistedMobileAssumptions(
+  ownerId: MobileAssumptionOwnerId = null,
+  authReady = true
+) {
   const isMounted = useRef(true);
   const [input, setInput] = useState<MobileDashboardInput>(() => cloneDefaultMobileInput());
+  const [loadedScope, setLoadedScope] = useState<string | null>(null);
   const [storageStatus, setStorageStatus] = useState<MobileAssumptionStorageStatus>('loading');
+  const [canPersist, setCanPersist] = useState(false);
+  const lastPersistedInput = useRef<MobileDashboardInput | null>(null);
+  const saveQueue = useRef<Promise<void>>(Promise.resolve());
+  const saveVersion = useRef(0);
+  const scope = mobileAssumptionsStorageKey(ownerId);
+  const activeScope = useRef(scope);
+  activeScope.current = scope;
+  const isHydrated = authReady && loadedScope === scope;
+  const fallbackInput = useMemo(() => cloneDefaultMobileInput(), [scope]);
 
   useEffect(() => {
     return () => {
@@ -51,51 +65,100 @@ export function usePersistedMobileAssumptions() {
 
   useEffect(() => {
     let shouldApply = true;
+    setLoadedScope(null);
+    setStorageStatus('loading');
+    setCanPersist(false);
+    lastPersistedInput.current = null;
+    saveVersion.current += 1;
+    setInput(cloneDefaultMobileInput());
+    if (!authReady) return () => { shouldApply = false; };
 
-    loadMobileAssumptions().then((result) => {
-      if (!shouldApply || !isMounted.current) return;
-      setInput(result.input);
-      setStorageStatus(toRestoredStatus(result.backend, result.restored));
-      didLoad.current = true;
-    });
+    loadMobileAssumptionsForOwner(ownerId)
+      .then((result) => {
+        if (!shouldApply || !isMounted.current) return;
+        lastPersistedInput.current = result.input;
+        setInput(result.input);
+        setLoadedScope(scope);
+        setCanPersist(result.backend !== 'unavailable');
+        setStorageStatus(toRestoredStatus(result.backend, result.restored));
+      })
+      .catch(() => {
+        if (!shouldApply || !isMounted.current) return;
+        const fallback = cloneDefaultMobileInput();
+        lastPersistedInput.current = fallback;
+        setInput(fallback);
+        setLoadedScope(scope);
+        setCanPersist(false);
+        setStorageStatus('unavailable');
+      });
 
     return () => {
       shouldApply = false;
     };
-  }, []);
+  }, [authReady, ownerId, scope]);
 
   useEffect(() => {
-    if (!didLoad.current) return;
-
-    let isMounted = true;
-
-    saveMobileAssumptions(input)
+    if (!authReady || !canPersist || loadedScope !== scope || input === lastPersistedInput.current) return;
+    lastPersistedInput.current = input;
+    const operationVersion = ++saveVersion.current;
+    const operation = saveQueue.current
+      .catch(() => undefined)
+      .then(() => saveMobileAssumptionsForOwner(ownerId, input));
+    saveQueue.current = operation.then(() => undefined, () => undefined);
+    operation
       .then((backend) => {
-        if (isMounted) setStorageStatus(toSavedStatus(backend));
+        if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
+          setCanPersist(true);
+          setStorageStatus(toSavedStatus(backend));
+        }
       })
       .catch(() => {
-        if (isMounted) setStorageStatus('unavailable');
+        if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
+          setCanPersist(false);
+          setStorageStatus('unavailable');
+        }
       });
+  }, [authReady, canPersist, input, loadedScope, ownerId, scope]);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [input]);
+  const updateAssumptions = useCallback((nextInput: MobileDashboardInput) => {
+    if (!isHydrated || activeScope.current !== scope) return;
+    setInput(nextInput);
+  }, [isHydrated, scope]);
 
   const resetAssumptions = useCallback(async (): Promise<MobileAssumptionStorageBackend> => {
+    if (!isHydrated) throw new Error('Mobile assumptions are still loading for this account.');
     const nextInput = cloneDefaultMobileInput();
-    didLoad.current = true;
+    lastPersistedInput.current = nextInput;
     setInput(nextInput);
+    setLoadedScope(scope);
+    if (!canPersist) return 'unavailable';
 
-    const backend = await saveMobileAssumptions(nextInput);
-    if (isMounted.current) setStorageStatus(toSavedStatus(backend));
-    return backend;
-  }, []);
+    const operationVersion = ++saveVersion.current;
+    const operation = saveQueue.current
+      .catch(() => undefined)
+      .then(() => saveMobileAssumptionsForOwner(ownerId, nextInput));
+    saveQueue.current = operation.then(() => undefined, () => undefined);
+    try {
+      const backend = await operation;
+      if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
+        setCanPersist(true);
+        setStorageStatus(toSavedStatus(backend));
+      }
+      return backend;
+    } catch (error) {
+      if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
+        setCanPersist(false);
+        setStorageStatus('unavailable');
+      }
+      throw error;
+    }
+  }, [canPersist, isHydrated, ownerId, scope]);
 
   return {
-    input,
+    input: isHydrated ? input : fallbackInput,
+    isHydrated,
     resetAssumptions,
-    setInput,
+    setInput: updateAssumptions,
     storageStatus,
   };
 }

@@ -66,11 +66,13 @@ function formatPercentageInputValue(value: number): string {
 
 function MoneyInput({
   accessibilityLabel,
+  disabled = false,
   label,
   value,
   onChange,
 }: {
   accessibilityLabel: string;
+  disabled?: boolean;
   label: string;
   value: number;
   onChange: (value: number) => void;
@@ -82,6 +84,7 @@ function MoneyInput({
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
+        editable={!disabled}
         inputMode="numeric"
         keyboardType="decimal-pad"
         onChangeText={(nextValue) => {
@@ -110,11 +113,13 @@ function MoneyInput({
 
 function TextValueInput({
   accessibilityLabel,
+  disabled = false,
   label,
   value,
   onChange,
 }: {
   accessibilityLabel: string;
+  disabled?: boolean;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -126,6 +131,7 @@ function TextValueInput({
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
+        editable={!disabled}
         autoCapitalize="words"
         onChangeText={(nextValue) => onChange(nextValue.trimStart())}
         selectTextOnFocus
@@ -149,11 +155,13 @@ function TextValueInput({
 
 function WholeNumberInput({
   accessibilityLabel,
+  disabled = false,
   label,
   value,
   onChange,
 }: {
   accessibilityLabel: string;
+  disabled?: boolean;
   label: string;
   value: number;
   onChange: (value: number) => void;
@@ -165,6 +173,7 @@ function WholeNumberInput({
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
+        editable={!disabled}
         inputMode="numeric"
         keyboardType="number-pad"
         onChangeText={(nextValue) => {
@@ -193,11 +202,13 @@ function WholeNumberInput({
 
 function PercentageInput({
   accessibilityLabel,
+  disabled = false,
   label,
   value,
   onChange,
 }: {
   accessibilityLabel: string;
+  disabled?: boolean;
   label: string;
   value: number;
   onChange: (value: number) => void;
@@ -209,6 +220,7 @@ function PercentageInput({
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
+        editable={!disabled}
         inputMode="decimal"
         keyboardType="decimal-pad"
         onChangeText={(nextValue) => {
@@ -236,9 +248,11 @@ function PercentageInput({
 }
 
 export function AssumptionControls({
+  disabled = false,
   input,
   onChange,
 }: {
+  disabled?: boolean;
   input: MobileDashboardInput;
   onChange: (input: MobileDashboardInput) => void;
 }) {
@@ -247,66 +261,77 @@ export function AssumptionControls({
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
         <TextValueInput
           accessibilityLabel="Active debt name"
+          disabled={disabled}
           label="Debt Name"
           value={input.activeDebtName}
           onChange={(activeDebtName) => onChange({ ...input, activeDebtName })}
         />
         <MoneyInput
           accessibilityLabel="Monthly income"
+          disabled={disabled}
           label="Income"
           value={input.monthlyIncome}
           onChange={(monthlyIncome) => onChange({ ...input, monthlyIncome })}
         />
         <MoneyInput
           accessibilityLabel="Monthly expenses"
+          disabled={disabled}
           label="Expenses"
           value={input.monthlyExpenses}
           onChange={(monthlyExpenses) => onChange({ ...input, monthlyExpenses })}
         />
         <MoneyInput
           accessibilityLabel="Velocity chunk amount"
+          disabled={disabled}
           label="Chunk"
           value={input.chunkAmount}
           onChange={(chunkAmount) => onChange({ ...input, chunkAmount })}
         />
         <MoneyInput
           accessibilityLabel="Line of credit limit"
+          disabled={disabled}
           label="LOC Limit"
           value={input.loc.limit}
           onChange={(limit) => onChange({ ...input, loc: { ...input.loc, limit } })}
         />
         <MoneyInput
           accessibilityLabel="Line of credit balance"
+          disabled={disabled}
           label="LOC Balance"
           value={input.loc.balance}
           onChange={(balance) => onChange({ ...input, loc: { ...input.loc, balance } })}
         />
         <PercentageInput
           accessibilityLabel="Line of credit APR"
+          disabled={disabled}
           label="LOC APR"
           value={input.loc.apr}
           onChange={(apr) => onChange({ ...input, loc: { ...input.loc, apr } })}
         />
         <MoneyInput
           accessibilityLabel="Active debt balance"
+          disabled={disabled}
           label="Debt Balance"
           value={input.activeDebt.balance}
           onChange={(balance) => onChange({ ...input, activeDebt: { ...input.activeDebt, balance } })}
         />
         <PercentageInput
           accessibilityLabel="Active debt APR"
+          disabled={disabled}
           label="Debt APR"
           value={input.activeDebt.apr}
           onChange={(apr) => onChange({ ...input, activeDebt: { ...input.activeDebt, apr } })}
         />
         <MoneyInput
           accessibilityLabel="Active debt monthly payment"
+          disabled={disabled}
           label="Debt Payment"
           value={input.activeDebt.monthlyPayment}
           onChange={(monthlyPayment) => onChange({ ...input, activeDebt: { ...input.activeDebt, monthlyPayment } })}
         />
         <WholeNumberInput
           accessibilityLabel="Active debt term months"
+          disabled={disabled}
           label="Debt Term"
           value={input.activeDebt.termMonths ?? 0}
           onChange={(termMonths) => onChange({ ...input, activeDebt: { ...input.activeDebt, termMonths } })}

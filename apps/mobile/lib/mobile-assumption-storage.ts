@@ -5,6 +5,9 @@ import {
 import * as SecureStore from 'expo-secure-store';
 
 export const MOBILE_ASSUMPTIONS_STORAGE_KEY = 'interestshield.mobile.assumptions.v1';
+const OWNER_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export type MobileAssumptionOwnerId = string | null;
 
 export type MobileAssumptionStorageBackend = 'secure-store' | 'local-storage' | 'unavailable';
 
@@ -16,8 +19,20 @@ export interface MobileAssumptionsStorageResult {
 
 interface StoredMobileAssumptionsPayload {
   input: MobileDashboardInput;
+  ownerId?: MobileAssumptionOwnerId;
   savedAt: string;
   version: 1;
+}
+
+function normalizedOwnerId(ownerId: MobileAssumptionOwnerId): MobileAssumptionOwnerId {
+  if (ownerId === null) return null;
+  if (!OWNER_ID_PATTERN.test(ownerId)) throw new Error('Mobile assumption owner id must be a UUID.');
+  return ownerId.toLowerCase();
+}
+
+export function mobileAssumptionsStorageKey(ownerId: MobileAssumptionOwnerId): string {
+  const normalized = normalizedOwnerId(ownerId);
+  return normalized ? `${MOBILE_ASSUMPTIONS_STORAGE_KEY}.owner.${normalized}` : MOBILE_ASSUMPTIONS_STORAGE_KEY;
 }
 
 function isFiniteNumber(value: unknown): value is number {
@@ -104,10 +119,12 @@ function isLegacyStandaloneMobileDefault(input: MobileDashboardInput): boolean {
 
 export function encodeMobileAssumptions(
   input: MobileDashboardInput,
-  savedAt: string = new Date().toISOString()
+  savedAt: string = new Date().toISOString(),
+  ownerId: MobileAssumptionOwnerId = null
 ): string {
   const payload: StoredMobileAssumptionsPayload = {
     input,
+    ownerId: normalizedOwnerId(ownerId),
     savedAt,
     version: 1,
   };
@@ -115,12 +132,19 @@ export function encodeMobileAssumptions(
   return JSON.stringify(payload);
 }
 
-export function decodeMobileAssumptions(rawValue: string | null): MobileDashboardInput | null {
+export function decodeMobileAssumptions(
+  rawValue: string | null,
+  expectedOwnerId: MobileAssumptionOwnerId = null
+): MobileDashboardInput | null {
   if (!rawValue) return null;
 
   try {
     const payload = JSON.parse(rawValue) as Partial<StoredMobileAssumptionsPayload>;
     if (payload.version !== 1) return null;
+    const payloadOwnerId = typeof payload.ownerId === 'string'
+      ? normalizedOwnerId(payload.ownerId)
+      : null;
+    if (payloadOwnerId !== normalizedOwnerId(expectedOwnerId)) return null;
     const normalized = normalizeMobileDashboardInput(payload.input);
     if (!normalized) return null;
     return isLegacyStandaloneMobileDefault(normalized) ? defaultMobileDashboardInput : normalized;
@@ -142,12 +166,15 @@ function getLocalStorage(): Storage | null {
   return globalThis.localStorage;
 }
 
-export async function loadMobileAssumptions(
+export async function loadMobileAssumptionsForOwner(
+  ownerId: MobileAssumptionOwnerId,
   fallbackInput: MobileDashboardInput = defaultMobileDashboardInput
 ): Promise<MobileAssumptionsStorageResult> {
+  const storageKey = mobileAssumptionsStorageKey(ownerId);
   if (await getSecureStoreAvailable()) {
     const stored = decodeMobileAssumptions(
-      await SecureStore.getItemAsync(MOBILE_ASSUMPTIONS_STORAGE_KEY)
+      await SecureStore.getItemAsync(storageKey),
+      ownerId
     );
 
     return {
@@ -159,7 +186,7 @@ export async function loadMobileAssumptions(
 
   const localStorage = getLocalStorage();
   if (localStorage) {
-    const stored = decodeMobileAssumptions(localStorage.getItem(MOBILE_ASSUMPTIONS_STORAGE_KEY));
+    const stored = decodeMobileAssumptions(localStorage.getItem(storageKey), ownerId);
 
     return {
       backend: 'local-storage',
@@ -175,19 +202,35 @@ export async function loadMobileAssumptions(
   };
 }
 
-export async function saveMobileAssumptions(input: MobileDashboardInput): Promise<MobileAssumptionStorageBackend> {
-  const payload = encodeMobileAssumptions(input);
+export async function saveMobileAssumptionsForOwner(
+  ownerId: MobileAssumptionOwnerId,
+  input: MobileDashboardInput
+): Promise<MobileAssumptionStorageBackend> {
+  const storageKey = mobileAssumptionsStorageKey(ownerId);
+  const payload = encodeMobileAssumptions(input, new Date().toISOString(), ownerId);
 
   if (await getSecureStoreAvailable()) {
-    await SecureStore.setItemAsync(MOBILE_ASSUMPTIONS_STORAGE_KEY, payload);
+    await SecureStore.setItemAsync(storageKey, payload);
     return 'secure-store';
   }
 
   const localStorage = getLocalStorage();
   if (localStorage) {
-    localStorage.setItem(MOBILE_ASSUMPTIONS_STORAGE_KEY, payload);
+    localStorage.setItem(storageKey, payload);
     return 'local-storage';
   }
 
   return 'unavailable';
+}
+
+export function loadMobileAssumptions(
+  fallbackInput: MobileDashboardInput = defaultMobileDashboardInput
+): Promise<MobileAssumptionsStorageResult> {
+  return loadMobileAssumptionsForOwner(null, fallbackInput);
+}
+
+export function saveMobileAssumptions(
+  input: MobileDashboardInput
+): Promise<MobileAssumptionStorageBackend> {
+  return saveMobileAssumptionsForOwner(null, input);
 }

@@ -9,32 +9,67 @@ function authParams(url: string): URLSearchParams {
   return params;
 }
 
-export async function handleMobileAuthUrl(client: SupabaseClient, url: string): Promise<void> {
+function callbackIdentity(url: string): string {
+  const parsed = new URL(url);
+  const pathname = parsed.pathname.replace(/\/+$/, '') || '/';
+  return `${parsed.protocol}//${parsed.host}${pathname}`;
+}
+
+export type MobileAuthCallbackResult = 'exchanged' | 'duplicate' | 'ignored';
+
+export async function handleMobileAuthUrl(
+  client: SupabaseClient,
+  url: string,
+  expectedCallbackUrl: string,
+  consumedCodes: Set<string> = new Set()
+): Promise<MobileAuthCallbackResult> {
   const params = authParams(url);
+  const hasAuthResponse = params.has('code') || params.has('error_description') ||
+    params.has('access_token') || params.has('refresh_token');
+  if (!hasAuthResponse) return 'ignored';
+  if (callbackIdentity(url) !== callbackIdentity(expectedCallbackUrl)) {
+    throw new Error('Mobile auth callback was rejected because its route did not match the requested sign-in flow.');
+  }
+
   const errorDescription = params.get('error_description');
   if (errorDescription) throw new Error(errorDescription);
 
-  const code = params.get('code');
-  if (code) {
-    const { error } = await client.auth.exchangeCodeForSession(code);
-    if (error) throw error;
-    return;
+  if (params.has('access_token') || params.has('refresh_token')) {
+    throw new Error('Mobile auth rejected a token fragment because this client requires the PKCE code flow.');
   }
 
-  const accessToken = params.get('access_token');
-  const refreshToken = params.get('refresh_token');
-  if (!accessToken || !refreshToken) return;
-  const { error } = await client.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-  if (error) throw error;
+  const code = params.get('code');
+  if (code) {
+    if (consumedCodes.has(code)) return 'duplicate';
+    consumedCodes.add(code);
+    try {
+      const { error } = await client.auth.exchangeCodeForSession(code);
+      if (error) throw error;
+      return 'exchanged';
+    } catch (error) {
+      consumedCodes.delete(code);
+      throw error;
+    }
+  }
+  return 'ignored';
 }
 
-export function registerMobileAuthDeepLinks(client: SupabaseClient): () => void {
+export function registerMobileAuthDeepLinks(
+  client: SupabaseClient,
+  expectedCallbackUrl: string = Linking.createURL('/settings'),
+  onError: (error: Error) => void = () => undefined
+): () => void {
   let active = true;
+  const consumedCodes = new Set<string>();
   const applyUrl = (url: string | null) => {
     if (!active || !url) return;
-    handleMobileAuthUrl(client, url).catch(() => undefined);
+    handleMobileAuthUrl(client, url, expectedCallbackUrl, consumedCodes).catch((error: unknown) => {
+      if (active) onError(error instanceof Error ? error : new Error('Mobile auth callback failed.'));
+    });
   };
-  Linking.getInitialURL().then(applyUrl);
+  Linking.getInitialURL().then(applyUrl).catch((error: unknown) => {
+    if (active) onError(error instanceof Error ? error : new Error('Initial auth callback could not be read.'));
+  });
   const subscription = Linking.addEventListener('url', ({ url }) => applyUrl(url));
   return () => {
     active = false;

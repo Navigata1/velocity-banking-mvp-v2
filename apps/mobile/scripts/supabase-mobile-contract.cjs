@@ -54,6 +54,18 @@ class MemorySecureStore {
   }
 }
 
+class FailureInjectingSecureStore extends MemorySecureStore {
+  failOnKeyPart = null;
+
+  async setItemAsync(key, value) {
+    if (this.failOnKeyPart && key.includes(this.failOnKeyPart)) {
+      this.failOnKeyPart = null;
+      throw new Error('simulated secure-store interruption');
+    }
+    await super.setItemAsync(key, value);
+  }
+}
+
 class FakeQuery {
   constructor(table, calls) {
     this.table = table;
@@ -121,6 +133,24 @@ async function main() {
   await authStorage.removeItem('supabase.auth');
   assert.equal(await authStorage.getItem('supabase.auth'), null);
 
+  const interruptedStore = new FailureInjectingSecureStore();
+  const interruptedGenerations = ['stable-generation', 'failed-generation'];
+  const interruptedStorage = authStorageModule.createChunkedSecureAuthStorage(
+    interruptedStore,
+    () => interruptedGenerations.shift()
+  );
+  await interruptedStorage.setItem('supabase.interrupted', 'stable-session');
+  interruptedStore.failOnKeyPart = '.failed-generation.1';
+  await assert.rejects(
+    () => interruptedStorage.setItem('supabase.interrupted', largeSession),
+    /simulated secure-store interruption/
+  );
+  assert.equal(await interruptedStorage.getItem('supabase.interrupted'), 'stable-session');
+  assert.equal(
+    [...interruptedStore.values.keys()].some((key) => key.includes('failed-generation')),
+    false
+  );
+
   const identityModule = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'sync-identity.ts'), mocks);
   const identityStorage = authStorageModule.createChunkedSecureAuthStorage(new MemorySecureStore(), () => 'storage-generation');
   const idOne = await identityModule.getOrCreateMobileSyncIdempotencyKey(
@@ -130,6 +160,18 @@ async function main() {
   const idTwo = await identityModule.getOrCreateMobileSyncIdempotencyKey(identityStorage, () => 'must-not-run');
   assert.equal(idOne, 'mobile-install:00000000-0000-4000-8000-000000000111');
   assert.equal(idTwo, idOne);
+
+  const concurrentIdentityStorage = authStorageModule.createChunkedSecureAuthStorage(
+    new MemorySecureStore(),
+    () => 'concurrent-storage-generation'
+  );
+  let createdIdentityCount = 0;
+  const concurrentIds = await Promise.all([
+    identityModule.getOrCreateMobileSyncIdempotencyKey(concurrentIdentityStorage, () => `concurrent-${++createdIdentityCount}`),
+    identityModule.getOrCreateMobileSyncIdempotencyKey(concurrentIdentityStorage, () => `concurrent-${++createdIdentityCount}`),
+  ]);
+  assert.deepEqual(concurrentIds, ['mobile-install:concurrent-1', 'mobile-install:concurrent-1']);
+  assert.equal(createdIdentityCount, 1);
 
   const syncModule = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'snapshot-sync.ts'), {
     ...mocks,
@@ -146,7 +188,10 @@ async function main() {
     },
     from: (table) => new FakeQuery(table, calls),
   };
-  const result = await syncModule.syncMobileSnapshot(client, { assumptions: {} });
+  const result = await syncModule.syncMobileSnapshot(client, {
+    assumptions: {},
+    expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
+  });
   assert.equal(result.ownerId, '00000000-0000-4000-8000-00000000000a');
   assert.deepEqual(calls.map(({ table, operation }) => `${table}:${operation}`), [
     'profiles:upsert',
@@ -156,19 +201,37 @@ async function main() {
   ]);
   assert.equal(calls[1].row.assumptions_json.storage[0].key, 'interestshield-mobile-assumptions-v1');
   assert.equal(calls[1].options.onConflict, 'owner_id,idempotency_key');
+  const callCountBeforeOwnerMismatch = calls.length;
   await assert.rejects(
-    () => syncModule.syncMobileSnapshot({ ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } }, { assumptions: {} }),
+    () => syncModule.syncMobileSnapshot(client, {
+      assumptions: {},
+      expectedOwnerId: '00000000-0000-4000-8000-00000000000b',
+    }),
+    /account changed before sync/i
+  );
+  assert.equal(calls.length, callCountBeforeOwnerMismatch);
+  await assert.rejects(
+    () => syncModule.syncMobileSnapshot(
+      { ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } },
+      { assumptions: {}, expectedOwnerId: '00000000-0000-4000-8000-00000000000a' }
+    ),
     /identity verification/i
   );
 
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'lib', 'supabase', 'config.ts'), 'utf8');
   const clientSource = fs.readFileSync(path.resolve(__dirname, '..', 'lib', 'supabase', 'client.ts'), 'utf8');
   const layoutSource = fs.readFileSync(path.resolve(__dirname, '..', 'app', '_layout.tsx'), 'utf8');
+  const authProviderSource = fs.readFileSync(
+    path.resolve(__dirname, '..', 'components', 'mobile-auth-provider.tsx'),
+    'utf8',
+  );
   assert.ok(source.includes('EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY'));
   assert.ok(!/service.role|service_role|secret.key/i.test(source));
   assert.ok(clientSource.includes('lock: processLock'));
   assert.ok(clientSource.includes("flowType: 'pkce'"));
-  assert.ok(layoutSource.includes('registerMobileAuthLifecycle(client)'));
+  assert.ok(layoutSource.includes('<MobileAuthProvider>'));
+  assert.ok(authProviderSource.includes('registerMobileAuthLifecycle(client)'));
+  assert.ok(authProviderSource.includes('registerMobileAuthDeepLinks('));
   console.log('Expo Supabase contract passed secure chunking, durable identity, and ordered owner-scoped sync.');
 }
 

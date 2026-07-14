@@ -829,9 +829,10 @@ test('Expo app uses dedicated shared-engine route modules instead of a monolithi
   assert.ok(fs.existsSync(assumptionsProviderPath), 'expected one assumptions provider above the retained route stack');
   const assumptionsProviderSource = fs.readFileSync(assumptionsProviderPath, 'utf8');
   assert.ok(routeFrameSource.includes('useMobileAssumptions'), 'expected retained routes to consume shared assumptions');
+  assert.ok(routeFrameSource.includes('disabled={!context.isHydrated}'), 'expected assumption edits to wait for owner hydration');
   assert.ok(!routeFrameSource.includes('usePersistedMobileAssumptions'), 'expected retained routes not to own persistence');
   assert.equal(
-    (assumptionsProviderSource.match(/usePersistedMobileAssumptions\(\)/g) ?? []).length,
+    (assumptionsProviderSource.match(/usePersistedMobileAssumptions\(/g) ?? []).length,
     1,
     'expected exactly one persisted assumptions owner'
   );
@@ -1366,8 +1367,18 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.ok(storageSource.includes('local-storage'));
   assert.ok(storageSource.includes('decodeMobileAssumptions'));
   assert.ok(hookSource.includes('useEffect'));
-  assert.ok(hookSource.includes('loadMobileAssumptions'));
-  assert.ok(hookSource.includes('saveMobileAssumptions'));
+  assert.ok(hookSource.includes('loadMobileAssumptionsForOwner'));
+  assert.ok(hookSource.includes('saveMobileAssumptionsForOwner'));
+  assert.ok(hookSource.includes('ownerId'));
+  assert.ok(hookSource.includes('authReady'));
+  assert.ok(hookSource.includes('isHydrated'));
+  assert.ok(hookSource.includes('setLoadedScope(scope)'), 'expected storage failures to enter session-only hydrated mode');
+  assert.ok(hookSource.includes('updateAssumptions'), 'expected assumption edits to use a guarded update action');
+  assert.ok(hookSource.includes('activeScope.current !== scope'), 'expected stale owner-scope edits to be rejected');
+  assert.ok(hookSource.includes('lastPersistedInput'), 'expected restored and explicitly saved inputs not to be written twice');
+  assert.ok(hookSource.includes('canPersist'), 'expected persistence availability to remain separate from display status');
+  assert.ok(hookSource.includes('saveVersion'), 'expected only the newest queued write to control persistence status');
+  assert.ok(hookSource.includes("throw new Error('Mobile assumptions are still loading for this account.')"));
   assert.ok(hookSource.includes('resetAssumptions'), 'expected Settings to reset assumptions through the persistence hook');
   assert.ok(hookSource.includes('cloneDefaultMobileInput'), 'expected reset to clone the starter assumptions');
 
@@ -1390,6 +1401,9 @@ test('mobile assumptions persist through encrypted native storage with a web fal
     },
   });
   const decoded = storageModule.decodeMobileAssumptions(encoded);
+  const ownerA = '00000000-0000-4000-8000-00000000000a';
+  const ownerB = '00000000-0000-4000-8000-00000000000b';
+  const ownerEncoded = storageModule.encodeMobileAssumptions(decoded, '2026-07-13T00:00:00.000Z', ownerA);
 
   assert.equal(storageModule.MOBILE_ASSUMPTIONS_STORAGE_KEY, 'interestshield.mobile.assumptions.v1');
   assert.equal(decoded.monthlyIncome, 8123);
@@ -1397,6 +1411,10 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.equal(decoded.chunkAmount, 987);
   assert.equal(storageModule.decodeMobileAssumptions('{bad json'), null);
   assert.equal(storageModule.decodeMobileAssumptions(JSON.stringify({ version: 1, input: { monthlyIncome: -1 } })), null);
+  assert.notEqual(storageModule.mobileAssumptionsStorageKey(ownerA), storageModule.mobileAssumptionsStorageKey(ownerB));
+  assert.equal(storageModule.decodeMobileAssumptions(ownerEncoded, ownerB), null);
+  assert.equal(storageModule.decodeMobileAssumptions(ownerEncoded, ownerA).monthlyIncome, 8123);
+  assert.equal(storageModule.decodeMobileAssumptions(encoded, ownerA), null, 'expected guest data not to enter an owner scope implicitly');
 });
 
 test('mobile storage migrates only the legacy standalone demo default', () => {

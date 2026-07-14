@@ -10,6 +10,7 @@ import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
 export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
   displayName?: string;
+  expectedOwnerId: string;
 }
 
 export interface MobileSnapshotSyncResult {
@@ -29,10 +30,13 @@ export async function syncMobileSnapshot(
   const { data: claimsData, error: claimsError } = await client.auth.getClaims();
   const ownerId = claimsData?.claims?.sub;
   if (claimsError || typeof ownerId !== 'string') throw syncError('identity verification', claimsError);
+  if (ownerId !== input.expectedOwnerId) {
+    throw new Error('Mobile snapshot sync stopped because the account changed before sync. Try again.');
+  }
 
   const storage: SnapshotStorageEntry[] = [{
     key: 'interestshield-mobile-assumptions-v1',
-    value: encodeMobileAssumptions(input.assumptions),
+    value: encodeMobileAssumptions(input.assumptions, undefined, ownerId),
   }];
   const plan = buildSnapshotSyncPlan({
     displayName: input.displayName,

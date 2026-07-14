@@ -260,3 +260,15 @@
 - Fresh merged-main validation passes 35 native contracts, Expo TypeScript, both Supabase suites, 263 web regressions and companion lanes, a fresh seven-route export, and Android/iOS Hermes bundle exports.
 - P6-G1 and P6-G2 pass. Android emulator and macOS Simulator evidence remain pending for P6-T4, so P6-G3 and P6-G4 stay open honestly.
 - P6-T2 starts on codex/mission/p6-native-auth-offline to harden auth lifecycle, SecureStore persistence, owner-scoped sync ordering, and offline recovery.
+
+## 2026-07-14T23:57Z - Native auth and owner isolation approved locally
+- One root provider now owns Supabase auth/session lifecycle above the Expo route stack; delayed bootstrap cannot overwrite a newer auth event.
+- PKCE callbacks are route-allowlisted, token fragments are rejected, concurrent duplicate codes exchange once, and callback failures surface to Settings.
+- Assumptions use owner-specific keys and owner-tagged payloads; guest and account scopes cannot read each other.
+- Owner hydration gates edits, Reset, and Sync. Storage read failures recover to a no-write session-only mode instead of exposing defaults or locking the app.
+- SecureStore writes clean interrupted generations, identity initialization is single-flight, and only the newest queued save can control persistence status.
+- Snapshot sync requires the active owner and copy now distinguishes secure native storage, browser localStorage, and owner-protected remote rows.
+- Final gates pass both mobile Supabase contracts, 35 native contracts, TypeScript, seven-route Expo export smoke, Android/iOS Hermes exports, 263 web regressions, and the web production build.
+- Chrome at 390x844 showed no overflow or console errors and preserved a 6500-to-7200 edit across routes and reload. Final post-review corrections received fresh export/bundle/contract gates.
+- Independent adversarial review closed hydration, copy, unavailable-storage, duplicate-write, and queued-write ordering findings; final verdict is approved with no findings.
+- P6-T2 remains open for a durable outbox, reconnect replay, transactional remote mutation, restore/adoption, and conflict semantics.
