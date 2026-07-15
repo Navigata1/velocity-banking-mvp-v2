@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { useMobileAuth } from '@/components/mobile-auth-provider';
 import { syncMobileSnapshot } from '@/lib/supabase/snapshot-sync';
+import { createMobileSyncOperationIdempotencyKey } from '@/lib/supabase/sync-identity';
 
 type WorkState = 'idle' | 'signing-in' | 'signing-out' | 'syncing';
 
@@ -86,7 +87,11 @@ export function MobileSupabaseAccount({
     setWork('syncing');
     setStatus(null);
     try {
-      await syncMobileSnapshot(client, { assumptions, expectedOwnerId });
+      await syncMobileSnapshot(client, {
+        assumptions,
+        expectedOwnerId,
+        operationIdempotencyKey: createMobileSyncOperationIdempotencyKey(),
+      });
       setStatus('Assumptions synced to your private, owner-protected snapshot.');
     } catch (error) {
       setStatus(`Sync failed: ${message(error)} Local data is unchanged.`);

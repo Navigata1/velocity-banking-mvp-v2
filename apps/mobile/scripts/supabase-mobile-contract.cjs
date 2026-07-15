@@ -160,6 +160,10 @@ async function main() {
   const idTwo = await identityModule.getOrCreateMobileSyncIdempotencyKey(identityStorage, () => 'must-not-run');
   assert.equal(idOne, 'mobile-install:00000000-0000-4000-8000-000000000111');
   assert.equal(idTwo, idOne);
+  assert.equal(
+    identityModule.createMobileSyncOperationIdempotencyKey(() => '00000000-0000-4000-8000-000000000222'),
+    'mobile-operation:00000000-0000-4000-8000-000000000222'
+  );
 
   const concurrentIdentityStorage = authStorageModule.createChunkedSecureAuthStorage(
     new MemorySecureStore(),
@@ -176,7 +180,9 @@ async function main() {
   const syncModule = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'snapshot-sync.ts'), {
     ...mocks,
     '../mobile-assumption-storage': { encodeMobileAssumptions: () => '{"version":1}' },
-    './sync-identity': { getOrCreateMobileSyncIdempotencyKey: async () => idOne },
+    './sync-identity': {
+      getOrCreateMobileSyncIdempotencyKey: async () => idOne,
+    },
   });
   const calls = [];
   const client = {
@@ -186,34 +192,59 @@ async function main() {
         error: null,
       }),
     },
-    from: (table) => new FakeQuery(table, calls),
+    from: () => { throw new Error('atomic snapshot sync must not issue direct table writes'); },
+    rpc: async (name, args) => {
+      calls.push({ args, name, operation: 'rpc' });
+      return { data: '00000000-0000-4000-8000-000000000999', error: null };
+    },
   };
   const result = await syncModule.syncMobileSnapshot(client, {
     assumptions: {},
     expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
+    operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000222',
   });
   assert.equal(result.ownerId, '00000000-0000-4000-8000-00000000000a');
-  assert.deepEqual(calls.map(({ table, operation }) => `${table}:${operation}`), [
-    'profiles:upsert',
-    'financial_snapshots:upsert',
-    'financial_snapshots:select',
-    'audit_events:insert',
+  assert.deepEqual(calls.map(({ name, operation }) => `${operation}:${name}`), [
+    'rpc:sync_interestshield_snapshot',
   ]);
-  assert.equal(calls[1].row.assumptions_json.storage[0].key, 'interestshield-mobile-assumptions-v1');
-  assert.equal(calls[1].options.onConflict, 'owner_id,idempotency_key');
+  assert.equal(calls[0].args.p_assumptions_json.storage[0].key, 'interestshield-mobile-assumptions-v1');
+  assert.equal(calls[0].args.p_snapshot_idempotency_key, idOne);
+  assert.equal(calls[0].args.p_expected_owner_id, '00000000-0000-4000-8000-00000000000a');
+  assert.equal(
+    calls[0].args.p_operation_idempotency_key,
+    'mobile-operation:00000000-0000-4000-8000-000000000222'
+  );
+  assert.equal(calls[0].args.p_snapshot_version, 1);
+  assert.equal(Object.hasOwn(calls[0].args, 'owner_id'), false, 'expected server-derived RPC ownership');
   const callCountBeforeOwnerMismatch = calls.length;
   await assert.rejects(
     () => syncModule.syncMobileSnapshot(client, {
       assumptions: {},
       expectedOwnerId: '00000000-0000-4000-8000-00000000000b',
+      operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000223',
     }),
     /account changed before sync/i
   );
   assert.equal(calls.length, callCountBeforeOwnerMismatch);
   await assert.rejects(
+    () => syncModule.syncMobileSnapshot({
+      ...client,
+      rpc: async () => ({ data: null, error: { message: 'transaction rolled back' } }),
+    }, {
+      assumptions: {},
+      expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
+      operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000224',
+    }),
+    /transactional snapshot sync.*transaction rolled back/i
+  );
+  await assert.rejects(
     () => syncModule.syncMobileSnapshot(
       { ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } },
-      { assumptions: {}, expectedOwnerId: '00000000-0000-4000-8000-00000000000a' }
+      {
+        assumptions: {},
+        expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
+        operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000225',
+      }
     ),
     /identity verification/i
   );

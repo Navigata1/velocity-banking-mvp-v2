@@ -5,6 +5,12 @@ const INSTALL_SYNC_KEY = 'interestshield.mobile.sync-install.v1';
 const defaultSyncStorage = createMobileAuthStorage();
 const pendingIdentityByStorage = new WeakMap<AsyncAuthStorage, Promise<string>>();
 
+export function createMobileSyncOperationIdempotencyKey(
+  createId: () => string = Crypto.randomUUID
+): string {
+  return `mobile-operation:${createId()}`;
+}
+
 export async function getOrCreateMobileSyncIdempotencyKey(
   storage: AsyncAuthStorage = defaultSyncStorage,
   createId: () => string = Crypto.randomUUID

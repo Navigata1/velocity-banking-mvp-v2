@@ -11,6 +11,7 @@ export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
   displayName?: string;
   expectedOwnerId: string;
+  operationIdempotencyKey: string;
 }
 
 export interface MobileSnapshotSyncResult {
@@ -45,28 +46,17 @@ export async function syncMobileSnapshot(
     storage,
   });
 
-  const { error: profileError } = await client
-    .from(plan.profile.table)
-    .upsert(plan.profile.row, { onConflict: plan.profile.onConflict });
-  if (profileError) throw syncError('profile upsert', profileError);
-
-  const { data: snapshot, error: snapshotError } = await client
-    .from(plan.snapshot.table)
-    .upsert(plan.snapshot.row, { onConflict: plan.snapshot.onConflict })
-    .select('id')
-    .single();
-  if (snapshotError || !snapshot?.id) throw syncError('snapshot upsert', snapshotError);
-
-  const { error: auditError } = await client.from('audit_events').insert({
-    owner_id: ownerId,
-    event_type: 'mobile-snapshot-synced',
-    event_json: {
-      contract_version: plan.version,
-      idempotency_key: plan.snapshot.row.idempotency_key,
-      snapshot_id: snapshot.id,
-    },
+  const { data: snapshotId, error } = await client.rpc('sync_interestshield_snapshot', {
+    p_assumptions_json: plan.snapshot.row.assumptions_json,
+    p_display_name: plan.profile.row.display_name,
+    p_expected_owner_id: input.expectedOwnerId,
+    p_operation_idempotency_key: input.operationIdempotencyKey,
+    p_snapshot_idempotency_key: plan.snapshot.row.idempotency_key,
+    p_snapshot_version: plan.version,
   });
-  if (auditError) throw syncError('audit append', auditError);
+  if (error || typeof snapshotId !== 'string') {
+    throw syncError('transactional snapshot sync', error);
+  }
 
-  return { ownerId, snapshotId: snapshot.id };
+  return { ownerId, snapshotId };
 }

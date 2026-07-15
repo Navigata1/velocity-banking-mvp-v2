@@ -77,23 +77,26 @@ async function main() {
         error: null,
       }),
     },
-    from: (table) => new FakeQuery(table, calls),
+    from: () => { throw new Error('atomic web sync must not issue direct table writes'); },
+    rpc: async (name, args) => {
+      calls.push({ args, name, operation: 'rpc' });
+      return { data: '00000000-0000-4000-8000-000000000999', error: null };
+    },
   };
   const result = await syncModule.syncLocalSnapshot(client, {
     idempotencyKey: 'browser-install-0001',
+    operationIdempotencyKey: 'browser-operation-0001',
     storage: [{ key: 'velocity-bank-storage', value: '{}' }],
   });
 
   assert.equal(result.ownerId, '00000000-0000-4000-8000-00000000000a');
-  assert.deepEqual(calls.map(({ table, operation }) => `${table}:${operation}`), [
-    'profiles:upsert',
-    'financial_snapshots:upsert',
-    'financial_snapshots:select',
-    'audit_events:insert',
+  assert.deepEqual(calls.map(({ name, operation }) => `${operation}:${name}`), [
+    'rpc:sync_interestshield_snapshot',
   ]);
-  assert.equal(calls[1].options.onConflict, 'owner_id,idempotency_key');
-  assert.equal(calls[1].row.owner_id, result.ownerId);
-  assert.equal(calls[3].row.owner_id, result.ownerId);
+  assert.equal(calls[0].args.p_snapshot_idempotency_key, 'browser-install-0001');
+  assert.equal(calls[0].args.p_expected_owner_id, '00000000-0000-4000-8000-00000000000a');
+  assert.equal(calls[0].args.p_operation_idempotency_key, 'browser-operation-0001');
+  assert.equal(Object.hasOwn(calls[0].args, 'owner_id'), false);
   assert.equal(configModule.readPublicSupabaseConfig({}), null);
   assert.equal(
     configModule.readPublicSupabaseConfig({
@@ -105,6 +108,7 @@ async function main() {
   await assert.rejects(
     () => syncModule.syncLocalSnapshot({ ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } }, {
       idempotencyKey: 'browser-install-0001',
+      operationIdempotencyKey: 'browser-operation-0002',
       storage: [{ key: 'velocity-bank-storage', value: '{}' }],
     }),
     /identity verification/i

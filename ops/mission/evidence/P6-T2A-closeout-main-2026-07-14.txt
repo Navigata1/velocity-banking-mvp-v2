@@ -1,0 +1,26 @@
+P6-T2A merged-main closeout
+Date: 2026-07-14 America/Chicago
+Main merge: 10fe6893c646af2dc35750a9f62b6e664318da18
+Pull request: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/246
+
+Remote gates
+- Vercel deployment: passed.
+- Vercel Preview Comments: passed.
+- GitHub Web and mobile quality gates run 29377675471: passed in 4m16s.
+- GitHub Web and mobile quality gates run 29377687270: passed in 4m20s.
+
+Fresh merged-main gates
+- npm --prefix apps/mobile run test:supabase:mobile: passed.
+- node scripts/mobile-port-contract-tests.cjs: 35/35 passed.
+- npm --prefix apps/mobile run check: passed.
+- npm --prefix apps/mobile run build:web: passed.
+- npm --prefix apps/mobile run smoke:web-export: seven routes passed.
+- npm --prefix apps/mobile run smoke:android-bundle: passed.
+- npm --prefix apps/mobile run smoke:ios-bundle: passed.
+- npm --prefix apps/web test: 263 regressions and companion lanes passed.
+
+Result
+- Native auth and session ownership is centralized above the route stack.
+- Local assumptions are owner-isolated and hydration-gated.
+- PKCE callbacks, SecureStore interruption recovery, save ordering, and expected-owner sync are hardened.
+- P6-T2 continues on codex/mission/p6-native-offline-outbox for durable queue/replay and remote transaction work.
