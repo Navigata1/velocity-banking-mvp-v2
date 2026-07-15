@@ -54,6 +54,10 @@ jobs:
         working-directory: apps/mobile
         run: npm run check
 
+      - name: Run owner recovery contracts
+        working-directory: apps/mobile
+        run: npm run test:supabase:mobile
+
       - name: Add Android SDK tools to PATH
         run: |
           ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
@@ -104,6 +108,9 @@ jobs:
         working-directory: apps/mobile
         env:
           ANDROID_SMOKE_AVD: ${{ inputs.avd_name }}
+          ANDROID_SMOKE_ACCESSIBILITY: 1
+          ANDROID_SMOKE_ACCESSIBILITY_SCREENSHOT: ${{ runner.temp }}/interestshield-android-large-text-landscape.png
+          ANDROID_SMOKE_DEEP_LINK_SCREENSHOT: ${{ runner.temp }}/interestshield-android-settings.png
           ANDROID_SMOKE_SCREENSHOT: ${{ runner.temp }}/interestshield-android-smoke.png
           ANDROID_SMOKE_TIMEOUT_MS: 480000
           ANDROID_BUNDLE_TIMEOUT_MS: 420000
@@ -138,5 +145,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: interestshield-android-smoke
-          path: ${{ runner.temp }}/interestshield-android-smoke.png
+          path: |
+            ${{ runner.temp }}/interestshield-android-smoke.png
+            ${{ runner.temp }}/interestshield-android-large-text-landscape.png
+            ${{ runner.temp }}/interestshield-android-settings.png
           if-no-files-found: ignore

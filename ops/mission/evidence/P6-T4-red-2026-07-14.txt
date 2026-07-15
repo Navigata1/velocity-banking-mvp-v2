@@ -1,0 +1,226 @@
+P6-T4 RED EVIDENCE - native release-candidate proof
+Captured: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-release-candidates
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Expected failures: 4
+- Android smoke did not exercise a direct Settings route.
+- iOS smoke did not exercise a direct Settings route.
+- Android hosted smoke did not rerun owner-recovery contracts.
+- iOS hosted smoke did not rerun owner-recovery contracts.
+Exit code: 1
+
+The failures established the release-candidate contract before implementation:
+both native platforms must prove direct routing, capture visual evidence, and
+rerun the owner-scoped recovery suite on their hosted release hosts.
+
+Hosted iOS baseline failure
+- Workflow run: 29387859879
+- Main SHA: 16dfe3e3b21656c62581e0ba4bcb8d7c17d0e0dc
+- Strict iOS Simulator mode timed out twice after Metro reported its listening
+  URL. Expo Go had been fetched and installed, but the app never requested the
+  bundle, exposing an unreliable first-run hosted launch handoff.
+- The P6-T4 harness now detects the installed Expo Go application and reopens
+  the Metro project through simctl on a bounded cadence.
+
+First P6-T4 branch-hosted iOS run
+- Workflow run: 29388574412
+- Branch SHA: 6cdb28eddcb41b986bd5ad8e8ff9b4ffaf67e313
+- Expo Go installed and every explicit simctl reopen returned successfully,
+  but the fresh simulator never requested the Metro bundle in either attempt.
+- Current Expo documentation identifies a first-install confirmation prompt as
+  a known simulator failure mode. The harness now bypasses that interactive
+  handoff: it downloads the exact project SDK's official Expo Go simulator app,
+  installs it directly with simctl, and starts Metro without auto-open.
+
+Second P6-T4 branch-hosted iOS run
+- Workflow run: 29389208514
+- Branch SHA: bb9870e209275d622ffb0650e3993bb8c10403f5
+- The diagnostic screenshot proved the exact blocker: CoreSimulator displayed
+  an Open in "Expo Go" confirmation sheet, so every accepted simctl openurl
+  request remained pending behind user consent.
+- The harness now writes the simulator's exp-scheme approval entry before launch.
+  It also pins Expo Go 56.0.4 and verifies archive SHA-256
+  e6ed55f7ad9c31c81e819addcb79ed8f0cd629950517d84328e377f182104eed.
+
+Third P6-T4 branch-hosted iOS run
+- Workflow run: 29389962283
+- Branch SHA: a7d64d10cd94031a56600bd9501aa9dd404d6168
+- The fixed archive downloaded and passed SHA-256 verification, then installation
+  stopped because the release tar stores app-bundle contents at its root rather
+  than wrapping them in an .app directory. The extractor now creates the .app
+  bundle directory explicitly before invoking simctl install.
+
+Fourth P6-T4 branch-hosted iOS run
+- Workflow run: 29390332438
+- Branch SHA: 9e218e1e9d38f1e4b356d748ec0d9a12fe228d0b
+- Verified Expo Go installed and the consent sheet no longer appeared. The app
+  reached its own error surface but could not connect to Metro at 127.0.0.1.
+- The harness now advertises the runner's real IPv4 address over Expo LAN
+  transport and resolves the canonical exp:// URL through /_expo/open. The
+  verified archive remains cached for the single same-job retry.
+
+Fifth P6-T4 branch-hosted iOS run
+- Workflow run: 29391229103
+- Branch SHA: fa4f2b5ce5311d45d4804cc133b06977df9c8993
+- The LAN transport succeeded: Metro bundled the app and the direct Settings
+  route rendered on both attempts. Native Vision OCR recognized the Settings
+  heading and route copy, proving that the deep link itself was no longer the
+  failure.
+- Expo Go's first-run developer-menu onboarding covered both evidence frames,
+  while the OCR contract requested Backend Status below the initial viewport.
+  The harness now writes Expo Go's documented onboarding and floating-control
+  preferences before launch, and verifies a unique Settings sentence that is
+  visible without scrolling.
+
+Sixth P6-T4 branch-hosted iOS run
+- Workflow run: 29391908196
+- Branch SHA: 0504fa068c8cd1668bc7d25998422fb36f6e1a04
+- Expo Go's onboarding and floating controls were successfully suppressed,
+  revealing a real application crash in react-native-screens. The native stack
+  attempted to set iOS status-bar options while Expo Go's host Info.plist does
+  not permit controller-based status-bar updates.
+- Native-stack status-bar options are now Android-only under Expo Go, while the
+  declarative React Native StatusBar remains cross-platform. Standalone iOS
+  builds explicitly enable UIViewControllerBasedStatusBarAppearance.
+
+Seventh P6-T4 branch-hosted iOS run
+- Workflow run: 29392409208
+- Branch SHA: 6e8c7e0cc7cce3579c7312bfab752c7df22fd5d0
+- The strict workflow and Settings OCR passed after the status-bar fix, but
+  manual artifact review rejected the dashboard screenshot because it captured
+  the white launch surface immediately after Metro's bundle event.
+- Both dashboard and Settings artifacts now wait for route-specific native
+  Vision OCR before they can pass, preventing blank or stale screenshots from
+  being accepted as release evidence.
+
+Eighth P6-T4 branch-hosted iOS run
+- Workflow run: 29392802730
+- Branch SHA: 17e4485c04d86ba370e4d3a6945da30cee3600f5
+- Both strict OCR gates passed and the dashboard artifact was complete. Manual
+  review found the Settings artifact was captured during the native push
+  transition, after route text appeared but before the navigation row settled.
+- The verifier now waits briefly after its first OCR match, recaptures the
+  frame, and requires the settled image to pass the same route-specific text
+  contract before accepting the artifact.
+
+Ninth P6-T4 branch-hosted iOS run
+- Workflow run: 29526612173
+- Branch SHA: a954eb28739ff6211e1946aed2f01e19c3a01aa3
+- The settled OCR contract passed, but manual review still found the Settings
+  route's reused navigation view in a partial state: route content was complete
+  while the title and most section tabs were absent.
+- Settings is now tested as a cold external deep link. The harness terminates
+  Expo Go after dashboard evidence, opens the exact /--/settings URL, and then
+  applies the same settled native Vision contract to the fresh route launch.
+
+Tenth P6-T4 branch-hosted iOS run
+- Workflow run: 29527332431
+- Branch SHA: aac84471cc3d921ed29f969d20ac2902ab8941e1
+- Cold-launch Settings rendered the complete route shell, proving the partial
+  navigation artifact was specific to warm Expo Go route reuse. The initial
+  dashboard project load then exposed the same partial-shell pattern.
+- After Metro bundles, both dashboard and Settings are now relaunched from a
+  terminated Expo Go process before settled OCR and artifact capture. The final
+  release proof therefore requires two complete cold routes on one commit.
+
+Eleventh P6-T4 branch-hosted iOS run
+- Workflow run: 29527948974
+- Branch SHA: 1e1e454afbf8475c9691ea36c19bbc8f3274cac2
+- Resetting Expo Go before the root dashboard route made simulator screenshot
+  capture unstable in both attempts, so cold relaunch is not a reliable root
+  transport even though it remains reliable for the explicit Settings URL.
+- Dashboard now stays in the original bundled process and must expose the full
+  shell through Vision OCR: InterestShield, Dashboard, Money Loop Mobile,
+  Simulator, and Cockpit. Settings retains the proven cold direct-route launch.
+
+Twelfth P6-T4 branch-hosted iOS run
+- Workflow run: 29529121723
+- Branch SHA: 56be46a8274309550acd823488aa7068ff568927
+- The retry passed and produced a complete dashboard. Manual review rejected
+  Settings because its cold launch can also expose route content before the
+  complete section navigation shell appears.
+- Settings OCR now requires the same shell markers as dashboard in addition to
+  its route-specific copy: Money Loop Mobile, Simulator, and Cockpit. Neither
+  route can pass on the observed two-button partial state.
+
+Thirteenth P6-T4 branch-hosted iOS run and independent review
+- Workflow run: 29530398472
+- Branch SHA: 2d00675f2ca7173cda583e25b2f3b34ccbbdee51
+- The strict workflow passed, but manual review again found a partial Settings
+  shell despite the new text contract. Native Vision had no confidence floor,
+  allowing low-confidence candidates to satisfy substring checks.
+- Independent no-edit review also found a medium risk in choosing and memoizing
+  an arbitrary LAN adapter, plus a low risk where a corrupt cached Expo Go
+  archive would fail permanently on a reused runner.
+- Vision now accepts only candidates at or above 0.8 confidence. The harness
+  selects the macOS default-route interface, keeps probing Expo's canonical
+  project URL instead of freezing an early fallback, and redownloads one corrupt
+  cached archive before failing checksum verification.
+
+Fourteenth P6-T4 independent review
+- The post-fix no-edit review found one remaining medium standalone-iOS
+  regression: UIViewControllerBasedStatusBarAppearance was enabled even though
+  the retained React Native StatusBar API requires that key to be disabled.
+- The app now keeps controller-based status-bar appearance disabled for shipped
+  iOS builds. Expo Go remains protected because react-native-screens status-bar
+  options stay Android-only, while the declarative and imperative React Native
+  StatusBar path continues to provide the light iOS status bar.
+
+Fifteenth P6-T4 branch artifact review
+- Workflow run: 29531352414
+- Branch SHA: 8b2b4042d736988a570338514f5b14c692a4cc3c
+- Confidence-filtered OCR passed, but the Settings artifact still showed the
+  partial two-button shell. Vision can confidently misread words inside longer
+  route copy, and substring matching allowed those candidates to satisfy short
+  shell labels such as Simulator or Cockpit.
+- Route-shell markers now require exact normalized OCR lines. Phrase containment
+  remains only for the unique Settings sentence, preventing prose or OCR
+  substitutions from impersonating navigation labels.
+
+Sixteenth P6-T4 branch artifact review
+- Workflow run: 29532284244
+- Branch SHA: 8afae3fd8ad6297e7ad3e7c1c690d490c8985a3b
+- Exact-line OCR passed, but manual review again found the partial Settings
+  shell. Text identity alone cannot prove that a recognized label occupies the
+  visible navigation row.
+- The native helper now emits confidence and normalized Vision bounding boxes.
+  Simulator, Cockpit, Portfolio, and Money Loop Mobile must appear in their
+  expected navigation/header bands before either screenshot can pass.
+
+Seventeenth P6-T4 branch artifact review and portability review
+- Workflow run: 29533424230
+- Branch SHA: dd3189a3fd254e84733119e0b2d9a3b518b2b7c8
+- The strict workflow passed. Initial inspection through the in-app image
+  viewer appeared to omit low-contrast inactive Settings navigation labels,
+  but later pixel-component analysis and an enhanced native-resolution crop
+  confirmed that all seven buttons and labels were present in the artifact.
+- Independent no-edit review also found that those fixed bands were coupled to
+  one Pro Max layout and that a network outage could fail the smoke even when
+  the exact pinned Expo Go was already installed.
+- Both routes now require all seven exact navigation labels in responsive
+  reading order beneath Money Loop Mobile. The installer still prefers the
+  checksum-pinned Expo Go 56.0.4 archive, but reuses an already installed exact
+  56.0.4 build when and only when archive retrieval fails.
+
+Eighteenth P6-T4 portability review
+- Workflow run: 29534425594
+- Branch SHA: 374eebcfc3c2684e6dbfe70d76dfd87b4fc8d162
+- The strict iOS workflow passed after one clean retry. Dashboard and Settings
+  artifacts both contained the complete seven-item navigation shell; the
+  Settings artifact was additionally verified through pixel components and an
+  enhanced full-resolution crop.
+- Final independent review found that LAN-only Metro selection could regress
+  offline, VPN-only, or IPv6-only local Macs even though iOS Simulator can
+  reach localhost. The harness now chooses LAN when a routable IPv4 exists and
+  otherwise restores localhost transport with a 127.0.0.1 project fallback.
+
+Nineteenth P6-T4 final branch verification
+- Workflow run: 29535779376
+- Branch SHA: ceb5e056ed9bbf01c7733acf8ab6cf5a825f007e
+- The strict hosted iOS workflow passed after one clean retry. Logs confirmed
+  the hosted runner retained LAN transport at exp://192.168.64.4:8082, while
+  the new localhost path remains available only when no LAN IPv4 is present.
+- Dashboard and direct cold Settings artifacts passed exact, confidence-scored,
+  responsive-order Vision checks. Pixel-component inspection confirmed all
+  seven Settings navigation buttons despite low-contrast viewer downsampling.

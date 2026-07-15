@@ -29,9 +29,11 @@ export default function RootLayout() {
           screenOptions={{
             headerStyle: { backgroundColor: '#0f172a' },
             headerTintColor: '#f8fafc',
-            statusBarBackgroundColor: '#0f172a',
-            statusBarStyle: 'light',
-            statusBarTranslucent: false,
+            ...(Platform.OS === 'android' ? {
+              statusBarBackgroundColor: '#0f172a',
+              statusBarStyle: 'light' as const,
+              statusBarTranslucent: false,
+            } : {}),
           }}
         >
           <Stack.Screen name="index" options={{ title: 'InterestShield' }} />

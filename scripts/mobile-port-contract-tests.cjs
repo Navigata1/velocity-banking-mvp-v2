@@ -215,6 +215,9 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
   assert.ok(smokeScript.includes('dumpIncludesText'), 'expected Android smoke to match UI dump text case-insensitively');
   assert.ok(smokeScript.includes('dumpTextExcerpt'), 'expected Android smoke failures to report visible native text');
   assert.ok(smokeScript.includes('waitForDashboardOrbit'), 'expected Android smoke to scroll to the Dashboard orbit');
+  assert.ok(smokeScript.includes("'/--/settings'"), 'expected Android smoke to exercise a direct Settings route');
+  assert.ok(smokeScript.includes('requiredSettingsText'), 'expected Android deep-link smoke to verify Settings content');
+  assert.ok(smokeScript.includes('ANDROID_SMOKE_DEEP_LINK_SCREENSHOT'), 'expected Android deep-link screenshot evidence');
   assert.ok(smokeScript.includes('ANDROID_SMOKE_ACCESSIBILITY'), 'expected optional enlarged-text rotation smoke');
   assert.ok(smokeScript.includes("System UI isn't responding"), 'expected emulator cold-boot ANR recovery');
   assert.ok(smokeScript.includes('dismissSystemUiAnrIfOpen'), 'expected Android smoke to dismiss the host ANR dialog');
@@ -260,9 +263,12 @@ test('Expo Android bundle smoke validates native export output when emulator lau
 
 test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () => {
   const smokeScriptPath = path.join(repoRoot, 'apps/mobile/scripts/smoke-ios-expo-go.cjs');
+  const ocrScriptPath = path.join(repoRoot, 'apps/mobile/scripts/ocr-ios-screenshot.swift');
   const smokeScript = fs.readFileSync(smokeScriptPath, 'utf8');
+  const ocrScript = fs.readFileSync(ocrScriptPath, 'utf8');
 
   assert.ok(fs.existsSync(smokeScriptPath), 'expected a committed iOS Expo Go smoke script');
+  assert.ok(fs.existsSync(ocrScriptPath), 'expected a committed iOS screenshot OCR helper');
   assert.ok(
     smokeScript.includes('iOS Expo Go smoke requires macOS with Xcode and Simulator.'),
     'expected a clear non-macOS blocker'
@@ -275,9 +281,64 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes('IOS_SMOKE_TIMEOUT_MS || 300000'), 'expected iOS smoke default timeout to allow first-run Expo Go setup');
   assert.ok(smokeScript.includes('timeout: 60000'), 'expected simctl startup probe to allow slow hosted macOS runners');
   assert.ok(smokeScript.includes("'expo', 'start'"), 'expected smoke script to launch Expo CLI');
-  assert.ok(smokeScript.includes('--ios'), 'expected smoke script to target iOS');
-  assert.ok(smokeScript.includes('--localhost'), 'expected smoke script to use simulator-local Metro transport');
+  assert.ok(smokeScript.includes('preinstallExpoGo'), 'expected deterministic Expo Go installation before launch');
+  assert.ok(smokeScript.includes("expoGoVersion = '56.0.4'"), 'expected an exact Expo Go simulator release');
+  assert.ok(smokeScript.includes('expoGoSha256'), 'expected the Expo Go archive checksum to be verified');
+  assert.ok(smokeScript.includes("'simctl', 'install'"), 'expected direct simulator installation without a first-open prompt');
+  assert.ok(smokeScript.includes('preapproveExpoGoScheme'), 'expected the one-time exp scheme confirmation to be preapproved');
+  assert.ok(smokeScript.includes('com.apple.launchservices.schemeapproval.plist'), 'expected CoreSimulator scheme consent');
+  assert.ok(smokeScript.includes('preconfigureExpoGoPreferences'), 'expected Expo Go first-run UI to be preconfigured');
+  assert.ok(smokeScript.includes('EXDevMenuIsOnboardingFinished'), 'expected Expo Go onboarding to be dismissed deterministically');
+  assert.ok(smokeScript.includes('EXDevMenuShowFloatingActionButton'), 'expected Expo Go controls not to cover release evidence');
+  assert.ok(smokeScript.includes('--go'), 'expected smoke script to force the Expo Go launch target');
+  assert.ok(smokeScript.includes('--lan'), 'expected smoke script to use the hosted runner LAN transport');
+  assert.ok(smokeScript.includes('--localhost'), 'expected offline local simulators to retain localhost transport');
+  assert.ok(smokeScript.includes('const metroTransport = packagerHostname'), 'expected transport selection from host reachability');
+  assert.ok(smokeScript.includes("packagerHostname || '127.0.0.1'"), 'expected a localhost project URL fallback');
+  assert.ok(smokeScript.includes('REACT_NATIVE_PACKAGER_HOSTNAME'), 'expected Metro to advertise the runner IPv4 address');
+  assert.ok(smokeScript.includes("'route', ['-n', 'get', 'default']"), 'expected the macOS default route to select the Metro host');
+  assert.ok(smokeScript.includes("'ipconfig', ['getifaddr'"), 'expected the default interface IPv4 address');
+  assert.ok(smokeScript.includes('/_expo/open?platform=ios&runtime=expo'), 'expected the official Expo open endpoint');
+  assert.ok(
+    smokeScript.includes('projectUrl = resolvedExpoProjectUrl() || projectUrl'),
+    'expected early fallback URLs not to be memoized over the canonical Expo URL'
+  );
   assert.ok(smokeScript.includes('iOS Bundled'), 'expected smoke script to wait for bundle completion');
+  assert.ok(smokeScript.includes("'/--/settings'"), 'expected iOS smoke to exercise a direct Settings route');
+  assert.ok(smokeScript.includes("'openurl'"), 'expected iOS smoke to open the direct route through simctl');
+  assert.ok(smokeScript.includes("'terminate'"), 'expected iOS Settings evidence to prove a cold direct-route launch');
+  assert.ok(smokeScript.includes('openColdProjectUrl'), 'expected iOS Settings to prove a fresh process launch');
+  assert.ok(smokeScript.includes("'get_app_container'"), 'expected iOS smoke to detect the installed Expo Go app');
+  assert.ok(smokeScript.includes('reopenProjectInExpoGo'), 'expected iOS smoke to recover a stalled hosted Expo Go launch');
+  assert.ok(smokeScript.includes('requiredSettingsText'), 'expected iOS smoke to verify route-specific Settings text');
+  assert.ok(smokeScript.includes('secure native storage'), 'expected a unique first-viewport Settings assertion');
+  assert.ok(
+    smokeScript.includes("'secure native storage',\n  'Money Loop Mobile',\n  'Dashboard',"),
+    'expected iOS Settings evidence to require the complete route shell'
+  );
+  assert.ok(smokeScript.includes('requiredDashboardText'), 'expected iOS smoke to reject blank dashboard evidence');
+  assert.ok(smokeScript.includes('Money Loop Mobile'), 'expected iOS dashboard evidence to require the complete route shell');
+  assert.ok(smokeScript.includes('exactOcrText'), 'expected iOS shell labels to use exact OCR line matches');
+  assert.ok(smokeScript.includes('ocrIncludesText'), 'expected OCR matching to distinguish labels from prose substrings');
+  assert.ok(smokeScript.includes('shellLayoutIsValid'), 'expected iOS shell labels to be verified in the navigation layout');
+  assert.ok(smokeScript.includes('followsReadingOrder'), 'expected navigation layout verification to adapt across simulator widths');
+  assert.ok(smokeScript.includes('orderedNavigationExists'), 'expected every responsive navigation label in visual order');
+  assert.ok(smokeScript.includes('centerX'), 'expected OCR records to expose normalized horizontal positions');
+  assert.ok(smokeScript.includes('centerY'), 'expected OCR records to expose normalized vertical positions');
+  assert.ok(smokeScript.includes('waitForScreenText'), 'expected both iOS screenshots to wait for route-specific OCR');
+  assert.ok(smokeScript.includes('await sleep(1500)'), 'expected iOS evidence to settle after native route transitions');
+  assert.ok(smokeScript.includes("'swiftc'"), 'expected iOS smoke to compile its native screenshot verifier');
+  assert.ok(ocrScript.includes('VNRecognizeTextRequest'), 'expected Vision OCR to verify the captured Settings screen');
+  assert.ok(ocrScript.includes('candidate.confidence >= 0.8'), 'expected low-confidence OCR candidates to be rejected');
+  assert.ok(ocrScript.includes('observation.boundingBox'), 'expected Vision OCR to report layout coordinates');
+  assert.ok(smokeScript.includes('expoGoArchiveSha256'), 'expected cached Expo Go archives to be verified');
+  assert.ok(smokeScript.includes('fs.rmSync(expoGoArchivePath'), 'expected corrupt cached Expo Go archives to be repaired');
+  assert.ok(smokeScript.includes('installedExpoGoVersion'), 'expected compatible installed Expo Go fallback detection');
+  assert.ok(
+    smokeScript.includes('downloadExpoGoArchiveWithInstalledFallback'),
+    'expected pinned archive download failures to reuse only a compatible installed Expo Go'
+  );
+  assert.ok(smokeScript.includes('IOS_SMOKE_DEEP_LINK_SCREENSHOT'), 'expected iOS deep-link screenshot evidence');
   assert.ok(smokeScript.includes('screenshot'), 'expected smoke script to capture visual evidence');
   assert.ok(smokeScript.includes('expo-env.d.ts'), 'expected smoke script to clean Expo-generated type noise');
 });
@@ -366,12 +427,14 @@ test('manual iOS native smoke runs on a macOS simulator host', () => {
   assert.ok(workflow.includes('xcode-select'), 'expected iOS smoke to select the available Xcode app before simctl use');
   assert.ok(workflow.includes('xcrun simctl list runtimes'), 'expected iOS smoke to warm Simulator tooling before npm smoke');
   assert.ok(workflow.includes('npm run check'), 'expected iOS smoke to type-check before running native smoke');
+  assert.ok(workflow.includes('npm run test:supabase:mobile'), 'expected iOS smoke to rerun owner recovery contracts');
   assert.ok(workflow.includes('IOS_SMOKE_SIMULATOR'), 'expected iOS smoke to pass the requested simulator through');
   assert.ok(workflow.includes('IOS_SMOKE_TIMEOUT_MS: 240000'), 'expected hosted iOS smoke fallback mode to use a bounded simulator attempt');
   assert.ok(workflow.includes('IOS_BUNDLE_TIMEOUT_MS: 420000'), 'expected hosted iOS bundle export to use the same long timeout');
   assert.ok(workflow.includes('STRICT_IOS_SIMULATOR'), 'expected iOS smoke to allow strict simulator mode');
   assert.ok(workflow.includes('Retrying iOS smoke once'), 'expected hosted iOS smoke to retry first-run Simulator openurl timeouts once');
   assert.ok(workflow.includes('npm run smoke:ios'), 'expected iOS smoke to run the committed Expo Go simulator smoke');
+  assert.ok(workflow.includes('IOS_SMOKE_DEEP_LINK_SCREENSHOT'), 'expected iOS Settings deep-link evidence upload');
   assert.ok(
     workflow.includes('Hosted iOS Simulator launch did not complete; validating the iOS bundle export fallback.'),
     'expected hosted iOS smoke to explain the fallback'
@@ -404,6 +467,9 @@ test('manual Android native smoke runs on a GitHub emulator host', () => {
   assert.ok(workflow.includes('test -f "$ANDROID_AVD_HOME/${{ inputs.avd_name }}.ini"'), 'expected Android smoke to verify the AVD ini path');
   assert.ok(workflow.includes('ANDROID_SMOKE_AVD'), 'expected Android smoke to pass the requested AVD through');
   assert.ok(workflow.includes('ANDROID_SMOKE_SCREENSHOT'), 'expected Android smoke to capture a workflow artifact screenshot');
+  assert.ok(workflow.includes('npm run test:supabase:mobile'), 'expected Android smoke to rerun owner recovery contracts');
+  assert.ok(workflow.includes('ANDROID_SMOKE_ACCESSIBILITY: 1'), 'expected Android release smoke to cover enlarged text and rotation');
+  assert.ok(workflow.includes('ANDROID_SMOKE_DEEP_LINK_SCREENSHOT'), 'expected Android Settings deep-link evidence upload');
   assert.ok(workflow.includes('ANDROID_SMOKE_TIMEOUT_MS: 480000'), 'expected hosted Android smoke fallback mode to use a bounded emulator attempt');
   assert.ok(workflow.includes('ANDROID_BUNDLE_TIMEOUT_MS: 420000'), 'expected hosted Android bundle export to use a long timeout');
   assert.ok(workflow.includes('STRICT_ANDROID_EMULATOR'), 'expected Android smoke to allow strict emulator mode');
@@ -1118,9 +1184,11 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
   assert.equal(appConfig.expo.androidStatusBar?.barStyle, 'light-content');
   assert.equal(appConfig.expo.androidStatusBar?.backgroundColor, '#0f172a');
   assert.equal(appConfig.expo.androidNavigationBar?.barStyle, 'light-content');
+  assert.equal(appConfig.expo.ios?.infoPlist?.UIViewControllerBasedStatusBarAppearance, false);
   assert.ok(layoutSource.includes('<StatusBar barStyle="light-content" backgroundColor="#0f172a" translucent={false} />'));
   assert.ok(layoutSource.includes('useWindowDimensions'));
   assert.ok(layoutSource.includes("StatusBar.setBarStyle('light-content', true)"));
+  assert.ok(layoutSource.includes("Platform.OS === 'android'"), 'expected native-stack status bar options to avoid Expo Go iOS crashes');
   assert.ok(layoutSource.includes("statusBarStyle: 'light'"));
   assert.ok(layoutSource.includes("statusBarBackgroundColor: '#0f172a'"));
   assert.ok(routeFrameSource.includes('useSafeAreaInsets'), 'expected Android and cutout-aware content insets');

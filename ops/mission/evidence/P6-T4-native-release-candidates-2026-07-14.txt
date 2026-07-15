@@ -1,0 +1,68 @@
+P6-T4 GREEN EVIDENCE - native release-candidate proof
+Captured: 2026-07-16 America/Chicago
+Branch: codex/mission/p6-release-candidates
+Release-candidate SHA: ceb5e056ed9bbf01c7733acf8ab6cf5a825f007e
+
+Focused gates
+
+Command: npm --prefix apps/mobile run check
+Result: PASS - TypeScript completed without errors.
+
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Result: PASS - all six secure persistence, account, stale-tab, outbox, replay,
+and explicit owner-recovery contract lanes.
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Result: PASS - all 36 shared mobile and native port contracts, including direct
+Settings routes, owner recovery, workflow artifacts, and hosted launch recovery.
+
+Command: npm --prefix apps/mobile run smoke:ios-bundle
+Result: PASS - current Expo SDK 56 iOS Hermes bundle exported locally.
+
+Local Android release candidate
+- Expo Go rendered the dashboard on emulator-5554.
+- Enlarged text at font scale 1.8 survived deterministic landscape rotation.
+- Direct exp:// routing opened /--/settings and exposed Settings screen and
+  Backend Status markers in the native accessibility tree.
+- Dashboard, landscape, and Settings screenshots were captured under
+  ops/mission/evidence/P6-T4-smoke/.
+
+Hosted baseline
+- Strict Android workflow 29387858430 passed on merged main.
+- Strict iOS workflow 29387859879 failed before the P6-T4 recovery change and
+  is preserved as red evidence.
+
+Final Android branch release proof
+- Strict workflow 29388574414 passed on the P6-T4 branch.
+- Owner-recovery contracts, API 36 emulator launch, dashboard, font scale 1.8
+  landscape rotation, direct Settings routing, and all three artifact uploads
+  passed.
+- Downloaded dashboard, enlarged-text landscape, and Settings screenshots were
+  inspected and committed under ops/mission/evidence/P6-T4-smoke/.
+
+Final iOS branch release proof
+- Strict workflow 29535779376 passed on SHA
+  ceb5e056ed9bbf01c7733acf8ab6cf5a825f007e after one clean hosted retry.
+- Logs confirmed checksum-pinned Expo Go 56.0.4, LAN Metro transport at
+  exp://192.168.64.4:8082, complete Dashboard rendering, and a direct cold
+  /--/settings route on iPhone 17 Pro Max Simulator.
+- Native Vision required confidence at or above 0.8, exact route-shell labels,
+  all seven navigation labels in responsive reading order, and a settled second
+  capture for both artifacts.
+- Downloaded Dashboard and Settings screenshots were manually inspected.
+  Pixel-component analysis and an enhanced native-resolution crop confirmed all
+  seven low-contrast Settings navigation buttons and labels.
+
+Independent review closure
+- Fixed arbitrary LAN-adapter selection and early fallback URL memoization.
+- Fixed corrupt cached Expo Go archive recovery.
+- Fixed standalone iOS status-bar configuration while retaining Expo Go safety.
+- Replaced simulator-specific OCR bands with responsive relative ordering.
+- Reused only an exact installed Expo Go 56.0.4 when archive download fails.
+- Restored localhost Metro fallback for offline, VPN-only, or IPv6-only Macs
+  while preserving LAN transport on hosted runners.
+
+Branch release status
+- PASS - Android and iOS branch release-candidate gates are complete.
+- Remaining gate: merge PR #252, then repeat strict Android and iOS workflows
+  on the merged main SHA before closing P6.
