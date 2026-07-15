@@ -1,0 +1,34 @@
+P6-T2C durable owner-scoped replay - red evidence
+Date: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-native-outbox-replay
+
+Observed failing contracts before implementation and each hardening correction
+
+1. Missing durable outbox
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Failure: ENOENT opening apps/mobile/lib/supabase/snapshot-outbox.ts.
+
+2. Missing enqueue-before-network and lifecycle replay
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Failure: account contract could not find mobileSnapshotOutbox.enqueue; replay module did not exist.
+
+3. Duplicate operation identity
+Command: node apps/mobile/scripts/snapshot-outbox-contract.cjs
+Failure: Missing expected rejection when two queued payloads received the same operation id.
+
+4. Owner UUID canonicalization
+Command: node apps/mobile/scripts/snapshot-outbox-contract.cjs
+Failure: uppercase and lowercase forms of one UUID produced different durable queue keys.
+
+5. Cross-platform storage copy
+Command: node apps/mobile/scripts/supabase-account-contract.cjs
+Failure: offline copy contained "Saved securely" even though Expo web uses localStorage.
+
+6. Post-commit SecureStore cleanup
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Failure: simulated stale-generation cleanup rejected after the new manifest had already committed.
+
+7. Owner-transition notice lifecycle
+Independent review found replay notices could survive A -> signed-out -> A and copied component status could survive A -> B. Source contracts failed until notices were uniquely identified, consumed, and cleared on owner transitions.
+
+Every failure was observed before its production correction.

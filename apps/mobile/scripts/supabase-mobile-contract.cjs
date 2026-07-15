@@ -55,7 +55,16 @@ class MemorySecureStore {
 }
 
 class FailureInjectingSecureStore extends MemorySecureStore {
+  failDeleteOnKeyPart = null;
   failOnKeyPart = null;
+
+  async deleteItemAsync(key) {
+    if (this.failDeleteOnKeyPart && key.includes(this.failDeleteOnKeyPart)) {
+      this.failDeleteOnKeyPart = null;
+      throw new Error('simulated stale-generation cleanup failure');
+    }
+    await super.deleteItemAsync(key);
+  }
 
   async setItemAsync(key, value) {
     if (this.failOnKeyPart && key.includes(this.failOnKeyPart)) {
@@ -149,6 +158,28 @@ async function main() {
   assert.equal(
     [...interruptedStore.values.keys()].some((key) => key.includes('failed-generation')),
     false
+  );
+
+  const cleanupStore = new FailureInjectingSecureStore();
+  const cleanupGenerations = ['cleanup-old', 'cleanup-new'];
+  const cleanupStorage = authStorageModule.createChunkedSecureAuthStorage(
+    cleanupStore,
+    () => cleanupGenerations.shift()
+  );
+  await cleanupStorage.setItem('supabase.cleanup', 'old-value');
+  cleanupStore.failDeleteOnKeyPart = '.cleanup-old.0';
+  await cleanupStorage.setItem('supabase.cleanup', 'new-value');
+  assert.equal(
+    await cleanupStorage.getItem('supabase.cleanup'),
+    'new-value',
+    'post-commit stale generation cleanup must not report a false write failure'
+  );
+  cleanupStore.failDeleteOnKeyPart = '.cleanup-new.0';
+  await cleanupStorage.removeItem('supabase.cleanup');
+  assert.equal(
+    await cleanupStorage.getItem('supabase.cleanup'),
+    null,
+    'post-commit stale chunk cleanup must not report a false remove failure'
   );
 
   const identityModule = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'sync-identity.ts'), mocks);

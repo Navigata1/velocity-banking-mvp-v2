@@ -1,0 +1,48 @@
+P6-T2C - Durable owner-scoped Expo snapshot outbox and foreground replay
+Date: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-native-outbox-replay
+
+Implemented
+- Sync presses prepare an immutable owner-bound request and persist it before checking connectivity.
+- Owner UUIDs resolve to one canonical queue key; embedded owner mismatches and malformed queues fail closed.
+- The bounded FIFO retains one operation identity and payload across reloads and ambiguous RPC failures.
+- Replay stops at the first failure, removes only the acknowledged head, and shares one in-flight flush per owner.
+- Duplicate operation IDs are rejected before persistence.
+- Sign-in, network reconnection, and app activation trigger Expo Go-compatible foreground replay.
+- Account changes cancel late replay notices and the server-side expected-owner check prevents cross-account mutation.
+- Background success/failure is surfaced to Settings through uniquely identified, consumable owner-scoped notices.
+- SecureStore stale-generation cleanup is best-effort after manifest commit, preventing false queue success/failure messages.
+- Offline copy says only "Saved on this device" because Expo web uses localStorage while native uses SecureStore.
+
+Fresh green gates
+- npm --prefix apps/mobile run test:supabase:mobile
+  - secure storage, auth/account, durable outbox, and replay trigger contracts passed
+- npm --prefix apps/mobile run check
+  - TypeScript passed
+- node scripts/mobile-port-contract-tests.cjs
+  - all 35 native/shared-engine contracts passed
+- npm --prefix apps/web run test:supabase
+  - static and client contracts plus 48/48 pgTAP assertions passed
+- npm --prefix apps/web test
+  - 263 regressions plus financial reference, accessibility, metadata, and asset lanes passed
+- npm --prefix apps/web run build
+  - production build and 12 static routes passed
+- npm --prefix apps/mobile run build:web
+  - Expo web export passed
+- npm --prefix apps/mobile run smoke:web-export
+  - all seven Expo routes passed
+- npm --prefix apps/mobile run smoke:android-bundle
+  - Android Hermes bundle passed
+- npm --prefix apps/mobile run smoke:ios-bundle
+  - iOS Hermes bundle passed
+- git diff --check
+  - passed; only repository line-ending notices were emitted
+
+Independent review
+- Initial findings covered post-commit cleanup truth, hidden replay outcomes, browser-storage copy, and stale owner notices.
+- All findings received failing contracts or explicit source guards and corrections.
+- Final re-review approved with no actionable findings.
+
+Explicitly remaining
+- P6-T2D: logical revision and cross-device conflict semantics before remote restore or guest adoption.
+- P6-T2 remains in progress until revision/conflict and recovery semantics close.
