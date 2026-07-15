@@ -1,11 +1,10 @@
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
 import * as Linking from 'expo-linking';
 import * as Network from 'expo-network';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { useMobileAuth } from '@/components/mobile-auth-provider';
-import { syncMobileSnapshot } from '@/lib/supabase/snapshot-sync';
-import { createMobileSyncOperationIdempotencyKey } from '@/lib/supabase/sync-identity';
+import { mobileSnapshotOutbox } from '@/lib/supabase/snapshot-outbox';
 
 type WorkState = 'idle' | 'signing-in' | 'signing-out' | 'syncing';
 
@@ -39,14 +38,28 @@ export function MobileSupabaseAccount({
   assumptions: MobileDashboardInput;
   assumptionsReady: boolean;
 }) {
-  const { authError, client, session } = useMobileAuth();
+  const { authError, client, consumeSyncNotice, session, syncNotice } = useMobileAuth();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<string | null>(null);
   const [work, setWork] = useState<WorkState>('idle');
+  const currentOwnerId = session?.user.id ?? null;
+  const statusOwnerId = useRef<string | null>(currentOwnerId);
 
   useEffect(() => {
     if (authError) setStatus(`Sign-in callback failed: ${authError}`);
   }, [authError]);
+
+  useEffect(() => {
+    if (statusOwnerId.current === currentOwnerId) return;
+    statusOwnerId.current = currentOwnerId;
+    setStatus(null);
+  }, [currentOwnerId]);
+
+  useEffect(() => {
+    if (!syncNotice || syncNotice.ownerId !== currentOwnerId) return;
+    setStatus(syncNotice.message);
+    consumeSyncNotice(syncNotice.id);
+  }, [consumeSyncNotice, currentOwnerId, syncNotice]);
 
   const requestMagicLink = async () => {
     const normalizedEmail = email.trim().toLowerCase();
@@ -80,21 +93,31 @@ export function MobileSupabaseAccount({
       setStatus('Saved assumptions are still loading for this account.');
       return;
     }
-    if (!await isOnline()) {
-      setStatus('You are offline. Local data is unchanged; reconnect and try again.');
-      return;
-    }
     setWork('syncing');
     setStatus(null);
+    let queued = false;
     try {
-      await syncMobileSnapshot(client, {
+      await mobileSnapshotOutbox.enqueue({
         assumptions,
         expectedOwnerId,
-        operationIdempotencyKey: createMobileSyncOperationIdempotencyKey(),
       });
-      setStatus('Assumptions synced to your private, owner-protected snapshot.');
+      queued = true;
+      if (!await isOnline()) {
+        setStatus('Saved on this device. Your snapshot will sync when you reconnect.');
+        return;
+      }
+      const result = await mobileSnapshotOutbox.flush(client, expectedOwnerId);
+      setStatus(
+        result.sent > 1
+          ? `${result.sent} queued snapshots synced to your private account.`
+          : 'Assumptions synced to your private, owner-protected snapshot.'
+      );
     } catch (error) {
-      setStatus(`Sync failed: ${message(error)} Local data is unchanged.`);
+      setStatus(
+        queued
+          ? `Saved on this device; account sync will retry automatically. ${message(error)}`
+          : `Could not queue account sync: ${message(error)} Local assumptions are unchanged.`
+      );
     } finally {
       setWork('idle');
     }

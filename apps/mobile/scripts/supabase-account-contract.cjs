@@ -112,8 +112,20 @@ async function main() {
   const authProviderPath = path.resolve(__dirname, '..', 'components', 'mobile-auth-provider.tsx');
   assert.ok(fs.existsSync(authProviderPath), 'expected one root native auth provider');
   const authProviderSource = fs.readFileSync(authProviderPath, 'utf8');
+  const syncSnapshotSource = componentSource.slice(
+    componentSource.indexOf('const syncSnapshot'),
+    componentSource.indexOf('const signOut')
+  );
   assert.ok(componentSource.includes('signInWithOtp'));
-  assert.ok(componentSource.includes('syncMobileSnapshot'));
+  assert.ok(componentSource.includes('mobileSnapshotOutbox.enqueue'));
+  assert.ok(componentSource.includes('mobileSnapshotOutbox.flush'));
+  assert.ok(componentSource.includes('syncNotice'));
+  assert.ok(componentSource.includes('consumeSyncNotice'));
+  assert.ok(componentSource.includes('statusOwnerId'));
+  assert.ok(
+    syncSnapshotSource.indexOf('mobileSnapshotOutbox.enqueue') < syncSnapshotSource.indexOf('await isOnline()'),
+    'expected snapshot enqueue to happen before the connectivity check'
+  );
   assert.ok(componentSource.includes('assumptionsReady'));
   assert.ok(componentSource.includes('!assumptionsReady'));
   assert.ok(componentSource.includes('getNetworkStateAsync'));
@@ -121,12 +133,19 @@ async function main() {
   assert.ok(componentSource.includes("scope: 'local'"), 'expected current-device sign-out scope');
   assert.ok(componentSource.includes('finally'), 'expected native auth actions to recover their busy state');
   assert.equal(componentSource.includes('Encrypted local'), false, 'expected copy not to overstate web or remote encryption');
+  assert.equal(componentSource.includes('Saved securely'), false, 'expected offline copy not to overstate browser storage');
   assert.ok(settingsSource.includes('assumptionsReady={isHydrated}'));
   assert.ok(settingsSource.includes('disabled={!assumptionsReady}'));
   assert.ok(layoutSource.includes('<MobileAuthProvider>'));
   assert.ok(layoutSource.indexOf('<MobileAuthProvider>') < layoutSource.indexOf('<MobileAssumptionsProvider>'));
   assert.ok(authProviderSource.includes('registerMobileAuthDeepLinks'));
   assert.ok(authProviderSource.includes('registerMobileAuthLifecycle'));
+  assert.ok(authProviderSource.includes('registerMobileSnapshotOutboxReplay'));
+  assert.ok(authProviderSource.includes('client, ownerId'));
+  assert.ok(authProviderSource.includes('onSuccess'));
+  assert.ok(authProviderSource.includes('onError'));
+  assert.ok(authProviderSource.includes('activeOwnerId.current !== nextOwnerId'));
+  assert.ok(authProviderSource.includes('consumeSyncNotice'));
   assert.ok(authProviderSource.includes('onAuthStateChange'));
   assert.ok(authProviderSource.includes('useMobileAuth'));
   console.log('Expo account contract passed owner-aware auth, PKCE callback isolation, and recoverable controls.');

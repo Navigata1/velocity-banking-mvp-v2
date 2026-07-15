@@ -45,7 +45,7 @@ function readManifest(raw: string | null): ChunkManifest | null {
 
 async function deleteGeneration(store: SecureStorePort, key: string, manifest: ChunkManifest | null) {
   if (!manifest) return;
-  await Promise.all(
+  await Promise.allSettled(
     Array.from({ length: manifest.count }, (_, index) =>
       store.deleteItemAsync(chunkKey(key, manifest.generation, index))
     )
