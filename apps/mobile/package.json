@@ -20,7 +20,7 @@
     "build:ios:preview": "npx eas-cli@latest build --platform ios --profile preview",
     "build:native:production": "npx eas-cli@latest build --profile production",
     "check": "tsc --noEmit",
-    "test:supabase:mobile": "node scripts/supabase-mobile-contract.cjs && node scripts/supabase-account-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/snapshot-outbox-replay-contract.cjs",
+    "test:supabase:mobile": "node scripts/supabase-mobile-contract.cjs && node scripts/supabase-account-contract.cjs && node scripts/mobile-assumption-storage-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/snapshot-outbox-replay-contract.cjs && node scripts/snapshot-recovery-contract.cjs",
     "test:supabase:account": "node scripts/supabase-account-contract.cjs"
   },
   "dependencies": {

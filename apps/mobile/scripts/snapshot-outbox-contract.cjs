@@ -62,7 +62,16 @@ const ownerB = '00000000-0000-4000-8000-00000000000b';
 async function main() {
   const modulePath = path.resolve(__dirname, '..', 'lib', 'supabase', 'snapshot-outbox.ts');
   const outboxModule = loadTsFile(modulePath, {
-    './auth-storage': { createMobileAuthStorage: () => new MemoryStorage() },
+    '../mobile-assumption-storage': {
+      decodeMobileAssumptions: (raw) => {
+        try { return JSON.parse(raw); } catch { return null; }
+      },
+    },
+    './auth-storage': {
+      createMobileAuthStorage: () => new MemoryStorage(),
+      isMobileSnapshotOwnerLock: (lock, ownerId) => lock?.ownerId === ownerId,
+      withMobileSnapshotOwnerLock: async (ownerId, action) => action({ ownerId }),
+    },
     './snapshot-sync': {
       prepareMobileSnapshotSync: async () => { throw new Error('inject prepareSnapshot in tests'); },
       syncPreparedMobileSnapshot: async () => { throw new Error('inject sendSnapshot in tests'); },
@@ -288,7 +297,169 @@ async function main() {
     'new work must not extend a stream with an unresolved conflict'
   );
 
+  const recoveryStorage = new MemoryStorage();
+  const recoveryOutbox = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => { throw new Error('recovery contract must not send discarded work'); },
+    storage: recoveryStorage,
+  });
+  const recoveryFirst = await recoveryOutbox.enqueue({ assumptions: { monthlyIncome: 7800 }, expectedOwnerId: ownerA });
+  await recoveryOutbox.enqueue({ assumptions: { monthlyIncome: 7900 }, expectedOwnerId: ownerA });
+  const staged = await recoveryOutbox.stageRecovery({
+    assumptions: { monthlyIncome: 8000 },
+    expectedLocalAssumptions: '{"monthlyIncome":7900}',
+    expectedOwnerId: ownerA,
+    serverRevision: 7,
+    snapshotIdempotencyKey: recoveryFirst.snapshotIdempotencyKey,
+    sourceKind: 'remote',
+  });
+  assert.equal(staged.clientRevision, 8);
+  const recoveryReloaded = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => { throw new Error('reloaded recovery must not send before commit'); },
+    storage: recoveryStorage,
+  });
+  assert.equal((await recoveryReloaded.readRecovery(ownerA)).recoveryId, staged.recoveryId);
+  await assert.rejects(
+    () => recoveryReloaded.enqueue({ assumptions: { monthlyIncome: 8050 }, expectedOwnerId: ownerA }),
+    /recovery is pending/i,
+    'new work must not enter a stream with a staged recovery journal'
+  );
+  await assert.rejects(
+    () => recoveryReloaded.flush({}, ownerA),
+    /recovery is pending/i,
+    'automatic replay must stop while recovery is staged'
+  );
+  const recoveryResult = await recoveryReloaded.commitRecovery(ownerA, staged.recoveryId);
+  assert.equal(recoveryResult.discarded, 2, 'confirmed recovery must report discarded local operations');
+  assert.equal(
+    (await recoveryReloaded.commitRecovery(ownerA, staged.recoveryId)).discarded,
+    0,
+    'a second tab must recognize an already committed recovery idempotently'
+  );
+  const afterRecovery = await recoveryReloaded.read(ownerA);
+  assert.equal(afterRecovery.length, 1);
+  assert.equal(afterRecovery[0].clientRevision, 8, 'recovered work must advance from the verified server revision');
+  assert.equal(afterRecovery[0].operationIdempotencyKey, staged.recoveryId);
+  assert.equal(await recoveryReloaded.readRecovery(ownerA), null);
+  assert.equal(await recoveryReloaded.readConflict(ownerA, recoveryFirst.snapshotIdempotencyKey), null);
+
+  const activeFlushStorage = new MemoryStorage();
+  let releaseSend;
+  let markSendStarted;
+  const sendStarted = new Promise((resolve) => { markSendStarted = resolve; });
+  const activeFlushOutbox = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => {
+      markSendStarted();
+      await new Promise((resolve) => { releaseSend = resolve; });
+      return { ownerId: ownerA, snapshotId: '00000000-0000-4000-8000-000000000998' };
+    },
+    storage: activeFlushStorage,
+  });
+  await activeFlushOutbox.enqueue({ assumptions: { monthlyIncome: 8050 }, expectedOwnerId: ownerA });
+  const activeFlush = activeFlushOutbox.flush({}, ownerA);
+  await sendStarted;
+  await assert.rejects(
+    () => activeFlushOutbox.stageRecovery({
+      assumptions: { monthlyIncome: 8100 },
+      expectedLocalAssumptions: '{"monthlyIncome":8050}',
+      expectedOwnerId: ownerA,
+      serverRevision: 7,
+      snapshotIdempotencyKey: 'mobile-install:00000000-0000-4000-8000-000000000111',
+      sourceKind: 'remote',
+    }),
+    /sync is active/i,
+    'recovery must not stage while an operation is being sent'
+  );
+  releaseSend();
+  await activeFlush;
+
+  const crossTabStorage = new MemoryStorage();
+  const withOwnerCrossContextLock = createCrossContextLock();
+  let releaseCrossTabSend;
+  let markCrossTabSendStarted;
+  const crossTabSendStarted = new Promise((resolve) => { markCrossTabSendStarted = resolve; });
+  const crossTabA = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => {
+      markCrossTabSendStarted();
+      await new Promise((resolve) => { releaseCrossTabSend = resolve; });
+      return { ownerId: ownerA, snapshotId: '00000000-0000-4000-8000-000000000997' };
+    },
+    storage: crossTabStorage,
+    withOwnerCrossContextLock,
+  });
+  const crossTabB = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => { throw new Error('second tab must not send during recovery staging'); },
+    storage: crossTabStorage,
+    withOwnerCrossContextLock,
+  });
+  const crossTabItem = await crossTabA.enqueue({ assumptions: { monthlyIncome: 8200 }, expectedOwnerId: ownerA });
+  const crossTabFlush = crossTabA.flush({}, ownerA);
+  await crossTabSendStarted;
+  let crossTabStageSettled = false;
+  const crossTabStage = crossTabB.stageRecovery({
+    assumptions: { monthlyIncome: 8250 },
+    expectedLocalAssumptions: '{"monthlyIncome":8200}',
+    expectedOwnerId: ownerA,
+    serverRevision: 1,
+    snapshotIdempotencyKey: crossTabItem.snapshotIdempotencyKey,
+    sourceKind: 'device',
+  }).finally(() => { crossTabStageSettled = true; });
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(crossTabStageSettled, false, 'a second tab must wait while the first tab holds the owner flush lock');
+  releaseCrossTabSend();
+  await crossTabFlush;
+  const crossTabRecovery = await crossTabStage;
+  assert.equal(crossTabRecovery.clientRevision, 2);
+
+  const staleBaselineStorage = new MemoryStorage();
+  const staleBaselineOutbox = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async (_client, item) => ({ ownerId: ownerA, snapshotId: item.operationIdempotencyKey }),
+    storage: staleBaselineStorage,
+  });
+  const acknowledged = await staleBaselineOutbox.enqueue({ assumptions: { monthlyIncome: 8300 }, expectedOwnerId: ownerA });
+  await staleBaselineOutbox.flush({}, ownerA);
+  await assert.rejects(
+    () => staleBaselineOutbox.stageRecovery({
+      assumptions: { monthlyIncome: 8350 },
+      expectedLocalAssumptions: '{"monthlyIncome":8300}',
+      expectedOwnerId: ownerA,
+      serverRevision: 0,
+      snapshotIdempotencyKey: acknowledged.snapshotIdempotencyKey,
+      sourceKind: 'device',
+    }),
+    /revision changed.*review again/i,
+    'recovery must not move a locally acknowledged stream backward'
+  );
+
   console.log('Expo snapshot outbox contract passed durable FIFO replay, owner isolation, and retry identity.');
+}
+
+function createCrossContextLock() {
+  const tails = new Map();
+  return async (ownerId, action) => {
+    const previous = tails.get(ownerId) ?? Promise.resolve();
+    let release;
+    const current = new Promise((resolve) => { release = resolve; });
+    tails.set(ownerId, previous.then(() => current));
+    await previous;
+    try {
+      return await action();
+    } finally {
+      release();
+    }
+  };
 }
 
 main().catch((error) => {

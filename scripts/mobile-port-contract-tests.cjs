@@ -59,10 +59,19 @@ function loadTsFile(filename) {
 
     if (request === 'expo-secure-store') {
       return {
+        deleteItemAsync: async () => undefined,
         getItemAsync: async () => null,
         isAvailableAsync: async () => false,
         setItemAsync: async () => undefined,
       };
+    }
+
+    if (request === 'expo-crypto') {
+      return { randomUUID: () => '00000000-0000-4000-8000-000000000001' };
+    }
+
+    if (request === 'react-native') {
+      return { Platform: { OS: 'web' } };
     }
 
     return require(request);
@@ -1366,6 +1375,9 @@ test('mobile assumptions persist through encrypted native storage with a web fal
   assert.ok(storageSource.includes('secure-store'));
   assert.ok(storageSource.includes('local-storage'));
   assert.ok(storageSource.includes('decodeMobileAssumptions'));
+  assert.ok(storageSource.includes('expectedRevision'));
+  assert.ok(storageSource.includes('currentRevision'));
+  assert.ok(storageSource.includes('withMobileSnapshotOwnerLock'));
   assert.ok(hookSource.includes('useEffect'));
   assert.ok(hookSource.includes('loadMobileAssumptionsForOwner'));
   assert.ok(hookSource.includes('saveMobileAssumptionsForOwner'));

@@ -4,6 +4,8 @@ import { Pressable, Text, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
 import { MobileSupabaseAccount } from '@/components/mobile-supabase-account';
 import type { MobileAssumptionStorageStatus } from '@/hooks/use-persisted-mobile-assumptions';
+import type { MobileAssumptionStorageBackend } from '@/lib/mobile-assumption-storage';
+import type { MobileSnapshotOwnerLock } from '@/lib/supabase/auth-storage';
 import { mobileStorageStatusCopy } from '../mobile-shell/controls';
 import { MobileRouteScreen } from './route-screen';
 
@@ -26,12 +28,18 @@ function SettingsPanel({
   assumptions,
   assumptionsReady,
   onResetAssumptions,
+  onReplaceAssumptions,
   resetStatus,
   storageStatus,
 }: {
   assumptions: MobileDashboardInput;
   assumptionsReady: boolean;
   onResetAssumptions: () => void;
+  onReplaceAssumptions: (
+    input: MobileDashboardInput,
+    ownerLock?: MobileSnapshotOwnerLock,
+    expectedRevision?: number
+  ) => Promise<MobileAssumptionStorageBackend>;
   resetStatus: string | null;
   storageStatus: MobileAssumptionStorageStatus;
 }) {
@@ -78,7 +86,11 @@ function SettingsPanel({
           </Text>
         ) : null}
       </View>
-      <MobileSupabaseAccount assumptions={assumptions} assumptionsReady={assumptionsReady} />
+      <MobileSupabaseAccount
+        assumptions={assumptions}
+        assumptionsReady={assumptionsReady}
+        onReplaceAssumptions={onReplaceAssumptions}
+      />
     </View>
   );
 }
@@ -89,7 +101,7 @@ export function SettingsRoute() {
     <MobileRouteScreen
       mode="settings"
       showAssumptionControls={false}
-      renderContent={({ input, isHydrated, resetAssumptions, storageStatus }) => {
+      renderContent={({ input, isHydrated, replaceAssumptions, resetAssumptions, storageStatus }) => {
         const handleResetAssumptions = () => {
           setResetStatus('Restoring starter assumptions...');
           resetAssumptions()
@@ -108,6 +120,7 @@ export function SettingsRoute() {
           <SettingsPanel
             assumptions={input}
             assumptionsReady={isHydrated}
+            onReplaceAssumptions={replaceAssumptions}
             onResetAssumptions={handleResetAssumptions}
             resetStatus={resetStatus}
             storageStatus={storageStatus}
