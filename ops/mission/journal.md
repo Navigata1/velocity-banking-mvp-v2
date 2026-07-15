@@ -272,3 +272,9 @@
 - Chrome at 390x844 showed no overflow or console errors and preserved a 6500-to-7200 edit across routes and reload. Final post-review corrections received fresh export/bundle/contract gates.
 - Independent adversarial review closed hydration, copy, unavailable-storage, duplicate-write, and queued-write ordering findings; final verdict is approved with no findings.
 - P6-T2 remains open for a durable outbox, reconnect replay, transactional remote mutation, restore/adoption, and conflict semantics.
+
+## 2026-07-15T00:04Z - Native auth and owner isolation merged; offline outbox begins
+- PR #246 merged at 10fe689 after Vercel and both duplicate GitHub quality workflows passed.
+- Fresh merged-main verification passes both mobile Supabase contracts, all 35 mobile contracts, Expo TypeScript, seven-route web export smoke, Android/iOS Hermes exports, and all 263 web regressions with companion lanes.
+- P6-T2A closes the root auth, PKCE callback, owner-local storage, hydration, interrupted write, save ordering, and expected-owner sync boundaries.
+- P6-T2 remains in progress. P6-T2B starts on codex/mission/p6-native-offline-outbox with a durable owner-scoped queue, reconnect replay, and transactional remote mutation as the next contract.
