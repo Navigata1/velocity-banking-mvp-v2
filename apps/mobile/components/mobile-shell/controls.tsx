@@ -1,7 +1,9 @@
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
-import { Text, TextInput, View } from 'react-native';
+import { InputAccessoryView, Keyboard, Pressable, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
 import type { MobileAssumptionStorageStatus } from '@/hooks/use-persisted-mobile-assumptions';
+
+const MOBILE_NUMBER_INPUT_ACCESSORY_ID = 'interestshield-mobile-number-inputs';
 
 export const mobileStorageStatusCopy: Record<
   MobileAssumptionStorageStatus,
@@ -79,12 +81,13 @@ function MoneyInput({
 }) {
   return (
     <View style={{ gap: 6, minWidth: 150 }}>
-      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
         {label}
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
         editable={!disabled}
+        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
         inputMode="numeric"
         keyboardType="decimal-pad"
         onChangeText={(nextValue) => {
@@ -102,6 +105,7 @@ function MoneyInput({
           fontSize: 18,
           fontVariant: ['tabular-nums'],
           fontWeight: '800',
+          minHeight: 48,
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
@@ -126,7 +130,7 @@ function TextValueInput({
 }) {
   return (
     <View style={{ gap: 6, minWidth: 150 }}>
-      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
         {label}
       </Text>
       <TextInput
@@ -144,6 +148,7 @@ function TextValueInput({
           color: '#f8fafc',
           fontSize: 18,
           fontWeight: '800',
+          minHeight: 48,
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
@@ -168,12 +173,13 @@ function WholeNumberInput({
 }) {
   return (
     <View style={{ gap: 6, minWidth: 150 }}>
-      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
         {label}
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
         editable={!disabled}
+        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
         inputMode="numeric"
         keyboardType="number-pad"
         onChangeText={(nextValue) => {
@@ -191,6 +197,7 @@ function WholeNumberInput({
           fontSize: 18,
           fontVariant: ['tabular-nums'],
           fontWeight: '800',
+          minHeight: 48,
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
@@ -215,12 +222,13 @@ function PercentageInput({
 }) {
   return (
     <View style={{ gap: 6, minWidth: 150 }}>
-      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
+      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
         {label}
       </Text>
       <TextInput
         accessibilityLabel={accessibilityLabel}
         editable={!disabled}
+        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
         inputMode="decimal"
         keyboardType="decimal-pad"
         onChangeText={(nextValue) => {
@@ -238,6 +246,7 @@ function PercentageInput({
           fontSize: 18,
           fontVariant: ['tabular-nums'],
           fontWeight: '800',
+          minHeight: 48,
           paddingHorizontal: 12,
           paddingVertical: 10,
         }}
@@ -257,8 +266,9 @@ export function AssumptionControls({
   onChange: (input: MobileDashboardInput) => void;
 }) {
   return (
-    <FinancialCard title="Tune Assumptions" detail="Native controls update the shared engine snapshot immediately.">
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+    <>
+      <FinancialCard title="Tune Assumptions" detail="Native controls update the shared engine snapshot immediately.">
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
         <TextValueInput
           accessibilityLabel="Active debt name"
           disabled={disabled}
@@ -336,8 +346,23 @@ export function AssumptionControls({
           value={input.activeDebt.termMonths ?? 0}
           onChange={(termMonths) => onChange({ ...input, activeDebt: { ...input.activeDebt, termMonths } })}
         />
-      </View>
-    </FinancialCard>
+        </View>
+      </FinancialCard>
+      {process.env.EXPO_OS === 'ios' ? (
+        <InputAccessoryView nativeID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}>
+          <View style={{ alignItems: 'flex-end', backgroundColor: '#0f172a', padding: 8 }}>
+            <Pressable
+              accessibilityLabel="Finish editing financial input"
+              accessibilityRole="button"
+              onPress={Keyboard.dismiss}
+              style={{ justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 }}
+            >
+              <Text style={{ color: '#bae6fd', fontSize: 16, fontWeight: '800' }}>Done</Text>
+            </Pressable>
+          </View>
+        </InputAccessoryView>
+      ) : null}
+    </>
   );
 }
 

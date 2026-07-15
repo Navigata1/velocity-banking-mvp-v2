@@ -121,6 +121,12 @@ jobs:
         working-directory: apps/mobile
         run: npm run smoke:web-export
 
+      - name: Smoke rendered Expo accessibility
+        working-directory: apps/mobile
+        env:
+          PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: ${{ steps.remotion-chrome.outputs.chrome-path }}
+        run: npm run smoke:accessibility:built
+
       - name: Run mobile contract tests
         run: node scripts/mobile-port-contract-tests.cjs
 

@@ -4,6 +4,7 @@ import { Pressable, Text, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
 import { MobileSupabaseAccount } from '@/components/mobile-supabase-account';
 import type { MobileAssumptionStorageStatus } from '@/hooks/use-persisted-mobile-assumptions';
+import { useAccessibilityAnnouncement } from '@/hooks/use-accessibility-announcement';
 import type { MobileAssumptionStorageBackend } from '@/lib/mobile-assumption-storage';
 import type { MobileSnapshotOwnerLock } from '@/lib/supabase/auth-storage';
 import { mobileStorageStatusCopy } from '../mobile-shell/controls';
@@ -73,6 +74,7 @@ function SettingsPanel({
             borderWidth: 1,
             paddingHorizontal: 14,
             opacity: assumptionsReady ? 1 : 0.65,
+            minHeight: 48,
             paddingVertical: 12,
           }}
         >
@@ -97,6 +99,7 @@ function SettingsPanel({
 
 export function SettingsRoute() {
   const [resetStatus, setResetStatus] = useState<string | null>(null);
+  useAccessibilityAnnouncement(resetStatus);
   return (
     <MobileRouteScreen
       mode="settings"

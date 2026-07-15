@@ -1,0 +1,75 @@
+P6-T3 GREEN EVIDENCE - native accessibility and responsive UI
+Captured: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-native-accessibility
+
+Scope
+- Safe-area-aware route frames with keyboard insets, drag dismissal, and
+  one-press navigation while an input is focused.
+- Route results before the repeated assumption editor.
+- Native headings, 48dp controls, iOS numeric-input completion, and iOS status
+  announcements.
+- Full financial labels for recovery, Money Loop choices, payoff progress, and
+  individual portfolio path points.
+- Recovery radiogroup consistency and focus transfer to the confirmation heading.
+- Responsive orbit geometry with a linear Dynamic Type layout at font scale 1.6+.
+- Phone/tablet rotation plus persistent high-contrast Android system bars.
+- Repeatable rendered accessibility and enlarged-text Android smoke in CI.
+
+Focused gates
+
+Command: npm --prefix apps/mobile run check
+Result: PASS - TypeScript completed without errors.
+
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Result: PASS - all six secure persistence, account, stale-tab, outbox, replay,
+and explicit recovery contract lanes.
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Result: PASS - all 36 shared mobile and native port contracts.
+
+Command: npm --prefix apps/mobile run build:web
+Command: npm --prefix apps/mobile run smoke:web-export
+Result: PASS - fresh Expo export and all seven routes:
+/, /simulator, /cockpit, /portfolio, /learn, /vault, /settings.
+
+Command: npm --prefix apps/mobile run smoke:accessibility:built
+Result: PASS - all seven routes at 280x800, 320x800, 390x844,
+844x390 landscape, and 768x1024; no horizontal overflow, framework overlays,
+browser errors, missing headings, or sub-48px tabs. The focused final numeric
+input navigated to Simulator on the first press. Orbit nodes stayed contained
+and at least 48px.
+
+Command: ANDROID_SMOKE_ACCESSIBILITY=1 npm --prefix apps/mobile run smoke:android
+Result: PASS - Expo Go on emulator-5554 verified font scale 1.8, Payoff Orbit,
+LOC orbit step, deterministic portrait/landscape rotation, retained landscape
+content, and foreground ExperienceActivity. The harness snapshots and restores
+the connected device's original font and rotation settings and automatically
+recovers the known emulator cold-boot System UI wait dialog.
+
+Command: npm --prefix apps/mobile run smoke:android-bundle
+Result: PASS - Android Hermes bundle export.
+
+Command: npm --prefix apps/mobile run smoke:ios-bundle
+Result: PASS - iOS Hermes bundle export.
+
+Workflow validation
+- .github/workflows/ci.yml and release-smoke.yml parse as YAML.
+- Both workflows run the rendered Expo accessibility smoke with pinned Chrome.
+
+Visual evidence
+- ops/mission/evidence/P6-T3-smoke/dashboard-phone-390.png
+- ops/mission/evidence/P6-T3-smoke/settings-tablet-768.png
+- ops/mission/evidence/P6-T3-smoke/android-large-text-portrait.png
+- ops/mission/evidence/P6-T3-smoke/android-large-text-landscape.png
+
+Adversarial review
+- Initial review found four medium issues: nested chart semantics, inconsistent
+  remote recovery selection, incomplete rendered/device assertions, and device
+  preference mutation.
+- All four were fixed and revalidated.
+- Final independent review: APPROVED with no blocking, high, or medium findings.
+
+Remaining release gate
+- P6-T4 still owns final-candidate Android rerun, macOS iOS Simulator evidence,
+  deep links, and live owner-recovery release proof. P6-G4 remains pending until
+  that macOS device workflow passes.

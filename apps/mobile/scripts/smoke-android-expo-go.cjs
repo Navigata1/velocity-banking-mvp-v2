@@ -8,6 +8,9 @@ const port = process.env.ANDROID_SMOKE_PORT || '8081';
 const timeoutMs = Number(process.env.ANDROID_SMOKE_TIMEOUT_MS || 180000);
 const screenshotPath =
   process.env.ANDROID_SMOKE_SCREENSHOT || path.join(os.tmpdir(), 'interestshield-android-smoke.png');
+const accessibilitySmoke = process.env.ANDROID_SMOKE_ACCESSIBILITY === '1';
+const accessibilityScreenshotPath = process.env.ANDROID_SMOKE_ACCESSIBILITY_SCREENSHOT
+  || path.join(os.tmpdir(), 'interestshield-android-accessibility-landscape.png');
 const windowDumpPath = '/sdcard/interestshield-window.xml';
 const requiredText = ['InterestShield', 'Money Loop Mobile', 'Dashboard'];
 const requiredOrbitText = ['Payoff Orbit', 'LOC orbit step'];
@@ -175,6 +178,24 @@ function dismissExpoMenuIfOpen(adb) {
   }
 }
 
+function readSystemSetting(adb, name, fallback) {
+  const result = run(adb, ['shell', 'settings', 'get', 'system', name], { timeout: 10000 });
+  const value = result.output.trim();
+  return result.status === 0 && value && value !== 'null' ? value : fallback;
+}
+
+function dismissSystemUiAnrIfOpen(adb) {
+  const dump = readWindowDump(adb);
+  if (!dumpIncludesText(dump, "System UI isn't responding")) return false;
+  const waitNode = dump.match(/<node\b[^>]*\btext="Wait"[^>]*>/)?.[0];
+  const bounds = waitNode?.match(/\bbounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/);
+  if (!bounds) return false;
+  const x = Math.round((Number(bounds[1]) + Number(bounds[3])) / 2);
+  const y = Math.round((Number(bounds[2]) + Number(bounds[4])) / 2);
+  run(adb, ['shell', 'input', 'tap', String(x), String(y)], { timeout: 10000 });
+  return true;
+}
+
 function displaySize(adb) {
   const result = run(adb, ['shell', 'wm', 'size'], { timeout: 10000 });
   const match = result.output.match(/Physical size:\s*(\d+)x(\d+)/);
@@ -215,7 +236,7 @@ async function waitForDashboardOrbit(adb, deadline) {
   return dump;
 }
 
-function captureScreenshot(adb) {
+function captureScreenshot(adb, targetPath = screenshotPath) {
   const result = spawnSync(adb, ['exec-out', 'screencap', '-p'], {
     cwd: appRoot,
     env: process.env,
@@ -227,7 +248,7 @@ function captureScreenshot(adb) {
     throw new Error('screencap did not return image data');
   }
 
-  fs.writeFileSync(screenshotPath, result.stdout);
+  fs.writeFileSync(targetPath, result.stdout);
 }
 
 function stopProcessTree(child) {
@@ -262,6 +283,7 @@ async function main() {
   let emulatorChild;
   let emulatorLog = '';
   let startedEmulator = false;
+  let originalDeviceSettings = null;
 
   try {
     let device = onlineAndroidDevice(adb);
@@ -312,6 +334,22 @@ async function main() {
       }
     }
 
+    if (accessibilitySmoke) {
+      originalDeviceSettings = {
+        accelerometerRotation: readSystemSetting(adb, 'accelerometer_rotation', '1'),
+        fontScale: readSystemSetting(adb, 'font_scale', '1.0'),
+        userRotation: readSystemSetting(adb, 'user_rotation', '0'),
+      };
+      run(adb, ['shell', 'settings', 'put', 'system', 'font_scale', '1.8']);
+      run(adb, ['shell', 'settings', 'put', 'system', 'accelerometer_rotation', '0']);
+      run(adb, ['shell', 'settings', 'put', 'system', 'user_rotation', '0']);
+      run(adb, ['shell', 'cmd', 'window', 'user-rotation', 'lock', '0']);
+      const appliedFontScale = Number(readSystemSetting(adb, 'font_scale', '0'));
+      if (Math.abs(appliedFontScale - 1.8) > 0.01) {
+        throw new Error(`Android accessibility smoke could not apply font scale 1.8; observed ${appliedFontScale}.`);
+      }
+    }
+
     run(adb, ['shell', 'am', 'force-stop', 'host.exp.exponent'], { timeout: 30000 });
     run(adb, ['logcat', '-c'], { timeout: 30000 });
     child = spawn(npx, ['expo', 'start', '--android', '--lan', '--port', port, '--clear'], {
@@ -336,6 +374,7 @@ async function main() {
 
     while (Date.now() < deadline) {
       await sleep(5000);
+      if (dismissSystemUiAnrIfOpen(adb)) await sleep(1500);
       dismissExpoMenuIfOpen(adb);
       finalDump = readWindowDump(adb);
       finalFocus = getFocus(adb);
@@ -350,6 +389,40 @@ async function main() {
         if (!orbitReady) break;
 
         captureScreenshot(adb);
+        if (accessibilitySmoke) {
+          run(adb, ['shell', 'settings', 'put', 'system', 'user_rotation', '1']);
+          run(adb, ['shell', 'cmd', 'window', 'user-rotation', 'lock', '1']);
+          const landscapeDeadline = Date.now() + 20000;
+          let landscapeDump = '';
+          let landscapeFocus = '';
+          while (Date.now() < landscapeDeadline) {
+            await sleep(1000);
+            landscapeDump = readWindowDump(adb);
+            landscapeFocus = getFocus(adb);
+            const landscapeContentReady = requiredOrbitText.every((text) => dumpIncludesText(landscapeDump, text));
+            if (
+              landscapeDump.includes('rotation="1"')
+              && landscapeFocus.includes('ExperienceActivity')
+              && landscapeContentReady
+            ) {
+              break;
+            }
+          }
+          const landscapeContentReady = requiredOrbitText.every((text) => dumpIncludesText(landscapeDump, text));
+          if (
+            !landscapeDump.includes('rotation="1"')
+            || !landscapeFocus.includes('ExperienceActivity')
+            || !landscapeContentReady
+          ) {
+            const observedRotation = landscapeDump.match(/rotation="(\d+)"/)?.[1] ?? 'unknown';
+            throw new Error(
+              `Android accessibility landscape check failed. Rotation: ${observedRotation}. Orbit: ${landscapeContentReady}. Focus: ${landscapeFocus || 'unknown'}`
+            );
+          }
+          captureScreenshot(adb, accessibilityScreenshotPath);
+          console.log('Android enlarged-text landscape smoke passed.');
+          console.log(`Accessibility screenshot: ${accessibilityScreenshotPath}`);
+        }
         console.log('Android Expo Go smoke passed.');
         console.log(`Device: ${device}`);
         console.log(`Orbit text: ${requiredOrbitText.join(', ')}`);
@@ -371,6 +444,16 @@ async function main() {
     );
   } finally {
     stopProcessTree(child);
+    if (accessibilitySmoke && originalDeviceSettings) {
+      run(adb, ['shell', 'settings', 'put', 'system', 'font_scale', originalDeviceSettings.fontScale]);
+      run(adb, ['shell', 'settings', 'put', 'system', 'user_rotation', originalDeviceSettings.userRotation]);
+      if (originalDeviceSettings.accelerometerRotation === '1') {
+        run(adb, ['shell', 'cmd', 'window', 'user-rotation', 'free']);
+      } else {
+        run(adb, ['shell', 'cmd', 'window', 'user-rotation', 'lock', originalDeviceSettings.userRotation]);
+      }
+      run(adb, ['shell', 'settings', 'put', 'system', 'accelerometer_rotation', originalDeviceSettings.accelerometerRotation]);
+    }
     if (startedEmulator) {
       run(adb, ['emu', 'kill'], { timeout: 10000 });
       stopProcessTree(emulatorChild);

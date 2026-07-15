@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useRouter, type Href } from 'expo-router';
 import { ScrollView, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   useMobileAssumptions,
   type MobileAssumptionsContextValue,
@@ -25,6 +26,7 @@ export function MobileRouteScreen({
   showAssumptionControls?: boolean;
 }) {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const context = useMobileAssumptions();
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
   const subtitle = mode === 'settings'
@@ -36,15 +38,29 @@ export function MobileRouteScreen({
 
   return (
     <ScrollView
+      automaticallyAdjustKeyboardInsets
       contentInsetAdjustmentBehavior="automatic"
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
       style={{ backgroundColor: '#020617' }}
-      contentContainerStyle={{ gap: 18, padding: 18, paddingBottom: 36 }}
+      contentContainerStyle={{
+        gap: 18,
+        paddingBottom: Math.max(36, insets.bottom + 24),
+        paddingLeft: 18 + insets.left,
+        paddingRight: 18 + insets.right,
+        paddingTop: 18,
+      }}
     >
       <View style={{ gap: 8 }}>
         <Text selectable style={{ color: '#94a3b8', fontSize: 14, fontWeight: '700' }}>
           Money Loop Mobile
         </Text>
-        <Text selectable style={{ color: '#f8fafc', fontSize: 34, fontWeight: '900', lineHeight: 38 }}>
+        <Text
+          accessibilityLabel={`${title} screen`}
+          accessibilityRole="header"
+          selectable
+          style={{ color: '#f8fafc', fontSize: 34, fontWeight: '900', lineHeight: 42 }}
+        >
           InterestShield
         </Text>
         <Text selectable style={{ color: '#cbd5e1', fontSize: 15, lineHeight: 22 }}>
@@ -53,9 +69,9 @@ export function MobileRouteScreen({
       </View>
 
       <MobileModeNavigation activeMode={mode} onModeChange={handleModeChange} />
+      {renderContent(context)}
       {showAssumptionControls ? <AssumptionControls disabled={!context.isHydrated} input={context.input} onChange={context.setInput} /> : null}
       <StorageStatusCard status={context.storageStatus} />
-      {renderContent(context)}
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>
         Educational tool. Not financial advice.

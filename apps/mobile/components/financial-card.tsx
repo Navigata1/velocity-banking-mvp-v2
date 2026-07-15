@@ -24,7 +24,7 @@ export function FinancialCard({
         padding: 16,
       }}
     >
-      <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '700', textTransform: 'uppercase' }}>
+      <Text accessibilityRole="header" selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '700', textTransform: 'uppercase' }}>
         {title}
       </Text>
       {value ? (

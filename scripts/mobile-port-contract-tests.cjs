@@ -215,6 +215,17 @@ test('Expo Android smoke is repeatable against a booted emulator', () => {
   assert.ok(smokeScript.includes('dumpIncludesText'), 'expected Android smoke to match UI dump text case-insensitively');
   assert.ok(smokeScript.includes('dumpTextExcerpt'), 'expected Android smoke failures to report visible native text');
   assert.ok(smokeScript.includes('waitForDashboardOrbit'), 'expected Android smoke to scroll to the Dashboard orbit');
+  assert.ok(smokeScript.includes('ANDROID_SMOKE_ACCESSIBILITY'), 'expected optional enlarged-text rotation smoke');
+  assert.ok(smokeScript.includes("System UI isn't responding"), 'expected emulator cold-boot ANR recovery');
+  assert.ok(smokeScript.includes('dismissSystemUiAnrIfOpen'), 'expected Android smoke to dismiss the host ANR dialog');
+  assert.ok(smokeScript.includes("'font_scale', '1.8'"), 'expected Android enlarged system text coverage');
+  assert.ok(smokeScript.includes('readSystemSetting'), 'expected Android accessibility settings to be observed');
+  assert.ok(smokeScript.includes('originalDeviceSettings'), 'expected connected-device settings to be restored');
+  assert.ok(smokeScript.includes('appliedFontScale'), 'expected Android font scale application to be verified');
+  assert.ok(smokeScript.includes("'user_rotation', '1'"), 'expected Android landscape rotation coverage');
+  assert.ok(smokeScript.includes("'user-rotation', 'lock', '1'"), 'expected deterministic Android window rotation coverage');
+  assert.ok(smokeScript.includes("'user-rotation', 'free'"), 'expected Android rotation cleanup');
+  assert.ok(smokeScript.includes('landscapeContentReady'), 'expected landscape smoke to retain rendered orbit content');
   assert.ok(smokeScript.includes("'input', 'swipe'"), 'expected Android smoke to scroll native dashboard content');
   assert.ok(smokeScript.includes('screencap'), 'expected smoke script to capture visual evidence');
   assert.ok(smokeScript.includes('Recent emulator log'), 'expected Android smoke boot failures to include emulator output');
@@ -304,6 +315,8 @@ test('GitHub CI protects web and mobile quality gates', () => {
   assert.ok(workflow.includes('working-directory: apps/mobile'), 'expected workflow to run mobile commands from apps/mobile');
   assert.ok(workflow.includes('npm run build:web'), 'expected workflow to build the Expo web export');
   assert.ok(workflow.includes('npm run smoke:web-export'), 'expected workflow to smoke the Expo web export');
+  assert.ok(workflow.includes('npm run smoke:accessibility:built'), 'expected workflow to smoke rendered Expo accessibility');
+  assert.ok(workflow.includes('PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH'), 'expected workflow to use the pinned browser');
   assert.ok(workflow.includes('npm run check'), 'expected workflow to run mobile type-checks');
   assert.ok(
     workflow.includes('node scripts/mobile-port-contract-tests.cjs'),
@@ -330,6 +343,8 @@ test('manual release smoke protects deployed web and optional mobile export gate
   assert.ok(workflow.includes('npm run check'), 'expected release smoke to type-check the mobile app when export checks run');
   assert.ok(workflow.includes('npm run build:web'), 'expected release smoke to build the Expo web export');
   assert.ok(workflow.includes('npm run smoke:web-export'), 'expected release smoke to verify the Expo web export');
+  assert.ok(workflow.includes('npm run smoke:accessibility:built'), 'expected release smoke to verify rendered accessibility');
+  assert.ok(workflow.includes('browser-actions/setup-chrome@'), 'expected release smoke to install the pinned browser');
   assert.ok(
     workflow.includes('node scripts/mobile-port-contract-tests.cjs'),
     'expected release smoke to run shared mobile contract tests'
@@ -1059,6 +1074,115 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
       `expected layout to register ${routeName} with ${title} title`
     );
   }
+});
+
+test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width ready', () => {
+  const appConfig = readJson('apps/mobile/app.json');
+  const layoutSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/app/_layout.tsx'), 'utf8');
+  const routeFrameSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-routes/route-screen.tsx'),
+    'utf8'
+  );
+  const cardSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/financial-card.tsx'),
+    'utf8'
+  );
+  const controlsSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-shell/controls.tsx'),
+    'utf8'
+  );
+  const orbitSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-shell/money-loop-visuals.tsx'),
+    'utf8'
+  );
+  const accountSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-supabase-account.tsx'),
+    'utf8'
+  );
+  const portfolioPathSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-shell/portfolio-path.tsx'),
+    'utf8'
+  );
+  const settingsSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/components/mobile-routes/settings-route.tsx'),
+    'utf8'
+  );
+  const accessibilityLabelsPath = path.join(repoRoot, 'apps/mobile/lib/accessibility-labels.ts');
+  const accessibilityLabelsSource = fs.readFileSync(accessibilityLabelsPath, 'utf8');
+  const renderedSmokeSource = fs.readFileSync(
+    path.join(repoRoot, 'apps/mobile/scripts/smoke-accessibility-rendered.cjs'),
+    'utf8'
+  );
+
+  assert.equal(appConfig.expo.orientation, 'default', 'expected phone and tablet rotation support');
+  assert.equal(appConfig.expo.androidStatusBar?.barStyle, 'light-content');
+  assert.equal(appConfig.expo.androidStatusBar?.backgroundColor, '#0f172a');
+  assert.equal(appConfig.expo.androidNavigationBar?.barStyle, 'light-content');
+  assert.ok(layoutSource.includes('<StatusBar barStyle="light-content" backgroundColor="#0f172a" translucent={false} />'));
+  assert.ok(layoutSource.includes('useWindowDimensions'));
+  assert.ok(layoutSource.includes("StatusBar.setBarStyle('light-content', true)"));
+  assert.ok(layoutSource.includes("statusBarStyle: 'light'"));
+  assert.ok(layoutSource.includes("statusBarBackgroundColor: '#0f172a'"));
+  assert.ok(routeFrameSource.includes('useSafeAreaInsets'), 'expected Android and cutout-aware content insets');
+  assert.ok(routeFrameSource.includes('automaticallyAdjustKeyboardInsets'), 'expected iOS keyboard insets');
+  assert.ok(routeFrameSource.includes('keyboardDismissMode="on-drag"'), 'expected drag-to-dismiss keyboard behavior');
+  assert.ok(routeFrameSource.includes('keyboardShouldPersistTaps="handled"'), 'expected one-tap controls while the keyboard is open');
+  assert.ok(routeFrameSource.includes('paddingBottom: Math.max(36, insets.bottom + 24)'));
+  assert.ok(routeFrameSource.includes('paddingLeft: 18 + insets.left'));
+  assert.ok(routeFrameSource.includes('paddingRight: 18 + insets.right'));
+  assert.ok(routeFrameSource.includes('accessibilityRole="header"'), 'expected a navigable route heading');
+  assert.ok(cardSource.includes('accessibilityRole="header"'), 'expected navigable financial section headings');
+
+  assert.ok(controlsSource.includes('inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}'));
+  assert.ok(controlsSource.includes('<InputAccessoryView nativeID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}>'));
+  assert.ok(controlsSource.includes('Keyboard.dismiss'), 'expected an iOS number-pad completion action');
+  assert.ok(controlsSource.includes('minHeight: 48'), 'expected assumption inputs to meet the native target minimum');
+
+  assert.ok(orbitSource.includes('useWindowDimensions'), 'expected compact-width orbit geometry');
+  assert.ok(orbitSource.includes('const orbitSize = Math.min(230'), 'expected a bounded responsive orbit stage');
+  assert.ok(orbitSource.includes('const orbitScale = orbitSize / 230'));
+
+  assert.ok(accessibilityLabelsSource.includes('function recoveryChoiceAccessibilityLabel'));
+  assert.ok(accountSource.includes('accessibilityRole="radiogroup"'));
+  assert.match(accountSource, /recoveryChoiceAccessibilityLabel\(\s*snapshot\.assumptions,/);
+  assert.ok(accessibilityLabelsSource.includes('input.activeDebt.monthlyPayment.toLocaleString()'));
+  assert.ok(accessibilityLabelsSource.includes('input.activeDebt.termMonths'));
+  assert.ok(accessibilityLabelsSource.includes('input.loc.limit.toLocaleString()'));
+  assert.ok(accountSource.includes('setAccessibilityFocus'));
+  assert.ok(accountSource.includes('const selected = snapshot.snapshotId === selectedSnapshotId;'));
+  assert.ok(accountSource.includes('<Text ref={recoveryConfirmationRef} accessibilityRole="header"'));
+  assert.ok(accountSource.includes('useAccessibilityAnnouncement(currentStatus)'));
+  assert.ok(settingsSource.includes('useAccessibilityAnnouncement(resetStatus)'));
+  assert.ok(accountSource.includes('minHeight: 48'), 'expected account actions to meet the native target minimum');
+  assert.ok(orbitSource.includes('accessibilityValue={{ text: mobileLoopStepAccessibilityValue(step) }}'));
+  assert.ok(orbitSource.includes('const useLinearOrbit = fontScale >= 1.6'));
+  assert.ok(portfolioPathSource.includes('accessibilityLabel="Portfolio payoff progress"'));
+  assert.ok(portfolioPathSource.includes('portfolioPointAccessibilityLabel(point)'));
+  assert.ok(renderedSmokeSource.includes("['phone-landscape', { width: 844, height: 390 }]"));
+  assert.ok(
+    routeFrameSource.indexOf('{renderContent(context)}')
+      < routeFrameSource.indexOf('<AssumptionControls'),
+    'expected route results before the repeated assumption editor'
+  );
+
+  const accessibilityLabels = loadTsFile(accessibilityLabelsPath);
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const spokenRecovery = accessibilityLabels.recoveryChoiceAccessibilityLabel(
+    sharedEngine.defaultMobileDashboardInput,
+    'Snapshot revision 4',
+    '2026-07-14T18:00:00.000Z'
+  );
+  for (const expected of ['Snapshot revision 4', 'Saved', 'Income', 'expenses', 'chunk', 'Auto Loan', 'APR', 'payment', 'term', 'LOC balance']) {
+    assert.ok(spokenRecovery.includes(expected), `expected recovery label to include ${expected}`);
+  }
+  assert.equal(
+    accessibilityLabels.mobileLoopStepAccessibilityValue({ value: '$1,500', detail: 'Available monthly cash flow.' }),
+    '$1,500. Available monthly cash flow.'
+  );
+  assert.equal(
+    accessibilityLabels.portfolioPointAccessibilityLabel({ month: 12, balance: 12345.4, progressPercent: 33.2 }),
+    'Month 12, balance $12,345, 33 percent paid'
+  );
 });
 
 test('shared mobile portfolio snapshot explains cash-flow coverage and debt priority', () => {

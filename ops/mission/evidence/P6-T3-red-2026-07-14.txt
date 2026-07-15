@@ -1,0 +1,26 @@
+P6-T3 RED EVIDENCE - native accessibility and responsive UI
+Captured: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-native-accessibility
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Expected failure: orientation contract expected "default" but app.json was "portrait"
+Exit code: 1
+
+The failing contract established phone and tablet rotation support before the
+production configuration changed.
+
+Initial adversarial audit findings
+- Route screens did not provide complete keyboard dismissal or inset handling.
+- Recovery choices hid their financial payload from screen readers.
+- Recovery confirmation did not receive accessibility focus.
+- iOS status updates were not announced.
+- Results followed the long repeated assumption editor in traversal order.
+- Payoff-path points and orbit choices omitted financial values.
+- The fixed 230px orbit could clip at compact widths and large text sizes.
+- Several native actions missed the Android 48dp target.
+- Route and card headings were not exposed as headings.
+- The app was portrait-locked despite declaring tablet support.
+
+The initial device review also exposed dark Android status icons over the navy
+header and a flaky legacy rotation request. Both became explicit runtime and
+device-smoke requirements before green evidence was accepted.
