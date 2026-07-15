@@ -28,7 +28,7 @@ export function MobileRouteScreen({
   const context = useMobileAssumptions();
   const title = modes.find((item) => item.id === mode)?.label ?? 'Dashboard';
   const subtitle = mode === 'settings'
-    ? 'Settings keeps encrypted local storage, backend readiness, and optional private account sync explicit.'
+    ? 'Settings keeps secure native storage, backend readiness, and optional private account sync explicit.'
     : `${title} runs from the shared financial engine so web and native assumptions stay aligned.`;
   const handleModeChange = (nextMode: MobileMode) => {
     router.push(modeRoutes[nextMode] as Href);
@@ -53,7 +53,7 @@ export function MobileRouteScreen({
       </View>
 
       <MobileModeNavigation activeMode={mode} onModeChange={handleModeChange} />
-      {showAssumptionControls ? <AssumptionControls input={context.input} onChange={context.setInput} /> : null}
+      {showAssumptionControls ? <AssumptionControls disabled={!context.isHydrated} input={context.input} onChange={context.setInput} /> : null}
       <StorageStatusCard status={context.storageStatus} />
       {renderContent(context)}
 

@@ -1,17 +1,20 @@
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
-import type { Session } from '@supabase/supabase-js';
 import * as Linking from 'expo-linking';
 import * as Network from 'expo-network';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { createMobileSupabaseClient } from '@/lib/supabase/client';
+import { useMobileAuth } from '@/components/mobile-auth-provider';
 import { syncMobileSnapshot } from '@/lib/supabase/snapshot-sync';
 
 type WorkState = 'idle' | 'signing-in' | 'signing-out' | 'syncing';
 
 async function isOnline(): Promise<boolean> {
-  const state = await Network.getNetworkStateAsync();
-  return state.isConnected === true && state.isInternetReachable !== false;
+  try {
+    const state = await Network.getNetworkStateAsync();
+    return state.isConnected === true && state.isInternetReachable !== false;
+  } catch {
+    return false;
+  }
 }
 
 function message(error: unknown): string {
@@ -28,27 +31,21 @@ const primaryButton = {
   paddingVertical: 12,
 };
 
-export function MobileSupabaseAccount({ assumptions }: { assumptions: MobileDashboardInput }) {
-  const client = useMemo(() => createMobileSupabaseClient(), []);
+export function MobileSupabaseAccount({
+  assumptions,
+  assumptionsReady,
+}: {
+  assumptions: MobileDashboardInput;
+  assumptionsReady: boolean;
+}) {
+  const { authError, client, session } = useMobileAuth();
   const [email, setEmail] = useState('');
-  const [session, setSession] = useState<Session | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [work, setWork] = useState<WorkState>('idle');
 
   useEffect(() => {
-    if (!client) return;
-    let active = true;
-    client.auth.getSession().then(({ data }) => {
-      if (active) setSession(data.session);
-    });
-    const { data } = client.auth.onAuthStateChange((_event, nextSession) => {
-      if (active) setSession(nextSession);
-    });
-    return () => {
-      active = false;
-      data.subscription.unsubscribe();
-    };
-  }, [client]);
+    if (authError) setStatus(`Sign-in callback failed: ${authError}`);
+  }, [authError]);
 
   const requestMagicLink = async () => {
     const normalizedEmail = email.trim().toLowerCase();
@@ -57,32 +54,42 @@ export function MobileSupabaseAccount({ assumptions }: { assumptions: MobileDash
       setStatus('Enter a valid email address.');
       return;
     }
-    if (!await isOnline()) {
-      setStatus('You are offline. Reconnect before requesting a sign-in link.');
-      return;
-    }
     setWork('signing-in');
-    const { error } = await client.auth.signInWithOtp({
-      email: normalizedEmail,
-      options: { emailRedirectTo: Linking.createURL('/settings') },
-    });
-    setWork('idle');
-    setStatus(error ? `Sign-in link failed: ${error.message}` : 'Check your email for the secure sign-in link.');
+    try {
+      if (!await isOnline()) {
+        setStatus('You are offline. Reconnect before requesting a sign-in link.');
+        return;
+      }
+      const { error } = await client.auth.signInWithOtp({
+        email: normalizedEmail,
+        options: { emailRedirectTo: Linking.createURL('/settings') },
+      });
+      setStatus(error ? `Sign-in link failed: ${error.message}` : 'Check your email for the secure sign-in link.');
+    } catch (error) {
+      setStatus(`Sign-in link failed: ${message(error)}`);
+    } finally {
+      setWork('idle');
+    }
   };
 
   const syncSnapshot = async () => {
-    if (!client) return;
+    const expectedOwnerId = session?.user.id;
+    if (!client || !expectedOwnerId) return;
+    if (!assumptionsReady) {
+      setStatus('Saved assumptions are still loading for this account.');
+      return;
+    }
     if (!await isOnline()) {
-      setStatus('You are offline. Encrypted local data is unchanged; reconnect and try again.');
+      setStatus('You are offline. Local data is unchanged; reconnect and try again.');
       return;
     }
     setWork('syncing');
     setStatus(null);
     try {
-      await syncMobileSnapshot(client, { assumptions });
-      setStatus('Encrypted local assumptions synced to your private snapshot.');
+      await syncMobileSnapshot(client, { assumptions, expectedOwnerId });
+      setStatus('Assumptions synced to your private, owner-protected snapshot.');
     } catch (error) {
-      setStatus(`Sync failed: ${message(error)} Encrypted local data is unchanged.`);
+      setStatus(`Sync failed: ${message(error)} Local data is unchanged.`);
     } finally {
       setWork('idle');
     }
@@ -91,9 +98,14 @@ export function MobileSupabaseAccount({ assumptions }: { assumptions: MobileDash
   const signOut = async () => {
     if (!client) return;
     setWork('signing-out');
-    const { error } = await client.auth.signOut();
-    setWork('idle');
-    setStatus(error ? `Sign-out failed: ${error.message}` : 'Signed out. Encrypted local data remains on this device.');
+    try {
+      const { error } = await client.auth.signOut({ scope: 'local' });
+      setStatus(error ? `Sign-out failed: ${error.message}` : 'Signed out. This account\'s local data remains isolated on this device.');
+    } catch (error) {
+      setStatus(`Sign-out failed: ${message(error)}`);
+    } finally {
+      setWork('idle');
+    }
   };
 
   if (!client) {
@@ -113,8 +125,8 @@ export function MobileSupabaseAccount({ assumptions }: { assumptions: MobileDash
       {session ? (
         <View style={{ gap: 10 }}>
           <Text selectable style={{ color: '#f8fafc', fontSize: 16, fontWeight: '800' }}>{session.user.email ?? 'Verified account'}</Text>
-          <Pressable accessibilityRole="button" accessibilityLabel="Sync encrypted local assumptions" disabled={work !== 'idle'} onPress={syncSnapshot} style={({ pressed }) => [primaryButton, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}>
-            <Text selectable style={{ color: '#ecfdf5', fontSize: 14, fontWeight: '900' }}>{work === 'syncing' ? 'Syncing...' : 'Sync local snapshot'}</Text>
+          <Pressable accessibilityRole="button" accessibilityLabel="Sync local assumptions" disabled={!assumptionsReady || work !== 'idle'} onPress={syncSnapshot} style={({ pressed }) => [primaryButton, { opacity: pressed || !assumptionsReady || work !== 'idle' ? 0.65 : 1 }]}>
+            <Text selectable style={{ color: '#ecfdf5', fontSize: 14, fontWeight: '900' }}>{work === 'syncing' ? 'Syncing...' : assumptionsReady ? 'Sync local snapshot' : 'Loading saved assumptions...'}</Text>
           </Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel="Sign out of private account" disabled={work !== 'idle'} onPress={signOut} style={({ pressed }) => [{ alignItems: 'center', borderColor: '#475569', borderRadius: 12, borderWidth: 1, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}>
             <Text selectable style={{ color: '#cbd5e1', fontSize: 14, fontWeight: '800' }}>{work === 'signing-out' ? 'Signing out...' : 'Sign out'}</Text>

@@ -24,11 +24,13 @@ const mobileBackendReadinessOptions = [
 
 function SettingsPanel({
   assumptions,
+  assumptionsReady,
   onResetAssumptions,
   resetStatus,
   storageStatus,
 }: {
   assumptions: MobileDashboardInput;
+  assumptionsReady: boolean;
   onResetAssumptions: () => void;
   resetStatus: string | null;
   storageStatus: MobileAssumptionStorageStatus;
@@ -51,6 +53,7 @@ function SettingsPanel({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Reset mobile starter assumptions"
+          disabled={!assumptionsReady}
           onPress={onResetAssumptions}
           testID="settings-reset-mobile-assumptions"
           style={{
@@ -61,6 +64,7 @@ function SettingsPanel({
             borderRadius: 14,
             borderWidth: 1,
             paddingHorizontal: 14,
+            opacity: assumptionsReady ? 1 : 0.65,
             paddingVertical: 12,
           }}
         >
@@ -74,7 +78,7 @@ function SettingsPanel({
           </Text>
         ) : null}
       </View>
-      <MobileSupabaseAccount assumptions={assumptions} />
+      <MobileSupabaseAccount assumptions={assumptions} assumptionsReady={assumptionsReady} />
     </View>
   );
 }
@@ -85,7 +89,7 @@ export function SettingsRoute() {
     <MobileRouteScreen
       mode="settings"
       showAssumptionControls={false}
-      renderContent={({ input, resetAssumptions, storageStatus }) => {
+      renderContent={({ input, isHydrated, resetAssumptions, storageStatus }) => {
         const handleResetAssumptions = () => {
           setResetStatus('Restoring starter assumptions...');
           resetAssumptions()
@@ -103,6 +107,7 @@ export function SettingsRoute() {
         return (
           <SettingsPanel
             assumptions={input}
+            assumptionsReady={isHydrated}
             onResetAssumptions={handleResetAssumptions}
             resetStatus={resetStatus}
             storageStatus={storageStatus}

@@ -1,0 +1,48 @@
+P6-T2A - Native auth and owner isolation
+Date: 2026-07-14
+Branch: codex/mission/p6-native-auth-offline
+
+Scope
+- Move Supabase auth/session ownership above the retained Expo route stack.
+- Accept only the requested PKCE callback route, reject token fragments, and deduplicate callback codes.
+- Isolate local assumptions by authenticated owner and prevent guest/account cross-read.
+- Serialize local writes and sync identity initialization; clean interrupted SecureStore generations.
+- Require the active authenticated owner for snapshot sync.
+- Fail closed while owner assumptions hydrate, then recover to session-only mode when storage is unavailable.
+
+Red evidence
+- Account callback contract initially exchanged a duplicate PKCE code twice.
+- Mobile persistence contract initially had no owner-aware load/save API or owner payload validation.
+- SecureStore interruption contract found failed-generation chunks left behind.
+- Hydration contracts found Sync, Reset, and editors enabled against starter fallback assumptions.
+- Adversarial review found failed-load read-only lockout, unguarded edits, duplicate saves, and mixed queued-write status races.
+
+Green evidence
+- npm --prefix apps/mobile run test:supabase:mobile: pass.
+- node scripts/mobile-port-contract-tests.cjs: 35/35 pass.
+- npm --prefix apps/mobile run check: pass.
+- npm --prefix apps/mobile run build:web: pass.
+- npm --prefix apps/mobile run smoke:web-export: all seven routes pass.
+- npm --prefix apps/mobile run smoke:android-bundle: Android Hermes export pass.
+- npm --prefix apps/mobile run smoke:ios-bundle: iOS Hermes export pass.
+- npm --prefix apps/web test: 263 regressions plus reference, accessibility, metadata, and asset lanes pass.
+- npm --prefix apps/web run build: 14 static routes pass.
+- git diff --check: pass.
+
+Browser evidence
+- Chrome at 390x844 rendered the Expo export with no horizontal overflow or console errors.
+- Settings failed closed to local-only when Supabase was unconfigured.
+- A 6500 -> 7200 income edit propagated to Simulator and restored after reload with the calculated cash-flow change.
+- Final hydration/queue corrections were subsequently covered by fresh web, Android, iOS, contract, and TypeScript gates.
+
+Independent review
+- Review round 1 found fallback-data Sync/Reset exposure and overstated encryption copy.
+- Later rounds found storage-failure lockout, unguarded edits, redundant writes, and mixed queued-write ordering.
+- Every finding received a correction and regression contract.
+- Final bounded re-review: approved with no findings.
+
+Remaining P6-T2 work
+- Durable owner-scoped outbox and reconnect replay.
+- Transactional server-side snapshot plus audit mutation.
+- Remote restore and explicit guest-to-account adoption.
+- Revision/conflict semantics and deployed owner-isolation smoke.

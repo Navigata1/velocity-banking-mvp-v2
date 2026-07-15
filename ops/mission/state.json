@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-13T12:47:17Z",
+    "updated": "2026-07-14T23:57:13Z",
     "sessionCount": 1
   },
   "policies": {
@@ -521,55 +521,59 @@
           "id": "P6-G1",
           "title": "Expo TypeScript",
           "command": "npm --prefix apps/mobile run check",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T13:21:28Z",
+          "notes": "TypeScript, 35 native contracts, both mobile Supabase suites, and the full web regression suite pass on merged main."
         },
         {
           "id": "P6-G2",
           "title": "Expo web export and route smoke",
           "command": "npm --prefix apps/mobile run smoke:web-export",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": "Run build:web first when dist-web is stale."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T13:21:28Z",
+          "notes": "Fresh Expo web export and all seven route probes pass on merged main."
         },
         {
           "id": "P6-G3",
           "title": "Android bundle and emulator smoke",
           "command": "npm --prefix apps/mobile run smoke:android-bundle",
           "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T13:21:28Z",
+          "notes": "Android Hermes bundle passes on merged main; emulator evidence remains pending for P6-T4."
         },
         {
           "id": "P6-G4",
           "title": "iOS bundle and simulator smoke through macOS CI",
           "command": "npm --prefix apps/mobile run smoke:ios-bundle",
           "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": "Requires the existing macOS GitHub Actions lane or another macOS host."
+          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
+          "lastRun": "2026-07-13T13:21:28Z",
+          "notes": "iOS Hermes bundle passes on merged main; macOS Simulator evidence remains pending for P6-T4."
         }
       ],
       "tasks": [
         {
           "id": "P6-T1",
           "title": "Split the monolithic mobile shell into native route modules",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": ["P3-T2"],
-          "pr": null,
-          "notes": "Active on codex/mission/p6-native-route-modules. Preserve Expo Router and shared financial-engine ownership while extracting bounded native route modules test-first."
+          "pr": {
+            "number": 245,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/245",
+            "mergedAt": "2026-07-13"
+          },
+          "notes": "Direct route owners replace the monolithic shell; one provider above the retained Stack owns persisted assumptions. Red/green and Chrome retained-route evidence are recorded under ops/mission/evidence/P6-T1-*."
         },
         {
           "id": "P6-T2",
           "title": "Wire native auth, SecureStore, sync, and offline recovery",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": ["P2-T3", "P6-T1"],
           "pr": null,
-          "notes": "Use Expo Go first and add a development build only for a demonstrated native requirement."
+          "notes": "P6-T2A is locally approved on codex/mission/p6-native-auth-offline: one root auth owner, PKCE callback allowlisting and deduplication, owner-scoped assumptions, hydration gates, interrupted SecureStore cleanup, ordered save identity, and expected-owner sync. Evidence: ops/mission/evidence/P6-T2A-native-auth-owner-isolation-2026-07-14.txt. P6-T2 remains in progress for durable outbox/replay, transactional remote mutation, restore, and conflict semantics."
         },
         {
           "id": "P6-T3",
@@ -876,13 +880,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/244",
       "phase": "P5 Educational Media Pipeline",
       "mergedAt": "2026-07-13"
+    },
+    {
+      "number": 245,
+      "title": "Extract Expo route modules",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/245",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-13"
     }
   ],
   "resume": {
     "activePhase": "P6",
     "nextActions": [
-      "Audit apps/mobile route ownership and the current Expo shell on codex/mission/p6-native-route-modules, then add a failing contract for the next bounded extraction.",
-      "Implement P6-T1 test-first while preserving Expo Router, shared financial-engine ownership, route behavior, web export, and current native smoke guards.",
+      "Audit the native auth, SecureStore, owner-scoped sync, and offline recovery flows on codex/mission/p6-native-auth-offline; turn each confirmed gap into a failing contract.",
+      "Implement P6-T2 with one shared assumptions owner, deterministic sync ordering, explicit offline states, and Expo Go compatibility, then rerun web export plus Android and iOS bundle smoke.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [

@@ -1,4 +1,5 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
+import { useMobileAuth } from '@/components/mobile-auth-provider';
 import { usePersistedMobileAssumptions } from '@/hooks/use-persisted-mobile-assumptions';
 
 export type MobileAssumptionsContextValue = ReturnType<typeof usePersistedMobileAssumptions>;
@@ -6,7 +7,8 @@ export type MobileAssumptionsContextValue = ReturnType<typeof usePersistedMobile
 const MobileAssumptionsContext = createContext<MobileAssumptionsContextValue | null>(null);
 
 export function MobileAssumptionsProvider({ children }: PropsWithChildren) {
-  const assumptions = usePersistedMobileAssumptions();
+  const { authReady, ownerId } = useMobileAuth();
+  const assumptions = usePersistedMobileAssumptions(ownerId, authReady);
 
   return (
     <MobileAssumptionsContext.Provider value={assumptions}>

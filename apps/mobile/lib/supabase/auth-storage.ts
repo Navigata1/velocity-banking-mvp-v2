@@ -76,11 +76,16 @@ export function createChunkedSecureAuthStorage(
       const previous = readManifest(await store.getItemAsync(manifestKey(key)));
       const generation = createGeneration();
       const chunks = value.match(new RegExp(`.{1,${CHUNK_SIZE}}`, 'gs')) ?? [''];
-      await Promise.all(
-        chunks.map((chunk, index) => store.setItemAsync(chunkKey(key, generation, index), chunk))
-      );
       const next: ChunkManifest = { count: chunks.length, generation, version: 1 };
-      await store.setItemAsync(manifestKey(key), JSON.stringify(next));
+      try {
+        for (const [index, chunk] of chunks.entries()) {
+          await store.setItemAsync(chunkKey(key, generation, index), chunk);
+        }
+        await store.setItemAsync(manifestKey(key), JSON.stringify(next));
+      } catch (error) {
+        await deleteGeneration(store, key, next);
+        throw error;
+      }
       await deleteGeneration(store, key, previous);
     },
   };

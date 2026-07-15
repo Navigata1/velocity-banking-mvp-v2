@@ -22,10 +22,13 @@ function loadTsFile(filename, mocks = {}) {
 
 async function main() {
   const calls = [];
+  const consumedCodes = new Set();
+  const callbackUrl = 'interestshield://settings';
   const client = {
     auth: {
       exchangeCodeForSession: async (code) => {
         calls.push({ code, operation: 'exchange' });
+        await Promise.resolve();
         return { error: null };
       },
       setSession: async (session) => {
@@ -37,16 +40,68 @@ async function main() {
   const module = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'auth-deep-link.ts'), {
     'expo-linking': {},
   });
-  await module.handleMobileAuthUrl(client, 'interestshield://settings?code=pkce-code');
-  await module.handleMobileAuthUrl(client, 'interestshield://settings#access_token=access&refresh_token=refresh');
+  await module.handleMobileAuthUrl(
+    client,
+    'interestshield://settings?code=pkce-code',
+    callbackUrl,
+    consumedCodes
+  );
+  await module.handleMobileAuthUrl(
+    client,
+    'interestshield://settings?code=pkce-code',
+    callbackUrl,
+    consumedCodes
+  );
   assert.equal(JSON.stringify(calls), JSON.stringify([
     { code: 'pkce-code', operation: 'exchange' },
-    { operation: 'session', session: { access_token: 'access', refresh_token: 'refresh' } },
   ]));
+  await Promise.all([
+    module.handleMobileAuthUrl(
+      client,
+      'interestshield://settings?code=concurrent-pkce-code',
+      callbackUrl,
+      consumedCodes
+    ),
+    module.handleMobileAuthUrl(
+      client,
+      'interestshield://settings?code=concurrent-pkce-code',
+      callbackUrl,
+      consumedCodes
+    ),
+  ]);
+  assert.equal(
+    calls.filter(({ code }) => code === 'concurrent-pkce-code').length,
+    1,
+    'expected concurrent delivery of one PKCE code to exchange once'
+  );
   await assert.rejects(
-    () => module.handleMobileAuthUrl(client, 'interestshield://settings?error_description=Expired%20link'),
+    () => module.handleMobileAuthUrl(
+      client,
+      'interestshield://settings?error_description=Expired%20link',
+      callbackUrl,
+      consumedCodes
+    ),
     /Expired link/
   );
+  await assert.rejects(
+    () => module.handleMobileAuthUrl(
+      client,
+      'malicious://settings?code=attacker-code',
+      callbackUrl,
+      consumedCodes
+    ),
+    /callback/i
+  );
+  await assert.rejects(
+    () => module.handleMobileAuthUrl(
+      client,
+      'interestshield://settings#access_token=access&refresh_token=refresh',
+      callbackUrl,
+      consumedCodes
+    ),
+    /PKCE|token fragment/i
+  );
+  assert.equal(calls.length, 2, 'expected rejected and duplicate callbacks not to mutate auth state');
 
   const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'components', 'mobile-supabase-account.tsx'), 'utf8');
   const settingsSource = fs.readFileSync(
@@ -54,13 +109,27 @@ async function main() {
     'utf8'
   );
   const layoutSource = fs.readFileSync(path.resolve(__dirname, '..', 'app', '_layout.tsx'), 'utf8');
+  const authProviderPath = path.resolve(__dirname, '..', 'components', 'mobile-auth-provider.tsx');
+  assert.ok(fs.existsSync(authProviderPath), 'expected one root native auth provider');
+  const authProviderSource = fs.readFileSync(authProviderPath, 'utf8');
   assert.ok(componentSource.includes('signInWithOtp'));
   assert.ok(componentSource.includes('syncMobileSnapshot'));
+  assert.ok(componentSource.includes('assumptionsReady'));
+  assert.ok(componentSource.includes('!assumptionsReady'));
   assert.ok(componentSource.includes('getNetworkStateAsync'));
   assert.ok(componentSource.includes('Nothing leaves this device until you press sync.'));
-  assert.ok(settingsSource.includes('<MobileSupabaseAccount assumptions={assumptions} />'));
-  assert.ok(layoutSource.includes('registerMobileAuthDeepLinks(client)'));
-  console.log('Expo account contract passed deep-link exchange, explicit sync, and offline-safe controls.');
+  assert.ok(componentSource.includes("scope: 'local'"), 'expected current-device sign-out scope');
+  assert.ok(componentSource.includes('finally'), 'expected native auth actions to recover their busy state');
+  assert.equal(componentSource.includes('Encrypted local'), false, 'expected copy not to overstate web or remote encryption');
+  assert.ok(settingsSource.includes('assumptionsReady={isHydrated}'));
+  assert.ok(settingsSource.includes('disabled={!assumptionsReady}'));
+  assert.ok(layoutSource.includes('<MobileAuthProvider>'));
+  assert.ok(layoutSource.indexOf('<MobileAuthProvider>') < layoutSource.indexOf('<MobileAssumptionsProvider>'));
+  assert.ok(authProviderSource.includes('registerMobileAuthDeepLinks'));
+  assert.ok(authProviderSource.includes('registerMobileAuthLifecycle'));
+  assert.ok(authProviderSource.includes('onAuthStateChange'));
+  assert.ok(authProviderSource.includes('useMobileAuth'));
+  console.log('Expo account contract passed owner-aware auth, PKCE callback isolation, and recoverable controls.');
 }
 
 main().catch((error) => {

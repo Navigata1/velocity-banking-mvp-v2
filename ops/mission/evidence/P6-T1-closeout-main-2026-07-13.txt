@@ -1,0 +1,36 @@
+P6-T1 CLOSEOUT - FRESH MERGED MAIN
+Date: 2026-07-13
+Commit: e60e136
+PR: #245
+
+HOSTED GATES
+- Both duplicate GitHub Web and mobile quality gates passed.
+- Vercel preview and Vercel Preview Comments passed.
+
+MERGED-MAIN GATES
+- node scripts/mobile-port-contract-tests.cjs: PASS, 35/35.
+- npm --prefix apps/mobile run check: PASS.
+- npm --prefix apps/mobile run test:supabase:mobile: PASS.
+- npm --prefix apps/web test: PASS, including 263 engine regressions and all
+  financial-reference, accessibility, metadata, and asset-budget lanes.
+- npm --prefix apps/mobile run build:web: PASS.
+- npm --prefix apps/mobile run smoke:web-export: PASS, all seven routes.
+- npm --prefix apps/mobile run smoke:android-bundle: PASS.
+  Bundle: entry-55065c8133dc30cc83e5c13499cfbde9.hbc
+- npm --prefix apps/mobile run smoke:ios-bundle: PASS.
+  Bundle: entry-170c28cf0ae6eae0943862c57b129d9d.hbc
+
+REVIEW AND BROWSER EVIDENCE
+- Independent review approved spec compliance and code quality after the shared
+  provider correction.
+- Chrome verified all seven route identities, no console warnings/errors,
+  390x844 width containment, retained-route shared edits and recalculation, and
+  Settings reset propagation.
+
+OPEN PLATFORM EVIDENCE
+- Android emulator evidence remains pending for P6-T4.
+- macOS Simulator evidence remains pending for P6-T4.
+
+VERDICT
+P6-T1 is complete on current main. P6-G1 and P6-G2 pass; P6-G3 and P6-G4 stay
+pending until release-candidate device evidence is recorded.
