@@ -278,3 +278,10 @@
 - Fresh merged-main verification passes both mobile Supabase contracts, all 35 mobile contracts, Expo TypeScript, seven-route web export smoke, Android/iOS Hermes exports, and all 263 web regressions with companion lanes.
 - P6-T2A closes the root auth, PKCE callback, owner-local storage, hydration, interrupted write, save ordering, and expected-owner sync boundaries.
 - P6-T2 remains in progress. P6-T2B starts on codex/mission/p6-native-offline-outbox with a durable owner-scoped queue, reconnect replay, and transactional remote mutation as the next contract.
+
+## 2026-07-15T00:43Z - Atomic snapshot sync merged; durable replay begins
+- PR #247 merged at 6f52539 after both GitHub quality workflows and Vercel passed.
+- One six-argument RPC now owns profile, stable snapshot, and immutable audit receipt mutation in a single transaction; exact replays return the original snapshot and changed-request key reuse fails before mutation.
+- The RPC checks the expected owner against auth.uid() inside the transaction, uses a constrained SECURITY DEFINER boundary, and revokes direct authenticated writes that could bypass its validation and audit receipt.
+- Fresh proof passes 48 pgTAP assertions, schema lint, mobile contracts and TypeScript, all 263 web regressions, a 12-route web build, seven Expo web routes, and Android/iOS Hermes bundles.
+- Independent re-review approved the focused atomic primitive. P6-T2C begins on codex/mission/p6-native-outbox-replay for durable owner-scoped FIFO enqueue and foreground replay; logical revision/conflict handling remains the following slice.

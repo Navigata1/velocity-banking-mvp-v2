@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-15T00:04:29Z",
+    "updated": "2026-07-15T00:43:43Z",
     "sessionCount": 1
   },
   "policies": {
@@ -522,36 +522,36 @@
           "title": "Expo TypeScript",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T13:21:28Z",
-          "notes": "TypeScript, 35 native contracts, both mobile Supabase suites, and the full web regression suite pass on merged main."
+          "evidence": "ops/mission/evidence/P6-T2B-atomic-snapshot-sync-2026-07-14.txt",
+          "lastRun": "2026-07-15T00:43:43Z",
+          "notes": "Expo TypeScript, both mobile Supabase suites, 48 pgTAP database assertions, and all 263 web regressions pass for the merged atomic sync slice."
         },
         {
           "id": "P6-G2",
           "title": "Expo web export and route smoke",
           "command": "npm --prefix apps/mobile run smoke:web-export",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T13:21:28Z",
-          "notes": "Fresh Expo web export and all seven route probes pass on merged main."
+          "evidence": "ops/mission/evidence/P6-T2B-atomic-snapshot-sync-2026-07-14.txt",
+          "lastRun": "2026-07-15T00:43:43Z",
+          "notes": "Fresh Expo web export and all seven route probes pass for the merged atomic sync slice."
         },
         {
           "id": "P6-G3",
           "title": "Android bundle and emulator smoke",
           "command": "npm --prefix apps/mobile run smoke:android-bundle",
           "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T13:21:28Z",
-          "notes": "Android Hermes bundle passes on merged main; emulator evidence remains pending for P6-T4."
+          "evidence": "ops/mission/evidence/P6-T2B-atomic-snapshot-sync-2026-07-14.txt",
+          "lastRun": "2026-07-15T00:43:43Z",
+          "notes": "Android Hermes bundle passes for the merged atomic sync slice; emulator evidence remains pending for P6-T4."
         },
         {
           "id": "P6-G4",
           "title": "iOS bundle and simulator smoke through macOS CI",
           "command": "npm --prefix apps/mobile run smoke:ios-bundle",
           "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T1-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T13:21:28Z",
-          "notes": "iOS Hermes bundle passes on merged main; macOS Simulator evidence remains pending for P6-T4."
+          "evidence": "ops/mission/evidence/P6-T2B-atomic-snapshot-sync-2026-07-14.txt",
+          "lastRun": "2026-07-15T00:43:43Z",
+          "notes": "iOS Hermes bundle passes for the merged atomic sync slice; macOS Simulator evidence remains pending for P6-T4."
         }
       ],
       "tasks": [
@@ -573,7 +573,7 @@
           "status": "in_progress",
           "dependsOn": ["P2-T3", "P6-T1"],
           "pr": null,
-          "notes": "PR #246 merged at 10fe689 with one root auth owner, PKCE callback allowlisting and deduplication, owner-scoped assumptions, hydration gates, interrupted SecureStore cleanup, ordered save identity, and expected-owner sync. Fresh main and remote gates pass; evidence: ops/mission/evidence/P6-T2A-closeout-main-2026-07-14.txt. P6-T2B is active on codex/mission/p6-native-offline-outbox for durable outbox/replay, transactional remote mutation, restore, and conflict semantics."
+          "notes": "PR #246 merged root auth, PKCE, owner-scoped local assumptions, hydration, and SecureStore ordering. PR #247 merged the six-argument atomic snapshot RPC, immutable operation receipts, in-transaction owner checks, and write-bypass revocation at 6f52539. Evidence: ops/mission/evidence/P6-T2A-closeout-main-2026-07-14.txt and P6-T2B-atomic-snapshot-sync-2026-07-14.txt. P6-T2C is active on codex/mission/p6-native-outbox-replay for durable owner-scoped enqueue and foreground replay; revision/conflict semantics remain the following slice."
         },
         {
           "id": "P6-T3",
@@ -887,13 +887,28 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/245",
       "phase": "P6 Expo Native Hardening",
       "mergedAt": "2026-07-13"
+    },
+    {
+      "number": 246,
+      "title": "Harden native auth and owner isolation",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/246",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-14"
+    },
+    {
+      "number": 247,
+      "title": "Make snapshot sync atomic",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/247",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-14"
     }
   ],
   "resume": {
     "activePhase": "P6",
     "nextActions": [
-      "Audit the native auth, SecureStore, owner-scoped sync, and offline recovery flows on codex/mission/p6-native-auth-offline; turn each confirmed gap into a failing contract.",
-      "Implement P6-T2 with one shared assumptions owner, deterministic sync ordering, explicit offline states, and Expo Go compatibility, then rerun web export plus Android and iOS bundle smoke.",
+      "Implement P6-T2C on codex/mission/p6-native-outbox-replay: persist an owner-scoped FIFO before network access, retain operation identity until acknowledgment, and stop replay at the first failure.",
+      "Register Expo Go-compatible foreground replay for sign-in, app activation, and network reconnection; prove owner isolation, crash-safe dequeue, and per-owner single-flight flush with failing contracts first.",
+      "After P6-T2C merges, implement logical revision and cross-device conflict semantics before restore or guest-adoption flows.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
