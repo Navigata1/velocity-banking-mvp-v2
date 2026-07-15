@@ -293,3 +293,12 @@
 - Post-commit SecureStore cleanup is best effort, browser copy accurately names localStorage, and Settings clears copied sync status when ownership changes.
 - Fresh proof passes four mobile Supabase contract lanes, Expo TypeScript, 35 native port contracts, 48 pgTAP assertions, all 263 web regressions, a 12-route web build, seven Expo web routes, and Android/iOS Hermes bundles.
 - Independent re-review approved the durable replay slice with no findings. P6-T2D begins on codex/mission/p6-sync-revision-conflicts for logical revisions and explicit stale/gap conflict behavior across native and web.
+
+## 2026-07-15T01:42Z - Logical revision conflicts merged; restore semantics begin
+- PR #249 merged at dd0c0ac after Vercel and both duplicate GitHub quality workflows passed.
+- The coordinated seven-argument RPC cutover serializes distinct owner/snapshot operations, accepts only the next safe logical revision, preserves exact historical retries, and rejects stale or gapped writes before mutation.
+- Native outbox v2 retains allocated and acknowledged revisions after an empty queue, persists conflict state, and stops foreground replay or new enqueueing until recovery.
+- Browser sync now allocates pending work in an IndexedDB transaction across tabs and drains older immutable retries before reporting the caller's current normalized intent as synchronized.
+- Independent review found and closed one high-severity browser intent-loss race; focused re-review approved the correction with no remaining findings.
+- Fresh proof passes clean migration replay, zero public-schema drift, 63 pgTAP assertions, all persistence contracts, 263 web regressions, production build and lint, seven Expo routes, and Android/iOS Hermes bundles.
+- P6-T2E begins on codex/mission/p6-restore-adoption for explicit owner-confirmed restore, guest adoption, conflict recovery, and P6-T2 closeout.
