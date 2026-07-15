@@ -1,0 +1,19 @@
+Interest Shield P6-T2D red-phase evidence
+Recorded: 2026-07-15T01:15Z
+
+Expected failing contracts before implementation:
+
+1. node apps/web/scripts/supabase-schema-contract.cjs
+   FAIL: snapshots must persist a backfilled logical client revision
+   The generated revision migration was intentionally empty.
+
+2. node apps/mobile/scripts/snapshot-outbox-contract.cjs
+   FAIL: the first persisted operation must allocate revision one
+   Actual clientRevision was undefined.
+
+3. node apps/web/scripts/supabase-client-contract.cjs
+   FAIL: expected a durable browser operation id; RPC received undefined.
+
+These failures establish that the prior implementation had no logical revision,
+lost the native sequence when an empty queue was deleted, and minted no durable
+browser retry identity before network access.

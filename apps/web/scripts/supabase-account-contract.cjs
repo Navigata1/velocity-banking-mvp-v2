@@ -49,6 +49,7 @@ const settingsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src', 'app
 assert.ok(panelSource.includes('signInWithOtp'));
 assert.ok(panelSource.includes('syncLocalSnapshot'));
 assert.ok(panelSource.includes('navigator.onLine'));
+assert.ok(!panelSource.includes('operationIdempotencyKey:'), 'the panel must not mint throwaway operation ids');
 assert.ok(settingsSource.includes('<SupabaseAccountPanel />'));
 assert.ok(!settingsSource.includes('Sign In as Demo User'));
 console.log('Supabase account contract passed stable browser snapshot identity and real settings workflow.');

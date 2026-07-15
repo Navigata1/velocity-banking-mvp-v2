@@ -1,5 +1,7 @@
 import {
+  asSnapshotRevisionConflict,
   buildSnapshotSyncPlan,
+  isSafeSnapshotRevision,
   type SnapshotStorageEntry,
   type SnapshotSyncPlan,
 } from '@interestshield/persistence-contract';
@@ -10,18 +12,22 @@ import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
 
 export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
+  clientRevision: number;
   displayName?: string;
   expectedOwnerId: string;
   operationIdempotencyKey: string;
+  snapshotIdempotencyKey?: string;
 }
 
 export interface MobileSnapshotSyncResult {
+  clientRevision: number;
   ownerId: string;
   snapshotId: string;
 }
 
 export interface PreparedMobileSnapshotSync {
   assumptionsJson: SnapshotSyncPlan['snapshot']['row']['assumptions_json'];
+  clientRevision: number;
   displayName: string | null;
   expectedOwnerId: string;
   operationIdempotencyKey: string;
@@ -37,19 +43,23 @@ function syncError(stage: string, error: { message?: string } | null): Error {
 export async function prepareMobileSnapshotSync(
   input: MobileSnapshotSyncInput
 ): Promise<PreparedMobileSnapshotSync> {
+  if (!isSafeSnapshotRevision(input.clientRevision)) {
+    throw new Error('Mobile snapshot sync requires a positive safe client revision.');
+  }
   const storage: SnapshotStorageEntry[] = [{
     key: 'interestshield-mobile-assumptions-v1',
     value: encodeMobileAssumptions(input.assumptions, undefined, input.expectedOwnerId),
   }];
   const plan = buildSnapshotSyncPlan({
     displayName: input.displayName,
-    idempotencyKey: await getOrCreateMobileSyncIdempotencyKey(),
+    idempotencyKey: input.snapshotIdempotencyKey ?? await getOrCreateMobileSyncIdempotencyKey(),
     ownerId: input.expectedOwnerId,
     storage,
   });
 
   return {
     assumptionsJson: plan.snapshot.row.assumptions_json,
+    clientRevision: input.clientRevision,
     displayName: plan.profile.row.display_name,
     expectedOwnerId: input.expectedOwnerId,
     operationIdempotencyKey: input.operationIdempotencyKey,
@@ -71,17 +81,32 @@ export async function syncPreparedMobileSnapshot(
 
   const { data: snapshotId, error } = await client.rpc('sync_interestshield_snapshot', {
     p_assumptions_json: input.assumptionsJson,
+    p_client_revision: input.clientRevision,
     p_display_name: input.displayName,
     p_expected_owner_id: input.expectedOwnerId,
     p_operation_idempotency_key: input.operationIdempotencyKey,
     p_snapshot_idempotency_key: input.snapshotIdempotencyKey,
     p_snapshot_version: input.snapshotVersion,
   });
-  if (error || typeof snapshotId !== 'string') {
+  if (error) {
+    const conflict = asSnapshotRevisionConflict(error);
+    if (conflict) throw conflict;
     throw syncError('transactional snapshot sync', error);
   }
+  if (
+    !snapshotId
+    || typeof snapshotId !== 'object'
+    || !('snapshot_id' in snapshotId)
+    || typeof snapshotId.snapshot_id !== 'string'
+    || !('client_revision' in snapshotId)
+    || snapshotId.client_revision !== input.clientRevision
+  ) throw syncError('transactional snapshot receipt', null);
 
-  return { ownerId, snapshotId };
+  return {
+    clientRevision: input.clientRevision,
+    ownerId,
+    snapshotId: snapshotId.snapshot_id,
+  };
 }
 
 export async function syncMobileSnapshot(

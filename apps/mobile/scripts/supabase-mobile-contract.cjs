@@ -226,15 +226,20 @@ async function main() {
     from: () => { throw new Error('atomic snapshot sync must not issue direct table writes'); },
     rpc: async (name, args) => {
       calls.push({ args, name, operation: 'rpc' });
-      return { data: '00000000-0000-4000-8000-000000000999', error: null };
+      return {
+        data: { client_revision: args.p_client_revision, snapshot_id: '00000000-0000-4000-8000-000000000999' },
+        error: null,
+      };
     },
   };
   const result = await syncModule.syncMobileSnapshot(client, {
     assumptions: {},
+    clientRevision: 1,
     expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
     operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000222',
   });
   assert.equal(result.ownerId, '00000000-0000-4000-8000-00000000000a');
+  assert.equal(result.clientRevision, 1);
   assert.deepEqual(calls.map(({ name, operation }) => `${operation}:${name}`), [
     'rpc:sync_interestshield_snapshot',
   ]);
@@ -246,11 +251,13 @@ async function main() {
     'mobile-operation:00000000-0000-4000-8000-000000000222'
   );
   assert.equal(calls[0].args.p_snapshot_version, 1);
+  assert.equal(calls[0].args.p_client_revision, 1);
   assert.equal(Object.hasOwn(calls[0].args, 'owner_id'), false, 'expected server-derived RPC ownership');
   const callCountBeforeOwnerMismatch = calls.length;
   await assert.rejects(
     () => syncModule.syncMobileSnapshot(client, {
       assumptions: {},
+      clientRevision: 1,
       expectedOwnerId: '00000000-0000-4000-8000-00000000000b',
       operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000223',
     }),
@@ -263,6 +270,7 @@ async function main() {
       rpc: async () => ({ data: null, error: { message: 'transaction rolled back' } }),
     }, {
       assumptions: {},
+      clientRevision: 1,
       expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
       operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000224',
     }),
@@ -273,6 +281,7 @@ async function main() {
       { ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } },
       {
         assumptions: {},
+        clientRevision: 1,
         expectedOwnerId: '00000000-0000-4000-8000-00000000000a',
         operationIdempotencyKey: 'mobile-operation:00000000-0000-4000-8000-000000000225',
       }
