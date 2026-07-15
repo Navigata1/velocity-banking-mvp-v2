@@ -1,0 +1,48 @@
+P6-T2 MERGED-MAIN CLOSEOUT - auth, sync, offline recovery, restore
+Captured: 2026-07-14 America/Chicago
+Merged commit: 1fc635b98d96115d258c299974b91adba49d31f7
+Pull request: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/250
+
+GitHub and Vercel
+- PR #250 merged after two duplicate GitHub quality workflows passed.
+- Vercel preview and preview-comments checks passed.
+- The main push workflow 29384663536 passed all web, rendered smoke,
+  media identity, report Worker, Expo export, and mobile contract steps.
+
+Web and calculation contract
+- npm --prefix apps/web test: PASS, 263 regressions and two independent
+  anonymized financial reference scenarios.
+- Accessibility route, metadata, and public asset contracts: PASS.
+- npm --prefix apps/web run lint: PASS.
+- npm --prefix apps/web run build: PASS, 12 static application routes.
+
+Supabase and persistence
+- npm --prefix apps/web run test:supabase: PASS.
+- Web schema/client/outbox/account contracts: PASS.
+- Local pgTAP: 63/63 assertions PASS.
+- npx supabase db lint --local: no schema errors.
+- npx supabase db diff --local: no output after shadow replay; no drift.
+
+Expo and native
+- npm --prefix apps/mobile run check: PASS.
+- npm --prefix apps/mobile run test:supabase:mobile: PASS, six lanes.
+- node scripts/mobile-port-contract-tests.cjs: PASS, 35 contracts.
+- Fresh Expo web export and all seven route probes: PASS.
+- Android Hermes bundle export: PASS.
+- iOS Hermes bundle export: PASS.
+
+Release evidence boundary
+- Earlier P6-T2E Android Expo Go smoke passed on emulator-5554 and the
+  Chromium 390px Settings smoke had no overflow or page errors.
+- P6-G3 remains pending until Android emulator smoke is repeated against the
+  final release candidate after P6-T3.
+- P6-G4 remains pending until the committed macOS workflow proves the final
+  release candidate in an iOS Simulator.
+
+Review
+- Independent focused review approved P6-T2E with no blocking, high, or
+  medium correctness findings after native mutex and owner-revision fixes.
+
+Residual dependency risk
+- Expo SDK 56 still reports ten moderate CLI/config-chain advisories.
+- The offered forced fix downgrades to Expo 46 and was intentionally rejected.
