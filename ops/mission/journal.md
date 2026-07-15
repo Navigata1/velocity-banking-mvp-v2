@@ -285,3 +285,11 @@
 - The RPC checks the expected owner against auth.uid() inside the transaction, uses a constrained SECURITY DEFINER boundary, and revokes direct authenticated writes that could bypass its validation and audit receipt.
 - Fresh proof passes 48 pgTAP assertions, schema lint, mobile contracts and TypeScript, all 263 web regressions, a 12-route web build, seven Expo web routes, and Android/iOS Hermes bundles.
 - Independent re-review approved the focused atomic primitive. P6-T2C begins on codex/mission/p6-native-outbox-replay for durable owner-scoped FIFO enqueue and foreground replay; logical revision/conflict handling remains the following slice.
+
+## 2026-07-15T01:10Z - Durable native replay merged; revision conflicts begin
+- PR #248 merged at 95abb37 after Vercel and both duplicate GitHub quality workflows passed.
+- Native snapshot requests are persisted before connectivity checks in a bounded owner-scoped FIFO; operation identity and payload survive reloads and ambiguous responses until the acknowledged head is removed.
+- Sign-in, reconnect, and app activation trigger per-owner single-flight replay that stops on the first failure and surfaces owner-scoped notices without leaking stale status across account transitions.
+- Post-commit SecureStore cleanup is best effort, browser copy accurately names localStorage, and Settings clears copied sync status when ownership changes.
+- Fresh proof passes four mobile Supabase contract lanes, Expo TypeScript, 35 native port contracts, 48 pgTAP assertions, all 263 web regressions, a 12-route web build, seven Expo web routes, and Android/iOS Hermes bundles.
+- Independent re-review approved the durable replay slice with no findings. P6-T2D begins on codex/mission/p6-sync-revision-conflicts for logical revisions and explicit stale/gap conflict behavior across native and web.
