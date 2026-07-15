@@ -1,0 +1,26 @@
+P6-T2E RED EVIDENCE - explicit remote restore and guest adoption
+Captured: 2026-07-15 America/Chicago
+
+Command: node apps/mobile/scripts/snapshot-outbox-contract.cjs
+Expected failure: TypeError: rebaseOutbox.rebase is not a function
+Exit code: 1
+
+Command: node apps/mobile/scripts/snapshot-recovery-contract.cjs
+Expected failure: ENOENT for apps/mobile/lib/supabase/snapshot-recovery.ts
+Exit code: 1
+
+These failures establish that the recovery contract was exercised before the
+production outbox rebase primitive and recovery orchestration module existed.
+
+Crash-safety red phase after independent review:
+
+Command: node apps/mobile/scripts/snapshot-outbox-contract.cjs
+Expected failure: TypeError: recoveryOutbox.stageRecovery is not a function
+Exit code: 1
+
+Command: node apps/mobile/scripts/snapshot-recovery-contract.cjs
+Expected failure: TypeError: outbox.rebase is not a function
+Exit code: 1
+
+These failures establish the stronger write-ahead journal and atomic recovery
+commit contract before its production implementation.

@@ -129,6 +129,23 @@ async function main() {
   );
 
   const authStorageModule = loadTsFile(path.resolve(__dirname, '..', 'lib', 'supabase', 'auth-storage.ts'), mocks);
+  const lockEvents = [];
+  let releaseFirstOwnerLock;
+  const firstOwnerLock = authStorageModule.withMobileSnapshotOwnerLock('owner-a', async (lock) => {
+    assert.equal(authStorageModule.isMobileSnapshotOwnerLock(lock, 'owner-a'), true);
+    lockEvents.push('first-start');
+    await new Promise((resolve) => { releaseFirstOwnerLock = resolve; });
+    lockEvents.push('first-end');
+  });
+  await Promise.resolve();
+  const secondOwnerLock = authStorageModule.withMobileSnapshotOwnerLock('owner-a', async () => {
+    lockEvents.push('second-start');
+  });
+  await Promise.resolve();
+  assert.deepEqual(lockEvents, ['first-start'], 'expected native owner work to remain serialized');
+  releaseFirstOwnerLock();
+  await Promise.all([firstOwnerLock, secondOwnerLock]);
+  assert.deepEqual(lockEvents, ['first-start', 'first-end', 'second-start']);
   const secureStore = new MemorySecureStore();
   const generations = ['generation-a', 'generation-b'];
   const authStorage = authStorageModule.createChunkedSecureAuthStorage(secureStore, () => generations.shift());

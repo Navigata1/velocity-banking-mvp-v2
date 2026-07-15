@@ -112,6 +112,14 @@ async function main() {
   const authProviderPath = path.resolve(__dirname, '..', 'components', 'mobile-auth-provider.tsx');
   assert.ok(fs.existsSync(authProviderPath), 'expected one root native auth provider');
   const authProviderSource = fs.readFileSync(authProviderPath, 'utf8');
+  const authStorageSource = fs.readFileSync(
+    path.resolve(__dirname, '..', 'lib', 'supabase', 'auth-storage.ts'),
+    'utf8'
+  );
+  const assumptionsHookSource = fs.readFileSync(
+    path.resolve(__dirname, '..', 'hooks', 'use-persisted-mobile-assumptions.ts'),
+    'utf8'
+  );
   const syncSnapshotSource = componentSource.slice(
     componentSource.indexOf('const syncSnapshot'),
     componentSource.indexOf('const signOut')
@@ -129,18 +137,65 @@ async function main() {
   assert.ok(componentSource.includes('assumptionsReady'));
   assert.ok(componentSource.includes('!assumptionsReady'));
   assert.ok(componentSource.includes('getNetworkStateAsync'));
+  assert.ok(componentSource.includes('loadMobileSnapshotRecoveryOptions'));
+  assert.ok(componentSource.includes('applyMobileSnapshotRecovery'));
+  assert.ok(componentSource.includes('selectedSnapshotId'));
+  assert.ok(componentSource.includes('pendingRecovery'));
+  assert.ok(componentSource.includes('No option is selected automatically.'));
+  assert.ok(componentSource.includes('Review selected restore'));
+  assert.ok(componentSource.includes('Confirm assumption recovery'));
+  assert.ok(componentSource.includes('Cancel assumption recovery'));
+  assert.ok(componentSource.includes('setPendingRecovery(null)'));
+  assert.ok(componentSource.includes('recoveryRequestVersion'));
+  assert.ok(componentSource.includes('isCurrentRequest'));
+  assert.ok(componentSource.includes('recoveryStateOwnerId'));
+  assert.ok(componentSource.includes('renderOwnerId.current = currentOwnerId'));
+  assert.ok(componentSource.includes('recoveryStateOwnerId === currentOwnerId'));
+  assert.ok(componentSource.includes('Keep this device as account version'));
+  assert.ok(componentSource.includes('Resume pending assumption recovery'));
+  assert.ok(componentSource.includes('cannot be cancelled after confirmation'));
+  assert.ok(componentSource.includes('RecoveryAssumptionSummary'));
+  assert.ok(componentSource.includes('input.monthlyExpenses'));
+  assert.ok(componentSource.includes('input.activeDebt.balance'));
+  assert.ok(componentSource.includes('input.activeDebt.monthlyPayment'));
+  assert.ok(componentSource.includes('input.activeDebt.termMonths'));
+  assert.ok(componentSource.includes('input.loc.balance'));
+  assert.ok(componentSource.includes('input.loc.apr'));
   assert.ok(componentSource.includes('Nothing leaves this device until you press sync.'));
   assert.ok(componentSource.includes("scope: 'local'"), 'expected current-device sign-out scope');
   assert.ok(componentSource.includes('finally'), 'expected native auth actions to recover their busy state');
   assert.equal(componentSource.includes('Encrypted local'), false, 'expected copy not to overstate web or remote encryption');
   assert.equal(componentSource.includes('Saved securely'), false, 'expected offline copy not to overstate browser storage');
   assert.ok(settingsSource.includes('assumptionsReady={isHydrated}'));
+  assert.ok(settingsSource.includes('onReplaceAssumptions={replaceAssumptions}'));
   assert.ok(settingsSource.includes('disabled={!assumptionsReady}'));
+  const replacementSource = assumptionsHookSource.slice(
+    assumptionsHookSource.indexOf('const replaceAssumptions'),
+    assumptionsHookSource.indexOf('\n\n  return {')
+  );
+  assert.ok(replacementSource.includes('saveQueue.current'));
+  assert.ok(replacementSource.includes('saveMobileAssumptionsForOwner'));
+  assert.ok(replacementSource.includes('expectedRevision'));
+  assert.ok(replacementSource.includes('ownerLock'));
+  assert.ok(replacementSource.includes('hasOwnerLock ? Promise.resolve()'));
+  assert.ok(replacementSource.includes('Promise.allSettled([precedingOperation, operation])'));
+  assert.ok(replacementSource.includes('account changed'));
+  assert.ok(
+    replacementSource.indexOf('await operation') < replacementSource.indexOf('setInput(nextInput)'),
+    'recovery replacement must persist before changing visible assumptions'
+  );
   assert.ok(layoutSource.includes('<MobileAuthProvider>'));
   assert.ok(layoutSource.indexOf('<MobileAuthProvider>') < layoutSource.indexOf('<MobileAssumptionsProvider>'));
   assert.ok(authProviderSource.includes('registerMobileAuthDeepLinks'));
   assert.ok(authProviderSource.includes('registerMobileAuthLifecycle'));
   assert.ok(authProviderSource.includes('registerMobileSnapshotOutboxReplay'));
+  assert.ok(authProviderSource.includes('resumePendingMobileSnapshotRecovery'));
+  assert.ok(authProviderSource.includes('recoveryReadyOwner'));
+  assert.ok(
+    authProviderSource.indexOf('resumePendingMobileSnapshotRecovery')
+      < authProviderSource.indexOf('registerMobileSnapshotOutboxReplay(client, ownerId'),
+    'pending recovery must be wired before automatic outbox replay'
+  );
   assert.ok(authProviderSource.includes('client, ownerId'));
   assert.ok(authProviderSource.includes('onSuccess'));
   assert.ok(authProviderSource.includes('onError'));
@@ -148,6 +203,10 @@ async function main() {
   assert.ok(authProviderSource.includes('consumeSyncNotice'));
   assert.ok(authProviderSource.includes('onAuthStateChange'));
   assert.ok(authProviderSource.includes('useMobileAuth'));
+  assert.ok(authStorageSource.includes('navigator?.locks'));
+  assert.ok(authStorageSource.includes("mode: 'exclusive'"));
+  assert.ok(authStorageSource.includes('cross-tab locking'));
+  assert.ok(authStorageSource.includes('nativeOwnerLockQueues'));
   console.log('Expo account contract passed owner-aware auth, PKCE callback isolation, and recoverable controls.');
 }
 

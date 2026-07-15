@@ -4,6 +4,9 @@ import { Platform } from 'react-native';
 
 const CHUNK_SIZE = 1800;
 const MANIFEST_SUFFIX = '.manifest';
+const SNAPSHOT_OWNER_LOCK_PREFIX = 'interestshield.mobile.snapshot-owner.';
+const ownerLockTokens = new WeakSet<object>();
+const nativeOwnerLockQueues = new Map<string, Promise<void>>();
 
 interface SecureStorePort {
   deleteItemAsync(key: string): Promise<void>;
@@ -21,6 +24,46 @@ export interface AsyncAuthStorage {
   getItem(key: string): Promise<string | null>;
   removeItem(key: string): Promise<void>;
   setItem(key: string, value: string): Promise<void>;
+}
+
+export interface MobileSnapshotOwnerLock {
+  readonly ownerId: string;
+}
+
+export function isMobileSnapshotOwnerLock(
+  value: MobileSnapshotOwnerLock | undefined,
+  ownerId: string
+): value is MobileSnapshotOwnerLock {
+  return !!value && value.ownerId === ownerId && ownerLockTokens.has(value);
+}
+
+export function withMobileSnapshotOwnerLock<T>(
+  ownerId: string,
+  action: (lock: MobileSnapshotOwnerLock) => Promise<T>
+): Promise<T> {
+  const lock = { ownerId };
+  ownerLockTokens.add(lock);
+  if (Platform.OS !== 'web') {
+    const previous = nativeOwnerLockQueues.get(ownerId) ?? Promise.resolve();
+    const operation = previous.catch(() => undefined).then(() => action(lock));
+    const tail = operation.then(() => undefined, () => undefined);
+    nativeOwnerLockQueues.set(ownerId, tail);
+    void tail.then(() => {
+      if (nativeOwnerLockQueues.get(ownerId) === tail) nativeOwnerLockQueues.delete(ownerId);
+    });
+    return operation;
+  }
+  const locks = globalThis.navigator?.locks;
+  if (!locks) {
+    return Promise.reject(new Error(
+      'Private account sync requires browser cross-tab locking, which is unavailable here.'
+    ));
+  }
+  return locks.request(
+    `${SNAPSHOT_OWNER_LOCK_PREFIX}${ownerId}`,
+    { mode: 'exclusive' },
+    () => action(lock)
+  );
 }
 
 function manifestKey(key: string): string {

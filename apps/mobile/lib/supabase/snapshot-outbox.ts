@@ -4,8 +4,16 @@ import {
   SnapshotRevisionConflictError,
   type SnapshotRevisionConflictKind,
 } from '@interestshield/persistence-contract';
+import type { MobileDashboardInput } from '@interestshield/financial-engine';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { createMobileAuthStorage, type AsyncAuthStorage } from './auth-storage';
+import { decodeMobileAssumptions } from '../mobile-assumption-storage';
+import {
+  createMobileAuthStorage,
+  isMobileSnapshotOwnerLock,
+  withMobileSnapshotOwnerLock,
+  type AsyncAuthStorage,
+  type MobileSnapshotOwnerLock,
+} from './auth-storage';
 import {
   prepareMobileSnapshotSync,
   syncPreparedMobileSnapshot,
@@ -34,6 +42,7 @@ interface MobileSnapshotStreamState {
   conflict: StoredRevisionConflict | null;
   lastAcknowledgedRevision: number;
   lastAllocatedRevision: number;
+  lastRecoveryId?: string;
 }
 
 export interface MobileSnapshotOutboxItem extends PreparedMobileSnapshotSync {
@@ -43,6 +52,7 @@ export interface MobileSnapshotOutboxItem extends PreparedMobileSnapshotSync {
 
 interface MobileSnapshotOutboxEnvelope {
   items: MobileSnapshotOutboxItem[];
+  recovery: StoredMobileSnapshotRecovery | null;
   streams: Record<string, MobileSnapshotStreamState>;
   version: typeof OUTBOX_VERSION;
 }
@@ -50,6 +60,38 @@ interface MobileSnapshotOutboxEnvelope {
 export interface MobileSnapshotOutboxFlushResult {
   remaining: number;
   sent: number;
+}
+
+export interface MobileSnapshotRecoveryCommitResult {
+  discarded: number;
+}
+
+export type MobileSnapshotRecoverySourceKind = 'device' | 'guest' | 'remote';
+
+interface StoredMobileSnapshotRecovery {
+  expectedLocalAssumptions: string;
+  item: MobileSnapshotOutboxItem;
+  recoveryId: string;
+  serverRevision: number;
+  sourceKind: MobileSnapshotRecoverySourceKind;
+}
+
+export interface MobileSnapshotPendingRecovery extends StoredMobileSnapshotRecovery {
+  assumptions: MobileDashboardInput;
+}
+
+export interface MobileSnapshotStageRecoveryInput {
+  assumptions: MobileDashboardInput;
+  expectedLocalAssumptions: string;
+  expectedOwnerId: string;
+  serverRevision: number;
+  snapshotIdempotencyKey: string;
+  sourceKind: MobileSnapshotRecoverySourceKind;
+}
+
+export interface MobileSnapshotStagedRecovery {
+  clientRevision: number;
+  recoveryId: string;
 }
 
 type MobileSnapshotEnqueueInput = Omit<
@@ -67,13 +109,27 @@ interface MobileSnapshotOutboxDependencies {
     input: PreparedMobileSnapshotSync
   ) => Promise<MobileSnapshotSyncResult>;
   storage?: AsyncAuthStorage;
+  withOwnerCrossContextLock?: <T>(
+    ownerId: string,
+    action: (lock: MobileSnapshotOwnerLock) => Promise<T>
+  ) => Promise<T>;
 }
 
 export interface MobileSnapshotOutbox {
+  commitRecovery(
+    ownerId: string,
+    recoveryId: string,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<MobileSnapshotRecoveryCommitResult>;
   enqueue(input: MobileSnapshotEnqueueInput): Promise<MobileSnapshotOutboxItem>;
   flush(client: SupabaseClient, ownerId: string): Promise<MobileSnapshotOutboxFlushResult>;
   read(ownerId: string): Promise<MobileSnapshotOutboxItem[]>;
   readConflict(ownerId: string, snapshotIdempotencyKey: string): Promise<SnapshotRevisionConflictError | null>;
+  readRecovery(ownerId: string, ownerLock?: MobileSnapshotOwnerLock): Promise<MobileSnapshotPendingRecovery | null>;
+  stageRecovery(
+    input: MobileSnapshotStageRecoveryInput,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<MobileSnapshotStagedRecovery>;
 }
 
 function requireOwnerId(ownerId: string): string {
@@ -112,11 +168,16 @@ function readStream(value: unknown): MobileSnapshotStreamState {
     || !Number.isSafeInteger(value.lastAllocatedRevision)
     || (value.lastAcknowledgedRevision as number) < 0
     || (value.lastAllocatedRevision as number) < (value.lastAcknowledgedRevision as number)
+    || ('lastRecoveryId' in value
+      && value.lastRecoveryId !== undefined
+      && (typeof value.lastRecoveryId !== 'string'
+        || !IDEMPOTENCY_KEY_PATTERN.test(value.lastRecoveryId)))
   ) throw new Error('Snapshot outbox contains malformed revision state.');
   return {
     conflict: readConflict(value.conflict),
     lastAcknowledgedRevision: value.lastAcknowledgedRevision as number,
     lastAllocatedRevision: value.lastAllocatedRevision as number,
+    lastRecoveryId: value.lastRecoveryId as string | undefined,
   };
 }
 
@@ -146,7 +207,32 @@ function readItem(value: unknown, ownerId: string): MobileSnapshotOutboxItem {
 }
 
 function emptyEnvelope(): MobileSnapshotOutboxEnvelope {
-  return { items: [], streams: {}, version: OUTBOX_VERSION };
+  return { items: [], recovery: null, streams: {}, version: OUTBOX_VERSION };
+}
+
+function readStoredRecovery(value: unknown, ownerId: string): StoredMobileSnapshotRecovery | null {
+  if (value === null || value === undefined) return null;
+  if (
+    !isRecord(value)
+    || typeof value.expectedLocalAssumptions !== 'string'
+    || typeof value.recoveryId !== 'string'
+    || !IDEMPOTENCY_KEY_PATTERN.test(value.recoveryId)
+    || !Number.isSafeInteger(value.serverRevision)
+    || (value.serverRevision as number) < 0
+    || (value.sourceKind !== 'device' && value.sourceKind !== 'guest' && value.sourceKind !== 'remote')
+  ) throw new Error('Snapshot outbox contains a malformed recovery journal.');
+  const item = readItem(value.item, ownerId);
+  if (
+    item.operationIdempotencyKey !== value.recoveryId
+    || item.clientRevision !== (value.serverRevision as number) + 1
+  ) throw new Error('Snapshot outbox recovery journal does not match its prepared operation.');
+  return {
+    expectedLocalAssumptions: value.expectedLocalAssumptions,
+    item,
+    recoveryId: value.recoveryId,
+    serverRevision: value.serverRevision as number,
+    sourceKind: value.sourceKind,
+  };
 }
 
 function parseEnvelope(raw: string | null, ownerId: string): MobileSnapshotOutboxEnvelope {
@@ -171,6 +257,7 @@ function parseEnvelope(raw: string | null, ownerId: string): MobileSnapshotOutbo
     readStream(stream),
   ]));
   const items = value.items.map((item) => readItem(item, ownerId));
+  const recovery = readStoredRecovery(value.recovery, ownerId);
   const expectedRevision = new Map<string, number>();
   for (const item of items) {
     const stream = streams[item.snapshotIdempotencyKey];
@@ -182,7 +269,7 @@ function parseEnvelope(raw: string | null, ownerId: string): MobileSnapshotOutbo
     }
     expectedRevision.set(item.snapshotIdempotencyKey, expected + 1);
   }
-  return { items, streams, version: OUTBOX_VERSION };
+  return { items, recovery, streams, version: OUTBOX_VERSION };
 }
 
 function copy<T>(value: T): T {
@@ -204,6 +291,8 @@ export function createMobileSnapshotOutbox(
   const getSnapshotIdempotencyKey = dependencies.getSnapshotIdempotencyKey
     ?? (() => getOrCreateMobileSyncIdempotencyKey());
   const now = dependencies.now ?? (() => new Date().toISOString());
+  const withOwnerCrossContextLock = dependencies.withOwnerCrossContextLock
+    ?? withMobileSnapshotOwnerLock;
   const ownerLocks = new Map<string, Promise<void>>();
   const ownerFlushes = new Map<string, Promise<MobileSnapshotOutboxFlushResult>>();
 
@@ -228,7 +317,36 @@ export function createMobileSnapshotOutbox(
 
   const read = (ownerId: string): Promise<MobileSnapshotOutboxItem[]> => {
     const checkedOwnerId = requireOwnerId(ownerId);
-    return withOwnerLock(checkedOwnerId, async () => copy((await readUnlocked(checkedOwnerId)).items));
+    return withOwnerExclusive(checkedOwnerId, async () => copy((await readUnlocked(checkedOwnerId)).items));
+  };
+
+  const withOwnerExclusive = <T>(
+    ownerId: string,
+    action: () => Promise<T>,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<T> => isMobileSnapshotOwnerLock(ownerLock, ownerId)
+    ? withOwnerLock(ownerId, action)
+    : withOwnerCrossContextLock(ownerId, () => withOwnerLock(ownerId, action));
+
+  const readPendingRecovery = (
+    ownerIdInput: string,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<MobileSnapshotPendingRecovery | null> => {
+    const ownerId = requireOwnerId(ownerIdInput);
+    return withOwnerExclusive(ownerId, async () => {
+      const recovery = (await readUnlocked(ownerId)).recovery;
+      if (!recovery) return null;
+      const storageEntry = recovery.item.assumptionsJson.storage.find(
+        (entry) => entry.key === 'interestshield-mobile-assumptions-v1'
+      );
+      const assumptions = storageEntry
+        ? decodeMobileAssumptions(storageEntry.value, ownerId)
+        : null;
+      if (!assumptions) {
+        throw new Error('Snapshot outbox recovery journal has invalid mobile assumptions.');
+      }
+      return copy({ ...recovery, assumptions });
+    }, ownerLock);
   };
 
   const readStoredConflict = (
@@ -240,7 +358,7 @@ export function createMobileSnapshotOutbox(
       snapshotIdempotencyKeyInput,
       'Snapshot outbox stream key'
     );
-    return withOwnerLock(ownerId, async () => {
+    return withOwnerExclusive(ownerId, async () => {
       const conflict = (await readUnlocked(ownerId)).streams[snapshotIdempotencyKey]?.conflict;
       return conflict ? conflictError(conflict) : null;
     });
@@ -254,8 +372,11 @@ export function createMobileSnapshotOutbox(
     );
     const operationIdempotencyKey = createOperationIdempotencyKey();
     const enqueuedAt = now();
-    return withOwnerLock(ownerId, async () => {
+    return withOwnerExclusive(ownerId, async () => {
       const envelope = await readUnlocked(ownerId);
+      if (envelope.recovery) {
+        throw new Error('Snapshot recovery is pending. Finish recovery before adding new changes.');
+      }
       const stream = envelope.streams[snapshotIdempotencyKey] ?? {
         conflict: null,
         lastAcknowledgedRevision: 0,
@@ -298,6 +419,107 @@ export function createMobileSnapshotOutbox(
     });
   };
 
+  const stageRecovery = async (
+    input: MobileSnapshotStageRecoveryInput,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<MobileSnapshotStagedRecovery> => {
+    const ownerId = requireOwnerId(input.expectedOwnerId);
+    const snapshotIdempotencyKey = requireIdempotencyKey(
+      input.snapshotIdempotencyKey,
+      'Snapshot outbox stream key'
+    );
+    if (!Number.isSafeInteger(input.serverRevision) || input.serverRevision < 0) {
+      throw new Error('Snapshot recovery requires a non-negative safe server revision.');
+    }
+    const clientRevision = input.serverRevision + 1;
+    if (!isSafeSnapshotRevision(clientRevision)) {
+      throw new Error('Snapshot recovery revision limit has been reached.');
+    }
+    const recoveryId = createOperationIdempotencyKey();
+    const enqueuedAt = now();
+    return withOwnerExclusive(ownerId, async () => {
+      if (ownerFlushes.has(ownerId)) {
+        throw new Error('Snapshot recovery cannot start while account sync is active. Try again.');
+      }
+      const envelope = await readUnlocked(ownerId);
+      if (envelope.recovery) {
+        throw new Error('Snapshot recovery is pending. Finish it before starting another recovery.');
+      }
+      const currentStream = envelope.streams[snapshotIdempotencyKey];
+      if (currentStream && input.serverRevision < currentStream.lastAcknowledgedRevision) {
+        throw new Error('The account revision changed during recovery review. Review again.');
+      }
+      const prepared = await prepareSnapshot({
+        assumptions: input.assumptions,
+        clientRevision,
+        expectedOwnerId: ownerId,
+        operationIdempotencyKey: recoveryId,
+        snapshotIdempotencyKey,
+      });
+      const item: MobileSnapshotOutboxItem = { ...prepared, enqueuedAt, version: OUTBOX_VERSION };
+      readItem(item, ownerId);
+      if (item.snapshotIdempotencyKey !== snapshotIdempotencyKey) {
+        throw new Error('Snapshot recovery preparation changed its installation stream.');
+      }
+      const retainedCount = envelope.items.filter(
+        (queued) => queued.snapshotIdempotencyKey !== snapshotIdempotencyKey
+      ).length;
+      if (retainedCount >= MAX_OUTBOX_ITEMS) {
+        throw new Error('Snapshot outbox is full on other streams. Sync them before recovery.');
+      }
+      envelope.recovery = {
+        expectedLocalAssumptions: input.expectedLocalAssumptions,
+        item,
+        recoveryId,
+        serverRevision: input.serverRevision,
+        sourceKind: input.sourceKind,
+      };
+      await writeUnlocked(ownerId, envelope);
+      return { clientRevision, recoveryId };
+    }, ownerLock);
+  };
+
+  const commitRecovery = (
+    ownerIdInput: string,
+    recoveryIdInput: string,
+    ownerLock?: MobileSnapshotOwnerLock
+  ): Promise<MobileSnapshotRecoveryCommitResult> => {
+    const ownerId = requireOwnerId(ownerIdInput);
+    const recoveryId = requireIdempotencyKey(recoveryIdInput, 'Snapshot recovery id');
+    return withOwnerExclusive(ownerId, async () => {
+      if (ownerFlushes.has(ownerId)) {
+        throw new Error('Snapshot recovery cannot commit while account sync is active. Try again.');
+      }
+      const envelope = await readUnlocked(ownerId);
+      const recovery = envelope.recovery;
+      if (!recovery) {
+        if (Object.values(envelope.streams).some((stream) => stream.lastRecoveryId === recoveryId)) {
+          return { discarded: 0 };
+        }
+        throw new Error('Snapshot recovery journal changed before commit. Review recovery again.');
+      }
+      if (recovery.recoveryId !== recoveryId) {
+        throw new Error('Snapshot recovery journal changed before commit. Review recovery again.');
+      }
+      const streamKey = recovery.item.snapshotIdempotencyKey;
+      const retained = envelope.items.filter((item) => item.snapshotIdempotencyKey !== streamKey);
+      const discarded = envelope.items.length - retained.length;
+      if (retained.some((item) => item.operationIdempotencyKey === recovery.recoveryId)) {
+        throw new Error('Snapshot recovery operation already exists on another stream.');
+      }
+      envelope.items = [...retained, recovery.item];
+      envelope.streams[streamKey] = {
+        conflict: null,
+        lastAcknowledgedRevision: recovery.serverRevision,
+        lastAllocatedRevision: recovery.item.clientRevision,
+        lastRecoveryId: recovery.recoveryId,
+      };
+      envelope.recovery = null;
+      await writeUnlocked(ownerId, envelope);
+      return { discarded };
+    }, ownerLock);
+  };
+
   const flush = (
     client: SupabaseClient,
     ownerIdInput: string
@@ -306,11 +528,14 @@ export function createMobileSnapshotOutbox(
     const existing = ownerFlushes.get(ownerId);
     if (existing) return existing;
 
-    const run = (async () => {
+    const run = withOwnerCrossContextLock(ownerId, async () => {
       let sent = 0;
       while (true) {
         const head = await withOwnerLock(ownerId, async () => {
           const envelope = await readUnlocked(ownerId);
+          if (envelope.recovery) {
+            throw new Error('Snapshot recovery is pending. Finish recovery before account sync.');
+          }
           const item = envelope.items[0];
           if (!item) return null;
           const conflict = envelope.streams[item.snapshotIdempotencyKey]?.conflict;
@@ -355,7 +580,7 @@ export function createMobileSnapshotOutbox(
         });
         sent += 1;
       }
-    })();
+    });
 
     ownerFlushes.set(ownerId, run);
     void run.finally(() => {
@@ -364,7 +589,15 @@ export function createMobileSnapshotOutbox(
     return run;
   };
 
-  return { enqueue, flush, read, readConflict: readStoredConflict };
+  return {
+    commitRecovery,
+    enqueue,
+    flush,
+    read,
+    readConflict: readStoredConflict,
+    readRecovery: readPendingRecovery,
+    stageRecovery,
+  };
 }
 
 export const mobileSnapshotOutbox = createMobileSnapshotOutbox();

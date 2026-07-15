@@ -14,6 +14,7 @@ import { registerMobileAuthLifecycle } from '@/lib/supabase/auth-lifecycle';
 import { registerMobileAuthDeepLinks } from '@/lib/supabase/auth-deep-link';
 import { createMobileSupabaseClient } from '@/lib/supabase/client';
 import { registerMobileSnapshotOutboxReplay } from '@/lib/supabase/snapshot-outbox-replay';
+import { resumePendingMobileSnapshotRecovery } from '@/lib/supabase/snapshot-recovery';
 
 type MobileAuthStatus = 'initializing' | 'unconfigured' | 'signed-out' | 'signed-in' | 'error';
 
@@ -43,6 +44,7 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<MobileAuthStatus>(client ? 'initializing' : 'unconfigured');
   const [authError, setAuthError] = useState<string | null>(null);
   const [syncNotice, setSyncNotice] = useState<MobileSyncNotice | null>(null);
+  const [recoveryReadyOwner, setRecoveryReadyOwner] = useState<string | null>(null);
   const activeOwnerId = useRef<string | null>(null);
   const nextSyncNoticeId = useRef(0);
 
@@ -59,6 +61,7 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
       const nextOwnerId = nextSession?.user.id ?? null;
       if (activeOwnerId.current !== nextOwnerId) {
         activeOwnerId.current = nextOwnerId;
+        setRecoveryReadyOwner(null);
         setSyncNotice(null);
       }
       setSession(nextSession);
@@ -104,6 +107,21 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
   const ownerId = session?.user.id ?? null;
   useEffect(() => {
     if (!client || !ownerId) return;
+    let active = true;
+    resumePendingMobileSnapshotRecovery(ownerId)
+      .then(() => {
+        if (active && activeOwnerId.current === ownerId) setRecoveryReadyOwner(ownerId);
+      })
+      .catch((error: unknown) => {
+        if (!active || activeOwnerId.current !== ownerId) return;
+        setAuthError(error instanceof Error ? error.message : 'Pending account recovery could not finish.');
+        setRecoveryReadyOwner(ownerId);
+      });
+    return () => { active = false; };
+  }, [client, ownerId]);
+
+  useEffect(() => {
+    if (!client || !ownerId || recoveryReadyOwner !== ownerId) return;
     return registerMobileSnapshotOutboxReplay(client, ownerId, {
       onError: (error) => {
         setSyncNotice({
@@ -124,18 +142,18 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
         });
       },
     });
-  }, [client, ownerId]);
+  }, [client, ownerId, recoveryReadyOwner]);
 
   const value = useMemo<MobileAuthContextValue>(() => ({
     authError,
-    authReady: status !== 'initializing',
+    authReady: status !== 'initializing' && (!ownerId || recoveryReadyOwner === ownerId),
     client,
     consumeSyncNotice,
     ownerId,
     session,
     status,
     syncNotice,
-  }), [authError, client, consumeSyncNotice, ownerId, session, status, syncNotice]);
+  }), [authError, client, consumeSyncNotice, ownerId, recoveryReadyOwner, session, status, syncNotice]);
 
   return <MobileAuthContext.Provider value={value}>{children}</MobileAuthContext.Provider>;
 }

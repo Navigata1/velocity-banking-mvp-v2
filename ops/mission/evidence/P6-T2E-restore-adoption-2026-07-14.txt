@@ -1,0 +1,64 @@
+P6-T2E GREEN EVIDENCE - explicit restore, adoption, and recovery
+Captured: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-restore-adoption
+
+Scope
+- Explicit, owner-confirmed remote snapshot restore.
+- Explicit guest-assumption adoption and keep-device conflict resolution.
+- Durable write-ahead recovery journal with resumable local replacement.
+- Owner-scoped outbox rebase and idempotent recovery commit.
+- Browser Web Locks plus native in-process owner mutex.
+- Monotonic local assumption revisions with compare-and-swap protection.
+- Synchronous owner-tagged recovery rendering across account changes.
+
+Focused gates
+
+Command: npm --prefix apps/mobile run check
+Result: PASS - TypeScript completed without errors.
+
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Result: PASS - six contract lanes:
+- secure chunking, durable identity, and ordered owner-scoped sync
+- owner-aware auth, PKCE callback isolation, and recovery controls
+- stale-tab local-assumption overwrite rejection after recovery
+- durable FIFO replay, owner isolation, retry identity, and recovery rebase
+- sign-in, reconnect, activation, and cleanup replay triggers
+- explicit preview, owner checks, restore ordering, resume, and guest adoption
+
+Command: node scripts/mobile-port-contract-tests.cjs
+Result: PASS - all 35 shared mobile and native port contracts.
+
+Command: npm --prefix apps/mobile run build:web
+Command: npm --prefix apps/mobile run smoke:web-export
+Result: PASS - fresh Expo export and all seven routes:
+/, /simulator, /cockpit, /portfolio, /learn, /vault, /settings.
+
+Command: npm --prefix apps/mobile run smoke:android-bundle
+Result: PASS - Android Hermes bundle export.
+
+Command: npm --prefix apps/mobile run smoke:ios-bundle
+Result: PASS - iOS Hermes bundle export.
+
+Live and responsive smoke
+- Android Expo Go passed on emulator-5554 and found Payoff Orbit plus LOC orbit step.
+- Chromium device metrics at 390 CSS pixels reported innerWidth=390 and
+  scrollWidth=390 with no page errors.
+- Desktop evidence: ops/mission/evidence/P6-T2E-smoke/settings-desktop.png
+- Mobile evidence: ops/mission/evidence/P6-T2E-smoke/settings-mobile-emulated.png
+
+Adversarial review
+- Initial review identified stale cross-tab overwrite and stale-owner rendering.
+- Follow-up review identified native lock serialization and delayed owner-revision risks.
+- Production native owner work now serializes before issuing a validated token.
+- Delayed saves update revision state only while their owner scope remains active.
+- Final independent focused review: APPROVED with no blocking, high, or medium
+  correctness findings.
+
+Dependency audit
+Command: npm --prefix apps/mobile audit --omit=dev
+Result: 10 moderate advisories in the Expo CLI/config/xcode/uuid toolchain.
+The offered forced remediation downgrades Expo 56 to Expo 46 and is not safe.
+No forced downgrade was applied; this tooling-chain residual remains documented.
+
+Red evidence
+- ops/mission/evidence/P6-T2E-red-2026-07-14.txt

@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-15T01:10:27Z",
+    "updated": "2026-07-15T01:42:09Z",
     "sessionCount": 1
   },
   "policies": {
@@ -522,36 +522,36 @@
           "title": "Expo TypeScript",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T2C-durable-outbox-replay-2026-07-14.txt",
-          "lastRun": "2026-07-15T01:10:27Z",
-          "notes": "Expo TypeScript, four mobile Supabase contract lanes, 48 pgTAP database assertions, and all 263 web regressions pass for the merged durable outbox slice."
+          "evidence": "ops/mission/evidence/P6-T2D-logical-revision-conflicts-2026-07-14.txt",
+          "lastRun": "2026-07-15T01:42:09Z",
+          "notes": "Expo TypeScript, four mobile persistence lanes, transactional browser outbox contracts, 63 pgTAP assertions, and all 263 web regressions pass for the merged logical revision slice."
         },
         {
           "id": "P6-G2",
           "title": "Expo web export and route smoke",
           "command": "npm --prefix apps/mobile run smoke:web-export",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T2C-durable-outbox-replay-2026-07-14.txt",
-          "lastRun": "2026-07-15T01:10:27Z",
-          "notes": "Fresh Expo web export and all seven route probes pass for the merged durable outbox slice."
+          "evidence": "ops/mission/evidence/P6-T2D-logical-revision-conflicts-2026-07-14.txt",
+          "lastRun": "2026-07-15T01:42:09Z",
+          "notes": "Fresh Expo web export and all seven route probes pass for the merged logical revision slice."
         },
         {
           "id": "P6-G3",
           "title": "Android bundle and emulator smoke",
           "command": "npm --prefix apps/mobile run smoke:android-bundle",
           "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T2C-durable-outbox-replay-2026-07-14.txt",
-          "lastRun": "2026-07-15T01:10:27Z",
-          "notes": "Android Hermes bundle passes for the merged durable outbox slice; emulator evidence remains pending for P6-T4."
+          "evidence": "ops/mission/evidence/P6-T2D-logical-revision-conflicts-2026-07-14.txt",
+          "lastRun": "2026-07-15T01:42:09Z",
+          "notes": "Android Hermes bundle passes for the merged logical revision slice; emulator evidence remains pending for P6-T4."
         },
         {
           "id": "P6-G4",
           "title": "iOS bundle and simulator smoke through macOS CI",
           "command": "npm --prefix apps/mobile run smoke:ios-bundle",
           "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T2C-durable-outbox-replay-2026-07-14.txt",
-          "lastRun": "2026-07-15T01:10:27Z",
-          "notes": "iOS Hermes bundle passes for the merged durable outbox slice; macOS Simulator evidence remains pending for P6-T4."
+          "evidence": "ops/mission/evidence/P6-T2D-logical-revision-conflicts-2026-07-14.txt",
+          "lastRun": "2026-07-15T01:42:09Z",
+          "notes": "iOS Hermes bundle passes for the merged logical revision slice; macOS Simulator evidence remains pending for P6-T4."
         }
       ],
       "tasks": [
@@ -573,7 +573,7 @@
           "status": "in_progress",
           "dependsOn": ["P2-T3", "P6-T1"],
           "pr": null,
-          "notes": "PR #246 merged root auth, PKCE, owner-scoped local assumptions, hydration, and SecureStore ordering. PR #247 merged the atomic snapshot RPC and immutable operation receipts. PR #248 merged a durable owner-scoped native FIFO at 95abb37 with enqueue-before-connectivity, stable operation identity, bounded replay, owner-transition cleanup, and sign-in/reconnect/activation triggers. Evidence: ops/mission/evidence/P6-T2A-closeout-main-2026-07-14.txt, P6-T2B-atomic-snapshot-sync-2026-07-14.txt, and P6-T2C-durable-outbox-replay-2026-07-14.txt. P6-T2D is active on codex/mission/p6-sync-revision-conflicts for logical revision and cross-device conflict semantics before restore or guest adoption."
+          "notes": "PRs #246-#248 merged root auth, owner-scoped local persistence, the atomic snapshot RPC, immutable receipts, and durable native replay. PR #249 merged per-owner/install logical revisions at dd0c0ac with exact old retries, serialized distinct operations, typed stale/gap conflicts, native v2 stream state, and a transactional cross-tab browser outbox. Evidence: ops/mission/evidence/P6-T2A-closeout-main-2026-07-14.txt through P6-T2D-logical-revision-conflicts-2026-07-14.txt. P6-T2E is active on codex/mission/p6-restore-adoption to define explicit remote restore, guest adoption, conflict recovery, and close P6-T2."
         },
         {
           "id": "P6-T3",
@@ -908,14 +908,21 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/248",
       "phase": "P6 Expo Native Hardening",
       "mergedAt": "2026-07-14"
+    },
+    {
+      "number": 249,
+      "title": "Enforce logical snapshot revision conflicts",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/249",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-14"
     }
   ],
   "resume": {
     "activePhase": "P6",
     "nextActions": [
-      "Implement P6-T2D on codex/mission/p6-sync-revision-conflicts: add per-snapshot logical revisions, serialize distinct operations, and reject stale or gapped mutations without changing exact-retry behavior.",
-      "Persist native revision allocation across an empty outbox and align the web client with durable pending-operation and conflict handling; prove both with failing contracts first.",
-      "After P6-T2D merges, define explicit remote restore and guest-adoption semantics and close P6-T2 with fresh-main recovery evidence.",
+      "Implement P6-T2E on codex/mission/p6-restore-adoption: define explicit owner-confirmed remote restore, guest adoption, and conflict resolution without guessing which snapshot should win.",
+      "Prove restore preview, owner isolation, transactional local replacement, outbox reset/rebase, cancellation, corrupt payload rejection, and interruption recovery with failing contracts first.",
+      "Close P6-T2 only after fresh-main auth, offline enqueue/replay, revision conflict, restore/adoption, web, Expo export, and Android/iOS bundle evidence pass together.",
       "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
     ],
     "blockers": [
