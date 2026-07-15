@@ -1,6 +1,7 @@
 import type { MobilePortfolioPathSnapshot } from '@interestshield/financial-engine';
 import { Text, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
+import { portfolioPointAccessibilityLabel } from '@/lib/accessibility-labels';
 
 export function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapshot }) {
   const tone = path.isProjected
@@ -51,8 +52,6 @@ export function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapsho
 
         <View style={{ gap: 10 }}>
           <View
-            accessibilityRole="progressbar"
-            accessibilityValue={{ min: 0, max: 100, now: Math.round(path.progressPercent) }}
             style={{
               backgroundColor: '#0f172a',
               borderColor: '#1e293b',
@@ -70,7 +69,9 @@ export function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapsho
                 <View
                   key={`${point.month}-${index}`}
                   testID={`mobile-portfolio-payoff-path-node-${index}`}
-                  accessibilityLabel={`Month ${point.month} payoff path point`}
+                  accessible
+                  accessibilityLabel={portfolioPointAccessibilityLabel(point)}
+                  accessibilityRole="text"
                   style={{
                     alignItems: 'center',
                     flex: 1,
@@ -111,7 +112,18 @@ export function MobilePortfolioPath({ path }: { path: MobilePortfolioPathSnapsho
         </View>
 
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-          <View style={{ minWidth: 120, flex: 1 }}>
+          <View
+            accessible
+            accessibilityLabel="Portfolio payoff progress"
+            accessibilityRole="progressbar"
+            accessibilityValue={{
+              min: 0,
+              max: 100,
+              now: Math.round(path.progressPercent),
+              text: `${path.statusLabel}. ${path.payoffMonthsLabel}.`,
+            }}
+            style={{ minWidth: 120, flex: 1 }}
+          >
             <Text selectable style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
               Progress
             </Text>

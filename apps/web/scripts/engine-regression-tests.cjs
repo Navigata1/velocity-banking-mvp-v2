@@ -944,8 +944,8 @@ test('mobile mode navigation exposes native tab semantics and stable touch targe
     'expected React Native Web to expose active tab state through aria-selected'
   );
   assert.ok(
-    mobileNavigationSource.includes('minHeight: 44'),
-    'expected mobile mode controls to preserve a 44px minimum touch target'
+    mobileNavigationSource.includes('minHeight: 48'),
+    'expected mobile mode controls to preserve the Android 48dp minimum touch target'
   );
   assert.ok(
     mobileNavigationSource.includes('testID={`mobile-mode-tab-${id}`}'),

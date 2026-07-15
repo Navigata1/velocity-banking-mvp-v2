@@ -1,9 +1,11 @@
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
 import * as Linking from 'expo-linking';
 import * as Network from 'expo-network';
-import { useEffect, useRef, useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { useEffect, useRef, useState, type ElementRef } from 'react';
+import { AccessibilityInfo, findNodeHandle, Pressable, Text, TextInput, View } from 'react-native';
 import { useMobileAuth } from '@/components/mobile-auth-provider';
+import { useAccessibilityAnnouncement } from '@/hooks/use-accessibility-announcement';
+import { recoveryChoiceAccessibilityLabel } from '@/lib/accessibility-labels';
 import type { MobileAssumptionStorageBackend } from '@/lib/mobile-assumption-storage';
 import type { MobileSnapshotOwnerLock } from '@/lib/supabase/auth-storage';
 import { mobileSnapshotOutbox } from '@/lib/supabase/snapshot-outbox';
@@ -38,6 +40,7 @@ const primaryButton = {
   borderColor: '#34d399',
   borderRadius: 12,
   borderWidth: 1,
+  minHeight: 48,
   paddingHorizontal: 14,
   paddingVertical: 12,
 };
@@ -80,6 +83,7 @@ export function MobileSupabaseAccount({
   const [pendingRecovery, setPendingRecovery] = useState<MobileSnapshotRecoverySource | null>(null);
   const [hasStagedRecovery, setHasStagedRecovery] = useState(false);
   const [recoveryStateOwnerId, setRecoveryStateOwnerId] = useState<string | null>(null);
+  const recoveryConfirmationRef = useRef<ElementRef<typeof Text>>(null);
   const currentOwnerId = session?.user.id ?? null;
   const statusOwnerId = useRef<string | null>(currentOwnerId);
   const renderOwnerId = useRef<string | null>(currentOwnerId);
@@ -352,6 +356,15 @@ export function MobileSupabaseAccount({
   const currentPendingRecovery = recoveryStateIsCurrent ? pendingRecovery : null;
   const currentHasStagedRecovery = recoveryStateIsCurrent && hasStagedRecovery;
   const currentStatus = statusOwnerId.current === currentOwnerId ? status : null;
+  useAccessibilityAnnouncement(currentStatus);
+  useEffect(() => {
+    if (!currentPendingRecovery) return;
+    const frame = requestAnimationFrame(() => {
+      const node = findNodeHandle(recoveryConfirmationRef.current);
+      if (node !== null) AccessibilityInfo.setAccessibilityFocus(node);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [currentPendingRecovery]);
   const selectedSnapshot = currentRecoveryOptions?.snapshots.find(
     (snapshot) => snapshot.snapshotId === selectedSnapshotId
   ) ?? null;
@@ -405,14 +418,14 @@ export function MobileSupabaseAccount({
               accessibilityLabel="Review snapshot recovery options"
               disabled={!assumptionsReady || currentHasStagedRecovery || work !== 'idle'}
               onPress={reviewRecoveryOptions}
-              style={({ pressed }) => [{ alignItems: 'center', borderColor: '#475569', borderRadius: 12, borderWidth: 1, padding: 12 }, { opacity: pressed || !assumptionsReady || currentHasStagedRecovery || work !== 'idle' ? 0.65 : 1 }]}
+              style={({ pressed }) => [{ alignItems: 'center', borderColor: '#475569', borderRadius: 12, borderWidth: 1, minHeight: 48, padding: 12 }, { opacity: pressed || !assumptionsReady || currentHasStagedRecovery || work !== 'idle' ? 0.65 : 1 }]}
             >
               <Text selectable style={{ color: '#e2e8f0', fontSize: 14, fontWeight: '800' }}>
                 {work === 'loading-recovery' ? 'Loading recovery options...' : 'Review recovery options'}
               </Text>
             </Pressable>
             {currentRecoveryOptions ? (
-              <View style={{ gap: 8 }}>
+              <View accessibilityLabel="Assumption recovery choices" accessibilityRole="radiogroup" style={{ gap: 8 }}>
                 {currentRecoveryOptions.snapshots.map((snapshot) => {
                   const selected = snapshot.snapshotId === selectedSnapshotId;
                   return (
@@ -420,12 +433,16 @@ export function MobileSupabaseAccount({
                       key={snapshot.snapshotId}
                       accessibilityRole="radio"
                       accessibilityState={{ checked: selected }}
-                      accessibilityLabel={`Select snapshot revision ${snapshot.clientRevision}`}
+                      accessibilityLabel={recoveryChoiceAccessibilityLabel(
+                        snapshot.assumptions,
+                        `Snapshot revision ${snapshot.clientRevision}`,
+                        snapshot.updatedAt
+                      )}
                       onPress={() => {
                         setSelectedSnapshotId(snapshot.snapshotId);
                         setPendingRecovery(null);
                       }}
-                      style={{ borderColor: selected ? '#34d399' : '#334155', borderRadius: 8, borderWidth: 1, gap: 3, padding: 10 }}
+                      style={{ borderColor: selected ? '#34d399' : '#334155', borderRadius: 8, borderWidth: 1, gap: 3, minHeight: 48, padding: 10 }}
                     >
                       <Text selectable style={{ color: '#f8fafc', fontSize: 13, fontWeight: '800' }}>
                         Revision {snapshot.clientRevision}
@@ -437,29 +454,20 @@ export function MobileSupabaseAccount({
                     </Pressable>
                   );
                 })}
-                {currentRecoveryOptions.rejectedCount > 0 ? (
-                  <Text selectable style={{ color: '#fbbf24', fontSize: 12, lineHeight: 18 }}>
-                    {currentRecoveryOptions.rejectedCount} corrupt or unsupported snapshot{currentRecoveryOptions.rejectedCount === 1 ? '' : 's'} hidden.
-                  </Text>
-                ) : null}
-                {selectedSnapshot ? (
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Review selected snapshot restore"
-                    disabled={work !== 'idle'}
-                    onPress={() => setPendingRecovery({ kind: 'remote', snapshot: selectedSnapshot })}
-                    style={({ pressed }) => [primaryButton, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
-                  >
-                    <Text selectable style={{ color: '#ecfdf5', fontSize: 14, fontWeight: '900' }}>Review selected restore</Text>
-                  </Pressable>
-                ) : null}
                 {currentRecoveryOptions.guestAssumptions ? (
                   <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Review guest assumption adoption"
+                    accessibilityRole="radio"
+                    accessibilityState={{ checked: currentPendingRecovery?.kind === 'guest' }}
+                    accessibilityLabel={recoveryChoiceAccessibilityLabel(
+                      currentRecoveryOptions.guestAssumptions,
+                      'Saved guest assumptions'
+                    )}
                     disabled={work !== 'idle'}
-                    onPress={() => setPendingRecovery({ assumptions: currentRecoveryOptions.guestAssumptions!, kind: 'guest' })}
-                    style={({ pressed }) => [{ alignItems: 'center', borderColor: '#38bdf8', borderRadius: 12, borderWidth: 1, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
+                    onPress={() => {
+                      setSelectedSnapshotId(null);
+                      setPendingRecovery({ assumptions: currentRecoveryOptions.guestAssumptions!, kind: 'guest' });
+                    }}
+                    style={({ pressed }) => [{ alignItems: 'center', borderColor: '#38bdf8', borderRadius: 12, borderWidth: 1, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
                   >
                     <Text selectable style={{ color: '#bae6fd', fontSize: 14, fontWeight: '800' }}>
                       Review guest adoption
@@ -468,20 +476,40 @@ export function MobileSupabaseAccount({
                   </Pressable>
                 ) : null}
                 <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Review keeping this device assumptions"
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: currentPendingRecovery?.kind === 'device' }}
+                  accessibilityLabel={recoveryChoiceAccessibilityLabel(assumptions, 'Current device assumptions')}
                   disabled={work !== 'idle'}
-                  onPress={() => setPendingRecovery({ assumptions, kind: 'device' })}
-                  style={({ pressed }) => [{ borderColor: '#34d399', borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
+                  onPress={() => {
+                    setSelectedSnapshotId(null);
+                    setPendingRecovery({ assumptions, kind: 'device' });
+                  }}
+                  style={({ pressed }) => [{ borderColor: '#34d399', borderRadius: 12, borderWidth: 1, gap: 4, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
                 >
                   <Text selectable style={{ color: '#bbf7d0', fontSize: 14, fontWeight: '800' }}>Keep this device as account version</Text>
                   <RecoveryAssumptionSummary input={assumptions} />
                 </Pressable>
               </View>
             ) : null}
+            {currentRecoveryOptions?.rejectedCount ? (
+              <Text selectable style={{ color: '#fbbf24', fontSize: 12, lineHeight: 18 }}>
+                {currentRecoveryOptions.rejectedCount} corrupt or unsupported snapshot{currentRecoveryOptions.rejectedCount === 1 ? '' : 's'} hidden.
+              </Text>
+            ) : null}
+            {selectedSnapshot && !currentPendingRecovery ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Review selected snapshot restore"
+                disabled={work !== 'idle'}
+                onPress={() => setPendingRecovery({ kind: 'remote', snapshot: selectedSnapshot })}
+                style={({ pressed }) => [primaryButton, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
+              >
+                <Text selectable style={{ color: '#ecfdf5', fontSize: 14, fontWeight: '900' }}>Review selected restore</Text>
+              </Pressable>
+            ) : null}
             {currentPendingRecovery ? (
-              <View accessibilityLabel="Recovery confirmation" style={{ backgroundColor: '#0f172a', borderLeftColor: '#fbbf24', borderLeftWidth: 3, gap: 9, padding: 11 }}>
-                <Text selectable style={{ color: '#f8fafc', fontSize: 14, fontWeight: '800' }}>
+              <View style={{ backgroundColor: '#0f172a', borderLeftColor: '#fbbf24', borderLeftWidth: 3, gap: 9, padding: 11 }}>
+                <Text ref={recoveryConfirmationRef} accessibilityRole="header" selectable style={{ color: '#f8fafc', fontSize: 14, fontWeight: '800' }}>
                   Confirm {currentPendingRecovery.kind === 'guest'
                     ? 'guest adoption'
                     : currentPendingRecovery.kind === 'device'
@@ -513,7 +541,7 @@ export function MobileSupabaseAccount({
                     accessibilityLabel="Cancel assumption recovery"
                     disabled={work !== 'idle'}
                     onPress={() => setPendingRecovery(null)}
-                    style={({ pressed }) => [{ alignItems: 'center', borderColor: '#64748b', borderRadius: 12, borderWidth: 1, flex: 1, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
+                    style={({ pressed }) => [{ alignItems: 'center', borderColor: '#64748b', borderRadius: 12, borderWidth: 1, flex: 1, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
                   >
                     <Text selectable style={{ color: '#e2e8f0', fontSize: 13, fontWeight: '800' }}>Cancel</Text>
                   </Pressable>
@@ -521,7 +549,7 @@ export function MobileSupabaseAccount({
               </View>
             ) : null}
           </View>
-          <Pressable accessibilityRole="button" accessibilityLabel="Sign out of private account" disabled={work !== 'idle'} onPress={signOut} style={({ pressed }) => [{ alignItems: 'center', borderColor: '#475569', borderRadius: 12, borderWidth: 1, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Sign out of private account" disabled={work !== 'idle'} onPress={signOut} style={({ pressed }) => [{ alignItems: 'center', borderColor: '#475569', borderRadius: 12, borderWidth: 1, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}>
             <Text selectable style={{ color: '#cbd5e1', fontSize: 14, fontWeight: '800' }}>{work === 'signing-out' ? 'Signing out...' : 'Sign out'}</Text>
           </Pressable>
         </View>
@@ -537,7 +565,7 @@ export function MobileSupabaseAccount({
             onChangeText={setEmail}
             placeholder="you@example.com"
             placeholderTextColor="#64748b"
-            style={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: 12, borderWidth: 1, color: '#f8fafc', fontSize: 15, paddingHorizontal: 12, paddingVertical: 11 }}
+            style={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: 12, borderWidth: 1, color: '#f8fafc', fontSize: 15, minHeight: 48, paddingHorizontal: 12, paddingVertical: 11 }}
             value={email}
           />
           <Pressable accessibilityRole="button" accessibilityLabel="Email secure sign-in link" disabled={work !== 'idle'} onPress={requestMagicLink} style={({ pressed }) => [primaryButton, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}>

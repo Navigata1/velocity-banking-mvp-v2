@@ -1,6 +1,7 @@
 import type { MobileDashboardSnapshot } from '@interestshield/financial-engine';
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { AccessibilityInfo, Pressable, Text, useWindowDimensions, View } from 'react-native';
+import { mobileLoopStepAccessibilityValue } from '@/lib/accessibility-labels';
 
 type MobileLoopStep = MobileDashboardSnapshot['loop'][number];
 
@@ -29,14 +30,25 @@ function getLoopTone(step: MobileLoopStep): { accent: string; surface: string; t
 }
 
 export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
+  const { fontScale, width } = useWindowDimensions();
   const [activeLabel, setActiveLabel] = useState(steps[0]?.label ?? 'Income');
   const activeStep = steps.find((step) => step.label === activeLabel) ?? steps[0];
   const activeIndex = Math.max(0, steps.findIndex((step) => step.label === activeStep?.label));
   const activeTone = activeStep ? getLoopTone(activeStep) : mobileLoopToneStyles.Income;
+  const orbitSize = Math.min(230, Math.max(176, width - 96));
+  const orbitScale = orbitSize / 230;
+  const useLinearOrbit = fontScale >= 1.6;
 
   if (!activeStep) {
     return null;
   }
+
+  const selectStep = (step: MobileLoopStep) => {
+    setActiveLabel(step.label);
+    if (process.env.EXPO_OS === 'ios') {
+      AccessibilityInfo.announceForAccessibility(`${step.label}. ${mobileLoopStepAccessibilityValue(step)}`);
+    }
+  };
 
   return (
     <View
@@ -58,34 +70,74 @@ export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
         Payoff Orbit
       </Text>
 
+      {useLinearOrbit ? (
+        <View style={{ gap: 8 }}>
+          {steps.map((step, index) => {
+            const tone = getLoopTone(step);
+            const isActive = step.label === activeStep.label;
+            return (
+              <Pressable
+                key={step.label}
+                testID={`mobile-payoff-orbit-node-${loopNodeId(step.label)}`}
+                accessibilityLabel={`${step.label} orbit step`}
+                accessibilityRole="radio"
+                accessibilityState={{ checked: isActive, selected: isActive }}
+                accessibilityValue={{ text: mobileLoopStepAccessibilityValue(step) }}
+                aria-checked={isActive}
+                aria-selected={isActive}
+                onPress={() => selectStep(step)}
+                style={{
+                  alignItems: 'center',
+                  backgroundColor: isActive ? tone.accent : tone.surface,
+                  borderColor: isActive ? '#f8fafc' : tone.accent,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  flexDirection: 'row',
+                  gap: 10,
+                  minHeight: 48,
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                }}
+              >
+                <Text style={{ color: isActive ? '#020617' : tone.text, fontSize: 14, fontWeight: '900' }}>
+                  {index + 1}. {step.label}
+                </Text>
+                <Text style={{ color: isActive ? '#020617' : '#f8fafc', flex: 1, fontSize: 14, textAlign: 'right' }}>
+                  {step.value}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : (
       <View style={{ alignItems: 'center' }}>
-        <View style={{ height: 230, width: 230 }}>
+        <View style={{ height: orbitSize, width: orbitSize }}>
           <View
             style={{
               borderColor: activeTone.accent,
-              borderRadius: 92,
+              borderRadius: 92 * orbitScale,
               borderWidth: 1,
-              height: 184,
-              left: 23,
+              height: 184 * orbitScale,
+              left: 23 * orbitScale,
               opacity: 0.48,
               position: 'absolute',
-              top: 23,
+              top: 23 * orbitScale,
               transform: [{ rotateX: '62deg' }, { rotateZ: '-14deg' }],
-              width: 184,
+              width: 184 * orbitScale,
             }}
           />
           <View
             style={{
               borderColor: '#334155',
-              borderRadius: 68,
+              borderRadius: 68 * orbitScale,
               borderWidth: 1,
-              height: 136,
-              left: 47,
+              height: 136 * orbitScale,
+              left: 47 * orbitScale,
               opacity: 0.7,
               position: 'absolute',
-              top: 47,
+              top: 47 * orbitScale,
               transform: [{ rotateX: '62deg' }, { rotateZ: '-14deg' }],
-              width: 136,
+              width: 136 * orbitScale,
             }}
           />
           <View
@@ -94,18 +146,18 @@ export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
               backgroundColor: activeTone.surface,
               borderColor: activeTone.accent,
               borderCurve: 'continuous',
-              borderRadius: 58,
+              borderRadius: 58 * orbitScale,
               borderWidth: 2,
-              height: 116,
+              height: 116 * orbitScale,
               justifyContent: 'center',
-              left: 57,
+              left: 57 * orbitScale,
               position: 'absolute',
               shadowColor: activeTone.accent,
               shadowOpacity: 0.25,
               shadowRadius: 18,
-              top: 57,
+              top: 57 * orbitScale,
               transform: [{ rotateX: '58deg' }, { rotateZ: '-14deg' }],
-              width: 116,
+              width: 116 * orbitScale,
             }}
           >
             <Text selectable style={{ color: '#f8fafc', fontSize: 12, fontWeight: '900' }}>
@@ -120,6 +172,8 @@ export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
             const tone = getLoopTone(step);
             const isActive = step.label === activeStep.label;
             const position = mobileLoopOrbitPositions[step.label] ?? { left: 93, top: 8 };
+            const left = Math.min(orbitSize - 48, position.left * orbitScale);
+            const top = Math.min(orbitSize - 48, position.top * orbitScale);
 
             return (
               <Pressable
@@ -128,21 +182,22 @@ export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
                 accessibilityLabel={`${step.label} orbit step`}
                 accessibilityRole="radio"
                 accessibilityState={{ checked: isActive, selected: isActive }}
+                accessibilityValue={{ text: mobileLoopStepAccessibilityValue(step) }}
                 aria-checked={isActive}
                 aria-selected={isActive}
-                onPress={() => setActiveLabel(step.label)}
+                onPress={() => selectStep(step)}
                 style={{
                   alignItems: 'center',
                   backgroundColor: isActive ? tone.accent : tone.surface,
                   borderColor: isActive ? '#f8fafc' : tone.accent,
-                  borderRadius: 22,
+                  borderRadius: 24,
                   borderWidth: 1,
-                  height: 44,
+                  height: 48,
                   justifyContent: 'center',
-                  left: position.left,
+                  left,
                   position: 'absolute',
-                  top: position.top,
-                  width: 44,
+                  top,
+                  width: 48,
                 }}
               >
                 <Text selectable style={{ color: isActive ? '#020617' : tone.text, fontSize: 13, fontWeight: '900' }}>
@@ -153,6 +208,7 @@ export function MobileMoneyLoopOrbit({ steps }: { steps: MobileLoopStep[] }) {
           })}
         </View>
       </View>
+      )}
 
       <View style={{ gap: 4 }}>
         <Text selectable style={{ color: activeTone.text, fontSize: 24, fontWeight: '900', lineHeight: 30 }}>

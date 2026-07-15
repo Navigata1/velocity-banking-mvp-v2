@@ -76,6 +76,26 @@ jobs:
         working-directory: apps/mobile
         run: npm run smoke:web-export
 
+      - name: Read pinned Chrome version
+        if: ${{ inputs.run_mobile_export }}
+        id: mobile-chrome-version
+        shell: bash
+        run: echo "version=$(cat apps/media/remotion/chrome.version)" >> "$GITHUB_OUTPUT"
+
+      - name: Install pinned Chrome
+        if: ${{ inputs.run_mobile_export }}
+        id: mobile-chrome
+        uses: browser-actions/setup-chrome@e574b4b3a21156ab45dd6b5f67e884fd26eed829 # v2.1.2
+        with:
+          chrome-version: ${{ steps.mobile-chrome-version.outputs.version }}
+
+      - name: Smoke rendered Expo accessibility
+        if: ${{ inputs.run_mobile_export }}
+        working-directory: apps/mobile
+        env:
+          PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: ${{ steps.mobile-chrome.outputs.chrome-path }}
+        run: npm run smoke:accessibility:built
+
       - name: Run mobile contract tests
         if: ${{ inputs.run_mobile_export }}
         run: node scripts/mobile-port-contract-tests.cjs

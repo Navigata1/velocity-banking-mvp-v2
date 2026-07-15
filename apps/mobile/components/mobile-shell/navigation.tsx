@@ -57,7 +57,7 @@ function ModeButton({
         borderRadius: 14,
         borderWidth: 1,
         justifyContent: 'center',
-        minHeight: 44,
+        minHeight: 48,
         paddingHorizontal: 12,
         paddingVertical: 10,
       }}

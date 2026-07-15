@@ -302,3 +302,11 @@
 - Independent review found and closed one high-severity browser intent-loss race; focused re-review approved the correction with no remaining findings.
 - Fresh proof passes clean migration replay, zero public-schema drift, 63 pgTAP assertions, all persistence contracts, 263 web regressions, production build and lint, seven Expo routes, and Android/iOS Hermes bundles.
 - P6-T2E begins on codex/mission/p6-restore-adoption for explicit owner-confirmed restore, guest adoption, conflict recovery, and P6-T2 closeout.
+
+## 2026-07-15T02:45Z - Explicit recovery merged; native accessibility begins
+- PR #250 merged at 1fc635b after two duplicate GitHub quality workflows, Vercel preview, and final independent review passed.
+- Recovery now requires an explicit remote, guest, or keep-device choice and revalidates the owner, reviewed source, durable local assumptions, and server revision before mutation.
+- A durable write-ahead journal, idempotent outbox rebase, browser Web Locks, native owner mutexes, and local revision CAS prevent interrupted or stale-context recovery from silently losing confirmed data.
+- Fresh merged-main proof passes 263 web regressions, two independent fixtures, lint, production build, all web and mobile persistence contracts, 63 pgTAP assertions, clean schema lint and drift, 35 native contracts, seven Expo routes, and Android/iOS Hermes bundles.
+- P6-T2 closes. P6-G3 remains pending for a final-candidate Android emulator rerun and P6-G4 remains pending for macOS iOS Simulator proof.
+- P6-T3 begins on codex/mission/p6-native-accessibility for safe areas, semantics, screen readers, reduced motion, responsive text, and selectable financial data across all seven native routes.

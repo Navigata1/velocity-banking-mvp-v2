@@ -11,6 +11,7 @@
     "build:web": "expo export --platform web --output-dir dist-web --clear",
     "serve:web-export": "node scripts/serve-web-export.cjs",
     "smoke:web-export": "node scripts/smoke-web-export.cjs",
+    "smoke:accessibility:built": "node scripts/smoke-accessibility-rendered.cjs",
     "smoke:android": "node scripts/smoke-android-expo-go.cjs",
     "smoke:android-bundle": "node scripts/smoke-android-bundle.cjs",
     "smoke:ios": "node scripts/smoke-ios-expo-go.cjs",
