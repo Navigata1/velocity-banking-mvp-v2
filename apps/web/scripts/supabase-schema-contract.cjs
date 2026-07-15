@@ -23,6 +23,11 @@ const atomicSyncMigrationPath = path.resolve(
   '20260715001056_atomic_snapshot_sync.sql'
 );
 const atomicSyncSql = fs.readFileSync(atomicSyncMigrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
+const revisionSyncMigrationPath = path.resolve(
+  path.dirname(migrationPath),
+  '20260715011513_snapshot_logical_revisions.sql'
+);
+const revisionSyncSql = fs.readFileSync(revisionSyncMigrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
 
 const tables = [
   'profiles',
@@ -136,6 +141,41 @@ assert.match(
 );
 assert.match(atomicSyncSql, /revoke all on function public\.sync_interestshield_snapshot[^;]+from public, anon, authenticated/);
 assert.match(atomicSyncSql, /grant execute on function public\.sync_interestshield_snapshot[^;]+to authenticated/);
+assert.match(
+  revisionSyncSql,
+  /add column client_revision bigint not null default 0/,
+  'snapshots must persist a backfilled logical client revision'
+);
+assert.match(
+  revisionSyncSql,
+  /p_client_revision bigint/,
+  'the final RPC must require a logical client revision'
+);
+assert.match(
+  revisionSyncSql,
+  /v_owner_id::text \|\| ':' \|\| p_snapshot_idempotency_key/,
+  'distinct operations must serialize on the owner-snapshot stream'
+);
+assert.match(
+  revisionSyncSql,
+  /p_client_revision <> v_current_revision \+ 1/,
+  'new operations must advance the current snapshot by exactly one revision'
+);
+assert.match(
+  revisionSyncSql,
+  /errcode = 'is001'.*errcode = 'is002'/,
+  'stale and gapped revisions must surface as distinct stable conflicts'
+);
+assert.match(
+  revisionSyncSql,
+  /'client_revision', p_client_revision/,
+  'operation fingerprints and receipts must bind the accepted revision'
+);
+assert.match(
+  revisionSyncSql,
+  /drop function public\.sync_interestshield_snapshot\(text, text, integer, jsonb, uuid, text\)/,
+  'the old revision-free RPC must not remain as a write bypass'
+);
 
 for (const table of ['profiles', 'financial_snapshots', 'learning_progress']) {
   const policy = `${table}_update_own`;

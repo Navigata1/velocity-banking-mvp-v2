@@ -41,35 +41,34 @@ function loadTsFile(filename) {
   return testModule.exports;
 }
 
-class FakeQuery {
-  constructor(table, calls) {
-    this.table = table;
-    this.calls = calls;
+class MemoryTransactionalStore {
+  constructor() {
+    this.values = new Map();
+    this.locks = new Map();
   }
-  upsert(row, options) {
-    this.calls.push({ operation: 'upsert', table: this.table, row, options });
-    return this;
-  }
-  insert(row) {
-    this.calls.push({ operation: 'insert', table: this.table, row });
-    return Promise.resolve({ data: null, error: null });
-  }
-  select(columns) {
-    this.calls.push({ operation: 'select', table: this.table, columns });
-    return this;
-  }
-  single() {
-    return Promise.resolve({ data: { id: '00000000-0000-4000-8000-000000000999' }, error: null });
-  }
-  then(resolve) {
-    return Promise.resolve({ data: null, error: null }).then(resolve);
+  async transact(key, update) {
+    const previous = this.locks.get(key) ?? Promise.resolve();
+    const result = previous.then(() => {
+      const next = update(this.values.get(key) ?? null);
+      this.values.set(key, JSON.parse(JSON.stringify(next)));
+      return JSON.parse(JSON.stringify(next));
+    });
+    this.locks.set(key, result.then(() => undefined, () => undefined));
+    return result;
   }
 }
 
 async function main() {
   const syncModule = loadTsFile(path.resolve(__dirname, '..', 'src', 'lib', 'supabase', 'snapshot-sync.ts'));
+  const outboxModule = loadTsFile(path.resolve(__dirname, '..', 'src', 'lib', 'supabase', 'snapshot-outbox.ts'));
   const configModule = loadTsFile(path.resolve(__dirname, '..', 'src', 'lib', 'supabase', 'config.ts'));
   const calls = [];
+  const stateStore = new MemoryTransactionalStore();
+  let operation = 0;
+  const outbox = outboxModule.createWebSnapshotOutbox({
+    createOperationIdempotencyKey: () => `browser-operation:00000000-0000-4000-8000-${String(++operation).padStart(12, '0')}`,
+    store: stateStore,
+  });
   const client = {
     auth: {
       getClaims: async () => ({
@@ -80,14 +79,16 @@ async function main() {
     from: () => { throw new Error('atomic web sync must not issue direct table writes'); },
     rpc: async (name, args) => {
       calls.push({ args, name, operation: 'rpc' });
-      return { data: '00000000-0000-4000-8000-000000000999', error: null };
+      return {
+        data: { client_revision: args.p_client_revision, snapshot_id: '00000000-0000-4000-8000-000000000999' },
+        error: null,
+      };
     },
   };
   const result = await syncModule.syncLocalSnapshot(client, {
     idempotencyKey: 'browser-install-0001',
-    operationIdempotencyKey: 'browser-operation-0001',
     storage: [{ key: 'velocity-bank-storage', value: '{}' }],
-  });
+  }, { outbox });
 
   assert.equal(result.ownerId, '00000000-0000-4000-8000-00000000000a');
   assert.deepEqual(calls.map(({ name, operation }) => `${operation}:${name}`), [
@@ -95,8 +96,16 @@ async function main() {
   ]);
   assert.equal(calls[0].args.p_snapshot_idempotency_key, 'browser-install-0001');
   assert.equal(calls[0].args.p_expected_owner_id, '00000000-0000-4000-8000-00000000000a');
-  assert.equal(calls[0].args.p_operation_idempotency_key, 'browser-operation-0001');
+  assert.equal(calls[0].args.p_operation_idempotency_key, 'browser-operation:00000000-0000-4000-8000-000000000001');
+  assert.equal(calls[0].args.p_client_revision, 1);
+  assert.equal(result.clientRevision, 1);
   assert.equal(Object.hasOwn(calls[0].args, 'owner_id'), false);
+  const committedState = await outbox.read(
+    '00000000-0000-4000-8000-00000000000a',
+    'browser-install-0001'
+  );
+  assert.equal(committedState.lastAcknowledgedRevision, 1);
+  assert.equal(committedState.pending, null);
   assert.equal(configModule.readPublicSupabaseConfig({}), null);
   assert.equal(
     configModule.readPublicSupabaseConfig({
@@ -108,11 +117,79 @@ async function main() {
   await assert.rejects(
     () => syncModule.syncLocalSnapshot({ ...client, auth: { getClaims: async () => ({ data: null, error: { message: 'no session' } }) } }, {
       idempotencyKey: 'browser-install-0001',
-      operationIdempotencyKey: 'browser-operation-0002',
       storage: [{ key: 'velocity-bank-storage', value: '{}' }],
-    }),
+    }, { outbox }),
     /identity verification/i
   );
+
+  const ambiguousStateStore = new MemoryTransactionalStore();
+  const ambiguousCalls = [];
+  let failAmbiguousResponse = true;
+  let ambiguousOperationCount = 0;
+  const ambiguousOutbox = outboxModule.createWebSnapshotOutbox({
+    createOperationIdempotencyKey: () => {
+      ambiguousOperationCount += 1;
+      return `browser-operation:00000000-0000-4000-8000-${String(776 + ambiguousOperationCount).padStart(12, '0')}`;
+    },
+    store: ambiguousStateStore,
+  });
+  const ambiguousClient = {
+    ...client,
+    rpc: async (name, args) => {
+      ambiguousCalls.push({ args, name });
+      if (failAmbiguousResponse) return { data: null, error: { message: 'response lost after commit' } };
+      return {
+        data: { client_revision: args.p_client_revision, snapshot_id: '00000000-0000-4000-8000-000000000998' },
+        error: null,
+      };
+    },
+  };
+  await assert.rejects(
+    () => syncModule.syncLocalSnapshot(ambiguousClient, {
+      idempotencyKey: 'browser-install-ambiguous',
+      storage: [{ key: 'velocity-bank-storage', value: '{"income":6500}' }],
+    }, { outbox: ambiguousOutbox }),
+    /response lost after commit/i
+  );
+  const pendingState = await ambiguousOutbox.read(
+    '00000000-0000-4000-8000-00000000000a',
+    'browser-install-ambiguous'
+  );
+  assert.equal(pendingState.pending.clientRevision, 1, 'pending browser work must retain revision one');
+  assert.equal(pendingState.pending.operationIdempotencyKey, 'browser-operation:00000000-0000-4000-8000-000000000777');
+  failAmbiguousResponse = false;
+  const retried = await syncModule.syncLocalSnapshot(ambiguousClient, {
+    idempotencyKey: 'browser-install-ambiguous',
+    storage: [{ key: 'velocity-bank-storage', value: '{"income":9999}' }],
+  }, { outbox: ambiguousOutbox });
+  assert.equal(retried.clientRevision, 2, 'one retry request must also commit the newer local intent');
+  assert.equal(ambiguousOperationCount, 2);
+  assert.equal(ambiguousCalls.length, 3);
+  assert.equal(
+    ambiguousCalls[1].args.p_operation_idempotency_key,
+    ambiguousCalls[0].args.p_operation_idempotency_key,
+    'ambiguous retry must reuse the durable operation identity'
+  );
+  assert.deepEqual(
+    ambiguousCalls[1].args.p_assumptions_json,
+    ambiguousCalls[0].args.p_assumptions_json,
+    'ambiguous retry must reuse the immutable payload rather than newer local data'
+  );
+  assert.equal(ambiguousCalls[2].args.p_client_revision, 2);
+  assert.equal(
+    ambiguousCalls[2].args.p_assumptions_json.storage[0].value,
+    '{"income":9999}',
+    'sync must not return success until the current normalized payload is acknowledged'
+  );
+  const nextOutbox = outboxModule.createWebSnapshotOutbox({
+    createOperationIdempotencyKey: () => 'browser-operation:00000000-0000-4000-8000-000000000779',
+    store: ambiguousStateStore,
+  });
+  await syncModule.syncLocalSnapshot(ambiguousClient, {
+    idempotencyKey: 'browser-install-ambiguous',
+    storage: [{ key: 'velocity-bank-storage', value: '{"income":9999}' }],
+  }, { outbox: nextOutbox });
+  assert.equal(ambiguousCalls[3].args.p_client_revision, 3, 'a new browser operation must advance after acknowledgment');
   console.log('Supabase web client contract passed verified identity and ordered sync mutations.');
 }
 

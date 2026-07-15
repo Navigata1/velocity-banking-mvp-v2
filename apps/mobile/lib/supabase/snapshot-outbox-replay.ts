@@ -1,3 +1,4 @@
+import { asSnapshotRevisionConflict } from '@interestshield/persistence-contract';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import * as Network from 'expo-network';
 import { AppState } from 'react-native';
@@ -38,6 +39,8 @@ function isOnline(state: NetworkState): boolean {
 }
 
 function asError(error: unknown): Error {
+  const conflict = asSnapshotRevisionConflict(error);
+  if (conflict) return conflict;
   if (error instanceof Error) return error;
   if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
     return new Error(error.message);

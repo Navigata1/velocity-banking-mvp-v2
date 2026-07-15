@@ -1,0 +1,59 @@
+Interest Shield P6-T2D logical revision and conflict evidence
+Completed locally: 2026-07-15T01:36:38Z
+Branch: codex/mission/p6-sync-revision-conflicts
+
+Implemented contract
+- A new migration starts existing install snapshots at revision epoch 0 and requires
+  each distinct operation to advance its owner/snapshot stream by exactly one.
+- Exact immutable operation retries return their original structured receipt before
+  stale or gap checks, so a later accepted revision cannot be rolled back.
+- Distinct operations serialize on owner plus snapshot identity. Stale revisions use
+  SQLSTATE IS001 and gapped revisions use IS002 before profile, snapshot, or audit mutation.
+- The revision-free six-argument RPC is removed in the same coordinated migration.
+- Native outbox v2 persists per-stream allocated and acknowledged revisions even when
+  empty, keeps conflicts at the FIFO head, and blocks new work until recovery.
+- Browser sync uses an owner/snapshot IndexedDB read-write transaction for cross-tab
+  allocation and persists immutable pending work before the RPC.
+- Browser retries drain older pending work and do not report success until the caller's
+  current normalized snapshot intent is itself acknowledged.
+- Legacy native v1 queue state fails closed rather than guessing a server revision.
+
+TDD and adversarial review
+- Initial expected failures are recorded in P6-T2D-red-2026-07-14.txt.
+- A focused cross-tab acknowledgment regression failed before local acknowledgments
+  became idempotent, then passed.
+- Independent review found one HIGH browser race: an old pending retry could report
+  success without sending newer local intent. A failing contract reproduced 1 instead
+  of expected revision 2. The sync loop now drains prior work and commits the current
+  intent before success.
+- Independent re-review result: APPROVED. The 20-operation contention bound can return
+  an explicit retry error but cannot return false success. No remaining findings.
+
+Database proof
+- Clean `supabase db reset --local` applied all four migrations successfully.
+- `supabase db lint --local --schema public --level warning`: no schema errors.
+- `supabase db diff --local --schema public`: no schema changes found.
+- pgTAP: 63/63 assertions pass, including exact old retry, revision 1 then 2,
+  stale, gap, invalid revision, independent streams, owner isolation, and rollback.
+
+Client and application proof
+- Mobile Supabase contracts: all four lanes pass.
+- Expo TypeScript: pass.
+- Web Supabase schema/client/outbox/account contracts: pass.
+- Web lint: pass with zero warnings.
+- Web production build: pass; 12 routes/static surfaces compile.
+- Web regression suite: 263 tests plus reference, accessibility, metadata, and asset lanes pass.
+- Expo web export: all seven routes pass.
+- Android Hermes bundle export: pass.
+- iOS Hermes bundle export: pass.
+- Mobile port contract: 35 assertions pass.
+- Web production dependency audit: zero vulnerabilities.
+- Mobile audit: no high/critical findings; ten known moderate Expo CLI/config findings
+  remain, and npm's proposed force fix is the invalid Expo 46 downgrade already tracked.
+- `git diff --check`: pass.
+
+Deployment boundary
+- This is a coordinated RPC plus web plus native cutover, so splitting the implementation
+  would leave a merged client calling a removed signature.
+- No dedicated Interest Shield remote Supabase project is linked. The migration was not
+  applied to any unrelated project; remote application remains a later environment gate.

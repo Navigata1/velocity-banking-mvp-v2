@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(48);
+SELECT plan(63);
 
 INSERT INTO auth.users (id, email)
 VALUES
@@ -33,12 +33,16 @@ VALUES ('00000000-0000-0000-0000-000000000501', '00000000-0000-0000-0000-0000000
 SELECT ok(NOT has_table_privilege('anon', 'public.profiles', 'SELECT'), 'anon cannot read profiles');
 SELECT ok(NOT has_table_privilege('anon', 'public.financial_snapshots', 'INSERT'), 'anon cannot insert snapshots');
 SELECT ok(
-  NOT has_function_privilege('anon', 'public.sync_interestshield_snapshot(text, text, integer, jsonb, uuid, text)', 'EXECUTE'),
+  NOT has_function_privilege('anon', 'public.sync_interestshield_snapshot(text, text, bigint, integer, jsonb, uuid, text)', 'EXECUTE'),
   'anon cannot call atomic snapshot sync'
 );
 SELECT ok(
-  has_function_privilege('authenticated', 'public.sync_interestshield_snapshot(text, text, integer, jsonb, uuid, text)', 'EXECUTE'),
+  has_function_privilege('authenticated', 'public.sync_interestshield_snapshot(text, text, bigint, integer, jsonb, uuid, text)', 'EXECUTE'),
   'authenticated users can call atomic snapshot sync'
+);
+SELECT ok(
+  to_regprocedure('public.sync_interestshield_snapshot(text,text,integer,jsonb,uuid,text)') is null,
+  'the revision-free atomic sync signature is removed'
 );
 SELECT ok(
   NOT has_table_privilege('authenticated', 'public.financial_snapshots', 'INSERT'),
@@ -114,6 +118,7 @@ SELECT lives_ok(
     'owner-a-mobile-sync-001',
     'owner-a-mobile-operation-001',
     1,
+    1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"first"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
     'Owner A Mobile'
@@ -135,10 +140,21 @@ SELECT is(
   1::bigint,
   'atomic sync appends one idempotent audit event'
 );
+SELECT is(
+  (SELECT client_revision FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-mobile-sync-001'),
+  1::bigint,
+  'the first logical snapshot mutation records revision one'
+);
+SELECT is(
+  (SELECT (event_json ->> 'client_revision')::bigint FROM public.audit_events WHERE idempotency_key = 'owner-a-mobile-operation-001'),
+  1::bigint,
+  'the immutable operation receipt records its logical revision'
+);
 SELECT throws_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-account-change',
     'owner-a-mobile-operation-account-change',
+    1,
     1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"account-change"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000b',
@@ -157,6 +173,7 @@ SELECT lives_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-001',
     'owner-a-mobile-operation-001',
+    1,
     1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"first"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
@@ -184,6 +201,7 @@ SELECT throws_ok(
     'owner-a-mobile-sync-001',
     'owner-a-mobile-operation-001',
     1,
+    1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"changed"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
     'Owner A Mobile'
@@ -201,6 +219,7 @@ SELECT lives_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-001',
     'owner-a-mobile-operation-002',
+    2,
     1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"third"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
@@ -213,10 +232,112 @@ SELECT is(
   2::bigint,
   'a new operation key appends a distinct audit event'
 );
+SELECT is(
+  (SELECT client_revision FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-mobile-sync-001'),
+  2::bigint,
+  'a distinct next operation advances the logical revision exactly once'
+);
+SELECT throws_ok(
+  $$SELECT public.sync_interestshield_snapshot(
+    'owner-a-mobile-sync-001',
+    'owner-a-mobile-operation-stale',
+    1,
+    1,
+    '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"stale"}]}'::jsonb,
+    '00000000-0000-0000-0000-00000000000a',
+    'Owner A Mobile'
+  )$$,
+  'IS001',
+  NULL,
+  'a distinct stale revision is rejected before mutation'
+);
+SELECT is(
+  (SELECT count(*) FROM public.audit_events WHERE idempotency_key = 'owner-a-mobile-operation-stale'),
+  0::bigint,
+  'a stale revision cannot create an operation receipt'
+);
+SELECT throws_ok(
+  $$SELECT public.sync_interestshield_snapshot(
+    'owner-a-mobile-sync-001',
+    'owner-a-mobile-operation-gap',
+    4,
+    1,
+    '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"gap"}]}'::jsonb,
+    '00000000-0000-0000-0000-00000000000a',
+    'Owner A Mobile'
+  )$$,
+  'IS002',
+  NULL,
+  'a distinct gapped revision is rejected before mutation'
+);
+SELECT is(
+  (SELECT count(*) FROM public.audit_events WHERE idempotency_key = 'owner-a-mobile-operation-gap'),
+  0::bigint,
+  'a gapped revision cannot create an operation receipt'
+);
+SELECT is(
+  (SELECT assumptions_json #>> '{storage,0,value}' FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-mobile-sync-001'),
+  'third',
+  'revision conflicts leave the accepted snapshot payload unchanged'
+);
+SELECT lives_ok(
+  $$SELECT public.sync_interestshield_snapshot(
+    'owner-a-mobile-sync-001',
+    'owner-a-mobile-operation-001',
+    1,
+    1,
+    '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"first"}]}'::jsonb,
+    '00000000-0000-0000-0000-00000000000a',
+    'Owner A Mobile'
+  )$$,
+  'an exact old operation remains retryable after later revisions'
+);
+SELECT is(
+  (SELECT assumptions_json #>> '{storage,0,value}' FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-mobile-sync-001'),
+  'third',
+  'an exact old retry cannot roll the snapshot back'
+);
+SELECT throws_ok(
+  $$SELECT public.sync_interestshield_snapshot(
+    'owner-a-mobile-sync-invalid-revision',
+    'owner-a-mobile-operation-invalid-revision',
+    0,
+    1,
+    '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"invalid-revision"}]}'::jsonb,
+    '00000000-0000-0000-0000-00000000000a',
+    'Owner A Mobile'
+  )$$,
+  '22023',
+  NULL,
+  'revision zero is rejected before mutation'
+);
+SELECT is(
+  (SELECT count(*) FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-mobile-sync-invalid-revision'),
+  0::bigint,
+  'an invalid revision cannot create a snapshot'
+);
+SELECT lives_ok(
+  $$SELECT public.sync_interestshield_snapshot(
+    'owner-a-second-install-001',
+    'owner-a-second-operation-001',
+    1,
+    1,
+    '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"second-install"}]}'::jsonb,
+    '00000000-0000-0000-0000-00000000000a',
+    'Owner A Mobile'
+  )$$,
+  'an independent install snapshot starts its own revision stream'
+);
+SELECT is(
+  (SELECT client_revision FROM public.financial_snapshots WHERE idempotency_key = 'owner-a-second-install-001'),
+  1::bigint,
+  'independent snapshot streams do not inherit another install revision'
+);
 SELECT throws_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-bad',
     'owner-a-mobile-operation-bad',
+    1,
     1,
     '{"contract_version":2,"storage":[]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
@@ -231,6 +352,7 @@ SELECT throws_ok(
     'owner-a-mobile-sync-null',
     'owner-a-mobile-operation-null',
     1,
+    1,
     NULL::jsonb,
     '00000000-0000-0000-0000-00000000000a',
     'Owner A Mobile'
@@ -244,6 +366,7 @@ SELECT throws_ok(
     'owner-a-mobile-sync-missing-version',
     'owner-a-mobile-operation-missing-version',
     1,
+    1,
     '{"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"missing-version"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
     'Owner A Mobile'
@@ -256,6 +379,7 @@ SELECT throws_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-missing-key',
     'owner-a-mobile-operation-missing-key',
+    1,
     1,
     '{"contract_version":1,"storage":[{"value":"missing-key"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
@@ -282,6 +406,7 @@ SELECT throws_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-malformed',
     'owner-a-mobile-operation-malformed',
+    1,
     1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"malformed"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',
@@ -317,6 +442,7 @@ SELECT throws_ok(
   $$SELECT public.sync_interestshield_snapshot(
     'owner-a-mobile-sync-rollback',
     'owner-a-mobile-operation-rollback',
+    1,
     1,
     '{"contract_version":1,"storage":[{"key":"interestshield-mobile-assumptions-v1","value":"rollback"}]}'::jsonb,
     '00000000-0000-0000-0000-00000000000a',

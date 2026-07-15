@@ -33,6 +33,7 @@ class MemoryStorage {
     this.order = order;
     this.values = new Map();
     this.failNextRemove = false;
+    this.failNextSet = false;
   }
   async getItem(key) {
     return this.values.get(key) ?? null;
@@ -46,6 +47,10 @@ class MemoryStorage {
     this.values.delete(key);
   }
   async setItem(key, value) {
+    if (this.failNextSet) {
+      this.failNextSet = false;
+      throw new Error('simulated dequeue persistence failure');
+    }
     this.order.push('persist');
     this.values.set(key, value);
   }
@@ -64,6 +69,7 @@ async function main() {
     },
     './sync-identity': {
       createMobileSyncOperationIdempotencyKey: () => 'mobile-operation:default',
+      getOrCreateMobileSyncIdempotencyKey: async () => 'mobile-install:00000000-0000-4000-8000-000000000111',
     },
   });
   assert.equal(
@@ -79,6 +85,7 @@ async function main() {
       storage: [{ key: 'interestshield-mobile-assumptions-v1', value: JSON.stringify(input.assumptions) }],
     },
     displayName: input.displayName ?? null,
+    clientRevision: input.clientRevision,
     expectedOwnerId: input.expectedOwnerId,
     operationIdempotencyKey: input.operationIdempotencyKey,
     snapshotIdempotencyKey: 'mobile-install:00000000-0000-4000-8000-000000000111',
@@ -104,7 +111,8 @@ async function main() {
   const first = await outbox.enqueue({ assumptions: { monthlyIncome: 6500 }, expectedOwnerId: ownerA });
   assert.deepEqual(order, ['persist'], 'enqueue must durably persist before any remote send');
   assert.equal(first.expectedOwnerId, ownerA);
-  assert.equal(first.version, 1);
+  assert.equal(first.clientRevision, 1, 'the first persisted operation must allocate revision one');
+  assert.equal(first.version, 2);
 
   const reloaded = outboxModule.createMobileSnapshotOutbox({
     createOperationIdempotencyKey,
@@ -119,9 +127,17 @@ async function main() {
   assert.equal((await reloaded.read(ownerB)).length, 0, 'owner B must not read owner A queue');
 
   await outbox.flush({}, ownerA);
-  assert.deepEqual(order, ['persist', 'send', 'remove']);
+  assert.deepEqual(order, ['persist', 'send', 'persist']);
   assert.equal(sent[0].operationIdempotencyKey, first.operationIdempotencyKey);
   assert.equal((await outbox.read(ownerA)).length, 0);
+  const retainedEnvelope = JSON.parse(storage.values.get(outboxModule.mobileSnapshotOutboxStorageKey(ownerA)));
+  assert.equal(
+    retainedEnvelope.streams[first.snapshotIdempotencyKey].lastAllocatedRevision,
+    1,
+    'an empty queue must retain its acknowledged revision'
+  );
+  const afterEmptyReload = await reloaded.enqueue({ assumptions: { monthlyIncome: 6600 }, expectedOwnerId: ownerA });
+  assert.equal(afterEmptyReload.clientRevision, 2, 'reload after an empty queue must allocate the next revision');
 
   const failingStorage = new MemoryStorage();
   const attempts = [];
@@ -138,6 +154,11 @@ async function main() {
   });
   const retryFirst = await retryOutbox.enqueue({ assumptions: { monthlyIncome: 7000 }, expectedOwnerId: ownerA });
   const retrySecond = await retryOutbox.enqueue({ assumptions: { monthlyIncome: 7100 }, expectedOwnerId: ownerA });
+  assert.deepEqual(
+    [retryFirst.clientRevision, retrySecond.clientRevision],
+    [1, 2],
+    'queued operations must receive contiguous durable revisions'
+  );
   await assert.rejects(() => retryOutbox.flush({}, ownerA), /offline during RPC/);
   assert.deepEqual(attempts, [retryFirst.operationIdempotencyKey], 'FIFO replay must stop at first failure');
   assert.equal((await retryOutbox.read(ownerA)).length, 2, 'failed head must remain queued');
@@ -162,7 +183,7 @@ async function main() {
     storage: crashStorage,
   });
   const crashItem = await crashOutbox.enqueue({ assumptions: { monthlyIncome: 7200 }, expectedOwnerId: ownerA });
-  crashStorage.failNextRemove = true;
+  crashStorage.failNextSet = true;
   await assert.rejects(() => crashOutbox.flush({}, ownerA), /dequeue persistence failure/);
   assert.equal((await crashOutbox.read(ownerA)).length, 1);
   await crashOutbox.flush({}, ownerA);
@@ -199,7 +220,17 @@ async function main() {
   const tamperedStorage = new MemoryStorage();
   tamperedStorage.values.set(
     outboxModule.mobileSnapshotOutboxStorageKey(ownerB),
-    JSON.stringify({ items: [{ ...first, expectedOwnerId: ownerA }], version: 1 })
+    JSON.stringify({
+      items: [{ ...first, expectedOwnerId: ownerA }],
+      streams: {
+        [first.snapshotIdempotencyKey]: {
+          conflict: null,
+          lastAcknowledgedRevision: 0,
+          lastAllocatedRevision: 1,
+        },
+      },
+      version: 2,
+    })
   );
   const tamperedOutbox = outboxModule.createMobileSnapshotOutbox({
     createOperationIdempotencyKey,
@@ -208,6 +239,54 @@ async function main() {
     storage: tamperedStorage,
   });
   await assert.rejects(() => tamperedOutbox.read(ownerB), /owner does not match/i);
+
+  const legacyStorage = new MemoryStorage();
+  legacyStorage.values.set(
+    outboxModule.mobileSnapshotOutboxStorageKey(ownerA),
+    JSON.stringify({ items: [], version: 1 })
+  );
+  const legacyOutbox = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => { throw new Error('legacy state must fail before send'); },
+    storage: legacyStorage,
+  });
+  await assert.rejects(
+    () => legacyOutbox.read(ownerA),
+    /cannot be migrated safely/i,
+    'legacy state must fail closed instead of guessing a server revision'
+  );
+
+  const conflictStorage = new MemoryStorage();
+  let conflictSends = 0;
+  const conflictOutbox = outboxModule.createMobileSnapshotOutbox({
+    createOperationIdempotencyKey,
+    prepareSnapshot,
+    sendSnapshot: async () => {
+      conflictSends += 1;
+      throw { code: 'IS001', details: '{"current_revision":2}', message: 'Snapshot sync revision is stale.' };
+    },
+    storage: conflictStorage,
+  });
+  const conflictItem = await conflictOutbox.enqueue({ assumptions: { monthlyIncome: 7600 }, expectedOwnerId: ownerA });
+  await assert.rejects(
+    () => conflictOutbox.flush({}, ownerA),
+    (error) => error.code === 'IS001' && error.kind === 'stale'
+  );
+  assert.equal((await conflictOutbox.read(ownerA)).length, 1, 'a conflicting head must remain queued');
+  const storedConflict = await conflictOutbox.readConflict(ownerA, conflictItem.snapshotIdempotencyKey);
+  assert.equal(storedConflict.kind, 'stale');
+  await assert.rejects(
+    () => conflictOutbox.flush({}, ownerA),
+    (error) => error.code === 'IS001',
+    'foreground replay must stop on the persisted conflict without sending again'
+  );
+  assert.equal(conflictSends, 1);
+  await assert.rejects(
+    () => conflictOutbox.enqueue({ assumptions: { monthlyIncome: 7700 }, expectedOwnerId: ownerA }),
+    (error) => error.code === 'IS001',
+    'new work must not extend a stream with an unresolved conflict'
+  );
 
   console.log('Expo snapshot outbox contract passed durable FIFO replay, owner isolation, and retry identity.');
 }

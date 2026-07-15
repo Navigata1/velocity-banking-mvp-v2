@@ -114,6 +114,21 @@ async function main() {
   await drainMicrotasks();
   assert.match(replayErrors[0].message, /still offline/);
 
+  const conflictErrors = [];
+  replayModule.registerMobileSnapshotOutboxReplay({}, ownerId, {
+    appState,
+    network,
+    onError: (error) => conflictErrors.push(error),
+    outbox: {
+      flush: async () => {
+        throw { code: 'IS002', details: '{"current_revision":1}', message: 'Snapshot sync revision has a gap.' };
+      },
+    },
+  });
+  await drainMicrotasks();
+  assert.equal(conflictErrors[0].code, 'IS002');
+  assert.equal(conflictErrors[0].kind, 'gap');
+
   console.log('Expo snapshot replay contract passed sign-in, reconnect, activation, and cleanup triggers.');
 }
 

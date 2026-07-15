@@ -1,4 +1,42 @@
 export const SNAPSHOT_SYNC_CONTRACT_VERSION = 1 as const;
+export const SNAPSHOT_REVISION_MAX = Number.MAX_SAFE_INTEGER;
+export const SNAPSHOT_REVISION_CONFLICT_CODES = {
+  gap: 'IS002',
+  stale: 'IS001',
+} as const;
+
+export type SnapshotRevisionConflictKind = keyof typeof SNAPSHOT_REVISION_CONFLICT_CODES;
+
+export class SnapshotRevisionConflictError extends Error {
+  readonly code: string;
+  readonly details?: string;
+  readonly kind: SnapshotRevisionConflictKind;
+
+  constructor(kind: SnapshotRevisionConflictKind, message?: string, details?: string) {
+    super(message ?? `Snapshot sync stopped because its ${kind} revision needs recovery.`);
+    this.name = 'SnapshotRevisionConflictError';
+    this.code = SNAPSHOT_REVISION_CONFLICT_CODES[kind];
+    this.details = details;
+    this.kind = kind;
+  }
+}
+
+export function asSnapshotRevisionConflict(error: unknown): SnapshotRevisionConflictError | null {
+  if (!error || typeof error !== 'object' || !('code' in error)) return null;
+  const code = typeof error.code === 'string' ? error.code : '';
+  const kind = (Object.entries(SNAPSHOT_REVISION_CONFLICT_CODES) as Array<[
+    SnapshotRevisionConflictKind,
+    string,
+  ]>).find(([, candidate]) => candidate === code)?.[0];
+  if (!kind) return null;
+  const message = 'message' in error && typeof error.message === 'string' ? error.message : undefined;
+  const details = 'details' in error && typeof error.details === 'string' ? error.details : undefined;
+  return new SnapshotRevisionConflictError(kind, message, details);
+}
+
+export function isSafeSnapshotRevision(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 1;
+}
 
 export const INTERESTSHIELD_STORAGE_KEYS = [
   'velocity-bank-storage',

@@ -78,7 +78,6 @@ export default function SupabaseAccountPanel() {
     try {
       await syncLocalSnapshot(client, {
         idempotencyKey: getOrCreateBrowserSyncIdempotencyKey(window.localStorage),
-        operationIdempotencyKey: `browser-operation:${crypto.randomUUID()}`,
         storage,
       });
       setStatus(`Synced ${storage.length} local data sections to your private snapshot.`);
