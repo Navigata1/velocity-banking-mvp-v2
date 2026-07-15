@@ -17,6 +17,10 @@ Scope
 
 Focused gates
 
+Command: npm --prefix apps/web test
+Result: PASS - 263 web regressions, two independent financial reference
+fixtures, accessibility route contracts, metadata, and public asset budget.
+
 Command: npm --prefix apps/mobile run check
 Result: PASS - TypeScript completed without errors.
 
