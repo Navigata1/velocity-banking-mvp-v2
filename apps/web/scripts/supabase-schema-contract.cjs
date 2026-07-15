@@ -18,6 +18,11 @@ const idempotencyMigrationPath = path.resolve(
   '20260713024039_snapshot_sync_idempotency.sql'
 );
 const idempotencySql = fs.readFileSync(idempotencyMigrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
+const atomicSyncMigrationPath = path.resolve(
+  path.dirname(migrationPath),
+  '20260715001056_atomic_snapshot_sync.sql'
+);
+const atomicSyncSql = fs.readFileSync(atomicSyncMigrationPath, 'utf8').replace(/\s+/g, ' ').toLowerCase();
 
 const tables = [
   'profiles',
@@ -80,6 +85,57 @@ assert.match(
   /source = 'local-demo-handoff'.*idempotency_key is not null/,
   'local demo handoffs must always carry an idempotency key'
 );
+assert.match(atomicSyncSql, /alter table public\.audit_events add column idempotency_key text/);
+assert.match(atomicSyncSql, /unique index audit_events_owner_event_idempotency_key_unique/);
+assert.match(atomicSyncSql, /create function public\.sync_interestshield_snapshot\(/);
+assert.match(atomicSyncSql, /security definer/);
+assert.match(atomicSyncSql, /set search_path = ''/);
+assert.match(atomicSyncSql, /auth\.uid\(\)/, 'atomic sync must derive its owner from the authenticated JWT');
+assert.match(
+  atomicSyncSql,
+  /p_expected_owner_id <> v_owner_id/,
+  'atomic sync must reject account changes inside the server transaction'
+);
+assert.match(atomicSyncSql, /insert into public\.profiles/);
+assert.match(atomicSyncSql, /insert into public\.financial_snapshots/);
+assert.match(atomicSyncSql, /insert into public\.audit_events/);
+assert.match(
+  atomicSyncSql,
+  /revoke insert, update, delete on table public\.profiles, public\.financial_snapshots from authenticated/,
+  'authenticated clients must not bypass the atomic profile and snapshot contract'
+);
+assert.match(
+  atomicSyncSql,
+  /revoke insert on table public\.audit_events from authenticated/,
+  'authenticated clients must not forge atomic sync receipts'
+);
+assert.match(
+  atomicSyncSql,
+  /pg_advisory_xact_lock/,
+  'atomic sync must serialize retries for each owner-operation pair'
+);
+assert.match(
+  atomicSyncSql,
+  /request_fingerprint/,
+  'atomic sync receipts must bind an operation key to one immutable request'
+);
+assert.match(
+  atomicSyncSql,
+  /already used with a different request/,
+  'operation-key collisions must fail before snapshot mutation'
+);
+assert.match(
+  atomicSyncSql,
+  /jsonb_typeof\(p_assumptions_json\) is distinct from 'object'/,
+  'atomic sync JSON validation must reject SQL null and missing fields'
+);
+assert.match(
+  atomicSyncSql,
+  /coalesce\(excluded\.display_name, public\.profiles\.display_name\)/,
+  'sync without a display name must preserve the existing profile name'
+);
+assert.match(atomicSyncSql, /revoke all on function public\.sync_interestshield_snapshot[^;]+from public, anon, authenticated/);
+assert.match(atomicSyncSql, /grant execute on function public\.sync_interestshield_snapshot[^;]+to authenticated/);
 
 for (const table of ['profiles', 'financial_snapshots', 'learning_progress']) {
   const policy = `${table}_update_own`;

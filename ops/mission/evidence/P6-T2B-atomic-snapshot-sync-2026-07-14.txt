@@ -1,0 +1,51 @@
+P6-T2B - Atomic owner-scoped snapshot sync
+Date: 2026-07-14 America/Chicago
+Branch: codex/mission/p6-native-offline-outbox
+
+Implemented
+- One server transaction now upserts the owner profile and stable snapshot, then appends an immutable audit receipt.
+- Separate stable snapshot and logical-operation keys prevent duplicate snapshots and duplicate audit receipts.
+- Exact operation replays return the original snapshot ID; changed-payload key reuse fails with SQLSTATE 22023 before mutation.
+- A transaction advisory lock serializes concurrent retries for the same owner-operation pair.
+- The RPC compares p_expected_owner_id with auth.uid() inside the transaction and fails closed on account changes.
+- SECURITY DEFINER is constrained by an empty search_path, fully qualified sensitive objects, JWT-derived ownership, and execute-only authenticated access.
+- Authenticated direct profile/snapshot mutations and audit inserts are revoked so clients cannot bypass the atomic contract.
+- Null and malformed JSON envelopes are rejected with null-safe validation.
+- Web and Expo adapters both use the same RPC and pass no writable owner field.
+
+Fresh green gates
+- npm --prefix apps/web run test:supabase
+  - static schema, web client, and settings account contracts passed
+  - 48/48 pgTAP owner, privilege, replay, collision, malformed-input, and rollback assertions passed
+- npx --yes supabase db reset --local --no-seed
+  - all three migrations applied from a clean PostgreSQL database
+- npx --yes supabase db lint --local --level warning
+  - no schema errors or warnings
+- npm --prefix apps/mobile run test:supabase:mobile
+  - Expo Supabase and account contracts passed
+- npm --prefix apps/mobile run check
+  - TypeScript passed
+- npm --prefix apps/web test
+  - 263 regressions plus independent financial, accessibility, metadata, and asset lanes passed
+- npx eslint src/lib/supabase/snapshot-sync.ts src/app/settings/SupabaseAccountPanel.tsx
+  - passed
+- npm --prefix apps/web run build
+  - production build and 12 static routes passed
+- npm --prefix apps/mobile run build:web && npm --prefix apps/mobile run smoke:web-export
+  - all seven Expo routes passed
+- npm --prefix apps/mobile run smoke:android-bundle
+  - Android Hermes bundle passed
+- npm --prefix apps/mobile run smoke:ios-bundle
+  - iOS Hermes bundle passed
+- git diff --check
+  - passed; only repository line-ending notices were emitted
+
+Independent review
+- First pass found owner-switch, direct-grant, retry-durability, and cross-operation ordering boundaries.
+- Owner-switch and direct-grant findings were fixed in this slice.
+- Final re-review approved P6-T2B with no actionable findings in the atomic RPC primitive.
+
+Explicitly remaining
+- P6-T2C: durable owner-scoped Expo outbox, stable retry identity, FIFO reconnect/app-activation replay, and crash-safe dequeue.
+- P6-T2D: logical revision and conflict semantics for distinct operations and cross-device restore/adoption.
+- No remote Supabase project is linked in supabase/.temp, so this migration was validated locally and has not been applied to an arbitrary existing project.

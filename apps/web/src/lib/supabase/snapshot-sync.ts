@@ -6,6 +6,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 export interface WebSnapshotSyncInput {
   idempotencyKey: string;
+  operationIdempotencyKey: string;
   displayName?: string;
   storage: SnapshotStorageEntry[];
 }
@@ -29,28 +30,17 @@ export async function syncLocalSnapshot(
   if (claimsError || typeof ownerId !== 'string') throw syncError('identity verification', claimsError);
 
   const plan = buildSnapshotSyncPlan({ ...input, ownerId });
-  const { error: profileError } = await client
-    .from(plan.profile.table)
-    .upsert(plan.profile.row, { onConflict: plan.profile.onConflict });
-  if (profileError) throw syncError('profile upsert', profileError);
-
-  const { data: snapshot, error: snapshotError } = await client
-    .from(plan.snapshot.table)
-    .upsert(plan.snapshot.row, { onConflict: plan.snapshot.onConflict })
-    .select('id')
-    .single();
-  if (snapshotError || !snapshot?.id) throw syncError('snapshot upsert', snapshotError);
-
-  const { error: auditError } = await client.from('audit_events').insert({
-    owner_id: ownerId,
-    event_type: 'local-demo-snapshot-synced',
-    event_json: {
-      contract_version: plan.version,
-      idempotency_key: input.idempotencyKey,
-      snapshot_id: snapshot.id,
-    },
+  const { data: snapshotId, error } = await client.rpc('sync_interestshield_snapshot', {
+    p_assumptions_json: plan.snapshot.row.assumptions_json,
+    p_display_name: plan.profile.row.display_name,
+    p_expected_owner_id: ownerId,
+    p_operation_idempotency_key: input.operationIdempotencyKey,
+    p_snapshot_idempotency_key: plan.snapshot.row.idempotency_key,
+    p_snapshot_version: plan.version,
   });
-  if (auditError) throw syncError('audit append', auditError);
+  if (error || typeof snapshotId !== 'string') {
+    throw syncError('transactional snapshot sync', error);
+  }
 
-  return { ownerId, snapshotId: snapshot.id };
+  return { ownerId, snapshotId };
 }
