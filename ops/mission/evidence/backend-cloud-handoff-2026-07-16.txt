@@ -1,0 +1,27 @@
+BACKEND CLOUD HANDOFF EVIDENCE
+Captured: 2026-07-16 America/Chicago
+
+Supabase
+
+- CLI: 2.109.1.
+- Command:
+  npx --yes supabase@latest projects list --output-format json
+- Result:
+  LegacyPlatformAuthRequiredError
+  Access token not provided. Run supabase login or set SUPABASE_ACCESS_TOKEN.
+- No cloud project was guessed, created, linked, migrated, or modified.
+- The owner-scoped schema, pgTAP isolation tests, backup/restore drill, client
+  adapters, and secure native recovery remain complete in the repository.
+
+Cloudflare
+
+- The report Worker remains a tested selective report/export lane with private
+  R2 boundaries and no D1 financial mirror.
+- No live R2 bucket or Worker deployment was created without account/resource
+  access and a confirmed production backend decision.
+
+Required ownership inputs
+
+- Authenticated Supabase organization/project access, or an explicit production
+  project reference and access token.
+- The owned InterestShield custom-domain hostname and authoritative DNS access.

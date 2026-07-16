@@ -1,0 +1,57 @@
+P0 FINAL-MAIN PRODUCTION EVIDENCE
+Captured: 2026-07-16 America/Chicago
+Main SHA: d7a0c9af9ad96dac3b85a6c20fd7c6d068d5e7f2
+PR: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254
+CI: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/29539332475
+
+Vercel production
+
+- Project: islanddevcrew/velocity-banking-mvp-v2
+- Project ID: prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s
+- Deployment: dpl_CnQ8CkKSNWnsTJZGy8a3zVpu2aDD
+- Deployment URL:
+  https://velocity-banking-mvp-v2-oqh002amx-islanddevcrew.vercel.app
+- Vercel metadata confirms:
+  source=cli
+  target=production
+  readyState=READY
+  githubCommitRef=main
+  githubCommitSha=d7a0c9af9ad96dac3b85a6c20fd7c6d068d5e7f2
+- Canonical alias:
+  https://velocity-banking-mvp-v2.vercel.app
+- Compatibility alias:
+  https://web-islanddevcrew.vercel.app
+- CDN and Data Cache purged after compatibility-alias assignment.
+
+Final route smoke
+
+- PASS seven routes at the canonical alias.
+- PASS seven routes at the compatibility alias.
+- PASS HTTP 200 HTML, current navigation marker, route-specific
+  InterestShield titles, and Next static assets.
+- PASS no Vercel failure/protection shell or framework error signature.
+
+Final rendered Chrome smoke
+
+- Chrome executable:
+  C:\Program Files\Google\Chrome\Application\chrome.exe
+- PASS all seven routes at 1440x900.
+- PASS all seven routes at 375x844.
+- PASS no console or page errors, framework overlays, broken visible images,
+  or page-width overflow.
+- PASS desktop four vitals, Money Loop rail, payoff orbit, and LOC interaction.
+- PASS mobile four vitals and Money Loop bridge.
+- Screenshots:
+  ops/mission/evidence/P0-production-rendered/production-dashboard-desktop.png
+  ops/mission/evidence/P0-production-rendered/production-dashboard-mobile.png
+
+External custom-domain handoff
+
+- No InterestShield custom hostname exists in the Vercel team domain inventory
+  or repository configuration.
+- interestshield.app resolves to Namecheap registrar DNS, but ownership is not
+  independently verified and HTTPS did not answer. It was not attached or
+  modified.
+- The owned hostname and authoritative DNS access remain required before the
+  custom-domain portion of P0 can close.
+

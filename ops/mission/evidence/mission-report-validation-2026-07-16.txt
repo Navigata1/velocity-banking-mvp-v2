@@ -1,0 +1,29 @@
+MISSION REPORT VALIDATION
+Captured: 2026-07-16 America/Chicago
+
+Artifact:
+  ops/mission/state-of-the-union.html
+
+Generation:
+  node ops/mission/render-sotu.mjs
+  phases: 7
+  tasks: 26/27
+  gates passed: 24/24
+  PRs: 39
+
+Playwright + system Chrome
+
+- Desktop viewport: 1440x1000
+  document client width: 1440
+  document scroll width: 1440
+- Mobile viewport: 375x844
+  document client width: 375
+  document scroll width: 375
+- Document title:
+  InterestShield July 2026 Rebuild - State of the Union
+- External resource requests: none
+- The report is a self-contained local HTML file.
+
+Screenshots:
+  ops/mission/evidence/mission-state-of-the-union-final.png
+  ops/mission/evidence/mission-state-of-the-union-final-mobile.png

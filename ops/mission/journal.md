@@ -310,3 +310,13 @@
 - Fresh merged-main proof passes 263 web regressions, two independent fixtures, lint, production build, all web and mobile persistence contracts, 63 pgTAP assertions, clean schema lint and drift, 35 native contracts, seven Expo routes, and Android/iOS Hermes bundles.
 - P6-T2 closes. P6-G3 remains pending for a final-candidate Android emulator rerun and P6-G4 remains pending for macOS iOS Simulator proof.
 - P6-T3 begins on codex/mission/p6-native-accessibility for safe areas, semantics, screen readers, reduced motion, responsive text, and selectable financial data across all seven native routes.
+
+## 2026-07-16T22:29Z - Native release proven; public production repaired
+- PR #251 merged native accessibility and responsive UI; PR #252 merged strict Android and iOS release-candidate workflows; PR #253 made the root iOS smoke contract portable across Windows CRLF checkouts.
+- Final-main Android run 29537614655 and iOS run 29537615381 both passed on SHA 7118701. Five durable screenshots record dashboard, settings, and Android large-text landscape output.
+- Vercel access was recovered and the actual production project was identified. Its empty root/framework configuration was repaired to `apps/web` and `nextjs`, SSO protection was disabled for the public educational app, and the stale compatibility alias was reassigned.
+- PR #254 merged route-specific production title validation, remote rendered Chrome smoke, a current release runbook, and red/green evidence. Merged-main CI run 29539332475 passed.
+- Final production deployment dpl_CnQ8CkKSNWnsTJZGy8a3zVpu2aDD records source SHA d7a0c9a and ref main. Both Vercel aliases pass all seven route checks; Chrome passes all seven routes at 1440x900 and 375x844 with no console errors, broken images, error overlays, or page-width overflow.
+- P6 is done. P0 production smoke is green, but P0 remains blocked on the exact owned custom-domain hostname and authoritative DNS access.
+- Supabase CLI 2.109.1 is present, but cloud project discovery returns LegacyPlatformAuthRequiredError because no access token is available. The owner-scoped schema and recovery contracts remain ready locally; no cloud project was guessed or modified.
+- Mission state is now blocked with six of seven phases done, zero confirmed high defects, 7/7 production routes current, and 2/2 native platforms carrying hosted device evidence.
