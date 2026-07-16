@@ -1,0 +1,39 @@
+P6 FINAL-MAIN NATIVE RELEASE EVIDENCE
+Captured: 2026-07-16 America/Chicago
+Main SHA: 71187011d5243889d681e05c37b1bd35ce0ef570
+
+Final strict Android workflow
+
+- Run: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/29537614655
+- Conclusion: success
+- Workflow: Mobile Android smoke
+- Source SHA: 71187011d5243889d681e05c37b1bd35ce0ef570
+- Artifact: interestshield-android-smoke
+- Verified dashboard, settings, and large-text landscape screenshots.
+
+Final strict iOS workflow
+
+- Run: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/29537615381
+- Conclusion: success
+- Workflow: Mobile iOS smoke
+- Source SHA: 71187011d5243889d681e05c37b1bd35ce0ef570
+- Artifact: interestshield-ios-smoke
+- Verified dashboard and settings screenshots.
+
+Durable rendered evidence
+
+- ops/mission/evidence/P6-final-main-smoke/android-dashboard.png
+- ops/mission/evidence/P6-final-main-smoke/android-settings.png
+- ops/mission/evidence/P6-final-main-smoke/android-large-text-landscape.png
+- ops/mission/evidence/P6-final-main-smoke/ios-dashboard.png
+- ops/mission/evidence/P6-final-main-smoke/ios-settings.png
+
+Release interpretation
+
+- P6-T3 merged in PR #251.
+- P6-T4 merged in PR #252.
+- Windows CRLF portability for the root iOS contract merged in PR #253.
+- Android and iOS final-main workflows both passed after PR #253.
+- The later P0 PR #254 changed only web smoke, release documentation, and
+  production evidence. It did not change the native runtime tree.
+

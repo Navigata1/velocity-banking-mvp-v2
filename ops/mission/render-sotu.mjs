@@ -289,7 +289,7 @@ const html = `<!doctype html>
 body{margin:0;background:radial-gradient(circle at top left,rgba(88,215,179,.15),transparent 30rem),radial-gradient(circle at top right,rgba(119,183,255,.13),transparent 32rem),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,"Segoe UI",sans-serif;line-height:1.55}
 main{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:40px 0 60px}
 h1,h2,h3{margin:0;line-height:1.12}
-h1{font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-.04em;max-width:900px;margin-top:10px}
+h1{font-size:clamp(2rem,5vw,3.8rem);letter-spacing:0;max-width:900px;margin-top:10px;overflow-wrap:anywhere}
 h2{margin-bottom:14px;font-size:clamp(1.4rem,2.6vw,2rem)}
 h3{font-size:1.02rem;color:#fff}
 p{margin:0}
@@ -326,9 +326,9 @@ td{color:var(--muted)}
 td b{color:#fff}
 .table-wrap{overflow-x:auto;border-radius:12px}
 .timeline{display:grid;gap:10px}
-.tl-item{display:grid;grid-template-columns:72px 1fr;gap:14px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.035)}
+.tl-item{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.035)}
 .tl-item time{color:var(--accent);font-size:.8rem;font-weight:900}
-.tl-item p{color:var(--muted)}
+.tl-item p{min-width:0;color:var(--muted);overflow-wrap:anywhere}
 details.resume{margin-top:14px;border:1px dashed rgba(88,215,179,.4);border-radius:12px;padding:10px 14px}
 details.resume summary{cursor:pointer;color:var(--accent);font-weight:800}
 .prompt-box{position:relative;margin-top:10px}
@@ -336,7 +336,7 @@ details.resume summary{cursor:pointer;color:var(--accent);font-weight:800}
 button.copy{position:absolute;top:8px;right:8px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.08);color:var(--ink);font-weight:700;padding:4px 12px;cursor:pointer}
 button.copy:hover{background:rgba(88,215,179,.2)}
 .footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:.9rem}
-@media(max-width:900px){main{width:min(100% - 24px,760px)}.tl-item{grid-template-columns:56px 1fr}}
+@media(max-width:900px){main{width:min(calc(100% - 24px),760px)}.tl-item{grid-template-columns:56px minmax(0,1fr)}}
 </style>
 </head>
 <body>

@@ -8,10 +8,10 @@
     "defaultBranch": "main",
     "planDoc": "C:/Users/IslandDevCrew/Documents/Interest Shield/docs/reports/InterestShield-State-of-the-Union-v2-2026-07-12.html",
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
-    "status": "active",
+    "status": "blocked",
     "started": "2026-07-12",
-    "updated": "2026-07-15T02:45:14Z",
-    "sessionCount": 1
+    "updated": "2026-07-16T22:29:37Z",
+    "sessionCount": 2
   },
   "policies": {
     "merge": "auto",
@@ -32,62 +32,78 @@
           "title": "Web regression and accessibility suite",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:42:00Z",
-          "notes": ""
+          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "PR #254 and merged-main CI run 29539332475 pass 263 regressions, independent fixtures, accessibility, metadata, assets, and lint."
         },
         {
           "id": "P0-G2",
           "title": "Web production build",
           "command": "npm --prefix apps/web run build",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:42:00Z",
-          "notes": ""
+          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Next.js 16.2.10 builds all 14 static outputs locally, in GitHub CI, and in the final Vercel production deployment."
         },
         {
           "id": "P0-G3",
           "title": "All seven local routes answer",
           "command": "npm --prefix apps/web run smoke:routes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:44:00Z",
-          "notes": ""
+          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "All seven local built routes pass HTTP and rendered Chrome smoke at desktop and mobile widths."
         },
         {
           "id": "P0-G4",
           "title": "Public production alias serves current markers",
           "command": "npm --prefix apps/web run smoke:production",
-          "status": "failed",
-          "evidence": "ops/mission/evidence/P0-G4-2026-07-12.txt",
-          "lastRun": "2026-07-13T01:45:00Z",
-          "notes": "Public alias still serves dpl_FfPyuRhZM8G4pTofYifoajjVDpLg. Latest green target is dfb4d91 at velocity-banking-mvp-v2-78l3t4zuy-islanddevcrew.vercel.app."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P0-final-main-production-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Both Vercel aliases serve final main d7a0c9a from deployment dpl_CnQ8CkKSNWnsTJZGy8a3zVpu2aDD and pass seven-route plus rendered Chrome production smoke."
         }
       ],
       "tasks": [
         {
           "id": "P0-T1",
           "title": "Resolve Vercel authentication and confirm project ownership",
-          "status": "blocked",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "Vercel connector reports oauth_token_invalid_grant and CLI 55.0.0 has no local credentials. Verify which project owns web-islanddevcrew.vercel.app and the custom InterestShield domain after reauthentication."
+          "pr": {
+            "number": 254,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
+            "mergedAt": "2026-07-16"
+          },
+          "notes": "Verified Vercel CLI access, owner, team, project ID, Git source, production branch, root directory, framework, and public protection posture."
         },
         {
           "id": "P0-T2",
           "title": "Promote the latest green main artifact and attach production domains",
-          "status": "pending",
-          "dependsOn": ["P0-T1"],
-          "pr": null,
-          "notes": "Promote without rebuilding, purge cache, preserve a documented rollback target."
+          "status": "blocked",
+          "dependsOn": [
+            "P0-T1"
+          ],
+          "pr": {
+            "number": 254,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
+            "mergedAt": "2026-07-16"
+          },
+          "notes": "Canonical and compatibility aliases are promoted, cache-purged, verified, and retain rollback evidence. The custom-domain hostname and authoritative DNS ownership are not available, so that domain was not guessed or modified."
         },
         {
           "id": "P0-T3",
           "title": "Run production Browser and Chrome responsive smoke",
-          "status": "pending",
-          "dependsOn": ["P0-T2"],
-          "pr": null,
-          "notes": "Verify freshness markers, four vitals, artifact rail, no console errors, and no offscreen controls at 375px."
+          "status": "done",
+          "dependsOn": [
+            "P0-T2"
+          ],
+          "pr": {
+            "number": 254,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
+            "mergedAt": "2026-07-16"
+          },
+          "notes": "Real Chrome passed all seven production routes at 1440x900 and 375x844 with four-vital, 3D rail/orbit, mobile bridge, interaction, console, image, overlay, and overflow checks."
         }
       ]
     },
@@ -143,7 +159,9 @@
           "id": "P1-T2",
           "title": "Define lender terms and confidence contract",
           "status": "done",
-          "dependsOn": ["P1-T1"],
+          "dependsOn": [
+            "P1-T1"
+          ],
           "pr": {
             "number": 219,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/219",
@@ -155,7 +173,9 @@
           "id": "P1-T3",
           "title": "Add transaction-calendar LOC accrual",
           "status": "done",
-          "dependsOn": ["P1-T2"],
+          "dependsOn": [
+            "P1-T2"
+          ],
           "pr": {
             "number": 220,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/220",
@@ -167,7 +187,9 @@
           "id": "P1-T4",
           "title": "Add lender fixture and independent reference lane",
           "status": "done",
-          "dependsOn": ["P1-T3"],
+          "dependsOn": [
+            "P1-T3"
+          ],
           "pr": {
             "number": 221,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/221",
@@ -226,7 +248,9 @@
           "id": "P2-T1",
           "title": "Repair and apply the owner-scoped Supabase schema",
           "status": "done",
-          "dependsOn": ["P1-T2"],
+          "dependsOn": [
+            "P1-T2"
+          ],
           "pr": {
             "number": 222,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/222",
@@ -238,7 +262,9 @@
           "id": "P2-T2",
           "title": "Adversarially test RLS, Data API grants, and deletion",
           "status": "done",
-          "dependsOn": ["P2-T1"],
+          "dependsOn": [
+            "P2-T1"
+          ],
           "pr": {
             "number": 223,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/223",
@@ -250,7 +276,9 @@
           "id": "P2-T3",
           "title": "Wire web and Expo authentication and snapshot sync",
           "status": "done",
-          "dependsOn": ["P2-T2"],
+          "dependsOn": [
+            "P2-T2"
+          ],
           "pr": {
             "number": 230,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/230",
@@ -262,7 +290,9 @@
           "id": "P2-T4",
           "title": "Prove backup, restore, retention, and incident logging",
           "status": "done",
-          "dependsOn": ["P2-T3"],
+          "dependsOn": [
+            "P2-T3"
+          ],
           "pr": {
             "number": 231,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/231",
@@ -274,7 +304,9 @@
           "id": "P2-T5",
           "title": "Add selective Cloudflare export and report lane",
           "status": "done",
-          "dependsOn": ["P2-T3"],
+          "dependsOn": [
+            "P2-T3"
+          ],
           "pr": {
             "number": 232,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/232",
@@ -333,7 +365,9 @@
           "id": "P3-T1",
           "title": "Freeze information architecture and dashboard first viewport",
           "status": "done",
-          "dependsOn": ["P1-T2"],
+          "dependsOn": [
+            "P1-T2"
+          ],
           "pr": {
             "number": 233,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/233",
@@ -345,7 +379,9 @@
           "id": "P3-T2",
           "title": "Split oversized Learn, Portfolio, and mobile shell modules",
           "status": "done",
-          "dependsOn": ["P3-T1"],
+          "dependsOn": [
+            "P3-T1"
+          ],
           "pr": {
             "number": 234,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/234",
@@ -357,7 +393,9 @@
           "id": "P3-T3",
           "title": "Replace emoji navigation and complete metadata surfaces",
           "status": "done",
-          "dependsOn": ["P3-T1"],
+          "dependsOn": [
+            "P3-T1"
+          ],
           "pr": {
             "number": 235,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/235",
@@ -419,7 +457,9 @@
           "id": "P4-T1",
           "title": "Define the five-artifact visual grammar and data bindings",
           "status": "done",
-          "dependsOn": ["P3-T1"],
+          "dependsOn": [
+            "P3-T1"
+          ],
           "pr": {
             "number": 237,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/237",
@@ -431,7 +471,10 @@
           "id": "P4-T2",
           "title": "Build the lazy-loaded Three.js selection stage",
           "status": "done",
-          "dependsOn": ["P4-T1", "P3-T4"],
+          "dependsOn": [
+            "P4-T1",
+            "P3-T4"
+          ],
           "pr": {
             "number": 238,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/238",
@@ -443,16 +486,28 @@
           "id": "P4-T3",
           "title": "Add reduced motion, static fallback, and mobile GPU controls",
           "status": "done",
-          "dependsOn": ["P4-T2"],
-          "pr": {"number": 239, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/239", "mergedAt": "2026-07-12"},
+          "dependsOn": [
+            "P4-T2"
+          ],
+          "pr": {
+            "number": 239,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/239",
+            "mergedAt": "2026-07-12"
+          },
           "notes": "PR #239 delivers fail-closed static/efficient/full policy, WebGL2 probe and renderer startup/loss paths, DPR/geometry budgets, offscreen/hidden pause, first-frame reveal, and runtime-tested cleanup. Both GitHub quality runs and Vercel passed."
         },
         {
           "id": "P4-T4",
           "title": "Verify screenshots, pixels, interaction, performance, and accessibility",
           "status": "done",
-          "dependsOn": ["P4-T3"],
-          "pr": {"number": 240, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240", "mergedAt": "2026-07-13"},
+          "dependsOn": [
+            "P4-T3"
+          ],
+          "pr": {
+            "number": 240,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240",
+            "mergedAt": "2026-07-13"
+          },
           "notes": "PR #240 merged at c7b9705 after duplicate GitHub Ubuntu quality runs and Vercel passed. Fresh main reruns prove all-five isolated pixels, under-700-ms settlement, DOM motion, responsive geometry, static fallback, focus order, adversarial failure lanes, and the 14-page build."
         }
       ]
@@ -488,7 +543,9 @@
           "id": "P5-T1",
           "title": "Create the InterestShield visual identity and motion contract",
           "status": "done",
-          "dependsOn": ["P4-T1"],
+          "dependsOn": [
+            "P4-T1"
+          ],
           "pr": 241,
           "notes": "PR #241 merged at 0ba48e4 after duplicate Ubuntu quality runs and Vercel passed. Fresh main passes 14 media identity tests, zero media vulnerabilities, 263 web regressions, lint, and the 14-page build. Evidence: ops/mission/evidence/P5-T1-closeout-main-2026-07-13.txt."
         },
@@ -496,16 +553,29 @@
           "id": "P5-T2",
           "title": "Build HyperFrames launch and tutorial compositions",
           "status": "done",
-          "dependsOn": ["P5-T1"],
-          "pr": {"number": 242, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/242", "mergedAt": "2026-07-13"},
+          "dependsOn": [
+            "P5-T1"
+          ],
+          "pr": {
+            "number": 242,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/242",
+            "mergedAt": "2026-07-13"
+          },
           "notes": "PR #242 merged at a1277b3 after Vercel and both Ubuntu quality runs passed. The 30-second H.264 reel contains deterministic launch and Money Loop compositions with local assets, bound captions, qualitative financial semantics, reduced-motion proof, exact animation-map evidence, and zero media vulnerabilities."
         },
         {
           "id": "P5-T3",
           "title": "Build Remotion scenario explainers from engine JSON",
           "status": "done",
-          "dependsOn": ["P5-T1", "P1-T2"],
-          "pr": {"number": 243, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/243", "mergedAt": "2026-07-13"},
+          "dependsOn": [
+            "P5-T1",
+            "P1-T2"
+          ],
+          "pr": {
+            "number": 243,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/243",
+            "mergedAt": "2026-07-13"
+          },
           "notes": "PR #243 merged at 3415d16 with three strict shared-engine stories across landscape, portrait, and square, a complete reduced-motion substitute, exact pinned browser rendering, and independent spec/code approval. PR #244 merged the Windows CRLF freshness regression at 82c4890; both duplicate CI runs and Vercel passed for both PRs."
         }
       ]
@@ -514,7 +584,7 @@
       "id": "P6",
       "title": "Expo Native Hardening",
       "goal": "The existing Expo app becomes a tested native product with shared-engine parity, secure persistence, and Android/iOS release evidence.",
-      "status": "in_progress",
+      "status": "done",
       "sessionsEstimate": "6-10",
       "gates": [
         {
@@ -522,36 +592,36 @@
           "title": "Expo TypeScript",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T2-closeout-main-2026-07-14.txt",
-          "lastRun": "2026-07-15T02:45:14Z",
-          "notes": "Merged-main Expo TypeScript, six mobile persistence and recovery lanes, 35 native contracts, 63 pgTAP assertions, and all 263 web regressions pass after explicit restore and adoption merged."
+          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Expo TypeScript, owner recovery lanes, native contracts, and final hosted native workflows pass."
         },
         {
           "id": "P6-G2",
           "title": "Expo web export and route smoke",
           "command": "npm --prefix apps/mobile run smoke:web-export",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P6-T2-closeout-main-2026-07-14.txt",
-          "lastRun": "2026-07-15T02:45:14Z",
-          "notes": "Fresh merged-main Expo web export and all seven route probes pass after explicit restore and adoption merged."
+          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Expo web export and all seven route probes pass in the merged quality gate."
         },
         {
           "id": "P6-G3",
           "title": "Android bundle and emulator smoke",
           "command": "npm --prefix apps/mobile run smoke:android-bundle",
-          "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T2-closeout-main-2026-07-14.txt",
-          "lastRun": "2026-07-15T02:45:14Z",
-          "notes": "Android Hermes bundle passes on merged main. Repeat the emulator smoke after P6-T3 against the final release candidate before passing this gate."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Strict Android workflow 29537614655 passed on final native main SHA 7118701 with dashboard, settings, and large-text landscape artifacts."
         },
         {
           "id": "P6-G4",
           "title": "iOS bundle and simulator smoke through macOS CI",
           "command": "npm --prefix apps/mobile run smoke:ios-bundle",
-          "status": "pending",
-          "evidence": "ops/mission/evidence/P6-T2-closeout-main-2026-07-14.txt",
-          "lastRun": "2026-07-15T02:45:14Z",
-          "notes": "iOS Hermes bundle passes on merged main; macOS Simulator evidence remains pending for P6-T4."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
+          "lastRun": "2026-07-16T22:29:37Z",
+          "notes": "Strict macOS iOS Simulator workflow 29537615381 passed on final native main SHA 7118701 with dashboard and settings artifacts."
         }
       ],
       "tasks": [
@@ -559,7 +629,9 @@
           "id": "P6-T1",
           "title": "Split the monolithic mobile shell into native route modules",
           "status": "done",
-          "dependsOn": ["P3-T2"],
+          "dependsOn": [
+            "P3-T2"
+          ],
           "pr": {
             "number": 245,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/245",
@@ -571,7 +643,10 @@
           "id": "P6-T2",
           "title": "Wire native auth, SecureStore, sync, and offline recovery",
           "status": "done",
-          "dependsOn": ["P2-T3", "P6-T1"],
+          "dependsOn": [
+            "P2-T3",
+            "P6-T1"
+          ],
           "pr": {
             "number": 250,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/250",
@@ -582,18 +657,31 @@
         {
           "id": "P6-T3",
           "title": "Complete native accessibility and responsive UI",
-          "status": "pending",
-          "dependsOn": ["P6-T1"],
-          "pr": null,
-          "notes": "Safe areas, tab semantics, screen readers, reduced motion, and selectable financial data."
+          "status": "done",
+          "dependsOn": [
+            "P6-T1"
+          ],
+          "pr": {
+            "number": 251,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/251",
+            "mergedAt": "2026-07-15"
+          },
+          "notes": "PR #251 completed safe areas, semantic native navigation, touch targets, screen-reader state, selectable outputs, large text, reduced motion, and responsive route coverage."
         },
         {
           "id": "P6-T4",
           "title": "Prove Android and iOS release candidates",
-          "status": "pending",
-          "dependsOn": ["P6-T2", "P6-T3"],
-          "pr": null,
-          "notes": "Record device and simulator evidence, bundle checks, deep links, and shared-engine fixtures."
+          "status": "done",
+          "dependsOn": [
+            "P6-T2",
+            "P6-T3"
+          ],
+          "pr": {
+            "number": 252,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/252",
+            "mergedAt": "2026-07-16"
+          },
+          "notes": "PR #252 delivered strict Android and iOS release-candidate workflows; PR #253 made the root iOS contract Windows CRLF portable. Final-main runs 29537614655 and 29537615381 both pass."
         }
       ]
     }
@@ -602,14 +690,14 @@
     {
       "label": "Confirmed high defects open",
       "baseline": "3",
-      "current": "1",
+      "current": "0",
       "target": "0",
       "direction": "down"
     },
     {
       "label": "Production routes on current shell",
       "baseline": "0/7",
-      "current": "0/7",
+      "current": "7/7",
       "target": "7/7",
       "direction": "up"
     },
@@ -644,41 +732,41 @@
     {
       "label": "Native platforms with device evidence",
       "baseline": "0/2",
-      "current": "0/2",
+      "current": "2/2",
       "target": "2/2",
       "direction": "up"
     }
   ],
   "risks": [
     {
-      "title": "Vercel authentication and alias ownership are unresolved",
+      "title": "Custom-domain hostname and DNS ownership are unavailable",
       "severity": "high",
-      "note": "GitHub issue #59; the public URL still serves a stale deployment."
+      "note": "Both public Vercel aliases are current and green. The final owned hostname and authoritative DNS access are still required before attaching and validating the custom domain."
     },
     {
-      "title": "Lender-specific terms are discussed but not executable",
+      "title": "No dedicated InterestShield Supabase cloud project is authenticated",
       "severity": "high",
-      "note": "Do not persist or market lender-specific projections until P1 closes."
+      "note": "CLI 2.109.1 reports LegacyPlatformAuthRequiredError. The owner-scoped schema, RLS, backup/restore, and adapters are ready, but production persistence must not be claimed until an authenticated project is migrated and verified."
     },
     {
-      "title": "No dedicated InterestShield Supabase cloud project exists",
+      "title": "Production projections require actual lender terms",
       "severity": "medium",
-      "note": "The repaired migration passes local PostgreSQL 17, lint, and security advisors, but no dedicated InterestShield cloud project exists yet."
+      "note": "The versioned lender-term contract fails closed when terms are missing; keep all outputs educational and assumption-labeled."
     },
     {
-      "title": "Cloudflare report Worker has no live R2 resources or deployment",
+      "title": "Cloudflare report resources are not live",
       "severity": "medium",
-      "note": "The Worker passes tests and deployment dry-run but intentionally refuses placeholder configuration; create private buckets and deploy only after explicit resource/cost approval."
+      "note": "The Worker and private R2 contract pass tests and dry-run, but no bucket or Worker was deployed without account/resource access. Supabase remains the intended financial system of record."
     },
     {
       "title": "Expo SDK 56 inherits moderate CLI and config audit advisories",
       "severity": "medium",
-      "note": "npm reports ten moderate findings in Expo CLI/config tooling and proposes an invalid Expo 46 downgrade; track upstream SDK updates and do not force the downgrade."
+      "note": "Track upstream SDK updates; do not apply npm audit force because its proposed Expo downgrade is invalid."
     },
     {
-      "title": "iOS simulator smoke requires macOS",
+      "title": "Store distribution remains a separate release operation",
       "severity": "medium",
-      "note": "Use the existing GitHub Actions macOS lane when P6 becomes active."
+      "note": "Android emulator and iOS Simulator evidence are green, but signing, store accounts, privacy declarations, and staged submissions require owner credentials and policy review."
     }
   ],
   "prLog": [
@@ -926,19 +1014,46 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/250",
       "phase": "P6 Expo Native Hardening",
       "mergedAt": "2026-07-14"
+    },
+    {
+      "number": 251,
+      "title": "Complete native accessibility and responsive UI",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/251",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-15"
+    },
+    {
+      "number": 252,
+      "title": "Prove Android and iOS release candidates",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/252",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-16"
+    },
+    {
+      "number": 253,
+      "title": "Make iOS smoke contract CRLF portable",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/253",
+      "phase": "P6 Expo Native Hardening",
+      "mergedAt": "2026-07-16"
+    },
+    {
+      "number": 254,
+      "title": "Repair production release smoke and Vercel handoff",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
+      "phase": "P0 Release Truth",
+      "mergedAt": "2026-07-16"
     }
   ],
   "resume": {
-    "activePhase": "P6",
+    "activePhase": "P0",
     "nextActions": [
-      "Implement P6-T3 on codex/mission/p6-native-accessibility: audit all seven native routes for safe areas, touch targets, tab semantics, screen-reader names and state, reduced motion, dynamic text, and selectable financial outputs.",
-      "Write failing native source or rendered contracts for confirmed accessibility and responsive defects, then fix them without changing shared financial-engine ownership.",
-      "After P6-T3 merges, execute P6-T4 against the final release candidate: repeat Android emulator smoke, run the macOS iOS Simulator workflow, verify deep links and owner recovery, and close P6 only when both device gates pass.",
-      "When Vercel reauthentication becomes available, return to P0-T1, confirm project and domain ownership, promote the verified main artifact, and rerun P0-G4 plus Browser and Chrome smoke."
+      "Identify the exact owned InterestShield custom-domain hostname and provide authoritative DNS or registrar access; attach it to islanddevcrew/velocity-banking-mvp-v2, set NEXT_PUBLIC_SITE_URL, and rerun both production smoke harnesses.",
+      "Authenticate Supabase CLI or MCP to the intended organization, select or create the dedicated InterestShield project, apply the owner-scoped migrations, run advisors and pgTAP isolation tests, then prove backup/restore against that cloud project.",
+      "After both ownership gates pass, set P0-T2 and the mission to done, regenerate this report, and begin the separate App Store and Play Store submission operation."
     ],
     "blockers": [
-      "P0-T1 is externally blocked: the Vercel connector requires reauthentication and CLI 55.0.0 has no local credentials; the latest deployment is protected.",
-      "The InterestShield custom-domain hostname is not recorded in the repository and must be discovered from Vercel project state."
+      "The exact owned InterestShield custom-domain hostname and authoritative DNS access are not available in Vercel or the repository.",
+      "Supabase cloud access is not authenticated: projects list returns LegacyPlatformAuthRequiredError because no access token is available."
     ],
     "conventions": [
       "Use codex/mission/<phase>-<task> branches and one focused PR per task.",
