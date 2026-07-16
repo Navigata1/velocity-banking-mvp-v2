@@ -11,9 +11,13 @@ const screenshotPath =
 const accessibilitySmoke = process.env.ANDROID_SMOKE_ACCESSIBILITY === '1';
 const accessibilityScreenshotPath = process.env.ANDROID_SMOKE_ACCESSIBILITY_SCREENSHOT
   || path.join(os.tmpdir(), 'interestshield-android-accessibility-landscape.png');
+const deepLinkScreenshotPath = process.env.ANDROID_SMOKE_DEEP_LINK_SCREENSHOT
+  || path.join(os.tmpdir(), 'interestshield-android-settings.png');
 const windowDumpPath = '/sdcard/interestshield-window.xml';
 const requiredText = ['InterestShield', 'Money Loop Mobile', 'Dashboard'];
 const requiredOrbitText = ['Payoff Orbit', 'LOC orbit step'];
+const requiredSettingsText = ['Settings screen', 'Backend Status'];
+const settingsRoutePath = '/--/settings';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -169,6 +173,50 @@ function getFocus(adb) {
     .filter((line) => /mCurrentFocus|mFocusedApp/.test(line))
     .slice(0, 5)
     .join('\n');
+}
+
+function expoProjectUrl(expoLog) {
+  return expoLog.match(/exp:\/\/[^\s]+/)?.[0].replace(/[),.]+$/, '') ?? null;
+}
+
+async function openSettingsRoute(adb, expoLog) {
+  const projectUrl = expoProjectUrl(expoLog);
+  if (!projectUrl) throw new Error('Android smoke could not find the Expo project URL for direct-route testing.');
+  const settingsUrl = `${projectUrl.replace(/\/+$/, '')}${settingsRoutePath}`;
+  const opened = run(adb, [
+    'shell',
+    'am',
+    'start',
+    '-W',
+    '-a',
+    'android.intent.action.VIEW',
+    '-d',
+    settingsUrl,
+    'host.exp.exponent',
+  ], { timeout: 30000 });
+  if (opened.status !== 0) throw new Error(`Android Settings deep link failed:\n${opened.output}`);
+
+  const deadline = Date.now() + 30000;
+  let dump = '';
+  let focus = '';
+  while (Date.now() < deadline) {
+    await sleep(1000);
+    if (dismissSystemUiAnrIfOpen(adb)) await sleep(1500);
+    dump = readWindowDump(adb);
+    focus = getFocus(adb);
+    if (
+      requiredSettingsText.every((text) => dumpIncludesText(dump, text))
+      && focus.includes('ExperienceActivity')
+      && !focus.includes('ErrorActivity')
+    ) {
+      captureScreenshot(adb, deepLinkScreenshotPath);
+      return settingsUrl;
+    }
+  }
+
+  throw new Error(
+    `Android Settings deep link did not render. Focus: ${focus || 'unknown'}. UI: ${dumpTextExcerpt(dump)}`
+  );
 }
 
 function dismissExpoMenuIfOpen(adb) {
@@ -423,6 +471,13 @@ async function main() {
           console.log('Android enlarged-text landscape smoke passed.');
           console.log(`Accessibility screenshot: ${accessibilityScreenshotPath}`);
         }
+        if (accessibilitySmoke) {
+          run(adb, ['shell', 'cmd', 'window', 'user-rotation', 'lock', '0']);
+          await sleep(1000);
+        }
+        const settingsUrl = await openSettingsRoute(adb, expoLog);
+        console.log(`Android Settings deep link passed: ${settingsUrl}`);
+        console.log(`Settings screenshot: ${deepLinkScreenshotPath}`);
         console.log('Android Expo Go smoke passed.');
         console.log(`Device: ${device}`);
         console.log(`Orbit text: ${requiredOrbitText.join(', ')}`);

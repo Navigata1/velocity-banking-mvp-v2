@@ -52,11 +52,17 @@ jobs:
         working-directory: apps/mobile
         run: npm run check
 
+      - name: Run owner recovery contracts
+        working-directory: apps/mobile
+        run: npm run test:supabase:mobile
+
       - name: Smoke iOS simulator
         working-directory: apps/mobile
         env:
           EXPO_NO_TELEMETRY: 1
           IOS_SMOKE_SIMULATOR: ${{ inputs.simulator }}
+          IOS_SMOKE_SCREENSHOT: ${{ runner.temp }}/interestshield-ios-dashboard.png
+          IOS_SMOKE_DEEP_LINK_SCREENSHOT: ${{ runner.temp }}/interestshield-ios-settings.png
           IOS_SMOKE_TIMEOUT_MS: 240000
           IOS_BUNDLE_TIMEOUT_MS: 420000
           STRICT_IOS_SIMULATOR: ${{ inputs.require_simulator }}
@@ -88,4 +94,14 @@ jobs:
         with:
           name: interestshield-ios-bundle
           path: apps/mobile/dist-ios
+          if-no-files-found: ignore
+
+      - name: Upload iOS smoke screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interestshield-ios-smoke
+          path: |
+            ${{ runner.temp }}/interestshield-ios-dashboard.png
+            ${{ runner.temp }}/interestshield-ios-settings.png
           if-no-files-found: ignore
