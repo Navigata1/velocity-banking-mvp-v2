@@ -7937,8 +7937,15 @@ test('web app exposes a repeatable route smoke command', () => {
   assert.ok(smokeScript.includes('finally') && smokeScript.includes('stopServer(server)'), 'expected smoke script to clean up the server');
   assert.equal(packageJson.scripts['smoke:rendered'], 'npm run build && npm run smoke:rendered:built');
   assert.equal(packageJson.scripts['smoke:rendered:built'], 'node scripts/smoke-rendered.cjs');
-  assert.ok(renderedSmoke.includes("['mobile', { width: 390, height: 844 }]"));
+  assert.ok(renderedSmoke.includes('process.env.RENDERED_SMOKE_MOBILE_WIDTH || 390'));
   assert.ok(renderedSmoke.includes("['desktop', { width: 1440, height: 900 }]"));
+  assert.ok(renderedSmoke.includes('process.env.RENDERED_SMOKE_ORIGIN'));
+  assert.ok(renderedSmoke.includes('process.env.RENDERED_SMOKE_EVIDENCE_DIR'));
+  assert.ok(renderedSmoke.includes('dashboard-vital-cash-flow'));
+  assert.ok(renderedSmoke.includes('dashboard-mobile-vital-cash-flow'));
+  assert.ok(renderedSmoke.includes('money-loop-artifact-rail'));
+  assert.ok(renderedSmoke.includes('money-loop-payoff-orbit'));
+  assert.ok(renderedSmoke.includes('dashboard-mobile-money-loop-bridge'));
   assert.ok(renderedSmoke.includes("page.getByTestId('money-loop-artifact-node-loc')"));
   assert.ok(renderedSmoke.includes('main?.innerText.includes(expectedMarker)'));
   assert.ok(renderedSmoke.includes('page.waitForFunction(') && renderedSmoke.includes('{ timeout: 15000 }'));
@@ -8078,7 +8085,11 @@ test('web app exposes a repeatable production Vercel smoke command', () => {
     productionSmokeScript.includes("content-type") && productionSmokeScript.includes("text/html"),
     'expected production smoke to verify HTML responses'
   );
-  assert.ok(productionSmokeScript.includes('InterestShield - Financial Empowerment'), 'expected production smoke to verify app metadata');
+  assert.ok(
+    productionSmokeScript.includes('extractDocumentTitle') &&
+      productionSmokeScript.includes("!documentTitle.includes('InterestShield')"),
+    'expected production smoke to accept route-specific InterestShield metadata titles'
+  );
   assert.ok(productionSmokeScript.includes('/_next/static'), 'expected production smoke to verify Next static assets');
   assert.ok(productionSmokeScript.includes('DEPLOYMENT_NOT_FOUND'), 'expected production smoke to catch missing Vercel deployments');
   assert.ok(productionSmokeScript.includes('Vercel Authentication'), 'expected production smoke to catch protected deployments');
@@ -8179,32 +8190,34 @@ test('repository exposes a manual release deployment smoke workflow', () => {
   assert.ok(workflow.includes('npm run smoke:web-export'), 'expected release smoke to verify the Expo web export');
 });
 
-test('repository documents the current Vercel alias promotion blocker', () => {
+test('repository documents the verified Vercel release and custom-domain handoff', () => {
   const runbookPath = path.resolve(__dirname, '..', '..', '..', 'docs', '42_VERCEL_RELEASE_ALIAS_RUNBOOK.md');
   const runbook = fs.existsSync(runbookPath) ? fs.readFileSync(runbookPath, 'utf8') : '';
 
   assert.ok(fs.existsSync(runbookPath), 'expected the Vercel alias runbook to exist');
   assert.ok(
-    runbook.includes('Use issue #59') &&
-      runbook.includes('npm run smoke:production') &&
-      runbook.includes('Do not rely on a hard-coded runbook SHA after new PRs merge'),
-    'expected the runbook to avoid pinning the live release state to a stale commit'
+    runbook.includes('Root directory: `apps/web`') &&
+      runbook.includes('Framework: `nextjs`') &&
+      runbook.includes('dpl_AfYvAyUF7mS8Dpx1T29ZxL2Hbdqk'),
+    'expected the runbook to record the repaired production project'
   );
   assert.ok(
-    runbook.includes('https://velocity-banking-mvp-v2-<deployment-suffix>-islanddevcrew.vercel.app') &&
-      runbook.includes('Latest GitHub Production deployment target'),
-    'expected the runbook to document ephemeral Vercel deployment targets'
+    runbook.includes('https://velocity-banking-mvp-v2.vercel.app') &&
+      runbook.includes('https://web-islanddevcrew.vercel.app') &&
+      runbook.includes('alias set'),
+    'expected the runbook to distinguish canonical and compatibility aliases'
   );
   assert.ok(
-    runbook.includes('dpl_FfPyuRhZM8G4pTofYifoajjVDpLg') && runbook.includes('x-vercel-cache: HIT'),
-    'expected the runbook to distinguish stale public alias and Vercel cache diagnostics'
+    runbook.includes('RENDERED_SMOKE_ORIGIN') &&
+      runbook.includes('dashboard-mobile-money-loop-bridge') &&
+      runbook.includes('money-loop-payoff-orbit'),
+    'expected the runbook to document rendered production verification'
   );
   assert.ok(
-    runbook.includes('VERCEL_AUTOMATION_BYPASS_SECRET') &&
-      runbook.includes('Promote or alias the current release build') &&
-      runbook.includes('npx vercel promote https://velocity-banking-mvp-v2-mxhnh9zn0-islanddevcrew.vercel.app') &&
-      runbook.includes('npx vercel cache purge --yes --scope islanddevcrew'),
-    'expected the runbook to document the required Vercel release action'
+    runbook.includes('The final InterestShield custom-domain hostname was not found') &&
+      runbook.includes('Do not guess or silently register a hostname') &&
+      runbook.includes('NEXT_PUBLIC_SITE_URL'),
+    'expected the runbook to preserve the unresolved custom-domain handoff honestly'
   );
 });
 

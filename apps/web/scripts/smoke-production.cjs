@@ -252,9 +252,14 @@ function buildDeploymentDiagnostics({ body, response }) {
   return diagnostics.length > 0 ? ` Observed Vercel diagnostics: ${diagnostics.join('; ')}.` : '';
 }
 
+function extractDocumentTitle(body) {
+  return body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() || '';
+}
+
 function assertCleanProductionShell({ body, response, route, label, url, latestDeployment }) {
   const contentType = String(response.headers['content-type'] || '');
   const failureSignature = failureSignatures.find((signature) => body.includes(signature));
+  const documentTitle = extractDocumentTitle(body);
   const deploymentDiagnostics = `${buildDeploymentDiagnostics({ body, response })}${latestDeployment.diagnostics}`;
   const remediation = latestDeployment.remediation;
 
@@ -289,9 +294,10 @@ function assertCleanProductionShell({ body, response, route, label, url, latestD
     );
   }
 
-  if (!body.includes('InterestShield - Financial Empowerment') || !body.includes('/_next/static')) {
+  if (!documentTitle.includes('InterestShield') || !body.includes('/_next/static')) {
     throw new Error(
-      `${label} route ${route} did not return the expected InterestShield Next shell.` +
+      `${label} route ${route} did not return the expected InterestShield Next shell. ` +
+        `Observed title: ${documentTitle || 'none'}.` +
         `${deploymentDiagnostics}${remediation}`
     );
   }

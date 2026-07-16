@@ -6,6 +6,13 @@ const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-ha
 const { createGracefulShutdown, startBuiltServer, stopServer } = require('./built-server-harness.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
+const configuredOrigin = process.env.RENDERED_SMOKE_ORIGIN
+  ? normalizeOrigin(process.env.RENDERED_SMOKE_ORIGIN)
+  : null;
+const evidenceDir = process.env.RENDERED_SMOKE_EVIDENCE_DIR
+  ? path.resolve(appRoot, process.env.RENDERED_SMOKE_EVIDENCE_DIR)
+  : null;
+const mobileViewportWidth = Number(process.env.RENDERED_SMOKE_MOBILE_WIDTH || 390);
 const routes = [
   ['/', 'Money Loop Dashboard'],
   ['/simulator', 'What-If Simulator'],
@@ -17,7 +24,7 @@ const routes = [
 ];
 const viewports = [
   ['desktop', { width: 1440, height: 900 }],
-  ['mobile', { width: 390, height: 844 }],
+  ['mobile', { width: mobileViewportWidth, height: 844 }],
 ];
 let activeServer;
 let activeBrowser;
@@ -35,6 +42,14 @@ const shutdown = createGracefulShutdown({
 
 process.once('SIGINT', () => { void shutdown(130); });
 process.once('SIGTERM', () => { void shutdown(143); });
+
+function normalizeOrigin(value) {
+  const url = new URL(value);
+  url.pathname = '/';
+  url.search = '';
+  url.hash = '';
+  return url.toString().replace(/\/$/, '');
+}
 
 async function settleImages(page) {
   await page.evaluate(async () => {
@@ -84,20 +99,49 @@ async function verifyRoute(page, origin, route, marker, viewportLabel) {
     }
     await settleImages(page);
 
-    const result = await page.evaluate((expectedMarker) => {
+    const result = await page.evaluate(({ expectedMarker, route: currentRoute, viewportLabel: currentViewport }) => {
       const root = document.documentElement;
       const main = document.querySelector('main');
       const images = [...document.images].filter((image) => image.getClientRects().length > 0);
+      const isVisible = (testId) => {
+        const element = document.querySelector(`[data-testid="${testId}"]`);
+        if (!element) return false;
+        const style = window.getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
+      };
+      let dashboardProof = null;
+      if (currentRoute === '/') {
+        const testIds = currentViewport === 'desktop'
+          ? [
+              'money-loop-artifact-rail',
+              'money-loop-payoff-orbit',
+              'dashboard-vital-cash-flow',
+              'dashboard-vital-interest-burn',
+              'dashboard-vital-debt-free-eta',
+              'dashboard-vital-next-move',
+            ]
+          : [
+              'dashboard-mobile-money-loop-bridge',
+              'dashboard-mobile-vitals',
+              'dashboard-mobile-vital-cash-flow',
+              'dashboard-mobile-vital-interest-burn',
+              'dashboard-mobile-vital-debt-free-eta',
+              'dashboard-mobile-vital-next-move',
+            ];
+        dashboardProof = Object.fromEntries(testIds.map((testId) => [testId, isVisible(testId)]));
+      }
       return {
         mainHasMarker: Boolean(main?.innerText.includes(expectedMarker)),
         clientWidth: root.clientWidth,
         scrollWidth: root.scrollWidth,
         hasOverlay: Boolean(document.querySelector('[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay')),
+        dashboardProof,
         brokenImages: images
           .filter((image) => !image.complete || image.naturalWidth === 0)
           .map((image) => image.currentSrc || image.src),
       };
-    }, marker);
+    }, { expectedMarker: marker, route, viewportLabel });
 
     if (!result.mainHasMarker) throw new Error(`${viewportLabel} ${route} is missing main-content marker ${marker}.`);
     if (result.hasOverlay) throw new Error(`${viewportLabel} ${route} rendered a framework error overlay.`);
@@ -107,8 +151,21 @@ async function verifyRoute(page, origin, route, marker, viewportLabel) {
     if (result.brokenImages.length > 0) {
       throw new Error(`${viewportLabel} ${route} has broken images: ${result.brokenImages.join(', ')}`);
     }
+    const missingDashboardProof = Object.entries(result.dashboardProof || {})
+      .filter(([, isVisible]) => !isVisible)
+      .map(([testId]) => testId);
+    if (missingDashboardProof.length > 0) {
+      throw new Error(`${viewportLabel} ${route} is missing visible dashboard proof: ${missingDashboardProof.join(', ')}`);
+    }
     if (consoleErrors.length > 0 || pageErrors.length > 0) {
       throw new Error(`${viewportLabel} ${route} browser errors: ${[...consoleErrors, ...pageErrors].join(' | ')}`);
+    }
+    if (route === '/' && evidenceDir) {
+      fs.mkdirSync(evidenceDir, { recursive: true });
+      await page.screenshot({
+        path: path.join(evidenceDir, `production-dashboard-${viewportLabel}.png`),
+        fullPage: true,
+      });
     }
 
     console.log(`PASS ${viewportLabel} ${route} ${result.clientWidth}px`);
@@ -119,8 +176,11 @@ async function verifyRoute(page, origin, route, marker, viewportLabel) {
 }
 
 async function run() {
-  if (!fs.existsSync(path.join(appRoot, '.next', 'build-manifest.json'))) {
+  if (!configuredOrigin && !fs.existsSync(path.join(appRoot, '.next', 'build-manifest.json'))) {
     throw new Error('Run npm run build before npm run smoke:rendered:built.');
+  }
+  if (!Number.isFinite(mobileViewportWidth) || mobileViewportWidth < 320) {
+    throw new Error('RENDERED_SMOKE_MOBILE_WIDTH must be a finite number of at least 320.');
   }
   const executablePath = findBrowserExecutable();
   if (!executablePath) {
@@ -128,15 +188,21 @@ async function run() {
   }
 
   try {
-    const started = await startBuiltServer(appRoot);
-    activeServer = started.server;
+    let origin = configuredOrigin;
+    if (!origin) {
+      const started = await startBuiltServer(appRoot);
+      activeServer = started.server;
+      origin = started.origin;
+    }
     activeBrowser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
+    console.log(`Rendered smoke origin: ${origin}`);
+    console.log(`Browser executable: ${executablePath}`);
 
     for (const [viewportLabel, viewport] of viewports) {
       const context = await activeBrowser.newContext({ viewport });
       const page = await context.newPage();
       for (const [route, marker] of routes) {
-        await verifyRoute(page, started.origin, route, marker, viewportLabel);
+        await verifyRoute(page, origin, route, marker, viewportLabel);
       }
 
       if (viewportLabel === 'desktop') {
@@ -148,7 +214,7 @@ async function run() {
         page.on('console', onConsole);
         page.on('pageerror', onPageError);
         try {
-          await page.goto(started.origin, { waitUntil: 'networkidle' });
+          await page.goto(origin, { waitUntil: 'networkidle' });
           await page.getByRole('button', { name: 'Next Money Loop artifact' }).click();
           const locArtifact = page.getByTestId('money-loop-artifact-node-loc');
           if ((await locArtifact.getAttribute('aria-selected')) !== 'true') {
@@ -168,7 +234,7 @@ async function run() {
   } finally {
     await activeBrowser?.close();
     activeBrowser = undefined;
-    await stopServer(activeServer);
+    if (activeServer) await stopServer(activeServer);
     activeServer = undefined;
   }
 }
