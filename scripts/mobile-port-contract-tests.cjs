@@ -312,8 +312,9 @@ test('Expo iOS smoke is repeatable on macOS and explicit when unavailable', () =
   assert.ok(smokeScript.includes('reopenProjectInExpoGo'), 'expected iOS smoke to recover a stalled hosted Expo Go launch');
   assert.ok(smokeScript.includes('requiredSettingsText'), 'expected iOS smoke to verify route-specific Settings text');
   assert.ok(smokeScript.includes('secure native storage'), 'expected a unique first-viewport Settings assertion');
-  assert.ok(
-    smokeScript.includes("'secure native storage',\n  'Money Loop Mobile',\n  'Dashboard',"),
+  assert.match(
+    smokeScript,
+    /'secure native storage',\r?\n  'Money Loop Mobile',\r?\n  'Dashboard',/,
     'expected iOS Settings evidence to require the complete route shell'
   );
   assert.ok(smokeScript.includes('requiredDashboardText'), 'expected iOS smoke to reject blank dashboard evidence');

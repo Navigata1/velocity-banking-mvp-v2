@@ -1,0 +1,37 @@
+P6-T4 CRLF CONTRACT EVIDENCE
+Captured: 2026-07-16 America/Chicago
+Base: merged main a45d53aab8de72f2eb51cbca241455251b4af273
+
+Red
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Result: FAIL on Windows after a fresh main checkout.
+Failure: expected iOS Settings evidence to require the complete route shell.
+
+Cause
+
+The new source contract matched one multiline JavaScript literal with hard-coded
+LF characters. Git's Windows checkout converted the inspected smoke script to
+CRLF, so the contract failed even though the source and runtime behavior were
+unchanged. Linux CI remained green and therefore did not expose the portability
+defect.
+
+Green contract
+
+The assertion now uses explicit CRLF-tolerant line boundaries. Re-run the root
+mobile contract on Windows, plus mobile TypeScript and owner-recovery contracts,
+before merging this focused portability fix.
+
+Green
+
+Command: node --test scripts/mobile-port-contract-tests.cjs
+Result: PASS - all 36 mobile and native contracts.
+
+Command: npm --prefix apps/mobile run check
+Result: PASS - TypeScript completed without errors.
+
+Command: npm --prefix apps/mobile run test:supabase:mobile
+Result: PASS - all six owner-scoped persistence and recovery lanes.
+
+Command: git diff --check
+Result: PASS - no whitespace errors.
