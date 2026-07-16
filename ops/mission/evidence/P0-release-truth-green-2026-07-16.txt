@@ -1,0 +1,87 @@
+P0 RELEASE TRUTH GREEN EVIDENCE
+Captured: 2026-07-16 America/Chicago
+Branch: codex/mission/p0-release-truth
+Base: main 71187011d5243889d681e05c37b1bd35ce0ef570
+
+Vercel project repair
+
+- Authenticated CLI: Vercel 56.3.0 as jony02-7429.
+- Team: islanddevcrew / Island Dev Crew.
+- Project: velocity-banking-mvp-v2.
+- Git source: Navigata1/velocity-banking-mvp-v2, production branch main.
+- Project configuration repaired in place:
+  rootDirectory=apps/web and framework=nextjs.
+- Rebuilt main 7118701 as production deployment
+  dpl_AfYvAyUF7mS8Dpx1T29ZxL2Hbdqk.
+- Canonical production alias:
+  https://velocity-banking-mvp-v2.vercel.app
+- Legacy public alias promoted to the repaired deployment:
+  https://web-islanddevcrew.vercel.app
+- Vercel project SSO protection was disabled so the educational production app
+  is publicly reachable.
+- CDN and Data Cache were purged after alias promotion.
+- Previous legacy rollback deployment retained:
+  dpl_FfPyuRhZM8G4pTofYifoajjVDpLg.
+
+Production route smoke
+
+The production shell assertion now verifies route-specific document titles by
+requiring "InterestShield" instead of requiring the Dashboard title verbatim.
+It still rejects 401/403/404/5xx responses, Vercel deployment errors, framework
+error shells, malformed Next asset paths, and missing Next static assets.
+
+Command:
+  npm --prefix apps/web run smoke:production
+
+Result:
+  PASS all seven routes at https://web-islanddevcrew.vercel.app
+
+Command:
+  PRODUCTION_ORIGIN=https://velocity-banking-mvp-v2.vercel.app npm run smoke:production
+
+Result:
+  PASS all seven routes at the canonical project alias
+
+Rendered Chrome production smoke
+
+Browser:
+  C:\Program Files\Google\Chrome\Application\chrome.exe
+
+Origin:
+  https://web-islanddevcrew.vercel.app
+
+Viewports:
+  desktop 1440x900
+  mobile 375x844
+
+Result:
+  PASS all seven routes at both viewports.
+  PASS no console errors or uncaught page errors.
+  PASS no framework overlays, broken visible images, or page-width overflow.
+  PASS Dashboard four-vital proof at both viewports.
+  PASS desktop Money Loop artifact rail and payoff orbit.
+  PASS desktop Money Loop Next control selects LOC.
+  PASS mobile Money Loop bridge and compact four-vital summary.
+
+Rendered evidence:
+  ops/mission/evidence/P0-production-rendered/production-dashboard-desktop.png
+  ops/mission/evidence/P0-production-rendered/production-dashboard-mobile.png
+
+Regression contract
+
+Command:
+  npm --prefix apps/web test
+
+Result:
+  PASS Three stage PNG and lifecycle helper tests.
+  PASS 263 regression tests.
+  PASS two independent financial reference scenarios.
+  PASS accessibility route contract.
+  PASS metadata contract.
+  PASS public asset budget.
+
+Additional release gates
+
+  PASS npm --prefix apps/web run lint
+  PASS npm --prefix apps/web run build
+  PASS npm --prefix apps/web run smoke:rendered:built

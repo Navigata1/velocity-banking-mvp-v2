@@ -1,0 +1,32 @@
+P0 RELEASE TRUTH RED EVIDENCE
+Captured: 2026-07-16 America/Chicago
+Branch: codex/mission/p0-release-truth
+Base: main 71187011d5243889d681e05c37b1bd35ce0ef570
+
+Vercel project configuration
+
+- Authenticated CLI: Vercel 56.3.0 as jony02-7429.
+- Team: islanddevcrew / Island Dev Crew.
+- Project: velocity-banking-mvp-v2.
+- Git source: Navigata1/velocity-banking-mvp-v2, production branch main.
+- Defect: project root and framework were empty, so successful Git deployments
+  contained only a zero-millisecond root build and returned HTTP 404.
+- Remediation applied in place: rootDirectory=apps/web, framework=nextjs.
+
+Production deployment
+
+- Rebuilt main 7118701 as production deployment
+  dpl_AfYvAyUF7mS8Dpx1T29ZxL2Hbdqk.
+- Public project alias now returns HTTP 200 and the current primary-navigation
+  marker on Dashboard, Simulator, Cockpit, and Settings.
+
+Remaining red contract
+
+Command:
+  PRODUCTION_ORIGIN=https://velocity-banking-mvp-v2.vercel.app npm run smoke:production
+
+Result: FAIL on /simulator.
+
+Cause: the smoke script requires the Dashboard title
+"InterestShield - Financial Empowerment" on every route. Current route metadata
+correctly renders titles such as "What-If Simulator | InterestShield".
