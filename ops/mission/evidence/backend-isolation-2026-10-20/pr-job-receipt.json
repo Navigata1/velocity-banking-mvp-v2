@@ -1,0 +1,106 @@
+{
+  "completed_at": "2026-10-20T20:41:47Z",
+  "conclusion": "success",
+  "head_sha": "37d188020ac2f350141e52f19d91ff20b81799ba",
+  "html_url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39493779589/job/118873424261",
+  "id": 118873424261,
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "name": "Isolated SQL and owner isolation",
+  "run_id": 39493779589,
+  "started_at": "2026-10-20T20:39:04Z",
+  "status": "completed",
+  "steps": [
+    {
+      "conclusion": "success",
+      "name": "Set up job",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Check out repository",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Set up Node",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Install web contract dependencies",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Check isolated database wiring",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Install pinned Supabase CLI",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Start disposable database",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Replay all migrations without seed data",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Verify client contracts and SQL owner isolation",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Lint application database functions",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Check database security advisors",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Repeat SQL tests to verify fixture rollback",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Stop disposable database",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Upload database isolation proof",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Post Install pinned Supabase CLI",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Post Set up Node",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Post Check out repository",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "name": "Complete job",
+      "status": "completed"
+    }
+  ]
+}

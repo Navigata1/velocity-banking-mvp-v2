@@ -47,6 +47,19 @@ All six owner tables, their existing RPC and the four migration bytes are unchan
 in this wiring checkpoint. Financial-engine, user scenario and visual code are also
 unchanged.
 
+## Initial Hosted Result
+
+The database jobs passed on source `37d188020ac2f350141e52f19d91ff20b81799ba`
+in both push run `39493769671` and PR run `39493779589`. Each passed all 63 SQL
+assertions twice, clean replay, lint, security advisors, project cleanup and proof
+upload. Logs/job receipts live in
+`ops/mission/evidence/backend-isolation-2026-10-20/`.
+
+The tested local image is Supabase Postgres `17.6.1.143`; the pinned CLI advertises
+2.121.0 as newer. This is reproducible functional isolation proof, not approval
+of a final managed-provider version or its patch/backup state. Future pushes must
+continue to pass the same standing gate.
+
 ## Sources Checked 2026-10-20
 
 - [Official CI database test guide](https://supabase.com/docs/guides/deployment/ci/testing)

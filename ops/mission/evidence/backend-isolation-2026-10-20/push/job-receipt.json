@@ -1,0 +1,144 @@
+{
+  "completed_at": "2026-10-20T20:42:40Z",
+  "conclusion": "success",
+  "head_sha": "37d188020ac2f350141e52f19d91ff20b81799ba",
+  "html_url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39493769671/job/118873389468",
+  "id": 118873389468,
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "name": "Isolated SQL and owner isolation",
+  "run_id": 39493769671,
+  "runner_group_name": "GitHub Actions",
+  "runner_name": "GitHub Actions 1000003149",
+  "started_at": "2026-10-20T20:39:00Z",
+  "status": "completed",
+  "steps": [
+    {
+      "completed_at": "2026-10-20T20:39:02Z",
+      "conclusion": "success",
+      "name": "Set up job",
+      "started_at": "2026-10-20T20:39:01Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:39:04Z",
+      "conclusion": "success",
+      "name": "Check out repository",
+      "started_at": "2026-10-20T20:39:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:39:05Z",
+      "conclusion": "success",
+      "name": "Set up Node",
+      "started_at": "2026-10-20T20:39:04Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:39:20Z",
+      "conclusion": "success",
+      "name": "Install web contract dependencies",
+      "started_at": "2026-10-20T20:39:05Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:39:21Z",
+      "conclusion": "success",
+      "name": "Check isolated database wiring",
+      "started_at": "2026-10-20T20:39:20Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:39:26Z",
+      "conclusion": "success",
+      "name": "Install pinned Supabase CLI",
+      "started_at": "2026-10-20T20:39:21Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:41:50Z",
+      "conclusion": "success",
+      "name": "Start disposable database",
+      "started_at": "2026-10-20T20:39:26Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:10Z",
+      "conclusion": "success",
+      "name": "Replay all migrations without seed data",
+      "started_at": "2026-10-20T20:41:50Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:17Z",
+      "conclusion": "success",
+      "name": "Verify client contracts and SQL owner isolation",
+      "started_at": "2026-10-20T20:42:10Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:18Z",
+      "conclusion": "success",
+      "name": "Lint application database functions",
+      "started_at": "2026-10-20T20:42:17Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:19Z",
+      "conclusion": "success",
+      "name": "Check database security advisors",
+      "started_at": "2026-10-20T20:42:18Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:20Z",
+      "conclusion": "success",
+      "name": "Repeat SQL tests to verify fixture rollback",
+      "started_at": "2026-10-20T20:42:19Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:33Z",
+      "conclusion": "success",
+      "name": "Stop disposable database",
+      "started_at": "2026-10-20T20:42:20Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:34Z",
+      "conclusion": "success",
+      "name": "Upload database isolation proof",
+      "started_at": "2026-10-20T20:42:33Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:36Z",
+      "conclusion": "success",
+      "name": "Post Install pinned Supabase CLI",
+      "started_at": "2026-10-20T20:42:34Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:38Z",
+      "conclusion": "success",
+      "name": "Post Set up Node",
+      "started_at": "2026-10-20T20:42:36Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:38Z",
+      "conclusion": "success",
+      "name": "Post Check out repository",
+      "started_at": "2026-10-20T20:42:38Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T20:42:38Z",
+      "conclusion": "success",
+      "name": "Complete job",
+      "started_at": "2026-10-20T20:42:38Z",
+      "status": "completed"
+    }
+  ]
+}

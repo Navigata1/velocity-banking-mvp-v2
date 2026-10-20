@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T20:39:00Z",
+    "updated": "2026-10-20T20:44:00Z",
     "sessionCount": 7
   },
   "policies": {
@@ -259,7 +259,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-        "notes": "Cloud discovery found an empty name-matched candidate, not a proven app binding. No remote writes or credentials added. New standing CI uses pinned tooling and a disposable Linux Supabase Postgres17 database to replay four migrations, run the 63-assertion owner/RPC suite twice and run lint/advisors. Static/client checks pass; fresh hosted SQL execution is still pending at this preflight checkpoint. See docs/backend-isolation-contract-2026-10-20.md."
+        "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md."
         },
         {
           "id": "R4-T2",
@@ -344,10 +344,10 @@
           "id": "R4-G6",
           "title": "Fresh isolated SQL and row-isolation proof",
           "command": "npm --prefix apps/web run test:supabase",
-          "status": "pending",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json",
-          "lastRun": "2026-10-20T17:59:00Z",
-        "notes": "Local Docker remains unavailable. A new disposable GitHub-hosted database job has passed its static red/green wiring checks and awaits actual execution. Require migration replay, both 63-assertion SQL runs, lint/advisors and exact-source evidence before changing this gate to passed. No production schema or records changed."
+        "status": "passed",
+        "evidence": "ops/mission/evidence/backend-isolation-2026-10-20/review-and-verification.md",
+        "lastRun": "2026-10-20T20:42:40Z",
+        "notes": "Fresh 37d1880 push/PR database jobs 118873389468/118873424261 passed four-migration replay, 63 pgTAP assertions twice per job, lint/security advisors, project cleanup and proof upload. Original logs/receipts retained. Standing CI enforces future runs. This passes isolated SQL correctness only, not hosted-project binding, API auth, backup recovery or current-provider patch alignment. Local Docker and production were untouched."
         }
       ]
     },
@@ -770,7 +770,7 @@
   "resume": {
     "activePhase": "R4",
     "nextActions": [
-      "Push the isolated-database CI checkpoint and require both exact-head CI runs including the actual SQL jobs. b985f8e is green; final receipt is PR #256 issuecomment-6300856800. Static/client tests do not close R4-G6. Do not merge the draft or promote production.",
+      "Require both final exact-head CI runs, including the SQL jobs, after this evidence/report push. R4-G6 now has actual fresh database proof on 37d1880 in both push/PR jobs; full web/mobile runs were still pending when SQL receipts were captured. Do not merge the draft or promote production.",
       "Continue R2-T2 beyond Simulator: Mortgage/Vault-web, Portfolio and dashboard helper comparisons still differ in liability/budget scope. Preserve the existing Velocity allocation policy and saved scenarios; add failing reproductions first. Read docs/simulator-comparison-contract-2026-10-20.md.",
       "R2-T3 is implemented and tested: do not restore ineffective timing buttons or delete legacy saved timing data. Shared/single-target affordability and chunk-recovery boundaries are fixed; apply the same preflight contract to mortgage/Portfolio paths. Keep actual lender terms and normal dated-calendar integration open.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
@@ -778,13 +778,13 @@
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
-      "Read docs/backend-isolation-contract-2026-10-20.md. Verify the new GitHub disposable SQL job, diagnose actual PostgreSQL failures without weakening assertions, and retain its artifact/run receipt. Hosted project binding, cross-device recovery and backup/restore remain separate; do not choose a cloud project by name alone.",
+      "Read docs/backend-isolation-contract-2026-10-20.md and preserve the standing real SQL gate. Actual 63-assertion runs now pass twice on both events. Next backend work is dedicated cloud association, current-provider patch/version alignment, complete six-table negative coverage and isolated backup/account recovery. Never choose a cloud project by name alone or treat functional CI as managed-backup proof.",
       "Use domain-readiness.json: interestshield.app/www are already verified on the app project with working Cloudflare DNS and HTTPS. Do not re-add or rewrite DNS. Verify the final restored deployment SHA, Production SITE_URL override and custom-domain browser smoke only when release gates pass.",
       "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
-      "Supabase project binding is unconfigured. Local Docker is unavailable; fresh SQL/RLS proof is now routed to disposable GitHub CI but has not executed at this checkpoint. Domain binding is verified; final restored production release stays gated."
+      "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",

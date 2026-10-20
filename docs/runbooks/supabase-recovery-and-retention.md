@@ -4,6 +4,11 @@
 
 This runbook covers the owner-scoped InterestShield Postgres contract. It does not claim that a managed cloud backup exists. The production gate remains blocked until a dedicated InterestShield Supabase project is approved, configured, and its provider backup is restored in a separate staging project.
 
+The standing disposable CI database gate is documented in
+[`backend-isolation-contract-2026-10-20.md`](../backend-isolation-contract-2026-10-20.md).
+It exercises migration replay and the real SQL owner/RPC suite, not a backup restore.
+Successful SQL tests do not close the recovery or hosted-project configuration gates.
+
 ## Local Recovery Drill
 
 Run from the repository root with the local Supabase database healthy:
@@ -29,7 +34,7 @@ Before real-user launch:
 
 1. Enable the provider backup tier selected for the dedicated project and record its recovery-point and recovery-time objectives.
 2. Restore the newest provider backup into a separate staging project, never over production first.
-3. Apply pending migrations, then run schema lint, security advisors, the 21-test owner-isolation suite, and application smoke.
+3. Apply pending migrations, then run schema lint, security advisors, the current committed SQL owner/RPC suite (`supabase/tests`, now 63 assertions), and application smoke.
 4. Compare row counts by owner and table, RLS/policy counts, migration versions, and a sample of encrypted or redacted snapshot checksums.
 5. Promote only after the incident commander and data owner sign off. Preserve the failed environment read-only until evidence is complete.
 

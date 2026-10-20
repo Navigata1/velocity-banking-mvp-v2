@@ -28,7 +28,7 @@
     "asset-centered dashboard and Vault artwork",
     "opt-in finite 360 degree viewer with reduced motion and cleanup",
     "deterministic HyperFrames 1080p turntable composition and render matrix",
-    "pinned disposable Supabase Postgres CI wiring with migration replay, repeated pgTAP, lint/advisors and failure artifacts; actual hosted SQL execution pending"
+    "standing disposable Supabase Postgres CI gate: both source-checkpoint database jobs passed clean migration replay, 63 pgTAP assertions twice, lint/advisors, cleanup and proof upload"
   ],
   "remainingProductionGates": [
     "Complete eight remaining textured hero models and artist-review both refined candidates and collection consistency",
@@ -57,6 +57,7 @@
     "mobileDependencyAudit": "critical count reduced from one to zero by compatible shell-quote patch 6e900d0; 40 noncritical findings remain, including CLI/Metro tooling; SDK remediation and exposure review stay open",
     "nativeExports": "fresh typecheck, contracts, seven web routes and Android/iOS Hermes exports passed after the critical patch; not device QA",
     "backendDiscovery": "cloud discovery available; name-matched Velocity Banking candidate has zero public tables/migrations; repo has four migrations but no cloud link or local public credentials; preview is local-only; no remote mutations",
+    "backendSql": "37d1880 database jobs passed in both CI runs 39493769671/39493779589: four migrations replayed, 63 assertions passed twice, lint/security advisors clean, cleanup successful. Tested Supabase PG17.6.1.143/CLI2.109.1 is functional proof, not final provider patch alignment, hosted account isolation or backup recovery",
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "prior reviews retained; timing copy re-reviewed clear. New budget review found exact-payment floating-point and calendar-summary eligibility defects; reproduced, fixed and cleared with focused re-review",
