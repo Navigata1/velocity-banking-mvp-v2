@@ -1,0 +1,37 @@
+Failure excerpts; passing cases omitted.
+
+FAIL Vault formats large illustrations within a readable monetary label
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '$3,445,847'
+- '$3.45M'
+     ^
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:366:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8878:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault acknowledges fully paid balances instead of requesting unusable projection inputs
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Velocity path needs usable inputs first'
+- 'Already paid off'
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:375:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8878:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49

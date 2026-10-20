@@ -46,6 +46,10 @@ The existing aligned demo defaults were preserved.
 - Inactive mortgage-frequency buttons removed from Simulator/Vault, with saved
   fields preserved. Monthly estimates and the annual-extra approximation are
   explicit; Guardian guidance matches the current Simulator contract.
+- Vault's four policies now share the mortgage, existing LOC and available budget.
+  Extras are funded after obligations; retained cash and adverse deltas are visible.
+  The contribution illustration is budget-capped, month-accurate and explicitly
+  separate from incremental savings or common-date net wealth. Saved data is intact.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. Vault is an original authored
@@ -56,8 +60,12 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 289 web regression cases, two independent reference scenarios, 78 closed-form
-  comparison cases, 25 zero-recovery conservation cases and ancillary contracts pass.
+- 310 web/shared regressions, two independent reference scenarios, 78 prior
+  comparisons, 25 zero-recovery cases and 100 new capped-mortgage closed-form
+  cases pass, along with ancillary contracts.
+- Twenty Vault browser executions at1440px/375px pass funding, cash, disclosures,
+  stored timing, adverse results, exact final/cent-short, failed horizon and large
+  amount bounds. The16 existing Simulator/saved-data cases remain green.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
@@ -113,9 +121,11 @@ Full lender/calendar enforcement remains a release gate.
 
 Detailed contract and limitations: `docs/simulator-comparison-contract-2026-10-20.md`.
 
-Vault's mortgage comparison still has differing payment allocations and LOC coverage.
-It now discloses that limitation before its deltas; this warning is not a substitute
-for completing the equal-budget/liability calculation contract before release.
+Vault now includes both liabilities and the same available budget. Its four
+allocation policies remain distinct and are named explicitly. Cash is measured at
+each plan's own payoff month, not a common date; lender/calendar/posting rules and
+full cash-inclusive net-wealth comparisons remain release work. See
+`docs/mortgage-comparison-contract-2026-10-20.md`.
 
 Budget/cadence corrections and preserved legacy timing data:
 `docs/money-loop-budget-contract-2026-10-20.md`. Independent review's exact-payment

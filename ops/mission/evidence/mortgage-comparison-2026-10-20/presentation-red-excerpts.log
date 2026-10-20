@@ -1,0 +1,262 @@
+Failure excerpts; passing cases omitted.
+
+FAIL Vault labels adverse outcomes and suppresses differences without a usable reference
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'No modeled interest difference'
+- '$42 more modeled interest'
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:256:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8796:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault comparison displays household routing, both liabilities and retained cash without a universal win claim
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /compareMortgageStrategies\(mortgageInput, \{\s*monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses/. Input:
+
+"'use client';\n" +
+  '\n' +
+  "import { useState, useMemo } from 'react';\n" +
+  "import Link from 'next/link';\n" +
+  "import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';\n" +
+  "import { useFinancialStore } from '@/stores/financial-store';\n" +
+  "import { useThemeStore, themeClasses } from '@/stores/theme-store';\n" +
+  "import ScrollReveal from '@/components/ScrollReveal';\n" +
+  "import PageTransition from '@/components/PageTransition';\n" +
+  "import AssetHero from '@/components/hero/AssetHero';\n" +
+  "import CountUp from '@/components/CountUp';\n" +
+  "import { useIsClient } from '@/hooks/useIsClient';\n" +
+  'import {\n' +
+  '  buildVaultComparisonWidthPercent,\n' +
+  '  buildVaultFreedomPathModel,\n' +
+  '  buildVaultVelocitySetupWarning,\n' +
+  '  buildVaultVisualPercent,\n' +
+  '  formatVaultPercentLabel,\n' +
+  '  formatVaultProjectionFailure,\n' +
+  '  formatVaultStrategyInterest,\n' +
+  '  formatVaultStrategyMonths,\n' +
+  '  formatVaultStrategySavings,\n' +
+  '  formatVaultStrategyTimeDelta,\n' +
+  '  formatVaultYearsLabel,\n' +
+  "} from '@/app/vault-model';\n" +
+  'import {\n' +
+  '  calculateMortgageAnalysis,\n' +
+  '  analyzeMortgageHistory,\n' +
+  '  generateAmortizationBreakdown,\n' +
+  '  compareMortgageStrategies,\n' +
+  '  formatCurrency,\n' +
+  '  MortgageAnalysisInput,\n' +
+  "} from '@/engine/calculations';\n" +
+  '\n' +
+  'const calculateFutureValue = (presentValue: number, annualRate: number, years: number) => {\n' +
+  '  return presentValue * Math.pow(1 + annualRate, years);\n' +
+  '};\n' +
+  '\n' +
+  "function ProgressBar({ progress, color = 'green' }: { progress: number; color?: 'green' | 'red' | 'gold' | 'blue' | 'emerald' }) {\n" +
+  '  const colors: Record<string, string> = {\n' +
+  "    green: 'bg-emerald-500', red: 'bg-red-500', gold: 'bg-amber-500', blue: 'bg-blue-500', emerald: 'bg-emerald-500',\n" +
+  '  };\n' +
+  '  const width = buildVaultVisualPercent(progress);\n' +
+  '  return (\n' +
+  '    <div className="w-full bg-gray-400/30 rounded-full h-3 overflow-hidden">\n' +
+  '      <div className={`h-full ${colors[color]} transition-all duration-1000 ease-out rounded-full`}\n' +
+  '        style={{ width: `${width}%` }} />\n' +
+  '    </div>\n' +
+  '  );\n' +
+  '}\n' +
+  '\n' +
+  'function formatProjectionFailure(reason?: string): string {\n' +
+  '  return formatVaultProjectionFailure(reason);\n' +
+  '}\n' +
+  '\n' +
+  'function formatMortgageMonths(strategy: { months: number; isPayoffPossible: boolean }): string {\n' +
+  '  return formatVaultStrategyMonths(strategy);\n' +
+  '}\n' +
+  '\n' +
+  'function formatMortgageInterest(totalInterest: number, isPayoffPossible: boolean): string {\n' +
+  '  return formatVaultStrategyInterest(totalInterest, isPayoffPossible);\n' +
+  '}\n' +
+  '\n' +
+  'function formatMortgageSavings(strategy: { saved: number; isPayoffPossible: boolean }): string {\n' +
+  '  return formatVaultStrategySavings({ ...strategy, monthsSaved: 0 });\n' +
+  '}\n' +
+  '\n' +
+  "function formatMortgageTimeDelta(strategy: { monthsSaved: number; isPayoffPossible: boolean; failureReason?: string }, suffix = ''): string {\n" +
+  '  return formatVaultStrategyTimeDelta({ ...strategy, saved: 0 }, suffix);\n' +
+  '}\n' +
+  '\n' +
+  'export default function VaultPage() {\n' +
+  '  const mounted = useIsClient();\n' +
+  '  const [step, setStep] = useState(0);\n' +
+  '  const [investmentRate, setInvestmentRate] = useState(0.07);\n' +
+  '  const store = useFinancialStore();\n' +
+  '  const { theme } = useThemeStore();\n' +
+  "  const classes = themeClasses[mounted ? theme : 'original'];\n" +
+  '\n' +
+  '  // Build mortgage analysis input from store\n' +
+  '  const mortgageInput: MortgageAnalysisInput = useMemo(() => ({\n' +
+  '    ...store.mortgageDetails,\n' +
+  '    currentAge: store.currentAge,\n' +
+  '  }), [store.mortgageDetails, store.currentAge]);\n' +
+  '\n' +
+  '  const analysis = useMemo(() => calculateMortgageAnalysis(mortgageInput), [mortgageInput]);\n' +
+  '  const history = useMemo(() => analyzeMortgageHistory(mortgageInput), [mortgageInput]);\n' +
+  '  const amortBreakdown = useMemo(() =>\n' +
+  '    generateAmortizationBreakdown(analysis.originalLoanAmount, store.mortgageDetails.originalRate, store.mortgageDetails.originalTermYears),\n' +
+  '    [analysis.originalLoanAmount, store.mortgageDetails.originalRate, store.mortgageDetails.originalTermYears]\n' +
+  '  );\n' +
+  '  const strategies = useMemo(() => {\n' +
+  '    const cashFlow = store.monthlyIncome - store.monthlyExpenses;\n' +
+  '    return compareMortgageStrategies(mortgageInput, cashFlow, {\n' +
+  '      limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance,\n' +
+  '    });\n' +
+  '  }, [mortgageInput, store.monthlyIncome, store.monthlyExpenses, store.loc]);\n' +
+  '  const velocitySetupWarning = useMemo(\n' +
+  '    () => buildVaultVelocitySetupWarning(strategies.velocity),\n' +
+  '    [strategies.velocity]\n' +
+  '  );\n' +
+  '\n' +
+  '  const nextStep = () => setStep(prev => Math.min(prev + 1, 5));\n' +
+  '  const prevStep = () => setStep(prev => Math.max(prev - 1, 0));\n' +
+  '  const restart = () => setStep(0);\n' +
+  '\n' +
+  '  if (!mounted) {\n' +
+  '    return (\n' +
+  '      <div className="p-6 md:p-10 max-w-2xl mx-auto">\n' +
+  '        <div className="animate-pulse">\n' +
+  '          <div className="h-8 bg-gray-500/30 rounded w-1/3 mb-4"></div>\n' +
+  '          <div className="h-96 bg-gray-500/20 rounded-3xl"></div>\n' +
+  '        </div>\n' +
+  '      </div>\n' +
+  '    );\n' +
+  '  }\n' +
+  '\n' +
+  '  const md = store.mortgageDetails;\n' +
+  '  const updateMD = store.updateMortgageDetails;\n' +
+  '\n' +
+  '  const renderStep = () => {\n' +
+  '    switch (step) {\n' +
+  '      // ── Step 0: Tell Me About Your Home ──\n' +
+  '      case 0:\n' +
+  '        return (\n' +
+  '          <div className="space-y-6">\n' +
+  '            {/* Entry mode tabs */}\n' +
+  '            <div className="flex gap-2" role="group" aria-label="Vault mortgage entry mode">\n' +
+  "              {(['purchase', 'current', 'both'] as const).map((mode) => (\n" +
+  '                <button key={mode} onClick={() => updateMD({ entryMode: mode })}\n' +
+  '                  aria-pressed={md.entryMode === mode}\n' +
+  '                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${\n' +
+  '                    md.entryMode === mode\n' +
+  "                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'\n" +
+  '                      : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`\n' +
+  '                  }`}>\n' +
+  "                  {mode === 'purchase' ? 'When I Bought It' : mode === 'current' ? 'Where I Am Now' : 'Both'}\n" +
+  '                </button>\n' +
+  '              ))}\n' +
+  '            </div>\n' +
+  '\n' +
+  '            {/* Purchase fields */}\n' +
+  "            {(md.entryMode === 'purchase' || md.entryMode === 'both') && (\n" +
+  '              <div className={`${classes.glass} rounded-xl p-5 space-y-4`}>\n' +
+  '                <h3 className={`text-sm font-semibold ${classes.textSecondary} uppercase tracking-wide`}>🏠 When You Bought It</h3>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Age at Purchase</label>\n' +
+  '                  <EditableNumber value={md.purchaseAge} onChange={(v) => updateMD({ purchaseAge: v })} ariaLabel="Vault age at purchase" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Purchase Price</label>\n' +
+  '                  <EditableCurrency value={md.originalCost} onChange={(v) => updateMD({ originalCost: v })} ariaLabel="Vault purchase price" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Down Payment</label>\n' +
+  '                  <EditableCurrency value={md.downPayment} onChange={(v) => updateMD({ downPayment: v })} ariaLabel="Vault down payment" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Term</label>\n' +
+  '                  <div className="flex gap-2" role="group" aria-label="Vault mortgage original term">\n' +
+  '                    {[15, 30].map(t => (\n' +
+  '                      <button key={t} onClick={() => updateMD({ originalTermYears: t })}\n' +
+  '                        aria-pressed={md.originalTermYears === t}\n' +
+  '                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${\n' +
+  '                          md.originalTermYears === t\n' +
+  "                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'\n" +
+  '                            : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`\n' +
+  '                        }`}>\n' +
+  '                        {t} yr\n' +
+  '                      </button>\n' +
+  '                    ))}\n' +
+  '                  </div>\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Original Rate</label>\n' +
+  '                  <EditablePercentage value={md.originalRate} onChange={(v) => updateMD({ originalRate: v })} ariaLabel="Vault original rate" size="lg" />\n' +
+  '                </div>\n' +
+  '              </div>\n' +
+  '            )}\n' +
+  '\n' +
+  '            {/* Current fields */}\n' +
+  "            {(md.entryMode === 'current' || md.entryMode === 'both') && (\n" +
+  '              <div className={`${classes.glass} rounded-xl p-5 space-y-4`}>\n' +
+  '                <h3 className={`text-sm font-semibold ${classes.textSecondary} uppercase tracking-wide`}>📍 Where You Are Now</h3>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Current Age</label>\n' +
+  '                  <EditableNumber value={store.currentAge} onChange={store.setCurrentAge} ariaLabel="Vault current age" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Current Balance</label>\n' +
+  '                  <EditableCurrency value={md.currentBalance} onChange={(v) => updateMD({ currentBalance: v })} ariaLabel="Vault current balance" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Remaining Years</label>\n' +
+  '                  <EditableNumber value={Math.round(md.remainingTermMonths / 12)} onChange={(v) => updateMD({ remainingTermMonths: v * 12 })} suffix=" years" ariaLabel="Vault remaining years" size="lg" />\n' +
+  '                </div>\n' +
+  '                <div className="flex justify-between items-center">\n' +
+  '                  <label className={`text-sm ${classes.textSecondary}`}>Current Rate</label>\n' +
+  '                  <E'... 30243 more characters
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:265:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8796:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault freedom illustration retains valid slower outcomes without inventing freed-payment growth
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:282:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8796:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault freed-payment illustration uses actual months rather than separately rounded payoff years
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 0.5
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:295:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8796:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49

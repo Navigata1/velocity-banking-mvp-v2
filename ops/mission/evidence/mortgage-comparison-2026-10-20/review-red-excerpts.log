@@ -1,0 +1,82 @@
+Failure excerpts; passing cases omitted.
+
+FAIL Vault illustration contributions cannot exceed the actual funded monthly budget
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(Math.abs(model.investmentGrowth - 123.7 * (1 + 0.07 / 12)) < 1e-8)
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:323:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8855:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault timeline scales exclude failed payoff horizons
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:329:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8855:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault rejects fractional investment horizons before presenting growth
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:342:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8855:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault rejects overflowing investment illustrations instead of displaying zero
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:347:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8855:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL Vault adverse sub-dollar differences remain visible in cents
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '$0 more modeled interest'
+- '$0.49 more modeled interest'
+     ^
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:354:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8855:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49

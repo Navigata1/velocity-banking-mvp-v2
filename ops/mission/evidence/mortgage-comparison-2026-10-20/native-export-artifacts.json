@@ -1,0 +1,20 @@
+{
+  "scope": "Current local bundle-export artifacts only; not final-device QA.",
+  "financialEngineSourceDigest": "32b0baaaecd13444b2b5bc40a6609b343e007fe07fa4c593dea281026329b315",
+  "exports": [
+    {
+      "platform": "android",
+      "file": "apps/mobile/dist-android/_expo/static/js/android/entry-8f0964ef4e8bbfce60a4e58d2417cd5a.hbc",
+      "bytes": 3588245,
+      "sha256": "f3bf4206afc917f8d640b2ccc765260fe11c4afd638fb55bd02c76ce11e12134",
+      "modifiedAt": "2026-10-20T21:14:58.695Z"
+    },
+    {
+      "platform": "ios",
+      "file": "apps/mobile/dist-ios/_expo/static/js/ios/entry-77196d453ede9075e1ec0340564b3a0f.hbc",
+      "bytes": 3302785,
+      "sha256": "cf880c9cda965d49ddab68369076f6c8a38aa37dabd4824f552bbf2cd4d77532",
+      "modifiedAt": "2026-10-20T21:15:08.039Z"
+    }
+  ]
+}

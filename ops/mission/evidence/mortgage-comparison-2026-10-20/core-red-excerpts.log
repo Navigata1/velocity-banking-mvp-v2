@@ -1,0 +1,151 @@
+Failure excerpts; passing cases omitted.
+
+FAIL capped direct repayment preserves the scheduled loan policy and accounts for unused cash
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2 !== 10
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:163:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+FAIL all mortgage plans reject a scheduled payment that exceeds the available household budget
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:169:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage comparison includes the existing LOC and accepts zero residual with no new chunks
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:177:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage extra allocations are capped after the mortgage and modeled LOC interest reserve
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:188:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage policies conserve the same starting liabilities and budget as debt or cash
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:197:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage Velocity retains its existing chunk policy and uses the supplied gross cash routing
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:214:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage comparison retains adverse signed interest differences instead of hiding them
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:221:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL all mortgage plans accept a clipped final payment below the scheduled amount
+AssertionError [ERR_ASSERTION]: mortgage comparisons need the shared funded two-liability contract
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at mortgageComparison (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:155:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:230:18
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+FAIL mortgage web adapter rejects unfunded direct plans and delegates actual household routing
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:243:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8750:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
