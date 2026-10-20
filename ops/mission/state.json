@@ -1,772 +1,422 @@
 {
   "version": 1,
   "mission": {
-    "name": "InterestShield July 2026 Rebuild",
-    "tagline": "Make the financial truth executable, then make the experience unforgettable.",
+    "name": "InterestShield Original-Vision Production Restoration",
+    "tagline": "Recognizable assets, conserved cash, trustworthy comparisons. Task progress is not production readiness.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
-    "planDoc": "C:/Users/IslandDevCrew/Documents/Interest Shield/docs/reports/InterestShield-State-of-the-Union-v2-2026-07-12.html",
+    "planDoc": "C:/Users/IslandDevCrew/Documents/Interest Shield/docs/restoration-status-2026-10-20.md",
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
-    "status": "blocked",
+    "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-07-16T22:29:37Z",
-    "sessionCount": 2
+    "updated": "2026-10-20T17:27:25Z",
+    "sessionCount": 3
   },
   "policies": {
-    "merge": "auto",
-    "branchPrefix": "codex/mission/",
+    "merge": "review",
+    "branchPrefix": "codex/",
     "maxPrLines": 400,
-    "notes": "Merge each focused task only after local gates and GitHub CI pass. Split work beyond roughly 400 changed implementation lines."
+    "notes": "User approved autonomous implementation, verified pushes and recurring work. PR #256 stays draft while required production gates remain open. Do not auto-deploy, broaden access, start paid GPU jobs or mutate production data. Keep future implementation slices focused."
   },
   "phases": [
     {
-      "id": "P0",
-      "title": "Release Truth",
-      "goal": "The public Vercel alias and InterestShield custom domain serve the current main artifact and pass production smoke at desktop and mobile widths.",
-      "status": "blocked",
-      "sessionsEstimate": "1-2",
+      "id": "R0",
+      "title": "Verified Restoration Checkpoint",
+      "goal": "Preserve the recovered dashboard and financial fixes on GitHub with exact-SHA checks.",
+      "status": "in_progress",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R0-T1",
+          "title": "Push the reviewed restoration checkpoint",
+          "status": "done",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Commits 382f042, 474f5cf and 24d238e pushed to the draft PR. Not merged or deployed to production."
+        },
+        {
+          "id": "R0-T2",
+          "title": "Require exact-SHA GitHub CI and preview evidence",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Checkpoint CI run 39463072955 is now visible: web, media, Worker and Expo smoke passed; two stale mobile-default fixture expectations failed. Corrected locally and all mobile contracts passed. Require a green run for the next exact pushed SHA."
+        }
+      ],
       "gates": [
         {
-          "id": "P0-G1",
-          "title": "Web regression and accessibility suite",
+          "id": "R0-G1",
+          "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "PR #254 and merged-main CI run 29539332475 pass 263 regressions, independent fixtures, accessibility, metadata, assets, and lint."
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "Fresh local draft evidence: 270 financial regressions, reference fixtures, GPU cleanup, asset and accessibility contracts. Not merged-main or production proof."
         },
         {
-          "id": "P0-G2",
-          "title": "Web production build",
-          "command": "npm --prefix apps/web run build",
+          "id": "R0-G2",
+          "title": "Built desktop/mobile routes",
+          "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Next.js 16.2.10 builds all 14 static outputs locally, in GitHub CI, and in the final Vercel production deployment."
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "Seven built routes at desktop/mobile widths passed locally; this is not release promotion."
         },
         {
-          "id": "P0-G3",
-          "title": "All seven local routes answer",
-          "command": "npm --prefix apps/web run smoke:routes",
+          "id": "R0-G3",
+          "title": "Exact pushed commit has successful CI",
+          "command": "node scripts/check-restoration-ci.cjs",
+          "status": "failed",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39463072955",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "24d238e failed stale mobile demo fixture expectations; fixed locally. Next pushed SHA must pass independently."
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "title": "Photoreal Hero Collection",
+      "goal": "Ten coherent, licensed or original textured models with portable finite rotations and real browser proof.",
+      "status": "in_progress",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R1-T1",
+          "title": "Refine and optimize the Auto model",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Licensed Car Concept adapted with attribution; 134971 triangles, 13 textures, 1.92 MiB. Desktop/mobile and HyperFrames proof passed; independent review findings fixed, including decode failure and blob cleanup. Logo-linked emission neutralized and approved on re-review. Remains a collection candidate, not an exact poster reconstruction."
+        },
+        {
+          "id": "R1-T2",
+          "title": "Refine House, Land and Vault while preserving identity",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R1-T3",
+          "title": "Refine the remaining six debt-domain models",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R1-T4",
+          "title": "Harden loading, GPU cleanup, licensing and mobile budgets",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Slow loading, repeat selection, reduced motion, network and texture decode failures passed. Shared GPU resources dispose once. Attribution and separate trademark removal are tested; exact-SHA CI and collection-wide art approval remain open."
+        }
+      ],
+      "gates": [
+        {
+          "id": "R1-G1",
+          "title": "Texture and provenance contracts",
+          "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P0-release-truth-green-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "All seven local built routes pass HTTP and rendered Chrome smoke at desktop and mobile widths."
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/media-contracts.log",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "35 contracts pass; refined car hash, PBR textures, embedded images, trademark exclusion and budgets checked. Nine remaining studies do not thereby pass final art approval."
         },
         {
-          "id": "P0-G4",
-          "title": "Public production alias serves current markers",
+          "id": "R1-G2",
+          "title": "Desktop/mobile actual-geometry checks",
+          "command": "npm --prefix apps/web run test:heroes",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/hero-browser.log",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "All ten heroes at 1440px and 375px; movement, framing, no pre-opt-in downloads, reduced motion, delayed network and failure fallbacks passed."
+        },
+        {
+          "id": "R1-G3",
+          "title": "Rendered full-revolution pixel proof",
+          "command": "npm --prefix apps/media run verify:heroes",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/turntable-verification.json",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "Ten 1080p nine-second MP4s: nonblank, actual movement and return to initial orientation; refined car re-rendered after logo removal."
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Scenario and Calculation Coherence",
+      "goal": "Dashboard, Portfolio, Vault and Expo use consistent scenarios and budget/liability contracts.",
+      "status": "pending",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R2-T1",
+          "title": "Safely unify scenario ownership without overwriting saved household data",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R2-T2",
+          "title": "Complete equal-budget equal-liability strategy comparisons",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R2-T3",
+          "title": "Implement or remove ineffective chunk-frequency controls",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        }
+      ],
+      "gates": [
+        {
+          "id": "R2-G1",
+          "title": "Financial regressions",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "R2-G2",
+          "title": "Independent reference scenarios",
+          "command": "npm --prefix apps/web run test:reference",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Lender and Calendar Truth",
+      "goal": "Normal calculations enforce lender terms and dated cash ledgers, with labeled fallback estimates.",
+      "status": "pending",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R3-T1",
+          "title": "Wire lender term confidence into normal simulation entry points",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R3-T2",
+          "title": "Integrate real transaction calendars and explicit cash reserves",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        }
+      ],
+      "gates": [
+        {
+          "id": "R3-G1",
+          "title": "Financial contract and conservation tests",
+          "command": "npm --prefix apps/web test",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "title": "Backend and Release Readiness",
+      "goal": "Verify owner isolation, recovery and the exact release artifact before production.",
+      "status": "pending",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R4-T1",
+          "title": "Verify dedicated Supabase environment and owner-scoped persistence",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R4-T2",
+          "title": "Verify backup, conflict recovery and cross-device behavior",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R4-T3",
+          "title": "Confirm custom domain and exact-SHA production release",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R4-T4",
+          "title": "Resolve media development-toolchain audit findings without weakening renderer checks",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Full media audit: 13 advisories (8 high, 5 moderate); production dependency audit clean. Use a focused update with fresh full media proof, not npm audit fix --force."
+        }
+      ],
+      "gates": [
+        {
+          "id": "R4-G1",
+          "title": "Persistence client contracts",
+          "command": "npm --prefix apps/web run test:supabase:client",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "R4-G2",
+          "title": "Account isolation contracts",
+          "command": "npm --prefix apps/web run test:supabase:account",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "R4-G3",
+          "title": "Verified production routes",
           "command": "npm --prefix apps/web run smoke:production",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P0-final-main-production-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Both Vercel aliases serve final main d7a0c9a from deployment dpl_CnQ8CkKSNWnsTJZGy8a3zVpu2aDD and pass seven-route plus rendered Chrome production smoke."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P0-T1",
-          "title": "Resolve Vercel authentication and confirm project ownership",
-          "status": "done",
-          "dependsOn": [],
-          "pr": {
-            "number": 254,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
-            "mergedAt": "2026-07-16"
-          },
-          "notes": "Verified Vercel CLI access, owner, team, project ID, Git source, production branch, root directory, framework, and public protection posture."
-        },
-        {
-          "id": "P0-T2",
-          "title": "Promote the latest green main artifact and attach production domains",
-          "status": "blocked",
-          "dependsOn": [
-            "P0-T1"
-          ],
-          "pr": {
-            "number": 254,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
-            "mergedAt": "2026-07-16"
-          },
-          "notes": "Canonical and compatibility aliases are promoted, cache-purged, verified, and retain rollback evidence. The custom-domain hostname and authoritative DNS ownership are not available, so that domain was not guessed or modified."
-        },
-        {
-          "id": "P0-T3",
-          "title": "Run production Browser and Chrome responsive smoke",
-          "status": "done",
-          "dependsOn": [
-            "P0-T2"
-          ],
-          "pr": {
-            "number": 254,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
-            "mergedAt": "2026-07-16"
-          },
-          "notes": "Real Chrome passed all seven production routes at 1440x900 and 375x844 with four-vital, 3D rail/orbit, mobile bridge, interaction, console, image, overlay, and overflow checks."
-        }
-      ]
-    },
-    {
-      "id": "P1",
-      "title": "Calculation Contract v2",
-      "goal": "Every displayed balance is ledger-continuous and lender-dependent assumptions are explicit, versioned, and executable.",
-      "status": "done",
-      "sessionsEstimate": "4-7",
-      "gates": [
-        {
-          "id": "P1-G1",
-          "title": "Financial engine regression suite",
-          "command": "npm --prefix apps/web test",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P1-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:13:00Z",
-          "notes": "241 regressions plus two independent anonymized reference scenarios cover ledger invariants, lender-term boundaries, and transaction-calendar accrual."
-        },
-        {
-          "id": "P1-G2",
-          "title": "Web build consumes the versioned contract",
-          "command": "npm --prefix apps/web run build",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P1-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:13:00Z",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
           "notes": ""
         },
         {
-          "id": "P1-G3",
-          "title": "Expo TypeScript consumes the shared contract",
-          "command": "npm --prefix apps/mobile run check",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P1-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T02:13:00Z",
+          "id": "R4-G4",
+          "title": "Media tooling dependency audit",
+          "command": "npm --prefix apps/media audit",
+          "status": "failed",
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/media-audit.json",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "13 development-toolchain advisories; zero production dependencies affected in this workspace. Findings remain open, not suppressed."
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "title": "Native Final Candidate",
+      "goal": "Rebuild and re-test native clients against the restored shared financial contracts.",
+      "status": "pending",
+      "sessionsEstimate": "evidence-driven",
+      "tasks": [
+        {
+          "id": "R5-T1",
+          "title": "Regenerate Expo/Hermes bundles after financial changes",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": ""
+        },
+        {
+          "id": "R5-T2",
+          "title": "Repeat Android and iOS final-candidate device checks",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
           "notes": ""
         }
       ],
-      "tasks": [
-        {
-          "id": "P1-T1",
-          "title": "Fix canonical Money Loop ledger continuity",
-          "status": "done",
-          "dependsOn": [],
-          "pr": {
-            "number": 218,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/218",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Corrected LOC event balanceAfter semantics. Red evidence: ops/mission/evidence/P1-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
-        },
-        {
-          "id": "P1-T2",
-          "title": "Define lender terms and confidence contract",
-          "status": "done",
-          "dependsOn": [
-            "P1-T1"
-          ],
-          "pr": {
-            "number": 219,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/219",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Version fees, rate mode, draw and repayment periods, minimum draws, minimum payments, and missing-input confidence. Red evidence: ops/mission/evidence/P1-T2-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
-        },
-        {
-          "id": "P1-T3",
-          "title": "Add transaction-calendar LOC accrual",
-          "status": "done",
-          "dependsOn": [
-            "P1-T2"
-          ],
-          "pr": {
-            "number": 220,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/220",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Model actual month length, paydays, bill dates, and daily closing balances with a labeled estimate fallback. Red evidence: ops/mission/evidence/P1-T3-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
-        },
-        {
-          "id": "P1-T4",
-          "title": "Add lender fixture and independent reference lane",
-          "status": "done",
-          "dependsOn": [
-            "P1-T3"
-          ],
-          "pr": {
-            "number": 221,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/221",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Use anonymized fixtures and compare core outputs against closed forms or an independent reference implementation. Red evidence: ops/mission/evidence/P1-T4-red-2026-07-12.txt; green evidence: ops/mission/evidence/P1-G1-2026-07-12.txt."
-        }
-      ]
-    },
-    {
-      "id": "P2",
-      "title": "Supabase Foundation",
-      "goal": "Web and Expo can persist private, owner-scoped, recoverable, deletable financial state through one audited data contract.",
-      "status": "done",
-      "sessionsEstimate": "5-8",
       "gates": [
         {
-          "id": "P2-G1",
-          "title": "Supabase local schema and RLS integration tests",
-          "command": "npm --prefix apps/web run test:supabase",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P2-G1-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:45:00Z",
-          "notes": "Static contract, 21 pgTAP owner-isolation/idempotency tests, and isolated backup/restore drill pass; PostgreSQL 17 schema lint and security advisors remain clean."
-        },
-        {
-          "id": "P2-G2",
-          "title": "Web regression suite with persistence adapters",
-          "command": "npm --prefix apps/web test",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P2-G2-2026-07-12.txt",
-          "lastRun": "2026-07-13T04:06:40Z",
-          "notes": "Web 243 regressions, account and adapter contracts, independent fixtures, accessibility, lint, build, seven-route HTTP smoke, and Chrome responsive smoke pass."
-        },
-        {
-          "id": "P2-G3",
-          "title": "Expo shared persistence types compile",
+          "id": "R5-G1",
+          "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
+          "status": "pending",
+          "evidence": null,
+          "lastRun": null,
+          "notes": ""
+        },
+        {
+          "id": "R5-G2",
+          "title": "Native route contracts",
+          "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/P2-G3-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:36:00Z",
-          "notes": "Expo adapter and account/deep-link contracts, TypeScript, SDK compatibility, seven-route web export smoke, and Android Hermes bundle export pass."
-        },
-        {
-          "id": "P2-G4",
-          "title": "Cloudflare report Worker security and dry-run bundle",
-          "command": "npm --prefix apps/report-worker run check && npm --prefix apps/report-worker test && npm --prefix apps/report-worker run build:dry-run",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P2-G4-cloudflare-report-worker-2026-07-12.txt",
-          "lastRun": "2026-07-13T03:58:00Z",
-          "notes": "Seven Worker behavior/security tests, generated bindings, zero dependency findings, and deployment dry-run pass with one R2 binding and no D1 binding."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P2-T1",
-          "title": "Repair and apply the owner-scoped Supabase schema",
-          "status": "done",
-          "dependsOn": [
-            "P1-T2"
-          ],
-          "pr": {
-            "number": 222,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/222",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Align profile ownership, add owner-consistent foreign keys, and use least-privilege grants. Red evidence: ops/mission/evidence/P2-T1-red-2026-07-12.txt; green evidence: ops/mission/evidence/P2-G1-2026-07-12.txt."
-        },
-        {
-          "id": "P2-T2",
-          "title": "Adversarially test RLS, Data API grants, and deletion",
-          "status": "done",
-          "dependsOn": [
-            "P2-T1"
-          ],
-          "pr": {
-            "number": 223,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/223",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Test anonymous, owner A, owner B, update ownership, exports, audit events, and account deletion. Red evidence: ops/mission/evidence/P2-T2-red-2026-07-12.txt; green evidence: ops/mission/evidence/P2-G1-2026-07-12.txt."
-        },
-        {
-          "id": "P2-T3",
-          "title": "Wire web and Expo authentication and snapshot sync",
-          "status": "done",
-          "dependsOn": [
-            "P2-T2"
-          ],
-          "pr": {
-            "number": 230,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/230",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "Database idempotency PR #224, shared mutation contract #225, web adapter #226, Expo SecureStore adapter #228, web account UI #229, and Expo account/deep-link UI #230 are merged. Ownership comes from verified claims and no service credential enters either client."
-        },
-        {
-          "id": "P2-T4",
-          "title": "Prove backup, restore, retention, and incident logging",
-          "status": "done",
-          "dependsOn": [
-            "P2-T3"
-          ],
-          "pr": {
-            "number": 231,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/231",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #231 proves a two-archive synthetic restore with all six owned tables, RLS and policy counts, cleanup, retention schedule, deletion boundaries, and incident procedure. Managed provider restore remains a production project gate."
-        },
-        {
-          "id": "P2-T5",
-          "title": "Add selective Cloudflare export and report lane",
-          "status": "done",
-          "dependsOn": [
-            "P2-T3"
-          ],
-          "pr": {
-            "number": 232,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/232",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #232 adds an authenticated Worker + private R2 report-object lane. Supabase remains the sole financial handoff target and system of record; no D1 mirror or live Cloudflare resource was created."
-        }
-      ]
-    },
-    {
-      "id": "P3",
-      "title": "Web Product Overhaul",
-      "goal": "The site and dashboard are calm, fast, accessible, modular, and centered on four truthful vitals plus the Money Loop experience.",
-      "status": "done",
-      "sessionsEstimate": "6-10",
-      "gates": [
-        {
-          "id": "P3-G1",
-          "title": "Web tests and accessibility contract",
-          "command": "npm --prefix apps/web test",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:55:00Z",
-          "notes": "Web 244 regressions, two independent fixtures, accessibility, metadata, and public asset contracts pass."
-        },
-        {
-          "id": "P3-G2",
-          "title": "Web lint",
-          "command": "npm --prefix apps/web run lint",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:55:00Z",
-          "notes": "ESLint passes across the asset cleanup, responsive tab fix, and browser automation."
-        },
-        {
-          "id": "P3-G3",
-          "title": "Web production build",
-          "command": "npm --prefix apps/web run build",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:55:00Z",
-          "notes": "Next.js 16.2.10 builds 14 static pages from the final 0.13 MiB public asset set."
-        },
-        {
-          "id": "P3-G4",
-          "title": "Seven-route rendered smoke and responsive overflow",
-          "command": "npm --prefix apps/web run smoke:rendered",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P3-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T05:55:00Z",
-          "notes": "Playwright-core checks all seven routes at 1440x900 and 390x844 plus the Money Loop LOC interaction against a fresh production build, with an explicit wait for client-mounted route markers."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P3-T1",
-          "title": "Freeze information architecture and dashboard first viewport",
-          "status": "done",
-          "dependsOn": [
-            "P1-T2"
-          ],
-          "pr": {
-            "number": 233,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/233",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #233 delivers the compact four-vital instrument strip, model-backed Money Loop stage, graphite shell, chrome-free domain scroller, and desktop/mobile width containment. Red evidence: ops/mission/evidence/P3-T1-red-2026-07-12.txt."
-        },
-        {
-          "id": "P3-T2",
-          "title": "Split oversized Learn, Portfolio, and mobile shell modules",
-          "status": "done",
-          "dependsOn": [
-            "P3-T1"
-          ],
-          "pr": {
-            "number": 234,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/234",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #234 reduces Learn, Portfolio, and Expo shell orchestration to 494, 63, and 207 lines with bounded modules. Both GitHub quality runs and Vercel passed after the root mobile-port contract was updated to follow extracted ownership."
-        },
-        {
-          "id": "P3-T3",
-          "title": "Replace emoji navigation and complete metadata surfaces",
-          "status": "done",
-          "dependsOn": [
-            "P3-T1"
-          ],
-          "pr": {
-            "number": 235,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/235",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #235 delivers Lucide shell icons plus route-specific metadata, manifest, robots, sitemap, and generated social image. Both GitHub quality runs and Vercel passed after route smoke was aligned with route-specific titles."
-        },
-        {
-          "id": "P3-T4",
-          "title": "Compress the 79.8 MiB visual library and enforce budgets",
-          "status": "done",
-          "dependsOn": [],
-          "pr": {
-            "number": 236,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/236",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #236 removed 79.69 MiB of unreachable visuals, converted the live Guardian to 28.6 KiB WebP, enforced reference-aware asset budgets, and added fresh-build rendered smoke that found and fixed a real 390px simulator overflow and a Linux hydration race."
-        }
-      ]
-    },
-    {
-      "id": "P4",
-      "title": "Model-Driven 3D Experience",
-      "goal": "A single performant Three.js show stage lets users select five data-bound artifacts with accessible controls and graceful fallbacks.",
-      "status": "done",
-      "sessionsEstimate": "6-9",
-      "gates": [
-        {
-          "id": "P4-G1",
-          "title": "Web tests",
-          "command": "npm --prefix apps/web test",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:49:00Z",
-          "notes": "Current main c7b9705 passes 263 regressions plus fixtures, strict PNG and lifecycle helpers, accessibility, metadata, and assets."
-        },
-        {
-          "id": "P4-G2",
-          "title": "3D rendered, interaction, and nonblank canvas checks",
-          "command": "npm --prefix apps/web run test:3d",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:49:00Z",
-          "notes": "Current main c7b9705 passes a fresh build plus full/efficient all-five pixel, motion, focus, responsive, adversarial hidden-WebGL, and reduced-motion fallback lanes."
-        },
-        {
-          "id": "P4-G3",
-          "title": "Web production build within asset budgets",
-          "command": "npm --prefix apps/web run build",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P4-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T09:49:00Z",
-          "notes": "Current main c7b9705 passes a separate 14-page production build after the merged visual gate."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P4-T1",
-          "title": "Define the five-artifact visual grammar and data bindings",
-          "status": "done",
-          "dependsOn": [
-            "P3-T1"
-          ],
-          "pr": {
-            "number": 237,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/237",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #237 binds five canonical geometries to normalized model channels, explicit operational state, fail-closed runtime validation, canonical DOM fallback, and static/efficient/full capability policy. Both GitHub quality runs and Vercel passed after three adversarial review rounds closed every finding."
-        },
-        {
-          "id": "P4-T2",
-          "title": "Build the lazy-loaded Three.js selection stage",
-          "status": "done",
-          "dependsOn": [
-            "P4-T1",
-            "P3-T4"
-          ],
-          "pr": {
-            "number": 238,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/238",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #238 delivers the client-only procedural stage, all five contract geometries, DOM-owned mesh selection, 650 ms demand-rendered settlement, static first paint/fallback, and production-consumed runtime contracts. Both GitHub quality runs and Vercel passed after spec and quality approval."
-        },
-        {
-          "id": "P4-T3",
-          "title": "Add reduced motion, static fallback, and mobile GPU controls",
-          "status": "done",
-          "dependsOn": [
-            "P4-T2"
-          ],
-          "pr": {
-            "number": 239,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/239",
-            "mergedAt": "2026-07-12"
-          },
-          "notes": "PR #239 delivers fail-closed static/efficient/full policy, WebGL2 probe and renderer startup/loss paths, DPR/geometry budgets, offscreen/hidden pause, first-frame reveal, and runtime-tested cleanup. Both GitHub quality runs and Vercel passed."
-        },
-        {
-          "id": "P4-T4",
-          "title": "Verify screenshots, pixels, interaction, performance, and accessibility",
-          "status": "done",
-          "dependsOn": [
-            "P4-T3"
-          ],
-          "pr": {
-            "number": 240,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/240",
-            "mergedAt": "2026-07-13"
-          },
-          "notes": "PR #240 merged at c7b9705 after duplicate GitHub Ubuntu quality runs and Vercel passed. Fresh main reruns prove all-five isolated pixels, under-700-ms settlement, DOM motion, responsive geometry, static fallback, focus order, adversarial failure lanes, and the 14-page build."
-        }
-      ]
-    },
-    {
-      "id": "P5",
-      "title": "Educational Media Pipeline",
-      "goal": "HyperFrames and Remotion produce deterministic, branded explainers without entering the calculator runtime bundle.",
-      "status": "done",
-      "sessionsEstimate": "3-6",
-      "gates": [
-        {
-          "id": "P5-G1",
-          "title": "Media lint, validation, overflow, and contrast",
-          "command": "npm --prefix apps/media run check",
-          "status": "passed",
-          "notes": "Fresh merged main at 82c4890 passes 34/34 media contracts, portable engine-data freshness, zero HyperFrames errors or warnings, 40/40 contrast, 26 finite tweens, pinned Chrome enumeration, and all 27 browser-rendered Remotion keyframes with runtime safe-area, overflow, and collision assertions.",
-          "evidence": "ops/mission/evidence/P5-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T12:47:00Z"
-        },
-        {
-          "id": "P5-G2",
-          "title": "Representative Remotion still render",
-          "command": "npm --prefix apps/media run render:still",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P5-closeout-main-2026-07-13.txt",
-          "lastRun": "2026-07-13T12:47:00Z",
-          "notes": "Fresh merged main rendered the complete 1920x1080 reduced-motion Money Loop fact sheet under pinned Chrome for Testing 150.0.7871.115."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P5-T1",
-          "title": "Create the InterestShield visual identity and motion contract",
-          "status": "done",
-          "dependsOn": [
-            "P4-T1"
-          ],
-          "pr": 241,
-          "notes": "PR #241 merged at 0ba48e4 after duplicate Ubuntu quality runs and Vercel passed. Fresh main passes 14 media identity tests, zero media vulnerabilities, 263 web regressions, lint, and the 14-page build. Evidence: ops/mission/evidence/P5-T1-closeout-main-2026-07-13.txt."
-        },
-        {
-          "id": "P5-T2",
-          "title": "Build HyperFrames launch and tutorial compositions",
-          "status": "done",
-          "dependsOn": [
-            "P5-T1"
-          ],
-          "pr": {
-            "number": 242,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/242",
-            "mergedAt": "2026-07-13"
-          },
-          "notes": "PR #242 merged at a1277b3 after Vercel and both Ubuntu quality runs passed. The 30-second H.264 reel contains deterministic launch and Money Loop compositions with local assets, bound captions, qualitative financial semantics, reduced-motion proof, exact animation-map evidence, and zero media vulnerabilities."
-        },
-        {
-          "id": "P5-T3",
-          "title": "Build Remotion scenario explainers from engine JSON",
-          "status": "done",
-          "dependsOn": [
-            "P5-T1",
-            "P1-T2"
-          ],
-          "pr": {
-            "number": 243,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/243",
-            "mergedAt": "2026-07-13"
-          },
-          "notes": "PR #243 merged at 3415d16 with three strict shared-engine stories across landscape, portrait, and square, a complete reduced-motion substitute, exact pinned browser rendering, and independent spec/code approval. PR #244 merged the Windows CRLF freshness regression at 82c4890; both duplicate CI runs and Vercel passed for both PRs."
-        }
-      ]
-    },
-    {
-      "id": "P6",
-      "title": "Expo Native Hardening",
-      "goal": "The existing Expo app becomes a tested native product with shared-engine parity, secure persistence, and Android/iOS release evidence.",
-      "status": "done",
-      "sessionsEstimate": "6-10",
-      "gates": [
-        {
-          "id": "P6-G1",
-          "title": "Expo TypeScript",
-          "command": "npm --prefix apps/mobile run check",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Expo TypeScript, owner recovery lanes, native contracts, and final hosted native workflows pass."
-        },
-        {
-          "id": "P6-G2",
-          "title": "Expo web export and route smoke",
-          "command": "npm --prefix apps/mobile run smoke:web-export",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Expo web export and all seven route probes pass in the merged quality gate."
-        },
-        {
-          "id": "P6-G3",
-          "title": "Android bundle and emulator smoke",
-          "command": "npm --prefix apps/mobile run smoke:android-bundle",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Strict Android workflow 29537614655 passed on final native main SHA 7118701 with dashboard, settings, and large-text landscape artifacts."
-        },
-        {
-          "id": "P6-G4",
-          "title": "iOS bundle and simulator smoke through macOS CI",
-          "command": "npm --prefix apps/mobile run smoke:ios-bundle",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/P6-final-main-release-2026-07-16.txt",
-          "lastRun": "2026-07-16T22:29:37Z",
-          "notes": "Strict macOS iOS Simulator workflow 29537615381 passed on final native main SHA 7118701 with dashboard and settings artifacts."
-        }
-      ],
-      "tasks": [
-        {
-          "id": "P6-T1",
-          "title": "Split the monolithic mobile shell into native route modules",
-          "status": "done",
-          "dependsOn": [
-            "P3-T2"
-          ],
-          "pr": {
-            "number": 245,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/245",
-            "mergedAt": "2026-07-13"
-          },
-          "notes": "Direct route owners replace the monolithic shell; one provider above the retained Stack owns persisted assumptions. Red/green and Chrome retained-route evidence are recorded under ops/mission/evidence/P6-T1-*."
-        },
-        {
-          "id": "P6-T2",
-          "title": "Wire native auth, SecureStore, sync, and offline recovery",
-          "status": "done",
-          "dependsOn": [
-            "P2-T3",
-            "P6-T1"
-          ],
-          "pr": {
-            "number": 250,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/250",
-            "mergedAt": "2026-07-14"
-          },
-          "notes": "PRs #246-#250 complete root auth, owner-scoped local persistence, atomic snapshot mutation and receipts, durable replay, logical revisions, explicit remote restore, guest adoption, keep-device conflict resolution, write-ahead recovery, Web Locks, native owner mutexes, and local revision CAS. Merged-main evidence: ops/mission/evidence/P6-T2-closeout-main-2026-07-14.txt."
-        },
-        {
-          "id": "P6-T3",
-          "title": "Complete native accessibility and responsive UI",
-          "status": "done",
-          "dependsOn": [
-            "P6-T1"
-          ],
-          "pr": {
-            "number": 251,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/251",
-            "mergedAt": "2026-07-15"
-          },
-          "notes": "PR #251 completed safe areas, semantic native navigation, touch targets, screen-reader state, selectable outputs, large text, reduced motion, and responsive route coverage."
-        },
-        {
-          "id": "P6-T4",
-          "title": "Prove Android and iOS release candidates",
-          "status": "done",
-          "dependsOn": [
-            "P6-T2",
-            "P6-T3"
-          ],
-          "pr": {
-            "number": 252,
-            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/252",
-            "mergedAt": "2026-07-16"
-          },
-          "notes": "PR #252 delivered strict Android and iOS release-candidate workflows; PR #253 made the root iOS contract Windows CRLF portable. Final-main runs 29537614655 and 29537615381 both pass."
+          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/mobile-contracts.log",
+          "lastRun": "2026-10-20T17:27:25Z",
+          "notes": "Default and legacy migration fixtures aligned to preserved 8200/4700 inputs. Custom zero-limit data remains unchanged. Not final-device proof."
         }
       ]
     }
   ],
   "metrics": [
     {
-      "label": "Confirmed high defects open",
+      "label": "Textured refined model candidates",
+      "baseline": "0",
+      "current": "1",
+      "target": "10",
+      "direction": "up"
+    },
+    {
+      "label": "Web financial regressions passing",
+      "baseline": "263",
+      "current": "270",
+      "target": "270",
+      "direction": "up"
+    },
+    {
+      "label": "Scenario owners to consolidate",
       "baseline": "3",
-      "current": "0",
-      "target": "0",
+      "current": "3",
+      "target": "1",
       "direction": "down"
     },
     {
-      "label": "Production routes on current shell",
-      "baseline": "0/7",
-      "current": "7/7",
-      "target": "7/7",
-      "direction": "up"
-    },
-    {
-      "label": "Web regression tests",
-      "baseline": "238",
-      "current": "263",
-      "target": "300+ focused",
-      "direction": "up"
-    },
-    {
-      "label": "Independent financial reference fixtures",
-      "baseline": "0",
-      "current": "2",
-      "target": "2+ per contract version",
-      "direction": "up"
-    },
-    {
-      "label": "Live InterestShield persistence backends",
+      "label": "Verified restoration production releases",
       "baseline": "0",
       "current": "0",
-      "target": "1 audited system of record",
-      "direction": "up"
-    },
-    {
-      "label": "Public web assets",
-      "baseline": "79.8 MiB",
-      "current": "0.13 MiB",
-      "target": "at most 2 MiB total",
-      "direction": "down"
-    },
-    {
-      "label": "Native platforms with device evidence",
-      "baseline": "0/2",
-      "current": "2/2",
-      "target": "2/2",
+      "target": "1",
       "direction": "up"
     }
   ],
   "risks": [
     {
-      "title": "Custom-domain hostname and DNS ownership are unavailable",
+      "title": "Nine models remain studies",
       "severity": "high",
-      "note": "Both public Vercel aliases are current and green. The final owned hostname and authoritative DNS access are still required before attaching and validating the custom domain."
+      "note": "The Auto model now has licensed textured geometry. Other heroes must not be represented as finished photoreal assets. Public generation GPU quota is limited and Hugging Face is not connected."
     },
     {
-      "title": "No dedicated InterestShield Supabase cloud project is authenticated",
+      "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "CLI 2.109.1 reports LegacyPlatformAuthRequiredError. The owner-scoped schema, RLS, backup/restore, and adapters are ready, but production persistence must not be claimed until an authenticated project is migrated and verified."
+      "note": "Scenario ownership, lender/calendar integration and equal-liability comparisons require contract-level work despite passing current regressions."
     },
     {
-      "title": "Production projections require actual lender terms",
-      "severity": "medium",
-      "note": "The versioned lender-term contract fails closed when terms are missing; keep all outputs educational and assumption-labeled."
+      "title": "Exact-SHA CI must be re-proven",
+      "severity": "high",
+      "note": "Checkpoint CI ran and failed stale mobile default fixtures. Local corrections pass, but only a fresh successful run on the next pushed SHA can close the gate."
     },
     {
-      "title": "Cloudflare report resources are not live",
-      "severity": "medium",
-      "note": "The Worker and private R2 contract pass tests and dry-run, but no bucket or Worker was deployed without account/resource access. Supabase remains the intended financial system of record."
+      "title": "Media toolchain advisories remain open",
+      "severity": "high",
+      "note": "Full development dependency audit reports 8 high and 5 moderate advisories. Media production dependency audit is clean. Tool updates need a separate fresh renderer validation."
     },
     {
-      "title": "Expo SDK 56 inherits moderate CLI and config audit advisories",
-      "severity": "medium",
-      "note": "Track upstream SDK updates; do not apply npm audit force because its proposed Expo downgrade is invalid."
-    },
-    {
-      "title": "Store distribution remains a separate release operation",
-      "severity": "medium",
-      "note": "Android emulator and iOS Simulator evidence are green, but signing, store accounts, privacy declarations, and staged submissions require owner credentials and policy review."
+      "title": "Production backend and custom domain unverified",
+      "severity": "high",
+      "note": "Do not apply production migrations, change DNS or promote the draft while ownership and release gates are open."
     }
   ],
   "prLog": [
@@ -1042,25 +692,42 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/254",
       "phase": "P0 Release Truth",
       "mergedAt": "2026-07-16"
+    },
+    {
+      "number": 256,
+      "title": "Restore original asset-centered experience (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R0",
+      "mergedAt": null
     }
   ],
   "resume": {
-    "activePhase": "P0",
+    "activePhase": "R1",
     "nextActions": [
-      "Identify the exact owned InterestShield custom-domain hostname and provide authoritative DNS or registrar access; attach it to islanddevcrew/velocity-banking-mvp-v2, set NEXT_PUBLIC_SITE_URL, and rerun both production smoke harnesses.",
-      "Authenticate Supabase CLI or MCP to the intended organization, select or create the dedicated InterestShield project, apply the owner-scoped migrations, run advisors and pgTAP isolation tests, then prove backup/restore against that cloud project.",
-      "After both ownership gates pass, set P0-T2 and the mission to done, regenerate this report, and begin the separate App Store and Play Store submission operation."
+      "Push the locally verified car and loading-hardening refinement with corrected mobile demo fixtures; require fresh hosted CI for that exact SHA and keep draft #256 unmerged.",
+      "Address any exact-SHA CI failure without weakening gates. Checkpoint run 39463072955 exposed two stale demo-default expectations; both now pass locally.",
+      "Refine House/Land/Vault from properly licensed or original textured sources, with provenance, small opt-in budgets and visual review. Do not overwrite refined imports by running the study generator.",
+      "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
+      "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
+      "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
-      "The exact owned InterestShield custom-domain hostname and authoritative DNS access are not available in Vercel or the repository.",
-      "Supabase cloud access is not authenticated: projects list returns LegacyPlatformAuthRequiredError because no access token is available."
+      "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
+      "Production Supabase environment and exact owned custom-domain hostname/access remain unverified."
     ],
     "conventions": [
       "Use codex/mission/<phase>-<task> branches and one focused PR per task.",
       "Write a failing regression test before every behavior fix and record red/green evidence.",
       "Keep financial calculations in packages/financial-engine and share them with web and Expo.",
       "Never hand-edit ops/mission/state-of-the-union.html; render it from state.json.",
-      "Educational tool. Not financial advice."
+      "Educational tool. Not financial advice.",
+      "Preserve calm Car / House / Vault identity. No further broad visual redesign.",
+      "Commit and push verified improvements; never force-push or auto-promote the draft.",
+      "Use Navigata1 GitHub credentials from the existing credential store without printing tokens."
     ]
+  },
+  "historicalState": {
+    "path": "ops/mission/history/july-2026-state.json",
+    "note": "Original July phases, gates and task history are preserved here; their completion counts do not establish October production readiness."
   }
 }

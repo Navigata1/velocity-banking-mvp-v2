@@ -1,0 +1,13 @@
+PASS network failure preserves studio artwork and releases the stage
+AssertionError [ERR_ASSERTION]: failed embedded textures must release their blob URLs
+
+12 !== 0
+
+    at run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\hero-fallback-smoke.cjs:37:41) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 12,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

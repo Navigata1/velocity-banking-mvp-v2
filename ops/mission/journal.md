@@ -327,3 +327,14 @@
 - P6 is done. P0 production smoke is green, but P0 remains blocked on the exact owned custom-domain hostname and authoritative DNS access.
 - Supabase CLI 2.109.1 is present, but cloud project discovery returns LegacyPlatformAuthRequiredError because no access token is available. The owner-scoped schema and recovery contracts remain ready locally; no cloud project was guessed or modified.
 - Mission state is now blocked with six of seven phases done, zero confirmed high defects, 7/7 production routes current, and 2/2 native platforms carrying hosted device evidence.
+
+## 2026-10-20T17:27Z - Refined Auto candidate and production hardening
+- Pushed restoration checkpoint commits 382f042, 474f5cf and 24d238e to draft PR #256. No merge or production promotion. Approved recurring work runs every four hours.
+- Replaced the Auto study with a source-hashed CC BY 4.0 Car Concept adaptation: 134,971 triangles, 13 embedded textures, 1.92 MiB. Separately licensed logo geometry and the shared logo texture were removed; attribution is visible in the app and turntable.
+- Independent review found subordinate texture-decode failures could incorrectly hide artwork and that the shared logo texture remained embedded. Added failing reproductions, corrected both, and regenerated the model and nine-second video.
+- Follow-up review found failed embedded-image blob URLs were not revoked; browser red/green proof changed 12 retained URLs to zero. Visual review also caught remaining logo-linked emission, now neutralized without changing dashboard or headlight emission and approved independently.
+- Fresh local proof passes 270 financial regressions, two reference fixtures, resource cleanup and asset contracts; built desktop/mobile routes; all ten actual-geometry views at 1440px and 375px; slow-network, repeated-mode, reduced-motion and network/texture failure paths.
+- All ten videos pass movement and return-to-start pixel checks; 35 media contracts pass; full existing HyperFrames/Remotion checks and 27 stills pass. The new hero composition passes with one Intel precision warning.
+- Checkpoint hosted CI run 39463072955 became visible and failed two obsolete mobile-default expectations. Aligned those specific fixtures with preserved 8200/4700 defaults; mobile contracts now pass locally. Exact next-SHA hosted CI remains mandatory.
+- Full media development audit has 13 open advisories (8 high, 5 moderate); production dependency audit has none. Added a dedicated upgrade task and failed audit gate rather than suppressing findings.
+- Archived full July state in history/july-2026-state.json and activated six October restoration phases. Nine models, scenario ownership, lender/calendar contracts, fair comparisons, live backend/domain and final-device verification remain open.

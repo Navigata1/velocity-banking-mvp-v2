@@ -14,20 +14,23 @@
     "active-target plus LOC daily-interest scope",
     "remove unequal-liability savings claim from dashboard",
     "ten generated studio-reference posters",
-    "ten locally authored self-contained GLB studies",
+    "one licensed refined textured Auto GLB and nine locally authored self-contained GLB studies",
+    "source-hashed repeatable car optimization with separately licensed logo geometry and texture removed",
+    "slow-network continuity, subordinate texture-failure fallback and shared GPU resource cleanup",
     "asset-centered dashboard and Vault artwork",
     "opt-in finite 360 degree viewer with reduced motion and cleanup",
     "deterministic HyperFrames 1080p turntable composition and render matrix"
   ],
   "remainingProductionGates": [
-    "Replace authored 3D studies with artist-reviewed meshes matching the detailed generated artwork",
+    "Complete the nine remaining textured hero models and artist-review collection consistency",
     "Unify scenario ownership across Dashboard, Portfolio and Vault without overwriting existing user scenarios",
     "Enforce lender terms and expose real transaction calendar assumptions in normal simulation paths",
     "Complete equal-budget equal-liability strategy comparisons across all routes",
     "Implement or remove ineffective chunk-frequency controls",
     "Verify live Supabase owner isolation, migrations, recovery and environment configuration",
     "Verify custom domain and release deployment against this restoration branch",
-    "Regenerate native bundles and repeat device QA after shared-engine changes"
+    "Regenerate native bundles and repeat device QA after shared-engine changes",
+    "Resolve development media-toolchain audit advisories and prove exact-SHA hosted CI"
   ],
   "verification": {
     "webBuild": "passed Next.js production build and TypeScript",
@@ -37,16 +40,21 @@
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
     "turntables": "all ten 1920x1080 nine-second MP4s passed movement and return-to-start pixel checks",
     "existingThreeStage": "desktop/mobile genuine WebGL, selection and reduced-motion gates passed",
-    "media": "34 contracts and full existing HyperFrames/Remotion checks passed; 27 Remotion matrix stills rendered",
+    "media": "35 contracts and full existing HyperFrames/Remotion checks passed; 27 Remotion matrix stills rendered",
+    "fallbacks": "delayed loading and repeated mode selection passed at both widths; injected WebP decode and network failures both preserve the poster",
+    "mediaAudit": "production dependency tree: zero advisories; full development tooling: 13 advisories (8 high, 5 moderate), open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "independent review found and cleared a final-payment affordability edge case; 83 focused regressions and 13 additional boundary checks passed re-review",
-    "deployment": "not deployed; local preview only",
+    "deployment": "draft PR #256; checkpoint Vercel preview passed; CI run 39463072955 failed two stale mobile demo fixtures, corrected locally; fresh exact-SHA green run required; no production promotion",
+    "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },
   "limitations": [
     "Public TRELLIS.2 GPU quota blocked completion of reconstructed textured meshes; no paid GPU job or backend migration was initiated",
-    "Generated posters and locally authored models are different art assets, not identical reconstructions",
+    "The refined car is adapted licensed Car Concept, not an AI reconstruction; nine remaining models are authored studies",
     "Ten base heroes do not replace every historical subcategory variant",
     "July completion counts are historical and do not establish current production readiness"
-  ]
+  ],
+  "github": { "pullRequest": 256, "draft": true, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "checkpointCommits": ["382f042", "474f5cf", "24d238e"] },
+  "automation": { "id": "interestshield-production-improvements", "cadenceHours": 4, "status": "ACTIVE", "policy": "bounded verified pushes to draft; no automatic production release" }
 }

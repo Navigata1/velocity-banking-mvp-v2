@@ -2,7 +2,7 @@
 
 ## Verdict
 
-Verified local restoration build. Not a production release.
+Verified local restoration build, pushed as draft PR #256. Not a production release.
 
 The recognizable asset-centered dashboard is back, with four vitals, a selected
 debt summary and a secondary Money Loop explorer. Vault also has its own hero.
@@ -11,17 +11,22 @@ The existing aligned demo defaults were preserved.
 ## Delivered
 
 - Ten high-detail generated hero artworks, with original PNGs and optimized WebP posters.
-- Ten genuine GLB studies with editable deterministic geometry source.
+- One refined licensed Auto GLB: 134,971 triangles, 13 embedded textures, 1.92 MiB,
+  with clearcoat paint, glass, interior, wheels and brakes. Nine authored studies remain.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
+- Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
+  and removal of separately licensed trademark geometry and shared logo texture.
+- Slow-network artwork continuity, texture/network failure fallbacks and shared
+  geometry/material/decoded-texture cleanup regressions.
 - Repairs for phantom payments after payoff, extra payments exceeding the budget,
   lost calendar deposit surplus, and dashboard interest-scope inconsistency.
 - Removed the dashboard's unequal-liability savings claim.
 
-The locally authored meshes are studies, not photoreal reconstructions of the
-generated artwork. Matching textured production models remain unfinished after
-the public reconstruction service exhausted its GPU quota. The app defaults to
-the polished artwork; the 3D studies are an optional inspection mode.
+The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
+not a reconstruction of the generated coupe poster. The other nine meshes remain
+studies. A coherent artist-approved textured collection is still unfinished.
+The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
 ## Verification
 
@@ -29,15 +34,26 @@ the polished artwork; the 3D studies are an optional inspection mode.
 - 270 financial regressions, two independent reference scenarios and asset/accessibility/metadata checks passed.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
+- Delayed loading and repeated mode selection passed at both widths; injected WebP
+  decode rejection and network failure both preserve the artwork and release the stage.
+- Failed-texture blob URL cleanup passed a real-browser red/green regression (12
+  leaked URLs before the fix, zero afterward). Logo-linked emission was neutralized
+  so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 34 media contracts and existing HyperFrames/Remotion checks passed; 27 Remotion stills rendered.
+- 35 media contracts and existing HyperFrames/Remotion checks passed; 27 Remotion stills rendered.
 - New HyperFrames checks passed with one Intel shader precision warning.
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
+- Media production dependency audit: zero advisories. Full media development-toolchain
+  audit: 13 advisories (8 high, 5 moderate), requiring a separately verified toolchain update.
+- Checkpoint Vercel preview passed. GitHub Actions run 39463072955 is now visible:
+  web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
+  demo defaults. The fixtures are corrected and the mobile contract suite passes
+  locally. A fresh exact-SHA green run is still required; preview is not CI approval.
 
 ## Remaining Production Gates
 
-1. Artist-reviewed, optimized textured meshes matching the generated artwork.
+1. Complete nine remaining textured models and review collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -45,9 +61,18 @@ the polished artwork; the 3D studies are an optional inspection mode.
 6. Live Supabase isolation, schema, environment and recovery verification.
 7. Custom-domain and verified production deployment.
 8. Updated Expo bundles and fresh device QA after shared-engine changes.
+9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 
 Preview: http://127.0.0.1:53143
 
 Desktop package: `C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20`
 
-Branch: `codex/restoration/asset-heroes`. No production deployment was made.
+Branch: `codex/restoration/asset-heroes`.
+Draft: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256
+The original restoration checkpoint was pushed in commits 382f042, 474f5cf and 24d238e.
+No production deployment was made. July mission state is archived in
+`ops/mission/history/july-2026-state.json`; October phases are now active.
+
+Approved recurring improvement runs are scheduled every four hours in this chat
+under `interestshield-production-improvements`. They must make focused verified
+changes, preserve the original identity, and push to the draft without auto-merging.
