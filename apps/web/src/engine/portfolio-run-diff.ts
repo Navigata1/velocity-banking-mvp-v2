@@ -61,7 +61,8 @@ function getMinPayment(debt: DebtItem): number {
 }
 
 function formatMonths(months: number): string {
-  if (!Number.isFinite(months) || months <= 0) return 'not projected';
+  if (!Number.isFinite(months) || months < 0) return 'not projected';
+  if (months === 0) return 'Paid off';
 
   const wholeMonths = Math.ceil(months);
   const years = Math.floor(wholeMonths / 12);
@@ -104,6 +105,7 @@ function findPrimaryTargetName(
   inputs: PortfolioSimulationInputs,
   result: PortfolioSimulationResult
 ): string | undefined {
+  if (result.primaryTargetName) return result.primaryTargetName;
   const rationaleTarget = Object.values(result.debtRationales)
     .find((rationale) => rationale.isCurrentTarget);
   if (rationaleTarget) {
@@ -124,7 +126,7 @@ export function summarizePortfolioRun(
 ): PortfolioRunSummary {
   return {
     cashFlow: inputs.monthlyIncome - inputs.monthlyExpenses,
-    totalDebt: inputs.debts.reduce((sum, debt) => sum + Math.max(0, debt.balance), 0),
+    totalDebt: inputs.debts.reduce((sum, debt) => sum + Math.max(0, debt.balance), 0) + Math.max(0, inputs.loc?.balance ?? 0),
     totalMinimums: inputs.debts.reduce((sum, debt) => sum + getMinPayment(debt), 0),
     payoffMonths: result.payoffMonths,
     totalInterest: result.totalInterest,

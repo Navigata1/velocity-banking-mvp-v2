@@ -33,15 +33,16 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   const payoffMonths = result?.payoffMonths ?? 0;
   const payoffDateStr = payoffMonths ? formatDate(payoffMonths) : '—';
   const totalInterest = result?.totalInterest ?? 0;
-  const portfolioProjectionValid = result?.isPayoffPossible !== false;
+  const portfolioProjectionValid = result?.isPayoffPossible === true;
   const displayedPayoffDateStr = result
-    ? portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'
+    ? portfolioProjectionValid ? payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths) : 'Review inputs'
     : payoffDateStr;
   const totalInterestLabel = portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected';
   const warnings = result?.warnings ?? [];
   const assumptions = result?.assumptions ?? [];
   const locInterestPaid = result?.locInterestPaid ?? 0;
   const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
+  const supportsChunkDraws = store.strategy === 'velocity' && store.focusMode === 'single';
   const velocityNeedsReview = store.strategy === 'velocity' && (!portfolioProjectionValid || warnings.length > 0);
   const velocityBadgeLabel = velocityNeedsReview
     ? 'Review first'
@@ -53,7 +54,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
     : moneyLoopActive
       ? 'text-emerald-400'
       : 'text-sky-300';
-  const totalDebt = store.debts.reduce((sum, debt) => sum + debt.balance, 0);
+  const totalDebt = store.debts.reduce((sum, debt) => sum + debt.balance, 0) + store.loc.balance;
   const cashFlow = store.monthlyIncome - store.monthlyExpenses;
   const runComparison = store.lastRunComparison;
   const payoffPathModel = buildPortfolioPathVisualModel(result, totalDebt);
@@ -103,39 +104,48 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Monthly Income</p>
-                <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} ariaLabel="Portfolio monthly income" size="lg" />
+                <EditableCurrency value={store.monthlyIncome} max={Math.max(10000000, store.monthlyIncome)} onChange={store.setMonthlyIncome} ariaLabel="Portfolio monthly income" size="lg" />
               </div>
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs mb-1`}>Monthly Expenses</p>
-                <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} ariaLabel="Portfolio monthly expenses" size="lg" />
+                <EditableCurrency value={store.monthlyExpenses} max={Math.max(10000000, store.monthlyExpenses)} onChange={store.setMonthlyExpenses} ariaLabel="Portfolio monthly expenses" size="lg" />
               </div>
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
-                <p className={`${classes.textMuted} text-xs mb-1`}>Extra Toward Debt</p>
-                <EditableCurrency value={store.extraMonthlyPayment} onChange={store.setExtraMonthlyPayment} ariaLabel="Portfolio extra debt payment" size="lg" />
-                <p className={`${classes.textMuted} text-[11px] mt-1`}>Optional, beyond minimums</p>
+                <p className={`${classes.textMuted} text-xs mb-1`}>Extra allocation</p>
+                <label className={`flex min-h-8 items-center gap-2 text-sm ${classes.textSecondary}`}>
+                  <input type="checkbox" aria-label="Automatic surplus" checked={store.extraMonthlyPayment === 0}
+                    onChange={event => store.setExtraMonthlyPayment(event.target.checked ? 0 : 100)} />
+                  Automatic surplus
+                </label>
+                {store.extraMonthlyPayment > 0 && (
+                  <EditableCurrency value={store.extraMonthlyPayment} max={Math.max(10000000, store.extraMonthlyPayment)} onChange={store.setExtraMonthlyPayment} ariaLabel="Portfolio extra debt payment" size="lg" />
+                )}
+                <p className={`${classes.textMuted} text-[11px] mt-1`}>Within household cash flow, not additional income.</p>
               </div>
             </div>
 
-            {store.strategy === 'velocity' && (
-              <div data-testid="portfolio-loc-controls" className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div data-testid="portfolio-loc-controls" className={`grid grid-cols-1 gap-4 ${supportsChunkDraws ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
                 <div className={`${classes.glassButton} rounded-2xl p-4`}>
                   <p className={`${classes.textMuted} text-xs mb-1`}>LOC Limit</p>
-                  <EditableCurrency value={store.loc.limit} onChange={(value) => store.updateLOC({ limit: value })} ariaLabel="Portfolio line of credit limit" size="md" />
+                  <EditableCurrency value={store.loc.limit} max={Math.max(10000000, store.loc.limit)} onChange={(value) => store.updateLOC({ limit: value })} ariaLabel="Portfolio line of credit limit" size="md" />
                 </div>
                 <div className={`${classes.glassButton} rounded-2xl p-4`}>
                   <p className={`${classes.textMuted} text-xs mb-1`}>LOC Balance</p>
-                  <EditableCurrency value={store.loc.balance} onChange={(value) => store.updateLOC({ balance: value })} ariaLabel="Portfolio line of credit balance" size="md" />
+                  <EditableCurrency value={store.loc.balance} max={Math.max(10000000, store.loc.balance)} onChange={(value) => store.updateLOC({ balance: value })} ariaLabel="Portfolio line of credit balance" size="md" />
                 </div>
                 <div className={`${classes.glassButton} rounded-2xl p-4`}>
                   <p className={`${classes.textMuted} text-xs mb-1`}>LOC APR</p>
                   <EditablePercentage value={store.loc.apr} onChange={(value) => store.updateLOC({ apr: value })} ariaLabel="Portfolio line of credit APR" size="md" />
                 </div>
-                <div className={`${classes.glassButton} rounded-2xl p-4`}>
+                {supportsChunkDraws && <div className={`${classes.glassButton} rounded-2xl p-4`}>
                   <p className={`${classes.textMuted} text-xs mb-1`}>Velocity Chunk</p>
-                  <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} ariaLabel="Portfolio velocity chunk" size="md" />
-                </div>
+                  <EditableCurrency value={store.chunkAmount} max={Math.max(10000000, store.chunkAmount)} onChange={store.setChunkAmount} ariaLabel="Portfolio velocity chunk" size="md" />
+                </div>}
               </div>
-            )}
+            <p data-testid="portfolio-liability-scope" className={`${classes.textMuted} text-xs leading-5`}>
+              Listed debts plus the separate LOC balance, under the same income and expenses in every strategy.
+              Cash is measured at each plan&apos;s own payoff date, not a common-date wealth comparison.
+            </p>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className={`${classes.glassButton} rounded-2xl p-4`}>
@@ -169,13 +179,14 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                   ))}
                 </div>
                 <p data-testid="portfolio-strategy-alignment-note" className={`${classes.textMuted} mt-3 text-xs leading-5`}>
-                  Velocity Mode is the Portfolio planning default, not a promise that it is the fastest or lowest-interest path. Use the Simulator cards to compare modeled payoff speed and interest cost under the same assumptions.
+                  Velocity Mode is the Portfolio planning default, not a promise that it is the fastest or lowest-interest path.
+                  These policies use this saved Portfolio. The Simulator has separate scenario inputs.
                 </p>
                 {store.strategy === 'velocity' && (
                   <p data-testid="portfolio-velocity-modeling-note" className={`${classes.textSecondary} mt-2 text-xs leading-5`}>
                     {moneyLoopActive
                       ? 'This single-lane plan includes a LOC event ledger and LOC interest estimate.'
-                      : 'This Portfolio view is ranking and allocation guidance only; it is not a LOC event ledger.'}
+                      : 'This plan uses direct month-end allocations, including existing LOC interest and repayment. No LOC chunk draws are modeled.'}
                   </p>
                 )}
               </div>
@@ -277,11 +288,11 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
           </div>
 
           <div className="w-full lg:w-[320px] space-y-3 flex-shrink-0">
-            <div className={`${classes.glassButton} rounded-2xl p-4`}>
+            <div data-testid="portfolio-total-debt" className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Total Debt</p>
               <p className={`text-2xl font-bold mt-1 ${classes.text}`}><CountUp value={totalDebt} /></p>
             </div>
-            <div className={`${classes.glassButton} rounded-2xl p-4`}>
+            <div data-testid="portfolio-payoff-summary" className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Estimated Debt-Free</p>
               <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{displayedPayoffDateStr}</p>
               <p className={`${classes.textSecondary} text-sm mt-1`}>
@@ -294,6 +305,16 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                 <CountUp value={cashFlow} />
               </p>
               <p className={`${classes.textMuted} text-[11px] mt-1`}>Your velocity fuel</p>
+            </div>
+            <p data-testid="portfolio-budget" className={`text-xs leading-5 ${classes.textSecondary}`}>
+              Available debt budget: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(cashFlow)}/mo
+            </p>
+            <div data-testid="portfolio-cash-at-payoff" className={`${classes.glassButton} rounded-2xl p-4`}>
+              <p className={`${classes.textMuted} text-xs`}>Cash at payoff</p>
+              <p className={`mt-1 text-xl font-semibold ${classes.text}`}>
+                {portfolioProjectionValid ? formatCurrency(result?.cashAtPayoff ?? 0) : 'Not projected'}
+              </p>
+              <p className={`${classes.textMuted} mt-1 text-xs`}>Unused budget held as cash. Not incremental savings.</p>
             </div>
             {runComparison && (
               <div
@@ -326,15 +347,13 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                 </div>
               </div>
             )}
-            {store.strategy === 'velocity' && (
               <div data-testid="portfolio-loc-summary" className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs`}>LOC Interest Est.</p>
-                <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{formatCurrency(locInterestPaid)}</p>
+                <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{portfolioProjectionValid ? formatCurrency(locInterestPaid) : 'Not projected'}</p>
                 <p className={`${classes.textMuted} text-[11px] mt-1`}>
-                  {moneyLoopActive ? 'Money Loop ledger active' : 'Ranking planner only'}
+                  {moneyLoopActive ? 'Money Loop ledger active' : 'Direct month-end LOC estimate'}
                 </p>
               </div>
-            )}
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"

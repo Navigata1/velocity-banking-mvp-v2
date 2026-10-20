@@ -186,7 +186,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                     <div className="grid grid-cols-2 gap-3">
                       <div className={`${classes.glass} rounded-xl p-3`}>
                         <p className={`${classes.textMuted} text-[11px] mb-1`}>Balance</p>
-                        <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
+                        <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                       </div>
                       <div className={`${classes.glass} rounded-xl p-3`}>
                         <p className={`${classes.textMuted} text-[11px] mb-1`}>APR</p>
@@ -256,7 +256,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                         </td>
                         <td className="py-3 pr-3">{renderCategorySelect(d)}</td>
                         <td className="py-3 pr-3">
-                          <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
+                          <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                         </td>
                         <td className="py-3 pr-3">
                           <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} ariaLabel={`${d.name} APR`} size="md" />

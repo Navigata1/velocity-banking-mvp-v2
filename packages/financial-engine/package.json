@@ -10,6 +10,11 @@
       "types": "./src/index.ts",
       "react-native": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./portfolio": {
+      "types": "./src/portfolio.ts",
+      "react-native": "./src/portfolio.ts",
+      "default": "./src/portfolio.ts"
     }
   },
   "sideEffects": false

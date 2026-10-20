@@ -19,7 +19,8 @@ export interface PortfolioPathVisualModel {
 }
 
 function sumBalances(month: MonthResult): number {
-  return Object.values(month.balances).reduce((sum, balance) => sum + Math.max(0, balance), 0);
+  return Object.values(month.balances).reduce((sum, balance) => sum + Math.max(0, balance), 0)
+    + Math.max(0, month.locBalance ?? 0);
 }
 
 function sumInterest(month: MonthResult): number {
@@ -47,6 +48,12 @@ export function buildPortfolioPathVisualModel(
 ): PortfolioPathVisualModel {
   const safeStartingBalance = Math.max(0, startingBalance);
 
+  if (result?.isPayoffPossible === true && result.payoffMonths === 0 && safeStartingBalance <= 0.01) {
+    return { isProjected: true, statusLabel: 'Paid off', startingBalance: 0, endingBalance: 0,
+      payoffMonths: 0, totalInterest: 0, maxBalance: 1,
+      sampledPoints: [{ month: 0, balance: 0, interest: 0, targetCount: 0 }] };
+  }
+
   if (!result || result.isPayoffPossible === false || result.monthResults.length === 0) {
     return {
       isProjected: false,
@@ -73,8 +80,8 @@ export function buildPortfolioPathVisualModel(
   const monthPoints = result.monthResults.map((month) => ({
     month: month.month,
     balance: sumBalances(month),
-    interest: sumInterest(month) + (locInterestByMonth.get(month.month) ?? 0),
-    targetCount: month.targetIds.length,
+    interest: sumInterest(month) + (month.locInterest ?? locInterestByMonth.get(month.month) ?? 0),
+    targetCount: month.targetIds.length + (month.locIsTarget ? 1 : 0),
   }));
   const allPoints = [
     {
