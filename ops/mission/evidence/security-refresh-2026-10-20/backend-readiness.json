@@ -1,0 +1,42 @@
+{
+  "checkedDate": "2026-10-20",
+  "scope": "Read-only discovery and client-contract checks. No schema, data, key, grant or DNS mutations.",
+  "candidate": {
+    "name": "Navigata1's Velocity Banking",
+    "platformStatus": "ACTIVE_HEALTHY",
+    "association": "Name match only; the app and repository are not configured to use this project.",
+    "publicTableCount": 0,
+    "appliedMigrationCount": 0,
+    "securityAdvisorNotices": 0,
+    "advisorCaveat": "An empty public schema with no notices does not prove owner isolation or application readiness."
+  },
+  "repository": {
+    "cloudLinkPresent": false,
+    "localPublicSupabaseUrlConfigured": false,
+    "localPublicClientKeyConfigured": false,
+    "migrationFiles": [
+      "202607020001_first_lane_owner_scoped_schema.sql",
+      "20260713024039_snapshot_sync_idempotency.sql",
+      "20260715001056_atomic_snapshot_sync.sql",
+      "20260715011513_snapshot_logical_revisions.sql"
+    ],
+    "expectedPublicTables": ["profiles", "financial_snapshots", "simulation_runs", "learning_progress", "export_records", "audit_events"]
+  },
+  "preview": {
+    "sourceSha": "8e1f41dac53f98fc8908723c25ded1bf6f2e8b1b",
+    "mode": "Local demo mode; no production backend connected; private account sync not configured",
+    "evidence": "preview-backend-local-mode.jpg"
+  },
+  "verification": {
+    "webClientContract": "passed verified identity and ordered sync mutations",
+    "accountContract": "passed stable browser snapshot identity and Settings workflow",
+    "freshSqlRlsTests": "not run: the Docker engine was initially unavailable; its installed launcher exceeded the requested 90-second deadline and only that CLI request was canceled. No verified isolated database is running for SQL test proof."
+  },
+  "nextGates": [
+    "Bind a verified dedicated target without adopting a project on name alone.",
+    "Replay and test all four migrations in an isolated database, including fresh owner-denial and recovery tests.",
+    "Review project patch/backup state, auth redirect allowlists and environment separation before wiring the client.",
+    "Configure only publishable client credentials, then test separate owners, sign-out, restore, deletion and reconnect behavior.",
+    "Keep local data intact until explicit versioned owner-confirmed migration succeeds."
+  ]
+}

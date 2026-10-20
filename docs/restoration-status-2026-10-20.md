@@ -55,6 +55,10 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   stability timeouts. The capture path now uses fixed canvas bounds and bounded
   timeouts, with every existing pixel assertion retained; all ten heroes passed
   a fresh software-rendered local run after the security patch.
+- Patched checkpoint 8e1f41d passed both hosted CI runs (39469462980 and
+  39469479740), Vercel and seven remote desktop/375px route checks. Later commits
+  still require their own exact-head hosted checks; a green checkpoint is not
+  production approval.
 
 ## Remaining Production Gates
 
@@ -65,7 +69,7 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 5. Effective chunk-frequency controls, or removal of the ineffective controls.
 6. Live Supabase isolation, schema, environment and recovery verification.
 7. Custom-domain and verified production deployment.
-8. Updated Expo bundles and fresh device QA after shared-engine changes.
+8. Final native-device QA and refreshed bundles after remaining shared-engine changes.
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
 
@@ -83,11 +87,33 @@ Primary references: [Next.js 16.4.2 release](https://github.com/vercel/next.js/r
 and [next/og advisory](https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j).
 An advisory match is not proof this application's configuration was exploitable.
 
+The native critical finding was then fixed in 6e900d0 through one compatible
+transitive update: shell-quote 1.8.4 to 1.12.0, without changing the Expo SDK.
+The advisory input now throws without being executed; normal quoting still works.
+Fresh native typecheck, contracts, web export/seven routes and Android/iOS Hermes
+exports passed. These exports are not final-device QA.
+
 Remaining dependency findings: 12 in web development tooling; 13 in media tooling;
-41 in the mobile omit-dev tree (1 critical, 28 high, 12 moderate). Expo CLI/Metro
-are included in that tree, so these counts must not be presented as confirmed
-device-runtime vulnerabilities. The Worker runtime audit is clean. Do not apply
-the audit command's suggested major SDK downgrades without compatibility review.
+40 noncritical findings in the mobile omit-dev tree (28 high, 12 moderate).
+Expo CLI/Metro are included in that tree, so these counts must not be presented
+as confirmed device-runtime vulnerabilities. The full native audit still fails,
+although its critical-only gate passes. The Worker runtime audit is clean. Do not
+apply suggested major SDK downgrades without compatibility review.
+
+## Backend Reality
+
+Supabase cloud discovery is now authenticated. A healthy project named
+"Navigata1's Velocity Banking" exists, but it is only a name-matched candidate:
+it has zero public tables and zero applied migrations. The repo has four migration
+files and no cloud-project link. Local public-client credentials are absent, and
+the deployed preview explicitly reports local demo mode and unconfigured sync.
+
+Client/account contracts passed, but fresh SQL/RLS replay has not been completed
+in this session. Docker was stopped; its installed launcher exceeded the requested
+timeout and only that CLI request was canceled. No isolated SQL test stack was verified.
+Zero advisor notices on an empty schema do not prove owner isolation. No schema,
+grants, keys, user records or DNS were changed. See the sanitized
+`ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json` inventory.
 
 Preview: http://127.0.0.1:53143
 

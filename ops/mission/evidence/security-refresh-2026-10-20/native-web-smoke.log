@@ -1,0 +1,12 @@
+
+> interest-shield-mobile@0.1.0 smoke:web-export
+> node scripts/smoke-web-export.cjs
+
+PASS Dashboard /
+PASS Simulator /simulator
+PASS Cockpit /cockpit
+PASS Portfolio /portfolio
+PASS Learn /learn
+PASS Vault /vault
+PASS Settings /settings
+Serving Expo web export at http://127.0.0.1:8110

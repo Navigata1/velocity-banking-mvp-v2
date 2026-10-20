@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T17:48:29Z",
+    "updated": "2026-10-20T18:03:35Z",
     "sessionCount": 3
   },
   "policies": {
@@ -45,7 +45,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "On 0d72c6b the push CI run 39467224435 passed, while PR run 39467230721 timed out in locator screenshot stability polling. Fixed bounded canvas capture and verified all heroes through software rendering. Next runtime patch 60ab957 and capture fix b4df206 require fresh exact-head CI and Vercel checks."
+          "notes": "8e1f41d passed push CI 39469462980, PR CI 39469479740 and Vercel; all seven remote desktop/mobile preview routes passed. Native critical patch 6e900d0 also has fresh local type/contracts/web/Android/iOS export proof. Require fresh checks for its next pushed head before release."
         }
       ],
       "gates": [
@@ -71,10 +71,10 @@
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
-          "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39467230721",
-          "lastRun": "2026-10-20T17:48:29Z",
-          "notes": "0d72c6b push CI passed but PR CI hit a GPU screenshot stability timeout. Local software rendering now passes with bounded clip capture. Require all applicable checks on the next exact pushed SHA, including the runtime patch; no production promotion."
+          "status": "passed",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39469479740",
+          "lastRun": "2026-10-20T18:03:35Z",
+          "notes": "Verified SHA 8e1f41d: both CI runs and Vercel passed, including all ten software-rendered heroes. This receipt is SHA-specific, not blanket approval for subsequent commits or production. Native critical follow-up 6e900d0 needs a fresh pushed-head check."
         }
       ]
     },
@@ -177,7 +177,7 @@
           "status": "pending",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "chunkFrequency is persisted but not consumed by the web simulator; Guardian copy still suggests unsupported timing comparisons. Mortgage paymentFrequency buttons also have no corresponding read in calculation logic. Remove or clearly label unsupported choices until the dated ledger contract is wired; preserve saved data."
         }
       ],
       "gates": [
@@ -247,10 +247,10 @@
         {
           "id": "R4-T1",
           "title": "Verify dedicated Supabase environment and owner-scoped persistence",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "Cloud access is now available. The similarly named healthy Velocity Banking candidate has zero public tables and zero applied migrations. Repo has four migrations but no cloud link; local credentials are absent and preview confirms local-only mode. Candidate association is not proven by its name alone. No remote writes performed."
         },
         {
           "id": "R4-T2",
@@ -290,19 +290,19 @@
           "id": "R4-G1",
           "title": "Persistence client contracts",
           "command": "npm --prefix apps/web run test:supabase:client",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-client-contracts.log",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Client identity and ordered-sync contracts only; not live SQL/RLS owner-isolation proof."
         },
         {
           "id": "R4-G2",
           "title": "Account isolation contracts",
           "command": "npm --prefix apps/web run test:supabase:account",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-account-contracts.log",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Browser snapshot identity and Settings contracts only. Backend is unconfigured; no claim of live account isolation."
         },
         {
           "id": "R4-G3",
@@ -330,6 +330,15 @@
           "evidence": "ops/mission/evidence/security-refresh-2026-10-20/web-runtime-after.json",
           "lastRun": "2026-10-20T17:42:00Z",
           "notes": "Zero current registry advisories after same-major Next patch. This is not a complete application-security audit or proof of production deployment."
+        },
+        {
+          "id": "R4-G6",
+          "title": "Fresh isolated SQL and row-isolation proof",
+          "command": "npm --prefix apps/web run test:supabase",
+          "status": "pending",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Docker was initially unavailable; the installed launcher exceeded its 90-second deadline and its CLI request was canceled without stopping databases or containers. No verified isolated SQL test stack was established. July results are historical; no production schema or records changed."
         }
       ]
     },
@@ -343,10 +352,10 @@
         {
           "id": "R5-T1",
           "title": "Regenerate Expo/Hermes bundles after financial changes",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "Fresh web export and seven routes, Android Hermes and iOS Hermes exports pass after the supported shell-quote patch. Final builds must be repeated after remaining shared financial-contract work; exports are not device QA."
         },
         {
           "id": "R5-T2",
@@ -362,7 +371,7 @@
           "status": "pending",
           "dependsOn": [],
           "pr": null,
-          "notes": "Mobile omit-dev tree has 41 findings (1 critical, 28 high, 12 moderate), including CLI/Metro build tooling. Device runtime exposure is not established. Do not accept audit's suggested Expo 44 or React Native 0.72 downgrades; verify an SDK-supported upgrade and native exports."
+          "notes": "6e900d0 patches shell-quote 1.8.4 to compatible 1.12.0 without changing the Expo SDK. Audit critical count is now zero; 40 noncritical findings (28 high, 12 moderate) remain, including build tools. Quoting regression, typecheck, contracts, web/Android/iOS exports pass. Do not accept audit's suggested major SDK downgrades; device exposure review remains open."
         }
       ],
       "gates": [
@@ -370,28 +379,37 @@
           "id": "R5-G1",
           "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/native-typecheck.log",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Fresh current-SDK typecheck after the transitive security patch."
         },
         {
           "id": "R5-G2",
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/mobile-contracts.log",
-          "lastRun": "2026-10-20T17:27:25Z",
-          "notes": "Default and legacy migration fixtures aligned to preserved 8200/4700 inputs. Custom zero-limit data remains unchanged. Not final-device proof."
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/native-contracts.log",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Preserved 8200/4700 defaults, custom-data guards and the critical shell quoting rejection regression pass. Not final-device proof."
         },
         {
           "id": "R5-G3",
           "title": "Native dependency audit and exposure review",
           "command": "npm --prefix apps/mobile audit --omit=dev",
           "status": "failed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-audit.json",
-          "lastRun": "2026-10-20T17:42:00Z",
-          "notes": "41 findings in a tree that includes SDK build tools. Scope actual bundle/server exposure and patch via supported SDK versions; findings are not dismissed or treated as confirmed phone exploits."
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-after.json",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "40 noncritical findings remain in a tree including SDK build tools. Critical finding fixed; the complete audit still fails. Scope actual exposure and use supported versions; do not treat these as confirmed phone exploits."
+        },
+        {
+          "id": "R5-G4",
+          "title": "Critical native dependency audit",
+          "command": "npm --prefix apps/mobile audit --omit=dev --audit-level=critical",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-after.json",
+          "lastRun": "2026-10-20T17:59:00Z",
+          "notes": "Critical count zero; CI enforces this floor. The full audit above still fails on 40 noncritical findings, so native release is not approved."
         }
       ]
     }
@@ -440,7 +458,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "0d72c6b push CI passed; its PR run hit a software GPU screenshot timeout. Bounded capture was corrected and verified locally; the runtime security patch also needs fresh all-checks-green exact-head evidence."
+      "note": "8e1f41d passed both CI runs and Vercel after bounded capture corrections. The native critical follow-up still needs fresh all-checks-green evidence on its resulting pushed head; no earlier green run authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -450,12 +468,12 @@
     {
       "title": "Web security patch is not yet live; native dependency findings remain",
       "severity": "high",
-      "note": "Patched local web runtime audit is clean, but the deployed production version has not been promoted. Native omit-dev tree has 41 findings, including build tooling; supported SDK remediation and exposure review remain required."
+      "note": "Patched web runtime audit is clean, but production has not been promoted. Native critical finding is patched without an SDK change; 40 noncritical findings remain, including build tooling. Supported remediation and exposure review remain required."
     },
     {
       "title": "Production backend and custom domain unverified",
       "severity": "high",
-      "note": "Do not apply production migrations, change DNS or promote the draft while ownership and release gates are open."
+      "note": "Cloud access is recovered, but the similarly named candidate is empty and not linked; the preview is local-only. Fresh SQL/RLS tests require an available isolated Docker backend. Do not mutate production or DNS while binding and release gates are open."
     }
   ],
   "prLog": [
@@ -743,17 +761,18 @@
   "resume": {
     "activePhase": "R4",
     "nextActions": [
-      "Push runtime security patch 60ab957 and software screenshot capture fix b4df206 with fresh evidence. Require all CI and Vercel checks on the exact resulting head; do not merge the restoration draft or promote production yet.",
+      "Push native critical patch 6e900d0 and the backend-readiness evidence; require all checks on the resulting exact head. Web runtime checkpoint 8e1f41d passed both CI runs and Vercel. Do not merge the draft or promote production yet.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
       "Refine House/Land/Vault from properly licensed or original textured sources, with provenance, small opt-in budgets and visual review. Do not overwrite refined imports by running the study generator.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
-      "Plan a supported Expo SDK/dependency remediation for its 41 omit-dev-tree advisories and the 12 remaining web development-toolchain findings; distinguish build tools from device runtime, and do not force audit-proposed major downgrades.",
+      "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
+      "Use backend-readiness.json: Supabase access is now available, but the candidate has no schema/migrations and the app is local-only. Establish a verified isolated target and fresh SQL/RLS proof before any production wiring; no candidate selection by name alone.",
       "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
-      "Production Supabase environment and exact owned custom-domain hostname/access remain unverified."
+      "Supabase project binding is unconfigured and fresh isolated SQL tests are unavailable without Docker; exact owned custom-domain hostname/access remains unverified."
     ],
     "conventions": [
       "Use codex/mission/<phase>-<task> branches and one focused PR per task.",

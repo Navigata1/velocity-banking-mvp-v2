@@ -346,3 +346,12 @@
 - Patched build, lint, 270 regressions, two reference fixtures, seven rendered routes, 35 media contracts, mobile contracts and lock consistency pass. Money Loop initially hit its absolute timing deadline during concurrent software rendering; a fresh standalone run passed unchanged. Independent dependency/capture review reported no actionable findings.
 - The production app has not been patched or promoted. Native omit-dev-tree audit reports 41 findings (including Expo CLI/Metro build tooling); web development tooling has 12 and media tooling 13. These remain explicit supported-upgrade/exposure-review tasks, not suppressed findings or confirmed phone exploits.
 - Full July state and diagnostic evidence retain their content while text line endings are normalized for portable review. Final pushed-head CI is still required before transport is called verified.
+
+## 2026-10-20T18:03Z - Hosted checkpoint green; native critical issue patched
+- SHA 8e1f41d passed push CI 39469462980 (12m51s), PR CI 39469479740 (13m10s), Vercel and all seven remote preview routes at desktop and 375px. The full hero pixel gate passed in both hosted jobs without weakening assertions or the 20-minute job cap.
+- 6e900d0 updates only shell-quote from 1.8.4 to compatible 1.12.0 and adds a real quoting regression plus a critical-only CI floor. Native critical audit count is zero; the full tree still has 40 noncritical findings. No Expo SDK downgrade or paid build was initiated.
+- Fresh typecheck, native contracts, seven-route Expo web export smoke, Android Hermes export and iOS Hermes export passed. Device QA remains open.
+- Supabase discovery now works. The name-matched healthy Velocity Banking candidate has no public tables or migration history; the repo has four migrations, no cloud-project link and no local public credentials. Preview Settings confirms local-only mode. No candidate was adopted or mutated on name alone.
+- Fresh client/account contracts pass, but isolated SQL/RLS replay has not yet been completed. Docker was stopped; a bounded installed-engine startup attempt was made. No remote schema, data, grants, keys or DNS changes occurred.
+- Evidence is in security-refresh-2026-10-20. The native follow-up and this receipt must receive fresh checks on the resulting pushed head before any release claim; production remains unchanged.
+- Docker's installed launcher exceeded its requested 90-second deadline. Only the verified launcher CLI processes were canceled; no database/container was stopped. A fresh isolated SQL test stack remains unverified.
