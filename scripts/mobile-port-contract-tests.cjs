@@ -819,15 +819,15 @@ test('shared mobile default assumptions start with the verified web demo Money L
   const vault = sharedEngine.buildMobileVaultSnapshot();
   const learn = sharedEngine.buildMobileLearnSnapshot();
 
-  assert.equal(defaultInput.monthlyIncome, 6500);
-  assert.equal(defaultInput.monthlyExpenses, 5000);
+  assert.equal(defaultInput.monthlyIncome, 8200);
+  assert.equal(defaultInput.monthlyExpenses, 4700);
   assert.equal(defaultInput.chunkAmount, 1000);
   assert.equal(defaultInput.activeDebt.termMonths, 48);
   assert.equal(defaultInput.loc.limit, 25000);
   assert.equal(defaultInput.loc.balance, 3200);
   assert.equal(defaultInput.loc.apr, 0.085);
-  assert.ok(webStoreSource.includes('monthlyIncome: 6500'));
-  assert.ok(webStoreSource.includes('monthlyExpenses: 5000'));
+  assert.ok(webStoreSource.includes('monthlyIncome: 8200'));
+  assert.ok(webStoreSource.includes('monthlyExpenses: 4700'));
   assert.ok(webStoreSource.includes('limit: 25000'));
   assert.ok(webStoreSource.includes('chunkAmount: 1000'));
 
@@ -1657,8 +1657,8 @@ test('mobile storage migrates only the legacy standalone demo default', () => {
     },
   }));
 
-  assert.equal(migrated.monthlyIncome, 6500);
-  assert.equal(migrated.monthlyExpenses, 5000);
+  assert.equal(migrated.monthlyIncome, 8200);
+  assert.equal(migrated.monthlyExpenses, 4700);
   assert.equal(migrated.chunkAmount, 1000);
   assert.equal(migrated.activeDebt.termMonths, 48);
   assert.equal(migrated.loc.limit, 25000);
