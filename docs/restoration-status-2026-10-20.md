@@ -26,6 +26,14 @@ The existing aligned demo defaults were preserved.
   the same available household budget, and expose cash retained at payoff. Adverse
   Velocity outcomes are signed and visible, not clamped to zero. Actual lender
   terms and the other routes still need integration; see the comparison contract.
+- Affordable final payments and zero residual after scheduled payments now remain
+  valid paths in the shared/single-target engine. Unfunded chunk draws, optimistic
+  recovery hints and omitted payment outflows are blocked; actual calendar totals
+  govern recovery when supplied. New chunks stay paused when scheduled recovery
+  cash is unavailable, without hiding an otherwise valid payoff path.
+- Inactive mortgage-frequency buttons removed from Simulator/Vault, with saved
+  fields preserved. Monthly estimates and the annual-extra approximation are
+  explicit; Guardian guidance matches the current Simulator contract.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. The other nine meshes remain
@@ -35,8 +43,8 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 275 financial regressions, two independent reference scenarios, 78 closed-form
-  comparison cases and asset/accessibility/metadata checks passed.
+- 289 financial regressions, two independent reference scenarios, 78 closed-form
+  comparison cases, 25 zero-recovery conservation cases and ancillary contracts pass.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
@@ -68,6 +76,11 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   Vercel and all seven preview routes at desktop/375px. New comparison work needs
   fresh exact-head hosted checks. Local Chrome verifies three comparison cases
   at desktop/375px, including slower/more-interest Velocity and unaffordable inputs.
+- Checkpoint 30b810e passed both hosted CI runs (39476307257 and 39476316604),
+  Vercel and all remote route/comparison checks. The timing/budget follow-up has
+  fresh local proof and still needs exact-head hosted checks. Its browser gate
+  now covers 16 cases across desktop/375px, including saved timing values surviving
+  an unrelated edit and navigation. No prior checkpoint authorizes production.
 
 ## Comparison Correction
 
@@ -85,13 +98,23 @@ Full lender/calendar enforcement remains a release gate.
 
 Detailed contract and limitations: `docs/simulator-comparison-contract-2026-10-20.md`.
 
+Vault's mortgage comparison still has differing payment allocations and LOC coverage.
+It now discloses that limitation before its deltas; this warning is not a substitute
+for completing the equal-budget/liability calculation contract before release.
+
+Budget/cadence corrections and preserved legacy timing data:
+`docs/money-loop-budget-contract-2026-10-20.md`. Independent review's exact-payment
+floating-point and optimistic calendar-summary cases were reproduced and fixed.
+An exactly funded $120.70 final payment passes; one cent less remains unaffordable.
+
 ## Remaining Production Gates
 
 1. Complete nine remaining textured models and review collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
-5. Effective chunk-frequency controls, or removal of the ineffective controls.
+5. Normal-path dated-calendar support; inactive timing choices are now removed,
+   not represented as a completed weekly/biweekly scheduling engine.
 6. Live Supabase isolation, schema, environment and recovery verification.
 7. Custom-domain and verified production deployment.
 8. Final native-device QA and refreshed bundles after remaining shared-engine changes.

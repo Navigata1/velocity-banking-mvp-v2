@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T18:35:13Z",
-    "sessionCount": 4
+    "updated": "2026-10-20T19:10:17Z",
+    "sessionCount": 5
   },
   "policies": {
     "merge": "review",
@@ -42,10 +42,10 @@
         {
           "id": "R0-T2",
           "title": "Require exact-SHA GitHub CI and preview evidence",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "58d0df5 passed push CI 39471854169, PR CI 39471862274 and Vercel; all seven remote desktop/375px preview routes passed. The comparison correction has fresh local proof but needs new exact-head hosted checks. No production promotion."
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "Exact-SHA verification is established and enforced: 30b810e passed both CI runs 39476307257/39476316604, Vercel and remote desktop/375px checks. Each subsequent push must still pass the standing gate; current boundary changes need a new receipt. No production promotion."
         }
       ],
       "gates": [
@@ -54,17 +54,17 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T18:35:13Z",
-          "notes": "Fresh local draft evidence: 275 financial regressions, two reference fixtures plus 78 closed-form cases, GPU cleanup, asset and accessibility contracts. Not merged-main or production proof."
+          "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T19:10:17Z",
+          "notes": "289 financial regressions, two reference fixtures, 78 closed-form comparison cases and 25 zero-recovery conservation cases; asset/accessibility/metadata contracts pass. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T18:35:13Z",
+          "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T19:10:17Z",
           "notes": "Seven built routes at desktop/mobile widths passed locally; this is not release promotion."
         },
         {
@@ -72,9 +72,9 @@
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39471862274",
-          "lastRun": "2026-10-20T18:35:13Z",
-          "notes": "Previous SHA 58d0df5 passed both CI runs and Vercel, including all ten software-rendered heroes. New comparison changes need their own pushed-head checks; the previous green receipt is not production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39476316604",
+          "lastRun": "2026-10-20T19:10:17Z",
+          "notes": "Previous SHA 30b810e passed both CI runs and Vercel, including all ten software-rendered heroes. Current timing/budget corrections need their own exact-head checks. No earlier green receipt approves production."
         }
       ]
     },
@@ -112,10 +112,10 @@
         {
           "id": "R1-T4",
           "title": "Harden loading, GPU cleanup, licensing and mobile budgets",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "Slow loading, repeat selection, reduced motion, network and texture decode failures passed. Shared GPU resources dispose once. Attribution and separate trademark removal are tested; exact-SHA CI and collection-wide art approval remain open."
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "Loading continuity, repeat selection, reduced motion, network/texture failures, one-time GPU cleanup, licensing and budgets passed locally and in both hosted 30b810e jobs. Hardening is established. Collection-wide art approval and nine refined models remain separate unfinished tasks; new imports must re-pass these standing gates."
         }
       ],
       "gates": [
@@ -169,15 +169,15 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Web/Expo Simulator now shares direct repayment with the same active debt, existing LOC and available budget. Cash at each payoff and adverse signed deltas are visible. 275 regressions, 78 closed-form cases and six actual-browser cases pass; independent review found no blocking financial defect. Mortgage/Vault-web, Portfolio, dashboard helpers, actual lender/calendar integration and Velocity final-payment/zero-surplus edges remain open."
+          "notes": "Simulator web/Expo shares liabilities/budget and now accepts affordable final payments and zero residual after scheduled payments; unsafe zero-recovery chunks and phantom routing are blocked. Calendar totals govern cadence when supplied. 289 regressions and 103 closed-form cases pass. Vault warns that its comparison is not yet like-for-like; correcting that math, Portfolio/dashboard scope, policy consistency, actual lender/calendar integration and scenario ownership remains open."
         },
         {
           "id": "R2-T3",
           "title": "Implement or remove ineffective chunk-frequency controls",
-          "status": "pending",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "chunkFrequency is persisted but not consumed by the web simulator; Guardian copy still suggests unsupported timing comparisons. Mortgage paymentFrequency buttons also have no corresponding read in calculation logic. Remove or clearly label unsupported choices until the dated ledger contract is wired; preserve saved data."
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "Unused weekly/biweekly mortgage buttons removed from Simulator/Vault; monthly estimate and annual-extra approximation disclosed. Guardian frequency and minimum-only baseline claims corrected across the answer bank and independently re-reviewed. Legacy chunkFrequency/paymentFrequency values survive a real unrelated edit and route navigation at desktop/375px. No dated-frequency capability is claimed."
         }
       ],
       "gates": [
@@ -186,8 +186,8 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T18:35:13Z",
+          "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T19:10:17Z",
           "notes": "Local branch regressions pass. This does not complete cross-route coherence or lender integration."
         },
         {
@@ -195,18 +195,18 @@
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/reference.log",
-          "lastRun": "2026-10-20T18:35:13Z",
-          "notes": "Two anonymized fixtures and 78 independent closed-form comparison cases. Fixtures are not actual lender quotes."
+          "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/reference.log",
+          "lastRun": "2026-10-20T19:10:17Z",
+          "notes": "Two anonymized fixtures, 78 closed-form comparison cases and 25 zero-recovery conservation cases. Not lender quotes."
         },
         {
           "id": "R2-G3",
           "title": "Rendered Simulator comparison edge cases",
           "command": "npm --prefix apps/web run smoke:comparison:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/browser-verification.json",
-          "lastRun": "2026-10-20T18:35:13Z",
-          "notes": "Three scenarios at 1440px and 375px: two liabilities, slower/higher-interest Velocity, unaffordable payments; visible bars, empty state, signed badges, no page overflow/errors. CI uploads actual screenshots."
+          "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/browser-verification.json",
+          "lastRun": "2026-10-20T19:10:17Z",
+          "notes": "16 cases across 1440px and 375px: six payoff scenarios including exact final payment/zero residual, plus two saved timing modes surviving an unrelated edit and navigation. Signed badges, chart, paused-chunk coaching, disclosures and no overflow/errors are asserted."
         }
       ]
     },
@@ -288,10 +288,10 @@
         {
           "id": "R4-T5",
           "title": "Patch vulnerable web framework and preserve a standing runtime audit gate",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
-          "pr": null,
-          "notes": "60ab957 patches Next/ESLint to 16.4.2 and PostCSS to 8.5.31. Runtime audit zero; build, lint, regressions, seven rendered routes, all ten software-rendered heroes, failure paths and standalone Money Loop proof passed locally. Independent patch review clear. Final exact-head hosted CI remains required; live production is not updated."
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "60ab957 patches Next/ESLint to 16.4.2 and PostCSS to 8.5.31; runtime audit remains zero. Patch and audit enforcement passed both hosted 30b810e jobs with full hero/media/native gates. Implementation task is complete, but production promotion is explicitly a separate open release task."
         }
       ],
       "gates": [
@@ -434,8 +434,8 @@
     {
       "label": "Web financial regressions passing",
       "baseline": "263",
-      "current": "275",
-      "target": "275",
+      "current": "289",
+      "target": "289",
       "direction": "up"
     },
     {
@@ -462,12 +462,12 @@
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Simulator web/Expo fixes equal starting liabilities and available budget, but other routes, scenario ownership, actual lender/calendar integration and Velocity final-payment/zero-surplus edges remain open."
+      "note": "Simulator web/Expo budget boundaries and inactive timing choices are corrected. Mortgage/Portfolio policy and comparison scope, scenario ownership and actual lender/calendar integration remain open."
     },
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "58d0df5 passed both CI runs and Vercel. The new comparison correction needs fresh all-checks-green evidence on its resulting pushed head; no earlier green run authorizes production."
+      "note": "30b810e passed both CI runs and Vercel. Current timing/budget corrections need fresh exact-head checks. No earlier receipt authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -770,9 +770,9 @@
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Push the same-liability Simulator correction and require both CI runs plus Vercel on the resulting exact head. Checkpoint 58d0df5 is green. Do not merge the draft or promote production yet.",
+      "Push the timing/budget corrections and require both CI runs plus Vercel on the resulting exact head. Checkpoint 30b810e passed both jobs and remote desktop/375px checks. Do not merge the draft or promote production yet.",
       "Continue R2-T2 beyond Simulator: Mortgage/Vault-web, Portfolio and dashboard helper comparisons still differ in liability/budget scope. Preserve the existing Velocity allocation policy and saved scenarios; add failing reproductions first. Read docs/simulator-comparison-contract-2026-10-20.md.",
-      "Add focused regressions for Velocity final-payment affordability and zero-surplus boundaries; implement or remove the ineffective chunk and mortgage payment-frequency controls. Keep actual lender terms and dated-calendar integration explicit and open.",
+      "R2-T3 is implemented and tested: do not restore ineffective timing buttons or delete legacy saved timing data. Shared/single-target affordability and chunk-recovery boundaries are fixed; apply the same preflight contract to mortgage/Portfolio paths. Keep actual lender terms and normal dated-calendar integration open.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
       "Refine House/Land/Vault from properly licensed or original textured sources, with provenance, small opt-in budgets and visual review. Do not overwrite refined imports by running the study generator.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",

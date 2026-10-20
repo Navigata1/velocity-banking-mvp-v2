@@ -28,6 +28,8 @@ separately under a real, funded routing ledger.
 Budget comparisons allow only `1e-8` of binary floating-point tolerance, consistent
 with the direct-repayment allocator. An exactly affordable $120.70 final payment
 passes; $120.69 still fails. This is not lender-specific statement rounding.
+The same tolerance applies to the legacy no-LOC path, including a $1,211 final
+obligation reconstructed internally as $1,211.0000000000002.
 
 ## Recovery And Chunks
 
