@@ -291,6 +291,8 @@ test('Portfolio path and run summaries include LOC debt after listed targets are
 
 test('Portfolio presents funded allocations, LOC controls and retained cash in every strategy', () => {
   const source = readPortfolioRouteSource();
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.ok(workflow.includes('npm run smoke:portfolio:built'), 'CI must exercise funded Portfolio interactions');
   assert.ok(source.includes('Extra allocation'));
   assert.ok(source.includes('Automatic surplus'));
   assert.ok(source.includes('data-testid="portfolio-cash-at-payoff"'));

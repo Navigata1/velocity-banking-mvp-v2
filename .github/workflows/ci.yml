@@ -98,6 +98,18 @@ jobs:
           path: apps/web/test-results/vault-comparison
           if-no-files-found: warn
 
+      - name: Verify funded Portfolio allocations and debt scope
+        working-directory: apps/web
+        run: npm run smoke:portfolio:built
+
+      - name: Upload Portfolio budget proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-budget-proof
+          path: apps/web/test-results/portfolio-budget
+          if-no-files-found: warn
+
       - name: Verify asset hero loading, rotation and reduced motion
         working-directory: apps/web
         run: npm run test:heroes
