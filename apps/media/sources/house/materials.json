@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "created": "2026-10-20",
+  "purpose": "Original generated albedo sources for the authored InterestShield House, not measured scans or complete PBR sets.",
+  "images": [
+    {
+      "file": "limestone-albedo-v1.png",
+      "sha256": "d4163ffdb7e7b6b04de4a800044f9ed9c73ce6a90d5c803afcf333011f8e4370",
+      "origin": "Codex built-in image generator",
+      "originalOutput": "exec-1b116b72-a2a3-49b0-ac99-aec6dab9e935.png",
+      "brief": "Flat evenly illuminated warm-white limestone ashlar, thin pale mortar, staggered courses, photographic stone grain; no perspective, labels, directional light or gloss."
+    },
+    {
+      "file": "oak-albedo-v1.png",
+      "sha256": "78f9cbed87ec67f0522f1aa5047e0959dac32e0074e6ba60f262820a4d397b7a",
+      "origin": "Codex built-in image generator",
+      "originalOutput": "exec-bcb419f6-eb26-46dd-ac40-dad32729b71d.png",
+      "brief": "Flat quarter-sawn oak, fine horizontal grain, restrained neutral brown variation; no joints, perspective, labels or baked highlights."
+    }
+  ],
+  "limitations": "AI-generated albedos. Micro-normal and packed roughness maps are authored procedural approximations, not reconstructed or measured surface relief. Repeating edges and architectural fidelity require visual review on the mesh. Source files retained unchanged; shipping textures are resized and WebP encoded."
+}

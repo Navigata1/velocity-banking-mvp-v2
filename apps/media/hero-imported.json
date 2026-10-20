@@ -32,5 +32,21 @@
     "provenance": "Original authored open-chamber geometry and deterministic brushed/turned metal PBR maps; not an AI reconstruction of the studio poster.",
     "units": "normalized stage units",
     "version": 2
+  },
+  {
+    "id": "house",
+    "quality": "refined-textured",
+    "bytes": 1144500,
+    "meshes": 155,
+    "triangles": 31316,
+    "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
+    "sourceSha256": "26fad67c8f8908d0f34cd3fc42aa14c3f417908bc6a56f2ed3d1a8dd69f4f82f",
+    "sourceFile": "apps/media/scripts/build-refined-house.mjs",
+    "materialSourceSha256": "ee03a127097e0fed9039be1d64cd13358fbf11e5b0c1519a5c6b0aad13b30a4e",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and generated material sources",
+    "provenance": "Original authored limestone House with actual openings, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "units": "normalized stage units",
+    "version": 2
   }
 ]
