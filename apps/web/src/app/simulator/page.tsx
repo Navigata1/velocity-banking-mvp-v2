@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { runSimulation, formatCurrency, SimulationInputs, calculateMortgageAnalysis, compareSingleDebtStrategies } from '@/engine/calculations';
+import { runSimulation, formatCurrency, SimulationInputs, calculateMortgageAnalysis, compareSingleDebtStrategies, SIMULATOR_COMPARISON_SCOPE, SIMULATOR_COMPARISON_ASSUMPTIONS, SIMULATOR_COMPARISON_TIMING } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
@@ -84,7 +84,7 @@ export default function SimulatorPage() {
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>What-If Simulator</h1>
-        <p className={classes.textSecondary}>See how velocity banking could accelerate your payoff</p>
+        <p className={classes.textSecondary}>Compare payoff plans using your current balances</p>
       </ScrollReveal>
 
       <div className="relative z-50">
@@ -432,20 +432,31 @@ export default function SimulatorPage() {
               <p className={`text-xs ${classes.textMuted} mb-5`}>
                 Fill level = time to payoff. Less fill = faster. Traditional is the baseline at 100%.
               </p>
+              <div data-testid="simulator-comparison-assumptions" className={`mb-5 space-y-2 text-xs leading-5 ${classes.textSecondary}`}>
+                <p>{SIMULATOR_COMPARISON_SCOPE}</p>
+                <p>{SIMULATOR_COMPARISON_ASSUMPTIONS}</p>
+                <details>
+                  <summary className="cursor-pointer font-medium text-emerald-400">Payment order and timing assumptions</summary>
+                  <p className="mt-2">Traditional uses the full available budget, active debt first. Snowball targets the smaller balance; Avalanche targets the higher APR. Each reserves the active loan payment and estimated LOC interest first.</p>
+                  <p className="mt-2">{SIMULATOR_COMPARISON_TIMING}</p>
+                </details>
+              </div>
               <div
                 data-testid="simulator-portfolio-alignment-note"
                 className={`mb-5 rounded-xl border ${classes.border} bg-slate-950/25 p-4`}
               >
                 <p className={`text-xs font-semibold uppercase ${classes.textMuted}`}>How this differs from Portfolio</p>
                 <p className={`mt-2 text-sm leading-6 ${classes.textSecondary}`}>
-                  Simulator compares modeled payoff speed and interest cost for the active debt. Portfolio Velocity is a planning default for ordering debts by cash-flow unlock and daily interest burn, not a promise that Velocity is always fastest or lowest-interest.
+                  Simulator compares modeled payoff speed and interest cost for the active debt and existing LOC together. Portfolio Velocity is a planning default for ordering debts by cash-flow unlock and daily interest burn, not a promise that Velocity is always fastest or lowest-interest.
                 </p>
                 <a href="/portfolio" className="mt-3 inline-block text-xs font-semibold text-emerald-400 hover:underline">
                   Review Portfolio planning order
                 </a>
               </div>
               
-              <StrategyGlassFill strategies={strategyResults} />
+              <div data-testid="simulator-strategy-comparison">
+                <StrategyGlassFill strategies={strategyResults} />
+              </div>
             </div>
 
             <div className={`${classes.glass} rounded-2xl p-6`}>
@@ -494,20 +505,25 @@ export default function SimulatorPage() {
             </div>
 
             <div className={`${classes.glass} rounded-2xl p-6`}>
-              <h3 className="font-semibold mb-4">Balance Over Time (Estimate)</h3>
-              <div className="h-48 flex items-end justify-between gap-1">
+              <h3 className="font-semibold mb-4">Active Debt + LOC Balance (Estimate)</h3>
+              <div data-testid="simulator-balance-chart" className="h-48 flex items-end justify-between gap-1">
+                {results.baseline.monthlyData.length === 0 && (
+                  <p className={`w-full self-center text-center text-sm ${classes.textMuted}`}>Review cash flow and payment assumptions.</p>
+                )}
                 {results.baseline.monthlyData.slice(0, 24).map((month, i) => (
-                  <div key={i} className="flex-1 flex flex-col gap-1">
+                  <div key={i} className="h-full min-w-0 flex-1 flex flex-col justify-end">
                     <div 
+                      data-testid="simulator-balance-bar"
+                      aria-label={`Month ${month.month}: ${formatCurrency(month.carBalance + month.locBalance)} total debt`}
                       className="bg-red-500/50 rounded-t"
-                      style={{ height: `${buildSimulatorBalanceBarHeightPercent(month.carBalance, currentDebt.balance)}%` }}
+                      style={{ height: `${buildSimulatorBalanceBarHeightPercent(month.carBalance + month.locBalance, currentDebt.balance + (inputs.loc?.balance ?? 0))}%` }}
                     />
                   </div>
                 ))}
               </div>
               <div className="flex justify-between text-xs text-gray-500 mt-2">
-                <span>Month 1</span>
-                <span>Month 24</span>
+                <span>{results.baseline.monthlyData.length > 0 ? 'Month 1' : 'Review inputs'}</span>
+                <span>{results.baseline.monthlyData.length > 0 ? `Month ${Math.min(24, results.baseline.monthlyData.length)}` : 'No affordable projection'}</span>
               </div>
               <div className="flex gap-4 mt-4 text-sm">
                 <div className="flex items-center gap-2">

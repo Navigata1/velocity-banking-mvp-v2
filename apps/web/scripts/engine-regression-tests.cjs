@@ -4456,6 +4456,82 @@ test('dashboard payoff helpers use the canonical single-debt engine', () => {
   );
 });
 
+test('Simulator comparison keeps the existing LOC and full available budget in its baseline', () => {
+  const result = calculations.runSimulation({
+    monthlyIncome: 1000, monthlyExpenses: 500,
+    carLoan: { balance: 600, apr: 0, monthlyPayment: 100 },
+    loc: { limit: 2000, balance: 400, apr: 0 },
+    useVelocity: true, extraPayment: 100,
+  });
+  assert.equal(result.baseline.payoffMonths, 2, 'both debts, not a six-month target-only minimum plan');
+  assert.equal(result.baseline.monthlyData[0].carBalance, 100);
+  assert.equal(result.baseline.monthlyData[0].locBalance, 400, 'existing LOC cannot disappear');
+  assert.equal(result.baseline.monthlyData[1].locBalance, 0);
+});
+
+test('shared direct repayment accounts for payments, interest and retained cash each month', () => {
+  for (const strategy of ['debt-first', 'snowball', 'avalanche']) {
+    const result = sharedFinancialEngine.simulateDirectRepayment({
+      principalBalance: 1250, debtApr: 0.12, debtPayment: 100,
+      loc: { limit: 2000, balance: 450, apr: 0.24 },
+      monthlyBudget: 600, strategy,
+    });
+    assert.equal(result.isPayoffPossible, true);
+    let previousTotal = 1700;
+    let previousCash = 0;
+    for (const row of result.monthlyData) {
+      const endTotal = row.debtBalance + row.locBalance;
+      assert.ok(Math.abs(previousTotal + row.debtInterest + row.locInterest - row.debtPayment - row.locPayment - endTotal) < 1e-8);
+      assert.ok(Math.abs(previousCash + 600 - row.debtPayment - row.locPayment - row.cashBalance) < 1e-8);
+      assert.ok(row.debtPayment + row.locPayment <= 600 + 1e-8, 'cannot spend more than the household budget');
+      previousTotal = endTotal;
+      previousCash = row.cashBalance;
+    }
+    assert.equal(roundCents(previousTotal), 0);
+    assert.ok(previousCash > 0, 'last-month surplus remains visible');
+  }
+});
+
+test('direct repayment priorities include the LOC and transfer unused payments in the same month', () => {
+  const input = {
+    principalBalance: 1000, debtApr: 0.12, debtPayment: 100,
+    loc: { limit: 2000, balance: 300, apr: 0.24 }, monthlyBudget: 500,
+  };
+  const direct = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'debt-first' }).monthlyData[0];
+  const snowball = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'snowball' }).monthlyData[0];
+  const avalanche = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'avalanche' }).monthlyData[0];
+  const locInterest = 300 * 0.24 * 30 / 365;
+  assert.ok(Math.abs(direct.locBalance - 300) < 1e-8, 'debt-first reserves LOC interest before targeting the loan');
+  assert.ok(Math.abs(direct.debtBalance - (1010 - (500 - locInterest))) < 1e-8);
+  assert.equal(snowball.locBalance, 0, 'smaller LOC is paid first');
+  assert.equal(avalanche.locBalance, 0, 'higher-rate LOC is paid first');
+  assert.ok(Math.abs(snowball.debtPayment - (500 - 300 - locInterest)) < 1e-8, 'unused LOC allocation rolls to target immediately');
+  assert.equal(snowball.debtBalance, avalanche.debtBalance);
+  const highTarget = { ...input, debtApr: 0.36 };
+  const highTargetAvalanche = sharedFinancialEngine.simulateDirectRepayment({ ...highTarget, strategy: 'avalanche' });
+  assert.ok(Math.abs(highTargetAvalanche.monthlyData[0].locBalance - 300) < 1e-8);
+});
+
+test('direct repayment rejects unaffordable obligations but clips the final target payment', () => {
+  const input = { principalBalance: 1000, debtApr: 0, debtPayment: 100, loc: { limit: 1000, balance: 300, apr: 0.24 }, strategy: 'snowball' };
+  assert.equal(sharedFinancialEngine.simulateDirectRepayment({ ...input, monthlyBudget: 102 }).failureReason, 'cashflow-below-minimums');
+  assert.equal(sharedFinancialEngine.simulateDirectRepayment({ ...input, monthlyBudget: 0 }).failureReason, 'negative-cashflow');
+  const final = sharedFinancialEngine.simulateDirectRepayment({ ...input, principalBalance: 50, monthlyBudget: 90 });
+  assert.equal(final.isPayoffPossible, true);
+  assert.equal(final.monthlyData[0].debtPayment, 50);
+});
+
+test('Simulator deltas retain slower and more-interest outcomes instead of clamping them to zero', () => {
+  const result = calculations.runSimulation({
+    monthlyIncome: 1000, monthlyExpenses: 500,
+    carLoan: { balance: 1000, apr: 0.12, monthlyPayment: 100 },
+    loc: { limit: 2000, balance: 0, apr: 0.30 },
+    useVelocity: true, extraPayment: 1,
+  });
+  assert.ok(result.velocity.monthsSaved < 0, 'slow low-chunk plan must not look equal to direct repayment');
+  assert.ok(result.velocity.interestSaved < 0, 'extra interest must remain signed');
+});
+
 test('single-debt strategy comparison keeps velocity aligned with runSimulation', () => {
   const inputs = {
     monthlyIncome: 6500,
@@ -4826,7 +4902,7 @@ test('simulator balance chart bars clamp invalid and over-starting balances', ()
   assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(5000, Number.POSITIVE_INFINITY), 0);
 
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
-  assert.ok(source.includes('buildSimulatorBalanceBarHeightPercent(month.carBalance, currentDebt.balance)'), 'expected Simulator chart to use bounded height helper');
+  assert.ok(source.includes('buildSimulatorBalanceBarHeightPercent(month.carBalance + month.locBalance, currentDebt.balance + (inputs.loc?.balance ?? 0))'), 'bounded chart uses the same two-liability scope as the comparison');
   assert.ok(!source.includes('(month.carBalance / (currentDebt.balance || 1)) * 100'), 'expected Simulator chart not to use raw ratio CSS height');
 });
 

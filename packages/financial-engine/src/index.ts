@@ -37,6 +37,41 @@ export interface AmortizedPayoffResult {
   failureReason?: AmortizedPayoffFailureReason;
 }
 
+export type DirectRepaymentStrategy = 'debt-first' | 'snowball' | 'avalanche';
+
+export interface DirectRepaymentInputs {
+  principalBalance: number;
+  debtApr: number;
+  debtPayment: number;
+  loc?: LOCDetails;
+  monthlyBudget: number;
+  strategy: DirectRepaymentStrategy;
+  maxMonths?: number;
+}
+
+export interface DirectRepaymentMonth {
+  month: number;
+  debtBalance: number;
+  locBalance: number;
+  debtInterest: number;
+  locInterest: number;
+  debtPayment: number;
+  locPayment: number;
+  cashBalance: number;
+}
+
+export interface DirectRepaymentResult {
+  payoffMonths: number;
+  totalInterest: number;
+  monthlyData: DirectRepaymentMonth[];
+  isPayoffPossible: boolean;
+  failureReason?: AmortizedPayoffFailureReason | 'negative-cashflow' | 'cashflow-below-minimums';
+}
+
+export const SIMULATOR_COMPARISON_SCOPE = 'Same active debt, existing LOC balance and available monthly budget. Other household debts are excluded.';
+export const SIMULATOR_COMPARISON_ASSUMPTIONS = 'Educational estimate: constant APRs, no fees and no draw-period expiry. Direct repayment reserves LOC interest only, not a verified lender minimum. Check actual lender terms before acting.';
+export const SIMULATOR_COMPARISON_TIMING = 'Direct strategies pay at month end; LOC interest uses 30 days / 365. Velocity estimates income at the start and expenses across 30 days. Unused money stays as cash, not an automatic extra debt payment. Cash is measured at each plan\'s own payoff month, not a common date.';
+
 export interface MoneyLoopLOC {
   limit: number;
   apr: number;
@@ -317,6 +352,7 @@ export interface MobileSimulatorStrategy {
   totalInterestLabel: string;
   interestLabel: string;
   statusLabel?: string;
+  endingCashLabel: string;
 }
 
 export interface MobileSimulatorSnapshot {
@@ -356,7 +392,7 @@ export interface MobileCockpitSnapshot {
 }
 
 export interface MobileVaultStage {
-  title: 'Stabilize' | 'Debt Freedom' | 'Buffer';
+  title: 'Stabilize' | 'Debt Freedom' | 'Interest Comparison';
   value: string;
   detail: string;
 }
@@ -384,6 +420,7 @@ interface MobilePayoffProjection {
   totalInterest: number;
   isPayoffPossible: boolean;
   failureReason?: MobilePayoffFailureReason;
+  endingCash?: number;
 }
 
 export const defaultMobileDashboardInput: MobileDashboardInput = {
@@ -726,6 +763,67 @@ export function formatCurrency(amount: number): string {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(safeAmount);
+}
+
+/** Educational two-liability model; LOC interest-only is an assumption, not lender terms. */
+export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRepaymentResult {
+  let debtBalance = finiteNonNegative(inputs.principalBalance);
+  let locBalance = finiteNonNegative(inputs.loc?.balance ?? 0);
+  const debtRate = calculateMonthlyRate(inputs.debtApr);
+  const locRate = calculateDailyRate(inputs.loc?.apr ?? 0) * 30;
+  const scheduledPayment = finiteNonNegative(inputs.debtPayment);
+  const budget = finiteNonNegative(inputs.monthlyBudget);
+  const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
+  const monthlyData: DirectRepaymentMonth[] = [];
+  let totalInterest = 0;
+  let cashBalance = 0;
+  const result = (failureReason?: DirectRepaymentResult['failureReason']): DirectRepaymentResult => ({
+    payoffMonths: monthlyData.length,
+    totalInterest,
+    monthlyData,
+    isPayoffPossible: !failureReason,
+    failureReason,
+  });
+
+  if (debtBalance <= 0.01 && locBalance <= 0.01) return result();
+  if (budget <= 0) return result('negative-cashflow');
+
+  while ((debtBalance > 0.01 || locBalance > 0.01) && monthlyData.length < maxMonths) {
+    const debtInterest = debtBalance * debtRate;
+    const locInterest = locBalance * locRate;
+    let debtPayment = Math.min(scheduledPayment, debtBalance + debtInterest);
+    let locPayment = locInterest;
+    if (debtPayment + locPayment > budget + 1e-8) return result('cashflow-below-minimums');
+
+    let remaining = Math.max(0, budget - debtPayment - locPayment);
+    const locFirst = inputs.strategy === 'snowball'
+      ? locBalance > 0.01 && (debtBalance <= 0.01 || locBalance < debtBalance)
+      : inputs.strategy === 'avalanche'
+        ? locBalance > 0.01 && (debtBalance <= 0.01 || calculateMonthlyRate(inputs.loc?.apr ?? 0) > debtRate)
+        : false;
+    const payDebt = () => {
+      const extra = Math.min(remaining, Math.max(0, debtBalance + debtInterest - debtPayment));
+      debtPayment += extra;
+      remaining -= extra;
+    };
+    const payLOC = () => {
+      const extra = Math.min(remaining, locBalance);
+      locPayment += extra;
+      remaining -= extra;
+    };
+    if (locFirst) { payLOC(); payDebt(); } else { payDebt(); payLOC(); }
+    if (debtBalance > 0.01 && debtPayment + 1e-8 < debtInterest) return result('payment-below-interest');
+
+    debtBalance = Math.max(0, debtBalance + debtInterest - debtPayment);
+    locBalance = Math.max(0, locBalance + locInterest - locPayment);
+    cashBalance += remaining;
+    totalInterest += debtInterest + locInterest;
+    monthlyData.push({
+      month: monthlyData.length + 1, debtBalance, locBalance, debtInterest, locInterest,
+      debtPayment, locPayment, cashBalance,
+    });
+  }
+  return result(debtBalance <= 0.01 && locBalance <= 0.01 ? undefined : 'payoff-horizon-exceeded');
 }
 
 export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopMonthResult {
@@ -1162,7 +1260,9 @@ function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
 }
 
 function formatMonthsSaved(months: number): string {
-  return `${months} ${months === 1 ? 'month' : 'months'} faster`;
+  if (months === 0) return 'Same payoff time';
+  const absolute = Math.abs(months);
+  return `${absolute} ${absolute === 1 ? 'month' : 'months'} ${months > 0 ? 'faster' : 'slower'}`;
 }
 
 function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjection {
@@ -1171,26 +1271,6 @@ function simulateMobileBaseline(input: MobileDashboardInput): MobilePayoffProjec
     principalBalance: model.activeDebt.balance,
     apr: model.activeDebt.apr,
     monthlyPayment: model.activeDebt.monthlyPayment,
-    maxMonths: 600,
-  });
-
-  return {
-    payoffMonths: projection.payoffMonths,
-    totalInterest: projection.totalInterest,
-    isPayoffPossible: projection.isPayoffPossible,
-    failureReason: projection.failureReason,
-  };
-}
-
-function simulateMobileWithExtraPayments(input: MobileDashboardInput, extraPaymentInput: number): MobilePayoffProjection {
-  const model = normalizeMobileDashboardInput(input);
-  const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
-  const extraPayment = Math.min(finiteNonNegative(extraPaymentInput), Math.max(0, cashFlow));
-  const projection = simulateAmortizedPayoff({
-    principalBalance: model.activeDebt.balance,
-    apr: model.activeDebt.apr,
-    monthlyPayment: model.activeDebt.monthlyPayment,
-    extraPayment,
     maxMonths: 600,
   });
 
@@ -1324,6 +1404,7 @@ function simulateMobileMoneyLoopPayoff(input: {
     totalInterest: projection.totalInterest,
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
+    endingCash: projection.monthlyData.at(-1)?.cashBalance ?? 0,
   };
 }
 
@@ -1396,7 +1477,8 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
 
 function toMobileSimulatorStrategy(
   name: MobileSimulatorStrategyName,
-  projection: MobilePayoffProjection
+  projection: MobilePayoffProjection,
+  endingCash = 0
 ): MobileSimulatorStrategy {
   const isPayoffPossible = projection.isPayoffPossible !== false && projection.payoffMonths > 0;
 
@@ -1410,6 +1492,7 @@ function toMobileSimulatorStrategy(
     totalInterestLabel: isPayoffPossible ? formatCurrency(projection.totalInterest) : 'Not projected',
     interestLabel: isPayoffPossible ? 'Projected interest' : 'Not projected',
     statusLabel: isPayoffPossible ? undefined : formatPayoffFailure(projection.failureReason),
+    endingCashLabel: isPayoffPossible ? `${formatCurrency(endingCash)} cash at payoff` : 'Cash not projected',
   };
 }
 
@@ -1417,20 +1500,24 @@ export function buildMobileSimulatorSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileSimulatorSnapshot {
   const model = normalizeMobileDashboardInput(input);
-  const baseline = simulateMobileBaseline(model);
   const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
-  const surplusAfterMinimum = Math.max(0, cashFlow - model.activeDebt.monthlyPayment);
-  const accelerated = simulateMobileWithExtraPayments(model, surplusAfterMinimum);
+  const directInputs = {
+    principalBalance: model.activeDebt.balance, debtApr: model.activeDebt.apr,
+    debtPayment: model.activeDebt.monthlyPayment, loc: model.loc, monthlyBudget: cashFlow,
+  };
+  const baseline = simulateDirectRepayment({ ...directInputs, strategy: 'debt-first' });
+  const snowball = simulateDirectRepayment({ ...directInputs, strategy: 'snowball' });
+  const avalanche = simulateDirectRepayment({ ...directInputs, strategy: 'avalanche' });
   const velocityProjection = simulateMobileVelocity(model);
   const strategies = [
-    toMobileSimulatorStrategy('Traditional', baseline),
-    toMobileSimulatorStrategy('Snowball', accelerated),
-    toMobileSimulatorStrategy('Avalanche', accelerated),
-    toMobileSimulatorStrategy('Velocity', velocityProjection),
+    toMobileSimulatorStrategy('Traditional', baseline, baseline.monthlyData.at(-1)?.cashBalance),
+    toMobileSimulatorStrategy('Snowball', snowball, snowball.monthlyData.at(-1)?.cashBalance),
+    toMobileSimulatorStrategy('Avalanche', avalanche, avalanche.monthlyData.at(-1)?.cashBalance),
+    toMobileSimulatorStrategy('Velocity', velocityProjection, velocityProjection.endingCash),
   ];
   const canCompareVelocity = baseline.isPayoffPossible && velocityProjection.isPayoffPossible;
-  const interestSaved = canCompareVelocity ? Math.max(0, baseline.totalInterest - velocityProjection.totalInterest) : 0;
-  const monthsSaved = canCompareVelocity ? Math.max(0, baseline.payoffMonths - velocityProjection.payoffMonths) : 0;
+  const interestSaved = canCompareVelocity ? baseline.totalInterest - velocityProjection.totalInterest : 0;
+  const monthsSaved = canCompareVelocity ? baseline.payoffMonths - velocityProjection.payoffMonths : 0;
   const fastestStrategy = strategies
     .filter((strategy) => strategy.isPayoffPossible)
     .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
@@ -1459,7 +1546,10 @@ export function buildMobileSimulatorSnapshot(
       totalInterest: velocityProjection.isPayoffPossible ? velocityProjection.totalInterest : 0,
       interestSaved,
       monthsSaved,
-      interestSavedLabel: canCompareVelocity ? `${formatCurrency(interestSaved)} modeled interest difference` : 'Not projected',
+      interestSavedLabel: !canCompareVelocity ? 'Not projected'
+        : Math.abs(interestSaved) < 0.005 ? 'Same modeled interest'
+          : interestSaved > 0 ? `${formatCurrency(interestSaved)} less modeled interest`
+            : `${formatCurrency(Math.abs(interestSaved))} more modeled interest`,
       monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
     },
   };
@@ -1494,10 +1584,10 @@ export function buildMobileVaultSnapshot(
           : 'No debt-free date is shown until the Money Loop inputs support a stable projection.',
       },
       {
-        title: 'Buffer',
+        title: 'Interest Comparison',
         value: interestFreedLabel,
         detail: hasModeledPath
-          ? 'Modeled interest freed is shown as an educational comparison; emergency reserves stay separate from payoff claims.'
+          ? 'Velocity versus full-budget direct repayment of the same active debt and LOC. A difference is not an emergency reserve or a promise of savings.'
           : 'Buffer planning waits until the payoff path is stable enough to model.',
       },
     ],

@@ -687,50 +687,44 @@ test('shared mobile velocity delegates to the canonical Money Loop payoff engine
   assert.equal(mobileVelocity.isPayoffPossible, canonicalProjection.isPayoffPossible);
 });
 
-test('shared mobile amortized strategies delegate to the canonical payoff helper', () => {
+test('shared mobile direct strategies use the canonical two-liability comparison helper', () => {
   const sharedEnginePath = path.join(repoRoot, 'packages/financial-engine/src/index.ts');
   const sharedEngine = loadTsFile(sharedEnginePath);
   const sharedEngineSource = fs.readFileSync(sharedEnginePath, 'utf8');
   const baselineStart = sharedEngineSource.indexOf('function simulateMobileBaseline');
-  const baselineEnd = sharedEngineSource.indexOf('function simulateMobileWithExtraPayments', baselineStart);
-  const extraStart = baselineEnd;
-  const extraEnd = sharedEngineSource.indexOf('function formatMobileMonths', extraStart);
+  const baselineEnd = sharedEngineSource.indexOf('function formatMobileMonths', baselineStart);
   const baselineWrapper = sharedEngineSource.slice(baselineStart, baselineEnd);
-  const extraWrapper = sharedEngineSource.slice(extraStart, extraEnd);
   const defaultInput = sharedEngine.defaultMobileDashboardInput;
   const cashFlow = defaultInput.monthlyIncome - defaultInput.monthlyExpenses;
-  const surplusAfterMinimum = Math.max(0, cashFlow - defaultInput.activeDebt.monthlyPayment);
-  const canonicalBaseline = sharedEngine.simulateAmortizedPayoff({
+  const comparisonInput = {
     principalBalance: defaultInput.activeDebt.balance,
-    apr: defaultInput.activeDebt.apr,
-    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
-    maxMonths: 600,
-  });
-  const canonicalAccelerated = sharedEngine.simulateAmortizedPayoff({
-    principalBalance: defaultInput.activeDebt.balance,
-    apr: defaultInput.activeDebt.apr,
-    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
-    extraPayment: surplusAfterMinimum,
-    maxMonths: 600,
-  });
+    debtApr: defaultInput.activeDebt.apr,
+    debtPayment: defaultInput.activeDebt.monthlyPayment,
+    loc: defaultInput.loc,
+    monthlyBudget: cashFlow,
+  };
+  const canonicalBaseline = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'debt-first' });
+  const canonicalSnowball = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'snowball' });
+  const canonicalAvalanche = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'avalanche' });
   const strategies = sharedEngine.buildMobileSimulatorSnapshot(defaultInput).strategies;
   const traditional = strategies.find((strategy) => strategy.name === 'Traditional');
   const snowball = strategies.find((strategy) => strategy.name === 'Snowball');
   const avalanche = strategies.find((strategy) => strategy.name === 'Avalanche');
 
   assert.ok(baselineWrapper.includes('simulateAmortizedPayoff({'), 'expected baseline wrapper to call the shared amortized payoff helper');
-  assert.ok(extraWrapper.includes('simulateAmortizedPayoff({'), 'expected extra-payment wrapper to call the shared amortized payoff helper');
   assert.ok(!baselineWrapper.includes('while (balance'), 'expected baseline wrapper not to duplicate an amortized payoff loop');
-  assert.ok(!extraWrapper.includes('while (balance'), 'expected extra-payment wrapper not to duplicate an amortized payoff loop');
+  assert.ok(sharedEngineSource.includes('simulateDirectRepayment({ ...directInputs'), 'mobile and web share the same comparison implementation');
   assert.ok(traditional, 'expected Traditional strategy in the mobile simulator snapshot');
   assert.ok(snowball, 'expected Snowball strategy in the mobile simulator snapshot');
   assert.ok(avalanche, 'expected Avalanche strategy in the mobile simulator snapshot');
   assert.equal(traditional.months, canonicalBaseline.payoffMonths);
   assert.equal(traditional.totalInterest.toFixed(2), canonicalBaseline.totalInterest.toFixed(2));
-  assert.equal(snowball.months, canonicalAccelerated.payoffMonths);
-  assert.equal(snowball.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
-  assert.equal(avalanche.months, canonicalAccelerated.payoffMonths);
-  assert.equal(avalanche.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
+  assert.equal(snowball.months, canonicalSnowball.payoffMonths);
+  assert.equal(snowball.totalInterest.toFixed(2), canonicalSnowball.totalInterest.toFixed(2));
+  assert.equal(avalanche.months, canonicalAvalanche.payoffMonths);
+  assert.equal(avalanche.totalInterest.toFixed(2), canonicalAvalanche.totalInterest.toFixed(2));
+  assert.ok(Number(canonicalBaseline.monthlyData[0].locBalance) > 0, 'LOC liability is included');
+  assert.equal(traditional.endingCashLabel, `${sharedEngine.formatCurrency(canonicalBaseline.monthlyData.at(-1).cashBalance)} cash at payoff`);
 });
 
 test('shared mobile dashboard snapshot keeps the required four vitals aligned with web', () => {
@@ -1418,9 +1412,14 @@ test('shared mobile simulator snapshot matches current web single-debt strategy 
     .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
   assert.equal(snapshot.guardrail, null);
   assert.equal(snapshot.velocity.months, velocity.months);
-  assert.equal(snapshot.velocity.interestSavedLabel.includes('modeled interest difference'), true);
+  const directBaseline = webStrategies.find((strategy) => strategy.name === 'Traditional');
+  const expectedInterestDelta = directBaseline.totalInterest - velocity.totalInterest;
+  assert.equal(snapshot.velocity.interestSaved, expectedInterestDelta);
+  assert.equal(snapshot.velocity.interestSavedLabel, `${sharedEngine.formatCurrency(Math.abs(expectedInterestDelta))} ${expectedInterestDelta > 0 ? 'less' : 'more'} modeled interest`);
   assert.equal(snapshot.velocity.interestSavedLabel.startsWith('Saves $'), false);
-  assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('faster'), true);
+  assert.equal(snapshot.velocity.monthsSaved, directBaseline.months - velocity.months);
+  assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('slower'), true, 'current low-chunk example is slower than full-budget direct repayment');
+  assert.equal(velocity.endingCashLabel, `${sharedEngine.formatCurrency(webStrategies.find((strategy) => strategy.name === 'Velocity').endingCash)} cash at payoff`);
   assert.equal(snapshot.fastestStrategyName, fastestWebStrategy.name);
 });
 
@@ -1768,7 +1767,7 @@ test('shared mobile vault snapshot turns the active debt model into an outcome p
 
   assert.equal(vault.guardrail, null);
   assert.ok(vault.freedomPathLabel.endsWith('mo'));
-  assert.ok(vault.interestFreedLabel.includes('modeled interest difference'));
+  assert.ok(/(?:more|less) modeled interest/.test(vault.interestFreedLabel));
   assert.equal(vault.interestFreedLabel.startsWith('Saves $'), false);
   assert.equal(vault.stages.length, 3);
   assert.equal(vault.stages[1].title, 'Debt Freedom');

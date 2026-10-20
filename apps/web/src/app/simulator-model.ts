@@ -1,4 +1,4 @@
-import type { PayoffFailureReason, SingleDebtStrategyResult } from '../engine/calculations';
+import { formatCurrency, type PayoffFailureReason, type SingleDebtStrategyResult } from '../engine/calculations';
 
 export interface SimulatorStrategyCard {
   name: SingleDebtStrategyResult['name'];
@@ -11,6 +11,7 @@ export interface SimulatorStrategyCard {
   monthsLabel: string;
   interestLabel: string;
   statusLabel?: string;
+  endingCashLabel: string;
 }
 
 export interface SimulatorWarningInput {
@@ -156,6 +157,7 @@ export function buildSimulatorStrategyCards(strategies: SingleDebtStrategyResult
       monthsLabel: isPayoffPossible ? `${strategy.months} mo` : 'Review inputs',
       interestLabel: isPayoffPossible ? 'Projected interest' : 'Not projected',
       statusLabel: isPayoffPossible ? undefined : formatFailure(strategy.failureReason),
+      endingCashLabel: isPayoffPossible ? `${formatCurrency(strategy.endingCash)} cash at payoff` : 'Cash not projected',
     };
   });
 }

@@ -101,4 +101,42 @@ for (const scenario of fixtures.scenarios) {
   assertNear(engineAccrual.endingBalance, referenceAccrual.endingBalance, `${scenario.id} ending balance`);
 }
 
-console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios.`);
+// With zero interest, any full-budget priority must clear the same total liability
+// in ceil(total / budget) months, regardless of how the payment is split.
+let directCases = 0;
+for (let index = 1; index <= 25; index += 1) {
+  const principal = 100 + index * 117;
+  const locBalance = index * 43;
+  const budget = 100 + index * 13;
+  const expectedMonths = Math.ceil((principal + locBalance) / budget);
+  for (const strategy of ['debt-first', 'snowball', 'avalanche']) {
+    const projection = engine.simulateDirectRepayment({
+      principalBalance: principal, debtApr: 0, debtPayment: index % 2 ? 25 : 0,
+      loc: { limit: 10000, balance: locBalance, apr: 0 },
+      monthlyBudget: budget, strategy,
+    });
+    assert.equal(projection.isPayoffPossible, true);
+    assert.equal(projection.payoffMonths, expectedMonths);
+    assert.equal(projection.totalInterest, 0);
+    const last = projection.monthlyData.at(-1);
+    assertNear(last.debtBalance + last.locBalance, 0, `${strategy} ending liabilities`);
+    assertNear(last.cashBalance, expectedMonths * budget - principal - locBalance, `${strategy} retained cash`);
+    directCases += 1;
+  }
+}
+
+// An affordable first-month payoff has a closed-form interest bill: one loan
+// month plus 30 actual/365 LOC days, paid from a single shared budget.
+for (const strategy of ['debt-first', 'snowball', 'avalanche']) {
+  const expectedInterest = 1250 * 0.12 / 12 + 450 * 0.24 * 30 / 365;
+  const projection = engine.simulateDirectRepayment({
+    principalBalance: 1250, debtApr: 0.12, debtPayment: 100,
+    loc: { limit: 2000, balance: 450, apr: 0.24 }, monthlyBudget: 2000, strategy,
+  });
+  assert.equal(projection.payoffMonths, 1);
+  assertNear(projection.totalInterest, expectedInterest, `${strategy} closed-form interest`);
+  assertNear(projection.monthlyData[0].cashBalance, 300 - expectedInterest, `${strategy} closed-form cash`);
+  directCases += 1;
+}
+
+console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios and ${directCases} closed-form comparison cases.`);

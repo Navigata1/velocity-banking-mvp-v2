@@ -7,6 +7,8 @@ import {
   calculateTotalAmortizationInterest,
   formatCurrency,
   simulateAmortizedPayoff,
+  simulateDirectRepayment,
+  type DirectRepaymentStrategy,
   type LOCDetails,
 } from '@interestshield/financial-engine';
 import {
@@ -14,6 +16,12 @@ import {
   simulateMoneyLoopPayoff,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
+
+export {
+  SIMULATOR_COMPARISON_SCOPE,
+  SIMULATOR_COMPARISON_ASSUMPTIONS,
+  SIMULATOR_COMPARISON_TIMING,
+} from '@interestshield/financial-engine';
 
 export {
   calculateADBInterest,
@@ -95,6 +103,7 @@ export interface MonthlyResult {
   locInterest: number;
   cashFlow: number;
   events?: SimulationEvent[];
+  cashBalance?: number;
 }
 
 export type PayoffFailureReason =
@@ -173,6 +182,7 @@ export interface SingleDebtStrategyResult {
   totalInterest: number;
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  endingCash: number;
 }
 
 // ─── Core Math ───────────────────────────────────────────────────────
@@ -457,6 +467,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
       locInterest: month.locInterest,
       cashFlow: locCashFlowPaydown,
       events: month.events,
+      cashBalance: month.cashBalance,
     })),
     isPayoffPossible: moneyLoop.isPayoffPossible,
     failureReason: moneyLoop.failureReason,
@@ -481,6 +492,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
     extraPayment,
     maxMonths: 600,
   });
+  let retainedCash = 0;
 
   return {
     payoffMonths: projection.payoffMonths,
@@ -492,6 +504,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
       carInterest: month.interest,
       locInterest: 0,
       cashFlow: cashFlow - month.payment,
+      cashBalance: (retainedCash += cashFlow - month.payment),
     })),
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
@@ -817,9 +830,29 @@ function simulateBaselineDebt(debt: DebtItem): {
 
 // ─── Legacy API (backwards compatible) ───────────────────────────────
 
+function simulateDirectComparison(inputs: SimulationInputs, strategy: DirectRepaymentStrategy): PayoffSimulation {
+  const projection = simulateDirectRepayment({
+    principalBalance: inputs.carLoan.balance,
+    debtApr: inputs.carLoan.apr,
+    debtPayment: inputs.carLoan.monthlyPayment,
+    loc: inputs.loc,
+    monthlyBudget: inputs.monthlyIncome - inputs.monthlyExpenses,
+    strategy,
+  });
+  return {
+    ...projection,
+    monthlyData: projection.monthlyData.map((row) => ({
+      month: row.month, carBalance: row.debtBalance, locBalance: row.locBalance,
+      carInterest: row.debtInterest, locInterest: row.locInterest,
+      cashFlow: inputs.monthlyIncome - inputs.monthlyExpenses,
+      cashBalance: row.cashBalance,
+    })),
+  };
+}
+
 export function runSimulation(inputs: SimulationInputs): SimulationResult {
   const safeInputs = sanitizeSimulationInputs(inputs);
-  const baseline = simulateBaseline(safeInputs);
+  const baseline = simulateDirectComparison(safeInputs, 'debt-first');
   const velocity = simulateVelocity(safeInputs);
   const canCompareSavings = baseline.isPayoffPossible && velocity.isPayoffPossible;
   const warnings = generateWarnings(
@@ -832,8 +865,8 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
     baseline,
     velocity: {
       ...velocity,
-      interestSaved: canCompareSavings ? Math.max(0, baseline.totalInterest - velocity.totalInterest) : 0,
-      monthsSaved: canCompareSavings ? Math.max(0, baseline.payoffMonths - velocity.payoffMonths) : 0,
+      interestSaved: canCompareSavings ? baseline.totalInterest - velocity.totalInterest : 0,
+      monthsSaved: canCompareSavings ? baseline.payoffMonths - velocity.payoffMonths : 0,
     },
     warnings,
   };
@@ -842,17 +875,8 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
 export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDebtStrategyResult[] {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const simulation = runSimulation(safeInputs);
-  const surplusAfterMinimum = Math.max(
-    0,
-    safeInputs.monthlyIncome - safeInputs.monthlyExpenses - safeInputs.carLoan.monthlyPayment
-  );
-  const acceleratedInputs: SimulationInputs = {
-    ...safeInputs,
-    loc: undefined,
-    useVelocity: false,
-    extraPayment: surplusAfterMinimum,
-  };
-  const accelerated = simulateVelocity(acceleratedInputs);
+  const snowball = simulateDirectComparison(safeInputs, 'snowball');
+  const avalanche = simulateDirectComparison(safeInputs, 'avalanche');
 
   return [
     {
@@ -861,20 +885,23 @@ export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDeb
       totalInterest: simulation.baseline.totalInterest,
       isPayoffPossible: simulation.baseline.isPayoffPossible,
       failureReason: simulation.baseline.failureReason,
+      endingCash: simulation.baseline.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Snowball',
-      months: accelerated.payoffMonths,
-      totalInterest: accelerated.totalInterest,
-      isPayoffPossible: accelerated.isPayoffPossible,
-      failureReason: accelerated.failureReason,
+      months: snowball.payoffMonths,
+      totalInterest: snowball.totalInterest,
+      isPayoffPossible: snowball.isPayoffPossible,
+      failureReason: snowball.failureReason,
+      endingCash: snowball.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Avalanche',
-      months: accelerated.payoffMonths,
-      totalInterest: accelerated.totalInterest,
-      isPayoffPossible: accelerated.isPayoffPossible,
-      failureReason: accelerated.failureReason,
+      months: avalanche.payoffMonths,
+      totalInterest: avalanche.totalInterest,
+      isPayoffPossible: avalanche.isPayoffPossible,
+      failureReason: avalanche.failureReason,
+      endingCash: avalanche.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Velocity',
@@ -882,6 +909,7 @@ export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDeb
       totalInterest: simulation.velocity.totalInterest,
       isPayoffPossible: simulation.velocity.isPayoffPossible,
       failureReason: simulation.velocity.failureReason,
+      endingCash: simulation.velocity.monthlyData.at(-1)?.cashBalance ?? 0,
     },
   ];
 }
