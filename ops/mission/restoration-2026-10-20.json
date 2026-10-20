@@ -20,7 +20,9 @@
     "remove inactive timing choices without dropping legacy saved frequency fields; correct Guardian and annual-extra copy",
     "real Chrome comparison regression gate at 1440px and 375px, including visible balance chart and invalid states",
     "ten generated studio-reference posters",
-    "one licensed refined textured Auto GLB and nine locally authored self-contained GLB studies",
+    "licensed refined Auto and original refined Vault textured GLB candidates; eight other self-contained GLB studies",
+    "shared web/HyperFrames studio reflections, original PBR maps and verified hinge/chamber geometry",
+    "serialized model and manifest publication with Windows sharing retries, atomic JSON replacement and real rebuild/import overlap coverage",
     "source-hashed repeatable car optimization with separately licensed logo geometry and texture removed",
     "slow-network continuity, subordinate texture-failure fallback and shared GPU resource cleanup",
     "asset-centered dashboard and Vault artwork",
@@ -28,7 +30,7 @@
     "deterministic HyperFrames 1080p turntable composition and render matrix"
   ],
   "remainingProductionGates": [
-    "Complete the nine remaining textured hero models and artist-review collection consistency",
+    "Complete eight remaining textured hero models and artist-review both refined candidates and collection consistency",
     "Unify scenario ownership across Dashboard, Portfolio and Vault without overwriting existing user scenarios",
     "Enforce lender terms and expose real transaction calendar assumptions in normal simulation paths",
     "Complete equal-budget equal-liability strategy comparisons across all routes",
@@ -47,7 +49,7 @@
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
     "turntables": "all ten 1920x1080 nine-second MP4s passed movement and return-to-start pixel checks",
     "existingThreeStage": "desktop/mobile genuine WebGL, selection and reduced-motion gates passed",
-    "media": "35 contracts and full existing HyperFrames/Remotion checks passed; 27 Remotion matrix stills rendered",
+    "media": "41 contracts pass; all ten turntables rebuilt under shared studio lighting and pass pixel verification; full existing HyperFrames/Remotion check and 27 stills pass; existing reel has3 layout info notices, zero errors/warnings",
     "fallbacks": "delayed loading and repeated mode selection passed at both widths; injected WebP decode and network failures both preserve the poster",
     "mediaAudit": "production dependency tree: zero advisories; full development tooling: 13 advisories (8 high, 5 moderate), open",
     "webRuntimeAudit": "six findings including critical on old Next 16.2.10; zero after local Next/ESLint 16.4.2 and PostCSS 8.5.31 patch; not yet promoted to production",
@@ -57,13 +59,13 @@
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "prior reviews retained; timing copy re-reviewed clear. New budget review found exact-payment floating-point and calendar-summary eligibility defects; reproduced, fixed and cleared with focused re-review",
-    "deployment": "draft PR #256; 30b810e passed both CI runs, Vercel and remote desktop/mobile checks; timing/budget follow-up requires fresh exact-head checks; no production promotion",
+    "deployment": "draft PR #256; 2b19284 passed both CI runs 39484667286/39484676569, Vercel and remote desktop/mobile checks; Vault/studio follow-up requires fresh exact-head checks; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },
   "limitations": [
     "Public TRELLIS.2 GPU quota blocked completion of reconstructed textured meshes; no paid GPU job or backend migration was initiated",
-    "The refined car is adapted licensed Car Concept, not an AI reconstruction; nine remaining models are authored studies",
+    "Auto is adapted licensed geometry and Vault an original refined textured candidate; eight models remain studies and all require collection art review",
     "Ten base heroes do not replace every historical subcategory variant",
     "July completion counts are historical and do not establish current production readiness"
   ],

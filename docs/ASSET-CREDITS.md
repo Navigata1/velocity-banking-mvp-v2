@@ -24,12 +24,24 @@ The asset import is pinned to source revision and SHA-256 in
 `apps/media/hero-imported.json`. The app displays attribution beside the model,
 and its HyperFrames turntable includes a credit line.
 
+## Original Refined Vault
+
+The Vault geometry and six deterministic PBR maps were authored for InterestShield
+in `apps/media/scripts/build-refined-vault.mjs`. There is no third-party mesh or
+texture dependency and no reconstructed-photo claim. The source and distributed
+GLB hashes are recorded in `apps/media/hero-imported.json`.
+
+The model has an open chamber, a beveled hinged door, steel/brass hardware and
+brushed/turned metal surfaces. It is a refined textured candidate, not final
+collection-wide photorealism approval. The shared studio lighting is locally
+authored and contains no downloaded environment map.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other nine base models remain locally authored 3D studies. They have not
+The other eight base models remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

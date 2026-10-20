@@ -1,0 +1,6 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (140)
+prune: Removed types... Accessor (156)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+prune: Removed types... Accessor (65)
+Refined Vault: 31976 triangles, 6 embedded textures, 703 KiB.

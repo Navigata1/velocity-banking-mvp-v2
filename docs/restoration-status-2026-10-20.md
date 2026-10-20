@@ -12,13 +12,20 @@ The existing aligned demo defaults were preserved.
 
 - Ten high-detail generated hero artworks, with original PNGs and optimized WebP posters.
 - One refined licensed Auto GLB: 134,971 triangles, 13 embedded textures, 1.92 MiB,
-  with clearcoat paint, glass, interior, wheels and brakes. Nine authored studies remain.
+  with clearcoat paint, glass, interior, wheels and brakes.
+- Original refined Vault candidate: 31,976 triangles, six embedded 512px PBR maps,
+  703 KiB, an open chamber, beveled door and physically connected hinge links.
+  Eight authored studies and collection-wide art approval remain.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
   and removal of separately licensed trademark geometry and shared logo texture.
 - Slow-network artwork continuity, texture/network failure fallbacks and shared
   geometry/material/decoded-texture cleanup regressions.
+- Shared photographic reflection setup for web and HyperFrames, with temporary
+  resource cleanup and poster fallback on environment setup failure.
+- Serialized model/manifest publication, atomic JSON replacement, Windows sharing
+  retries and protection against overlapping imports or full study rebuilds.
 - Repairs for phantom payments after payoff, extra payments exceeding the budget,
   lost calendar deposit surplus, and dashboard interest-scope inconsistency.
 - Removed the dashboard's unequal-liability savings claim.
@@ -36,7 +43,8 @@ The existing aligned demo defaults were preserved.
   explicit; Guardian guidance matches the current Simulator contract.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
-not a reconstruction of the generated coupe poster. The other nine meshes remain
+not a reconstruction of the generated coupe poster. Vault is an original authored
+refinement, not an AI reconstruction of its poster. The other eight meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
@@ -54,7 +62,9 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 35 media contracts and existing HyperFrames/Remotion checks passed; 27 Remotion stills rendered.
+- 41 media contracts pass. Existing HyperFrames/Remotion checks pass with 27 fresh
+  stills; new all-model turntables have fresh movement/rest pixel proof. The existing
+  reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
 - Media production dependency audit: zero advisories. Full media development-toolchain
@@ -109,7 +119,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete nine remaining textured models and review collection consistency.
+1. Complete eight remaining textured models and artist-review both candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -177,6 +187,22 @@ runtime tests preserve explicit overrides, and the built canonical/robots/sitema
 were checked. No DNS, domain assignment, production env, backend or deployment
 mutation occurred. A fresh bounded Docker probe still did not return in 20 seconds.
 See `ops/mission/evidence/timing-and-budget-2026-10-20/domain-readiness.json`.
+
+## Vault Refinement
+
+The original steel/brass Vault identity is now backed by textured geometry rather
+than a texture-free study. Web and video share the same local studio environment;
+all ten videos were rebuilt and pass full-turn/rest pixel checks. Browser checks
+pass all ten models at desktop/375px, reduced motion and failure fallbacks.
+Source/binary hashes and clean-regeneration preservation are verified. Independent
+review's hinge-contact, overlapping-write/rebuild and Windows-sharing findings
+were reproduced and corrected; 20 repeated eight-process runs passed re-review.
+
+This is two refined textured candidates, not two final photorealism approvals.
+The app still defaults to the reference artwork, and its financial/scenario/layout
+code was not changed. The prior 2b19284 checkpoint passed both hosted CI jobs and
+Vercel; the new candidate must receive its own exact-head receipt before release.
+See `docs/vault-refinement-contract-2026-10-20.md` and the new evidence folder.
 
 Comparison preview: http://127.0.0.1:53144/simulator
 

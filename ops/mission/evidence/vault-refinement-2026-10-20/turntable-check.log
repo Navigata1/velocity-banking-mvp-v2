@@ -1,0 +1,33 @@
+◆  Linting hero-turntables/index.html
+
+◇  0 errors, 0 warnings
+◆  Checking hero-turntables
+
+Lint
+  ◇ 0 errors, 0 warnings
+
+Runtime
+  ⚠ console_warning: THREE.WebGLProgram: Program Info Log: (210,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision
+(209,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
+(210,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
+(209,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
+(210,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
+
+
+
+    index.html [data-composition-id] t=0s
+  0 error(s), 1 warning(s), 0 info(s)
+
+Layout
+  ◇ 0 issues across 4 sample(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 3/3 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
