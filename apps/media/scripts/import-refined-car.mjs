@@ -5,6 +5,7 @@ import { MeshoptEncoder, MeshoptDecoder, MeshoptSimplifier } from 'meshoptimizer
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile, rename } from 'node:fs/promises';
+import { saveRefinedHero } from './refined-hero-record.mjs';
 const revision='15cd02d304e54cb42a4db4eefe719f76190f4b68';
 const sourceUrl=`https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/${revision}/Models/CarConcept/glTF-Binary/CarConcept.glb`;
 const expectedSha='c272098089d78c5cd9fd9f24ff50ee8acf8d932c55f2d55fc10adb6c8998966b';
@@ -41,7 +42,6 @@ root.getAsset().copyright+=' Modified for InterestShield: logo-bearing plates an
 const output=Buffer.from(await io.writeBinary(document));
 if(output.length>2.25*1024*1024) throw new Error(`Refined model exceeds budget: ${output.length} bytes; existing model was not changed.`);
 const target=new URL('../../web/public/heroes/car.glb',import.meta.url), temporary=new URL('../../web/public/heroes/car.glb.tmp',import.meta.url);
-await writeFile(temporary,output); await rename(temporary,target);
 const meshes=root.listMeshes().length;
 const triangles=root.listMeshes().reduce((sum,mesh)=>sum+mesh.listPrimitives().reduce((s,p)=>s+(p.getIndices()?.getCount()??p.getAttribute('POSITION').getCount())/3,0),0);
 const imported={id:'car',quality:'refined-textured',bytes:output.length,meshes,triangles,sha256:hash(output),sourceSha256:expectedSha,
@@ -50,8 +50,5 @@ const imported={id:'car',quality:'refined-textured',bytes:output.length,meshes,t
   excludedTrademarkTextureSha256,
   modifications:'Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants; simplified within 0.03% mesh error; WebP textures <=1024; Meshopt; normalized stage units.',
   provenance:'Adapted licensed Car Concept; not an AI reconstruction of the studio poster.',version:1};
-await writeFile(new URL('../hero-imported.json',import.meta.url),JSON.stringify([imported],null,2)+'\n');
-const inventoryPath=new URL('../hero-models.json',import.meta.url);
-const inventory=JSON.parse(await readFile(inventoryPath,'utf8')).map(item=>item.id==='car'?imported:item);
-await writeFile(inventoryPath,JSON.stringify(inventory,null,2)+'\n');
+await saveRefinedHero(imported,undefined,async()=>{await writeFile(temporary,output);await rename(temporary,target);});
 console.log(`Refined car: ${triangles} triangles, ${root.listTextures().length} textures, ${(output.length/1024).toFixed(0)} KiB.`);

@@ -3,6 +3,9 @@ import { RoundedBoxGeometry } from '../../web/node_modules/three/examples/jsm/ge
 import { GLTFExporter } from '../../web/node_modules/three/examples/jsm/exporters/GLTFExporter.js';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
+import { withHeroManifestLock, writeHeroManifest } from './refined-hero-record.mjs';
 
 // GLTFExporter uses FileReader even for texture-free binary models in Node.
 globalThis.FileReader = class {
@@ -309,9 +312,15 @@ function vault() {
 }
 
 const constructors={car,house,land,creditCard,studentLoan,medical,personal,recreation,custom,vault};
-const output=new URL('../../web/public/heroes/',import.meta.url);
+export async function buildHeroModels(paths={
+  output:new URL('../../web/public/heroes/',import.meta.url),
+  imported:new URL('../hero-imported.json',import.meta.url),
+  inventory:new URL('../hero-models.json',import.meta.url),
+}) {
+const output=paths.output;
 await mkdir(output,{recursive:true});
-const imported=JSON.parse(await readFile(new URL('../hero-imported.json',import.meta.url),'utf8').catch(error=>{if(error.code==='ENOENT') return '[]';throw error;}));
+await withHeroManifestLock(async()=>{
+const imported=JSON.parse(await readFile(paths.imported,'utf8').catch(error=>{if(error.code==='ENOENT') return '[]';throw error;}));
 const inventory=[...imported];
 for(const [id,create] of Object.entries(constructors)) {
   if(imported.some(asset=>asset.id===id)) { console.log(`${id}: preserving imported refined asset`); continue; }
@@ -343,4 +352,8 @@ for(const [id,create] of Object.entries(constructors)) {
     provenance:'Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.', units:'normalized stage units',version:1});
   console.log(`${id}: ${meshes} parts, ${triangles} triangles, ${(bytes.length/1024).toFixed(0)} KiB`);
 }
-await writeFile(new URL('../hero-models.json',import.meta.url),JSON.stringify(inventory,null,2)+'\n');
+const ids=Object.keys(constructors);
+await writeHeroManifest(paths.inventory,[...ids.map(id=>inventory.find(asset=>asset.id===id)),...inventory.filter(asset=>!ids.includes(asset.id))]);
+},paths);
+}
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)) await buildHeroModels();
