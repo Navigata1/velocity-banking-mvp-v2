@@ -391,6 +391,7 @@ async function assertDomTokenSelectionMotion(page, viewportLabel, expectedRender
     }));
   });
   await page.reload({ waitUntil: 'networkidle' });
+  await page.getByText('Explore the Money Loop', { exact: true }).click();
   await waitForNormalStage(page, viewportLabel, expectedRenderMode);
   await waitForStageSettled(page, 'income', Date.now() + 15000);
   await assertMotion('loc', 'credit-aperture', 'restrained-turn', 'artifactSpinSelectHalf');
@@ -650,6 +651,7 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
   try {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`${viewportLabel} dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
+    await page.getByText('Explore the Money Loop', { exact: true }).click();
     await waitForNormalStage(page, viewportLabel, expectedRenderMode);
     await waitForStageSettled(page, 'income', Date.now() + 15000);
     const webgl2 = await assertGenuineWebgl2(page, viewportLabel);
@@ -680,6 +682,7 @@ async function verifyReducedMotionFallback(browser, origin) {
   try {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`reduced-motion dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
+    await page.getByText('Explore the Money Loop', { exact: true }).click();
     const stage = page.getByTestId('money-loop-three-stage');
     await stage.waitFor({ state: 'visible', timeout: 15000 });
     await stage.scrollIntoViewIfNeeded();

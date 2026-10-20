@@ -7,6 +7,7 @@ import { useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
+import AssetHero from '@/components/hero/AssetHero';
 import CountUp from '@/components/CountUp';
 import { useIsClient } from '@/hooks/useIsClient';
 import {
@@ -674,6 +675,8 @@ export default function VaultPage() {
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Wealth Transfer Timeline</h1>
         <p className={classes.textSecondary}>See the true cost of your mortgage</p>
       </ScrollReveal>
+
+      <AssetHero id="vault" compact />
 
       <div className="flex gap-2 mb-8">
         {stepTitles.map((_, i) => (

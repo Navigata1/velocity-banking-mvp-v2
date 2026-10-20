@@ -1,0 +1,102 @@
+[
+  {
+    "id": "car",
+    "bytes": 834816,
+    "meshes": 373,
+    "triangles": 195436,
+    "sha256": "bcabef7f6470e03dd9a994cadaa3f40c66f8bc798988a3611994fbdd55ee7954",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "house",
+    "bytes": 1220664,
+    "meshes": 132,
+    "triangles": 68556,
+    "sha256": "e2bad652ac2776838ac096a3178656abe43313e74c36d92dccfb5c1c5da6e7e0",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "land",
+    "bytes": 158252,
+    "meshes": 155,
+    "triangles": 53984,
+    "sha256": "3444f4b6f2f84b80839c85224ee3be2b441eefd73851bea6ac494b08de20724f",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "creditCard",
+    "bytes": 548908,
+    "meshes": 68,
+    "triangles": 42356,
+    "sha256": "821045af8ca62df6b4fc3488dcbcb3eca1563d5c18059d9bcadfce31b848ba2f",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "studentLoan",
+    "bytes": 897548,
+    "meshes": 52,
+    "triangles": 39396,
+    "sha256": "30fed0d378a0d3214f6ef81a12a5887795bb2e8613ce93908e1ed2585f1d6d63",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "medical",
+    "bytes": 365016,
+    "meshes": 15,
+    "triangles": 7772,
+    "sha256": "2c0dd40ddac70000739d5e4b6956f1686e7b6f4e72886d3fd44c011aaa6a1a70",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "personal",
+    "bytes": 580536,
+    "meshes": 95,
+    "triangles": 56988,
+    "sha256": "664ace31388fcd98cee407d7399977b3fd8a0c6eefcab37a408cde6d121023bc",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "recreation",
+    "bytes": 893300,
+    "meshes": 32,
+    "triangles": 28656,
+    "sha256": "58f234f297ffafec29d82760f3eb41776cec54ed4cb9b47ae39016534f77f155",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "custom",
+    "bytes": 261576,
+    "meshes": 81,
+    "triangles": 45976,
+    "sha256": "a1ab505e1cccfdaf2b4535989694d11d847c6e2ac102f7da9eb906a55aa5459b",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  },
+  {
+    "id": "vault",
+    "bytes": 467588,
+    "meshes": 44,
+    "triangles": 13840,
+    "sha256": "d355b2c34166b4dab7d7140f7f742c912ad4a7cca90a72b86efac47df60c9fb0",
+    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "units": "normalized stage units",
+    "version": 1
+  }
+]

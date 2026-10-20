@@ -7,9 +7,10 @@ const ts = require('typescript');
 const appRoot = path.resolve(__dirname, '..');
 const publicRoot = path.join(appRoot, 'public');
 const sourceRoot = path.join(appRoot, 'src');
-const maxTotalBytes = 2 * 1024 * 1024;
+// Ten lazy GLB models plus optimized posters, not ten eager hero downloads.
+const maxTotalBytes = 10 * 1024 * 1024;
 const maxSingleBytes = Math.floor(1.25 * 1024 * 1024);
-const maxFileCount = 8;
+const maxFileCount = 28;
 
 function listFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {

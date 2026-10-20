@@ -5,6 +5,9 @@ import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import MoneyLoopArtifactRail from '@/components/MoneyLoopArtifactRail';
 import PageTransition from '@/components/PageTransition';
+import AssetHero from '@/components/hero/AssetHero';
+import { heroAssets } from '@/data/hero-assets';
+import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -93,8 +96,8 @@ export default function Dashboard() {
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex min-w-0 items-center gap-4">
               <div>
-                <p className={`text-xs font-medium ${classes.textSecondary}`}>Money Loop Dashboard</p>
-                <h1 className={`mt-0.5 text-xl font-semibold md:text-2xl ${classes.text}`}>Dashboard</h1>
+                <p className={`text-xs font-medium ${classes.textSecondary}`}>InterestShield</p>
+                <h1 className={`mt-0.5 text-xl font-semibold md:text-2xl ${classes.text}`}>{heroAssets[domain].label} Dashboard</h1>
               </div>
               <div className={`hidden items-center gap-2 border-l border-white/10 pl-4 text-xs font-medium sm:inline-flex ${statusStyle.value}`}>
                 <span className={`h-2 w-2 rounded-full ${statusStyle.dot}`} />
@@ -217,6 +220,22 @@ export default function Dashboard() {
           })}
         </section>
 
+        <section aria-label="Selected debt" className={`grid min-w-0 items-center gap-4 border-b border-current/10 py-5 md:grid-cols-[minmax(0,1.7fr)_minmax(240px,1fr)] ${classes.text}`}>
+          <AssetHero key={domain} id={domain} />
+          <div className="min-w-0 px-2 pb-3 md:px-5">
+            <p className={`text-xs font-medium uppercase ${classes.textSecondary}`}>{activeDebt.name}</p>
+            <p className="mt-2 text-3xl font-semibold tabular-nums">{formatCurrency(activeDebt.balance)}</p>
+            <p className={`mt-1 text-sm ${classes.textSecondary}`}>Remaining principal</p>
+            <div className={`my-5 grid grid-cols-2 gap-4 border-y border-current/15 py-4 text-sm ${classes.textSecondary}`}>
+              <div><p>APR</p><strong className={`mt-1 block font-medium ${classes.text}`}>{(activeDebt.interestRate * 100).toFixed(2)}%</strong></div>
+              <div><p>Monthly payment</p><strong className={`mt-1 block font-medium ${classes.text}`}>{formatCurrency(activeDebt.minimumPayment)}</strong></div>
+            </div>
+            <p className={`text-sm font-semibold ${nextMoveStyle.value}`}>{model.nextMove.title}</p>
+            <p className={`mt-2 text-sm leading-6 ${classes.textSecondary}`}>{model.nextMove.caption}</p>
+            <Link href="/simulator" className="mt-4 inline-flex min-h-11 items-center border-b border-emerald-500 font-medium text-emerald-500">Compare payoff paths</Link>
+          </div>
+        </section>
+
         <section id="dashboard-money-loop-artifacts" className="mt-4 scroll-mt-4 border-y border-white/10 py-4 md:mt-5 md:py-5">
           <div className="min-w-0">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -229,11 +248,14 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <MoneyLoopArtifactRail
+            <details>
+              <summary className={`mt-3 cursor-pointer text-sm font-medium ${classes.text}`}>Explore the Money Loop</summary>
+              <MoneyLoopArtifactRail
               data-testid="money-loop-artifact-rail"
               artifacts={model.moneyLoopArtifacts}
               className="mt-4"
             />
+            </details>
           </div>
         </section>
 

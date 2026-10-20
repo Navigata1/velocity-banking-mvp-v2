@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:heroes": "node scripts/build-hero-models.mjs",
+    "render:heroes": "npm run prepare:hyperframes && node scripts/render-hero-turntables.mjs",
+    "verify:heroes": "node scripts/verify-hero-turntables.mjs",
     "check": "npm run test:contracts && npm run check:hyperframes && npm run check:remotion",
     "test:contracts": "node --test scripts/*.test.mjs",
     "check:hyperframes": "node scripts/check-hyperframes.mjs",
