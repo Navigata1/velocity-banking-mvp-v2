@@ -145,6 +145,78 @@ function roundCents(value) {
   return Math.round(value * 100) / 100;
 }
 
+test('restoration releases unused debt payments into LOC recovery', () => {
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 200, debtApr: 0, debtPayment: 425,
+    loc: { limit: 25000, apr: 0, balance: 2750 },
+    chunkAmount: 0, cashFlowPaydown: 1075,
+    locDepositAmount: 6500, locExpenseAmount: 5425,
+  });
+  assert.equal(result.payoffMonths, 2);
+  assert.equal(result.monthlyData[0].locBalance, 1450);
+  assert.equal(result.monthlyData[1].locBalance, 0);
+  assert.equal(result.monthlyData[1].events.find(e => e.type === 'expenses-from-loc').amount, 5000);
+});
+
+test('restoration reserves the minimum before allowing extra payments', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 10000, apr: 0, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5500, monthlyExpenses: 5000, extraPayment: 500,
+  });
+  assert.equal(result.monthlyData[0].carBalance, 9500);
+  assert.ok(result.monthlyData.every(month => month.cashFlow >= 0));
+});
+
+test('restoration refuses an unaffordable minimum without a LOC', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 10000, apr: 0.07, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5300, monthlyExpenses: 5000, extraPayment: 100,
+  });
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'cashflow-below-minimums');
+});
+
+test('restoration accepts an affordable final payoff below the scheduled minimum', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 200, apr: 0.12, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5300, monthlyExpenses: 5000, extraPayment: 0,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 1);
+  assert.equal(result.monthlyData[0].cashFlow, 98);
+});
+
+test('restoration calendar retains excess deposits as cash instead of borrowing them again', () => {
+  const result = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 1000, apr: 0.1, monthlyIncome: 2000, monthlyExpenses: 1000,
+    calendar: { year: 2026, month: 4, transactions: [
+      { day: 1, type: 'deposit', amount: 2000 },
+      { day: 30, type: 'expense', amount: 1000 },
+    ] },
+  });
+  assert.equal(result.endingBalance, 0);
+  assert.equal(result.endingCashBalance, 0);
+  assert.equal(result.interest, 0);
+});
+
+test('restoration LOC ledger conserves principal, posted interest and retained cash', () => {
+  for (const principalBalance of [200, 1800, 18450]) {
+    const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+      principalBalance, debtApr: 0.069, debtPayment: 425,
+      loc: { limit: 25000, apr: 0.085, balance: 2750 },
+      chunkAmount: 1000, cashFlowPaydown: 1075,
+      locDepositAmount: 6500, locExpenseAmount: 5425,
+    });
+    let openingNetDebt = principalBalance + 2750;
+    for (const month of result.monthlyData) {
+      const closingNetDebt = month.debtBalance + month.locBalance - month.cashBalance;
+      const expected = openingNetDebt + month.debtInterest + month.locInterest + 5000 - 6500;
+      assert.ok(Math.abs(closingNetDebt - expected) < 1e-7, `unbalanced month ${month.month}`);
+      openingNetDebt = closingNetDebt;
+    }
+  }
+});
+
 function assertFiniteNumbersAndCleanText(value, pathLabel = 'value') {
   if (typeof value === 'number') {
     assert.ok(Number.isFinite(value), `expected finite number at ${pathLabel}, got ${value}`);
@@ -485,7 +557,7 @@ test('daily interest burn uses the shared financial-engine helper', () => {
   assert.equal(roundCents(calculations.calculateDailyInterest(18450, -0.069)), 0);
   assert.equal(velocityTargeting.estimateDailyInterest(18450, 6.9), calculations.calculateDailyInterest(18450, 6.9));
   assert.ok(
-    dashboardModelSource.includes('calculateDailyInterest(debt.balance, debt.interestRate)') &&
+    dashboardModelSource.includes('calculateDailyInterest(safeInput.activeDebt.balance, safeInput.activeDebt.interestRate)') &&
       dashboardModelSource.includes('calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate)'),
     'expected dashboard daily burn to use the shared helper for debt and LOC balances'
   );
@@ -1226,12 +1298,12 @@ test('shared Money Loop payoff includes LOC recovery after the target debt is cl
   const finalMonth = result.monthlyData.at(-1);
 
   assert.equal(result.isPayoffPossible, true);
-  assert.equal(result.payoffMonths, 4);
+  assert.equal(result.payoffMonths, 3);
   assert.equal(roundCents(finalMonth.debtBalance), 0);
   assert.equal(roundCents(finalMonth.locBalance), 0);
   assert.equal(
     result.monthlyData.map((month) => roundCents(month.locBalance)).join('|'),
-    '750|500|250|0'
+    '650|300|0'
   );
 });
 
@@ -1334,7 +1406,7 @@ test('multi-debt velocity includes LOC recovery after the final debt payoff', ()
   );
 
   assert.equal(velocity.debts[0].payoffMonths, 1);
-  assert.equal(velocity.totalMonths, 2);
+  assert.equal(velocity.totalMonths, 1);
   assert.equal(velocity.isPayoffPossible, true);
 });
 
@@ -3946,7 +4018,7 @@ test('portfolio velocity includes LOC recovery after the final debt payoff', () 
   });
 
   assert.equal(result.payoffOrder[0].monthPaidOff, 1);
-  assert.equal(result.payoffMonths, 2);
+  assert.equal(result.payoffMonths, 1);
   assert.equal(result.isPayoffPossible, true);
 });
 
@@ -8232,6 +8304,63 @@ test('client mount hook notifies subscribers after hydration', () => {
     source.includes('const subscribe = (callback: () => void)'),
     'expected useIsClient subscription to notify React after hydration'
   );
+});
+
+test('first-run demo defaults open Dashboard, Vault, and Portfolio without warning states', () => {
+  const state = financialStore.useFinancialStore.getState();
+  const cashFlow = state.monthlyIncome - state.monthlyExpenses;
+  const loc = { limit: state.loc.limit, apr: state.loc.interestRate, balance: state.loc.balance };
+
+  for (const [domain, debt] of Object.entries(state.debts)) {
+    const baseline = state.getBaselinePayoff(domain);
+    const velocity = state.getVelocityPayoff(domain);
+    assert.ok(baseline.isPayoffPossible, `${domain} baseline should be stable: ${baseline.failureReason}`);
+    assert.ok(velocity.isPayoffPossible, `${domain} velocity should be stable: ${velocity.failureReason}`);
+    const model = dashboardModel.buildDashboardModel({
+      monthlyIncome: state.monthlyIncome,
+      monthlyExpenses: state.monthlyExpenses,
+      chunkAmount: state.chunkAmount,
+      activeDebt: debt,
+      allDebts: Object.values(state.debts),
+      loc: state.loc,
+      baseline,
+      velocity,
+    });
+    assert.equal(JSON.stringify(model.warnings.map((warning) => warning.title)), '[]', `${domain} dashboard should open without warnings`);
+    assert.equal(model.statusLabel, 'Ready to simulate', `${domain} dashboard status`);
+  }
+
+  const mortgageInput = { ...state.mortgageDetails, currentAge: state.currentAge };
+  const analysis = calculations.calculateMortgageAnalysis(mortgageInput);
+  assert.equal(JSON.stringify(analysis.warnings.map((warning) => warning.type)), '[]', 'Vault mortgage history should be internally consistent');
+  const strategies = calculations.compareMortgageStrategies(mortgageInput, cashFlow, loc);
+  assert.ok(strategies.velocity.isPayoffPossible, `Vault velocity path should be stable: ${strategies.velocity.failureReason}`);
+
+  assert.equal(state.mortgageDetails.currentBalance, state.debts.house.balance, 'Vault and Dashboard mortgage balance');
+  assert.equal(state.mortgageDetails.currentRate, state.debts.house.interestRate, 'Vault and Dashboard mortgage APR');
+  assert.equal(state.mortgageDetails.currentMonthlyPayment, state.debts.house.minimumPayment, 'Vault and Dashboard mortgage payment');
+
+  const portfolioState = portfolioStore.usePortfolioStore.getState();
+  assert.equal(portfolioState.monthlyIncome, state.monthlyIncome, 'Portfolio and Dashboard income');
+  assert.equal(portfolioState.monthlyExpenses, state.monthlyExpenses, 'Portfolio and Dashboard expenses');
+  const portfolioResult = portfolioState.recompute();
+  assert.equal(JSON.stringify(portfolioResult.warnings), '[]', 'Portfolio should open without warnings');
+  assert.ok(portfolioResult.isPayoffPossible, 'Portfolio payoff path should be projected');
+
+  const sharedDebts = [
+    ['auto-demo', 'car'],
+    ['mortgage-demo', 'house'],
+    ['land-demo', 'land'],
+    ['card-demo', 'creditCard'],
+  ];
+  for (const [portfolioId, domain] of sharedDebts) {
+    const portfolioDebt = portfolioState.debts.find((debt) => debt.id === portfolioId);
+    assert.equal(portfolioDebt.balance, state.debts[domain].balance, `${portfolioDebt.name} balance matches Dashboard`);
+    assert.equal(portfolioDebt.apr, state.debts[domain].interestRate, `${portfolioDebt.name} APR matches Dashboard`);
+  }
+
+  assert.equal(sharedFinancialEngine.defaultMobileDashboardInput.monthlyIncome, state.monthlyIncome, 'mobile demo income matches web');
+  assert.equal(sharedFinancialEngine.defaultMobileDashboardInput.monthlyExpenses, state.monthlyExpenses, 'mobile demo expenses matches web');
 });
 
 let failures = 0;

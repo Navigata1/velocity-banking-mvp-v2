@@ -444,10 +444,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const locOverLimit = !locNeedsSetup && safeInput.loc.balance > safeInput.loc.limit;
   const locNoCapacity = !locNeedsSetup && safeInput.loc.balance === safeInput.loc.limit;
   const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(safeInput.loc) : `${Math.round(locUtilization * 100)}%`;
-  const debtDailyInterest = safeInput.allDebts.reduce(
-    (sum, debt) => sum + calculateDailyInterest(debt.balance, debt.interestRate),
-    0
-  );
+  const debtDailyInterest = calculateDailyInterest(safeInput.activeDebt.balance, safeInput.activeDebt.interestRate);
   const locDailyInterest = calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
   const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(safeInput.velocity);
@@ -515,7 +512,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       caption: `${formatCurrency(debtDailyInterest)}/day debt + ${formatCurrency(locDailyInterest)}/day LOC.`,
       tone: dailyInterestBurn > 50 ? 'amber' : 'sky',
       assumptions: [
-        'Daily burn is a simple daily accrual estimate across modeled debts plus current LOC balance.',
+        'Daily burn covers the selected target plus current LOC balance, matching this dashboard payoff scope.',
         'Actual lenders may post interest monthly and may use different balance rules.',
       ],
     },
@@ -524,11 +521,11 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       label: 'Debt-Free ETA',
       value: etaValue,
       caption: velocityPossible
-        ? `${formatMonths(safeInput.baseline.months)} baseline, ${formatCurrency(safeInput.velocity.savings)} estimated interest difference.`
+        ? 'Selected target + LOC. Other debts are not included.'
         : 'No debt-free date shown until the plan is stable.',
       tone: velocityPossible ? 'sky' : 'rose',
       assumptions: [
-        baselinePossible ? 'Baseline uses the current minimum-payment path.' : 'Baseline payoff is currently marked invalid by the engine.',
+        baselinePossible ? 'The separate baseline covers the target loan only; its liability scope differs from target plus LOC.' : 'Baseline payoff is currently marked invalid by the engine.',
         'Velocity ETA uses the shared single-debt velocity engine for the active target.',
       ],
     },

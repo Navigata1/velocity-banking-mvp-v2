@@ -78,9 +78,9 @@ const starterDebts: DebtItem[] = [
     category: 'mortgage',
     kind: 'amortized',
     balance: 285000,
-    apr: 0.0575,
-    minPaymentRule: { type: 'fixed', amount: 1850 },
-    termMonths: 336,
+    apr: 0.065,
+    minPaymentRule: { type: 'fixed', amount: 1896 },
+    termMonths: 312,
     paymentSource: 'checking',
     createdAt: new Date().toISOString(),
   },
@@ -332,8 +332,8 @@ export const usePortfolioStore = create<PortfolioState>()(
   persist(
     (set, get) => ({
       debts: starterDebts,
-      monthlyIncome: 6500,
-      monthlyExpenses: 5000,
+      monthlyIncome: 8200,
+      monthlyExpenses: 4700,
       extraMonthlyPayment: 0,
       chunkAmount: 1000,
       loc: {

@@ -466,7 +466,14 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
 function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
-  const extraPayment = Math.min(Math.max(0, safeInputs.extraPayment), Math.max(0, cashFlow));
+  const requiredPayment = Math.min(safeInputs.carLoan.monthlyPayment,
+    safeInputs.carLoan.balance * (1 + calculateMonthlyRate(safeInputs.carLoan.apr)));
+  if (safeInputs.carLoan.balance > 0 && cashFlow < requiredPayment) {
+    return { payoffMonths: 0, totalInterest: 0, monthlyData: [],
+      isPayoffPossible: false, failureReason: 'cashflow-below-minimums' };
+  }
+  const extraPayment = Math.min(Math.max(0, safeInputs.extraPayment),
+    Math.max(0, cashFlow - safeInputs.carLoan.monthlyPayment));
   const projection = simulateAmortizedPayoff({
     principalBalance: safeInputs.carLoan.balance,
     apr: safeInputs.carLoan.apr,
@@ -484,7 +491,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
       locBalance: 0,
       carInterest: month.interest,
       locInterest: 0,
-      cashFlow: cashFlow - safeInputs.carLoan.monthlyPayment - extraPayment,
+      cashFlow: cashFlow - month.payment,
     })),
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
@@ -615,6 +622,7 @@ export function simulateMultiDebt(
   }
 
   let locBalance = safeLoc?.balance ?? 0;
+  let locCashBalance = 0;
   let locInterestPaid = 0;
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
   let month = 0;
@@ -671,9 +679,11 @@ export function simulateMultiDebt(
           locDepositAmount: safeMonthlyIncome,
           locExpenseAmount: safeMonthlyExpenses + focusPayment + otherActivePayments,
           monthsSinceChunk,
+          cashBalance: locCashBalance,
         });
 
         locBalance = monthResult.locBalance;
+        locCashBalance = monthResult.cashBalance;
         locInterestPaid += monthResult.locInterest;
         monthsSinceChunk = monthResult.monthsSinceChunk;
         balances.set(d.id, monthResult.debtBalance);
@@ -693,6 +703,7 @@ export function simulateMultiDebt(
           locInterestMethod: monthResult.locInterestMethod,
           cashFlowPaydown: monthResult.cashFlowPaydown,
           events: monthResult.events,
+          cashBalance: monthResult.cashBalance,
         });
         usedMoneyLoopThisMonth = true;
 

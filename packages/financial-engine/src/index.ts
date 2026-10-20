@@ -77,6 +77,7 @@ export interface MoneyLoopMonthlyResult {
   locInterestMethod: LOCInterestMethod;
   cashFlowPaydown: number;
   events: MoneyLoopEvent[];
+  cashBalance: number;
 }
 
 export interface MoneyLoopPayoffInputs {
@@ -87,6 +88,7 @@ export interface MoneyLoopPayoffInputs {
   chunkAmount: number;
   cashFlowPaydown: number;
   locDepositAmount: number;
+  /** Household spending plus the scheduled debt payment; unused payment is released. */
   locExpenseAmount: number;
   maxMonths?: number;
   initialMonthsSinceChunk?: number;
@@ -102,9 +104,11 @@ export interface MoneyLoopMonthInputs {
   chunkAmount: number;
   cashFlowPaydown: number;
   locDepositAmount: number;
+  /** Includes debtPayment. Dated calendars must already contain actual transactions. */
   locExpenseAmount: number;
   locAccrualCalendar?: LOCAccrualCalendar;
   monthsSinceChunk: number;
+  cashBalance?: number;
 }
 
 export type LOCInterestMethod = 'transaction-calendar' | 'average-daily-balance-estimate';
@@ -129,6 +133,7 @@ export interface LOCInterestAccrualInputs {
   monthlyExpenses: number;
   daysInMonth?: number;
   calendar?: LOCAccrualCalendar;
+  startCashBalance?: number;
 }
 
 export interface LOCInterestAccrualResult {
@@ -142,6 +147,7 @@ export interface LOCInterestAccrualResult {
   totalDeposits: number;
   totalExpenses: number;
   dailyClosingBalances: number[];
+  endingCashBalance: number;
 }
 
 export interface MoneyLoopMonthResult extends MoneyLoopMonthlyResult {
@@ -381,8 +387,8 @@ interface MobilePayoffProjection {
 }
 
 export const defaultMobileDashboardInput: MobileDashboardInput = {
-  monthlyIncome: 6500,
-  monthlyExpenses: 5000,
+  monthlyIncome: 8200,
+  monthlyExpenses: 4700,
   chunkAmount: 1000,
   activeDebtName: 'Auto Loan',
   activeDebt: {
@@ -639,6 +645,7 @@ function isValidLOCTransaction(transaction: LOCTransaction, daysInMonth: number)
 
 export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): LOCInterestAccrualResult {
   const startBalance = finiteNonNegative(inputs.startBalance);
+  const startCash = finiteNonNegative(inputs.startCashBalance ?? 0);
   const calendarDays = inputs.calendar ? calendarDayCount(inputs.calendar) : null;
   const hasValidCalendar = calendarDays !== null
     && Array.isArray(inputs.calendar?.transactions)
@@ -655,12 +662,14 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
       else totalExpenses += transaction.amount;
     }
 
-    let balance = startBalance;
+    // Negative net borrowing is retained cash, not a negative-interest LOC credit.
+    let netBorrowing = startBalance - startCash;
     const dailyClosingBalances: number[] = [];
     for (let day = 1; day <= calendarDays; day += 1) {
-      balance = Math.max(0, balance + (dailyNetChanges.get(day) ?? 0));
-      dailyClosingBalances.push(balance);
+      netBorrowing += dailyNetChanges.get(day) ?? 0;
+      dailyClosingBalances.push(Math.max(0, netBorrowing));
     }
+    const balance = Math.max(0, netBorrowing);
     const totalDailyBalance = dailyClosingBalances.reduce((total, dailyBalance) => total + dailyBalance, 0);
     const averageDailyBalance = totalDailyBalance / calendarDays;
     const interest = totalDailyBalance * calculateDailyRate(inputs.apr);
@@ -676,13 +685,14 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
       totalDeposits,
       totalExpenses,
       dailyClosingBalances,
+      endingCashBalance: Math.max(0, -netBorrowing),
     };
   }
 
   const daysInMonth = finitePositiveInteger(inputs.daysInMonth ?? 30, 30);
   const totalDeposits = finiteNonNegative(inputs.monthlyIncome);
   const totalExpenses = finiteNonNegative(inputs.monthlyExpenses);
-  const balanceAfterDeposit = startBalance - totalDeposits;
+  const balanceAfterDeposit = startBalance - startCash - totalDeposits;
   const dailyExpense = totalExpenses / daysInMonth;
   const dailyClosingBalances = Array.from({ length: daysInMonth }, (_, index) => (
     Math.max(0, balanceAfterDeposit + dailyExpense * (index + 1))
@@ -690,7 +700,8 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
   const totalDailyBalance = dailyClosingBalances.reduce((total, dailyBalance) => total + dailyBalance, 0);
   const averageDailyBalance = totalDailyBalance / daysInMonth;
   const interest = totalDailyBalance * calculateDailyRate(inputs.apr);
-  const endingBalanceBeforeInterest = Math.max(0, startBalance - totalDeposits + totalExpenses);
+  const endingNetBorrowing = balanceAfterDeposit + totalExpenses;
+  const endingBalanceBeforeInterest = Math.max(0, endingNetBorrowing);
 
   return {
     method: 'average-daily-balance-estimate',
@@ -703,6 +714,7 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
     totalDeposits,
     totalExpenses,
     dailyClosingBalances,
+    endingCashBalance: Math.max(0, -endingNetBorrowing),
   };
 }
 
@@ -769,6 +781,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   }
 
   const debtPayment = Math.min(debtPaymentInput, debtBalance + debtInterest);
+  const releasedPayment = debtPaymentInput - debtPayment;
   const debtPrincipal = debtPayment - debtInterest;
   const debtPrincipalPaid = Math.min(debtBalance, Math.max(0, debtPrincipal));
 
@@ -785,8 +798,9 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     startBalance: locBalance,
     apr: loc.apr,
     monthlyIncome: locDepositAmount,
-    monthlyExpenses: locExpenseAmount,
+    monthlyExpenses: Math.max(0, locExpenseAmount - releasedPayment),
     calendar: inputs.locAccrualCalendar,
+    startCashBalance: inputs.cashBalance,
   });
 
   events.push({
@@ -794,7 +808,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     label: 'Income enters LOC',
     amount: locAccrual.totalDeposits,
     balanceAfter: Math.max(0, locBalance - locAccrual.totalDeposits),
-    note: 'Income is modeled as entering the LOC first, lowering the average daily balance.',
+    note: `Income reduces LOC borrowing first; any excess is retained as cash for expenses. Ending cash reserve: ${formatCurrency(locAccrual.endingCashBalance)}.`,
   });
 
   events.push({
@@ -821,7 +835,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   events.push({
     type: 'loc-cashflow-paydown',
     label: 'Cash flow pays down LOC',
-    amount: cashFlowPaydown,
+    amount: cashFlowPaydown + releasedPayment,
     balanceAfter: locBalance,
     note: 'The routed income and expenses above already reflect this net cash-flow paydown.',
   });
@@ -833,7 +847,8 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     debtInterest,
     locInterest,
     locInterestMethod: locAccrual.method,
-    cashFlowPaydown,
+    cashFlowPaydown: cashFlowPaydown + releasedPayment,
+    cashBalance: locAccrual.endingCashBalance,
     events,
     debtPayment,
     debtPrincipalPaid,
@@ -925,6 +940,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
   let locInterestPaid = 0;
   let month = 0;
   let monthsSinceChunk = finitePositiveInteger(inputs.initialMonthsSinceChunk ?? 0, 0);
+  let cashBalance = 0;
 
   while ((debtBalance > 0.01 || locBalance > 0.01) && month < maxMonths) {
     month += 1;
@@ -940,9 +956,11 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
       locDepositAmount,
       locExpenseAmount,
       monthsSinceChunk,
+      cashBalance,
     });
     debtBalance = monthResult.debtBalance;
     locBalance = monthResult.locBalance;
+    cashBalance = monthResult.cashBalance;
     monthsSinceChunk = monthResult.monthsSinceChunk;
     debtInterestPaid += monthResult.debtInterest;
     locInterestPaid += monthResult.locInterest;

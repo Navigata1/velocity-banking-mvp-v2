@@ -493,6 +493,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   }
 
   let locBalance = sanitizedLoc?.balance ?? 0;
+  let locCashBalance = 0;
   let locInterestPaid = 0;
   let monthsSinceChunk = 999;
   const effectiveChunk = Math.max(
@@ -577,9 +578,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           locDepositAmount: monthlyIncome,
           locExpenseAmount: monthlyExpenses + payment + otherActivePayments,
           monthsSinceChunk,
+          cashBalance: locCashBalance,
         });
 
         locBalance = monthResult.locBalance;
+        locCashBalance = monthResult.cashBalance;
         locInterestPaid += monthResult.locInterest;
         monthsSinceChunk = monthResult.monthsSinceChunk;
         balances.set(d.id, monthResult.debtBalance);
@@ -597,6 +600,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
           locInterestMethod: monthResult.locInterestMethod,
           cashFlowPaydown: monthResult.cashFlowPaydown,
           events: monthResult.events,
+          cashBalance: monthResult.cashBalance,
         });
         usedMoneyLoopThisMonth = true;
 
@@ -650,9 +654,11 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         locDepositAmount: monthlyIncome,
         locExpenseAmount: monthlyExpenses,
         monthsSinceChunk,
+        cashBalance: locCashBalance,
       });
 
       locBalance = locRecoveryMonth.locBalance;
+      locCashBalance = locRecoveryMonth.cashBalance;
       locInterestPaid += locRecoveryMonth.locInterest;
       monthsSinceChunk = locRecoveryMonth.monthsSinceChunk;
       moneyLoopMonthlyData.push({
@@ -664,6 +670,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         locInterestMethod: locRecoveryMonth.locInterestMethod,
         cashFlowPaydown: locRecoveryMonth.cashFlowPaydown,
         events: locRecoveryMonth.events,
+        cashBalance: locRecoveryMonth.cashBalance,
       });
     }
 
