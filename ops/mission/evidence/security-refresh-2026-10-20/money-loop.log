@@ -1,0 +1,35 @@
+
+> web@0.1.0 test:3d:built
+> node scripts/test-three-stage.cjs
+
+PASS desktop canvas effective DPR 1.500
+PASS desktop isolated canvas proof rejects a hidden WebGL canvas
+PASS desktop DOM token selection motion follows full, restrained, and blocked states
+PASS desktop loc credit-aperture 25 PNG canvas colors; settled in 566ms; stable through 615ms
+PASS desktop expenses outflow-gate 26 PNG canvas colors; settled in 567ms; stable through 616ms
+PASS desktop cash-flow flow-core 24 PNG canvas colors; settled in 569ms; stable through 618ms
+PASS desktop principal principal-shield 29 PNG canvas colors; settled in 567ms; stable through 617ms
+PASS desktop income deposit-reservoir 32 PNG canvas colors; settled in 551ms; stable through 600ms
+PASS desktop money-loop-artifact-next Enter selects loc and retains focus
+PASS desktop money-loop-artifact-next Space selects expenses and retains focus
+PASS desktop money-loop-artifact-previous Enter selects loc and retains focus
+PASS desktop money-loop-artifact-previous Space selects income and retains focus
+PASS desktop DOM tabs retain authority and roving focus
+PASS desktop Money Loop regions do not overlap
+PASS desktop full WebGL2 WebKit WebGL; screenshot C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\test-results\three-stage\desktop.png
+PASS mobile canvas effective DPR 1.000
+PASS mobile DOM token selection motion follows full, restrained, and blocked states
+PASS mobile loc credit-aperture 24 PNG canvas colors; settled in 559ms; stable through 592ms
+PASS mobile expenses outflow-gate 22 PNG canvas colors; settled in 550ms; stable through 583ms
+PASS mobile cash-flow flow-core 22 PNG canvas colors; settled in 550ms; stable through 584ms
+PASS mobile principal principal-shield 24 PNG canvas colors; settled in 553ms; stable through 604ms
+PASS mobile income deposit-reservoir 29 PNG canvas colors; settled in 564ms; stable through 597ms
+PASS mobile money-loop-artifact-next Enter selects loc and retains focus
+PASS mobile money-loop-artifact-next Space selects expenses and retains focus
+PASS mobile money-loop-artifact-previous Enter selects loc and retains focus
+PASS mobile money-loop-artifact-previous Space selects income and retains focus
+PASS mobile DOM tabs retain authority and roving focus
+PASS mobile Money Loop regions do not overlap
+PASS mobile efficient WebGL2 WebKit WebGL; screenshot C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\test-results\three-stage\mobile.png
+PASS reduced-motion static fallback has no WebGL canvas and preserves DOM tabs
+Three-stage screenshots: C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\test-results\three-stage

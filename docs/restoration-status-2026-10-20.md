@@ -50,6 +50,11 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
   demo defaults. The fixtures are corrected and the mobile contract suite passes
   locally. A fresh exact-SHA green run is still required; preview is not CI approval.
+- On the refined checkpoint 0d72c6b, push CI passed and all seven remote preview
+  routes passed at desktop/375px. Its PR CI run exposed software-GPU screenshot
+  stability timeouts. The capture path now uses fixed canvas bounds and bounded
+  timeouts, with every existing pixel assertion retained; all ten heroes passed
+  a fresh software-rendered local run after the security patch.
 
 ## Remaining Production Gates
 
@@ -62,6 +67,27 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 7. Custom-domain and verified production deployment.
 8. Updated Expo bundles and fresh device QA after shared-engine changes.
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
+10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
+
+## Security Refresh
+
+The broader audit found six web runtime dependency findings, including critical
+Next.js advisories. The local branch now uses Next.js and ESLint config 16.4.2,
+PostCSS 8.5.31 and compatible transitive patches. The web runtime registry audit
+is now clean; build, TypeScript, regressions, lint, seven rendered routes, all ten
+software-rendered heroes and the standalone Money Loop proof passed. Independent
+dependency/capture review found no issues. This patch has not been promoted to
+the live production app. Runtime patch: 60ab957; capture correction: b4df206.
+
+Primary references: [Next.js 16.4.2 release](https://github.com/vercel/next.js/releases/tag/v16.4.2)
+and [next/og advisory](https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j).
+An advisory match is not proof this application's configuration was exploitable.
+
+Remaining dependency findings: 12 in web development tooling; 13 in media tooling;
+41 in the mobile omit-dev tree (1 critical, 28 high, 12 moderate). Expo CLI/Metro
+are included in that tree, so these counts must not be presented as confirmed
+device-runtime vulnerabilities. The Worker runtime audit is clean. Do not apply
+the audit command's suggested major SDK downgrades without compatibility review.
 
 Preview: http://127.0.0.1:53143
 

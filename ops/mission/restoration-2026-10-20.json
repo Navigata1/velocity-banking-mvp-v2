@@ -43,9 +43,11 @@
     "media": "35 contracts and full existing HyperFrames/Remotion checks passed; 27 Remotion matrix stills rendered",
     "fallbacks": "delayed loading and repeated mode selection passed at both widths; injected WebP decode and network failures both preserve the poster",
     "mediaAudit": "production dependency tree: zero advisories; full development tooling: 13 advisories (8 high, 5 moderate), open",
+    "webRuntimeAudit": "six findings including critical on old Next 16.2.10; zero after local Next/ESLint 16.4.2 and PostCSS 8.5.31 patch; not yet promoted to production",
+    "mobileDependencyAudit": "41 findings including CLI/Metro build tooling; supported SDK remediation and actual exposure review remain open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "independent review found and cleared a final-payment affordability edge case; 83 focused regressions and 13 additional boundary checks passed re-review",
-    "deployment": "draft PR #256; checkpoint Vercel preview passed; CI run 39463072955 failed two stale mobile demo fixtures, corrected locally; fresh exact-SHA green run required; no production promotion",
+    "deployment": "draft PR #256; 0d72c6b Vercel and push CI passed, seven remote preview routes passed; PR CI hit a software screenshot timeout, fixed in b4df206; runtime patch 60ab957 verified locally; final exact-head green checks required; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },

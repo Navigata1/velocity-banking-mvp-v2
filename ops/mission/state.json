@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T17:27:25Z",
+    "updated": "2026-10-20T17:48:29Z",
     "sessionCount": 3
   },
   "policies": {
@@ -45,7 +45,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Checkpoint CI run 39463072955 is now visible: web, media, Worker and Expo smoke passed; two stale mobile-default fixture expectations failed. Corrected locally and all mobile contracts passed. Require a green run for the next exact pushed SHA."
+          "notes": "On 0d72c6b the push CI run 39467224435 passed, while PR run 39467230721 timed out in locator screenshot stability polling. Fixed bounded canvas capture and verified all heroes through software rendering. Next runtime patch 60ab957 and capture fix b4df206 require fresh exact-head CI and Vercel checks."
         }
       ],
       "gates": [
@@ -54,8 +54,8 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T17:27:25Z",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T17:48:29Z",
           "notes": "Fresh local draft evidence: 270 financial regressions, reference fixtures, GPU cleanup, asset and accessibility contracts. Not merged-main or production proof."
         },
         {
@@ -63,18 +63,18 @@
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T17:27:25Z",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T17:48:29Z",
           "notes": "Seven built routes at desktop/mobile widths passed locally; this is not release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
-          "status": "failed",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39463072955",
-          "lastRun": "2026-10-20T17:27:25Z",
-          "notes": "24d238e failed stale mobile demo fixture expectations; fixed locally. Next pushed SHA must pass independently."
+          "status": "pending",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39467230721",
+          "lastRun": "2026-10-20T17:48:29Z",
+          "notes": "0d72c6b push CI passed but PR CI hit a GPU screenshot stability timeout. Local software rendering now passes with bounded clip capture. Require all applicable checks on the next exact pushed SHA, including the runtime patch; no production promotion."
         }
       ]
     },
@@ -133,9 +133,9 @@
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/hero-browser.log",
-          "lastRun": "2026-10-20T17:27:25Z",
-          "notes": "All ten heroes at 1440px and 375px; movement, framing, no pre-opt-in downloads, reduced motion, delayed network and failure fallbacks passed."
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/hero-software-browser.log",
+          "lastRun": "2026-10-20T17:48:29Z",
+          "notes": "All ten heroes at 1440px and 375px passed hardware rendering and a fresh patched-Next software rendering pass; movement, framing, no pre-opt-in downloads, reduced motion and failure paths remain asserted."
         },
         {
           "id": "R1-G3",
@@ -241,7 +241,7 @@
       "id": "R4",
       "title": "Backend and Release Readiness",
       "goal": "Verify owner isolation, recovery and the exact release artifact before production.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "evidence-driven",
       "tasks": [
         {
@@ -270,11 +270,19 @@
         },
         {
           "id": "R4-T4",
-          "title": "Resolve media development-toolchain audit findings without weakening renderer checks",
+          "title": "Resolve web and media development-toolchain audit findings without weakening checks",
           "status": "pending",
           "dependsOn": [],
           "pr": null,
-          "notes": "Full media audit: 13 advisories (8 high, 5 moderate); production dependency audit clean. Use a focused update with fresh full media proof, not npm audit fix --force."
+          "notes": "Full media audit: 13 advisories (8 high, 5 moderate). Full patched web audit: 12 development findings (10 high, 2 moderate), while web runtime audit is clean. Use supported focused updates and fresh proof, not forced major downgrades."
+        },
+        {
+          "id": "R4-T5",
+          "title": "Patch vulnerable web framework and preserve a standing runtime audit gate",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "60ab957 patches Next/ESLint to 16.4.2 and PostCSS to 8.5.31. Runtime audit zero; build, lint, regressions, seven rendered routes, all ten software-rendered heroes, failure paths and standalone Money Loop proof passed locally. Independent patch review clear. Final exact-head hosted CI remains required; live production is not updated."
         }
       ],
       "gates": [
@@ -313,6 +321,15 @@
           "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/media-audit.json",
           "lastRun": "2026-10-20T17:27:25Z",
           "notes": "13 development-toolchain advisories; zero production dependencies affected in this workspace. Findings remain open, not suppressed."
+        },
+        {
+          "id": "R4-G5",
+          "title": "Web runtime dependency audit",
+          "command": "npm --prefix apps/web audit --omit=dev",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/web-runtime-after.json",
+          "lastRun": "2026-10-20T17:42:00Z",
+          "notes": "Zero current registry advisories after same-major Next patch. This is not a complete application-security audit or proof of production deployment."
         }
       ]
     },
@@ -338,6 +355,14 @@
           "dependsOn": [],
           "pr": null,
           "notes": ""
+        },
+        {
+          "id": "R5-T3",
+          "title": "Upgrade the native dependency stack through a supported Expo compatibility path",
+          "status": "pending",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Mobile omit-dev tree has 41 findings (1 critical, 28 high, 12 moderate), including CLI/Metro build tooling. Device runtime exposure is not established. Do not accept audit's suggested Expo 44 or React Native 0.72 downgrades; verify an SDK-supported upgrade and native exports."
         }
       ],
       "gates": [
@@ -358,6 +383,15 @@
           "evidence": "ops/mission/evidence/hero-refinement-2026-10-20/mobile-contracts.log",
           "lastRun": "2026-10-20T17:27:25Z",
           "notes": "Default and legacy migration fixtures aligned to preserved 8200/4700 inputs. Custom zero-limit data remains unchanged. Not final-device proof."
+        },
+        {
+          "id": "R5-G3",
+          "title": "Native dependency audit and exposure review",
+          "command": "npm --prefix apps/mobile audit --omit=dev",
+          "status": "failed",
+          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-audit.json",
+          "lastRun": "2026-10-20T17:42:00Z",
+          "notes": "41 findings in a tree that includes SDK build tools. Scope actual bundle/server exposure and patch via supported SDK versions; findings are not dismissed or treated as confirmed phone exploits."
         }
       ]
     }
@@ -406,12 +440,17 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "Checkpoint CI ran and failed stale mobile default fixtures. Local corrections pass, but only a fresh successful run on the next pushed SHA can close the gate."
+      "note": "0d72c6b push CI passed; its PR run hit a software GPU screenshot timeout. Bounded capture was corrected and verified locally; the runtime security patch also needs fresh all-checks-green exact-head evidence."
     },
     {
       "title": "Media toolchain advisories remain open",
       "severity": "high",
       "note": "Full development dependency audit reports 8 high and 5 moderate advisories. Media production dependency audit is clean. Tool updates need a separate fresh renderer validation."
+    },
+    {
+      "title": "Web security patch is not yet live; native dependency findings remain",
+      "severity": "high",
+      "note": "Patched local web runtime audit is clean, but the deployed production version has not been promoted. Native omit-dev tree has 41 findings, including build tooling; supported SDK remediation and exposure review remain required."
     },
     {
       "title": "Production backend and custom domain unverified",
@@ -702,13 +741,14 @@
     }
   ],
   "resume": {
-    "activePhase": "R1",
+    "activePhase": "R4",
     "nextActions": [
-      "Push the locally verified car and loading-hardening refinement with corrected mobile demo fixtures; require fresh hosted CI for that exact SHA and keep draft #256 unmerged.",
-      "Address any exact-SHA CI failure without weakening gates. Checkpoint run 39463072955 exposed two stale demo-default expectations; both now pass locally.",
+      "Push runtime security patch 60ab957 and software screenshot capture fix b4df206 with fresh evidence. Require all CI and Vercel checks on the exact resulting head; do not merge the restoration draft or promote production yet.",
+      "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
       "Refine House/Land/Vault from properly licensed or original textured sources, with provenance, small opt-in budgets and visual review. Do not overwrite refined imports by running the study generator.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
+      "Plan a supported Expo SDK/dependency remediation for its 41 omit-dev-tree advisories and the 12 remaining web development-toolchain findings; distinguish build tools from device runtime, and do not force audit-proposed major downgrades.",
       "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
