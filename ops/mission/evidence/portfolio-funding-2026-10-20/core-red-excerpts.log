@@ -1,0 +1,128 @@
+Selected observed failing Portfolio cases; passing cases and unrelated legacy copy failures omitted.
+
+FAIL Portfolio extra allocations never create money beyond entered household cash flow
+AssertionError [ERR_ASSERTION]: snowball
+
+4 !== 10
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:160:12
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Portfolio manual extra caps retain unused cash without changing saved inputs
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2 !== 7
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:170:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Every Portfolio strategy and focus includes an existing LOC until both liabilities clear
+AssertionError [ERR_ASSERTION]: snowball/single
+
+10 !== 15
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:185:14
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Direct Portfolio policies reserve LOC interest before funding target extras
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:197:12
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Portfolio accepts a funded clipped final payment and rejects a one-cent shortfall
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:208:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Portfolio debt-first priorities include the LOC for snowball and effective-rate avalanche
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+600 !== 100
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:221:12
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Portfolio monthly books conserve both liabilities, interest, household budget and cash
+AssertionError [ERR_ASSERTION]: snowball/single/1: 1900+NaN-350 != NaN
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:242:16
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Portfolio Velocity reserves scheduled payments and routes the funded residual to its LOC
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+300 !== 100
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:255:10
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\engine-regression-tests.cjs:8997:5)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+FAIL Web Portfolio delegates its calculation module to the portable shared engine

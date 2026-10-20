@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T21:35:20Z",
-    "sessionCount": 8
+    "updated": "2026-10-20T22:18:27Z",
+    "sessionCount": 9
   },
   "policies": {
     "merge": "review",
@@ -45,7 +45,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Exact-SHA verification is established: b6cb796 passed both CI runs 39494699757/39494707722 including real SQL jobs, Vercel and hosted checks. Each subsequent push needs its own standing gate and receipt. No production promotion."
+          "notes": "Exact-SHA verification is established: ec11223 passed both complete CI runs39502097560/39502102981 including real SQL, Vercel and hosted checks. Receipt: PR256 issuecomment-6302535434. Each subsequent push needs its own standing gate. No production promotion."
         }
       ],
       "gates": [
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T21:35:20Z",
-          "notes": "310 regressions, two reference fixtures, 78 prior comparisons, 25 zero-recovery cases and 100 new closed-form capped-mortgage cases pass. New Vault math/UI findings were reproduced and cleared. Saved scenarios and asset bytes are unchanged. Local draft evidence, not production proof."
+          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "328 regressions, prior reference lanes,480 new Portfolio closed-form policies and360 repeatable seeded paths (240 direct-oracle matches) pass. Funded caps, full liabilities, ranked splits, cash, promo and cleared states corrected. Review findings and imported loan/LOC no-op bugs reproduced and cleared. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T21:32:50Z",
-          "notes": "All seven built routes pass at 1440px/390px locally; the new 20-case Vault gate separately covers 375px, exact funding, disclosures, adverse results, large values and failed timelines. No release promotion."
+          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "All seven built routes pass at1440px/390px locally; separate Portfolio22/Vault20/Simulator16 browser cases cover375px, controls, funding and saved-data preservation. No release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6301381272",
-          "lastRun": "2026-10-20T21:35:20Z",
-          "notes": "b6cb796 passed both full CI runs and Vercel; its final receipt includes real SQL and remote checks. New mortgage/runtime/UI changes require both new exact-head runs, including the new Vault gate. Prior green does not approve this new head or production."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6302535434",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "ec11223 passed both complete CI runs, SQL, Vercel and hosted checks. This new shared Portfolio/UI checkpoint requires fresh exact-head proof, including its new Portfolio gate. Previous green is not production approval."
         }
       ]
     },
@@ -169,7 +169,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Simulator web/Expo and Vault now account for both starting liabilities and the available budget. Vault preserves four explicit policies, caps funded extras, shows retained cash and signed deltas, and uses actual household routing. Shared helper 883f3ac and web integration 3e9e151 are separate focused commits, followed by browser/CI/evidence. 310 regressions, 203 closed-form/conservation cases, 20 Vault and 16 Simulator browser executions pass. Review found illustration funding, failed-scale, fractional/overflow/currency defects; reproduced, fixed and cleared. Portfolio/dashboard scope, safe scenario ownership, common-date reserves/wealth and actual lender/calendar enforcement remain open."
+          "notes": "Simulator web/Expo, Vault and web Portfolio include available budget and LOC. Portfolio's portable module caps direct extras, ranks/splits LOC, retains cash and supplies gross Money Loop routing. Math and presentation findings reproduced and cleared;328 regressions,480 closed-form policies,360 seeded paths/240 direct-oracle matches and22 Portfolio Chrome cases pass. Imported100m loan/LOC and200m limit no-op edits preserve data. Dashboard helpers, native aggregate Portfolio adoption, shared ownership, common-date wealth and lender/calendar rules remain open."
         },
         {
           "id": "R2-T3",
@@ -186,18 +186,18 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T21:35:20Z",
-          "notes": "310 regressions pass on the local branch. Default uncapped Simulator behavior and Velocity chunk allocation are preserved; this does not complete all routes or lender integration."
+          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "328 regressions pass locally. Portfolio conserves its full debt/LOC/cash book; main Simulator/Vault entry and media outputs remain unchanged. Not all routes or lender integration are complete."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T21:35:20Z",
-          "notes": "Two anonymized fixtures, 78 prior closed-form comparisons, 25 zero-recovery cases and 100 new capped-mortgage closed-form/conservation cases. Independent review probes are recorded separately, not counted as this committed suite. Not lender quotes."
+          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
         },
         {
           "id": "R2-G3",
@@ -216,6 +216,15 @@
           "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/browser-verification.json",
           "lastRun": "2026-10-20T21:32:50Z",
           "notes": "20 Chrome executions at 1440px/375px: funded/unfunded, one-cent short, clipped final/contribution, existing LOC/zero recovery, cash reserves, adverse interest, failed horizon, large illustration and already-paid states. Actual card text/inputs retained; disclosures toggle, stored timing survives, no page/card overflow or errors, amount bounds and valid timeline percentages pass. Not actual lender or common-date wealth proof."
+        },
+        {
+          "id": "R2-G5",
+          "title": "Rendered funded Portfolio controls and full liability book",
+          "command": "npm --prefix apps/web run smoke:portfolio:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/browser-verification.json",
+          "lastRun": "2026-10-20T22:18:27Z",
+          "notes": "22 Chrome executions at1440px/375px cover funded caps/cash, ranked/split LOC, final/cent-short, interest shortfall, cleared and large imports. Real policy/cap edits,100m loan/LOC and200m limit no-op edits pass; separate timing stays intact. Failed LOC claims suppressed and inactive chunk controls absent. Stable-opacity screenshots replace rejected dark captures. No overflow/errors."
         }
       ]
     },
@@ -443,8 +452,8 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "310",
-      "target": "310",
+      "current": "328",
+      "target": "328",
       "direction": "up"
     },
     {
@@ -471,12 +480,12 @@
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Simulator web/Expo and Vault now use funded two-liability books and explicit cash. Portfolio/dashboard scope, safe scenario ownership, common-date reserves/wealth and normal lender/calendar/rounding/credit-availability integration remain open."
+      "note": "Simulator web/Expo, Vault and web Portfolio now use funded liability books with explicit cash. Dashboard helpers, native aggregate Portfolio adoption, safe scenario ownership, common-date wealth and lender/calendar/rounding/credit-availability integration remain open."
     },
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "b6cb796 passed both full CI runs, SQL and Vercel. The current mortgage/UI checkpoint needs new exact-head checks, including its new Vault browser gate. No earlier receipt authorizes production."
+      "note": "ec11223 passed both complete CI runs, SQL, Vercel and hosted proof. The current shared Portfolio/UI checkpoint needs fresh exact-head proof, including the new Portfolio gate. No prior receipt authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -779,9 +788,10 @@
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Push the reviewed mortgage checkpoint and require both final exact-head CI runs, SQL, Vercel and hosted Vault proof. b6cb796 is green; final receipt is PR #256 issuecomment-6301381272. This report is the new preflight snapshot, not final CI or production approval.",
-      "Continue R2-T2 with Portfolio/dashboard helper scope and common-date cash/reserve accounting, plus safe scenario ownership. Vault now has its funded shared contract; read docs/mortgage-comparison-contract-2026-10-20.md. Preserve the distinct explicit policies and saved data, and add failing reproductions first.",
-      "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target and Vault funding/final-payment boundaries now pass. Portfolio still needs coherence work. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
+      "Push the reviewed shared Portfolio checkpoint, then require both final exact-head CI runs, SQL, Vercel and hosted Portfolio proof. ec11223 passed; final receipt PR256 issuecomment-6302535434. This new report is preflight, not production approval.",
+      "Continue a focused House/Land textured model refinement with provenance and all-model web/video proof while preserving the calm original identity. Auto/Vault remain candidates and eight studies remain unfinished. Do not start paid GPU jobs or a broad layout redesign.",
+      "Next R2 work: dashboard helper scope, native aggregate Portfolio adoption, safe shared scenario ownership and common-date cash/wealth. Read docs/portfolio-funding-contract-2026-10-20.md; preserve saved caps as funded allocations, not added income, and retain separate explicit policies. Add failing reproductions first.",
+      "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
       "Continue House/Land and six remaining domain refinements. Vault and Auto are textured candidates, not final collection approval. Read docs/vault-refinement-contract-2026-10-20.md. Preserve the shared publication lock, artist-review geometry/material fidelity and re-run all-model web/video gates after shared lighting edits.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",

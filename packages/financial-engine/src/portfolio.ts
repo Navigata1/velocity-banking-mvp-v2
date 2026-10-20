@@ -1,6 +1,6 @@
 /**
  * Portfolio Simulation Engine
- * 
+ *
  * Supports multi-debt payoff simulation with velocity, snowball, and avalanche strategies.
  * Truth-first math. Educational estimates only. Not financial advice.
  */
@@ -198,7 +198,7 @@ function velocityScore(debt: DebtItem, balance: number): number {
 
 function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: PayoffStrategy): DebtItem[] {
   const active = debts.filter(d => (balances.get(d.id) ?? 0) > 0.01);
-  
+
   switch (strategy) {
     case 'snowball':
       return active.sort((a, b) => (balances.get(a.id) ?? 0) - (balances.get(b.id) ?? 0));
@@ -441,7 +441,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 
   const balances = new Map<string, number>();
   const totalInterestPaid = new Map<string, number>();
-  
+
   for (const d of debts) {
     balances.set(d.id, d.balance);
     totalInterestPaid.set(d.id, 0);
@@ -623,7 +623,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       // Apply extra to target debts
       payment += debtExtras.get(d.id) ?? 0;
       const newBal = Math.max(0, bal + interest - payment);
-      
+
       balances.set(d.id, newBal);
       totalInterestPaid.set(d.id, (totalInterestPaid.get(d.id) ?? 0) + interest);
 

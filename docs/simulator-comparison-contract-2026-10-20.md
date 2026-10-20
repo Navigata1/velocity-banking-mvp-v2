@@ -68,8 +68,10 @@ were rejected and replaced, not accepted as evidence. CI uploads the resulting p
 
 Vault-web now uses a funded shared two-liability book while retaining its four
 explicit allocation policies; see `docs/mortgage-comparison-contract-2026-10-20.md`.
-Portfolio, dashboard payoff helper comparisons and shared scenario ownership still
-need coherence work. Shared/single-target
+Web Portfolio now has a funded shared multi-debt/LOC/cash book; see
+`docs/portfolio-funding-contract-2026-10-20.md`. Dashboard payoff helpers, native
+aggregate Portfolio adoption, shared scenario ownership and common-date wealth
+still need coherence work. Shared/single-target
 zero-residual and final-payment cases are corrected in the subsequent budget
 contract, but other routes still need the same preflight. Inactive mortgage timing
 choices are removed and saved legacy fields preserved; there is no new dated

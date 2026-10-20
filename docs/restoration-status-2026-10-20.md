@@ -50,6 +50,11 @@ The existing aligned demo defaults were preserved.
   Extras are funded after obligations; retained cash and adverse deltas are visible.
   The contribution illustration is budget-capped, month-accurate and explicitly
   separate from incremental savings or common-date net wealth. Saved data is intact.
+- Web Portfolio now uses a portable shared funded book: existing LOC in every
+  strategy/focus, global direct extra caps, ranked LOC split slots and retained cash.
+  Single Velocity reserves scheduled/manual payments before LOC recovery. The chart
+  and summaries include LOC. Saved fields remain intact; native aggregate adoption
+  and shared scenario ownership are still separate work.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. Vault is an original authored
@@ -60,12 +65,19 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 310 web/shared regressions, two independent reference scenarios, 78 prior
-  comparisons, 25 zero-recovery cases and 100 new capped-mortgage closed-form
-  cases pass, along with ancillary contracts.
+- 328 web/shared regressions, two independent reference scenarios,78 prior
+  comparisons,25 zero-recovery,100 capped-mortgage and480 new Portfolio closed-form
+  cases pass, plus360 repeatable seeded paths with240 direct-oracle matches and
+  ancillary contracts.
 - Twenty Vault browser executions at1440px/375px pass funding, cash, disclosures,
   stored timing, adverse results, exact final/cent-short, failed horizon and large
   amount bounds. The16 existing Simulator/saved-data cases remain green.
+- Twenty-two Portfolio executions at1440px/375px pass policy/cap edits, retained cash,
+  existing/ranked/split LOC, final/cent-short/cleared states and unchanged separate
+  scenario data. Chrome caught an imported100m balance shownas10m; both editors
+  now preserve that value through a no-op edit. Review also caught imported LOC
+  clipping, lost LOC targets, invalid interest claims and paid-state copy; fixed and
+  cleared on re-review. Screenshots wait for reveal opacity.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
@@ -82,10 +94,14 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
 - Media production dependency audit: zero advisories. Full media development-toolchain
   audit: 13 advisories (8 high, 5 moderate), requiring a separately verified toolchain update.
-- Checkpoint Vercel preview passed. GitHub Actions run 39463072955 is now visible:
+- Historical checkpoint: Vercel preview passed. GitHub Actions run39463072955 showed:
   web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
   demo defaults. The fixtures are corrected and the mobile contract suite passes
   locally. A fresh exact-SHA green run is still required; preview is not CI approval.
+- Latest fully verified baseline ec11223 passed both complete runs39502097560/
+  39502102981, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6302535434.
+  The new shared Portfolio checkpoint needs its own postflight receipt. No production
+  release is inferred from either earlier success or this local preflight report.
 - On the refined checkpoint 0d72c6b, push CI passed and all seven remote preview
   routes passed at desktop/375px. Its PR CI run exposed software-GPU screenshot
   stability timeouts. The capture path now uses fixed canvas bounds and bounded

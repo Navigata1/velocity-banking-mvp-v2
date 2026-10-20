@@ -46,8 +46,8 @@
   "verification": {
     "webBuild": "passed Next.js production build and TypeScript",
     "webLint": "passed",
-    "webTests": "310 regressions, 2 reference scenarios, 78 prior closed-form comparisons, 25 zero-recovery cases and 100 new capped-mortgage closed-form cases, plus ancillary contracts passed",
-    "comparisonBrowser": "20 Vault plus16 existing Simulator/saved-data executions at1440px/375px; actual observed cards/inputs retained, funding/cent-short/cash/disclosures/failed horizons/large-value bounds pass, saved timing intact, no page errors or overflow",
+    "webTests": "328 regressions,2 reference scenarios,78 comparisons,25 zero-recovery,100 capped-mortgage,480 Portfolio closed-form policies and360 deterministic seeded paths (240 direct-oracle row matches), plus ancillary contracts passed",
+    "comparisonBrowser": "22 Portfolio +20 Vault +16 Simulator/saved-data executions at1440px/375px. Actual controls/caps, ranked/split LOC, cash, imported100m loan/LOC and200m limit no-op edits, cleared/final/cent-short and saved timing pass. Unsupported LOC claims hidden; inactive chunk controls absent. Stable-opacity screenshots; no errors/overflow",
     "routes": "all seven routes passed rendered Chrome smoke at desktop and mobile widths",
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
     "turntables": "all ten 1920x1080 nine-second MP4s passed movement and return-to-start pixel checks",
@@ -62,8 +62,8 @@
     "backendSql": "37d1880 database jobs passed in both CI runs 39493769671/39493779589: four migrations replayed, 63 assertions passed twice, lint/security advisors clean, cleanup successful. Tested Supabase PG17.6.1.143/CLI2.109.1 is functional proof, not final provider patch alignment, hosted account isolation or backup recovery",
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
-    "financialReview": "Core review cleared funded mortgage math and unchanged uncapped behavior. Presentation review found budget-exceeding illustration, invalid-horizon scaling, fractional/overflow and small-currency defects; reproduced and fixed, with final scoped re-review clear. Actual lender/calendar and broad security approval excluded",
-    "deployment": "draft PR #256; b6cb796 passed both CI runs 39494699757/39494707722 including SQL, Vercel and remote checks. New shared/Vault/browser checkpoint requires fresh exact-head proof; no production promotion",
+    "financialReview": "Prior mortgage reviews retained. New Portfolio math review found LOC cap bypass and second-ranked LOC split omission; reproduced, fixed and cleared with independent oracle/conservation probes. Frontend review recorded in the checkpoint evidence. Actual lender/calendar and broad security approval excluded",
+    "deployment": "draft PR256;ec11223 passed both complete runs39502097560/39502102981, real SQL, Vercel and remote checks. New shared Portfolio checkpoint requires fresh exact-head proof; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },
