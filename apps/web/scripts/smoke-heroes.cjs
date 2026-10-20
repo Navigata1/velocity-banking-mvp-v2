@@ -23,15 +23,23 @@ function visibleBounds(image) {
 }
 const domains = [['car','Auto'],['house','House'],['land','Land'],['creditCard','Credit Card'],
   ['studentLoan','Student Loan'],['medical','Medical'],['personal','Personal'],['recreation','Recreation'],['custom','Custom']];
+async function captureStage(page, stage) {
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');
+  const clip = await stage.boundingBox();
+  assert.ok(clip && clip.width > 0 && clip.height > 0, 'stage must have stable dimensions');
+  // Fixed stage bounds avoid locator screenshot stability polling during GPU work.
+  return page.screenshot({ clip, timeout: 120000 });
+}
 async function run() {
   const started = await startBuiltServer(root);
   const browserArgs = getHeadlessChromiumArgs();
   const browser = await chromium.launch({ executablePath: findBrowserExecutable(), headless: true,
-    args: process.platform === 'win32' ? browserArgs.filter(arg => !arg.includes('swiftshader')).concat('--use-angle=d3d11') : browserArgs });
+    args: process.platform === 'win32' && process.env.HERO_SMOKE_SOFTWARE_GPU !== '1' ? browserArgs.filter(arg => !arg.includes('swiftshader')).concat('--use-angle=d3d11') : browserArgs });
   try {
     for (const width of [1440,375]) {
       const context = await browser.newContext({ viewport: {width,height:900}, deviceScaleFactor:1 });
       const page = await context.newPage(); const errors = [], requests=[];
+      page.setDefaultTimeout(120000);
       page.on('pageerror', error => errors.push(error.message));
       page.on('console', message => { if(message.type()==='error') errors.push(message.text()); });
       page.on('request', request => requests.push(request.url()));
@@ -71,9 +79,9 @@ async function run() {
         await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
         const stage=page.getByTestId('asset-hero-canvas');
         await page.waitForFunction(() => document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
-        const a=await stage.screenshot();
+        const a=await captureStage(page,stage);
         await page.waitForTimeout(1500);
-        const b=await stage.screenshot();
+        const b=await captureStage(page,stage);
         fs.writeFileSync(path.join(output,`${width}-${id}-3d-start.png`),a);
         fs.writeFileSync(path.join(output,`${width}-${id}-3d.png`),b);
         const image=decodePngRgba(a),lastImage=decodePngRgba(b);
@@ -93,9 +101,9 @@ async function run() {
       await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
       await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
       const vault=page.getByTestId('asset-hero-canvas');
-      const start=decodePngRgba(await vault.screenshot());
+      const start=decodePngRgba(await captureStage(page,vault));
       await page.waitForTimeout(1500);
-      const end=decodePngRgba(await vault.screenshot());
+      const end=decodePngRgba(await captureStage(page,vault));
       const va=visibleBounds(start),vb=visibleBounds(end);
       const region={left:Math.min(va.left,vb.left),right:Math.max(va.right,vb.right),top:Math.min(va.top,vb.top),bottom:Math.max(va.bottom,vb.bottom)};
       assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(samplePngPixels(start,31,region).stabilityDescriptor,samplePngPixels(end,31,region).stabilityDescriptor)),'vault did not rotate');
@@ -104,13 +112,13 @@ async function run() {
       assert.deepEqual(errors,[]); await context.close();
     }
     const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
-    const page=await context.newPage(); await page.goto(started.origin,{waitUntil:'networkidle'});
+    const page=await context.newPage(); page.setDefaultTimeout(120000); await page.goto(started.origin,{waitUntil:'networkidle'});
     assert.equal(await page.getByTestId('asset-hero').locator('img').evaluate(image=>getComputedStyle(image).transitionProperty),'none','reduced-motion must not fade the artwork');
     await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
     await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
     await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');
     const stage=page.getByTestId('asset-hero-canvas');
-    const first=await stage.screenshot(); await page.waitForTimeout(1200); const last=await stage.screenshot();
+    const first=await captureStage(page,stage); await page.waitForTimeout(1200); const last=await captureStage(page,stage);
     assert.equal(samplePngPixels(decodePngRgba(first)).fingerprint,samplePngPixels(decodePngRgba(last)).fingerprint,'reduced-motion must be still');
     await context.close(); console.log('PASS reduced-motion still frame');
   } finally { await browser.close(); await stopServer(started.server); }
