@@ -159,9 +159,10 @@ const scenarios = [
           assert.equal(await page.getByRole('group', { name: 'Vault mortgage payment frequency', exact: true }).count(), 0);
           await page.getByRole('button', { name: /^Edit Vault current balance, current value \$124,000$/ }).waitFor();
           await page.getByRole('button', { name: 'Go to What If You Changed The Tool?', exact: true }).click();
+          await page.getByText('Financial assumptions', { exact: true }).click();
           const annualExtra = page.getByTestId('mortgage-annual-extra-assumption');
           await annualExtra.waitFor();
-          assert.match(await page.getByTestId('vault-comparison-scope-warning').innerText(), /not yet like-for-like/);
+          assert.match(await page.getByTestId('vault-comparison-scope-warning').innerText(), /Same mortgage, existing LOC balance and available monthly budget/);
           assert.match(await annualExtra.innerText(), /Actual biweekly payment dates are not modeled/);
           assert.equal(await page.getByText('Bi-Weekly Payments', { exact: true }).count(), 0);
           const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('velocity-bank-storage')).state);

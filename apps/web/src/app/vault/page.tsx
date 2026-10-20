@@ -12,6 +12,7 @@ import CountUp from '@/components/CountUp';
 import { useIsClient } from '@/hooks/useIsClient';
 import {
   buildVaultComparisonWidthPercent,
+  buildVaultComparisonMaxMonths,
   buildVaultFreedomPathModel,
   buildVaultVelocitySetupWarning,
   buildVaultVisualPercent,
@@ -21,6 +22,7 @@ import {
   formatVaultStrategyMonths,
   formatVaultStrategySavings,
   formatVaultStrategyTimeDelta,
+  formatVaultCashAtPayoff,
   formatVaultYearsLabel,
 } from '@/app/vault-model';
 import {
@@ -29,7 +31,10 @@ import {
   generateAmortizationBreakdown,
   compareMortgageStrategies,
   formatCurrency,
+  formatCurrencyPrecise,
   MortgageAnalysisInput,
+  SIMULATOR_COMPARISON_ASSUMPTIONS,
+  SIMULATOR_COMPARISON_TIMING,
 } from '@/engine/calculations';
 
 const calculateFutureValue = (presentValue: number, annualRate: number, years: number) => {
@@ -61,11 +66,11 @@ function formatMortgageInterest(totalInterest: number, isPayoffPossible: boolean
   return formatVaultStrategyInterest(totalInterest, isPayoffPossible);
 }
 
-function formatMortgageSavings(strategy: { saved: number; isPayoffPossible: boolean }): string {
+function formatMortgageSavings(strategy: { saved: number; isPayoffPossible: boolean; canCompare?: boolean }): string {
   return formatVaultStrategySavings({ ...strategy, monthsSaved: 0 });
 }
 
-function formatMortgageTimeDelta(strategy: { monthsSaved: number; isPayoffPossible: boolean; failureReason?: string }, suffix = ''): string {
+function formatMortgageTimeDelta(strategy: { monthsSaved: number; isPayoffPossible: boolean; failureReason?: string; canCompare?: boolean }, suffix = ''): string {
   return formatVaultStrategyTimeDelta({ ...strategy, saved: 0 }, suffix);
 }
 
@@ -90,11 +95,13 @@ export default function VaultPage() {
     [analysis.originalLoanAmount, store.mortgageDetails.originalRate, store.mortgageDetails.originalTermYears]
   );
   const strategies = useMemo(() => {
-    const cashFlow = store.monthlyIncome - store.monthlyExpenses;
-    return compareMortgageStrategies(mortgageInput, cashFlow, {
+    return compareMortgageStrategies(mortgageInput, {
+      monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
+    }, {
       limit: store.loc.limit, apr: store.loc.interestRate, balance: store.loc.balance,
     });
   }, [mortgageInput, store.monthlyIncome, store.monthlyExpenses, store.loc]);
+  const comparisonMaxMonths = buildVaultComparisonMaxMonths([strategies.standard, strategies.biweekly, strategies.extraPayment, strategies.velocity]);
   const velocitySetupWarning = useMemo(
     () => buildVaultVelocitySetupWarning(strategies.velocity),
     [strategies.velocity]
@@ -394,19 +401,29 @@ export default function VaultPage() {
       // ── Step 3: What If You Changed The Tool? ──
       case 3:
         return (
-          <div className="space-y-6">
-            <p className={`text-sm ${classes.textSecondary} text-center`}>4 strategies for YOUR remaining mortgage</p>
-            <p data-testid="vault-comparison-scope-warning" role="note" className="border-l-2 border-amber-500 pl-3 text-xs leading-5 text-amber-300">
-              These projections are not yet like-for-like: payment allocations and LOC coverage differ. Interest differences cannot be attributed to Velocity alone. Review this as an educational estimate, not a strategy recommendation.
+          <div data-testid="vault-strategy-comparison" className="space-y-6">
+            <p className={`text-sm ${classes.textSecondary} text-center`}>4 payoff paths for your mortgage and LOC</p>
+            <p data-testid="vault-comparison-scope-warning" role="note" className={`border-l-2 border-gray-500/50 pl-3 text-xs leading-5 ${classes.textSecondary}`}>
+              Same mortgage, existing LOC balance and available monthly budget. Cash is shown at each plan&apos;s own payoff month, not a common-date wealth comparison.
             </p>
-            <p data-testid="mortgage-annual-extra-assumption" className={`text-xs leading-5 ${classes.textMuted}`}>
-              Annual extra is a monthly approximation of one extra payment per year, capped by available cash flow. Actual biweekly payment dates are not modeled.
+            <p className={`text-xs leading-5 ${classes.textSecondary}`}>
+              Available budget: {Number.isInteger(strategies.monthlyBudget) ? formatCurrency(strategies.monthlyBudget) : formatCurrencyPrecise(strategies.monthlyBudget)}/mo
             </p>
+            <details data-testid="vault-comparison-assumptions" className={`text-xs leading-5 ${classes.textMuted}`}>
+              <summary className="cursor-pointer">Financial assumptions</summary>
+              <p className="mt-2">Other debts are excluded. Allocations and timing differ; outcomes cannot be attributed to Velocity alone. Scheduled plans reserve the mortgage and modeled LOC interest, then reduce the LOC. Unused cash is held once the LOC clears.</p>
+              <p data-testid="mortgage-annual-extra-assumption" className="mt-2">
+                Annual extra is a monthly approximation of one extra payment per year, capped after scheduled obligations. Actual biweekly payment dates are not modeled.
+              </p>
+              <p className="mt-2">{SIMULATOR_COMPARISON_ASSUMPTIONS}</p>
+              <p className="mt-2">Velocity posts LOC interest to the balance after modeled transactions. A separate lender minimum is not enforced; verify the actual payment schedule.</p>
+              <p className="mt-2">{SIMULATOR_COMPARISON_TIMING}</p>
+            </details>
 
             <div className="grid grid-cols-2 gap-3">
               {/* Standard */}
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-                <p className="text-xs text-red-400 font-semibold mb-2">Keep Paying As-Is</p>
+              <div data-testid="vault-plan-standard" className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+                <p className="text-xs text-red-400 font-semibold mb-2">Scheduled Mortgage + LOC</p>
                 <p className="text-2xl font-bold text-red-400">
                   {formatMortgageMonths(strategies.standard)}
                 </p>
@@ -416,42 +433,42 @@ export default function VaultPage() {
                     ? `Payoff: ${strategies.standard.payoffDate}`
                     : formatProjectionFailure(strategies.standard.failureReason)}
                 </p>
+                <p className={`text-xs ${classes.textMuted} mt-2`}>{formatVaultCashAtPayoff(strategies.standard)}</p>
               </div>
 
               {/* Bi-weekly */}
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+              <div data-testid="vault-plan-biweekly" className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
                 <p className="text-xs text-blue-400 font-semibold mb-2">Annual Extra (Estimate)</p>
                 <p className="text-2xl font-bold text-blue-400">
                   {formatMortgageMonths(strategies.biweekly)}
                 </p>
                 <p className="text-sm text-blue-400/80">{formatMortgageSavings(strategies.biweekly)}</p>
                 <p className={`text-xs ${classes.textMuted} mt-1`}>{formatMortgageTimeDelta(strategies.biweekly)}</p>
+                <p className={`text-xs ${classes.textMuted} mt-2`}>{formatVaultCashAtPayoff(strategies.biweekly)}</p>
               </div>
 
               {/* Extra Payments */}
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <p className="text-xs text-amber-400 font-semibold mb-2">+{formatCurrency(strategies.extraPayment.extraAmount)}/mo Extra</p>
+              <div data-testid="vault-plan-extraPayment" className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+                <p className="text-xs text-amber-400 font-semibold mb-2">+{strategies.extraPayment.extraAmount > 0 && strategies.extraPayment.extraAmount < 1 ? formatCurrencyPrecise(strategies.extraPayment.extraAmount) : formatCurrency(strategies.extraPayment.extraAmount)}/mo Extra</p>
                 <p className="text-2xl font-bold text-amber-400">
                   {formatMortgageMonths(strategies.extraPayment)}
                 </p>
                 <p className="text-sm text-amber-400/80">{formatMortgageSavings(strategies.extraPayment)}</p>
                 <p className={`text-xs ${classes.textMuted} mt-1`}>{formatMortgageTimeDelta(strategies.extraPayment)}</p>
+                <p className={`text-xs ${classes.textMuted} mt-2`}>{formatVaultCashAtPayoff(strategies.extraPayment)}</p>
               </div>
 
               {/* Velocity */}
-              <div className="bg-emerald-500/15 border border-emerald-500/50 rounded-xl p-4 ring-1 ring-emerald-500/30">
+              <div data-testid="vault-plan-velocity" className="bg-emerald-500/15 border border-emerald-500/50 rounded-xl p-4 ring-1 ring-emerald-500/30">
                 <p className="text-xs text-emerald-400 font-semibold mb-2">⚡ Velocity Banking</p>
                 <p className="text-2xl font-bold text-emerald-400">
-                  {strategies.velocity.isPayoffPossible ? (
-                    `${strategies.velocity.months} mo`
-                  ) : (
-                    'Review inputs'
-                  )}
+                  {formatMortgageMonths(strategies.velocity)}
                 </p>
-                <p className="text-sm text-emerald-400/80">
+                <p className={`text-xs ${classes.textMuted} mt-2`}>{formatVaultCashAtPayoff(strategies.velocity)}</p>
+                <p className={`text-sm ${strategies.velocity.saved < -0.005 ? 'text-amber-300' : 'text-emerald-400/80'}`}>
                   {formatMortgageSavings(strategies.velocity)}
                 </p>
-                <p className="text-xs text-emerald-400 mt-1 font-medium">
+                <p className={`text-xs ${strategies.velocity.monthsSaved < 0 ? 'text-amber-300' : 'text-emerald-400'} mt-1 font-medium`}>
                   {formatMortgageTimeDelta(strategies.velocity)}
                 </p>
               </div>
@@ -468,7 +485,7 @@ export default function VaultPage() {
               ].map(s => {
                 const width = buildVaultComparisonWidthPercent(
                   s.months,
-                  strategies.standard.months,
+                  comparisonMaxMonths,
                   s.isPayoffPossible
                 );
                 return (
@@ -550,30 +567,30 @@ export default function VaultPage() {
           standardMonths: strategies.standard.months,
           velocity: strategies.velocity,
           monthlyPayment,
+          monthlyBudget: strategies.monthlyBudget,
           investmentRate,
         });
-        const velocityTimelinePercent = freedomPath.isProjected && freedomPath.standardYears > 0
-          ? buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)
+        const timelineMaxMonths = buildVaultComparisonMaxMonths([strategies.standard, strategies.velocity]);
+        const velocityTimelinePercent = freedomPath.isProjected
+          ? buildVaultVisualPercent(strategies.velocity.months, timelineMaxMonths)
           : 0;
+        const standardTimelinePercent = strategies.standard.isPayoffPossible
+          ? buildVaultVisualPercent(strategies.standard.months, timelineMaxMonths) : 0;
 
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-5 text-center">
                 <div className={`${classes.textSecondary} text-sm mb-2`}>Modeled Interest Difference</div>
-                <div className="text-2xl font-bold text-emerald-500">
-                  {freedomPath.isProjected ? (
-                    <CountUp value={strategies.velocity.saved} />
-                  ) : (
-                    freedomPath.interestSavedLabel
-                  )}
+                <div className={`text-lg font-bold ${strategies.velocity.saved < 0 ? 'text-amber-400' : 'text-emerald-500'}`}>
+                  {freedomPath.interestSavedLabel}
                 </div>
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-5 text-center">
-                <div className={`${classes.textSecondary} text-sm mb-2`}>Years of Freedom</div>
+                <div className={`${classes.textSecondary} text-sm mb-2`}>Years Earlier</div>
                 <div className="text-2xl font-bold text-blue-500">
                   {freedomPath.isProjected ? (
-                    <CountUp value={freedomPath.freedYears} prefix="" suffix=" years" />
+                    <CountUp value={freedomPath.freedYears} prefix="" suffix=" years" decimals={1} />
                   ) : (
                     freedomPath.freedomYearsLabel
                   )}
@@ -584,9 +601,11 @@ export default function VaultPage() {
             {/* Timeline */}
             <div className={`${classes.glass} rounded-xl p-5`}>
               <div className="mb-4">
-                <div className={`text-sm ${classes.textSecondary} mb-2`}>Traditional Path</div>
+                <div className={`text-sm ${classes.textSecondary} mb-2`}>Scheduled Mortgage + LOC</div>
                 <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full" />
+                  <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full"
+                    data-testid="vault-standard-timeline"
+                    style={{ width: `${standardTimelinePercent}%` }} />
                 </div>
                 <div className={`flex justify-between mt-1 text-xs ${classes.textMuted}`}>
                   <span>Age {store.currentAge}</span>
@@ -597,32 +616,25 @@ export default function VaultPage() {
                 <div className="text-sm text-emerald-500 mb-2">Velocity Banking Path</div>
                 <div className="relative h-4 bg-gray-400/30 rounded-full overflow-hidden">
                   <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"
+                    data-testid="vault-velocity-timeline"
                     style={{ width: `${velocityTimelinePercent}%` }} />
                   {freedomPath.isProjected && (
                     <div className="absolute inset-y-0 bg-gradient-to-r from-amber-500 to-amber-300 rounded-full"
                       style={{ left: `${velocityTimelinePercent}%`, right: 0 }} />
                   )}
                 </div>
-                <div className="flex justify-between mt-1 text-xs">
+                <div className="flex flex-wrap gap-2 justify-between mt-1 text-xs">
                   <span className={classes.textMuted}>Age {store.currentAge}</span>
                   <span className="text-emerald-500">{freedomPath.velocityAgeLabel}</span>
-                  {freedomPath.isProjected ? (
-                  <span className="text-amber-500">Building wealth →</span>
-                  ) : (
-                    <span className="text-amber-500">{freedomPath.timelineLabel}</span>
-                  )}
+                  <span className="text-amber-500">{freedomPath.timelineLabel}</span>
                 </div>
               </div>
             </div>
 
             <div className={`${classes.glass} rounded-xl p-8 text-center border border-emerald-500/30`}>
-              <div className={`${classes.textSecondary} mb-2`}>Potential Portfolio Value</div>
-              <div className="text-5xl font-bold text-emerald-500">
-                {freedomPath.isProjected ? (
-                  <CountUp value={freedomPath.investmentGrowth} />
-                ) : (
-                  freedomPath.portfolioValueLabel
-                )}
+              <div className={`${classes.textSecondary} mb-2`}>Freed-Payment Illustration</div>
+              <div className="text-3xl font-bold text-emerald-500">
+                {freedomPath.portfolioValueLabel}
               </div>
               <p className={`text-sm ${classes.textMuted} mt-3`}>
                 {freedomPath.investmentCaption}

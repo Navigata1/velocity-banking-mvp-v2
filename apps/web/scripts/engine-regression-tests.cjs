@@ -145,6 +145,237 @@ function roundCents(value) {
   return Math.round(value * 100) / 100;
 }
 
+const mortgageComparisonFixture = {
+  principalBalance: 1000, debtApr: 0, debtPayment: 100,
+  loc: { limit: 2000, balance: 0, apr: 0 },
+  monthlyIncome: 1000, monthlyExpenses: 500, maxMonths: 1200,
+};
+
+function mortgageComparison(overrides = {}) {
+  assert.equal(typeof sharedFinancialEngine.compareMortgageRepayment, 'function', 'mortgage comparisons need the shared funded two-liability contract');
+  return sharedFinancialEngine.compareMortgageRepayment({ ...mortgageComparisonFixture, ...overrides });
+}
+
+test('capped direct repayment preserves the scheduled loan policy and accounts for unused cash', () => {
+  const projection = sharedFinancialEngine.simulateDirectRepayment({
+    ...mortgageComparisonFixture, monthlyBudget: 500, strategy: 'debt-first', debtExtraPaymentCap: 0,
+  });
+  assert.equal(projection.payoffMonths, 10);
+  assert.equal(projection.monthlyData[0].debtPayment, 100);
+  assert.equal(projection.monthlyData.at(-1).cashBalance, 4000);
+});
+
+test('all mortgage plans reject a scheduled payment that exceeds the available household budget', () => {
+  const result = mortgageComparison({ monthlyIncome: 50, monthlyExpenses: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, false, key);
+    assert.equal(result[key].failureReason, 'cashflow-below-minimums', key);
+  }
+});
+
+test('mortgage comparison includes the existing LOC and accepts zero residual with no new chunks', () => {
+  const result = mortgageComparison({ monthlyIncome: 100, monthlyExpenses: 0,
+    loc: { limit: 5000, balance: 2000, apr: 0 } });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true, key);
+    assert.equal(result[key].months, 30, key);
+    assert.equal(result[key].totalInterest, 0, key);
+  }
+  assert.equal(result.velocity.chunkSize, 0);
+});
+
+test('mortgage extra allocations are capped after the mortgage and modeled LOC interest reserve', () => {
+  const result = mortgageComparison({ debtPayment: 400,
+    loc: { limit: 2000, balance: 500, apr: 0.365 } });
+  assert.equal(result.monthlyBudget, 500);
+  assert.equal(result.extraPayment.extraAmount, 85);
+  assert.ok(result.biweekly.extraAmount <= 85);
+});
+
+test('mortgage policies conserve the same starting liabilities and budget as debt or cash', () => {
+  const input = { ...mortgageComparisonFixture, loc: { limit: 2000, balance: 300, apr: 0 } };
+  const result = mortgageComparison(input);
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    const plan = result[key];
+    assert.equal(plan.isPayoffPossible, true, key);
+    assert.ok(Math.abs(plan.months * 500 - 1300 - plan.totalInterest - plan.cashAtPayoff) < 1e-6, key);
+  }
+  assert.equal(mortgageComparison().standard.cashAtPayoff, 4000);
+});
+
+test('mortgage Velocity retains its existing chunk policy and uses the supplied gross cash routing', () => {
+  const input = { ...mortgageComparisonFixture, debtApr: 0.12,
+    loc: { limit: 2000, balance: 400, apr: 0.2 } };
+  const expected = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 1000, debtApr: 0.12, debtPayment: 100,
+    loc: input.loc, chunkAmount: 100, cashFlowPaydown: 400,
+    locDepositAmount: 1000, locExpenseAmount: 600, maxMonths: 1200, initialMonthsSinceChunk: 999,
+  });
+  const result = mortgageComparison(input).velocity;
+  assert.equal(result.months, expected.payoffMonths);
+  assert.equal(result.totalInterest, expected.totalInterest);
+  assert.equal(result.cashAtPayoff, expected.monthlyData.at(-1).cashBalance);
+});
+
+test('mortgage comparison retains adverse signed interest differences instead of hiding them', () => {
+  const result = mortgageComparison({ monthlyIncome: 120, monthlyExpenses: 0,
+    loc: { limit: 2000, balance: 0, apr: 0.5 } });
+  assert.equal(result.velocity.isPayoffPossible, true);
+  assert.ok(result.velocity.saved < -1);
+  assert.equal(result.velocity.saved, result.standard.totalInterest - result.velocity.totalInterest);
+  assert.equal(result.velocity.monthsSaved, result.standard.months - result.velocity.months);
+});
+
+test('all mortgage plans accept a clipped final payment below the scheduled amount', () => {
+  const result = mortgageComparison({ principalBalance: 120, debtApr: 0.07, debtPayment: 425,
+    monthlyIncome: 120.7, monthlyExpenses: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true, key);
+    assert.equal(result[key].months, 1, key);
+    assert.equal(roundCents(result[key].totalInterest), 0.7, key);
+  }
+});
+
+test('an already paid mortgage and LOC need no new borrowing setup or payoff date', () => {
+  const input = { entryMode: 'current', currentBalance: 0, currentRate: 0,
+    currentMonthlyPayment: 100, remainingTermMonths: 10, originalTermYears: 30 };
+  const result = calculations.compareMortgageStrategies(input, 0, { limit: 0, balance: 0, apr: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true);
+    assert.equal(result[key].months, 0);
+  }
+  assert.equal(result.standard.payoffDate, 'Already paid off');
+});
+
+test('mortgage web adapter rejects unfunded direct plans and delegates actual household routing', () => {
+  const input = { entryMode: 'current', currentBalance: 1000, currentRate: 0,
+    currentMonthlyPayment: 100, remainingTermMonths: 10, originalTermYears: 30 };
+  const unfunded = calculations.compareMortgageStrategies(input, 50, { limit: 2000, balance: 0, apr: 0 });
+  assert.equal(unfunded.standard.isPayoffPossible, false);
+  const routed = calculations.compareMortgageStrategies(input,
+    { monthlyIncome: 1000, monthlyExpenses: 500 }, { limit: 2000, balance: 300, apr: 0 });
+  const shared = mortgageComparison({ loc: { limit: 2000, balance: 300, apr: 0 } });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(routed[key].months, shared[key].months, key);
+    assert.equal(routed[key].cashAtPayoff, shared[key].cashAtPayoff, key);
+  }
+});
+
+test('Vault labels adverse outcomes and suppresses differences without a usable reference', () => {
+  const model = loadTsModule('src/app/vault-model.ts');
+  const adverse = { saved: -42, monthsSaved: -3, isPayoffPossible: true, canCompare: true };
+  assert.equal(model.formatVaultStrategySavings(adverse), '$42 more modeled interest');
+  assert.equal(model.formatVaultStrategyTimeDelta(adverse), '3 months slower');
+  assert.equal(model.formatVaultStrategySavings({ ...adverse, canCompare: false }), 'Not projected');
+  assert.equal(model.formatVaultStrategyTimeDelta({ ...adverse, canCompare: false }), 'Reference needs review');
+  assert.equal(model.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Paid off');
+});
+
+test('Vault comparison displays household routing, both liabilities and retained cash without a universal win claim', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.match(source, /compareMortgageStrategies\(mortgageInput, \{\s*monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses/);
+  assert.ok(source.includes('data-testid="vault-strategy-comparison"'));
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.ok(source.includes(`data-testid="vault-plan-${key}"`));
+    assert.ok(source.includes(`formatVaultCashAtPayoff(strategies.${key})`));
+  }
+  assert.ok(source.includes('Same mortgage, existing LOC balance and available monthly budget'));
+  assert.ok(!source.includes('These projections are not yet like-for-like'));
+  assert.ok(source.includes('not a common-date wealth comparison'));
+});
+
+test('Vault freedom illustration retains valid slower outcomes without inventing freed-payment growth', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 24,
+    velocity: { months: 36, saved: -42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.equal(model.interestSavedLabel, '$42 more modeled interest');
+  assert.equal(model.freedYears, 0);
+  assert.equal(model.investmentGrowth, 0);
+  assert.match(model.investmentCaption, /No earlier payoff/);
+});
+
+test('Vault freed-payment illustration uses actual months rather than separately rounded payoff years', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 24,
+    velocity: { months: 18, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0,
+  });
+  assert.equal(model.freedYears, 0.5);
+  assert.equal(model.investmentGrowth, 600);
+});
+
+test('Vault illustration contributions cannot exceed the actual funded monthly budget', () => {
+  const input = { entryMode: 'current', currentBalance: 120, currentRate: 0.07,
+    currentMonthlyPayment: 425, remainingTermMonths: 10, originalTermYears: 30 };
+  const plans = calculations.compareMortgageStrategies(input, 123.7, { limit: 2000, balance: 3, apr: 0.08 });
+  assert.equal(plans.standard.months, 2);
+  assert.equal(plans.velocity.months, 1);
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: plans.standard.months, velocity: plans.velocity,
+    monthlyPayment: 425, monthlyBudget: 123.7, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.ok(Math.abs(model.investmentGrowth - 123.7 * (1 + 0.07 / 12)) < 1e-8);
+  assert.ok(!model.investmentCaption.includes('$425'));
+});
+
+test('Vault timeline scales exclude failed payoff horizons', () => {
+  const model = loadTsModule('src/app/vault-model.ts');
+  assert.equal(typeof model.buildVaultComparisonMaxMonths, 'function');
+  const maximum = model.buildVaultComparisonMaxMonths([
+    { months: 371, isPayoffPossible: true }, { months: 1200, isPayoffPossible: false },
+  ]);
+  assert.equal(maximum, 371);
+  assert.equal(model.buildVaultVisualPercent(371, maximum), 100);
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('buildVaultComparisonMaxMonths([strategies.standard, strategies.velocity])'));
+});
+
+test('Vault rejects fractional investment horizons before presenting growth', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  const input = { currentAge: 40, standardMonths: 24,
+    velocity: { months: 18.5, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0 };
+  assert.equal(helpers.buildVaultFreedomPathModel(input).isProjected, false);
+});
+
+test('Vault rejects overflowing investment illustrations instead of displaying zero', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  assert.equal(helpers.buildVaultFreedomPathModel({ currentAge: 40, standardMonths: 24,
+    velocity: { months: 1, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 1e308 }).isProjected, false);
+});
+
+test('Vault adverse sub-dollar differences remain visible in cents', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  assert.equal(helpers.formatVaultStrategySavings({ saved: -0.49, monthsSaved: 0, isPayoffPossible: true }), '$0.49 more modeled interest');
+  assert.equal(helpers.formatVaultCashAtPayoff({ cashAtPayoff: 0.49, isPayoffPossible: true }), 'Cash at payoff: $0.49');
+});
+
+test('Vault formats large illustrations within a readable monetary label', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 360,
+    velocity: { months: 108, saved: 1000, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 6000, monthlyBudget: 12000, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.equal(model.portfolioValueLabel, '$3.45M');
+});
+
+test('Vault acknowledges fully paid balances instead of requesting unusable projection inputs', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 0,
+    velocity: { months: 0, saved: 0, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 0, investmentRate: 0.07,
+  });
+  assert.equal(model.timelineLabel, 'Already paid off');
+  assert.ok(!model.freedomYearsLabel.includes('Review'));
+  assert.equal(model.investmentGrowth, 0);
+});
+
 test('restoration releases unused debt payments into LOC recovery', () => {
   const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
     principalBalance: 200, debtApr: 0, debtPayment: 425,
@@ -5245,7 +5476,7 @@ test('mortgage purchase-mode analysis uses shared schedule without advancing une
     refinanceCount: 0,
   };
   const analysis = calculations.calculateMortgageAnalysis(input);
-  const strategies = calculations.compareMortgageStrategies(input, 1500, {
+  const strategies = calculations.compareMortgageStrategies(input, 2000, {
     limit: 50000,
     apr: 0.08,
     balance: 0,
@@ -5287,7 +5518,7 @@ test('mortgage purchase-mode strategies ignore hidden stale current balance inpu
   };
 
   const analysis = calculations.calculateMortgageAnalysis(input);
-  const strategies = calculations.compareMortgageStrategies(input, 1500, {
+  const strategies = calculations.compareMortgageStrategies(input, 2000, {
     limit: 50000,
     apr: 0.08,
     balance: 0,
@@ -5441,10 +5672,10 @@ test('mortgage standard strategy uses the actual current monthly payment', () =>
   );
 });
 
-test('mortgage strategy payment plans use the shared amortized payoff helper', () => {
+test('mortgage strategy plans use the shared funded comparison and preserve scheduled amortization', () => {
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
-  const wrapperStart = calculationsSource.indexOf('function simulateMortgagePaymentPlan');
-  const wrapperEnd = calculationsSource.indexOf('export function compareMortgageStrategies', wrapperStart);
+  const wrapperStart = calculationsSource.indexOf('export function compareMortgageStrategies');
+  const wrapperEnd = calculationsSource.indexOf('export interface BiweeklyResult', wrapperStart);
   const wrapperSource = calculationsSource.slice(wrapperStart, wrapperEnd);
   const input = {
     entryMode: 'current',
@@ -5476,7 +5707,7 @@ test('mortgage strategy payment plans use the shared amortized payoff helper', (
     maxMonths: input.remainingTermMonths * 4,
   });
 
-  assert.ok(wrapperSource.includes('simulateAmortizedPayoff({'), 'expected mortgage strategy plans to delegate to the shared payoff helper');
+  assert.ok(wrapperSource.includes('compareMortgageRepayment({'), 'expected mortgage strategy plans to delegate to the shared funded comparison');
   assert.ok(!wrapperSource.includes('while ('), 'expected mortgage strategy plans not to keep a separate payoff loop');
   assert.equal(strategies.standard.months, sharedProjection.payoffMonths);
   assert.equal(roundCents(strategies.standard.totalInterest), roundCents(sharedProjection.totalInterest));
@@ -5624,9 +5855,9 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
     isPayoffPossible: true,
   };
 
-  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No modeled interest difference');
+  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'Same modeled interest');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(zeroImprovement), 'No faster payoff');
-  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), '$1,250 modeled interest difference');
+  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), '$1,250 less modeled interest');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(positiveImprovement), '7 months faster');
   assert.equal(vaultModel.formatVaultStrategySavings(invalidProjection), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(invalidProjection), 'Cash flow below payment');
@@ -5636,7 +5867,7 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: 240, isPayoffPossible: true }), '240 mo');
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.NaN, isPayoffPossible: true }), 'Review inputs');
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.POSITIVE_INFINITY, isPayoffPossible: true }), 'Review inputs');
-  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Paid off');
   assert.equal(vaultModel.formatVaultStrategyInterest(12345, true), '$12,345 interest');
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.NaN, true), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.POSITIVE_INFINITY, true), 'Not projected');
@@ -5651,7 +5882,7 @@ test('modeled payoff comparison labels do not promise savings', () => {
   assert.ok(!combined.includes('`saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
   assert.ok(!combined.includes('saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
   assert.ok(
-    combined.includes('modeled interest difference'),
+    combined.includes('modeled interest'),
     'expected payoff result labels to frame deltas as modeled interest differences'
   );
 });
@@ -5708,7 +5939,7 @@ test('vault visual percentages clamp invalid and over-range values', () => {
   assert.ok(source.includes('buildVaultVisualPercent(yr.interestPaid, total)'), 'expected Vault amortization split to clamp visual percent');
   assert.ok(source.includes('buildVaultVisualPercent(total, maxVal)'), 'expected Vault amortization height to clamp visual percent');
   assert.ok(
-    source.includes('buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)'),
+    source.includes('buildVaultVisualPercent(strategies.velocity.months, timelineMaxMonths)'),
     'expected Vault freedom timeline to clamp visual percent'
   );
   assert.ok(source.includes('formatVaultPercentLabel(analysis.interestPercentOfPayment)'), 'expected Vault interest text to use safe percent labels');
@@ -5970,7 +6201,7 @@ test('vault freedom path blocks impact claims when velocity is invalid', () => {
   assert.equal(model.interestSavedLabel, 'Not projected');
   assert.equal(model.freedomYearsLabel, 'Review inputs');
   assert.equal(model.portfolioValueLabel, 'Not projected');
-  assert.equal(model.timelineLabel, 'Velocity path needs usable inputs first');
+  assert.equal(model.timelineLabel, 'Illustration needs review');
   assert.equal(model.investmentGrowth, 0);
 });
 
@@ -5997,7 +6228,7 @@ test('vault freedom path rejects non-finite inputs before projecting impact clai
   assert.equal(model.interestSavedLabel, 'Not projected');
   assert.equal(model.freedomYearsLabel, 'Review inputs');
   assert.equal(model.portfolioValueLabel, 'Not projected');
-  assert.equal(model.timelineLabel, 'Velocity path needs usable inputs first');
+  assert.equal(model.timelineLabel, 'Illustration needs review');
   assert.equal(model.standardAgeLabel, 'Review inputs');
   assert.equal(model.velocityAgeLabel, 'Review inputs');
   assert.ok(
@@ -6644,10 +6875,11 @@ test('Vault labels the annual-extra approximation separately from dated biweekly
   assert.ok(!source.includes('Bi-Weekly Payments'));
 });
 
-test('Vault discloses its still-unfinished comparison scope before showing strategy deltas', () => {
+test('Vault discloses its two-liability allocation scope before showing strategy deltas', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
   assert.ok(source.includes('data-testid="vault-comparison-scope-warning"'));
-  assert.ok(source.includes('not yet like-for-like'));
+  assert.ok(source.includes('Same mortgage, existing LOC balance and available monthly budget'));
+  assert.ok(source.includes('outcomes cannot be attributed to Velocity alone'));
   assert.ok(source.indexOf('data-testid="vault-comparison-scope-warning"') < source.indexOf('Annual Extra (Estimate)'));
 });
 
