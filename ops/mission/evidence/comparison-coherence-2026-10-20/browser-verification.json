@@ -1,0 +1,52 @@
+{
+  "receipts": [
+    {
+      "scenario": "zero-interest-two-liabilities",
+      "width": 1440,
+      "directMonths": "2 mo",
+      "chartHeight": 192.0001220703125,
+      "firstBarHeight": 96.0001220703125,
+      "errors": []
+    },
+    {
+      "scenario": "velocity-slower-and-more-interest",
+      "width": 1440,
+      "directMonths": "3 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 97.90625,
+      "errors": []
+    },
+    {
+      "scenario": "unaffordable-minimum",
+      "width": 1440,
+      "directMonths": "Review inputs",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "zero-interest-two-liabilities",
+      "width": 375,
+      "directMonths": "2 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 96,
+      "errors": []
+    },
+    {
+      "scenario": "velocity-slower-and-more-interest",
+      "width": 375,
+      "directMonths": "3 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 97.90625,
+      "errors": []
+    },
+    {
+      "scenario": "unaffordable-minimum",
+      "width": 375,
+      "directMonths": "Review inputs",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    }
+  ]
+}

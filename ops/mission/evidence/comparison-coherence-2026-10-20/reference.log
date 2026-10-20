@@ -1,0 +1,5 @@
+
+> web@0.1.0 test:reference
+> node scripts/financial-reference-tests.cjs
+
+Independent financial reference lane passed 2 anonymized scenarios and 78 closed-form comparison cases.

@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T18:03:35Z",
-    "sessionCount": 3
+    "updated": "2026-10-20T18:35:13Z",
+    "sessionCount": 4
   },
   "policies": {
     "merge": "review",
@@ -45,7 +45,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "8e1f41d passed push CI 39469462980, PR CI 39469479740 and Vercel; all seven remote desktop/mobile preview routes passed. Native critical patch 6e900d0 also has fresh local type/contracts/web/Android/iOS export proof. Require fresh checks for its next pushed head before release."
+          "notes": "58d0df5 passed push CI 39471854169, PR CI 39471862274 and Vercel; all seven remote desktop/375px preview routes passed. The comparison correction has fresh local proof but needs new exact-head hosted checks. No production promotion."
         }
       ],
       "gates": [
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T17:48:29Z",
-          "notes": "Fresh local draft evidence: 270 financial regressions, reference fixtures, GPU cleanup, asset and accessibility contracts. Not merged-main or production proof."
+          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T18:35:13Z",
+          "notes": "Fresh local draft evidence: 275 financial regressions, two reference fixtures plus 78 closed-form cases, GPU cleanup, asset and accessibility contracts. Not merged-main or production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T17:48:29Z",
+          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T18:35:13Z",
           "notes": "Seven built routes at desktop/mobile widths passed locally; this is not release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
-          "status": "passed",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39469479740",
-          "lastRun": "2026-10-20T18:03:35Z",
-          "notes": "Verified SHA 8e1f41d: both CI runs and Vercel passed, including all ten software-rendered heroes. This receipt is SHA-specific, not blanket approval for subsequent commits or production. Native critical follow-up 6e900d0 needs a fresh pushed-head check."
+          "status": "pending",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39471862274",
+          "lastRun": "2026-10-20T18:35:13Z",
+          "notes": "Previous SHA 58d0df5 passed both CI runs and Vercel, including all ten software-rendered heroes. New comparison changes need their own pushed-head checks; the previous green receipt is not production approval."
         }
       ]
     },
@@ -152,7 +152,7 @@
       "id": "R2",
       "title": "Scenario and Calculation Coherence",
       "goal": "Dashboard, Portfolio, Vault and Expo use consistent scenarios and budget/liability contracts.",
-      "status": "pending",
+      "status": "in_progress",
       "sessionsEstimate": "evidence-driven",
       "tasks": [
         {
@@ -166,10 +166,10 @@
         {
           "id": "R2-T2",
           "title": "Complete equal-budget equal-liability strategy comparisons",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "Web/Expo Simulator now shares direct repayment with the same active debt, existing LOC and available budget. Cash at each payoff and adverse signed deltas are visible. 275 regressions, 78 closed-form cases and six actual-browser cases pass; independent review found no blocking financial defect. Mortgage/Vault-web, Portfolio, dashboard helpers, actual lender/calendar integration and Velocity final-payment/zero-surplus edges remain open."
         },
         {
           "id": "R2-T3",
@@ -185,19 +185,28 @@
           "id": "R2-G1",
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T18:35:13Z",
+          "notes": "Local branch regressions pass. This does not complete cross-route coherence or lender integration."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
-          "status": "pending",
-          "evidence": null,
-          "lastRun": null,
-          "notes": ""
+          "status": "passed",
+          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/reference.log",
+          "lastRun": "2026-10-20T18:35:13Z",
+          "notes": "Two anonymized fixtures and 78 independent closed-form comparison cases. Fixtures are not actual lender quotes."
+        },
+        {
+          "id": "R2-G3",
+          "title": "Rendered Simulator comparison edge cases",
+          "command": "npm --prefix apps/web run smoke:comparison:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/comparison-coherence-2026-10-20/browser-verification.json",
+          "lastRun": "2026-10-20T18:35:13Z",
+          "notes": "Three scenarios at 1440px and 375px: two liabilities, slower/higher-interest Velocity, unaffordable payments; visible bars, empty state, signed badges, no page overflow/errors. CI uploads actual screenshots."
         }
       ]
     },
@@ -425,8 +434,8 @@
     {
       "label": "Web financial regressions passing",
       "baseline": "263",
-      "current": "270",
-      "target": "270",
+      "current": "275",
+      "target": "275",
       "direction": "up"
     },
     {
@@ -453,12 +462,12 @@
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Scenario ownership, lender/calendar integration and equal-liability comparisons require contract-level work despite passing current regressions."
+      "note": "Simulator web/Expo fixes equal starting liabilities and available budget, but other routes, scenario ownership, actual lender/calendar integration and Velocity final-payment/zero-surplus edges remain open."
     },
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "8e1f41d passed both CI runs and Vercel after bounded capture corrections. The native critical follow-up still needs fresh all-checks-green evidence on its resulting pushed head; no earlier green run authorizes production."
+      "note": "58d0df5 passed both CI runs and Vercel. The new comparison correction needs fresh all-checks-green evidence on its resulting pushed head; no earlier green run authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -759,9 +768,11 @@
     }
   ],
   "resume": {
-    "activePhase": "R4",
+    "activePhase": "R2",
     "nextActions": [
-      "Push native critical patch 6e900d0 and the backend-readiness evidence; require all checks on the resulting exact head. Web runtime checkpoint 8e1f41d passed both CI runs and Vercel. Do not merge the draft or promote production yet.",
+      "Push the same-liability Simulator correction and require both CI runs plus Vercel on the resulting exact head. Checkpoint 58d0df5 is green. Do not merge the draft or promote production yet.",
+      "Continue R2-T2 beyond Simulator: Mortgage/Vault-web, Portfolio and dashboard helper comparisons still differ in liability/budget scope. Preserve the existing Velocity allocation policy and saved scenarios; add failing reproductions first. Read docs/simulator-comparison-contract-2026-10-20.md.",
+      "Add focused regressions for Velocity final-payment affordability and zero-surplus boundaries; implement or remove the ineffective chunk and mortgage payment-frequency controls. Keep actual lender terms and dated-calendar integration explicit and open.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
       "Refine House/Land/Vault from properly licensed or original textured sources, with provenance, small opt-in budgets and visual review. Do not overwrite refined imports by running the study generator.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
@@ -775,7 +786,7 @@
       "Supabase project binding is unconfigured and fresh isolated SQL tests are unavailable without Docker; exact owned custom-domain hostname/access remains unverified."
     ],
     "conventions": [
-      "Use codex/mission/<phase>-<task> branches and one focused PR per task.",
+      "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",
       "Write a failing regression test before every behavior fix and record red/green evidence.",
       "Keep financial calculations in packages/financial-engine and share them with web and Expo.",
       "Never hand-edit ops/mission/state-of-the-union.html; render it from state.json.",

@@ -22,6 +22,10 @@ The existing aligned demo defaults were preserved.
 - Repairs for phantom payments after payoff, extra payments exceeding the budget,
   lost calendar deposit surplus, and dashboard interest-scope inconsistency.
 - Removed the dashboard's unequal-liability savings claim.
+- Simulator web/Expo comparisons now retain the existing LOC in every plan, use
+  the same available household budget, and expose cash retained at payoff. Adverse
+  Velocity outcomes are signed and visible, not clamped to zero. Actual lender
+  terms and the other routes still need integration; see the comparison contract.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. The other nine meshes remain
@@ -31,7 +35,8 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 270 financial regressions, two independent reference scenarios and asset/accessibility/metadata checks passed.
+- 275 financial regressions, two independent reference scenarios, 78 closed-form
+  comparison cases and asset/accessibility/metadata checks passed.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
@@ -59,6 +64,26 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   39469479740), Vercel and seven remote desktop/375px route checks. Later commits
   still require their own exact-head hosted checks; a green checkpoint is not
   production approval.
+- Checkpoint 58d0df5 passed both hosted CI runs (39471854169 and 39471862274),
+  Vercel and all seven preview routes at desktop/375px. New comparison work needs
+  fresh exact-head hosted checks. Local Chrome verifies three comparison cases
+  at desktop/375px, including slower/more-interest Velocity and unaffordable inputs.
+
+## Comparison Correction
+
+The previous Simulator reference omitted the existing LOC and used a smaller
+payment budget than the accelerated strategies. The new shared direct-repayment
+projection fixes that scope without changing the existing Velocity allocation
+policy or overwriting household data. The chart also includes both balances.
+
+The default educational example now projects direct repayment in 7 months versus
+14 for the low-chunk Velocity policy, with different cash reserves. Cash is shown
+at each plan's own payoff month, not at a shared date. This is not a universal
+strategy recommendation. Constant rates, zero fees, month-end direct payments,
+30/365 LOC interest and an unverified interest-only LOC obligation are disclosed.
+Full lender/calendar enforcement remains a release gate.
+
+Detailed contract and limitations: `docs/simulator-comparison-contract-2026-10-20.md`.
 
 ## Remaining Production Gates
 
@@ -115,7 +140,7 @@ Zero advisor notices on an empty schema do not prove owner isolation. No schema,
 grants, keys, user records or DNS were changed. See the sanitized
 `ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json` inventory.
 
-Preview: http://127.0.0.1:53143
+Comparison preview: http://127.0.0.1:53144/simulator
 
 Desktop package: `C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20`
 
