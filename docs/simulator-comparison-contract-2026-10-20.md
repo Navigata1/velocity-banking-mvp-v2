@@ -67,10 +67,11 @@ were rejected and replaced, not accepted as evidence. CI uploads the resulting p
 ## Still Open
 
 Mortgage/Vault-web, Portfolio, dashboard payoff helper comparisons and shared
-scenario ownership have not yet adopted this contract. Lender-term enforcement,
-dated transactions, intra-month LOC capacity and supported zero-surplus/final-payment
-Velocity edge cases still require dedicated regressions and integration. Chunk and
-mortgage payment-frequency controls remain ineffective. This slice does not resolve
-those gates or authorize a production release.
+scenario ownership have not yet adopted this contract. Shared/single-target
+zero-residual and final-payment cases are corrected in the subsequent budget
+contract, but other routes still need the same preflight. Inactive mortgage timing
+choices are removed and saved legacy fields preserved; there is no new dated
+weekly/biweekly engine. Lender-term enforcement, normal dated transactions and
+intra-month capacity remain open. No production release is authorized.
 
 Educational tool. Not financial advice.

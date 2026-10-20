@@ -139,4 +139,27 @@ for (const strategy of ['debt-first', 'snowball', 'avalanche']) {
   directCases += 1;
 }
 
-console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios and ${directCases} closed-form comparison cases.`);
+let boundaryCases = 0;
+for (let index = 1; index <= 25; index += 1) {
+  const principal = index * 120;
+  const locBalance = index * 30;
+  const budget = 425;
+  const expectedMonths = Math.ceil((principal + locBalance) / budget);
+  const result = engine.simulateMoneyLoopPayoff({
+    principalBalance: principal, debtApr: 0, debtPayment: budget,
+    loc: { limit: 10000, balance: locBalance, apr: 0 },
+    chunkAmount: 100, cashFlowPaydown: 0,
+    locDepositAmount: budget + 200, locExpenseAmount: budget + 200,
+    initialMonthsSinceChunk: 999,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, expectedMonths);
+  assert.ok(result.monthlyData.every(row => !row.events.some(event => event.type === 'loc-chunk-draw')));
+  for (const row of result.monthlyData) {
+    assertNear(principal + locBalance - row.month * budget + row.cashBalance,
+      row.debtBalance + row.locBalance, `zero-recovery conservation ${index}/${row.month}`);
+  }
+  assertNear(result.monthlyData.at(-1).cashBalance, expectedMonths * budget - principal - locBalance, 'closed-form final reserve');
+  boundaryCases += 1;
+}
+console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios, ${directCases} closed-form comparison cases and ${boundaryCases} zero-recovery conservation cases.`);

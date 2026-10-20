@@ -129,9 +129,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['velocity banking vs traditional', 'compared to normal', 'vs minimum payments'],
     question: 'How does velocity banking compare to traditional payments?',
     answers: [
-      'Traditional payments follow the lender schedule. A modeled velocity path uses strategic chunks against principal and should be trusted only when cash flow, LOC cost, fees, and recovery timing support the result.',
+      'In this Simulator, Traditional means full-budget direct repayment of the active debt and existing LOC, not minimum payments. Velocity uses the same available budget with its chunk and recovery policy. Estimates deserve to be trusted only when cash flow, LOC cost, fees, and recovery timing support the result.',
       'The Simulator shows both side-by-side. Your modeled interest difference depends on your inputs, rates, cash flow, fees, LOC terms, and consistency.',
-      'Traditional is passive (autopay minimums). Velocity is active (strategic chunks). Active can help when the numbers line up, but it requires more effort.'
+      'Direct extra payments and LOC-based chunks are different allocation choices. Compare the same starting debts and available budget, then check interest, retained cash, fees and lender terms without assuming either method wins.'
     ]
   },
 
@@ -261,9 +261,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['chunk frequency', 'how often chunk', 'when to chunk'],
     question: 'How often should I make chunks?',
     answers: [
-      'Use the Simulator to test frequency. Monthly, bi-weekly, or balance-triggered chunks only deserve trust when LOC recovery, fees, and buffer headroom still pass.',
+      'The current Simulator does not compare weekly or biweekly chunk schedules. It estimates monthly recovery from the chunk amount and cash flow; real payment dates still need a dated calendar.',
       'A rhythm should come from modeled cash flow and real account timing, not from a calendar rule. If the LOC cannot recover safely, pause the chunk plan.',
-      'Compare smaller frequent chunks with larger less-frequent chunks in the model, then choose the version that preserves due dates, LOC headroom, and cash-flow stability.'
+      'Compare chunk amounts, not payment schedules, in the current monthly model. Actual due dates, LOC headroom, fees and recovery must be checked separately.'
     ]
   },
   {
@@ -375,9 +375,9 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['simulator', 'use simulator', 'comparison'],
     question: 'How do I use the Simulator?',
     answers: [
-      'The Simulator shows baseline (minimum payments) vs velocity (with chunks) side by side. Adjust inputs to see impact.',
+      'The Simulator compares the same active debt and LOC with the same available budget. Traditional uses full-budget direct repayment; Velocity retains its chunk and recovery policy. Neither is assumed to win.',
       'Enter your debt details, LOC info, and cash flow. Compare the timelines to see whether your modeled velocity path improves payoff time under the assumptions.',
-      'Play with chunk amounts and frequencies. See how each change affects total interest and payoff date.'
+      'Changing the chunk amount changes the monthly model, not a weekly or biweekly payment schedule. Check the modeled interest, retained cash and assumptions together.'
     ]
   },
   {
@@ -507,7 +507,7 @@ export const shieldGuardianQA: QAPair[] = [
     keywords: ['takes too long', 'impatient', 'slow progress'],
     question: 'This feels like it\'s taking forever.',
     answers: [
-      'Compare the modeled path to minimum payments. Even a modest timeline improvement may be worth reviewing if the assumptions are realistic.',
+      'Compare plans using the same starting debts and available budget. A shorter payoff may reflect more money deployed, so inspect retained cash and assumptions before attributing the difference to the strategy.',
       'Zoom out with the model, not a canned timeline. If the Simulator shows time saved, inspect the assumptions that created that result.',
       'Quick wins: check whether principal is falling, interest burn is shrinking, and your buffer is intact. Those signals matter more than a dramatic headline.'
     ]

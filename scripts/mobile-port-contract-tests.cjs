@@ -1849,6 +1849,29 @@ test('shared mobile learn snapshot teaches from current Money Loop inputs', () =
   assert.ok(unsafeLearn.lessons.find((lesson) => lesson.title === 'Cash Flow').detail.includes('learning mode'));
 });
 
+test('native final-payment and zero-surplus snapshots match the web Money Loop without false guardrails', () => {
+  const shared = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const web = loadTsFile(path.join(repoRoot, 'apps/web/src/engine/calculations.ts'));
+  for (const fixture of [
+    { balance: 100, apr: 0.12, expenses: 800, locBalance: 0, months: 1 },
+    { balance: 1000, apr: 0, expenses: 575, locBalance: 500, months: 4 },
+  ]) {
+    const input = {
+      monthlyIncome: 1000, monthlyExpenses: fixture.expenses, chunkAmount: 100, activeDebtName: 'Loan',
+      activeDebt: { balance: fixture.balance, apr: fixture.apr, monthlyPayment: 425 },
+      loc: { limit: 2000, balance: fixture.locBalance, apr: 0 },
+    };
+    const snapshot = shared.buildMobileSimulatorSnapshot(input);
+    const projection = web.simulateVelocity({ ...input, carLoan: input.activeDebt, extraPayment: input.chunkAmount });
+    assert.equal(snapshot.guardrail, null);
+    assert.equal(snapshot.velocity.months, fixture.months);
+    assert.equal(snapshot.velocity.months, projection.payoffMonths);
+    assert.equal(snapshot.velocity.totalInterest.toFixed(2), projection.totalInterest.toFixed(2));
+    assert.equal(shared.buildMobileVaultSnapshot(input).guardrail, null, 'pause-new-chunks guidance is not an invalid-payoff guardrail');
+    assert.equal(shared.buildMobileDashboardSnapshot(input).nextMove, 'Pause new chunks');
+  }
+});
+
 if (process.exitCode) {
   console.error('Mobile port contract failed.');
   process.exit(process.exitCode);

@@ -45,6 +45,7 @@ const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
 const LOC_OVER_LIMIT_BODY = 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.';
 
 function formatFailure(reason?: PayoffFailureReason): string {
+  if (reason === 'invalid-routing') return 'Review routed cash flows';
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';

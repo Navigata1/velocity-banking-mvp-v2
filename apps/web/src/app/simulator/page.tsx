@@ -308,25 +308,8 @@ export default function SimulatorPage() {
                       </div>
                     </>
                   )}
-                  <div className="pt-2 border-t border-gray-400/30">
-                    <label className={`text-sm ${classes.textSecondary} mb-2 block`}>Payment Frequency</label>
-                    <div className="flex gap-2" role="group" aria-label="Mortgage payment frequency">
-                      {(['monthly', 'biweekly', 'weekly'] as const).map((freq) => (
-                        <button
-                          key={freq}
-                          type="button"
-                          aria-pressed={store.mortgageDetails.paymentFrequency === freq}
-                          onClick={() => store.updateMortgageDetails({ paymentFrequency: freq })}
-                          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors ${
-                            store.mortgageDetails.paymentFrequency === freq
-                              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                              : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
-                          }`}
-                        >
-                          {freq === 'monthly' ? 'Monthly' : freq === 'biweekly' ? 'Bi-Weekly' : 'Weekly'}
-                        </button>
-                      ))}
-                    </div>
+                  <div data-testid="mortgage-timing-assumption" className={`pt-2 border-t border-gray-400/30 text-xs leading-5 ${classes.textSecondary}`}>
+                    Monthly estimate. Weekly and biweekly payment dates are not modeled.
                   </div>
                   {/* Extra payments & refinance toggles */}
                   <div className="pt-2 border-t border-gray-400/30 space-y-3">
@@ -347,7 +330,7 @@ export default function SimulatorPage() {
                     </div>
                     {store.mortgageDetails.hasExtraPayments && (
                       <div className="flex justify-between items-center">
-                        <label className={`text-sm ${classes.textSecondary}`}>Extra/payment</label>
+                        <label className={`text-sm ${classes.textSecondary}`}>Extra/month</label>
                         <EditableCurrency value={store.mortgageDetails.extraPaymentAmount} onChange={(v) => store.updateMortgageDetails({ extraPaymentAmount: v })} size="lg" ariaLabel="Mortgage extra payment amount" />
                       </div>
                     )}

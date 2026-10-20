@@ -4,6 +4,7 @@ import {
   calculateCashFlow,
   calculateDailyInterest,
   calculateDailyRate,
+  calculateRequiredDebtPayment,
   calculateTotalAmortizationInterest,
   formatCurrency,
   simulateAmortizedPayoff,
@@ -110,6 +111,7 @@ export type PayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
+  | 'invalid-routing'
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
@@ -427,7 +429,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (cashFlow < safeInputs.carLoan.monthlyPayment) {
+  if (cashFlow + 1e-8 < calculateRequiredDebtPayment(safeInputs.carLoan.balance, safeInputs.carLoan.apr, safeInputs.carLoan.monthlyPayment)) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -437,7 +439,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  const locCashFlowPaydown = Math.max(0, cashFlow - safeInputs.carLoan.monthlyPayment);
+  const locCashFlowPaydown = cashFlow - safeInputs.carLoan.monthlyPayment;
   const chunkAmount = Math.max(
     0,
     safeInputs.extraPayment > 0 ? safeInputs.extraPayment : Math.min(locCashFlowPaydown * 3, safeInputs.loc.limit * 0.4)
@@ -465,7 +467,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
       locBalance: month.locBalance,
       carInterest: month.debtInterest,
       locInterest: month.locInterest,
-      cashFlow: locCashFlowPaydown,
+      cashFlow: month.cashFlowPaydown,
       events: month.events,
       cashBalance: month.cashBalance,
     })),
@@ -477,8 +479,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
 function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
-  const requiredPayment = Math.min(safeInputs.carLoan.monthlyPayment,
-    safeInputs.carLoan.balance * (1 + calculateMonthlyRate(safeInputs.carLoan.apr)));
+  const requiredPayment = calculateRequiredDebtPayment(safeInputs.carLoan.balance, safeInputs.carLoan.apr, safeInputs.carLoan.monthlyPayment);
   if (safeInputs.carLoan.balance > 0 && cashFlow < requiredPayment) {
     return { payoffMonths: 0, totalInterest: 0, monthlyData: [],
       isPayoffPossible: false, failureReason: 'cashflow-below-minimums' };

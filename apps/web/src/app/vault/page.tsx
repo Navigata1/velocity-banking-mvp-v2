@@ -208,21 +208,8 @@ export default function VaultPage() {
             {/* Payment behavior */}
             <div className={`${classes.glass} rounded-xl p-5 space-y-4`}>
               <h3 className={`text-sm font-semibold ${classes.textSecondary} uppercase tracking-wide`}>💰 Payment Behavior</h3>
-              <div>
-                <label className={`text-sm ${classes.textSecondary} mb-2 block`}>Payment Frequency</label>
-                <div className="flex gap-2" role="group" aria-label="Vault mortgage payment frequency">
-                  {(['monthly', 'biweekly', 'weekly'] as const).map((freq) => (
-                    <button key={freq} onClick={() => updateMD({ paymentFrequency: freq })}
-                      aria-pressed={md.paymentFrequency === freq}
-                      className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-                        md.paymentFrequency === freq
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                          : `${classes.glass} ${classes.textSecondary} border border-gray-400/20`
-                      }`}>
-                      {freq === 'monthly' ? 'Monthly' : freq === 'biweekly' ? 'Bi-Weekly' : 'Weekly'}
-                    </button>
-                  ))}
-                </div>
+              <div data-testid="vault-mortgage-timing-assumption" className={`text-xs leading-5 ${classes.textSecondary}`}>
+                Monthly estimate. Weekly and biweekly payment dates are not modeled.
               </div>
               <div className="flex justify-between items-center">
                 <label className={`text-sm ${classes.textSecondary}`}>Making extra payments?</label>
@@ -238,7 +225,7 @@ export default function VaultPage() {
               </div>
               {md.hasExtraPayments && (
                 <div className="flex justify-between items-center">
-                  <label className={`text-sm ${classes.textSecondary}`}>Extra per payment</label>
+                  <label className={`text-sm ${classes.textSecondary}`}>Extra per month</label>
                   <EditableCurrency value={md.extraPaymentAmount} onChange={(v) => updateMD({ extraPaymentAmount: v })} ariaLabel="Vault extra payment amount" size="lg" />
                 </div>
               )}
@@ -409,6 +396,12 @@ export default function VaultPage() {
         return (
           <div className="space-y-6">
             <p className={`text-sm ${classes.textSecondary} text-center`}>4 strategies for YOUR remaining mortgage</p>
+            <p data-testid="vault-comparison-scope-warning" role="note" className="border-l-2 border-amber-500 pl-3 text-xs leading-5 text-amber-300">
+              These projections are not yet like-for-like: payment allocations and LOC coverage differ. Interest differences cannot be attributed to Velocity alone. Review this as an educational estimate, not a strategy recommendation.
+            </p>
+            <p data-testid="mortgage-annual-extra-assumption" className={`text-xs leading-5 ${classes.textMuted}`}>
+              Annual extra is a monthly approximation of one extra payment per year, capped by available cash flow. Actual biweekly payment dates are not modeled.
+            </p>
 
             <div className="grid grid-cols-2 gap-3">
               {/* Standard */}
@@ -427,7 +420,7 @@ export default function VaultPage() {
 
               {/* Bi-weekly */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
-                <p className="text-xs text-blue-400 font-semibold mb-2">Bi-Weekly Payments</p>
+                <p className="text-xs text-blue-400 font-semibold mb-2">Annual Extra (Estimate)</p>
                 <p className="text-2xl font-bold text-blue-400">
                   {formatMortgageMonths(strategies.biweekly)}
                 </p>
@@ -469,7 +462,7 @@ export default function VaultPage() {
               <p className={`text-xs ${classes.textSecondary} mb-2`}>Time to Payoff</p>
               {[
                 { label: 'Standard', months: strategies.standard.months, color: 'bg-red-500', isPayoffPossible: strategies.standard.isPayoffPossible },
-                { label: 'Bi-Weekly', months: strategies.biweekly.months, color: 'bg-blue-500', isPayoffPossible: strategies.biweekly.isPayoffPossible },
+                { label: 'Annual Extra', months: strategies.biweekly.months, color: 'bg-blue-500', isPayoffPossible: strategies.biweekly.isPayoffPossible },
                 { label: 'Extra $', months: strategies.extraPayment.months, color: 'bg-amber-500', isPayoffPossible: strategies.extraPayment.isPayoffPossible },
                 { label: 'Velocity', months: strategies.velocity.months, color: 'bg-emerald-500', isPayoffPossible: strategies.velocity.isPayoffPossible },
               ].map(s => {

@@ -158,6 +158,147 @@ test('restoration releases unused debt payments into LOC recovery', () => {
   assert.equal(result.monthlyData[1].events.find(e => e.type === 'expenses-from-loc').amount, 5000);
 });
 
+test('LOC-backed Velocity accepts an affordable clipped final payment and preserves cash', () => {
+  const result = calculations.simulateVelocity({
+    monthlyIncome: 1000, monthlyExpenses: 800,
+    carLoan: { balance: 100, apr: 0.12, monthlyPayment: 425 },
+    loc: { limit: 1000, balance: 0, apr: 0.10 }, extraPayment: 1000,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 1);
+  assert.equal(roundCents(result.totalInterest), 1);
+  assert.equal(roundCents(result.monthlyData[0].cashBalance), 99);
+  assert.equal(roundCents(result.monthlyData[0].cashFlow), 99);
+});
+
+test('zero cash after the scheduled payment can recover the LOC after that payment is released', () => {
+  const result = calculations.simulateVelocity({
+    monthlyIncome: 1000, monthlyExpenses: 575,
+    carLoan: { balance: 1000, apr: 0, monthlyPayment: 425 },
+    loc: { limit: 2000, balance: 500, apr: 0 }, extraPayment: 100,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 4);
+  assert.ok(result.monthlyData.every(row => !row.events.some(event => event.type === 'loc-chunk-draw')), 'no new chunk without recoverable surplus');
+  assert.equal(result.monthlyData.at(-1).locBalance, 0);
+  assert.equal(result.monthlyData.at(-1).cashBalance, 200);
+});
+
+test('Money Loop cannot bypass zero recovery with a stale chunk-age sentinel', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 0, locDepositAmount: 1000,
+    locExpenseAmount: 1000, monthsSinceChunk: 999,
+  });
+  assert.equal(row.didChunk, false);
+  assert.equal(row.debtBalance, 900);
+  assert.equal(row.locBalance, 500);
+});
+
+test('Money Loop caps chunk recovery to routed surplus instead of trusting a larger hint', () => {
+  const base = {
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 500, locDepositAmount: 1000,
+    locExpenseAmount: 1000, monthsSinceChunk: 999,
+  };
+  const zero = sharedFinancialEngine.simulateMoneyLoopMonth(base);
+  assert.equal(zero.didChunk, false, 'a hint cannot create recovery cash');
+  assert.equal(zero.cashFlowPaydown, 0);
+  const positive = sharedFinancialEngine.simulateMoneyLoopMonth({ ...base, locExpenseAmount: 950, monthsSinceChunk: 0 });
+  assert.equal(positive.didChunk, false, '100 chunk requires two months of actual 50 surplus');
+  assert.equal(positive.cashFlowPaydown, 50);
+});
+
+test('Money Loop labels a routed shortfall without pretending retained cash is a new LOC paydown', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 0, debtApr: 0, debtPayment: 0,
+    loc: { limit: 2000, balance: 0, apr: 0 }, locBalance: 0,
+    chunkAmount: 0, cashFlowPaydown: 500, locDepositAmount: 0,
+    locExpenseAmount: 50, monthsSinceChunk: 999, cashBalance: 100,
+  });
+  assert.equal(row.cashFlowPaydown, -50);
+  assert.equal(row.cashBalance, 50);
+  assert.equal(row.locBalance, 0);
+  assert.equal(row.events.at(-1).label, 'Routed spending exceeds deposits');
+});
+
+test('Money Loop uses valid calendar totals rather than optimistic summaries for chunk recovery', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 500,
+    locDepositAmount: 1000, locExpenseAmount: 950, monthsSinceChunk: 999,
+    locAccrualCalendar: { year: 2026, month: 10, transactions: [
+      { day: 1, type: 'deposit', amount: 1000 }, { day: 30, type: 'expense', amount: 1000 },
+    ] },
+  });
+  assert.equal(row.didChunk, false);
+  assert.equal(row.cashFlowPaydown, 0);
+  assert.equal(row.locBalance, 500);
+  assert.equal(row.locInterestMethod, 'transaction-calendar');
+});
+
+test('Money Loop payoff rejects routing that omits the scheduled loan outflow', () => {
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 100, debtApr: 0.12, debtPayment: 425,
+    loc: { limit: 1000, balance: 0, apr: 0.1 }, chunkAmount: 0,
+    cashFlowPaydown: 0, locDepositAmount: 0, locExpenseAmount: 0,
+  });
+  assert.equal(result.isPayoffPossible, false, 'zero income cannot fund a phantom final payment');
+  assert.equal(result.failureReason, 'invalid-routing');
+});
+
+test('exactly affordable final payments tolerate floating-point reconstruction only', () => {
+  const base = {
+    principalBalance: 120, debtApr: 0.07, debtPayment: 425,
+    loc: { limit: 2000, balance: 0, apr: 0 }, chunkAmount: 0,
+    cashFlowPaydown: 120.7 - 425, locDepositAmount: 120.7, locExpenseAmount: 425,
+  };
+  const shared = sharedFinancialEngine.simulateMoneyLoopPayoff(base);
+  assert.equal(shared.isPayoffPossible, true);
+  assert.equal(shared.payoffMonths, 1);
+  assert.equal(roundCents(shared.totalInterest), 0.7);
+  const web = calculations.simulateVelocity({
+    monthlyIncome: 120.7, monthlyExpenses: 0,
+    carLoan: { balance: 120, apr: 0.07, monthlyPayment: 425 }, loc: base.loc, extraPayment: 100,
+  });
+  assert.equal(web.isPayoffPossible, true);
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, locDepositAmount: 120.69 }).isPayoffPossible, false, 'one cent short is still unaffordable');
+});
+
+test('shared payoff preflight uses routed household budget and refuses an unaffordable payment', () => {
+  const base = {
+    principalBalance: 100, debtApr: 0.12, debtPayment: 425,
+    loc: { limit: 1000, balance: 0, apr: 0.10 }, chunkAmount: 0,
+    cashFlowPaydown: -225, locDepositAmount: 1000, locExpenseAmount: 1225,
+  };
+  const affordable = sharedFinancialEngine.simulateMoneyLoopPayoff(base);
+  assert.equal(affordable.isPayoffPossible, true);
+  assert.equal(affordable.payoffMonths, 1);
+  assert.equal(affordable.monthlyData[0].cashFlowPaydown, 99);
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, principalBalance: 1000 }).failureReason, 'cashflow-below-minimums');
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, locDepositAmount: 800 }).failureReason, 'negative-cashflow');
+});
+
+test('web and mobile coaching do not propose a chunk when scheduled payments consume recovery cash', () => {
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: 1000, monthlyExpenses: 575, chunkAmount: 100,
+    activeDebt: { name: 'Loan', balance: 1000, interestRate: 0, minimumPayment: 425 }, allDebts: [],
+    loc: { limit: 2000, balance: 500, interestRate: 0 },
+    baseline: { months: 4, totalInterest: 0, isPayoffPossible: true },
+    velocity: { months: 4, totalInterest: 0, savings: 0, isPayoffPossible: true },
+  });
+  assert.equal(model.nextMove.title, 'Pause new chunks');
+  const mobile = sharedFinancialEngine.buildMobileDashboardSnapshot({
+    monthlyIncome: 1000, monthlyExpenses: 575, chunkAmount: 100, activeDebtName: 'Loan',
+    activeDebt: { balance: 1000, apr: 0, monthlyPayment: 425 },
+    loc: { limit: 2000, balance: 500, apr: 0 },
+  });
+  assert.equal(mobile.nextMove, 'Pause new chunks');
+});
+
 test('restoration reserves the minimum before allowing extra payments', () => {
   const result = calculations.simulateVelocity({
     carLoan: { balance: 10000, apr: 0, monthlyPayment: 425, termMonths: 60 },
@@ -1153,8 +1294,8 @@ test('shared Money Loop payoff distinguishes horizon misses from under-interest 
   assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited Money Loop projection to keep its event ledger');
 });
 
-test('shared Money Loop payoff sanitizes non-finite inputs before building an event ledger', () => {
-  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+test('shared Money Loop sanitizes debt inputs without inventing cash from non-finite routing', () => {
+  const input = {
     principalBalance: 1000,
     debtApr: Number.NaN,
     debtPayment: 250,
@@ -1169,7 +1310,13 @@ test('shared Money Loop payoff sanitizes non-finite inputs before building an ev
     locExpenseAmount: Number.NaN,
     maxMonths: Number.NaN,
     initialMonthsSinceChunk: Number.NaN,
-  });
+  };
+
+  const rejected = sharedFinancialEngine.simulateMoneyLoopPayoff(input);
+  assert.equal(rejected.isPayoffPossible, false, 'a NaN income cannot fund debt payments');
+  assert.equal(rejected.failureReason, 'invalid-routing');
+  assert.equal(rejected.monthlyData.length, 0);
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({ ...input, locDepositAmount: 600, locExpenseAmount: 250 });
 
   assert.equal(result.isPayoffPossible, true);
   assert.equal(result.payoffMonths, 4);
@@ -1348,9 +1495,10 @@ test('multi-debt velocity exposes the shared Money Loop event ledger', () => {
   assert.ok(firstMonth, 'expected multi-debt velocity to expose Money Loop monthly data');
   assert.equal(
     firstMonth.events.map((event) => event.type).join('|'),
-    'debt-interest|loc-chunk-draw|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
+    'debt-interest|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
   );
-  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw').amount, 1000);
+  assert.equal(firstMonth.cashFlowPaydown, 0, 'the current planner allocates its full budget to debt payments');
+  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw'), undefined, 'a stale chunk age cannot authorize borrowing without recovery');
   assert.equal(
     roundCents(firstMonth.events.find((event) => event.type === 'loc-interest').amount),
     roundCents(firstMonth.locInterest)
@@ -1380,8 +1528,8 @@ test('multi-debt velocity treats the focus payment as a cash outflow for LOC rec
   const firstMonth = velocity.moneyLoopMonthlyData[0];
   const chunkDraw = firstMonth.events.find((event) => event.type === 'loc-chunk-draw');
 
-  assert.ok(chunkDraw, 'expected a tiny LOC chunk so the LOC recovery math is visible');
-  assert.equal(roundCents(firstMonth.locBalance), 1001);
+  assert.equal(chunkDraw, undefined, 'no chunk without cash reserved for LOC recovery');
+  assert.equal(roundCents(firstMonth.locBalance), 1000);
   assert.equal(roundCents(firstMonth.cashFlowPaydown), 0);
 });
 
@@ -3263,8 +3411,8 @@ test('simulator mortgage option controls expose selected state', () => {
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.entryMode === mode}'), 'expected entry mode selected state');
   assert.ok(source.includes('role="group" aria-label="Mortgage original term"'), 'expected term controls to be grouped');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.originalTermYears === t}'), 'expected term selected state');
-  assert.ok(source.includes('role="group" aria-label="Mortgage payment frequency"'), 'expected payment frequency controls to be grouped');
-  assert.ok(source.includes('aria-pressed={store.mortgageDetails.paymentFrequency === freq}'), 'expected payment frequency selected state');
+  assert.ok(!source.includes('aria-label="Mortgage payment frequency"'), 'unused timing choices must not imply a modeled result');
+  assert.ok(source.includes('data-testid="mortgage-timing-assumption"'), 'monthly estimate is explicit');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasExtraPayments}'), 'expected extra-payment toggle state');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasRefinanced}'), 'expected refinance toggle state');
 });
@@ -3340,8 +3488,8 @@ test('vault mortgage option controls expose selected state', () => {
   assert.ok(source.includes('aria-pressed={md.entryMode === mode}'), 'expected Vault entry mode selected state');
   assert.ok(source.includes('role="group" aria-label="Vault mortgage original term"'), 'expected Vault term controls to be grouped');
   assert.ok(source.includes('aria-pressed={md.originalTermYears === t}'), 'expected Vault term selected state');
-  assert.ok(source.includes('role="group" aria-label="Vault mortgage payment frequency"'), 'expected Vault payment frequency controls to be grouped');
-  assert.ok(source.includes('aria-pressed={md.paymentFrequency === freq}'), 'expected Vault payment frequency selected state');
+  assert.ok(!source.includes('aria-label="Vault mortgage payment frequency"'), 'Vault cannot offer unused timing choices');
+  assert.ok(source.includes('data-testid="vault-mortgage-timing-assumption"'), 'Vault discloses the monthly estimate');
   assert.ok(source.includes('aria-pressed={md.hasExtraPayments}'), 'expected Vault extra-payment toggle state');
   assert.ok(source.includes('aria-pressed={md.hasRefinanced}'), 'expected Vault refinance toggle state');
 });
@@ -3704,9 +3852,10 @@ test('portfolio velocity uses shared Money Loop LOC math when LOC inputs are pre
   assert.ok(firstMonth, 'expected portfolio velocity to expose Money Loop monthly data');
   assert.equal(
     firstMonth.events.map((event) => event.type).join('|'),
-    'debt-interest|loc-chunk-draw|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
+    'debt-interest|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
   );
-  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw').amount, 1000);
+  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw'), undefined);
+  assert.equal(firstMonth.cashFlowPaydown, 0, 'full-budget debt allocation cannot also fund LOC recovery');
   assert.ok(result.locInterestPaid > 0, `expected LOC interest, got ${result.locInterestPaid}`);
   assert.equal(roundCents(firstMonth.locInterest), roundCents(result.locInterestPaid));
   assert.equal(roundCents(result.totalInterest), roundCents(debtInterestOnly + result.locInterestPaid));
@@ -3981,8 +4130,8 @@ test('portfolio velocity treats target debt payments as cash outflows for LOC re
   const firstMonth = result.moneyLoopMonthlyData[0];
   const chunkDraw = firstMonth.events.find((event) => event.type === 'loc-chunk-draw');
 
-  assert.ok(chunkDraw, 'expected a tiny LOC chunk so the LOC recovery math is visible');
-  assert.equal(roundCents(firstMonth.locBalance), 1001);
+  assert.equal(chunkDraw, undefined, 'the full payment allocation leaves no chunk recovery budget');
+  assert.equal(roundCents(firstMonth.locBalance), 1000);
   assert.equal(roundCents(firstMonth.cashFlowPaydown), 0);
 });
 
@@ -6448,13 +6597,51 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
     'expected Guardian ADB copy to include terms and fees before recommending timing changes'
   );
   assert.ok(
-    answerBank.includes('use the simulator to test frequency'),
-    'expected Guardian chunk-frequency copy to route timing choices through model testing'
+    answerBank.includes('does not compare weekly or biweekly chunk schedules'),
+    'Guardian must state the current monthly-model limit'
   );
   assert.ok(
     answerBank.includes('optimization is secondary to safety'),
     'expected Guardian chunk strategy copy to prioritize safety over optimization'
   );
+});
+
+test('Guardian Simulator and frequency guidance matches the actual comparison contract', () => {
+  const timing = guardian.shieldGuardianQA.find((entry) => entry.keywords.includes('chunk frequency'));
+  const simulator = guardian.shieldGuardianQA.find((entry) => entry.keywords.includes('use simulator'));
+  const answers = [...timing.answers, ...simulator.answers].join(' ').toLowerCase();
+  assert.ok(!answers.includes('test frequency'));
+  assert.ok(!answers.includes('chunk amounts and frequencies'));
+  assert.ok(!answers.includes('baseline (minimum payments)'));
+  assert.ok(answers.includes('same active debt and loc'));
+  assert.ok(answers.includes('available budget'));
+  const allAnswers = guardian.shieldGuardianQA.flatMap((entry) => entry.answers).join(' ').toLowerCase();
+  assert.ok(!allAnswers.includes('traditional is passive'));
+  assert.ok(!allAnswers.includes('compare the modeled path to minimum payments'));
+});
+
+test('legacy saved timing fields survive removal of inactive controls', () => {
+  const state = financialStore.useFinancialStore.getState();
+  const sanitized = financialStore.sanitizePersistedFinancialState({
+    chunkFrequency: 'weekly',
+    mortgageDetails: { ...state.mortgageDetails, paymentFrequency: 'biweekly' },
+  }, state);
+  assert.equal(sanitized.chunkFrequency, 'weekly');
+  assert.equal(sanitized.mortgageDetails.paymentFrequency, 'biweekly');
+});
+
+test('Vault labels the annual-extra approximation separately from dated biweekly payments', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('data-testid="mortgage-annual-extra-assumption"'));
+  assert.ok(source.includes('Annual Extra (Estimate)'));
+  assert.ok(!source.includes('Bi-Weekly Payments'));
+});
+
+test('Vault discloses its still-unfinished comparison scope before showing strategy deltas', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('data-testid="vault-comparison-scope-warning"'));
+  assert.ok(source.includes('not yet like-for-like'));
+  assert.ok(source.indexOf('data-testid="vault-comparison-scope-warning"') < source.indexOf('Annual Extra (Estimate)'));
 });
 
 test('Guardian getting-started prompt routes to planning-first guidance', () => {

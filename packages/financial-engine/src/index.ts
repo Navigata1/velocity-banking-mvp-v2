@@ -81,6 +81,8 @@ export interface MoneyLoopLOC {
 export type MoneyLoopFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
+  | 'cashflow-below-minimums'
+  | 'invalid-routing'
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
@@ -121,6 +123,7 @@ export interface MoneyLoopPayoffInputs {
   debtPayment: number;
   loc: MoneyLoopLOC;
   chunkAmount: number;
+  /** Ceiling for chunk recovery cadence; it cannot create routed cash flow. */
   cashFlowPaydown: number;
   locDepositAmount: number;
   /** Household spending plus the scheduled debt payment; unused payment is released. */
@@ -137,6 +140,7 @@ export interface MoneyLoopMonthInputs {
   loc: MoneyLoopLOC;
   locBalance: number;
   chunkAmount: number;
+  /** Ceiling for chunk recovery cadence; actual ledger flow comes from transactions. */
   cashFlowPaydown: number;
   locDepositAmount: number;
   /** Includes debtPayment. Dated calendars must already contain actual transactions. */
@@ -262,6 +266,7 @@ export type MobilePayoffFailureReason =
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
+  | 'invalid-routing'
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
@@ -572,6 +577,11 @@ export function calculateDailyRate(apr: number): number {
   return finiteNonNegative(normalizeApr(apr)) / 365;
 }
 
+export function calculateRequiredDebtPayment(balance: number, apr: number, scheduledPayment: number): number {
+  return Math.min(finiteNonNegative(scheduledPayment),
+    finiteNonNegative(balance) * (1 + calculateMonthlyRate(apr)));
+}
+
 export function calculateDailyInterest(balance: number, apr: number): number {
   return finiteNonNegative(balance) * calculateDailyRate(apr);
 }
@@ -836,17 +846,23 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   };
   const debtApr = finiteNonNegative(inputs.debtApr);
   const debtPaymentInput = finiteNonNegative(inputs.debtPayment);
-  const cashFlowPaydown = finiteNonNegative(inputs.cashFlowPaydown);
+  const cashFlowPaydown = finiteNumber(inputs.cashFlowPaydown);
   const locDepositAmount = finiteNonNegative(inputs.locDepositAmount);
   const locExpenseAmount = finiteNonNegative(inputs.locExpenseAmount);
+  // Reuse the accrual validator so valid dated cash flows override summaries here too.
+  const routing = inputs.locAccrualCalendar
+    ? calculateLOCInterestAccrual({ startBalance: 0, apr: 0, monthlyIncome: locDepositAmount,
+      monthlyExpenses: locExpenseAmount, calendar: inputs.locAccrualCalendar })
+    : { totalDeposits: locDepositAmount, totalExpenses: locExpenseAmount };
+  const recoverySurplus = Math.max(0, Math.min(cashFlowPaydown, routing.totalDeposits - routing.totalExpenses));
   let debtBalance = finiteNonNegative(inputs.debtBalance);
   let locBalance = finiteNonNegative(inputs.locBalance);
   let monthsSinceChunk = finitePositiveInteger(inputs.monthsSinceChunk, 0) + 1;
   let didChunk = false;
   const locAvailable = Math.max(0, loc.limit - locBalance);
   const effectiveChunkAmount = Math.min(chunkAmount, debtBalance, locAvailable);
-  const chunkRecoveryMonths = effectiveChunkAmount > 0 && cashFlowPaydown > 0
-    ? Math.ceil(effectiveChunkAmount / cashFlowPaydown)
+  const chunkRecoveryMonths = effectiveChunkAmount > 0 && recoverySurplus > 0
+    ? Math.ceil(effectiveChunkAmount / recoverySurplus)
     : 999;
 
   const debtInterest = debtBalance * calculateMonthlyRate(debtApr);
@@ -860,6 +876,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   });
 
   const canChunk =
+    recoverySurplus > 0 &&
     effectiveChunkAmount > 0 &&
     monthsSinceChunk >= chunkRecoveryMonths &&
     debtBalance > effectiveChunkAmount * 0.1;
@@ -932,8 +949,9 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   locBalance = routedLocBalance + locInterest;
   events.push({
     type: 'loc-cashflow-paydown',
-    label: 'Cash flow pays down LOC',
-    amount: cashFlowPaydown + releasedPayment,
+    label: locAccrual.totalDeposits >= locAccrual.totalExpenses
+      ? 'Cash flow pays down LOC' : 'Routed spending exceeds deposits',
+    amount: locAccrual.totalDeposits - locAccrual.totalExpenses,
     balanceAfter: locBalance,
     note: 'The routed income and expenses above already reflect this net cash-flow paydown.',
   });
@@ -945,7 +963,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     debtInterest,
     locInterest,
     locInterestMethod: locAccrual.method,
-    cashFlowPaydown: cashFlowPaydown + releasedPayment,
+    cashFlowPaydown: locAccrual.totalDeposits - locAccrual.totalExpenses,
     cashBalance: locAccrual.endingCashBalance,
     events,
     debtPayment,
@@ -971,7 +989,16 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
   const locExpenseAmount = finiteNonNegative(inputs.locExpenseAmount);
   const monthlyData: MoneyLoopMonthlyResult[] = [];
 
-  if (cashFlowPaydown <= 0) {
+  if (locExpenseAmount < debtPayment) {
+    return {
+      payoffMonths: 0, totalInterest: 0, debtInterestPaid: 0, locInterestPaid: 0,
+      monthlyData, isPayoffPossible: false, failureReason: 'invalid-routing',
+    };
+  }
+
+  // locExpenseAmount includes the scheduled debt payment, which may be released.
+  const householdBudget = locDepositAmount - locExpenseAmount + debtPayment;
+  if (householdBudget <= 0) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -980,6 +1007,13 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
       monthlyData,
       isPayoffPossible: false,
       failureReason: 'negative-cashflow',
+    };
+  }
+
+  if (householdBudget + 1e-8 < calculateRequiredDebtPayment(principalBalance, debtApr, debtPayment)) {
+    return {
+      payoffMonths: 0, totalInterest: 0, debtInterestPaid: 0, locInterestPaid: 0,
+      monthlyData, isPayoffPossible: false, failureReason: 'cashflow-below-minimums',
     };
   }
 
@@ -1119,6 +1153,8 @@ export function buildMobileDashboardSnapshot(
   } else if (!locNeedsSetup && locUtilization > 0.8) {
     nextMove = 'Pay down the LOC';
     warning = LOC_HIGH_UTILIZATION_WARNING;
+  } else if (!locNeedsSetup && cashFlow <= model.activeDebt.monthlyPayment) {
+    nextMove = 'Pause new chunks';
   } else if (!locNeedsSetup && safeChunk > 0) {
     nextMove = `Send ${formatCurrency(safeChunk)} to principal`;
   }
@@ -1155,8 +1191,10 @@ export function buildMobileDashboardSnapshot(
       {
         label: 'Next Move',
         value: nextMove,
-        detail: 'Educational estimate, not a money movement instruction.',
-        tone: warning ? 'watch' : 'good',
+        detail: nextMove === 'Pause new chunks'
+          ? 'Educational estimate: the scheduled-payment policy pauses new chunks. Unused final payments can still recover the LOC.'
+          : 'Educational estimate, not a money movement instruction.',
+        tone: warning || nextMove === 'Pause new chunks' ? 'watch' : 'good',
       },
     ],
     loop: [
@@ -1249,6 +1287,7 @@ export function buildMobilePortfolioSnapshot(
 }
 
 function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
+  if (reason === 'invalid-routing') return 'Review routed cash flows';
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
@@ -1448,7 +1487,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  if (cashFlow < model.activeDebt.monthlyPayment) {
+  if (cashFlow + 1e-8 < calculateRequiredDebtPayment(model.activeDebt.balance, model.activeDebt.apr, model.activeDebt.monthlyPayment)) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -1457,7 +1496,7 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
     };
   }
 
-  const locCashFlowPaydown = Math.max(0, cashFlow - model.activeDebt.monthlyPayment);
+  const locCashFlowPaydown = cashFlow - model.activeDebt.monthlyPayment;
   const chunkAmount = Math.max(
     0,
     model.chunkAmount > 0 ? model.chunkAmount : Math.min(locCashFlowPaydown * 3, model.loc.limit * 0.4)
@@ -1533,7 +1572,7 @@ export function buildMobileSimulatorSnapshot(
     guardrail = LOC_NO_CAPACITY_WARNING;
   } else if (model.loc.balance / model.loc.limit > 0.8) {
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
-  } else if (cashFlow < model.activeDebt.monthlyPayment) {
+  } else if (cashFlow + 1e-8 < calculateRequiredDebtPayment(model.activeDebt.balance, model.activeDebt.apr, model.activeDebt.monthlyPayment)) {
     guardrail = 'Cash flow does not cover the active debt minimum payment yet.';
   }
 

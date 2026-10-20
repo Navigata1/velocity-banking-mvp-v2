@@ -410,6 +410,14 @@ function buildNextMove(
     };
   }
 
+  if (cashFlow <= input.activeDebt.minimumPayment) {
+    return {
+      title: 'Pause new chunks', value: 'No new draw', tone: 'amber',
+      caption: 'New chunks need cash flow beyond scheduled payments. Unused final payments remain available for LOC recovery.',
+      assumptions: ['A valid payoff path does not mean a new LOC draw is recoverable this month.'],
+    };
+  }
+
   if (safeChunk <= 0) {
     return {
       title: 'Choose a starter chunk',

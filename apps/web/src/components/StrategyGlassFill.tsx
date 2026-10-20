@@ -77,6 +77,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
           return (
             <div
               key={strategy.name}
+              data-testid={`strategy-projection-${strategy.name.toLowerCase()}`}
               className={`
                 relative overflow-hidden rounded-xl border transition-all duration-500
                 ${colors.bg} ${colors.border}
