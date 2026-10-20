@@ -38,6 +38,10 @@ jobs:
         working-directory: apps/web
         run: npm ci
 
+      - name: Audit web runtime dependencies
+        working-directory: apps/web
+        run: npm audit --omit=dev
+
       - name: Run web regression tests
         working-directory: apps/web
         run: npm test
