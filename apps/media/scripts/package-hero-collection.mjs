@@ -13,4 +13,5 @@ for(const hero of provenance) {
 for(const name of ['hero-provenance.json','hero-models.json']) await copyFile(new URL(`../${name}`,import.meta.url),path.join(destination,name));
 await copyFile(new URL('../hyperframes/output/heroes/verification.json',import.meta.url),path.join(destination,'verification.json'));
 await copyFile(new URL('../hero-turntables/ASSET-COLLECTION.md',import.meta.url),path.join(destination,'README.md'));
+await copyFile(new URL('../../../docs/ASSET-CREDITS.md',import.meta.url),path.join(destination,'ASSET-CREDITS.md'));
 console.log(`Packaged ${provenance.length} heroes in ${destination}`);

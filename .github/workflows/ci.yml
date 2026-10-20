@@ -70,6 +70,18 @@ jobs:
         working-directory: apps/web
         run: npm run smoke:rendered:built
 
+      - name: Verify asset hero loading, rotation and reduced motion
+        working-directory: apps/web
+        run: npm run test:heroes
+
+      - name: Upload asset hero browser proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-hero-browser-proof
+          path: apps/web/test-results/heroes
+          if-no-files-found: warn
+
       - name: Install media workspace dependencies
         working-directory: apps/media
         run: npm ci --ignore-scripts

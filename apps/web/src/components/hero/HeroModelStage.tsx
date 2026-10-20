@@ -3,16 +3,18 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_TURN_SECONDS } from './turntable';
 
-interface Props { model: string; replay: number; onError: () => void; }
+interface Props { model: string; replay: number; onError: () => void; onReady: (ready: boolean) => void; }
 
-export default function HeroModelStage({ model, replay, onError }: Props) {
+export default function HeroModelStage({ model, replay, onError, onReady }: Props) {
   const host = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const element = host.current;
     if (!element) return;
+    onReady(false);
     let disposed = false, frame = 0;
     let object: THREE.Group | undefined;
     let renderer: THREE.WebGLRenderer;
@@ -58,13 +60,26 @@ export default function HeroModelStage({ model, replay, onError }: Props) {
       object.rotation.y = heroAngleAt(elapsed); render();
       if (elapsed < HERO_TURN_SECONDS && !reduced.matches) frame = requestAnimationFrame(animate);
     };
-    new GLTFLoader().load(model, (gltf) => {
-      if (disposed) { disposeModel(gltf.scene); return; }
+    const manager = new THREE.LoadingManager();
+    let assetFailed = false;
+    manager.onError = url => {
+      assetFailed = true;
+      // Three revokes embedded-image URLs on success, but not on decode failure.
+      if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+    };
+    new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).load(model, (gltf) => {
+      // GLTFLoader can resolve a scene after a texture decode has failed.
+      if (disposed || assetFailed) {
+        disposeModel(gltf.scene);
+        if (!disposed) onError();
+        return;
+      }
       object = gltf.scene; scene.add(object);
       const sphere = new THREE.Box3().setFromObject(object).getBoundingSphere(new THREE.Sphere());
       center = sphere.center; radius = sphere.radius; fitCamera();
       object.rotation.y = heroAngleAt(0); render();
       element.dataset.ready = 'true';
+      onReady(true);
       if (!reduced.matches) frame = requestAnimationFrame(animate);
     }, undefined, () => { if (!disposed) onError(); });
     return () => {
@@ -74,15 +89,31 @@ export default function HeroModelStage({ model, replay, onError }: Props) {
       environment.dispose(); renderer.dispose(); renderer.forceContextLoss();
       renderer.domElement.remove();
     };
-  }, [model, replay, onError]);
+  }, [model, replay, onError, onReady]);
   return <div ref={host} data-testid="asset-hero-canvas" className="absolute inset-0 [&_canvas]:h-full [&_canvas]:w-full" aria-hidden="true" />;
 }
 
 function disposeModel(object: THREE.Object3D) {
+  const geometries = new Set<THREE.BufferGeometry>();
+  const materials = new Set<THREE.Material>();
+  const textures = new Set<THREE.Texture>();
+  const images = new Set<{ close: () => void }>();
   object.traverse(node => {
     if (!(node instanceof THREE.Mesh)) return;
-    node.geometry.dispose();
-    const materials = Array.isArray(node.material) ? node.material : [node.material];
-    materials.forEach(material => material.dispose());
+    geometries.add(node.geometry);
+    for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      materials.add(material);
+      for (const value of Object.values(material)) if (value instanceof THREE.Texture) textures.add(value);
+    }
   });
+  for (const texture of textures) {
+    const data = texture.source.data;
+    if (data && typeof data === 'object' && 'close' in data && typeof data.close === 'function') {
+      images.add(data as { close: () => void });
+    }
+    texture.dispose();
+  }
+  images.forEach(image => image.close());
+  materials.forEach(material => material.dispose());
+  geometries.forEach(geometry => geometry.dispose());
 }

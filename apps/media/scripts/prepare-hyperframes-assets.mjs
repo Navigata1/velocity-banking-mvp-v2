@@ -22,10 +22,11 @@ console.log(`Prepared ${assets.length} pinned HyperFrames assets.`);
 await mkdir(new URL('three/addons/loaders/', vendorRoot), { recursive: true });
 await mkdir(new URL('three/addons/environments/', vendorRoot), { recursive: true });
 await mkdir(new URL('three/addons/utils/', vendorRoot), { recursive: true });
+await mkdir(new URL('three/addons/libs/', vendorRoot), { recursive: true });
 await mkdir(new URL('heroes/', vendorRoot), { recursive: true });
 for (const filename of ['build/three.module.js', 'build/three.core.js',
   'examples/jsm/loaders/GLTFLoader.js', 'examples/jsm/environments/RoomEnvironment.js',
-  'examples/jsm/utils/BufferGeometryUtils.js', 'examples/jsm/utils/SkeletonUtils.js']) {
+  'examples/jsm/utils/BufferGeometryUtils.js', 'examples/jsm/utils/SkeletonUtils.js', 'examples/jsm/libs/meshopt_decoder.module.js']) {
   const destination = filename.replace('build/', '').replace('examples/jsm/', 'addons/');
   await copyFile(new URL(`../web/node_modules/three/${filename}`, mediaRoot), new URL(`three/${destination}`, vendorRoot));
 }

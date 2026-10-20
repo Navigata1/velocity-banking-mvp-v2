@@ -1,7 +1,7 @@
 import * as T from '../../web/node_modules/three/build/three.module.js';
 import { RoundedBoxGeometry } from '../../web/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { GLTFExporter } from '../../web/node_modules/three/examples/jsm/exporters/GLTFExporter.js';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
 // GLTFExporter uses FileReader even for texture-free binary models in Node.
@@ -311,8 +311,10 @@ function vault() {
 const constructors={car,house,land,creditCard,studentLoan,medical,personal,recreation,custom,vault};
 const output=new URL('../../web/public/heroes/',import.meta.url);
 await mkdir(output,{recursive:true});
-const inventory=[];
+const imported=JSON.parse(await readFile(new URL('../hero-imported.json',import.meta.url),'utf8').catch(error=>{if(error.code==='ENOENT') return '[]';throw error;}));
+const inventory=[...imported];
 for(const [id,create] of Object.entries(constructors)) {
+  if(imported.some(asset=>asset.id===id)) { console.log(`${id}: preserving imported refined asset`); continue; }
   const object=create(); object.name=`InterestShield-${id}-authored-v1`;
   const bounds=new T.Box3().setFromObject(object), size=bounds.getSize(new T.Vector3()), center=bounds.getCenter(new T.Vector3());
   const scale=3.2/Math.max(size.x,size.y,size.z);

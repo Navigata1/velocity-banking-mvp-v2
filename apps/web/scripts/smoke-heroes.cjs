@@ -25,8 +25,9 @@ const domains = [['car','Auto'],['house','House'],['land','Land'],['creditCard',
   ['studentLoan','Student Loan'],['medical','Medical'],['personal','Personal'],['recreation','Recreation'],['custom','Custom']];
 async function run() {
   const started = await startBuiltServer(root);
+  const browserArgs = getHeadlessChromiumArgs();
   const browser = await chromium.launch({ executablePath: findBrowserExecutable(), headless: true,
-    args: getHeadlessChromiumArgs().filter(arg => !arg.includes('swiftshader')).concat('--use-angle=d3d11') });
+    args: process.platform === 'win32' ? browserArgs.filter(arg => !arg.includes('swiftshader')).concat('--use-angle=d3d11') : browserArgs });
   try {
     for (const width of [1440,375]) {
       const context = await browser.newContext({ viewport: {width,height:900}, deviceScaleFactor:1 });
@@ -38,6 +39,25 @@ async function run() {
       await page.getByTestId('asset-hero').waitFor();
       await page.screenshot({path:path.join(output,`dashboard-${width}.png`)});
       assert.equal(requests.filter(url=>url.endsWith('.glb')).length,0,'model must not download before opt-in');
+      let releaseModel, requestedModel;
+      const blocked=new Promise(resolve=>{releaseModel=resolve;});
+      const requested=new Promise(resolve=>{requestedModel=resolve;});
+      await page.route('**/heroes/car.glb',async route=>{requestedModel();await blocked;await route.continue();});
+      await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
+      let timer;
+      try { await Promise.race([requested,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('model request did not start')),10000);})]); }
+      finally { clearTimeout(timer); }
+      const poster=page.getByTestId('asset-hero').locator('img');
+      assert.equal(await poster.evaluate(image=>getComputedStyle(image).opacity),'1','artwork disappears before model is loaded');
+      releaseModel();
+      await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
+      await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');
+      await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
+      await page.waitForTimeout(250);
+      assert.equal(await poster.evaluate(image=>getComputedStyle(image).opacity),'0','selected mode click reopens poster');
+      await page.unroute('**/heroes/car.glb');
+      await page.getByRole('button',{name:'Studio artwork',exact:true}).click();
+      console.log(`PASS ${width}px slow-network poster continuity and selected-mode stability`);
       for (const [id,label] of domains) {
         if(id!=='car') await page.getByRole('tab',{name:`Switch to ${label} domain`,exact:true}).click();
         const hero=page.getByTestId('asset-hero');
@@ -48,7 +68,7 @@ async function run() {
         });
         assert.equal(await hero.getAttribute('data-hero'),id);
         await page.screenshot({path:path.join(output,`${width}-${id}-poster.png`)});
-        await page.getByRole('button',{name:'Inspect authored 3D model',exact:true}).click();
+        await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
         const stage=page.getByTestId('asset-hero-canvas');
         await page.waitForFunction(() => document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
         const a=await stage.screenshot();
@@ -70,7 +90,7 @@ async function run() {
       }
       await page.goto(`${started.origin}/vault`,{waitUntil:'networkidle'});
       assert.equal(await page.getByTestId('asset-hero').getAttribute('data-hero'),'vault');
-      await page.getByRole('button',{name:'Inspect authored 3D model',exact:true}).click();
+      await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
       await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
       const vault=page.getByTestId('asset-hero-canvas');
       const start=decodePngRgba(await vault.screenshot());
@@ -85,8 +105,10 @@ async function run() {
     }
     const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
     const page=await context.newPage(); await page.goto(started.origin,{waitUntil:'networkidle'});
-    await page.getByRole('button',{name:'Inspect authored 3D model',exact:true}).click();
+    assert.equal(await page.getByTestId('asset-hero').locator('img').evaluate(image=>getComputedStyle(image).transitionProperty),'none','reduced-motion must not fade the artwork');
+    await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
     await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
+    await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');
     const stage=page.getByTestId('asset-hero-canvas');
     const first=await stage.screenshot(); await page.waitForTimeout(1200); const last=await stage.screenshot();
     assert.equal(samplePngPixels(decodePngRgba(first)).fingerprint,samplePngPixels(decodePngRgba(last)).fingerprint,'reduced-motion must be still');

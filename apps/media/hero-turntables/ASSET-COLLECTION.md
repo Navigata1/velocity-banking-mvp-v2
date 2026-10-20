@@ -6,7 +6,8 @@ Created October 20, 2026. This is a restoration work package, not a production-r
 
 - **Full-Resolution-Art**: original generated PNG references for all ten heroes.
 - **Web-Posters**: optimized transparent WebP artwork used by the restored dashboard.
-- **3D-Studies**: actual self-contained GLB geometry, independently authored locally.
+- **3D-Studies**: actual self-contained GLB geometry. The refined car is adapted from
+  the licensed Car Concept; the other nine models remain locally authored studies.
 - **Turntables**: HyperFrames-rendered 1920 x 1080 MP4s, one smooth full revolution
   over eight seconds, followed by a one-second rest.
 - **verification.json**: video dimensions, duration, pixel-motion checks and SHA-256 hashes.
@@ -18,12 +19,17 @@ all regenerated in this package.
 
 ## Important Art Distinction
 
-The generated artwork is considerably more detailed than the locally authored
-3D studies. Those studies prove the real-geometry viewer, finite 360-degree
+The generated artwork is considerably more detailed than the nine locally authored
+3D studies. The car now uses a textured licensed model by Eric Chadwick / Darmstadt
+Graphics Group GmbH (2024), CC BY 4.0, adapted for InterestShield. Source and license:
+https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept
+https://creativecommons.org/licenses/by/4.0/
+
+The remaining studies prove the real-geometry viewer, finite 360-degree
 motion, portable GLB format and HyperFrames export pipeline. They are not exact
 photorealistic reconstructions of the artwork and have not passed final art approval.
-The public reconstruction service ran out of GPU quota, so a matching textured
-mesh collection remains an explicit production gate.
+The public reconstruction service ran out of GPU quota, so a complete coherent
+textured mesh collection remains an explicit production gate. See ASSET-CREDITS.md.
 
 The app defaults to studio artwork. Model inspection is optional. No visual asset
 controls financial outputs, and no financial balances are baked into these models.

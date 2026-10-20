@@ -7,11 +7,12 @@ export interface HeroAsset {
   poster: string;
   model: string;
   alt: string;
+  credit?: { name: string; url: string };
 }
 
 // Posters are generated product references. GLBs are independently authored geometry.
 export const heroAssets: Record<HeroId, HeroAsset> = {
-  car: { id: 'car', label: 'Auto', poster: '/heroes/car.webp', model: '/heroes/car.glb', alt: 'Crimson touring coupe with machined alloy wheels' },
+  car: { id: 'car', label: 'Auto', poster: '/heroes/car.webp', model: '/heroes/car.glb', alt: 'Crimson touring coupe with machined alloy wheels', credit: { name: '3D: Eric Chadwick / DGG, CC BY 4.0, adapted', url: 'https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept' } },
   house: { id: 'house', label: 'House', poster: '/heroes/house.webp', model: '/heroes/house.glb', alt: 'Limestone family home with warm windows and landscaping' },
   land: { id: 'land', label: 'Land', poster: '/heroes/land.webp', model: '/heroes/land.glb', alt: 'Green land parcel with trees, a path and exposed soil layers' },
   creditCard: { id: 'creditCard', label: 'Credit Card', poster: '/heroes/creditCard.webp', model: '/heroes/creditCard.glb', alt: 'Brushed platinum and emerald payment cards' },

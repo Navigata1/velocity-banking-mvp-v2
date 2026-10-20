@@ -13,16 +13,19 @@
     #hero-turntable { position: relative; }
     #turn-track { position: absolute; bottom: 42px; left: 860px; width: 200px; height: 2px; background: #38434a; }
     #turn-progress { height: 2px; width: 200px; background: #b8c8d0; transform-origin: left center; }
+    #asset-credit { position: absolute; bottom: 62px; left: 300px; right: 300px; text-align: center; color: #aab9c0; font: 18px Arial, sans-serif; }
   </style>
 </head>
 <body>
   <main id="hero-turntable" data-composition-id="interestshield-hero-turntable" data-width="1920" data-height="1080" data-fps="60" data-duration="9" data-start="0" data-track-index="0" data-composition-variables='[{"id":"hero","type":"string","default":"car"}]'>
     <canvas id="hero-canvas" aria-label="Three-dimensional hero turntable"></canvas>
     <div id="turn-track" aria-hidden="true"><div id="turn-progress"></div></div>
+    <div id="asset-credit"></div>
   </main>
   <script type="module">
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV } from './vendor/hero-turntable.js';
 
@@ -43,7 +46,15 @@
     scene.add(new THREE.HemisphereLight(0xffffff,0x414d52,2.5));
     const light = new THREE.DirectionalLight(0xffffff,4); light.position.set(-3,6,5); scene.add(light);
     const rim = new THREE.DirectionalLight(0xb8d9e6,3); rim.position.set(4,3,-4); scene.add(rim);
-    const gltf = await new GLTFLoader().loadAsync(`vendor/heroes/${selected}.glb`);
+    if (selected === 'car') document.querySelector('#asset-credit').textContent = 'Car Concept: Eric Chadwick / DGG - CC BY 4.0 - adapted';
+    const manager = new THREE.LoadingManager();
+    let assetFailed = false;
+    manager.onError = url => {
+      assetFailed = true;
+      if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+    };
+    const gltf = await new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).loadAsync(`vendor/heroes/${selected}.glb`);
+    if (assetFailed) throw new Error('Hero texture loading failed; refusing an incomplete render.');
     scene.add(gltf.scene);
     const sphere = new THREE.Box3().setFromObject(gltf.scene).getBoundingSphere(new THREE.Sphere());
     camera.position.copy(sphere.center).add(new THREE.Vector3(3.3,1.35,4.8).normalize().multiplyScalar(heroFrameDistance(sphere.radius,camera.aspect)));

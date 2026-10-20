@@ -13,6 +13,8 @@ export default function AssetHero({ id, compact = false }: { id: HeroId; compact
   const [mode, setMode] = useState<'poster' | 'model'>('poster');
   const [replay, setReplay] = useState(0);
   const [failed, setFailed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const modelReady = useCallback((value: boolean) => setReady(value), []);
   const [visible, setVisible] = useState(true);
   const [onScreen, setOnScreen] = useState(true);
   const figure = useRef<HTMLElement>(null);
@@ -31,18 +33,19 @@ export default function AssetHero({ id, compact = false }: { id: HeroId; compact
     <figure ref={figure} data-testid="asset-hero" data-hero={id} className="m-0 min-w-0">
       <div className={`relative isolate w-full ${compact ? 'h-[240px] md:h-[300px]' : 'h-[270px] md:h-[370px] xl:h-[420px]'}`}>
         <Image src={hero.poster} alt={hero.alt} fill priority={id === 'car'} sizes="(max-width: 768px) 92vw, 60vw"
-          className={`object-contain p-3 transition-opacity ${mode === 'model' && !failed && visible && onScreen ? 'opacity-0' : 'opacity-100'}`} />
-        {mode === 'model' && !failed && visible && onScreen && <HeroModelStage key={id} model={hero.model} replay={replay} onError={fail} />}
+          className={`object-contain p-3 transition-opacity motion-reduce:transition-none ${mode === 'model' && ready && !failed && visible && onScreen ? 'opacity-0' : 'opacity-100'}`} />
+        {mode === 'model' && !failed && visible && onScreen && <HeroModelStage key={id} model={hero.model} replay={replay} onError={fail} onReady={modelReady} />}
       </div>
       <figcaption className="flex min-h-11 flex-wrap items-center justify-center gap-2 text-xs text-current/70">
         <div role="group" aria-label={`${hero.label} presentation`} className="inline-flex overflow-hidden rounded-md border border-current/20">
           <button type="button" title="Studio artwork" aria-label="Studio artwork" aria-pressed={mode === 'poster'}
             onClick={() => setMode('poster')} className={`min-h-10 px-3 ${mode === 'poster' ? 'bg-current/10' : ''}`}><ImageIcon size={16} /></button>
-          <button type="button" title="Inspect authored 3D model" aria-label="Inspect authored 3D model" aria-pressed={mode === 'model'}
-            onClick={() => { setFailed(false); setMode('model'); }} className={`min-h-10 px-3 ${mode === 'model' ? 'bg-current/10' : ''}`}><Box size={16} /></button>
+          <button type="button" title="Inspect 3D model" aria-label="Inspect 3D model" aria-pressed={mode === 'model'}
+            onClick={() => { if (mode !== 'model' || failed) { setFailed(false); setReady(false); setMode('model'); } }} className={`min-h-10 px-3 ${mode === 'model' ? 'bg-current/10' : ''}`}><Box size={16} /></button>
         </div>
         {mode === 'model' && !failed && <button type="button" title="Replay full turn" aria-label="Replay full turn" onClick={() => setReplay(r => r + 1)} className="grid size-10 place-items-center rounded-md border border-current/20"><RotateCcw size={16} /></button>}
         {failed && <span role="status">3D unavailable. Studio artwork shown.</span>}
+        {mode === 'model' && hero.credit && <a className="basis-full text-center text-[11px] underline underline-offset-2" href={hero.credit.url} target="_blank" rel="noopener noreferrer">{hero.credit.name}</a>}
       </figcaption>
     </figure>
   );
