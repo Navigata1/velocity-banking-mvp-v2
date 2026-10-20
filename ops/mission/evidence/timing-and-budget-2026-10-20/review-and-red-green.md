@@ -52,3 +52,18 @@ No production deployment or merge. Goal remains active.
 Vault's remaining mortgage comparison-scope problem is now disclosed before its
 deltas and asserted in source/browser gates. This is a temporary truthfulness
 guardrail, not completion of the equal-budget/liability calculation task.
+
+## Domain Follow-Up Regression Correction
+
+Both hosted jobs on cf5a3e4 failed at the web regression step: the release-runbook
+contract still required the now-obsolete unknown-hostname wording. A fresh full
+local npm test reproduced exactly that failure. The metadata-only contract had
+passed, but did not cover this second runbook assertion; the earlier full-suite
+receipt predates the domain edit and was not final-head proof.
+
+The runbook contract now requires the verified apex/www binding, the instruction
+not to replace working records, the explicit no-production-mutation scope and
+the final NEXT_PUBLIC_SITE_URL release check. It also rejects the obsolete
+unknown-hostname blocker. No application behavior, pipeline gate, timeout or
+production configuration is changed by this correction. Full local and exact
+pushed-head verification must pass before a new green receipt is recorded.

@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T19:25:46Z",
+    "updated": "2026-10-20T19:34:34Z",
     "sessionCount": 5
   },
   "policies": {
@@ -55,8 +55,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T19:10:17Z",
-          "notes": "289 web engine/UI regression cases, two reference fixtures, 78 closed-form comparison cases and 25 zero-recovery conservation cases; asset/accessibility/metadata contracts pass. Local draft evidence, not production proof."
+          "lastRun": "2026-10-20T19:34:34Z",
+          "notes": "Fresh full suite after the domain correction passes 289 web engine/UI cases, two reference fixtures, 78 closed-form comparisons, 25 zero-recovery conservation cases and ancillary contracts. The stale unknown-hostname runbook assertion failed locally and on cf5a3e4 hosted CI before correction. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
@@ -72,9 +72,9 @@
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39476316604",
-          "lastRun": "2026-10-20T19:10:17Z",
-          "notes": "Previous SHA 30b810e passed both CI runs and Vercel, including all ten software-rendered heroes. Current timing/budget corrections need their own exact-head checks. No earlier green receipt approves production."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39483831514",
+          "lastRun": "2026-10-20T19:34:34Z",
+          "notes": "cf5a3e4 push/PR CI failed the obsolete unknown-domain runbook assertion, now reproduced and corrected with a fresh full local suite. Await both exact-head hosted jobs and final preview smoke for the corrected commit. Previous green 30b810e does not approve the new head or production."
         }
       ]
     },

@@ -8556,10 +8556,15 @@ test('repository documents the verified Vercel release and custom-domain handoff
     'expected the runbook to document rendered production verification'
   );
   assert.ok(
-    runbook.includes('The final InterestShield custom-domain hostname was not found') &&
-      runbook.includes('Do not guess or silently register a hostname') &&
+    runbook.includes('confirmed `interestshield.app` and `www.interestshield.app` already verified') &&
+      runbook.includes('Do not re-add the domain or replace its working records') &&
+      runbook.includes('No DNS, domain assignment, backend or production configuration was changed') &&
       runbook.includes('NEXT_PUBLIC_SITE_URL'),
-    'expected the runbook to preserve the unresolved custom-domain handoff honestly'
+    'expected the runbook to record the verified binding and preserve final-release checks without reconfiguring production'
+  );
+  assert.ok(
+    !runbook.includes('The final InterestShield custom-domain hostname was not found'),
+    'expected the obsolete unknown-hostname blocker to stay removed'
   );
 });
 
