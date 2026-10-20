@@ -173,3 +173,70 @@ jobs:
           echo "$output"
           test "$status" -eq 1
           grep -F "iOS Expo Go smoke requires macOS with Xcode and Simulator." <<< "$output"
+
+  backend-isolation:
+    name: Isolated SQL and owner isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install web contract dependencies
+        run: npm --prefix apps/web ci
+
+      - name: Check isolated database wiring
+        run: node apps/web/scripts/supabase-ci-contract.cjs
+
+      - name: Install pinned Supabase CLI
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+        with:
+          version: 2.109.1
+
+      - name: Start disposable database
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/backend-isolation"
+          supabase --version | tee "$RUNNER_TEMP/backend-isolation/cli-version.log"
+          supabase db start 2>&1 | tee "$RUNNER_TEMP/backend-isolation/start.log"
+
+      - name: Replay all migrations without seed data
+        shell: bash
+        run: supabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"
+
+      - name: Verify client contracts and SQL owner isolation
+        shell: bash
+        run: npm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"
+
+      - name: Lint application database functions
+        shell: bash
+        run: supabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"
+
+      - name: Check database security advisors
+        shell: bash
+        run: supabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"
+
+      - name: Repeat SQL tests to verify fixture rollback
+        shell: bash
+        run: supabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"
+
+      - name: Stop disposable database
+        if: always()
+        timeout-minutes: 2
+        run: supabase stop --project-id Interest_Shield --no-backup
+
+      - name: Upload database isolation proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-isolation-proof
+          path: ${{ runner.temp }}/backend-isolation
+          if-no-files-found: warn

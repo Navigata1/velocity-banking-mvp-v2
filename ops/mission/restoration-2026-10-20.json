@@ -27,7 +27,8 @@
     "slow-network continuity, subordinate texture-failure fallback and shared GPU resource cleanup",
     "asset-centered dashboard and Vault artwork",
     "opt-in finite 360 degree viewer with reduced motion and cleanup",
-    "deterministic HyperFrames 1080p turntable composition and render matrix"
+    "deterministic HyperFrames 1080p turntable composition and render matrix",
+    "pinned disposable Supabase Postgres CI wiring with migration replay, repeated pgTAP, lint/advisors and failure artifacts; actual hosted SQL execution pending"
   ],
   "remainingProductionGates": [
     "Complete eight remaining textured hero models and artist-review both refined candidates and collection consistency",
@@ -59,7 +60,7 @@
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "prior reviews retained; timing copy re-reviewed clear. New budget review found exact-payment floating-point and calendar-summary eligibility defects; reproduced, fixed and cleared with focused re-review",
-    "deployment": "draft PR #256; 2b19284 passed both CI runs 39484667286/39484676569, Vercel and remote desktop/mobile checks; Vault/studio follow-up requires fresh exact-head checks; no production promotion",
+    "deployment": "draft PR #256; b985f8e passed both CI runs 39490717464/39490724027, Vercel and remote desktop/mobile checks; isolated-database CI follow-up requires fresh exact-head checks; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },

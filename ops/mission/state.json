@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T20:16:26Z",
-    "sessionCount": 6
+    "updated": "2026-10-20T20:39:00Z",
+    "sessionCount": 7
   },
   "policies": {
     "merge": "review",
@@ -45,7 +45,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Exact-SHA verification is established: 2b19284 passed both CI runs 39484667286/39484676569, Vercel and remote desktop/375px checks. Each subsequent push still needs its own standing gate and receipt. No production promotion."
+          "notes": "Exact-SHA verification is established: b985f8e passed both CI runs 39490717464/39490724027, Vercel and remote desktop/375px checks. Each subsequent push still needs its own standing gate and receipt. No production promotion."
         }
       ],
       "gates": [
@@ -72,9 +72,9 @@
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6299900414",
-          "lastRun": "2026-10-20T20:12:36Z",
-          "notes": "2b19284 passed both full hosted jobs and Vercel, with final preview route/comparison/metadata proof. Current Vault/studio changes require both new exact-head jobs and hosted browser receipt. The earlier green commit does not approve this new head or production."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6300856800",
+          "lastRun": "2026-10-20T20:37:46Z",
+          "notes": "b985f8e passed both full hosted jobs and Vercel, with remote route/comparison/metadata proof. The new isolated-database CI wiring requires fresh exact-head jobs, including the new SQL job. Prior green does not approve this new head or production."
         }
       ]
     },
@@ -259,7 +259,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Cloud access is now available. The similarly named healthy Velocity Banking candidate has zero public tables and zero applied migrations. Repo has four migrations but no cloud link; local credentials are absent and preview confirms local-only mode. Candidate association is not proven by its name alone. No remote writes performed."
+        "notes": "Cloud discovery found an empty name-matched candidate, not a proven app binding. No remote writes or credentials added. New standing CI uses pinned tooling and a disposable Linux Supabase Postgres17 database to replay four migrations, run the 63-assertion owner/RPC suite twice and run lint/advisors. Static/client checks pass; fresh hosted SQL execution is still pending at this preflight checkpoint. See docs/backend-isolation-contract-2026-10-20.md."
         },
         {
           "id": "R4-T2",
@@ -347,7 +347,7 @@
           "status": "pending",
           "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json",
           "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "Docker was initially unavailable; the installed launcher exceeded its 90-second deadline and its CLI request was canceled without stopping databases or containers. No verified isolated SQL test stack was established. July results are historical; no production schema or records changed."
+        "notes": "Local Docker remains unavailable. A new disposable GitHub-hosted database job has passed its static red/green wiring checks and awaits actual execution. Require migration replay, both 63-assertion SQL runs, lint/advisors and exact-source evidence before changing this gate to passed. No production schema or records changed."
         }
       ]
     },
@@ -768,9 +768,9 @@
     }
   ],
   "resume": {
-    "activePhase": "R1",
+    "activePhase": "R4",
     "nextActions": [
-      "Push the verified Vault/studio candidate and require both exact-head CI runs plus Vercel and hosted browser proof. Checkpoint 2b19284 is green; its final receipt is on PR #256. Do not merge the draft or promote production yet.",
+      "Push the isolated-database CI checkpoint and require both exact-head CI runs including the actual SQL jobs. b985f8e is green; final receipt is PR #256 issuecomment-6300856800. Static/client tests do not close R4-G6. Do not merge the draft or promote production.",
       "Continue R2-T2 beyond Simulator: Mortgage/Vault-web, Portfolio and dashboard helper comparisons still differ in liability/budget scope. Preserve the existing Velocity allocation policy and saved scenarios; add failing reproductions first. Read docs/simulator-comparison-contract-2026-10-20.md.",
       "R2-T3 is implemented and tested: do not restore ineffective timing buttons or delete legacy saved timing data. Shared/single-target affordability and chunk-recovery boundaries are fixed; apply the same preflight contract to mortgage/Portfolio paths. Keep actual lender terms and normal dated-calendar integration open.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
@@ -778,13 +778,13 @@
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
-      "Use backend-readiness.json: Supabase access is now available, but the candidate has no schema/migrations and the app is local-only. Establish a verified isolated target and fresh SQL/RLS proof before any production wiring; no candidate selection by name alone.",
+      "Read docs/backend-isolation-contract-2026-10-20.md. Verify the new GitHub disposable SQL job, diagnose actual PostgreSQL failures without weakening assertions, and retain its artifact/run receipt. Hosted project binding, cross-device recovery and backup/restore remain separate; do not choose a cloud project by name alone.",
       "Use domain-readiness.json: interestshield.app/www are already verified on the app project with working Cloudflare DNS and HTTPS. Do not re-add or rewrite DNS. Verify the final restored deployment SHA, Production SITE_URL override and custom-domain browser smoke only when release gates pass.",
       "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
-      "Supabase project binding is unconfigured and fresh isolated SQL tests remain unavailable; a new bounded read-only Docker probe timed out. The custom domain is now identified and its existing binding verified; final restored production release is still gated."
+      "Supabase project binding is unconfigured. Local Docker is unavailable; fresh SQL/RLS proof is now routed to disposable GitHub CI but has not executed at this checkpoint. Domain binding is verified; final restored production release stays gated."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",

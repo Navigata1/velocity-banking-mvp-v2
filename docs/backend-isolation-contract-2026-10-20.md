@@ -1,0 +1,57 @@
+# Fresh database isolation gate
+
+## Scope
+
+R4-T1 / R4-G6: replay the existing persistence schema and exercise its real
+Postgres permissions. This does not connect the app to a cloud backend, add auth
+to the demo, select a hosted project, or establish production readiness.
+
+The local Docker engine is unavailable. GitHub-hosted Linux provides a disposable
+database on each push/PR under the existing CI workflow. The workflow has read-only
+repository permissions, no project token/password or remote database URL, and no
+link, push, deployment or cloud migration command.
+
+## Gate
+
+- Supabase CLI is pinned to 2.109.1 in both setup and `test:supabase`.
+- Official setup-cli v3.0.1 is pinned to commit
+  `45a513f8c64c0bc8e0e3dfe572b5c95be85f6359`.
+- `supabase db start` starts the actual Supabase Postgres 17 image and applies
+  migrations. Auth tables/roles are not mocked or manually substituted.
+- `supabase db reset --local --no-seed` proves a clean replay of all migrations.
+- `npm --prefix apps/web run test:supabase` runs schema/client/outbox/account
+  contracts, then the existing 63-assertion pgTAP suite against the local database.
+- Public-schema function lint fails on warnings; security advisors fail on errors.
+  Any advisor warnings remain visible and require review, not silent suppression.
+- A second pgTAP run checks fixture rollback/repeatability without another reset.
+- Bash pipefail preserves failures through `tee`. Logs upload even on failure.
+- Cleanup always targets only local project `Interest_Shield`, with `--no-backup`;
+  it is never a command to run against a user's persistent database or `--all`.
+- The job is bounded to 20 minutes; cleanup has its own two-minute timeout.
+
+## Verification And Limits
+
+Three new static wiring contracts failed before implementation: the database job,
+CLI pin/local target, and bounded cleanup/evidence wiring were absent. All three
+pass after implementation. These tests inspect configuration; they do not execute
+SQL and are not owner-isolation evidence by themselves.
+
+The live gate must report `Files=1, Tests=63` and `Result: PASS` twice on the exact
+pushed source, with migration replay and lint/advisors successful. Save the hosted
+run URL and artifact receipt. A failed run must not be relabeled a pass because
+client/static checks succeeded.
+
+Hosted-project binding, API/JWT sign-in, cross-device recovery, backup/restore,
+deletion, project settings and final environment separation remain separate gates.
+All six owner tables, their existing RPC and the four migration bytes are unchanged
+in this wiring checkpoint. Financial-engine, user scenario and visual code are also
+unchanged.
+
+## Sources Checked 2026-10-20
+
+- [Official CI database test guide](https://supabase.com/docs/guides/deployment/ci/testing)
+- [Official setup action at the pinned revision](https://github.com/supabase/setup-cli/tree/45a513f8c64c0bc8e0e3dfe572b5c95be85f6359)
+- [Testing and linting](https://supabase.com/docs/guides/local-development/cli/testing-and-linting)
+- [Current changelog](https://supabase.com/changelog.md)
+
+CLI command/flag spelling was checked using the pinned CLI's own `--help`.

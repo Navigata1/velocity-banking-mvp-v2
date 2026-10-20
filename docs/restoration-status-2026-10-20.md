@@ -26,6 +26,9 @@ The existing aligned demo defaults were preserved.
   resource cleanup and poster fallback on environment setup failure.
 - Serialized model/manifest publication, atomic JSON replacement, Windows sharing
   retries and protection against overlapping imports or full study rebuilds.
+- A standing disposable Supabase database CI job with pinned tooling, clean migration
+  replay, real SQL owner/RPC tests, lint/advisors, repeated-fixture rollback proof
+  and failure artifacts. Hosted execution remains pending at this preflight checkpoint.
 - Repairs for phantom payments after payoff, extra payments exceeding the budget,
   lost calendar deposit surplus, and dashboard interest-scope inconsistency.
 - Removed the dashboard's unequal-liability savings claim.
