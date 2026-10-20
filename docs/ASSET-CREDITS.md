@@ -49,12 +49,25 @@ manifest hashes are recorded in `apps/media/hero-imported.json`. This is an orig
 textured architectural candidate, not an exact reconstruction of its reference
 poster or final collection-wide photorealism approval. See the House contract.
 
+## Original Refined Land
+
+Land terrain, pond, path, cutaway, trees and markers are authored in
+`apps/media/scripts/build-refined-land.mjs`. Original generated meadow and single
+oak-leaf albedo/opacity sources, briefs and hashes are retained in
+`apps/media/sources/land/`. All other surface maps and shading are authored visual
+approximations, not measured scans or surveyed geology. Folded leaf geometry is
+not a full-tree image billboard.
+
+There is no third-party model or texture source. Model, builder and material
+manifest hashes are recorded in both asset manifests. This is a textured diorama
+candidate, not an exact poster reconstruction or final photorealism approval.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other seven base models remain locally authored 3D studies. They have not
+The other six base models remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

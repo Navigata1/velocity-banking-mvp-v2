@@ -36,13 +36,19 @@
   },
   {
     "id": "land",
-    "bytes": 158252,
-    "meshes": 155,
-    "triangles": 53984,
-    "sha256": "3444f4b6f2f84b80839c85224ee3be2b441eefd73851bea6ac494b08de20724f",
-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "quality": "refined-textured",
+    "bytes": 709260,
+    "meshes": 32,
+    "triangles": 49834,
+    "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+    "sourceSha256": "ab6edf9eac145c9ee23fa9324a11550c955b3309dd17379d6bf79100200db569",
+    "sourceFile": "apps/media/scripts/build-refined-land.mjs",
+    "materialSourceSha256": "ef8ebc33884c92bffc1ea3eed62101f9a43c5bc609d23c4ff399e24826b9d83e",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and generated material sources",
+    "provenance": "Original authored terrain with recessed pond, draped gravel path, exposed layers, grounded stakes and connected trees; generated meadow/leaf albedos with approximate authored surface maps. Not a scan or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 1
+    "version": 2
   },
   {
     "id": "creditCard",
