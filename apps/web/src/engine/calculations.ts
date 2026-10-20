@@ -480,7 +480,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
   const requiredPayment = calculateRequiredDebtPayment(safeInputs.carLoan.balance, safeInputs.carLoan.apr, safeInputs.carLoan.monthlyPayment);
-  if (safeInputs.carLoan.balance > 0 && cashFlow < requiredPayment) {
+  if (safeInputs.carLoan.balance > 0 && cashFlow + 1e-8 < requiredPayment) {
     return { payoffMonths: 0, totalInterest: 0, monthlyData: [],
       isPayoffPossible: false, failureReason: 'cashflow-below-minimums' };
   }

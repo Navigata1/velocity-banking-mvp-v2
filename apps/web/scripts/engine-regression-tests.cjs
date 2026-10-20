@@ -265,6 +265,13 @@ test('exactly affordable final payments tolerate floating-point reconstruction o
     carLoan: { balance: 120, apr: 0.07, monthlyPayment: 425 }, loc: base.loc, extraPayment: 100,
   });
   assert.equal(web.isPayoffPossible, true);
+  const noLOC = calculations.simulateVelocity({
+    monthlyIncome: 1211, monthlyExpenses: 0,
+    carLoan: { balance: 1200, apr: 0.11, monthlyPayment: 2000 }, extraPayment: 0,
+  });
+  assert.equal(noLOC.isPayoffPossible, true, 'the same tolerance applies without a LOC');
+  assert.equal(noLOC.payoffMonths, 1);
+  assert.equal(noLOC.totalInterest, 11);
   assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, locDepositAmount: 120.69 }).isPayoffPossible, false, 'one cent short is still unaffordable');
 });
 
