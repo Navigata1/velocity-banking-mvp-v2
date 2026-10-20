@@ -19,6 +19,7 @@
     "smoke:rendered": "npm run build && npm run smoke:rendered:built",
     "smoke:rendered:built": "node scripts/smoke-rendered.cjs",
     "smoke:comparison:built": "node scripts/smoke-comparison.cjs",
+    "smoke:vault:built": "node scripts/smoke-vault-comparison.cjs",
     "test:3d": "npm run build && npm run test:3d:built",
     "test:3d:built": "node scripts/test-three-stage.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"

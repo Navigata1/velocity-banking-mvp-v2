@@ -86,6 +86,18 @@ jobs:
           path: apps/web/test-results/comparison
           if-no-files-found: warn
 
+      - name: Verify funded Vault mortgage comparisons
+        working-directory: apps/web
+        run: npm run smoke:vault:built
+
+      - name: Upload Vault comparison proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vault-comparison-proof
+          path: apps/web/test-results/vault-comparison
+          if-no-files-found: warn
+
       - name: Verify asset hero loading, rotation and reduced motion
         working-directory: apps/web
         run: npm run test:heroes

@@ -282,6 +282,8 @@ test('Vault comparison displays household routing, both liabilities and retained
   assert.ok(source.includes('Same mortgage, existing LOC balance and available monthly budget'));
   assert.ok(!source.includes('These projections are not yet like-for-like'));
   assert.ok(source.includes('not a common-date wealth comparison'));
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.ok(workflow.includes('npm run smoke:vault:built'), 'CI must run the actual Vault interaction gate');
 });
 
 test('Vault freedom illustration retains valid slower outcomes without inventing freed-payment growth', () => {
