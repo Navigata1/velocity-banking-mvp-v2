@@ -1,0 +1,20 @@
+Selected observed failures, not complete test transcripts. Passing output and
+unrelated lines are omitted. See committed tests and final passing logs.
+
+Initial old House study, three new tests:
+House must replace its untextured study with a protected textured asset
+actual: undefined; expected: 'refined-textured'
+
+Hidden retained wall before main-facade termination:
+House-Facade-Left blocks the aperture at 0.25,4.7
+
+Exposed connecting wall before shared roof/gable correction:
+outside ray must meet House-Main-East-Gable
+actual: 'House-Interior-Floor'; expected: 'House-Main-East-Gable'
+
+Standing web budget before texture optimization:
+AssertionError: assert.ok(bytes.length < (hero === 'car' ? 2.25 : 1.25) * 1024 * 1024)
+
+Driveway before plant relocation/spread correction:
+House-Garden-Shrub-5 blocks the garage approach
+House-Garden-Shrub-9 blocks the garage approach

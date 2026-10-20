@@ -15,7 +15,10 @@ The existing aligned demo defaults were preserved.
   with clearcoat paint, glass, interior, wheels and brakes.
 - Original refined Vault candidate: 31,976 triangles, six embedded 512px PBR maps,
   703 KiB, an open chamber, beveled door and physically connected hinge links.
-  Eight authored studies and collection-wide art approval remain.
+  Collection-wide art approval remains.
+- Original refined House candidate:31,316 triangles, six embedded material maps,
+  1,144,500bytes, limestone facades, open glazing/interiors, charcoal standing seams,
+  oak joinery and a clear landscaped approach. Seven authored studies remain.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
@@ -58,7 +61,9 @@ The existing aligned demo defaults were preserved.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. Vault is an original authored
-refinement, not an AI reconstruction of its poster. The other eight meshes remain
+refinement, not an AI reconstruction of its poster. House is original architecture
+with generated albedos and authored approximate micro-normal/roughness maps, not a
+scanned building or exact reconstruction. The other seven meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
@@ -91,7 +96,7 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 41 media contracts pass. Existing HyperFrames/Remotion checks pass with 27 fresh
+- 47 media contracts pass. Existing HyperFrames/Remotion checks pass with 27 fresh
   stills; new all-model turntables have fresh movement/rest pixel proof. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.
@@ -154,7 +159,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete eight remaining textured models and artist-review both candidates and collection consistency.
+1. Complete seven remaining textured models and artist-review all three candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -233,13 +238,28 @@ Source/binary hashes and clean-regeneration preservation are verified. Independe
 review's hinge-contact, overlapping-write/rebuild and Windows-sharing findings
 were reproduced and corrected; 20 repeated eight-process runs passed re-review.
 
-This is two refined textured candidates, not two final photorealism approvals.
+That checkpoint established two textured candidates, not final photorealism approval.
 The app still defaults to the reference artwork, and its financial/scenario/layout
 code was not changed. The prior 2b19284 checkpoint passed both hosted CI jobs and
 Vercel; the new candidate must receive its own exact-head receipt before release.
 See `docs/vault-refinement-contract-2026-10-20.md` and the new evidence folder.
 
-Comparison preview: http://127.0.0.1:53144/simulator
+## House Refinement
+
+The House now preserves the original limestone/roof/window/wood/forecourt identity
+in a textured mesh. Six asset tests cover provenance, real apertures, retained-wall
+blockers, roof/connecting-wall rays, a clear garage approach and normalized budgets.
+Independent read-only review findings were reproduced, corrected and cleared on
+the final artifact. The standing1.25MiB cap was retained after an oversized early
+candidate failed. All ten desktop/375px viewers and the new House turn pass; nine
+unchanged videos were rechecked, not rebuilt. Camera/studio/timing, finances and
+saved inputs are unchanged. See the House contract and its evidence folder.
+
+Three textured candidates are not three final art approvals. Economical foliage,
+illustrative interiors, approximate maps and poster/model differences remain.
+The previous14ad261 head passed both full CI runs, SQL, Vercel and hosted checks;
+receipt: PR256 issuecomment-6303443438. This House report is preflight and requires
+new exact-head checks before any release. No production promotion occurred.
 
 Desktop package: `C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20`
 

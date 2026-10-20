@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T22:27:20Z",
-    "sessionCount": 9
+    "updated": "2026-10-20T23:00:07Z",
+    "sessionCount": 10
   },
   "policies": {
     "merge": "review",
@@ -45,7 +45,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Exact-SHA verification is established: ec11223 passed both complete CI runs39502097560/39502102981 including real SQL, Vercel and hosted checks. Receipt: PR256 issuecomment-6302535434. Each subsequent push needs its own standing gate. No production promotion."
+          "notes": "Exact-SHA verification is established:14ad261 passed both complete CI runs39508261387/39508267033 including real SQL, Vercel and hosted checks. Receipt: PR256 issuecomment-6303443438. Each subsequent push needs its own standing gate. No production promotion."
         }
       ],
       "gates": [
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:27:20Z",
-          "notes": "329 regressions, prior reference lanes,480 new Portfolio closed-form policies and360 repeatable seeded paths (240 direct-oracle matches) pass. Funded caps, full liabilities, ranked splits, cash, promo and cleared states corrected. Review findings and imported loan/LOC no-op bugs reproduced and cleared. Local draft evidence, not production proof."
+          "evidence": "ops/mission/evidence/house-refinement-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "329 regressions, prior reference lanes,480 Portfolio closed-form policies and360 repeatable seeded paths (240 direct-oracle matches) pass unchanged after House refinement. All asset budgets retained; public assets9.44MiB. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T22:27:20Z",
-          "notes": "All seven built routes pass at1440px/390px locally; separate Portfolio24/Vault20/Simulator16 browser cases cover375px, controls, funding and saved-data preservation. No release promotion."
+          "evidence": "ops/mission/evidence/house-refinement-2026-10-20/routes.log",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "All seven built routes pass at1440px/390px locally after the House change. Prior Portfolio24/Vault20/Simulator16 browser proof retained; both final exact-head pipelines must repeat their standing gates. No release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6302535434",
-          "lastRun": "2026-10-20T22:27:20Z",
-          "notes": "ec11223 passed both complete CI runs, SQL, Vercel and hosted checks. This new shared Portfolio/UI checkpoint requires fresh exact-head proof, including its new Portfolio gate. Previous green is not production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6303443438",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "14ad261 passed both complete CI runs, SQL, Vercel and hosted checks. This new House checkpoint requires fresh exact-head proof. Previous green is not production approval."
         }
       ]
     },
@@ -99,7 +99,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Original refined Vault candidate: 31976 triangles, six embedded PBR maps, 703 KiB, open chamber, beveled hinged door. Geometry, resources, all-model web/video pixels and protected regeneration pass. Independent hinge/concurrency/rebuild/Windows findings fixed and cleared. House/Land and collection art approval remain unfinished."
+          "notes": "Original Vault candidate retained. House now has31316 triangles, six embedded maps,1118KiB, real apertures/rooms, standing seams, oak joinery and planting. Independent facade/gable/wall/pitch findings were reproduced and cleared. Six House tests, all-model web/video checks and identical/protected regeneration pass. Land and collection art approval remain unfinished; see docs/house-refinement-contract-2026-10-20.md."
         },
         {
           "id": "R1-T3",
@@ -115,7 +115,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Hardening is established. New local studio setup retains poster fallback, resource cleanup and all ten desktop/375px checks. Publication now serializes imports/rebuilds with Windows sharing retries. Collection-wide art approval and eight further textured models remain separate unfinished tasks; every new head must re-pass hosted gates."
+          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and all ten desktop/375px checks. Publication serializes imports/rebuilds with Windows sharing retries. Collection-wide art approval and seven further textured models remain separate unfinished tasks; every new head must re-pass hosted gates."
         }
       ],
       "gates": [
@@ -124,27 +124,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/vault-refinement-2026-10-20/contracts.log",
-          "lastRun": "2026-10-20T20:12:36Z",
-          "notes": "41 contracts pass, including Vault recipe/binary hashes, open geometry, hinge contact and embedded maps, imported-record preservation, real rebuild overlap and Windows contention. Eight remaining studies and both candidates still need final collection art approval."
+          "evidence": "ops/mission/evidence/house-refinement-2026-10-20/contracts.log",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "47 contracts pass, including six House cases for sources/PBR, decoded apertures, hidden blockers, whole-scene roof rays, clear driveway and normalized budgets. Existing Vault/publication/concurrency guards retained. Seven studies and all three candidates still need collection art approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/vault-refinement-2026-10-20/hero-browser.log",
-          "lastRun": "2026-10-20T20:12:36Z",
-          "notes": "All ten heroes at 1440px/375px pass fresh hardware rendering with the new studio; movement, framing, no pre-opt-in downloads, reduced motion and injected failure paths remain asserted. Final hosted software-rendered proof remains mandatory."
+          "evidence": "ops/mission/evidence/house-refinement-2026-10-20/heroes.log",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "All ten heroes at1440px/375px pass fresh actual-geometry movement/framing checks, no pre-opt-in downloads, reduced motion and injected network/decode failures. New House rests on its recognizable front; shared camera/studio/timing unchanged. Final hosted proof remains mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/vault-refinement-2026-10-20/turntable-verification.json",
-          "lastRun": "2026-10-20T20:12:36Z",
-          "notes": "All ten 1080p nine-second MP4s rebuilt under shared studio reflections; nonblank, actual movement and return to initial orientation pass pixel checks. Viewer camera/timing and financial data unchanged."
+          "evidence": "ops/mission/evidence/house-refinement-2026-10-20/turntable-verification.json",
+          "lastRun": "2026-10-20T23:00:07Z",
+          "notes": "House1080p nine-second turn rebuilt and checked for nonblank movement/return/rest; model/vendor bytes match. Nine unchanged videos rechecked, not newly rebuilt. No shared camera/studio/timing or financial change; final collection art review remains open."
         }
       ]
     },
@@ -445,7 +445,7 @@
     {
       "label": "Textured refined model candidates",
       "baseline": "0",
-      "current": "2",
+      "current": "3",
       "target": "10",
       "direction": "up"
     },
@@ -473,9 +473,9 @@
   ],
   "risks": [
     {
-      "title": "Eight models remain studies; candidates need art review",
+      "title": "Seven models remain studies; candidates need art review",
       "severity": "high",
-      "note": "Auto and original Vault now have textured candidate geometry; neither count is final photorealism approval. Eight other heroes need their own refinements. Public generation GPU quota is limited and Hugging Face is not connected."
+      "note": "Auto, original Vault and House now have textured candidate geometry, not final photorealism approval. Seven other heroes need their own refinements. Public generation GPU quota is limited and Hugging Face is not connected."
     },
     {
       "title": "Financial coherence gates remain open",
@@ -485,7 +485,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "ec11223 passed both complete CI runs, SQL, Vercel and hosted proof. The current shared Portfolio/UI checkpoint needs fresh exact-head proof, including the new Portfolio gate. No prior receipt authorizes production."
+      "note": "14ad261 passed both complete CI runs, SQL, Vercel and hosted proof. The current House checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -786,14 +786,14 @@
     }
   ],
   "resume": {
-    "activePhase": "R2",
+    "activePhase": "R1",
     "nextActions": [
-      "Push the reviewed shared Portfolio checkpoint, then require both final exact-head CI runs, SQL, Vercel and hosted Portfolio proof. ec11223 passed; final receipt PR256 issuecomment-6302535434. This new report is preflight, not production approval.",
-      "Continue a focused House/Land textured model refinement with provenance and all-model web/video proof while preserving the calm original identity. Auto/Vault remain candidates and eight studies remain unfinished. Do not start paid GPU jobs or a broad layout redesign.",
+      "Push the reviewed House checkpoint, then require both final exact-head CI runs, SQL, Vercel and hosted hero proof.14ad261 passed; final receipt PR256 issuecomment-6303443438. This new report is preflight, not production approval.",
+      "Continue a focused Land textured model refinement with provenance and all-model web/video proof while preserving the calm original identity. Auto/Vault/House remain candidates and seven studies remain unfinished. Read docs/house-refinement-contract-2026-10-20.md. Do not start paid GPU jobs or a broad layout redesign.",
       "Next R2 work: dashboard helper scope, native aggregate Portfolio adoption, safe shared scenario ownership and common-date cash/wealth. Read docs/portfolio-funding-contract-2026-10-20.md; preserve saved caps as funded allocations, not added income, and retain separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
-      "Continue House/Land and six remaining domain refinements. Vault and Auto are textured candidates, not final collection approval. Read docs/vault-refinement-contract-2026-10-20.md. Preserve the shared publication lock, artist-review geometry/material fidelity and re-run all-model web/video gates after shared lighting edits.",
+      "Continue Land and six remaining domain refinements. Vault, Auto and House are textured candidates, not final collection approval. Preserve the shared publication lock, original identity, real apertures, roof geometry and per-model shipping caps. Re-run all-model web/video gates after shared lighting edits.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",

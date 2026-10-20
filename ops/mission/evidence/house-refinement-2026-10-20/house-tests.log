@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 1 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 70.6232
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 2 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 22.2716
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 3 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 21.9919
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 4 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 187.4404
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 5 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 26.869
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 6 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 71.85
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 666.6204

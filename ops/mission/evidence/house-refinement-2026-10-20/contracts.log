@@ -1,0 +1,296 @@
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 1 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 96.4797
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 2 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 37.7972
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 3 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 46.6335
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 4 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 303.0135
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 5 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 20.3371
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 6 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 53.6363
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 7 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 12.468
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 8 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 1.61
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 9 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 7.2863
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 10 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 2.6054
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 11 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 3.2761
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 12 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 4.1898
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 13 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 3.2726
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 14 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 4.7053
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 15 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 1.6658
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 16 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 2.2768
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 17 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 10.9898
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 18 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 2.4966
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 19 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 31.9154
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 20 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 16.1362
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 21 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 216.4194
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 22 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 7.9169
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 23 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 49.091
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 24 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 656.3173
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 25 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 328.6699
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 26 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 231.8106
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 27 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 11.2719
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 28 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 4.6413
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 29 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 584.1064
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 30 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 2.9089
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 31 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 3.1793
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 32 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 3.1746
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 33 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 2.2436
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 34 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 25.5186
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 35 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 4.4456
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 36 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 1.6124
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 37 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.7194
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 38 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.7633
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 39 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 0.8137
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 40 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 0.2324
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 41 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.6116
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 42 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.369
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 43 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.2186
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 44 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.2815
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 45 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 46.4491
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 46 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 2.7473
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 47 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3449
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2049.205
