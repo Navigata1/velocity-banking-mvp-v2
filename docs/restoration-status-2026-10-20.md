@@ -18,7 +18,10 @@ The existing aligned demo defaults were preserved.
   Collection-wide art approval remains.
 - Original refined House candidate:31,316 triangles, six embedded material maps,
   1,144,500bytes, limestone facades, open glazing/interiors, charcoal standing seams,
-  oak joinery and a clear landscaped approach. Seven authored studies remain.
+  oak joinery and a clear landscaped approach.
+- Original refined Land candidate: 49,834 triangles, eight embedded material maps,
+  709,260 bytes, real recessed pond, grounded path/stakes, connected woody branches
+  and folded individual leaf geometry. Six authored studies remain.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
@@ -63,7 +66,8 @@ The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. Vault is an original authored
 refinement, not an AI reconstruction of its poster. House is original architecture
 with generated albedos and authored approximate micro-normal/roughness maps, not a
-scanned building or exact reconstruction. The other seven meshes remain
+scanned building or exact reconstruction. Land is an original illustrative diorama
+with generated albedos and authored approximate surface/shading maps. The other six meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
@@ -96,8 +100,9 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 47 media contracts pass. Existing HyperFrames/Remotion checks pass with 27 fresh
-  stills; new all-model turntables have fresh movement/rest pixel proof. The existing
+- 56 media contracts pass, including nine Land and six House cases. Existing
+  HyperFrames/Remotion checks pass with 27 fresh stills; Land's turntable was rebuilt
+  and nine unchanged videos rechecked with fresh movement/rest pixel proof. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
@@ -107,9 +112,9 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
   demo defaults. The fixtures are corrected and the mobile contract suite passes
   locally. A fresh exact-SHA green run is still required; preview is not CI approval.
-- Latest fully verified baseline ec11223 passed both complete runs39502097560/
-  39502102981, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6302535434.
-  The new shared Portfolio checkpoint needs its own postflight receipt. No production
+- Latest fully verified baseline 20b28f3 passed complete push/PR runs 39512472477/
+  39512479956, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6303974765.
+  The new Land checkpoint needs its own postflight receipt. No production
   release is inferred from either earlier success or this local preflight report.
 - On the refined checkpoint 0d72c6b, push CI passed and all seven remote preview
   routes passed at desktop/375px. Its PR CI run exposed software-GPU screenshot
@@ -159,7 +164,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete seven remaining textured models and artist-review all three candidates and collection consistency.
+1. Complete six remaining textured models and artist-review all four candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -171,6 +176,12 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 8. Final native-device QA and refreshed bundles after remaining shared-engine changes.
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
+11. Make dashboard daily-interest display precision consistent: independent whole-dollar
+    rounding can show a $51 total with $51+$1 components. This does not demonstrate
+    an underlying unrounded sum error; reproduce and fix presentation separately.
+
+Public assets total 10,447,116 bytes, only 38,644 bytes below the unchanged 10 MiB
+cap. Later refinements must recover space through intentional optimization.
 
 ## Security Refresh
 
@@ -207,10 +218,11 @@ it has zero public tables and zero applied migrations. The repo has four migrati
 files and no cloud-project link. Local public-client credentials are absent, and
 the deployed preview explicitly reports local demo mode and unconfigured sync.
 
-Client/account contracts passed, but fresh SQL/RLS replay has not been completed
-in this session. Docker was stopped; its installed launcher exceeded the requested
-timeout and only that CLI request was canceled. No isolated SQL test stack was verified.
-Zero advisor notices on an empty schema do not prove owner isolation. No schema,
+Client/account contracts passed. Local Docker remained unavailable, but disposable
+GitHub CI subsequently replayed four migrations and passed 63 SQL assertions twice
+on both events, with lint/advisors and cleanup. This supersedes the earlier missing
+isolated-SQL proof, not the open hosted API/account/backup gates. Zero advisor
+notices on the empty cloud candidate still do not prove owner isolation. No cloud schema,
 grants, keys, user records or DNS were changed. See the sanitized
 `ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json` inventory.
 
@@ -255,11 +267,36 @@ candidate failed. All ten desktop/375px viewers and the new House turn pass; nin
 unchanged videos were rechecked, not rebuilt. Camera/studio/timing, finances and
 saved inputs are unchanged. See the House contract and its evidence folder.
 
-Three textured candidates are not three final art approvals. Economical foliage,
+At the House checkpoint, three textured candidates were not three final art approvals. Economical foliage,
 illustrative interiors, approximate maps and poster/model differences remain.
 The previous14ad261 head passed both full CI runs, SQL, Vercel and hosted checks;
 receipt: PR256 issuecomment-6303443438. This House report is preflight and requires
 new exact-head checks before any release. No production promotion occurred.
+
+## Land Refinement
+
+The Land preserves the original cutaway parcel, pond, winding path, four survey
+stakes and three broad-canopy trees. A shared analytic height field grounds actual
+geometry; connected curved branches carry individual folded leaf cards. Irregular
+layered faces include embedded roots/stones and a closed underside. Eight embedded
+maps fit a 709,260-byte model; original meadow/leaf sources and briefs are retained.
+
+Nine tests inspect hashes/PBR, terrain/pond/path contact, stakes/trees, cut faces,
+branch connectivity, lower-face winding and locked budget rejection. Deliberate
+in-memory branch detachment, face reversal and guard removal are rejected. Observed
+red cases and independent review clearance are retained in the evidence folder.
+The collection cap was not raised after richer intermediate builds failed.
+
+All ten desktop/375px hero viewers and seven local routes pass. Land's 1080p
+nine-second HyperFrames turn was rebuilt; nine unchanged turns were rechecked.
+Full media validation and 27 fresh stills pass. Other nine model bytes/records,
+camera/studio/timing, calculations, saved scenarios and dependencies are unchanged.
+
+This is four textured candidates and six studies, not four final art approvals.
+Canopy, water optics, layers and lighting remain illustrative and differ from the
+poster. See `docs/land-refinement-contract-2026-10-20.md`. This report is local
+preflight: require both new exact-head full CI runs, real SQL, Vercel and hosted
+browser proof, recorded in a subsequent PR receipt. No production promotion.
 
 Desktop package: `C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20`
 

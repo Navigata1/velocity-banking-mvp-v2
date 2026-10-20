@@ -22,7 +22,8 @@
     "remove inactive timing choices without dropping legacy saved frequency fields; correct Guardian and annual-extra copy",
     "real Chrome comparison regression gate at 1440px and 375px, including visible balance chart and invalid states",
     "ten generated studio-reference posters",
-    "licensed refined Auto, original refined Vault and House textured GLB candidates; seven other self-contained GLB studies",
+    "licensed refined Auto, original refined Vault, House and Land textured GLB candidates; six other self-contained GLB studies",
+    "original Land terrain/pond/path/cutaway and connected foliage, eight embedded maps, nine provenance/decoded-geometry/locked-budget regressions; identical protected regeneration",
     "shared web/HyperFrames studio reflections, original PBR maps and verified hinge/chamber geometry",
     "serialized model and manifest publication with Windows sharing retries, atomic JSON replacement and real rebuild/import overlap coverage",
     "source-hashed repeatable car optimization with separately licensed logo geometry and texture removed",
@@ -33,7 +34,8 @@
     "standing disposable Supabase Postgres CI gate: both source-checkpoint database jobs passed clean migration replay, 63 pgTAP assertions twice, lint/advisors, cleanup and proof upload"
   ],
   "remainingProductionGates": [
-    "Complete seven remaining textured hero models and artist-review all three refined candidates and collection consistency",
+    "Complete six remaining textured hero models and artist-review all four refined candidates and collection consistency; recover public asset bytes rather than raise the 10 MiB cap",
+    "Correct independent whole-dollar daily-interest display rounding without altering underlying unrounded financial calculations",
     "Unify scenario ownership across Dashboard, Portfolio and Vault without overwriting existing user scenarios",
     "Enforce lender terms and expose real transaction calendar assumptions in normal simulation paths",
     "Complete equal-budget equal-liability strategy comparisons across all routes",
@@ -52,7 +54,7 @@
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
     "turntables": "all ten 1920x1080 nine-second MP4s passed movement and return-to-start pixel checks",
     "existingThreeStage": "desktop/mobile genuine WebGL, selection and reduced-motion gates passed",
-    "media": "47 contracts pass including six House cases; new House turn rebuilt and all ten videos pass pixel verification. Shared studio unchanged. Full existing HyperFrames/Remotion checks and27 fresh matrix stills pass; original Intel precision warning/reel layout info notices remain",
+    "media": "56 contracts pass including nine Land and six House cases; new Land turn rebuilt and all ten videos pass pixel verification (nine unchanged, rechecked). Shared studio unchanged. Full existing HyperFrames/Remotion checks and27 fresh matrix stills pass; original Intel precision warning/reel layout info notices remain",
     "fallbacks": "delayed loading and repeated mode selection passed at both widths; injected WebP decode and network failures both preserve the poster",
     "mediaAudit": "production dependency tree: zero advisories; full development tooling: 13 advisories (8 high, 5 moderate), open",
     "webRuntimeAudit": "six findings including critical on old Next 16.2.10; zero after local Next/ESLint 16.4.2 and PostCSS 8.5.31 patch; not yet promoted to production",
@@ -63,13 +65,14 @@
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "Prior mortgage reviews retained. New Portfolio math review found LOC cap bypass and second-ranked LOC split omission; reproduced, fixed and cleared with independent oracle/conservation probes. Frontend review recorded in the checkpoint evidence. Actual lender/calendar and broad security approval excluded",
-    "deployment": "draft PR256;14ad261 passed both complete runs39508261387/39508267033, real SQL, Vercel and remote checks. ReceiptPR256 issuecomment-6303443438. New House checkpoint requires fresh exact-head proof; no production promotion",
+    "deployment": "draft PR256;20b28f3 passed complete push/PR runs39512472477/39512479956, real SQL, exact Vercel and remote checks. ReceiptPR256 issuecomment-6303974765. New Land checkpoint requires fresh exact-head proof; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },
   "limitations": [
     "Public TRELLIS.2 GPU quota blocked completion of reconstructed textured meshes; no paid GPU job or backend migration was initiated",
-    "Auto is adapted licensed geometry; Vault and House are original textured candidates. Seven models remain studies and all require collection art review. House albedos are image-generated, micro-normal/roughness approximations authored, not measured scans",
+    "Auto is adapted licensed geometry; Vault, House and Land are original textured candidates. Six models remain studies and all require collection art review. Generated albedos and authored surface maps are approximations, not measured scans; Land remains an illustrative diorama, not final photorealism",
+    "Public collection is10447116bytes, leaving38644bytes below the unchanged10MiB cap. Later refinements require optimization; model plus two manifests are not one crash-atomic transaction",
     "Ten base heroes do not replace every historical subcategory variant",
     "July completion counts are historical and do not establish current production readiness"
   ],
