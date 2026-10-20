@@ -34,7 +34,7 @@
     "Complete equal-budget equal-liability strategy comparisons across all routes",
     "Integrate real dated schedules before reintroducing timing choices; inactive controls are removed and saved fields preserved",
     "Verify live Supabase owner isolation, migrations, recovery and environment configuration",
-    "Verify custom domain and release deployment against this restoration branch",
+    "Verify final restored deployment SHA/env and post-promotion custom-domain browser proof; existing interestshield.app binding/DNS/HTTPS are verified",
     "Regenerate native bundles and repeat device QA after shared-engine changes",
     "Resolve development media-toolchain audit advisories and prove exact-SHA hosted CI"
   ],
@@ -54,6 +54,7 @@
     "mobileDependencyAudit": "critical count reduced from one to zero by compatible shell-quote patch 6e900d0; 40 noncritical findings remain, including CLI/Metro tooling; SDK remediation and exposure review stay open",
     "nativeExports": "fresh typecheck, contracts, seven web routes and Android/iOS Hermes exports passed after the critical patch; not device QA",
     "backendDiscovery": "cloud discovery available; name-matched Velocity Banking candidate has zero public tables/migrations; repo has four migrations but no cloud link or local public credentials; preview is local-only; no remote mutations",
+    "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "prior reviews retained; timing copy re-reviewed clear. New budget review found exact-payment floating-point and calendar-summary eligibility defects; reproduced, fixed and cleared with focused re-review",
     "deployment": "draft PR #256; 30b810e passed both CI runs, Vercel and remote desktop/mobile checks; timing/budget follow-up requires fresh exact-head checks; no production promotion",

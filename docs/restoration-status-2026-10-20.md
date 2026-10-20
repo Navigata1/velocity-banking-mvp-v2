@@ -43,7 +43,7 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 289 financial regressions, two independent reference scenarios, 78 closed-form
+- 289 web regression cases, two independent reference scenarios, 78 closed-form
   comparison cases, 25 zero-recovery conservation cases and ancillary contracts pass.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
@@ -116,7 +116,8 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 5. Normal-path dated-calendar support; inactive timing choices are now removed,
    not represented as a completed weekly/biweekly scheduling engine.
 6. Live Supabase isolation, schema, environment and recovery verification.
-7. Custom-domain and verified production deployment.
+7. Final restored production artifact verification. The existing custom domain,
+   DNS and HTTPS are now identified/verified; no new domain wiring is required.
 8. Final native-device QA and refreshed bundles after remaining shared-engine changes.
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
@@ -162,6 +163,20 @@ timeout and only that CLI request was canceled. No isolated SQL test stack was v
 Zero advisor notices on an empty schema do not prove owner isolation. No schema,
 grants, keys, user records or DNS were changed. See the sanitized
 `ops/mission/evidence/security-refresh-2026-10-20/backend-readiness.json` inventory.
+
+## Custom Domain Identified
+
+Authenticated Vercel discovery now confirms `interestshield.app` and `www` on the
+exact app project. DNS matches Vercel's configuration, Cloudflare nameservers are
+authoritative, HTTPS returns the app, `www` redirects 308 to apex and all seven
+current public routes pass HTTP smoke. Settings confirms local demo mode and
+unconfigured private sync. This does not prove the unreleased restoration candidate.
+
+The source canonical default and environment example now use the verified domain;
+runtime tests preserve explicit overrides, and the built canonical/robots/sitemap
+were checked. No DNS, domain assignment, production env, backend or deployment
+mutation occurred. A fresh bounded Docker probe still did not return in 20 seconds.
+See `ops/mission/evidence/timing-and-budget-2026-10-20/domain-readiness.json`.
 
 Comparison preview: http://127.0.0.1:53144/simulator
 

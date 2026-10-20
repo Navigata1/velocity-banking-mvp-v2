@@ -2,6 +2,8 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
+const ts = require('typescript');
 
 const appRoot = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(appRoot, relativePath), 'utf8');
@@ -20,7 +22,17 @@ const routeMetadata = new Map(
 );
 
 assert.match(siteMetadata, /NEXT_PUBLIC_SITE_URL/);
-assert.match(siteMetadata, /https:\/\/web-islanddevcrew\.vercel\.app/);
+assert.match(siteMetadata, /https:\/\/interestshield\.app/);
+function metadataFor(env) {
+  const testModule = { exports: {} };
+  const source = ts.transpileModule(siteMetadata, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  vm.runInNewContext(source, { module: testModule, exports: testModule.exports, URL, process: { env } });
+  return testModule.exports;
+}
+assert.equal(metadataFor({}).SITE_URL.origin, 'https://interestshield.app', 'default canonical uses the verified app domain');
+assert.equal(metadataFor({ NEXT_PUBLIC_SITE_URL: 'https://preview.example.com' }).SITE_URL.origin, 'https://preview.example.com', 'explicit environment override remains supported');
 assert.match(layout, /metadataBase: SITE_URL/);
 assert.match(layout, /alternates: \{ canonical: "\/" \}/);
 assert.match(layout, /openGraph:/);

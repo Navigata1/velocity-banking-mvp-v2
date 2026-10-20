@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T19:10:17Z",
+    "updated": "2026-10-20T19:25:46Z",
     "sessionCount": 5
   },
   "policies": {
@@ -56,7 +56,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/timing-and-budget-2026-10-20/web-tests.log",
           "lastRun": "2026-10-20T19:10:17Z",
-          "notes": "289 financial regressions, two reference fixtures, 78 closed-form comparison cases and 25 zero-recovery conservation cases; asset/accessibility/metadata contracts pass. Local draft evidence, not production proof."
+          "notes": "289 web engine/UI regression cases, two reference fixtures, 78 closed-form comparison cases and 25 zero-recovery conservation cases; asset/accessibility/metadata contracts pass. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
@@ -272,10 +272,10 @@
         {
           "id": "R4-T3",
           "title": "Confirm custom domain and exact-SHA production release",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "Authenticated Vercel discovery identifies interestshield.app/www on the exact app project, both verified. DNS matches, HTTPS works, www redirects 308 and all seven current public routes pass. Settings remains local-only. Candidate canonical/robots/sitemap now default to the verified domain; explicit env override preserved. Final restored deployment SHA, release env and post-promotion browser proof remain open. No DNS/production writes."
         },
         {
           "id": "R4-T4",
@@ -432,7 +432,7 @@
       "direction": "up"
     },
     {
-      "label": "Web financial regressions passing",
+      "label": "Web regression cases passing",
       "baseline": "263",
       "current": "289",
       "target": "289",
@@ -480,9 +480,9 @@
       "note": "Patched web runtime audit is clean, but production has not been promoted. Native critical finding is patched without an SDK change; 40 noncritical findings remain, including build tooling. Supported remediation and exposure review remain required."
     },
     {
-      "title": "Production backend and custom domain unverified",
+      "title": "Backend and restored production artifact unverified",
       "severity": "high",
-      "note": "Cloud access is recovered, but the similarly named candidate is empty and not linked; the preview is local-only. Fresh SQL/RLS tests require an available isolated Docker backend. Do not mutate production or DNS while binding and release gates are open."
+      "note": "The custom domain is identified and its existing binding/DNS/HTTPS verified. Its current Settings confirms local-only mode. The empty Supabase candidate is not linked, a bounded Docker probe still times out and final restored release gates remain open. No production/backend/DNS mutations."
     }
   ],
   "prLog": [
@@ -779,11 +779,12 @@
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
       "Use backend-readiness.json: Supabase access is now available, but the candidate has no schema/migrations and the app is local-only. Establish a verified isolated target and fresh SQL/RLS proof before any production wiring; no candidate selection by name alone.",
+      "Use domain-readiness.json: interestshield.app/www are already verified on the app project with working Cloudflare DNS and HTTPS. Do not re-add or rewrite DNS. Verify the final restored deployment SHA, Production SITE_URL override and custom-domain browser smoke only when release gates pass.",
       "The approved heartbeat runs every four hours. Continue bounded verified improvements on codex/restoration/asset-heroes and update PR #256."
     ],
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
-      "Supabase project binding is unconfigured and fresh isolated SQL tests are unavailable without Docker; exact owned custom-domain hostname/access remains unverified."
+      "Supabase project binding is unconfigured and fresh isolated SQL tests remain unavailable; a new bounded read-only Docker probe timed out. The custom domain is now identified and its existing binding verified; final restored production release is still gated."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",
