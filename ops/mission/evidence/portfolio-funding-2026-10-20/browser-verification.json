@@ -1,5 +1,5 @@
 {
-  "origin": "http://127.0.0.1:50400",
+  "origin": "http://127.0.0.1:49182",
   "receipts": [
     {
       "scenario": "unfunded-extra",
@@ -506,6 +506,70 @@
       "savedPortfolioAndSeparateScenarioPreserved": true
     },
     {
+      "scenario": "focus-not-first-payoff",
+      "width": 1440,
+      "input": {
+        "debts": [
+          {
+            "id": "smoke-loan",
+            "name": "Smoke Loan",
+            "category": "auto",
+            "kind": "amortized",
+            "balance": 100,
+            "apr": 0,
+            "minPaymentRule": {
+              "type": "fixed",
+              "amount": 100
+            },
+            "paymentSource": "checking"
+          },
+          {
+            "id": "mortgage",
+            "name": "Mortgage",
+            "category": "auto",
+            "kind": "amortized",
+            "balance": 1000,
+            "apr": 0,
+            "minPaymentRule": {
+              "type": "fixed",
+              "amount": 500
+            },
+            "paymentSource": "checking"
+          }
+        ],
+        "monthlyIncome": 700,
+        "monthlyExpenses": 0,
+        "extraMonthlyPayment": 0,
+        "chunkAmount": 0,
+        "loc": {
+          "limit": 2000,
+          "balance": 500,
+          "apr": 0
+        },
+        "strategy": "velocity",
+        "focusMode": "single",
+        "splitRatioPrimary": 0.7
+      },
+      "observedSummary": "Estimated Debt-Free\n\nJan 2027\n\n3 mo • Interest est. $0",
+      "cash": "Cash at payoff\n\n$500\n\nUnused budget held as cash. Not incremental savings.",
+      "scope": "Listed debts plus the separate LOC balance, under the same income and expenses in every strategy. Cash is measured at each plan's own payoff date, not a common-date wealth comparison.",
+      "actions": [
+        {
+          "focusBadgeIds": [
+            "portfolio-focus-mortgage"
+          ],
+          "firstPayoffText": "1\n\nSmoke Loan\n\nPaid off around Nov 2026\n\nMonth 1",
+          "currentTargetText": "⚡ Current target"
+        }
+      ],
+      "overflow": {
+        "page": false,
+        "stats": false
+      },
+      "errors": [],
+      "savedPortfolioAndSeparateScenarioPreserved": true
+    },
+    {
       "scenario": "unfunded-extra",
       "width": 375,
       "input": {
@@ -1002,6 +1066,70 @@
       "cash": "Cash at payoff\n\n$0\n\nUnused budget held as cash. Not incremental savings.",
       "scope": "Listed debts plus the separate LOC balance, under the same income and expenses in every strategy. Cash is measured at each plan's own payoff date, not a common-date wealth comparison.",
       "actions": [],
+      "overflow": {
+        "page": false,
+        "stats": false
+      },
+      "errors": [],
+      "savedPortfolioAndSeparateScenarioPreserved": true
+    },
+    {
+      "scenario": "focus-not-first-payoff",
+      "width": 375,
+      "input": {
+        "debts": [
+          {
+            "id": "smoke-loan",
+            "name": "Smoke Loan",
+            "category": "auto",
+            "kind": "amortized",
+            "balance": 100,
+            "apr": 0,
+            "minPaymentRule": {
+              "type": "fixed",
+              "amount": 100
+            },
+            "paymentSource": "checking"
+          },
+          {
+            "id": "mortgage",
+            "name": "Mortgage",
+            "category": "auto",
+            "kind": "amortized",
+            "balance": 1000,
+            "apr": 0,
+            "minPaymentRule": {
+              "type": "fixed",
+              "amount": 500
+            },
+            "paymentSource": "checking"
+          }
+        ],
+        "monthlyIncome": 700,
+        "monthlyExpenses": 0,
+        "extraMonthlyPayment": 0,
+        "chunkAmount": 0,
+        "loc": {
+          "limit": 2000,
+          "balance": 500,
+          "apr": 0
+        },
+        "strategy": "velocity",
+        "focusMode": "single",
+        "splitRatioPrimary": 0.7
+      },
+      "observedSummary": "Estimated Debt-Free\n\nJan 2027\n\n3 mo • Interest est. $0",
+      "cash": "Cash at payoff\n\n$500\n\nUnused budget held as cash. Not incremental savings.",
+      "scope": "Listed debts plus the separate LOC balance, under the same income and expenses in every strategy. Cash is measured at each plan's own payoff date, not a common-date wealth comparison.",
+      "actions": [
+        {
+          "focusBadgeIds": [
+            "portfolio-focus-mortgage"
+          ],
+          "firstPayoffText": "1\n\nSmoke Loan\n\nPaid off around Nov 2026\n\nMonth 1",
+          "currentTargetText": "⚡ Current target"
+        }
+      ],
       "overflow": {
         "page": false,
         "stats": false

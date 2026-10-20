@@ -65,19 +65,23 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 328 web/shared regressions, two independent reference scenarios,78 prior
+- 329 web/shared regressions, two independent reference scenarios,78 prior
   comparisons,25 zero-recovery,100 capped-mortgage and480 new Portfolio closed-form
   cases pass, plus360 repeatable seeded paths with240 direct-oracle matches and
   ancillary contracts.
 - Twenty Vault browser executions at1440px/375px pass funding, cash, disclosures,
   stored timing, adverse results, exact final/cent-short, failed horizon and large
   amount bounds. The16 existing Simulator/saved-data cases remain green.
-- Twenty-two Portfolio executions at1440px/375px pass policy/cap edits, retained cash,
+- Twenty-four Portfolio executions at1440px/375px pass policy/cap edits, retained cash,
   existing/ranked/split LOC, final/cent-short/cleared states and unchanged separate
   scenario data. Chrome caught an imported100m balance shownas10m; both editors
   now preserve that value through a no-op edit. Review also caught imported LOC
   clipping, lost LOC targets, invalid interest claims and paid-state copy; fixed and
   cleared on re-review. Screenshots wait for reveal opacity.
+- Live hosted QA then caught current-target badges derived from eventual payoff
+  order. They now use the engine's explicit allocation targets in desktop/mobile
+  and the payoff list. A dedicated fixture proves Auto clears first while Mortgage
+  remains current; focused independent review cleared the display-only correction.
 - All seven routes passed rendered desktop/mobile smoke.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP

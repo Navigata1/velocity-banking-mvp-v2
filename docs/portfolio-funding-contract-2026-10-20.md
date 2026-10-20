@@ -87,12 +87,16 @@ closed-form payoff/cash expectations, retaining the prior mortgage and Simulator
 references. A fixed20261020 LCG seed adds360 repeatable mixed-debt paths, including
 240 direct-policy row-by-row oracle matches. Historical transient reviewer counts
 were not reproduced exactly and are not counted as repeatable evidence.
-The standing browser gate exercises22 cases at1440px/375px, including
+The standing browser gate exercises24 cases at1440px/375px, including
 actual policy switching, manual-cap edits, no-op imported-balance edit, saved
 Portfolio preservation and unchanged separate scenario timing. Presentation review
 also reproduced lost LOC targets, unsupported zero-interest claims on rejected
 plans and paid-off comparison copy; corrected and cleared on re-review. Chunk
 controls are only shown for the single Velocity policy that can draw chunks.
+Manual hosted QA additionally caught a current-focus label derived from eventual
+payoff order. Both debt layouts and the payoff list now use the engine's current
+allocation flags. The dedicated fixture has Auto finish first while Mortgage is
+the actual current target. No calculation or saved-data change was needed.
 
 Direct LOC interest is starting balance times APR times30/365; loan interest is
 APR/12. Single Money Loop Velocity keeps its income-start/expense-spread average

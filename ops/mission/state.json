@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T22:18:27Z",
+    "updated": "2026-10-20T22:27:20Z",
     "sessionCount": 9
   },
   "policies": {
@@ -55,8 +55,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:18:27Z",
-          "notes": "328 regressions, prior reference lanes,480 new Portfolio closed-form policies and360 repeatable seeded paths (240 direct-oracle matches) pass. Funded caps, full liabilities, ranked splits, cash, promo and cleared states corrected. Review findings and imported loan/LOC no-op bugs reproduced and cleared. Local draft evidence, not production proof."
+          "lastRun": "2026-10-20T22:27:20Z",
+          "notes": "329 regressions, prior reference lanes,480 new Portfolio closed-form policies and360 repeatable seeded paths (240 direct-oracle matches) pass. Funded caps, full liabilities, ranked splits, cash, promo and cleared states corrected. Review findings and imported loan/LOC no-op bugs reproduced and cleared. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
@@ -64,8 +64,8 @@
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
           "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T22:18:27Z",
-          "notes": "All seven built routes pass at1440px/390px locally; separate Portfolio22/Vault20/Simulator16 browser cases cover375px, controls, funding and saved-data preservation. No release promotion."
+          "lastRun": "2026-10-20T22:27:20Z",
+          "notes": "All seven built routes pass at1440px/390px locally; separate Portfolio24/Vault20/Simulator16 browser cases cover375px, controls, funding and saved-data preservation. No release promotion."
         },
         {
           "id": "R0-G3",
@@ -73,7 +73,7 @@
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
           "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6302535434",
-          "lastRun": "2026-10-20T22:18:27Z",
+          "lastRun": "2026-10-20T22:27:20Z",
           "notes": "ec11223 passed both complete CI runs, SQL, Vercel and hosted checks. This new shared Portfolio/UI checkpoint requires fresh exact-head proof, including its new Portfolio gate. Previous green is not production approval."
         }
       ]
@@ -169,7 +169,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Simulator web/Expo, Vault and web Portfolio include available budget and LOC. Portfolio's portable module caps direct extras, ranks/splits LOC, retains cash and supplies gross Money Loop routing. Math and presentation findings reproduced and cleared;328 regressions,480 closed-form policies,360 seeded paths/240 direct-oracle matches and22 Portfolio Chrome cases pass. Imported100m loan/LOC and200m limit no-op edits preserve data. Dashboard helpers, native aggregate Portfolio adoption, shared ownership, common-date wealth and lender/calendar rules remain open."
+          "notes": "Simulator web/Expo, Vault and web Portfolio include available budget and LOC. Portfolio's portable module caps direct extras, ranks/splits LOC, retains cash and supplies gross Money Loop routing. Math and presentation findings reproduced and cleared;329 regressions,480 closed-form policies,360 seeded paths/240 direct-oracle matches and24 Portfolio Chrome cases pass. Imported100m loan/LOC and200m limit no-op edits preserve data. Dashboard helpers, native aggregate Portfolio adoption, shared ownership, common-date wealth and lender/calendar rules remain open."
         },
         {
           "id": "R2-T3",
@@ -187,8 +187,8 @@
           "command": "npm --prefix apps/web test",
           "status": "passed",
           "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:18:27Z",
-          "notes": "328 regressions pass locally. Portfolio conserves its full debt/LOC/cash book; main Simulator/Vault entry and media outputs remain unchanged. Not all routes or lender integration are complete."
+          "lastRun": "2026-10-20T22:27:20Z",
+          "notes": "329 regressions pass locally. Portfolio conserves its full debt/LOC/cash book; main Simulator/Vault entry and media outputs remain unchanged. Not all routes or lender integration are complete."
         },
         {
           "id": "R2-G2",
@@ -196,7 +196,7 @@
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
           "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:18:27Z",
+          "lastRun": "2026-10-20T22:27:20Z",
           "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
         },
         {
@@ -223,8 +223,8 @@
           "command": "npm --prefix apps/web run smoke:portfolio:built",
           "status": "passed",
           "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/browser-verification.json",
-          "lastRun": "2026-10-20T22:18:27Z",
-          "notes": "22 Chrome executions at1440px/375px cover funded caps/cash, ranked/split LOC, final/cent-short, interest shortfall, cleared and large imports. Real policy/cap edits,100m loan/LOC and200m limit no-op edits pass; separate timing stays intact. Failed LOC claims suppressed and inactive chunk controls absent. Stable-opacity screenshots replace rejected dark captures. No overflow/errors."
+          "lastRun": "2026-10-20T22:27:20Z",
+          "notes": "24 Chrome executions at1440px/375px cover funded caps/cash, ranked/split LOC, final/cent-short, interest shortfall, cleared and large imports. Real policy/cap edits,100m loan/LOC and200m limit no-op edits pass; separate timing stays intact. Failed LOC claims suppressed and inactive chunk controls absent. Focus labels follow current allocation, not eventual payoff order. Stable-opacity screenshots replace rejected dark captures. No overflow/errors."
         }
       ]
     },
@@ -452,8 +452,8 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "328",
-      "target": "328",
+      "current": "329",
+      "target": "329",
       "direction": "up"
     },
     {

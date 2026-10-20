@@ -46,8 +46,8 @@
   "verification": {
     "webBuild": "passed Next.js production build and TypeScript",
     "webLint": "passed",
-    "webTests": "328 regressions,2 reference scenarios,78 comparisons,25 zero-recovery,100 capped-mortgage,480 Portfolio closed-form policies and360 deterministic seeded paths (240 direct-oracle row matches), plus ancillary contracts passed",
-    "comparisonBrowser": "22 Portfolio +20 Vault +16 Simulator/saved-data executions at1440px/375px. Actual controls/caps, ranked/split LOC, cash, imported100m loan/LOC and200m limit no-op edits, cleared/final/cent-short and saved timing pass. Unsupported LOC claims hidden; inactive chunk controls absent. Stable-opacity screenshots; no errors/overflow",
+    "webTests": "329 regressions,2 reference scenarios,78 comparisons,25 zero-recovery,100 capped-mortgage,480 Portfolio closed-form policies and360 deterministic seeded paths (240 direct-oracle row matches), plus ancillary contracts passed",
+    "comparisonBrowser": "24 Portfolio +20 Vault +16 Simulator/saved-data executions at1440px/375px. Actual controls/caps, ranked/split LOC, cash, imported100m loan/LOC and200m limit no-op edits, cleared/final/cent-short and saved timing pass. Unsupported LOC claims hidden; inactive chunk controls absent. Stable-opacity screenshots; no errors/overflow",
     "routes": "all seven routes passed rendered Chrome smoke at desktop and mobile widths",
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
     "turntables": "all ten 1920x1080 nine-second MP4s passed movement and return-to-start pixel checks",

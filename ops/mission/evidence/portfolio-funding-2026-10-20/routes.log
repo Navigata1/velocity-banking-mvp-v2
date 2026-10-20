@@ -2,7 +2,7 @@
 > web@0.1.0 smoke:rendered:built
 > node scripts/smoke-rendered.cjs
 
-Rendered smoke origin: http://127.0.0.1:55005
+Rendered smoke origin: http://127.0.0.1:61222
 Browser executable: C:\Program Files\Google\Chrome\Application\chrome.exe
 PASS desktop / 1440px
 PASS desktop /simulator 1440px

@@ -24,6 +24,7 @@ PASS Portfolio cleared and LOC-only books do not require a new borrowing setup
 PASS Portfolio run comparisons retain a remaining LOC as the actual next target
 PASS Portfolio paid-off comparisons do not describe valid zero months as unprojected
 PASS Portfolio suppresses unsupported LOC interest claims and inactive draw controls
+PASS Portfolio focus labels use current allocation targets rather than eventual payoff order
 PASS capped direct repayment preserves the scheduled loan policy and accounts for unused cash
 PASS all mortgage plans reject a scheduled payment that exceeds the available household budget
 PASS mortgage comparison includes the existing LOC and accepts zero residual with no new chunks
@@ -334,7 +335,7 @@ PASS repository exposes a manual release deployment smoke workflow
 PASS repository documents the verified Vercel release and custom-domain handoff
 PASS client mount hook notifies subscribers after hydration
 PASS first-run demo defaults open Dashboard, Vault, and Portfolio without warning states
-328 regression tests passed.
+329 regression tests passed.
 Independent financial reference lane passed 2 anonymized scenarios, 78 closed-form comparison cases, 25 zero-recovery conservation cases, 100 capped-mortgage and 480 Portfolio closed-form policy cases; 360 repeatable seeded Portfolio paths including 240 direct-oracle matches.
 PASS src/app/layout.tsx: skip link targets main content
 PASS src/app/layout.tsx: main content exposes a skip-link target

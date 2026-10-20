@@ -13,6 +13,7 @@ PASS Portfolio loc-interest-shortfall at 1440px
 PASS Portfolio already-paid at 1440px
 PASS Portfolio large-value at 1440px
 PASS Portfolio large-loc at 1440px
+PASS Portfolio focus-not-first-payoff at 1440px
 PASS Portfolio unfunded-extra at 375px
 PASS Portfolio retained-cash at 375px
 PASS Portfolio existing-loc at 375px
@@ -24,3 +25,4 @@ PASS Portfolio loc-interest-shortfall at 375px
 PASS Portfolio already-paid at 375px
 PASS Portfolio large-value at 375px
 PASS Portfolio large-loc at 375px
+PASS Portfolio focus-not-first-payoff at 375px

@@ -67,13 +67,21 @@ Reviewer excluded browser/build/native execution, actual lender minimums, normal
 dated calendars, capacity enforcement, lender cent rounding and production approval.
 Main-agent rendered proof and builds are separate evidence, not reviewer execution.
 
+Live13c62bc browser QA then found current-focus badges using eventual payoff order,
+contradicting correct engine priorities. A failing fixture plus desktop/mobile
+browser case proves Auto finishes first while Mortgage is current. Both debt
+layouts and the payoff list now share the engine flag. Focused read-only reviewer
+Mill,01a15b6a-f243-74c0-bea7-875bfccca76c, cleared the five-file display/test diff
+with13 isolated helper checks, including split/LOC-only/invalid/frozen inputs.
+No math or saved-data change. Reviewer did not run full browser/build suites.
+
 ## Fresh Gates
 
-- 328 web/shared regressions and existing ancillary contracts.
+- 329 web/shared regressions and existing ancillary contracts.
 - 2 anonymized reference fixtures,78 prior comparison,25 zero-recovery,100 capped-
   mortgage and480 Portfolio closed-form policy cases;360 seeded paths/240 oracle
   matches as above. These are educational references, not bank quotes.
-- 22 actual Portfolio Chrome executions1440px/375px; observed values/actions/inputs
+- 24 actual Portfolio Chrome executions1440px/375px; observed values/actions/inputs
   retained in JSON. Policies/caps, failed/cleared/final/large states, saved data and
   no-op loan/LOC edits pass with no page errors or page/stat overflow.
 - Screenshot opacity is checked before capture. Earlier dark full-page fade-in
