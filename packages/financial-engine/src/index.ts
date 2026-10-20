@@ -46,6 +46,7 @@ export interface DirectRepaymentInputs {
   loc?: LOCDetails;
   monthlyBudget: number;
   strategy: DirectRepaymentStrategy;
+  debtExtraPaymentCap?: number;
   maxMonths?: number;
 }
 
@@ -71,6 +72,38 @@ export interface DirectRepaymentResult {
 export const SIMULATOR_COMPARISON_SCOPE = 'Same active debt, existing LOC balance and available monthly budget. Other household debts are excluded.';
 export const SIMULATOR_COMPARISON_ASSUMPTIONS = 'Educational estimate: constant APRs, no fees and no draw-period expiry. Direct repayment reserves LOC interest only, not a verified lender minimum. Check actual lender terms before acting.';
 export const SIMULATOR_COMPARISON_TIMING = 'Direct strategies pay at month end; LOC interest uses 30 days / 365. Velocity estimates income at the start and expenses across 30 days. Unused money stays as cash, not an automatic extra debt payment. Cash is measured at each plan\'s own payoff month, not a common date.';
+
+export interface MortgageRepaymentInputs {
+  principalBalance: number;
+  debtApr: number;
+  debtPayment: number;
+  loc: LOCDetails;
+  monthlyIncome: number;
+  monthlyExpenses: number;
+  maxMonths?: number;
+}
+
+export interface MortgagePlanProjection {
+  months: number;
+  totalInterest: number;
+  cashAtPayoff: number;
+  isPayoffPossible: boolean;
+  failureReason?: MoneyLoopFailureReason;
+}
+
+export interface MortgageStrategyProjection extends MortgagePlanProjection {
+  saved: number;
+  monthsSaved: number;
+  canCompare: boolean;
+}
+
+export interface MortgageComparisonResult {
+  monthlyBudget: number;
+  standard: MortgagePlanProjection;
+  biweekly: MortgageStrategyProjection & { extraAmount: number };
+  extraPayment: MortgageStrategyProjection & { extraAmount: number };
+  velocity: MortgageStrategyProjection & { chunkSize: number };
+}
 
 export interface MoneyLoopLOC {
   limit: number;
@@ -783,6 +816,7 @@ export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRe
   const locRate = calculateDailyRate(inputs.loc?.apr ?? 0) * 30;
   const scheduledPayment = finiteNonNegative(inputs.debtPayment);
   const budget = finiteNonNegative(inputs.monthlyBudget);
+  const extraCap = inputs.debtExtraPaymentCap === undefined ? Infinity : finiteNonNegative(inputs.debtExtraPaymentCap);
   const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
   const monthlyData: DirectRepaymentMonth[] = [];
   let totalInterest = 0;
@@ -812,7 +846,7 @@ export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRe
         ? locBalance > 0.01 && (debtBalance <= 0.01 || calculateMonthlyRate(inputs.loc?.apr ?? 0) > debtRate)
         : false;
     const payDebt = () => {
-      const extra = Math.min(remaining, Math.max(0, debtBalance + debtInterest - debtPayment));
+      const extra = Math.min(remaining, extraCap, Math.max(0, debtBalance + debtInterest - debtPayment));
       debtPayment += extra;
       remaining -= extra;
     };
@@ -1109,6 +1143,76 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     monthlyData,
     isPayoffPossible,
     failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
+  };
+}
+
+/** Four allocation policies share the same household budget and both starting liabilities. */
+export function compareMortgageRepayment(input: MortgageRepaymentInputs): MortgageComparisonResult {
+  const principalBalance = finiteNonNegative(input.principalBalance);
+  const debtApr = finiteNonNegative(input.debtApr);
+  const debtPayment = finiteNonNegative(input.debtPayment);
+  const loc = { limit: finiteNonNegative(input.loc.limit), balance: finiteNonNegative(input.loc.balance), apr: finiteNonNegative(input.loc.apr) };
+  const monthlyIncome = finiteNumber(input.monthlyIncome);
+  const monthlyExpenses = finiteNonNegative(input.monthlyExpenses);
+  const monthlyBudget = monthlyIncome - monthlyExpenses;
+  const maxMonths = finitePositiveInteger(input.maxMonths ?? 1200, 1200);
+  const mortgageFailure = principalBalance > 0.01 && debtPayment <= principalBalance * calculateMonthlyRate(debtApr)
+    ? 'payment-below-interest' : undefined;
+  const availableExtra = Math.max(0, monthlyBudget - calculateRequiredDebtPayment(principalBalance, debtApr, debtPayment)
+    - loc.balance * calculateDailyRate(loc.apr) * 30);
+  const annualExtra = Math.min(debtPayment / 12, availableExtra);
+  const extraAmount = Math.min(availableExtra, Math.max(monthlyBudget * 0.5, 200), 1000);
+  const recoveryCash = monthlyBudget - debtPayment;
+  const chunkSize = loc.limit > loc.balance && recoveryCash > 0 && !mortgageFailure
+    ? Math.min(loc.limit * 0.4, recoveryCash * 3, principalBalance * 0.1) : 0;
+  const invalid = (failureReason: MoneyLoopFailureReason): MortgagePlanProjection => ({
+    months: 0, totalInterest: 0, cashAtPayoff: 0, isPayoffPossible: false, failureReason,
+  });
+  const direct = (debtExtraPaymentCap: number): MortgagePlanProjection => {
+    if (mortgageFailure) return invalid(mortgageFailure);
+    const projection = simulateDirectRepayment({
+      principalBalance, debtApr, debtPayment, loc, monthlyBudget, maxMonths,
+      strategy: 'debt-first', debtExtraPaymentCap,
+    });
+    return {
+      months: projection.payoffMonths, totalInterest: projection.totalInterest,
+      cashAtPayoff: projection.isPayoffPossible ? projection.monthlyData.at(-1)?.cashBalance ?? 0 : 0,
+      isPayoffPossible: projection.isPayoffPossible, failureReason: projection.failureReason,
+    };
+  };
+  const standard = direct(0);
+  const biweekly = direct(annualExtra);
+  const extraPayment = direct(extraAmount);
+  const nothingOwed = principalBalance <= 0.01 && loc.balance <= 0.01;
+  const velocityFailure = mortgageFailure ?? (nothingOwed ? undefined
+    : loc.limit <= 0 ? 'loc-setup' : loc.balance > loc.limit ? 'loc-overlimit'
+      : loc.balance === loc.limit ? 'loc-no-capacity' : undefined);
+  let velocity: MortgagePlanProjection;
+  if (velocityFailure) velocity = invalid(velocityFailure);
+  else if (nothingOwed) velocity = { months: 0, totalInterest: 0, cashAtPayoff: 0, isPayoffPossible: true };
+  else {
+    const projection = simulateMoneyLoopPayoff({
+      principalBalance, debtApr, debtPayment, loc, maxMonths, chunkAmount: chunkSize,
+      cashFlowPaydown: recoveryCash, locDepositAmount: monthlyIncome,
+      locExpenseAmount: monthlyExpenses + debtPayment, initialMonthsSinceChunk: 999,
+    });
+    velocity = {
+      months: projection.payoffMonths, totalInterest: projection.totalInterest,
+      cashAtPayoff: projection.isPayoffPossible ? projection.monthlyData.at(-1)?.cashBalance ?? 0 : 0,
+      isPayoffPossible: projection.isPayoffPossible, failureReason: projection.failureReason,
+    };
+  }
+  const difference = (plan: MortgagePlanProjection): MortgageStrategyProjection => {
+    const canCompare = standard.isPayoffPossible && plan.isPayoffPossible;
+    return { ...plan, canCompare,
+      saved: canCompare ? standard.totalInterest - plan.totalInterest : 0,
+      monthsSaved: canCompare ? standard.months - plan.months : 0,
+    };
+  };
+  return { monthlyBudget, standard,
+    biweekly: { ...difference(biweekly), extraAmount: annualExtra },
+    extraPayment: { ...difference(extraPayment), extraAmount },
+    velocity: { ...difference(velocity), chunkSize },
   };
 }
 

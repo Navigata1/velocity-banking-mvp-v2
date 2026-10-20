@@ -162,4 +162,33 @@ for (let index = 1; index <= 25; index += 1) {
   assertNear(result.monthlyData.at(-1).cashBalance, expectedMonths * budget - principal - locBalance, 'closed-form final reserve');
   boundaryCases += 1;
 }
-console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios, ${directCases} closed-form comparison cases and ${boundaryCases} zero-recovery conservation cases.`);
+
+// At zero APR, a capped mortgage cannot finish before its own payment schedule
+// or before the full household budget can clear both liabilities.
+let mortgageCases = 0;
+for (let index = 1; index <= 25; index += 1) {
+  const principal = 1200 + index * 47;
+  const payment = 35 + index * 7;
+  const budget = payment + 100 + index * 23;
+  for (const cap of [0, 15 + index * 3]) {
+    for (const locBalance of [0, index * 43]) {
+      const expectedMonths = Math.max(Math.ceil(principal / (payment + cap)), Math.ceil((principal + locBalance) / budget));
+      const result = engine.simulateDirectRepayment({
+        principalBalance: principal, debtApr: 0, debtPayment: payment,
+        loc: { limit: 10000, balance: locBalance, apr: 0 },
+        monthlyBudget: budget, strategy: 'debt-first', debtExtraPaymentCap: cap,
+      });
+      assert.equal(result.isPayoffPossible, true);
+      assert.equal(result.payoffMonths, expectedMonths);
+      for (const row of result.monthlyData) {
+        assert.ok(row.debtPayment <= payment + cap + 1e-8);
+        assert.ok(row.debtPayment + row.locPayment <= budget + 1e-8);
+        assertNear(principal + locBalance - row.month * budget + row.cashBalance,
+          row.debtBalance + row.locBalance, `capped mortgage conservation ${index}/${cap}/${row.month}`);
+      }
+      assertNear(result.monthlyData.at(-1).cashBalance, expectedMonths * budget - principal - locBalance, 'capped mortgage cash');
+      mortgageCases += 1;
+    }
+  }
+}
+console.log(`Independent financial reference lane passed ${fixtures.scenarios.length} anonymized scenarios, ${directCases} closed-form comparison cases, ${boundaryCases} zero-recovery conservation cases and ${mortgageCases} capped-mortgage closed-form cases.`);
