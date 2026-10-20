@@ -37,4 +37,8 @@ const source = await readFile(new URL('../web/src/components/hero/turntable.ts',
 await writeFile(new URL('hero-turntable.js', vendorRoot), ts.transpileModule(source, {
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
 }).outputText);
+const studio = await readFile(new URL('../web/src/components/hero/studio-environment.ts', mediaRoot), 'utf8');
+await writeFile(new URL('studio-environment.js', vendorRoot), ts.transpileModule(studio, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
+}).outputText);
 await cp(vendorRoot, new URL('hero-turntables/vendor/', mediaRoot), { recursive: true });

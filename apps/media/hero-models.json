@@ -100,12 +100,17 @@
   },
   {
     "id": "vault",
-    "bytes": 467588,
-    "meshes": 44,
-    "triangles": 13840,
-    "sha256": "d355b2c34166b4dab7d7140f7f742c912ad4a7cca90a72b86efac47df60c9fb0",
-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "quality": "refined-textured",
+    "bytes": 719996,
+    "meshes": 45,
+    "triangles": 31976,
+    "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594",
+    "sourceSha256": "d49baf55e3b8ad524256171d4771b11f06967fb9d574cb7166a08558ed3816a7",
+    "sourceFile": "apps/media/scripts/build-refined-vault.mjs",
+    "creator": "InterestShield project",
+    "license": "Original project asset; no third-party license dependency",
+    "provenance": "Original authored open-chamber geometry and deterministic brushed/turned metal PBR maps; not an AI reconstruction of the studio poster.",
     "units": "normalized stage units",
-    "version": 1
+    "version": 2
   }
 ]

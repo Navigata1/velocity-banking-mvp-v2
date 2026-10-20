@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { createHeroEnvironment } from './studio-environment';
 import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_TURN_SECONDS } from './turntable';
 
 interface Props { model: string; replay: number; onError: () => void; onReady: (ready: boolean) => void; }
@@ -26,11 +26,13 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     renderer.setClearColor(0x000000, 0);
     element.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const room = new RoomEnvironment();
-    const environment = pmrem.fromScene(room, 0.04);
+    let environment: THREE.WebGLRenderTarget;
+    try { environment = createHeroEnvironment(renderer); }
+    catch {
+      renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
+      onError(); return;
+    }
     scene.environment = environment.texture;
-    room.dispose(); pmrem.dispose();
     scene.add(new THREE.HemisphereLight(0xffffff, 0x414d52, 2.5));
     const key = new THREE.DirectionalLight(0xffffff, 4); key.position.set(-3, 6, 5); scene.add(key);
     const rim = new THREE.DirectionalLight(0xb8d9e6, 3); rim.position.set(4, 3, -4); scene.add(rim);

@@ -19,3 +19,30 @@ const model=new THREE.Group(); model.add(new THREE.Mesh(geometry,material),new T
 moduleOutput.exports.disposeModel(model);
 assert.deepEqual(count,{geometry:1,material:1,texture:1,image:1});
 console.log('Hero resource cleanup releases shared geometry, materials, textures and decoded images exactly once.');
+
+const studioSource=fs.readFileSync(path.join(__dirname,'../src/components/hero/studio-environment.ts'),'utf8');
+for(const fails of [false,true]) {
+  const released={geometry:0,material:0,texture:0,generator:0};
+  const target={texture:'environment'}, output={exports:{}};
+  class PMREMGenerator {
+    fromScene(scene) {
+      assert.equal(scene.children.length,5);
+      const texture=scene.children[0].material.map;
+      texture.addEventListener('dispose',()=>released.texture++);
+      for(const mesh of scene.children) {
+        mesh.geometry.addEventListener('dispose',()=>released.geometry++);
+        mesh.material.addEventListener('dispose',()=>released.material++);
+        assert.equal(mesh.material.map,texture);
+      }
+      if(fails) throw new Error('PMREM failed');
+      return target;
+    }
+    dispose(){released.generator++;}
+  }
+  vm.runInNewContext(ts.transpileModule(studioSource,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,
+    {exports:output.exports,module:output,require:()=>({...THREE,PMREMGenerator})});
+  if(fails) assert.throws(()=>output.exports.createHeroEnvironment({}),/PMREM failed/);
+  else assert.equal(output.exports.createHeroEnvironment({}),target);
+  assert.deepEqual(released,{geometry:5,material:5,texture:1,generator:1});
+}
+console.log('Shared studio releases all temporary reflection resources on success and failure.');

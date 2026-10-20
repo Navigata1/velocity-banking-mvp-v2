@@ -26,7 +26,7 @@
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { createHeroEnvironment } from './vendor/studio-environment.js';
     import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV } from './vendor/hero-turntable.js';
 
     const names = ['car','house','land','creditCard','studentLoan','medical','personal','recreation','custom','vault'];
@@ -40,9 +40,7 @@
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1920 / 1080, 0.1, 50);
     camera.position.set(3.3,2.5,4.8); camera.lookAt(0,1.15,0);
-    const pmrem = new THREE.PMREMGenerator(renderer), room = new RoomEnvironment();
-    scene.environment = pmrem.fromScene(room,0.04).texture;
-    room.dispose(); pmrem.dispose();
+    scene.environment = createHeroEnvironment(renderer).texture;
     scene.add(new THREE.HemisphereLight(0xffffff,0x414d52,2.5));
     const light = new THREE.DirectionalLight(0xffffff,4); light.position.set(-3,6,5); scene.add(light);
     const rim = new THREE.DirectionalLight(0xb8d9e6,3); rim.position.set(4,3,-4); scene.add(rim);
