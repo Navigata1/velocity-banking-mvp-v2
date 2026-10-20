@@ -122,6 +122,7 @@ const moneyLoop = loadTsModule('src/engine/money-loop.ts');
 const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioPathVisual = loadTsModule('src/engine/portfolio-path-visual.ts');
 const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
+const portfolioFormatting = loadTsModule('src/app/portfolio/portfolio-formatters.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
@@ -365,6 +366,24 @@ test('Portfolio suppresses unsupported LOC interest claims and inactive draw con
   const source = readPortfolioRouteSource();
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(locInterestPaid) : 'Not projected'"));
   assert.ok(source.includes("store.strategy === 'velocity' && store.focusMode === 'single'"));
+});
+
+test('Portfolio focus labels use current allocation targets rather than eventual payoff order', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 700,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 100 },
+      { ...fundedPortfolio.debts[0], id: 'mortgage', name: 'Mortgage', balance: 1000,
+        minPaymentRule: { type: 'fixed', amount: 500 } }],
+    loc: { limit: 2000, balance: 500, apr: 0 }, chunkAmount: 0,
+    settings: { ...fundedPortfolio.settings, strategy: 'velocity' } };
+  const result = portfolio.simulatePortfolio(input);
+  assert.equal(result.payoffOrder[0].id, 'funded-loan');
+  assert.equal(result.primaryTargetName, 'Mortgage');
+  assert.equal(typeof portfolioFormatting.isCurrentPortfolioTarget, 'function');
+  assert.equal(portfolioFormatting.isCurrentPortfolioTarget(result, 'funded-loan'), false);
+  assert.equal(portfolioFormatting.isCurrentPortfolioTarget(result, 'mortgage'), true);
+  const source = readPortfolioRouteSource();
+  assert.ok(!source.includes('payoffOrder[0]?.id === d.id'));
+  assert.ok(source.includes('isCurrentPortfolioTarget(result, p.id)'));
 });
 
 const mortgageComparisonFixture = {

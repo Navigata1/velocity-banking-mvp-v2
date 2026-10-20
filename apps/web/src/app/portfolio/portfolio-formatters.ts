@@ -1,4 +1,4 @@
-import type { DebtItem, PayoffStrategy } from '@/engine/portfolio';
+import type { DebtItem, PayoffStrategy, PortfolioSimulationResult } from '@/engine/portfolio';
 import type { PortfolioRunChangeDirection, PortfolioRunComparisonStatus } from '@/engine/portfolio-run-diff';
 
 export const ALL_CATEGORIES: DebtItem['category'][] = [
@@ -30,6 +30,10 @@ export function strategyLabel(s: PayoffStrategy): string {
   if (s === 'velocity') return 'Velocity Mode';
   if (s === 'snowball') return 'Snowball';
   return 'Avalanche';
+}
+
+export function isCurrentPortfolioTarget(result: PortfolioSimulationResult | undefined, id: string): boolean {
+  return result?.isPayoffPossible === true && result.debtRationales[id]?.isCurrentTarget === true;
 }
 
 export function strategyDescription(s: PayoffStrategy): string {

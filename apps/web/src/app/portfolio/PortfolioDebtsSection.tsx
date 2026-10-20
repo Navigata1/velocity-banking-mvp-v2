@@ -12,6 +12,7 @@ import {
   debtKindLabel,
   formatPortfolioPercentLabel,
   getMinPaymentValue,
+  isCurrentPortfolioTarget,
   paymentSourceLabel,
 } from './portfolio-formatters';
 import type { PortfolioThemeClasses } from './portfolio-types';
@@ -24,7 +25,6 @@ interface PortfolioDebtsSectionProps {
 export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioDebtsSectionProps) {
   const store = usePortfolioStore();
   const result = store.lastResult;
-  const payoffOrder = result?.payoffOrder ?? [];
 
   const renderCategorySelect = (debt: DebtItem, fullWidth = false, ariaLabel = `${debt.name} debt type`) => (
     <select
@@ -150,7 +150,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
           <>
             <div className="space-y-4 md:hidden">
               {store.debts.map((d) => {
-                const isPrimary = payoffOrder.length > 0 && payoffOrder[0]?.id === d.id;
+                const isPrimary = isCurrentPortfolioTarget(result, d.id);
                 return (
                   <div
                     key={d.id}
@@ -169,7 +169,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                           />
                           <p className={`${classes.textMuted} mt-1 text-[11px]`}>
                             {debtKindLabel(d.kind)}
-                            {isPrimary && <span className="ml-2 text-emerald-400">Focus Target</span>}
+                            {isPrimary && <span data-testid={`portfolio-focus-${d.id}`} className="ml-2 text-emerald-400">Focus Target</span>}
                           </p>
                           {renderDebtRationale(result?.debtRationales?.[d.id])}
                         </div>
@@ -233,7 +233,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                 </thead>
                 <tbody>
                   {store.debts.map((d) => {
-                    const isPrimary = payoffOrder.length > 0 && payoffOrder[0]?.id === d.id;
+                    const isPrimary = isCurrentPortfolioTarget(result, d.id);
                     return (
                       <tr key={d.id} className={`border-b ${classes.border} hover:bg-slate-800/20 transition-colors ${isPrimary ? 'bg-emerald-500/5' : ''}`}>
                         <td className="py-3 pr-3">
@@ -248,7 +248,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                               />
                               <p className={`${classes.textMuted} text-[11px]`}>
                                 {debtKindLabel(d.kind)}
-                                {isPrimary && <span className="text-emerald-400 ml-2">⚡ Focus Target</span>}
+                                {isPrimary && <span data-testid={`portfolio-focus-${d.id}`} className="text-emerald-400 ml-2">⚡ Focus Target</span>}
                               </p>
                               {renderDebtRationale(result?.debtRationales?.[d.id], true)}
                             </div>

@@ -26,6 +26,10 @@ const scenarios = [
   { id: 'large-value', budget: 1000000, balance: 100000000, payment: 1000000, months: '100 mo', cash: '$0' },
   { id: 'large-loc', budget: 1000000, balance: 0,
     loc: { limit: 200000000, balance: 100000000, apr: 0 }, months: '100 mo', cash: '$0' },
+  { id: 'focus-not-first-payoff', budget: 700, balance: 100, strategy: 'velocity',
+    extraDebt: { ...loan, id: 'mortgage', name: 'Mortgage', balance: 1000,
+      minPaymentRule: { type: 'fixed', amount: 500 } },
+    loc: { limit: 2000, balance: 500, apr: 0 }, months: '3 mo', cash: '$500' },
 ];
 
 (async () => {
@@ -70,12 +74,22 @@ const scenarios = [
           assert.match(scope, /separate LOC balance/);
           assert.match(scope, /not a common-date wealth comparison/);
           assert.equal(await page.getByTestId('portfolio-loc-controls').isVisible(), true);
-          assert.equal(await page.getByRole('button', { name: /^Edit Portfolio velocity chunk/ }).count(), 0);
+          assert.equal(await page.getByRole('button', { name: /^Edit Portfolio velocity chunk/ }).count(), state.strategy === 'velocity' && state.focusMode === 'single' ? 1 : 0);
           if (scenario.months === 'Review inputs') assert.match(await page.getByTestId('portfolio-loc-summary').innerText(), /Not projected/);
           const total = debts.reduce((sum, debt) => sum + debt.balance, 0) + state.loc.balance;
           const totalLabel = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(total);
           assert.ok((await page.getByTestId('portfolio-total-debt').innerText()).includes(totalLabel));
           const actions = [];
+          if (scenario.id === 'focus-not-first-payoff') {
+            assert.equal(await page.locator('[data-testid="portfolio-focus-mortgage"]:visible').count(), 1);
+            assert.equal(await page.getByTestId('portfolio-focus-smoke-loan').count(), 0);
+            assert.equal(await page.getByTestId('portfolio-order-current-smoke-loan').count(), 0);
+            assert.equal(await page.getByTestId('portfolio-order-current-mortgage').count(), 1);
+            assert.match(await page.getByTestId('portfolio-payoff-smoke-loan').innerText(), /Month 1/);
+            actions.push({ focusBadgeIds: await page.locator('[data-testid^="portfolio-focus-"]:visible').evaluateAll(elements => elements.map(element => element.getAttribute('data-testid'))),
+              firstPayoffText: await page.getByTestId('portfolio-payoff-smoke-loan').innerText(),
+              currentTargetText: await page.getByTestId('portfolio-order-current-mortgage').innerText() });
+          }
           if (scenario.id === 'large-loc') {
             for (const [label, amount] of [['limit', '$200,000,000'], ['balance', '$100,000,000']]) {
               const button = page.getByRole('button', { name: new RegExp(`^Edit Portfolio line of credit ${label}`) });
@@ -131,6 +145,15 @@ const scenarios = [
           assert.equal(saved.separate.mortgageDetails.paymentFrequency, 'weekly');
           assert.deepEqual(errors, []);
           await page.screenshot({ path: path.join(output, `${scenario.id}-${width}.png`) });
+          if (scenario.id === 'focus-not-first-payoff') {
+            await page.locator('[data-testid="portfolio-focus-mortgage"]:visible').scrollIntoViewIfNeeded();
+            await page.waitForFunction(() => {
+              let node = [...document.querySelectorAll('[data-testid="portfolio-focus-mortgage"]')].find(element => element.getBoundingClientRect().width > 0);
+              while (node) { if (Number(getComputedStyle(node).opacity) < 0.99) return false; node = node.parentElement; }
+              return true;
+            });
+            await page.screenshot({ path: path.join(output, `focus-labels-${width}.png`) });
+          }
           receipts.push({ scenario: scenario.id, width, input: state, observedSummary, cash, scope, actions, overflow, errors,
             savedPortfolioAndSeparateScenarioPreserved: true });
           console.log(`PASS Portfolio ${scenario.id} at ${width}px`);
