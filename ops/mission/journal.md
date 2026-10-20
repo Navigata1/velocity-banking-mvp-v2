@@ -1,5 +1,12 @@
 # InterestShield Mission Journal
 
+## 2026-10-20 - Original-vision restoration
+- User approved the October drift review and requested implementation plus detailed hero assets and HyperFrames rotations.
+- Work is isolated on `codex/restoration/asset-heroes`; the four pre-existing demo-default edits are preserved.
+- Added cash-conservation repairs, active-target interest scope, restored asset-centered dashboard, ten studio posters, ten authored GLB studies and deterministic turntable tooling.
+- Detailed reconstruction is blocked by public TRELLIS.2 GPU quota. Authored studies are not represented as matching photoreal reconstructions.
+- Current work and outstanding production gates are recorded in `restoration-2026-10-20.json`. July completion percentages are historical, not a new readiness verdict.
+
 ## 2026-07-13T01:38Z - session 1 kickoff
 - Bootstrapped Mission Control from the July 12 State of the Union using inline execution with a cooling-off refutation pass.
 - Confirmed the mission starts at P0 Release Truth; Vercel authentication and domain ownership are the first external gates.
