@@ -123,6 +123,10 @@ jobs:
         working-directory: apps/mobile
         run: npm ci
 
+      - name: Audit critical native dependency advisories
+        working-directory: apps/mobile
+        run: npm audit --omit=dev --audit-level=critical
+
       - name: Run mobile type-check
         working-directory: apps/mobile
         run: npm run check

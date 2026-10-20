@@ -137,6 +137,12 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.equal(mobilePackage.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
 });
 
+test('native CLI shell quoting rejects a line terminator after a comment token', () => {
+  const { quote } = require(path.join(repoRoot, 'apps/mobile/node_modules/shell-quote'));
+  assert.throws(() => quote(['echo', 'ok', { comment: 'x' }, 'a\nUNTRUSTED_SENTINEL']), TypeError);
+  assert.equal(quote(['echo', 'safe value']), "echo 'safe value'");
+});
+
 test('Expo app exposes Codex run actions for local mobile workflows', () => {
   const runScriptPath = path.join(repoRoot, 'apps/mobile/script/build_and_run.sh');
   const environmentPath = path.join(repoRoot, 'apps/mobile/.codex/environments/environment.toml');
