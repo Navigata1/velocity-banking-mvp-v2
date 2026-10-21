@@ -43,8 +43,9 @@ function wall(name,outline,holes,z,rotation=0) {
   const shape=new T.Shape(outline.map(p=>new T.Vector2(...p)));
   for(const [x,y,w,h] of holes) shape.holes.push(new T.Path([[-w/2+x,-h/2+y],[-w/2+x,h/2+y],[w/2+x,h/2+y],[w/2+x,-h/2+y]].map(p=>new T.Vector2(...p))));
   const geo=new T.ExtrudeGeometry(shape,{depth:0.22,bevelEnabled:false,steps:1});
-  const p=geo.getAttribute('position'), uv=geo.getAttribute('uv');
-  for(let i=0;i<p.count;i++) uv.setXY(i,p.getX(i)/3.1,p.getY(i)/3.1);
+  const uv=geo.getAttribute('uv');
+  // Keep Three's depth-aware reveal charts and the original front-face scale.
+  for(let i=0;i<uv.count;i++) uv.setXY(i,uv.getX(i)/3.1,uv.getY(i)/3.1);
   return add(object,name,geo,stone,rotation?[z,0,0]:[0,0,z],[0,rotation,0]);
 }
 const rectangle=(left,right,bottom,top)=>[[left,bottom],[right,bottom],[right,top],[left,top]];
@@ -214,8 +215,8 @@ if(output.length>1.25*1024*1024 || triangles>120000) throw new Error('House exce
 await saveRefinedHero({id:'house',quality:'refined-textured',bytes:output.length,meshes:root.listMeshes().length,triangles,sha256:hash(output),
   sourceSha256:hash((await readFile(new URL(import.meta.url),'utf8')).replace(/\r\n/g,'\n')),sourceFile:'apps/media/scripts/build-refined-house.mjs',materialSourceSha256:hash(JSON.stringify(sources)),
   creator:'InterestShield project',license:'Original project geometry and generated material sources',
-  provenance:'Original authored limestone House with actual openings, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.',
-  units:'normalized stage units',version:2},undefined,async()=>{
+  provenance:'Original authored limestone House with actual openings, depth-aware reveal UV charts, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.',
+  units:'normalized stage units',version:3},undefined,async()=>{
   const target=new URL('../../web/public/heroes/house.glb',import.meta.url), temporary=new URL('../../web/public/heroes/house.glb.tmp',import.meta.url);
   await writeFile(temporary,output); await rename(temporary,target);
 });

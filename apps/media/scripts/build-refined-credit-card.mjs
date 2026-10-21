@@ -29,11 +29,17 @@ function rounded(width,height,radius,x=0,y=0,Type=T.Shape) {
   s.lineTo(r,t-radius);s.quadraticCurveTo(r,t,r-radius,t);s.lineTo(l+radius,t);
   s.quadraticCurveTo(l,t,l,t-radius);s.lineTo(l,b+radius);s.quadraticCurveTo(l,b,l+radius,b);s.closePath();return s;
 }
-function extrude(shape,depth,bevel=0.001,segments=8) {
+function extrude(shape,depth,bevel=0.001,segments=8,faceScale=[1.82,2.87]) {
   const g=new T.ExtrudeGeometry(shape,{depth,bevelEnabled:bevel>0,bevelSize:bevel,bevelThickness:bevel,bevelSegments:2,steps:1,curveSegments:segments});
   const p=g.attributes.position,uv=g.attributes.uv;
-  // Include bevel margins so UV quantization remains available.
-  for(let i=0;i<p.count;i++)uv.setXY(i,p.getX(i)/1.82+0.5,p.getY(i)/2.87+0.5);
+  // Preserve face/bevel mapping; depth walls need a separate two-dimensional chart.
+  for(let i=0;i<p.count;i+=3) {
+    const projected=(p.getX(i+1)-p.getX(i))*(p.getY(i+2)-p.getY(i))-(p.getY(i+1)-p.getY(i))*(p.getX(i+2)-p.getX(i));
+    const side=Math.abs(projected)<1e-12;
+    for(let j=i;j<i+3;j++)uv.setXY(j,
+      side?uv.getX(j)/Math.max(...faceScale)+0.5:p.getX(j)/faceScale[0]+0.5,
+      side?p.getZ(j)/Math.max(...faceScale)+0.5:p.getY(j)/faceScale[1]+0.5);
+  }
   return g;
 }
 function ribbon(points,width,steps=32) {
@@ -82,8 +88,7 @@ for(const [label,side]of [['Front',1],['Rear',-1]]) {
   const frame=new T.Group();frame.rotation.y=side===1?0:Math.PI;coin.add(frame);
   const face=new T.Shape();face.absarc(0,0,0.443,0,Math.PI*2,false);
   for(const path of wave)face.holes.push(ribbon(path,0.014,24));
-  const geometry=extrude(face,0.002,0.001,96),uv=geometry.attributes.uv,p=geometry.attributes.position;
-  for(let i=0;i<p.count;i++)uv.setXY(i,p.getX(i)/0.91+0.5,p.getY(i)/0.91+0.5);
+  const geometry=extrude(face,0.002,0.001,96,[0.91,0.91]);
   add(frame,'CC-Coin-'+label+'-Engraving',geometry,turned,[0,0,0.027]);
   add(frame,'CC-Coin-'+label+'-Rim',new T.TorusGeometry(0.451,0.005,8,128),polish,[0,0,0.03]);
 }
@@ -123,7 +128,7 @@ async function sizeOf(url){let n=0;for(const e of await readdir(url,{withFileTyp
 const collection=await sizeOf(new URL('../../web/public/',import.meta.url))-(await stat(target)).size+output.length;
 console.log(JSON.stringify({triangles,textures:root.listTextures().map(t=>({name:t.getName(),bytes:t.getImage().length})),meshes:root.listMeshes().length}));
 if(output.length>0.5*1024*1024||collection>10*1024*1024||triangles>75000)throw new Error(`Credit Card exceeds unchanged budgets: ${output.length} model bytes,${collection} public bytes; existing asset unchanged`);
-await saveRefinedHero({id:'creditCard',quality:'refined-textured',bytes:output.length,meshes:root.listMeshes().length,triangles,sha256:hash(output),sourceSha256:hash((await readFile(new URL(import.meta.url),'utf8')).replace(/\r\n/g,'\n')),sourceFile:'apps/media/scripts/build-refined-credit-card.mjs',materialSourceSha256:hash(JSON.stringify(source)),creator:'InterestShield project',license:'Original project geometry and procedural material sources',provenance:'Original authored silver/emerald cards with real engraved recesses, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.',units:'normalized stage units',version:2},undefined,async()=>{
+await saveRefinedHero({id:'creditCard',quality:'refined-textured',bytes:output.length,meshes:root.listMeshes().length,triangles,sha256:hash(output),sourceSha256:hash((await readFile(new URL(import.meta.url),'utf8')).replace(/\r\n/g,'\n')),sourceFile:'apps/media/scripts/build-refined-credit-card.mjs',materialSourceSha256:hash(JSON.stringify(source)),creator:'InterestShield project',license:'Original project geometry and procedural material sources',provenance:'Original authored silver/emerald cards with real engraved recesses, depth-aware edge UV charts, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.',units:'normalized stage units',version:3},undefined,async()=>{
   const liveCollection=await sizeOf(new URL('../../web/public/',import.meta.url))-(await stat(target)).size+output.length;
   if(liveCollection>10*1024*1024)throw new Error('Credit Card public budget changed before locked publication; existing asset unchanged');
   const temporary=new URL('../../web/public/heroes/creditCard.glb.tmp',import.meta.url);await writeFile(temporary,output);await rename(temporary,target);

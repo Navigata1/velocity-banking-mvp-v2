@@ -22,18 +22,18 @@
   {
     "id": "house",
     "quality": "refined-textured",
-    "bytes": 1144500,
+    "bytes": 1145320,
     "meshes": 155,
     "triangles": 31316,
-    "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
-    "sourceSha256": "26fad67c8f8908d0f34cd3fc42aa14c3f417908bc6a56f2ed3d1a8dd69f4f82f",
+    "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33",
+    "sourceSha256": "69b177d43ccf4655d2a8d4132ff2ac6e26b30b09b36c3f9cf04eeff291842a6b",
     "sourceFile": "apps/media/scripts/build-refined-house.mjs",
     "materialSourceSha256": "ee03a127097e0fed9039be1d64cd13358fbf11e5b0c1519a5c6b0aad13b30a4e",
     "creator": "InterestShield project",
     "license": "Original project geometry and generated material sources",
-    "provenance": "Original authored limestone House with actual openings, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "provenance": "Original authored limestone House with actual openings, depth-aware reveal UV charts, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 2
+    "version": 3
   },
   {
     "id": "land",
@@ -54,34 +54,34 @@
   {
     "id": "creditCard",
     "quality": "refined-textured",
-    "bytes": 516984,
+    "bytes": 523764,
     "meshes": 11,
     "triangles": 18008,
-    "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
-    "sourceSha256": "f31365f04526ada5b3381f89f9ce18f7dfe57b6422e7dcb2a66c394aa0373f4c",
+    "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025",
+    "sourceSha256": "db342fc5cfb51b6ba12da512ac6a3b738bab2b4e5fcdc0bbcf1a6b5bc8b264b5",
     "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
     "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
     "creator": "InterestShield project",
     "license": "Original project geometry and procedural material sources",
-    "provenance": "Original authored silver/emerald cards with real engraved recesses, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "provenance": "Original authored silver/emerald cards with real engraved recesses, depth-aware edge UV charts, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 2
+    "version": 3
   },
   {
     "id": "studentLoan",
     "quality": "refined-textured",
-    "bytes": 715276,
+    "bytes": 723868,
     "meshes": 71,
     "triangles": 29348,
-    "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222",
-    "sourceSha256": "bc7a021c892aaecbb8c9527a5fcd61dd420d68423cf69c674d531318782afd9a",
+    "sha256": "56dfe51ad199bdafcc0cc5ced65321a16a4e087693f645d6d12c6bc14fb98d12",
+    "sourceSha256": "48d99dc525248b488180947becd28733a7516c461382db055aff7eec791a33ce",
     "sourceFile": "apps/media/scripts/build-refined-student-loan.mjs",
     "materialSourceSha256": "cb5da74ce913e11568f82855744d40cfe4ac5416532e0bec60622a037aa620f3",
     "creator": "InterestShield project",
     "license": "Original project geometry and generated albedo sources",
-    "provenance": "Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.",
+    "provenance": "Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Depth-aware ribbon side/cap UV charts preserve original broad-face UVs and smoothed normals. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 2
+    "version": 3
   },
   {
     "id": "medical",

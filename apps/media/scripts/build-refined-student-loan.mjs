@@ -115,6 +115,23 @@ function ribbon(name,points,width) {
   }
   indices.push(0,1,2,1,3,2,steps*4,steps*4+2,steps*4+1,steps*4+1,steps*4+2,steps*4+3);
   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();
+  // Split side/cap UV charts only after preserving the original shared-vertex smoothing.
+  const normals=Array.from(g.getAttribute('normal').array),seams=new Map(),depthUv=0.004/width;
+  const splitVertex=(chart,index)=>{
+    const key=chart+':'+index;
+    if(!seams.has(key)) {
+      const copy=positions.length/3,side=chart==='left'||chart==='right';
+      positions.push(...positions.slice(index*3,index*3+3));normals.push(...normals.slice(index*3,index*3+3));
+      uv.push(side?Math.floor(index/4)/steps*2:index%2,index%4<2?depthUv:0);seams.set(key,copy);
+    }
+    return seams.get(key);
+  };
+  for(let i=0;i<steps;i++)for(let j=12;j<24;j++) {
+    const offset=i*24+j;indices[offset]=splitVertex(j<18?'left':'right',indices[offset]);
+  }
+  for(let i=steps*24;i<indices.length;i++)indices[i]=splitVertex(i<steps*24+6?'start':'end',indices[i]);
+  g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(uv,2));
+  g.setAttribute('normal',new T.Float32BufferAttribute(normals,3));g.setIndex(indices);
   return add(diploma,name,g,satin);
 }
 // Elliptic turns keep the ribbon half-width below the local bend radius.
@@ -193,7 +210,7 @@ async function sizeOf(url){let size=0;for(const entry of await readdir(url,{with
 const collection=await sizeOf(new URL('../../web/public/',import.meta.url))-(await stat(target)).size+output.length;
 console.log(JSON.stringify({triangles,meshes:root.listMeshes().length,textures:root.listTextures().map(t=>({name:t.getName(),bytes:t.getImage().length})),bytes:output.length,collection}));
 if(output.length>0.75*1024*1024||collection>10*1024*1024||triangles>75000)throw new Error('Student Loan exceeds unchanged delivery limits; existing artifact untouched');
-await saveRefinedHero({id:'studentLoan',quality:'refined-textured',bytes:output.length,meshes:root.listMeshes().length,triangles,sha256:hash(output),sourceSha256:hash((await readFile(new URL(import.meta.url),'utf8')).replace(/\r\n/g,'\n')),sourceFile:'apps/media/scripts/build-refined-student-loan.mjs',materialSourceSha256:hash(JSON.stringify(source)),creator:'InterestShield project',license:'Original project geometry and generated albedo sources',provenance:'Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.',units:'normalized stage units',version:2},undefined,async()=>{
+await saveRefinedHero({id:'studentLoan',quality:'refined-textured',bytes:output.length,meshes:root.listMeshes().length,triangles,sha256:hash(output),sourceSha256:hash((await readFile(new URL(import.meta.url),'utf8')).replace(/\r\n/g,'\n')),sourceFile:'apps/media/scripts/build-refined-student-loan.mjs',materialSourceSha256:hash(JSON.stringify(source)),creator:'InterestShield project',license:'Original project geometry and generated albedo sources',provenance:'Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Depth-aware ribbon side/cap UV charts preserve original broad-face UVs and smoothed normals. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.',units:'normalized stage units',version:3},undefined,async()=>{
   const liveCollection=await sizeOf(new URL('../../web/public/',import.meta.url))-(await stat(target)).size+output.length;
   if(liveCollection>10*1024*1024)throw new Error('Student Loan public budget changed before locked publication; existing artifact untouched');
   const temporary=new URL('../../web/public/heroes/studentLoan.glb.tmp',import.meta.url);await writeFile(temporary,output);await rename(temporary,target);
