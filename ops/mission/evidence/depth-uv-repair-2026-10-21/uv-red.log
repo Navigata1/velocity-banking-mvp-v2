@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: house shipped normal-mapped surfaces have two-dimensional UV charts
+not ok 1 - house shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 61.1407
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:48:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    house: collapsed charts on real compressed surfaces: [{"node":"House-Facade-Left","triangle":16},{"node":"House-Facade-Left","triangle":17},{"node":"House-Facade-Left","triangle":18},{"node":"House-Facade-Left","triangle":19},{"node":"House-Facade-Left","triangle":20}]
+    
+    244 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 244
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:50:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: house chart verifier rejects constant charts on actual used surfaces
+not ok 2 - house chart verifier rejects constant charts on actual used surfaces
+  ---
+  duration_ms: 49.1677
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    negative control requires the valid shipped asset first
+    
+    244 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 244
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:55:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: creditCard shipped normal-mapped surfaces have two-dimensional UV charts
+not ok 3 - creditCard shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 41.6356
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:48:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    creditCard: collapsed charts on real compressed surfaces: [{"node":"CC-Emerald-Card-Body","triangle":72},{"node":"CC-Emerald-Card-Body","triangle":73},{"node":"CC-Emerald-Card-Body","triangle":82},{"node":"CC-Emerald-Card-Body","triangle":83},{"node":"CC-Emerald-Card-Body","triangle":92}]
+    
+    2704 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2704
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:50:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: creditCard chart verifier rejects constant charts on actual used surfaces
+not ok 4 - creditCard chart verifier rejects constant charts on actual used surfaces
+  ---
+  duration_ms: 32.4167
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    negative control requires the valid shipped asset first
+    
+    2704 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2704
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:55:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: studentLoan shipped normal-mapped surfaces have two-dimensional UV charts
+not ok 5 - studentLoan shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 23.4609
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:48:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    studentLoan: collapsed charts on real compressed surfaces: [{"node":"SL-Bow-Left-Loop","triangle":1},{"node":"SL-Bow-Left-Loop","triangle":2},{"node":"SL-Bow-Left-Loop","triangle":3},{"node":"SL-Bow-Left-Loop","triangle":4},{"node":"SL-Bow-Left-Loop","triangle":7}]
+    
+    1040 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1040
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:50:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: studentLoan chart verifier rejects constant charts on actual used surfaces
+not ok 6 - studentLoan chart verifier rejects constant charts on actual used surfaces
+  ---
+  duration_ms: 16.9867
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    negative control requires the valid shipped asset first
+    
+    1040 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1040
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:55:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 365.4101

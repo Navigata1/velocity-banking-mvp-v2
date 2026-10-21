@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: house shipped normal-mapped surfaces have two-dimensional UV charts
+ok 1 - house shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 66.7547
+  type: 'test'
+  ...
+# Subtest: house chart verifier rejects constant and non-finite charts on actual used surfaces
+not ok 2 - house chart verifier rejects constant and non-finite charts on actual used surfaces
+  ---
+  duration_ms: 133.0042
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: 'NaN charts on actual used surfaces must be rejected'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:66:14)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: creditCard shipped normal-mapped surfaces have two-dimensional UV charts
+ok 3 - creditCard shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 36.0607
+  type: 'test'
+  ...
+# Subtest: creditCard chart verifier rejects constant and non-finite charts on actual used surfaces
+not ok 4 - creditCard chart verifier rejects constant and non-finite charts on actual used surfaces
+  ---
+  duration_ms: 99.5077
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: 'NaN charts on actual used surfaces must be rejected'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:66:14)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: studentLoan shipped normal-mapped surfaces have two-dimensional UV charts
+ok 5 - studentLoan shipped normal-mapped surfaces have two-dimensional UV charts
+  ---
+  duration_ms: 17.6724
+  type: 'test'
+  ...
+# Subtest: studentLoan chart verifier rejects constant and non-finite charts on actual used surfaces
+not ok 6 - studentLoan chart verifier rejects constant and non-finite charts on actual used surfaces
+  ---
+  duration_ms: 51.915
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\material-uv-charts.test.mjs:53:3'
+  failureType: 'testCodeFailure'
+  error: 'NaN charts on actual used surfaces must be rejected'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/material-uv-charts.test.mjs:66:14)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 3
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 560.9556

@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Verified4320a0c legacy-web truth checkpoint. Source-faithful Car paint repair locally verified; new exact-head CI/hosted138 still required. Collection art and production remain open.",
+    "tagline": "Verified189eeae Car data-fidelity checkpoint. Three-hero depth UV repair locally verified; new exact-head CI/hosted138 still required. Collection art and production remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T20:47:56.058Z",
-    "sessionCount": 24
+    "updated": "2026-10-21T21:41:18.576Z",
+    "sessionCount": 25
   },
   "policies": {
     "merge": "review",
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "Fresh348 regressions/21overview/31Cockpit/core31/ref23247, lint/build,146 media/27stills, native types/full contracts,14CI/4renderer pass. Bounded Car paintnormal byte/pixel repair only; all9 financial modules and other structured product sources preserved. Both NEW final-head CI/hosted138/manual still required."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247, lint/build,165media/27stills, nativecontracts/types,14CI/4renderer pass.28serial stages plus final-source fullmedia rerun after revieworacle fix. All9financial modules and protectedstructuredsources unchanged. BothNEWfinalhead CI/hosted138/manual stillrequired."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "Fresh15 serial browser stages pass on the repaired Car build: original138 workflows/711 newlegacy assertions, unclockedThree700/300ms, standard/software20heroes, fallbacks and sevenHTTP/rendered routes. No timing/pixel/cap changes. Isolated actualIAB Car360rest and all10samepose studio variants inspected, no preset selected. Not physical-device or final hosted proof."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "Fresh138browser workflows/711legacy assertions, unclockedThree700/300ms, standard/software20heroes, fallbacks and sevenHTTP/renderedroutes pass. No timing/pixel/cap changes. Threeactual1080p9second turns freshly rendered; all10videos checked. Not physicaldevice or newhosted proof."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6325520362",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "4320a0c VERIFIED full attempt1 push39665392060/PR39665396547 all3jobs/every step; fresh READY/hosted138/all20served hashes/actualIAB. Receipt6325520362. New substantive Car paint repair requires its own BOTH complete exact-head events and READY/hosted138/served hashes/manual. Do not metadata-only push loop or promote."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6326605424",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "189eeae VERIFIED fullattempt1 push39673512328/PR39673520776 all3jobs/every step; READY/hosted138/all20servedhashes/actualIAB; receipt6326605424. New substantive threeheroUV repair requires BOTHnewcomplete exacthead CI/READY/hosted138/all20servedhashes/manual. No metadata-only pushloop or promotion."
         }
       ]
     },
@@ -121,7 +121,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Source-faithful Car paint repair:2049728bytes,134971triangles,13embedded images/12active texture objects. Original128x128 paintnormal PNG and decodedRGB exact source hashes restored after lossy conversion; strength/filter/30x30tiling unchanged. Independent review confirms508 decodedaccessors/all410 compressed geometry payloads/all12otherimages/materials/JSON boundary unchanged; six actual-test negative controls.146media/27stills and fresh actualGLB/video gates pass locally. Remaining normals, deadimage/stale extension and art approval remain open; see car-paint-fidelity contract."
+          "notes": "Source-faithful Car paint repair:2049728bytes,134971triangles,13embedded images/12active texture objects. Original128x128 paintnormal PNG and decodedRGB exact source hashes restored after lossy conversion; strength/filter/30x30tiling unchanged. Independent review confirms508 decodedaccessors/all410 compressed geometry payloads/all12otherimages/materials/JSON boundary unchanged; six actual-test negative controls.146media/27stills and fresh actualGLB/video gates pass locally. Remaining normals, deadimage/stale extension and art approval remain open; see car-paint-fidelity contract. Verified189eeae source-fidelity receipt6326605424 folded into this substantive threeheroUV work; Car remains byte-identical. Hardwarewarning/remainingnormal/deadimage/art work remainsopen."
         },
         {
           "id": "R1-T2",
@@ -129,7 +129,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Original Vault and House candidates retained. Land now has 49834 triangles, eight embedded maps and 709260 bytes: recessed pond, draped path, layered cut faces, four stakes and connected trees. Nine actual-geometry/provenance/locked-budget tests pass; independent review cleared the final artifact. Identical/protected regeneration and all-model web/video proof pass. All four candidates still require collection art approval; see docs/land-refinement-contract-2026-10-20.md."
+          "notes": "Original Vault and House candidates retained. Land now has 49834 triangles, eight embedded maps and 709260 bytes: recessed pond, draped path, layered cut faces, four stakes and connected trees. Nine actual-geometry/provenance/locked-budget tests pass; independent review cleared the final artifact. Identical/protected regeneration and all-model web/video proof pass. All four candidates still require collection art approval; see docs/land-refinement-contract-2026-10-20.md. House v3 depth-aware revealUVs fix244collapsedsceneused triangles, actual1145320bytes. Independent postcompression geometry/normals/preservedfaceUVs/all6images exact; originalposters/studio/camera/lighting unchanged. See depth-uv-repair-contract-2026-10-21.md; collectionart remainsopen."
         },
         {
           "id": "R1-T3",
@@ -137,7 +137,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Credit Card/Student Loan/Medical/Personal/Recreation retained. Custom is now the original silver brushed-metal compass with hollow stepped case, seated dial/rose/ticks, faceted enamel needles, closed clear lens, upright hollow lid, five hollow hinge barrels with positive pin clearance, five connected brackets and open bail:237844bytes,13200unique/21240rendered triangles,12 original procedural maps.16 cases and exact independent geometry/pipeline re-reviews follow observed assembled-channel/pin-clearance/contact-oracle/corner-normal REDs/fixes. Protected full rebuilds and real40-payload package preserve other nine models/all ten posters;309 raw source snapshots and before/after all-ten video records reject mutation. See docs/custom-refinement-contract-2026-10-21.md. Ten textured candidates, not final all-ten art approval."
+          "notes": "Credit Card/Student Loan/Medical/Personal/Recreation retained. Custom is now the original silver brushed-metal compass with hollow stepped case, seated dial/rose/ticks, faceted enamel needles, closed clear lens, upright hollow lid, five hollow hinge barrels with positive pin clearance, five connected brackets and open bail:237844bytes,13200unique/21240rendered triangles,12 original procedural maps.16 cases and exact independent geometry/pipeline re-reviews follow observed assembled-channel/pin-clearance/contact-oracle/corner-normal REDs/fixes. Protected full rebuilds and real40-payload package preserve other nine models/all ten posters;309 raw source snapshots and before/after all-ten video records reject mutation. See docs/custom-refinement-contract-2026-10-21.md. Ten textured candidates, not final all-ten art approval. Card v3 fixes2704collapsededgecharts at523764bytes (only524bytes below originalcap); Student v3 fixes1040ribboncharts at723868bytes. Orientedgeometry/normals/preservedUVs/materials/all15images/copyright exact.19newfocused tests include review-found nonfiniteoracle RED/fix. No finalphotorealapproval; see depthUVcontract."
         },
         {
           "id": "R1-T4",
@@ -158,27 +158,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "146 media contracts/27fresh Remotion stills pass, including new actualGLB paintPNG/rawRGB sourcefidelity test. Prior actualoldasset RED and float32 test-fixture correction recorded. Independent materialaudit and repairreview retained. No wholecollection photoreal claim."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "165media/27freshstills pass, including6actualcompressedchart tests and13Student sourcegeometry controls. Original244/2704/1040collapsedtriangles nowzero. Independent review found NaN/Infinity oracle gap; reproduced3REDs and fixed with constant/NaN/bothinfinity controls. Geometry/normals/preservedUVs/materials/copyright/21images exact. SourcefaithfulCar test unchanged."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "All10 actualmodels standard/software at desktop/375px pass existing20herocases plusvisibility/cadence controls/fallbacks. Other9models/all10posters byte-identical to4320; Cargeometry/materials/otherimages unchanged. All10controlled studio variants inspected; no global lighting change selected. Fullsize/allangle art/device approval remains open."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "All10actualmodels standard/software desktop/375px and standingfallback/visibility/cadence checks pass. Sevenothermodels/all10posters unchanged. Sharedstudio/camera/lighting/financialUI unchanged. Fullsize/allangle art and physicaldeviceapproval remainopen."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "Repaired Car freshly exported through unchanged finiteHyperFrames turntable; strict SOFTWARE turntablecheck and all10 1080p/9second nonblank/movement/closure/rest checks pass. Extra strict HARDWARE check remains failed on X4122 compilerwarning, reproduced identically on unchangedCar; no suppression/graphicsedit.28successful stages across2segments plus retained failed diagnostic, not allgreen28sweep. Other9videos unchanged/rechecked, not rerendered. Sharedlighting/camera/eightsecond smooth360 unchanged; hardwarecompatibility/art/finalhosted proof remain open."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "House/Card/Student actual1080p9second HyperFrames turns freshly rendered, all10videos checked for pixels/motion/closure/rest. Sevenothers unchanged/rechecked, not rerendered. Explicitstrictsoftwarecheck passes. Inherited hardware/D3D X4122 diagnostic staysOPEN with prioridenticalunchangedCar reproduction; no suppression/graphicsedit/hardwareclearance. Existing8second smooth360 plus1secondrest unchanged."
         }
       ]
     },
@@ -248,9 +248,9 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/car-paint-fidelity-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T20:47:56.058Z",
-          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247 pass. All9 current financialengine source modules preserved versus verified4320. No numerical solver, schema/store, dependency, backend or routing/calendarchange; those production gates remain open."
+          "evidence": "ops/mission/evidence/depth-uv-repair-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T21:41:18.576Z",
+          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247 pass. All9financialengine modules preserved versus verified189eeae. No solver/schema/store/dependency/backend/routing/calendarchange; productiongates remainopen."
         },
         {
           "id": "R2-G2",
@@ -942,13 +942,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R1",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "title": "Repair three hero depth UV charts without visual drift (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R1",
+      "mergedAt": null
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "4320a0c24b6419910c812a644983406792a57571 VERIFIED: full attempt1 push39665392060/PR39665396547, all3jobs/every step, READYpreview/hosted138/all20servedhashes/actualIAB, receipt6325520362. Current substantive sourcefaithful Car paint repair has28successful localstages across2segments/146media/27stills/138workflows plus retained inheritedhardwarewarning; not allgreen28sweep. Require BOTH NEW complete exact-head CI events and fresh READY/hosted138/all20served hashes/actualIAB before its receipt; no metadata-only pushloop, merge or promotion.",
-      "R1 next: read docs/car-paint-fidelity-contract-2026-10-21.md and new materialaudit/repairreview evidence. Preserve Car sourcePNG/rawRGB identity and intendednearest/30x30/.3 flake design. No blanketlighting replacement earned approval in all10samepose variants. House/Card/StudentLoan collapsedsideUVs need separate actualdecodedtriangle REDs and bounded depth-aware charts; Housefirst. Car unusedimage/stale optionalextension and remaininglossy normals need separate liveimage/budget proof. Extra strict HyperFrames hardware X4122 warning reproduces on unchangedCar; strictsoftware passes withoutsuppression.28successful localstages span2segments plus retainedfailed diagnostic. Hardwarecompatibility and all-anglecollectionart stay open.",
+      "189eeaea5ae04554564474cf9a741b416b82c817 VERIFIED: fullattempt1 push39673512328/PR39673520776 all3jobs/every step, READY/hosted138/all20servedhashes/actualIAB; receipt6326605424. Current threehero depthUV repair:28serial localstages plus finalsource165media/27stills rerun,138webworkflows/711assertions,3freshturns/all10checked. Require BOTHNEWcomplete exactheadCI and freshREADY/hosted138/all20servedhashes/actualIAB before currentreceipt; no metadata-only pushloop/merge/promotion.",
+      "R1 next: read docs/depth-uv-repair-contract-2026-10-21.md and independentreview. House/Card/Student collapseddepthcharts are repaired; preserve exactgeometry/normals/preservedUVs/images and finitechartnegativecontrols. Card only524bytes belowcap: fail drift rather than raisebudget. Remaining Car data-map/deadimage/staleextension and allanglecollectionart need focusedproof. Inherited strictHyperFrameshardwareX4122 staysopen; explicitsoftwarepass is not hardwareclearance. No blanketstudiochange approved.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
       "Shared-source Dashboard is verified17457cc: /?scenario=portfolio uses existing canonical PortfolioBook/store; original / retains legacy target data. Preserve all21 overview contracts/new6 workflows and original126. Next R2 work is deliberate adoption and shared source across Simulator/Cockpit/Vault/Expo without migration/automatic merge; R3 lender/calendar/posting/routing remains open.",
       "Read docs/native-coaching-safety-contract-2026-10-21.md. Actual Velocity availability guards chunk advice. Preserve cashflow/LOC warning priorities, exactly80 boundary and valid clipped-final/zero-surplus Pause. All original numerical modules/index remain unchanged in the new shared-view slice; source-bound references/media must still pass. Prior native exports are inherited until fresh exact-head CI, not new device proof.",

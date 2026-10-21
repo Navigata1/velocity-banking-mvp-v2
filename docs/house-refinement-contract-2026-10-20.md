@@ -22,7 +22,9 @@ auxiliary maps. It has 31,316 unique-mesh triangles and 155 reusable meshes. The
 standing 1.25 MiB House cap and 10 MiB public-asset budget remain unchanged. An early
 1.38 MiB candidate failed the existing gate; auxiliary-map resolution and albedo
 encoding were optimized instead of increasing the cap. The final candidate is
-1,144,500 bytes. The authoritative value/hash is in `apps/media/hero-models.json`.
+1,144,500 bytes before the depth-chart repair. The current version 3 is 1,145,320
+bytes; see `depth-uv-repair-contract-2026-10-21.md`. The authoritative value/hash
+is in `apps/media/hero-models.json`.
 
 Publication uses the existing bounded exclusive manifest lock, atomic per-file
 replacement and full-rebuild preservation. Model and two manifests are not a
@@ -55,7 +57,7 @@ committed aperture/whole-scene ray probes inspect decoded triangles, not just no
 names. A separate triangle-bounds regression caught shrub leaves in the driveway
 before their placement/spread was corrected.
 
-Run all six `house-refinement.test.mjs` cases and the complete 47 media contracts,
+Run all six `house-refinement.test.mjs` cases and the complete current media suite,
 web regressions/build/lint, all ten desktop/mobile hero checks, poster/decode/network
 fallbacks, reduced motion and rendered routes. Rebuild the House HyperFrames MP4
 and verify motion, return and rest in actual pixels; recheck unchanged videos too.

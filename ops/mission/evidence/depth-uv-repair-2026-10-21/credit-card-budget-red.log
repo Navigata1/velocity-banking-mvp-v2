@@ -1,0 +1,13 @@
+prune: Removed types... Accessor (7)
+prune: Removed types... Accessor (40)
+prune: Removed types... Accessor (18)
+{"triangles":18008,"textures":[{"name":"CC-Brushed-Color","bytes":112},{"name":"CC-Brushed-Normal","bytes":736},{"name":"CC-Brushed-Roughness-Metal","bytes":510},{"name":"CC-Turned-Color","bytes":5912},{"name":"CC-Turned-Normal","bytes":16646},{"name":"CC-Turned-Roughness-Metal","bytes":376}],"meshes":11}
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-credit-card.mjs:130
+if(output.length>0.5*1024*1024||collection>10*1024*1024||triangles>75000)throw new Error(`Credit Card exceeds unchanged budgets: ${output.length} model bytes,${collection} public bytes; existing asset unchanged`);
+                                                                               ^
+
+Error: Credit Card exceeds unchanged budgets: 525500 model bytes,9953678 public bytes; existing asset unchanged
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-credit-card.mjs:130:80
+
+Node.js v22.22.2

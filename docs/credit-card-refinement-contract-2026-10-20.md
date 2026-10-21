@@ -17,7 +17,9 @@ and delivered GLB hashes are recorded in both asset manifests.
 Two thin rounded cards have real recessed sweeping grooves, eight inset beveled
 chip contacts and actual back stripe/signature panels. The beveled coin has
 96 real edge reeds and two-sided recessed wave faces. Components are grounded
-and normalized to the existing stage. The final GLB is 516,984 bytes, 11 reusable
+and normalized to the existing stage. The original candidate was 516,984 bytes.
+The current depth-chart version 3 is 523,764 bytes (only 524 bytes below its cap);
+see `depth-uv-repair-contract-2026-10-21.md`. It retains 11 reusable
 meshes and 18,008 unique-mesh triangles. Six maps supply authored brushing/turning,
 micro-normal and roughness/metalness approximations, not measured reflectance.
 Silver/turned metallic factors are 0.84 and emerald 0.90, with zero emission.
@@ -26,7 +28,8 @@ constructor roughness values. The silver is intentionally readable in the
 existing studio but differs from the reference's polished appearance.
 
 The 0.5 MiB candidate target and standing 10 MiB public cap are unchanged.
-Public assets total 10,415,192 bytes, leaving 70,568 bytes of headroom and
+At the initial candidate checkpoint, public assets totaled 10,415,192 bytes,
+leaving 70,568 bytes of headroom and
 recovering 31,924 bytes from the old study. Richer intermediate models failed
 before publication. Conservative simplification, padded UV domains, 16-bit
 position/UV quantization and Meshopt compression retain the actual engraving.
@@ -56,7 +59,7 @@ not one crash-atomic transaction; interruption requires regeneration/revalidatio
 ## Verification And Limits
 
 Require identical recipe regeneration and full study regeneration preserving all
-ten records/bytes. Run nine Credit Card cases and the full 65 media contracts,
+ten records/bytes. Run nine Credit Card cases and the full current media suite,
 web regressions/build/lint, all ten 1440px/375px actual-model/fallback checks and
 all seven routes. Rebuild this 1080p nine-second HyperFrames turn (eight-second
 revolution plus one-second rest), then recheck all ten videos. Nine unchanged
@@ -64,7 +67,7 @@ videos are rechecked, not rebuilt. Full media validation renders 27 fresh stills
 Both final exact-head CI events, real SQL, exact Vercel and hosted browser proof
 remain mandatory before calling the draft verified.
 
-Read-only independent review cleared final GLB SHA
+Read-only independent review cleared the initial candidate GLB SHA
 `223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17`
 and all nine tests. It did not approve art, finance, security or production.
 Five textured candidates and five remaining studies still require final all-ten

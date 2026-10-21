@@ -8,7 +8,9 @@ financial, saved-data, native, studio, camera or animation-timing change is need
 
 ## Artifact And Identity
 
-- 715,276-byte self-contained Meshopt/WebP GLB, nine embedded maps.
+- Initial 715,276-byte self-contained Meshopt/WebP GLB, nine embedded maps.
+  Current depth-chart version 3 is 723,868 bytes with the same maps and geometry;
+  see `depth-uv-repair-contract-2026-10-21.md` for exact preservation and budgets.
 - 29,348 unique-mesh triangles /71 meshes;34,940 instantiated triangles /85 mesh
   instances. The manifest's triangle field counts unique geometry, not draw cost.
 - Navy cap with crown/board/button; two green/oxblood leather books with separate
@@ -35,7 +37,7 @@ angular error is relative to the filtered256px field, not zero loss from512px.
 An initial1,435,748-byte build exceeded the original public budget and was rejected
 before replacing the old GLB. A lossy normal experiment also failed the unchanged
 RMS2/max8-degree guard. No cap or error tolerance was enlarged. The candidate now
-uses182,272 fewer bytes than the old897,548-byte study. Actual public total is
+used182,272 fewer bytes than the old897,548-byte study. Public total at that checkpoint was
 10,232,920 bytes:252,840 bytes below the unchanged10MiB cap. Student Loan also has
 a stricter0.75MiB/75,000-unique-triangle limit. The publication lock recalculates
 the live collection size before writing, not just the earlier observed total.
