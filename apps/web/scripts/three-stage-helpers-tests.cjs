@@ -2,6 +2,7 @@
 const assert = require('node:assert/strict');
 const zlib = require('node:zlib');
 const { createGracefulShutdown } = require('./built-server-harness.cjs');
+const { runTimingTests } = require('./three-stage-timing-tests.cjs');
 const {
   MAX_SETTLED_SPATIAL_CELL_DISTANCE,
   MAX_SETTLED_SPATIAL_MEAN_DISTANCE,
@@ -186,6 +187,7 @@ async function run() {
   await testGracefulShutdown();
   await testGracefulShutdownBrowserFailure();
   await testGracefulShutdownServerFailure();
+  await runTimingTests();
   console.log('Three stage PNG and lifecycle helper tests passed.');
 }
 

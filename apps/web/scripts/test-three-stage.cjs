@@ -4,6 +4,7 @@ const path = require('node:path');
 const { chromium } = require('playwright-core');
 const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-harness.cjs');
 const { createGracefulShutdown, startBuiltServer, stopServer } = require('./built-server-harness.cjs');
+const { createPhaseTiming } = require('./three-stage-timing.cjs');
 const {
   MAX_SETTLED_SPATIAL_CELL_DISTANCE,
   MAX_SETTLED_SPATIAL_MEAN_DISTANCE,
@@ -52,19 +53,19 @@ function remainingTimeout(deadline) {
   return Math.max(1, deadline - Date.now());
 }
 
-async function waitForNormalStage(page, viewportLabel, expectedRenderMode, timeout = 15000) {
+async function waitForNormalStage(page, viewportLabel, expectedRenderMode, timeout = 15000, timing = createPhaseTiming()) {
   const stage = page.getByTestId('money-loop-three-stage');
-  await stage.waitFor({ state: 'visible', timeout });
-  await stage.scrollIntoViewIfNeeded({ timeout });
-  await page.waitForFunction((expectedMode) => {
+  await timing.measure('stage.visible.wait', () => stage.waitFor({ state: 'visible', timeout }));
+  await timing.measure('stage.scroll', () => stage.scrollIntoViewIfNeeded({ timeout }));
+  await timing.measure('stage.render.wait', () => page.waitForFunction((expectedMode) => {
     const stageNode = document.querySelector('[data-testid="money-loop-three-stage"]');
     const canvas = stageNode?.querySelector('canvas');
     return stageNode?.getAttribute('data-render-mode') === expectedMode &&
       stageNode.getAttribute('data-should-render') === 'true' &&
       canvas instanceof HTMLCanvasElement &&
       getComputedStyle(canvas).opacity === '1';
-  }, expectedRenderMode, { timeout });
-  const mode = await stage.getAttribute('data-render-mode');
+  }, expectedRenderMode, { timeout }));
+  const mode = await timing.measure('stage.mode.read', () => stage.getAttribute('data-render-mode'));
   if (mode !== expectedRenderMode) throw new Error(`${viewportLabel} expected ${expectedRenderMode} render mode but received ${mode ?? 'no'}.`);
   return stage;
 }
@@ -170,13 +171,14 @@ async function resolveCanvasClip(page, viewportLabel) {
   return { box, scrollY: viewport.scrollY };
 }
 
-async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null) {
-  const canvasClip = clip ?? await resolveCanvasClip(page, viewportLabel);
+async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {
+  const canvasClip = clip ?? await timing.measure(`${phase}.clip`, () => resolveCanvasClip(page, viewportLabel));
   let screenshot;
+  const timeoutMs = remainingTimeout(deadline);
   try {
-    screenshot = await page.screenshot({ clip: canvasClip.box, scale: 'css', timeout: remainingTimeout(deadline) });
+    screenshot = await timing.measure(`${phase}.capture`, () => page.screenshot({ clip: canvasClip.box, scale: 'css', timeout: timeoutMs }), { timeoutMs, deadline });
   } catch (error) {
-    throw new Error(`${viewportLabel} clipped canvas PNG capture started with ${remainingTimeout(deadline)}ms remaining: ${error.message}`);
+    throw new Error(`${viewportLabel} clipped canvas PNG capture started with ${timeoutMs}ms remaining: ${error.message}`, { cause: error });
   }
   const completedAt = Date.now();
   if (completedAt > deadline) throw new Error(`${viewportLabel} canvas PNG capture completed after its deadline.`);
@@ -230,13 +232,13 @@ async function restoreCanvasOverlaysAfterPixelCapture(page) {
   });
 }
 
-async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null) {
-  const isolation = await hideCanvasOverlaysForPixelCapture(page);
+async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {
+  const isolation = await timing.measure(`${phase}.isolation`, () => hideCanvasOverlaysForPixelCapture(page));
   try {
     if (isolation.isolatedSvgOverlayCount < 1) throw new Error(`${viewportLabel} canvas isolation did not hide an overlapping SVG orbit overlay.`);
-    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, clip), isolation };
+    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, clip, timing, phase), isolation };
   } finally {
-    await restoreCanvasOverlaysAfterPixelCapture(page);
+    await timing.measure(`${phase}.restore`, () => restoreCanvasOverlaysAfterPixelCapture(page));
   }
 }
 
@@ -257,8 +259,8 @@ async function restoreOrResolveCanvasClip(page, viewportLabel, previousClip) {
     : resolveCanvasClip(page, viewportLabel);
 }
 
-async function restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline) {
-  await waitForNormalStage(page, viewportLabel, expectedRenderMode, remainingTimeout(deadline));
+async function restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline, timing = createPhaseTiming()) {
+  await waitForNormalStage(page, viewportLabel, expectedRenderMode, remainingTimeout(deadline), timing);
 }
 
 async function waitForStageSettled(page, artifactId, deadline) {
@@ -280,11 +282,11 @@ function formatSpatialDistance(distance) {
   return `max ${distance.maxCellDistance.toFixed(2)}, mean ${distance.meanCellDistance.toFixed(2)}, changed cells ${distance.changedCellCount}`;
 }
 
-async function captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, preClickFingerprint, preClickDescriptor, preClickClip) {
+async function captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, preClickFingerprint, preClickDescriptor, preClickClip, timing = createPhaseTiming()) {
   const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
-  const canvasClip = await restoreOrResolveCanvasClip(page, viewportLabel, preClickClip);
-  const candidateCapture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, canvasClip);
-  const candidatePixels = { ...candidateCapture, ...proveCanvasPng(candidateCapture.screenshot, viewportLabel) };
+  const canvasClip = await timing.measure('candidate.clip', () => restoreOrResolveCanvasClip(page, viewportLabel, preClickClip));
+  const candidateCapture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, canvasClip, timing, 'candidate');
+  const candidatePixels = { ...candidateCapture, ...timing.measureSync('candidate.decode', () => proveCanvasPng(candidateCapture.screenshot, viewportLabel)) };
   const candidateMaterialDistance = compareSpatialDescriptors(preClickDescriptor, candidatePixels.stabilityDescriptor);
   if (candidatePixels.identitySignature === preClickFingerprint || !hasMaterialSpatialChange(candidateMaterialDistance)) {
     throw new Error(`${viewportLabel} decoded candidate did not materially change from the pre-selection canvas: ${formatSpatialDistance(candidateMaterialDistance)}; material limits require max >= ${MIN_MATERIAL_SPATIAL_CELL_DISTANCE} and changed cells >= ${MIN_MATERIAL_SPATIAL_CHANGED_CELL_COUNT}.`);
@@ -297,11 +299,11 @@ async function captureSelectionCanvasState(page, viewportLabel, selectionStarted
   const confirmationDeadline = settledAt + STABILITY_CONFIRMATION_BUDGET_MS;
   let confirmationCapture;
   try {
-    confirmationCapture = await captureIsolatedCanvasPng(page, viewportLabel, confirmationDeadline, canvasClip);
+    confirmationCapture = await captureIsolatedCanvasPng(page, viewportLabel, confirmationDeadline, canvasClip, timing, 'confirmation');
   } catch (error) {
-    throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation missed its ${STABILITY_CONFIRMATION_BUDGET_MS}ms bound: ${error.message}`);
+    throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation missed its ${STABILITY_CONFIRMATION_BUDGET_MS}ms bound: ${error.message}`, { cause: error });
   }
-  const confirmationPixels = { ...confirmationCapture, ...proveCanvasPng(confirmationCapture.screenshot, viewportLabel) };
+  const confirmationPixels = { ...confirmationCapture, ...timing.measureSync('confirmation.decode', () => proveCanvasPng(confirmationCapture.screenshot, viewportLabel)) };
   const stableThrough = Date.now();
   if (stableThrough > confirmationDeadline) {
     throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation completed ${stableThrough - settledAt}ms later, beyond ${STABILITY_CONFIRMATION_BUDGET_MS}ms.`);
@@ -334,14 +336,20 @@ async function exerciseSelection(page, viewportLabel, expectedRenderMode, artifa
   await prepareStageAndTargetForClick(page, artifactId);
   const before = await captureCanvasElementPngProof(page, viewportLabel, preClickDeadline);
   const selectionStartedAt = Date.now();
-  await trigger();
-  const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
-  const selectionProof = waitForArtifactSelection(page, artifactId, geometry, remainingTimeout(deadline));
-  const restoredStage = restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline);
-  const settledStage = waitForStageSettled(page, artifactId, deadline);
-  await Promise.all([selectionProof, restoredStage, settledStage]);
-  const pixels = await captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, before.identitySignature, before.stabilityDescriptor, before.canvasClip);
-  return { pixels, pngProof: pixels, settledAtMs: pixels.settledAtMs, stableThroughMs: pixels.stableThroughMs };
+  const timing = createPhaseTiming();
+  try {
+    await timing.measure('input.dispatch', trigger);
+    const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
+    const selectionProof = timing.measure('selection.wait', () => waitForArtifactSelection(page, artifactId, geometry, remainingTimeout(deadline)));
+    const restoredStage = restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline, timing);
+    const settledStage = timing.measure('settled.wait', () => waitForStageSettled(page, artifactId, deadline));
+    await Promise.all([selectionProof, restoredStage, settledStage]);
+    const pixels = await captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, before.identitySignature, before.stabilityDescriptor, before.canvasClip, timing);
+    return { pixels, pngProof: pixels, settledAtMs: pixels.settledAtMs, stableThroughMs: pixels.stableThroughMs };
+  } finally {
+    // Parallel waits overlap; running phases have no end timestamp if another wait failed first.
+    console.log(`TIMING ${viewportLabel} ${artifactId}: ${JSON.stringify({ selectionStartedAt, selectionDeadline: selectionStartedAt + SELECTION_SETTLE_BUDGET_MS, stabilityBudgetMs: STABILITY_CONFIRMATION_BUDGET_MS, phases: timing.phases })}`);
+  }
 }
 
 async function waitForArtifact(page, artifactId, geometry, viewportLabel, expectedRenderMode, selectionFingerprints) {
