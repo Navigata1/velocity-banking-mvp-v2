@@ -1,43 +1,44 @@
 PASS hero visibility controls: blank, undersized and clipped frames rejected
 PASS hero readiness deadline controls: late results and pending waits rejected
+PASS hero cadence controls: primer 16ms and 15x100ms samples
 PASS 1440px slow-network poster continuity and selected-mode stability
-1440px car color samples: 523, 527
+1440px car color samples: 523, 524
 PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px house color samples: 426, 423
+1440px house color samples: 426, 447
 PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px land color samples: 485, 529
+1440px land color samples: 475, 543
 PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px creditCard color samples: 199, 77
+1440px creditCard color samples: 201, 81
 PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px studentLoan color samples: 412, 376
+1440px studentLoan color samples: 414, 369
 PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
 1440px medical color samples: 269, 292
 PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px personal color samples: 411, 449
+1440px personal color samples: 412, 450
 PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px recreation color samples: 365, 262
+1440px recreation color samples: 364, 252
 PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
-1440px custom color samples: 329, 315
+1440px custom color samples: 332, 315
 PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
 PASS 1440px vault: nonblank, framed, moving
 PASS 375px slow-network poster continuity and selected-mode stability
-375px car color samples: 558, 553
+375px car color samples: 558, 547
 PASS 375px car: poster, real GLB, nonblank pixels, visible rotation, containment
-375px house color samples: 427, 449
+375px house color samples: 427, 446
 PASS 375px house: poster, real GLB, nonblank pixels, visible rotation, containment
-375px land color samples: 475, 550
+375px land color samples: 475, 544
 PASS 375px land: poster, real GLB, nonblank pixels, visible rotation, containment
 375px creditCard color samples: 207, 83
 PASS 375px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
-375px studentLoan color samples: 427, 397
+375px studentLoan color samples: 427, 395
 PASS 375px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
-375px medical color samples: 280, 307
+375px medical color samples: 279, 306
 PASS 375px medical: poster, real GLB, nonblank pixels, visible rotation, containment
-375px personal color samples: 412, 437
+375px personal color samples: 412, 441
 PASS 375px personal: poster, real GLB, nonblank pixels, visible rotation, containment
-375px recreation color samples: 358, 261
+375px recreation color samples: 358, 251
 PASS 375px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
-375px custom color samples: 342, 319
+375px custom color samples: 343, 318
 PASS 375px custom: poster, real GLB, nonblank pixels, visible rotation, containment
 PASS 375px vault: nonblank, framed, moving
 PASS reduced-motion still frame

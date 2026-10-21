@@ -64,6 +64,28 @@ async function verifyDeadlineControls() {
   assert.equal(await beforeDeadline(Date.now()+1000,async()=>true,'Immediate action'),true);
   console.log('PASS hero readiness deadline controls: late results and pending waits rejected');
 }
+async function primeMotionFrame(page) {
+  await beforeDeadline(Date.now()+stageTimeout,()=>page.clock.runFor(16),'Animation primer');
+}
+async function advanceMotionSample(page) {
+  const deadline=Date.now()+stageTimeout;
+  // Fixed 10Hz test samples respect the runtime's 100ms delta cap; this is not an FPS test.
+  for(let sample=0;sample<15;sample++) {
+    await beforeDeadline(deadline,()=>page.clock.fastForward(100),'Animation sample');
+  }
+}
+async function verifyCadenceControls() {
+  const trace=[];
+  const page={clock:{runFor:async time=>trace.push(['primer',time]),fastForward:async time=>trace.push(['sample',time])}};
+  await primeMotionFrame(page);await advanceMotionSample(page);
+  assert.deepEqual(trace,[['primer',16],...Array.from({length:15},()=>['sample',100])]);
+  let calls=0;
+  await assert.rejects(advanceMotionSample({clock:{fastForward:async()=>{
+    if(++calls===7)throw new Error('injected sample failure');
+  }}}),/injected sample failure/);
+  assert.equal(calls,7,'failed sample must not trigger retries or extra ticks');
+  console.log('PASS hero cadence controls: primer 16ms and 15x100ms samples');
+}
 async function pauseAtVisibleHero(page) {
   await page.clock.resume();
   await page.waitForFunction(()=>{
@@ -97,6 +119,7 @@ async function captureStage(page, stage) {
 async function run() {
   verifyVisibilityControls();
   await verifyDeadlineControls();
+  await verifyCadenceControls();
   const started = await startBuiltServer(root);
   const browserArgs = getHeadlessChromiumArgs();
   const browser = await chromium.launch({ executablePath: findBrowserExecutable(), headless: true,
@@ -147,8 +170,9 @@ async function run() {
         await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
         const stage=page.getByTestId('asset-hero-canvas');
         await loadControlledStage(page);
+        await primeMotionFrame(page);
         const a=await captureStage(page,stage);
-        await page.clock.runFor(1500);
+        await advanceMotionSample(page);
         const b=await captureStage(page,stage);
         await page.clock.resume();
         fs.writeFileSync(path.join(output,`${width}-${id}-3d-start.png`),a);
@@ -172,10 +196,11 @@ async function run() {
       await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
       await loadControlledStage(page);
       const vault=page.getByTestId('asset-hero-canvas');
+      await primeMotionFrame(page);
       const startBytes=await captureStage(page,vault);
       fs.writeFileSync(path.join(output,`${width}-vault-3d-start.png`),startBytes);
       const start=decodePngRgba(startBytes);
-      await page.clock.runFor(1500);
+      await advanceMotionSample(page);
       const endBytes=await captureStage(page,vault);
       fs.writeFileSync(path.join(output,`${width}-vault-3d.png`),endBytes);
       const end=decodePngRgba(endBytes);

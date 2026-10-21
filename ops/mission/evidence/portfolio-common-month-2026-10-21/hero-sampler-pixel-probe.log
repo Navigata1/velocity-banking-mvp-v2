@@ -1,0 +1,50 @@
+{"mode":"normalized-reference-60hz","dispatchMilliseconds":14959.456999999999,"advanceAndCaptureMilliseconds":15343.844999999998,"colors":198,"visibilityAndMotionPassed":true}
+{"mode":"fixed-sampler-10hz","dispatchMilliseconds":1995.0764000000017,"advanceAndCaptureMilliseconds":2363.1445999999996,"colors":196,"visibilityAndMotionPassed":true}
+{
+  "verifiedAt": "2026-10-21T15:23:23.856Z",
+  "sourceHash": "6231db4e77516c3c811bdefee7d567265a80dee3406ea05a1f7888ac74cd7fe9",
+  "asset": "creditCard",
+  "width": 1440,
+  "backend": "requested software renderer",
+  "modes": [
+    {
+      "mode": "normalized-reference-60hz",
+      "dispatchMilliseconds": 14959.456999999999,
+      "advanceAndCaptureMilliseconds": 15343.844999999998,
+      "bounds": {
+        "left": 235,
+        "right": 459,
+        "top": 74,
+        "bottom": 355
+      },
+      "colors": 198
+    },
+    {
+      "mode": "fixed-sampler-10hz",
+      "dispatchMilliseconds": 1995.0764000000017,
+      "advanceAndCaptureMilliseconds": 2363.1445999999996,
+      "bounds": {
+        "left": 235,
+        "right": 459,
+        "top": 74,
+        "bottom": 355
+      },
+      "colors": 196
+    }
+  ],
+  "comparisons": {
+    "first": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.08737612244897264,
+      "meanCellDistance": 0.015861381536992042
+    },
+    "second": {
+      "changedCellCount": 6,
+      "maxCellDistance": 1.6083497959183646,
+      "meanCellDistance": 0.6189944924532306
+    }
+  },
+  "originalVisibilityAndMotionGuardsPassed": true,
+  "observedAdvanceCaptureRatio": 6.492977619736008,
+  "scope": "One-asset normalized reference versus fixed10Hz two-pose test sampling. Both use the same16ms primer. Timing is observational, not a device FPS/smoothness or legacy-D6 bit-identity claim."
+}

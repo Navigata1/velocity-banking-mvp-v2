@@ -1,0 +1,88 @@
+{
+  "headSha": "d6f6f5010237ff1843bb73a33360445b7d094687",
+  "preview": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+  "id": "dpl_74FiAwjtdUNy1phVdgJNZ29xpoCj",
+  "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+  "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+  "scope": "islanddevcrew",
+  "state": "READY",
+  "target": null,
+  "metadata": {
+    "id": "dpl_74FiAwjtdUNy1phVdgJNZ29xpoCj",
+    "name": "velocity-banking-mvp-v2",
+    "url": "velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1792594797629,
+    "creator": {
+      "uid": "QPOvN2WenLdiOTDpOvhQ4o5c",
+      "username": "jony02-7429"
+    },
+    "project": {
+      "id": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+      "name": "velocity-banking-mvp-v2",
+      "framework": "nextjs"
+    },
+    "meta": {
+      "githubCommitRef": "codex/restoration/asset-heroes",
+      "githubCommitSha": "d6f6f5010237ff1843bb73a33360445b7d094687",
+      "githubCommitMessage": "Stabilize hero capture phases and preserve strict release gates",
+      "githubRepo": "velocity-banking-mvp-v2",
+      "githubOrg": "Navigata1"
+    },
+    "alias": [
+      "velocity-banking-mvp-v2-git-codex-restorat-c1b229-islanddevcrew.vercel.app"
+    ],
+    "target": null,
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1792594798736,
+    "ready": 1792594818589,
+    "readyState": "READY",
+    "aliasError": null
+  },
+  "request": {
+    "idOrUrl": "dpl_74FiAwjtdUNy1phVdgJNZ29xpoCj",
+    "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+    "withGitRepoInfo": "true"
+  },
+  "authenticatedTeam": {
+    "id": "team_rccC7q4MEQxCAEz45598ttAe",
+    "slug": "islanddevcrew",
+    "source": "Authenticated Vercel get_team",
+    "verifiedAt": "2026-10-21T15:01:14.425Z"
+  },
+  "previewCreation": {
+    "automaticPreviewObserved": false,
+    "request": {
+      "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+      "requestBody": {
+        "name": "velocity-banking-mvp-v2",
+        "project": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+        "withLatestCommit": false,
+        "gitSource": {
+          "type": "github",
+          "org": "Navigata1",
+          "repo": "velocity-banking-mvp-v2",
+          "ref": "codex/restoration/asset-heroes",
+          "sha": "d6f6f5010237ff1843bb73a33360445b7d094687"
+        },
+        "meta": {
+          "githubCommitRef": "codex/restoration/asset-heroes",
+          "githubCommitSha": "d6f6f5010237ff1843bb73a33360445b7d094687",
+          "githubCommitMessage": "Stabilize hero capture phases and preserve strict release gates",
+          "githubRepo": "velocity-banking-mvp-v2",
+          "githubOrg": "Navigata1"
+        }
+      }
+    },
+    "targetResult": null,
+    "note": "Existing-project preview build only. No project settings, production target, custom domains, backend/schema/data, credentials or access changes requested.",
+    "rejectedTargetArgument": {
+      "status": 400,
+      "message": "Vercel API request failed (400: bad_request). Invalid request: `target` should be 'production', 'staging', or a custom environment identifier."
+    },
+    "apiReference": "https://vercel.com/docs/rest-api/deployments/create-a-new-deployment"
+  }
+}

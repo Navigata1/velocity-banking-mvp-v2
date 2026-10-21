@@ -3,13 +3,15 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import pixelProof from '../../../apps/web/scripts/png-pixel-proof.cjs';
 
 const scratch = path.resolve('.superpowers/sdd/2026-10-21-common-month');
 const output = path.resolve('ops/mission/evidence/portfolio-common-month-2026-10-21');
 const baseline = '1aec5bf7be3d0f3c26079141245e4c7291fd8778';
-const predecessor = '789ae25cc3feaefba942d26e1c1fbde02b747aaf';
+const predecessor = 'd6f6f5010237ff1843bb73a33360445b7d094687';
 const predecessorBytes = execFileSync('git', ['show', predecessor + ':ops/mission/evidence/portfolio-common-month-2026-10-21/artifact-receipt.json'], {maxBuffer:16*1024*1024});
 const predecessorReceipt = JSON.parse(predecessorBytes);
+const olderReceiptBytes = execFileSync('git', ['show', '789ae25cc3feaefba942d26e1c1fbde02b747aaf:ops/mission/evidence/portfolio-common-month-2026-10-21/artifact-receipt.json'], {maxBuffer:16*1024*1024});
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const normalized = bytes => hash(bytes.toString('utf8').replace(/\r\n?/g, '\n'));
 const prior = JSON.parse(await fs.readFile('.superpowers/sdd/2026-10-21-mobile-vitals/postflight.json', 'utf8'));
@@ -49,20 +51,23 @@ for (const name of ['run-hosted.cjs', 'postflight.mjs', 'publish-desktop.mjs', '
 for (const name of await fs.readdir(path.join(scratch, 'release'))) {
   if (/^projection.*\.(json|log|mjs)$/.test(name) || /^shipping-guards.*\.log$/.test(name) || /^currency-width.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
   if (/^hero-helper-.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
+  if (/^sampler-helper-.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
 }
 for (const [source, target] of Object.entries({
-  'web-tests-hero-clock.log': 'web-tests-final.log', 'web-lint-hero-clock.log': 'web-lint-final.log',
+  'web-tests-sampler.log': 'web-tests-final.log', 'web-lint-sampler.log': 'web-lint-final.log',
   'web-build-currency-fix.log': 'web-build-final.log', 'native-export-font-fix.log': 'native-export-final.log',
   'native-contracts-font-fix.log': 'native-contracts-final.log', 'media-font-fix.log': 'media-check.log',
-  'native-ui-font-fix.log': 'native-ui-capture-final.log', 'web-ui-hero-portfolio.log': 'web-ui-capture-final.log',
-  'videos-font-fix.log': 'videos-final.log', 'release/shipping-guards-hero-parent.log': 'release-tests-final.log',
+  'native-ui-font-fix.log': 'native-ui-capture-final.log', 'web-ui-sampler-portfolio.log': 'web-ui-capture-final.log',
+  'videos-font-fix.log': 'videos-final.log', 'release/shipping-guards-sampler-parent.log': 'release-tests-final.log',
 })) await copy(path.join(scratch, source), target);
-await copy(path.join(scratch, 'web-ui-hero-portfolio.log'), 'portfolio-currency-final.log');
+await copy(path.join(scratch, 'web-ui-sampler-portfolio.log'), 'portfolio-currency-final.log');
 for (const name of ['failed-push-ci.log', 'failed-pr-ci.log', 'failed-7bd72ac-browser-proof.json']) await copy(path.join(scratch, 'release', name), name);
 await fs.cp(path.join(scratch, 'release/failed-789ae25'), path.join(output, 'failed-789ae25'), {recursive:true});
-await fs.writeFile(path.join(output, 'failed-789ae25/local-preflight-receipt.json'), predecessorBytes);
+await fs.writeFile(path.join(output, 'failed-789ae25/local-preflight-receipt.json'), olderReceiptBytes);
+await fs.cp(path.join(scratch, 'release/failed-d6f6f50'), path.join(output, 'failed-d6f6f50'), {recursive:true});
+await fs.writeFile(path.join(output, 'failed-d6f6f50/local-preflight-receipt.json'), predecessorBytes);
 await fs.cp(path.join(scratch, 'release/failed-789ae25-push-heroes'), path.join(output, 'failed-789ae25-push-heroes'), {recursive:true});
-for (const directory of ['hero-clock-probe','hero-clock-probe-vault','hero-clock-probe-frozen','hero-vault-opacity-probe','hero-vault-opacity-probe-warm','hero-software-final-snapshots']) {
+for (const directory of ['hero-clock-probe','hero-clock-probe-vault','hero-clock-probe-frozen','hero-clock-probe-frozen-sampled','hero-vault-opacity-probe','hero-vault-opacity-probe-warm','hero-software-final-snapshots','hero-sampler-software-final-snapshots','hero-sampler-pixel-probe']) {
   await fs.cp(path.join(scratch, directory), path.join(output, directory), {recursive:true});
 }
 await copy('apps/web/test-results/portfolio-common-month/verification.json', 'web-common-month-verification.json');
@@ -94,11 +99,18 @@ for (const file of inheritedCanonicalFiles) assert.equal(hash(await fs.readFile(
 const gates = JSON.parse(await fs.readFile(path.join(output, 'web-gates-final.json'), 'utf8'));
 assert.equal(gates.status, 'completed'); assert.equal(gates.stages.length, 11);
 assert.ok(gates.stages.every(stage => stage.exitCode === 0 && !stage.error));
-const frozen = JSON.parse(await fs.readFile(path.join(output, 'hero-clock-probe-frozen/verification.json'), 'utf8'));
+const frozen = JSON.parse(await fs.readFile(path.join(output, 'hero-clock-probe-frozen-sampled/verification.json'), 'utf8'));
 assert.equal(frozen.normalGeometryGuardPassed, true); assert.equal(frozen.motionRejected, true);
-const software = JSON.parse(await fs.readFile(path.join(output, 'hero-software-final-snapshots/snapshot-receipt.json'), 'utf8'));
+assert.equal(frozen.sampled,true);assert.equal(frozen.samplingSourceHash,hash(await fs.readFile('apps/web/scripts/smoke-heroes.cjs')));
+const software = JSON.parse(await fs.readFile(path.join(output, 'hero-sampler-software-final-snapshots/snapshot-receipt.json'), 'utf8'));
 assert.equal(software.viewportCases,20); assert.equal(Object.keys(software.files).length,40); assert.equal(software.processExitCode,0);
 assert.equal(software.sourceHash,hash(await fs.readFile('apps/web/scripts/smoke-heroes.cjs')));
+const comparison = JSON.parse(await fs.readFile(path.join(output, 'hero-sampler-pixel-probe/verification.json'), 'utf8'));
+assert.equal(comparison.sourceHash,software.sourceHash);assert.equal(comparison.originalVisibilityAndMotionGuardsPassed,true);
+for (const distance of Object.values(comparison.comparisons)) {
+  assert.ok(distance.maxCellDistance<=pixelProof.MAX_SETTLED_SPATIAL_CELL_DISTANCE);
+  assert.ok(distance.meanCellDistance<=pixelProof.MAX_SETTLED_SPATIAL_MEAN_DISTANCE);
+}
 const web = await fs.readFile(path.join(output, 'web-tests-final.log'), 'utf8');
 assert.ok(web.includes('348 regression tests passed.') && web.includes('31 common-month contracts passed.'));
 const reference = web.split(/\r?\n/).filter(line => line.startsWith('{"seed":')).map(JSON.parse).at(-1);
@@ -125,9 +137,14 @@ const receipt = { verifiedAt: new Date().toISOString(), baseline, stage: 'Local 
     reason: 'Both web jobs fail common-month large-values280 section overflow; both SQL jobs pass. Hosted/local success did not override CI; no verified receipt or Desktop publication.' },
   failedHeroCapturePredecessor: {headSha:'789ae25cc3feaefba942d26e1c1fbde02b747aaf', push:{id:39612733144,conclusion:'failure'}, pullRequest:{id:39612743542,conclusion:'success'},
     reason:'Push failed the original uncontrolled-phase Credit Card visibility guard; complete PR pipeline succeeded. Neither retry fishing nor a receipt/Desktop publication occurred. Both new full exact-head events are required.'},
+  failedBudgetPredecessor: {headSha:predecessor,push:{id:39621111192,conclusion:'success'},pullRequest:{id:39621121164,conclusion:'cancelled'},
+    annotation:'The job has exceeded the maximum execution time of 20m0s',heroStepSeconds:813,passedViewportCases:15,
+    reason:'No visibility/movement assertion failed before the fixed job cap cancelled the PR after10 desktop+5 mobile cases. Later media/native steps were skipped, both SQL jobs succeeded. No receipt/Desktop publication; no same-head retry.'},
   heroCapture: {scope:'Only the existing browser test harness changes; all actual assets, animation/runtime and financial sources are preserved.',
-    controlledMilliseconds:1500, loadingTickMilliseconds:16, originalForegroundMinimum:0.02, originalScreenshotTimeoutMilliseconds:120000,
-    deadlineContracts:5, evidence:'hero-deadline-green-final.log', frozenSchedulerBrowserControl:'hero-clock-probe-frozen/verification.json',
+    controlledMilliseconds:1500, loadingTickMilliseconds:16, primerMilliseconds:16, sampleCount:15, sampleStepMilliseconds:100,samplingHz:10,
+    originalForegroundMinimum:0.02, originalScreenshotTimeoutMilliseconds:120000, groupWallBudgetMilliseconds:120000,
+    deadlineContracts:5, samplerContracts:5,evidence:'hero-deadline-sampler-green.log',samplerEvidence:'hero-sampler-green.log',
+    frozenSchedulerBrowserControl:'hero-clock-probe-frozen-sampled/verification.json',pixelComparison:'hero-sampler-pixel-probe/verification.json',
     limitation:'Clock-driven two-snapshot phase and visibility proof is not wall-time smoothness or device performance certification.'},
   inheritedUnchangedGates: {fromHead:predecessor, headWasReleaseVerified:false, localPreflightReceiptSha256:hash(predecessorBytes),
     unchangedExecutableSources:292, changedExecutableSource:'apps/web/scripts/smoke-heroes.cjs', canonicalFiles:inheritedCanonicalFiles,

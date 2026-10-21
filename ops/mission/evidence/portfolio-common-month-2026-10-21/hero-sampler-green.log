@@ -1,0 +1,6 @@
+PASS one16ms primer and exactly fifteen100ms samples, in fixed order
+PASS dispatch failure stops on that sample with no retries or extra ticks
+PASS all samples share one original wall deadline
+PASS a pending sample rejects within its remaining wall budget
+PASS a pending primer rejects within the unchanged wall budget
+{"passed":5,"failed":0,"cases":[{"name":"one16ms primer and exactly fifteen100ms samples, in fixed order","passed":true},{"name":"dispatch failure stops on that sample with no retries or extra ticks","passed":true},{"name":"all samples share one original wall deadline","passed":true},{"name":"a pending sample rejects within its remaining wall budget","passed":true},{"name":"a pending primer rejects within the unchanged wall budget","passed":true}]}

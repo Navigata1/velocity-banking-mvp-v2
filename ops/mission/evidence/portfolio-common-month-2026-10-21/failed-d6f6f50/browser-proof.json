@@ -1,0 +1,117 @@
+{
+  "headSha": "d6f6f5010237ff1843bb73a33360445b7d094687",
+  "invocationId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+  "capturedAt": "2026-10-21T15:07:42.328Z",
+  "house": {
+    "url": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app/",
+    "domain": "house",
+    "vitalsCount": 4,
+    "logs": [],
+    "interactionVerified": true,
+    "before": {
+      "cashFlow": "$3,500",
+      "interest": "Est. $51.50/day"
+    },
+    "after": {
+      "cashFlow": "$3,600",
+      "interest": "Est. $51.50/day"
+    },
+    "restored": {
+      "cashFlow": "$3,500",
+      "interest": "Est. $51.50/day"
+    }
+  },
+  "commonMonth": {
+    "url": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app/portfolio",
+    "fixture": "cash-versus-wealth",
+    "width": 375,
+    "logs": [],
+    "interactionVerified": true,
+    "storageProof": {
+      "source": "invocation-bound-browser-fixtures",
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "suite": "commonMonth",
+      "storagePreserved": true
+    },
+    "observations": [
+      {
+        "month": 0,
+        "snowball": {
+          "cash": "$0.00",
+          "debt": "$140.00",
+          "loc": "$40.00",
+          "net": "-$180.00"
+        },
+        "velocity": {
+          "cash": "$0.00",
+          "debt": "$140.00",
+          "loc": "$40.00",
+          "net": "-$180.00"
+        }
+      },
+      {
+        "month": 3,
+        "snowball": {
+          "cash": "$200.00",
+          "debt": "$80.00",
+          "loc": "$0.00",
+          "net": "$120.00"
+        },
+        "velocity": {
+          "cash": "$120.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$120.00"
+        }
+      },
+      {
+        "month": 6,
+        "snowball": {
+          "cash": "$420.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$420.00"
+        },
+        "velocity": {
+          "cash": "$420.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$420.00"
+        }
+      },
+      {
+        "month": 600,
+        "snowball": {
+          "cash": "$59,820.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$59,820.00"
+        },
+        "velocity": {
+          "cash": "$59,820.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$59,820.00"
+        }
+      }
+    ],
+    "restored": {
+      "month": 3,
+      "snowball": {
+        "cash": "$200.00",
+        "debt": "$80.00",
+        "loc": "$0.00",
+        "net": "$120.00"
+      },
+      "velocity": {
+        "cash": "$120.00",
+        "debt": "$0.00",
+        "loc": "$0.00",
+        "net": "$120.00"
+      }
+    },
+    "originalPortfolioRestored": true,
+    "originalMonthRestored": 60
+  },
+  "viewportReset": true
+}

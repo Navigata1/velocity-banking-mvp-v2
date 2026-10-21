@@ -1,0 +1,29 @@
+{
+  "scope": "Unchanged source inventory and all guard function bodies, postflight gates, publication preflight/staging, runner and projection test; byte-hash comparison only, not app/GPU/CI/publication approval",
+  "before": {
+    "sections": {
+      "sourceConfiguration": "162ae8fd8f5b9b4228c086407112a63bc4d7460192929f150617be2cb437c427",
+      "guardFunctions": "949331ff62674d04c9a677c30518a9a9e962d0ae75afcf440a9919350aa6aeaf",
+      "publicationPreflight": "28d3800569ec25724a58a4235a73123635468f3003a06b6f0d8f35582122e588",
+      "publicationStaging": "03bf4984f8d45b5024a81698af43256a5a9ede3e02c785e11e29eba6993a416d",
+      "postflightGates": "7f1b6b3309821bc244049982e1e78c9e938ecd8549a5bc7dd822175c0bf85f72"
+    },
+    "untouched": {
+      "run-hosted.cjs": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d",
+      "projection.test.mjs": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    }
+  },
+  "after": {
+    "sections": {
+      "sourceConfiguration": "162ae8fd8f5b9b4228c086407112a63bc4d7460192929f150617be2cb437c427",
+      "guardFunctions": "949331ff62674d04c9a677c30518a9a9e962d0ae75afcf440a9919350aa6aeaf",
+      "publicationPreflight": "28d3800569ec25724a58a4235a73123635468f3003a06b6f0d8f35582122e588",
+      "publicationStaging": "03bf4984f8d45b5024a81698af43256a5a9ede3e02c785e11e29eba6993a416d",
+      "postflightGates": "7f1b6b3309821bc244049982e1e78c9e938ecd8549a5bc7dd822175c0bf85f72"
+    },
+    "untouched": {
+      "run-hosted.cjs": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d",
+      "projection.test.mjs": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    }
+  }
+}

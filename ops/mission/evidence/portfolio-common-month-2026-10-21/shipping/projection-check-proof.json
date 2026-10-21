@@ -1,7 +1,7 @@
 {
   "scope": "Synthetic receipt / actual publisher state projection only; no publication, browser, CI or hosted proof",
-  "publisherSha256": "c7829425de5f8f0990fdd49e387b11dca11ceba4324acdb83fe4fcfef49d849c",
-  "sourceStateSha256": "fa38c7c17750fc61c345b263cbd23efeb31dd45a607ce80ca2570bd30b3c44ad",
+  "publisherSha256": "dca5d2205f34cf0c5715ee4dd53e85ee5621b95938f4d39990eed8da652c71bb",
+  "sourceStateSha256": "2f2f98cd4df6b377ece76e2e4f18e9a2f45a1eee6a91b9936184617d6a92e3f8",
   "receipt": {
     "verifiedAt": "2026-10-21T13:00:00.000Z",
     "receipt": "https://example.invalid/synthetic-common-month-receipt",
@@ -27,7 +27,7 @@
       "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
       "status": "active",
       "started": "2026-07-12",
-      "updated": "2026-10-21T13:55:00Z",
+      "updated": "2026-10-21T14:51:00Z",
       "sessionCount": 20
     },
     "policies": {
@@ -88,8 +88,8 @@
             "command": "npm --prefix apps/web test",
             "status": "passed",
             "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-tests-final.log",
-            "lastRun": "2026-10-21T12:56:00Z",
-            "notes": "Fresh full npm test passes348 existing regressions/reference lanes,31 common-month contracts and23247 seeded probes. Actual null/dust/cancellation/positive-range REDs preceded fixes; independent fixture-specific cutoff preserves all horizons/seed/tolerances/direct ledger. Corrective font changes preserve all six math modules, data, assets and dependencies.293 source fingerprints cover280 unchanged/5 old modified/8 new executable sources, including permanent eleven-width currency regression. Local preflight; both new exact-head CI events required."
+            "lastRun": "2026-10-21T14:47:43Z",
+            "notes": "Full npm test passes348 existing regressions/reference lanes,31 common-month contracts and23247 seeded probes. Actual null/dust/cancellation/positive-range REDs preceded fixes; independent fixture-specific cutoff preserves all horizons/seed/tolerances/direct ledger. Font and later capture-harness corrections preserve all six math modules, data, assets and dependencies. Current293 source inventory:279 old unchanged/6 old modified/8 new, including permanent eleven-width currency regression and existing hero test harness. Local numerical proof is not both complete new exact-head CI events."
           },
           {
             "id": "R0-G2",
@@ -97,17 +97,17 @@
             "command": "npm --prefix apps/web run smoke:rendered:built",
             "status": "passed",
             "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/rendered-final.log",
-            "lastRun": "2026-10-21T13:03:53Z",
-            "notes": "Final corrective-source serial11-stage batch passes strictThree700/300ms,all20 hero views/reduced-motion/fallbacks,seven HTTP/rendered routes and original88 workflows. Current affected Portfolio package adds21 common-month workflows and11 maximum-currency width checks:109 primary+11 layout=120 web checks. Expo49+21=70. All ten unchanged videos/media145/27 fresh stills rechecked; captures inspected. New complete CI/hosted120 required; not physical-device/final art/production approval."
+            "lastRun": "2026-10-21T14:49:39Z",
+            "notes": "Final11-stage standard browser matrix passes strictThree700/300ms,20 hero views/reduced-motion/fallbacks,seven HTTP/rendered routes and old88 workflows. Separate complete software-renderer20 hero cases pass;40 raw stage images archived. Actual isolated frozen-scheduler control preserves visible geometry and rejects motion. Refreshed affected Portfolio package includes21 common-month and11 currency boundaries:109 primary+11 layout=120 hosted checks required. Web348/31/23247,lint/runtimeaudit0 refreshed. Unchanged local build/native70/media14527/video logs retained byte-identically, not claimed rerun; both new complete CI events must freshly execute them. All assets/runtime/math unchanged; no physical-device/final art/production approval."
           },
           {
             "id": "R0-G3",
             "title": "Exact pushed commit has successful CI",
             "command": "node scripts/check-restoration-ci.cjs",
             "status": "pending",
-            "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39605673471",
-            "lastRun": "2026-10-21T13:31:05Z",
-            "notes": "7bd72ac FAILED both complete CI39605673471/39605676575 at large-values280 section overflow; both SQL jobs passed, later media/native skipped. Hosted109/IAB success did NOT produce receipt/Desktop publication. Actual requested-Verdana REDs at280/690 precede9rem/10rem content tracks and permanent eleven-width maximum-currency gate. Corrective578b87d/0ba5cf8 needs BOTH new complete CI/native70/SQL63 twice/event,ten hosted suites/120 checks/READY/hashes/new IAB. Previous verified1aec5bf receipt6315242743/322 Desktop files remains baseline;4134 baseline checks are not new tests. No report-only push loop or production approval."
+            "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39612733144",
+            "lastRun": "2026-10-21T14:15:17Z",
+            "notes": "789ae25 is NOT verified: complete push39612733144 FAILED original hero capture at nearly edge-on CreditCard1440 (1.39% foreground below unchanged2%); complete PR39612743542 SUCCESS all steps. Both events are required, no retry fishing/receipt/Desktop publication. Earlier7bd72ac remains BOTH-failed at280px currency overflow; corrective font gates pass. Uniform controlled-phase harness now preserves actual models/runtime/math and all pixel/700ms/300ms/20-minute limits; genuine deadline RED/GREEN and actual Vault PageTransition opacity0/1 reproduction are retained. Require final full local gates and BOTH new complete exact-head events/native70/media14527/SQL63 twice/event/READY/hosted120/hashes/new IAB before publication. Previous1aec5bf receipt6315242743/322 Desktop files stays baseline;4134 baseline checks are not new tests. No production approval."
           }
         ]
       },
@@ -170,9 +170,9 @@
             "title": "Desktop/mobile actual-geometry checks",
             "command": "npm --prefix apps/web run test:heroes",
             "status": "passed",
-            "evidence": "ops/mission/evidence/mobile-vitals-wrap-2026-10-21/heroes.log",
-            "lastRun": "2026-10-21T11:26:43.279Z",
-            "notes": "All ten heroes pass1440/375 geometry/movement/framing/loading/reduced-motion and texture/network fallbacks with the new mobile vital layout. Strict Three original700/300ms limits pass after heavy media and independent browser jobs are terminal. No asset/camera/motion changes or assertion/deadline waivers. Prior timing causes unresolved; hosted proof mandatory."
+            "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/heroes-final.log",
+            "lastRun": "2026-10-21T14:46:12.451Z",
+            "notes": "All ten heroes pass1440/375 in the standard browser and separate software-renderer runs; all20 viewport cases, reduced motion and network/texture fallbacks pass. Source1D629EA0 is stable in independent12-pin review, deadline P2 closed; no new bounded P1/P2. Clock-driven rest/1.5s captures retain2%/edge/color/spatial/overflow/error guards, after actual visible-page settlement.20 software cases retain40 raw images; actual frozen RAF control rejects stationary geometry. Strict Three remains separately unclocked700/300ms and passes. Failed789 push and intermediate Vault-opacity failure remain explicit. No runtime/asset/camera/math change or production/device/final-art approval."
           },
           {
             "id": "R1-G3",
@@ -206,7 +206,7 @@
             "status": "in_progress",
             "dependsOn": [],
             "pr": null,
-            "notes": "Shared Portfolio31 contracts/23247 probes remain unchanged after7bd72ac failed BOTH Linux web jobs. Corrective578b87d/0ba5cf8 uses9rem tracks at12px,10rem at existing14px breakpoint, preserving full values and all fit guards. Actual280/690 requested-Verdana REDs precede changes;21 primary web+21 native,permanent11 maximum-currency widths and42 extra stress executions pass locally. Bounded source reviews find no P1/P2; six math modules unchanged. Fresh final-head CI/hosted120 required; no receipt/Desktop yet. No data/allocation migration. Other route scopes,shared ownership,lender/calendar/device and entire R2 remain open."
+            "notes": "Shared Portfolio31 contracts/23247 probes,9rem/10rem tracks,21 web+21 native,11 maximum-currency widths and42 extra font probes are unchanged.789ae25 passed full PR CI39612743542 but push39612733144 failed unrelated original hero capture, so no receipt/Desktop publication. Narrow browser-harness clock correction does not recompute or migrate data; all six numerical modules remain pinned. Actual280/690 font REDs and both failed7bd72ac runs stay explicit. Fresh BOTH final-head CI/hosted120 required. Other route scopes,shared ownership,lender/calendar/device and entire R2 remain open."
           },
           {
             "id": "R2-T3",
@@ -882,11 +882,11 @@
     "resume": {
       "activePhase": "R0",
       "nextActions": [
-        "Previous1aec5bf freshly verified: both complete events39592109336/39592115293 attempt1,145media/27stills/348regressions/native49/fullcontracts/SQL63 twice/event, exact READY/hosted88/routes/all10hashes; receipt6315242743 and322 Desktop files/324 journal entries/48 backups.4134 read-only baseline checks are not new app tests. Current common-month substantive checkpoint requires both new final-head events/native70/hosted109/routes/all10hashes,actual IAB edit/restore and staged Desktop readback. No report-only push loop or production promotion.",
+        "Previous1aec5bf remains verified: complete events39592109336/39592115293, receipt6315242743 and322 Desktop files/324 journal entries/48 backups.789ae25 push39612733144 FAILED original hero capture; complete PR39612743542 succeeded. Neither one successful event nor hosted120/IAB overrides failed CI. Current capture-harness correction needs BOTH new complete exact-head CI/native70/media14527/SQL63 twice/event/READY/ten hosted suites120/all hashes/new IAB and staged Desktop readback.4134 baseline checks are not new app tests. No report-only push loop or production promotion.",
         "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
         "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
         "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
-        "Current correction578b87d/0ba5cf8:7bd72ac failed BOTH full CI39605673471/39605676575 at280px section overflow; bothSQLpassed, NO receipt/Desktop publication. Actual280/690 REDs precede9rem/10rem tracks, reversible font probe and permanent eleven-width max-currency gate. All local gates120web/70native/core31/ref23247/media14527/strictThree pass, six math modules unchanged.293 pins/280oldunchanged/5modified/8new,144 helper+3projection checks. Commit this evidence, push, require BOTH complete new CI/SQL63 twice/READY/ten hosted suites120/all hashes/new IAB+staged Desktop readback. No report-only push loop or weakened limits; whole R2/scenarios/lender/device/art/backend remain open.",
+        "Latest corrective source is only existing smoke-heroes.cjs beyond789ae25: uniform clock-driven phases/visible ancestor wait/bounded deadlines; all original limits retained. Complete software20 and standard20 hero/fallback/reduced-motion runs, final11-stage matrix/strictThree700/300, affected Portfolio package66, fresh348/31/23247/lint/audit0 pass. Actual frozen RAF negative rejects stationary geometry. Source1D629EA0 final independent12-pin review has no new bounded P1/P2; deadline2RED->5GREEN closed.40 raw software images retained. Inventory293:279 old unchanged/6 modified/8 new;146 helper+3projection checks. Unchanged local build/native70/media14527/video proofs are inherited byte-identically, not rerun. Commit/push substantive correction plus evidence once; BOTH new complete CI/build/native/media/SQL/READY/hosted120/IAB/staged Desktop proof still required. All assets/runtime/numerical/storage unchanged. Both failed histories stay explicit; whole R2/scenarios/lender/device/art/backend open.",
         "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
         "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
         "All ten textured candidates still need full-size/all-angle material/art review; preserved artwork is the default. Custom checkpoint single-frame side-by-side triage remains candidly illustrative in places. Do not relabel this as photoreal approval or restart broad redesign. Preserve all source lineage, publication locking, validated Buffer packaging and caps. Mobile readability is implemented; next substantive work R2/R3 shared scenarios/common-date wealth/lender/calendar.",
@@ -1075,7 +1075,7 @@
             "status": "passed",
             "evidence": "https://example.invalid/synthetic-common-month-receipt",
             "lastRun": "2026-10-21T13:00:00.000Z",
-            "notes": "All ten original models/posters/videos retained, with145 media contracts/27 fresh stills in both full CI events and exact hosted GLB/poster hashes. Both complete CI logs include the actual blank/undersized/clipped hero visibility-control marker. Only the capture-clock harness changes; existing geometry, motion,700/300 timing and fallback limits remain intact. Final all-ten art, device and production gates remain open."
+            "notes": "All ten original models/posters/videos retained, with145 media contracts/27 fresh stills in both full CI events and exact hosted GLB/poster hashes. Both complete CI logs include the actual visibility-control and primer16ms/15x100ms cadence-control markers. Fixed10Hz sampling is an endpoint test with fifteen actual100ms callbacks after one16ms primer, not wall-time FPS, a full turn or device approval. Only the capture-clock harness changes; existing geometry, motion,700/300 timing and fallback limits remain intact. Historical d6f6f50 push succeeded but PR was cancelled at20m0s; that mixed head remains unverified with no receipt/Desktop publication. Final all-ten art, device and production gates remain open."
           },
           {
             "id": "R1-G3",
@@ -1109,7 +1109,7 @@
             "status": "in_progress",
             "dependsOn": [],
             "pr": null,
-            "notes": "Shared Portfolio31 contracts/23247 probes remain unchanged after7bd72ac failed BOTH Linux web jobs. Corrective578b87d/0ba5cf8 uses9rem tracks at12px,10rem at existing14px breakpoint, preserving full values and all fit guards. Actual280/690 requested-Verdana REDs precede changes;21 primary web+21 native,permanent11 maximum-currency widths and42 extra stress executions pass locally. Bounded source reviews find no P1/P2; six math modules unchanged. Fresh final-head CI/hosted120 required; no receipt/Desktop yet. No data/allocation migration. Other route scopes,shared ownership,lender/calendar/device and entire R2 remain open."
+            "notes": "Shared Portfolio31 contracts/23247 probes,9rem/10rem tracks,21 web+21 native,11 maximum-currency widths and42 extra font probes are unchanged.789ae25 passed full PR CI39612743542 but push39612733144 failed unrelated original hero capture, so no receipt/Desktop publication. Narrow browser-harness clock correction does not recompute or migrate data; all six numerical modules remain pinned. Actual280/690 font REDs and both failed7bd72ac runs stay explicit. Fresh BOTH final-head CI/hosted120 required. Other route scopes,shared ownership,lender/calendar/device and entire R2 remain open."
           },
           {
             "id": "R2-T3",
@@ -1789,7 +1789,7 @@
         "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
         "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
         "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
-        "Current correction578b87d/0ba5cf8:7bd72ac failed BOTH full CI39605673471/39605676575 at280px section overflow; bothSQLpassed, NO receipt/Desktop publication. Actual280/690 REDs precede9rem/10rem tracks, reversible font probe and permanent eleven-width max-currency gate. All local gates120web/70native/core31/ref23247/media14527/strictThree pass, six math modules unchanged.293 pins/280oldunchanged/5modified/8new,144 helper+3projection checks. Commit this evidence, push, require BOTH complete new CI/SQL63 twice/READY/ten hosted suites120/all hashes/new IAB+staged Desktop readback. No report-only push loop or weakened limits; whole R2/scenarios/lender/device/art/backend remain open.",
+        "Latest corrective source is only existing smoke-heroes.cjs beyond789ae25: uniform clock-driven phases/visible ancestor wait/bounded deadlines; all original limits retained. Complete software20 and standard20 hero/fallback/reduced-motion runs, final11-stage matrix/strictThree700/300, affected Portfolio package66, fresh348/31/23247/lint/audit0 pass. Actual frozen RAF negative rejects stationary geometry. Source1D629EA0 final independent12-pin review has no new bounded P1/P2; deadline2RED->5GREEN closed.40 raw software images retained. Inventory293:279 old unchanged/6 modified/8 new;146 helper+3projection checks. Unchanged local build/native70/media14527/video proofs are inherited byte-identically, not rerun. Commit/push substantive correction plus evidence once; BOTH new complete CI/build/native/media/SQL/READY/hosted120/IAB/staged Desktop proof still required. All assets/runtime/numerical/storage unchanged. Both failed histories stay explicit; whole R2/scenarios/lender/device/art/backend open.",
         "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
         "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
         "All ten textured candidates still need full-size/all-angle material/art review; preserved artwork is the default. Custom checkpoint single-frame side-by-side triage remains candidly illustrative in places. Do not relabel this as photoreal approval or restart broad redesign. Preserve all source lineage, publication locking, validated Buffer packaging and caps. Mobile readability is implemented; next substantive work R2/R3 shared scenarios/common-date wealth/lender/calendar.",

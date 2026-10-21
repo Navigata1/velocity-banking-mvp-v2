@@ -31,6 +31,7 @@ export const ciMarkers = [
   '348 regression tests passed.', 'PASS Dashboard interest large-import at 280px',
   'PASS common-month wider-font 280px',
   'PASS hero visibility controls: blank, undersized and clipped frames rejected',
+  'PASS hero cadence controls: primer 16ms and 15x100ms samples',
   'Custom front lug physically seats the closed bail with a real empty ring aperture',
   'Collection packaging delivers validated source and manifest snapshots despite source-path changes',
   '15 explicit APR unit contracts passed.', '17 portable Portfolio book contracts passed.',

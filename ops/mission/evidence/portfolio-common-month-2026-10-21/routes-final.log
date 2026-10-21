@@ -11,5 +11,5 @@ PASS Vault /vault
 ▲ Next.js 16.4.2
 - Local:         http://localhost:5000
 - Network:       http://0.0.0.0:5000
-✓ Ready in 231ms
-✓ Running next.config.ts took 45ms
+✓ Ready in 234ms
+✓ Running next.config.ts took 46ms

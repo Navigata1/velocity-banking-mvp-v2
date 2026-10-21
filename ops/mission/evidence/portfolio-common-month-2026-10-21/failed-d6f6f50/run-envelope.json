@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 2,
+  "id": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+  "directory": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+  "headSha": "d6f6f5010237ff1843bb73a33360445b7d094687",
+  "deploymentId": "dpl_74FiAwjtdUNy1phVdgJNZ29xpoCj",
+  "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+  "deploymentSha256": "7909e9d550c05c77444dd70877649935aba89cc14e7f8bfc2367f58fd8771cec",
+  "runnerSha256": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d",
+  "guardsSha256": "41061a58491bab23b4c9a9b413fa33d1eff38c1c1fcfbae7f2a8bdbcb9023e5b",
+  "localReceiptSha256": "e2de3c805ae180ae03ddef2ded9731dcb7748f4140ac6b17c6b1af21c4b40d6c",
+  "startedAt": "2026-10-21T15:01:57.380Z",
+  "status": "completed",
+  "suites": {
+    "input": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:01:57.384Z",
+      "finishedAt": "2026-10-21T15:02:19.775Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/portfolio-input-smoke.cjs",
+      "scriptSha256": "69a72a8047f3f1b586216d098a24bb2a39d501c7508f634f33dab45d0d2e264c",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\portfolio-input-smoke.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\input.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/input/input.log",
+        "bytes": 312,
+        "sha256": "b1621dc833318b352f51096aa1e543110ecd62a0455622590c46efb242fa7bfd"
+      },
+      "artifacts": {
+        "apps/web/test-results/portfolio-input/portfolio-input-verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\portfolio-input\\portfolio-input-verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/input/0-portfolio-input-verification.json",
+          "bytes": 2459,
+          "sha256": "7f2fdba25852e802218d54fc01fd6e5e9f2b68ac2e72f14d167d3b2b0c770fec"
+        }
+      }
+    },
+    "http": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:02:19.782Z",
+      "finishedAt": "2026-10-21T15:02:21.137Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-production.cjs",
+      "scriptSha256": "5e121a850b4e885710a260f0dafd19ec0918a5fe60cb64599432223be63cd5ee",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-production.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\http.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/http/http.log",
+        "bytes": 237,
+        "sha256": "05a7b716f38cc4015add7d39f8915306a94cfa8b55e41257fe2dae34e09d75a8"
+      },
+      "artifacts": {}
+    },
+    "routes": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:02:21.140Z",
+      "finishedAt": "2026-10-21T15:02:37.543Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-rendered.cjs",
+      "scriptSha256": "64abc06f1f1103b2cf12b9873109248a4e40498eefce4bbcade329a5fb09e3b8",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-rendered.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\routes.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/routes/routes.log",
+        "bytes": 585,
+        "sha256": "b3c7b347da744d8aea526cc15e5b1dde7c302aed7433d704971d4fad9b4bc310"
+      },
+      "artifacts": {}
+    },
+    "dashboard": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:02:37.551Z",
+      "finishedAt": "2026-10-21T15:03:14.731Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-dashboard-interest.cjs",
+      "scriptSha256": "a24e9a659ea6f4614b6f23464b04aca3bb8289670585b78cba283727e0999dae",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-dashboard-interest.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\dashboard.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/dashboard/dashboard.log",
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "artifacts": {
+        "apps/web/test-results/dashboard-interest/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\dashboard-interest\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/dashboard/0-verification.json",
+          "bytes": 123804,
+          "sha256": "8c7e1b45e9845065e79fc511388a05ae06cfbcae549645263d77486ea4196283"
+        },
+        "apps/web/test-results/dashboard-interest/oracle-controls.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\dashboard-interest\\oracle-controls.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/dashboard/1-oracle-controls.json",
+          "bytes": 49082,
+          "sha256": "8371bbdc74fdcf1ec7ed59f03cf7f1fd2344206f4f5d41953a441fe42d5f66ea"
+        },
+        "apps/web/test-results/dashboard-interest/fallback-font-280.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\dashboard-interest\\fallback-font-280.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/dashboard/2-fallback-font-280.json",
+          "bytes": 3843,
+          "sha256": "af03f25e0282807a2de2daf82cbcf55ee05f51e070126cad3450a400fddd499f"
+        },
+        "apps/web/test-results/dashboard-interest/auto-375-viewport.png": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\dashboard-interest\\auto-375-viewport.png",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/dashboard/3-auto-375-viewport.png",
+          "bytes": 115123,
+          "sha256": "55bdbfb08b81ff6f0ba1629868c0fa97d4820d5d841bd6929f7ecf6520ae49d1"
+        }
+      }
+    },
+    "portfolio": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:03:14.741Z",
+      "finishedAt": "2026-10-21T15:03:53.302Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-portfolio-budget.cjs",
+      "scriptSha256": "14d0aedfcecb6d940a60d578c6513daef279e851c4a8e5c589205adf1bd0fdb7",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-portfolio-budget.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\portfolio.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/portfolio/portfolio.log",
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "artifacts": {
+        "apps/web/test-results/portfolio-budget/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\portfolio-budget\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/portfolio/0-verification.json",
+          "bytes": 35791,
+          "sha256": "e6b043180a86fc876f3425916e0659f25d4d57165aca82fd9a941c92a8cd8f2f"
+        }
+      }
+    },
+    "vault": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:03:53.308Z",
+      "finishedAt": "2026-10-21T15:04:26.842Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-vault-comparison.cjs",
+      "scriptSha256": "4980c0cc07110a5b6f0879c1366b1fd8b76166145e7d8fca3f6b51a3fcdea674",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-vault-comparison.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\vault.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/vault/vault.log",
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "artifacts": {
+        "apps/web/test-results/vault-comparison/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\vault-comparison\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/vault/0-verification.json",
+          "bytes": 21903,
+          "sha256": "f549f7e0ee45665bf6c9d039757be58eb94934f6fea06599014cff288923e756"
+        }
+      }
+    },
+    "comparison": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:04:26.848Z",
+      "finishedAt": "2026-10-21T15:05:04.445Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-comparison.cjs",
+      "scriptSha256": "041c1c543a88390a867f696b9121329883b7bb7aba985f5105b6b84147d94f62",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-comparison.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\comparison.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/comparison/comparison.log",
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "artifacts": {
+        "apps/web/test-results/comparison/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\comparison\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/comparison/0-verification.json",
+          "bytes": 2877,
+          "sha256": "1a6f8fd9895e23d711e524e7abaca6e12e3d5d7fea4e9f48c4a2f7f4fce55f58"
+        }
+      }
+    },
+    "portability": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:05:04.451Z",
+      "finishedAt": "2026-10-21T15:05:17.842Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-portfolio-portability.cjs",
+      "scriptSha256": "23ee9c409e6dfd3b879866cdc80b7fb81875403e938cb2454b4d33dc2ed7d52f",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-portfolio-portability.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\portability.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/portability/portability.log",
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "artifacts": {
+        "apps/web/test-results/portfolio-portability/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\portfolio-portability\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/portability/0-verification.json",
+          "bytes": 646,
+          "sha256": "8a1dab8ab5256e39e97f7b135f6f87e9f67a62bb68074e393bab22c81825d1e8"
+        }
+      }
+    },
+    "commonMonth": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:05:17.848Z",
+      "finishedAt": "2026-10-21T15:05:49.178Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+      "scriptSha256": "d01d05146af02c3541144082c38ca1b176ae467bd1b97cce7855e537605c9d4d",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-portfolio-common-month.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\commonMonth.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/commonMonth/commonMonth.log",
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "artifacts": {
+        "apps/web/test-results/portfolio-common-month/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\portfolio-common-month\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/commonMonth/0-verification.json",
+          "bytes": 174375,
+          "sha256": "88118b564643f7e5223cb9c6dc215a236826fd767e8d37a099889499a8aac150"
+        },
+        "apps/web/test-results/portfolio-common-month/web-cash-versus-wealth-375.png": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\portfolio-common-month\\web-cash-versus-wealth-375.png",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/commonMonth/1-web-cash-versus-wealth-375.png",
+          "bytes": 47731,
+          "sha256": "48e7198789cb8984c7d15dc7fa8a943b069612596b0a6b0a71defd1740a5d66b"
+        }
+      }
+    },
+    "currencyWidth": {
+      "runId": "712fa53b-1fe6-4401-9f4f-4e7098ff99f9",
+      "origin": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+      "startedAt": "2026-10-21T15:05:49.185Z",
+      "finishedAt": "2026-10-21T15:06:05.476Z",
+      "exitCode": 0,
+      "script": "apps/web/scripts/smoke-portfolio-currency-width.cjs",
+      "scriptSha256": "c1a1be358c40af59852a235537f7c9ce3a70203a8e2be8a89da76bd4398c33d4",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\scripts\\smoke-portfolio-currency-width.cjs"
+        ],
+        "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web"
+      },
+      "environment": {
+        "PRODUCTION_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "DASHBOARD_INTEREST_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_BUDGET_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "VAULT_COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMPARISON_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_PORTABILITY_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "PORTFOLIO_INPUT_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "COMMON_MONTH_SMOKE_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "CURRENCY_WIDTH_ORIGIN": "https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app",
+        "RENDERED_SMOKE_MOBILE_WIDTH": "375"
+      },
+      "log": {
+        "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\hosted\\currencyWidth.log",
+        "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/currencyWidth/currencyWidth.log",
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      },
+      "artifacts": {
+        "apps/web/test-results/currency-width/verification.json": {
+          "live": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web\\test-results\\currency-width\\verification.json",
+          "captured": "hosted-runs/712fa53b-1fe6-4401-9f4f-4e7098ff99f9/currencyWidth/0-verification.json",
+          "bytes": 3712,
+          "sha256": "320b91ef66317dc3fca60de69560cfd94dca01c34ff5b6fc99072814809d4866"
+        }
+      }
+    }
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-10-21T15:06:18.743Z"
+}

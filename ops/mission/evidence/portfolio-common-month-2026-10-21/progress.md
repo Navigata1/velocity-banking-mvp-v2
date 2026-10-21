@@ -2,6 +2,105 @@
 
 ## Current Resume Point (Overrides Older Entries Below)
 
+LATEST OVERRIDE (2026-10-21T15:24Z): d6f6f50 isNOT VERIFIED. Push39621111192
+COMPLETE SUCCESS allsteps; PR39621121164 CANCELLED byactual20mjoblimit, annotation
+'The job has exceeded the maximum execution time of 20m0s'. Hero15:02:04->15:15:37
+passed10desktop+5mobile cases, noassertionfailure; latermedia/native skipped,
+SQLjobssuccess. Watch71224 TERMINAL1. NOreceipt/Desktoppub; baseline1aecuntouched.
+Rawlogs/metadata/annotation/partialPNGs +D6helpers/READY/manual/JPEG/envelope/
+source1D archived release/failed-d6f6f50/. FullD6pushlogsaved. No sameheadretry.
+
+ActualbudgetREDjustifiesnarrowtest-sampleroptimization, notcapincrease. Current
+ONLYtrackedsourcechange smoke-heroes.cjs; newhash6231DB4E77516C3C811BDEFEE7D567265
+A80DEE3406EA05A1F7888AC74CD7FE9 (FROZENfornow). Addsbounded16msrAFprimerbeforeA,
+thenexact15awaitfastForward100ms samplesbeforeB, ONEsharedoriginal120swallbudget
+viaexistingbeforeDeadline. Entireapp/8secangle/100msruntimecap/GLB/poster/video/
+math/store/CSS/workflow/SQL unchanged; original2%/edge/color/spatial/overflow/
+reducedmotion/700300/20min guards intact. Fixed10HzTWO-POSEtest, NOTFPS/smoothness
+orper-assetcalibration. PermanentverifyCadenceControls testsfixedcount/orderand
+7thdispatchfailure(noextra/retry), literalCI marker required.
+
+Sampler5genuineRED onmissingfunctions ->5GREEN, old5deadlineGREEN. Benchmark
+3431 TERMINAL0: hero-sampler-pixel-probe comparesNORMALIZEDreference90-ishframes
+runFor1500 vsfixed15calls, BOTHwithsame16msprimer. RealCreditCard1440software;
+bothnormalvisibility/motionpass. Initialmax0.087/mean0.016; endmax1.608/mean0.619
+underUNCHANGED16/8stabilitylimits. Observedadvance+capture6.49x faster, onlyone
+asset/viewport observationalratio, nolegacyD6bitidentity/universaldeviceclaim.
+Images/JSON/log retained. Sourcecode usesactualASTextractednewfunctions.
+
+LIVE95791 fullnewSOFTWAREhero/fallback/reducedmotion ->pollSAME; logheroes-sampler-
+software.log. NOotherparentexecalive. Boole01a15e73... ACTIVEnewindependentreview
+hero-sampler-review.md ONLY (noGPU), derivesactualcallback/quantizationbounds and
+reviewscurrentpatch/protectedpins; needsfinalstabletargetafteranyfindingfix.
+Boyle01a15e80... CLOSED:5allowedruntimehelperfiles updatedonlynewmandatoryCI
+cadencemarker/10Hzscopewording,147checks(prior146retained)+projection3/3+4syntax.
+Sampler-helper-*proofs/hashesavailable; parentmustreview/rerun. Runner/protected
+baseline/recovery/publication code unchanged. Oldhost712fa andmanualD6 CANNOTcarry
+tofutureheadafterguard/sourcechanges. SourceboundarySTILL293/6modified8new vs1aec.
+
+NEXTfinishnew20SW; archivecurrent40images/sourceinaNEWsampler-softfolder (keep
+old1Dsoftware40reference); actualfrozenRAFnegative mustinvokeNEWsamplerfunctions
+(currenthero-clock-probe.cjsstillrunFor1500: add sampled flag/ASTfunctions andnew
+outputdir, don'tmislabeloldprobe); fullnormal11stage/strict700300 serialafterSW;
+freshwebtest/lint/audit/package66 asneeded. UpdatecollectorPREDECESSORfrom789toD6,
+archiveD6mixedCIs/oldhelpers+priorlocalreceipt406; newsoftware/frozen/benchmark
+paths/marker147/10Hzfields andtruthfulinheritedunchangednative/media/build logs.
+CurrentcollectorstillreflectsD6source1D andwillFAILnewsoftwarehash ifrununadapted.
+Updateopssource docs/state/journal/render withD6cancelledhistory+newpreflight;
+406currentcommittedpreflightmustnotbecalledcurrentnewsamplerproof. Commit/push
+substantivecadencefix+evidenceONCE, thenBOTHnewcompleteCI/READY/newhost120/newIAB
+andDesktoplast/readback/idempotence. No waiver/report-onlypush/fishing.
+SourceviewSOTU129226B wasofflineinitial-loadchecked1440/375 with0external/errors/
+overflow (report-preflight-initial-load.json), NOTfullysealedcertificate. Desktop
+still121936B/720ebd84... prior1aec. readbackhelpercurrentlyhardcodesD6 ->UPDATE
+afternewHEAD. GoalACTIVE; allart/R2/scenarios/lender/backend/device/releaseopen.
+
+POST-PUSH CURRENT (2026-10-21T15:08Z): HEAD+remote d6f6f5010237ff1843bb73a33360445b7d094687
+PUSHEDclean. Commit177files/oneexecutableharness83+7;293current+committedpins,
+406evidencefiles andtestedruntimebundle match. DO NOT reruncollector/render or
+edittrackedfiles now. Allsource/review/helperagentsCLOSED; source1D629EA0stable.
+GoalACTIVE; user53143/53144 +unrelatedagent01a15930 untouched.
+
+NewCI push39621111192 /PR39621121164 INPROGRESS15:08 (bothasset-hero step),
+bothSQLsuccess. Livewatch71224 (ghwatch30s bothsequential) ->pollSAME. Needboth
+COMPLETE SUCCESS allstepsinclmedia14527/native70/fullcontracts/SQL63twice/event;
+no20mincap/pixel/stepwaivers orretryfishing. Historical789/7bd failures retained.
+
+NoautomaticVercelpreviewappeared. Existingteam/project/Gitlink/repoID1148900282
+freshlyverified. RequestedONLYexisting-project immutableSHApreview throughAPI,
+no settings/env/prod/domain/backend/data/credential/access mutation. Initial
+literal targetpreview got400(no deployment); officialAPI docs confirm OMITtarget
+ispreview. Correctedrequestomits target, withLatestCommitfalse, gitSourceorg/repo/
+refbranch/shaexact. READY dpl_74FiAwjtdUNy1phVdgJNZ29xpoCj, targetnull, preview
+https://velocity-banking-mvp-v2-kftgtiong-islanddevcrew.vercel.app . AuthgetDeployment
+andgetTeam rawmetadata+creationaudit persisted release/deployment-d6f6f50.json
+anddeployment-final.json. RuntimehelperfilesUNCHANGED bythismetadata. No production
+promotion; customdomainunchanged.
+
+Freshhost9637 TERMINAL0: UUID712fa53b-1fe6-4401-9f4f-4e7098ff99f9 started15:01:57.380Z,
+finished15:06:18.743Z, ten suites120 cases+7HTTP/renderedroutes. Correct absolute
+rootverifyHostedInvocation +validateBrowserProof PASS. Earlierad-hoc relative-root
+callerfailedpathassertiononly; actualruntimeusesabsolutefileURLroot, unchanged.
+NewIABactualHouse8200->8300->8200/fourvitals/realGLBreadycanvas, logs[]; freshUI
+Portfolioexportbackup/importfictional140loan40LOCbook/horizons0/3/6/600/restore3
+values allcorrect, thenORIGINALcanonicalbookexportequality/restoredmonth60TRUE;
+viewportRESET, tab6 rootnewpreviewmarkDeliverable. NativeJPEGs currentrelease/
+Hosted-Mobile-Vitals.jpg &Hosted-Common-Month.jpg; browser-proof.json newhead/runid
+andfreshCuaobservations. All-storebytes attributionONLYnew21hostedfixtures, not
+hiddenIABreads; pointervalidatedactualdata. CurrentCua varsheroFinal* intact.
+
+NEXT afterBOTHnewCIsfullgreen: set EXPECTED_HEADd6full, VERIFIED_PREVIEWabove,
+HOSTED_RUN_ID712fa53b..., ALLOW_RECEIPT_POST1;node release/postflight.mjs. Then
+ALLOW_DESKTOP_PUBLICATION1 node release/publish-desktop.mjs. Bothhelpersfreshly
+validate406files/293pins/146testedbundle,bothCIlogs/READY/host/servedtenhashes/
+manual/baselinebeforewrites. PublicDesktopstillPRIOR1aec121936B/720ebd84...;
+322manifest/324journal/48backups untouched. NEVERpublish789 orreuseoldhostd111.
+readbackhelpernowUPDATEDtod6 names (Common-Month-d6f6f50), syntax0; runafterpub,
+then publisheridempotenceandrecheckjournal/hash. NeedactuallocalfileHTMLbrowser
+initial-loadcheck/Cuascreenshotoptionalnotfullsealedcert. Finalembedactualnew
+HouseJPEG+preview/PR/Desktoplinks, no fullphotoreal/R2/backend/device/prodclaim.
+Don'treportgoalcomplete; futureproductiongatesstillopen, no report-onlypushloop.
+
 FINAL LOCAL CHECKPOINT (2026-10-21): source1D629EA05D5AA64EDFDB259B290C4D96D8F7F0FA
 95720F05168DC3E5730F14B5 FROZEN, independentfinal12pinreview/11protectedunchanged,
 deadlineP2CLOSED/no newboundedP1P2. BooleandBoyleCLOSED; unrelated01a15930 untouched.
@@ -317,3 +416,15 @@ source fingerprint audit usesgitshowHEAD whileparent editsnewproductfiles; asset
 deps, SQL, CI andmodels stayunchanged. No newdependency or persistedfields. Selected
 policy iscomparison reference; same explicitH andsamecapturedbook/resources all3.
 Separate R2scenarioownership/lender/calendar/art/backend/device/release open.
+
+2026-10-21T15:41Z current checkpoint: d6f6f50 remains unverified (push success,
+PR cancelled at original20-minute cap after813-second hero step/15 passed views).
+No receipt/publication; public baseline1aec5bf remains. New6231DB4E harness uses
+16ms primer+15x100ms scheduled samples, preserving runtime/math/assets/all guards.
+Local standard11 stages+software20+sampled frozen-rAF+GPU reference comparison
+pass; fresh82656 web348/core31/ref23247/lint/audit0/Portfolio66 terminal0. Helpers
+147/projection3 pass. All owned test/reviewer sessions terminal. Next collect and
+commit/push once, BOTH new full CI, new exact READY/host120/IAB, then staged
+Desktop publication/readback. Fixed10Hz endpoint proof is not full-turn/FPS/device
+certification. Unchanged build/native/media logs are explicitly inherited locally;
+both NEW complete CI events must freshly execute them. No production promotion.

@@ -16,6 +16,17 @@ and IAB evidence still precede publication. See the correction section in
 `docs/portfolio-common-month-contract-2026-10-21.md`; earlier failed runs remain
 evidence, not retrospectively approved checkpoints.
 
+The later d6f6f50 push39621111192 succeeded, but PR39621121164 was cancelled at
+the original20-minute job cap: its hero step took813seconds and passed15 views
+before cancellation. Later media/native steps did not run. No receipt or Desktop
+publication was issued. The new test-only correction uses a16ms primer plus
+fifteen100ms clock samples, retaining the same actual renderer, deadlines and
+pixel guards. Both standard/software20-view runs and the full11-stage local
+matrix pass; a real frozen-renderer control still rejects missing movement.
+This fixed10Hz two-pose check is not full-turn smoothness or device-performance
+approval. New complete CI and fresh hosted evidence remain required. The public
+Desktop report is still the verified1aec5bf baseline until that succeeds.
+
 The recognizable asset-centered dashboard is back, with four vitals, a selected
 debt summary and a secondary Money Loop explorer. Vault also has its own hero.
 The existing aligned demo defaults were preserved.

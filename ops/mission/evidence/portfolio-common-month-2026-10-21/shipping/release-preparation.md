@@ -60,6 +60,52 @@ baseline guard or recoverable publication behavior is relaxed. Fresh final-sourc
 proof and both full successful exact-head CI events remain prerequisites, not a
 claim made by this bounded helper test bundle.
 
+## Sampler Budget Followup
+
+Parent-reported head `d6f6f5010237ff1843bb73a33360445b7d094687` is NOT verified:
+complete push39621111192 succeeded with all steps, but PR39621121164 was cancelled
+at the actual20m job cap (annotation literal `20m0s`). Its hero step had run13m33s
+with15/20 cases passing. No assertion failure was reported; both SQL jobs succeeded.
+One successful event cannot replace the cancelled event. No D6 receipt or Desktop
+publication is permitted, and this mixed profile must not be relabeled all-green.
+The parent already froze raw logs/annotations/partial PNGs, runtime helpers,
+deployment/IAB/invocation and source1D in `release/failed-d6f6f50/`; it is untouched.
+
+Parent owns the five cadence-contract REDs, implementation, comparative GPU probe,
+all app/source/collector/docs/state work, final gates and remote/publication work.
+Boole owns `hero-sampler-review.md`. This helper task performs no network/GPU or
+app implementation and does not edit probe/readback scripts, archives or source
+state. The unchanged projection test reads a snapshot only. Implementation,
+comparative probes and review are not claimed passed by these helper tests.
+
+Both complete successful current push AND PR logs must now contain this additional
+actual main-harness marker, while all prior requirements remain mandatory:
+
+```text
+PASS hero cadence controls: primer 16ms and 15x100ms samples
+```
+
+The proposed cadence is one fixed16ms primer plus exactly fifteen100ms fast-forward
+callbacks: a10Hz endpoint test, NOT wall-time FPS, a full turn, or device approval.
+It replaces scheduling90 unasserted intermediate callbacks during runFor1500, not
+the application animation or its0.1s dt cap. Runtime/assets/math remain unchanged.
+The2% foreground/color/motion/containment/reduced-motion requirements,700/300 timing,
+120s limits (including group dispatch) and20min CI cap remain intact. No budget or
+assertion is waived by these helpers.
+
+Source inventory and schema remain293 pins:279 old unchanged, six old modified,
+eight new, based on the same285-pin1aec predecessor. All source-pin, raw-deployment,
+baseline322/324/48, atomic-journal, staging/idempotence and public-Desktop-last
+guards remain unchanged. Only the new CI marker and bounded reporting scope change.
+The missing-marker counterexample genuinely failed before the guard was added;
+all146 existing checks plus the new check pass147 total, with projection3/3 unchanged.
+
+These revised helpers bind future proof only. Their changed guard hash requires a
+fresh final-source hosted invocation; the older `712fa53...` binding/envelope cannot
+carry forward. Do not copy, retarget or relabel old hosted evidence or D6's mixed CI
+as current proof. No helper main flow, receipt post, deploy, push or publication is
+executed by this maintenance.
+
 Preparation only. None of these helpers has been executed against hosted services,
 GitHub mutations, public Desktop paths, push, or publication during this subtask.
 Only bounded helper tests and syntax checks are authorized here. Reviewer approval
@@ -312,6 +358,11 @@ The later bounded hero-helper maintenance preserves those144 checks and adds two
 for146 passing checks plus3/3 unchanged projection tests. Its before144, genuine
 marker/allowlist RED and GREEN logs are retained under `hero-helper-*`; these
 contain only synthetic metadata/filesystem checks, not hero browser/CI approval.
+The sampler-marker maintenance retains all146 and adds one missing-cadence-marker
+counterexample for147 total; projection remains3/3. Before146, genuine marker RED,
+GREEN, syntax and protected-section hash proof are retained in `sampler-helper-*`.
+They certify only bounded helper metadata/filesystem behavior, not app cadence,
+GPU performance, either CI event, the failed D6 head, or publication readiness.
 
 Bounded command: `node .superpowers/sdd/2026-10-21-common-month/release/shipping-guards.test.mjs`.
 Add `--keep-fixtures` only to retain synthetic fault fixtures under this directory.

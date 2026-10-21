@@ -9,7 +9,19 @@ const {decodePngRgba} = require(path.join(app, 'scripts/png-pixel-proof.cjs'));
 const {samplePngPixels,compareSpatialDescriptors,hasMaterialSpatialChange}=require(path.join(app,'scripts/png-pixel-proof.cjs'));
 const isVault=process.argv.includes('vault');
 const frozen=process.argv.includes('frozen');
-const out = path.join(root, '.superpowers/sdd/2026-10-21-common-month/hero-clock-probe'+(isVault?'-vault':'')+(frozen?'-frozen':''));
+const sampled=process.argv.includes('sampled');
+const out = path.join(root, '.superpowers/sdd/2026-10-21-common-month/hero-clock-probe'+(isVault?'-vault':'')+(frozen?'-frozen':'')+(sampled?'-sampled':''));
+let samplingApi,samplingSourceHash;
+if(sampled){
+  const vm=require('node:vm'),assert=require('node:assert/strict'),ts=require(path.join(app,'node_modules/typescript'));
+  const source=fs.readFileSync(path.join(app,'scripts/smoke-heroes.cjs'),'utf8');
+  samplingSourceHash=require('node:crypto').createHash('sha256').update(source).digest('hex');
+  const ast=ts.createSourceFile('smoke-heroes.cjs',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
+  const names=['beforeDeadline','primeMotionFrame','advanceMotionSample'];
+  const selected=ast.statements.filter(node=>ts.isFunctionDeclaration(node)&&names.includes(node.name?.text)).map(node=>node.getText(ast)).join('\n');
+  const context=vm.createContext({assert,setTimeout,clearTimeout,Date,stageTimeout:120000});
+  vm.runInContext(selected,context);samplingApi=vm.runInContext('({primeMotionFrame,advanceMotionSample})',context);
+}
 fs.mkdirSync(out, {recursive:true});
 function coverage(bytes) {
   const image=decodePngRgba(bytes); let foreground=0;
@@ -45,9 +57,10 @@ function coverage(bytes) {
       if(Date.now()>opacityDeadline) throw new Error('poster transition timed out');
       await new Promise(resolve=>setTimeout(resolve,25));
     }
+    if(sampled)await samplingApi.primeMotionFrame(page);
     const a=await page.screenshot({clip});fs.writeFileSync(path.join(out,'rest.png'),a);
     console.log('rest',JSON.stringify(coverage(a)));
-    await page.clock.runFor(1500);
+    if(sampled)await samplingApi.advanceMotionSample(page);else await page.clock.runFor(1500);
     const b=await page.screenshot({clip});fs.writeFileSync(path.join(out,'1500.png'),b);
     console.log('1500',JSON.stringify(coverage(b)));
     if(frozen){
@@ -61,10 +74,10 @@ function coverage(bytes) {
       const first=samplePngPixels(firstImage,31,bounds),second=samplePngPixels(secondImage,31,bounds);
       assert.ok(first.colorCount>12);assert.equal(hasMaterialSpatialChange(compareSpatialDescriptors(first.stabilityDescriptor,second.stabilityDescriptor)),false);
       assert.throws(()=>assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(first.stabilityDescriptor,second.stabilityDescriptor)),'frozen scheduler failed motion proof'),/frozen scheduler failed motion proof/);
-      fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({scope:'Actual isolated browser RAF-disabled negative control, not a normal hero pass',normalGeometryGuardPassed:true,colors:first.colorCount,motionRejected:true,first:coverage(a),second:coverage(b)},null,2)+'\n');
+      fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({scope:'Actual isolated browser RAF-disabled negative control, not a normal hero pass',sampled,samplingSourceHash,normalGeometryGuardPassed:true,colors:first.colorCount,motionRejected:true,first:coverage(a),second:coverage(b)},null,2)+'\n');
       console.log('PASS actual frozen-scheduler browser control: geometry remains visible and unchanged motion is rejected');
     }
-    await page.clock.runFor(1500);
+    if(sampled)await samplingApi.advanceMotionSample(page);else await page.clock.runFor(1500);
     const c=await page.screenshot({clip});fs.writeFileSync(path.join(out,'3000.png'),c);
     console.log('3000',JSON.stringify(coverage(c)));
   } finally {await browser.close(); await stopServer(started.server);}

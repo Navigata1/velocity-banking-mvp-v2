@@ -1,0 +1,31 @@
+FAIL one16ms primer and exactly fifteen100ms samples, in fixed order: primer declaration required
++ actual - expected
+
++ 'object'
+- 'function'
+
+FAIL dispatch failure stops on that sample with no retries or extra ticks: primer declaration required
++ actual - expected
+
++ 'object'
+- 'function'
+
+FAIL all samples share one original wall deadline: primer declaration required
++ actual - expected
+
++ 'object'
+- 'function'
+
+FAIL a pending sample rejects within its remaining wall budget: primer declaration required
++ actual - expected
+
++ 'object'
+- 'function'
+
+FAIL a pending primer rejects within the unchanged wall budget: primer declaration required
++ actual - expected
+
++ 'object'
+- 'function'
+
+{"passed":0,"failed":5,"cases":[{"name":"one16ms primer and exactly fifteen100ms samples, in fixed order","passed":false,"error":"primer declaration required\n+ actual - expected\n\n+ 'object'\n- 'function'\n"},{"name":"dispatch failure stops on that sample with no retries or extra ticks","passed":false,"error":"primer declaration required\n+ actual - expected\n\n+ 'object'\n- 'function'\n"},{"name":"all samples share one original wall deadline","passed":false,"error":"primer declaration required\n+ actual - expected\n\n+ 'object'\n- 'function'\n"},{"name":"a pending sample rejects within its remaining wall budget","passed":false,"error":"primer declaration required\n+ actual - expected\n\n+ 'object'\n- 'function'\n"},{"name":"a pending primer rejects within the unchanged wall budget","passed":false,"error":"primer declaration required\n+ actual - expected\n\n+ 'object'\n- 'function'\n"}]}

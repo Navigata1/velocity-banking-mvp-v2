@@ -179,3 +179,38 @@ posters, videos, runtime animation, numerical modules and saved-data code are
 unchanged. The source inventory is293 files:279 old unchanged, six old modified
 (including this existing test harness), eight new. Final local and both new
 complete exact-head CI/READY/hosted120/IAB/publication proof are still required.
+
+## Fixed-Cadence Capture Cost Correction
+
+The subsequent d6f6f50 push39621111192 completed successfully, but PR39621121164
+was cancelled at the unchanged20-minute job cap. The hero step consumed813seconds
+and passed ten desktop plus five mobile cases before cancellation; no visibility
+or movement assertion failed. Both SQL jobs passed, while later media/native
+steps were skipped. This is not a verified checkpoint: no receipt or Desktop
+publication occurred, and no same-head retry was used to obtain a green result.
+
+Only the existing hero browser harness changes beyond d6f6f50. After readiness
+and the same visible-page boundary, it primes the real scheduled renderer for
+16ms, captures A, then executes fifteen awaited100ms clock jumps before B.
+Each jump retains the runtime's original100ms delta cap; a single1500ms jump
+would not produce an equivalent pose. The whole sampler retains one120-second
+wall budget. Five new exact-source contract checks and permanent sequence/fault
+controls verify the fixed count, stop-on-error behavior and bounded deadline.
+
+This is fixed10Hz two-pose sampling, not application FPS, every intermediate
+frame, full-turn smoothness or physical-device certification. Installed-clock
+analysis bounds the endpoint difference from an equally primed full-frame
+reference to12ms/about0.50degrees. An actual software-rendered Credit Card1440
+comparison passes the original geometry/motion guards in both paths and the
+existing16/8 spatial-distance limits. Its observed6.49x dispatch/capture ratio
+is one asset/viewport observation, not a universal performance claim.
+
+Current source6231DB4E passes all20 viewport cases in both standard and software
+renderer runs, reduced motion, network/texture fallbacks and an actual frozen-rAF
+negative that retains visible geometry but fails motion. The full11-stage local
+matrix passes, including separately unclocked Three700/300ms limits. Forty current
+software snapshots are retained separately from the old d6f6f50 images. Independent
+bounded source review found no new P1/P2; all eleven protected inputs are unchanged.
+All actual assets, cameras, animation/video, financial and storage sources remain
+unchanged. Both NEW complete exact-head pipelines and fresh hosted120/IAB proof
+remain required before receipt or Desktop publication;1aec5bf stays the baseline.
