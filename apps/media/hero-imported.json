@@ -144,5 +144,21 @@
     "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
     "units": "normalized stage units",
     "version": 2
+  },
+  {
+    "id": "custom",
+    "quality": "refined-textured",
+    "bytes": 237844,
+    "meshes": 17,
+    "triangles": 13200,
+    "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b",
+    "sourceFile": "apps/media/scripts/build-refined-custom.mjs",
+    "sourceSha256": "2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040",
+    "materialSourceSha256": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and procedural material fields",
+    "provenance": "Original brushed-metal pocket compass: hollow stepped case, seated dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid, connected five-barrel hinge and bail ring. Approximate authored PBR, not scans, exact poster reconstruction or navigation certification.",
+    "units": "normalized stage units",
+    "version": 2
   }
 ]
