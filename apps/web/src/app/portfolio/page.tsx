@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { RefreshCw } from 'lucide-react';
 import PageTransition from '@/components/PageTransition';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useIsClient } from '@/hooks/useIsClient';
-import { usePortfolioStore } from '@/stores/portfolio-store';
+import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-store';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
 import AddDebtDialog from './AddDebtDialog';
 import PortfolioDebtsSection from './PortfolioDebtsSection';
@@ -17,10 +18,11 @@ export default function PortfolioPage() {
   const classes = themeClasses[mounted ? theme : 'original'];
   const recompute = usePortfolioStore((state) => state.recompute);
   const [showAdd, setShowAdd] = useState(false);
+  const persistence = useSyncExternalStore(portfolioPersistence.subscribe, portfolioPersistence.getStatus, portfolioPersistence.getStatus);
 
   useEffect(() => {
-    recompute();
-  }, [recompute]);
+    if (persistence.status === 'ready') recompute();
+  }, [recompute, persistence.status]);
 
   if (!mounted) {
     return (
@@ -32,6 +34,19 @@ export default function PortfolioPage() {
         </div>
       </div>
     );
+  }
+
+  if (persistence.status !== 'ready') {
+    return <main data-testid="portfolio-storage-error" className="p-4 md:p-8 max-w-6xl mx-auto space-y-4">
+      <h1 className={`text-2xl font-bold ${classes.text}`}>Portfolio storage needs review</h1>
+      <p role="alert" className="text-amber-400">{persistence.error}</p>
+      <p className={classes.textSecondary}>Payoff projections and editing are paused. Existing saved data was not replaced.</p>
+      <button type="button" onClick={() => window.location.reload()} className="inline-flex items-center gap-2 min-h-12 border rounded-lg px-4 py-2"
+        aria-label="Reload saved portfolio and discard unsaved edits">
+        <RefreshCw aria-hidden="true" className="h-4 w-4" />Reload saved portfolio
+      </button>
+      <p className={`text-xs ${classes.textMuted}`}>Reloading discards unsaved edits. Educational tool. Not financial advice.</p>
+    </main>;
   }
 
   return (
