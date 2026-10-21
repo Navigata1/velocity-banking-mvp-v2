@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Platform, StatusBar, useWindowDimensions } from 'react-native';
 import { MobileAssumptionsProvider } from '@/components/mobile-assumptions-provider';
 import { MobileAuthProvider } from '@/components/mobile-auth-provider';
+import { MobilePortfolioProvider } from '@/components/mobile-portfolio-provider';
 
 function MobileSystemBar() {
   const { height, width } = useWindowDimensions();
@@ -24,6 +25,7 @@ export default function RootLayout() {
   return (
     <MobileAuthProvider>
       <MobileAssumptionsProvider>
+        <MobilePortfolioProvider>
         <MobileSystemBar />
         <Stack
           screenOptions={{
@@ -44,6 +46,7 @@ export default function RootLayout() {
           <Stack.Screen name="vault" options={{ title: 'Vault' }} />
           <Stack.Screen name="settings" options={{ title: 'Settings' }} />
         </Stack>
+        </MobilePortfolioProvider>
       </MobileAssumptionsProvider>
     </MobileAuthProvider>
   );

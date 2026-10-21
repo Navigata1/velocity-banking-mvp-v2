@@ -1042,10 +1042,12 @@ test('Expo app uses dedicated shared-engine route modules instead of a monolithi
     routesSource.includes('width: `${pressurePercent}%`'),
     'expected pressure segment width to be model-bound'
   );
-  assert.ok(routesSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
-  assert.ok(routesSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
+  assert.ok(routesSource.includes('PortfolioPayoffPath') && routesSource.includes('buildMobilePortfolioBookView'),
+    'expected Portfolio mode to render the shared whole-book payoff path');
+  const portfolioPathSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/portfolio/portfolio-payoff-path.tsx'), 'utf8');
+  assert.ok(portfolioPathSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
   assert.ok(
-    routesSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
+    portfolioPathSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
     'expected mobile Portfolio payoff path to render one node per engine point'
   );
   assert.ok(routesSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
@@ -1084,7 +1086,7 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
     ['index.tsx', 'DashboardRoute', 'dashboard-route.tsx', ['buildMobileDashboardSnapshot'], 'index', 'InterestShield'],
     ['simulator.tsx', 'SimulatorRoute', 'simulator-route.tsx', ['buildMobileDashboardSnapshot', 'buildMobileSimulatorSnapshot'], 'simulator', 'Simulator'],
     ['cockpit.tsx', 'CockpitRoute', 'cockpit-route.tsx', ['buildMobileCockpitSnapshot'], 'cockpit', 'Cockpit'],
-    ['portfolio.tsx', 'PortfolioRoute', 'portfolio-route.tsx', ['buildMobilePortfolioSnapshot'], 'portfolio', 'Portfolio'],
+    ['portfolio.tsx', 'PortfolioRoute', 'portfolio-route.tsx', ['buildMobilePortfolioBookView'], 'portfolio', 'Portfolio'],
     ['learn.tsx', 'LearnRoute', 'learn-route.tsx', ['buildMobileLearnSnapshot'], 'learn', 'Learn'],
     ['vault.tsx', 'VaultRoute', 'vault-route.tsx', ['buildMobileVaultSnapshot'], 'vault', 'Vault'],
     ['settings.tsx', 'SettingsRoute', 'settings-route.tsx', [], 'settings', 'Settings'],
@@ -1125,6 +1127,7 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
       'buildMobileSimulatorSnapshot',
       'buildMobileCockpitSnapshot',
       'buildMobilePortfolioSnapshot',
+      'buildMobilePortfolioBookView',
       'buildMobileLearnSnapshot',
       'buildMobileVaultSnapshot',
     ]) {

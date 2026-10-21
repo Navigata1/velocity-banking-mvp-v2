@@ -1586,7 +1586,7 @@ test('shared mobile snapshots sanitize non-finite planning inputs before display
   assert.equal(dashboard.warning, 'Income needs to exceed expenses before the Money Loop can recover LOC draws.');
 });
 
-test('shared mobile portfolio labels amortized planning separately from LOC ledger math', () => {
+test('legacy mobile planning labels remain compatible while the native book declares its actual model', () => {
   const portfolioSnapshot = sharedFinancialEngine.buildMobilePortfolioSnapshot({
     monthlyIncome: 6500,
     monthlyExpenses: 5000,
@@ -1620,12 +1620,13 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
     'expected mobile Portfolio to render the modeling-mode contract'
   );
   assert.ok(
-    mobilePortfolioSource.includes('value={portfolio.modelingLabel}'),
-    'expected mobile Portfolio to display the modeling label'
+    mobilePortfolioSource.includes('value={view.payoffLabel}'),
+    'expected native aggregate Portfolio to display the shared whole-book result state'
   );
   assert.ok(
-    mobilePortfolioSource.includes('detail={portfolio.modelingDetail}'),
-    'expected mobile Portfolio to display the modeling detail'
+    mobilePortfolioSource.includes('Funded monthly estimate:')
+      && mobilePortfolioSource.includes('Lender fees, posting rules and dated calendars are not modeled.'),
+    'expected native aggregate Portfolio to disclose its funded model and lender limits'
   );
 });
 
