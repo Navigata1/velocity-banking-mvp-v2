@@ -1,0 +1,749 @@
+{
+  "baseline": "35745b7f1e0b8b18a6279f7c54b47d4f0f9ea50e",
+  "verifiedAt": "2026-10-21T22:39:30.864Z",
+  "stage": "Local Car normal data fidelity, guarded orphan cleanup, locked publication and recipe provenance; BOTH new full exact-head CI/READY/hosted138/manual required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6327498132",
+  "sources": {
+    "apps/media/hero-imported.json": "b133ef153c5fb6f301e4bfb5bb24f58d739423f98d26193e4c50286ee1ef06be",
+    "apps/media/hero-models.json": "eef27aed1e234caae5868aea4d293e55bf54a8321762c1be052b4a994e5e7802",
+    "apps/media/scripts/import-refined-car.mjs": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94",
+    "apps/media/scripts/car-normal-data.test.mjs": "6c1763ca166a060d147a56a41dbf0553cf5d0e8221872cbf55a52850fc4eb9c9"
+  },
+  "normalizedSources": {
+    "apps/media/hero-imported.json": "b133ef153c5fb6f301e4bfb5bb24f58d739423f98d26193e4c50286ee1ef06be",
+    "apps/media/hero-models.json": "eef27aed1e234caae5868aea4d293e55bf54a8321762c1be052b4a994e5e7802",
+    "apps/media/scripts/import-refined-car.mjs": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94",
+    "apps/media/scripts/car-normal-data.test.mjs": "6c1763ca166a060d147a56a41dbf0553cf5d0e8221872cbf55a52850fc4eb9c9"
+  },
+  "boundary": {
+    "changed": [
+      "apps/media/hero-imported.json",
+      "apps/media/hero-models.json",
+      "apps/media/scripts/import-refined-car.mjs",
+      "apps/web/public/heroes/car.glb"
+    ],
+    "added": [
+      "apps/media/scripts/car-normal-data.test.mjs"
+    ],
+    "protectedStructuredSources": 346,
+    "financialSources": 9,
+    "unchangedOtherModels": 9,
+    "unchangedPosters": 10,
+    "unchangedOtherVideos": 9
+  },
+  "tests": {
+    "localStages": 28,
+    "initialMedia": 179,
+    "finalMedia": 180,
+    "media": 180,
+    "additionalFinalSourceMediaCheck": true,
+    "stills": 27,
+    "identicalRegeneration": {
+      "carImporter": true,
+      "fullStudy": true,
+      "allPublicAndManifestsPreserved": true
+    },
+    "regressions": 348,
+    "overview": 21,
+    "cockpit": 31,
+    "commonMonth": 31,
+    "reference": 23247,
+    "webWorkflows": 138,
+    "nativeTypes": true,
+    "nativePureContracts": true
+  },
+  "observedRed": {
+    "initialActualGlbFailures": 12,
+    "initialCases": 14,
+    "raw": "normal-data-red.log",
+    "missingRecipeStamp": "recipe-red.log",
+    "freshSourceGraphDetachedProperties": 2,
+    "failClosedFreshGraph": "prewrite-graph-red.log"
+  },
+  "review": {
+    "scope": "Independent508 decoded accessors/410 compressed payloads and metadata exact; five additional source-pixel-exact normals, seven other live images and original sampling unchanged; cleanup/publication negative controls and final recipe pins verified.",
+    "file": "review.md",
+    "photorealApproved": false
+  },
+  "models": [
+    {
+      "id": "car",
+      "quality": "refined-textured",
+      "bytes": 2232520,
+      "meshes": 95,
+      "triangles": 134971,
+      "sha256": "5d7fb0b2aa1457ce7e0013d3b7e04ba6568c3dd21941dc5df05a3bf969489225",
+      "sourceSha256": "c272098089d78c5cd9fd9f24ff50ee8acf8d932c55f2d55fc10adb6c8998966b",
+      "sourceUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/15cd02d304e54cb42a4db4eefe719f76190f4b68/Models/CarConcept/glTF-Binary/CarConcept.glb",
+      "sourceRevision": "15cd02d304e54cb42a4db4eefe719f76190f4b68",
+      "recipeSha256": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94",
+      "creator": "Eric Chadwick / Darmstadt Graphics Group GmbH",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePage": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept",
+      "excludedTrademarkTextureSha256": "1453559c58526ec236ea7f90a72b0e49823061e6c26b571928b9ea3b91593e4d",
+      "modifications": "Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants, final orphan image and stale optional iridescence; simplified within 0.03% mesh error; five full-resolution lossless WebP normal maps, byte-preserved source paint normal PNG, other textures including Tireside retain prior conversion; Meshopt; normalized stage units.",
+      "sourcePaintNormalSha256": "3c4b65d9a8372147a41594eee96eae35127105de26142cc9e9b752c3f9754b8e",
+      "provenance": "Adapted licensed Car Concept; not an AI reconstruction of the studio poster.",
+      "version": 3
+    },
+    {
+      "id": "house",
+      "quality": "refined-textured",
+      "bytes": 1145320,
+      "meshes": 155,
+      "triangles": 31316,
+      "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33",
+      "sourceSha256": "69b177d43ccf4655d2a8d4132ff2ac6e26b30b09b36c3f9cf04eeff291842a6b",
+      "sourceFile": "apps/media/scripts/build-refined-house.mjs",
+      "materialSourceSha256": "ee03a127097e0fed9039be1d64cd13358fbf11e5b0c1519a5c6b0aad13b30a4e",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated material sources",
+      "provenance": "Original authored limestone House with actual openings, depth-aware reveal UV charts, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 3
+    },
+    {
+      "id": "land",
+      "quality": "refined-textured",
+      "bytes": 709260,
+      "meshes": 32,
+      "triangles": 49834,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+      "sourceSha256": "ab6edf9eac145c9ee23fa9324a11550c955b3309dd17379d6bf79100200db569",
+      "sourceFile": "apps/media/scripts/build-refined-land.mjs",
+      "materialSourceSha256": "ef8ebc33884c92bffc1ea3eed62101f9a43c5bc609d23c4ff399e24826b9d83e",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated material sources",
+      "provenance": "Original authored terrain with recessed pond, draped gravel path, exposed layers, grounded stakes and connected trees; generated meadow/leaf albedos with approximate authored surface maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "creditCard",
+      "quality": "refined-textured",
+      "bytes": 523764,
+      "meshes": 11,
+      "triangles": 18008,
+      "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025",
+      "sourceSha256": "db342fc5cfb51b6ba12da512ac6a3b738bab2b4e5fcdc0bbcf1a6b5bc8b264b5",
+      "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
+      "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and procedural material sources",
+      "provenance": "Original authored silver/emerald cards with real engraved recesses, depth-aware edge UV charts, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 3
+    },
+    {
+      "id": "studentLoan",
+      "quality": "refined-textured",
+      "bytes": 723868,
+      "meshes": 71,
+      "triangles": 29348,
+      "sha256": "56dfe51ad199bdafcc0cc5ced65321a16a4e087693f645d6d12c6bc14fb98d12",
+      "sourceSha256": "48d99dc525248b488180947becd28733a7516c461382db055aff7eec791a33ce",
+      "sourceFile": "apps/media/scripts/build-refined-student-loan.mjs",
+      "materialSourceSha256": "cb5da74ce913e11568f82855744d40cfe4ac5416532e0bec60622a037aa620f3",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated albedo sources",
+      "provenance": "Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Depth-aware ribbon side/cap UV charts preserve original broad-face UVs and smoothed normals. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 3
+    },
+    {
+      "id": "medical",
+      "quality": "refined-textured",
+      "bytes": 509120,
+      "meshes": 50,
+      "triangles": 26104,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615",
+      "sourceFile": "apps/media/scripts/build-refined-medical.mjs",
+      "sourceSha256": "b9618865492ef2a6f0f96341df4e415eeb894cd476f9108be31f81345f79c620",
+      "materialSourceSha256": "f62c9ef5fbedd69cea32f0ec87c6e79b6bf73eb85cc6c6e45e4ede8b44b0d021",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and authored procedural material sources",
+      "provenance": "Original hollow enamel case with separate lid/gasket, connected hardware and stethoscope, paired earbows and shaped chestpiece. Original emerald shield; no institutional emblem. Approximate PBR, not scans or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "personal",
+      "quality": "refined-textured",
+      "bytes": 519844,
+      "meshes": 29,
+      "triangles": 22016,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79",
+      "sourceFile": "apps/media/scripts/build-refined-personal.mjs",
+      "sourceSha256": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+      "materialSourceSha256": "3377df695d1a66ace34911e0e5bc2e5bf5fd0b6a6b2479ed1f5c05208df47523",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and retained original generated leather albedo source",
+      "provenance": "Original hollow cognac satchel with thick curved flap, brass buckle/handle/shoulder assemblies, punched leather straps, real stitches/piping, key aperture and inserted illustrative papers. Approximate PBR, not measured scans or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "recreation",
+      "quality": "refined-textured",
+      "bytes": 521544,
+      "meshes": 47,
+      "triangles": 19296,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7",
+      "sourceFile": "apps/media/scripts/build-refined-recreation.mjs",
+      "sourceSha256": "2edfb8fae498e2877a49ce16de7530c645fcdb5dbc1cbdffdd1884ac95f7473e",
+      "materialSourceSha256": "9626f5b8ba0714edc5ce55b3ef852fe27747cb653e88001b7cff53f8e6ffa59c",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and explicitly retained original generated oak/cloth sources",
+      "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "custom",
+      "quality": "refined-textured",
+      "bytes": 237844,
+      "meshes": 17,
+      "triangles": 13200,
+      "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b",
+      "sourceFile": "apps/media/scripts/build-refined-custom.mjs",
+      "sourceSha256": "2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040",
+      "materialSourceSha256": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and procedural material fields",
+      "provenance": "Original brushed-metal pocket compass: hollow stepped case, seated dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid, connected five-barrel hinge and bail ring. Approximate authored PBR, not scans, exact poster reconstruction or navigation certification.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "vault",
+      "quality": "refined-textured",
+      "bytes": 719996,
+      "meshes": 45,
+      "triangles": 31976,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594",
+      "sourceSha256": "d49baf55e3b8ad524256171d4771b11f06967fb9d574cb7166a08558ed3816a7",
+      "sourceFile": "apps/media/scripts/build-refined-vault.mjs",
+      "creator": "InterestShield project",
+      "license": "Original project asset; no third-party license dependency",
+      "provenance": "Original authored open-chamber geometry and deterministic brushed/turned metal PBR maps; not an AI reconstruction of the studio poster.",
+      "units": "normalized stage units",
+      "version": 2
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "id": "house",
+      "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "id": "land",
+      "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "id": "creditCard",
+      "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "id": "studentLoan",
+      "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "id": "medical",
+      "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "id": "personal",
+      "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "id": "recreation",
+      "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "id": "custom",
+      "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "id": "vault",
+      "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "videos": [
+    {
+      "id": "car",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 9851922,
+      "sha256": "1478ab7f7623322500c46eaa1e49617bcccc769c4fcaf3a77160501d2b6762ad",
+      "motion": {
+        "changedCellCount": 13,
+        "maxCellDistance": 18.04714170223979,
+        "meanCellDistance": 1.37908304314888
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.02453379710145498,
+        "meanCellDistance": 0.002831970026350411
+      }
+    },
+    {
+      "id": "house",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 10121879,
+      "sha256": "e6d36a0e6795ad1a1677ff6de19cbf8265497a0e274376b6f2ec31e5e1256f5c",
+      "motion": {
+        "changedCellCount": 19,
+        "maxCellDistance": 81.02767555204215,
+        "meanCellDistance": 8.22241466716074
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.0622094545454388,
+        "meanCellDistance": 0.0069549537220033875
+      }
+    },
+    {
+      "id": "land",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 16507687,
+      "sha256": "dd6206b7064f5b7d2f78ee333c2abdcc723fad4e0f5f32b9de2cee712d61c00a",
+      "motion": {
+        "changedCellCount": 26,
+        "maxCellDistance": 34.64673868774703,
+        "meanCellDistance": 4.994768609354411
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.037452827404479194,
+        "meanCellDistance": 0.0036252047101443807
+      }
+    },
+    {
+      "id": "creditCard",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 3452595,
+      "sha256": "6cfb14d05a41941bc8800cbb3e337cdce509b7247b481ef4744121c2f672fa03",
+      "motion": {
+        "changedCellCount": 27,
+        "maxCellDistance": 131.40019710144927,
+        "meanCellDistance": 21.738240965415024
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.03289185770751146,
+        "meanCellDistance": 0.004518065217391676
+      }
+    },
+    {
+      "id": "studentLoan",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 5357366,
+      "sha256": "63c4b4118f2cf02c2bea7827f16367645e4ceffaf10aeb539a60b77a4763194e",
+      "motion": {
+        "changedCellCount": 19,
+        "maxCellDistance": 68.03698917523057,
+        "meanCellDistance": 5.4129188842226625
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.02678085902503824,
+        "meanCellDistance": 0.002425158596838284
+      }
+    },
+    {
+      "id": "medical",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 4211775,
+      "sha256": "03e7cb1fecf57875a721585e2a18093f2ed6688baec839db2a6259126ae956da",
+      "motion": {
+        "changedCellCount": 17,
+        "maxCellDistance": 143.59989220553356,
+        "meanCellDistance": 17.29170062104743
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.060736621870887575,
+        "meanCellDistance": 0.0035568323451914963
+      }
+    },
+    {
+      "id": "personal",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 5563251,
+      "sha256": "d56a9ba0b17f0d62cf4a60e878c8366a29b9e209320295c91223ae02d85d4042",
+      "motion": {
+        "changedCellCount": 20,
+        "maxCellDistance": 105.53033050856389,
+        "meanCellDistance": 11.893473227931487
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.0859447378128948,
+        "meanCellDistance": 0.00339662302371474
+      }
+    },
+    {
+      "id": "recreation",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 4773662,
+      "sha256": "12fecdaf4e2d01b6a42a5d70feab372b29a4b3906d84dfc78580c1157bb880e4",
+      "motion": {
+        "changedCellCount": 18,
+        "maxCellDistance": 52.502568832674555,
+        "meanCellDistance": 5.354912085638999
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.030392874835285966,
+        "meanCellDistance": 0.003589241765479201
+      }
+    },
+    {
+      "id": "custom",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 3958880,
+      "sha256": "7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2",
+      "motion": {
+        "changedCellCount": 21,
+        "maxCellDistance": 85.0148759314888,
+        "meanCellDistance": 8.199801417160739
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.021329559947304233,
+        "meanCellDistance": 0.0024436259881412403
+      }
+    },
+    {
+      "id": "vault",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 7038275,
+      "sha256": "5e206f25d6c0acfd5fb1d35acbf9d55b69a6c0f18ea6fa2c1a14d7463b6a7812",
+      "motion": {
+        "changedCellCount": 34,
+        "maxCellDistance": 120.18889788669303,
+        "meanCellDistance": 17.347790336297756
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.03923094598155785,
+        "meanCellDistance": 0.005110272397891691
+      }
+    }
+  ],
+  "visual": {
+    "ids": [
+      "car"
+    ],
+    "reviewedAt": "2026-10-21T22:36:19.417Z",
+    "photorealApproved": false,
+    "frames": [
+      {
+        "time": 0,
+        "before": true,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-car-data-fidelity\\before-car-0.png",
+        "bytes": 317828,
+        "sha256": "165b74c6068840a1cce7a759de5b7f619c0980689aecb557ac11e12712a32633",
+        "visuallyInspected": true,
+        "baseline": "Inherited prior verified Car export; not freshly rendered original"
+      },
+      {
+        "time": 0,
+        "before": false,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\hyperframes\\output\\heroes\\car-0.png",
+        "bytes": 318283,
+        "sha256": "5c7ce668523a34469b8217a37291a6010d1cb344e9a778ad11168f251f9ed451",
+        "visuallyInspected": true,
+        "baseline": ""
+      },
+      {
+        "time": 4,
+        "before": true,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-car-data-fidelity\\before-car-4.png",
+        "bytes": 304165,
+        "sha256": "f3e63f97776d70afcb389945779195839dccd8c5216d6164daef4ead0382c07c",
+        "visuallyInspected": false,
+        "baseline": "Inherited prior verified Car export; not freshly rendered original"
+      },
+      {
+        "time": 4,
+        "before": false,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\hyperframes\\output\\heroes\\car-4.png",
+        "bytes": 303493,
+        "sha256": "c37471ec2a90d6ceacc14e463e654facdb91c069b6a2c6b0befa897bc4b8a086",
+        "visuallyInspected": true,
+        "baseline": ""
+      },
+      {
+        "time": 8.5,
+        "before": true,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-car-data-fidelity\\before-car-8.5.png",
+        "bytes": 328273,
+        "sha256": "329cd7de67e9ab155b7c0f0fac04b297f564fb13e18a54e238983324ce995469",
+        "visuallyInspected": false,
+        "baseline": "Inherited prior verified Car export; not freshly rendered original"
+      },
+      {
+        "time": 8.5,
+        "before": false,
+        "file": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\hyperframes\\output\\heroes\\car-8.5.png",
+        "bytes": 328127,
+        "sha256": "2cd53576db63278bf01d54a60ee1af10ad2625055e28a26be6dfcf1d03ece50b",
+        "visuallyInspected": true,
+        "baseline": ""
+      }
+    ],
+    "video": {
+      "id": "car",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 9851922,
+      "sha256": "1478ab7f7623322500c46eaa1e49617bcccc769c4fcaf3a77160501d2b6762ad",
+      "motion": {
+        "changedCellCount": 13,
+        "maxCellDistance": 18.04714170223979,
+        "meanCellDistance": 1.37908304314888
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.02453379710145498,
+        "meanCellDistance": 0.002831970026350411
+      }
+    },
+    "observations": [
+      "Viewed inherited prior front and fresh front/mid-turn/rest frames at full delivered resolution.",
+      "Car silhouette, Carmine body, black roof, wheel openings and source-credit placement remain recognizable and contained.",
+      "Mid-turn presents the opposite side/rear; rest returns to the initial front view.",
+      "No large visual redesign is apparent at the inspected scale; source-pixel identity is a data-fidelity result, not proof of a dramatic realism gain.",
+      "Strong red metallic highlights and dark lower surfaces persist in the unchanged studio. Full-size/all-angle art direction and hardware review remain open.",
+      "Source paint/filter/tiling, original poster default, studio/camera/lighting and finite 8+1-second timing were not edited."
+    ],
+    "remaining": [
+      "Unchanged lossy Tireside map",
+      "All-ten collection art/photoreal approval",
+      "Inherited hardware/D3D X4122 diagnostic"
+    ]
+  },
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-21-car-data-fidelity",
+    "files": {
+      "gates.json": {
+        "bytes": 4734,
+        "sha256": "4c8e565318331e3fde49abc4ee434b846219bc108f8216942ac5aa21bebdfbe7"
+      },
+      "review.md": {
+        "bytes": 18106,
+        "sha256": "9d1865d772099a854d94706ddccc4673e63208fec45f37d9547129cc0cd9aa1f"
+      },
+      "source-binding-audit.md": {
+        "bytes": 22889,
+        "sha256": "18796da8f058dcce5248b4d9e5808f3ccc3ebb3b229ca461ee8314fa9dc3010e"
+      },
+      "normal-data-red.log": {
+        "bytes": 12482,
+        "sha256": "89dd88df9448023ca8ce791e2cd6b09c7c30a0e2ccbbf8bc4ca8327a27f8afe8"
+      },
+      "recipe-red.log": {
+        "bytes": 1096,
+        "sha256": "fec1ae4cc61529ecf99bdde2c752b5453b6e960190f860b673c5ce875efd2017"
+      },
+      "prewrite-graph-red.log": {
+        "bytes": 1891,
+        "sha256": "0145b47e7d0c46877e82eb5c15ae652317bea58b7b4e2d9132c7eed964e334f5"
+      },
+      "normal-measurement.json": {
+        "bytes": 5207,
+        "sha256": "f3d2e0fa6e919175538b6022313b7973bfbaea6148e16cf5aea7f44d3c42d98c"
+      },
+      "lossless-codec-measurement.json": {
+        "bytes": 12169,
+        "sha256": "b98a61c1a6ff539b9238808824cf81d2c22da1874500ed69bf2c5c6ecd56d3ee"
+      },
+      "tire-codec-measurement.json": {
+        "bytes": 3486,
+        "sha256": "40b7a0ae8d948692925dfd2f34e4e18869fb89fc13f59d147666a727f1f92327"
+      },
+      "meshopt-level-measurement.json": {
+        "bytes": 48830,
+        "sha256": "da2adda52a35bc23361c17dfc8f7e8f312aa1ec73e46916155adebd70a331ee7"
+      },
+      "normal-repair-measurement.json": {
+        "bytes": 1464,
+        "sha256": "bfbebcde7d9afec64490d84b528a432961e3a2bc62ac7924df11b1764655a437"
+      },
+      "recipe-stamp.json": {
+        "bytes": 356,
+        "sha256": "8da047e11ae4e8dd5c39ccd27d7964f1b6cc8d92cfb75304652c70852f4730d4"
+      },
+      "recipe-stamp.log": {
+        "bytes": 992,
+        "sha256": "560473171652181a54097d640a4d2126a9c14943a28ec2c22248582768b41eb4"
+      },
+      "final-media-check.json": {
+        "bytes": 3963,
+        "sha256": "0f1b64d03870cdfa4f88b3277a2171761fc0bc173e08c1203a11cb3ceeffecf5"
+      },
+      "visual-review.json": {
+        "bytes": 3814,
+        "sha256": "c8f48a10c42ecc46046fec5df5e57fc45e49b40a4d497032b56abc0dac2bafdd"
+      },
+      "web-tests.log": {
+        "bytes": 47861,
+        "sha256": "f706a8a3545c4d0f43627dd25e916514c0263df5a510588648d2761db749dd5b"
+      },
+      "web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "media-check.log": {
+        "bytes": 63193,
+        "sha256": "c1fc4afb4b23bf3f3ee8e821d44ec6f6080960a431ec04fcec56a942bbc6058d"
+      },
+      "native-types.log": {
+        "bytes": 54,
+        "sha256": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9"
+      },
+      "native-contracts.log": {
+        "bytes": 20068,
+        "sha256": "3f9e3a884df6e54422c8835298da5f3149aefc2e93446bab5e0b19a4837e2ce7"
+      },
+      "mobile-port.log": {
+        "bytes": 3288,
+        "sha256": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57"
+      },
+      "ci-contracts.log": {
+        "bytes": 2621,
+        "sha256": "3d87a64b651e7c0d5e115efd1f5753a82ea55e99eba0c68345449c1cc747d6cf"
+      },
+      "renderer-existing.log": {
+        "bytes": 34,
+        "sha256": "f73bc01951b76b00ed25bbf1911dd5205720b88aa1d3ff3efd244f5bb02e19d7"
+      },
+      "renderer-contracts.log": {
+        "bytes": 935,
+        "sha256": "576bb0fa3c12d0c500e0b3d11206cd44f1b707dffb7896ee5e3afc294c0c10c8"
+      },
+      "web-build.log": {
+        "bytes": 955,
+        "sha256": "5605f970d6ffd7be99925de304d5b0d858d07dee32479ead2e9573e8ef35eee4"
+      },
+      "legacy-truth.log": {
+        "bytes": 1213,
+        "sha256": "02acda4f6c74f9b1ebc9ac7aa73c32e9eed0348a84b32efe9459ca6ec3d24e02"
+      },
+      "shared-dashboard.log": {
+        "bytes": 314,
+        "sha256": "abdb719a7761f3a5eb0f93478b2e85344f8a55c35fd4a4bfb01f84abc1a56e21"
+      },
+      "three.log": {
+        "bytes": 46690,
+        "sha256": "1157144337d35d3a0f12b4d0d691bbeb91cf321e638a8506c89335eb2fbcbe11"
+      },
+      "heroes.log": {
+        "bytes": 2711,
+        "sha256": "a42c34ac31ad1775747df3cb8fb03cb40b6b921c2e11747c24e60ef5aa38ea27"
+      },
+      "fallbacks.log": {
+        "bytes": 138,
+        "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+      },
+      "routes.log": {
+        "bytes": 353,
+        "sha256": "76c9f347b6571fde6781bc0b94e1d344dd3994104c645da476e18c5d4d3d603b"
+      },
+      "rendered.log": {
+        "bytes": 541,
+        "sha256": "5d74a69f747595d29b181f81b2be2cb51a065fec8cc92a1037b1c8314cad0aee"
+      },
+      "dashboard.log": {
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "portfolio.log": {
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "vault.log": {
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "comparison.log": {
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "portability.log": {
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "input.log": {
+        "bytes": 268,
+        "sha256": "2e97ccf488b1821d1197c4ead32f8ddf6eee62d679d448a86fa9052b1131d41b"
+      },
+      "common-month.log": {
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "currency-width.log": {
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      },
+      "turntable-software.log": {
+        "bytes": 1302,
+        "sha256": "6eb398924a210006c0f9a617f72672ddfc02102ed81f859e7799b1233e70ff7d"
+      },
+      "render-car.log": {
+        "bytes": 38934,
+        "sha256": "4183a7d89451272d6472d5a61d96895dcaace72f78ce66e5db640dc37bf5cb1c"
+      },
+      "verify-turntables.log": {
+        "bytes": 807,
+        "sha256": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd"
+      },
+      "regenerate-car.log": {
+        "bytes": 992,
+        "sha256": "560473171652181a54097d640a4d2126a9c14943a28ec2c22248582768b41eb4"
+      },
+      "preserve-full-study.log": {
+        "bytes": 429,
+        "sha256": "749c9ed0f95a3014105a1a3528ac3b3b5ea8b896044876640448af0e968102f9"
+      },
+      "final-media-check.log": {
+        "bytes": 63411,
+        "sha256": "e9df36d7f8053b1113fbc4becb596f7a6ec0c830f036ace4f0b20662f62bd479"
+      }
+    }
+  },
+  "remaining": [
+    "Tireside remains unchanged lossy. All-seven lossless candidate exceeds original Car cap by92166bytes; measured alternatives fail vector or size guards. No cap relaxation or geometry/texture downsize.",
+    "Full-size/all-angle collection art approval; unchanged studio/camera/lighting/timing and originalposters remain.",
+    "Inherited HyperFrames hardware/D3D X4122 warning remains open; prior unchangedCar reproduction retained, explicit strictsoftware pass is not hardware clearance.",
+    "Canonicalscenario, lender/calendar, backend/recovery, accessibility/device/native and release gates remain open.",
+    "No merge/promotion/DesktopHTML republishing/dependencies/paidGPU/cloud-data-access change."
+  ]
+}

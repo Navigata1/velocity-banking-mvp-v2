@@ -1,0 +1,27 @@
+prune: Removed types... Mesh (2), Primitive (2), TextureInfo (35), Material (7), Accessor (51)
+prune: Removed types... Accessor (535)
+prune: Removed types... Accessor (249)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/import-refined-car.mjs:55
+  if(!extension||extension.isRequired()||extension.listProperties().length)throw new Error('Car iridescence cleanup requires an empty optional declaration: '+JSON.stringify(extension?.listProperties().map(property=>({type:property.propertyType,parents:property.listParents().map(parent=>({type:parent.propertyType,name:parent.getName()}))}))));
+                                                                                 ^
+
+Error: Car iridescence cleanup requires an empty optional declaration: [{"type":"Iridescence","parents":[]},{"type":"Iridescence","parents":[]}]
+    at cleanCarReferences (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/import-refined-car.mjs:55:82)
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/import-refined-car.mjs:63:1
+
+Node.js v22.22.2

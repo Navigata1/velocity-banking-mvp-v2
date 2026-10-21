@@ -2,6 +2,10 @@
 
 This is a bounded import repair, not collection-wide photoreal approval.
 
+Follow-up: `car-normal-fidelity-contract-2026-10-21.md` records five additional
+pixel-exact normal maps, guarded orphan cleanup and locked aggregate publication.
+The original paint invariant below remains unchanged; Tireside is still open.
+
 ## Proven Defect
 
 The previous Car importer converted every texture to lossy quality-90 WebP.
@@ -41,8 +45,9 @@ experience remains intact. Further polish needs all-angle visual review.
 The independent audit also found collapsed side-surface UV charts in House,
 Credit Card and Student Loan, plus one unreferenced Car image and a stale optional
 extension declaration. Those are separate repairs, not silently bundled here.
-The remaining Car normal maps still use the existing lossy conversion; restoring
-every source normal without further optimization would exceed current budgets.
+At that initial checkpoint, the remaining Car normal maps still used the lossy
+conversion. The follow-up above restores five more exactly; Tireside remains open
+because measured full-restoration candidates exceed the unchanged budget.
 
 Car remains an adapted CC-BY-4.0 model and textures by Eric Chadwick / DGG.
 The pinned source documents Unity Fan's public-domain starting geometry; that
