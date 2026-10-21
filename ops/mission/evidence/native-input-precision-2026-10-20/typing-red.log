@@ -1,0 +1,29 @@
+{
+  "sequence": [
+    {
+      "char": "1",
+      "display": "1"
+    },
+    {
+      "char": "2",
+      "display": "12"
+    },
+    {
+      "char": "0",
+      "display": "120"
+    },
+    {
+      "char": ".",
+      "display": "120"
+    },
+    {
+      "char": "7",
+      "display": "1207"
+    },
+    {
+      "char": "0",
+      "display": "12070"
+    }
+  ],
+  "stored": 12070
+}

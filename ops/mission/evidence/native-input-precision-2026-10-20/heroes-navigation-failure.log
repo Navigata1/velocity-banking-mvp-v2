@@ -1,0 +1,31 @@
+
+> web@0.1.0 test:heroes
+> node scripts/smoke-heroes.cjs && node scripts/hero-fallback-smoke.cjs
+
+PASS 1440px slow-network poster continuity and selected-mode stability
+1440px car color samples: 537, 507
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px house color samples: 457, 344
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px land color samples: 491, 533
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px creditCard color samples: 182, 120
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px studentLoan color samples: 355, 411
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px medical color samples: 195, 240
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px personal color samples: 237, 256
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px recreation color samples: 115, 221
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px custom color samples: 182, 169
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+locator.getAttribute: Timeout 120000ms exceeded.
+Call log:
+  - waiting for getByTestId('asset-hero')
+
+    at run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:100:57) {
+  log: [ "  - waiting for getByTestId('asset-hero')" ],
+  name: 'TimeoutError'
+}

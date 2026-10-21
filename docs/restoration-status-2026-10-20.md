@@ -8,6 +8,14 @@ The recognizable asset-centered dashboard is back, with four vitals, a selected
 debt summary and a secondary Money Loop explorer. Vault also has its own hero.
 The existing aligned demo defaults were preserved.
 
+Current follow-up: native input precision is corrected before aggregate Portfolio
+adoption. Chrome reproduced120.70 displayed as121 and typed120.70 saved as12070.
+Validated drafts now retain cents/APR precision, exact no-ops and unrelated saved
+values. Review found and closed additional precision/fraction/comma hazards.
+See `docs/native-input-precision-contract-2026-10-20.md`. The new test-only canvas
+phase diagnostics retain every deadline/assertion; they do not resolve the earlier
+reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
+
 ## Delivered
 
 - Ten high-detail generated hero artworks, with original PNGs and optimized WebP posters.
@@ -21,7 +29,11 @@ The existing aligned demo defaults were preserved.
   oak joinery and a clear landscaped approach.
 - Original refined Land candidate: 49,834 triangles, eight embedded material maps,
   709,260 bytes, real recessed pond, grounded path/stakes, connected woody branches
-  and folded individual leaf geometry. Six authored studies remain.
+  and folded individual leaf geometry.
+- Original refined Credit Card candidate:18,008 unique-mesh triangles, six embedded
+  procedural maps and516,984 bytes; silver/emerald cards with actual recesses,
+  connected chip contacts, back details and a two-sided96-reed silver coin.
+  Five authored studies remain; all-ten final collection art approval is open.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
@@ -71,7 +83,9 @@ not a reconstruction of the generated coupe poster. Vault is an original authore
 refinement, not an AI reconstruction of its poster. House is original architecture
 with generated albedos and authored approximate micro-normal/roughness maps, not a
 scanned building or exact reconstruction. Land is an original illustrative diorama
-with generated albedos and authored approximate surface/shading maps. The other six meshes remain
+with generated albedos and authored approximate surface/shading maps. Credit Card
+has original geometry and approximate procedural metal maps, not a scan or exact
+poster reconstruction. The other five meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
@@ -107,9 +121,10 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 56 media contracts pass, including nine Land and six House cases. Existing
-  HyperFrames/Remotion checks pass with 27 fresh stills; Land's turntable was rebuilt
-  and nine unchanged videos rechecked with fresh movement/rest pixel proof. The existing
+- 65 media contracts pass, including nine Credit Card, nine Land and six House cases.
+  Existing HyperFrames/Remotion checks pass with27 fresh stills. Credit Card's turn
+  was rebuilt in its checkpoint; all ten videos are unchanged/rechecked in the
+  native-input follow-up, with fresh movement/rest pixel proof. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
@@ -119,9 +134,10 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
   demo defaults. The fixtures are corrected and the mobile contract suite passes
   locally. A fresh exact-SHA green run is still required; preview is not CI approval.
-- Latest fully verified baseline 232b503 passed complete push/PR runs 39516617998/
-  39516623494, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6304488154.
-  The new Dashboard checkpoint needs its own postflight receipt. No production
+- Latest fully verified baseline8f65aef passed complete push/PR runs39523732339/
+  39523736791, real SQL, Vercel and72 hosted cases/routes; receiptPR256 issuecomment-6305482572.
+  Push attempt1's capture deadline miss remains recorded; full unchanged attempt2
+  passed. The new native-input/diagnostic checkpoint needs its own receipt. No production
   release is inferred from either earlier success or this local preflight report.
 - On the refined checkpoint 0d72c6b, push CI passed and all seven remote preview
   routes passed at desktop/375px. Its PR CI run exposed software-GPU screenshot
@@ -171,7 +187,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete six remaining textured models and artist-review all four candidates and collection consistency.
+1. Complete five remaining textured models and artist-review all five candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -184,7 +200,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
 
-Public assets total 10,447,116 bytes, only 38,644 bytes below the unchanged 10 MiB
+Public assets total10,415,192 bytes, only70,568 bytes below the unchanged10MiB
 cap. Later refinements must recover space through intentional optimization.
 
 ## Security Refresh

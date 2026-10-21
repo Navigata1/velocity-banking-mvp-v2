@@ -1,0 +1,30 @@
+FAIL testInvocationBudget: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /capture started with 9ms remaining: page.screenshot: Timeout 9ms exceeded/. Input:
+
+'desktop clipped canvas PNG capture started with 1ms remaining: page.screenshot: Timeout 9ms exceeded.'
+
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:48:12)
+    at expectedException (node:assert:576:17)
+    at expectsError (node:assert:701:21)
+    at Function.rejects (node:assert:767:3)
+    at async testInvocationBudget (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:47:3)
+    at async Object.runTimingTests (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:135:7)
+PASS testAbsoluteDeadline
+FAIL testPhaseTiming: AssertionError [ERR_ASSERTION]: phase timing diagnostics must be available
++ actual - expected
+
++ 'object'
+- 'function'
+
+    at testPhaseTiming (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:79:10)
+    at Object.runTimingTests (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:135:13)
+FAIL testDispatchFailureReporting: AssertionError [ERR_ASSERTION]: a failed dispatch must emit its timing report
+
+0 !== 1
+
+    at testDispatchFailureReporting (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:123:10)
+    at async Object.runTimingTests (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:135:7)
+AssertionError [ERR_ASSERTION]: timing diagnostic tests failed
+
+3 !== 0
+
+    at Object.runTimingTests (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\three-stage-timing-tests.cjs:142:10)

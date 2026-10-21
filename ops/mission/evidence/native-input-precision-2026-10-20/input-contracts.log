@@ -1,0 +1,16 @@
+PASS native input money preserves cents and sub-cent values
+PASS native input percentage display shifts decimal without multiplication noise
+PASS native input small and large scientific representations expand without losing their value
+PASS native input all no-op kinds retain the original exact IEEE value
+PASS native input money draft is interpreted only as the completed number
+PASS native input percentage entry shifts exact decimal before Number conversion
+PASS native input valid grouped USD money paste is supported
+PASS native input empty, incomplete, negative and malformed drafts preserve previous value
+PASS native input fractional and unsafe whole-number changes do not silently round
+PASS native input overflow and meaningful underflow are rejected instead of saved as infinity or zero
+PASS native input zero is an explicit valid edit
+PASS native input form resets with account scope and disabled edits cannot commit
+PASS native input new money edits reject decimal precision already lost during Number conversion
+PASS native input fractional whole-number digits cannot disappear in IEEE conversion
+PASS native input ambiguous comma keyboard amounts never silently become thousandfold values
+15 native input draft contracts passed. Scope assertions are static wiring, not signed-in device QA.

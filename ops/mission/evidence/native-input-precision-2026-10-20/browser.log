@@ -1,0 +1,42 @@
+
+> interest-shield-mobile@0.1.0 smoke:accessibility:built
+> node scripts/smoke-accessibility-rendered.cjs
+
+PASS native financial inputs 375px: cents, APR, ten no-ops, drafts, invalid values and reload
+PASS native financial inputs 1440px: cents, APR, ten no-ops, drafts, invalid values and reload
+PASS compact-280 / 280px
+PASS compact-280 /simulator 280px
+PASS compact-280 /cockpit 280px
+PASS compact-280 /portfolio 280px
+PASS compact-280 /learn 280px
+PASS compact-280 /vault 280px
+PASS compact-280 /settings 280px
+PASS compact-320 / 320px
+PASS compact-320 /simulator 320px
+PASS compact-320 /cockpit 320px
+PASS compact-320 /portfolio 320px
+PASS compact-320 /learn 320px
+PASS compact-320 /vault 320px
+PASS compact-320 /settings 320px
+PASS phone-390 / 390px
+PASS phone-390 /simulator 390px
+PASS phone-390 /cockpit 390px
+PASS phone-390 /portfolio 390px
+PASS phone-390 /learn 390px
+PASS phone-390 /vault 390px
+PASS phone-390 /settings 390px
+PASS focused assumption input navigates on the first tab press
+PASS phone-landscape / 844px
+PASS phone-landscape /simulator 844px
+PASS phone-landscape /cockpit 844px
+PASS phone-landscape /portfolio 844px
+PASS phone-landscape /learn 844px
+PASS phone-landscape /vault 844px
+PASS phone-landscape /settings 844px
+PASS tablet-768 / 768px
+PASS tablet-768 /simulator 768px
+PASS tablet-768 /cockpit 768px
+PASS tablet-768 /portfolio 768px
+PASS tablet-768 /learn 768px
+PASS tablet-768 /vault 768px
+PASS tablet-768 /settings 768px

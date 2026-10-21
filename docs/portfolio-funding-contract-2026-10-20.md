@@ -13,6 +13,11 @@ The main engine entry and current media scenario outputs remain unchanged. Nativ
 can resolve this portable subpath; its existing aggregate Portfolio screen has not
 yet adopted this full multi-debt book. Cross-screen scenario ownership remains open.
 
+The native input precision prerequisite is now corrected: drafts preserve cents,
+APR precision, no-op imports and unrelated saved values, with explicit rejection
+of ambiguous or lossy new edits. See the native input contract. This is not native
+aggregate adoption or cross-store scenario consolidation; those remain open.
+
 ## Funding And Allocations
 
 - Available budget is income minus household expenses, with no second source of

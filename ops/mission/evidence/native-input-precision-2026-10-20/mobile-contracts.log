@@ -1,0 +1,26 @@
+
+> interest-shield-mobile@0.1.0 test:supabase:mobile
+> node scripts/supabase-mobile-contract.cjs && node scripts/supabase-account-contract.cjs && node scripts/mobile-assumption-storage-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/snapshot-outbox-replay-contract.cjs && node scripts/snapshot-recovery-contract.cjs
+
+Expo Supabase contract passed secure chunking, durable identity, and ordered owner-scoped sync.
+Expo account contract passed owner-aware auth, PKCE callback isolation, and recoverable controls.
+PASS native input money preserves cents and sub-cent values
+PASS native input percentage display shifts decimal without multiplication noise
+PASS native input small and large scientific representations expand without losing their value
+PASS native input all no-op kinds retain the original exact IEEE value
+PASS native input money draft is interpreted only as the completed number
+PASS native input percentage entry shifts exact decimal before Number conversion
+PASS native input valid grouped USD money paste is supported
+PASS native input empty, incomplete, negative and malformed drafts preserve previous value
+PASS native input fractional and unsafe whole-number changes do not silently round
+PASS native input overflow and meaningful underflow are rejected instead of saved as infinity or zero
+PASS native input zero is an explicit valid edit
+PASS native input form resets with account scope and disabled edits cannot commit
+PASS native input new money edits reject decimal precision already lost during Number conversion
+PASS native input fractional whole-number digits cannot disappear in IEEE conversion
+PASS native input ambiguous comma keyboard amounts never silently become thousandfold values
+15 native input draft contracts passed. Scope assertions are static wiring, not signed-in device QA.
+Expo assumption storage contract rejected a stale-tab overwrite after recovery.
+Expo snapshot outbox contract passed durable FIFO replay, owner isolation, and retry identity.
+Expo snapshot replay contract passed sign-in, reconnect, activation, and cleanup triggers.
+Expo snapshot recovery contract passed explicit preview, owner checks, restore ordering, and guest adoption.
