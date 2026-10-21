@@ -62,6 +62,9 @@ function loadTsFile(filename) {
     if (request === '@interestshield/financial-engine/portfolio') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio.ts'));
     }
+    if (request === '@interestshield/financial-engine/portfolio-path') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-path.ts'));
+    }
 
     if (request.startsWith('.')) {
       const resolvedBase = path.resolve(path.dirname(filename), request);
