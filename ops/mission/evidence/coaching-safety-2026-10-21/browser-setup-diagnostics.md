@@ -1,0 +1,8 @@
+# Retained Setup Diagnostics
+
+- `browser-setup-failed-001/` and its log: localStorage capability probes (`lswt-*`) were counted as assumption writes. The fixture now records those probes separately; all other set/remove/clear operations remain checked across navigation and reload.
+- `browser-setup-failed-002/` and its log: Expo retains hidden prior screens. The original label locator matched hidden and active APR controls. The fixture now uses the accessible textbox role and verifies the active control is editable.
+- `browser-setup-failed-003/` and its log: the restoration assertion incorrectly expected raw `6.9` instead of stored decimal `0.069`. The fixture now accepts explicit literal stored values. A fixture edit during that raw run also correctly tripped source preservation. That run is not accepted as the stable RED.
+- Accepted stable RED: `browser-red/coaching-verification.json`, terminal session `83440`, exit `1`: exactly three failed-projection failures (24 failing safety assertions each) and three healthy-final-payment passes. All 60 route/reload surfaces and 69 viewport screenshots captured. Source/model/export preservation true, zero console/page errors. APR200 commits and APR6.9 restores each made exactly one write; navigation and reload made none.
+- Frozen baseline server PID `29748`, terminal session `95613`, origin `http://127.0.0.1:53983`, intentionally stopped after parent manual capture at `2026-10-21T17:28:15.3606345Z`; terminal exited `1`. Original served bundle SHA256 `194c54debe49256c20da1f9b4dbf30c05134a95147dcc9278bba379a7e824838`.
+- The standing source fixture is frozen before GREEN and no longer contains server-launch infrastructure. No export build was performed by the worker.

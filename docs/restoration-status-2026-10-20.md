@@ -4,7 +4,7 @@
 
 Verified local restoration build, pushed as draft PR #256. Not a production release.
 
-Latest verified application checkpoint: cc09e2e. Both complete attempt1 CI events
+Latest verified hosted web checkpoint: cc09e2e. Both complete attempt1 CI events
 39627899764/39627912909 passed, including native70/full contracts, media145/27
 stills and SQL63 twice per event. Exact READY preview, hosted120, all ten served
 GLB/poster hashes and actual IAB edit/import/restore passed. Receipt:
@@ -19,20 +19,29 @@ pass. Required steps come from the committed HEAD workflow; a dirty local
 workflow cannot conceal missing SQL execution. No application/asset/math/data
 changes were included in that maintenance slice. cc09 hosted120 stays inherited.
 
-Current bounded fix: native single-scenario APR entry now follows its legacy
-engine units, while canonical Portfolio decimal units remain unchanged. The old
-actual IAB export displayed200% but calculated2%, reducing default burn4/day to
-2/day. Rebuilt actual UI shows200% and102/day; explicit copy exports decimal2 and
-displays200%. Existing legacy6.5 displays6.5%, exact/equivalent no-ops preserve
-bytes, and ambiguous old raw2 remains2%, never guessed as historical200% intent.
-15 new/19 original draft contracts,70 original+6 new browser cases, web348/core31/
-ref23247, media145/27 fresh stills and fresh web/Android/iOS exports pass locally.
-The full native child exits0; first wrapperexit1 was a PASS-line counting error:
-one separate focused-navigation assertion makes77 lines, not76. This is recorded,
-not erased. Independent bounded review found no actionable issue. Both NEW full
-exact-head CI events remain required. See
-`docs/native-legacy-apr-contract-2026-10-21.md`. No allocation/accrual/schema,
-dependency, asset or backend change, physical-device approval or production push.
+Native APR compatibility is verified atef72dd7, both full attempt1 CI events
+39641080588/39641097086, all3jobs/every step. Receipt:
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322133013
+Single-scenario legacy units and canonical Portfolio decimal units stay distinct:
+old raw6.5 displays6.5%; changed200% storesraw200 and copiesdecimal2/display200%.
+Exact/equivalent bytes are preserved; old ambiguousraw2 stays2%, never guessed as
+past200% intent. Native76/full contracts/media14527/SQL63 twice/event pass. Fresh
+local web/Android/iOS exports and actual IAB entry/copy/recovery are separate from
+inherited cc09 hosted120. First local counting-wrapperexit1 remains reconciled:
+70+6 cases plus1navigation assertion=77 PASS lines, not76. No production release.
+
+Current coaching fix addresses the next actual UI conflict: the simulation
+reports payment-below-interest/ETAReviewinputs while NextMove/CoachNote still
+suggest a principal chunk and downstream screens announce readiness. Shared
+coaching now consults projection availability, without changing numerical math.
+16 focused contracts pass after7RED/9positives; new6 workflows at280/375/1440
+pass after3 expectedRED/3healthy positives. The original76 cases remain, full82
+passes, and parent IAB verifies five screens plus restoration of healthy guidance.
+Only1of111 index declarations changes; Remotion refreshes only its two source-
+fingerprint fields with identical inputs/results. See
+`docs/native-coaching-safety-contract-2026-10-21.md`. All13 serial web gates pass;
+BOTH new exact-head CI events still precede closure. Schemas/assets/dependencies/backend
+unchanged; final art, shared scenarios, lender/calendar/device/release stay open.
 
 The Desktop report has728-file readback/recovery evidence. Its first published
 version failed an offline page-overflow check; an inherited word-wrap correction

@@ -1,0 +1,560 @@
+{
+  "origin": "http://127.0.0.1:53985",
+  "scope": "Existing Expo export over native HTTP, fresh synthetic contexts only, not physical-device QA. Original 76 cases and receipts unchanged.",
+  "passed": 6,
+  "originalCaseCount": 76,
+  "newCaseCount": 6,
+  "preserved": {
+    "sources": true,
+    "export": true
+  },
+  "served": {
+    "_expo/static/js/web/entry-251236b09163641f6ff76ea07fe6600a.js": "41096bef03716012d83df4a6df683b521bfe7bf431262205f96088789d246fdd",
+    "index.html": "8063a134fae09db53afd4224f1e8191a14c6b0574b918fe0faab8f72aa311f89"
+  },
+  "receipts": [
+    {
+      "name": "failed-projection",
+      "width": 375,
+      "passed": true,
+      "checks": 32,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-failed-projection-375-initial-viewport.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "244e7f3bae0182b219f030e4ac1a87912af1d71892b810d33600c0da2d5a3180",
+          "nonWhiteRatio": 0.9821777777777778
+        },
+        {
+          "filename": "coaching-failed-projection-375-dashboard-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "3d5c3a010610cd641164339867df0da94f2d5381893bd967d4a0357e7afa0de6",
+          "nonWhiteRatio": 0.9845125925925926
+        },
+        {
+          "filename": "coaching-failed-projection-375-dashboard-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "bfda0f548c2264b0e3e38707ff7e8f1697107c1297d777e5b60852cf85c39df0",
+          "nonWhiteRatio": 0.9803259259259259
+        },
+        {
+          "filename": "coaching-failed-projection-375-simulator-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "7a8f6c1f0f4009d28d668d3681833160d51087757e28da0dbbddee1b9776ecce",
+          "nonWhiteRatio": 0.9818518518518519
+        },
+        {
+          "filename": "coaching-failed-projection-375-simulator-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "9b5386dc919bc79b98f8a6c395a83820a36626d688b3375044410421778ae24e",
+          "nonWhiteRatio": 0.9819762962962963
+        },
+        {
+          "filename": "coaching-failed-projection-375-cockpit-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "17c448f0a32f6b78ee418e0eadaf5fb0c499c8f6fe4611573c1fca78fb21fca4",
+          "nonWhiteRatio": 0.9846281481481481
+        },
+        {
+          "filename": "coaching-failed-projection-375-cockpit-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "c7b53a169adbf0b0b9d2c1c5805f75bd0d850f0502d25510bbb61ff7b50e53f0",
+          "nonWhiteRatio": 0.9847525925925926
+        },
+        {
+          "filename": "coaching-failed-projection-375-learn-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "d21c2e5a405bc9b578011f5c5781d96efb9355ec386fa6fd5f126edb22af7482",
+          "nonWhiteRatio": 0.9788740740740741
+        },
+        {
+          "filename": "coaching-failed-projection-375-learn-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "d5ee14b3394f633f5aac180b6f7c5818d86618eef96632871a96e382092aea01",
+          "nonWhiteRatio": 0.9789985185185185
+        },
+        {
+          "filename": "coaching-failed-projection-375-vault-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "9802a83b0251af782563e7bda287d1c56351da8be4f0b7f1d5df7c447a8b184c",
+          "nonWhiteRatio": 0.9796118518518518
+        },
+        {
+          "filename": "coaching-failed-projection-375-vault-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "c91ab8879c31644725e56e196aff5a5f552c3796c92654f14629d9d04ad809e8",
+          "nonWhiteRatio": 0.9797362962962963
+        },
+        {
+          "filename": "coaching-failed-projection-375-restored-default.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "e0b9f11bb7f7eb2503285534603da84a8198905760bde3bf9295c04afaaf7e2f",
+          "nonWhiteRatio": 0.9821777777777778
+        }
+      ]
+    },
+    {
+      "name": "healthy-final-payment",
+      "width": 375,
+      "passed": true,
+      "checks": 22,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-healthy-final-payment-375-initial-viewport.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "8884d21e8d9b472b09cf70e88b1bce003431fe62574d7a1301f410ffeb570977",
+          "nonWhiteRatio": 0.9845125925925926
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-dashboard-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "1a0beff419035726405f2df0c48209417d4827b997f5576ec22316aaa9f72355",
+          "nonWhiteRatio": 0.9845125925925926
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-dashboard-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "1a0beff419035726405f2df0c48209417d4827b997f5576ec22316aaa9f72355",
+          "nonWhiteRatio": 0.9845125925925926
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-simulator-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "37e24d7ceb015a72d81c765265e1be6b21060e25d7a948e2bb645fe3c664d579",
+          "nonWhiteRatio": 0.98176
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-simulator-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "67b9df6d8c17a1b7883afcd721a2e1c1030eb916a7f3bf64b690ac678f94a982",
+          "nonWhiteRatio": 0.9818844444444444
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-cockpit-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "057b60b5e370c3e59d316fc84831ee0529f04351949c77946a01474b426d34ec",
+          "nonWhiteRatio": 0.9826429629629629
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-cockpit-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "09ed6d82e105065f687869490f66ad584adcf47e3b82b7d8212bf3f6cd994039",
+          "nonWhiteRatio": 0.9827674074074074
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-learn-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "6b67533aadc8ef6b28a661b4955b18d5650d30124dc7c8d6b976708b70760353",
+          "nonWhiteRatio": 0.9818933333333333
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-learn-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "46f2c4c6af260f5a01f4192b7bc88117491377f33912cb000c032088dc5d1a9b",
+          "nonWhiteRatio": 0.9820177777777778
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-vault-navigation.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "bb9d75ffd10ee8c0c95080c8d759d588a265ed622391ff9e2c48f4267364cf81",
+          "nonWhiteRatio": 0.9838903703703704
+        },
+        {
+          "filename": "coaching-healthy-final-payment-375-vault-reload.png",
+          "width": 375,
+          "height": 900,
+          "sha256": "ca1cbd4e0ed4f2390e940a2ef2ee06de539081217c50bf03f128bf2d691255e7",
+          "nonWhiteRatio": 0.9840148148148148
+        }
+      ]
+    },
+    {
+      "name": "failed-projection",
+      "width": 280,
+      "passed": true,
+      "checks": 32,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-failed-projection-280-initial-viewport.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "da054d60c621d0029172ccb51059c93f049d7a03de852153ee9592495b8986d9",
+          "nonWhiteRatio": 0.9833968253968254
+        },
+        {
+          "filename": "coaching-failed-projection-280-dashboard-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "f5bdb85802fa9be43364bc587e14f93e9e97d795e77a9d722eaf06846d2a2fde",
+          "nonWhiteRatio": 0.9792341269841269
+        },
+        {
+          "filename": "coaching-failed-projection-280-dashboard-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "62055689fbb5c18163cee3413219c0c9886dd4438f63eea999f6aee067cd4be0",
+          "nonWhiteRatio": 0.9834285714285714
+        },
+        {
+          "filename": "coaching-failed-projection-280-simulator-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "85045b11ed9128fceb9362b2bb05918dea7fca2a1dfefd28a536271fe6ce60ce",
+          "nonWhiteRatio": 0.9756825396825397
+        },
+        {
+          "filename": "coaching-failed-projection-280-simulator-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "921096894ca8634f6793bb9584f927d963e493df143337aec37f39b50017d81c",
+          "nonWhiteRatio": 0.9758492063492064
+        },
+        {
+          "filename": "coaching-failed-projection-280-cockpit-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "3b0024bb54028e6dbc7341f5d6a54cd9820c3c0a6d186fa925c09d24abafd1fa",
+          "nonWhiteRatio": 0.9804087301587302
+        },
+        {
+          "filename": "coaching-failed-projection-280-cockpit-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "0df58577e2e78e8761fe91e669382113820158b788706ba4641567d1a0d36f4d",
+          "nonWhiteRatio": 0.9805753968253968
+        },
+        {
+          "filename": "coaching-failed-projection-280-learn-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "84d78d0d75408781dc987282faa229064a32ec53ca63cb812ea901b40a3009c4",
+          "nonWhiteRatio": 0.9757420634920635
+        },
+        {
+          "filename": "coaching-failed-projection-280-learn-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "d6af8dfa4f1fb04df8959f592b1a77bcafed0d5d7ba302bd29aa6fc75e3c6cd2",
+          "nonWhiteRatio": 0.9759087301587301
+        },
+        {
+          "filename": "coaching-failed-projection-280-vault-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "7854dc0946bb8ecaf5ace5e6a499adac275e0cf4112df4a2835963435368bffe",
+          "nonWhiteRatio": 0.9771547619047619
+        },
+        {
+          "filename": "coaching-failed-projection-280-vault-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "fd77ae9b317f2917f24a90ad1204c16df1088f40696cc5c2e0acb367dc174507",
+          "nonWhiteRatio": 0.9773214285714286
+        },
+        {
+          "filename": "coaching-failed-projection-280-restored-default.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "7f6e0ef64151d25cedce1154ea115475b536b383afb5a4474d485e111371e8c9",
+          "nonWhiteRatio": 0.9857420634920635
+        }
+      ]
+    },
+    {
+      "name": "healthy-final-payment",
+      "width": 280,
+      "passed": true,
+      "checks": 22,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-healthy-final-payment-280-initial-viewport.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "623b5e04b54ad24618b8457f2ec6cce9d15e2ff05b7c0e09b007433b5e42eb1f",
+          "nonWhiteRatio": 0.9841944444444445
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-dashboard-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "fe16d7209e87a8cd5c2860de84dfe8ad48fc8229f432131eacd5ade83b8a9ca4",
+          "nonWhiteRatio": 0.9891111111111112
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-dashboard-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "fe16d7209e87a8cd5c2860de84dfe8ad48fc8229f432131eacd5ade83b8a9ca4",
+          "nonWhiteRatio": 0.9891111111111112
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-simulator-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "7065614454e54958ab46f6fc07ef3ac95f9bb776479966c353e99afa7fe5b48d",
+          "nonWhiteRatio": 0.9756150793650794
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-simulator-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "caad489b5a0f7fcb9e218ec41ffe29775ccab3f45cda6946579a8efefeb33096",
+          "nonWhiteRatio": 0.9757817460317461
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-cockpit-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "213a858ebe2dec700802369f64f29da843a00bad4c4699f7c18cfbe13b7749f4",
+          "nonWhiteRatio": 0.9767817460317461
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-cockpit-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "af18c33efc3a1d922c84412581d4952e2ad892e2ae06dc3beef0dddb9787b28d",
+          "nonWhiteRatio": 0.9769484126984127
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-learn-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "5cb58bab55f9a43cb0bc8e53455e8858ee12239dc44d89de785d7b4d09364d32",
+          "nonWhiteRatio": 0.9781746031746031
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-learn-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "5212addc09e2569a3076be9d02ba6275bd979aad38c341d7cb53363afaca2eb2",
+          "nonWhiteRatio": 0.9783412698412698
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-vault-navigation.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "d6e434dc6df8cba2a55dba4fcbf353544d9074ea917b3b5af218366328dd8766",
+          "nonWhiteRatio": 0.9851666666666666
+        },
+        {
+          "filename": "coaching-healthy-final-payment-280-vault-reload.png",
+          "width": 280,
+          "height": 900,
+          "sha256": "7a8ff8a662cd7c4c661c39210a8164d10aec920fd29d562af5ca36955027933b",
+          "nonWhiteRatio": 0.9853333333333333
+        }
+      ]
+    },
+    {
+      "name": "failed-projection",
+      "width": 1440,
+      "passed": true,
+      "checks": 32,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-failed-projection-1440-initial-viewport.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "a91d559563725cc196af37706e01e8097e6f05b1f3a1764cfafa33cb8b205fae",
+          "nonWhiteRatio": 0.993945987654321
+        },
+        {
+          "filename": "coaching-failed-projection-1440-dashboard-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "ba52be36da293e27a6c05e454c516de4ab89081f0b51b5c26ed7594107773435",
+          "nonWhiteRatio": 0.9955270061728395
+        },
+        {
+          "filename": "coaching-failed-projection-1440-dashboard-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "78d2d9b138a3402f119e40949705b115653aa62fc695501c3d13272c225c0f9a",
+          "nonWhiteRatio": 0.9936280864197531
+        },
+        {
+          "filename": "coaching-failed-projection-1440-simulator-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "7fc81e40e609d78be7a0f47a7d4a5795da4f1c4e1ed54686ed094e7904fcd7db",
+          "nonWhiteRatio": 0.9949135802469136
+        },
+        {
+          "filename": "coaching-failed-projection-1440-simulator-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "52743f99811b49cfa359848ab8fb95b4acf97bdc49dcd51c02979d0e01675f12",
+          "nonWhiteRatio": 0.994945987654321
+        },
+        {
+          "filename": "coaching-failed-projection-1440-cockpit-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5d95803b900c10f96ac237bb92c543336f8feee3f3960686b942ec79d4ac243d",
+          "nonWhiteRatio": 0.995491512345679
+        },
+        {
+          "filename": "coaching-failed-projection-1440-cockpit-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "f1cab6c944270284abdbc0e6f1215a64e6e0582970d0a9b59d9076146e78dfca",
+          "nonWhiteRatio": 0.9955239197530864
+        },
+        {
+          "filename": "coaching-failed-projection-1440-learn-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "f7f1b11bb20289c01e9046abf63db69a72be1fae91e5cbf84d7a0b867dbadb82",
+          "nonWhiteRatio": 0.9939151234567901
+        },
+        {
+          "filename": "coaching-failed-projection-1440-learn-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "238f7fadc5ba176f90c9c8771e2caaf2e4bb45fe03173fb0aac7a891d0904969",
+          "nonWhiteRatio": 0.9939475308641975
+        },
+        {
+          "filename": "coaching-failed-projection-1440-vault-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "cda9431a4452711e7ede06c64400975a99e9fc0634ea9a0abe3d5c8f330b5cba",
+          "nonWhiteRatio": 0.9933587962962963
+        },
+        {
+          "filename": "coaching-failed-projection-1440-vault-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "fc2f0a78728d9527d76ec1342a341c16fa0a54340ba7f267a1e7d5457a52a29e",
+          "nonWhiteRatio": 0.9933912037037037
+        },
+        {
+          "filename": "coaching-failed-projection-1440-restored-default.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "a91d559563725cc196af37706e01e8097e6f05b1f3a1764cfafa33cb8b205fae",
+          "nonWhiteRatio": 0.993945987654321
+        }
+      ]
+    },
+    {
+      "name": "healthy-final-payment",
+      "width": 1440,
+      "passed": true,
+      "checks": 22,
+      "failedChecks": 0,
+      "errors": [],
+      "screenshots": [
+        {
+          "filename": "coaching-healthy-final-payment-1440-initial-viewport.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5cd45bfd6c502a464fce59ec401b34d690985ebd3cbb4af98b0bcbc89a7a344f",
+          "nonWhiteRatio": 0.9950069444444445
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-dashboard-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5cd45bfd6c502a464fce59ec401b34d690985ebd3cbb4af98b0bcbc89a7a344f",
+          "nonWhiteRatio": 0.9950069444444445
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-dashboard-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5cd45bfd6c502a464fce59ec401b34d690985ebd3cbb4af98b0bcbc89a7a344f",
+          "nonWhiteRatio": 0.9950069444444445
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-simulator-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "d962771e42d103e9d2dce8b6314b1fa5a83831aba3670fe567ccb4c12f912114",
+          "nonWhiteRatio": 0.994917438271605
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-simulator-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5eb32745e01130e4971e2ce71cc494e8e1b01c82c96d5eb98acdf3023436d13a",
+          "nonWhiteRatio": 0.9949498456790123
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-cockpit-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "e4019b31c104464fa502688a77fbb9b9e5dfcf3f479a9841b7a692d0e274083d",
+          "nonWhiteRatio": 0.9953094135802469
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-cockpit-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "2ada163f8ef93da4c928950ef3d8849660f735e3cadd173e7afb1cb9a896e504",
+          "nonWhiteRatio": 0.9953418209876543
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-learn-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "5d905df90f8e8cfa1d100e234ea3c1a8065501de541f12a1b1962e171029aeae",
+          "nonWhiteRatio": 0.9938233024691357
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-learn-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "38e594f30de70fe97af8bcfa5fd4cd9c6b78a23ffe79f7627864c8ea0b761330",
+          "nonWhiteRatio": 0.9938557098765433
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-vault-navigation.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "91d885c318eba04d245db667d1462ad52a61aee84aef4eec37dfeb1e7eed165b",
+          "nonWhiteRatio": 0.9943433641975309
+        },
+        {
+          "filename": "coaching-healthy-final-payment-1440-vault-reload.png",
+          "width": 1440,
+          "height": 900,
+          "sha256": "649e0583d81a649e101f370b63d5d67d47bba302fa73bc660732b373cce7660c",
+          "nonWhiteRatio": 0.9943757716049383
+        }
+      ]
+    }
+  ]
+}

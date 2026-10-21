@@ -1262,6 +1262,9 @@ export function buildMobileDashboardSnapshot(
   } else if (!locNeedsSetup && locUtilization > 0.8) {
     nextMove = 'Pay down the LOC';
     warning = LOC_HIGH_UTILIZATION_WARNING;
+  } else if (!locNeedsSetup && !velocityProjection.isPayoffPossible) {
+    nextMove = 'Review payoff inputs';
+    warning = `${formatPayoffFailure(velocityProjection.failureReason)}. Review the assumptions before modeling another chunk.`;
   } else if (!locNeedsSetup && cashFlow <= model.activeDebt.monthlyPayment) {
     nextMove = 'Pause new chunks';
   } else if (!locNeedsSetup && safeChunk > 0) {

@@ -1,0 +1,10 @@
+{
+  "baseline": "ef72dd7b11192418eb650aa2c6abf590b624bfb0",
+  "declarations": 111,
+  "changedDeclarations": [
+    "buildMobileDashboardSnapshot"
+  ],
+  "unchangedDeclarations": 110,
+  "engineSourceDigest": "7bef8e23071fd107e7a05bac9bb8653fdbcb8d703945cd4dc9b976cb28fab3a6",
+  "numericalFixturesUnchanged": true
+}

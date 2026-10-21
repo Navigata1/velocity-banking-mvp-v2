@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Verified CI baseline 8561784. Native APR compatibility fix locally verified; exact-head CI pending, not production approval.",
+    "tagline": "Verified native APR checkpoint ef72dd7. Projection-aware coaching locally verified; new exact-head CI pending, not production approval.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T17:07:00Z",
+    "updated": "2026-10-21T17:39:30Z",
     "sessionCount": 21
   },
   "policies": {
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-legacy-apr-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:07:00Z",
-          "notes": "Fresh local348 regressions,31 common-month contracts and23247 seeded reference probes pass, with web lint/build, media145/27 fresh stills and14 CI/4 static renderer contracts. Native single-scenario legacy APR input boundary is the only behavioral change; all numerical allocation/accrual modules, stored schemas, dependencies and30 GLB/poster/video payloads remain unchanged. No lender/device or final-art approval."
+          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T17:35:00Z",
+          "notes": "Fresh local348 regressions,31 common-month contracts and23247 source-bound reference probes pass; web lint/build,media145/27 fresh stills,14CI/4static renderer contracts. Only dashboard coaching changes among111 index declarations;110 retained, including numerical calculations. Generated Remotion source digest/version refreshed, all fixture inputs/results identical. Schemas, dependencies and30 hero GLB/poster/video payloads unchanged. No lender/device/final-art approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
-          "lastRun": "2026-10-21T15:36:01Z",
-          "notes": "Verified cc09e2e baseline: complete push39627899764/PR39627912909, hosted10 suites/120 cases, seven HTTP/rendered routes, all ten served model/poster hashes and actual IAB House income/Portfolio import/horizon restore. CI maintenance does not change app source, assets, storage or budgets. Those hosted results remain explicitly inherited, not new-head runs. New CI must freshly execute all existing native/media/SQL/browser commands. Final device/art/production approval remains open."
+          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T17:39:29.691Z",
+          "notes": "Fresh local13 serial web stages pass: strict unclockedThree700/300ms,20 hero views/reducedmotion/fallbacks,sevenHTTP/rendered routes and120 comparison/input/boundary workflows. Native original76+6coaching cases and1navigation assertion, actual parent IAB five-screen/recovery proof pass. Heavy rendering/exports and worker browser finish before strict web batch. Priorcc09 hosted120 is inherited, NOT new hosted web/device/production evidence. Both NEW complete CI events still required."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6321350077",
-          "lastRun": "2026-10-21T17:07:00Z",
-          "notes": "8561784 verified BOTH complete attempt1 events39635731600/39635740696, all3 jobs/every step, native70/media14527/SQL63 twice/event. Current native APR fix now needs BOTH NEW complete exact-head events, including all original70 plus6 added native cases and15 new contracts. Earlier7bd/789/D6 failures stay historical and unapproved. Standing verifier requires committed-HEAD workflow and every execution; no waived20-minute cap or production promotion."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322133013",
+          "lastRun": "2026-10-21T17:35:00Z",
+          "notes": "ef72dd7 VERIFIED full attempt1 push39641080588/PR39641097086: all3jobs/every step, native76/media14527/SQL63 twice/event. Primary688/695s under unchanged1200s caps. New coaching slice needs BOTH NEW complete exact-head events, original76+6 coaching cases and16 new contracts. Earlier failed checkpoints stay historical; standing verifier requires committed-HEAD workflow/all executions. No production promotion or relabeled hosted web smoke."
         }
       ]
     },
@@ -463,7 +463,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Native APR slice freshly rebuilds web export and Android/iOS Hermes bundles. Original70 browser cases plus6 new APR cases and one separate focused-navigation assertion pass;19 existing/15 new draft contracts and full owner/CAS/session/transfer/recovery suite pass. Full-harness child exit0; first counting wrapper exit1 incorrectly expected76 raw PASS lines versus77, explicitly reconciled without fixture edits. Signed-in physical-device, screen-reader, locale-complete keyboard and cloud cross-device QA remain open."
+          "notes": "Coaching slice freshly rebuilds web export and Android/iOS Hermes bundles, with original76+6 coaching browser cases and separate focused-navigation assertion passing.19 original/15 APR/16 coaching contracts and full owner/CAS/session/transfer/recovery suite pass. Earlier APR counting-wrapperexit1 remains preserved historical evidence, not repeated here. Signed-in physical-device, screen-reader, locale-complete keyboard and cloud cross-device QA remain open."
         },
         {
           "id": "R5-T2",
@@ -484,6 +484,18 @@
         {
           "id": "R5-T4",
           "title": "Align native single-scenario APR entry with legacy engine units",
+          "status": "done",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Verifiedef72dd7, receipt6322133013: BOTH full push39641080588/PR39641097086 attempt1 all3jobs/every step, native76/fullcontracts/media14527/SQL63 twice/event. Explicit legacy-percent preserves original/no-op bytes, new200 storesraw200, copies once to canonicaldecimal2; oldraw2 stays2%.15 new/19 original contracts and6 workflows at280/375/1440 pass; actual parent IAB entry/copy/restored. No allocation/schema/asset/dependency change, not hosted web/device/production approval. See docs/native-legacy-apr-contract-2026-10-21.md."
+        },
+        {
+          "id": "R5-T5",
+          "title": "Make native coaching respect unavailable payoff projections",
           "status": "in_progress",
           "dependsOn": [],
           "pr": {
@@ -491,7 +503,7 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Actual old-export IAB RED: typed200 displays200 but burn4/day falls2/day; raw legacy6.5 formats650. Explicit legacy-percent boundary preserves existing/no-op bytes, stores changed200 as200, copies once to Portfolio decimal2 and leaves canonical percent unchanged.15 contracts/6 new workflows at280/375/1440 GREEN; actual parent IAB200->102/day and visible canonical copy verified/restored. Independent6-pin review finds no actionable issue. Local preflight complete; BOTH NEW full exact-head CI events required before closing. See docs/native-legacy-apr-contract-2026-10-21.md."
+          "notes": "Actual old-export IAB and real-function RED: APR200 yields payment-below-interest/ETAReviewinputs but positive Send1000/tonegood and false downstream readiness. Three-line shared coaching guard now yields Reviewpayoffinputs/reason; cashflow/setup/LOC priorities and valid final/zero-surplus Pause preserved.16 contracts GREEN after7RED/9positive, new6 browserworkflows after3RED/3healthy positives. Original76+6 fullbrowser, parent IAB five-screen/recovery and13 serial web stages pass. Six executable/data pins independently reviewed; no actionable finding. BOTH new complete exact-head CI events precede closure. See docs/native-coaching-safety-contract-2026-10-21.md."
         }
       ],
       "gates": [
@@ -500,18 +512,18 @@
           "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-legacy-apr-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:07:00Z",
-          "notes": "Fresh current-SDK typecheck, web export and Android/iOS Hermes exports pass with the explicit legacy APR input policy. Storage schema and numerical allocation/accrual unchanged; not final-device proof."
+          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T17:35:00Z",
+          "notes": "Fresh typecheck, web export and Android/iOS Hermes exports pass with projection-aware shared coaching. No storage schema or numerical allocation/accrual change; not physical-device proof."
         },
         {
           "id": "R5-G2",
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-legacy-apr-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:07:00Z",
-          "notes": "Fresh root mobile and complete persistence/input/owner/revision/outbox/recovery contracts pass, including19 original drafts and15 legacy APR contracts. Actual exported-browser70 original+6 new cases pass; focused navigation is an additional assertion, not a replaced fixture. Final exact-head CI required. Memory/static/browser checks are not signed-in native-device proof."
+          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T17:35:00Z",
+          "notes": "Fresh root and full persistence/input/owner/revision/outbox/recovery contracts pass, preserving19 original/15APR and adding16 coaching cases. Actual exported-browser original76+6coaching pass, with1 separate focused-navigation assertion. No fixture shrinkage. New exact-head CI required; not signed-in physical-device or cloud approval."
         },
         {
           "id": "R5-G3",
@@ -891,8 +903,9 @@
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "Previous8561784 CI/report maintenance is VERIFIED: full push39635731600/PR39635740696 all3 jobs/every step, receipt6321350077. R0-T4 done. Current bounded native legacy APR slice has local15 new/19 original contracts, original70+6 browser cases, fresh web/media/native/export gates and actual IAB entry/copy/restore. Commit/push then require BOTH new exact-head complete CI events and content-validate all original counts plus new6/15. Never relabel inherited cc09 hosted120 or local native UI as new-head hosted web/device approval.",
-      "Read docs/native-legacy-apr-contract-2026-10-21.md. Only single-scenario PercentageInput uses legacy-percent; unchanged/equivalent records preserve bytes, new200 storesraw200, explicit copy yields canonicaldecimal2. Old raw2 remains2%, never guess historical200 intent. Canonical Portfolio percent/raw2=200% and all allocation/accrual/schema/assets remain unchanged. Full browser childexit0 has70+6 cases plus one navigation assertion; counting-wrapperexit1 remains explicit evidence. R5-T4 stays pending exact-head CI. Fold receipt into next substantive work, no metadata-only push loop.",
+      "Previousef72dd7 native APR checkpoint is VERIFIED: full push39641080588/PR39641097086 all3jobs/every step, receipt6322133013. R5-T4done. Current coaching slice passes16 contracts andoriginal76+6 browser workflows, actual IAB five-route/recovery, independent review and13 serial web gates. Commit/push then require BOTH NEW exact-head full CI/all original counts plus coaching6/16. No metadata-only push loop or relabeled cc09 hosted120/device/production approval.",
+      "Read docs/native-coaching-safety-contract-2026-10-21.md. Shared dashboard now consults actual Velocity availability before suggesting a chunk. Preserve cashflow/LOC warning priorities, exactly80 boundary, valid clipped-final/zero-surplus Pause and all numerical functions. Only1of111 index declarations changed; Remotion only source fingerprint/version refreshes, fixture inputs/results equal. New source index hash requires source-bound references and media freshness, not inherited old numerical digests. New R5-T5 awaits complete CI.",
+      "Read docs/native-legacy-apr-contract-2026-10-21.md. Single-scenario legacy-percent and canonical Portfolio percent remain separate; unchanged/equivalent bytes stay exact, new200 storesraw200/copiesdecimal2, oldraw2 remains2%. Original19 drafts/15APR/6browser cases stay intact. Historical counting-wrapperexit1 is explicitly reconciled as70+6cases plus1navigation assertion, never erased.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
       "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",

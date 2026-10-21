@@ -6,6 +6,7 @@ const path = require('node:path');
 const verifyFinancialInputs = require('./financial-input-smoke.cjs');
 const { runPortfolioBookFixtures } = require('./portfolio-book-smoke.cjs');
 const { runLegacyAprFixtures } = require('./legacy-apr-smoke.cjs');
+const { runCoachingSafetyFixtures } = require('./coaching-safety-smoke.cjs');
 const { runCommonMonthFixtures } = require('../../web/scripts/smoke-portfolio-common-month.cjs');
 const { chromium } = require(path.resolve(__dirname, '..', '..', 'web', 'node_modules', 'playwright-core'));
 const {
@@ -145,6 +146,7 @@ async function main() {
     await verifyFinancialInputs(browser, origin, outputDirectory);
     await runPortfolioBookFixtures({ browser, origin, output: outputDirectory });
     await runLegacyAprFixtures({ browser, origin, output: outputDirectory });
+    await runCoachingSafetyFixtures({ browser, origin, output: outputDirectory });
     for (const [viewportLabel, viewport] of viewports) {
       const context = await browser.newContext({ viewport });
       const page = await context.newPage();

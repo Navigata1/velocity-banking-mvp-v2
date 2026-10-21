@@ -1,0 +1,15 @@
+{
+  "origin": "http://127.0.0.1:53984",
+  "scope": "Actual IAB UI on rebuilt Expo; synthetic defaultAPR200, navigation across five screens, restored6.9; no hidden storage access",
+  "dashboard": {
+    "eta": "DEBT-FREE ETA\nReview inputs\nNo debt-free date shown until inputs support a stable projection.",
+    "next": "NEXT MOVE\nReview payoff inputs\nEducational estimate, not a money movement instruction.",
+    "warning": "REVIEW BEFORE MODELING\nReview payoff inputs\nPayment below interest. Review the assumptions before modeling another chunk."
+  },
+  "simulator": "CURRENT PLAN\nReview payoff inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+  "cockpit": "FLIGHT STATUS\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+  "learn": "LEARNING MODE\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+  "vault": "STABILIZE\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+  "restoredNext": "NEXT MOVE\nSend $1,000 to principal\nEducational estimate, not a money movement instruction.",
+  "logs": []
+}
