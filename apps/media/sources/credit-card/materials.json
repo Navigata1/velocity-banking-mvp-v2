@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "created": "2026-10-20",
+  "origin": "Original InterestShield procedural geometry and surface recipes; no downloaded model, generated image or third-party texture",
+  "identity": "Brushed silver front card, emerald rear card, inset segmented chip, engraved sweeping curves and reeded silver wave coin",
+  "card": { "width": 1.8, "height": 2.85, "cornerRadius": 0.11, "coreDepth": 0.022, "surfaceDepth": 0.005, "grooveWidth": 0.009 },
+  "frontGrooves": [
+    [[-0.65,-1.35],[-0.25,-0.65],[0.3,0.1],[0.5,0.8],[0.51,1.37]],
+    [[-0.35,-1.35],[0.03,-0.8],[0.45,-0.3],[0.86,-0.1]],
+    [[-0.86,-0.3],[-0.65,-0.8],[-0.78,-1.35]]
+  ],
+  "rearGrooves": [
+    [[-0.6,1.35],[-0.4,0.8],[0.1,0.45],[0.86,0.26]],
+    [[-0.26,1.35],[0,0.98],[0.4,0.8],[0.86,0.75]],
+    [[-0.86,-0.25],[0,-0.3],[0.48,-0.65],[0.86,-1.05]]
+  ],
+  "surfaces": { "resolution": 256, "grainSeed": 17389, "brushedAnisotropy": 0.65, "brushedTileScale": [1,8], "normalScale": 0.08, "coinReeds": 96 },
+  "limitations": "Authored studio illustration and approximate PBR maps, not measured reflectance, a scanned payment card, a financial credential or an exact reconstruction of the generated poster. All final collection art approval remains open."
+}

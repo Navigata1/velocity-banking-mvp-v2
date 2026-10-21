@@ -62,12 +62,26 @@ There is no third-party model or texture source. Model, builder and material
 manifest hashes are recorded in both asset manifests. This is a textured diorama
 candidate, not an exact poster reconstruction or final photorealism approval.
 
+## Original Refined Credit Card
+
+Silver/emerald card geometry, recessed engraving, segmented chip, back details
+and reeded two-sided wave coin are authored in
+`apps/media/scripts/build-refined-credit-card.mjs`. Original procedural brushing,
+turning and approximate PBR recipes are retained under
+`apps/media/sources/credit-card/`. No downloaded mesh, generated material image,
+third-party texture or issuer credential is used.
+
+Source, configuration and GLB hashes are recorded in both asset manifests.
+Metal/dielectric factors and surface maps are artistic approximations, not
+measured scans. This is a textured illustration candidate, not an exact poster
+reconstruction or final collection-wide photorealism approval. See its contract.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other six base models remain locally authored 3D studies. They have not
+The other five base models remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

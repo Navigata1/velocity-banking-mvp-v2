@@ -64,5 +64,21 @@
     "provenance": "Original authored terrain with recessed pond, draped gravel path, exposed layers, grounded stakes and connected trees; generated meadow/leaf albedos with approximate authored surface maps. Not a scan or exact poster reconstruction.",
     "units": "normalized stage units",
     "version": 2
+  },
+  {
+    "id": "creditCard",
+    "quality": "refined-textured",
+    "bytes": 516984,
+    "meshes": 11,
+    "triangles": 18008,
+    "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
+    "sourceSha256": "f31365f04526ada5b3381f89f9ce18f7dfe57b6422e7dcb2a66c394aa0373f4c",
+    "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
+    "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and procedural material sources",
+    "provenance": "Original authored silver/emerald cards with real engraved recesses, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "units": "normalized stage units",
+    "version": 2
   }
 ]
