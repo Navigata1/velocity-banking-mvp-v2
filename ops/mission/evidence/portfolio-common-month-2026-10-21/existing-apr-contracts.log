@@ -1,0 +1,16 @@
+PASS APR units legacy defaults remain mixed-unit compatible
+PASS APR units explicit decimal scalars do not jump down at100 percent
+PASS APR units dated and estimated LOC accrual retain the explicit APR
+PASS APR units Money Loop month forwards units to loan and daily LOC charges
+PASS APR units Portfolio decimal loan charge and retained cash have independent expected values
+PASS APR units avalanche ranks decimal high-rate loans and LOC without legacy reinterpretation
+PASS APR units promo transition and rationale retain high decimal APR meaning
+PASS APR units all policy/focus rows conserve high-rate debts LOC interest and funded cash
+PASS APR units legacy whole-percent Portfolio results match equivalent decimal books
+PASS APR units funded Velocity retains 99.99% loan and LOC APR through chunks, released payments and recovery
+PASS APR units funded Velocity retains 100% loan and LOC APR through chunks, released payments and recovery
+PASS APR units funded Velocity retains 100.01% loan and LOC APR through chunks, released payments and recovery
+PASS APR units funded Velocity retains 200% loan and LOC APR through chunks, released payments and recovery
+PASS APR units independent funded oracle rejects a missing Velocity target decimal argument
+PASS APR units independent funded oracle rejects a missing LOC-only recovery decimal argument
+15 explicit APR unit contracts passed. Native UI adoption and lender rules remain separate.

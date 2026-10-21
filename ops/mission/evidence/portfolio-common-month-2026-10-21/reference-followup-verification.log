@@ -1,0 +1,2 @@
+VERIFIED: exact archived source and parent RED retained; all original count fields, PRNG and 23247 probes preserved; zero sweep, independent direct ledger, numeric tolerances and row-accounting functions text-identical; current test plus all 6 loaded product-source hashes verified; 23247 passed, 0 failed.
+PIN NOTE: parent/narrow-probe common-month 6ebec7e2d08cf4e78037aad48ace1b7eb791992258f9e7de459173b98833e49c; actual full-run/current common-month 66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5. Adapter and original engine pins unchanged.

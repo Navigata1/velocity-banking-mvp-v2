@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-21T12:51:01.010Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "expectedHead": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "files": 239,
+  "changedSinceFinalFollowupPin": [
+    "apps/web/scripts/portfolio-common-month-reference-tests.cjs"
+  ],
+  "priorReviewArtifactsChanged": [],
+  "exit": 1
+}

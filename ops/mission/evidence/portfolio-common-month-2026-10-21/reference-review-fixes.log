@@ -1,0 +1,79 @@
+Zero-APR source 1/8 complete (all H0..600).
+Zero-APR source 2/8 complete (all H0..600).
+Zero-APR source 3/8 complete (all H0..600).
+Zero-APR source 4/8 complete (all H0..600).
+Zero-APR source 5/8 complete (all H0..600).
+Zero-APR source 6/8 complete (all H0..600).
+Zero-APR source 7/8 complete (all H0..600).
+Zero-APR source 8/8 complete (all H0..600).
+FAIL rate-snapshots: 4/split/H=12
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":12,"coveredThroughMonth":7,"reason":"cent-tolerance","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:70:10)
+    at matchesObserved (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:343:3)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:416:11
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:57:9)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:406:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL rate-snapshots: 4/split/H=24
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":24,"coveredThroughMonth":7,"reason":"cent-tolerance","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:70:10)
+    at matchesObserved (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:343:3)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:416:11
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:57:9)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:406:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL rate-snapshots: 4/split/H=60
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":60,"coveredThroughMonth":7,"reason":"cent-tolerance","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:70:10)
+    at matchesObserved (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:343:3)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:416:11
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:57:9)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:406:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL rate-snapshots: 4/split/H=120
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":120,"coveredThroughMonth":7,"reason":"cent-tolerance","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:70:10)
+    at matchesObserved (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:343:3)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:416:11
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:57:9)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:406:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL rate-snapshots: 4/split/H=600
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":600,"coveredThroughMonth":7,"reason":"cent-tolerance","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:70:10)
+    at matchesObserved (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:343:3)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:416:11
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:57:9)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:406:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+zero-apr: 19232 passed, 0 failed
+zero-convenience-parity: 128 passed, 0 failed
+hand-calculated: 8 passed, 0 failed
+engine-row-accounting: 1845 passed, 0 failed
+direct-reference-length: 48 passed, 0 failed
+direct-reference-row: 1212 passed, 0 failed
+rate-snapshots: 235 passed, 5 failed
+required-prefix: 504 passed, 0 failed
+boundaries: 23 passed, 0 failed
+adapter-overflow: 7 passed, 0 failed
+{"seed":20261021,"finalState":3883181796,"randomDraws":253,"testSourceHash":"15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd","sourceHashes":{"portfolio-common-month":"ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09","portfolio-book":"2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5","index":"23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477","numeric-range":"fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f","portfolio":"b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781","common-month":"6ebec7e2d08cf4e78037aad48ace1b7eb791992258f9e7de459173b98833e49c"},"counts":{"zeroSources":8,"zeroBooks":32,"zeroComparisons":19232,"zeroSnapshots":57696,"zeroPreparations":32,"zeroParityComparisons":128,"zeroParitySnapshots":384,"handSources":5,"handComparisons":8,"handSnapshots":24,"rateSources":12,"rateBooks":24,"ratePaths":72,"accountedRows":1845,"directOraclePaths":48,"directOracleRows":1212,"rateComparisons":240,"rateSnapshots":710,"prefixSources":1,"prefixMutations":72,"prefixSnapshots":504,"boundarySnapshots":23,"boundaryComparisons":7,"boundaryAdapterSnapshots":21},"zeroElapsedMilliseconds":50885.0506,"elapsedMilliseconds":53385.1715,"passed":23242,"failed":5}

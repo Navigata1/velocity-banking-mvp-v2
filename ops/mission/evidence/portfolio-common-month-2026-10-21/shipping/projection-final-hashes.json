@@ -1,0 +1,65 @@
+{
+  "scope": "R2 gate-mapping helper revision; file inventory only, not hosted/CI/Desktop publication proof",
+  "files": {
+    "publish-desktop.mjs": {
+      "bytes": 16494,
+      "sha256": "246cd3e745127b6fbcabdcabd536f831c0f15a0117688da6813d47a61d328665"
+    },
+    "projection.test.mjs": {
+      "bytes": 4555,
+      "sha256": "86276b3d073cf9e090a122eab12da05b72c68e6dbf6d0fe227a5018244cb629d"
+    },
+    "run-hosted.cjs": {
+      "bytes": 4039,
+      "sha256": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d"
+    },
+    "postflight.mjs": {
+      "bytes": 14396,
+      "sha256": "188964b119f15986fa8a8f7a121c89c78331566a827552a7fc57af71639d0c80"
+    },
+    "shipping-guards.mjs": {
+      "bytes": 25934,
+      "sha256": "5e3d86420ff047ec48b078c96153fe5b8088e46e3ddaf0f0ae5e37f492823943"
+    },
+    "shipping-guards.test.mjs": {
+      "bytes": 24780,
+      "sha256": "1aea0093b73a570285d30957977f579e741d692676cc04ce9ecb169ad7c092cb"
+    },
+    "release-preparation.md": {
+      "bytes": 12883,
+      "sha256": "f90a3c62c1e8345331fc35389b4f0f71c04404f9cbdc5bfab7e85b56c86d4214"
+    },
+    "shipping-guards-original-102.log": {
+      "bytes": 5687,
+      "sha256": "26a538ffe8d93f55bd6f6a504346a213df3be158288f023a661f1f865d35fcdf"
+    },
+    "projection-red.log": {
+      "bytes": 3634,
+      "sha256": "a9ce4ba421b7007e0dce19b9f757e4e789f58ff19268de49feb4ce4261115c14"
+    },
+    "projection-red-proof.json": {
+      "bytes": 110215,
+      "sha256": "ea7c079e225cb9076c943b1cfed82bd39fa056f46fcb6b347317cece35806e0e"
+    },
+    "projection-test-case-diagnostic.log": {
+      "bytes": 2821,
+      "sha256": "81b6398b03b9ffcc13f8fb1d5a56bafb8a77478a2a58c016ac7fc80eaea71004"
+    },
+    "projection-test-case-diagnostic-proof.json": {
+      "bytes": 110179,
+      "sha256": "52c6d5b20ccc03155f5bf0dd8a845533cfffa4783783111a5c6cff86a28292e5"
+    },
+    "projection-green.log": {
+      "bytes": 1114,
+      "sha256": "77fea39145a7af77515e181302105a0837025be49909a129d93f0a43528aef0e"
+    },
+    "projection-green-proof.json": {
+      "bytes": 110179,
+      "sha256": "52c6d5b20ccc03155f5bf0dd8a845533cfffa4783783111a5c6cff86a28292e5"
+    },
+    "shipping-guards-after-mapping-102.log": {
+      "bytes": 5687,
+      "sha256": "5cc3760e1add0551074b602f30c567e7c169e9e21d2b84bbb1e643437f7deec4"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "origin": "http://127.0.0.1:54267",
+  "receipts": [
+    {
+      "name": "canonical-round-trip",
+      "width": 375,
+      "passed": true
+    },
+    {
+      "name": "corrupt-primary",
+      "width": 375,
+      "passed": true
+    },
+    {
+      "name": "failed-publication",
+      "width": 375,
+      "passed": true
+    },
+    {
+      "name": "canonical-round-trip",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "corrupt-primary",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "failed-publication",
+      "width": 1440,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "at": "2026-10-21T12:54:26.486Z",
+  "method": "Independent high/low Uint32 IEEE754 decomposition to exact BigInt units at 2^-54; no production sum/guard used as arithmetic oracle",
+  "fixture": {
+    "debts": [
+      {
+        "id": "rate-4-0",
+        "name": "rate-4-0",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 461,
+        "apr": 0.03,
+        "minPaymentRule": {
+          "type": "fixed",
+          "amount": 36.83
+        },
+        "paymentSource": "checking"
+      },
+      {
+        "id": "rate-4-1",
+        "name": "rate-4-1",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 2055,
+        "apr": 0.04,
+        "minPaymentRule": {
+          "type": "percent",
+          "percent": 0.08,
+          "floor": 121.65
+        },
+        "paymentSource": "checking"
+      },
+      {
+        "id": "rate-4-2",
+        "name": "rate-4-2",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 1545,
+        "apr": 0.19,
+        "minPaymentRule": {
+          "type": "fixed",
+          "amount": 117.35
+        },
+        "paymentSource": "checking",
+        "promo": {
+          "introApr": 0,
+          "monthsRemaining": 2,
+          "postIntroApr": 0.36
+        }
+      }
+    ],
+    "loc": {
+      "limit": 50000,
+      "balance": 577,
+      "apr": 0.29
+    },
+    "monthlyIncome": 1610,
+    "monthlyExpenses": 956,
+    "focusMode": "split",
+    "extraMonthlyPayment": 0,
+    "chunkAmount": 20,
+    "splitRatioPrimary": 0.9,
+    "strategy": "snowball"
+  },
+  "draws": 154,
+  "state": 1900885999,
+  "exact": {
+    "unitsExponent": -54,
+    "enteredThrough7": "447",
+    "local7": "727",
+    "recorded7": "512",
+    "unsettledRemoval8": "512",
+    "seventh": {
+      "balance": 2.842170943040401e-14,
+      "interest": 0.49353985190178434,
+      "payment": 197.90948061261548
+    },
+    "eighth": {
+      "balance": 0,
+      "interest": 0,
+      "payment": 0,
+      "draw": 0
+    }
+  },
+  "negativeControls": {
+    "recordedSettlementRejected": true,
+    "offGridRejected": true
+  },
+  "exit": 1,
+  "error": "node:assert:150\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:\n\n[\n  'rate-4-0',\n  'rate-4-1',\n  'rate-4-2'\n]\n\n    at matchesObserved (evalmachine.<anonymous>:73:10)\n    at evalmachine.<anonymous>:1:1\n    at Script.runInContext (node:vm:149:12)\n    at Object.runInContext (node:vm:301:6)\n    at [eval]:78:6\n    at [eval]:89:61\n    at runScriptInThisContext (node:internal/vm:209:10)\n    at node:internal/process/execution:446:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:444:60)",
+  "milliseconds": 516
+}

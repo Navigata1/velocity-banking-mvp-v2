@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-21T12:51:50.357Z",
+  "checked": 239,
+  "allChangedPins": [
+    "apps/web/scripts/portfolio-common-month-reference-tests.cjs"
+  ],
+  "additionalChangesBeyondUnexecutedReference": [],
+  "note": "Full snapshot still not clean. No changes to modules, focused suite, or other captured files; no re-pin or approval of changed reference executable."
+}

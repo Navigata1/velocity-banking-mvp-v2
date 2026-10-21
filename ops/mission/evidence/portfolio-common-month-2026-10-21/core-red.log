@@ -1,0 +1,485 @@
+FAIL Common month all strategies observe the same complete month-zero book
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:36:16
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:35:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month same-month residual debts distinguish retained cash from net wealth
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:41:16
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:40:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month post-payoff continuation carries only the same external budget
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:46:16
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:45:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month all listed IDs plus existing LOC are included in different allocations
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:50:16
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:49:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month signed adverse differences are not clamped or ranked by cash alone
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:56:11
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:54:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month accepted prefix is usable even when a later attempted month fails
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:61:15
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:58:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month blocked borrowing does not suppress independently usable direct columns
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:67:83
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:66:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month LOC-only recovery needs no invented loan borrowing capacity
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:72:71
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:71:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month canonical APR2 remains 200 percent rather than legacy2percent
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:77:18
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:75:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month horizons are explicit safe whole months from0 through600
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:81:13
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:79:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month zero-cleared books continue cash but do not invent deficit borrowing
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:86:117
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:85:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month initial and terminal cent tolerance never become free exact-zero clearance
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:93:18
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:91:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month malformed or numerically overflowing books do not sanitize to success
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:101:31
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:99:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month captured selection and original policy outputs remain immutable
+AssertionError [ERR_ASSERTION]: comparePortfolioAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at compare (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:19:31)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:107:3
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:105:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month generic reducer uses accepted inventory and exact-zero continuation
+AssertionError [ERR_ASSERTION]: snapshotAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at at (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:20:17)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:115:34
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:114:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month elapsed counters cannot fill an uncovered failed month
+AssertionError [ERR_ASSERTION]: snapshotAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at at (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:20:17)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:119:21
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:117:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month missing duplicate gap or corrupted trace facts fail closed
+AssertionError [ERR_ASSERTION]: snapshotAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at at (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:20:17)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:123:55
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:121:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month the generic reducer never mutates or aliases trace positions
+AssertionError [ERR_ASSERTION]: snapshotAtMonth portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at at (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:20:17)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:127:64
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:126:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month same-month monetary formatting preserves signs and tiny nonzero values
+AssertionError [ERR_ASSERTION]: formatCommonMonthAmount portable common-month API must exist
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:43)
+    at f (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:130:18)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:130:73
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:129:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Common month portable typed package subpath resolves for both web and native
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ undefined
+- {
+-   'react-native': './src/portfolio-common-month.ts',
+-   default: './src/portfolio-common-month.ts',
+-   types: './src/portfolio-common-month.ts'
+- }
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:136:10
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:134:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: [Object],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+20 common-month contracts failed.

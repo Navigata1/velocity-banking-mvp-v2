@@ -1,0 +1,19 @@
+Zero-APR source 1/8 complete (all H0..600).
+Zero-APR source 2/8 complete (all H0..600).
+Zero-APR source 3/8 complete (all H0..600).
+Zero-APR source 4/8 complete (all H0..600).
+Zero-APR source 5/8 complete (all H0..600).
+Zero-APR source 6/8 complete (all H0..600).
+Zero-APR source 7/8 complete (all H0..600).
+Zero-APR source 8/8 complete (all H0..600).
+zero-apr: 19232 passed, 0 failed
+zero-convenience-parity: 128 passed, 0 failed
+hand-calculated: 8 passed, 0 failed
+engine-row-accounting: 1845 passed, 0 failed
+direct-reference-length: 48 passed, 0 failed
+direct-reference-row: 1212 passed, 0 failed
+rate-snapshots: 240 passed, 0 failed
+required-prefix: 504 passed, 0 failed
+boundaries: 23 passed, 0 failed
+adapter-overflow: 7 passed, 0 failed
+{"seed":20261021,"finalState":3883181796,"randomDraws":253,"testSourceHash":"15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd","sourceHashes":{"portfolio-common-month":"dfd44d05430db6d411dc8bbeeb12a5361141e618abb1e10b4ac8d048e80429c3","portfolio-book":"2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5","index":"23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477","numeric-range":"fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f","portfolio":"b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781","common-month":"0ecc1cb9eabf231a0e51d2ac97728520b657c0fad18367fc6663a4c86b7968a0"},"counts":{"zeroSources":8,"zeroBooks":32,"zeroComparisons":19232,"zeroSnapshots":57696,"zeroPreparations":32,"zeroParityComparisons":128,"zeroParitySnapshots":384,"handSources":5,"handComparisons":8,"handSnapshots":24,"rateSources":12,"rateBooks":24,"ratePaths":72,"accountedRows":1845,"directOraclePaths":48,"directOracleRows":1212,"rateComparisons":240,"rateSnapshots":720,"prefixSources":1,"prefixMutations":72,"prefixSnapshots":504,"boundarySnapshots":23,"boundaryComparisons":7,"boundaryAdapterSnapshots":21},"zeroElapsedMilliseconds":19254.6632,"elapsedMilliseconds":21425.3992,"passed":23247,"failed":0}

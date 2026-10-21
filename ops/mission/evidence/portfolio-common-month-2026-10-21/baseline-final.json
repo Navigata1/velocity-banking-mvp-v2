@@ -1,0 +1,167 @@
+{
+  "verifiedAt": "2026-10-21T12:02:07.393Z",
+  "sealedAt": "2026-10-21T12:02:51.321Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "verdict": "PASS: no baseline drift found",
+  "passedBaselineChecks": 4134,
+  "totalBaselineChecks": 4134,
+  "newlyExecutedApplicationTests": 0,
+  "coverage": {
+    "sourceFingerprintsFromPinnedGitShow": 285,
+    "currentImmutableTrackedFiles": 138,
+    "committedEvidenceFiles": 189,
+    "desktopManifestFiles": 322,
+    "publicationEntries": 324,
+    "recoverableBackups": 48,
+    "models": 10,
+    "posters": 10,
+    "videoFiles": 10,
+    "vendorModelFiles": 20,
+    "fullCIEvents": 2,
+    "fullCIJobs": 4,
+    "completeCISteps": 116,
+    "newlyExecutedApplicationTests": 0
+  },
+  "remote": {
+    "branch": {
+      "ref": "refs/heads/codex/restoration/asset-heroes",
+      "sha": "1aec5bf7be3d0f3c26079141245e4c7291fd8778"
+    },
+    "pr": {
+      "number": 256,
+      "state": "open",
+      "draft": true,
+      "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+      "branch": "codex/restoration/asset-heroes",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "updatedAt": "2026-10-21T11:52:59Z"
+    }
+  },
+  "postflight": {
+    "path": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-mobile-vitals\\postflight.json",
+    "bytes": 157054,
+    "sha256": "4c08e19ceeb9bbd20adda0b3f6807afab0ab5647c9c96507561762137aef7cea"
+  },
+  "manifest": {
+    "path": "C:\\Users\\IslandDevCrew\\Desktop\\InterestShield-Hero-Collection-2026-10-20\\Mobile-Vitals-1aec5bf-File-Manifest.json",
+    "bytes": 61106,
+    "sha256": "3f9a7605349bb20c13c95331021ac58af0421db42cb56bd65348fe0ea5fd10e1"
+  },
+  "publication": {
+    "path": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-mobile-vitals\\desktop-publication-1aec5bf7be3d0f3c26079141245e4c7291fd8778\\journal.json",
+    "bytes": 306013,
+    "sha256": "59e4febef6136ad1c64bd5a6b9d66d9cbd780dca722932dc1ef7de85c1fb3af0",
+    "entries": 324,
+    "backups": 48
+  },
+  "desktopReport": {
+    "path": "C:/Users/IslandDevCrew/Desktop/InterestShield-Production-Progress-2026-10-21.html",
+    "bytes": 121936,
+    "sha256": "720ebd84c8a94bb6cc49c7ee46bb0c77e63e8a32fc8464c9b4668ba5e3d864df",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "sourcePreflightStateSha256": "489eb1abe7daac290edc944139af5a32dd9fb1f39d92b0b64bd6e5724876629b",
+    "projectedStateSha256": "0bbbdc2b3ef1a4b5f9d779eb66bc8eb78c5ddf6d0d4133b33410bdefc8e44bbb",
+    "unchangedRendererSha256": "c61b7ed4427296a60531b894ffe560ee4087fdf45a5f6df86aaff16a7a4bb495",
+    "publicationJournal": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-mobile-vitals\\desktop-publication-1aec5bf7be3d0f3c26079141245e4c7291fd8778\\journal.json",
+    "note": "Generated postflight projection; committed source stays preflight to avoid report-only push cycle. Static checks only; no local-file runtime or fully-sealed certification. All files staged and hashed before recoverable publication; journal governs completion."
+  },
+  "ci": [
+    {
+      "event": "push",
+      "id": 39592109336,
+      "attempt": 1,
+      "archiveSha256": "dc01ca738874ae6fdce8f61b556e210e0d3fe153eb8b510b5f4c8741b76a63ec",
+      "jobs": [
+        {
+          "name": "Web and mobile quality gates",
+          "id": 119195373490,
+          "steps": 40,
+          "bytes": 537818,
+          "sha256": "4d8a72badc51c1901fbb1141ee8354198cfe14cba3c2e3efe8f97dba7b48e11a"
+        },
+        {
+          "name": "Isolated SQL and owner isolation",
+          "id": 119195373844,
+          "steps": 18,
+          "bytes": 114590,
+          "sha256": "e7f5829550155848862877e06cf8e9187f684d1038266228538af8e96060923f"
+        }
+      ]
+    },
+    {
+      "event": "pull_request",
+      "id": 39592115293,
+      "attempt": 1,
+      "archiveSha256": "8d89deaf7892562ac63aa3b40eac144d88eadb128d8f1231a528577f38618160",
+      "jobs": [
+        {
+          "name": "Isolated SQL and owner isolation",
+          "id": 119195392054,
+          "steps": 18,
+          "bytes": 116029,
+          "sha256": "71dc5c517b51f11c7f482656277487eace5bc4feee754d946061b6aedd083dfc"
+        },
+        {
+          "name": "Web and mobile quality gates",
+          "id": 119195392392,
+          "steps": 40,
+          "bytes": 539577,
+          "sha256": "afde474e281c9429ee5d32dc90ee2a2ff9b371aeab81bb7762ff94cffd85f5f6"
+        }
+      ]
+    }
+  ],
+  "deployment": {
+    "verifiedAt": "2026-10-21T12:00:00.997Z",
+    "source": "Authenticated read-only Vercel MCP get_deployment and get_team; selected metadata only",
+    "request": {
+      "idOrUrl": "dpl_9xWRX1G7xEpNinJ88YmCPCHpnpE9",
+      "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+      "withGitRepoInfo": "true"
+    },
+    "deployment": {
+      "id": "dpl_9xWRX1G7xEpNinJ88YmCPCHpnpE9",
+      "state": "READY",
+      "readyState": "READY",
+      "target": null,
+      "url": "velocity-banking-mvp-v2-m6slhn034-islanddevcrew.vercel.app",
+      "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+      "meta": {
+        "githubCommitSha": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+        "githubCommitRef": "codex/restoration/asset-heroes",
+        "githubRepo": "velocity-banking-mvp-v2",
+        "githubOrg": "Navigata1"
+      },
+      "gitSource": null
+    },
+    "team": {
+      "id": "team_rccC7q4MEQxCAEz45598ttAe",
+      "slug": "islanddevcrew"
+    }
+  },
+  "receiptComment": {
+    "id": 6315242743,
+    "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6315242743",
+    "issueUrl": "https://api.github.com/repos/Navigata1/velocity-banking-mvp-v2/issues/256",
+    "bodySha256": "d41e3c2c1f35b37ee2e6e0421578abec4a920db35f5bbd6d5eac0ff35d3bc815",
+    "createdAt": "2026-10-21T11:52:59Z",
+    "updatedAt": "2026-10-21T11:52:59Z"
+  },
+  "priorVerifierCorrection": {
+    "priorResults": "baseline-results.json",
+    "falseNegatives": 3,
+    "explanation": "Journal entry 322 is the generated File-Manifest.json. It intentionally has no pre-publication expected field; its durable after hash must match the independently read manifest. The initial verifier incorrectly required that absent field. Original run and logs are preserved."
+  },
+  "startStatus": "?? docs/superpowers/plans/2026-10-21-portfolio-common-month.md\n?? docs/superpowers/specs/2026-10-21-portfolio-common-month-design.md\n",
+  "endStatus": "?? docs/superpowers/plans/2026-10-21-portfolio-common-month.md\n?? docs/superpowers/specs/2026-10-21-portfolio-common-month-design.md\n",
+  "finalStatus": "?? apps/web/scripts/portfolio-common-month-tests.cjs\n?? docs/superpowers/plans/2026-10-21-portfolio-common-month.md\n?? docs/superpowers/specs/2026-10-21-portfolio-common-month-design.md\n",
+  "limitations": [
+    "Baseline-only verification; no R2 feature implementation or product review.",
+    "Historical CI test counts were independently read and hashed, not newly run.",
+    "Desktop report checked statically only, not opened in a browser.",
+    "Immutable text fingerprints use LF normalization; binary assets and recorded artifacts use raw bytes.",
+    "Source working-tree edits are contextual, not baseline drift; 285 source checks use the pinned Git commit.",
+    "Production/device/security/backend approval remains open as recorded in the baseline."
+  ]
+}

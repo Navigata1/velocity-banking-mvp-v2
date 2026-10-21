@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T11:26:43.279Z",
-    "sessionCount": 19
+    "updated": "2026-10-21T13:05:00Z",
+    "sessionCount": 20
   },
   "policies": {
     "merge": "review",
@@ -50,10 +50,10 @@
         {
           "id": "R0-T3",
           "title": "Restore readable narrow-screen dashboard vitals",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Original3b58bef local typography checkpoint failed both complete CI web jobs at280px large-import font overflow; both SQL jobs passed, no verified receipt. Follow-up adds explicit break before atomic/day with exact raw text and12px minimum unchanged.18 workflows/four responsive probes/one wider-font positive/ten root-descendant negative controls and original-node restoration pass locally after bounded re-review. Await both NEW complete final-head CI events and hosted88/routes/model/poster proof; not full accessibility/device or production approval."
+          "notes": "Bounded correction verified at1aec5bf: complete push39592109336/PR39592115293 attempt1,348 regressions,145 media/27stills,native49/full contracts,SQL63 twice/event; exact READY preview/hosted88/routes/all ten GLB/poster hashes and actual IAB income edit/restore. Receipt6315242743,322-file Desktop readback. Original3b58bef remains failed at actual280px font overflow. Fixed atomic/day break,12px minimum and ten original-node negative controls retained. Not full accessibility/device or production approval."
         }
       ],
       "gates": [
@@ -62,18 +62,18 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mobile-vitals-wrap-2026-10-21/web-tests.log",
-          "lastRun": "2026-10-21T11:26:43.279Z",
-          "notes": "348 main regressions/reference lanes pass. Three mobile CSS substitutions plus an explicit atomic-unit break preserve calculations, scenarios, native/persistence, assets/studio/camera/motion/dependencies/SQL/CI. Two obsolete exact-four-column SOURCE assertions replaced by actual browser token/first-viewport/hero checks, not numeric waivers.285 source fingerprints protect all other source bytes; all ten models/posters/videos unchanged. Local preflight; new exact-head CI required."
+          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-tests-final.log",
+          "lastRun": "2026-10-21T12:56:00Z",
+          "notes": "Fresh full npm test passes348 existing regressions/reference lanes,31 common-month contracts and23247 seeded probes. Actual null/dust/cancellation/positive-range REDs preceded fixes; independently proved fixture-specific unpaid-removal cutoff preserves all horizons/seed/tolerances/direct ledger. Original allocation/codec, data, assets and dependencies unchanged.292 source fingerprints cover280 unchanged/5 modified/7 new executable sources. Local preflight; both new exact-head CI events required."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mobile-vitals-wrap-2026-10-21/routes.log",
-          "lastRun": "2026-10-21T11:26:43.279Z",
-          "notes": "Seven HTTP/rendered routes and local Dashboard18/Simulator16/Vault20/Portfolio24/portability6/input4=88 workflows pass. Dashboard adds280/375/1440 plus four768/1264 boundary probes and ten negative controls. Prior caefd80 native49 verified; no new local native/device claim. Both complete final-head CI events and hosted88/routes must repeat."
+          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/rendered-final.log",
+          "lastRun": "2026-10-21T13:03:53Z",
+          "notes": "Fresh serial11-stage browser batch passes strictThree original700/300ms, all20 hero views/reduced-motion/fallbacks, seven HTTP/rendered routes and original88 workflows. New21 common-month fixtures make109 financial/input workflows; Expo runs49 old+21 new=70. All ten unchanged videos independently rechecked. Desktop/375/280 captures inspected. New complete exact-head CI/hosted109 required; not physical-device/final art/production approval."
         },
         {
           "id": "R0-G3",
@@ -82,7 +82,7 @@
           "status": "pending",
           "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6313685208",
           "lastRun": "2026-10-21T11:26:43.279Z",
-          "notes": "Previous caefd8086180513b3fb6c1cf85492174996a437b freshly verified: complete push39581976729/PR39581984357 attempt1,145 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event, exact READY preview/hosted82/routes/all ten GLB/poster hashes. Receipt6313685208 and198-file Desktop manifest match;1550 baseline checks are not new application tests. Predecessor3b58bef failed push39587774650/PR39587777183 at Linux280 large-import113px in107px; both SQL jobs passed. New unit-wrap checkpoint needs both complete final-head pipelines and hosted88/routes/all model/poster hashes.02f3137 remains failed/unverified. No report-only push loop or production approval."
+          "notes": "Previous1aec5bf freshly verified: complete push39592109336/PR39592115293 attempt1,145 media/27stills/348 regressions/native49/full contracts,SQL63 twice/event,exact READY/hosted88/routes/all ten hashes; receipt6315242743 and322 Desktop files/324 journal entries/48 backups match.4134 read-only baseline checks are not new app tests. Current substantive same-month feature needs both NEW complete final-head pipelines, native70,hosted109/routes/all model/poster hashes and actual browser edits. Failed3b58bef/02f3137 stay unverified. No report-only push loop or production approval."
         }
       ]
     },
@@ -177,7 +177,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Funded web/Expo Simulator, Vault and both aggregate Portfolios now share tested allocation math. Native full-book adoption has explicit create/copy/transfer, precise drafts, owner/CAS persistence and paired recovery. Canonical v2 APR units remove reinterpretation; v1 source bytes survive. Dashboard helper scope, shared scenario ownership, common-date wealth and lender/calendar rules remain open. See R2-T4 for bounded local implementation proof."
+          "notes": "Funded policies/canonical APR/native full-book adoption retained. New shared Portfolio same-month views are in final local preflight: selected reference/signed deltas/valid prefixes/exact-zero same-budget continuation/strict0..600 drafts/null unavailable money.31 contracts/23247 seeded probes and full standing web/native/media/browser gates pass after genuine review REDs; bounded independent fix/oracle reviews identify no remaining P1/P2. New21 web+21 Expo fixtures/four DOM controls each pass. Source commits038721d/97715ab/51d5fa8/c2b5ca3; both final-head CI events/hosted proof required. No allocation/persistence migration. Dashboard/Simulator/Vault scope, shared ownership, lender/calendar and device QA remain open; entire R2 is not complete."
         },
         {
           "id": "R2-T3",
@@ -249,7 +249,25 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/mobile-vitals-wrap-2026-10-21/dashboard-verification.json",
           "lastRun": "2026-10-21T11:26:43.279Z",
-          "notes": "18 real Chrome workflows at280/375/1440 preserve exact daily estimates, independent rounding, saved inputs, edit/restore/navigation and seven oversized no-ops. Four768/1264 boundary probes and ten actual DOM controls guard hidden/clipped/overlapping/empty values. Original /day RED, actual Linux3b58bef overflow failure and wider-font RED retained; nested-unit styles/node restoration independently reviewed. Three CSS substitutions plus atomic-unit break markup; no engine/scenario/lender change. Final exact-head hosted proof required."
+          "notes": "Bounded1aec5bf final exact-head hosted18 workflows/four responsive probes/wider-font positive/ten controls pass, receipt6315242743. Exact daily estimates, saved inputs and original-node restoration retained. Failed3b58bef history stays explicit. Current feature must rerun these unchanged standing checks; not arbitrary-font/device or lender approval."
+        },
+        {
+          "id": "R2-G7",
+          "title": "Same-month full-inventory numerical contracts",
+          "command": "node apps/web/scripts/portfolio-common-month-tests.cjs && node apps/web/scripts/portfolio-common-month-reference-tests.cjs",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-tests-final.log",
+          "lastRun": "2026-10-21T12:56:00Z",
+          "notes": "Fresh full command31 focused/23247 reference probes passes.57,696 zero-rate snapshots cover all0..600 horizons; independent direct ledger/seed253draws/final3883181796/tolerances remain unchanged. Exact posted-ledger447/727/512 units justify one literal rate4/split cutoff8, with earlier H7 and direct columns retained. Four genuine review REDs fixed and independently verified; previous failed pin check retained, authorized oracle/capture edits reconciled in new stable239-pin review. Generic Number estimates, not lender-posting or whole R2 approval."
+        },
+        {
+          "id": "R2-G8",
+          "title": "Web and Expo same-month rendered comparison",
+          "command": "node apps/web/scripts/smoke-portfolio-common-month.cjs && npm --prefix apps/mobile run smoke:accessibility:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-common-month-verification.json",
+          "lastRun": "2026-10-21T12:58:00Z",
+          "notes": "Final-source web build/native export/types pass. New21 cases each at1440/375/280, horizon0/3/6/600/invalid drafts, cash/debt/LOC/net/signed differences and saved-byte preservation pass; native includes all49 older cases for70 total. Four actual DOM controls per platform reject hidden/clipped/empty values and restore original nodes/styles. Capture-only top framing corrected after image inspection; final375px web/Expo images inspected. Not actual owner-switch/screen-reader/device/production certification."
         }
       ]
     },
@@ -823,11 +841,11 @@
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "Previous caefd8086180513b3fb6c1cf85492174996a437b verified fresh: both complete events39581976729/39581984357 attempt1,145media/27stills/348regressions/native49/fullcontracts/SQL63 twice/event, exact READY/hosted82/routes/model/poster hashes; receipt6313685208 and198 Desktop files.1550 baseline checks are not new app tests. Folded into substantive mobile readability fix; require both new final-head complete events and hosted88/routes/all10model/poster hashes. Append postflight, fold into next substantive R2 work; no report-only push loop or production promotion.",
+      "Previous1aec5bf freshly verified: both complete events39592109336/39592115293 attempt1,145media/27stills/348regressions/native49/fullcontracts/SQL63 twice/event, exact READY/hosted88/routes/all10hashes; receipt6315242743 and322 Desktop files/324 journal entries/48 backups.4134 read-only baseline checks are not new app tests. Current common-month substantive checkpoint requires both new final-head events/native70/hosted109/routes/all10hashes,actual IAB edit/restore and staged Desktop readback. No report-only push loop or production promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
       "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
-      "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
+      "Current R2 same-month slice: read docs/portfolio-common-month-contract-2026-10-21.md and committed portfolio-common-month evidence.31 focused/23247 reference checks, bounded independent reviews, local109 workflows/native70/strictThree/heroes/media pass. Source038721d/97715ab/51d5fa8/c2b5ca3 and this evidence are preflight: require both COMPLETE new final-head CI events/READY/hosted109/actual IAB/UI import+horizonrestore/staged Desktop readback. Further work remains dashboard/Simulator/Vault scopes, shared ownership, lender calendars and actual owner-switch/device QA. Keep strict limits and conservative unpaid-residual cutoff.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
       "All ten textured candidates still need full-size/all-angle material/art review; preserved artwork is the default. Custom checkpoint single-frame side-by-side triage remains candidly illustrative in places. Do not relabel this as photoreal approval or restart broad redesign. Preserve all source lineage, publication locking, validated Buffer packaging and caps. Mobile readability is implemented; next substantive work R2/R3 shared scenarios/common-date wealth/lender/calendar.",

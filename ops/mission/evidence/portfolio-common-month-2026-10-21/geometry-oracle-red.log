@@ -1,0 +1,17 @@
+PASS web common month cash-versus-wealth 1440px
+PASS web common month adverse 1440px
+PASS web common month blocked-reference 1440px
+PASS web common month failed-attempt 1440px
+PASS web common month nonzero-tolerance 1440px
+PASS web common month cleared 1440px
+PASS web common month large-values 1440px
+AssertionError [ERR_ASSERTION]: Missing expected exception: an ancestor-hidden comparison must be rejected
+    at runCommonMonthFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:64:138)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:74:308) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: undefined,
+  operator: 'throws',
+  diff: 'simple'
+}

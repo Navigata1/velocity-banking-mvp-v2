@@ -10,13 +10,15 @@ quote, common-date wealth comparison or production-release approval.
 The existing module moved into `packages/financial-engine/src/portfolio.ts`, exposed
 as `@interestshield/financial-engine/portfolio`. The web module is a re-export.
 The main engine entry and current media scenario outputs remain unchanged. Native
-can resolve this portable subpath; its existing aggregate Portfolio screen has not
-yet adopted this full multi-debt book. Cross-screen scenario ownership remains open.
+now uses this full multi-debt book through its canonical Portfolio adapter; see
+`native-portfolio-contract-2026-10-20.md` for the later adoption and owner-scoped
+recovery proof. Cross-screen scenario ownership remains open.
 
 The native input precision prerequisite is now corrected: drafts preserve cents,
 APR precision, no-op imports and unrelated saved values, with explicit rejection
-of ambiguous or lossy new edits. See the native input contract. This is not native
-aggregate adoption or cross-store scenario consolidation; those remain open.
+of ambiguous or lossy new edits. See the native input contract. Precision alone
+does not establish aggregate adoption or cross-store scenario consolidation. The
+later native adoption is implemented; cross-store consolidation remains open.
 
 ## Funding And Allocations
 

@@ -12,7 +12,14 @@ Current follow-up: Expo now edits and simulates a real portable multi-debt Portf
 with explicit creation/copy, owner-scoped persistence and paired snapshot recovery.
 The web reads legacy bytes without mutation and writes explicit canonical APR units.
 See `docs/native-portfolio-contract-2026-10-20.md`. Shared scenario ownership,
-common-date wealth and lender/device/backend/release approval remain open.
+other route comparison scopes and lender/device/backend/release approval remain
+open. A new shared web/Expo Portfolio same-month view is in final local preflight:
+cash minus all listed debts and LOC, signed differences against the selected
+policy, strict month0..600 drafts, accepted-prefix coverage and same-budget cash
+continuation only after exact payoff.31 focused contracts and23,247 synthetic
+reference probes pass after genuine review REDs. Existing allocations and saved
+records are unchanged. See `docs/portfolio-common-month-contract-2026-10-21.md`;
+fresh complete exact-head CI and hosted publication are still required.
 The earlier precision correction reproduced120.70 displayed as121 and typed120.70 saved as12070.
 Validated drafts now retain cents/APR precision, exact no-ops and unrelated saved
 values. Review found and closed additional precision/fraction/comma hazards.

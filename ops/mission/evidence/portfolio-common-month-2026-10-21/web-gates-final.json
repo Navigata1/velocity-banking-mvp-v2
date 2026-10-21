@@ -1,0 +1,84 @@
+{
+  "startedAt": "2026-10-21T12:59:16.019Z",
+  "status": "completed",
+  "stages": [
+    {
+      "script": "test-three-stage.cjs",
+      "name": "three",
+      "startedAt": "2026-10-21T12:59:16.020Z",
+      "finishedAt": "2026-10-21T12:59:39.643Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-heroes.cjs",
+      "name": "heroes",
+      "startedAt": "2026-10-21T12:59:39.645Z",
+      "finishedAt": "2026-10-21T13:00:44.796Z",
+      "exitCode": 0
+    },
+    {
+      "script": "hero-fallback-smoke.cjs",
+      "name": "fallbacks",
+      "startedAt": "2026-10-21T13:00:44.798Z",
+      "finishedAt": "2026-10-21T13:00:56.761Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-routes.cjs",
+      "name": "routes",
+      "startedAt": "2026-10-21T13:00:56.762Z",
+      "finishedAt": "2026-10-21T13:00:58.633Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-rendered.cjs",
+      "name": "rendered",
+      "startedAt": "2026-10-21T13:00:58.634Z",
+      "finishedAt": "2026-10-21T13:01:14.795Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-dashboard-interest.cjs",
+      "name": "dashboard",
+      "startedAt": "2026-10-21T13:01:14.796Z",
+      "finishedAt": "2026-10-21T13:01:47.050Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-portfolio-budget.cjs",
+      "name": "portfolio",
+      "startedAt": "2026-10-21T13:01:47.052Z",
+      "finishedAt": "2026-10-21T13:02:19.579Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-vault-comparison.cjs",
+      "name": "vault",
+      "startedAt": "2026-10-21T13:02:19.580Z",
+      "finishedAt": "2026-10-21T13:02:49.052Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-comparison.cjs",
+      "name": "comparison",
+      "startedAt": "2026-10-21T13:02:49.053Z",
+      "finishedAt": "2026-10-21T13:03:22.683Z",
+      "exitCode": 0
+    },
+    {
+      "script": "smoke-portfolio-portability.cjs",
+      "name": "portability",
+      "startedAt": "2026-10-21T13:03:22.684Z",
+      "finishedAt": "2026-10-21T13:03:33.837Z",
+      "exitCode": 0
+    },
+    {
+      "script": "portfolio-input-smoke.cjs",
+      "name": "input",
+      "startedAt": "2026-10-21T13:03:33.838Z",
+      "finishedAt": "2026-10-21T13:03:53.278Z",
+      "exitCode": 0
+    }
+  ],
+  "finishedAt": "2026-10-21T13:03:53.279Z"
+}

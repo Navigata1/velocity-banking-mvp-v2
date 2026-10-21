@@ -1,0 +1,154 @@
+{
+  "at": "2026-10-21T12:50:11.827Z",
+  "exit": 0,
+  "originalExactInput": {
+    "horizonMonths": 2,
+    "monthlyBudget": 0,
+    "initial": {
+      "balances": {},
+      "locBalance": 0,
+      "cashBalance": 1.7976931348623157e+308
+    },
+    "projection": {
+      "payoffPossible": false,
+      "payoffMonth": 2,
+      "rows": [
+        {
+          "month": 1,
+          "balances": {},
+          "locBalance": 0,
+          "cashBalance": 0,
+          "interest": 1.7976931348623157e+308
+        },
+        {
+          "month": 2,
+          "balances": {},
+          "locBalance": 1,
+          "cashBalance": 0,
+          "interest": 1
+        }
+      ]
+    }
+  },
+  "exactH1": {
+    "status": "modeled",
+    "horizonMonths": 1,
+    "coveredThroughMonth": 1,
+    "balances": {},
+    "debtBalance": 0,
+    "locBalance": 0,
+    "cashBalance": 0,
+    "netModeledWealth": 0,
+    "interestThroughMonth": 1.7976931348623157e+308,
+    "budgetThroughMonth": 0
+  },
+  "exactH2": {
+    "status": "unavailable",
+    "horizonMonths": 2,
+    "coveredThroughMonth": 1,
+    "reason": "numeric-range-exceeded",
+    "balances": null,
+    "debtBalance": null,
+    "locBalance": null,
+    "cashBalance": null,
+    "netModeledWealth": null,
+    "interestThroughMonth": null,
+    "budgetThroughMonth": null
+  },
+  "controls": [
+    {
+      "first": 8.988465674311579e+307,
+      "second": 1,
+      "expectedWithinRange": true,
+      "guard": true,
+      "residual": 0,
+      "h1": {
+        "status": "modeled",
+        "horizonMonths": 1,
+        "coveredThroughMonth": 1,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 0,
+        "netModeledWealth": 0,
+        "interestThroughMonth": 8.988465674311579e+307,
+        "budgetThroughMonth": 0
+      },
+      "actual": {
+        "status": "modeled",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 2,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 1,
+        "cashBalance": 0,
+        "netModeledWealth": -1,
+        "interestThroughMonth": 8.988465674311579e+307,
+        "budgetThroughMonth": 0
+      }
+    },
+    {
+      "first": 1.7976931348623157e+308,
+      "second": 0,
+      "expectedWithinRange": true,
+      "guard": true,
+      "residual": 0,
+      "h1": {
+        "status": "modeled",
+        "horizonMonths": 1,
+        "coveredThroughMonth": 1,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 0,
+        "netModeledWealth": 0,
+        "interestThroughMonth": 1.7976931348623157e+308,
+        "budgetThroughMonth": 0
+      },
+      "actual": {
+        "status": "modeled",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 2,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 0,
+        "netModeledWealth": 0,
+        "interestThroughMonth": 1.7976931348623157e+308,
+        "budgetThroughMonth": 0
+      }
+    },
+    {
+      "first": 1.7976931348623157e+308,
+      "second": 1,
+      "expectedWithinRange": false,
+      "guard": false,
+      "residual": 0,
+      "h1": {
+        "status": "modeled",
+        "horizonMonths": 1,
+        "coveredThroughMonth": 1,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 0,
+        "netModeledWealth": 0,
+        "interestThroughMonth": 1.7976931348623157e+308,
+        "budgetThroughMonth": 0
+      },
+      "actual": {
+        "status": "unavailable",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 1,
+        "reason": "numeric-range-exceeded",
+        "balances": null,
+        "debtBalance": null,
+        "locBalance": null,
+        "cashBalance": null,
+        "netModeledWealth": null,
+        "interestThroughMonth": null,
+        "budgetThroughMonth": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-21T12:47:12.287Z",
+  "name": "cumulative-interest-exceeds-finite-range-by-retained-residual",
+  "input": {
+    "horizonMonths": 2,
+    "monthlyBudget": 0,
+    "initial": {
+      "balances": {},
+      "locBalance": 0,
+      "cashBalance": 1.7976931348623157e+308
+    },
+    "projection": {
+      "payoffPossible": false,
+      "payoffMonth": 2,
+      "rows": [
+        {
+          "month": 1,
+          "balances": {},
+          "locBalance": 0,
+          "cashBalance": 0,
+          "interest": 1.7976931348623157e+308
+        },
+        {
+          "month": 2,
+          "balances": {},
+          "locBalance": 1,
+          "cashBalance": 0,
+          "interest": 1
+        }
+      ]
+    }
+  },
+  "h1": {
+    "status": "modeled",
+    "horizonMonths": 1,
+    "coveredThroughMonth": 1,
+    "balances": {},
+    "debtBalance": 0,
+    "locBalance": 0,
+    "cashBalance": 0,
+    "netModeledWealth": 0,
+    "interestThroughMonth": 1.7976931348623157e+308,
+    "budgetThroughMonth": 0
+  },
+  "actual": {
+    "status": "modeled",
+    "horizonMonths": 2,
+    "coveredThroughMonth": 2,
+    "balances": {},
+    "debtBalance": 0,
+    "locBalance": 1,
+    "cashBalance": 0,
+    "netModeledWealth": -1,
+    "interestThroughMonth": 1.7976931348623157e+308,
+    "budgetThroughMonth": 0
+  },
+  "existingPositiveRangeCheck": false,
+  "expected": {
+    "status": "unavailable",
+    "reason": "numeric-range-exceeded",
+    "coveredThroughMonth": 1
+  }
+}

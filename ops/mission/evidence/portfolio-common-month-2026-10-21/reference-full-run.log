@@ -1,0 +1,89 @@
+Zero-APR source 1/8 complete (all H0..600).
+Zero-APR source 2/8 complete (all H0..600).
+Zero-APR source 3/8 complete (all H0..600).
+Zero-APR source 4/8 complete (all H0..600).
+Zero-APR source 5/8 complete (all H0..600).
+Zero-APR source 6/8 complete (all H0..600).
+Zero-APR source 7/8 complete (all H0..600).
+Zero-APR source 8/8 complete (all H0..600).
+FAIL boundaries: large-cancellation/listed-small-after-large
+AssertionError [ERR_ASSERTION]: a representable liability must not disappear in cancellation
+
+0 !== -1
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:502:33
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:79
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:53:9)
+    at boundary (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:3)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:500:3)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL boundaries: large-cancellation/listed-small-before-large
+AssertionError [ERR_ASSERTION]: a representable liability must not disappear in cancellation
+
+0 !== -1
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:502:33
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:79
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:53:9)
+    at boundary (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:3)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:500:3)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL boundaries: large-cancellation/separate-loc-small
+AssertionError [ERR_ASSERTION]: a representable liability must not disappear in cancellation
+
+0 !== -1
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:502:33
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:79
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:53:9)
+    at boundary (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:3)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:500:3)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL boundaries: large-cancellation/cash-residual-plus-small
+AssertionError [ERR_ASSERTION]: a representable liability must not disappear in cancellation
+
+2 !== 3
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:502:33
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:79
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:53:9)
+    at boundary (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:3)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:500:3)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+FAIL boundaries: large-cancellation-in-accepted-row
+AssertionError [ERR_ASSERTION]: unavailable snapshot: {"status":"unavailable","horizonMonths":1,"coveredThroughMonth":0,"reason":"inconsistent-trace","balances":null,"debtBalance":null,"locBalance":null,"cashBalance":null,"netModeledWealth":null,"interestThroughMonth":null,"budgetThroughMonth":null}
+    at available (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:66:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:509:3
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:79
+    at probe (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:53:9)
+    at boundary (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:453:3)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-reference-tests.cjs:505:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+zero-apr: 19232 passed, 0 failed
+hand-calculated: 8 passed, 0 failed
+engine-row-accounting: 1845 passed, 0 failed
+direct-reference-length: 48 passed, 0 failed
+direct-reference-row: 1212 passed, 0 failed
+rate-snapshots: 240 passed, 0 failed
+required-prefix: 504 passed, 0 failed
+boundaries: 18 passed, 5 failed
+{"seed":20261021,"finalState":3883181796,"randomDraws":253,"sourceHashes":{"portfolio-common-month":"4ee4e10610e4631eec27342739e63ebd12778e434509783494ef67e6d3571e1e","portfolio-book":"2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5","index":"23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477","numeric-range":"fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f","portfolio":"b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781","common-month":"e201f335ad7cddc5638fe85e53d10168a145af8d68f122d52cf71a3571b7057d"},"counts":{"zeroSources":8,"zeroBooks":32,"zeroComparisons":19232,"zeroSnapshots":57696,"handSources":5,"handComparisons":8,"handSnapshots":24,"rateSources":12,"rateBooks":24,"ratePaths":72,"accountedRows":1845,"directOraclePaths":48,"directOracleRows":1212,"rateComparisons":240,"rateSnapshots":720,"prefixSources":1,"prefixMutations":72,"prefixSnapshots":504,"boundarySnapshots":23},"passed":23107,"failed":5}

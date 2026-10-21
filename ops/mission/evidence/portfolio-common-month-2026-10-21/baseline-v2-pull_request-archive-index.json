@@ -1,0 +1,316 @@
+{
+  "archiveBytes": 204813,
+  "archiveSha256": "8d89deaf7892562ac63aa3b40eac144d88eadb128d8f1231a528577f38618160",
+  "entries": [
+    {
+      "name": "0_Web and mobile quality gates.txt",
+      "bytes": 325107,
+      "sha256": "4f5e2f14b4b2c2d039c9ee32821f57183e0bfcfccfbd65cf937885171abecfa0"
+    },
+    {
+      "name": "Web and mobile quality gates/system.txt",
+      "bytes": 599,
+      "sha256": "97be7a03ee9a60afb70f0ead77542f7ab5c50677a648092021aa58b16714b792"
+    },
+    {
+      "name": "Web and mobile quality gates/1_Set up job.txt",
+      "bytes": 2349,
+      "sha256": "cbdfed2ee882ee17de4d32487e15d4860fb5b39fb8a564bdd38f46e873c9063a"
+    },
+    {
+      "name": "Web and mobile quality gates/2_Check out repository.txt",
+      "bytes": 7032,
+      "sha256": "5b431d21fe72da97f8e72740aef9ebea5ae1253a6fc2f1d3c4d841cb1b8f1f2c"
+    },
+    {
+      "name": "Web and mobile quality gates/3_Set up Node.txt",
+      "bytes": 2591,
+      "sha256": "800521c3072654756805abedaab4e8e1d4693e62b2f9f6b86984cfc2b9111f93"
+    },
+    {
+      "name": "Web and mobile quality gates/4_Install web dependencies.txt",
+      "bytes": 977,
+      "sha256": "85c47c1ee776262659eff382b1dd5ce4b9ff1b7dfb29a27523e17966bb752dc7"
+    },
+    {
+      "name": "Web and mobile quality gates/5_Audit web runtime dependencies.txt",
+      "bytes": 279,
+      "sha256": "0165772fd5b084340c8280db965c6160eee5d915d02c87ac940ea53845f3615d"
+    },
+    {
+      "name": "Web and mobile quality gates/6_Run web regression tests.txt",
+      "bytes": 52408,
+      "sha256": "3ee11efc898dc9d5ea1d23610764976c1d5a02aaeb08a2c2174fdcf91a7e4409"
+    },
+    {
+      "name": "Web and mobile quality gates/7_Run web lint.txt",
+      "bytes": 354,
+      "sha256": "d26adb9cae950d7ef9855ef6b6f65a528335eed0d6989df9ac18715e9168f4eb"
+    },
+    {
+      "name": "Web and mobile quality gates/8_Build web app.txt",
+      "bytes": 2866,
+      "sha256": "ad73bf6202b410b255933193a3cb9635b2caf57282c3a3c39234ecfc48da2cd5"
+    },
+    {
+      "name": "Web and mobile quality gates/9_Verify built Money Loop Three stage.txt",
+      "bytes": 48644,
+      "sha256": "7f35ed012314b5d6f293bdd5097a8f95e6485e63e5d02b6cd38e692889f54e5e"
+    },
+    {
+      "name": "Web and mobile quality gates/10_Upload Money Loop Three stage proof.txt",
+      "bytes": 2021,
+      "sha256": "c364a506c2fdc4a7f80051c8bcc3d537181c517cc42a5ddb036fe39b7a56be56"
+    },
+    {
+      "name": "Web and mobile quality gates/11_Smoke built web routes.txt",
+      "bytes": 1188,
+      "sha256": "4bed1f38740a0b5d7858adfc1990991d95b6d5f6cdc46eb343ae4e976b1878f1"
+    },
+    {
+      "name": "Web and mobile quality gates/12_Smoke rendered web routes.txt",
+      "bytes": 1430,
+      "sha256": "90a3b7aa74c569c3a384a70d50677cb494bfa003ee5399476aac8d8181b4744c"
+    },
+    {
+      "name": "Web and mobile quality gates/13_Verify same-liability Simulator comparisons.txt",
+      "bytes": 1781,
+      "sha256": "bd540fa86a20fec7824288b89520e8acf2b7359877c3d952b41d89d7fd8dc31a"
+    },
+    {
+      "name": "Web and mobile quality gates/14_Verify daily-interest display and saved dashboard inputs.txt",
+      "bytes": 1727,
+      "sha256": "f8ef49456579bc6a4d65d1d55e23770ae75b2d1a812a9699aff0a3d063f99711"
+    },
+    {
+      "name": "Web and mobile quality gates/15_Upload dashboard interest proof.txt",
+      "bytes": 2090,
+      "sha256": "65cc19415b04aaff067447da2dd0cad5062c206820a832e757bd877ffe95e773"
+    },
+    {
+      "name": "Web and mobile quality gates/16_Upload Simulator comparison proof.txt",
+      "bytes": 2034,
+      "sha256": "f565b56f3893d8a48fec97e95529ad2df333b76fe0db05b307183b8358c52dd6"
+    },
+    {
+      "name": "Web and mobile quality gates/17_Verify funded Vault mortgage comparisons.txt",
+      "bytes": 1762,
+      "sha256": "3d5d3558c88a74e51c90593409594938d5987e435a85b6cee7513a333bb5297d"
+    },
+    {
+      "name": "Web and mobile quality gates/18_Upload Vault comparison proof.txt",
+      "bytes": 2028,
+      "sha256": "eeb884e88da7ded4e34bf18bdd9611343007dd548dcd2edb550948d4edce6d82"
+    },
+    {
+      "name": "Web and mobile quality gates/19_Verify funded Portfolio allocations and debt scope.txt",
+      "bytes": 3102,
+      "sha256": "0134a2358db01d3752d13ba1c02d2089a838b9b42e6f6bfbfa3f7da1dc91ad52"
+    },
+    {
+      "name": "Web and mobile quality gates/20_Upload Portfolio budget proof.txt",
+      "bytes": 2470,
+      "sha256": "2f7a240689710275a8ea747b67c78204fdb41a69f1ac70fe7057ec7099254e2c"
+    },
+    {
+      "name": "Web and mobile quality gates/21_Verify asset hero loading, rotation and reduced motion.txt",
+      "bytes": 4318,
+      "sha256": "de19c30ea62ff7f180fb0102eb54ca94a3218fce0b47dbf4903842aa3b35583b"
+    },
+    {
+      "name": "Web and mobile quality gates/22_Upload asset hero browser proof.txt",
+      "bytes": 2024,
+      "sha256": "9e9f359fccd3c85643b99682f14d5472efb08efb1dcf5c25b0d734d26525effd"
+    },
+    {
+      "name": "Web and mobile quality gates/23_Install media workspace dependencies.txt",
+      "bytes": 1256,
+      "sha256": "f41cc382d33f9719da7966da8a84d47a61c74b729c92c8093054ac3e48faa95e"
+    },
+    {
+      "name": "Web and mobile quality gates/24_Read pinned Remotion Chrome version.txt",
+      "bytes": 369,
+      "sha256": "910e3001fd0416c573aec807155e24cab5cc269b4a824906c9e592ff955ddd9c"
+    },
+    {
+      "name": "Web and mobile quality gates/25_Install pinned Remotion Chrome.txt",
+      "bytes": 1265,
+      "sha256": "39c61f7edbc376a65163213c020a0c42d7689d61a130c8aa8a19eb370b34657c"
+    },
+    {
+      "name": "Web and mobile quality gates/26_Check media identity contracts.txt",
+      "bytes": 102463,
+      "sha256": "ab5982d8e64e98373988e59de59ea2722b6c7629bfdfff49780b2c66a969ccec"
+    },
+    {
+      "name": "Web and mobile quality gates/27_Install report Worker dependencies.txt",
+      "bytes": 777,
+      "sha256": "82a2926a6e363362a36f49620e267882fd837457a122da7de1fdf4711009663c"
+    },
+    {
+      "name": "Web and mobile quality gates/28_Check and test report Worker.txt",
+      "bytes": 10973,
+      "sha256": "147478bb16743a3589a6494ee9b3759c4c2bd44370f4c251bf92e9537442de49"
+    },
+    {
+      "name": "Web and mobile quality gates/29_Install mobile dependencies.txt",
+      "bytes": 1223,
+      "sha256": "99364dfd8d00cf25b3e3f66a50b6850c13bbc318a8ce190fda9937caa2355e6a"
+    },
+    {
+      "name": "Web and mobile quality gates/30_Audit critical native dependency advisories.txt",
+      "bytes": 20514,
+      "sha256": "38b899ab6cd8166a90ba652179efba0e8d66e3ccd904a5d39504ec35a999fcac"
+    },
+    {
+      "name": "Web and mobile quality gates/31_Run mobile type-check.txt",
+      "bytes": 382,
+      "sha256": "b9adad08b56c2cc7b69afb3b1f8fe729bb5c29f2b0b58e9c8222940c7ee57126"
+    },
+    {
+      "name": "Web and mobile quality gates/32_Build Expo web export.txt",
+      "bytes": 2838,
+      "sha256": "9ee33a6d07e2656cf38f9aca57220a975a29e23c2a5d2cca9445343e62accd04"
+    },
+    {
+      "name": "Web and mobile quality gates/33_Smoke Expo web export.txt",
+      "bytes": 868,
+      "sha256": "25694dd688b42b9a9982f9cb5aa47b64318d09d413c2b3109b9e484b551e0ab6"
+    },
+    {
+      "name": "Web and mobile quality gates/34_Smoke rendered Expo accessibility.txt",
+      "bytes": 3910,
+      "sha256": "0f3f3f206bcdf1fa56203050d958e565061bd029e4a6d3910b8f3422d7620184"
+    },
+    {
+      "name": "Web and mobile quality gates/35_Run mobile contract tests.txt",
+      "bytes": 27249,
+      "sha256": "3d9718531069ac902852eced7ab25bd7c1cf6c0b079f9ae1b8a91e38e5162a3d"
+    },
+    {
+      "name": "Web and mobile quality gates/36_Upload native Portfolio and accessibility proof.txt",
+      "bytes": 2072,
+      "sha256": "c70b24cc3032fdb060af83974bebff24526d88721b8087e7cfdf6318bee55865"
+    },
+    {
+      "name": "Web and mobile quality gates/37_Verify iOS smoke guard on Linux.txt",
+      "bytes": 1012,
+      "sha256": "c0d581224111bed267b8f0a9c86ec955fd39c44ad2d01fbe6d5a4d79c497f6cc"
+    },
+    {
+      "name": "Web and mobile quality gates/73_Post Set up Node.txt",
+      "bytes": 482,
+      "sha256": "bf936b2f95cb69d628c338397c971914e5976655c64d1f391c4b67c65d728885"
+    },
+    {
+      "name": "Web and mobile quality gates/74_Post Check out repository.txt",
+      "bytes": 1741,
+      "sha256": "13df63ac14b40c96ed6d3bd9752e257ff4588231219a66f45a69eb3a12937884"
+    },
+    {
+      "name": "Web and mobile quality gates/75_Complete job.txt",
+      "bytes": 355,
+      "sha256": "53626ac037f07c6a41963f3135288d5298a557cb191d478b99c5d6480e290aef"
+    },
+    {
+      "name": "1_Isolated SQL and owner isolation.txt",
+      "bytes": 62408,
+      "sha256": "03f2a07896796b19c9e25f32be21ab770db915a77b48d60815e5059e9662fcbb"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/system.txt",
+      "bytes": 598,
+      "sha256": "0cb775ca9f96b1ceb2f4bbbd8c8e7ac622c4e2cdff3f95b2a320dc1d98afb412"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/1_Set up job.txt",
+      "bytes": 2730,
+      "sha256": "2158a091546784ef517ae60720a22b2b1ca5b2943d7659961ace4a32f9dd2199"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/2_Check out repository.txt",
+      "bytes": 7032,
+      "sha256": "31313a0261d259b06b8a63f48d3ad9d99896db0b2b6bc69a6aa975f35c01c0a3"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/3_Set up Node.txt",
+      "bytes": 2364,
+      "sha256": "82778398e8d3dc4a50320c65a87bbd62f8e44f8637fdd60ed65901c021603bf8"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/4_Install web contract dependencies.txt",
+      "bytes": 1014,
+      "sha256": "4db11258c185624a12bd19d5e18fc99ef3535f6121480368647715881ddc5455"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/5_Check isolated database wiring.txt",
+      "bytes": 1791,
+      "sha256": "bc7a40a7c8e5df6c652a4980f54dfdc3bda7dbab78cbe625820a5c8373f20211"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/6_Install pinned Supabase CLI.txt",
+      "bytes": 13516,
+      "sha256": "33a498cf0a1cbd0396df9012391b80d6f80b73e70429908e094f94c9fc90bfe8"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/7_Start disposable database.txt",
+      "bytes": 20279,
+      "sha256": "92e31ac4c681c0fc686ec49b53424027acc6a621403822fb6dd04cbe8d9bf3b0"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/8_Replay all migrations without seed data.txt",
+      "bytes": 1530,
+      "sha256": "09e4ae773e6cf74d66c258b1c6194b4635bccddfb92ba0f3153ed1034c56584b"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/9_Verify client contracts and SQL owner isolation.txt",
+      "bytes": 4494,
+      "sha256": "80a7edd276c5220bc75d6d392588f8b555c87d021981d799d019548f67cf9533"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/10_Lint application database functions.txt",
+      "bytes": 634,
+      "sha256": "b1439f74545281b5aec312a022f3fa9697ee97a3cf69624e5c576d92b88dbac6"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/11_Check database security advisors.txt",
+      "bytes": 575,
+      "sha256": "79bd96ef9cf3c152fad7a251d12b23dff150f63bdf990a871443c43d9de6a950"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/12_Repeat SQL tests to verify fixture rollback.txt",
+      "bytes": 814,
+      "sha256": "c71127c234df934cc064ca2396bf752d6397c89cd4a557045c33310499625b34"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/13_Stop disposable database.txt",
+      "bytes": 702,
+      "sha256": "912f3f1eccc6e9955e9ced49a9cd64b8d12498992d056b807c8c66c7629f98ce"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/14_Upload database isolation proof.txt",
+      "bytes": 2027,
+      "sha256": "0ab99717e6534c14d1e111f28c8c4281dcc77502d2479da35fb86b1980f6d6eb"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/26_Post Install pinned Supabase CLI.txt",
+      "bytes": 380,
+      "sha256": "198f36afe5d864bfe9e2bbf3f85ced122c8bc7456ecd33fa17d6d0496cebc749"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/27_Post Set up Node.txt",
+      "bytes": 481,
+      "sha256": "47bf9287086b879a3c038b7d1f1a584cb11c64502331b7fe80f4a725e7ec6610"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/28_Post Check out repository.txt",
+      "bytes": 1741,
+      "sha256": "8caa0cacb99daffd82e9e15a0e2d7b27301fb46664b8958095bdb062c406e057"
+    },
+    {
+      "name": "Isolated SQL and owner isolation/29_Complete job.txt",
+      "bytes": 355,
+      "sha256": "306d0125692097c98a3cf9beef26684f60b261ff29444507e50e8350dc268b15"
+    }
+  ]
+}
