@@ -126,6 +126,7 @@ jobs:
             apps/web/test-results/portfolio-budget
             apps/web/test-results/portfolio-portability
             apps/web/test-results/portfolio-input
+            apps/web/test-results/shared-portfolio-dashboard
           if-no-files-found: warn
 
       - name: Install media workspace dependencies

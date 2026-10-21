@@ -50,7 +50,7 @@
 - [x] Add debt inspection selection, scope/status, same-store household/LOC controls, strategy modes and return links. Missing identities/empty books remain explicit; financial totals do not depend on selection.
 - [x] Respect persistence readiness before offering projections/editing; retain the existing error/reload behavior.
 - [x] Test actual entry/edit/return and reverse edits; verify exact legacy bytes, canonical metadata/no-ops and failed persistence.
-- [ ] Commit the coherent presentation/navigation slice.
+- [x] Commit the coherent presentation/navigation slice.
 
 ## Task 3: Standing Browser And Release Proof
 

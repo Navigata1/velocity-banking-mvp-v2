@@ -102,6 +102,7 @@ test('workflow isolates graphics without changing the per-job cap or backend',()
     for(const step of job.steps)assert.equal(step['continue-on-error'],undefined);
   }
   const primary=workflow.jobs['web-mobile-quality'],hero=workflow.jobs['asset-hero-quality'];
+  assert.ok(primary.steps.find(step=>step.name==='Upload Portfolio budget proof').with.path.split('\n').includes('apps/web/test-results/shared-portfolio-dashboard'));
   assert.equal(hero.needs,undefined);
   assert.ok(!primary.steps.some(step=>step.run==='npm run test:heroes'));
   assert.deepEqual(hero.steps.filter(step=>step.run).map(step=>[step['working-directory'],step.run]),[
