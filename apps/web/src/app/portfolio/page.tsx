@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { ArrowUpRight, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
 import PageTransition from '@/components/PageTransition';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -54,6 +55,9 @@ export default function PortfolioPage() {
       <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8">
         <ScrollReveal as="header" className="space-y-2">
           <h1 className={`text-3xl font-bold tracking-tight ${classes.text}`}>📋 Portfolio</h1>
+          <Link href="/?scenario=portfolio" className={`inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4 ${classes.text}`}>
+            Open dashboard<ArrowUpRight aria-hidden="true" size={16} />
+          </Link>
           <p className={`${classes.textSecondary} max-w-3xl`}>
             Build a complete picture of your debts, then choose a payoff approach.{' '}
             <span className="text-emerald-400">Velocity Mode</span> prioritizes{' '}

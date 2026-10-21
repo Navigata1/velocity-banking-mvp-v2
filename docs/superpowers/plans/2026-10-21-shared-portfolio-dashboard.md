@@ -37,7 +37,7 @@
 - [x] Add APR2/LOC2, promo intro/expiry, invalid minimums/horizon, exact-zero/tolerance and nonfinite-range cases. Run and preserve expected RED.
 - [x] Implement the overview using the existing engine and strict codec; no new payoff algorithm.
 - [x] Run new and all existing pure regressions/references. Verify all previous numerical module sources unchanged.
-- [ ] Commit the cohesive model/test slice without pushing partial UI claims.
+- [x] Commit the cohesive model/test slice without pushing partial UI claims.
 
 ## Task 2: Canonical Dashboard View
 
@@ -46,10 +46,10 @@
 **Interfaces:** Consume `buildPortfolioOverview`, existing Portfolio store/persistence, `AssetHero` and canonical editors. Produce a Dashboard presentation selected by `/?scenario=portfolio`, using the same store actions and no persisted selection.
 
 - [x] Establish a rendered RED for the absent shared view using distinct legacy/canonical synthetic records.
-- [ ] Add the query-selected lazy presentation under Suspense; default `/` remains legacy. Use existing theme/asset layout conventions and the four vitals.
-- [ ] Add debt inspection selection, scope/status, same-store household/LOC controls, strategy modes and return links. Missing identities/empty books remain explicit; financial totals do not depend on selection.
-- [ ] Respect persistence readiness before offering projections/editing; retain the existing error/reload behavior.
-- [ ] Test actual entry/edit/return and reverse edits; verify exact legacy bytes, canonical metadata/no-ops and failed persistence.
+- [x] Add the query-selected lazy presentation under Suspense; default `/` remains legacy. Use existing theme/asset layout conventions and the four vitals.
+- [x] Add debt inspection selection, scope/status, same-store household/LOC controls, strategy modes and return links. Missing identities/empty books remain explicit; financial totals do not depend on selection.
+- [x] Respect persistence readiness before offering projections/editing; retain the existing error/reload behavior.
+- [x] Test actual entry/edit/return and reverse edits; verify exact legacy bytes, canonical metadata/no-ops and failed persistence.
 - [ ] Commit the coherent presentation/navigation slice.
 
 ## Task 3: Standing Browser And Release Proof
@@ -58,9 +58,9 @@
 
 **Interfaces:** Use existing built-server/browser harness, fresh synthetic contexts and separate `shared-portfolio-dashboard/verification.json`. Existing gate receipts remain separate.
 
-- [ ] Add shared-source/edit and adverse persistence/empty/precision workflows at280/375/1440. Verify full values, no overlay/console failures, fit, source-byte preservation and actual model/hero identity.
-- [ ] Perform primary actual IAB interaction and save valid viewport screenshots; no hidden-state UI manipulation or report-file workaround.
+- [x] Add shared-source/edit and adverse persistence/empty/precision workflows at280/375/1440. Verify full values, no overlay/console failures, fit, source-byte preservation and actual model/hero identity.
+- [x] Perform primary actual IAB interaction and save valid viewport screenshots; no hidden-state UI manipulation or report-file workaround.
 - [ ] Run web regressions/references/lint/build, media freshness, all original web/native gates and new workflow. Keep numerical, asset, timing and pixel assertions intact.
-- [ ] Fresh independent review checks the final source pins and attempts to refute cohort/unit/preservation/error behavior.
+- [x] Fresh independent review checks the final source pins and attempts to refute cohort/unit/preservation/error behavior.
 - [ ] Fold a792504/receipt6322747051 into mission state; leave overallR2 and later route/native adoption open. Render the HTML; do not hand-edit it.
 - [ ] Push the focused verified commits to draftPR256; require both complete exact-head CI events, source-bound logs and scope-accurate proof before posting the receipt. No metadata-only push loop.

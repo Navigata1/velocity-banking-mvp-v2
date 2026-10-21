@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -6,9 +7,9 @@ const vm=require('node:vm');
 const root=path.resolve(__dirname,'../../..'),cache=new Map();
 function load(file){
   if(cache.has(file))return cache.get(file).exports;
-  const module={exports:{}};cache.set(file,module);
+  const loaded={exports:{}};cache.set(file,loaded);
   const output=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
-  vm.runInNewContext(output,{module,exports:module.exports,require:id=>id.startsWith('.')?load(path.resolve(path.dirname(file),id+'.ts')):require(id),console},{filename:file});return module.exports;
+  vm.runInNewContext(output,{module:loaded,exports:loaded.exports,require:id=>id.startsWith('.')?load(path.resolve(path.dirname(file),id+'.ts')):require(id),console},{filename:file});return loaded.exports;
 }
 const fixture=()=>({monthlyIncome:2000,monthlyExpenses:1500,extraMonthlyPayment:0,chunkAmount:100,
   loc:{limit:5000,balance:300,apr:0.1},strategy:'avalanche',focusMode:'single',splitRatioPrimary:0.7,

@@ -1,6 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import MoneyLoopArtifactRail from '@/components/MoneyLoopArtifactRail';
@@ -50,7 +53,18 @@ const toneStyles: Record<DashboardTone, {
   },
 };
 
+const PortfolioDashboard = dynamic(() => import('./PortfolioDashboard'));
+
+function DashboardSource() {
+  const params = useSearchParams();
+  return params.get('scenario') === 'portfolio' ? <PortfolioDashboard /> : <TargetDashboard />;
+}
+
 export default function Dashboard() {
+  return <Suspense fallback={<p role="status" className="p-6">Loading dashboard...</p>}><DashboardSource /></Suspense>;
+}
+
+function TargetDashboard() {
   const mounted = useIsClient();
   const store = useFinancialStore();
   const { theme } = useThemeStore();
