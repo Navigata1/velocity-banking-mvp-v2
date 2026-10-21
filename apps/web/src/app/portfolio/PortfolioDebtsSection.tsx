@@ -1,7 +1,6 @@
 'use client';
 
 import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
-import ScrollReveal from '@/components/ScrollReveal';
 import { formatCurrency } from '@/engine/calculations';
 import type { DebtItem, DebtPriorityRationale } from '@/engine/portfolio';
 import { usePortfolioStore } from '@/stores/portfolio-store';
@@ -121,7 +120,6 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
   };
 
   return (
-    <ScrollReveal variant="fadeUp" delay={0.1}>
       <section className={`${classes.glass} rounded-3xl p-4 md:p-8`}>
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -255,7 +253,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                           </div>
                         </td>
                         <td className="py-3 pr-3">{renderCategorySelect(d)}</td>
-                        <td className="min-w-[9rem] py-3 pr-3">
+                        <td className="min-w-[10rem] py-3 pr-3">
                           <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                         </td>
                         <td className="min-w-[14rem] py-3 pr-3">
@@ -298,6 +296,5 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
           </>
         )}
       </section>
-    </ScrollReveal>
   );
 }

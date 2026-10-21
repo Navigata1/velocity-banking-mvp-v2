@@ -4,7 +4,6 @@ import { useState } from 'react';
 import CountUp from '@/components/CountUp';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import PortfolioPayoffPath from '@/components/PortfolioPayoffPath';
-import ScrollReveal from '@/components/ScrollReveal';
 import { formatCurrency, formatDate } from '@/engine/calculations';
 import { buildPortfolioPathVisualModel } from '@/engine/portfolio-path-visual';
 import type { PayoffStrategy } from '@/engine/portfolio';
@@ -97,8 +96,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   };
 
   return (
-    <ScrollReveal variant="fadeUp">
-      <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
+      <section className={`${classes.glass} rounded-3xl p-4 md:p-8`}>
         <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
           <div className="space-y-4 flex-1">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -124,7 +122,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
               </div>
             </div>
 
-              <div data-testid="portfolio-loc-controls" className={`grid grid-cols-1 gap-4 ${supportsChunkDraws ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+              <div data-testid="portfolio-loc-controls" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className={`${classes.glassButton} rounded-2xl p-4`}>
                   <p className={`${classes.textMuted} text-xs mb-1`}>LOC Limit</p>
                   <EditableCurrency value={store.loc.limit} max={Math.max(10000000, store.loc.limit)} onChange={(value) => store.updateLOC({ limit: value })} ariaLabel="Portfolio line of credit limit" size="md" />
@@ -425,6 +423,5 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
           </div>
         </div>
       </section>
-    </ScrollReveal>
   );
 }

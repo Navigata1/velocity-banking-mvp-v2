@@ -50,7 +50,7 @@ function formatDisplay(value: number, format: EditableNumberProps['format']): st
 }
 
 const inputSizes = { sm: 'text-sm px-2 py-1', md: 'text-sm px-2 py-2', lg: 'text-base px-3 py-2', xl: 'text-lg px-3 py-3' };
-const displaySizes = { sm: 'text-sm', md: 'text-lg', lg: 'text-2xl', xl: 'text-3xl' };
+const displaySizes = { sm: 'text-sm', md: 'text-sm', lg: 'text-2xl', xl: 'text-3xl' };
 
 export function EditableNumber({ value, onChange, prefix = '', suffix = '', min = 0, max, step = 1,
   format = 'number', size = 'md', className = '', label, ariaLabel }: EditableNumberProps) {
@@ -144,11 +144,11 @@ export function EditableNumber({ value, onChange, prefix = '', suffix = '', min 
       ) : (
         <button ref={buttonRef} type="button" onClick={beginEdit} aria-label={`Edit ${controlLabel}, current value ${display}`}
           aria-describedby={error ? feedbackId : undefined} title="Click to edit"
-          className={`group inline-flex min-h-12 w-full min-w-0 max-w-full items-center gap-1 rounded-lg border border-transparent px-2 py-1 font-mono transition-colors hover:border-emerald-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${hoverClass} ${displaySizes[size]} ${textClass}`}>
+          className={`group inline-flex min-h-12 w-full min-w-0 max-w-full items-center gap-1 rounded-lg border border-transparent px-1 py-1 font-mono transition-colors hover:border-emerald-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${hoverClass} ${displaySizes[size]} ${textClass}`}>
           {prefix ? <span className="shrink-0">{prefix}</span> : null}
-          <span className={`min-w-0 overflow-x-auto whitespace-nowrap text-left ${format === 'percent' ? 'text-sm' : ''}`}>{display}</span>
+          <span className={`min-w-0 whitespace-nowrap text-left ${format === 'percent' ? 'text-sm' : ''}`}>{display}</span>
           {suffix ? <span className={`shrink-0 ${mutedClass}`}>{suffix}</span> : null}
-          <Pencil aria-hidden="true" className="ml-1 h-3 w-3 shrink-0 text-emerald-500 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
+          <Pencil aria-hidden="true" className="h-3 w-3 shrink-0 text-emerald-500 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
         </button>
       )}
       {error ? <p id={feedbackId} role="alert" className="mt-1 text-xs leading-5 text-amber-600 [overflow-wrap:anywhere]">{error}</p> : null}

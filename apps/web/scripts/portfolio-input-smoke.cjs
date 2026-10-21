@@ -51,6 +51,10 @@ async function assertSource(page) {
     'original legacy bytes must remain unchanged across all edits and reload');
 }
 async function open(page, label) {
+  const display = await button(page, label).locator('span').first().evaluate(element => ({
+    width: element.clientWidth, contentWidth: element.scrollWidth,
+  }));
+  assert.ok(display.contentWidth <= display.width + 1, `${label} display needs horizontal scrolling: ${JSON.stringify(display)}`);
   await button(page, label).click();
   const input = field(page, label);
   await input.waitFor({ state: 'visible' });
@@ -80,8 +84,8 @@ async function invalid(page, label, draft, message) {
 
 async function verifyWidth({ browser, origin, output, width }) {
   const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-  await context.route('**/*', route => new URL(route.request().url()).origin === origin
-    ? route.continue() : route.abort('blockedbyclient'));
+  const isolatedRequests = [];
+  await context.route('**/*', route => isolateRequest(route, origin, isolatedRequests));
   await context.addInitScript(({ legacyKey, legacyBytes }) => {
     if (localStorage.getItem('portfolio-input-fixture-seeded')) return;
     localStorage.setItem(legacyKey, legacyBytes);
@@ -185,7 +189,7 @@ async function verifyWidth({ browser, origin, output, width }) {
     assert.deepEqual(errors, []);
     await page.screenshot({ path: path.join(output, `portfolio-input-${width}.png`) });
     console.log(`PASS precise Portfolio inputs ${width}px`);
-    return { width, passed: true, observedAPR, geometry, inputPixels, errors };
+    return { width, passed: true, observedAPR, geometry, inputPixels, errors, isolatedRequests };
   } catch (error) {
     await page.screenshot({ path: path.join(output, `portfolio-input-${width}-failure.png`) }).catch(() => {});
     const receipt = { width, passed: false, message: error.message, observedAPR, errors,
@@ -199,7 +203,7 @@ async function verifyWidth({ browser, origin, output, width }) {
 async function runPortfolioInputFixtures({ browser, origin, output }) {
   fs.mkdirSync(output, { recursive: true });
   const receipts = [];
-  for (const width of [375, 1440, 280]) receipts.push(await verifyWidth({ browser, origin, output, width }));
+  for (const width of [375, 1440, 280, 1264]) receipts.push(await verifyWidth({ browser, origin, output, width }));
   fs.writeFileSync(path.join(output, 'portfolio-input-verification.json'), JSON.stringify({ origin, receipts }, null, 2) + '\n');
   assert.equal(receipts.filter(receipt => !receipt.passed).length, 0, 'precise Portfolio rendered input fixtures must all pass');
   return receipts;
@@ -207,6 +211,13 @@ async function runPortfolioInputFixtures({ browser, origin, output }) {
 module.exports = runPortfolioInputFixtures;
 module.exports.runPortfolioInputFixtures = runPortfolioInputFixtures;
 module.exports.assertInputPixels = assertInputPixels;
+async function isolateRequest(route, origin, isolatedRequests) {
+  const url = route.request().url();
+  if (new URL(url).origin === origin) return route.continue();
+  isolatedRequests.push(url);
+  return route.fulfill({ status: 204, body: '' });
+}
+module.exports.isolateRequest = isolateRequest;
 
 async function main(runFixtures = runPortfolioInputFixtures) {
   const { chromium } = require('playwright-core');
@@ -226,7 +237,7 @@ async function main(runFixtures = runPortfolioInputFixtures) {
     const origin = process.env.PORTFOLIO_INPUT_ORIGIN || server.origin;
     browser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
     const output = path.resolve(process.env.PORTFOLIO_INPUT_OUTPUT || path.join(root, 'test-results', 'portfolio-input'));
-    console.log(`Portfolio input fixtures against existing built web app at ${origin}; isolated 375/1440/280px contexts.`);
+    console.log(`Portfolio input fixtures against existing built web app at ${origin}; isolated 375/1440/280/1264px contexts.`);
     await runFixtures({ browser, origin, output });
   } catch (error) { process.exitCode = 1; throw error; }
   finally { clearTimeout(deadline); await shutdown(process.exitCode ?? 0); }
