@@ -6,6 +6,7 @@ const ts = require('typescript');
 const vm = require('node:vm');
 const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 require('./portfolio-apr-unit-tests.cjs');
+require('./portfolio-book-tests.cjs');
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
