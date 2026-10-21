@@ -128,5 +128,21 @@
     "provenance": "Original hollow cognac satchel with thick curved flap, brass buckle/handle/shoulder assemblies, punched leather straps, real stitches/piping, key aperture and inserted illustrative papers. Approximate PBR, not measured scans or exact poster reconstruction.",
     "units": "normalized stage units",
     "version": 2
+  },
+  {
+    "id": "recreation",
+    "quality": "refined-textured",
+    "bytes": 521544,
+    "meshes": 47,
+    "triangles": 19296,
+    "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7",
+    "sourceFile": "apps/media/scripts/build-refined-recreation.mjs",
+    "sourceSha256": "2edfb8fae498e2877a49ce16de7530c645fcdb5dbc1cbdffdd1884ac95f7473e",
+    "materialSourceSha256": "9626f5b8ba0714edc5ce55b3ef852fe27747cb653e88001b7cff53f8e6ffa59c",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and explicitly retained original generated oak/cloth sources",
+    "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
+    "units": "normalized stage units",
+    "version": 2
   }
 ]

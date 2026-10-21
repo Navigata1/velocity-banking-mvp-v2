@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "created": "2026-10-21",
+  "purpose": "Original white/teal sailing yacht with timber deck, woven sails, connected stainless rigging and visible keel/rudder.",
+  "resolution": 256,
+  "colorResolution": 512,
+  "normalResolution": 256,
+  "images": [
+    {"file":"../house/oak-albedo-v1.png","sha256":"78f9cbed87ec67f0522f1aa5047e0959dac32e0074e6ba60f262820a4d397b7a","origin":"Original Codex built-in image generator House source, reused unchanged with explicit provenance and timber shader dye.","originalOutput":"exec-bcb419f6-eb26-46dd-ac40-dad32729b71d.png"},
+    {"file":"../student-loan/cloth.png","sha256":"bc2451f333299567d32abe18c229cdb5c768c1762318932e2f1e42fbba6364d2","origin":"Original Codex built-in image_gen Student Loan source, reused unchanged with explicit provenance and ivory canvas shader dye.","originalOutput":"exec-2dd965ed-9875-426a-a8cb-c3fa408b8bce.png"}
+  ],
+  "surfaces": {
+    "canvas":{"roughness":0.84,"normalScale":0.2,"tile":[6,6]},
+    "timber":{"roughness":0.58,"normalScale":0.18,"tile":[2,2]},
+    "paint":{"roughness":0.26,"normalScale":0.06,"tile":[1,1]},
+    "steel":{"roughness":0.27,"normalScale":0.1,"tile":[1,1]}
+  },
+  "limitations": "Original geometry and explicitly retained generated oak/cloth albedos. Timber dye, canvas weave, procedural paint/steel and height-derived micro-normals are artistic approximations, not photographed scans, measured PBR or exact poster reconstruction. Normals are filtered/renormalized before lossless packing. No marine engineering/manufacturability, final all-ten art or production approval is implied. No financial records or balances are embedded."
+}
