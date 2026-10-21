@@ -38,14 +38,16 @@ function comparisonGeometry(element){
       }
       const tokens=[];let current=[];const finish=()=>{if(current.length){tokens.push({text:current.map(c=>c.character).join(''),oneLine:current.every(c=>Math.abs(c.rect.top-current[0].rect.top)<=1&&Math.abs(c.rect.bottom-current[0].rect.bottom)<=1)});current=[];}};
       for(const character of characters){if(character.rect)current.push(character);else finish();}finish();
-      return{text:node.textContent,width:box.width,fontSize:parseFloat(style.fontSize),fits:node.scrollWidth<=node.clientWidth+1,visible,contained,tokens};
+      return{text:node.textContent,width:box.width,fontSize:parseFloat(style.fontSize),fontFamily:style.fontFamily,fits:node.scrollWidth<=node.clientWidth+1,visible,contained,tokens};
     })};
 }
 function assertGeometry(geometry){
-  assert.equal(geometry.pageOverflow,false);assert.equal(geometry.sectionOverflow,false);assert.equal(geometry.metrics.length,15);
-  assert.ok(geometry.metrics.every(metric=>metric.visible&&metric.fits&&metric.contained&&metric.fontSize>=12&&metric.text.trim()&&metric.tokens.length&&metric.tokens.every(token=>token.oneLine)));
+  const diagnostic=JSON.stringify({...geometry,metrics:geometry.metrics.map(({tokens,...metric})=>({...metric,tokens:tokens.map(token=>({text:token.text,oneLine:token.oneLine}))}))});
+  assert.equal(geometry.pageOverflow,false,'Page overflow: '+diagnostic);assert.equal(geometry.sectionOverflow,false,'Comparison section overflow: '+diagnostic);assert.equal(geometry.metrics.length,15);
+  assert.ok(geometry.metrics.every(metric=>metric.visible&&metric.fits&&metric.contained&&metric.fontSize>=12&&metric.text.trim()&&metric.tokens.length&&metric.tokens.every(token=>token.oneLine)),diagnostic);
 }
-async function runCommonMonthFixtures({browser,origin,output,native=false,widths=[1440,375,280]}){
+async function runCommonMonthFixtures({browser,origin,output,native=false,widths=[1440,375,280],fontFamily}){
+  if(fontFamily!==undefined)assert.ok(['Verdana','Arial','sans-serif','serif'].includes(fontFamily),'bounded font probe only');
   fs.mkdirSync(output,{recursive:true});const receipts=[];
   for(const width of widths)for(const entry of cases){
     const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
@@ -76,6 +78,7 @@ async function runCommonMonthFixtures({browser,origin,output,native=false,widths
         await input.fill('3');await input.press('Tab');assert.equal(await page.getByTestId('common-month-net-snowball').innerText(),'$120.00');
       }
       assert.deepEqual(await storage(),before,'comparison-only horizon edits must not write any stored record');
+      if(fontFamily)await page.addStyleTag({content:`[data-testid="common-month-comparison"],[data-testid="common-month-comparison"] *{font-family:${fontFamily} !important;}`});
       await section.scrollIntoViewIfNeeded();
       await page.waitForFunction(()=>{let element=document.querySelector('[data-testid="common-month-comparison"]');while(element){if(Number(getComputedStyle(element).opacity)<0.99)return false;element=element.parentElement;}return true;});
       const geometry=await section.evaluate(comparisonGeometry);assertGeometry(geometry);assert.deepEqual(errors,[]);const oracleControls=[];
@@ -94,12 +97,19 @@ async function runCommonMonthFixtures({browser,origin,output,native=false,widths
           const originalNode=await value.evaluate((element,state)=>document.createTreeWalker(element,NodeFilter.SHOW_TEXT).nextNode()===state.node,snapshot);assert.ok(originalNode);assert.deepEqual(await section.evaluate(comparisonGeometry),geometry);oracleControls.push({kind,rejected:true,restored:true,originalNode});
         }}finally{await snapshot.dispose();}
       }
+      let widerFontProbe=null;
+      if(!native&&entry.name==='large-values'&&width===280){
+        const style=await page.addStyleTag({content:'[data-testid="common-month-comparison"],[data-testid="common-month-comparison"] *{font-family:Verdana !important;}'});
+        try{const probe=await section.evaluate(comparisonGeometry);assertGeometry(probe);widerFontProbe={fontFamily:'Verdana',passed:true,minFontSize:Math.min(...probe.metrics.map(metric=>metric.fontSize))};}
+        finally{await style.evaluate(element=>element.remove());}
+        assert.deepEqual(await section.evaluate(comparisonGeometry),geometry);console.log('PASS common-month wider-font 280px');
+      }
       await section.evaluate(element=>{element.scrollIntoView({block:'start'});for(let parent=element.parentElement;parent;parent=parent.parentElement){const style=getComputedStyle(parent);if(/auto|scroll/.test(style.overflowY)&&parent.scrollHeight>parent.clientHeight&&parent.scrollTop>0){parent.scrollTop=Math.max(0,parent.scrollTop-80);return;}}window.scrollBy(0,-80);});
       await page.screenshot({path:path.join(output,`${native?'native':'web'}-${entry.name}-${width}.png`)});
-      receipts.push({name:entry.name,width,native,expected:entry.expected,geometry,oracleControls,storagePreserved:true,errors});console.log(`PASS ${native?'native':'web'} common month ${entry.name} ${width}px`);
+      receipts.push({name:entry.name,width,native,expected:entry.expected,geometry,oracleControls,widerFontProbe,storagePreserved:true,errors});console.log(`PASS ${native?'native':'web'} common month ${entry.name} ${width}px`);
     }finally{await context.close();}
   }
   fs.writeFileSync(path.join(output,native?'native-common-month-verification.json':'verification.json'),JSON.stringify({origin,receipts},null,2)+'\n');return receipts;
 }
-async function main(){let browser,server;try{server=process.env.COMMON_MONTH_SMOKE_ORIGIN?null:await startBuiltServer(root);const origin=process.env.COMMON_MONTH_SMOKE_ORIGIN??server.origin;browser=await chromium.launch({executablePath:findBrowserExecutable(),headless:true,args:getHeadlessChromiumArgs()});await runCommonMonthFixtures({browser,origin,output:path.join(root,'test-results/portfolio-common-month')});}finally{await browser?.close();await stopServer(server?.server);}}
+async function main(){let browser,server;try{server=process.env.COMMON_MONTH_SMOKE_ORIGIN?null:await startBuiltServer(root);const origin=process.env.COMMON_MONTH_SMOKE_ORIGIN??server.origin;browser=await chromium.launch({executablePath:findBrowserExecutable(),headless:true,args:getHeadlessChromiumArgs()});await runCommonMonthFixtures({browser,origin,output:path.join(root,'test-results/portfolio-common-month'),fontFamily:process.env.COMMON_MONTH_SMOKE_FONT});}finally{await browser?.close();await stopServer(server?.server);}}
 module.exports={runCommonMonthFixtures};if(require.main===module)main().catch(error=>{console.error(error);process.exitCode=1;});

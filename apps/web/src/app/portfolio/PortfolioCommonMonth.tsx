@@ -42,7 +42,7 @@ export default function PortfolioCommonMonth({ book, classes }: { book: Portfoli
                 <h3 className={`text-sm font-semibold ${classes.text}`}>{strategyLabel(plan.strategy)}</h3>
                 <p className={`text-xs ${s.status === 'unavailable' ? 'text-amber-400' : classes.textSecondary}`}>{commonMonthStatusLabel(s)}</p>
               </div>
-              <dl className="grid min-w-0 grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-5">
+              <dl className="grid min-w-0 grid-cols-[repeat(auto-fit,minmax(min(100%,9rem),1fr))] gap-x-4 gap-y-3">
                 {metrics.map(([id, label, value]) => <div key={id} className="min-w-0">
                   <dt className={`min-h-8 text-xs leading-4 ${classes.textMuted}`}>{label}</dt>
                   <dd data-testid={`common-month-${id}-${plan.strategy}`} className={`mt-1 text-xs font-semibold tabular-nums sm:text-sm ${classes.text}`}>{formatCommonMonthAmount(value)}</dd>
