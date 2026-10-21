@@ -1,0 +1,34 @@
+PASS web common month cash-versus-wealth 1440px
+PASS web common month adverse 1440px
+PASS web common month blocked-reference 1440px
+PASS web common month failed-attempt 1440px
+PASS web common month nonzero-tolerance 1440px
+PASS web common month cleared 1440px
+PASS web common month large-values 1440px
+PASS web common month cash-versus-wealth 375px
+PASS web common month adverse 375px
+PASS web common month blocked-reference 375px
+PASS web common month failed-attempt 375px
+PASS web common month nonzero-tolerance 375px
+PASS web common month cleared 375px
+PASS web common month large-values 375px
+PASS web common month cash-versus-wealth 280px
+PASS web common month adverse 280px
+PASS web common month blocked-reference 280px
+PASS web common month failed-attempt 280px
+PASS web common month nonzero-tolerance 280px
+PASS web common month cleared 280px
+AssertionError [ERR_ASSERTION]: Comparison section overflow: {"pageOverflow":false,"sectionOverflow":true,"metrics":[{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]},{"text":"$99,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$99,000,000.00","oneLine":true}]},{"text":"$91,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$91,000,000.00","oneLine":true}]},{"text":"-$190,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"-$190,000,000.00","oneLine":true}]},{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]},{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]},{"text":"$90,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$90,000,000.00","oneLine":true}]},{"text":"$100,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$100,000,000.00","oneLine":true}]},{"text":"-$190,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"-$190,000,000.00","oneLine":true}]},{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]},{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]},{"text":"$90,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$90,000,000.00","oneLine":true}]},{"text":"$100,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"$100,000,000.00","oneLine":true}]},{"text":"-$190,000,000.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":false,"visible":true,"contained":false,"tokens":[{"text":"-$190,000,000.00","oneLine":true}]},{"text":"$0.00","width":99,"fontSize":12,"fontFamily":"Verdana","fits":true,"visible":true,"contained":true,"tokens":[{"text":"$0.00","oneLine":true}]}]}
+
+true !== false
+
+    at assertGeometry (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:46:81)
+    at runCommonMonthFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:84:65)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:107:308) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

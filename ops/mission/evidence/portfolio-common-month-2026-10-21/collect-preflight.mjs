@@ -18,13 +18,13 @@ const modified = ['apps/web/package.json', 'apps/web/src/app/portfolio/Portfolio
 const added = ['packages/financial-engine/src/common-month.ts', 'packages/financial-engine/src/portfolio-common-month.ts',
   'apps/web/src/app/portfolio/PortfolioCommonMonth.tsx', 'apps/mobile/components/portfolio/portfolio-common-month.tsx',
   'apps/web/scripts/portfolio-common-month-tests.cjs', 'apps/web/scripts/portfolio-common-month-reference-tests.cjs',
-  'apps/web/scripts/smoke-portfolio-common-month.cjs'];
+  'apps/web/scripts/smoke-portfolio-common-month.cjs', 'apps/web/scripts/smoke-portfolio-currency-width.cjs'];
 const sources = {};
 for (const file of [...Object.keys(prior.local.sources), ...added]) {
   sources[file] = normalized(await fs.readFile(file));
   if (!modified.includes(file) && !added.includes(file)) assert.equal(sources[file], prior.local.sources[file], file);
 }
-assert.equal(Object.keys(sources).length, 292);
+assert.equal(Object.keys(sources).length, 293);
 for (const model of prior.local.models) assert.equal(hash(await fs.readFile(`apps/web/public/heroes/${model.id}.glb`)), model.sha256);
 for (const poster of prior.local.posters) assert.equal(hash(await fs.readFile(`apps/web/public/heroes/${poster.id}.webp`)), poster.posterSha256);
 const videos = JSON.parse(await fs.readFile('apps/media/hyperframes/output/heroes/verification.json', 'utf8'));
@@ -43,9 +43,18 @@ for (const name of ['run-hosted.cjs', 'postflight.mjs', 'publish-desktop.mjs', '
   await copy(path.join(scratch, 'release', name), 'shipping/' + name);
 }
 for (const name of await fs.readdir(path.join(scratch, 'release'))) {
-  if (/^projection.*\.(json|log|mjs)$/.test(name) || /^shipping-guards.*\.log$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
+  if (/^projection.*\.(json|log|mjs)$/.test(name) || /^shipping-guards.*\.log$/.test(name) || /^currency-width.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
 }
+for (const [source, target] of Object.entries({
+  'web-tests-font-fix.log': 'web-tests-final.log', 'web-lint-currency-final.log': 'web-lint-final.log',
+  'web-build-currency-fix.log': 'web-build-final.log', 'native-export-font-fix.log': 'native-export-final.log',
+  'native-contracts-font-fix.log': 'native-contracts-final.log', 'media-font-fix.log': 'media-check.log',
+  'native-ui-font-fix.log': 'native-ui-capture-final.log', 'web-ui-font-fix-final.log': 'web-ui-capture-final.log',
+  'videos-font-fix.log': 'videos-final.log', 'release-tests-currency-final.log': 'release-tests-final.log',
+})) await copy(path.join(scratch, source), target);
+for (const name of ['failed-push-ci.log', 'failed-pr-ci.log', 'failed-7bd72ac-browser-proof.json']) await copy(path.join(scratch, 'release', name), name);
 await copy('apps/web/test-results/portfolio-common-month/verification.json', 'web-common-month-verification.json');
+await copy('apps/web/test-results/currency-width/verification.json', 'currency-width-verification.json');
 await copy('apps/mobile/test-results/accessibility/native-common-month-verification.json', 'native-common-month-verification.json');
 for (const width of [1440, 375, 280]) {
   await copy(`apps/web/test-results/portfolio-common-month/web-cash-versus-wealth-${width}.png`, `web-common-month-${width}.png`);
@@ -66,7 +75,7 @@ const requiredLogs = ['web-tests-final.log', 'web-lint-final.log', 'web-build-fi
   'native-contracts-final.log', 'native-ui-capture-final.log', 'web-ui-capture-final.log', 'videos-final.log',
   'runtime-audit.log', 'media-check.log', 'three-final.log', 'heroes-final.log', 'fallbacks-final.log',
   'routes-final.log', 'rendered-final.log', 'dashboard-final.log', 'portfolio-final.log', 'vault-final.log',
-  'comparison-final.log', 'portability-final.log', 'input-final.log'];
+  'comparison-final.log', 'portability-final.log', 'input-final.log', 'portfolio-currency-final.log'];
 for (const file of requiredLogs) assert.ok((await fs.stat(path.join(output, file))).size > 0, file);
 const gates = JSON.parse(await fs.readFile(path.join(output, 'web-gates-final.json'), 'utf8'));
 assert.equal(gates.status, 'completed'); assert.equal(gates.stages.length, 11);
@@ -88,11 +97,13 @@ for (const entry of await fs.readdir(output, { recursive: true, withFileTypes: t
 }
 const receipt = { verifiedAt: new Date().toISOString(), baseline, stage: 'Local preflight; final exact-head CI and hosted proof required', productionReady: false,
   priorReceipt: prior.receipt, allowedSourceChanges: [...modified, ...added], sources,
-  web: { regressions: 348, dashboardCases: 18, hostedCasesRequired: 109, heroViewportCases: 20 },
+  web: { regressions: 348, dashboardCases: 18, hostedCasesRequired: 120, heroViewportCases: 20 },
   native: { browserExecutions: 70, commonMonthCases: 21 },
-  commonMonth: { coreContracts: 31, webCases: 21, nativeCases: 21, oracleControls: 4, widths: [1440, 375, 280],
+  commonMonth: { coreContracts: 31, webCases: 21, nativeCases: 21, currencyWidthCases: 11, oracleControls: 4, widerFontProbes: 1, widerFontBoundaryExecutions: 42, widths: [1440, 375, 280],
     reference: { passed: 23247, failed: 0, adjudicated: true, logFile: 'web-tests-final.log', reportFile: 'reference-followup-decision.md' } },
   media: { contracts: 145, freshStills: 27, unchangedModelsAndPosters: 10, unchangedVideosRechecked: 10 },
+  failedPredecessor: { headSha: '7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47', ciRuns: [39605673471, 39605676575],
+    reason: 'Both web jobs fail common-month large-values280 section overflow; both SQL jobs pass. Hosted/local success did not override CI; no verified receipt or Desktop publication.' },
   models: prior.local.models, posters: prior.local.posters, videos, files,
   limitations: ['No old payoff allocation, saved-data, asset or cloud change.', 'Generic Number estimates are not exact lender posting.',
     'Whole R2, final collection art, lender/calendar, backend, physical-device and production release remain open.',

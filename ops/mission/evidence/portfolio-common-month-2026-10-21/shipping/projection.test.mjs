@@ -45,6 +45,10 @@ test('Dashboard G6 retains daily18/ten-controls/fallback proof; comparison maps 
   assert.match(numerical.notes,/31 focused/);assert.match(numerical.notes,/23247.*reference/);
   const rendered=gates.find(gate=>gate.id==='R2-G8');
   assert.match(rendered.notes,/21 web \+21 native/);assert.match(rendered.notes,/70.*native|native.*70/);
+  assert.match(rendered.notes,/11.*currency.*boundar/i);
+  const overall=projected.phases.find(phase=>phase.id==='R0').gates;
+  assert.match(overall.find(gate=>gate.id==='R0-G3').notes,/Ten hosted suites\/120.*109 primary.*11/i);
+  assert.match(overall.find(gate=>gate.id==='R0-G1').notes,/293.*eight new/);
   for(const id of ['R2-G6','R2-G7','R2-G8']){
     const gate=gates.find(gate=>gate.id===id);assert.equal(gate.lastRun,receipt.verifiedAt,id+' receipt timestamp');
     assert.equal(gate.evidence,receipt.receipt,id+' receipt URL');assert.equal(gate.status,'passed',id+' bounded gate status');

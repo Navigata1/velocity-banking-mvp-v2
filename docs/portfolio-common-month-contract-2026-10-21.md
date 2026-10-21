@@ -85,6 +85,29 @@ month availability remain separate lender gates.
 
 ## Evidence In Progress
 
+The first pushed head7bd72ac failed BOTH complete CI events39605673471 and
+39605676575: the new large-value comparison at280px overflowed its section.
+Both SQL jobs passed; later media/native CI steps were skipped. Hosted109 and
+actual IAB edits passed, but no receipt or Desktop publication was issued.
+A local requested-Verdana probe reproduced99px columns too narrow for full
+currency at12px before a one-class content-track fix. It does not identify the
+actual Linux font. The corrected grid uses auto-fit tracks with a9rem minimum for
+12px values and a10rem minimum at the existing14px breakpoint, both capped by
+available width. Values are not clipped, shrunk or numerically changed.
+The standing21-case gate now includes a reversible wider-font280 positive probe;
+42 additional executions across280/360/640/768/1024/1440 pass independently.
+Four actual DOM counterexamples and every fit/minimum-font assertion remain.
+Both NEW complete final-head CI events remain mandatory.
+
+An additional real maximum-standard-notation boundary RED at690px showed
+`-$1,000,000,000.00` at14px needs156.359px, exceeding a144px track. The10rem
+breakpoint correction follows that RED. A permanent web browser gate now runs
+that one canonical book at11 widths, including690/700; it checks exact full text,
+one-line containment, finite positive widths, font>=12, no overflow and no errors.
+Those are11 layout executions, not11 lender examples. Web totals are109 primary
+workflow cases plus11 currency boundaries=120, across ten hosted suites. Native
+remains70; source inventory293=280 old unchanged,5 old modified and8 new.
+
 Local shared contracts:31 passing cases, with genuine preceding API, prefix,
 draft/coverage, cancellation, tolerance and four review-regression REDs preserved.
 The independent

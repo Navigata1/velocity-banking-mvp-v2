@@ -13,6 +13,7 @@ export const modifiedSources = [
 export const newSources = [
   'apps/mobile/components/portfolio/portfolio-common-month.tsx', 'apps/web/scripts/portfolio-common-month-reference-tests.cjs',
   'apps/web/scripts/portfolio-common-month-tests.cjs', 'apps/web/scripts/smoke-portfolio-common-month.cjs',
+  'apps/web/scripts/smoke-portfolio-currency-width.cjs',
   'apps/web/src/app/portfolio/PortfolioCommonMonth.tsx', 'packages/financial-engine/src/common-month.ts', 'packages/financial-engine/src/portfolio-common-month.ts',
 ];
 export const hostedConfigs = [
@@ -21,10 +22,13 @@ export const hostedConfigs = [
   ['smoke-portfolio-budget.cjs','portfolio',['portfolio-budget/verification.json']], ['smoke-vault-comparison.cjs','vault',['vault-comparison/verification.json']],
   ['smoke-comparison.cjs','comparison',['comparison/verification.json']], ['smoke-portfolio-portability.cjs','portability',['portfolio-portability/verification.json']],
   ['smoke-portfolio-common-month.cjs','commonMonth',['portfolio-common-month/verification.json','portfolio-common-month/web-cash-versus-wealth-375.png']],
+  ['smoke-portfolio-currency-width.cjs','currencyWidth',['currency-width/verification.json']],
 ];
-export const hostedEnvironment = origin => ({...Object.fromEntries(['PRODUCTION_ORIGIN','RENDERED_SMOKE_ORIGIN','DASHBOARD_INTEREST_SMOKE_ORIGIN','PORTFOLIO_BUDGET_SMOKE_ORIGIN','VAULT_COMPARISON_SMOKE_ORIGIN','COMPARISON_SMOKE_ORIGIN','PORTFOLIO_PORTABILITY_ORIGIN','PORTFOLIO_INPUT_ORIGIN','COMMON_MONTH_SMOKE_ORIGIN'].map(key=>[key,origin])),RENDERED_SMOKE_MOBILE_WIDTH:'375'});
+export const currencyWidths = [280,375,640,690,700,768,1024,1100,1120,1280,1440];
+export const hostedEnvironment = origin => ({...Object.fromEntries(['PRODUCTION_ORIGIN','RENDERED_SMOKE_ORIGIN','DASHBOARD_INTEREST_SMOKE_ORIGIN','PORTFOLIO_BUDGET_SMOKE_ORIGIN','VAULT_COMPARISON_SMOKE_ORIGIN','COMPARISON_SMOKE_ORIGIN','PORTFOLIO_PORTABILITY_ORIGIN','PORTFOLIO_INPUT_ORIGIN','COMMON_MONTH_SMOKE_ORIGIN','CURRENCY_WIDTH_ORIGIN'].map(key=>[key,origin])),RENDERED_SMOKE_MOBILE_WIDTH:'375'});
 export const ciMarkers = [
   '348 regression tests passed.', 'PASS Dashboard interest large-import at 280px',
+  'PASS common-month wider-font 280px',
   'Custom front lug physically seats the closed bail with a real empty ring aperture',
   'Collection packaging delivers validated source and manifest snapshots despite source-path changes',
   '15 explicit APR unit contracts passed.', '17 portable Portfolio book contracts passed.',
@@ -65,13 +69,13 @@ export function validateLocalReceipt(local, prior) {
   assert.equal(prior.headSha,baselineHead);assert.equal(local.baseline,baselineHead);assert.equal(local.priorReceipt,prior.receipt);assert.equal(local.productionReady,false);
   assert.deepEqual(sorted(local.allowedSourceChanges),sorted([...modifiedSources,...newSources]));
   assert.equal(Object.keys(prior.local.sources).length,285);
-  assert.deepEqual(sorted(Object.keys(local.sources)),sorted([...Object.keys(prior.local.sources),...newSources]));assert.equal(Object.keys(local.sources).length,292);
+  assert.deepEqual(sorted(Object.keys(local.sources)),sorted([...Object.keys(prior.local.sources),...newSources]));assert.equal(Object.keys(local.sources).length,293);
   for(const [file,pin]of Object.entries(local.sources)){assert.match(pin,/^[a-f0-9]{64}$/);if(!local.allowedSourceChanges.includes(file))assert.equal(pin,prior.local.sources[file],file+' immutable pin');}
-  assert.equal(local.web.regressions,348);assert.equal(local.web.dashboardCases,18);assert.equal(local.web.hostedCasesRequired,109);
+  assert.equal(local.web.regressions,348);assert.equal(local.web.dashboardCases,18);assert.equal(local.web.hostedCasesRequired,120);
   assert.equal(local.media.contracts,145);assert.equal(local.media.freshStills,27);assert.equal(local.native.browserExecutions,70);assert.equal(local.native.commonMonthCases,21);
   for(const key of ['models','posters','videos'])assert.deepEqual(local[key],prior.local[key],key+' unchanged asset snapshots');
   const common=local.commonMonth;assert.ok(Number.isSafeInteger(common.coreContracts)&&common.coreContracts>0,'explicit core contract count required');
-  assert.equal(common.webCases,21);assert.equal(common.nativeCases,21);assert.equal(common.oracleControls,4);assert.deepEqual(sorted(common.widths),[1440,280,375]);
+  assert.equal(common.webCases,21);assert.equal(common.nativeCases,21);assert.equal(common.currencyWidthCases,11);assert.equal(common.oracleControls,4);assert.deepEqual(sorted(common.widths),[1440,280,375]);
   const ref=common.reference;assert.ok(ref?.adjudicated===true,'adjudicated reference receipt required');assert.ok(Number.isSafeInteger(ref.passed)&&ref.passed>0);assert.equal(ref.failed,0);
   assert.ok(typeof ref.logFile==='string'&&ref.logFile.length>0);assert.ok(local.files[ref.logFile],'reference log must be hash-pinned in local.files');
   assert.ok(typeof ref.reportFile==='string'&&ref.reportFile.length>0);assert.ok(local.files[ref.reportFile],'adjudication report must be hash-pinned in local.files');
@@ -123,7 +127,26 @@ export function validateCiLogs(webLog, sqlLog, common, binding) {
   for(const marker of [...ciMarkers,`${common.coreContracts} common-month contracts passed.`,'# tests 145','Rendered 27 Remotion matrix stills.'])assert.ok(webLog.includes(marker),'CI missing '+marker);
   for(const [pattern,count]of [[/\bPASS (?:compact-|phone-|tablet-)/g,35],[/\bPASS native portfolio /g,12],[/\bPASS native financial inputs /g,2],[/\bPASS native common month /g,21],[/\bPASS web common month /g,21]])assert.equal((webLog.match(pattern)||[]).length,count,'actual browser execution count');
   assert.equal((sqlLog.match(/Tests=63\b/g)||[]).length,2,'SQL63 twice per event');
+  assert.equal(common.currencyWidthCases,11);validateCurrencyWidthLog(webLog);
   return validateReferenceLog(webLog,common.reference,binding);
+}
+
+export function validateCurrencyWidthLog(log) {
+  const actual=[...log.matchAll(/\bPASS max-standard-currency boundary (\d+)px[ \t]*$/gm)].map(match=>Number(match[1]));
+  assert.deepEqual(actual.sort((a,b)=>a-b),currencyWidths,'each of the eleven actual currency boundary executions required exactly once');
+  return actual;
+}
+
+export function validateCurrencyWidth(data, origin) {
+  assert.equal(data.origin,origin);assert.equal(data.receipts.length,11);const seen=new Set();
+  for(const receipt of data.receipts){
+    assert.ok(currencyWidths.includes(receipt.viewportWidth));assert.ok(!seen.has(receipt.viewportWidth));seen.add(receipt.viewportWidth);
+    assert.equal(receipt.text,'-$1,000,000,000.00');assert.equal(receipt.fontFamilyRequested,'Verdana');
+    assert.ok(Number.isFinite(receipt.fontSize)&&receipt.fontSize>=12);
+    assert.equal(receipt.fits,true);assert.equal(receipt.contained,true);assert.equal(receipt.oneLine,true);assert.equal(receipt.pageOverflow,false);assert.deepEqual(receipt.errors,[]);
+    assert.ok(Number.isFinite(receipt.metricWidth)&&receipt.metricWidth>0&&Number.isFinite(receipt.glyphWidth)&&receipt.glyphWidth>0&&receipt.glyphWidth<=receipt.metricWidth+1);
+  }
+  return data;
 }
 
 export function validateCommonMonth(data, origin, native=false) {
@@ -138,6 +161,10 @@ export function validateCommonMonth(data, origin, native=false) {
       assert.deepEqual(receipt.oracleControls.map(c=>c.kind),['ancestor-opacity','value-opacity','value-clip','empty-value']);
       for(const c of receipt.oracleControls){assert.equal(c.rejected,true);assert.equal(c.restored,true);if(c.kind!=='ancestor-opacity')assert.equal(c.originalNode,true);}
     }else assert.deepEqual(receipt.oracleControls,[]);
+    if(!native&&receipt.name==='large-values'&&receipt.width===280){
+      assert.equal(receipt.widerFontProbe?.fontFamily,'Verdana');assert.equal(receipt.widerFontProbe.passed,true);
+      assert.ok(Number.isFinite(receipt.widerFontProbe.minFontSize)&&receipt.widerFontProbe.minFontSize>=12);
+    }
   }
   return data;
 }

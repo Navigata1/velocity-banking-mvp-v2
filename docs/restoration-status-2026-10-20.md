@@ -20,6 +20,11 @@ continuation only after exact payoff.31 focused contracts and23,247 synthetic
 reference probes pass after genuine review REDs. Existing allocations and saved
 records are unchanged. See `docs/portfolio-common-month-contract-2026-10-21.md`;
 fresh complete exact-head CI and hosted publication are still required.
+Initial7bd72ac failed both Linux web CI events at280px large-currency section
+overflow; SQL passed, but no receipt or Desktop update was issued. A requested-
+Verdana RED precedes the content-sized grid correction. Full values,12px minimum
+and every fit/visibility/control assertion remain.42 extra width-boundary cases
+pass; both new complete final-head pipelines are required for the correction.
 The earlier precision correction reproduced120.70 displayed as121 and typed120.70 saved as12070.
 Validated drafts now retain cents/APR precision, exact no-ops and unrelated saved
 values. Review found and closed additional precision/fraction/comma hazards.

@@ -1,0 +1,16 @@
+{"viewportWidth":280,"text":"-$1,000,000,000.00","width":214,"glyphWidth":134.015625,"fontSize":12,"fontFamily":"Verdana","fits":true}
+{"viewportWidth":375,"text":"-$1,000,000,000.00","width":146.5,"glyphWidth":134.015625,"fontSize":12,"fontFamily":"Verdana","fits":true}
+{"viewportWidth":640,"text":"-$1,000,000,000.00","width":180.65625,"glyphWidth":156.359375,"fontSize":14,"fontFamily":"Verdana","fits":true}
+{"viewportWidth":690,"text":"-$1,000,000,000.00","width":144,"glyphWidth":156.359375,"fontSize":14,"fontFamily":"Verdana","fits":false}
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(geometry.fits)
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-common-month\currency-width-boundary.cjs:30:134 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

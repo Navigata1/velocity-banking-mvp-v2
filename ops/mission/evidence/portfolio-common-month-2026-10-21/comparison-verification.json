@@ -28,16 +28,16 @@
       "scenario": "zero-interest-two-liabilities",
       "width": 1440,
       "directMonths": "2 mo",
-      "chartHeight": 192,
-      "firstBarHeight": 96,
+      "chartHeight": 192.0001220703125,
+      "firstBarHeight": 96.0001220703125,
       "errors": []
     },
     {
       "scenario": "velocity-slower-and-more-interest",
       "width": 1440,
       "directMonths": "3 mo",
-      "chartHeight": 192,
-      "firstBarHeight": 97.90625,
+      "chartHeight": 192.0001220703125,
+      "firstBarHeight": 97.9063720703125,
       "errors": []
     },
     {

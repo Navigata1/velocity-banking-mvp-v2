@@ -1,84 +1,84 @@
 {
-  "startedAt": "2026-10-21T12:59:16.019Z",
+  "startedAt": "2026-10-21T13:49:40.924Z",
   "status": "completed",
   "stages": [
     {
       "script": "test-three-stage.cjs",
       "name": "three",
-      "startedAt": "2026-10-21T12:59:16.020Z",
-      "finishedAt": "2026-10-21T12:59:39.643Z",
+      "startedAt": "2026-10-21T13:49:40.925Z",
+      "finishedAt": "2026-10-21T13:50:06.628Z",
       "exitCode": 0
     },
     {
       "script": "smoke-heroes.cjs",
       "name": "heroes",
-      "startedAt": "2026-10-21T12:59:39.645Z",
-      "finishedAt": "2026-10-21T13:00:44.796Z",
+      "startedAt": "2026-10-21T13:50:06.631Z",
+      "finishedAt": "2026-10-21T13:51:10.241Z",
       "exitCode": 0
     },
     {
       "script": "hero-fallback-smoke.cjs",
       "name": "fallbacks",
-      "startedAt": "2026-10-21T13:00:44.798Z",
-      "finishedAt": "2026-10-21T13:00:56.761Z",
+      "startedAt": "2026-10-21T13:51:10.242Z",
+      "finishedAt": "2026-10-21T13:51:22.328Z",
       "exitCode": 0
     },
     {
       "script": "smoke-routes.cjs",
       "name": "routes",
-      "startedAt": "2026-10-21T13:00:56.762Z",
-      "finishedAt": "2026-10-21T13:00:58.633Z",
+      "startedAt": "2026-10-21T13:51:22.329Z",
+      "finishedAt": "2026-10-21T13:51:23.695Z",
       "exitCode": 0
     },
     {
       "script": "smoke-rendered.cjs",
       "name": "rendered",
-      "startedAt": "2026-10-21T13:00:58.634Z",
-      "finishedAt": "2026-10-21T13:01:14.795Z",
+      "startedAt": "2026-10-21T13:51:23.696Z",
+      "finishedAt": "2026-10-21T13:51:39.151Z",
       "exitCode": 0
     },
     {
       "script": "smoke-dashboard-interest.cjs",
       "name": "dashboard",
-      "startedAt": "2026-10-21T13:01:14.796Z",
-      "finishedAt": "2026-10-21T13:01:47.050Z",
+      "startedAt": "2026-10-21T13:51:39.153Z",
+      "finishedAt": "2026-10-21T13:52:12.254Z",
       "exitCode": 0
     },
     {
       "script": "smoke-portfolio-budget.cjs",
       "name": "portfolio",
-      "startedAt": "2026-10-21T13:01:47.052Z",
-      "finishedAt": "2026-10-21T13:02:19.579Z",
+      "startedAt": "2026-10-21T13:52:12.256Z",
+      "finishedAt": "2026-10-21T13:52:44.777Z",
       "exitCode": 0
     },
     {
       "script": "smoke-vault-comparison.cjs",
       "name": "vault",
-      "startedAt": "2026-10-21T13:02:19.580Z",
-      "finishedAt": "2026-10-21T13:02:49.052Z",
+      "startedAt": "2026-10-21T13:52:44.778Z",
+      "finishedAt": "2026-10-21T13:53:13.701Z",
       "exitCode": 0
     },
     {
       "script": "smoke-comparison.cjs",
       "name": "comparison",
-      "startedAt": "2026-10-21T13:02:49.053Z",
-      "finishedAt": "2026-10-21T13:03:22.683Z",
+      "startedAt": "2026-10-21T13:53:13.702Z",
+      "finishedAt": "2026-10-21T13:53:46.894Z",
       "exitCode": 0
     },
     {
       "script": "smoke-portfolio-portability.cjs",
       "name": "portability",
-      "startedAt": "2026-10-21T13:03:22.684Z",
-      "finishedAt": "2026-10-21T13:03:33.837Z",
+      "startedAt": "2026-10-21T13:53:46.895Z",
+      "finishedAt": "2026-10-21T13:53:58.410Z",
       "exitCode": 0
     },
     {
       "script": "portfolio-input-smoke.cjs",
       "name": "input",
-      "startedAt": "2026-10-21T13:03:33.838Z",
-      "finishedAt": "2026-10-21T13:03:53.278Z",
+      "startedAt": "2026-10-21T13:53:58.411Z",
+      "finishedAt": "2026-10-21T13:54:18.247Z",
       "exitCode": 0
     }
   ],
-  "finishedAt": "2026-10-21T13:03:53.279Z"
+  "finishedAt": "2026-10-21T13:54:18.248Z"
 }

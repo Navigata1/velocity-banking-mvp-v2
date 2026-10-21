@@ -1,0 +1,1545 @@
+
+> @interestshield/media@0.1.0 check
+> npm run test:contracts && npm run check:hyperframes && npm run check:remotion
+
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+ok 1 - Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+  ---
+  duration_ms: 298.2384
+  type: 'test'
+  ...
+# Subtest: Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+ok 2 - Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+  ---
+  duration_ms: 253.2096
+  type: 'test'
+  ...
+# Subtest: Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+ok 3 - Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+  ---
+  duration_ms: 715.7786
+  type: 'test'
+  ...
+# Subtest: Credit Card keeps eight inset chip contacts connected to their recessed substrate
+ok 4 - Credit Card keeps eight inset chip contacts connected to their recessed substrate
+  ---
+  duration_ms: 259.5907
+  type: 'test'
+  ...
+# Subtest: Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+ok 5 - Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+  ---
+  duration_ms: 300.1217
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has actual reeding, two closed faces and recessed wave details
+ok 6 - Credit Card coin has actual reeding, two closed faces and recessed wave details
+  ---
+  duration_ms: 185.6858
+  type: 'test'
+  ...
+# Subtest: Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+ok 7 - Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+  ---
+  duration_ms: 982.9939
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+ok 8 - Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+  ---
+  duration_ms: 39.0994
+  type: 'test'
+  ...
+# Subtest: Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+ok 9 - Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+  ---
+  duration_ms: 216.4145
+  type: 'test'
+  ...
+# Subtest: Custom replaces the study with hash-protected procedural original refinement in both manifests
+ok 10 - Custom replaces the study with hash-protected procedural original refinement in both manifests
+  ---
+  duration_ms: 121.7175
+  type: 'test'
+  ...
+# Subtest: Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+ok 11 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+  ---
+  duration_ms: 658.5765
+  type: 'test'
+  ...
+# Subtest: Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+ok 12 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+  ---
+  duration_ms: 225.1931
+  type: 'test'
+  ...
+# Subtest: Custom dark dial is a closed seated cylinder with its top near author Y .264
+ok 13 - Custom dark dial is a closed seated cylinder with its top near author Y .264
+  ---
+  duration_ms: 6535.8235
+  type: 'test'
+  ...
+# Subtest: Custom rose is a closed raised faceted metal eight-point body seated on the dial
+ok 14 - Custom rose is a closed raised faceted metal eight-point body seated on the dial
+  ---
+  duration_ms: 153.8535
+  type: 'test'
+  ...
+# Subtest: Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+ok 15 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+  ---
+  duration_ms: 270.5936
+  type: 'test'
+  ...
+# Subtest: Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+ok 16 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+  ---
+  duration_ms: 172.4367
+  type: 'test'
+  ...
+# Subtest: Custom axle and pivot physically connect the dial and both needle roots
+ok 17 - Custom axle and pivot physically connect the dial and both needle roots
+  ---
+  duration_ms: 902.3152
+  type: 'test'
+  ...
+# Subtest: Custom transparent closed lens covers the complete needle and pivot without intersecting them
+ok 18 - Custom transparent closed lens covers the complete needle and pivot without intersecting them
+  ---
+  duration_ms: 261.5347
+  type: 'test'
+  ...
+# Subtest: Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+ok 19 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+  ---
+  duration_ms: 135.4894
+  type: 'test'
+  ...
+# Subtest: Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+ok 20 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+  ---
+  duration_ms: 89.5782
+  type: 'test'
+  ...
+# Subtest: Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+ok 21 - Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+  ---
+  duration_ms: 215.8653
+  type: 'test'
+  ...
+# Subtest: Custom pin retains positive radial clearance in all five assembled hinge bores
+ok 22 - Custom pin retains positive radial clearance in all five assembled hinge bores
+  ---
+  duration_ms: 153.6337
+  type: 'test'
+  ...
+# Subtest: Custom five hinge brackets join actual case/lid skins at opposite knuckle endpoints
+ok 23 - Custom five hinge brackets join actual case/lid skins at opposite knuckle endpoints
+  ---
+  duration_ms: 6178.3554
+  type: 'test'
+  ...
+# Subtest: Custom front lug physically seats the closed bail with a real empty ring aperture
+ok 24 - Custom front lug physically seats the closed bail with a real empty ring aperture
+  ---
+  duration_ms: 3565.5248
+  type: 'test'
+  ...
+# Subtest: Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+ok 25 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+  ---
+  duration_ms: 204.4657
+  type: 'test'
+  ...
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 26 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 183.9092
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 27 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 58.1845
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 28 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 64.8203
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 29 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 576.6036
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 30 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 51.9449
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 31 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 184.0907
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 32 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 17.8666
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 33 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 2.2268
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 34 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 69.7799
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 35 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 9.81
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 36 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 24.1059
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 37 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 4.0858
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 38 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 3.4005
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 39 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 6.6371
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 40 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 1.8469
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 41 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 2.3687
+  type: 'test'
+  ...
+# Subtest: Land preserves generated sources, embedded PBR maps and the standing collection budget
+ok 42 - Land preserves generated sources, embedded PBR maps and the standing collection budget
+  ---
+  duration_ms: 233.6622
+  type: 'test'
+  ...
+# Subtest: Land has real pond depth and non-flat terrain rather than a water disk over grass
+ok 43 - Land has real pond depth and non-flat terrain rather than a water disk over grass
+  ---
+  duration_ms: 239.6226
+  type: 'test'
+  ...
+# Subtest: Land gravel ribbon follows the actual triangulated terrain without floating
+ok 44 - Land gravel ribbon follows the actual triangulated terrain without floating
+  ---
+  duration_ms: 129.5218
+  type: 'test'
+  ...
+# Subtest: Land keeps four grounded survey stakes and three connected textured trees
+ok 45 - Land keeps four grounded survey stakes and three connected textured trees
+  ---
+  duration_ms: 174.5655
+  type: 'test'
+  ...
+# Subtest: Land cutaway layers meet the terrain and preserve finite normalized geometry
+ok 46 - Land cutaway layers meet the terrain and preserve finite normalized geometry
+  ---
+  duration_ms: 287.189
+  type: 'test'
+  ...
+# Subtest: Land cut faces include actual stone/root detail and varied leaf shading
+ok 47 - Land cut faces include actual stone/root detail and varied leaf shading
+  ---
+  duration_ms: 163.8914
+  type: 'test'
+  ...
+# Subtest: Land woody components actually enter their trunks and reject detached branches
+ok 48 - Land woody components actually enter their trunks and reject detached branches
+  ---
+  duration_ms: 114.307
+  type: 'test'
+  ...
+# Subtest: Land cutaway has outward-facing lower joins, corners and a closed underside
+ok 49 - Land cutaway has outward-facing lower joins, corners and a closed underside
+  ---
+  duration_ms: 518.6918
+  type: 'test'
+  ...
+# Subtest: Land rechecks the live collection budget inside locked asset publication
+ok 50 - Land rechecks the live collection budget inside locked asset publication
+  ---
+  duration_ms: 168.132
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 51 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 43.5501
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 52 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 6.9308
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 53 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 52.6803
+  type: 'test'
+  ...
+# Subtest: Medical poster retains traceable original-badge edit sources and current delivery hashes
+ok 54 - Medical poster retains traceable original-badge edit sources and current delivery hashes
+  ---
+  duration_ms: 43.5589
+  type: 'test'
+  ...
+# Subtest: Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+ok 55 - Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+  ---
+  duration_ms: 196.5545
+  type: 'test'
+  ...
+# Subtest: Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+ok 56 - Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+  ---
+  duration_ms: 10697.1266
+  type: 'test'
+  ...
+# Subtest: Legacy poster preparation and collection packaging retain the edited Medical source
+ok 57 - Legacy poster preparation and collection packaging retain the edited Medical source
+  ---
+  duration_ms: 26.9677
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+ok 58 - Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+  ---
+  duration_ms: 84.0107
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+ok 59 - Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+  ---
+  duration_ms: 57.2455
+  type: 'test'
+  ...
+# Subtest: Collection packaging delivers validated source and manifest snapshots despite source-path changes
+ok 60 - Collection packaging delivers validated source and manifest snapshots despite source-path changes
+  ---
+  duration_ms: 11.0392
+  type: 'test'
+  ...
+# Subtest: Medical replaces the study with protected original geometry and verifiable source provenance
+ok 61 - Medical replaces the study with protected original geometry and verifiable source provenance
+  ---
+  duration_ms: 176.1679
+  type: 'test'
+  ...
+# Subtest: Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+ok 62 - Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+  ---
+  duration_ms: 279.8698
+  type: 'test'
+  ...
+# Subtest: Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+ok 63 - Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+  ---
+  duration_ms: 583.1539
+  type: 'test'
+  ...
+# Subtest: Medical handle is an arched tube with an actual open aperture and attached grip and bases
+ok 64 - Medical handle is an arched tube with an actual open aperture and attached grip and bases
+  ---
+  duration_ms: 996.9857
+  type: 'test'
+  ...
+# Subtest: Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+ok 65 - Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+  ---
+  duration_ms: 318.1843
+  type: 'test'
+  ...
+# Subtest: Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+ok 66 - Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+  ---
+  duration_ms: 1504.1859
+  type: 'test'
+  ...
+# Subtest: Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+ok 67 - Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+  ---
+  duration_ms: 134.1258
+  type: 'test'
+  ...
+# Subtest: Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+ok 68 - Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+  ---
+  duration_ms: 4780.0471
+  type: 'test'
+  ...
+# Subtest: Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+ok 69 - Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+  ---
+  duration_ms: 349.6054
+  type: 'test'
+  ...
+# Subtest: Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+ok 70 - Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+  ---
+  duration_ms: 198.4942
+  type: 'test'
+  ...
+# Subtest: Medical contact verification rejects concentric open tube skins without touching surfaces
+ok 71 - Medical contact verification rejects concentric open tube skins without touching surfaces
+  ---
+  duration_ms: 23.8338
+  type: 'test'
+  ...
+# Subtest: Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+ok 72 - Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+  ---
+  duration_ms: 58.7765
+  type: 'test'
+  ...
+# Subtest: Medical badge rim is closed and outward with visible aperture-facing inner walls
+ok 73 - Medical badge rim is closed and outward with visible aperture-facing inner walls
+  ---
+  duration_ms: 48.5731
+  type: 'test'
+  ...
+# Subtest: Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+ok 74 - Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+  ---
+  duration_ms: 87.6351
+  type: 'test'
+  ...
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+ok 75 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 140.9416
+  type: 'test'
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+ok 76 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 523.4185
+  type: 'test'
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+ok 77 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 355.9193
+  type: 'test'
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+ok 78 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 379.4666
+  type: 'test'
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+ok 79 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 6295.3997
+  type: 'test'
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+ok 80 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 1368.2449
+  type: 'test'
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+ok 81 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 527.8977
+  type: 'test'
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+ok 82 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 366.379
+  type: 'test'
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+ok 83 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 31.146
+  type: 'test'
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+ok 84 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 347.1196
+  type: 'test'
+  ...
+# Subtest: Personal geometry verification expands actual GPU instance translation, rotation and scale
+ok 85 - Personal geometry verification expands actual GPU instance translation, rotation and scale
+  ---
+  duration_ms: 15.6976
+  type: 'test'
+  ...
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 86 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 3.6645
+  type: 'test'
+  ...
+# Subtest: Personal textured surfaces retain bounded nondegenerate UVs after compression
+ok 87 - Personal textured surfaces retain bounded nondegenerate UVs after compression
+  ---
+  duration_ms: 98.3993
+  type: 'test'
+  ...
+# Subtest: Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ok 88 - Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+  ---
+  duration_ms: 12.9789
+  type: 'test'
+  ...
+# Subtest: Personal papers clear the folded flap while retaining a real inserted mouth path
+ok 89 - Personal papers clear the folded flap while retaining a real inserted mouth path
+  ---
+  duration_ms: 384.1743
+  type: 'test'
+  ...
+# Subtest: Personal every real stitch instance is surface-seated rather than buried or floating
+ok 90 - Personal every real stitch instance is surface-seated rather than buried or floating
+  ---
+  duration_ms: 2463.9567
+  type: 'test'
+  ...
+# Subtest: Personal key bevel has no proper nonadjacent surface crossings
+ok 91 - Personal key bevel has no proper nonadjacent surface crossings
+  ---
+  duration_ms: 187.7222
+  type: 'test'
+  ...
+# Subtest: Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+ok 92 - Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+  ---
+  duration_ms: 10.2638
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 93 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 27.7078
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 94 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 407.1774
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 95 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 59.0944
+  type: 'test'
+  ...
+# Subtest: Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+ok 96 - Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+  ---
+  duration_ms: 676.0028
+  type: 'test'
+  ...
+# Subtest: Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+ok 97 - Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+  ---
+  duration_ms: 441.5104
+  type: 'test'
+  ...
+# Subtest: Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+ok 98 - Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+  ---
+  duration_ms: 300.2547
+  type: 'test'
+  ...
+# Subtest: Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+ok 99 - Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+  ---
+  duration_ms: 474.7883
+  type: 'test'
+  ...
+# Subtest: Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+ok 100 - Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+  ---
+  duration_ms: 741.226
+  type: 'test'
+  ...
+# Subtest: Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+ok 101 - Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+  ---
+  duration_ms: 108.1856
+  type: 'test'
+  ...
+# Subtest: Recreation boom, both sail feet and sheets clear the actual cabin roof
+ok 102 - Recreation boom, both sail feet and sheets clear the actual cabin roof
+  ---
+  duration_ms: 786.0785
+  type: 'test'
+  ...
+# Subtest: Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+ok 103 - Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+  ---
+  duration_ms: 4050.1478
+  type: 'test'
+  ...
+# Subtest: Recreation closed teal keel and rudder physically join the hull and extend below it
+ok 104 - Recreation closed teal keel and rudder physically join the hull and extend below it
+  ---
+  duration_ms: 653.2016
+  type: 'test'
+  ...
+# Subtest: Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+ok 105 - Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+  ---
+  duration_ms: 113.5713
+  type: 'test'
+  ...
+# Subtest: Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+ok 106 - Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+  ---
+  duration_ms: 21.0837
+  type: 'test'
+  ...
+# Subtest: Recreation grab rails have two real standoffs seated on the cabin roof
+ok 107 - Recreation grab rails have two real standoffs seated on the cabin roof
+  ---
+  duration_ms: 24.891
+  type: 'test'
+  ...
+# Subtest: Recreation winch bases sit on the actual timber deck
+ok 108 - Recreation winch bases sit on the actual timber deck
+  ---
+  duration_ms: 38.9805
+  type: 'test'
+  ...
+# Subtest: Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+ok 109 - Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+  ---
+  duration_ms: 341.6254
+  type: 'test'
+  ...
+# Subtest: Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+ok 110 - Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+  ---
+  duration_ms: 47.741
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 111 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 952.7784
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 112 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 2146.2392
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 113 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 1917.7731
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 114 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 830.2809
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 115 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 73.9152
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 116 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 8.1716
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 117 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 1613.1378
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 118 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 1.8585
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 119 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 2.3611
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 120 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 2.0927
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 121 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 1.5006
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 122 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 34.8114
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 123 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 4.303
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 124 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 1.969
+  type: 'test'
+  ...
+# Subtest: Student Loan replaces the study with a protected original artifact and verifiable source provenance
+ok 125 - Student Loan replaces the study with a protected original artifact and verifiable source provenance
+  ---
+  duration_ms: 300.4203
+  type: 'test'
+  ...
+# Subtest: Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+ok 126 - Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+  ---
+  duration_ms: 411.2581
+  type: 'test'
+  ...
+# Subtest: Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+ok 127 - Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+  ---
+  duration_ms: 272.0912
+  type: 'test'
+  ...
+# Subtest: Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+ok 128 - Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+  ---
+  duration_ms: 3287.2512
+  type: 'test'
+  ...
+# Subtest: Student Loan tassel has 48 separate volumetric strands attached to its head
+ok 129 - Student Loan tassel has 48 separate volumetric strands attached to its head
+  ---
+  duration_ms: 94.301
+  type: 'test'
+  ...
+# Subtest: Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+ok 130 - Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+  ---
+  duration_ms: 39.5818
+  type: 'test'
+  ...
+# Subtest: Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+ok 131 - Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+  ---
+  duration_ms: 44.5968
+  type: 'test'
+  ...
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+ok 132 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 309.2928
+  type: 'test'
+  ...
+# Subtest: Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+ok 133 - Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+  ---
+  duration_ms: 58.6517
+  type: 'test'
+  ...
+# Subtest: Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+ok 134 - Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+  ---
+  duration_ms: 90.8786
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 135 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.8137
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 136 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.7158
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 137 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 1.291
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 138 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 3.8907
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 139 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.9001
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 140 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 7.9169
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 141 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.2658
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 142 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.3258
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 143 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 80.2656
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 144 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 18.5842
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 145 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3604
+  type: 'test'
+  ...
+1..145
+# tests 145
+# suites 0
+# pass 145
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20599.9318
+
+> @interestshield/media@0.1.0 check:hyperframes
+> node scripts/check-hyperframes.mjs
+
+
+[hyperframes] prepare local renderer assets
+Prepared 4 pinned HyperFrames assets.
+
+[hyperframes] lint composition structure
+◆  Linting hyperframes/3 files
+
+◇  0 errors, 0 warnings
+
+[hyperframes] strict runtime, layout, motion, and contrast check
+◆  Checking hyperframes
+
+Lint
+  ◇ 0 errors, 0 warnings
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ℹ t=12s text_occluded main.clip.composition inside #loop-income "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Text is hidden beneath an opaque element.
+        Fix: Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.
+  ℹ t=12s content_overlap main.clip.composition inside span.disclaimer "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  ℹ t=12s content_overlap main.clip.composition inside div.caption-group "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  0 error(s), 0 warning(s), 3 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 40/40 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+
+[hyperframes] map registered animation timelines
+Mapped 26 tweens across 2 timelines.
+
+> @interestshield/media@0.1.0 check:remotion
+> node scripts/check-remotion.mjs
+
+
+[remotion] prepare pinned local fonts
+Prepared 3 pinned Remotion fonts.
+
+[remotion] verify generated financial scenarios
+Remotion scenario JSON matches the shared engine.
+
+[remotion] type-check compositions
+
+[remotion] bundle and enumerate compositions
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling code        ━                  6%
+Bundling code        ━━                 13%
+Bundling code        ━━━━━━━━━━━        62%
+Bundling code        ━━━━━━━━━━━━       69%
+Bundling code        ━━━━━━━━━━━━━      74%
+Bundling code        ━━━━━━━━━━━━━━     80%
+Bundling code        ━━━━━━━━━━━━━━━    85%
+Bundling code        ━━━━━━━━━━━━━━━━   90%
+Bundling code        ━━━━━━━━━━━━━━━━━  95%
+Bundling code        ━━━━━━━━━━━━━━━━━━ 100%
+Bundled code         ━━━━━━━━━━━━━━━━━━ 1307ms
+
+The following compositions are available:
+
+Baseline-Landscape               30      1920x1080      240 (8.00 sec)
+Baseline-Portrait                30      1080x1920      240 (8.00 sec)
+Baseline-Square                  30      1080x1080      240 (8.00 sec)
+MoneyLoopMonth-Landscape         30      1920x1080      240 (8.00 sec)
+MoneyLoopMonth-Portrait          30      1080x1920      240 (8.00 sec)
+MoneyLoopMonth-Square            30      1080x1080      240 (8.00 sec)
+BlockedPlan-Landscape            30      1920x1080      240 (8.00 sec)
+BlockedPlan-Portrait             30      1080x1920      240 (8.00 sec)
+BlockedPlan-Square               30      1080x1080      240 (8.00 sec)
+InterestShield-Scenario-Still            1920x1080      Still
+
+[remotion] render browser-verified aspect-ratio matrix
+Prepared 3 pinned Remotion fonts.
+
+[remotion] rendering Baseline-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-intro.png
+
+[remotion] rendering Baseline-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-story.png
+
+[remotion] rendering Baseline-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-resolve.png
+
+[remotion] rendering Baseline-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-intro.png
+
+[remotion] rendering Baseline-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-story.png
+
+[remotion] rendering Baseline-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-resolve.png
+
+[remotion] rendering Baseline-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-intro.png
+
+[remotion] rendering Baseline-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-story.png
+
+[remotion] rendering Baseline-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-intro.png
+
+[remotion] rendering MoneyLoopMonth-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-story.png
+
+[remotion] rendering MoneyLoopMonth-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-intro.png
+
+[remotion] rendering MoneyLoopMonth-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-story.png
+
+[remotion] rendering MoneyLoopMonth-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-intro.png
+
+[remotion] rendering MoneyLoopMonth-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-story.png
+
+[remotion] rendering MoneyLoopMonth-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-resolve.png
+
+[remotion] rendering BlockedPlan-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-intro.png
+
+[remotion] rendering BlockedPlan-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-story.png
+
+[remotion] rendering BlockedPlan-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-resolve.png
+
+[remotion] rendering BlockedPlan-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-intro.png
+
+[remotion] rendering BlockedPlan-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-story.png
+
+[remotion] rendering BlockedPlan-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-resolve.png
+
+[remotion] rendering BlockedPlan-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-intro.png
+
+[remotion] rendering BlockedPlan-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-story.png
+
+[remotion] rendering BlockedPlan-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-resolve.png
+
+Rendered 27 Remotion matrix stills.
+
+Remotion checks passed.

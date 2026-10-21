@@ -5,19 +5,19 @@
 Starting Metro Bundler
 
 warning: Bundler cache is empty, rebuilding (this may take a minute)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-| (node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (node:27348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 | (Use `node --trace-warnings ...` to show where the warning was created)
-Web Bundled 16967ms node_modules\expo-router\entry.js (887 modules)
+Web Bundled 18764ms node_modules\expo-router\entry.js (887 modules)
 
 › Assets (18):
 node_modules\expo-router\assets\arrow_down.017bc6ba3fc25503e5eb5e53826d48a8.png (9.5KB)

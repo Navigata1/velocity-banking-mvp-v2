@@ -1,0 +1,119 @@
+{
+  "verifiedAt": "2026-10-21T13:29:51.041Z",
+  "headSha": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+  "status": "failed-CI-not-a-verified-release",
+  "ci": [
+    {
+      "id": 39605673471,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39605673471",
+      "web": "failure",
+      "sql": "success",
+      "failedStep": "Verify funded Portfolio allocations and debt scope",
+      "skippedWebSteps": [
+        "Verify asset hero loading, rotation and reduced motion",
+        "Install media workspace dependencies",
+        "Read pinned Remotion Chrome version",
+        "Install pinned Remotion Chrome",
+        "Check media identity contracts",
+        "Install report Worker dependencies",
+        "Check and test report Worker",
+        "Install mobile dependencies",
+        "Audit critical native dependency advisories",
+        "Run mobile type-check",
+        "Build Expo web export",
+        "Smoke Expo web export",
+        "Smoke rendered Expo accessibility",
+        "Run mobile contract tests",
+        "Verify iOS smoke guard on Linux",
+        "Post Set up Node"
+      ]
+    },
+    {
+      "id": 39605676575,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39605676575",
+      "web": "failure",
+      "sql": "success",
+      "failedStep": "Verify funded Portfolio allocations and debt scope",
+      "skippedWebSteps": [
+        "Verify asset hero loading, rotation and reduced motion",
+        "Install media workspace dependencies",
+        "Read pinned Remotion Chrome version",
+        "Install pinned Remotion Chrome",
+        "Check media identity contracts",
+        "Install report Worker dependencies",
+        "Check and test report Worker",
+        "Install mobile dependencies",
+        "Audit critical native dependency advisories",
+        "Run mobile type-check",
+        "Build Expo web export",
+        "Smoke Expo web export",
+        "Smoke rendered Expo accessibility",
+        "Run mobile contract tests",
+        "Verify iOS smoke guard on Linux",
+        "Post Set up Node"
+      ]
+    }
+  ],
+  "hosted": {
+    "id": "880695c4-6090-4a94-bf5c-fc74912b2bbd",
+    "origin": "https://velocity-banking-mvp-v2-3fqgaay8v-islanddevcrew.vercel.app",
+    "status": "completed",
+    "suites": 9,
+    "workflows": 109
+  },
+  "failure": "Common-month large-values280 section overflow. Requested-Verdana local RED independently reproduces99px currency columns at12px; actual Linux font is not inferred.",
+  "originalPreviewPortfolio": "UI export/import restore and canonical export equality verified; comparison month reset60; browser viewport reset.",
+  "desktopPublished": false,
+  "receiptPosted": false,
+  "retainedDirectory": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\failed-7bd72ac",
+  "files": {
+    "ci-39605673471.json": {
+      "bytes": 10554,
+      "sha256": "9567ae3e3fea78e6429b83401646f9e49f14575437172aa218cd250195b3b0d0"
+    },
+    "ci-39605676575.json": {
+      "bytes": 10554,
+      "sha256": "cef6d2acdf365147fb28fb624174e56f07ceab9a1860eb3a9c668f1ad3a09fa4"
+    },
+    "committed-local-receipt.json": {
+      "bytes": 85227,
+      "sha256": "95fd2c9157baa4318aba7587bf4271ad480595abadf82d3561c42fadb5b154fb"
+    },
+    "deployment-final.json": {
+      "bytes": 1819,
+      "sha256": "db786a2a9c836b3dbe00cedac76167c48a7d6020eb4ac5f6dc627862f9cce385"
+    },
+    "failed-7bd72ac-browser-proof.json": {
+      "bytes": 2738,
+      "sha256": "4e9c3cc9d2b3b0d8982b15f19d9b69d5d696fd7e7e0846eebbaf11f91b8ce9dc"
+    },
+    "failed-pr-ci.log": {
+      "bytes": 12047,
+      "sha256": "9887df8753bc3c29a10a7fdcdac671343dbbbe5f5365d8edb760045b071f8fda"
+    },
+    "failed-push-ci.log": {
+      "bytes": 12047,
+      "sha256": "d8c21d7bc0cb0a191b34a8c6ffa8ff9f5b4b24e7aa28cfefcc26a5718c17fcfe"
+    },
+    "Hosted-Common-Month.jpg": {
+      "bytes": 29948,
+      "sha256": "ffea913d08ce830647bceb66b599444d1c57824cb3aec9fd765b06e081210616"
+    },
+    "Hosted-Mobile-Vitals.jpg": {
+      "bytes": 35920,
+      "sha256": "e1d46385bc5c19565fcf41a828969e9fe4698b90e1b83724fbf72c565f0bc022"
+    },
+    "hosted-run.log": {
+      "bytes": 1231,
+      "sha256": "b64e5271fa2cb9ec64b2cdf0e738466b838f5fa75d9e1a2df276a6d793720d80"
+    },
+    "invocation-shipping-guards.mjs": {
+      "bytes": 25934,
+      "sha256": "5e3d86420ff047ec48b078c96153fe5b8088e46e3ddaf0f0ae5e37f492823943"
+    },
+    "run-envelope.json": {
+      "bytes": 25411,
+      "sha256": "89d91f9fc1506ecd182753e2ba4377dd36ba91d4f518a221a90c1a63f33e9f3b"
+    }
+  }
+}

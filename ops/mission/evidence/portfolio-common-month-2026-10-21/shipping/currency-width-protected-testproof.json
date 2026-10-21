@@ -1,0 +1,13 @@
+{
+  "scope": "Protected baseline seal/raw deployment/baseline files/recovery/publication guard sections unchanged; byte-hash comparison only",
+  "before": {
+    "baselineSeal": "c28b37058761af8cc36cccc4c0dd9942cf1855b9aca41cd95ae0de580ca44e78",
+    "deployment": "e57345d01d3ac960b42fac3f85bfa5ba0d21c8b78a971aa769f20fe26cfc2304",
+    "recovery": "db70c841fcf17cb213b1060a3685a67c695a7bc3adea26340bc23bb243990385"
+  },
+  "after": {
+    "baselineSeal": "c28b37058761af8cc36cccc4c0dd9942cf1855b9aca41cd95ae0de580ca44e78",
+    "deployment": "e57345d01d3ac960b42fac3f85bfa5ba0d21c8b78a971aa769f20fe26cfc2304",
+    "recovery": "db70c841fcf17cb213b1060a3685a67c695a7bc3adea26340bc23bb243990385"
+  }
+}

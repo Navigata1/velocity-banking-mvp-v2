@@ -1,0 +1,109 @@
+{
+  "scope": "Currency-width helper adaptation: bounded metadata/filesystem and synthetic projection proof only; no hosted/CI/production/Desktop publication certification",
+  "root": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release",
+  "sourceFiles": [
+    "run-hosted.cjs",
+    "postflight.mjs",
+    "publish-desktop.mjs",
+    "shipping-guards.mjs",
+    "shipping-guards.test.mjs",
+    "projection.test.mjs",
+    "release-preparation.md"
+  ],
+  "tests": {
+    "previousFontPositiveHelperChecks": 105,
+    "helperChecks": 144,
+    "projectionTests": 3,
+    "projectionFailures": 0,
+    "syntaxExecutables": 6
+  },
+  "schema": {
+    "sourcePins": 293,
+    "modifiedSources": 5,
+    "newSources": 8,
+    "hostedSuites": 10,
+    "primaryCases": 109,
+    "currencyWidthCases": 11,
+    "totalCases": 120,
+    "nativeBrowserExecutions": 70,
+    "coreAndReference": "Required explicit local receipt values; no defaults"
+  },
+  "files": {
+    "run-hosted.cjs": {
+      "bytes": 4039,
+      "sha256": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d"
+    },
+    "postflight.mjs": {
+      "bytes": 15292,
+      "sha256": "51a8b0dcf61c8422b914e1bc678a5adc7702f9a1e071dd64ee53a443b69ac4d2"
+    },
+    "publish-desktop.mjs": {
+      "bytes": 17366,
+      "sha256": "970dcf0b70e25fe5ecf6bdcf7d588d6a7fd9e98ecc86c40973faae97843289b1"
+    },
+    "shipping-guards.mjs": {
+      "bytes": 27872,
+      "sha256": "d49508de9d9653350a612097747bf0f0e1dde0d74ef021bb28d2640620f03495"
+    },
+    "shipping-guards.test.mjs": {
+      "bytes": 31177,
+      "sha256": "944d7e194cb1a1c6c177d8b1b917470e537b14e82b9481249886f54e00ed7154"
+    },
+    "projection.test.mjs": {
+      "bytes": 4863,
+      "sha256": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    },
+    "release-preparation.md": {
+      "bytes": 16671,
+      "sha256": "f1f9df57ede3788655266edf7a8d21c743253d832a197c17283d573c87fb18bb"
+    },
+    "currency-width-before-105.log": {
+      "bytes": 5838,
+      "sha256": "2ae9c245232b1748f2d16f78c88e1a4d89e7a527e2796d2d6300b9845f41ae55"
+    },
+    "currency-width-green-initial.log": {
+      "bytes": 7807,
+      "sha256": "bdcd488d2b592bcb18faf7c098d03d561eb4f09eba32844fb575070bc81b449a"
+    },
+    "currency-width-green.log": {
+      "bytes": 7987,
+      "sha256": "e3c5275e0686d0e00efa73d6f554a5d120cf16ccbdb4acc9a33d6d435d350107"
+    },
+    "currency-width-postflight-realm-diagnostic.log": {
+      "bytes": 8367,
+      "sha256": "120128cec8c22eeb2fea377f2cf211eca83a38c66aecdae8f9440d83798c91f0"
+    },
+    "currency-width-postflight-red.log": {
+      "bytes": 8147,
+      "sha256": "fb5708ff4c49116b94f25754cfec464de19c7772649f0763ddd8ee4595f2b1e0"
+    },
+    "currency-width-projection-green.log": {
+      "bytes": 1124,
+      "sha256": "3a1d3f57b5cd31a69d7ff85481b37d131074dc30399e3d7715e61799980a0704"
+    },
+    "currency-width-projection-red.log": {
+      "bytes": 3118,
+      "sha256": "3d87f43e4e8601ed8af83960559b7032ec49ad1ef9e5c3a7b19a4f80953ed7b2"
+    },
+    "currency-width-protected-testproof.json": {
+      "bytes": 695,
+      "sha256": "86918921932669d423f548c34c714f6682795416e1efcda96044ef93b1c9baaf"
+    },
+    "currency-width-red.log": {
+      "bytes": 2556,
+      "sha256": "489554070f34cd984d229bdb888e8accd6a79beab6b958de6e006b18844966d0"
+    },
+    "currency-width-syntax-testproof.log": {
+      "bytes": 193,
+      "sha256": "ce4f09b10e24c75f22fe14f52a3ace56c209f15eef0d25d767107ee8be0fbdaa"
+    },
+    "projection-currency-green-proof.json": {
+      "bytes": 111340,
+      "sha256": "a359f7722cc66292080fe62a34f3885440325cf8fe163c4bf82032ef93f874fc"
+    },
+    "projection-currency-red-proof.json": {
+      "bytes": 110696,
+      "sha256": "6b7d92f94c2fb605c5cc9789a2789ad50c202764cb34d614b1ce6f0c885ac4d7"
+    }
+  }
+}

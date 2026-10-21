@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-21T13:24:02.368Z",
+  "pins": [
+    {
+      "file": "packages/financial-engine/src/common-month.ts",
+      "prior": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5",
+      "current": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio-common-month.ts",
+      "prior": "ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09",
+      "current": "ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/index.ts",
+      "prior": "23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477",
+      "current": "23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio.ts",
+      "prior": "b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781",
+      "current": "b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio-book.ts",
+      "prior": "2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5",
+      "current": "2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/numeric-range.ts",
+      "prior": "fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f",
+      "current": "fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f",
+      "unchanged": true
+    }
+  ]
+}

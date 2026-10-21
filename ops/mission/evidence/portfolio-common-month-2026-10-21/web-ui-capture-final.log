@@ -18,4 +18,5 @@ PASS web common month blocked-reference 280px
 PASS web common month failed-attempt 280px
 PASS web common month nonzero-tolerance 280px
 PASS web common month cleared 280px
+PASS common-month wider-font 280px
 PASS web common month large-values 280px

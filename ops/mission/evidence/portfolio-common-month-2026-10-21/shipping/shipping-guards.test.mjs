@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
 import {validateDeployment,verifyHostedInvocation,publishFiles,recoverPublication,digest} from './shipping-guards.mjs';
 import * as guards from './shipping-guards.mjs';
@@ -47,6 +48,7 @@ console.log(JSON.stringify({checks,scope:'Local metadata and filesystem fault pr
 assert.equal(typeof guards.validateCommonMonth,'function','common-month receipt guard required');
 const geometry={pageOverflow:false,sectionOverflow:false,metrics:Array.from({length:15},()=>({text:'$120.00',fontSize:12,fits:true,visible:true,contained:true,tokens:[{oneLine:true}]}))};
 const common={origin:deployment.preview,receipts:[1440,375,280].flatMap(width=>['cash-versus-wealth','adverse','blocked-reference','failed-attempt','nonzero-tolerance','cleared','large-values'].map(name=>({name,width,native:false,geometry:structuredClone(geometry),storagePreserved:true,errors:[],oracleControls:width===375&&name==='cash-versus-wealth'?['ancestor-opacity','value-opacity','value-clip','empty-value'].map(kind=>({kind,rejected:true,restored:true,...(kind==='ancestor-opacity'?{}:{originalNode:true})})):[]})))};
+common.receipts.at(-1).widerFontProbe={fontFamily:'Verdana',passed:true,minFontSize:12};
 guards.validateCommonMonth(common,deployment.preview);pass('21 distinct same-month fixtures with four restored actual DOM controls');
 for(const [name,change]of [
   ['stale origin',d=>d.origin='http://localhost'],['missing narrow width',d=>d.receipts=d.receipts.filter(r=>r.width!==280)],
@@ -54,16 +56,30 @@ for(const [name,change]of [
   ['hidden value',d=>d.receipts[0].geometry.metrics[0].visible=false],['clipped value',d=>d.receipts[0].geometry.metrics[0].contained=false],
   ['wrapped token',d=>d.receipts[0].geometry.metrics[0].tokens[0].oneLine=false],['storage write',d=>d.receipts[0].storagePreserved=false],
   ['missing DOM control',d=>d.receipts[7].oracleControls.pop()],['no node restoration',d=>d.receipts[7].oracleControls[1].originalNode=false],
-  ['unrestored control',d=>d.receipts[7].oracleControls[0].restored=false],['page error',d=>d.receipts[0].errors.push('error')]
+  ['unrestored control',d=>d.receipts[7].oracleControls[0].restored=false],['page error',d=>d.receipts[0].errors.push('error')],
+  ['missing wider-font probe',d=>delete d.receipts.at(-1).widerFontProbe],['failed wider-font probe',d=>d.receipts.at(-1).widerFontProbe.passed=false],
+  ['shrunk wider-font probe',d=>d.receipts.at(-1).widerFontProbe.minFontSize=11]
 ]){const copy=structuredClone(common);change(copy);assert.throws(()=>guards.validateCommonMonth(copy,deployment.preview));pass('reject common-month '+name);}
+assert.equal(typeof guards.validateCurrencyWidth,'function','permanent currency-width receipt guard required');
+const currencyWidths=[280,375,640,690,700,768,1024,1100,1120,1280,1440];
+const currency={origin:deployment.preview,receipts:currencyWidths.map(viewportWidth=>({viewportWidth,text:'-$1,000,000,000.00',metricWidth:170,glyphWidth:156.359375,fontSize:14,fontFamilyRequested:'Verdana',fits:true,contained:true,oneLine:true,pageOverflow:false,errors:[]}))};
+guards.validateCurrencyWidth(currency,deployment.preview);pass('eleven distinct signed-billion Verdana currency boundaries');
+for(const [name,change]of [
+  ['missing width',d=>d.receipts=d.receipts.filter(r=>r.viewportWidth!==690)],['duplicate width',d=>d.receipts[0]=structuredClone(d.receipts[1])],
+  ['unexpected width',d=>d.receipts[0].viewportWidth=281],['wrong origin',d=>d.origin='http://localhost'],
+  ['wrong text',d=>d.receipts[0].text='-$1.00B'],['wrong requested font',d=>d.receipts[0].fontFamilyRequested='Arial'],
+  ['failed fit',d=>d.receipts[0].fits=false],['uncontained glyph',d=>d.receipts[0].contained=false],['wrapped text',d=>d.receipts[0].oneLine=false],
+  ['shrunk font',d=>d.receipts[0].fontSize=11],['invalid font',d=>d.receipts[0].fontSize=NaN],['overflow',d=>d.receipts[0].pageOverflow=true],
+  ['page error',d=>d.receipts[0].errors.push('render failed')],['inconsistent glyph width',d=>d.receipts[0].glyphWidth=180]
+]){const copy=structuredClone(currency);change(copy);assert.throws(()=>guards.validateCurrencyWidth(copy,deployment.preview));pass('reject currency-width '+name);}
 assert.equal(typeof guards.validateLocalReceipt,'function','local receipt guard required');
 const prior=JSON.parse(await fs.readFile(path.join(cache,'../../2026-10-21-mobile-vitals/postflight.json'),'utf8'));
 const local={baseline:prior.headSha,priorReceipt:prior.receipt,productionReady:false,allowedSourceChanges:[...guards.modifiedSources,...guards.newSources],sources:{...prior.local.sources,...Object.fromEntries(guards.newSources.map(file=>[file,'a'.repeat(64)]))},
   models:prior.local.models,posters:prior.local.posters,videos:prior.local.videos,
-  web:{regressions:348,dashboardCases:18,hostedCasesRequired:109},media:{contracts:145,freshStills:27},native:{browserExecutions:70,commonMonthCases:21},
-  commonMonth:{coreContracts:31,webCases:21,nativeCases:21,oracleControls:4,widths:[1440,375,280],reference:{passed:123,failed:0,adjudicated:true,logFile:'reference.log',reportFile:'adjudication.md'}},files:{'reference.log':{bytes:1,sha256:'a'.repeat(64)},'adjudication.md':{bytes:1,sha256:'b'.repeat(64)}}};
+  web:{regressions:348,dashboardCases:18,hostedCasesRequired:120},media:{contracts:145,freshStills:27},native:{browserExecutions:70,commonMonthCases:21},
+  commonMonth:{coreContracts:31,webCases:21,nativeCases:21,currencyWidthCases:11,oracleControls:4,widths:[1440,375,280],reference:{passed:123,failed:0,adjudicated:true,logFile:'reference.log',reportFile:'adjudication.md'}},files:{'reference.log':{bytes:1,sha256:'a'.repeat(64)},'adjudication.md':{bytes:1,sha256:'b'.repeat(64)}}};
 guards.validateLocalReceipt(local,prior);pass('explicit adjudicated local reference count accepted without a baked-in final count');
-for(const [name,change]of [['missing reference',d=>delete d.commonMonth.reference],['failed reference',d=>d.commonMonth.reference.failed=5],['not adjudicated',d=>d.commonMonth.reference.adjudicated=false],['missing reference file',d=>delete d.files['reference.log']],['missing adjudication report',d=>delete d.files['adjudication.md']],['old hosted count',d=>d.web.hostedCasesRequired=88],['old native count',d=>d.native.browserExecutions=49],['missing new pin',d=>delete d.sources[guards.newSources[0]]],['extra modified native',d=>d.allowedSourceChanges.push('apps/mobile/app/index.tsx')]]){
+for(const [name,change]of [['missing reference',d=>delete d.commonMonth.reference],['failed reference',d=>d.commonMonth.reference.failed=5],['not adjudicated',d=>d.commonMonth.reference.adjudicated=false],['missing reference file',d=>delete d.files['reference.log']],['missing adjudication report',d=>delete d.files['adjudication.md']],['old hosted count',d=>d.web.hostedCasesRequired=88],['old native count',d=>d.native.browserExecutions=49],['missing new pin',d=>delete d.sources[guards.newSources[0]]],['extra modified native',d=>d.allowedSourceChanges.push('apps/mobile/app/index.tsx')],['old109 hosted count',d=>d.web.hostedCasesRequired=109],['missing currency count',d=>delete d.commonMonth.currencyWidthCases],['wrong currency count',d=>d.commonMonth.currencyWidthCases=10],['missing currency pin',d=>delete d.sources['apps/web/scripts/smoke-portfolio-currency-width.cjs']]]){
   const copy=structuredClone(local);change(copy);assert.throws(()=>guards.validateLocalReceipt(copy,prior));pass('reject local '+name);
 }
 assert.equal(typeof guards.validateReferenceLog,'function');
@@ -71,9 +87,12 @@ const referenceSummary={seed:20261021,passed:123,failed:0,testSourceHash:'a'.rep
 guards.validateReferenceLog('group: 123 passed, 0 failed\n'+JSON.stringify(referenceSummary),local.commonMonth.reference,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}});pass('reference summary must match configured count and actual source bytes');
 for(const change of [s=>s.failed=5,s=>s.passed=122,s=>s.testSourceHash='c'.repeat(64),s=>s.sourceHashes['common-month']='c'.repeat(64)]){const copy=structuredClone(referenceSummary);change(copy);assert.throws(()=>guards.validateReferenceLog(JSON.stringify(copy),local.commonMonth.reference,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}}));pass('reject unadjudicated/stale reference summary');}
 assert.equal(typeof guards.validateCiLogs,'function');
-const ciLog=[...guards.ciMarkers,'31 common-month contracts passed.','# tests 145','Rendered 27 Remotion matrix stills.',...Array(35).fill('PASS phone-fixture'),...Array(12).fill('PASS native portfolio fixture'),...Array(2).fill('PASS native financial inputs fixture'),...Array(21).fill('PASS native common month fixture'),...Array(21).fill('PASS web common month fixture'),JSON.stringify(referenceSummary)].join('\n');
+const currencyMarkers=currencyWidths.map(width=>'PASS max-standard-currency boundary '+width+'px');
+const ciLog=[...guards.ciMarkers,'31 common-month contracts passed.','# tests 145','Rendered 27 Remotion matrix stills.',...Array(35).fill('PASS phone-fixture'),...Array(12).fill('PASS native portfolio fixture'),...Array(2).fill('PASS native financial inputs fixture'),...Array(21).fill('PASS native common month fixture'),...Array(21).fill('PASS web common month fixture'),...currencyMarkers,JSON.stringify(referenceSummary)].join('\n');
 guards.validateCiLogs(ciLog,'Tests=63\nTests=63',local.commonMonth,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}});pass('both full CI event log validators require 70 native executions and adjudicated reference');
 for(const [name,web,sql]of [['old native',ciLog.replaceAll('PASS native common month fixture','not executed'),'Tests=63\nTests=63'],['missing regression',ciLog.replace('348 regression tests passed.',''),'Tests=63\nTests=63'],['SQL only once',ciLog,'Tests=63'],['obsolete core count',ciLog.replace('31 common-month','30 common-month'),'Tests=63\nTests=63']]){assert.throws(()=>guards.validateCiLogs(web,sql,local.commonMonth,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}}));pass('reject CI '+name);}
+for(const marker of currencyMarkers){assert.throws(()=>guards.validateCiLogs(ciLog.replace(marker,'missing boundary'),'Tests=63\nTests=63',local.commonMonth,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}}));pass('reject CI missing actual '+marker);}
+for(const [name,log]of [['duplicate currency boundary',ciLog.replace(currencyMarkers[0],currencyMarkers[1])],['currency summary instead of executions',ciLog.replace(currencyMarkers.join('\n'),'11 currency-width cases passed.')],['wrong currency width',ciLog.replace(currencyMarkers[0],'PASS max-standard-currency boundary 281px')]]){assert.throws(()=>guards.validateCiLogs(log,'Tests=63\nTests=63',local.commonMonth,{testSourceHash:'a'.repeat(64),sourceHashes:{'common-month':'b'.repeat(64)}}));pass('reject CI '+name);}
 console.log(JSON.stringify({checks,scope:'Bounded synthetic metadata/filesystem tests only; no hosted/CI/publication proof',fixture}));
 
 assert.equal(typeof guards.validateBrowserProof,'function','head-bound actual UI proof guard required');
@@ -105,12 +124,14 @@ for(const [script,name,artifacts]of guards.hostedConfigs){
 envelope.finishedAt=new Date().toISOString();
 const saveEnvelope=copy=>put(path.join(isolatedCache,'hosted/run-envelope.json'),JSON.stringify(copy));
 const verify=()=>verifyHostedInvocation(isolatedCache,deployment,{root:isolatedRoot,expectedRunId:runId});
-await saveEnvelope(envelope);await verify();pass('isolated fresh nine-suite envelope including common-month screenshot');
+assert.deepEqual(Object.keys(envelope.suites),['input','http','routes','dashboard','portfolio','vault','comparison','portability','commonMonth','currencyWidth']);
+assert.equal(envelope.suites.currencyWidth.environment.CURRENCY_WIDTH_ORIGIN,deployment.preview);
+await saveEnvelope(envelope);await verify();pass('isolated fresh ten-suite envelope including common-month screenshot and currency verification');
 for(const [name,change]of [
-  ['old eight suites',d=>delete d.suites.commonMonth],['stale receipt',d=>d.localReceiptSha256='0'.repeat(64)],['old guard bytes',d=>d.guardsSha256='0'.repeat(64)],
+  ['old eight suites',d=>delete d.suites.commonMonth],['old nine suites',d=>delete d.suites.currencyWidth],['stale receipt',d=>d.localReceiptSha256='0'.repeat(64)],['old guard bytes',d=>d.guardsSha256='0'.repeat(64)],
   ['head',d=>d.headSha='0'.repeat(40)],['origin',d=>d.origin='http://127.0.0.1'],['deployment',d=>d.deploymentId='old'],['runner bytes',d=>d.runnerSha256='0'.repeat(64)],
   ['stale suite id',d=>d.suites.comparison.runId='old'],['wrong script',d=>d.suites.comparison.script='apps/web/scripts/smoke-production.cjs'],
-  ['wrong environment',d=>d.suites.commonMonth.environment.COMMON_MONTH_SMOKE_ORIGIN='http://localhost'],['missing screenshot',d=>delete d.suites.commonMonth.artifacts['apps/web/test-results/portfolio-common-month/web-cash-versus-wealth-375.png']],
+  ['wrong environment',d=>d.suites.commonMonth.environment.COMMON_MONTH_SMOKE_ORIGIN='http://localhost'],['currency wrong origin',d=>d.suites.currencyWidth.environment.CURRENCY_WIDTH_ORIGIN='http://localhost'],['missing currency output',d=>delete d.suites.currencyWidth.artifacts['apps/web/test-results/currency-width/verification.json']],['currency stale invocation',d=>d.suites.currencyWidth.runId='old'],['missing screenshot',d=>delete d.suites.commonMonth.artifacts['apps/web/test-results/portfolio-common-month/web-cash-versus-wealth-375.png']],
   ['failed run',d=>d.status='failed'],['incomplete run',d=>delete d.finishedAt],['path escape',d=>d.suites.commonMonth.log.captured='../escaped'],
   ['tampered output',d=>Object.values(d.suites.comparison.artifacts)[0].sha256='0'.repeat(64)]
 ]){const copy=structuredClone(envelope);change(copy);await saveEnvelope(copy);await assert.rejects(verify());pass('reject envelope '+name);}
@@ -124,7 +145,7 @@ console.log(JSON.stringify({checks,scope:'Bounded helper tests; all synthetic pu
 
 assert.equal(typeof guards.validateSourceChanges,'function');
 const sourceChanges=[...guards.modifiedSources.map(file=>'M\t'+file),...guards.newSources.map(file=>'A\t'+file)];
-guards.validateSourceChanges(sourceChanges);pass('five modified plus seven new executable files allowed');
+guards.validateSourceChanges(sourceChanges);pass('five modified plus eight new executable files allowed');
 for(const file of ['apps/mobile/app/index.tsx','apps/web/public/heroes/car.glb','apps/media/package.json','.github/workflows/ci.yml','supabase/config.toml','packages/financial-engine/src/portfolio.ts']){
   assert.throws(()=>guards.validateSourceChanges([...sourceChanges,'M\t'+file]));pass('reject protected source '+file);
 }
@@ -151,6 +172,23 @@ const priorBytes=await fs.readFile(path.join(cache,'../../2026-10-21-mobile-vita
 const seal=JSON.parse(await fs.readFile(path.join(cache,'../baseline-v2-results.json'),'utf8'));
 guards.validateBaselineSeal(seal,priorBytes);pass('recorded 4134-check baseline binds actual predecessor postflight bytes');
 for(const [name,change]of [['failed check',d=>d.checks[0].passed=false],['wrong baseline',d=>d.expectedHead='0'.repeat(40)],['postflight digest',d=>d.postflight.sha256='0'.repeat(64)]]){const copy=structuredClone(seal);change(copy);assert.throws(()=>guards.validateBaselineSeal(copy,priorBytes));pass('reject baseline seal '+name);}
+const postflightSource=await fs.readFile(path.join(cache,'postflight.mjs'),'utf8');
+const loopStart='const suites={};',loopEnd="for(const name of ['http','routes'";
+assert.equal(postflightSource.split(loopStart).length,2);assert.equal(postflightSource.split(loopEnd).length,2);
+const metadataBlock=postflightSource.slice(postflightSource.indexOf(loopStart),postflightSource.indexOf(loopEnd));
+const suiteData={};
+for(const [dir,file,count]of [['portfolio-budget','verification.json',24],['vault-comparison','verification.json',20],['comparison','verification.json',16],['portfolio-portability','verification.json',6],['portfolio-input','portfolio-input-verification.json',4]])suiteData[`apps/web/test-results/${dir}/${file}`]={origin:deployment.preview,receipts:Array.from({length:count},()=>({width:375,errors:[],inputPixels:{brightPixels:25,colors:2}}))};
+const vital={inViewport:true,label:{glyphBottom:0,visible:true,fits:true,tokens:[{oneLine:true,contained:true}]},value:{glyphTop:1,fontSize:12,visible:true,fits:true,tokens:[{oneLine:true,contained:true}]}};
+suiteData['apps/web/test-results/dashboard-interest/verification.json']={origin:deployment.preview,receipts:Array.from({length:18},()=>({width:375,errors:[],savedInputsPreserved:true,heroVisibleHeight:48,layout:Array.from({length:4},()=>structuredClone(vital))}))};
+suiteData['apps/web/test-results/portfolio-common-month/verification.json']=common;
+suiteData['apps/web/test-results/currency-width/verification.json']=currency;
+const capturedMetadata=new Map();
+const metadata=JSON.parse(JSON.stringify(await new vm.Script(`(async()=>{${metadataBlock}\nreturn suites;})()`,{filename:'postflight-receipt-loop-only.mjs'}).runInNewContext({
+  assert,path,JSON,out:cache,origin:deployment.preview,hash:digest,validateCommonMonth:guards.validateCommonMonth,validateCurrencyWidth:guards.validateCurrencyWidth,
+  fs:{readFile:async file=>{assert.ok(suiteData[file],file);return Buffer.from(JSON.stringify(suiteData[file]));},writeFile:async(file,bytes)=>{assert.equal(path.dirname(file),path.join(cache,'hosted'));capturedMetadata.set(path.basename(file),JSON.parse(bytes));}},
+})));
+assert.equal(metadata.currencyWidth?.cases,11);assert.deepEqual(metadata.currencyWidth.widths,currencyWidths);assert.equal(Object.values(metadata).reduce((sum,suite)=>sum+suite.cases,0),120);pass('actual postflight loop preserves viewportWidth and 109 primary plus11 boundary metadata');
+assert.deepEqual(capturedMetadata.get('currencyWidth-verification.json'),currency);pass('actual postflight loop archives raw currency verification without relabeling it');
 if(!process.argv.includes('--keep-fixtures')){
   const relative=path.relative(path.resolve(cache),path.resolve(fixture));assert.ok(relative.startsWith('shipping-test-')&&!relative.includes(path.sep)&&!path.isAbsolute(relative));
   await fs.rm(fixture,{recursive:true});

@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-21T13:40:55.559Z",
+  "base": "578b87d03b5959aec889925a20b3d64d69507cc0",
+  "head": "578b87d03b5959aec889925a20b3d64d69507cc0",
+  "count": 239,
+  "changesVsPriorFont": [
+    {
+      "file": "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx",
+      "before": "88df7de872b76f49d123293e623e2563e2679e5b7f48966b93aa61e3eba6e850",
+      "after": "8d713edb897afa8cea91147a87106c99f6ea9f18f4519a644d85d84c99ac73a6"
+    }
+  ],
+  "contentChangesVs578": [
+    "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx"
+  ],
+  "crlfOnlyGitBlobDifferences": 114,
+  "inputPins": {
+    "currency-width-boundary.cjs": "6f0a564f7d6086c20e4e366c976183610a169741d8d0771c0c98da646b519cd5",
+    "currency-width-boundary-red.log": "27aa8d9e6da13f613f5ef0569a03732c33a8e2366d0c67a68100ba93b5ce5894"
+  },
+  "math": [
+    {
+      "file": "packages/financial-engine/src/common-month.ts",
+      "hash": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio-common-month.ts",
+      "hash": "ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/index.ts",
+      "hash": "23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio.ts",
+      "hash": "b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio-book.ts",
+      "hash": "2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5",
+      "unchanged": true
+    },
+    {
+      "file": "packages/financial-engine/src/numeric-range.ts",
+      "hash": "fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f",
+      "unchanged": true
+    }
+  ],
+  "failedHeadDisposition": "7bd72ac remains failed web CI;578b87d local commit/gates are not a new pushed CI/hosted receipt; no publication approved."
+}

@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-21T13:22:52.177Z",
+  "scope": "source-only and synthetic controller/guard checks; no real DOM, browser, font rendering or server",
+  "guardMutationsRejected": [
+    "font-under-12",
+    "page-overflow",
+    "section-overflow",
+    "metric-overflow",
+    "clipped-glyph",
+    "split-currency",
+    "hidden",
+    "empty",
+    "no-tokens",
+    "missing-metric"
+  ],
+  "sourceEquivalence": {
+    "fixtures": true,
+    "fourControls": true,
+    "strictPredicate": true,
+    "geometryOnlyFontDiagnosticAdded": true,
+    "componentOnlyGridClassChanged": true
+  },
+  "controller": {
+    "successEvents": {
+      "stylesAdded": 1,
+      "stylesRemoved": 1,
+      "contextsClosed": 1,
+      "realWrites": 0,
+      "geometryReads": 3,
+      "logs": [
+        "PASS common-month wider-font 280px",
+        "PASS web common month large-values 280px"
+      ]
+    },
+    "failedProbeCleanup": {
+      "stylesAdded": 1,
+      "stylesRemoved": 1,
+      "contextsClosed": 1,
+      "realWrites": 0,
+      "geometryReads": 2,
+      "logs": []
+    },
+    "failedRestoreDetected": {
+      "stylesAdded": 1,
+      "stylesRemoved": 1,
+      "contextsClosed": 1,
+      "realWrites": 0,
+      "geometryReads": 3,
+      "logs": []
+    },
+    "nativeStyleAdds": 0,
+    "invalidFontInputsRejected": 6
+  },
+  "gridArithmetic": {
+    "oldObservedInnerWidth": 214,
+    "oldGap": 16,
+    "oldTwoTrackWidth": 99,
+    "newMinimumAt16pxRoot": 144,
+    "newOneTrackWidth": 214,
+    "note": "Track calculation only; not glyph measurement or proof of compiled CSS/actual rendering."
+  },
+  "exit": 0,
+  "milliseconds": 671
+}
