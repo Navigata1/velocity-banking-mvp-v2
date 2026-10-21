@@ -134,7 +134,9 @@ export default function Dashboard() {
                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
                 </div>
                 <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
-                  {vital.value}
+                  {vital.id === 'interest-burn' && vital.value.endsWith('/day') ? (
+                    <>{vital.value.slice(0, -4)}<wbr /><span className="inline-block whitespace-nowrap">/day</span></>
+                  ) : vital.value}
                 </p>
                 <p className="sr-only">
                   {vital.caption}
