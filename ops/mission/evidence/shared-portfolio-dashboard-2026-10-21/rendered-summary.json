@@ -1,0 +1,258 @@
+{
+  "origin": "http://127.0.0.1:65348",
+  "scope": "Two multi-assertion workflows at three widths; synthetic records only",
+  "receipts": [
+    {
+      "name": "shared-edits",
+      "width": 280,
+      "passed": true,
+      "details": {
+        "geometry": {
+          "pageFits": true,
+          "metrics": [
+            {
+              "value": "$950.00",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "$2.43/day",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "3 mo",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "Line of credit",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "$2,100.00",
+              "font": 14,
+              "fits": true
+            }
+          ]
+        },
+        "lightContrast": [
+          {
+            "value": "$950.00",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "$2.43/day",
+            "color": "lab(44.7267 -21.5987 -26.118)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.278369731166806
+          },
+          {
+            "value": "3 mo",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "Line of credit",
+            "color": "lab(47.2709 42.9082 69.2966)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.030530556917215
+          }
+        ],
+        "bidirectional": true,
+        "legacyBytesPreserved": true,
+        "modelChecked": false
+      },
+      "errors": []
+    },
+    {
+      "name": "adverse-states",
+      "width": 280,
+      "passed": true,
+      "details": {
+        "apr200": true,
+        "promo": true,
+        "tolerance": true,
+        "empty": true,
+        "locOnly": true,
+        "extremeFit": true,
+        "failedWritesPaused": true,
+        "corruptPrimaryPaused": true,
+        "unavailablePaused": true
+      },
+      "errors": []
+    },
+    {
+      "name": "shared-edits",
+      "width": 375,
+      "passed": true,
+      "details": {
+        "geometry": {
+          "pageFits": true,
+          "metrics": [
+            {
+              "value": "$950.00",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "$2.43/day",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "3 mo",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "Line of credit",
+              "font": 16,
+              "fits": true
+            },
+            {
+              "value": "$2,100.00",
+              "font": 14,
+              "fits": true
+            }
+          ]
+        },
+        "lightContrast": [
+          {
+            "value": "$950.00",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "$2.43/day",
+            "color": "lab(44.7267 -21.5987 -26.118)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.278369731166806
+          },
+          {
+            "value": "3 mo",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "Line of credit",
+            "color": "lab(47.2709 42.9082 69.2966)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.030530556917215
+          }
+        ],
+        "bidirectional": true,
+        "legacyBytesPreserved": true,
+        "modelChecked": true
+      },
+      "errors": []
+    },
+    {
+      "name": "adverse-states",
+      "width": 375,
+      "passed": true,
+      "details": {
+        "apr200": true,
+        "promo": true,
+        "tolerance": true,
+        "empty": true,
+        "locOnly": true,
+        "extremeFit": true,
+        "failedWritesPaused": true,
+        "corruptPrimaryPaused": true,
+        "unavailablePaused": true
+      },
+      "errors": []
+    },
+    {
+      "name": "shared-edits",
+      "width": 1440,
+      "passed": true,
+      "details": {
+        "geometry": {
+          "pageFits": true,
+          "metrics": [
+            {
+              "value": "$950.00",
+              "font": 20,
+              "fits": true
+            },
+            {
+              "value": "$2.43/day",
+              "font": 20,
+              "fits": true
+            },
+            {
+              "value": "3 mo",
+              "font": 20,
+              "fits": true
+            },
+            {
+              "value": "Line of credit",
+              "font": 20,
+              "fits": true
+            },
+            {
+              "value": "$2,100.00",
+              "font": 14,
+              "fits": true
+            }
+          ]
+        },
+        "lightContrast": [
+          {
+            "value": "$950.00",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "$2.43/day",
+            "color": "lab(44.7267 -21.5987 -26.118)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.278369731166806
+          },
+          {
+            "value": "3 mo",
+            "color": "lab(44.4871 -41.0396 11.0361)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.363999913316052
+          },
+          {
+            "value": "Line of credit",
+            "color": "lab(47.2709 42.9082 69.2966)",
+            "background": "rgb(255, 255, 255)",
+            "ratio": 5.030530556917215
+          }
+        ],
+        "bidirectional": true,
+        "legacyBytesPreserved": true,
+        "modelChecked": true
+      },
+      "errors": []
+    },
+    {
+      "name": "adverse-states",
+      "width": 1440,
+      "passed": true,
+      "details": {
+        "apr200": true,
+        "promo": true,
+        "tolerance": true,
+        "empty": true,
+        "locOnly": true,
+        "extremeFit": true,
+        "failedWritesPaused": true,
+        "corruptPrimaryPaused": true,
+        "unavailablePaused": true
+      },
+      "errors": []
+    }
+  ]
+}

@@ -60,7 +60,7 @@
 
 - [x] Add shared-source/edit and adverse persistence/empty/precision workflows at280/375/1440. Verify full values, no overlay/console failures, fit, source-byte preservation and actual model/hero identity.
 - [x] Perform primary actual IAB interaction and save valid viewport screenshots; no hidden-state UI manipulation or report-file workaround.
-- [ ] Run web regressions/references/lint/build, media freshness, all original web/native gates and new workflow. Keep numerical, asset, timing and pixel assertions intact.
+- [x] Run web regressions/references/lint/build, media freshness, original web gates, native types/contracts and new workflow. Keep numerical, asset, timing and pixel assertions intact. Prior native exports are explicitly inherited froma792504 until new exact-head CI.
 - [x] Fresh independent review checks the final source pins and attempts to refute cohort/unit/preservation/error behavior.
-- [ ] Fold a792504/receipt6322747051 into mission state; leave overallR2 and later route/native adoption open. Render the HTML; do not hand-edit it.
+- [x] Fold a792504/receipt6322747051 into mission state; leave overallR2 and later route/native adoption open. Render the HTML; do not hand-edit it.
 - [ ] Push the focused verified commits to draftPR256; require both complete exact-head CI events, source-bound logs and scope-accurate proof before posting the receipt. No metadata-only push loop.

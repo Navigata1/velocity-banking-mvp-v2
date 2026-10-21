@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Verified native APR checkpoint ef72dd7. Projection-aware coaching locally verified; new exact-head CI pending, not production approval.",
+    "tagline": "Verified coaching checkpoint a792504. Shared-source Portfolio Dashboard locally verified; final-head CI and hosted preview pending, not production approval.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T17:39:30Z",
-    "sessionCount": 21
+    "updated": "2026-10-21T18:34:49Z",
+    "sessionCount": 22
   },
   "policies": {
     "merge": "review",
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:35:00Z",
-          "notes": "Fresh local348 regressions,31 common-month contracts and23247 source-bound reference probes pass; web lint/build,media145/27 fresh stills,14CI/4static renderer contracts. Only dashboard coaching changes among111 index declarations;110 retained, including numerical calculations. Generated Remotion source digest/version refreshed, all fixture inputs/results identical. Schemas, dependencies and30 hero GLB/poster/video payloads unchanged. No lender/device/final-art approval."
+          "evidence": "ops/mission/evidence/shared-portfolio-dashboard-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T18:34:20Z",
+          "notes": "Fresh348 regressions/new21overview/core31/ref23247, lint/build,media145/27stills,native types/fullcontracts,14CI/4static renderer pass.10 executable/config pins independently cleared;293 protected files/all8 original financial modules and30 model/poster/video bytes matcha792504. No numerical algorithm, schema, dependency or asset change. Final-head CI and hosted proof pending; not lender/device/final-art approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:39:29.691Z",
-          "notes": "Fresh local13 serial web stages pass: strict unclockedThree700/300ms,20 hero views/reducedmotion/fallbacks,sevenHTTP/rendered routes and120 comparison/input/boundary workflows. Native original76+6coaching cases and1navigation assertion, actual parent IAB five-screen/recovery proof pass. Heavy rendering/exports and worker browser finish before strict web batch. Priorcc09 hosted120 is inherited, NOT new hosted web/device/production evidence. Both NEW complete CI events still required."
+          "evidence": "ops/mission/evidence/shared-portfolio-dashboard-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T18:34:20.693Z",
+          "notes": "Fresh14 serial stages pass: new6 shared Dashboard workflows plus original120, strict unclockedThree700/300ms,20 hero views/reducedmotion/fallbacks andsevenHTTP/rendered routes. Parent actual IAB proves entry/edit/reverse edit,3D/replay/poster and corrected light colors/logs empty. Media/native quality finish before strict browser batch; owned manual servers closed, user53143/53144 untouched. Native exported-browser/Android/iOS proof inheriteda792 until fresh CI; no new hosted/production claim yet."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322133013",
-          "lastRun": "2026-10-21T17:35:00Z",
-          "notes": "ef72dd7 VERIFIED full attempt1 push39641080588/PR39641097086: all3jobs/every step, native76/media14527/SQL63 twice/event. Primary688/695s under unchanged1200s caps. New coaching slice needs BOTH NEW complete exact-head events, original76+6 coaching cases and16 new contracts. Earlier failed checkpoints stay historical; standing verifier requires committed-HEAD workflow/all executions. No production promotion or relabeled hosted web smoke."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322747051",
+          "lastRun": "2026-10-21T18:31:00Z",
+          "notes": "a792504 VERIFIED full attempt1 push39645989749/PR39646001229: all3jobs/every step, native76+6/media14527/SQL63 twice/event. Current shared-source Dashboard needs BOTH NEW complete exact-head events plus21 overview contracts/new6 workflows, all originals preserved. New web UI also requires fresh READY identity/hosted126/actual IAB. Pending is intentional preflight, not production or inherited hosted approval."
         }
       ]
     },
@@ -192,10 +192,10 @@
         {
           "id": "R2-T1",
           "title": "Safely unify scenario ownership without overwriting saved household data",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "First vertical slice: explicit /?scenario=portfolio Dashboard reuses the SAME canonical PortfolioBook/store; original / remains single-target demo. No mirrored record, persisted source flag, merge or migration.21 overview contracts and new6 GREEN workflows at280/375/1440 exercise full-cohort vitals, view-only selection, bidirectional edits, decimal200/promo/tolerance/range and persistence failures. Actual IAB reproduces source drift then verifies edits both ways. Review caught light contrast;3RED then3GREEN ratios>=5.03, all10 source pins cleared. Final complete CI/hosted proof still required. Simulator/Cockpit/Vault/Expo and explicit legacy adoption remain open. See docs/shared-portfolio-dashboard-contract-2026-10-21.md."
         },
         {
           "id": "R2-T2",
@@ -236,9 +236,9 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "348 main regressions and independent references pass. Explicit unit/range behavior adds15 APR and17 codec/range contracts. Remotion scenario inputs/results unchanged, source digest refreshed. Number is not arbitrary-precision posting; lender/common-date/shared-owner gates remain open."
+          "evidence": "ops/mission/evidence/shared-portfolio-dashboard-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T18:34:20Z",
+          "notes": "348 main regressions/new21overview/core31/ref23247 pass. Original8 financial-engine modules remain byte-equivalent after line normalization, includingindex/units/codec/portfolio/common-month. New adapter consumes existing strict book/simulator/decimal accrual; no allocation, posting or tolerance changes. Number is not arbitrary-precision lender posting; full shared ownership/lender/calendar remain open."
         },
         {
           "id": "R2-G2",
@@ -302,6 +302,15 @@
           "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
           "lastRun": "2026-10-21T16:24:59.000Z",
           "notes": "cc09e2e verified21 web+21 native common-month cases at1440/375/280; native total70 includes49 preserved cases. Four actual DOM negatives restore original nodes/styles; stored bytes preserved. Separate11 currency-width boundaries on one fictional book preserve full signed-billion values, >=12px, fit/containment and no page overflow. Hosted120/new IAB corroborate bounded comparisons; not lender/device/shared-scenario approval."
+        },
+        {
+          "id": "R2-G9",
+          "title": "Shared-source Portfolio Dashboard and storage failures",
+          "command": "node apps/web/scripts/smoke-shared-portfolio-dashboard.cjs",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/shared-portfolio-dashboard-2026-10-21/rendered-summary.json",
+          "lastRun": "2026-10-21T18:31:00Z",
+          "notes": "Two multi-assertion workflows at280/375/1440 (6 total), not6 lender examples. Exact separate/legacy bytes, canonical bidirectional edits/metadata/no-ops, full cohort/actual asset identity, APR200/promo/empty/tolerance/LOC-only/ranges and corrupt/unavailable/failed-write pause pass. Real canvas pixels/framing/replay checked at375/1440. Light vital ratios5.03-5.36 after three actual REDs2.13-2.47. New evidence path retained by existing CI upload. Not full R2, global accessibility or production approval."
         }
       ]
     },
@@ -496,14 +505,14 @@
         {
           "id": "R5-T5",
           "title": "Make native coaching respect unavailable payoff projections",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Actual old-export IAB and real-function RED: APR200 yields payment-below-interest/ETAReviewinputs but positive Send1000/tonegood and false downstream readiness. Three-line shared coaching guard now yields Reviewpayoffinputs/reason; cashflow/setup/LOC priorities and valid final/zero-surplus Pause preserved.16 contracts GREEN after7RED/9positive, new6 browserworkflows after3RED/3healthy positives. Original76+6 fullbrowser, parent IAB five-screen/recovery and13 serial web stages pass. Six executable/data pins independently reviewed; no actionable finding. BOTH new complete exact-head CI events precede closure. See docs/native-coaching-safety-contract-2026-10-21.md."
+          "notes": "Verifieda792504, receipt6322747051: BOTH full push39645989749/PR39646001229 attempt1 all3jobs/every step, primary572/559s, heroes329/528s andSQL162/164s under unchanged1200s caps. Actual APR200 RED/7 unit failures precede projection-aware guard;16 contracts/original76+6 browser and actual IAB five-screen/recovery pass. Cashflow/LOC priority and valid final/zero-surplus Pause preserved. Only1of111 index declarations changed;110 and all numerical fixtures retained. This bounded coaching task is done, not device/cloud/final-art/production approval. See docs/native-coaching-safety-contract-2026-10-21.md."
         }
       ],
       "gates": [
@@ -562,9 +571,9 @@
       "direction": "up"
     },
     {
-      "label": "Scenario owners to consolidate",
+      "label": "Scenario source families to consolidate",
       "baseline": "3",
-      "current": "3",
+      "current": "4",
       "target": "1",
       "direction": "down"
     },
@@ -590,12 +599,12 @@
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Simulator web/Expo, Vault and both Portfolios use funded liability books with explicit cash. Canonical units and native full-book persistence/recovery are implemented. Dashboard helpers, shared scenario ownership, common-date wealth and lender/calendar/rounding/credit-availability integration remain open."
+      "note": "Four existing persisted source families are now explicitly inventoried (web target, web Portfolio, native target, native Portfolio); no new store is added. Explicit shared-source Dashboard begins canonical adoption, not full consolidation. Simulator/Vault/Expo adoption, lender/calendar/rounding/credit-availability and final release remain open. Existing same-month Portfolio comparisons are bounded proof."
     },
     {
       "title": "Verified draft is not production approval",
       "severity": "high",
-      "note": "cc09e2e passed both full CI events, but primary job1198s had only2s margin against1200s. Isolate existing graphics checks under the same per-job cap and require both events/all3 jobs. Final art, scenario/lender/calendar/backend/security/device/release gates remain open."
+      "note": "CI graphics isolation is verified at8561784 and latera792504: both complete events/all3 jobs, unchanged1200s caps. Each substantive push still needs its own exact-head CI and appropriate hosted proof. Final art, full scenario adoption, lender/calendar/backend/security/device/release gates remain open."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -901,10 +910,11 @@
     }
   ],
   "resume": {
-    "activePhase": "R0",
+    "activePhase": "R2",
     "nextActions": [
-      "Previousef72dd7 native APR checkpoint is VERIFIED: full push39641080588/PR39641097086 all3jobs/every step, receipt6322133013. R5-T4done. Current coaching slice passes16 contracts andoriginal76+6 browser workflows, actual IAB five-route/recovery, independent review and13 serial web gates. Commit/push then require BOTH NEW exact-head full CI/all original counts plus coaching6/16. No metadata-only push loop or relabeled cc09 hosted120/device/production approval.",
-      "Read docs/native-coaching-safety-contract-2026-10-21.md. Shared dashboard now consults actual Velocity availability before suggesting a chunk. Preserve cashflow/LOC warning priorities, exactly80 boundary, valid clipped-final/zero-surplus Pause and all numerical functions. Only1of111 index declarations changed; Remotion only source fingerprint/version refreshes, fixture inputs/results equal. New source index hash requires source-bound references and media freshness, not inherited old numerical digests. New R5-T5 awaits complete CI.",
+      "Previousa792504 coaching checkpoint is VERIFIED: full push39645989749/PR39646001229 attempt1 all3jobs/every step, receipt6322747051; R5-T5done. Current substantive R2 slice adds explicit shared-source Portfolio Dashboard,21 overview contracts and6 browser workflows. Require BOTH NEW full exact-head CI events and fresh READY/hosted126/actual IAB before final receipt. No metadata-only push loop or relabeled old hosted evidence.",
+      "Read docs/shared-portfolio-dashboard-contract-2026-10-21.md and its spec/plan. /?scenario=portfolio and Portfolio share one existing canonical book/actions; original / retains its saved target data. Preserve exact legacy bytes, no-op drafts, actual identities, full cohort, decimalAPR/promo/tolerance/range and paused failed storage. No new store/source flag/automatic merge. Other routes/native and explicit adoption are NEXT, so R2-T1 remains in progress. Four existing source families are discovered inventory, not new records.",
+      "Read docs/native-coaching-safety-contract-2026-10-21.md. Actual Velocity availability guards chunk advice. Preserve cashflow/LOC warning priorities, exactly80 boundary and valid clipped-final/zero-surplus Pause. All original numerical modules/index remain unchanged in the new shared-view slice; source-bound references/media must still pass. Prior native exports are inherited until fresh exact-head CI, not new device proof.",
       "Read docs/native-legacy-apr-contract-2026-10-21.md. Single-scenario legacy-percent and canonical Portfolio percent remain separate; unchanged/equivalent bytes stay exact, new200 storesraw200/copiesdecimal2, oldraw2 remains2%. Original19 drafts/15APR/6browser cases stay intact. Historical counting-wrapperexit1 is explicitly reconciled as70+6cases plus1navigation assertion, never erased.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",

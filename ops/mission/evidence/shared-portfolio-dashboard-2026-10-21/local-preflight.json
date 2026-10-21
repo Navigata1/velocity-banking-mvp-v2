@@ -1,0 +1,248 @@
+{
+  "baseline": "a792504f5d42301d609e30c368f629a9911c4ed4",
+  "verifiedAt": "2026-10-21T18:34:43.915Z",
+  "stage": "Shared-source web Dashboard local preflight; BOTH final-head CI events and fresh hosted preview required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322747051",
+  "sources": {
+    "apps/web/package.json": "b4dfef60adc99c05349bf80462b88446cc9cd54dbd65196f6c0c6409bbf37ac2",
+    "packages/financial-engine/package.json": "8f7c3937101c9750650f41ac2fd6e875a519358e2d10a329f5f4d91049da1ea3",
+    "apps/web/src/app/page.tsx": "6c531f5d5ef28f0acad54ece2cedce9f163b4220b254973373e16816749ecd3a",
+    "apps/web/src/app/portfolio/page.tsx": "f9d7e060c5fbaf67b5ce6f99450bbce6abedc524e3dfc38bea18005fd45d9808",
+    ".github/workflows/ci.yml": "a650e9ce52b5718bc493f3f2dfe76578d43d8de542bbc9133daa891b4a7a1617",
+    "scripts/check-restoration-ci.test.cjs": "16a6e4a9c8b8b562a2d87608f58b2bf5d9923ffe923720cd226c7ee196e485db",
+    "packages/financial-engine/src/portfolio-overview.ts": "916be65c23918b2e26de426ed83551a707e120ffa7f56fbe5ea922e9d2a8ecf7",
+    "apps/web/scripts/portfolio-overview-tests.cjs": "851e8b6880fc8921acc0fb1ecf68d1fa586f48fb4a3a84047c39b7fd3ded0e01",
+    "apps/web/src/app/PortfolioDashboard.tsx": "b0b382f228a691b0cb940db3363b4eab2aa6de63509dea0aa4b2835056d8cc9e",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "885f879a7ccd0ffef6fe701634f73a7b919dfb6511e15536f3b1f39a66f08ed3"
+  },
+  "normalizedSources": {
+    "apps/web/package.json": "b4dfef60adc99c05349bf80462b88446cc9cd54dbd65196f6c0c6409bbf37ac2",
+    "packages/financial-engine/package.json": "8f7c3937101c9750650f41ac2fd6e875a519358e2d10a329f5f4d91049da1ea3",
+    "apps/web/src/app/page.tsx": "6c531f5d5ef28f0acad54ece2cedce9f163b4220b254973373e16816749ecd3a",
+    "apps/web/src/app/portfolio/page.tsx": "f9d7e060c5fbaf67b5ce6f99450bbce6abedc524e3dfc38bea18005fd45d9808",
+    ".github/workflows/ci.yml": "a650e9ce52b5718bc493f3f2dfe76578d43d8de542bbc9133daa891b4a7a1617",
+    "scripts/check-restoration-ci.test.cjs": "16a6e4a9c8b8b562a2d87608f58b2bf5d9923ffe923720cd226c7ee196e485db",
+    "packages/financial-engine/src/portfolio-overview.ts": "916be65c23918b2e26de426ed83551a707e120ffa7f56fbe5ea922e9d2a8ecf7",
+    "apps/web/scripts/portfolio-overview-tests.cjs": "851e8b6880fc8921acc0fb1ecf68d1fa586f48fb4a3a84047c39b7fd3ded0e01",
+    "apps/web/src/app/PortfolioDashboard.tsx": "b0b382f228a691b0cb940db3363b4eab2aa6de63509dea0aa4b2835056d8cc9e",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "885f879a7ccd0ffef6fe701634f73a7b919dfb6511e15536f3b1f39a66f08ed3"
+  },
+  "sourceBoundary": {
+    "modified": [
+      "apps/web/package.json",
+      "packages/financial-engine/package.json",
+      "apps/web/src/app/page.tsx",
+      "apps/web/src/app/portfolio/page.tsx",
+      ".github/workflows/ci.yml",
+      "scripts/check-restoration-ci.test.cjs"
+    ],
+    "added": [
+      "packages/financial-engine/src/portfolio-overview.ts",
+      "apps/web/scripts/portfolio-overview-tests.cjs",
+      "apps/web/src/app/PortfolioDashboard.tsx",
+      "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs"
+    ],
+    "protectedSources": 293,
+    "originalFinancialSources": 8,
+    "models": 10,
+    "posters": 10,
+    "videos": 10
+  },
+  "tests": {
+    "webRegressions": 348,
+    "overviewContracts": 21,
+    "commonMonthContracts": 31,
+    "referenceProbes": 23247,
+    "mediaContracts": 145,
+    "freshStills": 27,
+    "ciContracts": 14,
+    "staticRendererContracts": 4,
+    "localWebStages": 14,
+    "oldWebWorkflows": 120,
+    "newSharedDashboardWorkflows": 6,
+    "nativeTypes": true,
+    "nativeFullContracts": true
+  },
+  "manualActualIab": {
+    "syntheticOnly": true,
+    "entry": "Portfolio link to /?scenario=portfolio",
+    "initial": {
+      "cashFlow": "$500.00",
+      "dailyBurn": "$0.87/day",
+      "months": 5,
+      "target": "Loan B"
+    },
+    "dashboardIncomeEdit": 2500,
+    "portfolioReadback": 2500,
+    "reverseExpenseEdit": 1550,
+    "returnedCashFlow": "$950.00",
+    "returnedMonths": 3,
+    "studioAnd3DReplay": true,
+    "screenshot": "C:/Users/IslandDevCrew/Desktop/InterestShield-Shared-Portfolio-Verified-2026-10-21.jpg"
+  },
+  "rawLocalEvidence": {
+    "directory": ".superpowers/sdd/2026-10-21-shared-portfolio-dashboard",
+    "files": {
+      "overview-red.log": {
+        "bytes": 3130,
+        "sha256": "42cf69d0baf3d6049903aaa7e21d31dfbcd3b2806cdfc7424f4fecaa9b0a43ef"
+      },
+      "overview-green.log": {
+        "bytes": 1794,
+        "sha256": "8e94d69592ff05c8d55c681cd4e497eb7aff80f5d64e1a9999c169e8bc537cd7"
+      },
+      "task2-build.log": {
+        "bytes": 993,
+        "sha256": "babec7eb5eb34045627b052947f46cb73caf24bfc9935fbd6297449327a4bb3e"
+      },
+      "final-build.log": {
+        "bytes": 991,
+        "sha256": "e5f3f0e26ab1a3dcef29c705672f9c8af072205262639c033687e15ca2f9bbb4"
+      },
+      "contrast-red.log": {
+        "bytes": 3592,
+        "sha256": "117ceae81bbdbc4596debe4633a78cd0a93e095cd76c6d95b2256e3d31074426"
+      },
+      "contrast-red-verification.json": {
+        "bytes": 3321,
+        "sha256": "dd29a5811b42d690c3a61aae47a512482d3b20ce49bbd20914117992328630c5"
+      },
+      "ci-upload-red.log": {
+        "bytes": 3727,
+        "sha256": "8f6bb167f6beeb64aaf6522ea9d85359872da6c2576a6130ec1b720d1e3f6064"
+      },
+      "ci-upload-green.log": {
+        "bytes": 2720,
+        "sha256": "b8784c9a3ba87e7ee15436bc9bab481d4ecee77902c2b2a11d3674b821b23e59"
+      },
+      "web-tests.log": {
+        "bytes": 45240,
+        "sha256": "a5bf2144f5a73e214f20eaf667ec860a52110a523e434e0365a7e5cbb19f4850"
+      },
+      "web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "media-check.log": {
+        "bytes": 55671,
+        "sha256": "a47a019a6ead38122d4f8fdd33d0c8f9134ba660456e2af9e0c7f72026954508"
+      },
+      "native-types.log": {
+        "bytes": 54,
+        "sha256": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9"
+      },
+      "native-contracts.log": {
+        "bytes": 20068,
+        "sha256": "3f9e3a884df6e54422c8835298da5f3149aefc2e93446bab5e0b19a4837e2ce7"
+      },
+      "mobile-port.log": {
+        "bytes": 3288,
+        "sha256": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57"
+      },
+      "ci-contracts.log": {
+        "bytes": 2621,
+        "sha256": "f5231773905a665c1be7c7d0ca5e0d184dee2cd372362bdf5ddea8872af8b763"
+      },
+      "renderer-existing.log": {
+        "bytes": 34,
+        "sha256": "f73bc01951b76b00ed25bbf1911dd5205720b88aa1d3ff3efd244f5bb02e19d7"
+      },
+      "renderer-contracts.log": {
+        "bytes": 935,
+        "sha256": "5e4cc50230a12554e1462aede7f02e2cc73b5a4d604cad845a68008ce3fcf0fc"
+      },
+      "quality.json": {
+        "bytes": 706,
+        "sha256": "84bfe77ebc6f9491f36c5135e866e073e36ee081d6ce6c4be5f68fb3d3b97290"
+      },
+      "web-gates.json": {
+        "bytes": 2933,
+        "sha256": "1f6872969feca7270970271018778241022a2fbf83e5d9711a0e648e170173d0"
+      },
+      "browser-before.txt": {
+        "bytes": 7212,
+        "sha256": "704f8e353fce44933ffb2a6c4e7f82c92c88dab96182feeb9d87dc165532ebdb"
+      },
+      "browser-after.txt": {
+        "bytes": 4805,
+        "sha256": "eb580fbdfa2edc6b185e43a36b24ae288151f5728e05681ac273108cb19bde29"
+      },
+      "browser-before.jpg": {
+        "bytes": 86705,
+        "sha256": "159a9d1162e2206096a979aad3ecc3b969f8efc02d319757fcf9fa6838cf1987"
+      },
+      "light-before.jpg": {
+        "bytes": 78820,
+        "sha256": "c16cbaba230d16645ea9e39b89fe963a12498510185b6cda227b3ce57bd73699"
+      },
+      "light-after.jpg": {
+        "bytes": 78972,
+        "sha256": "4235db1ef404d64a446924b6ab965bccb39ab8b20fd264a15c0d7458bf04d0a2"
+      },
+      "shared-dashboard.log": {
+        "bytes": 314,
+        "sha256": "abdb719a7761f3a5eb0f93478b2e85344f8a55c35fd4a4bfb01f84abc1a56e21"
+      },
+      "three.log": {
+        "bytes": 46627,
+        "sha256": "77a27dd410c275205b018d589da15fbaad640c5c8c486ea15e64097b1fb86a5e"
+      },
+      "heroes.log": {
+        "bytes": 2711,
+        "sha256": "174021e5e8b7f3f5d688114e4e9e351e053530adeb7152e4b48e2754c18866a8"
+      },
+      "fallbacks.log": {
+        "bytes": 138,
+        "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+      },
+      "routes.log": {
+        "bytes": 353,
+        "sha256": "75f10767e76d96773b3b0a37857bc95a574199383406535bee2dd27bf50af8b5"
+      },
+      "rendered.log": {
+        "bytes": 541,
+        "sha256": "e58bb612a7556efda193684019460549df6acfbfd2c46b8eb11707bd0a462fe0"
+      },
+      "dashboard.log": {
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "portfolio.log": {
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "vault.log": {
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "comparison.log": {
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "portability.log": {
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "input.log": {
+        "bytes": 268,
+        "sha256": "7ad037f4445c47b6d67bf8ca1d7aa72801db1e014608a028dfa18db288b0d5bc"
+      },
+      "common-month.log": {
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "currency-width.log": {
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      }
+    }
+  },
+  "limitations": [
+    "First shared-source slice only: Simulator/Cockpit/Vault/Expo and explicit legacy adoption remain open.",
+    "No original numerical module, saved source schema, asset payload, dependency or backend change.",
+    "Local native types/contracts refreshed; prior exported native/Android/iOS evidence is inherited from a792504 until fresh CI browser proof.",
+    "Final all-angle photoreal, lender/calendar, backend/security/device/release not approved.",
+    "No merge, production promotion, report-file browser workaround, Desktop HTML republishing, paidGPU or cloud/schema/DNS/data/access mutation."
+  ]
+}
