@@ -1,7 +1,7 @@
 {
-  "verifiedAt": "2026-10-21T03:58:46.460Z",
+  "verifiedAt": "2026-10-21T04:13:54.149Z",
   "baseline": "b41b6a3bb32eae6d6541776c6fece609e2144068",
-  "localSourceCheckpoint": "418224a8af848c2d6752c76ca259c09f9d1c14c6",
+  "localSourceCheckpoint": "43f6488f992fd4bf72b902882de5b7de8854082b",
   "stage": "local preflight; final exact-head remote proof required",
   "productionReady": false,
   "web": {
@@ -10,7 +10,7 @@
     "codecRange": 17,
     "adapter": 22,
     "actualStore": 3,
-    "portfolioBrowser": 33
+    "portfolioBrowser": 34
   },
   "native": {
     "bookBrowser": 12,
@@ -110,21 +110,21 @@
     "apps/web/scripts/financial-reference-tests.cjs": "2332113ec79a756fa6d18e6a2adb0353459cd70188dc2e359877e41001e9deca",
     "apps/web/scripts/portfolio-apr-unit-tests.cjs": "126d7655eafb086d0f23bc5527f36c70c6fe85a347f748f38ccd33ee70356ef7",
     "apps/web/scripts/portfolio-book-tests.cjs": "36713324b4d74f358ec0fefb575aff0390756a8f4802145bc71f34e91461523c",
-    "apps/web/scripts/portfolio-browser-harness-tests.cjs": "1044e393f5f8f4286da48e2a52650f8e034719a594f67c9eb369a931155e0178",
-    "apps/web/scripts/portfolio-input-smoke.cjs": "de65e1bcf7715c14ba2155f1dc472e0319af05891d1de4cdec3757bee3a45ce7",
+    "apps/web/scripts/portfolio-browser-harness-tests.cjs": "840734d338918b91549346bbaed01f8b230a7fd9e0df6df0815e00199314da42",
+    "apps/web/scripts/portfolio-input-smoke.cjs": "69a72a8047f3f1b586216d098a24bb2a39d501c7508f634f33dab45d0d2e264c",
     "apps/web/scripts/portfolio-persistence-tests.cjs": "831497453ea3f98f5b28a0ecb0259a25318d3a90a6841f8475968f9f4804e3c0",
     "apps/web/scripts/portfolio-store-storage-tests.cjs": "7d519ad86f6692ec77504e8f7cafb5f328b47c7954ecffa235befa22e5bb7729",
     "apps/web/scripts/smoke-portfolio-budget.cjs": "14d0aedfcecb6d940a60d578c6513daef279e851c4a8e5c589205adf1bd0fdb7",
     "apps/web/scripts/smoke-portfolio-portability.cjs": "23ee9c409e6dfd3b879866cdc80b7fb81875403e938cb2454b4d33dc2ed7d52f",
     "apps/web/scripts/supabase-account-contract.cjs": "380b48aac48a4d3c4015b71d358780cfd43fc2561ffb80e37036f1e81734ca69",
     "apps/web/src/app/portfolio/AddDebtDialog.tsx": "ae391998083ae5e015a422685c01d227dd3462e278dd62a5971e0aaddc1e5178",
-    "apps/web/src/app/portfolio/PortfolioDebtsSection.tsx": "30b175b5df6ad8af728ca6634c3258e3d1bf7f92ccb2365bbbef3cddee9cf388",
-    "apps/web/src/app/portfolio/PortfolioPlanSection.tsx": "459085abed697af6198a691fc81da430acc957274c8da8a335496c22a861e677",
+    "apps/web/src/app/portfolio/PortfolioDebtsSection.tsx": "6638f0a1e825531a1c678ac99118de686e4db6555f473190f7b9a393c311b829",
+    "apps/web/src/app/portfolio/PortfolioPlanSection.tsx": "c48c9fcac9f32a087ed321617d71ea4a1d0a13e6b57a3efaedb87fe10034b7de",
     "apps/web/src/app/portfolio/page.tsx": "dd802f48722acce0ea03f574edcdaebde66d41930f72b9656619b13dbe21c3af",
     "apps/web/src/app/settings/SupabaseAccountPanel.tsx": "a7d23654d407e68129c73641bbfb5979c0d46acb9da37c266015785a17e5237e",
     "apps/web/src/app/settings/local-data-reset.ts": "48fba0e4e0ce347d28b6b03ebdb7107ad339880f7e40bb6c66139e45e5888ec4",
     "apps/web/src/app/settings/local-demo-snapshot.ts": "d802b292502e0f82940921a43c7bf252a9e54ada4d8e6e0daf25c14da7ecad6c",
-    "apps/web/src/components/PortfolioEditableNumber.tsx": "b52a63884d0d168e8b213e253454e7d216818a3f1d73e1e705d666ddbe650544",
+    "apps/web/src/components/PortfolioEditableNumber.tsx": "b118681d149d178d1d021e8145bc44b72e82df1d126f17104132b8906ae36e0e",
     "apps/web/src/engine/portfolio-path-visual.ts": "94d60590f1f594dd75ea39671152218fcc923808dca0020e9653cf4f16797999",
     "apps/web/src/engine/portfolio-run-diff.ts": "499e55455880aaa22a3a9d5a1c13edbe1ada7c53d02fabced07b2606a548f3cc",
     "apps/web/src/lib/supabase/account-sync-source.ts": "ceddf8e9c1479872417fc8352f89dcf683b609068adf62c76fe43e0f51bc74db",
@@ -145,8 +145,8 @@
       "sha256": "72582d68202fbae7cc6dfe598a4f29c9685fb424e62b0d0a5cb405806298a3d2"
     },
     "web-build.log": {
-      "bytes": 954,
-      "sha256": "fb9477fbdd4846c091b724a38096a8341f78764ae59438a61afaeb6346b3e76a"
+      "bytes": 952,
+      "sha256": "754cfa9282f7215fab8d2440fa7bee93a7e49dfaf485d569b3f4a329961ae3ad"
     },
     "web-lint.log": {
       "bytes": 28,
@@ -161,8 +161,8 @@
       "sha256": "dcbba06b8f8b9ada4398bae8d1b7dc255bc26883515a231d11d387c5a0fc36c2"
     },
     "portfolio.log": {
-      "bytes": 1685,
-      "sha256": "ec0f9df28c38949cd4458a600bc13abfde8018503334e0c8b8c004ae3e6fb814"
+      "bytes": 1727,
+      "sha256": "d9c1b48cf7c7f9ed6f08dcdadd3c139a315bf3db0516bc1b353a6926abd0ad49"
     },
     "dashboard.log": {
       "bytes": 592,
@@ -250,23 +250,27 @@
     },
     "web-portability-verification.json": {
       "bytes": 602,
-      "sha256": "e0bb23b7daecea2b374c0677f3a9c0393adfedb7d07833505f6b6842514c98d9"
+      "sha256": "349ed1f2f96919e24f2234e5c562ae7240b69a49adebc5c65f4df38d9cd09702"
     },
     "web-input-verification.json": {
-      "bytes": 1339,
-      "sha256": "c35ec9020c0eb4074faac8cc65c4d9014927f8887927bae3caceab8a525b7e6f"
+      "bytes": 1887,
+      "sha256": "af93c896ce66c21ba2ff8b1641f26b4057be4ffc59af450ee2084b69b30eb24b"
     },
     "web-input-280.png": {
-      "bytes": 125226,
-      "sha256": "b8579607f403924bb3e5dd67d20bc175ef81561dec531727fc625aa51b343630"
+      "bytes": 124365,
+      "sha256": "6bf011df927ac5271d13fd70da42b70ac0614a102a882c8f4bfe7c048525234e"
     },
     "web-input-375.png": {
-      "bytes": 169077,
-      "sha256": "72efed4c10c3d74fda0d3787980d91621bd39f5ab9c795f5503f77576b24eff3"
+      "bytes": 166435,
+      "sha256": "9af0a2b5d57b8cbc0515a82a034c7653be5206f16026ea80610eebb11230a3bd"
+    },
+    "web-input-1264.png": {
+      "bytes": 105204,
+      "sha256": "07d8af7b72426541975bd5c49deb2186ba92056141d0aee67ad52c5466a05188"
     },
     "web-input-1440.png": {
-      "bytes": 111320,
-      "sha256": "8528e12260fd1e82afd45d2200cd5d63b5326f779989afaf7dbc86d11f9f9451"
+      "bytes": 110347,
+      "sha256": "66fcafcdf0a8332cbb024b7406382e486b4ba28cddce30cea93ce835a644c9e8"
     },
     "native-book-375.png": {
       "bytes": 45550,
@@ -307,6 +311,26 @@
     "rejected-transparent-web-input-375.png": {
       "bytes": 7249,
       "sha256": "06691a024192695cbffc278b05c912b57f3f937295fd927e3be4d1cf281b1ea7"
+    },
+    "compact-plan-fields-red.log": {
+      "bytes": 940,
+      "sha256": "e47ee96ad8e3ea1018ddfbcd50accb968528fe0f2d8b2ff85b7c1a0924f2b29c"
+    },
+    "precise-apr-display-red.log": {
+      "bytes": 2294,
+      "sha256": "0d164727e0a74aa2fbfd7ccb202bbd401d2a0df5e0f5d5730cf000a65c11d5db"
+    },
+    "02f3137-failed-push.log": {
+      "bytes": 4755,
+      "sha256": "5e86827a6f6424a63dbbd2e47e03feaa82344fe4ff2efa50b4a87aa7dc8b9bed"
+    },
+    "02f3137-failed-pr.log": {
+      "bytes": 4755,
+      "sha256": "c8085aed201b961496f98532b68e82a3ed56fa0e0b00a3924333f9a52342d80c"
+    },
+    "rejected-plan-02f3137.jpg": {
+      "bytes": 85585,
+      "sha256": "28db1f0d3c768fee362f74482de2fc817a67fd47a4ff078aa08692b4a5a07d1d"
     }
   },
   "limitations": [

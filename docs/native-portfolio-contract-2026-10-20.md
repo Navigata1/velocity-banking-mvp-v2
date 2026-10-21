@@ -72,9 +72,18 @@ the pre-existing identity/outbox/recovery coverage.
 Actual exported Chrome fixtures cover create/edit, explicit copy, imported no-ops,
 real Web Locks stale-tab rejection and JSON transfer: 12 book cases, two precision
 fixtures and 35 existing route/viewport executions. Web has 24 funded cases, six
-portability/error cases and precise editors at 280/375/1440. Capture checks reject
+portability/error cases and precise editors at 280/375/1264/1440. Capture checks reject
 blank/transparent inputs, clipped drafts and split currency lines. Retained RED
 captures are rejected evidence, not successful visual proof.
+
+The first remote checkpoint stopped at the essential Portfolio section's ancestor
+opacity check on both CI events. Its SQL jobs passed, but that head was not verified.
+Core Plan/Debts forms no longer depend on scroll-triggered reveal. A live1264px
+capture also exposed clipped labels/field scrollbars; LOC uses two columns when
+space allows, compact numeric type and a no-horizontal-scroll display assertion.
+The new viewport also retains every existing precision/no-op/invalid/reload check.
+External scripts in the isolated precision fixture receive recorded empty204
+responses, not abort-generated console errors; real console errors still fail.
 
 Fresh Expo web and Android/iOS Hermes exports are bundle proof, not signed-in device,
 screen-reader, locale-complete keyboard, cloud backup or cross-device approval.

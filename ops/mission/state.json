@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T03:58:00Z",
+    "updated": "2026-10-21T04:14:00Z",
     "sessionCount": 14
   },
   "policies": {
@@ -65,7 +65,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/routes.log",
           "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "Seven rendered web routes pass1440/390. Web33 Portfolio cases cover funded budgets, canonical portability/failures and precise280/375/1440 editors. Expo49 executions comprise12 book,2 precision and35 prior route cases. Both exact-head full pipelines and hosted81-case/routes proof must repeat. No device or release approval."
+          "notes": "Seven rendered web routes pass1440/390. Web34 Portfolio cases cover funded budgets, canonical portability/failures and precise280/375/1264/1440 editors. Expo49 executions comprise12 book,2 precision and35 prior route cases. Both exact-head full pipelines and hosted82-case/routes proof must repeat. No device or release approval."
         },
         {
           "id": "R0-G3",
@@ -74,7 +74,7 @@
           "status": "pending",
           "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6306173894",
           "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "b41b6a3 passed complete push/PR39529176994/39529182382 on attempt1, actual full native lane, real SQL63 twice/event, exact Vercel and hosted72/routes/model proof. Superseded15cd5d8 was never declared verified. This native-book checkpoint needs both new complete pipelines, actual new lane execution and hosted receipt. Fold postflight into next substantive update."
+          "notes": "b41b6a3 passed complete push/PR39529176994/39529182382 attempt1, full native lane, SQL63 twice/event and exact hosted proof.02f3137 failed both Portfolio opacity checks despite passing SQL; not verified.43f6488 follow-up passes34 local Portfolio cases including1264, with essential forms always visible and strict console tests. Both final-head complete pipelines/new lane execution/hosted82 receipt remain required. Fold postflight into next substantive update."
         }
       ]
     },
@@ -502,7 +502,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "b41b6a3 passed both complete pipelines, actual native lane, SQL, Vercel and hosted proof. The current native-book/canonical/recovery checkpoint needs both fresh full events and hosted81-case/routes proof. No prior receipt authorizes production."
+      "note": "b41b6a3 passed both complete pipelines, actual native lane, SQL, Vercel and hosted proof.02f3137 failed both Portfolio visibility gates despite passing SQL; not verified. The follow-up needs both fresh full events and hosted82-case/routes proof. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -810,7 +810,7 @@
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Push this reviewed native-book checkpoint, require both final exact-head complete CI runs, SQL63 twice/event, actual full native/new UI/browser lanes, exact Vercel and hosted81 cases plus seven routes. b41b6a3 receiptPR256 issuecomment-6306173894 is folded in. Append new postflight receipt and fold into next substantive update; no report-only push loop or production promotion.",
+      "Push the essential-form visibility/responsive follow-up, require both final exact-head complete CI runs, SQL63 twice/event, actual full native/new UI/browser lanes, exact Vercel and hosted82 cases plus seven routes.02f3137 failed Portfolio opacity checks on both events; SQL passed but head was not verified. b41b6a3 receiptPR256 issuecomment-6306173894 is folded in. Append postflight and fold into next substantive update; no report-only push loop or promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
       "Next refine Student Loan or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land/Credit Card are candidates, five studies remain. Public assets have70568bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/credit-card-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",

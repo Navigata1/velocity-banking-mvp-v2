@@ -1,0 +1,52 @@
+
+> web@0.1.0 smoke:portfolio:built
+> node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs
+
+PASS Portfolio unfunded-extra at 1440px
+PASS Portfolio retained-cash at 1440px
+PASS Portfolio existing-loc at 1440px
+PASS Portfolio ranked-loc-cap at 1440px
+PASS Portfolio split-ranked-loc at 1440px
+PASS Portfolio funded-final at 1440px
+PASS Portfolio one-cent-short at 1440px
+PASS Portfolio loc-interest-shortfall at 1440px
+PASS Portfolio already-paid at 1440px
+PASS Portfolio large-value at 1440px
+PASS Portfolio large-loc at 1440px
+PASS Portfolio focus-not-first-payoff at 1440px
+PASS Portfolio unfunded-extra at 375px
+PASS Portfolio retained-cash at 375px
+PASS Portfolio existing-loc at 375px
+PASS Portfolio ranked-loc-cap at 375px
+PASS Portfolio split-ranked-loc at 375px
+PASS Portfolio funded-final at 375px
+PASS Portfolio one-cent-short at 375px
+PASS Portfolio loc-interest-shortfall at 375px
+PASS Portfolio already-paid at 375px
+PASS Portfolio large-value at 375px
+PASS Portfolio large-loc at 375px
+PASS Portfolio focus-not-first-payoff at 375px
+PASS web Portfolio portability canonical-round-trip 375px
+PASS web Portfolio portability corrupt-primary 375px
+PASS web Portfolio portability failed-publication 375px
+PASS web Portfolio portability canonical-round-trip 1440px
+PASS web Portfolio portability corrupt-primary 1440px
+PASS web Portfolio portability failed-publication 1440px
+Portfolio input fixtures against existing built web app at http://127.0.0.1:63267; isolated 375/1440/280/1264px contexts.
+PASS precise Portfolio inputs 375px
+PASS precise Portfolio inputs 1440px
+FAIL precise Portfolio inputs 280px: Precision Loan APR display needs horizontal scrolling: {"width":116,"contentWidth":126}
+PASS precise Portfolio inputs 1264px
+AssertionError [ERR_ASSERTION]: precise Portfolio rendered input fixtures must all pass
+
+1 !== 0
+
+    at runPortfolioInputFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:208:10)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:241:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
