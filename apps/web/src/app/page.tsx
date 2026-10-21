@@ -367,15 +367,15 @@ export default function Dashboard() {
                 <div className="mt-4 space-y-4">
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Income</span>
-                    <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="md" ariaLabel="Monthly income" />
+                    <EditableCurrency value={store.monthlyIncome} max={Math.max(10000000, store.monthlyIncome)} onChange={store.setMonthlyIncome} size="md" ariaLabel="Monthly income" />
                   </label>
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Expenses</span>
-                    <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="md" ariaLabel="Monthly expenses" />
+                    <EditableCurrency value={store.monthlyExpenses} max={Math.max(10000000, store.monthlyExpenses)} onChange={store.setMonthlyExpenses} size="md" ariaLabel="Monthly expenses" />
                   </label>
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Chunk Amount</span>
-                    <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} size="md" ariaLabel="Velocity chunk amount" />
+                    <EditableCurrency value={store.chunkAmount} max={Math.max(10000000, store.chunkAmount)} onChange={store.setChunkAmount} size="md" ariaLabel="Velocity chunk amount" />
                   </label>
                 </div>
               </div>
@@ -387,6 +387,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Balance</span>
                     <EditableCurrency
                       value={activeDebt.balance}
+                      max={Math.max(10000000, activeDebt.balance)}
                       onChange={(value) => store.updateDebt(debtType, { balance: value })}
                       size="md"
                       ariaLabel={`${activeDebt.name} balance`}
@@ -405,6 +406,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Minimum Payment</span>
                     <EditableCurrency
                       value={activeDebt.minimumPayment}
+                      max={Math.max(10000000, activeDebt.minimumPayment)}
                       onChange={(value) => store.updateDebt(debtType, { minimumPayment: value })}
                       size="md"
                       ariaLabel={`${activeDebt.name} minimum payment`}
@@ -425,6 +427,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Limit</span>
                     <EditableCurrency
                       value={store.loc.limit}
+                      max={Math.max(10000000, store.loc.limit)}
                       onChange={(value) => store.updateLOC({ limit: value })}
                       size="md"
                       ariaLabel="Line of credit limit"
@@ -434,6 +437,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Balance</span>
                     <EditableCurrency
                       value={store.loc.balance}
+                      max={Math.max(10000000, store.loc.balance)}
                       onChange={(value) => store.updateLOC({ balance: value })}
                       size="md"
                       ariaLabel="Line of credit balance"

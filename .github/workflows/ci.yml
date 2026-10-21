@@ -78,6 +78,18 @@ jobs:
         working-directory: apps/web
         run: npm run smoke:comparison:built
 
+      - name: Verify daily-interest display and saved dashboard inputs
+        working-directory: apps/web
+        run: npm run smoke:dashboard:built
+
+      - name: Upload dashboard interest proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-interest-proof
+          path: apps/web/test-results/dashboard-interest
+          if-no-files-found: warn
+
       - name: Upload Simulator comparison proof
         if: always()
         uses: actions/upload-artifact@v4

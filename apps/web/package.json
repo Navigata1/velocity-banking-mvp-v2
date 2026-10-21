@@ -18,6 +18,7 @@
     "smoke:routes": "node scripts/smoke-routes.cjs",
     "smoke:rendered": "npm run build && npm run smoke:rendered:built",
     "smoke:rendered:built": "node scripts/smoke-rendered.cjs",
+    "smoke:dashboard:built": "node scripts/smoke-dashboard-interest.cjs",
     "smoke:comparison:built": "node scripts/smoke-comparison.cjs",
     "smoke:vault:built": "node scripts/smoke-vault-comparison.cjs",
     "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs",
