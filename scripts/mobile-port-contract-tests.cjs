@@ -57,6 +57,10 @@ function loadTsFile(filename) {
       return loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
     }
 
+    if (request === '@interestshield/financial-engine/input-draft') {
+      return loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/input-draft.ts'));
+    }
+
     if (request === 'expo-secure-store') {
       return {
         deleteItemAsync: async () => undefined,

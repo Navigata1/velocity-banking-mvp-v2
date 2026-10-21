@@ -4,11 +4,18 @@ const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
 const filename = path.resolve(__dirname, '../lib/financial-input-draft.ts');
-const output = ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
-}).outputText;
-const exportsObject = {};
-new vm.Script(output, { filename }).runInNewContext({ exports: exportsObject });
+function load(file) {
+  const output = ts.transpileModule(fs.readFileSync(file, 'utf8'), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const exportsObject = {};
+  new vm.Script(output, { filename: file }).runInNewContext({ exports: exportsObject, require: request => {
+    if (request === '@interestshield/financial-engine/input-draft') return load(fs.realpathSync(require.resolve(request)));
+    throw new Error(`Unsupported input draft contract import: ${request}`);
+  } });
+  return exportsObject;
+}
+const exportsObject = load(filename);
 const { formatFinancialInput, resolveFinancialDraft } = exportsObject;
 let count = 0, failures = 0;
 function test(name, run) {

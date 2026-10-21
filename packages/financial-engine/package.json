@@ -21,6 +21,11 @@
       "react-native": "./src/portfolio-path.ts",
       "default": "./src/portfolio-path.ts"
     },
+    "./input-draft": {
+      "types": "./src/input-draft.ts",
+      "react-native": "./src/input-draft.ts",
+      "default": "./src/input-draft.ts"
+    },
     "./portfolio-book": {
       "types": "./src/portfolio-book.ts",
       "react-native": "./src/portfolio-book.ts",
