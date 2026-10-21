@@ -4090,7 +4090,8 @@ test('cockpit emergency scenario uses recovery-oriented coach copy', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/cockpit/page.tsx'), 'utf8');
 
   assert.ok(source.includes('data-testid="cockpit-emergency-coach-note"'), 'expected a stable emergency coach note hook');
-  assert.ok(source.includes('Emergency scenario active'), 'expected neutral emergency scenario copy');
+  assert.ok(source.includes('Emergency drill active'), 'expected an educational drill rather than a simulated expense claim');
+  assert.ok(source.includes('not part of the payoff calculation'), 'expected the unmodeled expense to be disclosed');
   assert.ok(source.includes('Recovery is part of the plan'), 'expected recovery-oriented guidance');
   assert.ok(source.includes('Pause new chunks until the emergency cost is absorbed.'), 'expected a pause-chunk recovery step');
   assert.ok(source.includes('Protect essentials and minimum payments before chasing payoff speed.'), 'expected essentials-first guidance');
