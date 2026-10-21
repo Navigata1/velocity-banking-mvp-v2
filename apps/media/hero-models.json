@@ -68,13 +68,19 @@
   },
   {
     "id": "studentLoan",
-    "bytes": 897548,
-    "meshes": 52,
-    "triangles": 39396,
-    "sha256": "30fed0d378a0d3214f6ef81a12a5887795bb2e8613ce93908e1ed2585f1d6d63",
-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "quality": "refined-textured",
+    "bytes": 715276,
+    "meshes": 71,
+    "triangles": 29348,
+    "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222",
+    "sourceSha256": "bc7a021c892aaecbb8c9527a5fcd61dd420d68423cf69c674d531318782afd9a",
+    "sourceFile": "apps/media/scripts/build-refined-student-loan.mjs",
+    "materialSourceSha256": "cb5da74ce913e11568f82855744d40cfe4ac5416532e0bec60622a037aa620f3",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and generated albedo sources",
+    "provenance": "Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 1
+    "version": 2
   },
   {
     "id": "medical",

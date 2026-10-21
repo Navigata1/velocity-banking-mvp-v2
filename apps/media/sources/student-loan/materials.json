@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "created": "2026-10-20",
+  "purpose": "Original Student Loan cap, books and diploma: generated grayscale albedos with original geometry and approximate authored PBR surfaces.",
+  "resolution": 512,
+  "normalResolution": 256,
+  "images": [
+    {
+      "file": "cloth.png",
+      "sha256": "bc2451f333299567d32abe18c229cdb5c768c1762318932e2f1e42fbba6364d2",
+      "origin": "Codex built-in image_gen",
+      "originalOutput": "exec-2dd965ed-9875-426a-a8cb-c3fa408b8bce.png",
+      "brief": "Single seamless grayscale PBR base-color tile, fine premium cotton/rayon basket weave, tiny natural thread variation, orthographic macro scan style, flat even diffuse illumination, neutral mid-light grayscale for navy/emerald shader dye. Uniform scale/brightness, full square; no folds, creases, shadows, reflections, border, vignette, objects, text, logos or swatches. Restrained contrast and tactile fibers, requested 2048 square."
+    },
+    {
+      "file": "leather.png",
+      "sha256": "7b4897dbee5f4ad7e0982e3cb81a10fb3bcb445db9a084b073215738e01a74e1",
+      "origin": "Codex built-in image_gen",
+      "originalOutput": "exec-7595a962-77c7-42c1-9773-0aca4bc2df46.png",
+      "brief": "Single seamless grayscale leather base-color tile, fine premium goatskin bookbinding grain, small organic pebbles/hairline creases, orthographic macro scan style, flat even diffuse illumination, neutral mid-light grayscale for emerald/oxblood shader dye. Uniform scale/brightness, no border, vignette, shadows, folds, seams, wear patches, tears, text, logos, objects or swatches. Restrained contrast, requested 2048 square."
+    }
+  ],
+  "surfaces": {
+    "clothNormalScale": 0.22,
+    "leatherNormalScale": 0.16,
+    "paperNormalScale": 0.12,
+    "clothTileScale": [4, 4],
+    "leatherTileScale": [2, 2],
+    "grainSeed": 4831
+  },
+  "limitations": "Generated albedos are not photographed scans. Micro-normal, roughness, dye, sheen and metal factors are authored approximations, not measured surface relief or reflectance. Original source images are retained unchanged. Color/roughness maps use 512px; normals are filtered and renormalized to 256px, then losslessly WebP encoded. Repeating edges, small-screen readability and final photorealism require visual review. Original authored geometry is not an exact reconstruction of the poster or an institutional credential."
+}
