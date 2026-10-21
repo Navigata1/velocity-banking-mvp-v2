@@ -14,7 +14,8 @@ Original base model: Unity Fan, public-domain / CC0, as documented by the source
 InterestShield modifications: removed logo-bearing license plate, steering emblem
 and the separately licensed shared Khronos logo texture with all of its references;
 removed unused material variants; optimized geometry with a bounded simplification
-error; compressed geometry with Meshopt and textures as WebP; normalized scene
+error; compressed geometry with Meshopt and textures as WebP except the
+byte-preserved original paint normal PNG; normalized scene
 size and pivot. Original source copyright metadata is retained in the GLB.
 
 This is an adapted third-party asset, not an AI reconstruction of the generated

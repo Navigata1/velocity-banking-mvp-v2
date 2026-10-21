@@ -19,6 +19,10 @@ const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
   'meshopt.encoder':MeshoptEncoder,'meshopt.decoder':MeshoptDecoder,
 });
 const document=await io.readBinary(source), root=document.getRoot();
+const sourcePaintNormalSha256='3c4b65d9a8372147a41594eee96eae35127105de26142cc9e9b752c3f9754b8e';
+const paintNormal=root.listMaterials().find(material=>material.getName()==='Paint 1 Carmine')?.getNormalTexture();
+if(!paintNormal || hash(paintNormal.getImage())!==sourcePaintNormalSha256) throw new Error('Pinned paint normal was not found; existing model was not changed.');
+const sourcePaintNormal=Buffer.from(paintNormal.getImage());
 const excludedTrademarkTextureSha256='1453559c58526ec236ea7f90a72b0e49823061e6c26b571928b9ea3b91593e4d';
 const trademarkTexture=root.listTextures().find(texture=>hash(texture.getImage())===excludedTrademarkTextureSha256);
 if(!trademarkTexture) throw new Error('Expected separately licensed logo texture was not found.');
@@ -32,6 +36,8 @@ await document.transform(prune(),dedup(),weld(),
   simplify({simplifier:MeshoptSimplifier,ratio:0.55,error:0.0003,lockBorder:true}),
   textureCompress({encoder:sharp,targetFormat:'webp',resize:[1024,1024],quality:90,effort:80}),
   meshopt({encoder:MeshoptEncoder,level:'high'}));
+// A tiled tangent-space normal is data: lossy color compression changes its directions.
+paintNormal.setImage(sourcePaintNormal).setMimeType('image/png');
 const scene=root.listScenes()[0], bounds=getBounds(scene);
 const scale=3.2/Math.max(...bounds.max.map((value,index)=>value-bounds.min[index]));
 const parent=document.createNode('InterestShield-car-refined-v1').setScale([scale,scale,scale])
@@ -48,7 +54,8 @@ const imported={id:'car',quality:'refined-textured',bytes:output.length,meshes,t
   sourceUrl,sourceRevision:revision,creator:'Eric Chadwick / Darmstadt Graphics Group GmbH',license:'CC-BY-4.0',
   licenseUrl:'https://creativecommons.org/licenses/by/4.0/',sourcePage:'https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept',
   excludedTrademarkTextureSha256,
-  modifications:'Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants; simplified within 0.03% mesh error; WebP textures <=1024; Meshopt; normalized stage units.',
-  provenance:'Adapted licensed Car Concept; not an AI reconstruction of the studio poster.',version:1};
+  modifications:'Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants; simplified within 0.03% mesh error; WebP textures <=1024 except byte-preserved source paint normal PNG; Meshopt; normalized stage units.',
+  sourcePaintNormalSha256,
+  provenance:'Adapted licensed Car Concept; not an AI reconstruction of the studio poster.',version:2};
 await saveRefinedHero(imported,undefined,async()=>{await writeFile(temporary,output);await rename(temporary,target);});
 console.log(`Refined car: ${triangles} triangles, ${root.listTextures().length} textures, ${(output.length/1024).toFixed(0)} KiB.`);
