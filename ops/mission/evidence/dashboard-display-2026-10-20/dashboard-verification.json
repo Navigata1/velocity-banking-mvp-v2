@@ -1,0 +1,209 @@
+{
+  "origin": "http://127.0.0.1:53113",
+  "receipts": [
+    {
+      "scenario": "house",
+      "width": 1440,
+      "value": "Est. $51.50/day",
+      "caption": "Debt: $50.75/day; LOC: $0.75/day.",
+      "bounds": {
+        "fits": true,
+        "width": 161.6875,
+        "height": 30,
+        "scroll": 162,
+        "client": 162
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": true,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "auto",
+      "width": 1440,
+      "value": "Est. $4.23/day",
+      "caption": "Debt: $3.49/day; LOC: $0.75/day.",
+      "bounds": {
+        "fits": true,
+        "width": 152.53125,
+        "height": 30,
+        "scroll": 153,
+        "client": 153
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "cleared",
+      "width": 1440,
+      "value": "Est. $0.00/day",
+      "caption": "Debt: $0.00/day; LOC: $0.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 152.03125,
+        "height": 30,
+        "scroll": 152,
+        "client": 152
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "sub-cent",
+      "width": 1440,
+      "value": "Est. <$0.01/day",
+      "caption": "Debt: <$0.01/day; LOC: $0.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 165.03125,
+        "height": 30,
+        "scroll": 165,
+        "client": 165
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "cent-mismatch",
+      "width": 1440,
+      "value": "Est. $1.47/day",
+      "caption": "Debt: $1.24/day; LOC: $0.24/day.",
+      "bounds": {
+        "fits": true,
+        "width": 148.40625,
+        "height": 30,
+        "scroll": 148,
+        "client": 148
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "large-import",
+      "width": 1440,
+      "value": "Est. $200,000.00/day",
+      "caption": "Debt: $100,000.00/day; LOC: $100,000.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 224.4375,
+        "height": 30,
+        "scroll": 224,
+        "client": 224
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 7,
+      "errors": []
+    },
+    {
+      "scenario": "house",
+      "width": 375,
+      "value": "Est. $51.50/day",
+      "caption": "Debt: $50.75/day; LOC: $0.75/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": true,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "auto",
+      "width": 375,
+      "value": "Est. $4.23/day",
+      "caption": "Debt: $3.49/day; LOC: $0.75/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "cleared",
+      "width": 375,
+      "value": "Est. $0.00/day",
+      "caption": "Debt: $0.00/day; LOC: $0.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "sub-cent",
+      "width": 375,
+      "value": "Est. <$0.01/day",
+      "caption": "Debt: <$0.01/day; LOC: $0.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "cent-mismatch",
+      "width": 375,
+      "value": "Est. $1.47/day",
+      "caption": "Debt: $1.24/day; LOC: $0.24/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 0,
+      "errors": []
+    },
+    {
+      "scenario": "large-import",
+      "width": 375,
+      "value": "Est. $200,000.00/day",
+      "caption": "Debt: $100,000.00/day; LOC: $100,000.00/day.",
+      "bounds": {
+        "fits": true,
+        "width": 65.25,
+        "height": 52.5,
+        "scroll": 65,
+        "client": 65
+      },
+      "savedInputsPreserved": true,
+      "editedAndNavigated": false,
+      "noOpCurrencyFields": 7,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "receipts": [
+    {
+      "scenario": "affordable-final-payment",
+      "width": 1440,
+      "directMonths": "1 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "zero-after-minimum",
+      "width": 1440,
+      "directMonths": "4 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 137.59375,
+      "errors": []
+    },
+    {
+      "scenario": "exact-final-payment",
+      "width": 1440,
+      "directMonths": "1 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "zero-interest-two-liabilities",
+      "width": 1440,
+      "directMonths": "2 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 96.0001220703125,
+      "errors": []
+    },
+    {
+      "scenario": "velocity-slower-and-more-interest",
+      "width": 1440,
+      "directMonths": "3 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 97.9061279296875,
+      "errors": []
+    },
+    {
+      "scenario": "unaffordable-minimum",
+      "width": 1440,
+      "directMonths": "Review inputs",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "legacy-timing-weekly",
+      "width": 1440,
+      "preserved": true,
+      "editedBalance": 124000,
+      "errors": []
+    },
+    {
+      "scenario": "legacy-timing-biweekly",
+      "width": 1440,
+      "preserved": true,
+      "editedBalance": 124000,
+      "errors": []
+    },
+    {
+      "scenario": "affordable-final-payment",
+      "width": 375,
+      "directMonths": "1 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "zero-after-minimum",
+      "width": 375,
+      "directMonths": "4 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 137.59375,
+      "errors": []
+    },
+    {
+      "scenario": "exact-final-payment",
+      "width": 375,
+      "directMonths": "1 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "zero-interest-two-liabilities",
+      "width": 375,
+      "directMonths": "2 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 96,
+      "errors": []
+    },
+    {
+      "scenario": "velocity-slower-and-more-interest",
+      "width": 375,
+      "directMonths": "3 mo",
+      "chartHeight": 192,
+      "firstBarHeight": 97.90625,
+      "errors": []
+    },
+    {
+      "scenario": "unaffordable-minimum",
+      "width": 375,
+      "directMonths": "Review inputs",
+      "chartHeight": 192,
+      "firstBarHeight": 0,
+      "errors": []
+    },
+    {
+      "scenario": "legacy-timing-weekly",
+      "width": 375,
+      "preserved": true,
+      "editedBalance": 124000,
+      "errors": []
+    },
+    {
+      "scenario": "legacy-timing-biweekly",
+      "width": 375,
+      "preserved": true,
+      "editedBalance": 124000,
+      "errors": []
+    }
+  ]
+}

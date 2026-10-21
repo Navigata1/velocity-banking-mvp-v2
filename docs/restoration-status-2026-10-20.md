@@ -40,6 +40,10 @@ The existing aligned demo defaults were preserved.
 - Repairs for phantom payments after payoff, extra payments exceeding the budget,
   lost calendar deposit surplus, and dashboard interest-scope inconsistency.
 - Removed the dashboard's unequal-liability savings claim.
+- Dashboard daily interest now shows explicit cent/sub-cent estimates and separately
+  rounded components, with numeric overflow marked for review. Raw calculations
+  and the selected-target-plus-LOC scope are unchanged. Seven currency editors also
+  preserve current oversized imports; actual no-op data loss was reproduced first.
 - Simulator web/Expo comparisons now retain the existing LOC in every plan, use
   the same available household budget, and expose cash retained at payoff. Adverse
   Velocity outcomes are signed and visible, not clamped to zero. Actual lender
@@ -74,7 +78,7 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 329 web/shared regressions, two independent reference scenarios,78 prior
+- 340 web/shared regressions, two independent reference scenarios,78 prior
   comparisons,25 zero-recovery,100 capped-mortgage and480 new Portfolio closed-form
   cases pass, plus360 repeatable seeded paths with240 direct-oracle matches and
   ancillary contracts.
@@ -92,6 +96,9 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   and the payoff list. A dedicated fixture proves Auto clears first while Mortgage
   remains current; focused independent review cleared the display-only correction.
 - All seven routes passed rendered desktop/mobile smoke.
+- Twelve new Dashboard browser cases at1440px/375px pass daily text/amount bounds,
+  cent mismatch, small/cleared/large amounts, desktop assumptions, saved-input
+  preservation, income edit/restore/navigation and seven oversized currency no-ops.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
   decode rejection and network failure both preserve the artwork and release the stage.
@@ -112,9 +119,9 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   web, media, Worker and Expo smoke passed, but two mobile fixtures expected old
   demo defaults. The fixtures are corrected and the mobile contract suite passes
   locally. A fresh exact-SHA green run is still required; preview is not CI approval.
-- Latest fully verified baseline 20b28f3 passed complete push/PR runs 39512472477/
-  39512479956, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6303974765.
-  The new Land checkpoint needs its own postflight receipt. No production
+- Latest fully verified baseline 232b503 passed complete push/PR runs 39516617998/
+  39516623494, real SQL, Vercel and hosted proof; receipt PR256 issuecomment-6304488154.
+  The new Dashboard checkpoint needs its own postflight receipt. No production
   release is inferred from either earlier success or this local preflight report.
 - On the refined checkpoint 0d72c6b, push CI passed and all seven remote preview
   routes passed at desktop/375px. Its PR CI run exposed software-GPU screenshot
@@ -176,9 +183,6 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 8. Final native-device QA and refreshed bundles after remaining shared-engine changes.
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
-11. Make dashboard daily-interest display precision consistent: independent whole-dollar
-    rounding can show a $51 total with $51+$1 components. This does not demonstrate
-    an underlying unrounded sum error; reproduce and fix presentation separately.
 
 Public assets total 10,447,116 bytes, only 38,644 bytes below the unchanged 10 MiB
 cap. Later refinements must recover space through intentional optimization.
@@ -305,6 +309,29 @@ Draft: https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256
 The original restoration checkpoint was pushed in commits 382f042, 474f5cf and 24d238e.
 No production deployment was made. July mission state is archived in
 `ops/mission/history/july-2026-state.json`; October phases are now active.
+
+## Dashboard Estimate And Editor Correction
+
+The House example's $51/day total with $51+$1 components was independent display
+rounding, not an incorrect raw sum. It now shows `Est. $51.50/day`, with debt
+$50.75/day and LOC $0.75/day described separately. Positive amounts below one cent
+stay distinct from zero, assumptions disclose independent rounding, and invalid
+numeric overflow asks for review. Four vitals, raw fields and tone thresholds stay
+unchanged. No hidden rounding residual is assigned to an individual debt.
+
+Visual QA then exposed an existing Dashboard editor issue: a 100-million mortgage
+became 10 million after a real no-op Enter in an isolated fixture. All seven
+currency fields now retain a larger current imported value using the established
+Portfolio pattern. Desktop/mobile tests exercise no-op edits for balances,
+minimum, LOC limit, income, expenses and chunk, then compare saved inputs.
+
+The standing browser gate has 12 cases and retains failure artifacts. Eleven new
+regressions bring the total to340; financial reference outcomes remain unchanged.
+Independent scoped reviews cleared display/overflow and editor/harness changes.
+This is local preflight; final exact-head hosted proof is mandatory. It does not
+complete shared scenario ownership, dashboard/native Portfolio scope, actual
+lender/calendars or native-device/release work. See
+`docs/dashboard-display-contract-2026-10-20.md` and its evidence folder.
 
 Approved recurring improvement runs are scheduled every four hours in this chat
 under `interestshield-production-improvements`. They must make focused verified

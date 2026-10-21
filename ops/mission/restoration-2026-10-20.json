@@ -12,6 +12,9 @@
     "retain surplus deposits as explicit cash instead of discarding calendar credit",
     "conservation regression across principal, interest, spending and retained cash",
     "active-target plus LOC daily-interest scope",
+    "explicit cent/sub-cent Dashboard daily estimates, independent-rounding disclosure and numeric-overflow review without changing raw calculations",
+    "seven Dashboard currency editors preserve existing oversized imports through actual no-op edits, following Portfolio's field-local maximum pattern",
+    "standing twelve-case desktop/mobile Dashboard browser gate with saved-input, amount-bound and failure-artifact proof",
     "remove unequal-liability savings claim from dashboard",
     "same active-debt plus LOC liabilities and available budget in web/Expo Simulator comparisons",
     "shared direct repayment priorities, retained cash and signed adverse deltas with explicit educational assumptions",
@@ -35,7 +38,6 @@
   ],
   "remainingProductionGates": [
     "Complete six remaining textured hero models and artist-review all four refined candidates and collection consistency; recover public asset bytes rather than raise the 10 MiB cap",
-    "Correct independent whole-dollar daily-interest display rounding without altering underlying unrounded financial calculations",
     "Unify scenario ownership across Dashboard, Portfolio and Vault without overwriting existing user scenarios",
     "Enforce lender terms and expose real transaction calendar assumptions in normal simulation paths",
     "Complete equal-budget equal-liability strategy comparisons across all routes",
@@ -48,7 +50,8 @@
   "verification": {
     "webBuild": "passed Next.js production build and TypeScript",
     "webLint": "passed",
-    "webTests": "329 regressions,2 reference scenarios,78 comparisons,25 zero-recovery,100 capped-mortgage,480 Portfolio closed-form policies and360 deterministic seeded paths (240 direct-oracle row matches), plus ancillary contracts passed",
+    "webTests": "340 regressions,2 reference scenarios,78 comparisons,25 zero-recovery,100 capped-mortgage,480 Portfolio closed-form policies and360 deterministic seeded paths (240 direct-oracle row matches), plus ancillary contracts passed",
+    "dashboardBrowser": "12 actual Chrome cases at1440px/375px: precise cent/sub-cent/cleared/large estimates, independent-cent mismatch, amount bounds, assumptions, income edit/restore/navigation, normalized saved-input preservation and seven oversized currency no-op edits. Actual100m->10m loss reproduced before correction. No engine/scenario migration",
     "comparisonBrowser": "24 Portfolio +20 Vault +16 Simulator/saved-data executions at1440px/375px. Actual controls/caps, ranked/split LOC, cash, imported100m loan/LOC and200m limit no-op edits, cleared/final/cent-short and saved timing pass. Unsupported LOC claims hidden; inactive chunk controls absent. Stable-opacity screenshots; no errors/overflow",
     "routes": "all seven routes passed rendered Chrome smoke at desktop and mobile widths",
     "heroViewer": "all ten heroes passed desktop 1440px and mobile 375px checks; nonblank geometry, visible rotation, framing and reduced motion",
@@ -65,7 +68,7 @@
     "customDomain": "interestshield.app/www verified on the exact app project; DNS matches, HTTPS and seven public route checks pass, www redirects308. Current Settings local-only. Candidate canonical/robots/sitemap use verified domain; no DNS/production changes. Final restored release proof remains open",
     "newHyperFramesComposition": "lint clean; runtime/layout/frame checks passed with one Intel shader precision warning",
     "financialReview": "Prior mortgage reviews retained. New Portfolio math review found LOC cap bypass and second-ranked LOC split omission; reproduced, fixed and cleared with independent oracle/conservation probes. Frontend review recorded in the checkpoint evidence. Actual lender/calendar and broad security approval excluded",
-    "deployment": "draft PR256;20b28f3 passed complete push/PR runs39512472477/39512479956, real SQL, exact Vercel and remote checks. ReceiptPR256 issuecomment-6303974765. New Land checkpoint requires fresh exact-head proof; no production promotion",
+    "deployment": "draft PR256;232b503 passed complete push/PR runs39516617998/39516623494, real SQL, exact Vercel and remote checks. ReceiptPR256 issuecomment-6304488154. New Dashboard checkpoint requires fresh exact-head proof; no production promotion",
     "mobileContracts": "all contracts pass after aligning current default and legacy migration expectations to preserved 8200/4700 inputs; custom-data guards retained",
     "desktopAssets": "C:/Users/IslandDevCrew/Desktop/InterestShield-Hero-Collection-2026-10-20"
   },

@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-20T23:38:00Z",
-    "sessionCount": 11
+    "updated": "2026-10-21T00:08:00Z",
+    "sessionCount": 12
   },
   "policies": {
     "merge": "review",
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/land-refinement-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "329 regressions, prior reference lanes, 480 Portfolio closed-form policies and 360 repeatable seeded paths (240 direct-oracle matches) pass unchanged after Land refinement. All budgets retained; public assets 9.96 MiB, about 38 KiB headroom. Local draft evidence, not production proof."
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "340 regressions, all prior reference lanes, 480 Portfolio closed-form policies and 360 repeatable seeded paths (240 direct-oracle matches) pass. New display/overflow tests preserve raw values and scope; actual oversized Dashboard no-op edits are covered separately. Assets unchanged at 9.96 MiB. Local draft evidence, not production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/land-refinement-2026-10-20/routes.log",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "All seven built routes pass at 1440px/390px locally after the Land change. Prior Portfolio24/Vault20/Simulator16 browser proof retained; both final exact-head pipelines must repeat their standing gates. No release promotion."
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/routes.log",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "All seven built routes pass at1440px/390px. Dedicated Dashboard12 cases at1440px/375px cover precision, amount bounds, saved inputs and seven oversized currency no-op edits. Standing Portfolio24/Vault20/Simulator16 cases pass. Both final exact-head pipelines must repeat their gates. No release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6303974765",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "20b28f3 passed complete push/PR CI 39512472477/39512479956, real SQL, exact Vercel and hosted checks. This new Land checkpoint requires fresh exact-head proof. Previous green is not production approval; append final proof to PR256 after both full pipelines pass."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6304488154",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "232b503 passed complete push/PR CI39516617998/39516623494, real SQL, exact Vercel and hosted checks. This new Dashboard checkpoint needs its own exact-head full pipelines and hosted receipt. Previous green is not production approval; fold new postflight proof into the next substantive update."
         }
       ]
     },
@@ -133,9 +133,9 @@
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/land-refinement-2026-10-20/heroes.log",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "All ten heroes at 1440px/375px pass fresh actual-geometry movement/framing checks, no pre-opt-in downloads, reduced motion and injected network/decode failures. Land updated; shared camera/studio/timing unchanged. Final hosted proof remains mandatory."
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/heroes.log",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "All ten heroes pass fresh1440px/375px actual-geometry movement/framing checks, no pre-opt-in downloads, reduced motion and injected network/decode failures after Dashboard changes. Asset/camera/studio/timing bytes unchanged. Final hosted proof mandatory."
         },
         {
           "id": "R1-G3",
@@ -169,7 +169,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Simulator web/Expo, Vault and web Portfolio include available budget and LOC. Portfolio caps direct extras, ranks/splits LOC, retains cash and supplies gross routing;329 regressions and reference/browser lanes pass. Dashboard display follow-up: House example independently rounds total to $51/day but caption parts to $51+$1. Add failing display regression and consistent precision/approximation; do not alter underlying unrounded engine to force display sums. Dashboard helper scope, native aggregate Portfolio, shared ownership, common-date wealth and lender/calendar rules remain open."
+          "notes": "Simulator web/Expo, Vault and web Portfolio retain funded liability books. Dashboard daily estimates now show cents/sub-cent bounds, independent-rounding disclosure and overflow review without altering raw math. Actual100m mortgage no-op loss reproduced; seven currency fields now preserve current imported values, matching Portfolio.340 regressions and Dashboard12 browser cases pass. Dashboard helper scope, native aggregate Portfolio, shared ownership, common-date wealth and lender/calendar rules remain open; this display/editor slice does not complete comparisons."
         },
         {
           "id": "R2-T3",
@@ -186,17 +186,17 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:27:20Z",
-          "notes": "329 regressions pass locally. Portfolio conserves its full debt/LOC/cash book; main Simulator/Vault entry and media outputs remain unchanged. Not all routes or lender integration are complete."
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "340 regressions pass. Selected daily-interest raw fields, four vitals, warning thresholds and input immutability remain intact; overflow is rejected for display. Shared engine and scenario outputs unchanged. Not all route/lender coherence is complete."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-20T22:27:20Z",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T00:08:00Z",
           "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
         },
         {
@@ -204,8 +204,8 @@
           "title": "Rendered Simulator comparison edge cases",
           "command": "npm --prefix apps/web run smoke:comparison:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/simulator-verification.json",
-          "lastRun": "2026-10-20T21:32:50Z",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/comparison-verification.json",
+          "lastRun": "2026-10-21T00:08:00Z",
           "notes": "All 16 existing cases pass at 1440px/375px, including exact final payments, signed outcomes and saved timing surviving edit/navigation. Vault's actual Financial assumptions disclosure is opened and checked. No scenario migration."
         },
         {
@@ -213,8 +213,8 @@
           "title": "Rendered funded Vault comparison and impact states",
           "command": "npm --prefix apps/web run smoke:vault:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mortgage-comparison-2026-10-20/browser-verification.json",
-          "lastRun": "2026-10-20T21:32:50Z",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/vault-verification.json",
+          "lastRun": "2026-10-21T00:08:00Z",
           "notes": "20 Chrome executions at 1440px/375px: funded/unfunded, one-cent short, clipped final/contribution, existing LOC/zero recovery, cash reserves, adverse interest, failed horizon, large illustration and already-paid states. Actual card text/inputs retained; disclosures toggle, stored timing survives, no page/card overflow or errors, amount bounds and valid timeline percentages pass. Not actual lender or common-date wealth proof."
         },
         {
@@ -222,9 +222,18 @@
           "title": "Rendered funded Portfolio controls and full liability book",
           "command": "npm --prefix apps/web run smoke:portfolio:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-funding-2026-10-20/browser-verification.json",
-          "lastRun": "2026-10-20T22:27:20Z",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/portfolio-verification.json",
+          "lastRun": "2026-10-21T00:08:00Z",
           "notes": "24 Chrome executions at1440px/375px cover funded caps/cash, ranked/split LOC, final/cent-short, interest shortfall, cleared and large imports. Real policy/cap edits,100m loan/LOC and200m limit no-op edits pass; separate timing stays intact. Failed LOC claims suppressed and inactive chunk controls absent. Focus labels follow current allocation, not eventual payoff order. Stable-opacity screenshots replace rejected dark captures. No overflow/errors."
+        },
+        {
+          "id": "R2-G6",
+          "title": "Rendered daily estimates and Dashboard saved-value preservation",
+          "command": "npm --prefix apps/web run smoke:dashboard:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/dashboard-verification.json",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "12 actual Chrome cases at1440px/375px cover exact cent/sub-cent/cleared/large text, independent-cent mismatch, amount containment, desktop assumptions, normalized saved inputs, income edit/restore/navigation and seven oversized currency no-op edits. Actual100m->10m red observed before correction. CI retains failure artifacts. Not complete accessibility, native-device or lender approval."
         }
       ]
     },
@@ -407,17 +416,17 @@
           "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/native-typecheck.log",
-          "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "Fresh current-SDK typecheck after the transitive security patch."
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/mobile-check.log",
+          "lastRun": "2026-10-21T00:08:00Z",
+          "notes": "Fresh current-SDK typecheck; native and shared-engine source unchanged in the Dashboard slice. Not final-device proof."
         },
         {
           "id": "R5-G2",
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/native-contracts.log",
-          "lastRun": "2026-10-20T17:59:00Z",
+          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/mobile-contracts.log",
+          "lastRun": "2026-10-21T00:08:00Z",
           "notes": "Preserved 8200/4700 defaults, custom-data guards and the critical shell quoting rejection regression pass. Not final-device proof."
         },
         {
@@ -452,8 +461,8 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "329",
-      "target": "329",
+      "current": "340",
+      "target": "340",
       "direction": "up"
     },
     {
@@ -485,7 +494,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "20b28f3 passed both complete CI runs, SQL, Vercel and hosted proof. The current Land checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
+      "note": "232b503 passed both complete CI runs, SQL, Vercel and hosted proof. The current Dashboard checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -786,11 +795,11 @@
     }
   ],
   "resume": {
-    "activePhase": "R1",
+    "activePhase": "R2",
     "nextActions": [
-      "Push the reviewed Land checkpoint, then require both final exact-head full CI runs, SQL, Vercel and hosted hero proof.20b28f3 passed; receipt PR256 issuecomment-6303974765. Append new postflight proof to PR256 and fold it into the next substantive state update, avoiding report-only push loops. This report is preflight, not production approval.",
-      "Next focused R2 slice: reproduce dashboard daily-interest display rounding (House total $51/day vs caption $51+$1), then make precision/approximation consistent without rounding the engine. Preserve active-target+LOC scope and add regression/browser proof. Full lender/rounding policy remains R3, not solved by display formatting.",
-      "Then refine Credit Card or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land are candidates, six studies remain. Public assets have only38644bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/land-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
+      "Push the reviewed Dashboard estimate/editor checkpoint, then require both final exact-head full CI runs, SQL, exact Vercel and hosted routes/Dashboard12/comparison60 proof.232b503 passed; receipt PR256 issuecomment-6304488154. Append postflight proof to PR256 and fold into the next substantive update, avoiding report-only push loops. This report is preflight, not production approval.",
+      "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
+      "Next refine Credit Card or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land are candidates, six studies remain. Public assets have only38644bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/land-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
       "Remaining R2 work: dashboard helper scope, native aggregate Portfolio adoption, safe shared scenario ownership and common-date cash/wealth. Read docs/portfolio-funding-contract-2026-10-20.md; preserve saved caps as funded allocations, not added income, and retain separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
