@@ -109,12 +109,27 @@ No medical provider, humanitarian organization or device endorsement is implied.
 The model is original geometry, not an exact AI reconstruction of its poster or
 final collection-wide photorealism approval. See the Medical refinement contract.
 
+## Original Refined Personal
+
+Original hollow cognac satchel, fitted flap, punched straps, brass assemblies,
+459 physical stitch instances, continuous shoulder ribbon, silver key and inserted
+illustrative papers are authored in `apps/media/scripts/build-refined-personal.mjs`.
+Nine embedded WebP maps reuse the original generated leather PNG retained under
+`apps/media/sources/student-loan/`; `sources/personal/materials.json` explicitly
+records that shared path, original generation identity and exact hash. No new
+third-party mesh, texture, branding or financial record is embedded.
+
+512px leather color/256px remaining maps and lossless packed micro-normals are
+artistic approximations, not scanned PBR or exact poster reconstruction. Protected
+manifests record builder/configuration/model hashes. The original poster is
+unchanged. This remains a candidate pending final collection-wide art approval.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other three base models (Personal, Recreation and Custom) remain locally authored 3D studies. They have not
+The other two base models (Recreation and Custom) remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

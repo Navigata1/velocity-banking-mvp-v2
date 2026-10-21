@@ -1,0 +1,195 @@
+TAP version 13
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+not ok 1 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 15.9819
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Personal must replace the untextured study with a protected refinement
+    + actual - expected
+    
+    + undefined
+    - 'refined-textured'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'refined-textured'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:108:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+not ok 2 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 7.5583
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:121:1'
+  failureType: 'testCodeFailure'
+  error: 'three actual color/normal/roughness sets are required'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:123:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+not ok 3 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 8.0718
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:142:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:144:48)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+not ok 4 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 18.5252
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:165:48)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+not ok 5 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 8.0058
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:175:48)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+not ok 6 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 4.6784
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:186:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:187:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+not ok 7 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 5.0259
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:195:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:196:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+not ok 8 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 30.2999
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:209:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:211:48)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+not ok 9 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 6.4948
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:223:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Body missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:20:106)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:224:44)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+not ok 10 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 35.3351
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:235:1'
+  failureType: 'testCodeFailure'
+  error: 'Personal GLB must recover headroom within 0.5MiB'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:240:87)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 0
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 375.3298

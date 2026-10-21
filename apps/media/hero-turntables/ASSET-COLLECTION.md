@@ -7,8 +7,8 @@ Updated October 21, 2026. This is a restoration work package, not a production-r
 - **Full-Resolution-Art**: original generated PNG references for all ten heroes.
 - **Web-Posters**: optimized transparent WebP artwork used by the restored dashboard.
 - **3D-Studies**: actual self-contained GLB geometry. The refined car is adapted from
-  the licensed Car Concept; Vault, House, Land, Credit Card, Student Loan and Medical
-  are original textured candidates. The other three models remain authored studies.
+  the licensed Car Concept; Vault, House, Land, Credit Card, Student Loan, Medical
+  and Personal are original textured candidates. The other two remain studies.
 - **Turntables**: HyperFrames-rendered 1920 x 1080 MP4s, one smooth full revolution
   over eight seconds, followed by a one-second rest.
 - **verification.json**: video dimensions, duration, pixel-motion checks and SHA-256 hashes.
@@ -20,7 +20,7 @@ all regenerated in this package.
 
 ## Important Art Distinction
 
-The generated artwork is considerably more detailed than the three remaining
+The generated artwork is considerably more detailed than the two remaining
 3D studies. The car uses a textured licensed model by Eric Chadwick / Darmstadt
 Graphics Group GmbH (2024), CC BY 4.0, adapted for InterestShield. Source and license:
 https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept
@@ -33,7 +33,10 @@ leather spines, cloth, a braided cord, fine tassel and an open spiral diploma.
 Medical adds a fitted enamel case, curved guards, chrome hardware and connected
 stethoscope. Its updated poster retains the original identity with an emerald
 shield; the original edit input and source lineage remain in the repository.
-All seven remain candidates, not final photorealism approvals. Material values are
+Personal adds a hollow cognac satchel, punched straps, connected brass hardware,
+seated physical stitching, an open-bow key and inserted papers, with the original
+generated leather source reused explicitly. All posters remain unchanged in this
+Personal refinement. All eight remain candidates, not final photorealism approvals. Material values are
 artistic approximations, not measured scans or exact poster reconstructions.
 
 The remaining studies prove the real-geometry viewer, finite 360-degree

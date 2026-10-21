@@ -1,0 +1,545 @@
+{
+  "probe": "revised-material-provenance-and-bounded-delta",
+  "status": "PASS",
+  "hashes": {
+    "model": "a49605478a5466ed5f16464ed878e2f990244f5510f4088c6db60a2faf7b7b06",
+    "sourceLF": "161159e34ef9cc5bd0b1bf67a7912147ff567c6f4593d94f98e760cfb2edf414",
+    "sourceRaw": "161159e34ef9cc5bd0b1bf67a7912147ff567c6f4593d94f98e760cfb2edf414",
+    "configCanonical": "3377df695d1a66ace34911e0e5bc2e5bf5fd0b6a6b2479ed1f5c05208df47523",
+    "configRaw": "c2bb19587d1b4628d819d674657d8689a38d10b052fbda637dcf4c025c08b247"
+  },
+  "retainedLeather": {
+    "bytes": 4507113,
+    "sha256": "7b4897dbee5f4ad7e0982e3cb81a10fb3bcb445db9a084b073215738e01a74e1",
+    "originalOutput": "exec-7595a962-77c7-42c1-9773-0aca4bc2df46.png"
+  },
+  "authoredNormalExactMatch": true,
+  "leatherColorMeanAbsoluteByteError": 2.2662887573242188,
+  "maps": [
+    {
+      "name": "P-Leather-Color",
+      "bytes": 92040,
+      "sha256": "d22357a6dcc2e9e1b6a4ebadf4688a5bf359f8a18ac0c8d9459b6bfc34aba7fc",
+      "width": 512,
+      "height": 512,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          140,
+          140,
+          140
+        ],
+        "max": [
+          254,
+          254,
+          254
+        ],
+        "mean": [
+          194.92535018920898,
+          194.9170799255371,
+          194.92535018920898
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Leather-Cognac",
+          "role": "Color",
+          "colorSpace": "sRGB",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        },
+        {
+          "material": "P-Leather-Edges",
+          "role": "Color",
+          "colorSpace": "sRGB",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P-Leather-Normal",
+      "bytes": 95180,
+      "sha256": "b7b1673d428d91cc67c0d88409fa75afa6927003c690c3446059038350ab2e32",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8L"
+      ],
+      "channels": {
+        "min": [
+          102,
+          94,
+          250
+        ],
+        "max": [
+          155,
+          159,
+          255
+        ],
+        "mean": [
+          127.49493408203125,
+          127.54344177246094,
+          254.37136840820312
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Leather-Cognac",
+          "role": "Normal",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        },
+        {
+          "material": "P-Leather-Edges",
+          "role": "Normal",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        }
+      ],
+      "normalLength": [
+        0.9955765294105272,
+        1.0044958528997954
+      ]
+    },
+    {
+      "name": "P-Leather-Roughness",
+      "bytes": 1240,
+      "sha256": "ad78871bfa839f37dc19ad692bbadd817d671243b88c1487481c4c5152cdc039",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          250,
+          119,
+          0
+        ],
+        "max": [
+          255,
+          129,
+          4
+        ],
+        "mean": [
+          254.54579162597656,
+          123.93064880371094,
+          0.1041412353515625
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Leather-Cognac",
+          "role": "Roughness",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        },
+        {
+          "material": "P-Leather-Edges",
+          "role": "Roughness",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P-Brass-Color",
+      "bytes": 1018,
+      "sha256": "e0857d1bf2e8d1c5d9b9c066cbe45642d40a57ec42ace05f7d9262962a30fe32",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          214,
+          214,
+          214
+        ],
+        "max": [
+          225,
+          225,
+          225
+        ],
+        "mean": [
+          219.40406799316406,
+          219.40406799316406,
+          219.40406799316406
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Brass-Antique",
+          "role": "Color",
+          "colorSpace": "sRGB",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P-Brass-Normal",
+      "bytes": 2348,
+      "sha256": "68d53e06bb22194784331e50c1c97d1e6c7b852ea8f83345f671ae0e72ceee02",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8L"
+      ],
+      "channels": {
+        "min": [
+          124,
+          117,
+          255
+        ],
+        "max": [
+          131,
+          138,
+          255
+        ],
+        "mean": [
+          127.875,
+          127.49853515625,
+          255
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Brass-Antique",
+          "role": "Normal",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ],
+      "normalLength": [
+        1.0000153785822494,
+        1.0037607101520292
+      ]
+    },
+    {
+      "name": "P-Brass-Roughness",
+      "bytes": 810,
+      "sha256": "f45388dc285d37da38643d4ed7291b15d48913a7400e0290ee8c18233dbdce79",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          251,
+          86,
+          252
+        ],
+        "max": [
+          255,
+          92,
+          255
+        ],
+        "mean": [
+          254.7874755859375,
+          89.50054931640625,
+          254.4189910888672
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Brass-Antique",
+          "role": "Roughness",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P-Steel-Color",
+      "bytes": 1018,
+      "sha256": "50c59edb2e9292979b18ed35a9578ccc5a6a5a161d0187038dbf447ab7bbdd85",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          214,
+          214,
+          214
+        ],
+        "max": [
+          225,
+          225,
+          225
+        ],
+        "mean": [
+          219.41949462890625,
+          219.41949462890625,
+          219.41949462890625
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Steel-Silver",
+          "role": "Color",
+          "colorSpace": "sRGB",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P-Steel-Normal",
+      "bytes": 2352,
+      "sha256": "653aef64184e77a1726460fba52430c2b16bb27b845f51f2645e7b74e925d25a",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8L"
+      ],
+      "channels": {
+        "min": [
+          123,
+          117,
+          255
+        ],
+        "max": [
+          132,
+          138,
+          255
+        ],
+        "mean": [
+          127.87525939941406,
+          127.5020751953125,
+          255
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Steel-Silver",
+          "role": "Normal",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ],
+      "normalLength": [
+        1.0000153785822494,
+        1.0037607101520292
+      ]
+    },
+    {
+      "name": "P-Steel-Roughness",
+      "bytes": 964,
+      "sha256": "04609788f6a265ee5afa915c5d7f2e3a1fd0a2b2831cca98efbdb17ccfd548aa",
+      "width": 256,
+      "height": 256,
+      "chunks": [
+        "VP8 "
+      ],
+      "channels": {
+        "min": [
+          252,
+          104,
+          252
+        ],
+        "max": [
+          255,
+          110,
+          255
+        ],
+        "mean": [
+          254.6276092529297,
+          106.82257080078125,
+          254.2963104248047
+        ]
+      },
+      "uses": [
+        {
+          "material": "P-Steel-Silver",
+          "role": "Roughness",
+          "colorSpace": "linear data",
+          "texCoord": 0,
+          "scale": [
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "factors": [
+    {
+      "name": "P-Leather-Cognac",
+      "baseColorLinear": [
+        0.24228112245478564,
+        0.059511238155621766,
+        0.013702083043526807,
+        1
+      ],
+      "roughnessFactor": 1,
+      "metallicFactor": 0,
+      "normalScale": 0.65,
+      "effectiveRoughness": [
+        0.4666666666666667,
+        0.5058823529411764
+      ],
+      "effectiveMetallic": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "P-Brass-Antique",
+      "baseColorLinear": [
+        0.4396571738310091,
+        0.25818285291079235,
+        0.06662593863608139,
+        1
+      ],
+      "roughnessFactor": 1,
+      "metallicFactor": 1,
+      "normalScale": 0.14,
+      "effectiveRoughness": [
+        0.33725490196078434,
+        0.3607843137254902
+      ],
+      "effectiveMetallic": [
+        0.9882352941176471,
+        1
+      ]
+    },
+    {
+      "name": "P-Leather-Edges",
+      "baseColorLinear": [
+        0.13286832154414627,
+        0.03820437158923601,
+        0.012286488353353374,
+        1
+      ],
+      "roughnessFactor": 1,
+      "metallicFactor": 0,
+      "normalScale": 0.65,
+      "effectiveRoughness": [
+        0.4666666666666667,
+        0.5058823529411764
+      ],
+      "effectiveMetallic": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "P-Thread-Tan",
+      "baseColorLinear": [
+        0.7304607400847158,
+        0.5457244613615395,
+        0.31854677811435356,
+        1
+      ],
+      "roughnessFactor": 0.82,
+      "metallicFactor": 0,
+      "effectiveRoughness": null,
+      "effectiveMetallic": null
+    },
+    {
+      "name": "P-Steel-Silver",
+      "baseColorLinear": [
+        0.7454042095350284,
+        0.7529422167708612,
+        0.76052450467022,
+        1
+      ],
+      "roughnessFactor": 1,
+      "metallicFactor": 1,
+      "normalScale": 0.14,
+      "effectiveRoughness": [
+        0.40784313725490196,
+        0.43137254901960786
+      ],
+      "effectiveMetallic": [
+        0.9882352941176471,
+        1
+      ]
+    },
+    {
+      "name": "P-Paper-Ivory",
+      "baseColorLinear": [
+        0.822785754392438,
+        0.7991027380100881,
+        0.7304607400847158,
+        1
+      ],
+      "roughnessFactor": 0.94,
+      "metallicFactor": 0,
+      "effectiveRoughness": null,
+      "effectiveMetallic": null
+    },
+    {
+      "name": "P-Chart-Ink",
+      "baseColorLinear": [
+        0.07421356837213867,
+        0.12743768042608497,
+        0.16826940017946088,
+        1
+      ],
+      "roughnessFactor": 0.92,
+      "metallicFactor": 0,
+      "effectiveRoughness": null,
+      "effectiveMetallic": null
+    }
+  ],
+  "note": "CPU only. Color-space checked against local shipped GLTFLoader, not browser rendering. Generated-source claim traced to retained project metadata, not independently authenticated.",
+  "revision": {
+    "approvedSourceDeltaOnly": true,
+    "approvedConfigDeltaOnly": true,
+    "changedMaps": [
+      "P-Steel-Roughness"
+    ],
+    "silverMeanEffectiveRoughness": 0.4189120423560049,
+    "historicalSourceSha256ReconstructedInMemory": "2da81a4d80955b8b7b5b41f68ae90fc9cad8a9486c94e8f8518b3bafcd8e1345",
+    "historicalLogPreserved": true
+  }
+}

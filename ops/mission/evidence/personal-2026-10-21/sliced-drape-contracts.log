@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+ok 1 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 41.5325
+  type: 'test'
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+ok 2 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 147.7534
+  type: 'test'
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+ok 3 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 113.7872
+  type: 'test'
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+ok 4 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 126.9475
+  type: 'test'
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+ok 5 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 2400.1605
+  type: 'test'
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+ok 6 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 356.7085
+  type: 'test'
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+ok 7 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 197.8986
+  type: 'test'
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+ok 8 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 157.781
+  type: 'test'
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+ok 9 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 14.8881
+  type: 'test'
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+ok 10 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 147.9552
+  type: 'test'
+  ...
+# Subtest: Personal geometry verification expands actual GPU instance translation, rotation and scale
+ok 11 - Personal geometry verification expands actual GPU instance translation, rotation and scale
+  ---
+  duration_ms: 11.3241
+  type: 'test'
+  ...
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 12 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 1.082
+  type: 'test'
+  ...
+# Subtest: Personal textured surfaces retain bounded nondegenerate UVs after compression
+not ok 13 - Personal textured surfaces retain bounded nondegenerate UVs after compression
+  ---
+  duration_ms: 28.9546
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-refinement.test.mjs:303:1'
+  failureType: 'testCodeFailure'
+  error: 'P-Strap-L must not collapse a real textured triangle to a UV line'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-refinement.test.mjs:309:324)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ok 14 - Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+  ---
+  duration_ms: 7.8632
+  type: 'test'
+  ...
+# Subtest: Personal papers clear the folded flap while retaining a real inserted mouth path
+ok 15 - Personal papers clear the folded flap while retaining a real inserted mouth path
+  ---
+  duration_ms: 115.8977
+  type: 'test'
+  ...
+# Subtest: Personal every real stitch instance is surface-seated rather than buried or floating
+not ok 16 - Personal every real stitch instance is surface-seated rather than buried or floating
+  ---
+  duration_ms: 103.6055
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-seating.test.mjs:40:1'
+  failureType: 'testCodeFailure'
+  error: 'burial classification requires a closed consistently wound leather skin'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:30:327
+    Array.map (<anonymous>)
+    seated (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:30:22)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:44:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Personal key bevel has no proper nonadjacent surface crossings
+ok 17 - Personal key bevel has no proper nonadjacent surface crossings
+  ---
+  duration_ms: 84.6401
+  type: 'test'
+  ...
+# Subtest: Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+ok 18 - Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+  ---
+  duration_ms: 7.2111
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 16
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4027.3907

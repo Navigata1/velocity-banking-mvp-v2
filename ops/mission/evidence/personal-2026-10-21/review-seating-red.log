@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: Personal papers clear the folded flap while retaining a real inserted mouth path
+not ok 1 - Personal papers clear the folded flap while retaining a real inserted mouth path
+  ---
+  duration_ms: 153.5907
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-seating.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    P-Paper-Front must emerge through open space, not cut the leather
+    + actual - expected
+    
+    + Vector3 {
+    +   x: 0.8715339231297234,
+    +   y: 0.7569895773301835,
+    +   z: -0.18416459573007557
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    x: 0.8715339231297234
+    y: 0.7569895773301835
+    z: -0.18416459573007557
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:21:36)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Personal every real stitch instance is surface-seated rather than buried or floating
+not ok 2 - Personal every real stitch instance is surface-seated rather than buried or floating
+  ---
+  duration_ms: 87.5978
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\personal-seating.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: 'thread 0 must seat at thread-scale clearance, actual 0.006381508432141308'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    seated (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:32:12)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/personal-seating.test.mjs:41:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 486.9656

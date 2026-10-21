@@ -1,0 +1,21 @@
+PIN [{"path":"apps/web/public/heroes/personal.glb","bytes":519844,"sha256":"e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"},{"path":"apps/media/scripts/build-refined-personal.mjs","bytes":25939,"sha256":"588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c"},{"path":"apps/media/scripts/personal-refinement.test.mjs","bytes":32880,"sha256":"720a941cf3245f5514f8c5e8c912a24e40873e2142e95c25dbd2a3b119513110"},{"path":"apps/media/scripts/personal-seating.test.mjs","bytes":6153,"sha256":"5a0b4ac3409f2bc38a4c71a562ca0d9d64b67dace1366b0eb2eb33f960236870"},{"path":"apps/media/scripts/personal-geometry-test-helpers.mjs","bytes":3178,"sha256":"77635f6f372d6f4d5fbea41383e82f85703d85505cd1c0a64deb21917c6be2eb"}]
+PROBE1 {"unique":22016,"rendered":33844,"meshes":29,"maps":9,"finiteScalars":276364,"badUv":0,"collapsedUv":0,"rawNormalBad":0,"worldNormalBad":0,"worldBounds":{"min":[-1.5999745473094091,-0.000012479945839492801,-1.2928454100495204],"max":[1.6000078612072972,2.3399869019026562,1.2928590343865167],"span":[3.199982408516706,2.3399993818484957,2.585704444436037]},"closure":{"P-Body":{"triangles":4160,"unmatched":0,"edges":6240,"volume":0.2894642409169266,"repeatedPointTriangles":0},"P-Flap":{"triangles":1144,"unmatched":0,"edges":1716,"volume":0.04817097961766092,"repeatedPointTriangles":0},"P-Handle":{"triangles":516,"unmatched":0,"edges":774,"volume":0.008545009913685663,"repeatedPointTriangles":0},"P-Strap-L":{"triangles":3680,"unmatched":0,"edges":5520,"volume":0.004098004118306709,"repeatedPointTriangles":0},"P-Strap-R":{"triangles":3680,"unmatched":0,"edges":5520,"volume":0.004097688573979921,"repeatedPointTriangles":0},"P-Shoulder-Strap":{"triangles":1028,"unmatched":0,"edges":1542,"volume":0.01464790446427739,"repeatedPointTriangles":0},"P-Handle-Tab-L":{"triangles":108,"unmatched":0,"edges":162,"volume":0.0010155895112550564,"repeatedPointTriangles":0},"P-Handle-Tab-R":{"triangles":108,"unmatched":0,"edges":162,"volume":0.001015589511254977,"repeatedPointTriangles":0},"P-Shoulder-Tab-L":{"triangles":108,"unmatched":0,"edges":162,"volume":0.0021228867697930527,"repeatedPointTriangles":0},"P-Shoulder-Tab-R":{"triangles":108,"unmatched":0,"edges":162,"volume":0.0021228867697930583,"repeatedPointTriangles":0},"P-Key":{"triangles":768,"unmatched":0,"edges":1152,"volume":0.011578033978764732,"repeatedPointTriangles":0},"P-Handle-Ring-L":{"triangles":512,"unmatched":0,"edges":768,"volume":0.00023056536777591125,"repeatedPointTriangles":0},"P-Handle-Ring-R":{"triangles":512,"unmatched":0,"edges":768,"volume":0.00023056536777586197,"repeatedPointTriangles":0},"P-Shoulder-Ring-L":{"triangles":512,"unmatched":0,"edges":768,"volume":0.00038754666971798285,"repeatedPointTriangles":0},"P-Shoulder-Ring-R":{"triangles":512,"unmatched":0,"edges":768,"volume":0.00038754666971797347,"repeatedPointTriangles":0},"P-Buckle-L":{"triangles":864,"unmatched":0,"edges":1296,"volume":0.0015536328614225775,"repeatedPointTriangles":0},"P-Buckle-R":{"triangles":864,"unmatched":0,"edges":1296,"volume":0.0015536328614225742,"repeatedPointTriangles":0}}}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: P-Handle-Ring-L
+
+1 !== 0
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-final-probes.mjs:100:116 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
+

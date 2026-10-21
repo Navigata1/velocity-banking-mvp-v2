@@ -1,0 +1,127 @@
+{
+  "probe": "final-actual-precision-budgets-and-protection",
+  "status": "PASS",
+  "modelSha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79",
+  "head": "3e931369fea268efe4c0180de8aaafd38675a5ed",
+  "modelBytes": 519844,
+  "modelHeadroom": 4444,
+  "publicBytes": 10303650,
+  "publicHeadroom": 182110,
+  "meshes": 29,
+  "uniqueTriangles": 22016,
+  "instantiatedTriangles": 33844,
+  "batches": [
+    {
+      "node": "P-Stitches",
+      "instances": 459,
+      "baseTriangles": 20,
+      "instantiatedTriangles": 9180
+    }
+  ],
+  "precision": {
+    "actualPositionAccessors": 27,
+    "actualUvAccessors": 15,
+    "normalizedUvRange": [
+      0,
+      1
+    ],
+    "decodedNormalLength": [
+      0.9941860876173804,
+      1.0049477697074807
+    ],
+    "nondegenerateTexturedTriangles": 20644,
+    "minimumUvDoubleArea": 1.4435940453119271e-8
+  },
+  "protectedRecords": [
+    {
+      "id": "car",
+      "sha256": "15a8e84b4efa1ef896dbd244a87f065bc5da8e45ca912c3599b78f8ac56d6d11"
+    },
+    {
+      "id": "house",
+      "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639"
+    },
+    {
+      "id": "land",
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    {
+      "id": "creditCard",
+      "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17"
+    },
+    {
+      "id": "studentLoan",
+      "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222"
+    },
+    {
+      "id": "medical",
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    {
+      "id": "recreation",
+      "sha256": "58f234f297ffafec29d82760f3eb41776cec54ed4cb9b47ae39016534f77f155"
+    },
+    {
+      "id": "custom",
+      "sha256": "a1ab505e1cccfdaf2b4535989694d11d847c6e2ac102f7da9eb906a55aa5459b"
+    },
+    {
+      "id": "vault",
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "sha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "id": "house",
+      "sha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "id": "land",
+      "sha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "id": "creditCard",
+      "sha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "id": "studentLoan",
+      "sha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "id": "medical",
+      "sha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "id": "personal",
+      "sha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "id": "recreation",
+      "sha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "id": "custom",
+      "sha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "id": "vault",
+      "sha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "unchangedPrimaryFiles": [
+    "apps/media/scripts/refined-hero-record.mjs",
+    "apps/media/scripts/build-hero-models.mjs",
+    "apps/media/sources/student-loan/leather.png",
+    "apps/media/sources/student-loan/materials.json"
+  ],
+  "changedTracked": [
+    "apps/media/hero-imported.json",
+    "apps/media/hero-models.json",
+    "apps/web/public/heroes/personal.glb"
+  ],
+  "note": "No topology/contact or closed-volume geometry tests duplicated; UV area and decoded normals checked for material transport only."
+}

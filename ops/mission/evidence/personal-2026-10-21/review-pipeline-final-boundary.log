@@ -1,0 +1,90 @@
+{
+  "probe": "final-publication-boundary-and-test-source-inspection",
+  "status": "PASS",
+  "sourceLFSha256": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+  "sourceImageMismatchRejected": true,
+  "deliveryBoundaries": {
+    "modelBytes": 524288,
+    "uniqueTriangles": 65000,
+    "instantiatedTriangles": 65000,
+    "aggregateBytes": 10485760
+  },
+  "fixture": {
+    "oldModelBytes": 512876,
+    "candidateBytes": 519844,
+    "growth": 6968
+  },
+  "liveCases": {
+    "over": {
+      "events": [
+        "live-total",
+        "old-model-size"
+      ],
+      "error": "Personal public budget changed before locked publication; previous artifact untouched"
+    },
+    "exact": {
+      "events": [
+        "live-total",
+        "old-model-size",
+        "would-write-temp",
+        "would-rename"
+      ]
+    }
+  },
+  "mutatedGuardAndStaleTotalRejectedByOracle": true,
+  "sizeAndStatFailureRejectBeforePublication": true,
+  "publisherLexicallyInsideExistingLock": true,
+  "publicationAwaitedBeforeBothManifestUpdates": true,
+  "protectedPersonalSkipBoundary": {
+    "messages": [
+      "personal: preserving imported refined asset"
+    ],
+    "legacyBuildReached": false,
+    "absentRecordPositiveControlReached": true
+  },
+  "helperSha256": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b",
+  "legacyBuilderSha256": "7d146dcf309cb6373b9aaebdfa766f73ccb42acbb37e07e8e11149a82c7cf92b",
+  "note": "All boundary execution uses extracted fragments and in-memory adapters. No builder, manifest writer, filesystem lock, asset write, or full rebuild executed.",
+  "inspectedFiles": [
+    {
+      "path": "apps/media/scripts/personal-geometry-test-helpers.mjs",
+      "bytes": 3178,
+      "sha256": "77635f6f372d6f4d5fbea41383e82f85703d85505cd1c0a64deb21917c6be2eb",
+      "sourceLFSha256": "77635f6f372d6f4d5fbea41383e82f85703d85505cd1c0a64deb21917c6be2eb"
+    },
+    {
+      "path": "apps/media/scripts/personal-seating.test.mjs",
+      "bytes": 6153,
+      "sha256": "5a0b4ac3409f2bc38a4c71a562ca0d9d64b67dace1366b0eb2eb33f960236870",
+      "sourceLFSha256": "5a0b4ac3409f2bc38a4c71a562ca0d9d64b67dace1366b0eb2eb33f960236870"
+    },
+    {
+      "path": "apps/media/scripts/personal-refinement.test.mjs",
+      "bytes": 32880,
+      "sha256": "720a941cf3245f5514f8c5e8c912a24e40873e2142e95c25dbd2a3b119513110",
+      "sourceLFSha256": "720a941cf3245f5514f8c5e8c912a24e40873e2142e95c25dbd2a3b119513110"
+    },
+    {
+      "path": "apps/media/scripts/refined-hero-record.mjs",
+      "bytes": 2478,
+      "sha256": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b",
+      "sourceLFSha256": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b"
+    }
+  ],
+  "testHelperReadOnly": true,
+  "helperReadsNormalizedElements": true,
+  "seatingTestsInspected": [
+    "Personal papers clear the folded flap while retaining a real inserted mouth path",
+    "Personal every real stitch instance is surface-seated rather than buried or floating",
+    "Personal key bevel has no proper nonadjacent surface crossings",
+    "Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal"
+  ],
+  "parentEvidence": {
+    "file": "final-personal-contracts.log",
+    "sha256": "4aad7ad589f6a56d4400b3beb78106cb2a02c285b2c1e4cba64229ca0bbc917b",
+    "tests": 18,
+    "pass": 18,
+    "fail": 0,
+    "independentlyRerun": false
+  }
+}

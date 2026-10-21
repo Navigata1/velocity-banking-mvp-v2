@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T06:05:14Z",
-    "sessionCount": 15
+    "updated": "2026-10-21T07:30:00Z",
+    "sessionCount": 16
   },
   "policies": {
     "merge": "review",
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/medical-2026-10-21/web-tests.log",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/UI/studio/camera/timing/dependency paths and nine baseline model/poster records/bytes remain unchanged from verified ecc682a; only Medical model/poster and publication/packaging are refined. New exact-head CI/hosted proof still required. Local preflight, not production approval."
+          "evidence": "ops/mission/evidence/personal-2026-10-21/web-tests.log",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/UI/studio/camera/timing/dependency paths and nine baseline model records/bytes plus all ten posters remain unchanged from verified3e93136. Only Personal geometry/configuration/contracts change. New exact-head CI/hosted proof required. Local preflight, not production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/medical-2026-10-21/routes.log",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "Seven HTTP/rendered routes and all local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass. Precise inputs include280/375/1264/1440. Previous ecc682a native49 executions are verified; no local native bundle/device rerun is claimed for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
+          "evidence": "ops/mission/evidence/personal-2026-10-21/routes.log",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "Seven HTTP/rendered routes and local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass at unchanged assertions. Numeric inputs include280/375/1264/1440. Previous3e93136 native49 executions verified; no new local native bundle/device rerun for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6308704525",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "Previous ecc682a passed complete push39547381960/PR39547385927 attempt1, actual75 media/27stills/348 regressions and full native lane49 browser executions/contracts, SQL63 twice/event, exact READY preview and hosted82/routes/all ten served GLBs. ReceiptPR256 issuecomment-6308704525.02f3137 remains failed/unverified. Medical requires both new final-head complete pipelines, exact preview and hosted82/routes/model/new-poster proof. No report-only push loop or production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6309536456",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "Previous3e931369fea268efe4c0180de8aaafd38675a5ed freshly verified: complete push39553574615/PR39553579491 attempt1,96 media/27stills/348 regressions/full native49 executions/contracts, SQL63 twice/event, exact READY preview and hosted82/routes/all ten GLBs/new Medical poster. Receipt6309536456.02f3137 remains failed/unverified. Personal needs both new final-head complete pipelines, exact preview and hosted82/routes/all ten model/poster hashes. No report-only push loop or production approval."
         }
       ]
     },
@@ -107,7 +107,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Credit Card/Student Loan retained. Medical now has a fitted enamel case, curved guards, connected stethoscope and emerald badge:509120bytes,26104unique/43412instantiated triangles, nine256px maps. Matching poster130728bytes has retained source/edit lineage.14 geometry/seven poster tests include five independently found defects with observed RED/fixes and final clearance. Identical/protected full model/poster rebuilds and real40-payload package preserve nine baseline assets. See docs/medical-refinement-contract-2026-10-21.md. Personal, Recreation and Custom remain studies; seven candidates are not final all-ten art approval."
+          "notes": "Credit Card/Student Loan/Medical retained. Personal now has an original hollow cognac satchel, thick front-lip flap, connected brass hardware, punched/draped straps,459 seated physical stitch instances, open-bow key and inserted papers:519844bytes,22016unique/33844instantiated triangles, nine maps. Original generated leather reused explicitly, all ten posters unchanged.18 cases include observed RED/fixes for independent paper/flap and buried/floating stitch P2s, exact CPU re-review and verifier counterexamples. Identical/protected full rebuilds and real40-payload package preserve other nine models. See docs/personal-refinement-contract-2026-10-21.md. Recreation/Custom remain studies; eight candidates are not final all-ten art approval."
         },
         {
           "id": "R1-T4",
@@ -115,7 +115,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval and three further textured models remain unfinished; every new head must re-pass hosted gates."
+          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval and two further textured models remain unfinished; every new head must re-pass hosted gates."
         }
       ],
       "gates": [
@@ -124,27 +124,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/medical-2026-10-21/media-check.log",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "96 media contracts and27 fresh Remotion stills pass.14 Medical geometry/seven poster cases inspect actual maps/contact/voids/winding/crossings, live locked budgets and package snapshot races. Independent final reviews clear five confirmed findings, not final art. Source/edit lineage retained; nine other model/poster records/bytes and shared studio unchanged. Seven candidates/three studies; final all-ten approval stays open."
+          "evidence": "ops/mission/evidence/personal-2026-10-21/media-check.log",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "114 media contracts and27 fresh Remotion stills pass.18 Personal cases inspect actual maps/instances/contact/voids/winding/crossings/UVs/live locked budgets; independent paper/flap and hidden/floating stitch defects reproduced RED and fixed. Source lineage retained; nine other models/all ten posters and shared studio unchanged. Eight candidates/two studies; final all-ten approval stays open."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/medical-2026-10-21/heroes.log",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "All ten heroes pass1440px/375px actual geometry/movement/framing/loading and reduced-motion checks, plus separate network/texture fallbacks. Medical changes; nine baseline model/poster bytes/records remain unchanged. Strict Three gate passes original700/300ms serially after heavy render jobs; prior timing/DOM failures are retained, not declared diagnosed. Final hosted proof mandatory."
+          "evidence": "ops/mission/evidence/personal-2026-10-21/heroes.log",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "All ten heroes pass1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate network/texture fallbacks. Personal changes; nine model records/bytes and all ten posters remain unchanged. Strict Three gate uses original700/300ms serially after heavy render jobs; prior timing/DOM failures retained, not declared diagnosed. Final hosted proof mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/medical-2026-10-21/turntable-verification.json",
-          "lastRun": "2026-10-21T06:05:14Z",
-          "notes": "Medical1080p/30fps nine-second turn rebuilt after geometry correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
+          "evidence": "ops/mission/evidence/personal-2026-10-21/turntable-verification.json",
+          "lastRun": "2026-10-21T07:30:00Z",
+          "notes": "Personal1080p/30fps nine-second turn rebuilt after geometry correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
         }
       ]
     },
@@ -462,7 +462,7 @@
     {
       "label": "Textured refined model candidates",
       "baseline": "0",
-      "current": "7",
+      "current": "8",
       "target": "10",
       "direction": "up"
     },
@@ -490,9 +490,14 @@
   ],
   "risks": [
     {
-      "title": "Three models remain studies; candidates need art review",
+      "title": "Mobile vital labels need a focused readability pass",
+      "severity": "medium",
+      "note": "Fresh375px Personal context capture shows the compact Interest Burn value breaking within day. No overlap or calculation change; existing four-column mobile vitals remain untouched in this asset-only slice. Fix token wrapping/responsive tracks separately with280/375px rendered numeric/large-value tests. Evidence:personal-2026-10-21/preview-375-context.png."
+    },
+    {
+      "title": "Two models remain studies; candidates need art review",
       "severity": "high",
-      "note": "Auto, Vault, House, Land, Credit Card, Student Loan and Medical are textured candidates, not final photorealism approval. Personal, Recreation and Custom need refinement. Public collection is10364342bytes,121418bytes below the unchanged10MiB cap. Maps are artistic approximations, not measured scans; global final art review remains open. Public GPU quota is limited and Hugging Face is not connected."
+      "note": "Auto, Vault, House, Land, Credit Card, Student Loan, Medical and Personal are textured candidates, not final photorealism approval. Recreation and Custom need refinement. Public collection is10303650bytes,182110bytes below unchanged10MiB cap. Maps are authored approximations, not measured scans; global final art review remains open. Public GPU quota limited; Hugging Face not connected."
     },
     {
       "title": "Financial coherence gates remain open",
@@ -502,7 +507,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "ecc682a passed both complete pipelines, actual75 media/27stills/348 regressions/native49 cases/full contracts, SQL, READY Vercel and hosted82/routes; receiptPR256 issuecomment-6308704525.02f3137 remains failed/unverified. Medical needs both fresh full events and hosted82/routes/model/new-poster proof. No prior receipt authorizes production."
+      "note": "3e93136 passed both complete pipelines39553574615/39553579491 attempt1,96 media/27stills/348 regressions/native49/full contracts, SQL, READY Vercel and hosted82/routes; receipt6309536456.02f3137 remains failed/unverified. Personal needs both fresh full events and hosted82/routes/all-ten model/poster hashes. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -810,16 +815,17 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "Previous ecc682a is verified: both full CI events39547381960/39547385927 attempt1, actual75 media/27stills/348 regressions/49 native executions/full contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6308704525 folded into this substantive Medical work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/all ten GLB/new-poster-byte proof. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
+      "Previous3e931369fea268efe4c0180de8aaafd38675a5ed freshly verified: both full events39553574615/39553579491 attempt1,96 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6309536456 folded into substantive Personal work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/all ten GLB/poster hashes. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
-      "Medical candidate adds original enamel/chrome case and connected stethoscope, nine maps, matching emerald-badge poster and retained edit lineage. Read docs/medical-refinement-contract-2026-10-21.md.14 geometry/seven poster-publication cases reproduce five independently found defects and guard fixes. Seven candidates/three studies; public assets have121418bytes headroom, not a larger cap. Next refine Personal or another remaining study with provenance and all-model web/video proof. No paid GPU or broad layout redesign.",
+      "Personal candidate adds hollow cognac satchel, curved front-lip flap, punched straps, connected brass,459 physical stitch instances, open-bow key and inserted papers; original generated leather reused, all posters unchanged. Read docs/personal-refinement-contract-2026-10-21.md.18 cases guard geometry, actual instances, thread-scale seating and observed paper/flap/stitch P2 fixes. Eight candidates/two studies;182110bytes public headroom, unchanged caps. Next Recreation or Custom with provenance/all-model proof. No paid GPU or broad redesign.",
       "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
-      "Continue three remaining domain refinements and final art review of all ten. Auto, Vault, House, Land, Credit Card, Student Loan and Medical are textured candidates, not final collection approval. Preserve publication locking, source lineage/revisions, validated Buffer packaging, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
+      "Continue Recreation/Custom refinements and final art review of all ten. Eight textured candidates are not final collection approval. Preserve publication locking, source lineage/revisions, validated Buffer packaging, original identity, real geometry and per-model/aggregate caps. Re-run all-model web/video gates after shared lighting edits.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
+      "Fix the newly recorded375px vital-value token wrapping in a separate focused UI slice: preserve all four vitals and numeric semantics, add280/375px rendered cent/sub-cent/large-value coverage, no engine or broad layout redesign. See Personal preview-375-context.png.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
       "Read docs/backend-isolation-contract-2026-10-20.md and preserve the standing real SQL gate. Actual 63-assertion runs now pass twice on both events. Next backend work is dedicated cloud association, current-provider patch/version alignment, complete six-table negative coverage and isolated backup/account recovery. Never choose a cloud project by name alone or treat functional CI as managed-backup proof.",
       "Use domain-readiness.json: interestshield.app/www are already verified on the app project with working Cloudflare DNS and HTTPS. Do not re-add or rewrite DNS. Verify the final restored deployment SHA, Production SITE_URL override and custom-domain browser smoke only when release gates pass.",

@@ -1,0 +1,43 @@
+{
+  "probe": "source-and-publication-boundary",
+  "status": "PASS",
+  "sourceLFSha256": "2da81a4d80955b8b7b5b41f68ae90fc9cad8a9486c94e8f8518b3bafcd8e1345",
+  "sourceImageMismatchRejected": true,
+  "deliveryBoundaries": {
+    "modelBytes": 524288,
+    "uniqueTriangles": 65000,
+    "instantiatedTriangles": 65000,
+    "aggregateBytes": 10485760
+  },
+  "liveCases": {
+    "over": {
+      "events": [
+        "live-total",
+        "old-model-size"
+      ],
+      "error": "Personal public budget changed before locked publication; previous artifact untouched"
+    },
+    "exact": {
+      "events": [
+        "live-total",
+        "old-model-size",
+        "would-write-temp",
+        "would-rename"
+      ]
+    }
+  },
+  "mutatedGuardAndStaleTotalRejectedByOracle": true,
+  "sizeAndStatFailureRejectBeforePublication": true,
+  "publisherLexicallyInsideExistingLock": true,
+  "publicationAwaitedBeforeBothManifestUpdates": true,
+  "protectedPersonalSkipBoundary": {
+    "messages": [
+      "personal: preserving imported refined asset"
+    ],
+    "legacyBuildReached": false,
+    "absentRecordPositiveControlReached": true
+  },
+  "helperSha256": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b",
+  "legacyBuilderSha256": "7d146dcf309cb6373b9aaebdfa766f73ccb42acbb37e07e8e11149a82c7cf92b",
+  "note": "All boundary execution uses extracted fragments and in-memory adapters. No builder, manifest writer, filesystem lock, asset write, or full rebuild executed."
+}

@@ -1,0 +1,12 @@
+prune: Removed types... Accessor (10)
+prune: Removed types... Accessor (102)
+prune: Removed types... Accessor (46)
+{"triangles":22600,"instantiated":29356,"meshes":28,"largest":[{"name":"P-Stitches","triangles":5640},{"name":"P-Piping","triangles":2560},{"name":"P-Strap-L","triangles":2168},{"name":"P-Buckle-L","triangles":1632},{"name":"P-Strap-Keeper-L","triangles":1632},{"name":"P-Body","triangles":1352},{"name":"P-Shoulder-Strap","triangles":1028},{"name":"P-Key","triangles":984},{"name":"P-Paper-Front","triangles":608},{"name":"P-Paper-Back","triangles":608}],"textures":[{"name":"P-Leather-Color","bytes":76032},{"name":"P-Leather-Normal","bytes":95180},{"name":"P-Leather-Roughness","bytes":1362},{"name":"P-Brass-Color","bytes":1018},{"name":"P-Brass-Normal","bytes":2348},{"name":"P-Brass-Roughness","bytes":810},{"name":"P-Steel-Color","bytes":1018},{"name":"P-Steel-Normal","bytes":2352},{"name":"P-Steel-Roughness","bytes":790}],"bytes":695720,"collection":10479526}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-personal.mjs:122
+if(output.length>0.5*1024*1024||triangles>65000||instantiated>65000||collection>10*1024*1024)throw new Error('Personal exceeds delivery limits; previous artifact untouched');
+                                                                                                   ^
+
+Error: Personal exceeds delivery limits; previous artifact untouched
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-personal.mjs:122:100
+
+Node.js v22.22.2

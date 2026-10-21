@@ -41,12 +41,18 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 - Original refined Student Loan candidate:29,348 unique-mesh triangles, nine
   embedded maps and715,276 bytes; leather bindings, woven cloth, physical book
   leaves, braided cord,48 tassel fibers and a hollow spiral diploma with real bow.
-  Three authored studies remain; seven candidates are not seven final art approvals.
+  Two authored studies remain; eight candidates are not eight final art approvals.
 - Original refined Medical candidate:26,104 unique/43,412 instantiated triangles,
   nine256px maps and509,120 bytes; fitted enamel case, curved guards, connected
   chrome/rubber stethoscope and original emerald badge. Matching transparent
   poster is updated with retained edit input/source lineage. See the Medical contract.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
+- Original refined Personal candidate:22,016 unique/33,844 instantiated triangles,
+  nine maps and519,844 bytes; hollow cognac satchel, thick flap, punched straps,
+  connected brass hardware,459 seated stitch instances, toothed open-bow key and
+  inserted papers. Original leather source reused explicitly, poster unchanged.
+  See `docs/personal-refinement-contract-2026-10-21.md`;18 geometry cases include
+  independently reproduced paper/flap and hidden/floating-stitch corrections.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
   and removal of separately licensed trademark geometry and shared logo texture.
@@ -101,27 +107,29 @@ poster reconstruction. Student Loan has generated cloth/leather sources and
 approximate authored maps, not measured fabric/leather or reconstructed relief.
 Medical uses original geometry and approximate procedural enamel/steel/rubber
 maps, not a measured medical product or exact poster reconstruction.
-The other three meshes remain
+Personal reuses the retained original leather with approximate authored brass/
+steel maps and original geometry. The other two meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
 ## Verification
 
-Medical local checkpoint:96 media contracts/27 fresh stills,348 web
+Personal local checkpoint:114 media contracts/27 fresh stills,348 web
 regressions/reference lanes, lint/build, seven HTTP/rendered routes, all20 hero
 viewport checks/fallbacks, strict Three budgets and82 local calculation/portability
-cases pass. New Medical1080p turn and nine unchanged turns pass pixel/hash proof.
-Independent reviews caught and cleared tube collisions, false contact, inward rim,
-mixed-type source revisions and hash/reopen packaging races after observed RED/GREEN.
+cases pass. New Personal1080p turn and nine unchanged turns pass pixel/hash proof.
+Independent Personal review reproduced paper/flap crossings and hidden/floating
+stitching, then cleared bounded fixes after RED/GREEN. Earlier Medical publication
+and geometry fixes remain protected by their existing tests.
 Byte-identical/protected model/poster rebuilds, a real40-payload package and source fingerprints preserve prior
 financial/native/persistence/layout/camera/studio/timing/dependency behavior.
-Previous ecc682a is remotely verified: complete push39547381960/PR39547385927
-attempt1, actual75 media/27stills/348 regressions/49 native executions, SQL63 twice
+Previous3e93136 is remotely verified: complete push39553574615/PR39553579491
+attempt1, actual96 media/27stills/348 regressions/49 native executions, SQL63 twice
 per event, READY Vercel and hosted82/routes/all ten served GLBs. Receipt:
-https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6308704525
-This new Medical
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6309536456
+This new Personal
 substantive checkpoint still requires both exact-head full pipelines, SQL,
-READY Vercel and hosted82/routes/all-ten-model-byte/new-poster proof before a postflight
+READY Vercel and hosted82/routes/all-ten-model/poster-byte proof before a postflight
 receipt. Source report remains preflight to avoid report-only push loops.
 
 - Next.js production build, TypeScript and ESLint passed.
@@ -154,9 +162,9 @@ receipt. Source report remains preflight to avoid report-only push loops.
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 96 media contracts pass, including14 Medical geometry/seven poster-publication,
+- 114 media contracts pass, including18 Personal,14 Medical geometry/seven poster-publication,
   ten Student Loan, nine Credit Card, nine Land and six House cases.
-  Existing HyperFrames/Remotion checks pass with27 fresh stills. Medical's turn
+  Existing HyperFrames/Remotion checks pass with27 fresh stills. Personal's turn
   is rebuilt in this checkpoint; nine previous videos are unchanged/rechecked,
   with fresh movement/rest pixel proof and matching model/vendor hashes. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
@@ -221,7 +229,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete Personal, Recreation and Custom; artist-review all seven candidates and collection consistency.
+1. Complete Recreation and Custom; artist-review all eight candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -234,7 +242,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
 
-Public assets total10,364,342 bytes, only121,418 bytes below the unchanged10MiB
+Public assets total10,303,650 bytes,182,110 bytes below the unchanged10MiB
 cap. Later refinements must recover space through intentional optimization.
 
 ## Security Refresh

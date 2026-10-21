@@ -1,0 +1,12 @@
+prune: Removed types... Accessor (10)
+prune: Removed types... Accessor (102)
+prune: Removed types... Accessor (46)
+{"triangles":36936,"instantiated":44716,"meshes":28,"textures":[{"name":"P-Leather-Color","bytes":76032},{"name":"P-Leather-Normal","bytes":95180},{"name":"P-Leather-Roughness","bytes":1362},{"name":"P-Brass-Color","bytes":1018},{"name":"P-Brass-Normal","bytes":2348},{"name":"P-Brass-Roughness","bytes":810},{"name":"P-Steel-Color","bytes":1018},{"name":"P-Steel-Normal","bytes":2352},{"name":"P-Steel-Roughness","bytes":790}],"bytes":814892,"collection":10598698}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-personal.mjs:122
+if(output.length>0.5*1024*1024||triangles>65000||instantiated>65000||collection>10*1024*1024)throw new Error('Personal exceeds delivery limits; previous artifact untouched');
+                                                                                                   ^
+
+Error: Personal exceeds delivery limits; previous artifact untouched
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-personal.mjs:122:100
+
+Node.js v22.22.2
