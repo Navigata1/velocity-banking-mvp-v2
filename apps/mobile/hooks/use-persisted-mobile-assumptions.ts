@@ -231,5 +231,6 @@ export function usePersistedMobileAssumptions(
     resetAssumptions,
     setInput: updateAssumptions,
     storageStatus,
+    storageScope: scope,
   };
 }

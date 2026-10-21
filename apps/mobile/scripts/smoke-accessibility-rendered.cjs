@@ -3,6 +3,7 @@ const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
+const verifyFinancialInputs = require('./financial-input-smoke.cjs');
 const { chromium } = require(path.resolve(__dirname, '..', '..', 'web', 'node_modules', 'playwright-core'));
 const {
   findBrowserExecutable,
@@ -137,6 +138,7 @@ async function main() {
   try {
     await waitForServer(origin);
     browser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
+    await verifyFinancialInputs(browser, origin, outputDirectory);
     for (const [viewportLabel, viewport] of viewports) {
       const context = await browser.newContext({ viewport });
       const page = await context.newPage();

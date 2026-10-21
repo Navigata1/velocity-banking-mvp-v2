@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
+require('./financial-input-draft-contract.cjs');
 
 const ownerId = '00000000-0000-4000-8000-00000000000a';
 const defaultInput = {

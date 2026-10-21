@@ -42,6 +42,7 @@ yarn-error.log*
 # Testing
 coverage/
 /apps/web/test-results/
+/apps/mobile/test-results/
 /apps/media/hyperframes/vendor/
 /apps/media/hyperframes/snapshots/
 /apps/media/hyperframes/output/

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useRouter, type Href } from 'expo-router';
-import { ScrollView, Text, View } from 'react-native';
+import { Platform, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   useMobileAssumptions,
@@ -40,7 +40,7 @@ export function MobileRouteScreen({
     <ScrollView
       automaticallyAdjustKeyboardInsets
       contentInsetAdjustmentBehavior="automatic"
-      keyboardDismissMode="on-drag"
+      keyboardDismissMode={Platform.OS === 'web' ? 'none' : 'on-drag'}
       keyboardShouldPersistTaps="handled"
       style={{ backgroundColor: '#020617' }}
       contentContainerStyle={{
@@ -70,7 +70,7 @@ export function MobileRouteScreen({
 
       <MobileModeNavigation activeMode={mode} onModeChange={handleModeChange} />
       {renderContent(context)}
-      {showAssumptionControls ? <AssumptionControls disabled={!context.isHydrated} input={context.input} onChange={context.setInput} /> : null}
+      {showAssumptionControls ? <AssumptionControls key={context.storageScope} disabled={!context.isHydrated} input={context.input} onChange={context.setInput} /> : null}
       <StorageStatusCard status={context.storageStatus} />
 
       <Text selectable style={{ color: '#94a3b8', fontSize: 12, lineHeight: 18, textAlign: 'center' }}>

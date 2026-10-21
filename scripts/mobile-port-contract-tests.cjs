@@ -974,23 +974,15 @@ test('Expo app uses dedicated shared-engine route modules instead of a monolithi
   assert.ok(routesSource.includes('accessibilityLabel="Active debt APR"'));
   assert.ok(routesSource.includes('accessibilityLabel="Active debt monthly payment"'));
   assert.ok(routesSource.includes('accessibilityLabel="Active debt term months"'));
-  assert.ok(
-    routesSource.includes('function finiteNonNegativeInputValue(value: number): number'),
-    'expected native numeric inputs to sanitize non-finite display values'
-  );
-  assert.ok(routesSource.includes('value={formatMoneyInputValue(value)}'), 'expected money inputs to use finite display formatting');
-  assert.ok(
-    routesSource.includes('value={formatWholeNumberInputValue(value)}'),
-    'expected whole-number inputs to use finite display formatting'
-  );
-  assert.ok(
-    routesSource.includes('value={formatPercentageInputValue(value)}'),
-    'expected percentage inputs to use finite display formatting'
-  );
-  assert.ok(
-    routesSource.includes('Math.round(finiteNonNegativeInputValue(value) * 10000) / 100'),
-    'expected APR input to preserve two decimal display precision after sanitizing'
-  );
+  const numericInput = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/financial-input-draft.ts'));
+  assert.equal(numericInput.formatFinancialInput(NaN, 'money'), '');
+  assert.equal(numericInput.formatFinancialInput(Infinity, 'percent'), '');
+  assert.equal(numericInput.formatFinancialInput(120.7, 'money'), '120.7');
+  assert.equal(numericInput.formatFinancialInput(0.07123456789, 'percent'), '7.123456789');
+  assert.equal(numericInput.resolveFinancialDraft(120.7, '12..3', 'money').value, 120.7);
+  assert.equal(numericInput.resolveFinancialDraft(120.7, '100000000000000.01', 'money').value, 120.7);
+  assert.ok(routesSource.includes('FinancialNumberInput') && routesSource.includes('value={draft}'),
+    'expected native numeric fields to edit validated local drafts');
   assert.ok(
     !routesSource.includes('value={String(Math.round(value))}') &&
       !routesSource.includes('value={String(value)}') &&
@@ -1154,10 +1146,7 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
     path.join(repoRoot, 'apps/mobile/components/financial-card.tsx'),
     'utf8'
   );
-  const controlsSource = fs.readFileSync(
-    path.join(repoRoot, 'apps/mobile/components/mobile-shell/controls.tsx'),
-    'utf8'
-  );
+  const controlsSource = readReachableSource(path.join(repoRoot, 'apps/mobile/components/mobile-shell/controls.tsx'));
   const orbitSource = fs.readFileSync(
     path.join(repoRoot, 'apps/mobile/components/mobile-shell/money-loop-visuals.tsx'),
     'utf8'
@@ -1194,7 +1183,8 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
   assert.ok(layoutSource.includes("statusBarBackgroundColor: '#0f172a'"));
   assert.ok(routeFrameSource.includes('useSafeAreaInsets'), 'expected Android and cutout-aware content insets');
   assert.ok(routeFrameSource.includes('automaticallyAdjustKeyboardInsets'), 'expected iOS keyboard insets');
-  assert.ok(routeFrameSource.includes('keyboardDismissMode="on-drag"'), 'expected drag-to-dismiss keyboard behavior');
+  assert.ok(routeFrameSource.includes("keyboardDismissMode={Platform.OS === 'web' ? 'none' : 'on-drag'}"),
+    'expected native drag dismissal without committing partial drafts during web programmatic scroll');
   assert.ok(routeFrameSource.includes('keyboardShouldPersistTaps="handled"'), 'expected one-tap controls while the keyboard is open');
   assert.ok(routeFrameSource.includes('paddingBottom: Math.max(36, insets.bottom + 24)'));
   assert.ok(routeFrameSource.includes('paddingLeft: 18 + insets.left'));
