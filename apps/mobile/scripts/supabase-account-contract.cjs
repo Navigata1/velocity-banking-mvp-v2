@@ -191,6 +191,11 @@ async function main() {
   assert.ok(authProviderSource.includes('registerMobileSnapshotOutboxReplay'));
   assert.ok(authProviderSource.includes('resumePendingMobileSnapshotRecovery'));
   assert.ok(authProviderSource.includes('recoveryReadyOwner'));
+  const retryStart = authProviderSource.indexOf('const retryPendingRecovery');
+  assert.ok(retryStart >= 0, 'blocked startup recovery needs an explicit retry path');
+  const resumeCatch = authProviderSource.slice(retryStart);
+  assert.ok(!/\.catch\([\s\S]*?setRecoveryReadyOwner\((?:ownerId|expectedOwner)\)/.test(resumeCatch),
+    'failed recovery must not enable edits or automatic replay');
   assert.ok(
     authProviderSource.indexOf('resumePendingMobileSnapshotRecovery')
       < authProviderSource.indexOf('registerMobileSnapshotOutboxReplay(client, ownerId'),

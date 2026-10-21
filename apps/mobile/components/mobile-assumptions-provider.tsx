@@ -7,11 +7,14 @@ export type MobileAssumptionsContextValue = ReturnType<typeof usePersistedMobile
 const MobileAssumptionsContext = createContext<MobileAssumptionsContextValue | null>(null);
 
 export function MobileAssumptionsProvider({ children }: PropsWithChildren) {
-  const { authReady, ownerId } = useMobileAuth();
+  const { authReady, ownerId, recoveryBusy, isRecoveryBusy } = useMobileAuth();
   const assumptions = usePersistedMobileAssumptions(ownerId, authReady);
+  const editable = { ...assumptions, isHydrated: assumptions.isHydrated && !recoveryBusy,
+    setInput: (input: Parameters<typeof assumptions.setInput>[0]) => { if (!isRecoveryBusy()) assumptions.setInput(input); },
+    resetAssumptions: () => isRecoveryBusy() ? Promise.reject(new Error('Recovery is applying.')) : assumptions.resetAssumptions() };
 
   return (
-    <MobileAssumptionsContext.Provider value={assumptions}>
+    <MobileAssumptionsContext.Provider value={editable}>
       {children}
     </MobileAssumptionsContext.Provider>
   );
