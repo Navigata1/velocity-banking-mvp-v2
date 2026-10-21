@@ -8,8 +8,12 @@ The recognizable asset-centered dashboard is back, with four vitals, a selected
 debt summary and a secondary Money Loop explorer. Vault also has its own hero.
 The existing aligned demo defaults were preserved.
 
-Current follow-up: native input precision is corrected before aggregate Portfolio
-adoption. Chrome reproduced120.70 displayed as121 and typed120.70 saved as12070.
+Current follow-up: Expo now edits and simulates a real portable multi-debt Portfolio,
+with explicit creation/copy, owner-scoped persistence and paired snapshot recovery.
+The web reads legacy bytes without mutation and writes explicit canonical APR units.
+See `docs/native-portfolio-contract-2026-10-20.md`. Shared scenario ownership,
+common-date wealth and lender/device/backend/release approval remain open.
+The earlier precision correction reproduced120.70 displayed as121 and typed120.70 saved as12070.
 Validated drafts now retain cents/APR precision, exact no-ops and unrelated saved
 values. Review found and closed additional precision/fraction/comma hazards.
 See `docs/native-input-precision-contract-2026-10-20.md`. The new test-only canvas
@@ -75,8 +79,8 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 - Web Portfolio now uses a portable shared funded book: existing LOC in every
   strategy/focus, global direct extra caps, ranked LOC split slots and retained cash.
   Single Velocity reserves scheduled/manual payments before LOC recovery. The chart
-  and summaries include LOC. Saved fields remain intact; native aggregate adoption
-  and shared scenario ownership are still separate work.
+  and summaries include LOC. Expo now uses that shared full-book engine/path model;
+  shared scenario ownership is still separate work.
 
 The Auto model is an adapted Car Concept by Eric Chadwick / DGG, CC BY 4.0,
 not a reconstruction of the generated coupe poster. Vault is an original authored
@@ -92,7 +96,7 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 ## Verification
 
 - Next.js production build, TypeScript and ESLint passed.
-- 340 web/shared regressions, two independent reference scenarios,78 prior
+- 348 main web/shared regressions, separate explicit-APR/codec/storage contracts, two independent reference scenarios,78 prior
   comparisons,25 zero-recovery,100 capped-mortgage and480 new Portfolio closed-form
   cases pass, plus360 repeatable seeded paths with240 direct-oracle matches and
   ancillary contracts.

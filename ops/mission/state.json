@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T01:34:34Z",
+    "updated": "2026-10-21T03:58:00Z",
     "sessionCount": 14
   },
   "policies": {
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "340 regressions and all reference lanes pass. Four new canvas diagnostic cases preserve700ms/300ms limits and original causes. Native15 draft contracts and two actual Chrome fixtures cover cents/APR/no-ops/invalid edits; engine source/output and all assets unchanged. Local draft evidence, not production approval."
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T03:58:00Z",
+          "notes": "348 main regressions and all references pass, plus15 APR,17 codec/range,22 adapter,3 actual-Zustand and capture-harness contracts. Explicit APR/range engine changes are tested; Remotion scenario inputs/results and all assets are unchanged. Local preflight, not production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/routes.log",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "Seven built web routes pass1440px/390px. New native375px/1440px fixtures and35 existing route/viewport executions pass, with navigation and exact saved inputs. Both new full pipelines and hosted72-case/routes proof must repeat. No release promotion."
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/routes.log",
+          "lastRun": "2026-10-21T03:58:00Z",
+          "notes": "Seven rendered web routes pass1440/390. Web33 Portfolio cases cover funded budgets, canonical portability/failures and precise280/375/1440 editors. Expo49 executions comprise12 book,2 precision and35 prior route cases. Both exact-head full pipelines and hosted81-case/routes proof must repeat. No device or release approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6305482572",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "8f65aef passed complete push/PR CI39523732339(attempt2)/39523736791, real SQL, exact Vercel and hosted72-case/routes/model proof. Initial capture miss retained, not declared fixed. This native-input/diagnostic checkpoint requires its own exact-head full pipelines and hosted receipt. Fold postflight proof into the next substantive update."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6306173894",
+          "lastRun": "2026-10-21T03:58:00Z",
+          "notes": "b41b6a3 passed complete push/PR39529176994/39529182382 on attempt1, actual full native lane, real SQL63 twice/event, exact Vercel and hosted72/routes/model proof. Superseded15cd5d8 was never declared verified. This native-book checkpoint needs both new complete pipelines, actual new lane execution and hosted receipt. Fold postflight into next substantive update."
         }
       ]
     },
@@ -124,7 +124,7 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/media-check.log",
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/media-check.log",
           "lastRun": "2026-10-21T01:34:34Z",
           "notes": "65 media contracts and27 fresh Remotion stills pass. All ten model records/bytes, sources and shared studio remain unchanged. Five studies and all five textured candidates still need final collection art approval."
         },
@@ -133,7 +133,7 @@
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/heroes.log",
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/heroes.log",
           "lastRun": "2026-10-21T01:34:34Z",
           "notes": "All ten unchanged heroes pass fresh1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate fallback tests. Initial run reached Vault without its hero DOM; unchanged assertions passed with read-only navigation/error observation. Cause remains unexplained; failure retained. Final hosted proof mandatory."
         },
@@ -169,7 +169,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Funded web/Expo Simulator, Vault and web Portfolio retained. Native forms now preserve cents/APR drafts/no-ops, reject lossy/ambiguous edits and avoid web scroll-triggered partial commits; actual120.70->12070 loss reproduced first. Engine/scenario/store formats unchanged. Dashboard helper scope, native aggregate Portfolio adoption, shared ownership, common-date wealth and lender/calendar rules remain open. Input precision is a prerequisite, not complete comparisons."
+          "notes": "Funded web/Expo Simulator, Vault and both aggregate Portfolios now share tested allocation math. Native full-book adoption has explicit create/copy/transfer, precise drafts, owner/CAS persistence and paired recovery. Canonical v2 APR units remove reinterpretation; v1 source bytes survive. Dashboard helper scope, shared scenario ownership, common-date wealth and lender/calendar rules remain open. See R2-T4 for bounded local implementation proof."
         },
         {
           "id": "R2-T3",
@@ -178,6 +178,14 @@
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
           "notes": "Unused weekly/biweekly mortgage buttons removed from Simulator/Vault; monthly estimate and annual-extra approximation disclosed. Guardian frequency and minimum-only baseline claims corrected across the answer bank and independently re-reviewed. Legacy chunkFrequency/paymentFrequency values survive a real unrelated edit and route navigation at desktop/375px. No dated-frequency capability is claimed."
+        },
+        {
+          "id": "R2-T4",
+          "title": "Port the funded aggregate Portfolio safely to Expo",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "Bounded implementation done locally, pending final exact-head remote proof. Shared strict canonical book/path, explicit APR units/range guards, full native editor, owner/CAS/session storage, JSON review and paired durable recovery. Reproduced storage/lifecycle/review/precision findings fixed and scoped re-reviewed. Web legacy bytes remain untouched; failed imports do not become active. See docs/native-portfolio-contract-2026-10-20.md. Exports/null-host/browser proofs are not physical-device, cloud or full coherence approval."
         }
       ],
       "gates": [
@@ -186,16 +194,16 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "340 regressions pass unchanged. Core engine/scenario outputs untouched; native precision15 contracts are separate UI-entry proof. Not all route/lender coherence is complete."
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T03:58:00Z",
+          "notes": "348 main regressions and independent references pass. Explicit unit/range behavior adds15 APR and17 codec/range contracts. Remotion scenario inputs/results unchanged, source digest refreshed. Number is not arbitrary-precision posting; lender/common-date/shared-owner gates remain open."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/web-tests.log",
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
           "lastRun": "2026-10-21T01:34:34Z",
           "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
         },
@@ -391,7 +399,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Fresh native input fix passes web export, two375px/1440px entry fixtures,35 route/viewport executions, Android/iOS Hermes exports and existing identity/recovery contracts. Fifteen draft cases cover review-found precision/fraction/comma hazards. Native aggregate book/keyboard locale/device/account-race QA and final rebuilds after financial changes remain open."
+          "notes": "Fresh full-book web export,49 browser executions and Android/iOS Hermes bundles pass. Standing contracts cover19 drafts, owner/CAS/chunks/sessions, actual React hook/auth/recovery races, transfer and paired journal recovery. Native aggregate implementation is present; signed-in physical-device, screen-reader, locale-complete keyboard and cloud cross-device QA remain open. Rebuild again after financial source changes."
         },
         {
           "id": "R5-T2",
@@ -416,7 +424,7 @@
           "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/mobile-check.log",
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/native-types.log",
           "lastRun": "2026-10-21T01:34:34Z",
           "notes": "Fresh current-SDK typecheck with validated numeric drafts and account-scope remount. Storage schema/engine unchanged; not final-device proof."
         },
@@ -425,7 +433,7 @@
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/mobile-routes.log",
+          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/native-root.log",
           "lastRun": "2026-10-21T01:34:34Z",
           "notes": "Existing root mobile contracts pass; obsolete rounding/private-function assertions now exercise the real draft helper and platform wiring. Main CI now explicitly calls the full native persistence/input suite too, including15 numeric cases and owner/revision/outbox/recovery. Final exact-head execution still required. Lifecycle wiring assertions are static, not signed-in native-device proof."
         },
@@ -461,8 +469,8 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "340",
-      "target": "340",
+      "current": "348",
+      "target": "348",
       "direction": "up"
     },
     {
@@ -489,12 +497,12 @@
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Simulator web/Expo, Vault and web Portfolio now use funded liability books with explicit cash. Dashboard helpers, native aggregate Portfolio adoption, safe scenario ownership, common-date wealth and lender/calendar/rounding/credit-availability integration remain open."
+      "note": "Simulator web/Expo, Vault and both Portfolios use funded liability books with explicit cash. Canonical units and native full-book persistence/recovery are implemented. Dashboard helpers, shared scenario ownership, common-date wealth and lender/calendar/rounding/credit-availability integration remain open."
     },
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "8f65aef passed both complete CI runs, SQL, Vercel and hosted proof. The current native-input/diagnostic checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
+      "note": "b41b6a3 passed both complete pipelines, actual native lane, SQL, Vercel and hosted proof. The current native-book/canonical/recovery checkpoint needs both fresh full events and hosted81-case/routes proof. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -802,11 +810,11 @@
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Push the reviewed native-input/diagnostic checkpoint, then require both final exact-head full CI runs, SQL, exact Vercel and hosted web72-case/routes proof, plus fresh native exported browser gates in CI.8f65aef passed; receipt PR256 issuecomment-6305482572. Append postflight receipt and fold into the next substantive update; avoid report-only push loops. This report is preflight, not production approval.",
-      "Native precision prerequisite is corrected; read docs/native-input-precision-contract-2026-10-20.md. Do not restore per-keystroke rounding/coercion or treat15 draft cases/static scope wiring as signed-in device or locale-complete keyboard approval. Actual native aggregate Portfolio still needs the shared funded multi-debt book with safe persistence/scenario ownership.",
+      "Push this reviewed native-book checkpoint, require both final exact-head complete CI runs, SQL63 twice/event, actual full native/new UI/browser lanes, exact Vercel and hosted81 cases plus seven routes. b41b6a3 receiptPR256 issuecomment-6306173894 is folded in. Append new postflight receipt and fold into next substantive update; no report-only push loop or production promotion.",
+      "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
       "Next refine Student Loan or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land/Credit Card are candidates, five studies remain. Public assets have70568bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/credit-card-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
-      "Remaining R2 work: dashboard helper scope, native aggregate Portfolio adoption, safe shared scenario ownership and common-date cash/wealth. Read docs/portfolio-funding-contract-2026-10-20.md; preserve saved caps as funded allocations, not added income, and retain separate explicit policies. Add failing reproductions first.",
+      "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
       "Continue five remaining domain refinements and final art review of all ten. Vault, Auto, House, Land and Credit Card are textured candidates, not final collection approval. Preserve publication locking, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
