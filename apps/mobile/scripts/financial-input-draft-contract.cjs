@@ -90,5 +90,27 @@ test('ambiguous comma keyboard amounts never silently become thousandfold values
     const r = resolveFinancialDraft(120.7, draft, 'money'); assert.equal(r.value, 120.7); assert.ok(r.error);
   }
 });
+test('changed bounded values reject invalid splits and terms without clamping', () => {
+  for(const [value,draft,kind,bounds] of [[0.7,'101','percent',{minimum:0,maximum:1}],
+    [12,'0','whole',{minimum:1}],[120.7,'200','money',{maximum:150}]]) {
+    const r=resolveFinancialDraft(value,draft,kind,bounds);assert.equal(r.value,value);assert.ok(r.error);
+  }
+});
+test('range boundaries accept exact supported values', () => {
+  assert.equal(resolveFinancialDraft(0.7,'100','percent',{minimum:0,maximum:1}).value,1);
+  assert.equal(resolveFinancialDraft(0.7,'0','percent',{minimum:0,maximum:1}).value,0);
+  assert.equal(resolveFinancialDraft(12,'1','whole',{minimum:1}).value,1);
+});
+test('bounds do not rewrite an unchanged imported value', () => {
+  const r=resolveFinancialDraft(100000000.125,formatFinancialInput(100000000.125,'money'),'money',{maximum:10000000});
+  assert.equal(r.value,100000000.125);assert.equal(r.error,null);
+  const equivalent=resolveFinancialDraft(100000000.125,'$ 100,000,000.1250','money',{maximum:10000000});
+  assert.equal(equivalent.value,100000000.125);assert.equal(equivalent.error,null);
+});
+test('invalid range configuration cannot accept a changed value', () => {
+  for(const bounds of [{minimum:2,maximum:1},{maximum:NaN},{minimum:Infinity}]) {
+    const r=resolveFinancialDraft(0.7,'80','percent',bounds);assert.equal(r.value,0.7);assert.ok(r.error);
+  }
+});
 assert.equal(failures, 0, `${failures} native input draft contracts failed`);
 console.log(`${count} native input draft contracts passed. Scope assertions are static wiring, not signed-in device QA.`);

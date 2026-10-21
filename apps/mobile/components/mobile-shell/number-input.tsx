@@ -4,13 +4,15 @@ import { formatFinancialInput, resolveFinancialDraft, type FinancialInputKind } 
 
 export const MOBILE_NUMBER_INPUT_ACCESSORY_ID = 'interestshield-mobile-number-inputs';
 
-export function FinancialNumberInput({ accessibilityLabel, disabled = false, label, value, onChange, kind }: {
+export function FinancialNumberInput({ accessibilityLabel, disabled = false, label, value, onChange, kind, minimum, maximum }: {
   accessibilityLabel: string;
   disabled?: boolean;
   label: string;
   value: number;
   onChange: (value: number) => void;
   kind: FinancialInputKind;
+  minimum?: number;
+  maximum?: number;
 }) {
   const display = formatFinancialInput(value, kind);
   const [draft, setDraft] = useState(display);
@@ -22,7 +24,7 @@ export function FinancialNumberInput({ accessibilityLabel, disabled = false, lab
     setDraft(formatFinancialInput(value, kind));
     setError('');
     return () => { session.current = null; };
-  }, [value, kind, disabled]);
+  }, [value, kind, disabled, minimum, maximum]);
 
   const commit = () => {
     const edit = session.current;
@@ -31,7 +33,7 @@ export function FinancialNumberInput({ accessibilityLabel, disabled = false, lab
       setDraft(display);
       return;
     }
-    const result = resolveFinancialDraft(value, edit.draft, kind);
+    const result = resolveFinancialDraft(value, edit.draft, kind, { minimum, maximum });
     setDraft(formatFinancialInput(result.value, kind));
     setError(result.error ?? '');
     if (!result.error && !Object.is(result.value, value)) onChange(result.value);

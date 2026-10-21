@@ -1,4 +1,5 @@
 export type FinancialInputKind = 'money' | 'percent' | 'whole';
+export interface FinancialInputBounds { minimum?: number; maximum?: number }
 
 function shiftDecimal(text: string, places: number): string {
   const [mantissa, exponent = '0'] = text.toLowerCase().split('e');
@@ -22,7 +23,7 @@ function canonicalDecimal(text: string): string {
   return integer + (significantFraction ? `.${significantFraction}` : '');
 }
 
-export function resolveFinancialDraft(value: number, draft: string, kind: FinancialInputKind): {
+export function resolveFinancialDraft(value: number, draft: string, kind: FinancialInputKind, bounds: FinancialInputBounds = {}): {
   value: number;
   error: string | null;
 } {
@@ -45,5 +46,14 @@ export function resolveFinancialDraft(value: number, draft: string, kind: Financ
   if (canonicalDecimal(String(parsed)) !== canonicalDecimal(decimal)) {
     return { value, error: 'Value exceeds supported precision.' };
   }
+  if (Object.is(parsed, value)) return { value, error: null };
+  const { minimum, maximum } = bounds;
+  const validBound = (bound: number | undefined) => bound === undefined || Number.isFinite(bound) && bound >= 0;
+  if (!validBound(minimum) || !validBound(maximum) || minimum !== undefined && maximum !== undefined && minimum > maximum) {
+    return { value, error: 'Input range is invalid.' };
+  }
+  const suffix = kind === 'percent' ? '%' : '';
+  if (minimum !== undefined && parsed < minimum) return { value, error: `Enter at least ${formatFinancialInput(minimum, kind)}${suffix}.` };
+  if (maximum !== undefined && parsed > maximum) return { value, error: `Enter at most ${formatFinancialInput(maximum, kind)}${suffix}.` };
   return { value: parsed, error: null };
 }
