@@ -1,0 +1,135 @@
+{
+  "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615",
+  "couplings": [
+    {
+      "name": "M-Y-Left-Branch",
+      "end": 0,
+      "faces": 16,
+      "innerRadius": 0.017997063349075033,
+      "outerRadius": 0.04000373907759622
+    },
+    {
+      "name": "M-Y-Left-Branch",
+      "end": 1,
+      "faces": 16,
+      "innerRadius": 0.017995387049882395,
+      "outerRadius": 0.04000317352574166
+    },
+    {
+      "name": "M-Y-Right-Branch",
+      "end": 0,
+      "faces": 16,
+      "innerRadius": 0.017997372952235725,
+      "outerRadius": 0.04000313280375261
+    },
+    {
+      "name": "M-Y-Right-Branch",
+      "end": 1,
+      "faces": 16,
+      "innerRadius": 0.01799595593402271,
+      "outerRadius": 0.04000226564837644
+    },
+    {
+      "name": "M-Main-Tube",
+      "end": 0,
+      "faces": 16,
+      "innerRadius": 0.015735822833426984,
+      "outerRadius": 0.03501390470542269
+    },
+    {
+      "name": "M-Main-Tube",
+      "end": 1,
+      "faces": 16,
+      "innerRadius": 0.01574090847427469,
+      "outerRadius": 0.03499928621114027
+    }
+  ],
+  "clearance": [
+    {
+      "name": "M-Chestpiece-Body@126",
+      "authoredGap": 0.04495900423311748,
+      "stageGap": 0.05126080984335335,
+      "closestPair": [
+        [
+          0.6450000071525573,
+          0.03500053565571182,
+          1.0700000000000003
+        ],
+        [
+          0.6000852126878696,
+          0.03496024081146208,
+          1.071992906458884
+        ]
+      ],
+      "formerPathRejectedAt": [
+        0.849504109591463,
+        0.057431948392339775,
+        1.2570566473790785
+      ]
+    },
+    {
+      "name": "M-Chestpiece-Rim@127",
+      "authoredGap": 0.03596011912071999,
+      "stageGap": 0.041000570622819234,
+      "closestPair": [
+        [
+          0.6000770152448821,
+          0.08775694091109403,
+          1.0716151255380477
+        ],
+        [
+          0.6360000038146971,
+          0.08800276378565584,
+          1.0700000000000003
+        ]
+      ],
+      "formerPathRejectedAt": [
+        0.8437932184625824,
+        0.08286243966931638,
+        1.2697441960742295
+      ]
+    },
+    {
+      "name": "M-Chestpiece-Diaphragm@128",
+      "authoredGap": 0.06692816208431664,
+      "stageGap": 0.07630933665657376,
+      "closestPair": [
+        [
+          0.6001407302622738,
+          0.08745214204411184,
+          1.0729858594257191
+        ],
+        [
+          0.6670000070333479,
+          0.08800044225686697,
+          1.0700000000000003
+        ]
+      ],
+      "formerPathRejectedAt": [
+        0.9039904460233893,
+        0.08286850154399872,
+        1.2290227629383264
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "name": "M-Y-Left-Branch",
+      "removedAnnularFaces": 16,
+      "standingContactRejected": true,
+      "restoredGap": 0.010911122398867991
+    },
+    {
+      "name": "M-Y-Right-Branch",
+      "removedAnnularFaces": 16,
+      "standingContactRejected": true,
+      "restoredGap": 0.011055707295591185
+    },
+    {
+      "name": "M-Badge-Rim",
+      "onlyInnerFacesReversed": 500,
+      "standingRimRejected": true,
+      "missingFaceRejected": true
+    }
+  ]
+}

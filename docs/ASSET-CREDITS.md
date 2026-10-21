@@ -93,12 +93,28 @@ Both manifests record builder, material-manifest and distributed model hashes.
 This is a textured candidate, not an exact poster reconstruction or final
 collection-wide photorealism approval.
 
+## Original Refined Medical
+
+Case, hollow frame, curved guards, latches/hinges, open handle, original emerald
+badge and connected stethoscope are authored in
+`apps/media/scripts/build-refined-medical.mjs`. Nine256px enamel/steel/rubber maps
+are procedural artistic approximations, not measured scans. Configuration,
+builder and distributed model hashes are recorded in the protected manifests.
+
+The matching poster was edited with Codex's built-in image generator. Its original
+edit input, unchanged generated PNG, exact prompt and hash chain are retained in
+`apps/media/sources/medical/`. The earlier red-cross emblem is replaced by an
+original emerald shield as a conservative clearance choice, not a legal verdict.
+No medical provider, humanitarian organization or device endorsement is implied.
+The model is original geometry, not an exact AI reconstruction of its poster or
+final collection-wide photorealism approval. See the Medical refinement contract.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other four base models remain locally authored 3D studies. They have not
+The other three base models (Personal, Recreation and Custom) remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

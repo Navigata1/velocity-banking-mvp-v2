@@ -1,0 +1,36 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (200)
+prune: Removed types... Accessor (100)
+{"jsonBytes":85068,"nodes":131,"accessors":172,"buffers":[{"byteLength":424024},{"byteLength":768172,"extensions":{"EXT_meshopt_compression":{"fallback":true}}}],"largestMeshes":[{"name":"","triangles":2080},{"name":"","triangles":1792},{"name":"","triangles":1536},{"name":"","triangles":1248},{"name":"","triangles":1200},{"name":"","triangles":1024},{"name":"","triangles":1024},{"name":"","triangles":1024}]}
+{"triangles":26104,"meshes":50,"textures":[{"name":"M-Enamel-Color","bytes":1146},{"name":"M-Enamel-Normal","bytes":9414},{"name":"M-Enamel-Roughness","bytes":1462},{"name":"M-Steel-Color","bytes":1098},{"name":"M-Steel-Normal","bytes":6360},{"name":"M-Steel-Roughness","bytes":2016},{"name":"M-Rubber-Color","bytes":1144},{"name":"M-Rubber-Normal","bytes":9432},{"name":"M-Rubber-Roughness","bytes":1446}],"bytes":509120,"collection":10364342}
+Refined Medical: 26104 unique triangles,9 maps,509120 bytes; public10364342 bytes.
+PASS identical Medical model regeneration
+Medical poster revision2: 130728 bytes, SHA256 d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1
+PASS identical Medical poster regeneration
+car: preserving imported refined asset
+house: preserving imported refined asset
+land: preserving imported refined asset
+creditCard: preserving imported refined asset
+studentLoan: preserving imported refined asset
+medical: preserving imported refined asset
+personal: 95 parts, 56988 triangles, 567 KiB
+recreation: 32 parts, 28656 triangles, 872 KiB
+custom: 81 parts, 45976 triangles, 255 KiB
+vault: preserving imported refined asset
+PASS protected full model rebuild
+car: 163 KiB
+house: 239 KiB
+land: 394 KiB
+creditCard: 110 KiB
+studentLoan: 336 KiB
+personal: 292 KiB
+recreation: 139 KiB
+custom: 142 KiB
+vault: 168 KiB
+PASS protected full poster rebuild
+Packaged 10 verified heroes in C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-medical\package-proof
+PASS real 40-file art/poster/model/video package and captured manifest hashes

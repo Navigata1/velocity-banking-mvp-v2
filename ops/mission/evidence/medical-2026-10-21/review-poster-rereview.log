@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-10-21T05:49:53.032Z",
+  "filesystem": "virtual-only fixtures; only this permitted scratch log written",
+  "results": [
+    {
+      "name": "incoming-revisions-reject-before-lock-or-output",
+      "status": "PASS",
+      "cases": 13
+    },
+    {
+      "name": "stored-revisions-all-records-before-output",
+      "status": "PASS",
+      "cases": 22,
+      "unrelatedRecordsIncluded": true
+    },
+    {
+      "name": "legacy-undefined-revision",
+      "status": "PASS",
+      "missingRevisionMeansOne": true,
+      "downgradeFromTwoRejected": true
+    },
+    {
+      "name": "publisher-snapshot-still-preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "queued-publisher-rechecks-revision",
+      "status": "PASS"
+    },
+    {
+      "name": "package-all-payload-and-manifest-snapshots",
+      "status": "PASS",
+      "capturesAndDeliveries": 7,
+      "pathsActuallyMutated": 7,
+      "allReadsAndWritesLocked": true,
+      "singleReadPerPayloadAndManifest": true
+    },
+    {
+      "name": "package-rejects-corrupt-source-poster-model-video",
+      "status": "PASS",
+      "cases": 4,
+      "capturedManifestNotPublishedOnFailure": true,
+      "limit": "earlier individual output files can remain; no collection transaction is claimed"
+    },
+    {
+      "name": "package-lexical-containment-retained",
+      "status": "PASS",
+      "cases": 4,
+      "limit": "realpath/symlink/junction containment not established"
+    },
+    {
+      "name": "package-and-publisher-use-same-existing-lock",
+      "status": "PASS",
+      "packageRevision": 2,
+      "laterLiveRevision": 3,
+      "packagePosterMatchesCapturedRecord": true
+    },
+    {
+      "name": "review-source-digests",
+      "status": "PASS",
+      "sha256": {
+        "prepare-medical-poster.mjs": "c791927f4e3a74714e5bcf6fd4357266b3c8b33953d65e164ccd84ee4a107584",
+        "build-medical-poster.mjs": "7d5acc78349e38b3bb315f0b4948a39181fe91064354a3d62483c3f458feef78",
+        "hero-poster-publication.mjs": "1620b28d99bfb14e4f52b16c80b4926e59bc94648262b6492fe275f84309d989",
+        "prepare-hero-posters.mjs": "1442c2f8587d1df2355f746df09bb932152910cac7b0841ed274151a88098857",
+        "package-hero-collection.mjs": "d22965484de8ba7c423ecf5b6a187c63dbb3729e5d42442ff119294b074a127e",
+        "medical-poster.test.mjs": "d8f0068cffa701aa45692fb189ec41c6167e10c568213cadcd2b9ffa675ea125",
+        "refined-hero-record.mjs": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b"
+      }
+    }
+  ]
+}

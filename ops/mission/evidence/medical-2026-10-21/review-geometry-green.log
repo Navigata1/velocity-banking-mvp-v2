@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: Medical replaces the study with protected original geometry and verifiable source provenance
+ok 1 - Medical replaces the study with protected original geometry and verifiable source provenance
+  ---
+  duration_ms: 31.2182
+  type: 'test'
+  ...
+# Subtest: Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+ok 2 - Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+  ---
+  duration_ms: 63.2914
+  type: 'test'
+  ...
+# Subtest: Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+ok 3 - Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+  ---
+  duration_ms: 204.63
+  type: 'test'
+  ...
+# Subtest: Medical handle is an arched tube with an actual open aperture and attached grip and bases
+ok 4 - Medical handle is an arched tube with an actual open aperture and attached grip and bases
+  ---
+  duration_ms: 323.0942
+  type: 'test'
+  ...
+# Subtest: Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+ok 5 - Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+  ---
+  duration_ms: 77.4496
+  type: 'test'
+  ...
+# Subtest: Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+ok 6 - Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+  ---
+  duration_ms: 575.6901
+  type: 'test'
+  ...
+# Subtest: Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+ok 7 - Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+  ---
+  duration_ms: 24.0592
+  type: 'test'
+  ...
+# Subtest: Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+ok 8 - Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+  ---
+  duration_ms: 1694.4773
+  type: 'test'
+  ...
+# Subtest: Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+ok 9 - Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+  ---
+  duration_ms: 105.9155
+  type: 'test'
+  ...
+# Subtest: Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+ok 10 - Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+  ---
+  duration_ms: 72.7391
+  type: 'test'
+  ...
+# Subtest: Medical contact verification rejects concentric open tube skins without touching surfaces
+ok 11 - Medical contact verification rejects concentric open tube skins without touching surfaces
+  ---
+  duration_ms: 8.7304
+  type: 'test'
+  ...
+# Subtest: Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+ok 12 - Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+  ---
+  duration_ms: 18.6615
+  type: 'test'
+  ...
+# Subtest: Medical badge rim is closed and outward with visible aperture-facing inner walls
+ok 13 - Medical badge rim is closed and outward with visible aperture-facing inner walls
+  ---
+  duration_ms: 25.4484
+  type: 'test'
+  ...
+# Subtest: Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+ok 14 - Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+  ---
+  duration_ms: 30.7384
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3512.7986
