@@ -84,13 +84,19 @@
   },
   {
     "id": "medical",
-    "bytes": 365016,
-    "meshes": 15,
-    "triangles": 7772,
-    "sha256": "2c0dd40ddac70000739d5e4b6956f1686e7b6f4e72886d3fd44c011aaa6a1a70",
-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "quality": "refined-textured",
+    "bytes": 509120,
+    "meshes": 50,
+    "triangles": 26104,
+    "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615",
+    "sourceFile": "apps/media/scripts/build-refined-medical.mjs",
+    "sourceSha256": "b9618865492ef2a6f0f96341df4e415eeb894cd476f9108be31f81345f79c620",
+    "materialSourceSha256": "f62c9ef5fbedd69cea32f0ec87c6e79b6bf73eb85cc6c6e45e4ede8b44b0d021",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and authored procedural material sources",
+    "provenance": "Original hollow enamel case with separate lid/gasket, connected hardware and stethoscope, paired earbows and shaped chestpiece. Original emerald shield; no institutional emblem. Approximate PBR, not scans or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 1
+    "version": 2
   },
   {
     "id": "personal",

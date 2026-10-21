@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "created": "2026-10-21",
+  "resolution": 256,
+  "seed": 6841,
+  "grainCellSize": 8,
+  "purpose": "Original white enamel case, polished/brushed stainless hardware and black rubber stethoscope, with an original emerald shield badge.",
+  "surfaces": {
+    "enamelRoughness": 0.28,
+    "steelRoughness": 0.4,
+    "polishedSteelFactor": 0.6,
+    "rubberRoughness": 0.74,
+    "enamelNormalScale": 0.09,
+    "steelNormalScale": 0.14,
+    "rubberNormalScale": 0.15
+  },
+  "limitations": "All material fields, metal/dielectric response, roughness, clearcoat and micro-normal maps are authored procedural approximations, not photographed scans or measured medical product materials. The original mesh is separately authored, not an exact poster reconstruction or a real certified medical device. No institutional endorsement or financial result is represented."
+}
