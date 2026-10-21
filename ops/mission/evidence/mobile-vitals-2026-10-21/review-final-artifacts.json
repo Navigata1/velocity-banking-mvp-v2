@@ -1,0 +1,245 @@
+{
+  "generated": "2026-10-21T10:44:52.929Z",
+  "files": [
+    {
+      "name": "review-final-desktop-1440.json",
+      "bytes": 32978,
+      "sha256": "c51898438bf768ed097e00e6632199739ad08c1b1ee18ccd07c3fcd0d2d34f24"
+    },
+    {
+      "name": "review-final-desktop-1440.png",
+      "bytes": 385623,
+      "sha256": "c6cd8ed46c498c49ce665b5263dc2b87dd36d736a4dec5f234ca2c6478ee3b78"
+    },
+    {
+      "name": "review-final-evidence.json",
+      "bytes": 736910,
+      "sha256": "724e88057b8d50c0e4cd0d27ee7910aae4e674ee2ba011b9c490f9c08e7ad659"
+    },
+    {
+      "name": "review-final-house-375.json",
+      "bytes": 31209,
+      "sha256": "ec8c0ecbd2df50915d97efe0b3501a6b82f18ae9bfa333dc4b843668c52592ed"
+    },
+    {
+      "name": "review-final-house-375.png",
+      "bytes": 120961,
+      "sha256": "2dbe91505f88eea2f901985fcf1651f476708beab923e78fbabb16844031e3f8"
+    },
+    {
+      "name": "review-final-income-edit-zero.json",
+      "bytes": 32660,
+      "sha256": "1b8524c76c24477ed57ccb56c0024b6c080d119d1ce1d20b0915872ff2b5e1ae"
+    },
+    {
+      "name": "review-final-income-edit-zero.png",
+      "bytes": 128324,
+      "sha256": "302a8e9c9e876a35496596a31c3680340555515d97c9e7c28b1c7e17faa7f33f"
+    },
+    {
+      "name": "review-final-mutant-ancestor-clip.json",
+      "bytes": 33253,
+      "sha256": "b6f53157b2c2a5ff4eecc23766e8c5ce32606bfaf084726e2d793156cd5fde61"
+    },
+    {
+      "name": "review-final-mutant-ancestor-clip.png",
+      "bytes": 117610,
+      "sha256": "7606d54fa67671024da459bfb04ff00fea51c25aa6c588a2d3c5bfb535ede3fb"
+    },
+    {
+      "name": "review-final-mutant-ancestor-opacity.json",
+      "bytes": 31660,
+      "sha256": "f094d84d635b7703fb5f71dc9103a1c28163d8eb1eb42a3d5eb3bf63a3aa2a55"
+    },
+    {
+      "name": "review-final-mutant-ancestor-opacity.png",
+      "bytes": 118991,
+      "sha256": "ac717564cd195a1fccaeff650e9106d735688d832b79a95031a9222854b98fd3"
+    },
+    {
+      "name": "review-final-mutant-empty-value.json",
+      "bytes": 27743,
+      "sha256": "3b84c539b60b5529e9b9a28c8efeb6ea71351824c292de294071f7b03d7d56c8"
+    },
+    {
+      "name": "review-final-mutant-empty-value.png",
+      "bytes": 120068,
+      "sha256": "fc4531d4d5d101579d95228a26e2f12e9d9842aef6e16ca5b8800f5546abb1e7"
+    },
+    {
+      "name": "review-final-mutant-forced-currency-chop.json",
+      "bytes": 32018,
+      "sha256": "ec292542d75631cfcf4cb695e8644da8f60586434c12b4606256a52637d6cd9a"
+    },
+    {
+      "name": "review-final-mutant-forced-currency-chop.png",
+      "bytes": 117834,
+      "sha256": "1dce1d0647a1907379c8b539063a0031de935b6513f80932cc48f23d3327823e"
+    },
+    {
+      "name": "review-final-mutant-hero-offscreen.json",
+      "bytes": 31347,
+      "sha256": "4f5951bac461095638e85598767e743e8b7de38385aa66f6b175a264003405e1"
+    },
+    {
+      "name": "review-final-mutant-hero-offscreen.png",
+      "bytes": 37226,
+      "sha256": "f17134aef5a4c06ead05944d918f5b856a0f76e1195ae2c26ddb0c21beb3aa08"
+    },
+    {
+      "name": "review-final-mutant-hidden-next-move.json",
+      "bytes": 31792,
+      "sha256": "e935c535f64251af30f367eeea7606a34e96dd9e42851150cd86adef2abad039"
+    },
+    {
+      "name": "review-final-mutant-hidden-next-move.png",
+      "bytes": 120144,
+      "sha256": "c632ba5cae9a10fd2401353a2313c16221df23cb0a1731707bb35d61916d99b3"
+    },
+    {
+      "name": "review-final-mutant-label-value-collision.json",
+      "bytes": 31429,
+      "sha256": "6cc366c8892b0854dc6d42f3ee9e60144b30a3e726cb6b65c98e24f35a883f1f"
+    },
+    {
+      "name": "review-final-mutant-label-value-collision.png",
+      "bytes": 120845,
+      "sha256": "2ecd1644bc51d8b6b549fefae48bdd9d07017abdfe2b16b5fc91072128ac9af4"
+    },
+    {
+      "name": "review-final-mutant-original-four-column.json",
+      "bytes": 31962,
+      "sha256": "3df23b3cf05156ec3892e746fa840d2c262d3ee460374a611d8a3b27b7f28cb0"
+    },
+    {
+      "name": "review-final-mutant-original-four-column.png",
+      "bytes": 122004,
+      "sha256": "f3bbc2710e770c11d940ea6233c83a4dc9bb03993b2aabc35d06fa997092fd06"
+    },
+    {
+      "name": "review-final-mutant-translated-label.json",
+      "bytes": 31308,
+      "sha256": "e9c3c4803249acd5d79276eeea080d3ab6a4761731dbe104bbf47fed4efa14cb"
+    },
+    {
+      "name": "review-final-mutant-translated-label.png",
+      "bytes": 121029,
+      "sha256": "16b6ed5ac9a0ebee68fd9c170e721e828e5721882a7b3f3e51f279db1be6419d"
+    },
+    {
+      "name": "review-final-mutant-value-opacity.json",
+      "bytes": 31775,
+      "sha256": "7b6e52d2f4b74b0714dc53d6326c29688da85758b154519a4f1d387b9d8d72c3"
+    },
+    {
+      "name": "review-final-mutant-value-opacity.png",
+      "bytes": 120144,
+      "sha256": "c632ba5cae9a10fd2401353a2313c16221df23cb0a1731707bb35d61916d99b3"
+    },
+    {
+      "name": "review-final-mutant-vertical-currency-clip.json",
+      "bytes": 31975,
+      "sha256": "e5c150e50ae9af37dd7c6931976a2d5325093b6d12223212af69b5f3a6e3c852"
+    },
+    {
+      "name": "review-final-mutant-vertical-currency-clip.png",
+      "bytes": 120182,
+      "sha256": "7c4e6116a384434778e19d915a9ebb47b678411e4dd23deab63fc45cbe62d38a"
+    },
+    {
+      "name": "review-final-mutant-vertical-one-pixel.json",
+      "bytes": 31963,
+      "sha256": "0aa2e9f2c17c7a91e20f59866207040f176bd1da16c543e0978b851c14d223ea"
+    },
+    {
+      "name": "review-final-mutant-vertical-one-pixel.png",
+      "bytes": 120068,
+      "sha256": "fc4531d4d5d101579d95228a26e2f12e9d9842aef6e16ca5b8800f5546abb1e7"
+    },
+    {
+      "name": "review-final-negative-280.json",
+      "bytes": 33819,
+      "sha256": "98df1b1eae6255a3b70aecf30845946af5af147d979d053aea373376731a0e26"
+    },
+    {
+      "name": "review-final-negative-280.png",
+      "bytes": 44849,
+      "sha256": "136f3dbc5e5193d73caba3358a543f8049bbadd35fca73b292fc5b67cf96d8a0"
+    },
+    {
+      "name": "review-final-oracle-source.txt",
+      "bytes": 3630,
+      "sha256": "4deb0b01f0ca05f9569b9f6e81af0ab2f782dc0ef355a2c7b0f9327b5a07b8fe"
+    },
+    {
+      "name": "review-final-pin-check.cjs",
+      "bytes": 2474,
+      "sha256": "bb9e810f9227e9fa42277f650c00dd74be8bb7f43e617dede6a6399f47dfd870"
+    },
+    {
+      "name": "review-final-pin-check.json",
+      "bytes": 1252,
+      "sha256": "2e565fdcfe0bc39848c83e69d20d5512e550d98465a53482fae24958b539b3d0"
+    },
+    {
+      "name": "review-final-probe.cjs",
+      "bytes": 18285,
+      "sha256": "eb0a253749a668eb27017d0857cb3e715d690ccc76979f759c60b7abe7ddb0d6"
+    },
+    {
+      "name": "review-final-probe.log",
+      "bytes": 5025,
+      "sha256": "27f5ef236871b65a9cb071c7614052c310ecf1b2588cf73306aacac37f057bb5"
+    },
+    {
+      "name": "review-final-report.md",
+      "bytes": 7975,
+      "sha256": "f1a711b33964f240668fea86d6de653067ba5b6037813dd3223ac8a5f1ca1711"
+    },
+    {
+      "name": "review-final-short-375.json",
+      "bytes": 31209,
+      "sha256": "1926235ce98ef63a6d01395621b790f76628f84744b2444c30f203ae798fa770"
+    },
+    {
+      "name": "review-final-short-375.png",
+      "bytes": 78212,
+      "sha256": "3e38345a2e6a8a84c1536a509d5717b32a6752ea454883662a58e3d8b36530ea"
+    },
+    {
+      "name": "review-final-subcent-280.json",
+      "bytes": 27953,
+      "sha256": "7ef3e1a4e2e9449d0667f6140f78b95f19c58e57d59eea7ac7db23406f011b17"
+    },
+    {
+      "name": "review-final-subcent-280.png",
+      "bytes": 82670,
+      "sha256": "0683eaa0ecfdf716fd399db2eb16e307d924e923a9a42b2054d608922379fd14"
+    },
+    {
+      "name": "review-final-threshold-18.json",
+      "bytes": 29914,
+      "sha256": "0662f396d09e5fa8913faf1c13b688d07595d9f6d86bf846928ee83131ccf7ed"
+    },
+    {
+      "name": "review-final-threshold-18.png",
+      "bytes": 83429,
+      "sha256": "6ba40cff55f107b1c77027d120210f4e33c6fe615cbb0dcd499d8da54d7f80f5"
+    },
+    {
+      "name": "review-final-threshold-19.json",
+      "bytes": 30119,
+      "sha256": "5bcee7661a9b6db6b6dc19e5bf4e1556b2f039726a4f0f988431f10cfdd2bffd"
+    },
+    {
+      "name": "review-final-threshold-19.png",
+      "bytes": 83261,
+      "sha256": "331e6f9d1aeb5e165494f7e43aba0a8e96280b1e38fb8c5e1cbb228f4cf15fbc"
+    },
+    {
+      "name": "review-final-working.diff",
+      "bytes": 13652,
+      "sha256": "23b83f74400f407407a2875ae991dc19e7c8e682a6aedad8187e5a5425d6eccd"
+    }
+  ]
+}

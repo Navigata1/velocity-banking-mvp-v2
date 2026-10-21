@@ -1,0 +1,10 @@
+AssertionError [ERR_ASSERTION]: vital layout oracle accepted broken styles: [{"kind":"hidden-value","rejected":false},{"kind":"invisible-value","rejected":false},{"kind":"hidden-ancestor","rejected":false},{"kind":"vertical-clip","rejected":false},{"kind":"ancestor-clip","rejected":false},{"kind":"label-collision","rejected":false}]
+    at checkVitalOracleControls (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:105:10)
+    at async C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:209:55 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

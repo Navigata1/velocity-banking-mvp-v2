@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T10:03:12Z",
-    "sessionCount": 18
+    "updated": "2026-10-21T10:50:20.399Z",
+    "sessionCount": 19
   },
   "policies": {
     "merge": "review",
@@ -46,6 +46,14 @@
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
           "notes": "Exact-SHA verification is established:14ad261 passed both complete CI runs39508261387/39508267033 including real SQL, Vercel and hosted checks. Receipt: PR256 issuecomment-6303443438. Each subsequent push needs its own standing gate. No production promotion."
+        },
+        {
+          "id": "R0-T3",
+          "title": "Restore readable narrow-screen dashboard vitals",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "notes": "Three CSS-line implementation4fbcf55 and bounded independent re-review complete locally.18 workflows/four responsive probes/seven DOM negative controls retain exact values, all four vitals, hero hint and saved inputs. Original /day, hidden/clipped/collision and empty-output REDs retained. Local348/media145/27stills/all-model/88 workflow gates pass. Await both complete exact-head CI events and hosted88/routes/model/poster proof; not full accessibility/device or production approval."
         }
       ],
       "gates": [
@@ -54,27 +62,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/custom-2026-10-21/web-tests.log",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/UI/studio/camera/timing/dependency paths and nine baseline model records/bytes plus all ten posters remain unchanged from verified8e2f25e. Only Custom geometry/configuration/contracts change. New exact-head CI/hosted proof required. Local preflight, not production approval."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/web-tests.log",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "348 main regressions/reference lanes pass. Three mobile CSS substitutions preserve calculations, scenarios, native/persistence, assets/studio/camera/motion/dependencies/SQL/CI. Two obsolete exact-four-column SOURCE assertions replaced by actual browser token/first-viewport/hero checks, not numeric waivers.285 source fingerprints protect all other source bytes; all ten models/posters/videos unchanged. Local preflight; new exact-head CI required."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/custom-2026-10-21/routes.log",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "Seven HTTP/rendered routes and local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass at unchanged assertions. Numeric inputs include280/375/1264/1440. Previous8e2f25e native49 executions verified; no new local native bundle/device rerun for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/routes.log",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "Seven HTTP/rendered routes and local Dashboard18/Simulator16/Vault20/Portfolio24/portability6/input4=88 workflows pass. Dashboard adds280/375/1440 plus four768/1264 boundary probes and seven negative controls. Prior caefd80 native49 verified; no new local native/device claim. Both complete final-head CI events and hosted88/routes must repeat."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6312277013",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "Previous8e2f25ef6b81ffc65b9f96644170834c511078d3 freshly verified: complete push39572136041/PR39572140246 attempt1,129 media/27stills/348 regressions/full native49 executions/contracts, SQL63 twice/event, exact READY preview and hosted82/routes/all ten GLB/poster hashes. Receipt6312277013 and205-file Desktop manifest verified.02f3137 remains failed/unverified. Custom needs both new final-head complete pipelines, exact preview and hosted82/routes/all ten model/poster hashes. No report-only push loop or production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6313685208",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "Previous caefd8086180513b3fb6c1cf85492174996a437b freshly verified: complete push39581976729/PR39581984357 attempt1,145 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event, exact READY preview/hosted82/routes/all ten GLB/poster hashes. Receipt6313685208 and198-file Desktop manifest match;1550 baseline checks are not new application tests. New mobile-vital checkpoint needs both complete final-head pipelines and hosted88/routes/all model/poster hashes.02f3137 remains failed/unverified. No report-only push loop or production approval."
         }
       ]
     },
@@ -124,27 +132,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/custom-2026-10-21/media-check.log",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "145 media contracts and27 fresh Remotion stills pass.16 Custom cases inspect actual maps/contacts/assembled bores/clearances/lens/normals/UVs/live locked budgets; independent findings reproduced RED and fixed. Separate source/video preservation adversaries now reject mutations. Nine other models/all ten posters and shared studio unchanged. Ten textured candidates; final all-ten art approval stays open."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/media-check.log",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "145 media contracts and27 fresh stills pass. All ten model/poster records/bytes, source material lineage, vendor copies and shared studio remain unchanged. Custom16 and prior geometry/publication tests retained. This slice fixes mobile typography only; ten textured candidates are not final photoreal approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/custom-2026-10-21/heroes.log",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "All ten heroes pass1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate network/texture fallbacks. Custom changes; nine model records/bytes and all ten posters unchanged. Strict Three passes original700/300ms limits; batch began during final package tail, after media/video jobs. Earlier timing/DOM failures retained, not declared diagnosed. Final hosted proof mandatory."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/heroes.log",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "All ten heroes pass1440/375 geometry/movement/framing/loading/reduced-motion and texture/network fallbacks with the new mobile vital layout. Strict Three original700/300ms limits pass after heavy media and independent browser jobs are terminal. No asset/camera/motion changes or assertion/deadline waivers. Prior timing causes unresolved; hosted proof mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/custom-2026-10-21/turntable-verification.json",
-          "lastRun": "2026-10-21T10:03:12Z",
-          "notes": "Custom1080p/30fps nine-second turn rebuilt after geometry correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/turn-verification.log",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "All ten unchanged1080p/30fps nine-second videos rechecked for nonblank/movement/closure/rest and model/vendor hashes. No model, video, poster, studio/camera/timing or financial source rebuilt/changed in this typography slice. Final collection art approval remains open."
         }
       ]
     },
@@ -239,9 +247,9 @@
           "title": "Rendered daily estimates and Dashboard saved-value preservation",
           "command": "npm --prefix apps/web run smoke:dashboard:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/dashboard-verification.json",
-          "lastRun": "2026-10-21T00:08:00Z",
-          "notes": "12 actual Chrome cases at1440px/375px cover exact cent/sub-cent/cleared/large text, independent-cent mismatch, amount containment, desktop assumptions, normalized saved inputs, income edit/restore/navigation and seven oversized currency no-op edits. Actual100m->10m red observed before correction. CI retains failure artifacts. Not complete accessibility, native-device or lender approval."
+          "evidence": "ops/mission/evidence/mobile-vitals-2026-10-21/dashboard-verification.json",
+          "lastRun": "2026-10-21T10:50:20.399Z",
+          "notes": "18 real Chrome workflows at280/375/1440 preserve exact daily estimates, independent rounding, saved inputs, edit/restore/navigation and seven oversized no-ops. Four768/1264 boundary probes and seven actual DOM controls guard hidden/clipped/overlapping/empty values. Original /day RED and independent12-mutant/eight-positive bounded re-review retained. Three CSS-line fix; no engine/scenario/lender change. Final exact-head hosted proof required."
         }
       ]
     },
@@ -490,9 +498,9 @@
   ],
   "risks": [
     {
-      "title": "Mobile vital labels need a focused readability pass",
+      "title": "Viewport checks are not complete accessibility approval",
       "severity": "medium",
-      "note": "Fresh375px Personal context capture shows the compact Interest Burn value breaking within day. No overlap or calculation change; existing four-column mobile vitals remain untouched in this asset-only slice. Fix token wrapping/responsive tracks separately with280/375px rendered numeric/large-value tests. Evidence:personal-2026-10-21/preview-375-context.png."
+      "note": "Recorded375px /day fragmentation is corrected after actual RED. Two-column mobile vitals and fixed12/14px content-based type retain exact values.18 workflows/four boundary probes/seven negative controls and bounded independent re-review pass. Arbitrary fonts, zoom, locale-complete screen readers/keyboard and physical-device approval remain separate gates. See docs/mobile-vitals-contract-2026-10-21.md."
     },
     {
       "title": "Ten textured candidates still require final art review",
@@ -507,7 +515,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "8e2f25e passed both complete pipelines39572136041/39572140246 attempt1,129 media/27stills/348 regressions/native49/full contracts, SQL, READY Vercel and hosted82/routes; receipt6312277013.02f3137 remains failed/unverified. Custom needs both fresh full events and hosted82/routes/all-ten model/poster hashes. No prior receipt authorizes production."
+      "note": "caefd80 passed both complete pipelines39581976729/39581984357 attempt1,145 media/27stills/348 regressions/native49/full contracts/SQL, READY preview and hosted82/routes; receipt6313685208. New mobile-vital checkpoint needs both fresh complete events and hosted88/routes/all ten model/poster hashes. Prior hero PR stage was slower but passed unchanged; no rerun or gate relaxation. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -813,19 +821,19 @@
     }
   ],
   "resume": {
-    "activePhase": "R1",
+    "activePhase": "R2",
     "nextActions": [
-      "Previous8e2f25ef6b81ffc65b9f96644170834c511078d3 freshly verified: both full events39572136041/39572140246 attempt1,129 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6312277013 and205-file Desktop manifest folded into substantive Custom work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/all ten GLB/poster hashes. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
+      "Previous caefd8086180513b3fb6c1cf85492174996a437b verified fresh: both complete events39581976729/39581984357 attempt1,145media/27stills/348regressions/native49/fullcontracts/SQL63 twice/event, exact READY/hosted82/routes/model/poster hashes; receipt6313685208 and198 Desktop files.1550 baseline checks are not new app tests. Folded into substantive mobile readability fix; require both new final-head complete events and hosted88/routes/all10model/poster hashes. Append postflight, fold into next substantive R2 work; no report-only push loop or production promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
-      "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
+      "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/seven negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
       "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
       "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
-      "Perform final art/reference review of all ten textured candidates, not automatic photoreal approval. Preserve publication locking, source lineage/revisions, validated Buffer packaging, original identity, real geometry and per-model/aggregate caps. Re-run all-model web/video gates after shared lighting edits. Next focused implementation is mobile vital token wrapping, then R2/R3 scenario/lender coherence.",
+      "All ten textured candidates still need full-size/all-angle material/art review; preserved artwork is the default. Custom checkpoint single-frame side-by-side triage remains candidly illustrative in places. Do not relabel this as photoreal approval or restart broad redesign. Preserve all source lineage, publication locking, validated Buffer packaging and caps. Mobile readability is implemented; next substantive work R2/R3 shared scenarios/common-date wealth/lender/calendar.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
-      "Fix the newly recorded375px vital-value token wrapping in a separate focused UI slice: preserve all four vitals and numeric semantics, add280/375px rendered cent/sub-cent/large-value coverage, no engine or broad layout redesign. See Personal preview-375-context.png.",
+      "Preserve the corrected mobile vital layout and all18 workflows/four responsive probes/seven actualDOM negative controls. Original /day, hidden/clipped/collision and empty-output REDs remain evidence. Arbitrary-font, zoom/locale/screen-reader and physical-device QA are not replaced by bounded desktop/phone browser success.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
       "Read docs/backend-isolation-contract-2026-10-20.md and preserve the standing real SQL gate. Actual 63-assertion runs now pass twice on both events. Next backend work is dedicated cloud association, current-provider patch/version alignment, complete six-table negative coverage and isolated backup/account recovery. Never choose a cloud project by name alone or treat functional CI as managed-backup proof.",
       "Use domain-readiness.json: interestshield.app/www are already verified on the app project with working Cloudflare DNS and HTTPS. Do not re-add or rewrite DNS. Verify the final restored deployment SHA, Production SITE_URL override and custom-domain browser smoke only when release gates pass.",

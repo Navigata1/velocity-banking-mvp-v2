@@ -1,0 +1,201 @@
+diff --git a/apps/web/scripts/engine-regression-tests.cjs b/apps/web/scripts/engine-regression-tests.cjs
+index ec2bf16..de561fe 100644
+--- a/apps/web/scripts/engine-regression-tests.cjs
++++ b/apps/web/scripts/engine-regression-tests.cjs
+@@ -8439,7 +8439,7 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
+   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
+ 
+   assert.ok(source.includes('data-testid="dashboard-mobile-vitals"'), 'expected a stable mobile vitals hook');
+-  assert.ok(source.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected mobile vitals to show all four cards in one compact row');
++  // Token fit and first-screen visibility are exercised by smoke-dashboard-interest.cjs.
+   assert.ok(source.includes('min-h-[82px]'), 'expected mobile vital cards to fit the first screen summary');
+   assert.ok(source.includes('data-testid="dashboard-mobile-money-loop-bridge"'), 'expected the Money Loop bridge to remain on the mobile first screen');
+   assert.ok(
+@@ -8492,7 +8492,6 @@ test('dashboard mobile vital cards keep coach copy available without first-scree
+   const mobileVitalsSource = source.slice(mobileVitalsStart, mobileBridgeStart);
+ 
+   assert.ok(mobileVitalsStart >= 0 && mobileBridgeStart > mobileVitalsStart, 'expected mobile vitals section before the mobile bridge');
+-  assert.ok(mobileVitalsSource.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected all four mobile vitals to fit in one row');
+   assert.ok(mobileVitalsSource.includes('min-h-[82px]'), 'expected mobile vital cards to reserve compact first-screen height');
+   assert.ok(!mobileVitalsSource.includes('line-clamp'), 'expected mobile vital captions not to be line-clamped');
+   assert.ok(!mobileVitalsSource.includes('truncate'), 'expected mobile vital captions not to be truncated');
+diff --git a/apps/web/scripts/smoke-dashboard-interest.cjs b/apps/web/scripts/smoke-dashboard-interest.cjs
+index 86421d2..bea2478 100644
+--- a/apps/web/scripts/smoke-dashboard-interest.cjs
++++ b/apps/web/scripts/smoke-dashboard-interest.cjs
+@@ -32,6 +32,95 @@ async function storedInputs(page) {
+   });
+ }
+ 
++async function vitalLayout(page, width) {
++  const prefix = width < 768 ? 'dashboard-mobile-vital-' : 'dashboard-vital-';
++  return page.locator(`[data-testid^="${prefix}"]`).evaluateAll((articles) => articles.map((article) => {
++    const [label, value] = article.querySelectorAll('p'), card = article.getBoundingClientRect();
++    const inspect = (element) => {
++      const text = element.textContent, box = element.getBoundingClientRect(), chars = [], clips = [];
++      let visible = true;
++      for (let ancestor = element; ancestor; ancestor = ancestor.parentElement) {
++        const style = getComputedStyle(ancestor), rect = ancestor.getBoundingClientRect();
++        visible &&= style.visibility === 'visible' && style.display !== 'none' && Number(style.opacity) >= 0.99;
++        clips.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom,
++          x: style.overflowX !== 'visible', y: style.overflowY !== 'visible' });
++      }
++      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
++      let node;
++      while ((node = walker.nextNode())) for (let offset = 0; offset < node.length; offset++) {
++        const range = document.createRange(); range.setStart(node, offset); range.setEnd(node, offset + 1);
++        const rect = range.getBoundingClientRect();
++        chars.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, height: rect.height });
++      }
++      const tokens = [...text.matchAll(/<?\$[\d,]+(?:\.\d+)?|\/day|[A-Za-z]+/g)].map((match) => {
++        const rects = chars.slice(match.index, match.index + match[0].length);
++        return { text: match[0], oneLine: rects.length > 0 && rects.every(r => r.height > 0 && Math.abs(r.top - rects[0].top) <= 1),
++          contained: rects.every(r => r.left >= Math.max(box.left, card.left) - 1 && r.right <= Math.min(box.right, card.right) + 1 &&
++            r.top >= Math.max(box.top, card.top) - 1 && r.bottom <= Math.min(box.bottom, card.bottom) + 1 &&
++            clips.every(c => (!c.x || (r.left >= c.left - 1 && r.right <= c.right + 1)) && (!c.y || (r.top >= c.top - 1 && r.bottom <= c.bottom + 1)))) };
++      });
++      return { text, tokens, visible, glyphTop: Math.min(...chars.map(r => r.top)), glyphBottom: Math.max(...chars.map(r => r.bottom)),
++        fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
++        fits: element.scrollWidth <= element.clientWidth + 1 };
++    };
++    return { id: article.dataset.testid, label: inspect(label), value: inspect(value),
++      inViewport: card.width > 0 && card.height > 0 && card.left >= -1 && card.right <= innerWidth + 1 && card.top >= -1 && card.bottom <= innerHeight,
++      width: card.width, height: card.height };
++  }));
++}
++
++function assertVitalLayout(layout, context) {
++  assert.equal(layout.length, 4, context + ': all four vitals remain visible');
++  assert.deepEqual(layout.map(v => v.label.text.trim()), ['Cash Flow', 'Interest Burn', 'Debt-Free ETA', 'Next Move']);
++  for (const vital of layout) for (const part of ['label', 'value']) {
++    assert.ok(vital.inViewport, context + ': all four vitals stay in the first viewport');
++    assert.ok(vital.label.glyphBottom <= vital.value.glyphTop + 1, context + ': label and value glyphs must not overlap');
++    const result = vital[part];
++    assert.ok(result.visible && result.fits && result.tokens.length > 0 && result.tokens.every(t => t.oneLine && t.contained),
++      `${context}: ${vital.id} ${part} must fit without splitting tokens: ${JSON.stringify(result)}`);
++    if (part === 'value') assert.ok(result.fontSize >= 12, context + ': value text stays readable');
++  }
++}
++
++async function checkVitalOracleControls(page) {
++  const before = await vitalLayout(page, 375), controls = [];
++  for (const kind of ['hidden-value', 'invisible-value', 'hidden-ancestor', 'vertical-clip', 'ancestor-clip', 'label-collision', 'empty-value']) {
++    const target = page.getByTestId(kind === 'hidden-value' ? 'dashboard-mobile-vital-next-move' : 'dashboard-mobile-vital-interest-burn');
++    const saved = await target.evaluate((article, kind) => {
++      const [label, value] = article.querySelectorAll('p');
++      const saved = { styles: [label, value, article, article.parentElement].map(el => el.getAttribute('style')), text: value.textContent };
++      if (kind === 'hidden-value') value.style.opacity = '0';
++      if (kind === 'invisible-value') value.style.visibility = 'hidden';
++      if (kind === 'hidden-ancestor') article.style.opacity = '0';
++      if (kind === 'vertical-clip') { value.style.height = '1px'; value.style.overflow = 'hidden'; }
++      if (kind === 'ancestor-clip') { article.parentElement.style.height = '1px'; article.parentElement.style.overflow = 'hidden'; }
++      if (kind === 'label-collision') label.style.transform = `translateY(${value.getBoundingClientRect().top - label.getBoundingClientRect().top}px)`;
++      if (kind === 'empty-value') value.textContent = '';
++      return saved;
++    }, kind);
++    try {
++      const layout = await vitalLayout(page, 375);
++      let rejected = false;
++      try { assertVitalLayout(layout, kind); } catch (error) {
++        if (!(error instanceof assert.AssertionError)) throw error;
++        rejected = true;
++      }
++      controls.push({ kind, rejected, layout });
++    } finally {
++      await target.evaluate((article, { saved, kind }) => {
++        const [label, value] = article.querySelectorAll('p');
++        [label, value, article, article.parentElement].forEach((el, i) => {
++          if (saved.styles[i] === null) el.removeAttribute('style'); else el.setAttribute('style', saved.styles[i]);
++        });
++        if (kind === 'empty-value') value.textContent = saved.text;
++      }, { saved, kind });
++    }
++    assert.deepEqual(await vitalLayout(page, 375), before, 'oracle controls must restore the real UI');
++  }
++  fs.writeFileSync(path.join(output, 'oracle-controls.json'), JSON.stringify(controls, null, 2) + '\n');
++  assert.ok(controls.every(c => c.rejected), 'vital layout oracle accepted broken styles: ' + JSON.stringify(controls.map(c => ({ kind: c.kind, rejected: c.rejected }))));
++}
++
+ (async () => {
+   let server, browser;
+   try {
+@@ -42,7 +131,7 @@ async function storedInputs(page) {
+     browser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
+     fs.mkdirSync(output, { recursive: true });
+     const receipts = [];
+-    for (const width of [1440, 375]) for (const scenario of scenarios) {
++    for (const width of [375, 280, 1440]) for (const scenario of scenarios) {
+       const domain = scenario.id === 'auto' ? 'car' : 'house';
+       const state = { activeDomain: domain, monthlyIncome: scenario.income ?? 8200, monthlyExpenses: scenario.expenses ?? 4700,
+         chunkAmount: scenario.chunk ?? 1000, chunkFrequency: 'weekly',
+@@ -121,7 +210,30 @@ async function storedInputs(page) {
+           while (n) { if (Number(getComputedStyle(n).opacity) < 0.99) return false; n = n.parentElement; }
+           return true;
+         });
++        await page.evaluate(() => window.scrollTo(0, 0));
+         await page.screenshot({ path: path.join(output, `${scenario.id}-${width}.png`), fullPage: true });
++        if (['house', 'auto', 'large-import'].includes(scenario.id)) {
++          await page.screenshot({ path: path.join(output, `${scenario.id}-${width}-viewport.png`) });
++        }
++        const layout = await vitalLayout(page, width), boundaries = [];
++        fs.writeFileSync(path.join(output, `${scenario.id}-${width}-layout.json`), JSON.stringify(layout, null, 2) + '\n');
++        assertVitalLayout(layout, `${scenario.id} ${width}px`);
++        const hero = await page.getByTestId('asset-hero').boundingBox();
++        const heroVisibleHeight = hero ? Math.min(hero.y + hero.height, 900) - Math.max(hero.y, 0) : 0;
++        assert.ok(heroVisibleHeight >= 48,
++          'readable vitals must leave a visible part of the asset hero in the first viewport');
++        if (width === 375 && scenario.id === 'house') await checkVitalOracleControls(page);
++        if (width === 1440 && ['house', 'large-import'].includes(scenario.id)) {
++          for (const boundaryWidth of [768, 1264]) {
++            await page.setViewportSize({ width: boundaryWidth, height: 900 });
++            const boundary = await vitalLayout(page, boundaryWidth);
++            fs.writeFileSync(path.join(output, `${scenario.id}-${boundaryWidth}-layout.json`), JSON.stringify(boundary, null, 2) + '\n');
++            await page.screenshot({ path: path.join(output, `${scenario.id}-${boundaryWidth}.png`), fullPage: true });
++            assertVitalLayout(boundary, `${scenario.id} ${boundaryWidth}px`);
++            boundaries.push({ width: boundaryWidth, vitals: boundary });
++          }
++          await page.setViewportSize({ width, height: 900 });
++        }
+         if (scenario.id === 'house') {
+           await changeIncome(8300); await changeIncome(8200);
+           await page.goto(`${origin}/simulator`, { waitUntil: 'networkidle' });
+@@ -133,7 +245,7 @@ async function storedInputs(page) {
+         assert.deepEqual(await storedInputs(page), before, 'edits/navigation must preserve all unrelated financial data');
+         assert.deepEqual(errors, [], 'no browser errors');
+         receipts.push({ scenario: scenario.id, width, value: scenario.value, caption: scenario.caption,
+-          bounds, savedInputsPreserved: true, editedAndNavigated: scenario.id === 'house',
++          bounds, layout, boundaries, heroVisibleHeight, savedInputsPreserved: true, editedAndNavigated: scenario.id === 'house',
+           noOpCurrencyFields: scenario.id === 'large-import' ? 7 : 0, errors });
+         console.log(`PASS Dashboard interest ${scenario.id} at ${width}px`);
+       } finally { await context.close(); }
+diff --git a/apps/web/src/app/page.tsx b/apps/web/src/app/page.tsx
+index 27f90b5..81f9d97 100644
+--- a/apps/web/src/app/page.tsx
++++ b/apps/web/src/app/page.tsx
+@@ -116,7 +116,7 @@ export default function Dashboard() {
+ 
+         <section
+           data-testid="dashboard-mobile-vitals"
+-          className="grid grid-cols-4 gap-1.5 md:hidden"
++          className="grid grid-cols-2 gap-1.5 md:hidden"
+           aria-label="Dashboard vitals"
+         >
+           {model.vitals.map((vital) => {
+@@ -125,7 +125,7 @@ export default function Dashboard() {
+               <article
+                 key={vital.id}
+                 data-testid={`dashboard-mobile-vital-${vital.id}`}
+-                className={`${classes.glass} ${style.card} min-h-[82px] rounded-xl border p-2`}
++                className={`${classes.glass} ${style.card} min-h-[82px] min-w-0 rounded-xl border p-2`}
+               >
+                 <div className="flex items-start justify-between gap-1">
+                   <p className={`text-[9px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
+@@ -133,7 +133,7 @@ export default function Dashboard() {
+                   </p>
+                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
+                 </div>
+-                <p className={`mt-1.5 text-sm font-bold leading-tight break-words ${style.value}`}>
++                <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
+                   {vital.value}
+                 </p>
+                 <p className="sr-only">

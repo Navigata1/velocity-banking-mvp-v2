@@ -1,0 +1,27 @@
+{
+  "started": "2026-10-21T10:35:35.772Z",
+  "command": "node .superpowers/sdd/2026-10-21-mobile-vitals/review-probe.cjs",
+  "browserPath": "Browser plugin not available; regular Playwright with explicit user Chrome authorization",
+  "head": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "initialHashes": {
+    "apps/web/src/app/page.tsx": "01211b504632c98c4fd951656a7b4c02362a4f0b56591e491675613fe9444297",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9c35fb5ad7850a10a7a15e295a925a5f741fe3ce00e31a8be8b3cc9c4e93a54d",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "oracleSha256": "13dfd2a38989c7b35e70945488de62d236f414d03384691f55befc6847ea42c1",
+  "scenarios": [],
+  "mutations": [],
+  "sourceScope": "exact original after reversing only the three stated substitutions",
+  "origin": "http://127.0.0.1:62151",
+  "serverPid": 5440,
+  "browser": "155.0.8059.85",
+  "failure": "locator.textContent: Error: strict mode violation: locator('h1') resolved to 2 elements:\n    1) <h1 class=\"jsx-1cba73b5a3420daf text-lg font-semibold text-white\">InterestShield</h1> aka getByTestId('primary-navigation').getByText('InterestShield')\n    2) <h1 class=\"mt-0.5 text-xl font-semibold md:text-2xl text-white\">House Dashboard</h1> aka getByRole('heading', { name: 'House Dashboard' })\n\nCall log:\n\u001b[2m  - waiting for locator('h1')\u001b[22m\n\n    at main (C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-mobile-vitals\\review-probe.cjs:136:104)",
+  "finalHashes": {
+    "apps/web/src/app/page.tsx": "01211b504632c98c4fd951656a7b4c02362a4f0b56591e491675613fe9444297",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9c35fb5ad7850a10a7a15e295a925a5f741fe3ce00e31a8be8b3cc9c4e93a54d",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "finalHead": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "finished": "2026-10-21T10:35:40.401Z",
+  "trackedUnchangedDuringReview": true
+}

@@ -20,6 +20,13 @@ See `docs/native-input-precision-contract-2026-10-20.md`. The new test-only canv
 phase diagnostics retain every deadline/assertion; they do not resolve the earlier
 reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 
+Mobile vitals now use a readable two-column layout with full values and fixed
+12/14px content-based type. The actual375px `/day` split was reproduced before
+three CSS substitutions.18 workflows/four responsive probes and seven real DOM
+negative controls preserve four vitals, a first-screen hero hint and saved inputs.
+No financial/scenario/asset/native/motion changes. See
+`docs/mobile-vitals-contract-2026-10-21.md`. Final accessibility/device gates remain.
+
 ## Delivered
 
 - Ten high-detail generated hero artworks, with original PNGs and optimized WebP posters.
@@ -130,25 +137,32 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
 
 ## Verification
 
-Custom local checkpoint:145 media contracts/27 fresh stills,348 web
+Mobile-vitals local checkpoint:145 media contracts/27 fresh stills,348 web
 regressions/reference lanes, lint/build, seven HTTP/rendered routes, all20 hero
-viewport checks/fallbacks, strict Three budgets and82 local calculation/portability
-cases pass. New Custom1080p turn and nine unchanged turns pass pixel/hash proof.
-Independent Custom review reproduced blocked assembled hinge bores, insufficient
+viewport checks/fallbacks, strict original Three budgets and88 local workflow/input
+cases pass. All ten unchanged turns pass fresh pixel/hash proof. Independent
+typography re-review closes hidden/clipped/collision/empty test-oracle findings:
+eight positive checkpoints and twelve actual DOM counterexamples pass bounded
+review. Its broad checksum exit from concurrent documentation-only edits is
+retained; executable pins/results were reconciled, not relabeled GREEN.
+Prior independent Custom review reproduced blocked assembled hinge bores, insufficient
 pin clearance, weak contact tests and lens corner normals, then cleared bounded
 fixes after RED/GREEN. A separate rebuild-harness review caught missing before/after
 source/video snapshots; genuine negative tests now reject both mutations. Earlier Medical publication
 and geometry fixes remain protected by their existing tests.
-Byte-identical/protected model/poster rebuilds, a real40-payload package and source fingerprints preserve prior
-financial/native/persistence/layout/camera/studio/timing/dependency behavior.
-Previous8e2f25e is remotely verified: complete push39572136041/PR39572140246
-attempt1, actual129 media/27stills/348 regressions/49 native executions, SQL63 twice
+The prior Custom checkpoint proved protected rebuilds/40-payload packaging.
+This typography slice changes no models/posters/videos;285 source fingerprints
+protect everything outside three declared UI/test files. Numeric financial
+assertions, native/persistence/studio/camera/motion/dependencies/SQL/CI are unchanged.
+Previous caefd80 is remotely verified: complete push39581976729/PR39581984357
+attempt1, actual145 media/27stills/348 regressions/49 native executions, SQL63 twice
 per event, READY Vercel and hosted82/routes/all ten served GLB/poster hashes.
-The205-file Desktop checkpoint was freshly reverified. Receipt:
-https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6312277013
-This new Custom
+The198-file Desktop checkpoint was freshly reverified.1550 baseline checks are
+verification checks, not newly executed app tests. Receipt:
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6313685208
+This new mobile-vital
 substantive checkpoint still requires both exact-head full pipelines, SQL,
-READY Vercel and hosted82/routes/all-ten-model/poster-byte proof before a postflight
+READY Vercel and hosted88/routes/all-ten-model/poster-byte proof before a postflight
 receipt. Source report remains preflight to avoid report-only push loops.
 
 - Next.js production build, TypeScript and ESLint passed.
@@ -170,9 +184,14 @@ receipt. Source report remains preflight to avoid report-only push loops.
   and the payoff list. A dedicated fixture proves Auto clears first while Mortgage
   remains current; focused independent review cleared the display-only correction.
 - All seven routes passed rendered desktop/mobile smoke.
-- Twelve new Dashboard browser cases at1440px/375px pass daily text/amount bounds,
+- Eighteen Dashboard browser workflows at280px/375px/1440px pass daily text/token bounds,
   cent mismatch, small/cleared/large amounts, desktop assumptions, saved-input
   preservation, income edit/restore/navigation and seven oversized currency no-ops.
+  Four768/1264 boundary probes and seven real DOM negative controls reject hidden,
+  clipped, overlapping and empty values. All four vitals and a hero hint stay in
+  the first viewport. Two obsolete exact-one-row source assertions were replaced
+  by rendered checks; all financial assertions remain. Final zoom/font/device QA
+  is not inferred from these bounded checks.
 - All ten heroes passed desktop and 375px mobile nonblank, framing and rotation checks.
 - Delayed loading and repeated mode selection passed at both widths; injected WebP
   decode rejection and network failure both preserve the artwork and release the stage.
@@ -183,8 +202,8 @@ receipt. Source report remains preflight to avoid report-only push loops.
 - Ten nine-second videos passed movement and return-to-start checks.
 - 145 media contracts pass, including16 Custom,15 Recreation,18 Personal,14 Medical geometry/seven poster-publication,
   ten Student Loan, nine Credit Card, nine Land and six House cases.
-  Existing HyperFrames/Remotion checks pass with27 fresh stills. Custom's turn
-  is rebuilt in this checkpoint; nine previous videos are unchanged/rechecked,
+  Existing HyperFrames/Remotion checks pass with27 fresh stills. All ten prior
+  videos are unchanged/rechecked in this typography checkpoint,
   with fresh movement/rest pixel proof and matching model/vendor hashes. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.

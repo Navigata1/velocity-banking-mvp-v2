@@ -1,0 +1,15 @@
+PASS Dashboard /
+PASS Simulator /simulator
+PASS Cockpit /cockpit
+PASS Portfolio /portfolio
+PASS Learn /learn
+PASS Settings /settings
+PASS Vault /vault
+> web@0.1.0 start
+> next start -H 0.0.0.0 -p 5000
+
+▲ Next.js 16.4.2
+- Local:         http://localhost:5000
+- Network:       http://0.0.0.0:5000
+✓ Ready in 224ms
+✓ Running next.config.ts took 49ms

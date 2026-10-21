@@ -1,0 +1,27 @@
+{
+  "started": "2026-10-21T10:36:14.227Z",
+  "command": "node .superpowers/sdd/2026-10-21-mobile-vitals/review-probe.cjs",
+  "browserPath": "Browser plugin not available; regular Playwright with explicit user Chrome authorization",
+  "head": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "initialHashes": {
+    "apps/web/src/app/page.tsx": "01211b504632c98c4fd951656a7b4c02362a4f0b56591e491675613fe9444297",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9c35fb5ad7850a10a7a15e295a925a5f741fe3ce00e31a8be8b3cc9c4e93a54d",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "oracleSha256": "13dfd2a38989c7b35e70945488de62d236f414d03384691f55befc6847ea42c1",
+  "scenarios": [],
+  "mutations": [],
+  "sourceScope": "exact original after reversing only the three stated substitutions",
+  "origin": "http://127.0.0.1:62580",
+  "serverPid": 24284,
+  "browser": "155.0.8059.85",
+  "failure": "page.waitForFunction: Timeout 12000ms exceeded.\n    at main (C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-mobile-vitals\\review-probe.cjs:131:18)",
+  "finalHashes": {
+    "apps/web/src/app/page.tsx": "01211b504632c98c4fd951656a7b4c02362a4f0b56591e491675613fe9444297",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9c35fb5ad7850a10a7a15e295a925a5f741fe3ce00e31a8be8b3cc9c4e93a54d",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "finalHead": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "finished": "2026-10-21T10:36:29.542Z",
+  "trackedUnchangedDuringReview": true
+}

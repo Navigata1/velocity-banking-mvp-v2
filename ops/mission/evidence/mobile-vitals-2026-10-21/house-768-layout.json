@@ -1,0 +1,201 @@
+[
+  {
+    "id": "dashboard-vital-cash-flow",
+    "label": {
+      "text": "Cash Flow",
+      "tokens": [
+        {
+          "text": "Cash",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "Flow",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 176,
+      "glyphBottom": 192,
+      "fontSize": 12,
+      "fits": true
+    },
+    "value": {
+      "text": "$3,500",
+      "tokens": [
+        {
+          "text": "$3,500",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 199,
+      "glyphBottom": 231,
+      "fontSize": 24,
+      "fits": true
+    },
+    "inViewport": true,
+    "width": 251,
+    "height": 343
+  },
+  {
+    "id": "dashboard-vital-interest-burn",
+    "label": {
+      "text": "Interest Burn",
+      "tokens": [
+        {
+          "text": "Interest",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "Burn",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 176,
+      "glyphBottom": 192,
+      "fontSize": 12,
+      "fits": true
+    },
+    "value": {
+      "text": "Est. $51.50/day",
+      "tokens": [
+        {
+          "text": "Est",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "$51.50",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "/day",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 199,
+      "glyphBottom": 231,
+      "fontSize": 24,
+      "fits": true
+    },
+    "inViewport": true,
+    "width": 251,
+    "height": 343
+  },
+  {
+    "id": "dashboard-vital-debt-free-eta",
+    "label": {
+      "text": "Debt-Free ETA",
+      "tokens": [
+        {
+          "text": "Debt",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "Free",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "ETA",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 519,
+      "glyphBottom": 535,
+      "fontSize": 12,
+      "fits": true
+    },
+    "value": {
+      "text": "Stabilize first",
+      "tokens": [
+        {
+          "text": "Stabilize",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "first",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 542,
+      "glyphBottom": 574,
+      "fontSize": 24,
+      "fits": true
+    },
+    "inViewport": true,
+    "width": 251,
+    "height": 192
+  },
+  {
+    "id": "dashboard-vital-next-move",
+    "label": {
+      "text": "Next Move",
+      "tokens": [
+        {
+          "text": "Next",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "Move",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 519,
+      "glyphBottom": 535,
+      "fontSize": 12,
+      "fits": true
+    },
+    "value": {
+      "text": "Fix the payoff inputs",
+      "tokens": [
+        {
+          "text": "Fix",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "the",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "payoff",
+          "oneLine": true,
+          "contained": true
+        },
+        {
+          "text": "inputs",
+          "oneLine": true,
+          "contained": true
+        }
+      ],
+      "visible": true,
+      "glyphTop": 542,
+      "glyphBottom": 604,
+      "fontSize": 24,
+      "fits": true
+    },
+    "inViewport": true,
+    "width": 251,
+    "height": 192
+  }
+]
