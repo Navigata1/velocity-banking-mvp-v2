@@ -133,8 +133,10 @@ const scenarios = [
               const box = document.querySelector(`[data-testid="${id}"]`); return box.scrollWidth > box.clientWidth + 1;
             }) }));
           assert.deepEqual(overflow, { page: false, stats: false });
-          const saved = await page.evaluate(() => ({ portfolio: JSON.parse(localStorage.getItem('interestshield-portfolio-v1')).state,
+          const saved = await page.evaluate(() => ({ portfolio: JSON.parse(localStorage.getItem('interestshield-portfolio-v2')).data,
+            legacyBytes: localStorage.getItem('interestshield-portfolio-v1'),
             separate: JSON.parse(localStorage.getItem('velocity-bank-storage')).state }));
+          assert.equal(saved.legacyBytes, JSON.stringify({ state, version: 1 }), 'legacy Portfolio source stays byte-identical');
           assert.equal(saved.portfolio.monthlyIncome, scenario.budget);
           assert.equal(saved.portfolio.extraMonthlyPayment, scenario.cap ?? 0);
           assert.deepEqual(saved.portfolio.loc, state.loc);
