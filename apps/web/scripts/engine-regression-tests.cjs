@@ -7,6 +7,9 @@ const vm = require('node:vm');
 const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 require('./portfolio-apr-unit-tests.cjs');
 require('./portfolio-book-tests.cjs');
+require('./portfolio-persistence-tests.cjs');
+require('./portfolio-store-storage-tests.cjs');
+require('./portfolio-browser-harness-tests.cjs');
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
@@ -64,6 +67,9 @@ function loadTsFile(filename) {
     }
     if (request === '@interestshield/financial-engine/portfolio-path') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-path.ts'));
+    }
+    if (request === '@interestshield/financial-engine/portfolio-book') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-book.ts'));
     }
 
     if (request.startsWith('.')) {
@@ -3673,7 +3679,7 @@ test('settings local demo data reset clears only InterestShield storage keys', (
 test('settings full local demo snapshot exports only known InterestShield storage keys', () => {
   const storage = createMemoryStorage();
   storage.setItem('velocity-bank-storage', '{"state":{"monthlyIncome":6500}}');
-  storage.setItem('interestshield-portfolio-v1', '{"state":{"strategy":"velocity"}}');
+  storage.setItem('interestshield-portfolio-v1', JSON.stringify({ version: 1, state: JSON.parse(portfolioStore.usePortfolioStore.getState().exportState()).data }));
   storage.setItem('unrelated-app-key', 'keep-me');
 
   const result = settingsSnapshot.exportLocalDemoSnapshot(storage);
@@ -3693,6 +3699,97 @@ test('settings full local demo snapshot exports only known InterestShield storag
     ['interestshield-portfolio-v1', 'velocity-bank-storage']
   );
   assert.ok(!result.json.includes('unrelated-app-key'));
+});
+
+test('Settings snapshots map canonical Portfolio bytes through the existing logical key and preserve legacy sources', () => {
+  const storage = createMemoryStorage(), document = portfolioStore.usePortfolioStore.getState().exportState();
+  storage.setItem('interestshield-portfolio-v1', 'preserved-legacy-source');
+  storage.setItem('interestshield-portfolio-v2', document);
+  const exported = settingsSnapshot.exportLocalDemoSnapshot(storage);
+  assert.equal(exported.ok, true);
+  const entries = JSON.parse(exported.json).storage;
+  assert.deepEqual(entries, [{ key: 'interestshield-portfolio-v1', value: document }]);
+  const data = JSON.parse(document).data; data.monthlyIncome = 9876.54321;
+  const target = JSON.stringify({ version: 2, aprUnit: 'decimal', data }, null, 2);
+  assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [{ key: 'interestshield-portfolio-v1', value: target }] }), storage).ok, true);
+  assert.equal(storage.getItem('interestshield-portfolio-v2'), target);
+  assert.equal(storage.getItem('interestshield-portfolio-v1'), 'preserved-legacy-source');
+  assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [] }), storage).ok, true);
+  assert.equal(storage.getItem('interestshield-portfolio-v2'), target, 'missing source book preserves its destination');
+});
+
+test('Settings book-only Portfolio snapshots preserve the destination scenario byte-for-byte', () => {
+  const data = JSON.parse(portfolioStore.usePortfolioStore.getState().exportState()).data;
+  data.monthlyIncome = 9876.54321;
+  const scenario = ' \n' + JSON.stringify({ version: 0, state: { monthlyIncome: 7123.456, monthlyExpenses: 4200.007 } }, null, 3) + '\n';
+  const documents = [
+    { label: 'canonical', value: JSON.stringify({ version: 2, aprUnit: 'decimal', data }) },
+    { label: 'legacy', value: JSON.stringify({ version: 1, state: data }) },
+    { label: 'explicit empty', value: JSON.stringify({ version: 2, aprUnit: 'decimal',
+      data: { ...data, debts: [], loc: { limit: 0, balance: 0, apr: 0 } } }) },
+  ];
+  for (const document of documents) {
+    const storage = createMemoryStorage();
+    storage.setItem('velocity-bank-storage', scenario);
+    storage.setItem('interestshield-portfolio-v1', 'preserved-legacy-source');
+    storage.setItem('interestshield-preferences-v1', 'old-preferences');
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1,
+      storage: [{ key: 'interestshield-portfolio-v1', value: document.value }] }), storage);
+    assert.equal(result.ok, true, document.label);
+    assert.equal(result.imported, 1);
+    assert.equal(storage.getItem('velocity-bank-storage'), scenario, `${document.label} book must preserve the destination scenario`);
+    assert.equal(JSON.parse(storage.getItem('interestshield-portfolio-v2')).data.monthlyIncome, 9876.54321);
+    assert.equal(storage.getItem('interestshield-portfolio-v1'), 'preserved-legacy-source');
+    assert.equal(storage.getItem('interestshield-preferences-v1'), null, 'only the absent scenario gets the book-only exception');
+  }
+});
+
+test('Settings Portfolio snapshots with other entries retain full-snapshot scenario replacement semantics', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  for (const entry of [
+    { key: 'interestshield-theme', value: 'new-theme' },
+    { key: 'velocity-bank-storage', value: '{"version":0,"state":{"monthlyIncome":8123.456}}' },
+  ]) {
+    const storage = createMemoryStorage();
+    storage.setItem('velocity-bank-storage', 'original-scenario');
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1,
+      storage: [{ key: 'interestshield-portfolio-v1', value: document }, entry] }), storage);
+    assert.equal(result.ok, true);
+    assert.equal(result.imported, 2);
+    assert.equal(storage.getItem('velocity-bank-storage'), entry.key === 'velocity-bank-storage' ? entry.value : null);
+    assert.equal(storage.getItem(entry.key), entry.value);
+    assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
+});
+
+test('Settings snapshot rejects corrupt or duplicate present books before mutating any destination', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  for (const entries of [[{ key: 'interestshield-portfolio-v1', value: '{bad' }],
+    [{ key: 'interestshield-portfolio-v1', value: document }, { key: 'interestshield-portfolio-v1', value: document }]]) {
+    const storage = createMemoryStorage(); storage.setItem('velocity-bank-storage', 'original'); storage.setItem('interestshield-portfolio-v2', document);
+    assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: entries }), storage).ok, false);
+    assert.equal(storage.getItem('velocity-bank-storage'), 'original'); assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
+});
+
+test('Settings snapshot rolls back both physical Portfolio and other demo keys after a write interruption', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  const data = JSON.parse(document).data; data.monthlyIncome = 9123;
+  const target = JSON.stringify({ version: 2, aprUnit: 'decimal', data }, null, 2);
+  for (const failedKey of ['interestshield-portfolio-v2', 'velocity-bank-storage']) {
+    const storage = createMemoryStorage(); storage.setItem('velocity-bank-storage', 'original-finance');
+    storage.setItem('interestshield-portfolio-v1', 'original-legacy'); storage.setItem('interestshield-portfolio-v2', document);
+    let failed = false;
+    const port = { ...storage, setItem: (key, value) => {
+      if (key === failedKey && !failed) { failed = true; throw new Error('Synthetic one-shot publication interruption'); }
+      storage.setItem(key, value);
+    } };
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [
+      { key: 'interestshield-portfolio-v1', value: target }, { key: 'velocity-bank-storage', value: 'updated-finance' },
+    ] }), port);
+    assert.equal(result.ok, false); assert.equal(storage.getItem('velocity-bank-storage'), 'original-finance');
+    assert.equal(storage.getItem('interestshield-portfolio-v1'), 'original-legacy'); assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
 });
 
 test('settings full local demo snapshot import rejects unknown storage keys without mutating storage', () => {
@@ -4791,6 +4888,39 @@ test('portfolio backup export and import preserve Money Loop planning inputs', (
   }
 });
 
+test('web Portfolio accepts canonical 200-percent APR backups without legacy reinterpretation', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const book = { monthlyIncome: 1000, monthlyExpenses: 0, extraMonthlyPayment: 20, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'avalanche', focusMode: 'single', splitRatioPrimary: 0.7,
+    debts: [{ id: 'canonical-high-apr', name: '  Imported precise debt  ', category: 'custom', kind: 'amortized',
+      balance: 1200, apr: 2, minPaymentRule: { type: 'fixed', amount: 300 }, paymentSource: 'checking',
+      termMonths: 61, notes: '  Preserve exact notes  ', createdAt: '2026-10-20T00:00:00Z' }] };
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    const result = portfolioStore.usePortfolioStore.getState().recompute();
+    assert.equal(result.monthResults[0].interestCharges['canonical-high-apr'], 200);
+    assert.equal(result.monthResults[0].cashBalance, 680);
+    const exported = JSON.parse(store.exportState());
+    assert.equal(exported.version, 2); assert.equal(exported.aprUnit, 'decimal');
+    assert.deepEqual(exported.data, book);
+  } finally { store.importState(original); }
+});
+
+test('web Portfolio converts legacy rates once and rejects unsupported document units without mutation', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const data = JSON.parse(original).data; data.loc.apr = 8.5; data.debts[0].apr = 6.5;
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 1, data })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().loc.apr, 0.085);
+    assert.equal(portfolioStore.usePortfolioStore.getState().debts[0].apr, 0.065);
+    const before = store.exportState();
+    for (const invalid of [{ version: 99, data }, { version: 2, aprUnit: 'percent', data }, { version: 2, data }]) {
+      assert.equal(store.importState(JSON.stringify(invalid)).ok, false);
+      assert.equal(store.exportState(), before);
+    }
+  } finally { store.importState(original); }
+});
+
 test('portfolio backup import rejects non-finite money inputs without corrupting state', () => {
   const store = portfolioStore.usePortfolioStore.getState();
   const original = store.exportState();
@@ -4800,6 +4930,7 @@ test('portfolio backup import rejects non-finite money inputs without corrupting
     const result = store.importState(JSON.stringify({
       version: 1,
       data: {
+        ...originalData,
         monthlyIncome: 'not-a-number',
         monthlyExpenses: 5000,
         debts: [{

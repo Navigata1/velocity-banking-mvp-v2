@@ -67,15 +67,14 @@ export default function SupabaseAccountPanel() {
       setStatus('You are offline. Local data is unchanged; reconnect and try sync again.');
       return;
     }
-    const storage = collectBrowserSnapshotStorage(window.localStorage);
-    if (storage.length === 0) {
-      setStatus('No local InterestShield data is ready to sync yet.');
-      return;
-    }
-
     setWork('syncing');
     setStatus(null);
     try {
+      const storage = collectBrowserSnapshotStorage(window.localStorage);
+      if (storage.length === 0) {
+        setStatus('No local InterestShield data is ready to sync yet.');
+        return;
+      }
       await syncLocalSnapshot(client, {
         idempotencyKey: getOrCreateBrowserSyncIdempotencyKey(window.localStorage),
         storage,

@@ -1,4 +1,6 @@
 import { LOCAL_DEMO_STORAGE_KEYS, type StorageLike } from './local-data-reset';
+import { CANONICAL_PORTFOLIO_KEY, LEGACY_PORTFOLIO_KEY, readPortfolioSnapshotDocument } from '@/stores/portfolio-persistence';
+import { decodePortfolioDocument, encodePortfolioDocument } from '@interestshield/financial-engine/portfolio-book';
 import { BACKEND_HANDOFF_TARGETS } from './backend-readiness';
 import {
   buildBackendMigrationContract,
@@ -35,7 +37,7 @@ function isKnownStorageKey(value: unknown): value is LocalDemoStorageKey {
 
 function readSnapshotEntries(storage: StorageLike): LocalDemoSnapshotEntry[] {
   return LOCAL_DEMO_STORAGE_KEYS.flatMap((key) => {
-    const value = storage.getItem(key);
+    const value = key === LEGACY_PORTFOLIO_KEY ? readPortfolioSnapshotDocument(storage) : storage.getItem(key);
     return value == null ? [] : [{ key, value }];
   });
 }
@@ -54,20 +56,25 @@ export function exportLocalDemoSnapshot(storage: StorageLike | null = browserSto
   | { ok: false; error: string } {
   if (!storage) return { ok: false, error: 'Browser storage is unavailable.' };
 
-  const payload = {
-    version: LOCAL_DEMO_SNAPSHOT_VERSION,
-    exportedAt: new Date().toISOString(),
-    mode: 'local-demo',
-    backendTargets: BACKEND_HANDOFF_TARGETS,
-    backendMigrationContract: buildBackendMigrationContract(),
-    storage: readSnapshotEntries(storage),
-  };
+  try {
+    const payload = {
+      version: LOCAL_DEMO_SNAPSHOT_VERSION,
+      exportedAt: new Date().toISOString(),
+      mode: 'local-demo',
+      backendTargets: BACKEND_HANDOFF_TARGETS,
+      backendMigrationContract: buildBackendMigrationContract(),
+      storage: readSnapshotEntries(storage),
+    };
 
-  return {
-    ok: true,
-    count: payload.storage.length,
-    json: JSON.stringify(payload, null, 2),
-  };
+    return {
+      ok: true,
+      count: payload.storage.length,
+      json: JSON.stringify(payload, null, 2),
+    };
+  } catch (error) {
+    return { ok: false, error: error && typeof error === 'object' && 'message' in error && typeof error.message === 'string'
+      ? error.message : 'Snapshot data could not be read.' };
+  }
 }
 
 export function importLocalDemoSnapshot(
@@ -104,22 +111,34 @@ export function importLocalDemoSnapshot(
         throw new Error('Snapshot storage value is invalid.');
       }
 
-      return entry;
+      return entry.key === LEGACY_PORTFOLIO_KEY ? { ...entry, value: encodePortfolioDocument(decodePortfolioDocument(entry.value)) } : entry;
     });
-
-    for (const key of LOCAL_DEMO_STORAGE_KEYS) {
-      storage.removeItem(key);
-    }
-
-    for (const entry of entries) {
-      storage.setItem(entry.key, entry.value);
+    if (new Set(entries.map(entry => entry.key)).size !== entries.length) throw new Error('Snapshot contains duplicate storage keys.');
+    const portfolio = entries.find(entry => entry.key === LEGACY_PORTFOLIO_KEY);
+    const bookOnly = entries.length === 1 && portfolio !== undefined;
+    const replacedKeys = LOCAL_DEMO_STORAGE_KEYS.filter(key => key !== LEGACY_PORTFOLIO_KEY
+      && (!bookOnly || key !== 'velocity-bank-storage'));
+    const physicalKeys = [...replacedKeys, CANONICAL_PORTFOLIO_KEY];
+    const before = physicalKeys.map(key => ({ key, value: storage.getItem(key) }));
+    try {
+      if (portfolio) storage.setItem(CANONICAL_PORTFOLIO_KEY, portfolio.value);
+      for (const key of replacedKeys) storage.removeItem(key);
+      for (const entry of entries) if (entry.key !== LEGACY_PORTFOLIO_KEY) storage.setItem(entry.key, entry.value);
+    } catch (error) {
+      let incomplete = false;
+      for (const entry of before) {
+        try { if (entry.value === null) storage.removeItem(entry.key); else storage.setItem(entry.key, entry.value); }
+        catch { incomplete = true; }
+      }
+      if (incomplete) throw new Error('Snapshot import was interrupted and rollback could not finish. Keep the original backup; browser storage needs repair.');
+      throw error;
     }
 
     return { ok: true, imported: entries.length };
   } catch (error) {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : 'Failed to import snapshot JSON.',
+      error: error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ? error.message : 'Failed to import snapshot JSON.',
     };
   }
 }
