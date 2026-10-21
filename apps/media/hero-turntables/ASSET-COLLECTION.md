@@ -7,8 +7,8 @@ Created October 20, 2026. This is a restoration work package, not a production-r
 - **Full-Resolution-Art**: original generated PNG references for all ten heroes.
 - **Web-Posters**: optimized transparent WebP artwork used by the restored dashboard.
 - **3D-Studies**: actual self-contained GLB geometry. The refined car is adapted from
-  the licensed Car Concept; the Vault is an original refined textured candidate.
-  The other eight models remain locally authored studies.
+  the licensed Car Concept; Vault, House, Land, Credit Card and Student Loan are
+  original textured candidates. The other four models remain authored studies.
 - **Turntables**: HyperFrames-rendered 1920 x 1080 MP4s, one smooth full revolution
   over eight seconds, followed by a one-second rest.
 - **verification.json**: video dimensions, duration, pixel-motion checks and SHA-256 hashes.
@@ -20,15 +20,18 @@ all regenerated in this package.
 
 ## Important Art Distinction
 
-The generated artwork is considerably more detailed than the eight remaining
+The generated artwork is considerably more detailed than the four remaining
 3D studies. The car uses a textured licensed model by Eric Chadwick / Darmstadt
 Graphics Group GmbH (2024), CC BY 4.0, adapted for InterestShield. Source and license:
 https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept
 https://creativecommons.org/licenses/by/4.0/
 
-The original Vault now has six embedded PBR maps, an open chamber, a beveled
-hinged door and locking hardware. Both it and Auto remain collection candidates;
-there is no claim that the full collection has passed final photorealism review.
+Vault has an open chamber and locking hardware; House has limestone/oak materials
+and open glazing; Land has connected trees and a recessed pond; Credit Card has
+physical recesses, segmented contacts and a two-sided coin. Student Loan adds
+leather spines, cloth, a braided cord, fine tassel and an open spiral diploma.
+All six remain candidates, not final photorealism approvals. Material values are
+artistic approximations, not measured scans or exact poster reconstructions.
 
 The remaining studies prove the real-geometry viewer, finite 360-degree
 motion, portable GLB format and HyperFrames export pipeline. They are not exact
@@ -41,10 +44,13 @@ controls financial outputs, and no financial balances are baked into these model
 
 ## Application Status
 
-The restoration includes corrections for minimum-payment budgeting, released
-payments after payoff, retained cash in LOC calendars, and active-target interest
-scope. Backend alignment, shared scenario ownership, lender-term enforcement,
-equal-liability comparisons and a verified release deployment remain unfinished.
+The restoration corrects minimum-payment budgeting, released payments, retained
+calendar cash and selected-target interest scope. Simulator, Vault and both web
+and Expo Portfolios use tested funded/equal-liability paths. Native Portfolio has
+precise editors, canonical transfer, owner/CAS storage and paired snapshot recovery.
+Backend/provider alignment, shared scenario ownership, common-date wealth,
+lender/calendar enforcement, physical-device tests and release approval remain
+unfinished. Verified previews are draft checkpoints, not production certification.
 
 Local preview: use the current verified URL in the mission report or PR receipt.
 

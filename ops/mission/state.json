@@ -10,7 +10,7 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T04:14:00Z",
+    "updated": "2026-10-21T05:02:09Z",
     "sessionCount": 14
   },
   "policies": {
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "348 main regressions and all references pass, plus15 APR,17 codec/range,22 adapter,3 actual-Zustand and capture-harness contracts. Explicit APR/range engine changes are tested; Remotion scenario inputs/results and all assets are unchanged. Local preflight, not production approval."
+          "evidence": "ops/mission/evidence/student-loan-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T05:01:00Z",
+          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/source paths, scenario inputs/results and nine baseline assets remain unchanged from verified2fe733c; only Student Loan is refined. New exact-head CI/hosted proof still required. Local preflight, not production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/routes.log",
-          "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "Seven rendered web routes pass1440/390. Web34 Portfolio cases cover funded budgets, canonical portability/failures and precise280/375/1264/1440 editors. Expo49 executions comprise12 book,2 precision and35 prior route cases. Both exact-head full pipelines and hosted82-case/routes proof must repeat. No device or release approval."
+          "evidence": "ops/mission/evidence/student-loan-2026-10-20/routes.log",
+          "lastRun": "2026-10-21T05:01:00Z",
+          "notes": "Seven HTTP/rendered routes and all local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass. Precise inputs include280/375/1264/1440. Previous2fe733c native49 executions are verified; no local native bundle/device rerun is claimed for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6306173894",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6308099018",
           "lastRun": "2026-10-21T03:58:00Z",
-          "notes": "b41b6a3 passed complete push/PR39529176994/39529182382 attempt1, full native lane, SQL63 twice/event and exact hosted proof.02f3137 failed both Portfolio opacity checks despite passing SQL; not verified.43f6488 follow-up passes34 local Portfolio cases including1264, with essential forms always visible and strict console tests. Both final-head complete pipelines/new lane execution/hosted82 receipt remain required. Fold postflight into next substantive update."
+          "notes": "Previous2fe733c passed complete push39542919815/PR39542924399 attempt1, actual full native lane49 browser executions/new contracts, SQL63 twice/event, exact READY preview and hosted82/routes. ReceiptPR256 issuecomment-6308099018.02f3137 remains failed/unverified; visibility/fit follow-ups are verified on2fe733c. Student Loan work requires both new final-head complete pipelines, exact preview and hosted82 proof. No report-only push loop or production approval."
         }
       ]
     },
@@ -107,7 +107,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Credit Card is a516984-byte,18008-triangle original silver/emerald card-and-coin candidate with six embedded maps. Nine decoded-geometry/provenance/fresh-budget cases and independent review pass. Identical/protected regeneration retained all ten records/bytes. Student Loan, Medical, Personal, Recreation and Custom remain studies; final all-ten art approval remains open. See docs/credit-card-refinement-contract-2026-10-20.md."
+          "notes": "Credit Card retained. Student Loan now has original cap/books/cord/tassel/hollow spiral diploma and volumetric bow:715276bytes,29348unique/34940instantiated triangles and nine embedded maps. Ten geometry/provenance/live-budget contracts include a real bow-crossing RED and corrected elliptic turns. Identical/protected regeneration and nine baseline assets pass. See docs/student-loan-refinement-contract-2026-10-20.md. Medical, Personal, Recreation and Custom remain studies; six candidates are not final all-ten art approval."
         },
         {
           "id": "R1-T4",
@@ -115,7 +115,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and all ten desktop/375px checks. Publication serializes imports/rebuilds with Windows sharing retries; Land/Credit Card recheck aggregate bytes inside the lock. Collection art approval and five further textured models remain unfinished; every new head must re-pass hosted gates."
+          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds with Windows sharing retries; Land/Credit Card/Student Loan recheck aggregate bytes inside the lock. Collection art approval and four further textured models remain unfinished; every new head must re-pass hosted gates."
         }
       ],
       "gates": [
@@ -124,27 +124,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/media-check.log",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "65 media contracts and27 fresh Remotion stills pass. All ten model records/bytes, sources and shared studio remain unchanged. Five studies and all five textured candidates still need final collection art approval."
+          "evidence": "ops/mission/evidence/student-loan-2026-10-20/media-check-final.log",
+          "lastRun": "2026-10-21T05:02:09Z",
+          "notes": "75 media contracts and27 fresh Remotion stills pass after final bow correction. Ten Student Loan cases include provenance/PBR, actual geometry/contact/holes/winding, crossing mutations and live locked budget. Independent final artifact review clears the confirmed bow defect, not final art. Sources, nine other model records/bytes and shared studio are unchanged. Six candidates/four studies; final all-ten approval stays open."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/heroes.log",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "All ten unchanged heroes pass fresh1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate fallback tests. Initial run reached Vault without its hero DOM; unchanged assertions passed with read-only navigation/error observation. Cause remains unexplained; failure retained. Final hosted proof mandatory."
+          "evidence": "ops/mission/evidence/student-loan-2026-10-20/heroes.log",
+          "lastRun": "2026-10-21T05:01:00Z",
+          "notes": "All ten heroes pass1440px/375px actual geometry/movement/framing/loading and reduced-motion checks, plus separate network/texture fallbacks. Student Loan changes; nine baseline model bytes/records remain unchanged. Strict Three gate passes original700/300ms serially after heavy render jobs; prior timing/DOM failures are retained, not declared diagnosed. Final hosted proof mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/turntable-verification.json",
-          "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "All ten unchanged1080p nine-second videos rechecked for movement/return/rest and model/vendor integrity, not rebuilt. No shared camera/studio/timing or financial change; final collection art review remains open."
+          "evidence": "ops/mission/evidence/student-loan-2026-10-20/turntable-verification.json",
+          "lastRun": "2026-10-21T05:01:00Z",
+          "notes": "Student Loan1080p/30fps nine-second turn rebuilt after bow correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
         }
       ]
     },
@@ -182,10 +182,10 @@
         {
           "id": "R2-T4",
           "title": "Port the funded aggregate Portfolio safely to Expo",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Bounded implementation done locally, pending final exact-head remote proof. Shared strict canonical book/path, explicit APR units/range guards, full native editor, owner/CAS/session storage, JSON review and paired durable recovery. Reproduced storage/lifecycle/review/precision findings fixed and scoped re-reviewed. Web legacy bytes remain untouched; failed imports do not become active. See docs/native-portfolio-contract-2026-10-20.md. Exports/null-host/browser proofs are not physical-device, cloud or full coherence approval."
+          "notes": "Bounded implementation and exact-head2fe733c proof complete: full push39542919815/PR39542924399,49 actual native browser cases/new contracts, SQL63 twice/event, READY preview and hosted82/routes. ReceiptPR256 issuecomment-6308099018. Shared strict canonical book/path, explicit APR units/range guards, native editor, owner/CAS/session storage and paired recovery retained. Legacy bytes survive; failed imports never activate. Shared ownership/common-date/lender/device/cloud/release approval remain separate open gates."
         }
       ],
       "gates": [
@@ -462,7 +462,7 @@
     {
       "label": "Textured refined model candidates",
       "baseline": "0",
-      "current": "5",
+      "current": "6",
       "target": "10",
       "direction": "up"
     },
@@ -490,9 +490,9 @@
   ],
   "risks": [
     {
-      "title": "Five models remain studies; candidates need art review",
+      "title": "Four models remain studies; candidates need art review",
       "severity": "high",
-      "note": "Auto, original Vault, House, Land and Credit Card have textured candidate geometry, not final photorealism approval. Five heroes need refinement. Public collection is10415192bytes,70568bytes below the unchanged10MiB cap; future refinements must recover space. Public GPU quota is limited and Hugging Face is not connected."
+      "note": "Auto, Vault, House, Land, Credit Card and Student Loan are textured candidates, not final photorealism approval. Medical, Personal, Recreation and Custom need refinement. Public collection is10232920bytes,252840bytes below the unchanged10MiB cap. Maps are artistic approximations, not measured scans; global final art review remains open. Public GPU quota is limited and Hugging Face is not connected."
     },
     {
       "title": "Financial coherence gates remain open",
@@ -502,7 +502,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "b41b6a3 passed both complete pipelines, actual native lane, SQL, Vercel and hosted proof.02f3137 failed both Portfolio visibility gates despite passing SQL; not verified. The follow-up needs both fresh full events and hosted82-case/routes proof. No prior receipt authorizes production."
+      "note": "2fe733c passed both complete pipelines, actual native lane49 browser cases/new contracts, SQL, READY Vercel and hosted82/routes; receiptPR256 issuecomment-6308099018.02f3137 remains failed/unverified. Student Loan checkpoint needs both fresh full events and hosted82/routes proof. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -808,16 +808,16 @@
     }
   ],
   "resume": {
-    "activePhase": "R2",
+    "activePhase": "R1",
     "nextActions": [
-      "Push the essential-form visibility/responsive follow-up, require both final exact-head complete CI runs, SQL63 twice/event, actual full native/new UI/browser lanes, exact Vercel and hosted82 cases plus seven routes.02f3137 failed Portfolio opacity checks on both events; SQL passed but head was not verified. b41b6a3 receiptPR256 issuecomment-6306173894 is folded in. Append postflight and fold into next substantive update; no report-only push loop or promotion.",
+      "Previous2fe733c is verified: both full CI events, actual49 native browser cases/new contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6308099018 folded into this substantive Student Loan work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/model-byte proof. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
-      "Next refine Student Loan or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land/Credit Card are candidates, five studies remain. Public assets have70568bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/credit-card-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
+      "Student Loan candidate adds original cloth/leather geometry/maps, a real diploma spiral and bow, with ten tests including independently discovered crossing RED/fix. Read docs/student-loan-refinement-contract-2026-10-20.md. Six candidates/four studies; public assets have252840bytes headroom, not a larger cap. Next refine Medical or another remaining study with provenance and all-model web/video proof. No paid GPU or broad layout redesign.",
       "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
-      "Continue five remaining domain refinements and final art review of all ten. Vault, Auto, House, Land and Credit Card are textured candidates, not final collection approval. Preserve publication locking, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
+      "Continue four remaining domain refinements and final art review of all ten. Auto, Vault, House, Land, Credit Card and Student Loan are textured candidates, not final collection approval. Preserve publication locking, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",

@@ -1,0 +1,33 @@
+{
+  "baseline": "2fe733ccc8ed344d9279f123c0ab3206946d6ffb",
+  "unchangedPaths": [
+    "packages/financial-engine",
+    "packages/persistence-contract",
+    "apps/mobile",
+    "apps/web/src",
+    "apps/web/scripts",
+    "apps/media/hero-turntables/index.html",
+    "apps/media/remotion",
+    "supabase",
+    ".github",
+    "apps/web/package.json",
+    "apps/media/package.json",
+    "apps/web/package-lock.json",
+    "apps/media/package-lock.json"
+  ],
+  "identicalRegeneration": true,
+  "protectedRebuild": true,
+  "otherNineBytesAndRecordsUnchanged": true,
+  "models": {
+    "car": "15a8e84b4efa1ef896dbd244a87f065bc5da8e45ca912c3599b78f8ac56d6d11",
+    "house": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
+    "land": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+    "creditCard": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
+    "studentLoan": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222",
+    "medical": "2c0dd40ddac70000739d5e4b6956f1686e7b6f4e72886d3fd44c011aaa6a1a70",
+    "personal": "664ace31388fcd98cee407d7399977b3fd8a0c6eefcab37a408cde6d121023bc",
+    "recreation": "58f234f297ffafec29d82760f3eb41776cec54ed4cb9b47ae39016534f77f155",
+    "custom": "a1ab505e1cccfdaf2b4535989694d11d847c6e2ac102f7da9eb906a55aa5459b",
+    "vault": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+  }
+}

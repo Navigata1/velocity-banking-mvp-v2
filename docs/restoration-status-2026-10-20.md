@@ -37,7 +37,11 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 - Original refined Credit Card candidate:18,008 unique-mesh triangles, six embedded
   procedural maps and516,984 bytes; silver/emerald cards with actual recesses,
   connected chip contacts, back details and a two-sided96-reed silver coin.
-  Five authored studies remain; all-ten final collection art approval is open.
+  All-ten final collection art approval is open.
+- Original refined Student Loan candidate:29,348 unique-mesh triangles, nine
+  embedded maps and715,276 bytes; leather bindings, woven cloth, physical book
+  leaves, braided cord,48 tassel fibers and a hollow spiral diploma with real bow.
+  Four authored studies remain; six candidates are not six final art approvals.
 - Smooth one-revolution-and-rest viewing, reduced motion, resource cleanup and static fallbacks.
 - Ten HyperFrames 1080p turntable videos, verified through actual rendered pixels.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
@@ -89,11 +93,25 @@ with generated albedos and authored approximate micro-normal/roughness maps, not
 scanned building or exact reconstruction. Land is an original illustrative diorama
 with generated albedos and authored approximate surface/shading maps. Credit Card
 has original geometry and approximate procedural metal maps, not a scan or exact
-poster reconstruction. The other five meshes remain
+poster reconstruction. Student Loan has generated cloth/leather sources and
+approximate authored maps, not measured fabric/leather or reconstructed relief.
+The other four meshes remain
 studies. A coherent artist-approved textured collection is still unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
 ## Verification
+
+Student Loan local checkpoint:75 media contracts/27 fresh stills,348 web
+regressions/reference lanes, lint/build, seven HTTP/rendered routes, all20 hero
+viewport checks/fallbacks, strict Three budgets and82 local calculation/portability
+cases pass. New1080p turn and nine unchanged turns pass pixel/hash proof. Independent
+review's confirmed bow crossing is fixed with observed RED/GREEN and final clearance.
+Regeneration/protected rebuild and246 source fingerprints preserve the prior
+financial/native/persistence/layout/camera/studio/timing/dependency behavior.
+Previous2fe733c is remotely verified (PR256 issuecomment-6308099018); this new
+substantive checkpoint still requires both exact-head full pipelines, SQL,
+READY Vercel and hosted82/routes/all-ten-model-byte proof before a postflight
+receipt. Source report remains preflight to avoid report-only push loops.
 
 - Next.js production build, TypeScript and ESLint passed.
 - 348 main web/shared regressions, separate explicit-APR/codec/storage contracts, two independent reference scenarios,78 prior
@@ -125,10 +143,10 @@ The app defaults to the polished artwork; real 3D inspection is optional and laz
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 65 media contracts pass, including nine Credit Card, nine Land and six House cases.
-  Existing HyperFrames/Remotion checks pass with27 fresh stills. Credit Card's turn
-  was rebuilt in its checkpoint; all ten videos are unchanged/rechecked in the
-  native-input follow-up, with fresh movement/rest pixel proof. The existing
+- 75 media contracts pass, including ten Student Loan, nine Credit Card, nine Land and six House cases.
+  Existing HyperFrames/Remotion checks pass with27 fresh stills. Student Loan's turn
+  is rebuilt in this checkpoint; nine previous videos are unchanged/rechecked,
+  with fresh movement/rest pixel proof and matching model/vendor hashes. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
 - New HyperFrames checks passed with one Intel shader precision warning.
 - Independent financial review's one introduced edge case was fixed and approved on re-review.
@@ -191,7 +209,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete five remaining textured models and artist-review all five candidates and collection consistency.
+1. Complete four remaining textured models and artist-review all six candidates and collection consistency.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.

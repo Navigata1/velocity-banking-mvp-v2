@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: Student Loan replaces the study with a protected original artifact and verifiable source provenance
+ok 1 - Student Loan replaces the study with a protected original artifact and verifiable source provenance
+  ---
+  duration_ms: 38.5239
+  type: 'test'
+  ...
+# Subtest: Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+ok 2 - Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+  ---
+  duration_ms: 120.8987
+  type: 'test'
+  ...
+# Subtest: Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+ok 3 - Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+  ---
+  duration_ms: 113.3299
+  type: 'test'
+  ...
+# Subtest: Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+ok 4 - Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+  ---
+  duration_ms: 1702.6998
+  type: 'test'
+  ...
+# Subtest: Student Loan tassel has 48 separate volumetric strands attached to its head
+ok 5 - Student Loan tassel has 48 separate volumetric strands attached to its head
+  ---
+  duration_ms: 52.3762
+  type: 'test'
+  ...
+# Subtest: Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+ok 6 - Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+  ---
+  duration_ms: 23.7472
+  type: 'test'
+  ...
+# Subtest: Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+ok 7 - Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+  ---
+  duration_ms: 32.1622
+  type: 'test'
+  ...
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+ok 8 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 344.8009
+  type: 'test'
+  ...
+# Subtest: Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+ok 9 - Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+  ---
+  duration_ms: 46.043
+  type: 'test'
+  ...
+# Subtest: Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+ok 10 - Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+  ---
+  duration_ms: 80.9538
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2808.0226

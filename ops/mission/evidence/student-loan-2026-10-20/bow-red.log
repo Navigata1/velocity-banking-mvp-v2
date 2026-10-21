@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+not ok 1 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 111.817
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\student-loan-refinement.test.mjs:239:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Left loop self-intersects outside knot
+    
+    90 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 90
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/student-loan-refinement.test.mjs:250:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 578.9325

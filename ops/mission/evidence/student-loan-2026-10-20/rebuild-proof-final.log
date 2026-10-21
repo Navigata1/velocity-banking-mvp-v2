@@ -1,0 +1,26 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+SL-Cloth-Normal encoding: rms=0.000deg max=0.000deg
+SL-Leather-Normal encoding: rms=0.000deg max=0.000deg
+SL-Paper-Normal encoding: rms=0.000deg max=0.000deg
+prune: Removed types... Accessor (65)
+prune: Removed types... Accessor (230)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+prune: Removed types... Accessor (83)
+{"triangles":29348,"meshes":71,"textures":[{"name":"SL-Cloth-Color","bytes":68014},{"name":"SL-Cloth-Normal","bytes":97128},{"name":"SL-Cloth-Roughness","bytes":25480},{"name":"SL-Leather-Color","bytes":76032},{"name":"SL-Leather-Normal","bytes":90442},{"name":"SL-Leather-Roughness","bytes":17458},{"name":"SL-Paper-Color","bytes":23232},{"name":"SL-Paper-Normal","bytes":31264},{"name":"SL-Paper-Roughness","bytes":3210}],"bytes":715276,"collection":10232920}
+Refined Student Loan: 29348 triangles,9 maps,715276 bytes; public collection10232920 bytes.
+car: preserving imported refined asset
+house: preserving imported refined asset
+land: preserving imported refined asset
+creditCard: preserving imported refined asset
+studentLoan: preserving imported refined asset
+medical: 15 parts, 7772 triangles, 356 KiB
+personal: 95 parts, 56988 triangles, 567 KiB
+recreation: 32 parts, 28656 triangles, 872 KiB
+custom: 81 parts, 45976 triangles, 255 KiB
+vault: preserving imported refined asset
+PASS identical regeneration, protected full rebuild, nine baseline assets and invariant source paths

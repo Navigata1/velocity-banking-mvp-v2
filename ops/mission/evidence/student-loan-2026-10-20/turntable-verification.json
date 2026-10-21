@@ -1,0 +1,182 @@
+[
+  {
+    "id": "car",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 9684496,
+    "sha256": "a30b6ecc861cc10ab2df2287cf991a4449ab68b6ce287cabc82abb31f3cea081",
+    "motion": {
+      "changedCellCount": 13,
+      "maxCellDistance": 18.138543915678525,
+      "meanCellDistance": 1.378111976943346
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.03197670619235993,
+      "meanCellDistance": 0.003038186594202588
+    }
+  },
+  {
+    "id": "house",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 10122824,
+    "sha256": "b54fbf5a0b3e54628939385c801ed9f471ad59cd7c297532a14b3c8d418ead3c",
+    "motion": {
+      "changedCellCount": 19,
+      "maxCellDistance": 81.09095290645588,
+      "meanCellDistance": 8.22620053969038
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.0755224664031573,
+      "meanCellDistance": 0.0073992422595517415
+    }
+  },
+  {
+    "id": "land",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 16507687,
+    "sha256": "dd6206b7064f5b7d2f78ee333c2abdcc723fad4e0f5f32b9de2cee712d61c00a",
+    "motion": {
+      "changedCellCount": 26,
+      "maxCellDistance": 34.64673868774703,
+      "meanCellDistance": 4.994768609354411
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.037452827404479194,
+      "meanCellDistance": 0.0036252047101443807
+    }
+  },
+  {
+    "id": "creditCard",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 3309415,
+    "sha256": "dc5ef1e58e53d73c0fcc365515ed2ab1c4f6c36b01c54ab7e461bfbe428a120f",
+    "motion": {
+      "changedCellCount": 27,
+      "maxCellDistance": 131.7397511884058,
+      "meanCellDistance": 21.680785066699602
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.02476490118577601,
+      "meanCellDistance": 0.0037701559617904223
+    }
+  },
+  {
+    "id": "studentLoan",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 5358977,
+    "sha256": "840ccef6fcbf909654c8808e4cee2e8bfb2b3af5189116492e9ac96ce1142ad1",
+    "motion": {
+      "changedCellCount": 19,
+      "maxCellDistance": 68.04102285111989,
+      "meanCellDistance": 5.414147140480895
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.02970315678524571,
+      "meanCellDistance": 0.0028834280303034476
+    }
+  },
+  {
+    "id": "medical",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 2368322,
+    "sha256": "921765716e59dffc9514eb42b89e9908ab075163a67e0840d5d25acfebda4e77",
+    "motion": {
+      "changedCellCount": 28,
+      "maxCellDistance": 206.60441701185772,
+      "meanCellDistance": 38.54131832246377
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.02851954677205981,
+      "meanCellDistance": 0.00343220849802639
+    }
+  },
+  {
+    "id": "personal",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 2853169,
+    "sha256": "e8ca6877ee47397e2174dc006ace429d233039897c8340106deff670b15b6cae",
+    "motion": {
+      "changedCellCount": 29,
+      "maxCellDistance": 133.20347812384716,
+      "meanCellDistance": 22.932519761198943
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.029563330698280765,
+      "meanCellDistance": 0.003122382246377231
+    }
+  },
+  {
+    "id": "recreation",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 3327609,
+    "sha256": "6811fb66272365716368ce21689ec785c3af5579d2326b39893f73c38a8982df",
+    "motion": {
+      "changedCellCount": 16,
+      "maxCellDistance": 45.00642622397895,
+      "meanCellDistance": 5.262753843708828
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.03741266930171605,
+      "meanCellDistance": 0.0024736992753619513
+    }
+  },
+  {
+    "id": "custom",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 2660699,
+    "sha256": "c0d053d99ef9a91ac71fef2a615a4fa2bd7d7654f49a68c65aa504efe536c38b",
+    "motion": {
+      "changedCellCount": 21,
+      "maxCellDistance": 60.659134113306976,
+      "meanCellDistance": 5.626384811923584
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.020298403162058776,
+      "meanCellDistance": 0.0017116884057970516
+    }
+  },
+  {
+    "id": "vault",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 7038275,
+    "sha256": "5e206f25d6c0acfd5fb1d35acbf9d55b69a6c0f18ea6fa2c1a14d7463b6a7812",
+    "motion": {
+      "changedCellCount": 34,
+      "maxCellDistance": 120.18889788669303,
+      "meanCellDistance": 17.347790336297756
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.03923094598155785,
+      "meanCellDistance": 0.005110272397891691
+    }
+  }
+]

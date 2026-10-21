@@ -76,12 +76,29 @@ Metal/dielectric factors and surface maps are artistic approximations, not
 measured scans. This is a textured illustration candidate, not an exact poster
 reconstruction or final collection-wide photorealism approval. See its contract.
 
+## Original Refined Student Loan
+
+Graduation cap, two leather-bound books, braided cord, 48 tassel fibers and hollow
+spiral diploma with a volumetric bow are authored in
+`apps/media/scripts/build-refined-student-loan.mjs`. Original cloth and leather
+images were made with Codex's built-in image generator; unchanged sources, briefs
+and hashes are retained under `apps/media/sources/student-loan/`.
+
+Color/roughness maps are 512px; normal fields are filtered and renormalized to
+256px before lossless WebP packing. Zero normal codec error refers to that filtered
+field, not zero filtering loss. Material factors, height-derived micro-normals and
+paper grain are artistic approximations, not measured scans or reconstructed
+relief. No third-party mesh, institutional branding or credential is used.
+Both manifests record builder, material-manifest and distributed model hashes.
+This is a textured candidate, not an exact poster reconstruction or final
+collection-wide photorealism approval.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other five base models remain locally authored 3D studies. They have not
+The other four base models remain locally authored 3D studies. They have not
 passed the final photorealism gate and must not be represented as finished
 photorealistic assets or exact reconstructions of the posters.

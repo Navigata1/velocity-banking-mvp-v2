@@ -1,0 +1,13 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+SL-Cloth-Normal encoding: rms=4.267deg max=18.449deg
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:155
+      if(rms>2||max>8)throw new Error(`${name} encoding exceeds original-derivative angular error limits: rms=${rms},max=${max}`);
+                            ^
+
+Error: SL-Cloth-Normal encoding exceeds original-derivative angular error limits: rms=4.266887166112764,max=18.44923321018016
+    at texture (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:155:29)
+    at async maps (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:159:61)
+    at async file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:161:17
+
+Node.js v22.22.2
