@@ -1,0 +1,9 @@
+{
+  "capturedAt": "2026-10-21T16:56:54.541Z",
+  "origin": "http://127.0.0.1:54857",
+  "before": "INTEREST BURN\n$4/day\nSimple daily accrual estimate across active debt and LOC balance.",
+  "entered": "200",
+  "after": "INTEREST BURN\n$2/day\nSimple daily accrual estimate across active debt and LOC balance.",
+  "logs": [],
+  "scope": "Real DOM/UI through Cua; no hidden storage read. Deliberately failed baseline, not a passing financial result."
+}

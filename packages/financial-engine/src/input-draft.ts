@@ -1,4 +1,4 @@
-export type FinancialInputKind = 'money' | 'percent' | 'whole';
+export type FinancialInputKind = 'money' | 'percent' | 'legacy-percent' | 'whole';
 export interface FinancialInputBounds { minimum?: number; maximum?: number }
 
 function shiftDecimal(text: string, places: number): string {
@@ -14,7 +14,8 @@ function shiftDecimal(text: string, places: number): string {
 }
 
 export function formatFinancialInput(value: number, kind: FinancialInputKind): string {
-  return Number.isFinite(value) ? shiftDecimal(String(value), kind === 'percent' ? 2 : 0) : '';
+  const fraction = kind === 'percent' || kind === 'legacy-percent' && value <= 1;
+  return Number.isFinite(value) ? shiftDecimal(String(value), fraction ? 2 : 0) : '';
 }
 
 function canonicalDecimal(text: string): string {
@@ -36,7 +37,11 @@ export function resolveFinancialDraft(value: number, draft: string, kind: Financ
   }
   const valid = /^(?:(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d*)?|\.\d+)$/.test(text);
   const raw = text.replace(/,/g, '');
-  const decimal = valid ? (kind === 'percent' ? shiftDecimal(raw, -2) : raw) : '';
+  const legacy = kind === 'legacy-percent';
+  // Equivalent edits must not migrate an existing mixed-unit legacy record.
+  if (legacy && valid && Number.isFinite(value) && canonicalDecimal(raw) === canonicalDecimal(formatFinancialInput(value, kind))) return { value, error: null };
+  const fraction = kind === 'percent' || legacy && Number(raw) <= 100;
+  const decimal = valid ? (fraction ? shiftDecimal(raw, -2) : raw) : '';
   const parsed = valid ? Number(decimal) : NaN;
   const fractionalWhole = kind === 'whole' && /[1-9]/.test(raw.split('.')[1] ?? '');
   const underflow = parsed === 0 && /[1-9]/.test(raw);
@@ -48,12 +53,13 @@ export function resolveFinancialDraft(value: number, draft: string, kind: Financ
   }
   if (Object.is(parsed, value)) return { value, error: null };
   const { minimum, maximum } = bounds;
+  const comparable = (candidate: number) => legacy ? Number(formatFinancialInput(candidate, kind)) : candidate;
   const validBound = (bound: number | undefined) => bound === undefined || Number.isFinite(bound) && bound >= 0;
-  if (!validBound(minimum) || !validBound(maximum) || minimum !== undefined && maximum !== undefined && minimum > maximum) {
+  if (!validBound(minimum) || !validBound(maximum) || minimum !== undefined && maximum !== undefined && comparable(minimum) > comparable(maximum)) {
     return { value, error: 'Input range is invalid.' };
   }
-  const suffix = kind === 'percent' ? '%' : '';
-  if (minimum !== undefined && parsed < minimum) return { value, error: `Enter at least ${formatFinancialInput(minimum, kind)}${suffix}.` };
-  if (maximum !== undefined && parsed > maximum) return { value, error: `Enter at most ${formatFinancialInput(maximum, kind)}${suffix}.` };
+  const suffix = kind === 'percent' || legacy ? '%' : '';
+  if (minimum !== undefined && comparable(parsed) < comparable(minimum)) return { value, error: `Enter at least ${formatFinancialInput(minimum, kind)}${suffix}.` };
+  if (maximum !== undefined && comparable(parsed) > comparable(maximum)) return { value, error: `Enter at most ${formatFinancialInput(maximum, kind)}${suffix}.` };
   return { value: parsed, error: null };
 }

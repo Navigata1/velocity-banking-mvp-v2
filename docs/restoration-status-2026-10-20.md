@@ -10,15 +10,29 @@ stills and SQL63 twice per event. Exact READY preview, hosted120, all ten served
 GLB/poster hashes and actual IAB edit/import/restore passed. Receipt:
 https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045
 
-The primary CI job took1198seconds against its unchanged1200-second cap. Current
-bounded maintenance moves the original hero test/upload to an independent20-minute
-job, retains the complete backend and all remaining primary steps, and requires
-BOTH exact-head events with every job/step successful.14 new verifier/workflow
-contracts pass after the old latest-only false acceptance was reproduced RED.
-The checker reads required steps from the committed HEAD workflow, so local
-uncommitted workflow edits cannot hide a missing committed SQL repeat step.
-No calculations, assets, application source, dependency or stored data changes.
-Both new three-job CI events remain required before this maintenance task closes.
+CI/report maintenance is verified at8561784: both complete attempt1 events
+39635731600/39635740696 passed all three jobs/every step. Receipt:
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6321350077
+Primary489/510s, heroes306/529s and SQL152/168s retain the unchanged1200-second
+caps, not a guarantee of future speed.14 verifier and4 static report contracts
+pass. Required steps come from the committed HEAD workflow; a dirty local
+workflow cannot conceal missing SQL execution. No application/asset/math/data
+changes were included in that maintenance slice. cc09 hosted120 stays inherited.
+
+Current bounded fix: native single-scenario APR entry now follows its legacy
+engine units, while canonical Portfolio decimal units remain unchanged. The old
+actual IAB export displayed200% but calculated2%, reducing default burn4/day to
+2/day. Rebuilt actual UI shows200% and102/day; explicit copy exports decimal2 and
+displays200%. Existing legacy6.5 displays6.5%, exact/equivalent no-ops preserve
+bytes, and ambiguous old raw2 remains2%, never guessed as historical200% intent.
+15 new/19 original draft contracts,70 original+6 new browser cases, web348/core31/
+ref23247, media145/27 fresh stills and fresh web/Android/iOS exports pass locally.
+The full native child exits0; first wrapperexit1 was a PASS-line counting error:
+one separate focused-navigation assertion makes77 lines, not76. This is recorded,
+not erased. Independent bounded review found no actionable issue. Both NEW full
+exact-head CI events remain required. See
+`docs/native-legacy-apr-contract-2026-10-21.md`. No allocation/accrual/schema,
+dependency, asset or backend change, physical-device approval or production push.
 
 The Desktop report has728-file readback/recovery evidence. Its first published
 version failed an offline page-overflow check; an inherited word-wrap correction

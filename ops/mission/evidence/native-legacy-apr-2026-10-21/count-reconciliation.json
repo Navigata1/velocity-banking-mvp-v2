@@ -1,0 +1,10 @@
+{
+  "applicationHarnessExitCode": 0,
+  "firstCountingWrapperExitCode": 1,
+  "reason": "Wrapper incorrectly expected76 raw PASS lines. Standing harness exit0; actual77 includes one separate focused-navigation assertion. No test changed or removed.",
+  "standingOriginalCaseReceipts": 70,
+  "newLegacyAprCaseReceipts": 6,
+  "additionalFocusedNavigationAssertions": 1,
+  "totalPassLines": 77,
+  "originalFixturesUnchanged": true
+}

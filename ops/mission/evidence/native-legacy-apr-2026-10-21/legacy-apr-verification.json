@@ -1,0 +1,100 @@
+{
+  "origin": "http://127.0.0.1:64858",
+  "capturedAt": "2026-10-21T17:03:34.430Z",
+  "scope": "Exported Expo app HTTP; fresh synthetic browser contexts, not physical-device QA. Original 70 native cases are separate and unchanged.",
+  "newCaseCount": 6,
+  "passed": 6,
+  "hashes": {
+    "packages/financial-engine/src/input-draft.ts": "3a92b4a6c4280787dfed3d3be86409408cabf7ab24df724016fbae7bc3e36e93",
+    "apps/mobile/components/mobile-shell/controls.tsx": "0b10f0bf75bfc1c2af0184090c688b696fd47fe7f7bf00457610e8f34438b5ea",
+    "apps/mobile/scripts/legacy-apr-smoke.cjs": "b122399512520eb7e189819d8b573de697368a07b397ca4842c7a65fb66e41ca",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "924ff8ef759fb50e6459697ec6d04cd55d113578dd721c45f492c74cd9a20f36",
+    "apps/mobile/scripts/financial-input-smoke.cjs": "761a34cb112eaaf4b329acea624e6b5f237190495e8c0d96dd2ee9f7d0242baa",
+    "apps/mobile/scripts/portfolio-book-smoke.cjs": "e2c8fcb9c7ad1338f0bf1e969d3407657235e86fdd1b0e1c85f9b0c1dceecab0",
+    "apps/mobile/dist-web/index.html": "6e506525e7ead6d3bb84f031da0fd74f82a501c9b69d68c94b7287fd97478a7c",
+    "apps/mobile/dist-web/_expo/static/js/web/entry-559ada819d7399d2a7ced6e1f14645bd.js": "194c54debe49256c20da1f9b4dbf30c05134a95147dcc9278bba379a7e824838"
+  },
+  "receipts": [
+    {
+      "name": "preservation",
+      "width": 375,
+      "passed": true,
+      "checks": {
+        "noOps": 2,
+        "equivalentEdits": 2,
+        "invalidDrafts": 14,
+        "abandonedDraftReload": true,
+        "navigationReload": true
+      },
+      "errors": []
+    },
+    {
+      "name": "entry200-copy",
+      "width": 375,
+      "passed": true,
+      "checks": {
+        "committedRaw": 200,
+        "canonicalRaw": 2,
+        "dailyBurn": 66.50255136986301,
+        "dailyLabel": "$67/day",
+        "scenarioBytes": "{\"input\":{\"activeDebt\":{\"apr\":200,\"balance\":12000.705,\"monthlyPayment\":425.15,\"termMonths\":60},\"activeDebtName\":\"Synthetic legacy APR loan\",\"chunkAmount\":1000.55,\"loc\":{\"apr\":8.5,\"balance\":3200.25,\"limit\":25000.99},\"monthlyExpenses\":4700.25,\"monthlyIncome\":8200.75},\"ownerId\":null,\"revision\":8,\"savedAt\":\"2026-10-21T17:03:22.033Z\",\"version\":1}",
+        "bookBytes": "{\"version\":1,\"ownerId\":null,\"revision\":1,\"savedAt\":\"2026-10-21T17:03:22.332Z\",\"document\":\"{\\n  \\\"version\\\": 2,\\n  \\\"aprUnit\\\": \\\"decimal\\\",\\n  \\\"data\\\": {\\n    \\\"monthlyIncome\\\": 8200.75,\\n    \\\"monthlyExpenses\\\": 4700.25,\\n    \\\"extraMonthlyPayment\\\": 0,\\n    \\\"chunkAmount\\\": 1000.55,\\n    \\\"loc\\\": {\\n      \\\"limit\\\": 25000.99,\\n      \\\"balance\\\": 3200.25,\\n      \\\"apr\\\": 0.085\\n    },\\n    \\\"strategy\\\": \\\"velocity\\\",\\n    \\\"focusMode\\\": \\\"single\\\",\\n    \\\"splitRatioPrimary\\\": 0.7,\\n    \\\"debts\\\": [\\n      {\\n        \\\"id\\\": \\\"8270c4a3-9034-45a1-b3e0-70a38c51068f\\\",\\n        \\\"name\\\": \\\"Synthetic legacy APR loan\\\",\\n        \\\"category\\\": \\\"custom\\\",\\n        \\\"kind\\\": \\\"amortized\\\",\\n        \\\"balance\\\": 12000.705,\\n        \\\"apr\\\": 2,\\n        \\\"minPaymentRule\\\": {\\n          \\\"type\\\": \\\"fixed\\\",\\n          \\\"amount\\\": 425.15\\n        },\\n        \\\"paymentSource\\\": \\\"checking\\\",\\n        \\\"termMonths\\\": 60\\n      }\\n    ]\\n  }\\n}\"}"
+      },
+      "errors": []
+    },
+    {
+      "name": "preservation",
+      "width": 280,
+      "passed": true,
+      "checks": {
+        "noOps": 2,
+        "equivalentEdits": 2,
+        "invalidDrafts": 14,
+        "abandonedDraftReload": true,
+        "navigationReload": true
+      },
+      "errors": []
+    },
+    {
+      "name": "entry200-copy",
+      "width": 280,
+      "passed": true,
+      "checks": {
+        "committedRaw": 200,
+        "canonicalRaw": 2,
+        "dailyBurn": 66.50255136986301,
+        "dailyLabel": "$67/day",
+        "scenarioBytes": "{\"input\":{\"activeDebt\":{\"apr\":200,\"balance\":12000.705,\"monthlyPayment\":425.15,\"termMonths\":60},\"activeDebtName\":\"Synthetic legacy APR loan\",\"chunkAmount\":1000.55,\"loc\":{\"apr\":8.5,\"balance\":3200.25,\"limit\":25000.99},\"monthlyExpenses\":4700.25,\"monthlyIncome\":8200.75},\"ownerId\":null,\"revision\":8,\"savedAt\":\"2026-10-21T17:03:27.453Z\",\"version\":1}",
+        "bookBytes": "{\"version\":1,\"ownerId\":null,\"revision\":1,\"savedAt\":\"2026-10-21T17:03:27.699Z\",\"document\":\"{\\n  \\\"version\\\": 2,\\n  \\\"aprUnit\\\": \\\"decimal\\\",\\n  \\\"data\\\": {\\n    \\\"monthlyIncome\\\": 8200.75,\\n    \\\"monthlyExpenses\\\": 4700.25,\\n    \\\"extraMonthlyPayment\\\": 0,\\n    \\\"chunkAmount\\\": 1000.55,\\n    \\\"loc\\\": {\\n      \\\"limit\\\": 25000.99,\\n      \\\"balance\\\": 3200.25,\\n      \\\"apr\\\": 0.085\\n    },\\n    \\\"strategy\\\": \\\"velocity\\\",\\n    \\\"focusMode\\\": \\\"single\\\",\\n    \\\"splitRatioPrimary\\\": 0.7,\\n    \\\"debts\\\": [\\n      {\\n        \\\"id\\\": \\\"88c4f93c-6410-421b-b43e-1c0272493fb2\\\",\\n        \\\"name\\\": \\\"Synthetic legacy APR loan\\\",\\n        \\\"category\\\": \\\"custom\\\",\\n        \\\"kind\\\": \\\"amortized\\\",\\n        \\\"balance\\\": 12000.705,\\n        \\\"apr\\\": 2,\\n        \\\"minPaymentRule\\\": {\\n          \\\"type\\\": \\\"fixed\\\",\\n          \\\"amount\\\": 425.15\\n        },\\n        \\\"paymentSource\\\": \\\"checking\\\",\\n        \\\"termMonths\\\": 60\\n      }\\n    ]\\n  }\\n}\"}"
+      },
+      "errors": []
+    },
+    {
+      "name": "preservation",
+      "width": 1440,
+      "passed": true,
+      "checks": {
+        "noOps": 2,
+        "equivalentEdits": 2,
+        "invalidDrafts": 14,
+        "abandonedDraftReload": true,
+        "navigationReload": true
+      },
+      "errors": []
+    },
+    {
+      "name": "entry200-copy",
+      "width": 1440,
+      "passed": true,
+      "checks": {
+        "committedRaw": 200,
+        "canonicalRaw": 2,
+        "dailyBurn": 66.50255136986301,
+        "dailyLabel": "$67/day",
+        "scenarioBytes": "{\"input\":{\"activeDebt\":{\"apr\":200,\"balance\":12000.705,\"monthlyPayment\":425.15,\"termMonths\":60},\"activeDebtName\":\"Synthetic legacy APR loan\",\"chunkAmount\":1000.55,\"loc\":{\"apr\":8.5,\"balance\":3200.25,\"limit\":25000.99},\"monthlyExpenses\":4700.25,\"monthlyIncome\":8200.75},\"ownerId\":null,\"revision\":8,\"savedAt\":\"2026-10-21T17:03:32.737Z\",\"version\":1}",
+        "bookBytes": "{\"version\":1,\"ownerId\":null,\"revision\":1,\"savedAt\":\"2026-10-21T17:03:32.956Z\",\"document\":\"{\\n  \\\"version\\\": 2,\\n  \\\"aprUnit\\\": \\\"decimal\\\",\\n  \\\"data\\\": {\\n    \\\"monthlyIncome\\\": 8200.75,\\n    \\\"monthlyExpenses\\\": 4700.25,\\n    \\\"extraMonthlyPayment\\\": 0,\\n    \\\"chunkAmount\\\": 1000.55,\\n    \\\"loc\\\": {\\n      \\\"limit\\\": 25000.99,\\n      \\\"balance\\\": 3200.25,\\n      \\\"apr\\\": 0.085\\n    },\\n    \\\"strategy\\\": \\\"velocity\\\",\\n    \\\"focusMode\\\": \\\"single\\\",\\n    \\\"splitRatioPrimary\\\": 0.7,\\n    \\\"debts\\\": [\\n      {\\n        \\\"id\\\": \\\"697efafc-3b65-48d2-9cfe-36efb4db8199\\\",\\n        \\\"name\\\": \\\"Synthetic legacy APR loan\\\",\\n        \\\"category\\\": \\\"custom\\\",\\n        \\\"kind\\\": \\\"amortized\\\",\\n        \\\"balance\\\": 12000.705,\\n        \\\"apr\\\": 2,\\n        \\\"minPaymentRule\\\": {\\n          \\\"type\\\": \\\"fixed\\\",\\n          \\\"amount\\\": 425.15\\n        },\\n        \\\"paymentSource\\\": \\\"checking\\\",\\n        \\\"termMonths\\\": 60\\n      }\\n    ]\\n  }\\n}\"}"
+      },
+      "errors": []
+    }
+  ]
+}

@@ -122,7 +122,7 @@ function PercentageInput({
   value: number;
   onChange: (value: number) => void;
 }) {
-  return <FinancialNumberInput accessibilityLabel={accessibilityLabel} disabled={disabled} label={label} value={value} onChange={onChange} kind={'percent'} />;
+  return <FinancialNumberInput accessibilityLabel={accessibilityLabel} disabled={disabled} label={label} value={value} onChange={onChange} kind={'legacy-percent'} />;
 }
 
 export function AssumptionControls({
