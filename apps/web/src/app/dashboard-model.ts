@@ -126,6 +126,14 @@ function safeNonNegative(value: number, fallback = 0): number {
   return Number.isFinite(value) ? Math.max(0, value) : fallback;
 }
 
+const dailyInterestCurrency = new Intl.NumberFormat('en-US', {
+  style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2,
+});
+
+function formatDailyInterest(amount: number): string {
+  return amount > 0 && amount < 0.01 ? '<$0.01' : dailyInterestCurrency.format(amount);
+}
+
 function sanitizeProjection(input: DashboardProjectionInput): DashboardProjectionInput {
   return {
     ...input,
@@ -516,11 +524,14 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     {
       id: 'interest-burn',
       label: 'Interest Burn',
-      value: `${formatCurrency(dailyInterestBurn)}/day`,
-      caption: `${formatCurrency(debtDailyInterest)}/day debt + ${formatCurrency(locDailyInterest)}/day LOC.`,
+      value: Number.isFinite(dailyInterestBurn) ? `Est. ${formatDailyInterest(dailyInterestBurn)}/day` : 'Review inputs',
+      caption: Number.isFinite(dailyInterestBurn)
+        ? `Debt: ${formatDailyInterest(debtDailyInterest)}/day; LOC: ${formatDailyInterest(locDailyInterest)}/day.`
+        : 'Daily interest exceeds the supported numeric range. Review balance and APR.',
       tone: dailyInterestBurn > 50 ? 'amber' : 'sky',
       assumptions: [
         'Daily burn covers the selected target plus current LOC balance, matching this dashboard payoff scope.',
+        'Amounts are rounded independently for display; displayed components may not add to the displayed total. Calculations retain unrounded values.',
         'Actual lenders may post interest monthly and may use different balance rules.',
       ],
     },

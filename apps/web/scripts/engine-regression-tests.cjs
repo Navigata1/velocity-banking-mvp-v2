@@ -7367,6 +7367,81 @@ test('dashboard model keeps the first screen to four vitals and blocks unstable 
   assert.ok(model.warnings.some((warning) => warning.kind === 'loc-utilization'));
 });
 
+for (const fixture of [
+  { id: 'House rounding', balance: 285000, apr: 0.065, locBalance: 3200, locApr: 0.085,
+    value: 'Est. $51.50/day', debt: '$50.75', loc: '$0.75' },
+  { id: 'Auto rounding', balance: 18450, apr: 0.069, locBalance: 3200, locApr: 0.085,
+    value: 'Est. $4.23/day', debt: '$3.49', loc: '$0.75' },
+  { id: 'cleared balances', balance: 0, apr: 0.065, locBalance: 0, locApr: 0.085,
+    value: 'Est. $0.00/day', debt: '$0.00', loc: '$0.00' },
+  { id: 'positive sub-cent', balance: 1, apr: 0.01, locBalance: 0, locApr: 0,
+    value: 'Est. <$0.01/day', debt: '<$0.01', loc: '$0.00' },
+  { id: 'one-cent boundary', balance: 10, apr: 0.365, locBalance: 0, locApr: 0,
+    value: 'Est. $0.01/day', debt: '$0.01', loc: '$0.00' },
+  { id: 'independent cent rounding', balance: 1236, apr: 0.365, locBalance: 236, locApr: 0.365,
+    value: 'Est. $1.47/day', debt: '$1.24', loc: '$0.24' },
+  { id: 'large imported balances', balance: 100000000, apr: 0.365, locBalance: 100000000, locApr: 0.365,
+    value: 'Est. $200,000.00/day', debt: '$100,000.00', loc: '$100,000.00' },
+  { id: 'unrounded warning threshold', balance: 50004, apr: 0.365, locBalance: 0, locApr: 0,
+    value: 'Est. $50.00/day', debt: '$50.00', loc: '$0.00' },
+]) {
+  test(`dashboard daily-interest display preserves unrounded scope: ${fixture.id}`, () => {
+    const activeDebt = { name: 'Selected Loan', balance: fixture.balance,
+      interestRate: fixture.apr, minimumPayment: 425 };
+    const input = {
+      monthlyIncome: 8200, monthlyExpenses: 4700, chunkAmount: 1000, activeDebt,
+      allDebts: [activeDebt, { name: 'Other Loan', balance: 90000000, interestRate: 0.99, minimumPayment: 5000 }],
+      loc: { limit: 200000000, balance: fixture.locBalance, interestRate: fixture.locApr },
+      baseline: { months: 48, totalInterest: 2600, isPayoffPossible: true },
+      velocity: { months: 24, totalInterest: 1800, savings: 800, isPayoffPossible: true },
+    };
+    const unchanged = JSON.stringify(input);
+    const model = dashboardModel.buildDashboardModel(input);
+    const vital = model.vitals.find((v) => v.id === 'interest-burn');
+    assert.equal(vital.value, fixture.value);
+    assert.equal(vital.caption, `Debt: ${fixture.debt}/day; LOC: ${fixture.loc}/day.`);
+    assert.ok(vital.assumptions.some((a) => a.includes('rounded independently')));
+    assert.ok(vital.assumptions.some((a) => a.includes('selected target plus current LOC balance')));
+    assert.equal(model.debtDailyInterest, fixture.balance * (fixture.apr / 365));
+    assert.equal(model.locDailyInterest, fixture.locBalance * (fixture.locApr / 365));
+    assert.equal(model.dailyInterestBurn, model.debtDailyInterest + model.locDailyInterest);
+    assert.equal(vital.tone, model.dailyInterestBurn > 50 ? 'amber' : 'sky');
+    assert.equal(model.vitals.length, 4);
+    assert.equal(model.vitals.find((v) => v.id === 'cash-flow').value, '$3,500');
+    assert.equal(JSON.stringify(input), unchanged, 'presentation must not mutate its inputs');
+  });
+}
+
+for (const overflow of [
+  { id: 'multiplication', apr: 365000, locBalance: 0, locApr: 0 },
+  { id: 'sum of finite components', apr: 36500, locBalance: Number.MAX_VALUE, locApr: 36500 },
+]) test(`dashboard daily-interest display rejects overflow: ${overflow.id}`, () => {
+  const debt = { name: 'Oversized import', balance: Number.MAX_VALUE, interestRate: overflow.apr, minimumPayment: 425 };
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: 8200, monthlyExpenses: 4700, chunkAmount: 1000,
+    activeDebt: debt, allDebts: [debt],
+    loc: { limit: Number.MAX_VALUE, balance: overflow.locBalance, interestRate: overflow.locApr },
+    baseline: { months: 48, totalInterest: 2600, isPayoffPossible: true },
+    velocity: { months: 24, totalInterest: 1800, savings: 800, isPayoffPossible: true },
+  });
+  const vital = model.vitals.find((v) => v.id === 'interest-burn');
+  assert.equal(model.dailyInterestBurn, Infinity, 'do not rewrite the existing numeric calculation');
+  if (overflow.id === 'sum of finite components') {
+    assert.ok(Number.isFinite(model.debtDailyInterest) && Number.isFinite(model.locDailyInterest));
+  }
+  assert.equal(vital.value, 'Review inputs');
+  assert.equal(vital.caption, 'Daily interest exceeds the supported numeric range. Review balance and APR.');
+});
+
+test('CI retains the rendered dashboard daily-interest gate and its failure artifacts', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'));
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.equal(pkg.scripts['smoke:dashboard:built'], 'node scripts/smoke-dashboard-interest.cjs');
+  assert.ok(workflow.includes('run: npm run smoke:dashboard:built'));
+  assert.match(workflow, /name: Upload dashboard interest proof\s+if: always\(\)/);
+  assert.ok(workflow.includes('path: apps/web/test-results/dashboard-interest'));
+});
+
 test('dashboard model treats a missing LOC limit as setup needed instead of maxed out', () => {
   const model = dashboardModel.buildDashboardModel({
     monthlyIncome: 6500,
