@@ -1,4 +1,5 @@
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
+import { decodePortfolioBook, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import {
   decodeMobileAssumptions,
@@ -15,6 +16,9 @@ import {
   type MobileSnapshotOutbox,
 } from './snapshot-outbox';
 import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
+import { loadMobilePortfolioForOwner, saveMobilePortfolioForOwner } from '../mobile-portfolio-storage';
+import { readMobileSnapshotPortfolio, serializeMobileRecoveryPortfolio } from './portfolio-snapshot';
+export { serializeMobileRecoveryPortfolio } from './portfolio-snapshot';
 
 const MOBILE_STORAGE_KEY = 'interestshield-mobile-assumptions-v1';
 const MAX_RECOVERY_CANDIDATES = 20;
@@ -39,7 +43,8 @@ interface SnapshotRow {
 }
 
 export interface MobileSnapshotRecoveryPreview {
-  assumptions: MobileDashboardInput;
+  assumptions: MobileDashboardInput | null;
+  portfolio: PortfolioBook | null;
   clientRevision: number;
   snapshotId: string;
   snapshotIdempotencyKey: string;
@@ -48,6 +53,7 @@ export interface MobileSnapshotRecoveryPreview {
 
 export interface MobileSnapshotRecoveryOptions {
   guestAssumptions: MobileDashboardInput | null;
+  guestPortfolio: PortfolioBook | null;
   rejectedCount: number;
   selectedSnapshotId: null;
   snapshots: MobileSnapshotRecoveryPreview[];
@@ -55,8 +61,8 @@ export interface MobileSnapshotRecoveryOptions {
 }
 
 export type MobileSnapshotRecoverySource =
-  | { assumptions: MobileDashboardInput; kind: 'device' }
-  | { assumptions: MobileDashboardInput; kind: 'guest' }
+  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; kind: 'device' }
+  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; kind: 'guest' }
   | { kind: 'remote'; snapshot: MobileSnapshotRecoveryPreview };
 
 export type MobileSnapshotRecoveryConfirmation =
@@ -65,6 +71,7 @@ export type MobileSnapshotRecoveryConfirmation =
     kind: 'device' | 'guest';
     ownerId: string;
     reviewedAssumptions: string;
+    reviewedPortfolio?: string;
   };
 
 export interface MobileSnapshotRecoveryResult {
@@ -85,7 +92,8 @@ export class MobileSnapshotRecoveryPendingError extends Error {
   }
 }
 
-export function serializeMobileRecoveryAssumptions(input: MobileDashboardInput): string {
+export function serializeMobileRecoveryAssumptions(input: MobileDashboardInput | null): string {
+  if (input === null) return 'null';
   return JSON.stringify({
     activeDebt: {
       apr: input.activeDebt.apr,
@@ -111,6 +119,11 @@ interface MobileSnapshotRecoveryDependencies {
   outbox?: RecoveryOutbox;
   replaceAssumptions: (
     input: MobileDashboardInput,
+    ownerLock?: MobileSnapshotOwnerLock,
+    expectedRevision?: number
+  ) => Promise<MobileAssumptionStorageBackend>;
+  replacePortfolio?: (
+    book: PortfolioBook,
     ownerLock?: MobileSnapshotOwnerLock,
     expectedRevision?: number
   ) => Promise<MobileAssumptionStorageBackend>;
@@ -159,22 +172,17 @@ function readRow(value: unknown, expectedOwnerId: string): SnapshotRow {
 
 function decodePreview(row: SnapshotRow, expectedOwnerId: string): MobileSnapshotRecoveryPreview | null {
   if (row.snapshot_version !== 1) return null;
-  const entries = row.assumptions_json.storage.filter(
-    (candidate) => isRecord(candidate)
-      && candidate.key === MOBILE_STORAGE_KEY
-      && typeof candidate.value === 'string'
-  );
-  if (entries.length !== 1) return null;
-  const [entry] = entries;
-  const assumptions = decodeMobileAssumptions(entry.value, expectedOwnerId);
-  if (!assumptions) return null;
-  return {
-    assumptions,
-    clientRevision: row.client_revision,
-    snapshotId: row.id,
-    snapshotIdempotencyKey: row.idempotency_key,
-    updatedAt: row.updated_at,
-  };
+  try {
+    const entries = row.assumptions_json.storage.filter(candidate => isRecord(candidate) && candidate.key === MOBILE_STORAGE_KEY);
+    if (entries.length > 1) return null;
+    const entry = entries[0];
+    const assumptions = entry && typeof entry.value === 'string' ? decodeMobileAssumptions(entry.value, expectedOwnerId) : null;
+    if (entry && !assumptions) return null;
+    const portfolio = readMobileSnapshotPortfolio(row.assumptions_json.storage);
+    if (!assumptions && !portfolio) return null;
+    return { assumptions, portfolio, clientRevision: row.client_revision, snapshotId: row.id,
+      snapshotIdempotencyKey: row.idempotency_key, updatedAt: row.updated_at };
+  } catch { return null; }
 }
 
 async function queryOwnedRows(
@@ -215,9 +223,10 @@ export async function loadMobileSnapshotRecoveryOptions(
 ): Promise<MobileSnapshotRecoveryOptions> {
   const ownerId = await verifyActiveOwner(client, expectedOwnerIdInput);
   const currentStreamKey = await getOrCreateMobileSyncIdempotencyKey();
-  const [rows, guest] = await Promise.all([
+  const [rows, guest, guestPortfolio] = await Promise.all([
     queryOwnedRows(client, ownerId, currentStreamKey),
     loadMobileAssumptionsForOwner(null),
+    loadMobilePortfolioForOwner(null),
   ]);
   const snapshots: MobileSnapshotRecoveryPreview[] = [];
   const streamRevisions: Record<string, number> = {};
@@ -234,6 +243,7 @@ export async function loadMobileSnapshotRecoveryOptions(
   await verifyActiveOwner(client, ownerId);
   return {
     guestAssumptions: guest.restored ? guest.input : null,
+    guestPortfolio: guestPortfolio.book,
     rejectedCount,
     selectedSnapshotId: null,
     snapshots,
@@ -249,7 +259,17 @@ function samePreview(
     && left.clientRevision === right.clientRevision
     && left.snapshotIdempotencyKey === right.snapshotIdempotencyKey
     && left.updatedAt === right.updatedAt
-    && JSON.stringify(left.assumptions) === JSON.stringify(right.assumptions);
+    && JSON.stringify(left.assumptions) === JSON.stringify(right.assumptions)
+    && serializeMobileRecoveryPortfolio(left.portfolio) === serializeMobileRecoveryPortfolio(right.portfolio);
+}
+
+function captureRecoverySource(source: MobileSnapshotRecoverySource): MobileSnapshotRecoverySource {
+  const scenario = (value: MobileDashboardInput | null) => value === null ? null
+    : { ...value, activeDebt: { ...value.activeDebt }, loc: { ...value.loc } };
+  const book = (value: PortfolioBook | null | undefined) => value == null ? null : decodePortfolioBook(value);
+  return source.kind === 'remote' ? { kind: 'remote', snapshot: { ...source.snapshot,
+    assumptions: scenario(source.snapshot.assumptions), portfolio: book(source.snapshot.portfolio) } }
+    : { kind: source.kind, assumptions: scenario(source.assumptions), portfolio: book(source.portfolio) };
 }
 
 export async function applyMobileSnapshotRecovery(
@@ -258,13 +278,16 @@ export async function applyMobileSnapshotRecovery(
     confirmation: MobileSnapshotRecoveryConfirmation;
     expectedOwnerId: string;
     reviewedLocalAssumptions: string;
+    reviewedLocalPortfolio?: string;
     source: MobileSnapshotRecoverySource;
   },
   dependencies: MobileSnapshotRecoveryDependencies
 ): Promise<MobileSnapshotRecoveryResult> {
+  input = { ...input, confirmation: { ...input.confirmation }, source: captureRecoverySource(input.source) };
   const ownerId = await verifyActiveOwner(client, input.expectedOwnerId);
   const options = await loadMobileSnapshotRecoveryOptions(client, ownerId);
-  let assumptions: MobileDashboardInput;
+  let assumptions: MobileDashboardInput | null;
+  let sourcePortfolio: PortfolioBook | null;
 
   if (input.source.kind === 'remote') {
     if ('kind' in input.confirmation) {
@@ -282,21 +305,25 @@ export async function applyMobileSnapshotRecovery(
       throw new Error('The selected snapshot changed. Review again before applying it.');
     }
     assumptions = current.assumptions;
+    sourcePortfolio = current.portfolio;
   } else if (input.source.kind === 'guest') {
     if (
       !('kind' in input.confirmation)
       || input.confirmation.kind !== 'guest'
       || requireOwnerId(input.confirmation.ownerId) !== ownerId
     ) throw new Error('Guest adoption requires confirmation for the active owner.');
-    if (!options.guestAssumptions) {
-      throw new Error('No saved guest assumptions are available to adopt.');
+    if (!options.guestAssumptions && !options.guestPortfolio) {
+      throw new Error('No saved guest scenario or Portfolio is available to adopt.');
     }
     const reviewedAssumptions = serializeMobileRecoveryAssumptions(input.source.assumptions);
     if (
       input.confirmation.reviewedAssumptions !== reviewedAssumptions
       || serializeMobileRecoveryAssumptions(options.guestAssumptions) !== reviewedAssumptions
+      || serializeMobileRecoveryPortfolio(options.guestPortfolio) !== serializeMobileRecoveryPortfolio(input.source.portfolio ?? null)
+      || options.guestPortfolio !== null && input.confirmation.reviewedPortfolio !== serializeMobileRecoveryPortfolio(options.guestPortfolio)
     ) throw new Error('Guest assumptions changed. Review again before adopting them.');
     assumptions = options.guestAssumptions;
+    sourcePortfolio = options.guestPortfolio;
   } else {
     if (
       !('kind' in input.confirmation)
@@ -304,8 +331,10 @@ export async function applyMobileSnapshotRecovery(
       || requireOwnerId(input.confirmation.ownerId) !== ownerId
       || input.confirmation.reviewedAssumptions
         !== serializeMobileRecoveryAssumptions(input.source.assumptions)
+      || input.source.portfolio != null && input.confirmation.reviewedPortfolio !== serializeMobileRecoveryPortfolio(input.source.portfolio)
     ) throw new Error('Keeping this device requires confirmation of the reviewed assumptions.');
     assumptions = input.source.assumptions;
+    sourcePortfolio = input.source.portfolio ?? null;
   }
 
   const getSnapshotIdempotencyKey = dependencies.getSnapshotIdempotencyKey
@@ -316,26 +345,50 @@ export async function applyMobileSnapshotRecovery(
 
   const discarded = await withMobileSnapshotOwnerLock(ownerId, async (ownerLock) => {
     await verifyActiveOwner(client, ownerId);
-    const local = await loadMobileAssumptionsForOwner(ownerId, undefined, ownerLock);
+    const [local, localPortfolio] = await Promise.all([
+      loadMobileAssumptionsForOwner(ownerId, undefined, ownerLock), loadMobilePortfolioForOwner(ownerId, ownerLock),
+    ]);
+    if (localPortfolio.backend === 'unavailable') throw new Error('Portfolio storage is unavailable. Recovery was not staged.');
     const currentLocalAssumptions = serializeMobileRecoveryAssumptions(local.input);
+    const currentLocalPortfolio = serializeMobileRecoveryPortfolio(localPortfolio.book);
     if (currentLocalAssumptions !== input.reviewedLocalAssumptions) {
       throw new Error('Local assumptions changed after review. Review recovery again.');
     }
     if (
       input.source.kind === 'device'
+      && input.source.assumptions !== null
       && serializeMobileRecoveryAssumptions(input.source.assumptions) !== currentLocalAssumptions
     ) throw new Error('This device changed after review. Review recovery again.');
+    if (input.reviewedLocalPortfolio !== undefined ? input.reviewedLocalPortfolio !== currentLocalPortfolio
+      : localPortfolio.book !== null || sourcePortfolio !== null) {
+      throw new Error('Local Portfolio changed after review or was not reviewed. Review recovery again.');
+    }
+    const targetAssumptions = assumptions ?? local.input;
+    const targetPortfolio = sourcePortfolio ?? localPortfolio.book;
 
     const staged = await outbox.stageRecovery({
-      assumptions,
+      assumptions: targetAssumptions,
+      portfolio: targetPortfolio,
       expectedLocalAssumptions: currentLocalAssumptions,
+      expectedLocalPortfolio: currentLocalPortfolio,
       expectedOwnerId: ownerId,
       serverRevision,
       snapshotIdempotencyKey,
       sourceKind: input.source.kind,
     }, ownerLock);
     try {
-      await dependencies.replaceAssumptions(assumptions, ownerLock, local.revision);
+      if (assumptions !== null && await dependencies.replaceAssumptions(targetAssumptions, ownerLock, local.revision) === 'unavailable') {
+        throw new Error('Recovery requires durable scenario storage.');
+      }
+      if (targetPortfolio !== null && serializeMobileRecoveryPortfolio(targetPortfolio) !== currentLocalPortfolio) {
+        if (dependencies.replacePortfolio) {
+          if (await dependencies.replacePortfolio(targetPortfolio, ownerLock, localPortfolio.revision) === 'unavailable') {
+            throw new Error('Recovery requires durable Portfolio storage.');
+          }
+        }
+        else await saveMobilePortfolioForOwner(ownerId, targetPortfolio, { ownerLock, expectedRevision: localPortfolio.revision });
+      }
+      await verifyActiveOwner(client, ownerId);
       return (await outbox.commitRecovery(ownerId, staged.recoveryId, ownerLock)).discarded;
     } catch (error) {
       throw new MobileSnapshotRecoveryPendingError(error);
@@ -355,6 +408,7 @@ export async function resumePendingMobileSnapshotRecovery(
       expectedRevision?: number
     ) => Promise<MobileAssumptionStorageBackend>;
     saveAssumptions?: typeof saveMobileAssumptionsForOwner;
+    replacePortfolio?: MobileSnapshotRecoveryDependencies['replacePortfolio'];
   } = {}
 ): Promise<boolean> {
   const ownerId = requireOwnerId(expectedOwnerIdInput);
@@ -368,8 +422,19 @@ export async function resumePendingMobileSnapshotRecovery(
     if (current !== pending.expectedLocalAssumptions && current !== target) {
       throw new Error('Local assumptions changed after recovery was confirmed. Review is required.');
     }
-    let backend: MobileAssumptionStorageBackend;
-    if (dependencies.replaceAssumptions) {
+    const localPortfolio = pending.expectedLocalPortfolio === undefined ? null : await loadMobilePortfolioForOwner(ownerId, ownerLock);
+    if (localPortfolio) {
+      if (localPortfolio.backend === 'unavailable') throw new Error('Pending recovery requires durable Portfolio storage.');
+      const currentBook = serializeMobileRecoveryPortfolio(localPortfolio.book);
+      const targetBook = serializeMobileRecoveryPortfolio(pending.portfolio ?? null);
+      if (currentBook !== pending.expectedLocalPortfolio && currentBook !== targetBook) {
+        throw new Error('Local Portfolio changed after recovery was confirmed. Review is required.');
+      }
+    }
+    let backend: MobileAssumptionStorageBackend = local.backend;
+    if (current === target) {
+      // A half-applied pair must not rewrite the store that already reached its target.
+    } else if (dependencies.replaceAssumptions) {
       backend = await dependencies.replaceAssumptions(
         pending.assumptions,
         ownerLock,
@@ -385,6 +450,13 @@ export async function resumePendingMobileSnapshotRecovery(
     }
     if (backend === 'unavailable') {
       throw new Error('Pending snapshot recovery requires durable local storage.');
+    }
+    if (localPortfolio && pending.portfolio !== null && pending.portfolio !== undefined
+      && serializeMobileRecoveryPortfolio(localPortfolio.book) !== serializeMobileRecoveryPortfolio(pending.portfolio)) {
+      if (dependencies.replacePortfolio) {
+        const bookBackend = await dependencies.replacePortfolio(pending.portfolio, ownerLock, localPortfolio.revision);
+        if (bookBackend === 'unavailable') throw new Error('Pending recovery requires durable Portfolio storage.');
+      } else await saveMobilePortfolioForOwner(ownerId, pending.portfolio, { ownerLock, expectedRevision: localPortfolio.revision });
     }
     await outbox.commitRecovery(ownerId, pending.recoveryId, ownerLock);
     return true;

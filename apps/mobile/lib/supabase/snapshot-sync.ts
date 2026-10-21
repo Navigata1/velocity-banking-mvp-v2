@@ -7,11 +7,14 @@ import {
 } from '@interestshield/persistence-contract';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
+import { encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { PORTFOLIO_SNAPSHOT_KEY } from './portfolio-snapshot';
 import { encodeMobileAssumptions } from '../mobile-assumption-storage';
 import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
 
 export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
+  portfolio?: PortfolioBook | null;
   clientRevision: number;
   displayName?: string;
   expectedOwnerId: string;
@@ -50,6 +53,9 @@ export async function prepareMobileSnapshotSync(
     key: 'interestshield-mobile-assumptions-v1',
     value: encodeMobileAssumptions(input.assumptions, undefined, input.expectedOwnerId),
   }];
+  if (input.portfolio !== undefined && input.portfolio !== null) {
+    storage.push({ key: PORTFOLIO_SNAPSHOT_KEY, value: encodePortfolioDocument(input.portfolio) });
+  }
   const plan = buildSnapshotSyncPlan({
     displayName: input.displayName,
     idempotencyKey: input.snapshotIdempotencyKey ?? await getOrCreateMobileSyncIdempotencyKey(),

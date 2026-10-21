@@ -12,6 +12,7 @@ function loadTsFile(filename, mocks = {}) {
   const testModule = { exports: {} };
   const localRequire = (request) => {
     if (Object.hasOwn(mocks, request)) return mocks[request];
+    if (request.startsWith('@interestshield/financial-engine')) return loadTsFile(fs.realpathSync(require.resolve(request)), mocks);
     if (request.startsWith('.')) {
       const base = path.resolve(path.dirname(filename), request);
       const resolved = [base, `${base}.ts`, path.join(base, 'index.ts')].find(fs.existsSync);
