@@ -1163,7 +1163,7 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
     'utf8'
   );
   const portfolioPathSource = fs.readFileSync(
-    path.join(repoRoot, 'apps/mobile/components/mobile-shell/portfolio-path.tsx'),
+    path.join(repoRoot, 'apps/mobile/components/portfolio/portfolio-payoff-path.tsx'),
     'utf8'
   );
   const settingsSource = fs.readFileSync(
@@ -1222,8 +1222,10 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
   assert.ok(accountSource.includes('minHeight: 48'), 'expected account actions to meet the native target minimum');
   assert.ok(orbitSource.includes('accessibilityValue={{ text: mobileLoopStepAccessibilityValue(step) }}'));
   assert.ok(orbitSource.includes('const useLinearOrbit = fontScale >= 1.6'));
-  assert.ok(portfolioPathSource.includes('accessibilityLabel="Portfolio payoff progress"'));
-  assert.ok(portfolioPathSource.includes('portfolioPointAccessibilityLabel(point)'));
+  assert.ok(portfolioPathSource.includes('accessibilityLabel="Portfolio payoff path"'));
+  assert.ok(portfolioPathSource.includes('accessibilityRole="text"') && portfolioPathSource.includes('accessible'));
+  assert.ok(portfolioPathSource.includes('Modeled balance ${formatCurrency(point.balance)}'));
+  assert.ok(portfolioPathSource.includes('Interest this month ${formatCurrency(point.interest)}'));
   assert.ok(renderedSmokeSource.includes("['phone-landscape', { width: 844, height: 390 }]"));
   assert.ok(
     routeFrameSource.indexOf('{renderContent(context)}')
@@ -1666,6 +1668,16 @@ test('mobile storage migrates only the legacy standalone demo default', () => {
   assert.equal(migrated.loc.limit, 25000);
   assert.equal(customZeroLimit.monthlyIncome, 6400);
   assert.equal(customZeroLimit.loc.limit, 0);
+});
+
+test('native recovery review uses legacy scenario APR units and explicit canonical book units', () => {
+  const labels = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/accessibility-labels.ts'));
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const input = { ...sharedEngine.defaultMobileDashboardInput, activeDebt: { ...sharedEngine.defaultMobileDashboardInput.activeDebt, apr: 6.5 },
+    loc: { ...sharedEngine.defaultMobileDashboardInput.loc, apr: 8.5 } };
+  const spoken = labels.recoveryChoiceAccessibilityLabel(input, 'Reviewed source');
+  assert.match(spoken, /6\.5 percent APR/); assert.match(spoken, /8\.5 percent APR/); assert.doesNotMatch(spoken, /(?:650|850) percent APR/);
+  assert.equal(labels.formatRecoveryAPR(2, 'decimal'), '200');
 });
 
 test('shared mobile cockpit snapshot exposes the core demo instruments and guardrails', () => {

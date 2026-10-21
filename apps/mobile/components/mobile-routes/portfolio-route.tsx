@@ -45,7 +45,7 @@ function PortfolioWorkspace({ input, scenarioReady }: { input: MobileDashboardIn
           : 'Start a separate simulated inventory. Your existing single-debt scenario remains unchanged.'} />
       <Text testID="native-portfolio-storage-status" accessibilityLiveRegion="polite" style={styles.detail}>{statusLabel}</Text>
       {commandError ? <Text accessibilityRole="alert" style={styles.warning}>{commandError}</Text> : null}
-      <Text style={styles.detail}>This portfolio is saved separately on this device. Account sync currently includes the single-debt scenario only.</Text>
+      <Text style={styles.detail}>Portfolio and the single-debt scenario have separate inputs. Configured private snapshot sync includes both saved records.</Text>
       {status === 'error' ? <>
         <Text style={styles.warning}>Reloading discards unsaved portfolio edits. Other tabs may have newer saved values.</Text>
         <Command label={confirmReload ? 'Confirm reload saved portfolio' : 'Reload saved portfolio'} onPress={() => {
