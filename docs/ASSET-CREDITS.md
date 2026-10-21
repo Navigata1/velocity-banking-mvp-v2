@@ -139,12 +139,25 @@ Original poster unchanged; source/config/model hashes protected in both manifest
 No manufacturer branding, third-party boat mesh, financial records or marine
 certification. Final collection-wide art approval remains open; see its contract.
 
+## Original Refined Custom
+
+Original pocket compass, stepped hollow case, seated dial/rose/ticks, faceted
+green/red needle, clear lens, upright hollow lid, five-barrel hinge and bail are
+authored in `apps/media/scripts/build-refined-custom.mjs`. Twelve embedded256px
+WebPs derive from original deterministic procedural brush/dial/enamel fields.
+`apps/media/sources/custom/materials.json` records the recipe and explicit lack of
+external image sources. No manufacturer marks, downloaded meshes or stock textures.
+
+Lossless packed normal directions and lossy color/roughness fields are artistic
+approximations, not measured scans, certified alloy, physical refraction or a
+calibrated navigation instrument. Poster unchanged; both manifests protect exact
+builder/config/model hashes. See its contract; final collection art approval is open.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The remaining Custom base model is a locally authored 3D study. It has not
-passed the final photorealism gate and must not be represented as finished
-photorealistic artwork or an exact reconstruction of its poster.
+All ten base models now have textured refinement candidates. This does not close
+the final photorealism/collection art gate or establish exact poster reconstruction.

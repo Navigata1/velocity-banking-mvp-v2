@@ -1,0 +1,1103 @@
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+ok 1 - Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+  ---
+  duration_ms: 135.5045
+  type: 'test'
+  ...
+# Subtest: Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+ok 2 - Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+  ---
+  duration_ms: 255.6576
+  type: 'test'
+  ...
+# Subtest: Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+ok 3 - Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+  ---
+  duration_ms: 594.5746
+  type: 'test'
+  ...
+# Subtest: Credit Card keeps eight inset chip contacts connected to their recessed substrate
+ok 4 - Credit Card keeps eight inset chip contacts connected to their recessed substrate
+  ---
+  duration_ms: 215.3845
+  type: 'test'
+  ...
+# Subtest: Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+ok 5 - Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+  ---
+  duration_ms: 248.2149
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has actual reeding, two closed faces and recessed wave details
+ok 6 - Credit Card coin has actual reeding, two closed faces and recessed wave details
+  ---
+  duration_ms: 153.4111
+  type: 'test'
+  ...
+# Subtest: Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+ok 7 - Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+  ---
+  duration_ms: 999.1763
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+ok 8 - Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+  ---
+  duration_ms: 34.3733
+  type: 'test'
+  ...
+# Subtest: Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+ok 9 - Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+  ---
+  duration_ms: 187.822
+  type: 'test'
+  ...
+# Subtest: Custom replaces the study with hash-protected procedural original refinement in both manifests
+not ok 10 - Custom replaces the study with hash-protected procedural original refinement in both manifests
+  ---
+  duration_ms: 48.7213
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:87:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom must replace the untextured study
+    + actual - expected
+    
+    + undefined
+    - 'refined-textured'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'refined-textured'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:88:56)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+not ok 11 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+  ---
+  duration_ms: 13.576
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:95:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    four real PBR triplets replace flat study materials
+    
+    0 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:96:169)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+not ok 12 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+  ---
+  duration_ms: 29.8439
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Case
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:109:47)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom dark dial is a closed seated cylinder with its top near author Y .264
+not ok 13 - Custom dark dial is a closed seated cylinder with its top near author Y .264
+  ---
+  duration_ms: 15.8061
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:112:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:113:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom rose is a closed raised faceted metal eight-point body seated on the dial
+not ok 14 - Custom rose is a closed raised faceted metal eight-point body seated on the dial
+  ---
+  duration_ms: 61.1838
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:117:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:120:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+not ok 15 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+  ---
+  duration_ms: 6.7867
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:124:44)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+not ok 16 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+  ---
+  duration_ms: 7.5022
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:130:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:131:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom axle and pivot physically connect the dial and both needle roots
+not ok 17 - Custom axle and pivot physically connect the dial and both needle roots
+  ---
+  duration_ms: 16.4143
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:137:98)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom transparent closed lens covers the complete needle and pivot without intersecting them
+not ok 18 - Custom transparent closed lens covers the complete needle and pivot without intersecting them
+  ---
+  duration_ms: 15.1124
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:141:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:142:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+not ok 19 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+  ---
+  duration_ms: 8.519
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:148:79)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+not ok 20 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+  ---
+  duration_ms: 63.1332
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:153:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:155:40)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+not ok 21 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+  ---
+  duration_ms: 72.1988
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:166:73)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom front lug physically seats the closed bail with a real empty ring aperture
+not ok 22 - Custom front lug physically seats the closed bail with a real empty ring aperture
+  ---
+  duration_ms: 31.0837
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:170:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:171:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+not ok 23 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+  ---
+  duration_ms: 24.9578
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: 'Custom refinement requires a protected imported record'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:180:51)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 24 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 109.8154
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 25 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 70.5248
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 26 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 92.5835
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 27 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 612.0935
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 28 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 35.3921
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 29 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 198.1043
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 30 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 12.7995
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 31 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 1.5652
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 32 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 11.667
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 33 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 1.3446
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 34 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 1.6028
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 35 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 4.4645
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 36 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 3.8245
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 37 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 12.465
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 38 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 1.6987
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 39 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 2.4913
+  type: 'test'
+  ...
+# Subtest: Land preserves generated sources, embedded PBR maps and the standing collection budget
+ok 40 - Land preserves generated sources, embedded PBR maps and the standing collection budget
+  ---
+  duration_ms: 260.187
+  type: 'test'
+  ...
+# Subtest: Land has real pond depth and non-flat terrain rather than a water disk over grass
+ok 41 - Land has real pond depth and non-flat terrain rather than a water disk over grass
+  ---
+  duration_ms: 258.5271
+  type: 'test'
+  ...
+# Subtest: Land gravel ribbon follows the actual triangulated terrain without floating
+ok 42 - Land gravel ribbon follows the actual triangulated terrain without floating
+  ---
+  duration_ms: 118.6735
+  type: 'test'
+  ...
+# Subtest: Land keeps four grounded survey stakes and three connected textured trees
+ok 43 - Land keeps four grounded survey stakes and three connected textured trees
+  ---
+  duration_ms: 96.6645
+  type: 'test'
+  ...
+# Subtest: Land cutaway layers meet the terrain and preserve finite normalized geometry
+ok 44 - Land cutaway layers meet the terrain and preserve finite normalized geometry
+  ---
+  duration_ms: 202.0578
+  type: 'test'
+  ...
+# Subtest: Land cut faces include actual stone/root detail and varied leaf shading
+ok 45 - Land cut faces include actual stone/root detail and varied leaf shading
+  ---
+  duration_ms: 59.1205
+  type: 'test'
+  ...
+# Subtest: Land woody components actually enter their trunks and reject detached branches
+ok 46 - Land woody components actually enter their trunks and reject detached branches
+  ---
+  duration_ms: 149.9924
+  type: 'test'
+  ...
+# Subtest: Land cutaway has outward-facing lower joins, corners and a closed underside
+ok 47 - Land cutaway has outward-facing lower joins, corners and a closed underside
+  ---
+  duration_ms: 311.7741
+  type: 'test'
+  ...
+# Subtest: Land rechecks the live collection budget inside locked asset publication
+ok 48 - Land rechecks the live collection budget inside locked asset publication
+  ---
+  duration_ms: 130.8229
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 49 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 26.4283
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 50 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 2.763
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 51 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 59.8612
+  type: 'test'
+  ...
+# Subtest: Medical poster retains traceable original-badge edit sources and current delivery hashes
+ok 52 - Medical poster retains traceable original-badge edit sources and current delivery hashes
+  ---
+  duration_ms: 55.2823
+  type: 'test'
+  ...
+# Subtest: Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+ok 53 - Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+  ---
+  duration_ms: 291.4446
+  type: 'test'
+  ...
+# Subtest: Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+ok 54 - Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+  ---
+  duration_ms: 9231.0858
+  type: 'test'
+  ...
+# Subtest: Legacy poster preparation and collection packaging retain the edited Medical source
+ok 55 - Legacy poster preparation and collection packaging retain the edited Medical source
+  ---
+  duration_ms: 21.9005
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+ok 56 - Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+  ---
+  duration_ms: 81.619
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+ok 57 - Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+  ---
+  duration_ms: 51.9644
+  type: 'test'
+  ...
+# Subtest: Collection packaging delivers validated source and manifest snapshots despite source-path changes
+ok 58 - Collection packaging delivers validated source and manifest snapshots despite source-path changes
+  ---
+  duration_ms: 6.4935
+  type: 'test'
+  ...
+# Subtest: Medical replaces the study with protected original geometry and verifiable source provenance
+ok 59 - Medical replaces the study with protected original geometry and verifiable source provenance
+  ---
+  duration_ms: 104.2817
+  type: 'test'
+  ...
+# Subtest: Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+ok 60 - Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+  ---
+  duration_ms: 208.3287
+  type: 'test'
+  ...
+# Subtest: Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+ok 61 - Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+  ---
+  duration_ms: 435.8679
+  type: 'test'
+  ...
+# Subtest: Medical handle is an arched tube with an actual open aperture and attached grip and bases
+ok 62 - Medical handle is an arched tube with an actual open aperture and attached grip and bases
+  ---
+  duration_ms: 928.8363
+  type: 'test'
+  ...
+# Subtest: Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+ok 63 - Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+  ---
+  duration_ms: 247.0728
+  type: 'test'
+  ...
+# Subtest: Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+ok 64 - Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+  ---
+  duration_ms: 1440.1229
+  type: 'test'
+  ...
+# Subtest: Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+ok 65 - Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+  ---
+  duration_ms: 99.7807
+  type: 'test'
+  ...
+# Subtest: Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+ok 66 - Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+  ---
+  duration_ms: 3799.5887
+  type: 'test'
+  ...
+# Subtest: Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+ok 67 - Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+  ---
+  duration_ms: 202.9504
+  type: 'test'
+  ...
+# Subtest: Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+ok 68 - Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+  ---
+  duration_ms: 189.7002
+  type: 'test'
+  ...
+# Subtest: Medical contact verification rejects concentric open tube skins without touching surfaces
+ok 69 - Medical contact verification rejects concentric open tube skins without touching surfaces
+  ---
+  duration_ms: 16.4839
+  type: 'test'
+  ...
+# Subtest: Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+ok 70 - Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+  ---
+  duration_ms: 31.1536
+  type: 'test'
+  ...
+# Subtest: Medical badge rim is closed and outward with visible aperture-facing inner walls
+ok 71 - Medical badge rim is closed and outward with visible aperture-facing inner walls
+  ---
+  duration_ms: 34.8448
+  type: 'test'
+  ...
+# Subtest: Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+ok 72 - Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+  ---
+  duration_ms: 52.1115
+  type: 'test'
+  ...
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+ok 73 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 101.648
+  type: 'test'
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+ok 74 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 365.0592
+  type: 'test'
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+ok 75 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 321.6699
+  type: 'test'
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+ok 76 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 475.7379
+  type: 'test'
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+ok 77 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 5056.8933
+  type: 'test'
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+ok 78 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 702.2659
+  type: 'test'
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+ok 79 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 343.6793
+  type: 'test'
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+ok 80 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 299.8986
+  type: 'test'
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+ok 81 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 18.3782
+  type: 'test'
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+ok 82 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 211.0742
+  type: 'test'
+  ...
+# Subtest: Personal geometry verification expands actual GPU instance translation, rotation and scale
+ok 83 - Personal geometry verification expands actual GPU instance translation, rotation and scale
+  ---
+  duration_ms: 13.4157
+  type: 'test'
+  ...
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 84 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 2.0532
+  type: 'test'
+  ...
+# Subtest: Personal textured surfaces retain bounded nondegenerate UVs after compression
+ok 85 - Personal textured surfaces retain bounded nondegenerate UVs after compression
+  ---
+  duration_ms: 69.8246
+  type: 'test'
+  ...
+# Subtest: Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ok 86 - Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+  ---
+  duration_ms: 6.8129
+  type: 'test'
+  ...
+# Subtest: Personal papers clear the folded flap while retaining a real inserted mouth path
+ok 87 - Personal papers clear the folded flap while retaining a real inserted mouth path
+  ---
+  duration_ms: 233.9098
+  type: 'test'
+  ...
+# Subtest: Personal every real stitch instance is surface-seated rather than buried or floating
+ok 88 - Personal every real stitch instance is surface-seated rather than buried or floating
+  ---
+  duration_ms: 2044.2635
+  type: 'test'
+  ...
+# Subtest: Personal key bevel has no proper nonadjacent surface crossings
+ok 89 - Personal key bevel has no proper nonadjacent surface crossings
+  ---
+  duration_ms: 170.9624
+  type: 'test'
+  ...
+# Subtest: Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+ok 90 - Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+  ---
+  duration_ms: 6.3858
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 91 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 31.7075
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 92 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 314.653
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 93 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 22.7488
+  type: 'test'
+  ...
+# Subtest: Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+ok 94 - Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+  ---
+  duration_ms: 103.0945
+  type: 'test'
+  ...
+# Subtest: Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+ok 95 - Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+  ---
+  duration_ms: 425.0671
+  type: 'test'
+  ...
+# Subtest: Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+ok 96 - Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+  ---
+  duration_ms: 401.0291
+  type: 'test'
+  ...
+# Subtest: Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+ok 97 - Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+  ---
+  duration_ms: 410.5605
+  type: 'test'
+  ...
+# Subtest: Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+ok 98 - Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+  ---
+  duration_ms: 723.9656
+  type: 'test'
+  ...
+# Subtest: Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+ok 99 - Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+  ---
+  duration_ms: 80.4234
+  type: 'test'
+  ...
+# Subtest: Recreation boom, both sail feet and sheets clear the actual cabin roof
+ok 100 - Recreation boom, both sail feet and sheets clear the actual cabin roof
+  ---
+  duration_ms: 510.8539
+  type: 'test'
+  ...
+# Subtest: Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+ok 101 - Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+  ---
+  duration_ms: 2958.1964
+  type: 'test'
+  ...
+# Subtest: Recreation closed teal keel and rudder physically join the hull and extend below it
+ok 102 - Recreation closed teal keel and rudder physically join the hull and extend below it
+  ---
+  duration_ms: 605.0042
+  type: 'test'
+  ...
+# Subtest: Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+ok 103 - Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+  ---
+  duration_ms: 108.032
+  type: 'test'
+  ...
+# Subtest: Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+ok 104 - Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+  ---
+  duration_ms: 15.7647
+  type: 'test'
+  ...
+# Subtest: Recreation grab rails have two real standoffs seated on the cabin roof
+ok 105 - Recreation grab rails have two real standoffs seated on the cabin roof
+  ---
+  duration_ms: 13.6156
+  type: 'test'
+  ...
+# Subtest: Recreation winch bases sit on the actual timber deck
+ok 106 - Recreation winch bases sit on the actual timber deck
+  ---
+  duration_ms: 28.9739
+  type: 'test'
+  ...
+# Subtest: Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+ok 107 - Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+  ---
+  duration_ms: 235.528
+  type: 'test'
+  ...
+# Subtest: Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+ok 108 - Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+  ---
+  duration_ms: 55.9143
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 109 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 103.9808
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 110 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 1421.2855
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 111 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 746.0796
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 112 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 333.0677
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 113 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 10.4551
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 114 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 7.1627
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 115 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 1290.7746
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 116 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 3.8849
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 117 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 3.7343
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 118 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 4.9723
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 119 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 5.0173
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 120 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 36.1586
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 121 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 4.3274
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 122 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 2.2717
+  type: 'test'
+  ...
+# Subtest: Student Loan replaces the study with a protected original artifact and verifiable source provenance
+ok 123 - Student Loan replaces the study with a protected original artifact and verifiable source provenance
+  ---
+  duration_ms: 243.3756
+  type: 'test'
+  ...
+# Subtest: Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+ok 124 - Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+  ---
+  duration_ms: 255.8237
+  type: 'test'
+  ...
+# Subtest: Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+ok 125 - Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+  ---
+  duration_ms: 171.5425
+  type: 'test'
+  ...
+# Subtest: Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+ok 126 - Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+  ---
+  duration_ms: 2600.0199
+  type: 'test'
+  ...
+# Subtest: Student Loan tassel has 48 separate volumetric strands attached to its head
+ok 127 - Student Loan tassel has 48 separate volumetric strands attached to its head
+  ---
+  duration_ms: 91.8592
+  type: 'test'
+  ...
+# Subtest: Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+ok 128 - Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+  ---
+  duration_ms: 37.1742
+  type: 'test'
+  ...
+# Subtest: Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+ok 129 - Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+  ---
+  duration_ms: 36.9002
+  type: 'test'
+  ...
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+ok 130 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 311.9801
+  type: 'test'
+  ...
+# Subtest: Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+ok 131 - Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+  ---
+  duration_ms: 59.2739
+  type: 'test'
+  ...
+# Subtest: Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+ok 132 - Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+  ---
+  duration_ms: 90.0663
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 133 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.8951
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 134 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.6663
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 135 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 7.8853
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 136 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 1.0444
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 137 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.7899
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 138 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.3407
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 139 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.8668
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 140 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.2931
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 141 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 53.0252
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 142 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 4.0099
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 143 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3712
+  type: 'test'
+  ...
+1..143
+# tests 143
+# suites 0
+# pass 129
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10246.0017

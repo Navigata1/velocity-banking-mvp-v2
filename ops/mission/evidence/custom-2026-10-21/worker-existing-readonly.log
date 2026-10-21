@@ -1,0 +1,21 @@
+Read-only existing media contracts, Node v22.22.2, HEAD 8e2f25ef6b81ffc65b9f96644170834c511078d3.
+Command (PowerShell, repo root):
+$files = Get-ChildItem apps/media/scripts/*.test.mjs | Where-Object { $_.Name -notin @('custom-refinement.test.mjs','medical-poster.test.mjs','refined-hero-record.test.mjs','remotion-compositions-contract.test.mjs') }
+& node --experimental-test-isolation=none --test $files.FullName
+
+Actual final TAP summary from completed process25747 (exit0):
+1..108
+# tests 108
+# suites 0
+# pass 108
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14330.2569
+
+This is a summary excerpt, not a full raw TAP transcript. All 108 existing
+read-only cases passed; Recreation cases73..87 passed, including actual geometry,
+counterexamples and publication-callback mutations. The other 21 original cases
+in the excluded three files perform disallowed scratch writes or spawn children;
+the parent owns their full129 baseline/full-suite rerun. None were modified.

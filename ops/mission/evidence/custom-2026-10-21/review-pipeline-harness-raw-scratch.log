@@ -1,0 +1,68 @@
+PASS actual baseline comparison: other nine model/import records and all ten poster records
+(node:21708) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS identical Custom model regeneration
+PASS protected full model rebuild
+PASS protected full poster rebuild
+PASS real 40-file art/poster/model/video package and captured manifest hashes
+PASS identical Custom model regeneration
+PASS protected full model rebuild
+PASS protected full poster rebuild
+PASS real 40-file art/poster/model/video package and captured manifest hashes
+PASS identical Custom model regeneration
+PASS protected full model rebuild
+PASS protected full poster rebuild
+PASS real 40-file art/poster/model/video package and captured manifest hashes
+{
+  "harnessSha256": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1",
+  "otherNineRecordsUnchanged": true,
+  "allTenPosterRecordsUnchanged": true,
+  "cases": [
+    {
+      "scenario": "control",
+      "harnessPassed": true,
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": false,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    },
+    {
+      "scenario": "retained-source-mutation",
+      "harnessPassed": true,
+      "retainedSourceChanged": true,
+      "otherNineVideoChanged": false,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    },
+    {
+      "scenario": "personal-video-and-manifest-mutation",
+      "harnessPassed": true,
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": true,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    }
+  ]
+}
+

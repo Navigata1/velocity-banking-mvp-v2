@@ -1,0 +1,88 @@
+## HEAD
+$ git rev-parse HEAD
+exit=0
+8e2f25ef6b81ffc65b9f96644170834c511078d3
+
+## Shared scope
+$ git diff --name-only 8e2f25ef6b81ffc65b9f96644170834c511078d3 -- packages apps/mobile apps/web/src apps/web/scripts apps/media/src apps/media/remotion apps/media/hyperframes .github supabase apps/web/package.json apps/web/package-lock.json apps/media/package.json apps/media/package-lock.json apps/media/scripts/refined-hero-record.mjs apps/media/scripts/hero-poster-publication.mjs apps/media/scripts/package-hero-collection.mjs apps/media/scripts/build-hero-models.mjs apps/media/scripts/prepare-hero-posters.mjs apps/media/hero-turntables/index.html
+exit=0
+
+## Manifest diff
+$ git diff 8e2f25ef6b81ffc65b9f96644170834c511078d3 -- apps/media/hero-imported.json apps/media/hero-models.json
+exit=0
+diff --git a/apps/media/hero-imported.json b/apps/media/hero-imported.json
+index ddf44c3..0c94850 100644
+--- a/apps/media/hero-imported.json
++++ b/apps/media/hero-imported.json
+@@ -144,5 +144,21 @@
+     "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
+     "units": "normalized stage units",
+     "version": 2
++  },
++  {
++    "id": "custom",
++    "quality": "refined-textured",
++    "bytes": 237124,
++    "meshes": 17,
++    "triangles": 13200,
++    "sha256": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b",
++    "sourceFile": "apps/media/scripts/build-refined-custom.mjs",
++    "sourceSha256": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17",
++    "materialSourceSha256": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0",
++    "creator": "InterestShield project",
++    "license": "Original project geometry and procedural material fields",
++    "provenance": "Original brushed-metal pocket compass: hollow stepped case, seated dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid, connected five-barrel hinge and bail ring. Approximate authored PBR, not scans, exact poster reconstruction or navigation certification.",
++    "units": "normalized stage units",
++    "version": 2
+   }
+ ]
+diff --git a/apps/media/hero-models.json b/apps/media/hero-models.json
+index 6322e3b..8089bf6 100644
+--- a/apps/media/hero-models.json
++++ b/apps/media/hero-models.json
+@@ -132,13 +132,19 @@
+   },
+   {
+     "id": "custom",
+-    "bytes": 261576,
+-    "meshes": 81,
+-    "triangles": 45976,
+-    "sha256": "a1ab505e1cccfdaf2b4535989694d11d847c6e2ac102f7da9eb906a55aa5459b",
+-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
++    "quality": "refined-textured",
++    "bytes": 237124,
++    "meshes": 17,
++    "triangles": 13200,
++    "sha256": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b",
++    "sourceFile": "apps/media/scripts/build-refined-custom.mjs",
++    "sourceSha256": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17",
++    "materialSourceSha256": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0",
++    "creator": "InterestShield project",
++    "license": "Original project geometry and procedural material fields",
++    "provenance": "Original brushed-metal pocket compass: hollow stepped case, seated dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid, connected five-barrel hinge and bail ring. Approximate authored PBR, not scans, exact poster reconstruction or navigation certification.",
+     "units": "normalized stage units",
+-    "version": 1
++    "version": 2
+   },
+   {
+     "id": "vault",
+
+## Whitespace
+$ git diff --check 8e2f25ef6b81ffc65b9f96644170834c511078d3
+exit=0
+
+## Working tree
+$ git status --short
+exit=0
+ M apps/media/hero-imported.json
+ M apps/media/hero-models.json
+ M apps/media/hero-turntables/ASSET-COLLECTION.md
+ M apps/media/hero-turntables/DESIGN.md
+ M apps/web/public/heroes/custom.glb
+ M docs/ASSET-CREDITS.md
+?? apps/media/scripts/build-refined-custom.mjs
+?? apps/media/scripts/custom-refinement.test.mjs
+?? apps/media/sources/custom/
+?? docs/custom-refinement-contract-2026-10-21.md
+
+

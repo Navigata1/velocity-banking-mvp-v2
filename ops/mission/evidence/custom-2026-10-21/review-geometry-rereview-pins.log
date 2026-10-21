@@ -1,0 +1,17 @@
+COMMAND git rev-parse HEAD; git status --short; $files=@('apps/web/public/heroes/custom.glb','apps/media/scripts/build-refined-custom.mjs','apps/media/scripts/custom-refinement.test.mjs','apps/media/sources/custom/materials.json'); foreach($f in $files){ '{0} bytes={1} sha256={2}' -f $f,(Get-Item -LiteralPath $f).Length,(Get-FileHash -LiteralPath $f -Algorithm SHA256).Hash.ToLower() }
+EXIT 0
+8e2f25ef6b81ffc65b9f96644170834c511078d3
+ M apps/media/hero-imported.json
+ M apps/media/hero-models.json
+ M apps/media/hero-turntables/ASSET-COLLECTION.md
+ M apps/media/hero-turntables/DESIGN.md
+ M apps/web/public/heroes/custom.glb
+ M docs/ASSET-CREDITS.md
+?? apps/media/scripts/build-refined-custom.mjs
+?? apps/media/scripts/custom-refinement.test.mjs
+?? apps/media/sources/custom/
+?? docs/custom-refinement-contract-2026-10-21.md
+apps/web/public/heroes/custom.glb bytes=237844 sha256=2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b
+apps/media/scripts/build-refined-custom.mjs bytes=13785 sha256=2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040
+apps/media/scripts/custom-refinement.test.mjs bytes=34076 sha256=26c50474ca83b358d7bd18481b73a3f2f703ed921e6cdd29d45e07b4d27c460c
+apps/media/sources/custom/materials.json bytes=1248 sha256=26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532

@@ -1,0 +1,98 @@
+COMMAND node .superpowers/sdd/2026-10-21-custom/review-geometry-rereview.mjs
+EXIT 1
+PIN_BEFORE {"file":"apps/web/public/heroes/custom.glb","bytes":237844,"actual":"2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b","match":true}
+PIN_BEFORE {"file":"apps/media/scripts/build-refined-custom.mjs","bytes":13785,"actual":"2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040","match":true}
+PIN_BEFORE {"file":"apps/media/scripts/custom-refinement.test.mjs","bytes":34076,"actual":"26c50474ca83b358d7bd18481b73a3f2f703ed921e6cdd29d45e07b4d27c460c","match":true}
+PIN_BEFORE {"file":"apps/media/sources/custom/materials.json","bytes":1248,"actual":"26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532","match":true}
+COUNTS {"unique":13200,"rendered":21240,"meshes":17,"maps":12,"gpu":0}
+MATRIX_RECONSTRUCTION {"matrixError":0}
+TOPOLOGY {"name":"C-Case","faces":3584,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.6540364614498719,"minArea":0.0005028376137806285,"minUv":0.0004872234679914931,"uvBad":0,"components":[{"count":3584,"volume":0.4384431704041516}]}
+TOPOLOGY {"name":"C-Dial","faces":768,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.6630069221831204,"minArea":0.0003008181893347795,"minUv":0.00013002265295925175,"uvBad":0,"components":[{"count":768,"volume":0.3434983826056508}]}
+TOPOLOGY {"name":"C-Rose","faces":64,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9999422435066821,"minArea":0.0036777751413665906,"minUv":0.011833142252123952,"uvBad":0,"components":[{"count":64,"volume":0.006744746695587194}]}
+TOPOLOGY {"name":"C-Tick-0","faces":108,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.8386477904134032,"minArea":6.835068760727987e-7,"minUv":0.0015247119230955022,"uvBad":0,"components":[{"count":108,"volume":0.000020148597638931034}]}
+TOPOLOGY {"name":"C-Needle-North","faces":12,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9999878410340864,"minArea":0.0008407002207168026,"minUv":0.022086793309563268,"uvBad":0,"components":[{"count":12,"volume":0.0013671825305203084}]}
+TOPOLOGY {"name":"C-Needle-South","faces":12,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9999671569095044,"minArea":0.0008396393330847318,"minUv":0.02053174635314527,"uvBad":0,"components":[{"count":12,"volume":0.0012702453488394683}]}
+TOPOLOGY {"name":"C-Axle","faces":192,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9970414910412682,"minArea":0.00008456515838036647,"minUv":0.02082856488899054,"uvBad":0,"components":[{"count":192,"volume":0.00044658713235912754}]}
+TOPOLOGY {"name":"C-Pivot","faces":1536,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.49990728309219257,"minArea":0.00003077227923018467,"minUv":0.0004895460245402023,"uvBad":0,"components":[{"count":1536,"volume":0.0020726286954681427}]}
+TOPOLOGY {"name":"C-Glass","faces":960,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9990426168842673,"minArea":0.00020067501731423835,"minUv":null,"uvBad":0,"components":[{"count":960,"volume":0.016552651178539185}]}
+TOPOLOGY {"name":"C-Lid","faces":2560,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9279771602042091,"minArea":0.000581781777262392,"minUv":0.0001451491901766282,"uvBad":0,"components":[{"count":2560,"volume":0.16720742257031088}]}
+TOPOLOGY {"name":"C-Hinge-Knuckle-1","faces":384,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.25134593580067854,"minArea":0.0000501006213384999,"minUv":0.005206902854601847,"uvBad":0,"components":[{"count":384,"volume":0.0009623374201606608}]}
+TOPOLOGY {"name":"C-Hinge-Knuckle-3","faces":384,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.25134593580067816,"minArea":0.000050100621338499726,"minUv":0.005206902854601847,"uvBad":0,"components":[{"count":384,"volume":0.0009623374201606608}]}
+TOPOLOGY {"name":"C-Hinge-Lid-Link--1","faces":80,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9868422525072282,"minArea":0.00005004233016118746,"minUv":0.04998855573357741,"uvBad":0,"components":[{"count":80,"volume":0.00013696013434054316}]}
+TOPOLOGY {"name":"C-Hinge-Lid-Link-1","faces":80,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9868422525072282,"minArea":0.00005004233016118746,"minUv":0.04998855573357741,"uvBad":0,"components":[{"count":80,"volume":0.00013696013434054316}]}
+TOPOLOGY {"name":"C-Hinge-Knuckle-0","faces":384,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.25134593580067827,"minArea":0.00005010062133849899,"minUv":0.005206902854601847,"uvBad":0,"components":[{"count":384,"volume":0.0009623374201606587}]}
+TOPOLOGY {"name":"C-Hinge-Knuckle-2","faces":384,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.25134593580067877,"minArea":0.000050100621338499,"minUv":0.005206902854601847,"uvBad":0,"components":[{"count":384,"volume":0.0009623374201606588}]}
+TOPOLOGY {"name":"C-Hinge-Knuckle-4","faces":384,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.25134593580067877,"minArea":0.00005010062133849899,"minUv":0.005206902854601847,"uvBad":0,"components":[{"count":384,"volume":0.0009623374201606587}]}
+TOPOLOGY {"name":"C-Hinge-Pin","faces":192,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9972842571559761,"minArea":0.00002874049724457074,"minUv":0.02082856488899054,"uvBad":0,"components":[{"count":192,"volume":0.0010497710601800735}]}
+TOPOLOGY {"name":"C-Hinge-Case-Link--1","faces":80,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9868422525072272,"minArea":0.00006812056576335505,"minUv":0.04998855573357741,"uvBad":0,"components":[{"count":80,"volume":0.0001893125800194621}]}
+TOPOLOGY {"name":"C-Hinge-Case-Link-0","faces":80,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9868422525072272,"minArea":0.00006812056576335494,"minUv":0.04998855573357741,"uvBad":0,"components":[{"count":80,"volume":0.00018931258001946192}]}
+TOPOLOGY {"name":"C-Hinge-Case-Link-1","faces":80,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9868422525072263,"minArea":0.00006812056576335505,"minUv":0.04998855573357741,"uvBad":0,"components":[{"count":80,"volume":0.00018931258001946228}]}
+TOPOLOGY {"name":"C-Lug","faces":1024,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.2672612419124242,"minArea":0.00006453024899855159,"minUv":0.0015608788435232997,"uvBad":0,"components":[{"count":1024,"volume":0.004071046402776721}]}
+TOPOLOGY {"name":"C-Bail","faces":1536,"edgeBad":0,"degenerate":0,"normalBad":0,"minNormalDot":0.9618316457182632,"minArea":0.00013232900647748862,"minUv":0.001300772068438995,"uvBad":0,"components":[{"count":1536,"volume":0.003018322386681073}]}
+STAGE {"min":{"x":-1.2741238819255651,"y":0.0000011179590988230625,"z":-0.9063783341545143},"max":{"x":1.274110355752994,"y":3.200001188132757,"z":0.906387077949162}}
+SELF {"name":"C-Case","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Lid","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Glass","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Rose","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Pivot","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Bail","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Needle-North","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Needle-South","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+SELF {"name":"C-Hinge-Knuckle-0","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Case","b":"C-Lid","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Rose","b":"C-Needle-North","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Rose","b":"C-Needle-South","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Needle-North","b":"C-Needle-South","pairs":8,"points":4,"coplanar":4,"pointBounds":{"min":{"x":-0.08998031983488011,"y":0.3140023317454399,"z":-0.05390185679156648},"max":{"x":0.08992191027728892,"y":0.3219987919160915,"z":0.05393686921066258}},"examples":[{"i":10,"j":3,"points":[[-0.08998031983488008,0.3140023317454399,0.05393686921066258]],"area":0},{"i":10,"j":9,"points":[[0.08992191027728892,0.3219987919160915,-0.05390185679156647]],"area":0},{"i":10,"j":10,"points":[],"area":0.00035998089041053283}]}
+PAIR {"a":"C-Glass","b":"C-Pivot","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Glass","b":"C-Needle-North","pairs":0,"points":0,"coplanar":0,"pointBounds":{"min":{"x":null,"y":null,"z":null},"max":{"x":null,"y":null,"z":null}},"examples":[]}
+PAIR {"a":"C-Lug","b":"C-Bail","pairs":137,"points":274,"coplanar":0,"pointBounds":{"min":{"x":-0.08200079164838574,"y":0.192998627331687,"z":1.0624588900014862},"max":{"x":0.0820007916483859,"y":0.24700137266831276,"z":1.1255453250335414}},"examples":[{"i":567,"j":657,"points":[[-0.0804260365946228,0.2040034184306127,1.1180399982977909],[-0.07980302767964169,0.20151604950413385,1.1149986249907236]],"area":0},{"i":568,"j":656,"points":[[-0.08059974994424102,0.2051757137993096,1.119418065239396],[-0.0804509527293357,0.2041715636502745,1.1182374649695772]],"area":0},{"i":568,"j":657,"points":[[-0.0804260365946228,0.2040034184306127,1.1180399982977909],[-0.08045095272933568,0.2041715636502745,1.1182374649695772]],"area":0}]}
+BORE_CLEARANCE {"k":0,"x":-0.3,"min":0.00299305862740451,"max":0.003004232147184392,"samples":[{"angle":0.03642283982755666,"bore":[0.02395914565702071,0.055904322705073596],"pin":[0.020964375133206405],"clearance":0.002994770523814305},{"angle":0.1345976102522377,"bore":[0.023994989168128613,0.055987029716178166],"pin":[0.020990757020944693],"clearance":0.0030042321471839203}]}
+BORE_CLEARANCE {"k":1,"x":-0.15000000000000008,"min":0.0029597297492035997,"max":0.0030305724986060788,"samples":[{"angle":0.03642283982755666,"bore":[0.02398941639482435,0.05597585347135893],"pin":[0.020964375133206405],"clearance":0.003025041261617945},{"angle":0.1345976102522377,"bore":[0.02395648187615184,0.05589815819173704],"pin":[0.020990757020944693],"clearance":0.0029657248552071476}]}
+BORE_CLEARANCE {"k":2,"x":-8.326672684688674e-17,"min":0.0029930586274045518,"max":0.0030042321471841424,"samples":[{"angle":0.03642283982755666,"bore":[0.023959145657020932,0.05590432270507393],"pin":[0.020964375133206405],"clearance":0.0029947705238145272},{"angle":0.1345976102522377,"bore":[0.023994989168128943,0.05598702971617849],"pin":[0.020990757020944804],"clearance":0.003004232147184139}]}
+BORE_CLEARANCE {"k":3,"x":0.14999999999999988,"min":0.0029597297492033776,"max":0.0030305724986061135,"samples":[{"angle":0.03642283982755666,"bore":[0.02398941639482424,0.05597585347135882],"pin":[0.020964375133206516],"clearance":0.003025041261617723},{"angle":0.1345976102522377,"bore":[0.023956481876151733,0.05589815819173693],"pin":[0.020990757020944804],"clearance":0.002965724855206929}]}
+BORE_CLEARANCE {"k":4,"x":0.30000000000000004,"min":0.0029930586274045656,"max":0.003004232147184302,"samples":[{"angle":0.03642283982755666,"bore":[0.023959145657020932,0.05590432270507382],"pin":[0.020964375133206516],"clearance":0.0029947705238144162},{"angle":0.1345976102522377,"bore":[0.02399498916812883,0.05598702971617839],"pin":[0.020990757020944915],"clearance":0.003004232147183917}]}
+LENS_VERTICAL_CLEARANCE {"n":"C-Needle-North","globalLowerBound":0.029005145817512124}
+LENS_VERTICAL_CLEARANCE {"n":"C-Needle-South","globalLowerBound":0.029008806674511167}
+LENS_VERTICAL_CLEARANCE {"n":"C-Pivot","globalLowerBound":0.004006182421267712}
+VOID_SECTION {"n":"lidCenter","origin":[0.071,-1,1.083],"hits":[1.0150075517664734,1.059991834734093]}
+VOID_SECTION {"n":"caseCenter","origin":[0.071,-1,0.023],"hits":[1.039986275880119,1.1200058077261836]}
+VOID_SECTION {"n":"bailCenter","origin":[0.001,-1,1.301],"hits":[]}
+PIN_AFTER {"file":"apps/web/public/heroes/custom.glb","bytes":237844,"actual":"2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b","match":true}
+PIN_AFTER {"file":"apps/media/scripts/build-refined-custom.mjs","bytes":13785,"actual":"2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040","match":true}
+PIN_AFTER {"file":"apps/media/scripts/custom-refinement.test.mjs","bytes":34076,"actual":"26c50474ca83b358d7bd18481b73a3f2f703ed921e6cdd29d45e07b4d27c460c","match":true}
+PIN_AFTER {"file":"apps/media/sources/custom/materials.json","bytes":1248,"actual":"26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532","match":true}
+HINGE_FRAME {"center":[-1.1102230246251565e-16,0.5,-1.06],"lidOrigin":[-8.326672684688674e-17,0.5,-1.06]}
+ASSEMBLED_CHANNEL {"axialRays":453,"radiusMax":0.0234,"allMeshNodesExceptPin":true}
+SHAFT_SKIN_BRACKET {"name":"C-Case","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Lid","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Hinge-Lid-Link--1","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Hinge-Lid-Link-1","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Hinge-Case-Link--1","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Hinge-Case-Link-0","crossings":0,"containedSamples":0}
+SHAFT_SKIN_BRACKET {"name":"C-Hinge-Case-Link-1","crossings":0,"containedSamples":0}
+AXIS_OCCUPANCY {"i":0,"p":[-0.3,0.5,-1.06],"caseInside":false,"lidInside":false}
+AXIS_OCCUPANCY {"i":1,"p":[-0.15,0.5,-1.06],"caseInside":false,"lidInside":false}
+AXIS_OCCUPANCY {"i":2,"p":[0,0.5,-1.06],"caseInside":false,"lidInside":false}
+AXIS_OCCUPANCY {"i":3,"p":[0.14999999999999997,0.5,-1.06],"caseInside":false,"lidInside":false}
+AXIS_OCCUPANCY {"i":4,"p":[0.3,0.5,-1.06],"caseInside":false,"lidInside":false}
+EXACT_ENDPOINT_CAPS {"name":"C-Hinge-Case-Link--1","lo":[-0.3000000000000001,0.3600000022084336,-0.9400000012882529],"hi":[-0.3000000000000001,0.47999999779156627,-1.009999998711747],"seated":[true,true],"skinCrossings":42,"barrelCrossings":49}
+EXACT_ENDPOINT_CAPS {"name":"C-Hinge-Case-Link-0","lo":[2.829251383438364e-17,0.36000000220843353,-0.9400000012882529],"hi":[2.829251383438364e-17,0.47999999779156616,-1.009999998711747],"seated":[true,true],"skinCrossings":47,"barrelCrossings":49}
+EXACT_ENDPOINT_CAPS {"name":"C-Hinge-Case-Link-1","lo":[0.3,0.36000000220843376,-0.9400000012882528],"hi":[0.3,0.47999999779156644,-1.0099999987117467],"seated":[true,true],"skinCrossings":44,"barrelCrossings":49}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(seated.every(Boolean))
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-custom/review-geometry-rereview.mjs:20:220 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

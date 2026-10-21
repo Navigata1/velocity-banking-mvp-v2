@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: Custom replaces the study with hash-protected procedural original refinement in both manifests
+ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests
+  ---
+  duration_ms: 30.4452
+  type: 'test'
+  ...
+# Subtest: Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+  ---
+  duration_ms: 179.0059
+  type: 'test'
+  ...
+# Subtest: Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+  ---
+  duration_ms: 105.4321
+  type: 'test'
+  ...
+# Subtest: Custom dark dial is a closed seated cylinder with its top near author Y .264
+ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264
+  ---
+  duration_ms: 33.8004
+  type: 'test'
+  ...
+# Subtest: Custom rose is a closed raised faceted metal eight-point body seated on the dial
+ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial
+  ---
+  duration_ms: 16.1022
+  type: 'test'
+  ...
+# Subtest: Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+  ---
+  duration_ms: 92.6045
+  type: 'test'
+  ...
+# Subtest: Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+  ---
+  duration_ms: 9.1801
+  type: 'test'
+  ...
+# Subtest: Custom axle and pivot physically connect the dial and both needle roots
+ok 8 - Custom axle and pivot physically connect the dial and both needle roots
+  ---
+  duration_ms: 241.7989
+  type: 'test'
+  ...
+# Subtest: Custom transparent closed lens covers the complete needle and pivot without intersecting them
+ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them
+  ---
+  duration_ms: 476.4382
+  type: 'test'
+  ...
+# Subtest: Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+  ---
+  duration_ms: 49.0797
+  type: 'test'
+  ...
+# Subtest: Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+  ---
+  duration_ms: 43.4645
+  type: 'test'
+  ...
+# Subtest: Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+  ---
+  duration_ms: 531.1814
+  type: 'test'
+  ...
+# Subtest: Custom front lug physically seats the closed bail with a real empty ring aperture
+ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture
+  ---
+  duration_ms: 3143.19
+  type: 'test'
+  ...
+# Subtest: Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+  ---
+  duration_ms: 156.7114
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5347.7233

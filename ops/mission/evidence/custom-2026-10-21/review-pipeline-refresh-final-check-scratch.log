@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-21T09:53:56.173Z",
+  "sevenFinalPinsEqual": true,
+  "allArchivedFilesEqual": true,
+  "videoManifestStable": true,
+  "parentCjsResultAssertionsGreenWithoutSpawn": true,
+  "finalReportBytes": 12052,
+  "finalReportSha256": "c128b622e48adffdd510d28edb3aaca3dc98e4578465e78ccbad069c0be017b0"
+}
+

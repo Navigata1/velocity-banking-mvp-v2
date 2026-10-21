@@ -11,7 +11,7 @@ It uses Three.js 0.185.1 from apps/web and HyperFrames 0.7.56 from apps/media.
 - The slim progress index indicates completion of the single revolution.
 - Local GLBs, local modules and local GSAP only. No render-time remote assets.
 - Auto is adapted licensed geometry; Vault, House, Land, Credit Card, Student
-  Loan, Medical, Personal and Recreation are original textured candidates; Custom remains a study.
+  Loan, Medical, Personal, Recreation and Custom are original textured candidates.
   They are not reconstructions of the generated
   reference posters. Final photorealistic fidelity remains a collection art gate.
 - No financial values or payoff claims in this composition.

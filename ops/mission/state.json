@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T08:48:09Z",
-    "sessionCount": 17
+    "updated": "2026-10-21T10:03:12Z",
+    "sessionCount": 18
   },
   "policies": {
     "merge": "review",
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/recreation-2026-10-21/web-tests.log",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/UI/studio/camera/timing/dependency paths and nine baseline model records/bytes plus all ten posters remain unchanged from verified a162c10. Only Recreation geometry/configuration/contracts change. New exact-head CI/hosted proof required. Local preflight, not production approval."
+          "evidence": "ops/mission/evidence/custom-2026-10-21/web-tests.log",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "348 main regressions and all reference lanes pass. Financial/native/persistence/UI/studio/camera/timing/dependency paths and nine baseline model records/bytes plus all ten posters remain unchanged from verified8e2f25e. Only Custom geometry/configuration/contracts change. New exact-head CI/hosted proof required. Local preflight, not production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/recreation-2026-10-21/routes.log",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "Seven HTTP/rendered routes and local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass at unchanged assertions. Numeric inputs include280/375/1264/1440. Previous a162c10 native49 executions verified; no new local native bundle/device rerun for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
+          "evidence": "ops/mission/evidence/custom-2026-10-21/routes.log",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "Seven HTTP/rendered routes and local Dashboard12/Simulator16/Vault20/Portfolio24/portability6/input4 cases pass at unchanged assertions. Numeric inputs include280/375/1264/1440. Previous8e2f25e native49 executions verified; no new local native bundle/device rerun for this asset-only slice. Both final-head complete events and hosted82/routes must repeat."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6310926308",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "Previous a162c10c4ad9590ffcd12dbbffe189d6371d5e52 freshly verified: complete push39562963550/PR39562968812 attempt1,114 media/27stills/348 regressions/full native49 executions/contracts, SQL63 twice/event, exact READY preview and hosted82/routes/all ten GLB/poster hashes. Receipt6310926308 and202-file Desktop manifest verified.02f3137 remains failed/unverified. Recreation needs both new final-head complete pipelines, exact preview and hosted82/routes/all ten model/poster hashes. No report-only push loop or production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6312277013",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "Previous8e2f25ef6b81ffc65b9f96644170834c511078d3 freshly verified: complete push39572136041/PR39572140246 attempt1,129 media/27stills/348 regressions/full native49 executions/contracts, SQL63 twice/event, exact READY preview and hosted82/routes/all ten GLB/poster hashes. Receipt6312277013 and205-file Desktop manifest verified.02f3137 remains failed/unverified. Custom needs both new final-head complete pipelines, exact preview and hosted82/routes/all ten model/poster hashes. No report-only push loop or production approval."
         }
       ]
     },
@@ -107,7 +107,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Credit Card/Student Loan/Medical/Personal retained. Recreation now has the original white/teal hollow yacht, timber cockpit, actual glazed cabin holes, thick billowed sails, physical seams, connected rigging/helm/keel/rudder and seated hardware:521544bytes,19296unique/25304rendered triangles,12 embedded maps. Retained House oak/Student Loan cloth sources explicit.15 cases and exact independent geometry/pipeline re-reviews follow observed roof-crossing, hardware-support and thread-oracle REDs/fixes. Identical/protected full rebuilds and real40-payload package preserve other nine models/all ten posters. See docs/recreation-refinement-contract-2026-10-21.md. Nine candidates/Custom study are not final all-ten art approval."
+          "notes": "Credit Card/Student Loan/Medical/Personal/Recreation retained. Custom is now the original silver brushed-metal compass with hollow stepped case, seated dial/rose/ticks, faceted enamel needles, closed clear lens, upright hollow lid, five hollow hinge barrels with positive pin clearance, five connected brackets and open bail:237844bytes,13200unique/21240rendered triangles,12 original procedural maps.16 cases and exact independent geometry/pipeline re-reviews follow observed assembled-channel/pin-clearance/contact-oracle/corner-normal REDs/fixes. Protected full rebuilds and real40-payload package preserve other nine models/all ten posters;309 raw source snapshots and before/after all-ten video records reject mutation. See docs/custom-refinement-contract-2026-10-21.md. Ten textured candidates, not final all-ten art approval."
         },
         {
           "id": "R1-T4",
@@ -115,7 +115,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval and Custom refinement remain unfinished; every new head must re-pass hosted gates."
+          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval remains unfinished; every new head must re-pass hosted gates."
         }
       ],
       "gates": [
@@ -124,27 +124,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/recreation-2026-10-21/media-check.log",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "129 media contracts and27 fresh Remotion stills pass.15 Recreation cases inspect actual maps/contact/apertures/skins/winding/crossings/UVs/live locked budgets; independent roof crossings, floating hardware and stitch-oracle defects reproduced RED and fixed. Source lineage retained; nine other models/all ten posters and shared studio unchanged. Nine candidates/Custom study; final all-ten approval stays open."
+          "evidence": "ops/mission/evidence/custom-2026-10-21/media-check.log",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "145 media contracts and27 fresh Remotion stills pass.16 Custom cases inspect actual maps/contacts/assembled bores/clearances/lens/normals/UVs/live locked budgets; independent findings reproduced RED and fixed. Separate source/video preservation adversaries now reject mutations. Nine other models/all ten posters and shared studio unchanged. Ten textured candidates; final all-ten art approval stays open."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/recreation-2026-10-21/heroes.log",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "All ten heroes pass1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate network/texture fallbacks. Recreation changes; nine model records/bytes and all ten posters remain unchanged. Strict Three gate uses original700/300ms serially after heavy render jobs; prior timing/DOM failures retained, not declared diagnosed. Final hosted proof mandatory."
+          "evidence": "ops/mission/evidence/custom-2026-10-21/heroes.log",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "All ten heroes pass1440px/375px geometry/movement/framing/loading/reduced-motion checks and separate network/texture fallbacks. Custom changes; nine model records/bytes and all ten posters unchanged. Strict Three passes original700/300ms limits; batch began during final package tail, after media/video jobs. Earlier timing/DOM failures retained, not declared diagnosed. Final hosted proof mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/recreation-2026-10-21/turntable-verification.json",
-          "lastRun": "2026-10-21T08:48:09Z",
-          "notes": "Recreation1080p/30fps nine-second turn rebuilt after geometry correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
+          "evidence": "ops/mission/evidence/custom-2026-10-21/turntable-verification.json",
+          "lastRun": "2026-10-21T10:03:12Z",
+          "notes": "Custom1080p/30fps nine-second turn rebuilt after geometry correction; nine previous videos rechecked unchanged against prior delivery. All ten pass nonblank/movement/closure/rest checks with distributed/vendor model hash integrity. Shared camera/studio/timing and financial sources unchanged; final collection art review stays open."
         }
       ]
     },
@@ -462,7 +462,7 @@
     {
       "label": "Textured refined model candidates",
       "baseline": "0",
-      "current": "9",
+      "current": "10",
       "target": "10",
       "direction": "up"
     },
@@ -495,9 +495,9 @@
       "note": "Fresh375px Personal context capture shows the compact Interest Burn value breaking within day. No overlap or calculation change; existing four-column mobile vitals remain untouched in this asset-only slice. Fix token wrapping/responsive tracks separately with280/375px rendered numeric/large-value tests. Evidence:personal-2026-10-21/preview-375-context.png."
     },
     {
-      "title": "Custom remains a study; candidates need art review",
+      "title": "Ten textured candidates still require final art review",
       "severity": "high",
-      "note": "Auto, Vault, House, Land, Credit Card, Student Loan, Medical, Personal and Recreation are textured candidates, not final photorealism approval. Custom needs refinement. Public collection is9931894bytes,553866bytes below unchanged10MiB cap; Recreation has2744bytes model headroom. Maps are authored approximations, not measured scans; global final art review remains open. Public GPU quota limited; Hugging Face not connected."
+      "note": "All ten models are textured candidates, not final photorealism approval. Public collection is9908162bytes,577598bytes below unchanged10MiB cap; Custom has286444bytes model headroom. Maps are authored approximations, not measured scans; global final art review remains open. No paid GPU or new dependency used."
     },
     {
       "title": "Financial coherence gates remain open",
@@ -507,7 +507,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "a162c10 passed both complete pipelines39562963550/39562968812 attempt1,114 media/27stills/348 regressions/native49/full contracts, SQL, READY Vercel and hosted82/routes; receipt6310926308.02f3137 remains failed/unverified. Recreation needs both fresh full events and hosted82/routes/all-ten model/poster hashes. No prior receipt authorizes production."
+      "note": "8e2f25e passed both complete pipelines39572136041/39572140246 attempt1,129 media/27stills/348 regressions/native49/full contracts, SQL, READY Vercel and hosted82/routes; receipt6312277013.02f3137 remains failed/unverified. Custom needs both fresh full events and hosted82/routes/all-ten model/poster hashes. No prior receipt authorizes production."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -815,14 +815,14 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "Previous a162c10c4ad9590ffcd12dbbffe189d6371d5e52 freshly verified: both full events39562963550/39562968812 attempt1,114 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6310926308 and202-file Desktop manifest folded into substantive Recreation work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/all ten GLB/poster hashes. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
+      "Previous8e2f25ef6b81ffc65b9f96644170834c511078d3 freshly verified: both full events39572136041/39572140246 attempt1,129 media/27stills/348 regressions/native49/full contracts, SQL63 twice/event and hosted82/routes; receiptPR256 issuecomment-6312277013 and205-file Desktop manifest folded into substantive Custom work. Push only after local/review gates, require both new exact-head full events, exact READY Vercel and hosted82/routes/all ten GLB/poster hashes. Append postflight and fold into next substantive update, not report-only push loops or promotion.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
-      "Recreation candidate preserves white/teal hollow yacht, timber cockpit, glazed cabin holes, thick billowed sails/physical seams and connected rigging/helm/keel/rudder. Read docs/recreation-refinement-contract-2026-10-21.md.15 cases and exact independent geometry/pipeline review follow roof-crossing/hardware/thread-oracle REDs/fixes. Nine candidates/Custom study;553866bytes public headroom, unchanged caps. Next Custom with provenance/all-model proof. No paid GPU or broad redesign.",
+      "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
       "Remaining R2 work: dashboard helper scope, safe shared scenario ownership and common-date cash/wealth. Native aggregate adoption is implemented, not global scenario consolidation. Read docs/portfolio-funding-contract-2026-10-20.md; preserve funded caps and separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
-      "Continue Custom refinement and final art review of all ten. Nine textured candidates are not final collection approval. Preserve publication locking, source lineage/revisions, validated Buffer packaging, original identity, real geometry and per-model/aggregate caps. Re-run all-model web/video gates after shared lighting edits.",
+      "Perform final art/reference review of all ten textured candidates, not automatic photoreal approval. Preserve publication locking, source lineage/revisions, validated Buffer packaging, original identity, real geometry and per-model/aggregate caps. Re-run all-model web/video gates after shared lighting edits. Next focused implementation is mobile vital token wrapping, then R2/R3 scenario/lender coherence.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Fix the newly recorded375px vital-value token wrapping in a separate focused UI slice: preserve all four vitals and numeric semantics, add280/375px rendered cent/sub-cent/large-value coverage, no engine or broad layout redesign. See Personal preview-375-context.png.",

@@ -1,0 +1,88 @@
+{
+  "harnessSha256": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1",
+  "otherNineRecordsUnchanged": true,
+(node:8684) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+  "allTenPosterRecordsUnchanged": true,
+  "cases": [
+    {
+      "scenario": "control",
+      "harnessPassed": true,
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": false,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    },
+    {
+      "scenario": "retained-source-mutation",
+      "harnessPassed": true,
+      "retainedSourceChanged": true,
+      "otherNineVideoChanged": false,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+(Use `node --trace-warnings ...` to show where the warning was created)
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    },
+    {
+      "scenario": "personal-video-and-manifest-mutation",
+      "harnessPassed": true,
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": true,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    }
+  ]
+}
+node:assert:150
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: rebuild proof must reject both real-source and unrelated-video mutations
++ actual - expected
+
++ [
++   'retained-source-mutation incorrectly accepted',
++   'personal-video-and-manifest-mutation incorrectly accepted'
++ ]
+- []
+
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-custom\harness-preservation-contract.cjs:8:51)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'retained-source-mutation incorrectly accepted',
+    'personal-video-and-manifest-mutation incorrectly accepted'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

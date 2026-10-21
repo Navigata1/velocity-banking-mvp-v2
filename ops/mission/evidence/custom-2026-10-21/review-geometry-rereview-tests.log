@@ -1,0 +1,108 @@
+COMMAND node --experimental-test-isolation=none --test apps/media/scripts/custom-refinement.test.mjs
+EXIT 0
+TAP version 13
+# Subtest: Custom replaces the study with hash-protected procedural original refinement in both manifests
+ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests
+  ---
+  duration_ms: 67.5261
+  type: 'test'
+  ...
+# Subtest: Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+  ---
+  duration_ms: 438.7218
+  type: 'test'
+  ...
+# Subtest: Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+  ---
+  duration_ms: 284.2577
+  type: 'test'
+  ...
+# Subtest: Custom dark dial is a closed seated cylinder with its top near author Y .264
+ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264
+  ---
+  duration_ms: 3636.8415
+  type: 'test'
+  ...
+# Subtest: Custom rose is a closed raised faceted metal eight-point body seated on the dial
+ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial
+  ---
+  duration_ms: 49.7336
+  type: 'test'
+  ...
+# Subtest: Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+  ---
+  duration_ms: 88.8538
+  type: 'test'
+  ...
+# Subtest: Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+  ---
+  duration_ms: 6.1998
+  type: 'test'
+  ...
+# Subtest: Custom axle and pivot physically connect the dial and both needle roots
+ok 8 - Custom axle and pivot physically connect the dial and both needle roots
+  ---
+  duration_ms: 233.9978
+  type: 'test'
+  ...
+# Subtest: Custom transparent closed lens covers the complete needle and pivot without intersecting them
+ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them
+  ---
+  duration_ms: 98.5872
+  type: 'test'
+  ...
+# Subtest: Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+  ---
+  duration_ms: 44.6881
+  type: 'test'
+  ...
+# Subtest: Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+  ---
+  duration_ms: 60.0996
+  type: 'test'
+  ...
+# Subtest: Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+ok 12 - Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+  ---
+  duration_ms: 130.7882
+  type: 'test'
+  ...
+# Subtest: Custom pin retains positive radial clearance in all five assembled hinge bores
+ok 13 - Custom pin retains positive radial clearance in all five assembled hinge bores
+  ---
+  duration_ms: 24.0808
+  type: 'test'
+  ...
+# Subtest: Custom five hinge brackets join actual case/lid skins at opposite knuckle endpoints
+ok 14 - Custom five hinge brackets join actual case/lid skins at opposite knuckle endpoints
+  ---
+  duration_ms: 5177.1138
+  type: 'test'
+  ...
+# Subtest: Custom front lug physically seats the closed bail with a real empty ring aperture
+ok 15 - Custom front lug physically seats the closed bail with a real empty ring aperture
+  ---
+  duration_ms: 4747.7322
+  type: 'test'
+  ...
+# Subtest: Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+ok 16 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+  ---
+  duration_ms: 197.8494
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15675.1767

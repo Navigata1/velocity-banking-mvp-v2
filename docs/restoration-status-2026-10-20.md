@@ -41,7 +41,7 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 - Original refined Student Loan candidate:29,348 unique-mesh triangles, nine
   embedded maps and715,276 bytes; leather bindings, woven cloth, physical book
   leaves, braided cord,48 tassel fibers and a hollow spiral diploma with real bow.
-  Custom remains a study; nine candidates are not nine final art approvals.
+  All ten textured candidates still require final collection art approval.
 - Original refined Medical candidate:26,104 unique/43,412 instantiated triangles,
   nine256px maps and509,120 bytes; fitted enamel case, curved guards, connected
   chrome/rubber stethoscope and original emerald badge. Matching transparent
@@ -61,6 +61,13 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
   oak/Student Loan cloth sources, all ten posters unchanged. Fifteen focused cases
   and independent exact-artifact reviews follow observed roof-crossing, hardware
   and thread-oracle REDs/fixes. See `docs/recreation-refinement-contract-2026-10-21.md`.
+- Original refined Custom compass:13,200 unique/21,240 rendered triangles,
+  twelve embedded procedural maps and237,844 bytes; hollow stepped case, seated
+  dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid,
+  five hollow hinge barrels with positive pin clearance, five connected brackets
+  and open bail. Sixteen focused cases and independent exact-artifact reviews
+  follow observed assembled-channel, contact-oracle and corner-normal REDs/fixes.
+  See `docs/custom-refinement-contract-2026-10-21.md`.
 - Reproducible source-hashed car import, Meshopt/WebP compression, visible credits,
   and removal of separately licensed trademark geometry and shared logo texture.
 - Slow-network artwork continuity, texture/network failure fallbacks and shared
@@ -116,27 +123,30 @@ Medical uses original geometry and approximate procedural enamel/steel/rubber
 maps, not a measured medical product or exact poster reconstruction.
 Personal reuses the retained original leather with approximate authored brass/
 steel maps and original geometry. Recreation reuses retained oak/cloth with
-authored approximate paint/steel fields and tinted BLEND glass. Custom remains
-a study. A coherent artist-approved textured collection is still unfinished.
+authored approximate paint/steel fields and tinted BLEND glass. Custom uses
+original procedural brushed-metal/dial/enamel maps and approximate clear optics.
+All ten are textured candidates; a coherent artist-approved collection is unfinished.
 The app defaults to the polished artwork; real 3D inspection is optional and lazy-loaded.
 
 ## Verification
 
-Recreation local checkpoint:129 media contracts/27 fresh stills,348 web
+Custom local checkpoint:145 media contracts/27 fresh stills,348 web
 regressions/reference lanes, lint/build, seven HTTP/rendered routes, all20 hero
 viewport checks/fallbacks, strict Three budgets and82 local calculation/portability
-cases pass. New Recreation1080p turn and nine unchanged turns pass pixel/hash proof.
-Independent Recreation review reproduced roof crossings, floating hardware and
-weak thread-oracle acceptance, then cleared bounded fixes after RED/GREEN. Earlier Medical publication
+cases pass. New Custom1080p turn and nine unchanged turns pass pixel/hash proof.
+Independent Custom review reproduced blocked assembled hinge bores, insufficient
+pin clearance, weak contact tests and lens corner normals, then cleared bounded
+fixes after RED/GREEN. A separate rebuild-harness review caught missing before/after
+source/video snapshots; genuine negative tests now reject both mutations. Earlier Medical publication
 and geometry fixes remain protected by their existing tests.
 Byte-identical/protected model/poster rebuilds, a real40-payload package and source fingerprints preserve prior
 financial/native/persistence/layout/camera/studio/timing/dependency behavior.
-Previous a162c10 is remotely verified: complete push39562963550/PR39562968812
-attempt1, actual114 media/27stills/348 regressions/49 native executions, SQL63 twice
+Previous8e2f25e is remotely verified: complete push39572136041/PR39572140246
+attempt1, actual129 media/27stills/348 regressions/49 native executions, SQL63 twice
 per event, READY Vercel and hosted82/routes/all ten served GLB/poster hashes.
-The202-file Desktop checkpoint was freshly reverified. Receipt:
-https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6310926308
-This new Recreation
+The205-file Desktop checkpoint was freshly reverified. Receipt:
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6312277013
+This new Custom
 substantive checkpoint still requires both exact-head full pipelines, SQL,
 READY Vercel and hosted82/routes/all-ten-model/poster-byte proof before a postflight
 receipt. Source report remains preflight to avoid report-only push loops.
@@ -171,9 +181,9 @@ receipt. Source report remains preflight to avoid report-only push loops.
   so metal components retain their intended non-glowing appearance.
 - Reduced-motion and the pre-existing WebGL selection suites passed.
 - Ten nine-second videos passed movement and return-to-start checks.
-- 129 media contracts pass, including15 Recreation,18 Personal,14 Medical geometry/seven poster-publication,
+- 145 media contracts pass, including16 Custom,15 Recreation,18 Personal,14 Medical geometry/seven poster-publication,
   ten Student Loan, nine Credit Card, nine Land and six House cases.
-  Existing HyperFrames/Remotion checks pass with27 fresh stills. Recreation's turn
+  Existing HyperFrames/Remotion checks pass with27 fresh stills. Custom's turn
   is rebuilt in this checkpoint; nine previous videos are unchanged/rechecked,
   with fresh movement/rest pixel proof and matching model/vendor hashes. The existing
   reel retains three layout information notices at a transition, with zero errors/warnings.
@@ -238,7 +248,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 
 ## Remaining Production Gates
 
-1. Complete Custom; artist-review all nine candidates and collection consistency.
+1. Artist-review all ten textured candidates and collection consistency; candidate completion is not photoreal approval.
 2. Shared scenario ownership across Dashboard, Portfolio and Vault, with safe migration of existing data.
 3. Lender-term enforcement and real transaction-calendar integration in the normal simulation paths.
 4. Equal-budget, equal-liability strategy comparisons across every route.
@@ -251,7 +261,7 @@ An exactly funded $120.70 final payment passes; one cent less remains unaffordab
 9. Resolve media-toolchain advisories and prove exact-SHA hosted CI on the final candidate.
 10. Complete supported native dependency upgrades and assess SDK build-tool exposure.
 
-Public assets total9,931,894 bytes,553,866 bytes below the unchanged10MiB
+Public assets total9,908,162 bytes,577,598 bytes below the unchanged10MiB
 cap. Later refinements must recover space through intentional optimization.
 
 ## Security Refresh
