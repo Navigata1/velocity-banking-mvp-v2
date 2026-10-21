@@ -1,0 +1,192 @@
+PASS actual authenticated deployment positive
+PASS reject raw head
+PASS reject raw project
+PASS reject raw url
+PASS reject raw state
+PASS reject raw ready state
+PASS reject raw target
+PASS reject raw id
+PASS reject summary team
+PASS reject authenticated team
+PASS reject team slug
+PASS reject query team
+PASS reject repository
+PASS reject branch
+PASS reject missing raw
+PASS late missing stage leaves every public target untouched
+PASS late publication fault rolls back report/readme/new file
+PASS new artifact retained recoverably rather than deleted
+PASS retry after rollback succeeds
+PASS committed publication idempotent
+PASS committed drift rejected without overwriting user edit
+PASS out-of-scope target rejected before publication
+PASS prepared journal recovery restores a simulated interrupted write
+PASS partial commit-journal write preserves valid recovery and rolls back files
+PASS retry succeeds after partial journal write
+PASS originless predecessor receipts alone cannot satisfy invocation gate
+{"checks":26,"scope":"Local metadata and filesystem fault probes; not a production or power-loss certification","fixture":"C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\shipping-test-ellq4N"}
+PASS 21 distinct same-month fixtures with four restored actual DOM controls
+PASS reject common-month stale origin
+PASS reject common-month missing narrow width
+PASS reject common-month duplicate case
+PASS reject common-month native output on web
+PASS reject common-month hidden value
+PASS reject common-month clipped value
+PASS reject common-month wrapped token
+PASS reject common-month storage write
+PASS reject common-month missing DOM control
+PASS reject common-month no node restoration
+PASS reject common-month unrestored control
+PASS reject common-month page error
+PASS reject common-month missing wider-font probe
+PASS reject common-month failed wider-font probe
+PASS reject common-month shrunk wider-font probe
+PASS eleven distinct signed-billion Verdana currency boundaries
+PASS reject currency-width missing width
+PASS reject currency-width duplicate width
+PASS reject currency-width unexpected width
+PASS reject currency-width wrong origin
+PASS reject currency-width wrong text
+PASS reject currency-width wrong requested font
+PASS reject currency-width failed fit
+PASS reject currency-width uncontained glyph
+PASS reject currency-width wrapped text
+PASS reject currency-width shrunk font
+PASS reject currency-width invalid font
+PASS reject currency-width overflow
+PASS reject currency-width page error
+PASS reject currency-width inconsistent glyph width
+PASS explicit adjudicated local reference count accepted without a baked-in final count
+PASS reject local missing reference
+PASS reject local failed reference
+PASS reject local not adjudicated
+PASS reject local missing reference file
+PASS reject local missing adjudication report
+PASS reject local old hosted count
+PASS reject local old native count
+PASS reject local missing new pin
+PASS reject local extra modified native
+PASS reject local old109 hosted count
+PASS reject local missing currency count
+PASS reject local wrong currency count
+PASS reject local missing currency pin
+PASS reference summary must match configured count and actual source bytes
+PASS reject unadjudicated/stale reference summary
+PASS reject unadjudicated/stale reference summary
+PASS reject unadjudicated/stale reference summary
+PASS reject unadjudicated/stale reference summary
+PASS both full CI event log validators require 70 native executions and adjudicated reference
+PASS reject CI missing actual hero blank/undersized/clipped visibility-control marker
+PASS reject CI old native
+PASS reject CI missing regression
+PASS reject CI SQL only once
+PASS reject CI obsolete core count
+PASS reject CI missing actual PASS max-standard-currency boundary 280px
+PASS reject CI missing actual PASS max-standard-currency boundary 375px
+PASS reject CI missing actual PASS max-standard-currency boundary 640px
+PASS reject CI missing actual PASS max-standard-currency boundary 690px
+PASS reject CI missing actual PASS max-standard-currency boundary 700px
+PASS reject CI missing actual PASS max-standard-currency boundary 768px
+PASS reject CI missing actual PASS max-standard-currency boundary 1024px
+PASS reject CI missing actual PASS max-standard-currency boundary 1100px
+PASS reject CI missing actual PASS max-standard-currency boundary 1120px
+PASS reject CI missing actual PASS max-standard-currency boundary 1280px
+PASS reject CI missing actual PASS max-standard-currency boundary 1440px
+PASS reject CI duplicate currency boundary
+PASS reject CI currency summary instead of executions
+PASS reject CI wrong currency width
+{"checks":96,"scope":"Bounded synthetic metadata/filesystem tests only; no hosted/CI/publication proof","fixture":"C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\shipping-test-ellq4N"}
+PASS current-head UI horizon proof references fixture-owned storage evidence
+PASS reject manual old head
+PASS reject manual old capture
+PASS reject manual wrong invocation
+PASS reject manual missing long horizon
+PASS reject manual cash mistaken for wealth
+PASS reject manual storage proof wrong run
+PASS reject manual storage proof false attribution
+PASS reject manual not restored
+{"checks":105,"scope":"Bounded helper tests; no hosted calls or Desktop writes","fixture":"C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\shipping-test-ellq4N"}
+PASS isolated fresh ten-suite envelope including common-month screenshot and currency verification
+PASS reject envelope old eight suites
+PASS reject envelope old nine suites
+PASS reject envelope stale receipt
+PASS reject envelope old guard bytes
+PASS reject envelope head
+PASS reject envelope origin
+PASS reject envelope deployment
+PASS reject envelope runner bytes
+PASS reject envelope stale suite id
+PASS reject envelope wrong script
+PASS reject envelope wrong environment
+PASS reject envelope currency wrong origin
+PASS reject envelope missing currency output
+PASS reject envelope currency stale invocation
+PASS reject envelope missing screenshot
+PASS reject envelope failed run
+PASS reject envelope incomplete run
+PASS reject envelope path escape
+PASS reject envelope tampered output
+PASS reject wrong-origin http log with recomputed hashes
+PASS reject wrong-origin routes log with recomputed hashes
+PASS caller must select the fresh invocation
+{"checks":128,"scope":"Bounded helper tests; all synthetic public paths are inside release/","fixture":"C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\shipping-test-ellq4N"}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: exact executable source boundary
++ actual - expected
+... Skipped lines
+
+  [
+    'A\tapps/mobile/components/portfolio/portfolio-common-month.tsx',
+    'A\tapps/web/scripts/portfolio-common-month-reference-tests.cjs',
+    'A\tapps/web/scripts/portfolio-common-month-tests.cjs',
+    'A\tapps/web/scripts/smoke-portfolio-common-month.cjs',
+...
+    'M\tapps/web/package.json',
++   'M\tapps/web/scripts/smoke-heroes.cjs',
+    'M\tapps/web/src/app/portfolio/PortfolioPlanSection.tsx',
+    'M\tpackages/financial-engine/package.json'
+  ]
+
+    at Module.validateSourceChanges (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-common-month/release/shipping-guards.mjs:88:10)
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-common-month/release/shipping-guards.test.mjs:150:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'A\tapps/mobile/components/portfolio/portfolio-common-month.tsx',
+    'A\tapps/web/scripts/portfolio-common-month-reference-tests.cjs',
+    'A\tapps/web/scripts/portfolio-common-month-tests.cjs',
+    'A\tapps/web/scripts/smoke-portfolio-common-month.cjs',
+    'A\tapps/web/scripts/smoke-portfolio-currency-width.cjs',
+    'A\tapps/web/src/app/portfolio/PortfolioCommonMonth.tsx',
+    'A\tpackages/financial-engine/src/common-month.ts',
+    'A\tpackages/financial-engine/src/portfolio-common-month.ts',
+    'M\tapps/mobile/components/mobile-routes/portfolio-route.tsx',
+    'M\tapps/mobile/scripts/smoke-accessibility-rendered.cjs',
+    'M\tapps/web/package.json',
+    'M\tapps/web/scripts/smoke-heroes.cjs',
+    'M\tapps/web/src/app/portfolio/PortfolioPlanSection.tsx',
+    'M\tpackages/financial-engine/package.json'
+  ],
+  expected: [
+    'A\tapps/mobile/components/portfolio/portfolio-common-month.tsx',
+    'A\tapps/web/scripts/portfolio-common-month-reference-tests.cjs',
+    'A\tapps/web/scripts/portfolio-common-month-tests.cjs',
+    'A\tapps/web/scripts/smoke-portfolio-common-month.cjs',
+    'A\tapps/web/scripts/smoke-portfolio-currency-width.cjs',
+    'A\tapps/web/src/app/portfolio/PortfolioCommonMonth.tsx',
+    'A\tpackages/financial-engine/src/common-month.ts',
+    'A\tpackages/financial-engine/src/portfolio-common-month.ts',
+    'M\tapps/mobile/components/mobile-routes/portfolio-route.tsx',
+    'M\tapps/mobile/scripts/smoke-accessibility-rendered.cjs',
+    'M\tapps/web/package.json',
+    'M\tapps/web/src/app/portfolio/PortfolioPlanSection.tsx',
+    'M\tpackages/financial-engine/package.json'
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

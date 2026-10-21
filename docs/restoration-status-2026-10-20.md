@@ -4,6 +4,18 @@
 
 Verified local restoration build, pushed as draft PR #256. Not a production release.
 
+The789ae25 predecessor did not earn a verified release checkpoint: its complete
+push CI39612733144 failed a nearly edge-on Credit Card capture, while complete
+PR CI39612743542 succeeded. No789ae25 receipt or Desktop publication was issued.
+The next correction changes only the standing hero browser harness beyond that
+predecessor, not the assets, animation, calculations or stored data. It controls
+the capture phase, waits for a visible page before pausing time, and rejects
+late readiness/opacity results. Original pixel, motion, fallback,700ms/300ms and
+20-minute limits remain. Both new complete exact-head pipelines and fresh hosted
+and IAB evidence still precede publication. See the correction section in
+`docs/portfolio-common-month-contract-2026-10-21.md`; earlier failed runs remain
+evidence, not retrospectively approved checkpoints.
+
 The recognizable asset-centered dashboard is back, with four vitals, a selected
 debt summary and a secondary Money Loop explorer. Vault also has its own hero.
 The existing aligned demo defaults were preserved.

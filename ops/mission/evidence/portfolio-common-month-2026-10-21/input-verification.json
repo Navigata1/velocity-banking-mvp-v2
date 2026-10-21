@@ -1,5 +1,5 @@
 {
-  "origin": "http://127.0.0.1:55439",
+  "origin": "http://127.0.0.1:61841",
   "receipts": [
     {
       "width": 375,
@@ -80,7 +80,7 @@
         "width": 213,
         "height": 49,
         "brightPixels": 3137,
-        "colors": 339
+        "colors": 340
       },
       "errors": [],
       "isolatedRequests": []

@@ -1,0 +1,28 @@
+{
+  "scope": "Byte-hash comparison of protected helper sections and untouched runner/projection test; not hosted, hero, CI or publication approval",
+  "before": {
+    "sections": {
+      "baseline": "c28b37058761af8cc36cccc4c0dd9942cf1855b9aca41cd95ae0de580ca44e78",
+      "deploymentAndBaseline": "e57345d01d3ac960b42fac3f85bfa5ba0d21c8b78a971aa769f20fe26cfc2304",
+      "hostedAndRecovery": "d99055286479d4f727f3afba8d75d70f6934d454f1da5eb0b102f3c2535b342d",
+      "publicationStage": "03bf4984f8d45b5024a81698af43256a5a9ede3e02c785e11e29eba6993a416d"
+    },
+    "untouched": {
+      "run-hosted.cjs": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d",
+      "projection.test.mjs": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    },
+    "heroAlreadyPinned": true
+  },
+  "after": {
+    "sections": {
+      "baseline": "c28b37058761af8cc36cccc4c0dd9942cf1855b9aca41cd95ae0de580ca44e78",
+      "deploymentAndBaseline": "e57345d01d3ac960b42fac3f85bfa5ba0d21c8b78a971aa769f20fe26cfc2304",
+      "hostedAndRecovery": "d99055286479d4f727f3afba8d75d70f6934d454f1da5eb0b102f3c2535b342d",
+      "publicationStage": "03bf4984f8d45b5024a81698af43256a5a9ede3e02c785e11e29eba6993a416d"
+    },
+    "untouched": {
+      "run-hosted.cjs": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d",
+      "projection.test.mjs": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    }
+  }
+}

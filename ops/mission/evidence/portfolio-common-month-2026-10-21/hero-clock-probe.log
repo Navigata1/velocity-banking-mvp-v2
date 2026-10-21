@@ -1,0 +1,11 @@
+clock paused before model opt-in
+locator.waitFor: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator('[data-testid="asset-hero-canvas"][data-ready="true"]') to be visible
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-common-month\hero-clock-probe.cjs:30:80 {
+  log: [
+    `  - waiting for locator('[data-testid="asset-hero-canvas"][data-ready="true"]') to be visible`
+  ],
+  name: 'TimeoutError'
+}

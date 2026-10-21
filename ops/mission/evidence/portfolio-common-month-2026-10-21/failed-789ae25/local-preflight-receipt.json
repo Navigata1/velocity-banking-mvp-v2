@@ -1,0 +1,1877 @@
+{
+  "verifiedAt": "2026-10-21T13:57:50.133Z",
+  "baseline": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "stage": "Local preflight; final exact-head CI and hosted proof required",
+  "productionReady": false,
+  "priorReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6315242743",
+  "allowedSourceChanges": [
+    "apps/web/package.json",
+    "apps/web/src/app/portfolio/PortfolioPlanSection.tsx",
+    "apps/mobile/components/mobile-routes/portfolio-route.tsx",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs",
+    "packages/financial-engine/package.json",
+    "packages/financial-engine/src/common-month.ts",
+    "packages/financial-engine/src/portfolio-common-month.ts",
+    "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx",
+    "apps/mobile/components/portfolio/portfolio-common-month.tsx",
+    "apps/web/scripts/portfolio-common-month-tests.cjs",
+    "apps/web/scripts/portfolio-common-month-reference-tests.cjs",
+    "apps/web/scripts/smoke-portfolio-common-month.cjs",
+    "apps/web/scripts/smoke-portfolio-currency-width.cjs"
+  ],
+  "sources": {
+    ".github/workflows/ci.yml": "3ed7792c4637588aeda5b5e920d97323598be5212b3ac1606ffa427fb5954969",
+    ".github/workflows/mobile-android-smoke.yml": "8778d3eb1a9ed1fc4bc00ced33461542e204261c86b0bbb706cc3feb2beeb31a",
+    ".github/workflows/mobile-ios-smoke.yml": "d2d1242f469fdc0589ad12f1b81e52cc6aa69a7dd298363b12c55efed078b533",
+    ".github/workflows/release-smoke.yml": "cdebc0c6d789ac8b70eb0104e44f6e766ecbf9eaf799bda2319148823462b846",
+    "apps/media/hero-provenance.json": "993095bdaf63641b46eb7c81cb37af6239c93f511678fae86025f584ced9ff03",
+    "apps/media/hero-turntables/index.html": "5a0f26f4e0f9290a9cbb6256a1243c344899b8451b698ec56a7339b18c2779c1",
+    "apps/media/package-lock.json": "de10e0c7531e32bb6e1d654b22f443b551e1823ffea31d959f6145c49b350870",
+    "apps/media/package.json": "de55ed3793da7d51fdf319fb5940b4911a0f1dadd1c851a5f5c2c41451156f75",
+    "apps/media/remotion/data/scenarios.v1.json": "0dd5ac7ed3c16b88fff1be24e277b801cfbcf8af4c29ecf52603330ce8f7da0d",
+    "apps/media/remotion/src/Root.tsx": "1587920330f02211e02d50c7253b0cb027cc45076a57fb8ca523bce3d05a4d4b",
+    "apps/media/remotion/src/ScenarioExplainer.tsx": "63a6819599309e987ff5d30e7e189db8f21eb9655f579424866e7a934b7a905d",
+    "apps/media/remotion/src/index.ts": "60b69dba5beffb32021f4f1f0b59e4a3df9ef7a8e6b4d61de06296a9554876d9",
+    "apps/media/remotion/src/scenario-schema.ts": "c170cd609c4b89b27260eb9e74c58358631d2c97f1395ac7fd3b1b074a6e285d",
+    "apps/media/remotion/src/scenario-types.ts": "e2c4eda0b4f3b1a8b90704786fab1d10c3975256997e8aff0b2df661e2d04886",
+    "apps/media/remotion/src/visuals.tsx": "dbb8602e58b68c9df7155e239b97371e114881def3d585eb0dc2c4584ae66ab2",
+    "apps/media/remotion/tsconfig.json": "c6736c31bf0312bbde0a0e0152a64a6772d40d5e7d51c19df08c855beb836e60",
+    "apps/media/scripts/build-hero-models.mjs": "7d146dcf309cb6373b9aaebdfa766f73ccb42acbb37e07e8e11149a82c7cf92b",
+    "apps/media/scripts/build-refined-credit-card.mjs": "f31365f04526ada5b3381f89f9ce18f7dfe57b6422e7dcb2a66c394aa0373f4c",
+    "apps/media/scripts/build-refined-house.mjs": "26fad67c8f8908d0f34cd3fc42aa14c3f417908bc6a56f2ed3d1a8dd69f4f82f",
+    "apps/media/scripts/build-refined-land.mjs": "ab6edf9eac145c9ee23fa9324a11550c955b3309dd17379d6bf79100200db569",
+    "apps/media/scripts/build-refined-medical.mjs": "b9618865492ef2a6f0f96341df4e415eeb894cd476f9108be31f81345f79c620",
+    "apps/media/scripts/build-refined-personal.mjs": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+    "apps/media/scripts/build-refined-recreation.mjs": "2edfb8fae498e2877a49ce16de7530c645fcdb5dbc1cbdffdd1884ac95f7473e",
+    "apps/media/scripts/build-refined-student-loan.mjs": "bc7a021c892aaecbb8c9527a5fcd61dd420d68423cf69c674d531318782afd9a",
+    "apps/media/scripts/build-refined-vault.mjs": "d49baf55e3b8ad524256171d4771b11f06967fb9d574cb7166a08558ed3816a7",
+    "apps/media/scripts/credit-card-refinement.test.mjs": "ae33d05de1df1f5c5f4f3ced8b5e1bfec1bbe1588ba928a2998256d6ef0e5d37",
+    "apps/media/scripts/hero-poster-publication.mjs": "1620b28d99bfb14e4f52b16c80b4926e59bc94648262b6492fe275f84309d989",
+    "apps/media/scripts/house-refinement.test.mjs": "5cfdba8279ac3e19560d8aee294db2e1ce1093531884a1a47b672b32eb9b86f7",
+    "apps/media/scripts/hyperframes-compositions-contract.test.mjs": "4c808ad10ba2c53c306cf23f80dbae62afd221c7245c5d6f37abe0301cdc8b9c",
+    "apps/media/scripts/land-refinement.test.mjs": "f662914e1f06bac0a44f14ae6a0029dffb965a1fcd8af17e636381449f32fc3a",
+    "apps/media/scripts/media-workspace-contract.test.mjs": "837f6880e3ead157025206d5584d145deb6f62a9f5274236e808fcc8dae43dce",
+    "apps/media/scripts/medical-poster.test.mjs": "d8f0068cffa701aa45692fb189ec41c6167e10c568213cadcd2b9ffa675ea125",
+    "apps/media/scripts/medical-refinement.test.mjs": "d9212cdb51711d4526baa4bc42cc03220b290de6fc07f330a05307b5f9e103c3",
+    "apps/media/scripts/package-hero-collection.mjs": "d22965484de8ba7c423ecf5b6a187c63dbb3729e5d42442ff119294b074a127e",
+    "apps/media/scripts/personal-geometry-test-helpers.mjs": "77635f6f372d6f4d5fbea41383e82f85703d85505cd1c0a64deb21917c6be2eb",
+    "apps/media/scripts/personal-refinement.test.mjs": "720a941cf3245f5514f8c5e8c912a24e40873e2142e95c25dbd2a3b119513110",
+    "apps/media/scripts/personal-seating.test.mjs": "5a0b4ac3409f2bc38a4c71a562ca0d9d64b67dace1366b0eb2eb33f960236870",
+    "apps/media/scripts/photoreal-assets.test.mjs": "6b02d831a9abd09c0d8bbaefca9fa83923eb0e9bb7955b2f6007e9b424c89aab",
+    "apps/media/scripts/prepare-hero-posters.mjs": "1442c2f8587d1df2355f746df09bb932152910cac7b0841ed274151a88098857",
+    "apps/media/scripts/recreation-refinement.test.mjs": "d7185ec2ed9bb6955a27db98047fa5d91159d491cf5461dae1b0dc4aab5dd794",
+    "apps/media/scripts/refined-hero-record.mjs": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b",
+    "apps/media/scripts/refined-hero-record.test.mjs": "4dfb85e3d2336114a3116a2234d905ca734c3adb9148294a882c3bee5a56c04e",
+    "apps/media/scripts/remotion-compositions-contract.test.mjs": "2a8240767fcea92c1a53e417549cad692e31ffba6fcc597b3f8d6d813e304741",
+    "apps/media/scripts/student-loan-refinement.test.mjs": "b31b5923412d0fa4a33cf7f153dd507a155057aaae76d55bb0d02d7ed1db2a57",
+    "apps/media/scripts/visual-identity-contract.test.mjs": "c1dd6b4d6fe0b295ebb5efa8678815fdf2e7d60ae2a5807d85cb5057ecec527f",
+    "apps/media/sources/credit-card/materials.json": "abad9b117771644aa3e96c4ec386634b6af5c41c83b712edd8b112864cce1d41",
+    "apps/media/sources/house/materials.json": "b59a5963a434ac91190eacc97d95e30e15409fd54bb7b6468fee37d8d50274f2",
+    "apps/media/sources/land/materials.json": "5810fe15be57516e2847201dafa2ac1f6c84c07fc50e6e3bfd49cbd2b326ea5e",
+    "apps/media/sources/medical/materials.json": "388a931832ce943f241e036183910aa8fd8a77ded736e6ddb4da23e35f6f1de4",
+    "apps/media/sources/medical/poster.json": "1d8fc9bee6ba4234129361a1dab84cf934c6feb42db0534886a2365bb6f4cc8e",
+    "apps/media/sources/personal/materials.json": "c2bb19587d1b4628d819d674657d8689a38d10b052fbda637dcf4c025c08b247",
+    "apps/media/sources/recreation/materials.json": "6b5776151c1b052c82e4a408b81be0e72a3047ec1392b0492a3b9f38a0bcac04",
+    "apps/media/sources/student-loan/materials.json": "00edd7a0f7dd8948f6343c7c5375a19b674c964098a7afc770f0bc2692d67186",
+    "apps/media/src/visual-identity.mjs": "8bb08a6c3f03c1c4da40565e960770352b351e6b974cb78fd8421fe6995c4857",
+    "apps/mobile/app.json": "3b8c851a2b03a0407519a4d8d4923f44be43cedf9259c5544f28a9c1438025f3",
+    "apps/mobile/app/_layout.tsx": "80777a64814a8619db988ea6f4d5ca00a6ee1757de3f738601443bbb164d3061",
+    "apps/mobile/app/cockpit.tsx": "e97fcea835c5e22a9ca9d688a0e8d394f0193a2f05c60cffd3465782288996a2",
+    "apps/mobile/app/index.tsx": "d70e52f3f7de0de2f19080abed18dfd02969ff4046cceeab942ed637bde3060f",
+    "apps/mobile/app/learn.tsx": "3baf211f5c48e6d3ecac706aa07f084912d48b1ceb8e6a9b0c848ae996eaa15d",
+    "apps/mobile/app/portfolio.tsx": "5073286b44e0db3a986b8144d127c6916794a532170d5a91948dd33e4d6de7fb",
+    "apps/mobile/app/settings.tsx": "d1c724823ca74f2cc5c14094c2839ed342d4c5e7ef5cc0c9557601e3ef36363f",
+    "apps/mobile/app/simulator.tsx": "346904f991a3a16a435f901ef1437bb4fc66ae55c5f9b10669064a7faf7c7cad",
+    "apps/mobile/app/vault.tsx": "b8b1df4ded36ce05256290ed2d3ec911d886f711effd041162e0c4aaa1798d09",
+    "apps/mobile/babel.config.js": "c07b85b47c4d914d11373e4094bd1e936d47c8a1602513df288301964a07f8e3",
+    "apps/mobile/components/financial-card.tsx": "24a1e09e96557be553439a277bb6a33a9c3f69a6857f99f7ebfbdf14c988cdef",
+    "apps/mobile/components/mobile-assumptions-provider.tsx": "e3bc5abe447ce09ddc5e81b1f7f042ade0780938191d0800084ee8766ce5f111",
+    "apps/mobile/components/mobile-auth-provider.tsx": "0084c54712b78fb965c01c0d078cbdd81daa8f86db03407e9099251d0b65d58e",
+    "apps/mobile/components/mobile-portfolio-provider.tsx": "8889a266401e93817a0cd99d15582322451b85d03b24cae002d40b0833e8422d",
+    "apps/mobile/components/mobile-routes/cockpit-route.tsx": "a70f612d344a6f4e5576b64d7409081bb07c98dad20ab8e95e38ac759cbbaf4a",
+    "apps/mobile/components/mobile-routes/dashboard-route.tsx": "861c071f5e56c781796fb675fb8653b8f8f76b5ef6ce2cc899de3dc1bb6ca71b",
+    "apps/mobile/components/mobile-routes/learn-route.tsx": "faa041b71965b5093b58ed066511adf08ea219b29319c9ce6981fd288fb4586c",
+    "apps/mobile/components/mobile-routes/portfolio-route.tsx": "96a4d411670748484db3d83ad6e1816d59eb6ede1ed32c6bd5b3893ada3c5eee",
+    "apps/mobile/components/mobile-routes/route-screen.tsx": "ffb89181e211a1720f4cdebe33771466c0d7f3b79707f444af1c38072fa64405",
+    "apps/mobile/components/mobile-routes/settings-route.tsx": "8a69a8a23c574bc07646b58bc859814ba707e82aab27fd65fb9625e50724f72c",
+    "apps/mobile/components/mobile-routes/simulator-route.tsx": "9decc66150f3182d84c70e9c55b41a8dea9f2030ab76f254f32fd1cbfddc88d7",
+    "apps/mobile/components/mobile-routes/vault-route.tsx": "5c5d310cd7f0ec929152461bb142b3d7f34daa306441904fc5c4228556896731",
+    "apps/mobile/components/mobile-shell/controls.tsx": "41f4d0907ea4a33aa9d2176b11545a5e8225c0a386d76df0502fe8a0e3c923f2",
+    "apps/mobile/components/mobile-shell/money-loop-visuals.tsx": "554b97acaa0d34040cdbade40854306e37313ec0a1fc95783b32b1b33a9a9b4f",
+    "apps/mobile/components/mobile-shell/navigation.tsx": "754e8cebd870b51e62a952db31a5ab68c6ba63d8cfc6a0dc1de9b818d500f571",
+    "apps/mobile/components/mobile-shell/number-input.tsx": "3dc48a41c5d4bf0df38726add67b4e8698dba60657759efac010319763717487",
+    "apps/mobile/components/mobile-shell/portfolio-path.tsx": "a99f6395a4b79edb98859c53ede47afdf8a584133b1d374f7a49ffccde5f50e8",
+    "apps/mobile/components/mobile-supabase-account.tsx": "052eab6e33304a3aaf65d1f6f401034626399ba880b384911c74f32fb1cae15a",
+    "apps/mobile/components/portfolio/choice-control.tsx": "57ef154b2a11a327f735b4ab9f9d706932875bbdeeb97b7d293ce67845d7cd9d",
+    "apps/mobile/components/portfolio/portfolio-controls.tsx": "fcc57cfdb3e809bcc3ef00e9b5d6f2cf474e8d11f9e56fbab5c988cca48518c9",
+    "apps/mobile/components/portfolio/portfolio-debt-editor.tsx": "2e822d5e37b31208293078f148e7ceb865a75e33be38e7dec893f34e36de43c9",
+    "apps/mobile/components/portfolio/portfolio-payoff-path.tsx": "9ce36a0cb8dcf03719882dd4643ddb18f971f525fd3c09d42cc8411715f49de3",
+    "apps/mobile/components/portfolio/portfolio-transfer.tsx": "bedbb5a069d80c64c134d24746ae4f8d5734380bf7bf1e0f0eebe174791868e5",
+    "apps/mobile/eas.json": "fe8c092bba4062320ec6dcfa7bb7ecf4095a081efaba7046387779833a358585",
+    "apps/mobile/expo-env.d.ts": "949003038a49dc98cfed700a0b1ddd63e120c64a125bbc404259bfdd0c4efd1d",
+    "apps/mobile/hooks/use-accessibility-announcement.ts": "21422e1f6e155ed0cd487aef05947fb44a891b60987125ad29a2fe169ae56449",
+    "apps/mobile/hooks/use-persisted-mobile-assumptions.ts": "6ee1edb1fcc9cd0d45729b9718469bd1c92c86f7f0c98404e8f415bc0b6e70a7",
+    "apps/mobile/hooks/use-persisted-mobile-portfolio.ts": "ed87a68ac7b5d32410c7b70d3dfe5f52e1881549d3fc0d9378c3305935bc991f",
+    "apps/mobile/lib/accessibility-labels.ts": "518a2dd4437c3c3ffe2099048472e37c814813fa7f837764432d96fb4519ac5a",
+    "apps/mobile/lib/financial-input-draft.ts": "62201daa7e5668d4d2d3ecfdf5433ade5bdc5bd2c572fc2b21fbddee167c13eb",
+    "apps/mobile/lib/mobile-assumption-storage.ts": "85d273717069a8954bd0010bcc415cd2e33368a3ae382e88074e96ca431cb2f0",
+    "apps/mobile/lib/mobile-portfolio-model.ts": "58afb924d6784d908c19610e563b39bafcf88d7ddd61e1173d1bf6bbee95da07",
+    "apps/mobile/lib/mobile-portfolio-session.ts": "69fa19610cbc7c04f98792f7745ea43c0c947bbf85e34d1f89b51c2aa03571a9",
+    "apps/mobile/lib/mobile-portfolio-storage.ts": "ebcf865105269ca1cdc12158304ba4ddd68acfe6bd7813117dafd1bf08ded994",
+    "apps/mobile/lib/portfolio-transfer-review.ts": "04ee66101fa3f85600ecf912d4bd434ffbebaf1f515cb0af82495af49090ec11",
+    "apps/mobile/lib/supabase/auth-deep-link.ts": "45ee3c19397a18521290d4b0de6000fc5a6d9917f7a86bceee799da61bb57494",
+    "apps/mobile/lib/supabase/auth-lifecycle.ts": "402f8983c748b7217c72a6693ade126e98a82e79a6054ff1b68cf64359389a8e",
+    "apps/mobile/lib/supabase/auth-storage.ts": "7b1378c3d9834e0761df76657370a27a5700c2fc913634a0182a34bf582900a5",
+    "apps/mobile/lib/supabase/client.ts": "ae2c99dc24ee9950283378eb52278251b33f0b89841f326745673a508b180212",
+    "apps/mobile/lib/supabase/config.ts": "d18a667cbdf047214c83af08d060a7bc13a820144bb8586c1b7b61f640168336",
+    "apps/mobile/lib/supabase/portfolio-snapshot.ts": "7726f4ae647af8f032849c809cde90d37b17bbc2fb42b650f385b30f1fc10c56",
+    "apps/mobile/lib/supabase/snapshot-outbox-replay.ts": "d0f2773dc8dc40ca5ef40648726ef2adbcbbf2d793031e9e5e8972aca4696151",
+    "apps/mobile/lib/supabase/snapshot-outbox.ts": "8b6c6c89d422e508bf254ed60ba67a192156cafca8f104b8b8e643153b0ee991",
+    "apps/mobile/lib/supabase/snapshot-recovery.ts": "5e924a54a0802e6348f163136fff30d88f9c1d3e7ef85c962adb0572de3d0e7d",
+    "apps/mobile/lib/supabase/snapshot-sync.ts": "8ea24ee0dfa855c5abbb27375ad2d39edac475cdec8c53b5d9cd61d230916f83",
+    "apps/mobile/lib/supabase/sync-identity.ts": "b51e93287fb01ecb2264ac957026940c11efb92dca934077bc3eba101902f92a",
+    "apps/mobile/metro.config.js": "cb63f55ab93cdd2ebecbce46a16a984f312f683cab1fbd31d78b76bc8b4453d9",
+    "apps/mobile/package-lock.json": "ade3dce11f432dca859be2ba91b4be7369808ae5f205b5378c03bea7f60a4708",
+    "apps/mobile/package.json": "dfdedb6fec0fb13a2b7c439867e5980cda3530579ee520bcd390eca503417eb1",
+    "apps/mobile/scripts/financial-input-draft-contract.cjs": "2da544c4ef29927fca1fcd0a755bc7fc8479c32e4f766c560ac3c995e2522f46",
+    "apps/mobile/scripts/financial-input-smoke.cjs": "761a34cb112eaaf4b329acea624e6b5f237190495e8c0d96dd2ee9f7d0242baa",
+    "apps/mobile/scripts/mobile-assumption-storage-contract.cjs": "33b0e25bbefa09d63ed65a9c7e6d59fc6a25bb5842852603e82789c625d94132",
+    "apps/mobile/scripts/native-preflight.cjs": "1df3bd74a977e4b957d94bbe50cf0f14ee0c536a6d8cf673448647371b35ba8f",
+    "apps/mobile/scripts/portfolio-book-smoke.cjs": "e2c8fcb9c7ad1338f0bf1e969d3407657235e86fdd1b0e1c85f9b0c1dceecab0",
+    "apps/mobile/scripts/portfolio-hook-contract.cjs": "852d52134fe5b9cbd46131ba132219d8938185203c0bece8bc5ca96c050f55ee",
+    "apps/mobile/scripts/portfolio-model-contract.cjs": "df704a6761cccfb557e73af17cb1463b0e91db0f9410fb398ebb491b28b93fd9",
+    "apps/mobile/scripts/portfolio-owner-storage-contract.cjs": "f2763ab2def253508bf562229300cd764d5c6c686c024583269a242cc6d63df7",
+    "apps/mobile/scripts/portfolio-session-contract.cjs": "5efdceb95e600b49bb5e4921273534af8e2a7793f0e07ae50cae55f3f7081fbd",
+    "apps/mobile/scripts/portfolio-snapshot-contract.cjs": "23acb4d33508c1b5ebf523c16c405de992a2efcead448877e0c9c54931526778",
+    "apps/mobile/scripts/portfolio-storage-contract.cjs": "4361b0f34678fd92ba2761ce163f0f41445a5ff9e7e73413e3abcb13c2772331",
+    "apps/mobile/scripts/portfolio-transfer-contract.cjs": "95b36400bd56008ce49da225b841a9e86f2a1ee2619785524df5d4dcd617087e",
+    "apps/mobile/scripts/recovery-hook-contract.cjs": "03b274518297e0196a53e19f95e04cca05de8edf1b445b3093ae4bd6ce3079c1",
+    "apps/mobile/scripts/recovery-review-ui-contract.cjs": "afe4017772a8b30bbe0510f1977fac642619a7fd3033e54b57c8da1a4f454c22",
+    "apps/mobile/scripts/serve-web-export.cjs": "ff80b9e6d9f34ae9cac2fec9c1923a4f9a18ccbb34da961740786b6bbf52c79f",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "1ff048cb6b619547508be3e5aa5a092f6cc7aa8910a4e8a74ac355a74ee6a234",
+    "apps/mobile/scripts/smoke-android-bundle.cjs": "454df76b36a9060a44eea158412c4aa55fdcb44eb862dab42b83874d785e54e8",
+    "apps/mobile/scripts/smoke-android-expo-go.cjs": "80e6aab70938faf1e6c8189fe902c71f838867128551d500ee3fa87b0f96165a",
+    "apps/mobile/scripts/smoke-ios-bundle.cjs": "ec591d49f4893d8cb94b006719e22491213993b1527f4c1b8db82a2eee9cee0a",
+    "apps/mobile/scripts/smoke-ios-expo-go.cjs": "cca819a03dac273aed62e16129673f38577a27a7d9b43abf29ba2215d69a7975",
+    "apps/mobile/scripts/smoke-web-export.cjs": "922c1d8004175263b3d9f2661e3b37dce2f985e7cbea28912353501fb970d65b",
+    "apps/mobile/scripts/snapshot-outbox-contract.cjs": "69cb2d4913097f636d7f073e994c91597bb95f1cb62137f1c91af1cdf0602abf",
+    "apps/mobile/scripts/snapshot-outbox-replay-contract.cjs": "3af10f6d6ad22fa20d1f0fefbc03afda5ab391abf8cb14db3f6b59287f04c36b",
+    "apps/mobile/scripts/snapshot-recovery-contract.cjs": "fb2511bda212e25dbeea06c6d59337d6e61157c2f2591fce8e40340db17723e2",
+    "apps/mobile/scripts/supabase-account-contract.cjs": "e61a602f272fdd6f6519cf67bf8547009e52bc412ae1842b5111817201e9c848",
+    "apps/mobile/scripts/supabase-mobile-contract.cjs": "6ea1f044dbbbe382c2e6f6018d2fed3c39263ac7d1f9b22fec560c3e1e223dd4",
+    "apps/mobile/tsconfig.json": "51a72685ddd1ad302aa6ed0ff21d1e87a14297c990a92f16169ad5dcf60341d0",
+    "apps/mobile/vercel.json": "387e025e92d70d39f38c1f6682f8fc82168730559575388878687842d81dbfd3",
+    "apps/web/package-lock.json": "80abe6c16c380f8c6af6b0b47c4175749fe523a349988414dd8a1bdaede0cc54",
+    "apps/web/package.json": "9998e365b8595cf841a799ba764f03cf29c727ae57376cf4011fe1e0123251be",
+    "apps/web/scripts/accessibility-route-contract.cjs": "2114c8c51800dc8ea14fd1a4734e859e6673aa73bae10bffe862dcbf9bc5f914",
+    "apps/web/scripts/browser-harness.cjs": "7c81347797a081f7b061cccdfc08460804c47847a6f8e6e4273fd8d570ed705f",
+    "apps/web/scripts/built-server-harness.cjs": "2aba5828cf3f9be95b57197534e100a2b169900f9e7e9f66d7dffb59df860c54",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114",
+    "apps/web/scripts/financial-reference-tests.cjs": "2332113ec79a756fa6d18e6a2adb0353459cd70188dc2e359877e41001e9deca",
+    "apps/web/scripts/hero-contract-tests.cjs": "364cd5f7acdde18ee9b716b5e323fde532526e46de3139041a6a512eded47d1c",
+    "apps/web/scripts/hero-fallback-smoke.cjs": "48510a3448bccc618d07b386f464411115c8b9213b96201dd346f1c4020f6716",
+    "apps/web/scripts/hero-resource-tests.cjs": "ea6a1ab17b9b67f9011be20f4c0c352cbf78ee65cd9fc3ac1d548b650c457f69",
+    "apps/web/scripts/metadata-contract.cjs": "0af11a89f375e01e1559849a38ab9e22a00163376664a450260ef3d377a09776",
+    "apps/web/scripts/png-pixel-proof.cjs": "632d1a0b82930b9d8cf404fc65c390f547ad85e39229b9c4f19ced69bb057a7f",
+    "apps/web/scripts/portfolio-apr-unit-tests.cjs": "126d7655eafb086d0f23bc5527f36c70c6fe85a347f748f38ccd33ee70356ef7",
+    "apps/web/scripts/portfolio-book-tests.cjs": "36713324b4d74f358ec0fefb575aff0390756a8f4802145bc71f34e91461523c",
+    "apps/web/scripts/portfolio-browser-harness-tests.cjs": "840734d338918b91549346bbaed01f8b230a7fd9e0df6df0815e00199314da42",
+    "apps/web/scripts/portfolio-input-smoke.cjs": "69a72a8047f3f1b586216d098a24bb2a39d501c7508f634f33dab45d0d2e264c",
+    "apps/web/scripts/portfolio-persistence-tests.cjs": "831497453ea3f98f5b28a0ecb0259a25318d3a90a6841f8475968f9f4804e3c0",
+    "apps/web/scripts/portfolio-store-storage-tests.cjs": "7d519ad86f6692ec77504e8f7cafb5f328b47c7954ecffa235befa22e5bb7729",
+    "apps/web/scripts/public-asset-budget.cjs": "faa08e551b014a372efd8dd89218877c7f849f1b5f8f5c11d158b7150fb0035e",
+    "apps/web/scripts/smoke-comparison.cjs": "041c1c543a88390a867f696b9121329883b7bb7aba985f5105b6b84147d94f62",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "a24e9a659ea6f4614b6f23464b04aca3bb8289670585b78cba283727e0999dae",
+    "apps/web/scripts/smoke-heroes.cjs": "307ee07b810ee242f970729839cbab22f622a95a7da355954eba682ea586776f",
+    "apps/web/scripts/smoke-portfolio-budget.cjs": "14d0aedfcecb6d940a60d578c6513daef279e851c4a8e5c589205adf1bd0fdb7",
+    "apps/web/scripts/smoke-portfolio-portability.cjs": "23ee9c409e6dfd3b879866cdc80b7fb81875403e938cb2454b4d33dc2ed7d52f",
+    "apps/web/scripts/smoke-production.cjs": "9f369e7506d37e161f15e39d26a0fe8f19a36d31a5be87a888c90474869ec84b",
+    "apps/web/scripts/smoke-rendered.cjs": "64abc06f1f1103b2cf12b9873109248a4e40498eefce4bbcade329a5fb09e3b8",
+    "apps/web/scripts/smoke-routes.cjs": "28aebaf57f2e1c9faca81552263ed74a92afe5a59d616798f5a67fe8b5788f74",
+    "apps/web/scripts/smoke-vault-comparison.cjs": "4980c0cc07110a5b6f0879c1366b1fd8b76166145e7d8fca3f6b51a3fcdea674",
+    "apps/web/scripts/snapshot-outbox-contract.cjs": "6e4c0975c97a17ef85a9045acf847e8cc1ccb43e1dd7ea0abe39e9239dd64970",
+    "apps/web/scripts/supabase-account-contract.cjs": "380b48aac48a4d3c4015b71d358780cfd43fc2561ffb80e37036f1e81734ca69",
+    "apps/web/scripts/supabase-ci-contract.cjs": "a9c61a12f76195b5b9242b783cf20cc82326f5d26af7de4c0366a037ca9765cd",
+    "apps/web/scripts/supabase-client-contract.cjs": "9b078566d0e2c2bcfc65b12645fc12321259c0218bd077fbf28a17808d60525f",
+    "apps/web/scripts/supabase-schema-contract.cjs": "609a5e241db879481e1900542c9fb7c02a606ab70ef020307ff14cfa834b1a91",
+    "apps/web/scripts/test-three-stage.cjs": "f5bb82a7ca80e8088ff7d6ff422bae8826ccdcf39ecdb9862e75375c12efef15",
+    "apps/web/scripts/three-stage-helpers-tests.cjs": "1886fc44be166e5a144fb4c67388314984f1cd7d008977efafe92d0740f746bd",
+    "apps/web/scripts/three-stage-timing-tests.cjs": "88e06d13191b32f277467d4581aa48c94c7516397d177f7a99a62b76d940c46b",
+    "apps/web/scripts/three-stage-timing.cjs": "2000dd8f29c728d54ce76e004064afadd4b5f63346f9b27f58971edf394d3329",
+    "apps/web/src/app/artifact-visual-contract.ts": "1819190c6fa4ee4757712569d3bdadc7f0712def32ff70589eb45e018f6d81c3",
+    "apps/web/src/app/cockpit-model.ts": "818c6ea7af38e677f0b2eea4efa016c012cea90b0d79c0d33995c1ac7bdf2163",
+    "apps/web/src/app/cockpit/layout.tsx": "ecef52d3df740dfddbbab96bf0251abc5c1d6622effbe4f2f0885cf430ee6eb7",
+    "apps/web/src/app/cockpit/page.tsx": "bb3a83effe22c57ebc1941389652483541716f002b1d616f777f80765d942dbb",
+    "apps/web/src/app/dashboard-model.ts": "015119a090003eb4d3aef53abea8ca4aa33f56d7f80197487cbd477239f344bd",
+    "apps/web/src/app/layout.tsx": "33229babe950020ca22c81d9eeb83af83d79e98cd548b8829789eb12b3868809",
+    "apps/web/src/app/learn/animated-counter.tsx": "4915c7055d60fe3b2082a0ede8a7818983e6573f68b9a213c95caf2e26d8cd6b",
+    "apps/web/src/app/learn/celebration-canvases.tsx": "61d9a5c153e6f4920ac5f510a5809a9773630b35b129174477cd179ca3209979",
+    "apps/web/src/app/learn/layout.tsx": "5caffde74226dad99f96d44c6ef8d5e622048d62d663729a49be527532a01245",
+    "apps/web/src/app/learn/lesson-card.tsx": "919254f270e59a30948d3c68ec2cdc704518ebf3387e3c4eb2e2324a3916f841",
+    "apps/web/src/app/learn/page.tsx": "654543df12c09f2138847e4693a540c213b91aefd4e72220fdd23ddbb2900453",
+    "apps/web/src/app/learn/progress-store.ts": "446211992a12af88205394e743ca1645d3e3d2268d083da824eaf43e095fae3d",
+    "apps/web/src/app/learn/use-learn-progress.ts": "8a4539fa7542f48dba4b90b6dd1711ff6e2be2d31c71781c277dd384d88f9449",
+    "apps/web/src/app/manifest.ts": "e62486e63422b03c64a87fe436148e98516075eaec8d9d705b490168b311d525",
+    "apps/web/src/app/opengraph-image.tsx": "4e548bec2b275729473356bc0d49c850b4f9a199548d0af087ef3de1dd504b19",
+    "apps/web/src/app/page.tsx": "e966bf3a2499d7a50792f3f89ca042791514537dd00a570825bc9ffea97d5b5c",
+    "apps/web/src/app/portfolio/AddDebtDialog.tsx": "ae391998083ae5e015a422685c01d227dd3462e278dd62a5971e0aaddc1e5178",
+    "apps/web/src/app/portfolio/PortfolioDebtsSection.tsx": "6638f0a1e825531a1c678ac99118de686e4db6555f473190f7b9a393c311b829",
+    "apps/web/src/app/portfolio/PortfolioPayoffOrder.tsx": "e6b9e26337138709ac04cd0178d1b80dff794ecfb27b7e950a00d2238c277f99",
+    "apps/web/src/app/portfolio/PortfolioPlanSection.tsx": "f0ec6b9f625e1745eb8390cdee18c056e4bbed67db63b9db3ee987bb0df67bd5",
+    "apps/web/src/app/portfolio/layout.tsx": "f99a74686dfc442196b3e1a15a428322073a92d532e10312e19312485a3ca1fe",
+    "apps/web/src/app/portfolio/page.tsx": "dd802f48722acce0ea03f574edcdaebde66d41930f72b9656619b13dbe21c3af",
+    "apps/web/src/app/portfolio/portfolio-formatters.ts": "2c4a4a6e0a899f63ced7f52a5fdfc3eed60c9528266157b96c9d5dbafec36036",
+    "apps/web/src/app/portfolio/portfolio-types.ts": "1ec03ad505ce370d552a86d04abb46175ff7e5c6863e2720179d14de9f113366",
+    "apps/web/src/app/robots.ts": "dcff0c95e28f8b53bff184103a383acd1de06444722712c89961b5c834fe9e4f",
+    "apps/web/src/app/settings/SupabaseAccountPanel.tsx": "a7d23654d407e68129c73641bbfb5979c0d46acb9da37c266015785a17e5237e",
+    "apps/web/src/app/settings/backend-migration-contract.ts": "49bdb61f809e39c0a5cbc87a48f2b54abaf5ac5f43caf6c4eec5817b7194ccf8",
+    "apps/web/src/app/settings/backend-readiness.ts": "0acf5e50eb127948a63677470e706783e8489923f1af44ed5d0870a8fd1b5e7a",
+    "apps/web/src/app/settings/layout.tsx": "cf3d1de10c25449f858f955af1c889437f61fe2dff13bd155930f5e78d6f0fab",
+    "apps/web/src/app/settings/local-data-reset.ts": "48fba0e4e0ce347d28b6b03ebdb7107ad339880f7e40bb6c66139e45e5888ec4",
+    "apps/web/src/app/settings/local-demo-snapshot.ts": "d802b292502e0f82940921a43c7bf252a9e54ada4d8e6e0daf25c14da7ecad6c",
+    "apps/web/src/app/settings/page.tsx": "b555a54590651c56b60a455b78fc421f84b45dcb163fb18cb58b28c9d8cb0734",
+    "apps/web/src/app/simulator-model.ts": "e4cd938c0e9ae32760fed72b4c823d1ae69bcf8d4470b307dbdaec0424ca6664",
+    "apps/web/src/app/simulator/layout.tsx": "41a5f630de1ee20929e4cfe2a30ed0840c4e5a50f45a410492954aac1ddc6162",
+    "apps/web/src/app/simulator/page.tsx": "12b223288d615a9bdc04735be0cb4a8a6149c5e2cfbf6a6f1d31e71f5d386485",
+    "apps/web/src/app/site-metadata.ts": "8768af4f37f1a6e106e9e40118fcc48acb7926b86d0f8f7455edf8644b2f72f7",
+    "apps/web/src/app/sitemap.ts": "0bcf6f3c8e6e7989f5dfd9d3832096933e8bb8ce8ec95d7c175c338a134461df",
+    "apps/web/src/app/vault-model.ts": "3ff98346f7ef9dee1f41e75656b3080f8799b7d6bb87161f628417d9781caa6e",
+    "apps/web/src/app/vault/layout.tsx": "aed27638dc1481cf5d6777dc8f77e59d2d4a1c6bc1fe54f95412eab5c8981e2b",
+    "apps/web/src/app/vault/page.tsx": "c4e768f50fc04a2c336f2428dc5977e2e1f3f4fc0447b4c34f4023489a0d3545",
+    "apps/web/src/components/ActionFeed.tsx": "0b600491253225a1812fd0040869de576056bb86943b4dffc067a7bce34b23d0",
+    "apps/web/src/components/AnimatedButton.tsx": "ce0d51b6047cc14e47b4cc549ae65adc2084bd670e506a553f5db932bcf31127",
+    "apps/web/src/components/CountUp.tsx": "9078d2e600fe27f1cd8307d2c5a7b871855c4cc67c03e660dcad39a9bfb754b7",
+    "apps/web/src/components/DomainTabs.tsx": "93d24eae9bc2e42bef3338f1b0edb1ae0d981afa30097144d019d8c27d5b0343",
+    "apps/web/src/components/DualSlider.tsx": "c98309f0eb6862a6aa27d650b78606644fdf820cf12ec00ea7e9fb1c8d3731a5",
+    "apps/web/src/components/EditableNumber.tsx": "f90b299b040c37d467ff0d4c4f7cf663f967a6d775b56fccdb487cbbb466f808",
+    "apps/web/src/components/GlassCard.tsx": "3fb00d50afe5e374b673e3f3a734528e89c6eff90989f37136e00aa33d0b130a",
+    "apps/web/src/components/IntroAnimation.tsx": "06763b45de93c5a74dd24fb836e3d2f13b62ef84debad703335efc4d2c12c67d",
+    "apps/web/src/components/IntroModal.tsx": "0e3b175a7d3d4fd6c90a56db2543b289ed1373b9d49debe749fdcce42568f4fd",
+    "apps/web/src/components/MoneyLoopArtifactRail.tsx": "e9d85b7d66914c22c9f6987bfb5654df70eed36c1edd6f1c30c6eac4cfa11e94",
+    "apps/web/src/components/Navigation.tsx": "60b4fcda1c7c9f5397d77a5a3239d9f2e1fd7f9e8d8d2e45c93d9d5a115f400b",
+    "apps/web/src/components/PageTransition.tsx": "41536231221af7f393bcc521ef25ad5609d2429cb0296b7f69523ad317942152",
+    "apps/web/src/components/PortfolioEditableNumber.tsx": "b118681d149d178d1d021e8145bc44b72e82df1d126f17104132b8906ae36e0e",
+    "apps/web/src/components/PortfolioPayoffPath.tsx": "7419546586b3f928b07637d051c5952251a142c0998972caf1e6d6d905403472",
+    "apps/web/src/components/PortfolioStrip.tsx": "9f4794fc530b370d8bb1748b0ffd18885e3a136da15527c461f47841bb85a0ef",
+    "apps/web/src/components/PreAppPreview.tsx": "4ddaa300b202f298b76e819e66870720f1d3d61f5c922ac4db7ec39167b5f117",
+    "apps/web/src/components/ProgressRing.tsx": "fbd2a369b5d6e6ae44920de0893b3eeb86846de93a53b92f9973caec3e6d80f1",
+    "apps/web/src/components/ScrollReveal.tsx": "afae1b9e5e611793123e9e3fa8b2b2b7bda55cc0a5e635a927b5a527b8a68e06",
+    "apps/web/src/components/Skeleton.tsx": "1a74e0324ff344ec7b4a1b3b6d5cb5f21dc4c195707483279ceaf7c9d2be2591",
+    "apps/web/src/components/StrategyGlassFill.tsx": "119102c0bf6b16bea13e9d6ca73b0f5c3eea3574361398617ce7e502fc547f76",
+    "apps/web/src/components/ThemeProvider.tsx": "2df38ed0213ad9673d6fb7199242dccf8810632d939ba011c8c5b573d810d25a",
+    "apps/web/src/components/VitalCard.tsx": "25ef302f17abf0fd337fb229fcf39a759176c52ac48f80852f9d6fa92870ec1e",
+    "apps/web/src/components/VitalsGrid.tsx": "2b14aaa8ac7fff20408b5734a87f968f4f52d8cf8ed21675365bbc9254809140",
+    "apps/web/src/components/hero/AssetHero.tsx": "e8cca04af1e34e358a9a0d2365380fc9dc57236b3249a60086494232cd9f121e",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "b613999f1b117b52d3d92a9361b5b39b41af52352d7ce6ed5fe03bb203fe8daa",
+    "apps/web/src/components/hero/studio-environment.ts": "ab47fbfd534664f7945cb37fbe142e02fa207b693e57c19be3057b8f3626dc5b",
+    "apps/web/src/components/hero/turntable.ts": "ea4ca3afa595b848a7735ad96082478fe195173271baa99951d5574c20a2954a",
+    "apps/web/src/components/money-loop-3d/MoneyLoopThreeScene.tsx": "d8075d9dc0aefbd365893384344317a7b85aba1f61313e7f0b55aa6e7b75db2c",
+    "apps/web/src/components/money-loop-3d/MoneyLoopThreeStage.tsx": "47ebd16419753ce93216ed040dac35b1daf55329e8c93e4d4a0e4d6a5c96ed38",
+    "apps/web/src/components/money-loop-3d/artifact-meshes.tsx": "7aff7b320a2c3e1deb2d965b9dac4503b19010e03d65af8b2023f9cd6b7414c5",
+    "apps/web/src/components/money-loop-3d/selection-motion.ts": "2b88f3cd6d8cfb6d571b013e8615a5d4e8101340541482d7338ef26a2125fa54",
+    "apps/web/src/components/money-loop-3d/useMoneyLoopRenderMode.ts": "2cad5f041e6ae8edfd7f37bc47a67f305d017267924f5d6e6f5a4c76e669ba65",
+    "apps/web/src/components/pre-app-preview-model.ts": "9bc7221b47a663291e1949b14348f221573a6c89e963342e1e2781df83ec7ccd",
+    "apps/web/src/components/strategy-glass-fill-model.ts": "7cf001f3b0ab32b0671d9193631e9eb14bd00083d5a5537d2f19ac848163302c",
+    "apps/web/src/data/hero-assets.ts": "f6000df8f03159e10a77d823e74807e758137fd8900047288525b149b3fe951a",
+    "apps/web/src/data/shield-guardian-qa.ts": "24805e72df78822f352274a6b7a9d6c9f6278b30d24fd659b5fbfd6714210566",
+    "apps/web/src/engine/calculations.ts": "c5b4ec0f642df1ad78f3c6c266b3517cfc226060a8fc8ce9537a9f625bc60f27",
+    "apps/web/src/engine/money-loop.ts": "830ec8c9ba0f837da40ced2ca06ce02a767be3ca85313fdb1343edb02fe9c665",
+    "apps/web/src/engine/portfolio-path-visual.ts": "94d60590f1f594dd75ea39671152218fcc923808dca0020e9653cf4f16797999",
+    "apps/web/src/engine/portfolio-run-diff.ts": "499e55455880aaa22a3a9d5a1c13edbe1ada7c53d02fabced07b2606a548f3cc",
+    "apps/web/src/engine/portfolio.ts": "9ec53dda9c3d2c0631c8046780d6bd09071cd95624a8e1543899e033b9d70641",
+    "apps/web/src/engine/velocity-targeting.ts": "6dd3a865e8c4be29791c4cffba351da0c418149d41e605fed3f0ca6dccef9106",
+    "apps/web/src/hooks/useIsClient.ts": "7dc0bd6d0d4d9f3c14a02df0ec6d86eb608cedfa43bfc1fab6c7132461eed561",
+    "apps/web/src/lib/supabase/account-sync-source.ts": "ceddf8e9c1479872417fc8352f89dcf683b609068adf62c76fe43e0f51bc74db",
+    "apps/web/src/lib/supabase/client.ts": "837538991324d8ea8717a7a81307ea1e6fc458d084b26669d4543ef2e35a478b",
+    "apps/web/src/lib/supabase/config.ts": "adad262b1058033e534daff6f0e2d6afe0cb363f9fe9de3e792e1935fda699f9",
+    "apps/web/src/lib/supabase/snapshot-outbox.ts": "27d570b45690331ba278f280a8b9e9a734f477a961e9cee480218a1ed69d6148",
+    "apps/web/src/lib/supabase/snapshot-sync.ts": "74ef7f3252710c214c15dea7cf139acf2f2fcb8869d834d9df3dd85e2de4b9a9",
+    "apps/web/src/stores/app-store.ts": "a1132e888969de636fa862d516ccf6663f4a37415f5d028ed1bad841a88f9f64",
+    "apps/web/src/stores/financial-store.ts": "58295986b8248ade7aface141e46a1bc564cf9345cf6dee9bc8e7a20d188d91b",
+    "apps/web/src/stores/portfolio-persistence.ts": "649c256d2f1937e9139f1a86e86e47ca6d0d45908fa7993920d48c7b338b980f",
+    "apps/web/src/stores/portfolio-store.ts": "3715918146b7b8b5463696e0baa2fe2eff46278b55f41369a29e67fb3980695b",
+    "apps/web/src/stores/preferences-store.ts": "24e597a6154b80116bb5f68da6228ce070d96199bf3985369601ba5debde09a0",
+    "apps/web/src/stores/theme-store.ts": "b88023d06f448c01b78658ec4fee688f5e33eca2cc9c42867ff41c94b1b4442b",
+    "packages/financial-engine/fixtures/anonymized-lender-scenarios.v1.json": "c1b5e68b23d0aca4a6e89cbe61cad44f4a1659846da83a4c08309978f2cf90c2",
+    "packages/financial-engine/package.json": "b1d80c010dca345068485c686a1cdf2b8bb06719d5ba3b53446077bf9ee380fc",
+    "packages/financial-engine/src/index.ts": "23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477",
+    "packages/financial-engine/src/input-draft.ts": "0b6fc1ff9efcbcba59a6600af65b8a5ae9e0601e74385ebde43469478b710056",
+    "packages/financial-engine/src/numeric-range.ts": "fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f",
+    "packages/financial-engine/src/portfolio-book.ts": "2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5",
+    "packages/financial-engine/src/portfolio-path.ts": "e748b9ff2c59bfd7dd54b2bb3d296b8a520e55c0b7fdcac407da0e135b462812",
+    "packages/financial-engine/src/portfolio.ts": "b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781",
+    "packages/persistence-contract/package.json": "3ab0b425a12dff7157b93f87ae10f83ecd7672a7024ee69bfb90a092eeb82461",
+    "packages/persistence-contract/src/index.ts": "35216bba3e4ecb90e3ff8caa87e0aa9504ef5abfa9d79427c62beab3c66b5e06",
+    "apps/media/scripts/build-refined-custom.mjs": "2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040",
+    "apps/media/scripts/custom-refinement.test.mjs": "26c50474ca83b358d7bd18481b73a3f2f703ed921e6cdd29d45e07b4d27c460c",
+    "apps/media/sources/custom/materials.json": "26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532",
+    "packages/financial-engine/src/common-month.ts": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5",
+    "packages/financial-engine/src/portfolio-common-month.ts": "ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09",
+    "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx": "8d713edb897afa8cea91147a87106c99f6ea9f18f4519a644d85d84c99ac73a6",
+    "apps/mobile/components/portfolio/portfolio-common-month.tsx": "92df671e9020176759ccf770041e766c7819711d468a9eed73b78a966d9d1d89",
+    "apps/web/scripts/portfolio-common-month-tests.cjs": "4f8b2115992c1f8134d4dae0b682be473ecb163fc35171eebc365149bcb8d2c7",
+    "apps/web/scripts/portfolio-common-month-reference-tests.cjs": "d6655109cfb91f96f832cc720f7d0a71b38e57857e7bc556b81a6c77d6e6e9ec",
+    "apps/web/scripts/smoke-portfolio-common-month.cjs": "d01d05146af02c3541144082c38ca1b176ae467bd1b97cce7855e537605c9d4d",
+    "apps/web/scripts/smoke-portfolio-currency-width.cjs": "c1a1be358c40af59852a235537f7c9ce3a70203a8e2be8a89da76bd4398c33d4"
+  },
+  "web": {
+    "regressions": 348,
+    "dashboardCases": 18,
+    "hostedCasesRequired": 120,
+    "heroViewportCases": 20
+  },
+  "native": {
+    "browserExecutions": 70,
+    "commonMonthCases": 21
+  },
+  "commonMonth": {
+    "coreContracts": 31,
+    "webCases": 21,
+    "nativeCases": 21,
+    "currencyWidthCases": 11,
+    "oracleControls": 4,
+    "widerFontProbes": 1,
+    "widerFontBoundaryExecutions": 42,
+    "widths": [
+      1440,
+      375,
+      280
+    ],
+    "reference": {
+      "passed": 23247,
+      "failed": 0,
+      "adjudicated": true,
+      "logFile": "web-tests-final.log",
+      "reportFile": "reference-followup-decision.md"
+    }
+  },
+  "media": {
+    "contracts": 145,
+    "freshStills": 27,
+    "unchangedModelsAndPosters": 10,
+    "unchangedVideosRechecked": 10
+  },
+  "failedPredecessor": {
+    "headSha": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+    "ciRuns": [
+      39605673471,
+      39605676575
+    ],
+    "reason": "Both web jobs fail common-month large-values280 section overflow; both SQL jobs pass. Hosted/local success did not override CI; no verified receipt or Desktop publication."
+  },
+  "models": [
+    {
+      "id": "car",
+      "quality": "refined-textured",
+      "bytes": 2013548,
+      "meshes": 95,
+      "triangles": 134971,
+      "sha256": "15a8e84b4efa1ef896dbd244a87f065bc5da8e45ca912c3599b78f8ac56d6d11",
+      "sourceSha256": "c272098089d78c5cd9fd9f24ff50ee8acf8d932c55f2d55fc10adb6c8998966b",
+      "sourceUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/15cd02d304e54cb42a4db4eefe719f76190f4b68/Models/CarConcept/glTF-Binary/CarConcept.glb",
+      "sourceRevision": "15cd02d304e54cb42a4db4eefe719f76190f4b68",
+      "creator": "Eric Chadwick / Darmstadt Graphics Group GmbH",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePage": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept",
+      "excludedTrademarkTextureSha256": "1453559c58526ec236ea7f90a72b0e49823061e6c26b571928b9ea3b91593e4d",
+      "modifications": "Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants; simplified within 0.03% mesh error; WebP textures <=1024; Meshopt; normalized stage units.",
+      "provenance": "Adapted licensed Car Concept; not an AI reconstruction of the studio poster.",
+      "version": 1
+    },
+    {
+      "id": "house",
+      "quality": "refined-textured",
+      "bytes": 1144500,
+      "meshes": 155,
+      "triangles": 31316,
+      "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
+      "sourceSha256": "26fad67c8f8908d0f34cd3fc42aa14c3f417908bc6a56f2ed3d1a8dd69f4f82f",
+      "sourceFile": "apps/media/scripts/build-refined-house.mjs",
+      "materialSourceSha256": "ee03a127097e0fed9039be1d64cd13358fbf11e5b0c1519a5c6b0aad13b30a4e",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated material sources",
+      "provenance": "Original authored limestone House with actual openings, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "land",
+      "quality": "refined-textured",
+      "bytes": 709260,
+      "meshes": 32,
+      "triangles": 49834,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+      "sourceSha256": "ab6edf9eac145c9ee23fa9324a11550c955b3309dd17379d6bf79100200db569",
+      "sourceFile": "apps/media/scripts/build-refined-land.mjs",
+      "materialSourceSha256": "ef8ebc33884c92bffc1ea3eed62101f9a43c5bc609d23c4ff399e24826b9d83e",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated material sources",
+      "provenance": "Original authored terrain with recessed pond, draped gravel path, exposed layers, grounded stakes and connected trees; generated meadow/leaf albedos with approximate authored surface maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "creditCard",
+      "quality": "refined-textured",
+      "bytes": 516984,
+      "meshes": 11,
+      "triangles": 18008,
+      "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
+      "sourceSha256": "f31365f04526ada5b3381f89f9ce18f7dfe57b6422e7dcb2a66c394aa0373f4c",
+      "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
+      "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and procedural material sources",
+      "provenance": "Original authored silver/emerald cards with real engraved recesses, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "studentLoan",
+      "quality": "refined-textured",
+      "bytes": 715276,
+      "meshes": 71,
+      "triangles": 29348,
+      "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222",
+      "sourceSha256": "bc7a021c892aaecbb8c9527a5fcd61dd420d68423cf69c674d531318782afd9a",
+      "sourceFile": "apps/media/scripts/build-refined-student-loan.mjs",
+      "materialSourceSha256": "cb5da74ce913e11568f82855744d40cfe4ac5416532e0bec60622a037aa620f3",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and generated albedo sources",
+      "provenance": "Original navy graduation cap, two detailed leather books, three-strand braided gold cord,48 tassel fibers and hollow spiral diploma tied with volumetric satin bow. Generated albedos and authored approximate PBR, not scans or an exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "medical",
+      "quality": "refined-textured",
+      "bytes": 509120,
+      "meshes": 50,
+      "triangles": 26104,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615",
+      "sourceFile": "apps/media/scripts/build-refined-medical.mjs",
+      "sourceSha256": "b9618865492ef2a6f0f96341df4e415eeb894cd476f9108be31f81345f79c620",
+      "materialSourceSha256": "f62c9ef5fbedd69cea32f0ec87c6e79b6bf73eb85cc6c6e45e4ede8b44b0d021",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and authored procedural material sources",
+      "provenance": "Original hollow enamel case with separate lid/gasket, connected hardware and stethoscope, paired earbows and shaped chestpiece. Original emerald shield; no institutional emblem. Approximate PBR, not scans or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "personal",
+      "quality": "refined-textured",
+      "bytes": 519844,
+      "meshes": 29,
+      "triangles": 22016,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79",
+      "sourceFile": "apps/media/scripts/build-refined-personal.mjs",
+      "sourceSha256": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+      "materialSourceSha256": "3377df695d1a66ace34911e0e5bc2e5bf5fd0b6a6b2479ed1f5c05208df47523",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and retained original generated leather albedo source",
+      "provenance": "Original hollow cognac satchel with thick curved flap, brass buckle/handle/shoulder assemblies, punched leather straps, real stitches/piping, key aperture and inserted illustrative papers. Approximate PBR, not measured scans or exact poster reconstruction.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "recreation",
+      "quality": "refined-textured",
+      "bytes": 521544,
+      "meshes": 47,
+      "triangles": 19296,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7",
+      "sourceFile": "apps/media/scripts/build-refined-recreation.mjs",
+      "sourceSha256": "2edfb8fae498e2877a49ce16de7530c645fcdb5dbc1cbdffdd1884ac95f7473e",
+      "materialSourceSha256": "9626f5b8ba0714edc5ce55b3ef852fe27747cb653e88001b7cff53f8e6ffa59c",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and explicitly retained original generated oak/cloth sources",
+      "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "custom",
+      "quality": "refined-textured",
+      "bytes": 237844,
+      "meshes": 17,
+      "triangles": 13200,
+      "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b",
+      "sourceFile": "apps/media/scripts/build-refined-custom.mjs",
+      "sourceSha256": "2e21fb5c03e55d4649184d7362fe3df73efee9ac2b76395fd9796c3a948c5040",
+      "materialSourceSha256": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0",
+      "creator": "InterestShield project",
+      "license": "Original project geometry and procedural material fields",
+      "provenance": "Original brushed-metal pocket compass: hollow stepped case, seated dark dial/rose/ticks, faceted enamel needle, clear lens, upright hollow lid, connected five-barrel hinge and bail ring. Approximate authored PBR, not scans, exact poster reconstruction or navigation certification.",
+      "units": "normalized stage units",
+      "version": 2
+    },
+    {
+      "id": "vault",
+      "quality": "refined-textured",
+      "bytes": 719996,
+      "meshes": 45,
+      "triangles": 31976,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594",
+      "sourceSha256": "d49baf55e3b8ad524256171d4771b11f06967fb9d574cb7166a08558ed3816a7",
+      "sourceFile": "apps/media/scripts/build-refined-vault.mjs",
+      "creator": "InterestShield project",
+      "license": "Original project asset; no third-party license dependency",
+      "provenance": "Original authored open-chamber geometry and deterministic brushed/turned metal PBR maps; not an AI reconstruction of the studio poster.",
+      "units": "normalized stage units",
+      "version": 2
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-f473d226-3567-4602-a46c-ea55f14f9493.png",
+      "sourceSha256": "60f0d160647234844f3f7727ab4ecf88492129e7d2b5fb7305224b6801564c89",
+      "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97",
+      "bytes": 166578,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "house",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-9eb4bb6a-4848-40d6-87d1-df59bdf67a82.png",
+      "sourceSha256": "e2a1cca55dc4e41e855e34c01ef6f9d1c41232b3e9d818f8a7f119a64e15f98b",
+      "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca",
+      "bytes": 244470,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "land",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-5a8a3eb0-e5ed-4b92-9589-7ae85c06a120.png",
+      "sourceSha256": "b171db43b69efede45ad6334c9acd9a3ffc65f0c8343e14e4061972644d3634f",
+      "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345",
+      "bytes": 403746,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "creditCard",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-01f84116-1b2f-4ab6-81f4-c1b6ec1ca2f8.png",
+      "sourceSha256": "b697cdc35a639786876675aee530e7c9b4efd0d1fbe82c00dd222dc8fb46e131",
+      "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198",
+      "bytes": 112828,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "studentLoan",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-8444db0a-fe6e-414d-842b-d9cdbaabb96a.png",
+      "sourceSha256": "8c565df317acfbcc8ab86dce6c668dab88784ec2e69a91de4aa34744f09c8b4d",
+      "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1",
+      "bytes": 344514,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "medical",
+      "generated": "2026-10-21",
+      "tool": "OpenAI image_gen",
+      "source": "exec-f539b88b-9084-4456-be6a-96426589c10c.png",
+      "sourceFile": "apps/media/sources/medical/poster.png",
+      "sourceSha256": "30dd8c59ba54ce8608863eaf9f8835c40296e829d1e97f635fb1f1d2b732e41f",
+      "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1",
+      "bytes": 130728,
+      "role": "Edited generated product-render reference and transparent static fallback; original emerald shield badge, not a reconstructed mesh.",
+      "revision": 2,
+      "previous": {
+        "source": "exec-f2604576-9027-410e-8f4e-9eb674801c16.png",
+        "sourceSha256": "5a6977f9194a9cd2c5860318bdb639b910927462a892ea4c2f9190f9f5211325",
+        "posterSha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2"
+      }
+    },
+    {
+      "id": "personal",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-d886def9-70b0-45ec-bb9e-5df0a5623dc7.png",
+      "sourceSha256": "9a4944fce07132b12a297340cba6d44afc8fe4843a2f32a703e78f9a55719c21",
+      "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9",
+      "bytes": 298994,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "recreation",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-6947528c-23c1-4139-b1d1-04bc08462e6a.png",
+      "sourceSha256": "fae53c1a66924adbb39f76c05e48a683e668dde6ab7154aff400eac1bef1f066",
+      "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621",
+      "bytes": 142004,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "custom",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-6b35f159-2a9a-4bae-a365-60ede6a3303f.png",
+      "sourceSha256": "b3dad090b62cec3b035ecfb6422f6d8e2fc03d0a3ba9541d85f8d78e749765ae",
+      "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870",
+      "bytes": 145068,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    },
+    {
+      "id": "vault",
+      "generated": "2026-10-20",
+      "tool": "OpenAI image_gen",
+      "source": "exec-dc438c3c-2951-4913-8c52-e4267472e450.png",
+      "sourceSha256": "f7420e57ba6064c1d4dcbd3ab115cd59cc37eaabcbcc56ff176a0e322b089700",
+      "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874",
+      "bytes": 171688,
+      "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    }
+  ],
+  "videos": [
+    {
+      "id": "car",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 9684496,
+      "sha256": "a30b6ecc861cc10ab2df2287cf991a4449ab68b6ce287cabc82abb31f3cea081",
+      "motion": {
+        "changedCellCount": 13,
+        "maxCellDistance": 18.138543915678525,
+        "meanCellDistance": 1.378111976943346
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.03197670619235993,
+        "meanCellDistance": 0.003038186594202588
+      }
+    },
+    {
+      "id": "house",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 10122824,
+      "sha256": "b54fbf5a0b3e54628939385c801ed9f471ad59cd7c297532a14b3c8d418ead3c",
+      "motion": {
+        "changedCellCount": 19,
+        "maxCellDistance": 81.09095290645588,
+        "meanCellDistance": 8.22620053969038
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.0755224664031573,
+        "meanCellDistance": 0.0073992422595517415
+      }
+    },
+    {
+      "id": "land",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 16507687,
+      "sha256": "dd6206b7064f5b7d2f78ee333c2abdcc723fad4e0f5f32b9de2cee712d61c00a",
+      "motion": {
+        "changedCellCount": 26,
+        "maxCellDistance": 34.64673868774703,
+        "meanCellDistance": 4.994768609354411
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.037452827404479194,
+        "meanCellDistance": 0.0036252047101443807
+      }
+    },
+    {
+      "id": "creditCard",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 3309415,
+      "sha256": "dc5ef1e58e53d73c0fcc365515ed2ab1c4f6c36b01c54ab7e461bfbe428a120f",
+      "motion": {
+        "changedCellCount": 27,
+        "maxCellDistance": 131.7397511884058,
+        "meanCellDistance": 21.680785066699602
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.02476490118577601,
+        "meanCellDistance": 0.0037701559617904223
+      }
+    },
+    {
+      "id": "studentLoan",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 5358977,
+      "sha256": "840ccef6fcbf909654c8808e4cee2e8bfb2b3af5189116492e9ac96ce1142ad1",
+      "motion": {
+        "changedCellCount": 19,
+        "maxCellDistance": 68.04102285111989,
+        "meanCellDistance": 5.414147140480895
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.02970315678524571,
+        "meanCellDistance": 0.0028834280303034476
+      }
+    },
+    {
+      "id": "medical",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 4211775,
+      "sha256": "03e7cb1fecf57875a721585e2a18093f2ed6688baec839db2a6259126ae956da",
+      "motion": {
+        "changedCellCount": 17,
+        "maxCellDistance": 143.59989220553356,
+        "meanCellDistance": 17.29170062104743
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.060736621870887575,
+        "meanCellDistance": 0.0035568323451914963
+      }
+    },
+    {
+      "id": "personal",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 5563251,
+      "sha256": "d56a9ba0b17f0d62cf4a60e878c8366a29b9e209320295c91223ae02d85d4042",
+      "motion": {
+        "changedCellCount": 20,
+        "maxCellDistance": 105.53033050856389,
+        "meanCellDistance": 11.893473227931487
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.0859447378128948,
+        "meanCellDistance": 0.00339662302371474
+      }
+    },
+    {
+      "id": "recreation",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 4773662,
+      "sha256": "12fecdaf4e2d01b6a42a5d70feab372b29a4b3906d84dfc78580c1157bb880e4",
+      "motion": {
+        "changedCellCount": 18,
+        "maxCellDistance": 52.502568832674555,
+        "meanCellDistance": 5.354912085638999
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.030392874835285966,
+        "meanCellDistance": 0.003589241765479201
+      }
+    },
+    {
+      "id": "custom",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 3958880,
+      "sha256": "7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2",
+      "motion": {
+        "changedCellCount": 21,
+        "maxCellDistance": 85.0148759314888,
+        "meanCellDistance": 8.199801417160739
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.021329559947304233,
+        "meanCellDistance": 0.0024436259881412403
+      }
+    },
+    {
+      "id": "vault",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9,
+      "bytes": 7038275,
+      "sha256": "5e206f25d6c0acfd5fb1d35acbf9d55b69a6c0f18ea6fa2c1a14d7463b6a7812",
+      "motion": {
+        "changedCellCount": 34,
+        "maxCellDistance": 120.18889788669303,
+        "meanCellDistance": 17.347790336297756
+      },
+      "closure": {
+        "changedCellCount": 0,
+        "maxCellDistance": 0.03923094598155785,
+        "meanCellDistance": 0.005110272397891691
+      }
+    }
+  ],
+  "files": {
+    "baseline-files.json": {
+      "bytes": 6157,
+      "sha256": "e6c133eb5dd03ba3c4015b6860c955ce2f72c41d23583c7ca513e4613632a456"
+    },
+    "baseline-final.json": {
+      "bytes": 7375,
+      "sha256": "350e9e3cff8e1636ad4a39c4f638a44263e2157eef29c60c85924c763fc03a9f"
+    },
+    "baseline-git-end.log": {
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13"
+    },
+    "baseline-git-start.log": {
+      "bytes": 8,
+      "sha256": "416b208b5a126e27cd2879b0aaf528f6fd43c755dbc5ce244f7ca5a75b37cc1e"
+    },
+    "baseline-pull_request-archive-index.json": {
+      "bytes": 12459,
+      "sha256": "b8fe37966109ae0b232b8c6975c203aabe79f5032bd1bcfdb64c87ce5a75ac2d"
+    },
+    "baseline-pull_request-metadata.json": {
+      "bytes": 18632,
+      "sha256": "26de665ac2f2836190c6e8666189488da254046c1710c5538df0ebe4434a0cb9"
+    },
+    "baseline-pull_request-sql.log": {
+      "bytes": 116029,
+      "sha256": "71dc5c517b51f11c7f482656277487eace5bc4feee754d946061b6aedd083dfc"
+    },
+    "baseline-pull_request-web.log": {
+      "bytes": 539577,
+      "sha256": "afde474e281c9429ee5d32dc90ee2a2ff9b371aeab81bb7762ff94cffd85f5f6"
+    },
+    "baseline-push-archive-index.json": {
+      "bytes": 12459,
+      "sha256": "fef4f8cbe7d6301495f7437260b71eec7cb1270022ab4c6cbc3bf977469df7f7"
+    },
+    "baseline-push-metadata.json": {
+      "bytes": 18616,
+      "sha256": "fb6cbe10beac4e28b1d367e591d5cb4a14dc8173d4adab7b6c83bac5080d7d3c"
+    },
+    "baseline-push-sql.log": {
+      "bytes": 114590,
+      "sha256": "e7f5829550155848862877e06cf8e9187f684d1038266228538af8e96060923f"
+    },
+    "baseline-push-web.log": {
+      "bytes": 537818,
+      "sha256": "4d8a72badc51c1901fbb1141ee8354198cfe14cba3c2e3efe8f97dba7b48e11a"
+    },
+    "baseline-receipt-comment.json": {
+      "bytes": 374,
+      "sha256": "5d4da6b5f53c41e0d1f6b1c349aa8bff07d8b852fbf3207a2b524676216f9ba3"
+    },
+    "baseline-remote.json": {
+      "bytes": 426,
+      "sha256": "c190ce0f4b8968abcdabf72beea29aa43a56b54d120149b1f44e5bf805961d09"
+    },
+    "baseline-report.md": {
+      "bytes": 5103,
+      "sha256": "e8de4d6eaaf65a8449bbfe861f12f4492ef254ba066c9d039987efc5457d1fbe"
+    },
+    "baseline-results.json": {
+      "bytes": 2065656,
+      "sha256": "90eb85942f5889930422a54d98dece2aaac30a27ec761ac1ccc460bb756a5189"
+    },
+    "baseline-seal.cjs": {
+      "bytes": 10157,
+      "sha256": "a51022e1fb2919221b4a52d31ffae6d05ca751446f14bc0ae570b09236843e2a"
+    },
+    "baseline-v2-git-end.log": {
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13"
+    },
+    "baseline-v2-git-start.log": {
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13"
+    },
+    "baseline-v2-pull_request-archive-index.json": {
+      "bytes": 12459,
+      "sha256": "b8fe37966109ae0b232b8c6975c203aabe79f5032bd1bcfdb64c87ce5a75ac2d"
+    },
+    "baseline-v2-pull_request-metadata.json": {
+      "bytes": 18632,
+      "sha256": "26de665ac2f2836190c6e8666189488da254046c1710c5538df0ebe4434a0cb9"
+    },
+    "baseline-v2-pull_request-sql.log": {
+      "bytes": 116029,
+      "sha256": "71dc5c517b51f11c7f482656277487eace5bc4feee754d946061b6aedd083dfc"
+    },
+    "baseline-v2-pull_request-web.log": {
+      "bytes": 539577,
+      "sha256": "afde474e281c9429ee5d32dc90ee2a2ff9b371aeab81bb7762ff94cffd85f5f6"
+    },
+    "baseline-v2-push-archive-index.json": {
+      "bytes": 12459,
+      "sha256": "fef4f8cbe7d6301495f7437260b71eec7cb1270022ab4c6cbc3bf977469df7f7"
+    },
+    "baseline-v2-push-metadata.json": {
+      "bytes": 18616,
+      "sha256": "fb6cbe10beac4e28b1d367e591d5cb4a14dc8173d4adab7b6c83bac5080d7d3c"
+    },
+    "baseline-v2-push-sql.log": {
+      "bytes": 114590,
+      "sha256": "e7f5829550155848862877e06cf8e9187f684d1038266228538af8e96060923f"
+    },
+    "baseline-v2-push-web.log": {
+      "bytes": 537818,
+      "sha256": "4d8a72badc51c1901fbb1141ee8354198cfe14cba3c2e3efe8f97dba7b48e11a"
+    },
+    "baseline-v2-receipt-comment.json": {
+      "bytes": 374,
+      "sha256": "5d4da6b5f53c41e0d1f6b1c349aa8bff07d8b852fbf3207a2b524676216f9ba3"
+    },
+    "baseline-v2-remote.json": {
+      "bytes": 426,
+      "sha256": "c190ce0f4b8968abcdabf72beea29aa43a56b54d120149b1f44e5bf805961d09"
+    },
+    "baseline-v2-results.json": {
+      "bytes": 2067185,
+      "sha256": "23b66dbb2d1bee9328e3597ecb5d246be2436465eed9ea6b0ea4d33dce8e3036"
+    },
+    "baseline-vercel-selected.json": {
+      "bytes": 898,
+      "sha256": "7aa8e20ff4a4ad9820f65b5e8b509fcfa2148ec0d2ddf3b650924956d7a0e419"
+    },
+    "baseline-verify-v2.cjs": {
+      "bytes": 26048,
+      "sha256": "04587c7cf437fae7d77e684d6c6aa5ef964ccd75085f2034ae921bec1218eec2"
+    },
+    "baseline-verify.cjs": {
+      "bytes": 25168,
+      "sha256": "efdc3187ca2ef62a8f5b69e495ac0f041cb02d1a7c789e47eac9d61c30efd908"
+    },
+    "collect-preflight.mjs": {
+      "bytes": 9819,
+      "sha256": "3bed853ac87b178776787025f9616b3762a161c1dac97f55c7990c1de0a25494"
+    },
+    "comparison-final.log": {
+      "bytes": 882,
+      "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+    },
+    "comparison-verification.json": {
+      "bytes": 2905,
+      "sha256": "1fcdd64c5d27178b0fd9b412a171381546403ca9af0e47b752f6450173b553d4"
+    },
+    "core-cancellation-green.log": {
+      "bytes": 2080,
+      "sha256": "af58263d41907a39f73402cae86ca5dce6405b4548037e25a328964c39e1bc40"
+    },
+    "core-first-green.log": {
+      "bytes": 1714,
+      "sha256": "4e85a421cb36eb3253c8af09a0a763fddc08e75ced5a3d9268e56aca6c8653b3"
+    },
+    "core-prefix-green.log": {
+      "bytes": 1810,
+      "sha256": "10c8ae6a7bb3812c51d1997265f164a642ca754d35313bfb92c4a49272ff61bb"
+    },
+    "core-presentation-green.log": {
+      "bytes": 3654,
+      "sha256": "db0f0da9f2a4faf7e1abc0da4dd01c19ac43e276a7d7b2c1fb0883bc19d3ad68"
+    },
+    "core-red.log": {
+      "bytes": 26431,
+      "sha256": "30fd57f52cb03a19edfbdb813b7c441263cfde06fbc871c2fcae7e09fb5f6401"
+    },
+    "core-typed-green.log": {
+      "bytes": 1990,
+      "sha256": "dbb9ada6a5389683ceb842f1ff7e6d6b59e16c10a3e132c6acaa4f78a3321c32"
+    },
+    "currency-maximum-green.log": {
+      "bytes": 478,
+      "sha256": "ad109908157937497114375acfe4b7377d677a63ab66541563f125b9253908d1"
+    },
+    "currency-review-commands.jsonl": {
+      "bytes": 4533,
+      "sha256": "0c7258af1bf2a756e14ca26b425541ed71eb37764e0c9a51266c95e5c32ba6e4"
+    },
+    "currency-review-extended-pins.json": {
+      "bytes": 28801,
+      "sha256": "57a5050eb737ee590a4bd0959f05457da0e56897ca3c6bd5bfb8f65f43be9557"
+    },
+    "currency-review-extension-reconciliation.json": {
+      "bytes": 1465,
+      "sha256": "869d32cfa1e65112e41c930659f041e7e55a1e09394be968fe01333fdb8f95b2"
+    },
+    "currency-review-final-race-check.json": {
+      "bytes": 615,
+      "sha256": "26f5d46f0705bc0b6fd34451f5749d30fdc7a9d51a849b5e8df63cae174134e3"
+    },
+    "currency-review-pins.json": {
+      "bytes": 28664,
+      "sha256": "810748eae9e6e1832cb2a966b35f66a580fe5956732b1cbc01823cc6cd3ba254"
+    },
+    "currency-review-reconciliation.json": {
+      "bytes": 2062,
+      "sha256": "fcb5c0b8d20d9eca5b190c8763ce9b02f730e0a4b95b4d155a104633d8e1835e"
+    },
+    "currency-review-report.md": {
+      "bytes": 8269,
+      "sha256": "a91bb9fa6caaa04ae18f240ef57b06217f7c2844dcda909c77ea7e468b02e6cf"
+    },
+    "currency-review-source-probe.json": {
+      "bytes": 3561,
+      "sha256": "28ba22dfcfea8692dd694a97df4a41889f38d75470cbd13091c980f40e2354c0"
+    },
+    "currency-width-boundary-red.log": {
+      "bytes": 926,
+      "sha256": "27aa8d9e6da13f613f5ef0569a03732c33a8e2366d0c67a68100ba93b5ce5894"
+    },
+    "currency-width-boundary.cjs": {
+      "bytes": 3194,
+      "sha256": "6f0a564f7d6086c20e4e366c976183610a169741d8d0771c0c98da646b519cd5"
+    },
+    "currency-width-boundary.json": {
+      "bytes": 1723,
+      "sha256": "ae0899ca9388350b73643d1e9c14a8edb127263ce9dc23bcfa953516f4a2b803"
+    },
+    "currency-width-boundary.log": {
+      "bytes": 1070,
+      "sha256": "766098a55471282aa7c87b49aa9a5a9603f2bb44f1cb21a27972cc4658e1dac0"
+    },
+    "currency-width-verification.json": {
+      "bytes": 3668,
+      "sha256": "57d0d2f94303ac6878d0a40d8318c89df9e3c1683f3841c3f615812bb6142626"
+    },
+    "dashboard-fallback-font.json": {
+      "bytes": 3843,
+      "sha256": "af03f25e0282807a2de2daf82cbcf55ee05f51e070126cad3450a400fddd499f"
+    },
+    "dashboard-final.log": {
+      "bytes": 765,
+      "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+    },
+    "dashboard-oracle-controls.json": {
+      "bytes": 49082,
+      "sha256": "8371bbdc74fdcf1ec7ed59f03cf7f1fd2344206f4f5d41953a441fe42d5f66ea"
+    },
+    "dashboard-verification.json": {
+      "bytes": 123760,
+      "sha256": "895422d88001eb14e273a7cb883b7eec65a4c82c9c193a5fd98809ef3b5c913d"
+    },
+    "draft-red.log": {
+      "bytes": 3130,
+      "sha256": "70a87127148db88d97b4f9efbdb9ddc39c1e5f75d039697cce61c5969156d9e0"
+    },
+    "engine-final.log": {
+      "bytes": 34569,
+      "sha256": "1841e375e62312b1f8a2d0920006a51d343e7367a94880e078066a1b855428ab"
+    },
+    "existing-apr-contracts.log": {
+      "bytes": 1455,
+      "sha256": "35175631a5c58e0c04f6c315cc9c490caa2b9eb56cfe6c1415d57180be308ef2"
+    },
+    "existing-book-contracts.log": {
+      "bytes": 1714,
+      "sha256": "fc43224672f0e46a931db0962bf14f8841280c72c4a069101c167228afb03fad"
+    },
+    "failed-39605673471-metadata.json": {
+      "bytes": 10554,
+      "sha256": "9567ae3e3fea78e6429b83401646f9e49f14575437172aa218cd250195b3b0d0"
+    },
+    "failed-39605676575-metadata.json": {
+      "bytes": 10554,
+      "sha256": "cef6d2acdf365147fb28fb624174e56f07ceab9a1860eb3a9c668f1ad3a09fa4"
+    },
+    "failed-7bd72ac-browser-proof.json": {
+      "bytes": 2738,
+      "sha256": "4e9c3cc9d2b3b0d8982b15f19d9b69d5d696fd7e7e0846eebbaf11f91b8ce9dc"
+    },
+    "failed-checkpoint-7bd72ac.json": {
+      "bytes": 4585,
+      "sha256": "7b65e8e0e99f1422a75453bb09bffd626883bcf5923ec6401af4284dac314d8c"
+    },
+    "failed-pr-ci.log": {
+      "bytes": 12047,
+      "sha256": "9887df8753bc3c29a10a7fdcdac671343dbbbe5f5365d8edb760045b071f8fda"
+    },
+    "failed-push-ci.log": {
+      "bytes": 12047,
+      "sha256": "d8c21d7bc0cb0a191b34a8c6ffa8ff9f5b4b24e7aa28cfefcc26a5718c17fcfe"
+    },
+    "fallbacks-final.log": {
+      "bytes": 138,
+      "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+    },
+    "final-followup-commands.jsonl": {
+      "bytes": 13739,
+      "sha256": "7c96c99bfe157c54b4cff3f2e2656573f21b7ee5102718edfcfd817cddb8e65b"
+    },
+    "final-followup-pins.json": {
+      "bytes": 28363,
+      "sha256": "e6b6a1cabb136ee0ade50776e1e390c47261fdc0e1c8d16d61e42d858b90c77e"
+    },
+    "final-followup-race-check.json": {
+      "bytes": 328,
+      "sha256": "00016b7b94d616a282e3e7a3523ffc71a711086d4af3cddc7bde47506d274027"
+    },
+    "final-followup-range-verification.json": {
+      "bytes": 3825,
+      "sha256": "bfe6aaaaad4f63dfdf0cb6ecd6f36b93aad1b2edb01c994a722fcb1a6518ea10"
+    },
+    "final-followup-reconciliation.json": {
+      "bytes": 1500,
+      "sha256": "5d99fddac11a8d4b9322eab88fbdf34bc001f925bfb7e81a060114fbaf8222a2"
+    },
+    "final-followup-reference-drift.json": {
+      "bytes": 446,
+      "sha256": "c6b3298d49ca37ebcb0a30c0c510583d7d915c88d66ccbd6618a32a7d2af5ddd"
+    },
+    "final-followup-report.md": {
+      "bytes": 7294,
+      "sha256": "eddda137b2cbbb9e3079d6d709572d08769f6f3ebb194b9dbad33bc0b80ce8cd"
+    },
+    "final-followup-tested-source-check.json": {
+      "bytes": 364,
+      "sha256": "8ff964cb124d306aa051cee223f32aab1b0c08a8fb2700e58ec2eefde05696db"
+    },
+    "followup-commands.jsonl": {
+      "bytes": 12206,
+      "sha256": "fc1ad643312e97e027afbc25275628ba15ad1e4936c8687b7fd04ea03c856174"
+    },
+    "followup-pins.json": {
+      "bytes": 28378,
+      "sha256": "23231d40bd1ae8320a50387ba707606c034b0881bbf885cd20e629d36747d6b9"
+    },
+    "followup-race-check.json": {
+      "bytes": 241,
+      "sha256": "a2deaf3f5559dacf758d141e082b31152f4807738ab9f1051cb5199a7e565db0"
+    },
+    "followup-range-probe.json": {
+      "bytes": 1453,
+      "sha256": "9677a3690572a86a45eb67f1817e794ceefc945e59214f81b2b4efd3f0ce17a7"
+    },
+    "followup-reconciliation.json": {
+      "bytes": 1018,
+      "sha256": "f97ab470ac0e58b8b0af3aae699ce0c0b84d02ec87bd6abb0b4816796b69dbb2"
+    },
+    "followup-refutation.json": {
+      "bytes": 1545,
+      "sha256": "dda819a2f2e11b8ec2a4d6fab4289fa061e822cc0d13c128b60647bd31ac5074"
+    },
+    "followup-report.md": {
+      "bytes": 8937,
+      "sha256": "02b51a73dfec38695a7abaa7e043c2c5f530fd49feedcbac51f8e10ab692386f"
+    },
+    "font-boundaries-final.log": {
+      "bytes": 1862,
+      "sha256": "219c6e4d6044dbc40657e9e82496c0744b64ca48160b5faba88e8bbb26b01a92"
+    },
+    "font-boundaries.cjs": {
+      "bytes": 1514,
+      "sha256": "b8fd9cfd1dd3a0a0deafe1d0770ab605b54080076f7ea8d3d5cdabaaa1254867"
+    },
+    "font-boundaries.log": {
+      "bytes": 1862,
+      "sha256": "219c6e4d6044dbc40657e9e82496c0744b64ca48160b5faba88e8bbb26b01a92"
+    },
+    "font-boundary-summary.json": {
+      "bytes": 400,
+      "sha256": "4d287b234a22b9ce040816096fbe10d5efeabc967b2bd9ac6d5c9732e37924d3"
+    },
+    "font-review-commands.jsonl": {
+      "bytes": 10183,
+      "sha256": "820002d0cbd4762a407e2938cc3354eb837762e52698728cb4d0e606400b7f91"
+    },
+    "font-review-final-race-check.json": {
+      "bytes": 402,
+      "sha256": "eb6cba5319d9da6cc4d44f6ca5dc6e18f4ce48c4aaccb7e4af172c0a10dbd2b7"
+    },
+    "font-review-math-pins.json": {
+      "bytes": 1666,
+      "sha256": "2a403d8bc6eedd7f5390f7e568593ea05f3ff7c01f12b96cb2128bdd8d661bc9"
+    },
+    "font-review-pins.json": {
+      "bytes": 28444,
+      "sha256": "6ef7c57c002ce146b092349b60d55a4a6280af891c5020118d60a0583828008a"
+    },
+    "font-review-reconciliation.json": {
+      "bytes": 28373,
+      "sha256": "29690a8336a9b51071b10eae92a667b2213268ab711514dd0a449f235b342e2c"
+    },
+    "font-review-report.md": {
+      "bytes": 6634,
+      "sha256": "b87ee991704078ce567013f686e1c68125976457bb029edaf77c4b8850cb5384"
+    },
+    "font-review-scope-classification.json": {
+      "bytes": 5916,
+      "sha256": "fc375d7619d7d9d18bb82352b1b84aeda7e366a0731450406bb583f1ff36f695"
+    },
+    "font-review-source-probe.json": {
+      "bytes": 1605,
+      "sha256": "8dd588fbea926042aa0f11614307c34dbd9611823c448a469973dbc7cafd6d58"
+    },
+    "font-shipping-green.log": {
+      "bytes": 5837,
+      "sha256": "c11bb6ff4bbfcf9337f19c51c3c8bb9b984375df712c3923fe220079cb0ae07b"
+    },
+    "font-shipping-red.log": {
+      "bytes": 2324,
+      "sha256": "44a97f8cd7c59bf6ada30784f0f4fe9bb4b70f17dd1027d76538eca8c7177f44"
+    },
+    "geometry-oracle-red.log": {
+      "bytes": 829,
+      "sha256": "72ce64e26c9d39855b152b95ae3d2814b5ace19909365922e60bcb9e7d380f50"
+    },
+    "heroes-final.log": {
+      "bytes": 2496,
+      "sha256": "f8335fe1ece1aced8b8130ec24af73b031b043924802e5591a9b3150f7bfd119"
+    },
+    "input-final.log": {
+      "bytes": 268,
+      "sha256": "252e8384805f43f8356673ce2590d6fcda1afbac78040e184e6fb12680a81eec"
+    },
+    "input-verification.json": {
+      "bytes": 1887,
+      "sha256": "dafec189664fe5bd4274a86502a8ecaa4a5bd9069a97fdfaea6303f5637e1787"
+    },
+    "media-check.log": {
+      "bytes": 57215,
+      "sha256": "030751aeb517055d92da835fa0f35047f61180b57b153321c83e932215820621"
+    },
+    "media-font-fix.log": {
+      "bytes": 57215,
+      "sha256": "030751aeb517055d92da835fa0f35047f61180b57b153321c83e932215820621"
+    },
+    "native-common-month-1440.png": {
+      "bytes": 37773,
+      "sha256": "5817c84174f1fb9097f8c2af53f3b57e8f1212be9ea36d48be61a9fc7b7a8b7b"
+    },
+    "native-common-month-280.png": {
+      "bytes": 28116,
+      "sha256": "75e3f150fcd69ac26d233c3a2caba6fef3597bb8ef1481be423301aea98a6eca"
+    },
+    "native-common-month-375.png": {
+      "bytes": 30919,
+      "sha256": "fb974a0fdc4ebe94a3fe9c817b3bbd1bf8076cc759b02e2f8e7e68e59c556629"
+    },
+    "native-common-month-verification.json": {
+      "bytes": 161874,
+      "sha256": "eae9d9ac0eff917734a738bc4aafedb0044a1945b8d4dbb742e6c9bd06fd980b"
+    },
+    "native-contracts-final.log": {
+      "bytes": 17398,
+      "sha256": "becd884c98a9fc915d646206b054c8d05157ffb2dc99e1a2c46774a87639c59e"
+    },
+    "native-contracts-font-fix.log": {
+      "bytes": 17398,
+      "sha256": "becd884c98a9fc915d646206b054c8d05157ffb2dc99e1a2c46774a87639c59e"
+    },
+    "native-contracts.log": {
+      "bytes": 17398,
+      "sha256": "becd884c98a9fc915d646206b054c8d05157ffb2dc99e1a2c46774a87639c59e"
+    },
+    "native-export-current.log": {
+      "bytes": 2684,
+      "sha256": "69eb730d7abad58bc0a24302869dbebf71630f8f2ec0f2d08ff2b4f698924f3b"
+    },
+    "native-export-final.log": {
+      "bytes": 2684,
+      "sha256": "416f55e22c918c02a82ed6a2d608c66d1fc4f9dbae13144ebe7cc37e1157a3e4"
+    },
+    "native-export-font-fix.log": {
+      "bytes": 2684,
+      "sha256": "416f55e22c918c02a82ed6a2d608c66d1fc4f9dbae13144ebe7cc37e1157a3e4"
+    },
+    "native-export-review-fixes.log": {
+      "bytes": 2684,
+      "sha256": "eefe83d93b15660184d7f03314ddc43bbca8c23bae0b83daf32ae429cc12b038"
+    },
+    "native-export.log": {
+      "bytes": 2684,
+      "sha256": "c6d182c76247ced6c15d49de083a72adb52a547545739793368fe2329536f04f"
+    },
+    "native-types-current.log": {
+      "bytes": 58,
+      "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+    },
+    "native-types-font-fix.log": {
+      "bytes": 58,
+      "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+    },
+    "native-types-review-fixes.log": {
+      "bytes": 58,
+      "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+    },
+    "native-types.log": {
+      "bytes": 58,
+      "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+    },
+    "native-ui-capture-final.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "native-ui-final.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "native-ui-first.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "native-ui-font-fix.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "native-ui-framing-final.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "native-ui-red.log": {
+      "bytes": 489,
+      "sha256": "f0af4530c03fdc792689e14e147790a3a59f59254ecbe85c87ec02017a2171b1"
+    },
+    "native-ui-review-fixes.log": {
+      "bytes": 2842,
+      "sha256": "47a36d1235b0c3c92d72e34822e65d034d40f695243212dee9aa3dc3a84adaeb"
+    },
+    "oracle-review-browser-framing-reconciliation.json": {
+      "bytes": 725,
+      "sha256": "e11ebecd1d3985a3164e0e1817e3fb8dcd50a114455093cf68645abb4972eb41"
+    },
+    "oracle-review-commands.jsonl": {
+      "bytes": 14719,
+      "sha256": "e9b9f8ccb1ba5fd4cc2840db64b79875a922b85c26f65fa3032265bab848d3bd"
+    },
+    "oracle-review-exact-probe-verified.json": {
+      "bytes": 5796,
+      "sha256": "356ca18ff691c7d53c5e965609fa5664e0f05ce87eb13b874c3d31771dc9131b"
+    },
+    "oracle-review-exact-probe.json": {
+      "bytes": 2756,
+      "sha256": "1bd15163c2e51a63ffdd019a4f050f5e3cc2fe106cc8cffe77f55898215d961f"
+    },
+    "oracle-review-final-pins.json": {
+      "bytes": 28428,
+      "sha256": "bf6b3fe8d645c47a5b605bbeeb525c863e90a3196d829946e34aff5893f842f0"
+    },
+    "oracle-review-final-race-check.json": {
+      "bytes": 327,
+      "sha256": "e95c6ad6cc80f11b416c20634f2147fd1c829d31d978f79182fe0830730794cf"
+    },
+    "oracle-review-final-reconciliation.json": {
+      "bytes": 1039,
+      "sha256": "3fdf0a95e95863b539a7f7190114023d50c132a3bb3557a4c6990617246aeb8d"
+    },
+    "oracle-review-pins.json": {
+      "bytes": 28437,
+      "sha256": "5fa11bdc70b1a7608e86b332b2f650602a5118c3c62f5091d538d116db5cbad1"
+    },
+    "oracle-review-reconciliation.json": {
+      "bytes": 1052,
+      "sha256": "1c514002853646c404aa4ded925b86a7c3175de245f6a325bf66ae2c3a696974"
+    },
+    "oracle-review-report.md": {
+      "bytes": 8888,
+      "sha256": "2957b38ca8f143a035c02c71caf84ceac5dc8a2f836e9dfc7973440b135946d0"
+    },
+    "oracle-review-verdict.json": {
+      "bytes": 743,
+      "sha256": "87d59f4ccf6d52140919acf8bb5f370ba260db4e02d9309d3f390fc294e23fa7"
+    },
+    "portability-final.log": {
+      "bytes": 337,
+      "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+    },
+    "portability-verification.json": {
+      "bytes": 602,
+      "sha256": "a64976b588814a3f683948d3fec0cd038d75d46b523826aae4b02889a00c686c"
+    },
+    "portfolio-currency-final.log": {
+      "bytes": 3293,
+      "sha256": "1f5b3223bd6e36b101f2ec512b42a7a79586818b19583c811f423b0ea908431c"
+    },
+    "portfolio-final.log": {
+      "bytes": 954,
+      "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+    },
+    "portfolio-verification.json": {
+      "bytes": 35747,
+      "sha256": "5bc77921f8427702aeb5bcf796cc90ee4fe2c44ea053d6efe7af3f6d8e19bf4a"
+    },
+    "prefix-red.log": {
+      "bytes": 2939,
+      "sha256": "3db3a747d4af6a6a53815f5205360d411bdb570c1d2cf346d05c67e2fb8776a1"
+    },
+    "prepared-model-red.log": {
+      "bytes": 3263,
+      "sha256": "89e5117fec06e637776ac67e12004752a635e39fd90be0947b9e301fb9411dc3"
+    },
+    "presentation-red.log": {
+      "bytes": 4462,
+      "sha256": "0fe5aefdcfc8197670d9fbe84e18df5518de2c4ca71dfdca75b19ca3a3cb83c2"
+    },
+    "preserve-failed-head.mjs": {
+      "bytes": 3667,
+      "sha256": "f922ef8ef68b9c757e375afe878f9bf73f73d54c644d76347008a2256e60bed1"
+    },
+    "prior-verified-checkpoint.json": {
+      "bytes": 738,
+      "sha256": "f84daab57fafb50f332ee9f38730e8f21f345553cdc8ee04c73e109b589be6f5"
+    },
+    "progress.md": {
+      "bytes": 13603,
+      "sha256": "203cadc726f4a9efa3278505da66a93cd8ce7abe83c8e9e3fa85e7dd0ef557a8"
+    },
+    "reference-before-prepare.cjs": {
+      "bytes": 32050,
+      "sha256": "c7cc3a4473358f7d1c4c7c8c61bc112ae7f15b00f9fe8b4db0d93c0eca339521"
+    },
+    "reference-final-run.log": {
+      "bytes": 7838,
+      "sha256": "7c6a5f4fd510e9d60ccefa5fa46c97004ade5808faeb412fcb937fbe2fe4f77d"
+    },
+    "reference-findings.md": {
+      "bytes": 2650,
+      "sha256": "7e5ba27a25282b9354d480ff2d52089fe5732358c48ef41ce076e0678f361972"
+    },
+    "reference-followup-before.cjs": {
+      "bytes": 33046,
+      "sha256": "15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd"
+    },
+    "reference-followup-decision.md": {
+      "bytes": 6225,
+      "sha256": "f47a26b4e7447baaaca7efb0bf0c9376c4373f72fc0f7c67a40001d2a0a22a97"
+    },
+    "reference-followup-full.log": {
+      "bytes": 2030,
+      "sha256": "b0b47612a203f97a384d49532f0d0150587ba88bedfb2815501c3b6eeefe7fff"
+    },
+    "reference-followup-probe.cjs": {
+      "bytes": 6424,
+      "sha256": "5442d6782f972a4da1b016ad2a64a4ba7c787e0371c030d4bbbbe79d9734b6c2"
+    },
+    "reference-followup-probe.log": {
+      "bytes": 20668,
+      "sha256": "a02adc196bbca8c7aa1eda0a3c1815d39762f4c3d8673e912991601126d6c3d0"
+    },
+    "reference-followup-provenance.log": {
+      "bytes": 23883,
+      "sha256": "efb6a15fdd4fc5e82f59f3b7a26cdbe49d1fbbf732624d6ed8f2ecfbcb88ba7b"
+    },
+    "reference-followup-results.md": {
+      "bytes": 5997,
+      "sha256": "86a6d0ed9a06fd8a6ea92557d5a1b68c77e95440c42d03abc6648cff6d646a09"
+    },
+    "reference-followup-runtime.log": {
+      "bytes": 49,
+      "sha256": "b8f09782e8eb37d51b5945ae59f0bd89b9f945d41393c341f815ea1619e289fb"
+    },
+    "reference-followup-verification.log": {
+      "bytes": 565,
+      "sha256": "807cfc6a419178cadf1b312449c65205deb767008403725a43a2f4512bb7c189"
+    },
+    "reference-full-run.log": {
+      "bytes": 7662,
+      "sha256": "fb1c7ae15e6b166326c4617d4285dab55918af842302140eee6db643dc5efb68"
+    },
+    "reference-initial-red.log": {
+      "bytes": 1231,
+      "sha256": "2bdc39eabd067ca66caf5212e4645f2149dea00a714c0daffc38e65f925ec121"
+    },
+    "reference-method.md": {
+      "bytes": 4931,
+      "sha256": "f1a2f96612dee6e3225cb79db243d7946625f6aa265fa565a93f5b7f7b189239"
+    },
+    "reference-parent-red.log": {
+      "bytes": 7838,
+      "sha256": "7c6a5f4fd510e9d60ccefa5fa46c97004ade5808faeb412fcb937fbe2fe4f77d"
+    },
+    "reference-post-tolerance.log": {
+      "bytes": 2030,
+      "sha256": "c180be843bdce90ef031e9827dac96d4f80e610c4b1d27e90cf608743f83b844"
+    },
+    "reference-prepared-results.md": {
+      "bytes": 6203,
+      "sha256": "6462d46c3e46d53dd8dfe051072f27909ad579d5b2761395a95203078d1ce7ba"
+    },
+    "reference-prepared-run.log": {
+      "bytes": 2028,
+      "sha256": "d1364ad2d62c56ca0e000fa378a3401c651e58e3f2d922f6cd92d086bbf0556f"
+    },
+    "reference-prepared-runtime.log": {
+      "bytes": 49,
+      "sha256": "1bfcf2e825dbefe898b13d07775e5b89511260df962e845c011a1642722510c7"
+    },
+    "reference-prepared-verification.log": {
+      "bytes": 395,
+      "sha256": "f046e804b5bd6b25a2e5bf6db8a1dfdb6d71c41bbf426b14f6b5e079cbd8cc25"
+    },
+    "reference-results.md": {
+      "bytes": 3103,
+      "sha256": "8abfaa91e3dcdbf09111ef15173302fe413c95b76394fa310cadb2c9bed45a52"
+    },
+    "reference-review-fixes.log": {
+      "bytes": 8699,
+      "sha256": "2deebd5ce3a9401f23a69cf72cadec1a5ae39cfe4c2e1d675c5b35d81cce4d7a"
+    },
+    "release-projection-currency-current.log": {
+      "bytes": 1094,
+      "sha256": "4ff8e5f36bb78d156a9176f3e07af865a869b3440ae73e12baee86775fb11dde"
+    },
+    "release-projection-currency-final.log": {
+      "bytes": 1094,
+      "sha256": "f1b758fa067094fcf6a805d96bc28015393d464b2756825f4cc3a8725c2d0a24"
+    },
+    "release-projection-final.log": {
+      "bytes": 1093,
+      "sha256": "b7f527a22297130e24b26bb1a00568fa35587e3271d5b601cb77ff4cf043579a"
+    },
+    "release-tests-currency-final.log": {
+      "bytes": 7986,
+      "sha256": "cec2901a8162bff61c4c6c393f0c3eac9c5a3165a80579f390c2f42fd68f8f75"
+    },
+    "release-tests-final.log": {
+      "bytes": 7986,
+      "sha256": "cec2901a8162bff61c4c6c393f0c3eac9c5a3165a80579f390c2f42fd68f8f75"
+    },
+    "rendered-final.log": {
+      "bytes": 541,
+      "sha256": "597e2241d0166409d9d79d2cc72728373072b6bb1951c53011ec57ed3254c0fe"
+    },
+    "review-artifact-pins.json": {
+      "bytes": 521,
+      "sha256": "5ad303ead6154b6b5adf838f22f0d338eab82a438df4dc9bde1ac68f5b1d0db3"
+    },
+    "review-commands.jsonl": {
+      "bytes": 85899,
+      "sha256": "3a6bedca94a47cef2d878771583d9903d5227d5359c101a357b3fa0a0278e331"
+    },
+    "review-findings.json": {
+      "bytes": 4990,
+      "sha256": "f91c8d4da77f153c1fb93806479880e9472eb77ad509b0a5d33c85b21518f6db"
+    },
+    "review-pins.json": {
+      "bytes": 28342,
+      "sha256": "c4009359fd3e0ab7049c5ac183d0931aa50f7510fd9b3c23aebd0f10d50ccc92"
+    },
+    "review-probes.cjs": {
+      "bytes": 8629,
+      "sha256": "1984bc1395173417bbadcc0477c614c7bf76f0bfac15af4c544dc7353bebf07a"
+    },
+    "review-range-green.log": {
+      "bytes": 2731,
+      "sha256": "6ded465ca58a84e8cb4593cfd7248c4fb5ebcea91bf00523080d1b54cf00a2d6"
+    },
+    "review-range-red.log": {
+      "bytes": 3902,
+      "sha256": "bcb97fb7c6e5291333bdff048068664ee5cd17f838883bd22aa5db5e8ac46a1b"
+    },
+    "review-regressions-green.log": {
+      "bytes": 2630,
+      "sha256": "6e68e73fdb8a542ab4eefdde4be2fda2a5efb02b053006cec96b3cede4f8e6c9"
+    },
+    "review-regressions-red.log": {
+      "bytes": 7137,
+      "sha256": "e1cbe5e462da38503cd403786769afdad2176ed7de881d20c51171086dee22e0"
+    },
+    "review-report.md": {
+      "bytes": 10985,
+      "sha256": "b23a4cc05dbfdd403b0e5d052f52454fc92dcfab8dc8ed7db59fc9b581123c6e"
+    },
+    "review-runner.cjs": {
+      "bytes": 3147,
+      "sha256": "e576d6b0dd02ee3696bd62c8fa9e05f9aadd25287bab352d684139cc7a1e5f5b"
+    },
+    "routes-final.log": {
+      "bytes": 353,
+      "sha256": "488f5764572bbf4afb61566ccc97f417a86bc0d369f8937349c9fc042171ed93"
+    },
+    "run-web-gates.cjs": {
+      "bytes": 1759,
+      "sha256": "23dcb9011f23d3a99ad00a237793389c544f2028732a8cee22c5d14dd374876c"
+    },
+    "runtime-audit.log": {
+      "bytes": 25,
+      "sha256": "4b02d4a3c23d969c46bd2041360f80bfcb1fe760d9db864009acdd710f9de601"
+    },
+    "three-final.log": {
+      "bytes": 46564,
+      "sha256": "c9600188d81a4225545191eadbbc13ffe9e6eadf441701d7d21e808aa852a7e0"
+    },
+    "tolerance-green.log": {
+      "bytes": 2352,
+      "sha256": "76e63b1c38c6cff6403a7eb0d3832b27ed85b680d23a088b7a79c1384b921c88"
+    },
+    "tolerance-red.log": {
+      "bytes": 5780,
+      "sha256": "6787904366ccac6be0cb7fa8a7ae4dc337b0efa032e4a39c8edeb09bbcf7002b"
+    },
+    "turntable-verification.json": {
+      "bytes": 4797,
+      "sha256": "3ef72fee64543bf9c83fec35efe19743ebde25993f85a34cf10111cd05a49698"
+    },
+    "vault-final.log": {
+      "bytes": 756,
+      "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+    },
+    "vault-verification.json": {
+      "bytes": 21859,
+      "sha256": "b8782c58ed45686f8e6cb4057971c315872d28ea9f938f5d08f5d6932667528a"
+    },
+    "videos-final.log": {
+      "bytes": 729,
+      "sha256": "aa952ad875ed22396691dc8cf05d289ea897973fde0bbc8fb988216c701d1d99"
+    },
+    "videos-font-fix.log": {
+      "bytes": 729,
+      "sha256": "aa952ad875ed22396691dc8cf05d289ea897973fde0bbc8fb988216c701d1d99"
+    },
+    "web-build-currency-fix.log": {
+      "bytes": 993,
+      "sha256": "c6109c00aadc3d3bd6442e797a18cab0ac07ea2edcf62380e8db5bf918c692e7"
+    },
+    "web-build-current.log": {
+      "bytes": 993,
+      "sha256": "da97d6af98172b8610ac68f7a7b6546746627be3a213a781e2e20e43de084504"
+    },
+    "web-build-final.log": {
+      "bytes": 993,
+      "sha256": "c6109c00aadc3d3bd6442e797a18cab0ac07ea2edcf62380e8db5bf918c692e7"
+    },
+    "web-build-font-fix.log": {
+      "bytes": 994,
+      "sha256": "bdd59bc3fc320379b85d4fa0656164905e5587de8f877d494bc0e4fbd083d717"
+    },
+    "web-build-review-fixes.log": {
+      "bytes": 991,
+      "sha256": "49060460adb25bc11a81ded24d3962d732d7ea0c4abf4439d70502277f6d05f5"
+    },
+    "web-build-typed.log": {
+      "bytes": 993,
+      "sha256": "06b43b51f7f1677034cfd8f58f3949e3e87584c8189b321216c469488de1a9b1"
+    },
+    "web-build.log": {
+      "bytes": 956,
+      "sha256": "40e3b18b1d110d0b816895ec3c3a1040dc5dff70c95ec655a8697b7fa66f53cf"
+    },
+    "web-common-month-1440.png": {
+      "bytes": 99523,
+      "sha256": "95b6ecf7d95b7bb58342ca2f1e4d1dc2efb913c622a6ec20d3224ac74f08ce12"
+    },
+    "web-common-month-280.png": {
+      "bytes": 40734,
+      "sha256": "757e5cc0dc1dabb029cf416149e2a10301f7817cf8d7f04518a2da9723f46312"
+    },
+    "web-common-month-375.png": {
+      "bytes": 47748,
+      "sha256": "980a42c5d73b9216c3b8f7355239639bf06f69662fdcc65d4c0af0cfc3baea35"
+    },
+    "web-common-month-verification.json": {
+      "bytes": 174331,
+      "sha256": "60e4651a6185fa8b4fd6f31918aed8c35219dc95dc000cead2871edc78de5b5a"
+    },
+    "web-full-tests.log": {
+      "bytes": 43564,
+      "sha256": "09019f7992c1c5fecb0ef7bd9612c98ef3b8b6382911f56f6d01ca3ea10c31f7"
+    },
+    "web-gates-final.json": {
+      "bytes": 2291,
+      "sha256": "27191478e7462c00cd69e84f1353729d7c578cd7dd8820ade71eac24d4c93c53"
+    },
+    "web-lint-currency-final.log": {
+      "bytes": 32,
+      "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+    },
+    "web-lint-final.log": {
+      "bytes": 32,
+      "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+    },
+    "web-lint-font-fix.log": {
+      "bytes": 32,
+      "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+    },
+    "web-lint-review-fixes.log": {
+      "bytes": 32,
+      "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+    },
+    "web-lint.log": {
+      "bytes": 32,
+      "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+    },
+    "web-tests-final.log": {
+      "bytes": 43943,
+      "sha256": "9a3f893efd39f0b15d21898f7d1ae7b11335580f184c547060bf4e61861ab2ba"
+    },
+    "web-tests-font-fix.log": {
+      "bytes": 43943,
+      "sha256": "9a3f893efd39f0b15d21898f7d1ae7b11335580f184c547060bf4e61861ab2ba"
+    },
+    "web-ui-capture-final.log": {
+      "bytes": 949,
+      "sha256": "9c8fc7efc9cb740c6117692d81047c547210559c3d26ff1055e881e8b14a52c7"
+    },
+    "web-ui-final.log": {
+      "bytes": 913,
+      "sha256": "7c4d4bc5c08ebaa98c4ddc11df33c3379a5fbfc90404b795e1c626ff055b4228"
+    },
+    "web-ui-first.log": {
+      "bytes": 913,
+      "sha256": "7c4d4bc5c08ebaa98c4ddc11df33c3379a5fbfc90404b795e1c626ff055b4228"
+    },
+    "web-ui-font-fix-final.log": {
+      "bytes": 949,
+      "sha256": "9c8fc7efc9cb740c6117692d81047c547210559c3d26ff1055e881e8b14a52c7"
+    },
+    "web-ui-font-fix.log": {
+      "bytes": 949,
+      "sha256": "9c8fc7efc9cb740c6117692d81047c547210559c3d26ff1055e881e8b14a52c7"
+    },
+    "web-ui-framing-final.log": {
+      "bytes": 913,
+      "sha256": "7c4d4bc5c08ebaa98c4ddc11df33c3379a5fbfc90404b795e1c626ff055b4228"
+    },
+    "web-ui-geometry-green.log": {
+      "bytes": 913,
+      "sha256": "7c4d4bc5c08ebaa98c4ddc11df33c3379a5fbfc90404b795e1c626ff055b4228"
+    },
+    "web-ui-red.log": {
+      "bytes": 487,
+      "sha256": "947b30bddad3011ee39bf619daa0853006731f2c1b35cb61f82028e41b93438b"
+    },
+    "web-ui-review-fixes.log": {
+      "bytes": 913,
+      "sha256": "7c4d4bc5c08ebaa98c4ddc11df33c3379a5fbfc90404b795e1c626ff055b4228"
+    },
+    "wide-font-green.log": {
+      "bytes": 949,
+      "sha256": "9c8fc7efc9cb740c6117692d81047c547210559c3d26ff1055e881e8b14a52c7"
+    },
+    "wide-font-red.log": {
+      "bytes": 4025,
+      "sha256": "885d7d66a09ceae7fd7406d4a9b6156bf74d664539d4845c35cf295686fb0334"
+    },
+    "shipping/currency-width-before-105.log": {
+      "bytes": 5838,
+      "sha256": "2ae9c245232b1748f2d16f78c88e1a4d89e7a527e2796d2d6300b9845f41ae55"
+    },
+    "shipping/currency-width-final-testproof-hashes.json": {
+      "bytes": 3829,
+      "sha256": "3b635023c8412f792dcb8ba6aff7be7be62ff20a5426e79deb68d58f663d42b0"
+    },
+    "shipping/currency-width-green-initial.log": {
+      "bytes": 7807,
+      "sha256": "bdcd488d2b592bcb18faf7c098d03d561eb4f09eba32844fb575070bc81b449a"
+    },
+    "shipping/currency-width-green.log": {
+      "bytes": 7987,
+      "sha256": "e3c5275e0686d0e00efa73d6f554a5d120cf16ccbdb4acc9a33d6d435d350107"
+    },
+    "shipping/currency-width-postflight-realm-diagnostic.log": {
+      "bytes": 8367,
+      "sha256": "120128cec8c22eeb2fea377f2cf211eca83a38c66aecdae8f9440d83798c91f0"
+    },
+    "shipping/currency-width-postflight-red.log": {
+      "bytes": 8147,
+      "sha256": "fb5708ff4c49116b94f25754cfec464de19c7772649f0763ddd8ee4595f2b1e0"
+    },
+    "shipping/currency-width-projection-green.log": {
+      "bytes": 1124,
+      "sha256": "3a1d3f57b5cd31a69d7ff85481b37d131074dc30399e3d7715e61799980a0704"
+    },
+    "shipping/currency-width-projection-red.log": {
+      "bytes": 3118,
+      "sha256": "3d87f43e4e8601ed8af83960559b7032ec49ad1ef9e5c3a7b19a4f80953ed7b2"
+    },
+    "shipping/currency-width-protected-testproof.json": {
+      "bytes": 695,
+      "sha256": "86918921932669d423f548c34c714f6682795416e1efcda96044ef93b1c9baaf"
+    },
+    "shipping/currency-width-red.log": {
+      "bytes": 2556,
+      "sha256": "489554070f34cd984d229bdb888e8accd6a79beab6b958de6e006b18844966d0"
+    },
+    "shipping/currency-width-syntax-testproof.log": {
+      "bytes": 193,
+      "sha256": "ce4f09b10e24c75f22fe14f52a3ace56c209f15eef0d25d767107ee8be0fbdaa"
+    },
+    "shipping/postflight.mjs": {
+      "bytes": 15292,
+      "sha256": "51a8b0dcf61c8422b914e1bc678a5adc7702f9a1e071dd64ee53a443b69ac4d2"
+    },
+    "shipping/projection-check-proof.json": {
+      "bytes": 111425,
+      "sha256": "528b309e5c7050b28cee73655536738457d146422406ad868a98c9e066882f07"
+    },
+    "shipping/projection-currency-green-proof.json": {
+      "bytes": 111340,
+      "sha256": "a359f7722cc66292080fe62a34f3885440325cf8fe163c4bf82032ef93f874fc"
+    },
+    "shipping/projection-currency-red-proof.json": {
+      "bytes": 110696,
+      "sha256": "6b7d92f94c2fb605c5cc9789a2789ad50c202764cb34d614b1ce6f0c885ac4d7"
+    },
+    "shipping/projection-final-hashes.json": {
+      "bytes": 2321,
+      "sha256": "d6e744182605328ac1efc83d0898e57d1691237466fb40f571020732bd75b61e"
+    },
+    "shipping/projection-green-proof.json": {
+      "bytes": 110179,
+      "sha256": "52c6d5b20ccc03155f5bf0dd8a845533cfffa4783783111a5c6cff86a28292e5"
+    },
+    "shipping/projection-green.log": {
+      "bytes": 1114,
+      "sha256": "77fea39145a7af77515e181302105a0837025be49909a129d93f0a43528aef0e"
+    },
+    "shipping/projection-red-proof.json": {
+      "bytes": 110215,
+      "sha256": "ea7c079e225cb9076c943b1cfed82bd39fa056f46fcb6b347317cece35806e0e"
+    },
+    "shipping/projection-red.log": {
+      "bytes": 3634,
+      "sha256": "a9ce4ba421b7007e0dce19b9f757e4e789f58ff19268de49feb4ce4261115c14"
+    },
+    "shipping/projection-test-case-diagnostic-proof.json": {
+      "bytes": 110179,
+      "sha256": "52c6d5b20ccc03155f5bf0dd8a845533cfffa4783783111a5c6cff86a28292e5"
+    },
+    "shipping/projection-test-case-diagnostic.log": {
+      "bytes": 2821,
+      "sha256": "81b6398b03b9ffcc13f8fb1d5a56bafb8a77478a2a58c016ac7fc80eaea71004"
+    },
+    "shipping/projection.test.mjs": {
+      "bytes": 4863,
+      "sha256": "c14342d44856c34f90aeb4b4b67337e8c51faf0d9cd5432d8e9fef5d59b37a59"
+    },
+    "shipping/publish-desktop.mjs": {
+      "bytes": 17366,
+      "sha256": "970dcf0b70e25fe5ecf6bdcf7d588d6a7fd9e98ecc86c40973faae97843289b1"
+    },
+    "shipping/release-preparation.md": {
+      "bytes": 16671,
+      "sha256": "f1f9df57ede3788655266edf7a8d21c743253d832a197c17283d573c87fb18bb"
+    },
+    "shipping/run-hosted.cjs": {
+      "bytes": 4039,
+      "sha256": "9cfee0693d31ca08af1f02921889cab9aa8fea9fc56194b97ed07f826f40d70d"
+    },
+    "shipping/shipping-guards-after-mapping-102.log": {
+      "bytes": 5687,
+      "sha256": "5cc3760e1add0551074b602f30c567e7c169e9e21d2b84bbb1e643437f7deec4"
+    },
+    "shipping/shipping-guards-original-102.log": {
+      "bytes": 5687,
+      "sha256": "26a538ffe8d93f55bd6f6a504346a213df3be158288f023a661f1f865d35fcdf"
+    },
+    "shipping/shipping-guards.mjs": {
+      "bytes": 27872,
+      "sha256": "d49508de9d9653350a612097747bf0f0e1dde0d74ef021bb28d2640620f03495"
+    },
+    "shipping/shipping-guards.test.mjs": {
+      "bytes": 31177,
+      "sha256": "944d7e194cb1a1c6c177d8b1b917470e537b14e82b9481249886f54e00ed7154"
+    }
+  },
+  "limitations": [
+    "No old payoff allocation, saved-data, asset or cloud change.",
+    "Generic Number estimates are not exact lender posting.",
+    "Whole R2, final collection art, lender/calendar, backend, physical-device and production release remain open.",
+    "Static self-contained HTML checks do not establish file-runtime, whole-set crash atomicity or power-loss durability."
+  ]
+}

@@ -28,6 +28,38 @@ CI remains70; core/reference counts remain required receipt inputs, not defaults
 Original105 font-positive/helper coverage and earlier102/projection proof remain
 historical. Fresh invocation, exact-head CI and actual IAB proof are still required.
 
+## Hero Capture Followup
+
+Parent-reported789ae25 is NOT a verified checkpoint: push39612733144 failed the
+Credit Card1440px hero capture at a valid edge-on1.392% foreground against the
+unchanged2% minimum; PR39612743542 completed successfully with all jobs passing.
+Both exact-head events are not green, so no receipt or Desktop publication is
+permitted. Historical7bd72ac also remains failed, never relabeled verified.
+The prior1aec baseline and its322/324/48 publication proof remain untouched.
+
+Parent owns capture-clock software/hardware tests, independent harness review,
+source/collector/docs/state, commits, pushes and remote/publication execution.
+This maintenance reads the smoke-heroes.cjs patch but does not execute it or assume
+that its review or browser checks have passed. The frozen failed789 archive at
+`release/failed-789ae25/` and downloaded `failed-789ae25-push-heroes` proof are not
+modified. No network, cloud, GPU, extra-agent or public Desktop operation runs here.
+
+The only added source exception is the existing `apps/web/scripts/smoke-heroes.cjs`:
+293 pins now mean279 old unchanged, six modified, eight new. Both complete current
+push and PR CI logs must contain this actual marker in addition to every existing
+regression, currency, font, media, native, financial/reference and SQL requirement:
+
+```text
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+```
+
+Genuine missing-marker and sixth-file allowlist REDs precede the fix. All prior144
+checks remain, with two added checks for146; projection remains3/3. No font,
+geometry, motion,700/300 timing, SQL/native/financial/reference limit, CI timeout,
+baseline guard or recoverable publication behavior is relaxed. Fresh final-source
+proof and both full successful exact-head CI events remain prerequisites, not a
+claim made by this bounded helper test bundle.
+
 Preparation only. None of these helpers has been executed against hosted services,
 GitHub mutations, public Desktop paths, push, or publication during this subtask.
 Only bounded helper tests and syntax checks are authorized here. Reviewer approval
@@ -63,7 +95,7 @@ Its required shape (types/field descriptions, not substitute proof):
   priorReceipt: string; // exact prior mobile-vitals postflight receipt URL
   productionReady: false;
   stage: string;
-  allowedSourceChanges: string[]; // exactly the 5 modified +8 new below
+  allowedSourceChanges: string[]; // exactly the 6 modified +8 new below
   sources: Record<string, string>; // all 293 normalized LF SHA-256 source pins
   web: { regressions: 348; dashboardCases: 18; hostedCasesRequired: 120 };
   media: { contracts: 145; freshStills: 27 };
@@ -107,8 +139,8 @@ installed as a default or used to relabel old failures as current proof.
 ## Source Boundary
 
 Derive the inventory from prior.local.sources285 plus the eight existing new
-executable files. The actual union was read and counted:293 (280 old unchanged,
-five modified, eight new). This is inventory
+executable files. The actual union was read and counted:293 (279 old unchanged,
+six modified, eight new). This is inventory
 verification, not a claim that the uncommitted feature has passed final pin checks.
 Later helpers compare all293 current and committed hashes, check the exact git
 name-status boundary, and require clean HEAD distinct from/descended from baseline.
@@ -118,6 +150,7 @@ Modified:
 - `apps/mobile/components/mobile-routes/portfolio-route.tsx`
 - `apps/mobile/scripts/smoke-accessibility-rendered.cjs`
 - `apps/web/package.json` (only test and smoke:portfolio:built script changes)
+- `apps/web/scripts/smoke-heroes.cjs` (bounded capture-clock harness; original limits retained)
 - `apps/web/src/app/portfolio/PortfolioPlanSection.tsx`
 - `packages/financial-engine/package.json` (only new typed subpath export)
 
@@ -275,6 +308,10 @@ currency adaptation passes144 bounded helper checks plus the existing3/3 project
 tests. Currency guard, postflight metadata loop and projected currency reporting
 were observed RED before implementation, then GREEN. No hosted/CI/Desktop proof
 is inferred from synthetic receipts or from the parent's local11 browser result.
+The later bounded hero-helper maintenance preserves those144 checks and adds two,
+for146 passing checks plus3/3 unchanged projection tests. Its before144, genuine
+marker/allowlist RED and GREEN logs are retained under `hero-helper-*`; these
+contain only synthetic metadata/filesystem checks, not hero browser/CI approval.
 
 Bounded command: `node .superpowers/sdd/2026-10-21-common-month/release/shipping-guards.test.mjs`.
 Add `--keep-fixtures` only to retain synthetic fault fixtures under this directory.

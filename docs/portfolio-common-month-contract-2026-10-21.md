@@ -106,7 +106,8 @@ that one canonical book at11 widths, including690/700; it checks exact full text
 one-line containment, finite positive widths, font>=12, no overflow and no errors.
 Those are11 layout executions, not11 lender examples. Web totals are109 primary
 workflow cases plus11 currency boundaries=120, across ten hosted suites. Native
-remains70; source inventory293=280 old unchanged,5 old modified and8 new.
+remains70. At that currency checkpoint, source inventory293 comprised280 old
+unchanged,5 old modified and8 new; the later hero-harness boundary is below.
 
 Local shared contracts:31 passing cases, with genuine preceding API, prefix,
 draft/coverage, cancellation, tolerance and four review-regression REDs preserved.
@@ -134,3 +135,47 @@ asset hashes and actual UI edit/restore still precede a verified receipt.
 
 Future Simulator/Vault adapters must retain their single-target scopes and actual
 policy traces. No scenario is automatically copied, merged or migrated here.
+
+## Standing Hero Capture Correction
+
+The next pushed checkpoint,789ae25, was not approved: its complete push pipeline
+39612733144 failed the original hero visibility test, while complete PR pipeline
+39612743542 succeeded. Both event results are required. The previous1aec5bf
+Desktop publication remains the verified baseline; no789ae25 receipt or report
+publication occurred.
+
+The failing Credit Card capture contains real, nearly edge-on geometry:12.83%
+foreground in A and1.39% in B. The unchanged visibility predicate correctly
+rejects B under its2% occupancy rule. The old harness let screenshot/GPU latency
+choose these two turn phases. The correction controls the test clock before
+model opt-in, advances loading in16ms ticks, captures the initial loaded view, then delivers
+1500ms through the real scheduled animation/render callbacks before capture B.
+It does not set a model angle, replace pixels, replay on failure or choose a
+different phase for a particular asset. Clock-driven snapshots are not a
+wall-time frame-rate or full-turn smoothness measurement.
+
+The first software-renderer trial passed all nine dashboard domains, then failed
+at Vault. A focused warm-navigation probe reproduced a separate harness mistake:
+the loaded canvas and faded poster were inside a PageTransition at opacity0.
+Its screenshot had0 foreground pixels. Resuming the page, waiting for visible
+ancestors and loading the same asset at rest produced26132 pixels (14.71%).
+The uniform pause boundary now waits for actual ancestor opacity1 and visible
+layout before freezing time. Runtime page transitions and model animation are
+unchanged. Raw Vault images are saved before subsequent visibility assertions.
+
+Independent review also reproduced late-success acceptance in the initial
+polling loops. Genuine deadline REDs precede a bounded helper that races each
+operation against its remaining wall budget and checks the deadline again after
+resolution. Five focused exact-source AST/VM checks pass, including a pending
+query; permanent expired/late/pending/positive controls run in the standing hero
+harness. RGB unit controls reject blank, undersized and clipped geometry. They
+are not described as DOM/browser counterexamples. Descriptor/self comparison
+rejects identical frames; that alone is not a disabled-scheduler browser test.
+
+Original2% occupancy, edge margins, color/spatial movement checks, overflow,
+errors, reduced-motion stillness,120-second operations, independent Three700ms/
+300ms timing and the20-minute workflow cap remain. All ten actual models,
+posters, videos, runtime animation, numerical modules and saved-data code are
+unchanged. The source inventory is293 files:279 old unchanged, six old modified
+(including this existing test harness), eight new. Final local and both new
+complete exact-head CI/READY/hosted120/IAB/publication proof are still required.

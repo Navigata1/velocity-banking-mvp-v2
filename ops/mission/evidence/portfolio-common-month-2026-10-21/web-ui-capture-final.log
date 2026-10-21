@@ -1,3 +1,42 @@
+
+> web@0.1.0 smoke:portfolio:built
+> node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs && node scripts/smoke-portfolio-currency-width.cjs
+
+PASS Portfolio unfunded-extra at 1440px
+PASS Portfolio retained-cash at 1440px
+PASS Portfolio existing-loc at 1440px
+PASS Portfolio ranked-loc-cap at 1440px
+PASS Portfolio split-ranked-loc at 1440px
+PASS Portfolio funded-final at 1440px
+PASS Portfolio one-cent-short at 1440px
+PASS Portfolio loc-interest-shortfall at 1440px
+PASS Portfolio already-paid at 1440px
+PASS Portfolio large-value at 1440px
+PASS Portfolio large-loc at 1440px
+PASS Portfolio focus-not-first-payoff at 1440px
+PASS Portfolio unfunded-extra at 375px
+PASS Portfolio retained-cash at 375px
+PASS Portfolio existing-loc at 375px
+PASS Portfolio ranked-loc-cap at 375px
+PASS Portfolio split-ranked-loc at 375px
+PASS Portfolio funded-final at 375px
+PASS Portfolio one-cent-short at 375px
+PASS Portfolio loc-interest-shortfall at 375px
+PASS Portfolio already-paid at 375px
+PASS Portfolio large-value at 375px
+PASS Portfolio large-loc at 375px
+PASS Portfolio focus-not-first-payoff at 375px
+PASS web Portfolio portability canonical-round-trip 375px
+PASS web Portfolio portability corrupt-primary 375px
+PASS web Portfolio portability failed-publication 375px
+PASS web Portfolio portability canonical-round-trip 1440px
+PASS web Portfolio portability corrupt-primary 1440px
+PASS web Portfolio portability failed-publication 1440px
+Portfolio input fixtures against existing built web app at http://127.0.0.1:61841; isolated 375/1440/280/1264px contexts.
+PASS precise Portfolio inputs 375px
+PASS precise Portfolio inputs 1440px
+PASS precise Portfolio inputs 280px
+PASS precise Portfolio inputs 1264px
 PASS web common month cash-versus-wealth 1440px
 PASS web common month adverse 1440px
 PASS web common month blocked-reference 1440px
@@ -20,3 +59,14 @@ PASS web common month nonzero-tolerance 280px
 PASS web common month cleared 280px
 PASS common-month wider-font 280px
 PASS web common month large-values 280px
+PASS max-standard-currency boundary 280px
+PASS max-standard-currency boundary 375px
+PASS max-standard-currency boundary 640px
+PASS max-standard-currency boundary 690px
+PASS max-standard-currency boundary 700px
+PASS max-standard-currency boundary 768px
+PASS max-standard-currency boundary 1024px
+PASS max-standard-currency boundary 1100px
+PASS max-standard-currency boundary 1120px
+PASS max-standard-currency boundary 1280px
+PASS max-standard-currency boundary 1440px

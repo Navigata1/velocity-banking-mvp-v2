@@ -1,0 +1,5 @@
+FAIL readiness observed after the wall deadline is rejected: Missing expected rejection.
+FAIL opacity observed after the wall deadline is rejected: Missing expected rejection.
+PASS readiness before the deadline succeeds without extra loading ticks
+PASS poster opacity succeeds before capture at the original dimensions
+{"passed":2,"failed":2,"cases":[{"name":"readiness observed after the wall deadline is rejected","passed":false,"error":"Missing expected rejection."},{"name":"opacity observed after the wall deadline is rejected","passed":false,"error":"Missing expected rejection."},{"name":"readiness before the deadline succeeds without extra loading ticks","passed":true},{"name":"poster opacity succeeds before capture at the original dimensions","passed":true}]}

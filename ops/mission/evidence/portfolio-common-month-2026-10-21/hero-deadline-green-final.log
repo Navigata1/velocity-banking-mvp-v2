@@ -1,0 +1,6 @@
+PASS readiness observed after the wall deadline is rejected
+PASS opacity observed after the wall deadline is rejected
+PASS readiness before the deadline succeeds without extra loading ticks
+PASS poster opacity succeeds before capture at the original dimensions
+PASS a pending loading operation is bounded by the unchanged wall deadline
+{"passed":5,"failed":0,"cases":[{"name":"readiness observed after the wall deadline is rejected","passed":true},{"name":"opacity observed after the wall deadline is rejected","passed":true},{"name":"readiness before the deadline succeeds without extra loading ticks","passed":true},{"name":"poster opacity succeeds before capture at the original dimensions","passed":true},{"name":"a pending loading operation is bounded by the unchanged wall deadline","passed":true}]}

@@ -1,0 +1,6 @@
+clock paused before model opt-in
+loaded with paused clock
+rest {"width":725,"height":420,"foreground":36083,"percent":11.84991789819376}
+1500 {"width":725,"height":420,"foreground":36083,"percent":11.84991789819376}
+PASS actual frozen-scheduler browser control: geometry remains visible and unchanged motion is rejected
+3000 {"width":725,"height":420,"foreground":36083,"percent":11.84991789819376}

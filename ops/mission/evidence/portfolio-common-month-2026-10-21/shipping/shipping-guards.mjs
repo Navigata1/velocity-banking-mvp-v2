@@ -9,6 +9,7 @@ export const localReceiptPath = 'ops/mission/evidence/portfolio-common-month-202
 export const modifiedSources = [
   'apps/mobile/components/mobile-routes/portfolio-route.tsx', 'apps/mobile/scripts/smoke-accessibility-rendered.cjs',
   'apps/web/package.json', 'apps/web/src/app/portfolio/PortfolioPlanSection.tsx', 'packages/financial-engine/package.json',
+  'apps/web/scripts/smoke-heroes.cjs',
 ];
 export const newSources = [
   'apps/mobile/components/portfolio/portfolio-common-month.tsx', 'apps/web/scripts/portfolio-common-month-reference-tests.cjs',
@@ -29,6 +30,7 @@ export const hostedEnvironment = origin => ({...Object.fromEntries(['PRODUCTION_
 export const ciMarkers = [
   '348 regression tests passed.', 'PASS Dashboard interest large-import at 280px',
   'PASS common-month wider-font 280px',
+  'PASS hero visibility controls: blank, undersized and clipped frames rejected',
   'Custom front lug physically seats the closed bail with a real empty ring aperture',
   'Collection packaging delivers validated source and manifest snapshots despite source-path changes',
   '15 explicit APR unit contracts passed.', '17 portable Portfolio book contracts passed.',

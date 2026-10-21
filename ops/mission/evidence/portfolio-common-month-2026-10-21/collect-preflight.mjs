@@ -7,6 +7,9 @@ import { execFileSync } from 'node:child_process';
 const scratch = path.resolve('.superpowers/sdd/2026-10-21-common-month');
 const output = path.resolve('ops/mission/evidence/portfolio-common-month-2026-10-21');
 const baseline = '1aec5bf7be3d0f3c26079141245e4c7291fd8778';
+const predecessor = '789ae25cc3feaefba942d26e1c1fbde02b747aaf';
+const predecessorBytes = execFileSync('git', ['show', predecessor + ':ops/mission/evidence/portfolio-common-month-2026-10-21/artifact-receipt.json'], {maxBuffer:16*1024*1024});
+const predecessorReceipt = JSON.parse(predecessorBytes);
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const normalized = bytes => hash(bytes.toString('utf8').replace(/\r\n?/g, '\n'));
 const prior = JSON.parse(await fs.readFile('.superpowers/sdd/2026-10-21-mobile-vitals/postflight.json', 'utf8'));
@@ -14,7 +17,7 @@ assert.equal(prior.headSha, baseline);
 assert.equal(execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8' }).trim(), 'codex/restoration/asset-heroes');
 const modified = ['apps/web/package.json', 'apps/web/src/app/portfolio/PortfolioPlanSection.tsx',
   'apps/mobile/components/mobile-routes/portfolio-route.tsx', 'apps/mobile/scripts/smoke-accessibility-rendered.cjs',
-  'packages/financial-engine/package.json'];
+  'packages/financial-engine/package.json', 'apps/web/scripts/smoke-heroes.cjs'];
 const added = ['packages/financial-engine/src/common-month.ts', 'packages/financial-engine/src/portfolio-common-month.ts',
   'apps/web/src/app/portfolio/PortfolioCommonMonth.tsx', 'apps/mobile/components/portfolio/portfolio-common-month.tsx',
   'apps/web/scripts/portfolio-common-month-tests.cjs', 'apps/web/scripts/portfolio-common-month-reference-tests.cjs',
@@ -23,6 +26,7 @@ const sources = {};
 for (const file of [...Object.keys(prior.local.sources), ...added]) {
   sources[file] = normalized(await fs.readFile(file));
   if (!modified.includes(file) && !added.includes(file)) assert.equal(sources[file], prior.local.sources[file], file);
+  if (file !== 'apps/web/scripts/smoke-heroes.cjs') assert.equal(sources[file], predecessorReceipt.sources[file], file + ' unchanged since unverified predecessor');
 }
 assert.equal(Object.keys(sources).length, 293);
 for (const model of prior.local.models) assert.equal(hash(await fs.readFile(`apps/web/public/heroes/${model.id}.glb`)), model.sha256);
@@ -44,15 +48,23 @@ for (const name of ['run-hosted.cjs', 'postflight.mjs', 'publish-desktop.mjs', '
 }
 for (const name of await fs.readdir(path.join(scratch, 'release'))) {
   if (/^projection.*\.(json|log|mjs)$/.test(name) || /^shipping-guards.*\.log$/.test(name) || /^currency-width.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
+  if (/^hero-helper-.*\.(json|log)$/.test(name)) await copy(path.join(scratch, 'release', name), 'shipping/' + name);
 }
 for (const [source, target] of Object.entries({
-  'web-tests-font-fix.log': 'web-tests-final.log', 'web-lint-currency-final.log': 'web-lint-final.log',
+  'web-tests-hero-clock.log': 'web-tests-final.log', 'web-lint-hero-clock.log': 'web-lint-final.log',
   'web-build-currency-fix.log': 'web-build-final.log', 'native-export-font-fix.log': 'native-export-final.log',
   'native-contracts-font-fix.log': 'native-contracts-final.log', 'media-font-fix.log': 'media-check.log',
-  'native-ui-font-fix.log': 'native-ui-capture-final.log', 'web-ui-font-fix-final.log': 'web-ui-capture-final.log',
-  'videos-font-fix.log': 'videos-final.log', 'release-tests-currency-final.log': 'release-tests-final.log',
+  'native-ui-font-fix.log': 'native-ui-capture-final.log', 'web-ui-hero-portfolio.log': 'web-ui-capture-final.log',
+  'videos-font-fix.log': 'videos-final.log', 'release/shipping-guards-hero-parent.log': 'release-tests-final.log',
 })) await copy(path.join(scratch, source), target);
+await copy(path.join(scratch, 'web-ui-hero-portfolio.log'), 'portfolio-currency-final.log');
 for (const name of ['failed-push-ci.log', 'failed-pr-ci.log', 'failed-7bd72ac-browser-proof.json']) await copy(path.join(scratch, 'release', name), name);
+await fs.cp(path.join(scratch, 'release/failed-789ae25'), path.join(output, 'failed-789ae25'), {recursive:true});
+await fs.writeFile(path.join(output, 'failed-789ae25/local-preflight-receipt.json'), predecessorBytes);
+await fs.cp(path.join(scratch, 'release/failed-789ae25-push-heroes'), path.join(output, 'failed-789ae25-push-heroes'), {recursive:true});
+for (const directory of ['hero-clock-probe','hero-clock-probe-vault','hero-clock-probe-frozen','hero-vault-opacity-probe','hero-vault-opacity-probe-warm','hero-software-final-snapshots']) {
+  await fs.cp(path.join(scratch, directory), path.join(output, directory), {recursive:true});
+}
 await copy('apps/web/test-results/portfolio-common-month/verification.json', 'web-common-month-verification.json');
 await copy('apps/web/test-results/currency-width/verification.json', 'currency-width-verification.json');
 await copy('apps/mobile/test-results/accessibility/native-common-month-verification.json', 'native-common-month-verification.json');
@@ -77,9 +89,16 @@ const requiredLogs = ['web-tests-final.log', 'web-lint-final.log', 'web-build-fi
   'routes-final.log', 'rendered-final.log', 'dashboard-final.log', 'portfolio-final.log', 'vault-final.log',
   'comparison-final.log', 'portability-final.log', 'input-final.log', 'portfolio-currency-final.log'];
 for (const file of requiredLogs) assert.ok((await fs.stat(path.join(output, file))).size > 0, file);
+const inheritedCanonicalFiles = ['web-build-final.log','native-export-final.log','native-contracts-final.log','native-ui-capture-final.log','media-check.log','videos-final.log'];
+for (const file of inheritedCanonicalFiles) assert.equal(hash(await fs.readFile(path.join(output, file))), predecessorReceipt.files[file].sha256, file + ' inherited unchanged proof');
 const gates = JSON.parse(await fs.readFile(path.join(output, 'web-gates-final.json'), 'utf8'));
 assert.equal(gates.status, 'completed'); assert.equal(gates.stages.length, 11);
 assert.ok(gates.stages.every(stage => stage.exitCode === 0 && !stage.error));
+const frozen = JSON.parse(await fs.readFile(path.join(output, 'hero-clock-probe-frozen/verification.json'), 'utf8'));
+assert.equal(frozen.normalGeometryGuardPassed, true); assert.equal(frozen.motionRejected, true);
+const software = JSON.parse(await fs.readFile(path.join(output, 'hero-software-final-snapshots/snapshot-receipt.json'), 'utf8'));
+assert.equal(software.viewportCases,20); assert.equal(Object.keys(software.files).length,40); assert.equal(software.processExitCode,0);
+assert.equal(software.sourceHash,hash(await fs.readFile('apps/web/scripts/smoke-heroes.cjs')));
 const web = await fs.readFile(path.join(output, 'web-tests-final.log'), 'utf8');
 assert.ok(web.includes('348 regression tests passed.') && web.includes('31 common-month contracts passed.'));
 const reference = web.split(/\r?\n/).filter(line => line.startsWith('{"seed":')).map(JSON.parse).at(-1);
@@ -104,6 +123,15 @@ const receipt = { verifiedAt: new Date().toISOString(), baseline, stage: 'Local 
   media: { contracts: 145, freshStills: 27, unchangedModelsAndPosters: 10, unchangedVideosRechecked: 10 },
   failedPredecessor: { headSha: '7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47', ciRuns: [39605673471, 39605676575],
     reason: 'Both web jobs fail common-month large-values280 section overflow; both SQL jobs pass. Hosted/local success did not override CI; no verified receipt or Desktop publication.' },
+  failedHeroCapturePredecessor: {headSha:'789ae25cc3feaefba942d26e1c1fbde02b747aaf', push:{id:39612733144,conclusion:'failure'}, pullRequest:{id:39612743542,conclusion:'success'},
+    reason:'Push failed the original uncontrolled-phase Credit Card visibility guard; complete PR pipeline succeeded. Neither retry fishing nor a receipt/Desktop publication occurred. Both new full exact-head events are required.'},
+  heroCapture: {scope:'Only the existing browser test harness changes; all actual assets, animation/runtime and financial sources are preserved.',
+    controlledMilliseconds:1500, loadingTickMilliseconds:16, originalForegroundMinimum:0.02, originalScreenshotTimeoutMilliseconds:120000,
+    deadlineContracts:5, evidence:'hero-deadline-green-final.log', frozenSchedulerBrowserControl:'hero-clock-probe-frozen/verification.json',
+    limitation:'Clock-driven two-snapshot phase and visibility proof is not wall-time smoothness or device performance certification.'},
+  inheritedUnchangedGates: {fromHead:predecessor, headWasReleaseVerified:false, localPreflightReceiptSha256:hash(predecessorBytes),
+    unchangedExecutableSources:292, changedExecutableSource:'apps/web/scripts/smoke-heroes.cjs', canonicalFiles:inheritedCanonicalFiles,
+    note:'These local build/native/media/video logs are retained byte-identically for unchanged inputs, not described as rerun after this harness correction. Both new complete CI events must freshly execute all build/media/native/SQL steps before release evidence or Desktop publication.'},
   models: prior.local.models, posters: prior.local.posters, videos, files,
   limitations: ['No old payoff allocation, saved-data, asset or cloud change.', 'Generic Number estimates are not exact lender posting.',
     'Whole R2, final collection art, lender/calendar, backend, physical-device and production release remain open.',

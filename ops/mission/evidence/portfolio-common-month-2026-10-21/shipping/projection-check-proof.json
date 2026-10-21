@@ -1,6 +1,6 @@
 {
   "scope": "Synthetic receipt / actual publisher state projection only; no publication, browser, CI or hosted proof",
-  "publisherSha256": "970dcf0b70e25fe5ecf6bdcf7d588d6a7fd9e98ecc86c40973faae97843289b1",
+  "publisherSha256": "c7829425de5f8f0990fdd49e387b11dca11ceba4324acdb83fe4fcfef49d849c",
   "sourceStateSha256": "fa38c7c17750fc61c345b263cbd23efeb31dd45a607ce80ca2570bd30b3c44ad",
   "receipt": {
     "verifiedAt": "2026-10-21T13:00:00.000Z",
@@ -992,7 +992,7 @@
             "status": "passed",
             "evidence": "https://example.invalid/synthetic-common-month-receipt",
             "lastRun": "2026-10-21T13:00:00.000Z",
-            "notes": "Both complete exact-head push/PR pipelines pass on ffffffffffffffffffffffffffffffffffffffff; 348 regressions, 31 common-month contracts, 23247 adjudicated reference checks; 145 media/27 fresh stills, full native contracts/70 browser executions, SQL63 twice/event. Ten hosted suites/120 browser cases:109 primary workflow/input cases plus11 currency-width layout boundary checks; seven HTTP/rendered routes and all ten served GLB/poster hashes unchanged. Verified draft, not full R2/final art/production approval. All293 current/committed source pins match; five old executable files modified plus eight new. Original engine/media/public/workflow/SQL sources remain unchanged. Every future head needs fresh proof."
+            "notes": "Both complete exact-head push/PR pipelines pass on ffffffffffffffffffffffffffffffffffffffff; 348 regressions, 31 common-month contracts, 23247 adjudicated reference checks; 145 media/27 fresh stills, full native contracts/70 browser executions, SQL63 twice/event. Ten hosted suites/120 browser cases:109 primary workflow/input cases plus11 currency-width layout boundary checks; seven HTTP/rendered routes and all ten served GLB/poster hashes unchanged. Verified draft, not full R2/final art/production approval. All293 current/committed source pins match; six old executable files modified plus eight new, including the bounded hero capture-clock harness. Original engine/media/public/workflow/SQL sources remain unchanged. Every future head needs fresh proof."
           },
           {
             "id": "R0-G2",
@@ -1075,7 +1075,7 @@
             "status": "passed",
             "evidence": "https://example.invalid/synthetic-common-month-receipt",
             "lastRun": "2026-10-21T13:00:00.000Z",
-            "notes": "All ten original models/posters/videos retained, with145 media contracts/27 fresh stills in both full CI events and exact hosted GLB/poster hashes. Existing motion/framing/loading/fallback gates preserved. Final all-ten art, device and production gates remain open."
+            "notes": "All ten original models/posters/videos retained, with145 media contracts/27 fresh stills in both full CI events and exact hosted GLB/poster hashes. Both complete CI logs include the actual blank/undersized/clipped hero visibility-control marker. Only the capture-clock harness changes; existing geometry, motion,700/300 timing and fallback limits remain intact. Final all-ten art, device and production gates remain open."
           },
           {
             "id": "R1-G3",

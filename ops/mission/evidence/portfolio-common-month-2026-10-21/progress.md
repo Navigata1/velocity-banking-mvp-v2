@@ -2,6 +2,132 @@
 
 ## Current Resume Point (Overrides Older Entries Below)
 
+FINAL LOCAL CHECKPOINT (2026-10-21): source1D629EA05D5AA64EDFDB259B290C4D96D8F7F0FA
+95720F05168DC3E5730F14B5 FROZEN, independentfinal12pinreview/11protectedunchanged,
+deadlineP2CLOSED/no newboundedP1P2. BooleandBoyleCLOSED; unrelated01a15930 untouched.
+AllownedexecsTERMINAL:11701software0/20hero+reducedmotion+fallback,28686normal
+serial11stages0/20hero/strictThree700300/routes/old88;19372web348+31+23247,
+lint/audit0/affectedPortfolio66 incl21commonMonth11currency. OneactualfrozenRAF
+browsernegative0: samevisible11.85%realgeometrybothshots, motionassertrejects.
+Software40rawstageimages+exactsource+receiptarchivedhero-software-final-snapshots.
+NormalrunnerfinalJSONfinished14:46:12.451Z;packagefinished14:49:39Z. No liveexec.
+
+HEAD/remoteSTILL789ae25. Trackedchangesonlyexistingharness83insertions/7deletions,
+scopeddocs/state/journal/generatedreport/evidence. Sourceinventory293 total;
+292unchangedvs789;279oldunchanged/6oldmodified/8newvsverified1aec5bf. Collector
+now6oldmodified, currentwebtest/lint/packagealiases, fullmixed789failurearchive,
+allprobeimages, software40, frozencontrol, exactsourcefingerprints and146helper+
+projection3. ExplicitinheritedUnchangedGates binds build/native70/media14527/
+video LOCALproofbytes to789preflight, NOT rerun; newcompleteCI mustfreshlyrunall.
+Bothfailed7bdand789mixedstatusesretained; no789receipt/Desktopwrite.
+
+NEXT: finalcollect-preflight/render/staticcheck,validate293/406+files/helperbundle,
+inspectdiff/secretprefixes,commit/push substantiveclockfixplusstate/evidenceONCE.
+ThenbothcompleteNEWCIevents build/native70/media14527/SQL63twice/event/READY
+exactproject/team/nulltarget/newhostedinvocation120/newIAB UIbackup/import/
+horizons/restore/viewportreset/all10GLBposterhashes BEFOREreceipt+Desktoplast
+staging/readback/idempotence. Runtimehelpers5testedmatchnewcommittedbundle;
+oldhostd111 CANNOTcarryoverafterhelper/sourcechange. readbackhelperstillhardcodes
+789 UPDATEafternewHEAD, NEVERpublish789. DoNOT reruncollectorafterhostedproof
+orcreatepostflightreport-onlypushloop. GoalACTIVE; sourcegates20/25 andtasks7/21,
+notproductionpercent. Finalart/R2/scenarios/lender/backend/device/releaseopen.
+
+2026-10-21T14:29Z LATEST: HEAD/remote789ae25 unchanged; ONLY tracked working
+change apps/web/scripts/smoke-heroes.cjs. NO789 receipt/Desktop publication.
+789 push39612733144 FAILED originalarbitraryphase CreditCard2%guard; PR39612743542
+COMPLETE SUCCESS allsteps16m25 (hero6m22), so BOTH notgreen. Entirerawlogs/metadata/
+helpers/manual/READY/envelope retained release/failed-789ae25; failedPNGset separate
+release/failed-789ae25-push-heroes. Prior1aec5bf Desktop stilluntouchedbaseline.
+
+Narrowappharnessfix: Playwrightclockinstalledbeforegoto; aftervisiblepageopac1,
+pausebeforeoptin;16msloadingticks; fixedrunFor1500; A/Bclockpaused;resumeafterB.
+No asset/camera/motion/math/style/dependency/workflow/SQL/Three700/300 changes;
+2%visibility/edge/>12colors/spatialmotion/overflow/error/reducedmotion intact.
+RGBsyntheticblank/tiny/clipped controls nowopaquealpha; descriptor/selfcontrol
+notmislabelledasrealDOMnegative. Deadlinehelpergenuine2RED/2positive ->5/5GREEN
+usingTypeScriptAST/VM exactfunctions (hero-deadline-{red,green-final}.log). New
+beforeDeadline enforcesremainingwalltimer ANDpostawaitdeadline; pendingqueries
+fail. Permanentmainharness expired/late/pending/positivecontrols nowexecute too.
+
+FIRSTfullsoftware81742 TERMINAL1:9desktopdomainsPASS, thenVaultfirstframeguard
+failed. NoVaultPNGs inoldharness; nowrawVaultstart/endwrittenBEFOREassert.
+Focusedvault57850 TERMINAL0:14.71%rest/12.32%1.5s/13.02%3s. Warmopacityprobe88603
+TERMINAL0 reproducesactualcause: ancestorPageTransitionopacity0 whilecanvasready
+andposteropacity0 ->0foreground;resume/waitparentopac1/reloadSAMEasset ->14.71%.
+Artifacts hero-vault-opacity-warm.log /hero-vault-opacity-probe-warm. Directprobe
+24811 TERMINAL0 didn'treproduceinitialblank; firstafterreloadframehadposteroverlay,
+fixedrefadeinwarmsource; don'tcallthatolderframevalid3Dproof. NewpauseAtVisibleHero
+resumesclockandwaitsallactualancestoropacity===1/display/visibilitybeforepause;
+noDOMpose/opacitysetters or pixelretry. UniformrunFor1500 retained, no15FFvariant.
+
+CURRENT fullfinalsoftware11701 LIVE -> poll SAME, logheroes-clock-software-final.
+Parenthelperreview/tests20984 LIVE ->poll SAME. Boole01a15e73... ACTIVE bounded
+re-reviewonly hero-capture-review.md; originalP2deadlines reproducedandfixed as
+above, needsindependentclosure/finalsourcepin. NoGPUduplication. HelperBoyle
+01a15e80... CLOSED: exact6modified/8new293 (279oldunchanged), visibilityCI marker,
+146guards(previous144retained)+projection3/3+4syntax; helperfinalhashJSONpresent.
+Runtimehelpersnew=>oldhostd111 nofutureproof. run-hosted/protectedbaseline/publication
+functionsunchanged. Newreadbackhelperverify-publication-readback.mjs currently
+hardcodes789 andmustUPDATEfornewcorrectiveHEADbeforefutureuse, NEVERpublish789.
+
+NEXT: finishactual20SW +20hardware/strictThree/all11localbrowser stages serially,
+freshwebtest/lint, boundedfrozen-schedulernegative ifneeded; preserveallREDs.
+CollectorUNMODIFIEDstill5oldlist/oldaliases, MUSTadapt6old/new293andlatestlogs,
+archive789mixedCI/clockprobes/review/helpers; priornative/media unchangedpins
+mustnotbecalledfreshlyrerun. Updatecurrentdocs/state/journal/render withpending
+newCI, commit substantiveharness+evidence/push once. BOTH complete NEWCI/native70/
+SQL63twice/media14527/READY/newhostID120/newIAB restore required thenpostflight/
+stagedDesktoplast/readback/idempotence. No report-onlypushloop. GoalACTIVE,
+finalart/scenarios/lender/calendar/backend/device/production allremainopen.
+
+2026-10-21T14:14Z OVERRIDE: 789ae25 push39612733144 FAILED original asset-hero
+smoke (after all financial/layout gates passed); PR39612743542 passed hero and
+is building native. NO receipt/Desktop publication. Push failure screenshot is
+intact Credit Card at near-edge-on angle: A12.833% foreground, B1.392%, below
+original2% per-shot guard. Wall-time snapshots sample different phases on slow
+software GPU. Raw failed log/screenshots and original helper/deployment/manual/
+invocation files retained under release/failed-789ae25*; source HEAD stillclean.
+Do NOT rerun the failed push to fish for green. Need narrow capture-clock fix,
+preserving2%/>12colors/spatial change/containment/reducedmotion and all priorlimits.
+Focused ignored probe: paused clock before opt-in alone causes genuine20s load
+timeout (hero-clock-probe.log); controlled16ms loading ticks then1.5s runFor PASS
+software-GPU Credit Card at1440 (11.85% rest,13.70% at1.5s,3.57% at3s). Probe70484
+TERMINAL0, prior62333 TERMINAL1. Boole01a15e73-c76b-7691-b156-2e6478ecb45c RESUMED
+bounded independent read-only clock design review, writes hero-capture-review.md
+only. Parent owns source fix, genuine negative controls, full gates/newHEAD/proof.
+All other agents/execs remainclosed; user53143/53144 and otheragent01a15930 untouched.
+
+2026-10-21T14:06Z CURRENT CORRECTED HEAD789ae25cc3feaefba942d26e1c1fbde02b747aaf
+pushed clean to codex/restoration/asset-heroes / draft PR256. Corrective578b87d
+and0ba5cf8 fix observed280/690 font overflow with base9rem/sm10rem tracks and a
+permanent11-width maximum-currency gate. Do NOT use failed7bd72ac proof as current.
+Its BOTH CI39605673471/39605676575 FAILED web Portfolio280; SQL passed, later
+media/native skipped, no receipt/Desktop publication. Raw failed artifacts retained.
+
+Final local348/31/23247, lint/build/audit0, native70/full contracts, media145/27,
+all ten unchanged video proofs, original strictThree700/300/all20hero/routes/88
+workflows and comparison21+currency11 pass. 42 additional requested-font probes
+pass. 293 pins (280old unchanged/5old modified/8new),263 committed evidencefiles.
+Helpers144/projection3/3 pass and runtime matches committed tested bundle. All
+source/reference/helper reviewers CLOSED. Do not restart any prior completed gate.
+
+Exact READY preview6kj0np900 / dpl_DiNvgSVjwsniwKLCdoqu9q4yq9yn verified with
+raw project/team/SHA/ref/null target. Hosted invocation d11140aa-1355-4b40-b968-
+33ba72561d0f started13:59:59.304Z, ten suites/120 browser checks+seven HTTP/rendered
+routes; exec8712 TERMINAL0. Live output artifacts match invocation captures.
+New actual IAB House8200->8300->8200/four vitals/no errors, Portfolio fresh UI
+backup/import synthetic book/months0/3/6/600/restore3/no errors. Original local
+book restored with exported canonical equality and month60; viewport reset.
+Current browser-proof.json and two native JPEG screenshots saved in release/.
+
+At14:05 both complete exact-head CI39612733144 push /39612743542 PR stillrunning
+web, both SQLsuccess. MUST wait BOTH fully success and run postflight.mjs with
+expected789ae25, preview6kj0np900, runIDd111..., ALLOW_RECEIPT_POST1. Then guarded
+publish-desktop.mjs ALLOW_DESKTOP_PUBLICATION1, independent manifest/journal/
+backup/readback/staticHTML/idempotence checks. Prior1aec5bf publicDesktop121936B
+SHA720ebd84... remains authoritative until that commits. No report-only push.
+Goal ACTIVE. No production promotion or final all-ten art/R2/backend/device claim.
+
 2026-10-21T13:06Z FINAL LOCAL CHECKPOINT: Source commits038721d focused217lines,
 97715ab shared2modules/export239lines,51d5fa8 independentreference631lines,
 c2b5ca3 web/Expo views+standingharness240lines. No push after1aec yet. Allcurrent

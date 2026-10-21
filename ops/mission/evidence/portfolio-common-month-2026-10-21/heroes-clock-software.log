@@ -1,0 +1,34 @@
+
+> web@0.1.0 test:heroes
+> node scripts/smoke-heroes.cjs && node scripts/hero-fallback-smoke.cjs
+
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+PASS 1440px slow-network poster continuity and selected-mode stability
+1440px car color samples: 529, 537
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px house color samples: 418, 432
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px land color samples: 484, 542
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px creditCard color samples: 196, 70
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px studentLoan color samples: 420, 359
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px medical color samples: 267, 287
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px personal color samples: 414, 456
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px recreation color samples: 367, 264
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px custom color samples: 343, 311
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+AssertionError [ERR_ASSERTION]: insufficient visible geometry
+    at visibleBounds (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:21:10)
+    at run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:139:16) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
