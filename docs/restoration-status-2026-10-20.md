@@ -22,7 +22,8 @@ reliability miss. See `docs/canvas-timing-diagnostics-contract-2026-10-20.md`.
 
 Mobile vitals now use a readable two-column layout with full values and fixed
 12/14px content-based type. The actual375px `/day` split was reproduced before
-three CSS substitutions.18 workflows/four responsive probes and seven real DOM
+three CSS substitutions plus an explicit atomic daily-unit break.18 workflows/four
+responsive probes, a wider-font positive probe and ten real DOM
 negative controls preserve four vitals, a first-screen hero hint and saved inputs.
 No financial/scenario/asset/native/motion changes. See
 `docs/mobile-vitals-contract-2026-10-21.md`. Final accessibility/device gates remain.
@@ -141,9 +142,10 @@ Mobile-vitals local checkpoint:145 media contracts/27 fresh stills,348 web
 regressions/reference lanes, lint/build, seven HTTP/rendered routes, all20 hero
 viewport checks/fallbacks, strict original Three budgets and88 local workflow/input
 cases pass. All ten unchanged turns pass fresh pixel/hash proof. Independent
-typography re-review closes hidden/clipped/collision/empty test-oracle findings:
-eight positive checkpoints and twelve actual DOM counterexamples pass bounded
-review. Its broad checksum exit from concurrent documentation-only edits is
+typography re-review closes hidden/clipped/collision/empty test-oracle findings.
+The font follow-up additionally checks descendant-unit visibility and original
+live-node restoration: ten standing controls and17 bounded positive checkpoints
+pass re-review. Earlier broad checksum exit from documentation-only edits is
 retained; executable pins/results were reconciled, not relabeled GREEN.
 Prior independent Custom review reproduced blocked assembled hinge bores, insufficient
 pin clearance, weak contact tests and lens corner normals, then cleared bounded
@@ -164,6 +166,16 @@ This new mobile-vital
 substantive checkpoint still requires both exact-head full pipelines, SQL,
 READY Vercel and hosted88/routes/all-ten-model/poster-byte proof before a postflight
 receipt. Source report remains preflight to avoid report-only push loops.
+
+The intervening `3b58bef` checkpoint FAILED both full CI events39587774650/
+39587777183: Linux280px large-import text needed113px in107px. Both SQL jobs
+passed and the 88 hosted Windows workflows passed, but later CI media/native
+steps did not run. There is no verified receipt or promotion for that head.
+A genuine wider-font RED preceded the atomic `/day` break; full text and the
+12px minimum remain unchanged. All old failures and new bounded re-review are
+retained under `mobile-vitals-wrap-2026-10-21`. This follow-up needs BOTH new
+complete exact-head CI events and a new READY/hosted88 receipt, not a silent
+reclassification or timing waiver. See the updated mobile-vitals contract.
 
 - Next.js production build, TypeScript and ESLint passed.
 - 348 main web/shared regressions, separate explicit-APR/codec/storage contracts, two independent reference scenarios,78 prior
@@ -187,8 +199,9 @@ receipt. Source report remains preflight to avoid report-only push loops.
 - Eighteen Dashboard browser workflows at280px/375px/1440px pass daily text/token bounds,
   cent mismatch, small/cleared/large amounts, desktop assumptions, saved-input
   preservation, income edit/restore/navigation and seven oversized currency no-ops.
-  Four768/1264 boundary probes and seven real DOM negative controls reject hidden,
-  clipped, overlapping and empty values. All four vitals and a hero hint stay in
+  Four768/1264 boundary probes, one wider-font positive probe and ten real DOM
+  negative controls reject root/descendant hidden, clipped, overlapping and empty
+  values. Original DOM nodes/text/semantic CSS are restored. All four vitals and a hero hint stay in
   the first viewport. Two obsolete exact-one-row source assertions were replaced
   by rendered checks; all financial assertions remain. Final zoom/font/device QA
   is not inferred from these bounded checks.

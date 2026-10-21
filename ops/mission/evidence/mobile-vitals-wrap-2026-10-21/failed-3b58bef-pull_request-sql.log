@@ -1,0 +1,884 @@
+Isolated SQL and owner isolation	Set up job	﻿2026-10-21T10:52:39.4843108Z Current runner version: '2.337.0'
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4871382Z ##[group]Runner Image Provisioner
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4872457Z Hosted Compute Agent
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4873076Z Version: 20261015.610
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4873772Z Commit: 267fdb4e8bbec4ab5ea31367f3a00d5c480c7656
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4874534Z Build Date: 2026-10-14T17:06:54Z
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4875228Z Worker ID: {99b15f74-38f4-47c2-a621-0b923369c126}
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4876032Z Region: eastus
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4876582Z Cloud: Azure
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4877097Z ##[endgroup]
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4879467Z ##[group]Operating System
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4880172Z Ubuntu
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4880899Z 24.04.5
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4881422Z LTS
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4881969Z ##[endgroup]
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4882548Z ##[group]Runner Image
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4883202Z Image: ubuntu-24.04
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4883898Z Version: 20261018.339.1
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4884967Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261018.339/images/ubuntu/Ubuntu2404-Readme.md
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4886847Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261018.339
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4887875Z ##[endgroup]
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4889565Z ##[group]GITHUB_TOKEN Permissions
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4891578Z Contents: read
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4892372Z Metadata: read
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4892954Z ##[endgroup]
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4895329Z Secret source: Actions
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4896367Z Cache mode: write
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.4897116Z Prepare workflow directory
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.5245263Z Prepare all required actions
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.5295571Z Getting action download info
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.7654135Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:39.8637904Z Download action repository 'actions/setup-node@v5' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.0174533Z Download action repository 'supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359' (SHA:45a513f8c64c0bc8e0e3dfe572b5c95be85f6359)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.1279157Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.3394292Z Getting action download info
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.4115098Z Download action repository 'actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e' (SHA:48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.5451418Z Download action repository 'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+Isolated SQL and owner isolation	Set up job	2026-10-21T10:52:40.7238637Z Complete job name: Isolated SQL and owner isolation
+Isolated SQL and owner isolation	Check out repository	﻿2026-10-21T10:52:40.8307302Z ##[group]Run actions/checkout@v5
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8308536Z with:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8309122Z   repository: Navigata1/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8313493Z   token: ***
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8313968Z   ssh-strict: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8314461Z   ssh-user: git
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8314949Z   persist-credentials: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8315518Z   clean: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8315995Z   sparse-checkout-cone-mode: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8316557Z   fetch-depth: 1
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8317022Z   fetch-tags: false
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8317505Z   show-progress: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8318143Z   lfs: false
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8318605Z   submodules: false
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8319124Z   set-safe-directory: true
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8319679Z   allow-unsafe-pr-checkout: false
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.8320564Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9417636Z Syncing repository: Navigata1/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9421540Z ##[group]Getting Git version info
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9423305Z Working directory is '/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2'
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9425759Z [command]/usr/bin/git version
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9505325Z git version 2.55.0
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9536801Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9555493Z Temporarily overriding HOME='/home/runner/work/_temp/b242f647-ad5d-46f2-be5e-ef40129a1125' before making global git config changes
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9558992Z Adding repository directory to the temporary git global config as a safe directory
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9565219Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9627707Z Deleting the contents of '/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2'
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9632939Z ##[group]Initializing the repository
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9640398Z [command]/usr/bin/git init /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9769089Z hint: Using 'master' as the name for the initial branch. This default branch name
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9772265Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9775186Z hint: to use in all of your new repositories, which will suppress this warning,
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9777328Z hint: call:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9779126Z hint:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9781222Z hint: 	git config --global init.defaultBranch <name>
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9782963Z hint:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9784579Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9787162Z hint: 'development'. The just-created branch can be renamed via this command:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9789500Z hint:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9790853Z hint: 	git branch -m <name>
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9792213Z hint:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9793948Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9796734Z Initialized empty Git repository in /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/.git/
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9802000Z [command]/usr/bin/git remote add origin https://github.com/Navigata1/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9860413Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9861972Z ##[group]Disabling automatic garbage collection
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9865634Z [command]/usr/bin/git config --local gc.auto 0
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9904163Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9905992Z ##[group]Setting up auth
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9912694Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:40.9952075Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.0386851Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.0441459Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.0713003Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.0762821Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.1024179Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.1078712Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.1079747Z ##[group]Fetching the repository
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:41.1089633Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f5f65ba1e962234aca24e48fde56f77c015a6ff:refs/remotes/pull/256/merge
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6220553Z From https://github.com/Navigata1/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6222012Z  * [new ref]         2f5f65ba1e962234aca24e48fde56f77c015a6ff -> pull/256/merge
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6229957Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6230737Z ##[group]Determining the checkout info
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6232887Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6239578Z [command]/usr/bin/git sparse-checkout disable
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6309157Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6357765Z ##[group]Checking out the ref
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:43.6362393Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/256/merge
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0372235Z Note: switching to 'refs/remotes/pull/256/merge'.
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0373048Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0373466Z You are in 'detached HEAD' state. You can look around, make experimental
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0374451Z changes and commit them, and you can discard any commits you make in this
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0375378Z state without impacting any branches by switching back to a branch.
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0375963Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0376419Z If you want to create a new branch to retain commits you create, you may
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0377442Z do so (now or later) by using -c with the switch command. Example:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0378209Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0378448Z   git switch -c <new-branch-name>
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0378801Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0379035Z Or undo this operation with:
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0379345Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0379572Z   git switch -
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0379862Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0380265Z Turn off this advice by setting config variable advice.detachedHead to false
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0380962Z 
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0381635Z HEAD is now at 2f5f65b Merge 3b58beffd14db959cedc667b1c892ef5c0cc672b into e8f41278c14b83db50d616babd058b2d38ae2771
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0434593Z ##[endgroup]
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0493638Z [command]/usr/bin/git log -1 --format=%H
+Isolated SQL and owner isolation	Check out repository	2026-10-21T10:52:44.0532402Z 2f5f65ba1e962234aca24e48fde56f77c015a6ff
+Isolated SQL and owner isolation	Set up Node	﻿2026-10-21T10:52:44.0855882Z ##[group]Run actions/setup-node@v5
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0856225Z with:
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0856432Z   node-version: 22
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0856642Z   cache: npm
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0856899Z   cache-dependency-path: apps/web/package-lock.json
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0857217Z   always-auth: false
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0857429Z   check-latest: false
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0860454Z   token: ***
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0860709Z   package-manager-cache: true
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.0860970Z ##[endgroup]
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.2497186Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.2502785Z (node:2336) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.2504179Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.2505994Z ##[group]Environment details
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.7102417Z node: v22.23.3
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.7102814Z npm: 10.9.9
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.7103023Z yarn: 1.22.22
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.7103858Z ##[endgroup]
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.7130183Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.8370989Z /home/runner/.npm
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.9174653Z Cache hit for: node-cache-Linux-x64-npm-4afdddd99cf49e8c30a4d8ff9f80bc1f5beee6709ff5a623b3f320c702da90ed
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:44.9300052Z (node:2336) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:45.9774915Z Received 176160768 of 334249823 (52.7%), 167.5 MBs/sec
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:46.6300878Z Received 334249823 of 334249823 (100.0%), 192.6 MBs/sec
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:46.6302021Z Cache Size: ~319 MB (334249823 B)
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:46.6432068Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5b9016d8-b194-46c8-8755-8933ee599429/cache.tzst -P -C /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2 --use-compress-program unzstd
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:47.4842116Z Cache restored successfully
+Isolated SQL and owner isolation	Set up Node	2026-10-21T10:52:47.4989839Z Cache restored from key: node-cache-Linux-x64-npm-4afdddd99cf49e8c30a4d8ff9f80bc1f5beee6709ff5a623b3f320c702da90ed
+Isolated SQL and owner isolation	Install web contract dependencies	﻿2026-10-21T10:52:47.5221897Z ##[group]Run npm --prefix apps/web ci
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:52:47.5222325Z ^[[36;1mnpm --prefix apps/web ci^[[0m
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:52:47.5429787Z shell: /usr/bin/bash -e {0}
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:52:47.5430161Z ##[endgroup]
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.6541952Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.6549508Z added 397 packages, and audited 400 packages in 15s
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.6549905Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.6550113Z 149 packages are looking for funding
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.6550452Z   run `npm fund` for details
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7065166Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7066079Z 12 vulnerabilities (2 moderate, 10 high)
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7066473Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7066819Z To address issues that do not require attention, run:
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7067341Z   npm audit fix
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7067532Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7067874Z To address all issues (including breaking changes), run:
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7068974Z   npm audit fix --force
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7069214Z 
+Isolated SQL and owner isolation	Install web contract dependencies	2026-10-21T10:53:02.7069407Z Run `npm audit` for details.
+Isolated SQL and owner isolation	Check isolated database wiring	﻿2026-10-21T10:53:02.8310558Z ##[group]Run node apps/web/scripts/supabase-ci-contract.cjs
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8311343Z ^[[36;1mnode apps/web/scripts/supabase-ci-contract.cjs^[[0m
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8367591Z shell: /usr/bin/bash -e {0}
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8367873Z ##[endgroup]
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8829178Z TAP version 13
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8839261Z # Subtest: standing CI runs a bounded real database isolation job
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8846525Z ok 1 - standing CI runs a bounded real database isolation job
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8847283Z   ---
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8847707Z   duration_ms: 1.079548
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8848455Z   type: 'test'
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8848881Z   ...
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8851564Z # Subtest: database commands pin the CLI and do not select a remote target
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8862587Z ok 2 - database commands pin the CLI and do not select a remote target
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8864329Z   ---
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8864688Z   duration_ms: 0.417266
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8864942Z   type: 'test'
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8865157Z   ...
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8866890Z # Subtest: database job preserves logs and always cleans up only its own project
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8869526Z ok 3 - database job preserves logs and always cleans up only its own project
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8870984Z   ---
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8871347Z   duration_ms: 0.268449
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8871636Z   type: 'test'
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8878965Z   ...
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8879188Z 1..3
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8879779Z # tests 3
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8880269Z # suites 0
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8881178Z # pass 3
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8881737Z # fail 0
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8882478Z # cancelled 0
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8882999Z # skipped 0
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8883711Z # todo 0
+Isolated SQL and owner isolation	Check isolated database wiring	2026-10-21T10:53:02.8884419Z # duration_ms 12.190746
+Isolated SQL and owner isolation	Install pinned Supabase CLI	﻿2026-10-21T10:53:02.9066260Z ##[group]Run supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9066685Z with:
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9066881Z   version: 2.109.1
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9067095Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9144938Z ##[start-action display=Resolve Bun Download URL;id=__supabase_setup-cli.bun-download]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9176374Z ##[group]Run set -eu
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9176664Z ^[[36;1mset -eu^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9176856Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9177053Z ^[[36;1mis_musl=false^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9177283Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9177497Z ^[[36;1mif [ "${RUNNER_OS}" = "Linux" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9178415Z ^[[36;1m  # setup-bun does not detect Linux musl yet, so Alpine-like containers need the musl asset explicitly.^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9178995Z ^[[36;1m  if [ -f /etc/alpine-release ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9179295Z ^[[36;1m    is_musl=true^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9179682Z ^[[36;1m  elif command -v ldd >/dev/null 2>&1 && ldd --version 2>&1 | grep -qi musl; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9180150Z ^[[36;1m    is_musl=true^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9180372Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9180562Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9180753Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9180991Z ^[[36;1mecho "is-musl=${is_musl}" >> "$GITHUB_OUTPUT"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9181291Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9181492Z ^[[36;1mif [ "${is_musl}" != "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9181773Z ^[[36;1m  exit 0^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9181970Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9182149Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9182560Z ^[[36;1mversion="$(cat .bun-version)"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9182844Z ^[[36;1mcase "$(uname -m)" in^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9183089Z ^[[36;1m  x86_64) arch="x64" ;;^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9183358Z ^[[36;1m  aarch64|arm64) arch="aarch64" ;;^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9183630Z ^[[36;1m  *)^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9183929Z ^[[36;1m    echo "Unsupported Linux musl architecture: $(uname -m)" >&2^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9184301Z ^[[36;1m    exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9184518Z ^[[36;1m    ;;^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9184791Z ^[[36;1mesac^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9185005Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9185520Z ^[[36;1mecho "url=https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-${arch}-musl.zip" >> "$GITHUB_OUTPUT"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9276455Z shell: /usr/bin/sh -e {0}
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9276761Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9406639Z ##[end-action id=__supabase_setup-cli.bun-download;outcome=success;conclusion=success;duration_ms=26]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9414221Z ##[start-action display=Install Alpine Runtime Dependencies;id=__supabase_setup-cli.__run]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9456943Z ##[group]Run set -eu
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9457253Z ^[[36;1mset -eu^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9457454Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9457659Z ^[[36;1mif [ "false" != "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9458229Z ^[[36;1m  exit 0^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9458469Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9458657Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9459008Z ^[[36;1m# Alpine/musl containers need runtime packages for Bun and the npm CLI shim.^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9459625Z ^[[36;1m# actions/setup-node uses glibc Node builds, so install Alpine's Node/npm instead.^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9460096Z ^[[36;1mif command -v apk >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9460409Z ^[[36;1m  missing_packages=""^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9460681Z ^[[36;1m  prefer_apk_bin=false^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9460968Z ^[[36;1m  for package in libstdc++ libgcc; do^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9461336Z ^[[36;1m    if ! apk info -e "${package}" >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9461741Z ^[[36;1m      missing_packages="${missing_packages} ${package}"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9462076Z ^[[36;1m    fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9462279Z ^[[36;1m  done^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9462474Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9462863Z ^[[36;1m  if ! command -v node >/dev/null 2>&1 || ! node -p 'process.versions.node' >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9463569Z ^[[36;1m    if [ -x /usr/bin/node ] && PATH="/usr/bin:${PATH}" /usr/bin/node -p 'process.versions.node' >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9464329Z ^[[36;1m      prefer_apk_bin=true^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9464583Z ^[[36;1m    else^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9464852Z ^[[36;1m      missing_packages="${missing_packages} nodejs"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9465167Z ^[[36;1m    fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9465363Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9465556Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9465865Z ^[[36;1m  if ! command -v npm >/dev/null 2>&1 || ! npm --version >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9466444Z ^[[36;1m    if [ -x /usr/bin/npm ] && PATH="/usr/bin:${PATH}" /usr/bin/npm --version >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9466899Z ^[[36;1m      prefer_apk_bin=true^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9467153Z ^[[36;1m    else^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9467412Z ^[[36;1m      missing_packages="${missing_packages} npm"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9467720Z ^[[36;1m    fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9467913Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9468370Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9468610Z ^[[36;1m  if [ "${prefer_apk_bin}" = "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9468950Z ^[[36;1m    echo "/usr/bin" >> "$GITHUB_PATH"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9469227Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9469420Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9469636Z ^[[36;1m  if [ -z "${missing_packages}" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9469941Z ^[[36;1m    exit 0^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9470146Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9470329Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9470521Z ^[[36;1m  if [ "$(id -u)" != "0" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9471502Z ^[[36;1m    echo "::error::Alpine/musl containers need${missing_packages} to run Supabase CLI. Add 'apk add --no-cache${missing_packages}' before supabase/setup-cli, or run this job container as root."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9472282Z ^[[36;1m    exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9472516Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9472705Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9472934Z ^[[36;1m  apk add --no-cache ${missing_packages}^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9473329Z ^[[36;1m  if echo " ${missing_packages} " | grep -Eq ' (nodejs|npm) '; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9473727Z ^[[36;1m    echo "/usr/bin" >> "$GITHUB_PATH"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9474000Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9474199Z ^[[36;1m  exit 0^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9474397Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9474580Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9475105Z ^[[36;1mecho "::error::Linux musl containers need libstdc++, libgcc, nodejs, and npm to run Supabase CLI. Install them before supabase/setup-cli."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9475711Z ^[[36;1mexit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9534505Z shell: /usr/bin/sh -e {0}
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9534794Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9620783Z ##[end-action id=__supabase_setup-cli.__run;outcome=success;conclusion=success;duration_ms=20]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9623220Z ##[start-action display=Resolve Node Runtime;id=__supabase_setup-cli.node-runtime]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9644680Z ##[group]Run set -eu
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9644976Z ^[[36;1mset -eu^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9645174Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9645388Z ^[[36;1mnode_version=""^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9645648Z ^[[36;1mnode_major=""^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9645873Z ^[[36;1mhas_npm=false^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9646086Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9646312Z ^[[36;1mif command -v node >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9646744Z ^[[36;1m  node_version="$(node -p 'process.versions.node' 2>/dev/null || true)"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9647157Z ^[[36;1m  node_major="${node_version%%.*}"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9647429Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9647611Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9647850Z ^[[36;1mif command -v npm >/dev/null 2>&1; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9648390Z ^[[36;1m  has_npm=true^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9648606Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9648785Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9649053Z ^[[36;1mif [ -n "${node_version}" ] && [ "${has_npm}" = "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9649397Z ^[[36;1m  case "${node_major}" in^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9649650Z ^[[36;1m    ''|*[!0-9]*)^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9650189Z ^[[36;1m      echo "::error::Could not determine Node.js version from '${node_version}'. Supabase CLI npm installs require Node.js 20 or newer."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9650962Z ^[[36;1m      exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9651168Z ^[[36;1m      ;;^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9651358Z ^[[36;1m  esac^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9651547Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9651761Z ^[[36;1m  if [ "${node_major}" -lt 20 ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9652566Z ^[[36;1m    echo "::error::Supabase CLI npm installs require Node.js 20 or newer, but found Node.js ${node_version}. Set up Node.js 20+ before supabase/setup-cli, or use a runner image with Node.js 20+ and npm."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9653349Z ^[[36;1m    exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9653547Z ^[[36;1m  fi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9653737Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9653965Z ^[[36;1m  echo "setup-node=false" >> "$GITHUB_OUTPUT"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9654263Z ^[[36;1m  exit 0^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9654455Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9654639Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9654826Z ^[[36;1mif [ "false" = "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9655744Z ^[[36;1m  echo "::error::Linux musl containers need Node.js 20 or newer and npm from musl-compatible packages. Install libstdc++, libgcc, nodejs, and npm before supabase/setup-cli, or run this job container as root so the action can install them."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9656662Z ^[[36;1m  exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9656851Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9657026Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9657280Z ^[[36;1mif [ -n "${node_version}" ] || [ "${has_npm}" = "true" ]; then^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9658374Z ^[[36;1m  echo "::error::Supabase CLI npm installs need both Node.js 20+ and npm. Found Node.js '${node_version:-missing}' and npm '${has_npm}'. Configure both before supabase/setup-cli."^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9659068Z ^[[36;1m  exit 1^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9659262Z ^[[36;1mfi^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9659444Z ^[[36;1m^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9659675Z ^[[36;1mecho "setup-node=true" >> "$GITHUB_OUTPUT"^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9716426Z shell: /usr/bin/sh -e {0}
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:02.9716690Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0083828Z ##[end-action id=__supabase_setup-cli.node-runtime;outcome=success;conclusion=success;duration_ms=45]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0086445Z ##[start-action display=Setup Node;id=__supabase_setup-cli.__actions_setup-node]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0095212Z ##[end-action id=__supabase_setup-cli.__actions_setup-node;outcome=skipped;conclusion=skipped;duration_ms=0]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0097618Z ##[start-action display=Setup Bun;id=__supabase_setup-cli.__oven-sh_setup-bun]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0146572Z ##[group]Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0147082Z with:
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0147702Z   bun-version-file: /home/runner/work/_actions/supabase/setup-cli/45a513f8c64c0bc8e0e3dfe572b5c95be85f6359/.bun-version
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0148820Z   no-cache: false
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0151484Z   token: ***
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.0151844Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.1958334Z Obtained version 1.3.10 from /home/runner/work/_actions/supabase/setup-cli/45a513f8c64c0bc8e0e3dfe572b5c95be85f6359/.bun-version
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.2769253Z Cache hit for: bun-Ki+pY5x+JEo+hNxyfTQYMbDXy7M=
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.6096570Z Received 36196344 of 36196344 (100.0%), 127.4 MBs/sec
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.6097608Z Cache Size: ~35 MB (36196344 B)
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.6133688Z [command]/usr/bin/tar -xf /home/runner/work/_temp/30ffb890-1030-471c-b594-a4dc4f5ec4a7/cache.tzst -P -C /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2 --use-compress-program unzstd
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8082537Z Cache restored successfully
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8114148Z [command]/home/runner/.bun/bin/bun --revision
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8226386Z 1.3.10+30e609e08
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8238418Z Using a cached version of Bun: 1.3.10+30e609e08
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8455456Z ##[end-action id=__supabase_setup-cli.__oven-sh_setup-bun;outcome=success;conclusion=success;duration_ms=835]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8458864Z ##[start-action display=Install Action Dependencies;id=__supabase_setup-cli.__run_2]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8981249Z ##[group]Run bun install --frozen-lockfile --production
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.8981699Z ^[[36;1mbun install --frozen-lockfile --production^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.9038621Z shell: /usr/bin/sh -e {0}
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.9038905Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:03.9621646Z bun install v1.3.10 (30e609e0)
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0231993Z 
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0232822Z + @actions/core@3.0.1
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0233357Z 
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0233687Z 6 packages installed [62.00ms]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0259938Z ##[end-action id=__supabase_setup-cli.__run_2;outcome=success;conclusion=success;duration_ms=180]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0269854Z ##[start-action display=Setup Supabase CLI;id=__supabase_setup-cli.setup-cli]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0291248Z ##[group]Run bun src/main.ts
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0291537Z ^[[36;1mbun src/main.ts^[[0m
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0349874Z shell: /usr/bin/sh -e {0}
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0350188Z env:
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0350412Z   INPUT_VERSION: 2.109.1
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:04.0350688Z ##[endgroup]
+Isolated SQL and owner isolation	Install pinned Supabase CLI	2026-10-21T10:53:07.1906756Z ##[end-action id=__supabase_setup-cli.setup-cli;outcome=success;conclusion=success;duration_ms=3163]
+Isolated SQL and owner isolation	Start disposable database	﻿2026-10-21T10:53:07.1966244Z ##[group]Run mkdir -p "$RUNNER_TEMP/backend-isolation"
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.1966706Z ^[[36;1mmkdir -p "$RUNNER_TEMP/backend-isolation"^[[0m
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.1967157Z ^[[36;1msupabase --version | tee "$RUNNER_TEMP/backend-isolation/cli-version.log"^[[0m
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.1967701Z ^[[36;1msupabase db start 2>&1 | tee "$RUNNER_TEMP/backend-isolation/start.log"^[[0m
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.2019255Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.2019646Z ##[endgroup]
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:07.6883871Z 2.109.1
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.2535219Z Starting database...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.4231064Z 17.6.1.143: Pulling from supabase/postgres
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5536946Z e6f31ffc071e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5537710Z 1c0396601337: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5538519Z 9918c0ca3fb2: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5539142Z c9a5bdeb38c4: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5539736Z 0d9502de34ca: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5540241Z d03e110f15b3: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5540909Z 54b222fe0c5b: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5541551Z 55541ba25baf: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5542126Z f6bdea2be18c: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5542723Z 75efb44ab4c9: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5543335Z 7c8f5e9f8055: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5543948Z b9965acde846: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5544539Z c80343e291d0: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5545107Z f0199592d423: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5545812Z 8972c7a7171b: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5546424Z 530c3bcf58fd: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5547023Z 2acb3852c9cb: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5547622Z 12102920ba5a: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5548510Z 63215bcdb820: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5549165Z 1889860cc5fd: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5549777Z a25d0edefeeb: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5550363Z 9fe841240ceb: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5550956Z 2ce0daa4dfbe: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5551559Z ab651ad7651b: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5552102Z 60e903a27082: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5552645Z 37c7c2f4a5f2: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5553336Z 24eb1e934cad: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5553977Z 997211c7723e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5554643Z 9760957a42e0: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5555188Z c9a5bdeb38c4: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5555474Z 0d9502de34ca: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5555709Z 75efb44ab4c9: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5555956Z d03e110f15b3: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5556196Z 54b222fe0c5b: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5556434Z 530c3bcf58fd: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5556660Z 55541ba25baf: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5556901Z 2acb3852c9cb: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5557132Z 12102920ba5a: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5557357Z f6bdea2be18c: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5557592Z 7c8f5e9f8055: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5557818Z b9965acde846: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5558675Z c80343e291d0: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5559084Z f0199592d423: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5559457Z 63215bcdb820: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5559846Z 8972c7a7171b: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5560216Z 1889860cc5fd: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5560595Z a25d0edefeeb: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5560975Z 37c7c2f4a5f2: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5561347Z 9fe841240ceb: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5561749Z 2ce0daa4dfbe: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5562176Z 24eb1e934cad: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5562676Z ab651ad7651b: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5563085Z 60e903a27082: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.5563493Z 997211c7723e: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6683461Z 9918c0ca3fb2: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6684954Z 9918c0ca3fb2: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6839939Z e6f31ffc071e: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6842044Z e6f31ffc071e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6842931Z 1c0396601337: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.6843934Z 1c0396601337: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7306650Z 0d9502de34ca: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7308931Z 0d9502de34ca: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7420182Z d03e110f15b3: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7427695Z d03e110f15b3: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7681938Z 54b222fe0c5b: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7683481Z 54b222fe0c5b: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7753877Z 55541ba25baf: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.7754973Z 55541ba25baf: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8162589Z f6bdea2be18c: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8163996Z f6bdea2be18c: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8215373Z 75efb44ab4c9: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8219897Z 75efb44ab4c9: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8349750Z e6f31ffc071e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8500645Z 7c8f5e9f8055: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8501889Z 7c8f5e9f8055: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8624168Z b9965acde846: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.8628552Z b9965acde846: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9019193Z c80343e291d0: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9073560Z f0199592d423: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9074689Z f0199592d423: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9354465Z 8972c7a7171b: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9358805Z 8972c7a7171b: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9438739Z 530c3bcf58fd: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9441672Z 530c3bcf58fd: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9804465Z 12102920ba5a: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9806090Z 12102920ba5a: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9822121Z 2acb3852c9cb: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:08.9822735Z 2acb3852c9cb: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0261039Z 63215bcdb820: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0268324Z 63215bcdb820: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0293633Z 1889860cc5fd: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0295064Z 1889860cc5fd: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0692154Z 9fe841240ceb: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0693278Z 9fe841240ceb: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0809717Z a25d0edefeeb: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.0810308Z a25d0edefeeb: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1461974Z ab651ad7651b: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1462724Z ab651ad7651b: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1512965Z 2ce0daa4dfbe: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1514589Z 2ce0daa4dfbe: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1850050Z 60e903a27082: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.1851090Z 60e903a27082: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2033060Z 37c7c2f4a5f2: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2367070Z 997211c7723e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2374200Z 24eb1e934cad: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2374894Z 24eb1e934cad: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2804111Z 9760957a42e0: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.2805113Z 9760957a42e0: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.9517804Z c9a5bdeb38c4: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:09.9518619Z c9a5bdeb38c4: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:12.8076087Z 1c0396601337: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:13.0643497Z 9918c0ca3fb2: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.0196852Z c9a5bdeb38c4: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.0500165Z 0d9502de34ca: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.0727349Z d03e110f15b3: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.0847397Z 54b222fe0c5b: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1131337Z 55541ba25baf: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1281639Z f6bdea2be18c: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1572629Z 75efb44ab4c9: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1679998Z 7c8f5e9f8055: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1781512Z b9965acde846: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1860418Z c80343e291d0: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.1967795Z f0199592d423: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2046752Z 8972c7a7171b: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2125279Z 530c3bcf58fd: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2249659Z 2acb3852c9cb: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2353426Z 12102920ba5a: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2439753Z 63215bcdb820: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2526981Z 1889860cc5fd: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2623091Z a25d0edefeeb: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2706843Z 9fe841240ceb: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2788771Z 2ce0daa4dfbe: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.2893321Z ab651ad7651b: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3126747Z 60e903a27082: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3212989Z 37c7c2f4a5f2: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3292403Z 24eb1e934cad: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3396876Z 997211c7723e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3491922Z 9760957a42e0: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3534765Z Digest: sha256:80d7b27c3e8d77cfa7226eee9508671796da214781ff15a35b3670d7ad5ee453
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:26.3548989Z Status: Downloaded newer image for public.ecr.aws/supabase/postgres:17.6.1.143
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.6727348Z Initialising schema...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.8604966Z v2.112.6: Pulling from supabase/realtime
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9358755Z 5c32499ab806: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9359968Z 7ff4e6b4b099: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9360537Z c651f6fbec0a: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9361052Z a6c402c1c1a7: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9361507Z 7b18341145e7: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9361956Z 2422c2c034eb: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9362419Z 4a9cfffa288e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9362866Z d71214b4506e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9363338Z 21b7c3f31e06: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9363790Z 276a0b8305a2: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9364392Z 3982d643246d: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9364847Z 4f4fb700ef54: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9365269Z 4a9cfffa288e: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9365668Z d71214b4506e: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9366068Z 21b7c3f31e06: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9366497Z 276a0b8305a2: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9366887Z a6c402c1c1a7: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9367265Z 7b18341145e7: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9367649Z 2422c2c034eb: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9368357Z 3982d643246d: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:37.9368935Z 4f4fb700ef54: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.0770658Z 5c32499ab806: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.0771555Z 5c32499ab806: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.0792896Z c651f6fbec0a: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.0798600Z c651f6fbec0a: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1335698Z a6c402c1c1a7: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1363412Z 7b18341145e7: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1364941Z 7b18341145e7: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1787829Z 7ff4e6b4b099: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1789564Z 7ff4e6b4b099: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1814579Z 4a9cfffa288e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1890059Z 2422c2c034eb: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.1892052Z 2422c2c034eb: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2097464Z d71214b4506e: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2098943Z d71214b4506e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2179554Z 21b7c3f31e06: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2181849Z 21b7c3f31e06: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2407136Z 4f4fb700ef54: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2569342Z 3982d643246d: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.2570350Z 3982d643246d: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.5506141Z 276a0b8305a2: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:38.5507450Z 276a0b8305a2: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:39.2164237Z 5c32499ab806: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.7125780Z 7ff4e6b4b099: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8267161Z c651f6fbec0a: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8391339Z a6c402c1c1a7: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8491522Z 7b18341145e7: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8669407Z 2422c2c034eb: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8892974Z 4a9cfffa288e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.8982492Z d71214b4506e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:43.9058309Z 21b7c3f31e06: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:44.9994641Z 276a0b8305a2: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:45.0090481Z 3982d643246d: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:45.0179750Z 4f4fb700ef54: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:45.0224152Z Digest: sha256:7b56da34216fd568042be043900d15cdd33c2c48c2116c9a333f9465255da80d
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:45.0234428Z Status: Downloaded newer image for public.ecr.aws/supabase/realtime:v2.112.6
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6181743Z v1.62.5: Pulling from supabase/storage-api
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6922673Z e6f31ffc071e: Already exists
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6941206Z 16733d1099a5: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6946068Z 09ddda476dba: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6946876Z 0d8aa8e026f1: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6947602Z d2f04496a183: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6948347Z 52cd27cac02e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6948859Z b6d85ef1ea27: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6949370Z a7537cf4b694: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6949871Z e5723cc41baf: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6950370Z 55468a10f7b3: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6950868Z e958952de594: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6951367Z f41c2ed3946e: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6951663Z cc2ec52924e2: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6951912Z 52cd27cac02e: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6952174Z b6d85ef1ea27: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6952413Z a7537cf4b694: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6952642Z e5723cc41baf: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6952887Z 55468a10f7b3: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6953108Z e958952de594: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6953332Z f41c2ed3946e: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6953560Z cc2ec52924e2: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.6953785Z d2f04496a183: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7412806Z 0d8aa8e026f1: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7413501Z 0d8aa8e026f1: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7453616Z 09ddda476dba: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7454302Z 09ddda476dba: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7942012Z 52cd27cac02e: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.7943059Z 52cd27cac02e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.8515739Z b6d85ef1ea27: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.8522320Z b6d85ef1ea27: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.8977771Z a7537cf4b694: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.8979188Z a7537cf4b694: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.9077496Z 16733d1099a5: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:49.9819298Z 55468a10f7b3: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.0367359Z e5723cc41baf: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.0368675Z e5723cc41baf: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.0991639Z f41c2ed3946e: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.1009070Z f41c2ed3946e: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.1483897Z cc2ec52924e2: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.1484931Z cc2ec52924e2: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.1664688Z d2f04496a183: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.1665397Z d2f04496a183: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.2568124Z e958952de594: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:50.2569135Z e958952de594: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:51.9104655Z 16733d1099a5: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:51.9490757Z 09ddda476dba: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:51.9623049Z 0d8aa8e026f1: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:54.6128196Z d2f04496a183: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:54.6227154Z 52cd27cac02e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:54.6395476Z b6d85ef1ea27: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:54.6473851Z a7537cf4b694: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:55.6116394Z e5723cc41baf: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:53:55.6476002Z 55468a10f7b3: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:18.4594707Z e958952de594: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:18.7636784Z f41c2ed3946e: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:18.7781615Z cc2ec52924e2: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:18.7828907Z Digest: sha256:1dbe962d9862ef12e20357f9d7ba5431989c1daf4a556d6cb20ee4efd1c57320
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:18.7840668Z Status: Downloaded newer image for public.ecr.aws/supabase/storage-api:v1.62.5
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:20.6093587Z failed to pull docker image: Error response from daemon: toomanyrequests: Rate exceeded
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:20.6094329Z Retrying after 4s: public.ecr.aws/supabase/gotrue:v2.192.0
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.7976059Z v2.192.0: Pulling from supabase/gotrue
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8677766Z 55afa1ecc21d: Already exists
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8702612Z 565df2d910df: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8704004Z dc286a8aa197: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8704499Z 79ee4066848c: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8704816Z 4b1c10f5635f: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8705288Z 03bc85a5a5ef: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8705780Z 4b1c10f5635f: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.8706225Z 03bc85a5a5ef: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9272098Z 565df2d910df: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9274823Z 565df2d910df: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9323710Z dc286a8aa197: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9325711Z dc286a8aa197: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9481415Z 565df2d910df: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9643179Z 4b1c10f5635f: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9644643Z 4b1c10f5635f: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9747004Z 03bc85a5a5ef: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:24.9747810Z 03bc85a5a5ef: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.0231458Z 79ee4066848c: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.0232181Z 79ee4066848c: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.0587856Z dc286a8aa197: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.2948980Z 79ee4066848c: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.3220361Z 4b1c10f5635f: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.3327200Z 03bc85a5a5ef: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.3363940Z Digest: sha256:b252efb680be37d4a8bf77c210cf0439c19b63a4b51929233a65dd101d25bdab
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.3376499Z Status: Downloaded newer image for public.ecr.aws/supabase/gotrue:v2.192.0
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7631999Z Seeding globals from roles.sql...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7677428Z Applying migration 202607020001_first_lane_owner_scoped_schema.sql...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7695292Z NOTICE (42710): extension "pgcrypto" already exists, skipping
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7934946Z Applying migration 20260713024039_snapshot_sync_idempotency.sql...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7958932Z Applying migration 20260715001056_atomic_snapshot_sync.sql...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.7998458Z Applying migration 20260715011513_snapshot_logical_revisions.sql...
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:25.9881296Z v1.74.2: Pulling from supabase/edge-runtime
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0706444Z b9136609bef0: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0707419Z bfab333b5e81: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0708335Z be4c37910e5f: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0708966Z 724041fce750: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0709600Z abecb94bba46: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0710089Z 0367cb7f5023: Pulling fs layer
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0710722Z 724041fce750: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0711319Z abecb94bba46: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.0712017Z 0367cb7f5023: Waiting
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.1274301Z be4c37910e5f: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.1275158Z be4c37910e5f: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.2277094Z b9136609bef0: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.2278282Z b9136609bef0: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.3311751Z bfab333b5e81: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.3315852Z bfab333b5e81: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.4002302Z 724041fce750: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.4003496Z 724041fce750: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.4570681Z 0367cb7f5023: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:26.4571350Z 0367cb7f5023: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:27.1223727Z abecb94bba46: Verifying Checksum
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:27.1224309Z abecb94bba46: Download complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:27.5617175Z b9136609bef0: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:29.4664880Z bfab333b5e81: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:29.4784948Z be4c37910e5f: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:30.3117716Z 724041fce750: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:31.6118398Z abecb94bba46: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:31.8545759Z 0367cb7f5023: Pull complete
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:31.8596384Z Digest: sha256:a82676277615aee03c4f288cbbbf68dedb5ba8693073e567ab8dbfdd11ba5d45
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:31.8607691Z Status: Downloaded newer image for public.ecr.aws/supabase/edge-runtime:v1.74.2
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:34.8493763Z A new version of Supabase CLI is available: v2.121.0 (currently installed v2.109.1)
+Isolated SQL and owner isolation	Start disposable database	2026-10-21T10:54:34.8495850Z We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+Isolated SQL and owner isolation	Replay all migrations without seed data	﻿2026-10-21T10:54:34.8799850Z ##[group]Run supabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:34.8800611Z ^[[36;1msupabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"^[[0m
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:34.8852528Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:34.8852916Z ##[endgroup]
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:35.4602342Z Resetting local database...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:35.7192999Z Recreating database...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:46.9086709Z Initialising schema...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4553734Z Seeding globals from roles.sql...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4587266Z Applying migration 202607020001_first_lane_owner_scoped_schema.sql...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4603956Z NOTICE (42710): extension "pgcrypto" already exists, skipping
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4849343Z Applying migration 20260713024039_snapshot_sync_idempotency.sql...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4872270Z Applying migration 20260715001056_atomic_snapshot_sync.sql...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:53.4910006Z Applying migration 20260715011513_snapshot_logical_revisions.sql...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:54.8766042Z Restarting containers...
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:54.8785085Z Finished supabase db reset on branch codex/restoration/asset-heroes.
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:55.2811620Z A new version of Supabase CLI is available: v2.121.0 (currently installed v2.109.1)
+Isolated SQL and owner isolation	Replay all migrations without seed data	2026-10-21T10:54:55.2813926Z We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	﻿2026-10-21T10:54:55.3143879Z ##[group]Run npm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.3145256Z ^[[36;1mnpm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"^[[0m
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.3209052Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.3209440Z ##[endgroup]
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4290567Z 
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4291271Z > web@0.1.0 test:supabase
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4293910Z > node scripts/supabase-ci-contract.cjs && node scripts/supabase-schema-contract.cjs && node scripts/supabase-client-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/supabase-account-contract.cjs && cd ../.. && npx --yes supabase@2.109.1 test db --local supabase/tests
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4295369Z 
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4721403Z TAP version 13
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4731104Z # Subtest: standing CI runs a bounded real database isolation job
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4737808Z ok 1 - standing CI runs a bounded real database isolation job
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4738972Z   ---
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4739382Z   duration_ms: 1.039774
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4739807Z   type: 'test'
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4740129Z   ...
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4743445Z # Subtest: database commands pin the CLI and do not select a remote target
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4755758Z ok 2 - database commands pin the CLI and do not select a remote target
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4757377Z   ---
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4757800Z   duration_ms: 0.413609
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4758458Z   type: 'test'
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4758766Z   ...
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4762989Z # Subtest: database job preserves logs and always cleans up only its own project
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4765637Z ok 3 - database job preserves logs and always cleans up only its own project
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4766900Z   ---
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4767378Z   duration_ms: 0.265844
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4767813Z   type: 'test'
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4768496Z   ...
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4776424Z 1..3
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4776820Z # tests 3
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4777448Z # suites 0
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4778415Z # pass 3
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4779248Z # fail 0
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4779789Z # cancelled 0
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4780557Z # skipped 0
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4781123Z # todo 0
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.4781844Z # duration_ms 12.660158
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.5115477Z Supabase schema contract passed 6 owner-scoped tables.
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:55.8983553Z Supabase web client contract passed verified identity and ordered sync mutations.
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:56.2850724Z Web snapshot outbox contract passed transactional allocation, retry durability, and conflict blocking.
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:56.8409981Z Supabase account contract passed stable browser snapshot identity and real settings workflow.
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:57.7836026Z Connecting to local database...
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.1954152Z 3.36: Pulling from supabase/pg_prove
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.2743257Z dcccee43ad5d: Pulling fs layer
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.2743932Z 06d62d0de6d7: Pulling fs layer
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.2744460Z a22cb17b3b93: Pulling fs layer
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.2744988Z 4f4fb700ef54: Pulling fs layer
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.2745265Z 4f4fb700ef54: Waiting
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3173652Z a22cb17b3b93: Verifying Checksum
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3174723Z a22cb17b3b93: Download complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3252049Z dcccee43ad5d: Verifying Checksum
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3253407Z dcccee43ad5d: Download complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3336054Z 4f4fb700ef54: Verifying Checksum
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.3337268Z 4f4fb700ef54: Download complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.4401773Z dcccee43ad5d: Pull complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.5284807Z 06d62d0de6d7: Verifying Checksum
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:58.5285589Z 06d62d0de6d7: Download complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1358614Z 06d62d0de6d7: Pull complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1647545Z a22cb17b3b93: Pull complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1751156Z 4f4fb700ef54: Pull complete
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1788852Z Digest: sha256:eda7c5e68719e9c8287e78c017118407b48df904a51c935f5ab6098b8c0bc6bc
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1800069Z Status: Downloaded newer image for public.ecr.aws/supabase/pg_prove:3.36
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.1807811Z public.ecr.aws/supabase/pg_prove:3.36
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.5120310Z /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/supabase/tests/owner_isolation_test.sql .. ok
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.5121577Z All tests successful.
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.5122669Z Files=1, Tests=63,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.01 cusr  0.00 csys =  0.04 CPU)
+Isolated SQL and owner isolation	Verify client contracts and SQL owner isolation	2026-10-21T10:54:59.5123361Z Result: PASS
+Isolated SQL and owner isolation	Lint application database functions	﻿2026-10-21T10:55:00.0151682Z ##[group]Run supabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.0153272Z ^[[36;1msupabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"^[[0m
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.0215458Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.0215851Z ##[endgroup]
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.5779716Z Connecting to local database...
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.6173924Z Linting schema: public
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.6279311Z 
+Isolated SQL and owner isolation	Lint application database functions	2026-10-21T10:55:00.6279981Z No schema errors found
+Isolated SQL and owner isolation	Check database security advisors	﻿2026-10-21T10:55:00.9760833Z ##[group]Run supabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"
+Isolated SQL and owner isolation	Check database security advisors	2026-10-21T10:55:00.9761826Z ^[[36;1msupabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"^[[0m
+Isolated SQL and owner isolation	Check database security advisors	2026-10-21T10:55:00.9815771Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Check database security advisors	2026-10-21T10:55:00.9816155Z ##[endgroup]
+Isolated SQL and owner isolation	Check database security advisors	2026-10-21T10:55:01.5339252Z Connecting to local database...
+Isolated SQL and owner isolation	Check database security advisors	2026-10-21T10:55:01.6667259Z No issues found
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	﻿2026-10-21T10:55:02.0111095Z ##[group]Run supabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:02.0111916Z ^[[36;1msupabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"^[[0m
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:02.0164407Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:02.0164790Z ##[endgroup]
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:02.6051907Z Connecting to local database...
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:03.0939460Z /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/supabase/tests/owner_isolation_test.sql .. ok
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:03.0941607Z All tests successful.
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:03.0942756Z Files=1, Tests=63,  1 wallclock secs ( 0.02 usr  0.00 sys +  0.01 cusr  0.00 csys =  0.03 CPU)
+Isolated SQL and owner isolation	Repeat SQL tests to verify fixture rollback	2026-10-21T10:55:03.0943807Z Result: PASS
+Isolated SQL and owner isolation	Stop disposable database	﻿2026-10-21T10:55:03.5747403Z ##[group]Run supabase stop --project-id Interest_Shield --no-backup
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:03.5748221Z ^[[36;1msupabase stop --project-id Interest_Shield --no-backup^[[0m
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:03.5799369Z shell: /usr/bin/bash -e {0}
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:03.5799639Z ##[endgroup]
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:04.1559051Z Stopping containers...
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:16.3119714Z Stopped supabase local development setup.
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:16.7150118Z A new version of Supabase CLI is available: v2.121.0 (currently installed v2.109.1)
+Isolated SQL and owner isolation	Stop disposable database	2026-10-21T10:55:16.7159775Z We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+Isolated SQL and owner isolation	Upload database isolation proof	﻿2026-10-21T10:55:16.7489155Z ##[group]Run actions/upload-artifact@v4
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7489506Z with:
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7489731Z   name: backend-isolation-proof
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7490050Z   path: /home/runner/work/_temp/backend-isolation
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7490369Z   if-no-files-found: warn
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7490613Z   compression-level: 6
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7490851Z   overwrite: false
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7491075Z   include-hidden-files: false
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.7491325Z ##[endgroup]
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.9363902Z (node:5735) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.9364847Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.9480195Z With the provided path, there will be 7 files uploaded
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.9539003Z Artifact name is valid!
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:16.9569461Z Root directory input is valid!
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.1544526Z Beginning upload of artifact content to blob storage
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.1854015Z (node:5735) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.2124577Z Uploaded bytes 4962
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.2275033Z Finished uploading artifact content to blob storage!
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.2276514Z SHA256 digest of uploaded artifact zip is 91aa68a6c4bd6e74af97c9f7ab51d5cc76c66486c11305333d8acc64afad0f6d
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.2278853Z Finalizing artifact upload
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.4500360Z Artifact backend-isolation-proof.zip successfully finalized. Artifact ID 12340057422
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.4502202Z Artifact backend-isolation-proof has been successfully uploaded! Final size is 4962 bytes. Artifact ID is 12340057422
+Isolated SQL and owner isolation	Upload database isolation proof	2026-10-21T10:55:17.4509577Z Artifact download URL: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39587777183/artifacts/12340057422
+Isolated SQL and owner isolation	Post Install pinned Supabase CLI	﻿2026-10-21T10:55:17.4768493Z Post job cleanup.
+Isolated SQL and owner isolation	Post Install pinned Supabase CLI	2026-10-21T10:55:17.4772781Z ##[start-action display=Setup Bun;id=__a56f8ecc-8791-43bb-9e85-02004ec89676.__oven-sh_setup-bun]
+Isolated SQL and owner isolation	Post Install pinned Supabase CLI	2026-10-21T10:55:17.4814503Z Post job cleanup.
+Isolated SQL and owner isolation	Post Install pinned Supabase CLI	2026-10-21T10:55:17.6709368Z ##[end-action id=__a56f8ecc-8791-43bb-9e85-02004ec89676.__oven-sh_setup-bun;outcome=success;conclusion=success;duration_ms=193]
+Isolated SQL and owner isolation	Post Set up Node	﻿2026-10-21T10:55:17.6807083Z Post job cleanup.
+Isolated SQL and owner isolation	Post Set up Node	2026-10-21T10:55:17.8277879Z (node:5756) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Isolated SQL and owner isolation	Post Set up Node	2026-10-21T10:55:17.8279390Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Isolated SQL and owner isolation	Post Set up Node	2026-10-21T10:55:17.8283297Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-4afdddd99cf49e8c30a4d8ff9f80bc1f5beee6709ff5a623b3f320c702da90ed, not saving cache.
+Isolated SQL and owner isolation	Post Check out repository	﻿2026-10-21T10:55:17.8450741Z Post job cleanup.
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9434966Z [command]/usr/bin/git version
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9492906Z git version 2.55.0
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9540791Z Temporarily overriding HOME='/home/runner/work/_temp/5ef36d7a-75ff-40ae-a0c1-0b1bcf877cc8' before making global git config changes
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9542323Z Adding repository directory to the temporary git global config as a safe directory
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9548145Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9608742Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:17.9657212Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0022972Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0073775Z http.https://github.com/.extraheader
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0090056Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0142057Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0444819Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Isolated SQL and owner isolation	Post Check out repository	2026-10-21T10:55:18.0505639Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Isolated SQL and owner isolation	Complete job	﻿2026-10-21T10:55:18.0960285Z Cleaning up orphan processes
+Isolated SQL and owner isolation	Complete job	2026-10-21T10:55:18.1294886Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

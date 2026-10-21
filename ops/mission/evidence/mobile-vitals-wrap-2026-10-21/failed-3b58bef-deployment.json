@@ -1,0 +1,47 @@
+{
+  "verifiedAt": "2026-10-21T10:53:15.528Z",
+  "headSha": "3b58beffd14db959cedc667b1c892ef5c0cc672b",
+  "preview": "https://velocity-banking-mvp-v2-mxe28o2cf-islanddevcrew.vercel.app",
+  "id": "dpl_DvxPHZN2cnrEtoxmBS29mH3cKG3J",
+  "state": "READY",
+  "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+  "scope": "islanddevcrew",
+  "target": null,
+  "source": "Authenticated Vercel get_deployment withGitRepoInfo=true",
+  "metadata": {
+    "id": "dpl_DvxPHZN2cnrEtoxmBS29mH3cKG3J",
+    "name": "velocity-banking-mvp-v2",
+    "url": "velocity-banking-mvp-v2-mxe28o2cf-islanddevcrew.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1792579955838,
+    "creator": {
+      "uid": "QPOvN2WenLdiOTDpOvhQ4o5c",
+      "username": "jony02-7429"
+    },
+    "project": {
+      "id": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+      "name": "velocity-banking-mvp-v2",
+      "framework": "nextjs"
+    },
+    "meta": {
+      "githubCommitRef": "codex/restoration/asset-heroes",
+      "githubCommitSha": "3b58beffd14db959cedc667b1c892ef5c0cc672b",
+      "githubCommitMessage": "Record mobile vital red-green review gates and production preflight",
+      "githubRepo": "velocity-banking-mvp-v2",
+      "githubOrg": "Navigata1"
+    },
+    "alias": [
+      "velocity-banking-mvp-v2-git-codex-restorat-c1b229-islanddevcrew.vercel.app"
+    ],
+    "target": null,
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1792579956706,
+    "ready": 1792579974895,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

@@ -1,0 +1,15 @@
+AssertionError [ERR_ASSERTION]: controls must preserve value markup
++ actual - expected
+
++ 'Est. $51.50<wbr><span class="inline-block whitespace-nowrap" style="">/day</span>'
+- 'Est. $51.50<wbr><span class="inline-block whitespace-nowrap">/day</span>'
+
+    at checkVitalOracleControls (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:142:12)
+    at async C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:250:55 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Est. $51.50<wbr><span class="inline-block whitespace-nowrap" style="">/day</span>',
+  expected: 'Est. $51.50<wbr><span class="inline-block whitespace-nowrap">/day</span>',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

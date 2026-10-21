@@ -1,0 +1,133 @@
+diff --git a/apps/web/scripts/smoke-dashboard-interest.cjs b/apps/web/scripts/smoke-dashboard-interest.cjs
+index bea2478..92771e0 100644
+--- a/apps/web/scripts/smoke-dashboard-interest.cjs
++++ b/apps/web/scripts/smoke-dashboard-interest.cjs
+@@ -47,17 +47,26 @@ async function vitalLayout(page, width) {
+       }
+       const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+       let node;
+-      while ((node = walker.nextNode())) for (let offset = 0; offset < node.length; offset++) {
+-        const range = document.createRange(); range.setStart(node, offset); range.setEnd(node, offset + 1);
+-        const rect = range.getBoundingClientRect();
+-        chars.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, height: rect.height });
++      while ((node = walker.nextNode())) {
++        const innerClips = [];
++        for (let ancestor = node.parentElement; ancestor && ancestor !== element; ancestor = ancestor.parentElement) {
++          const style = getComputedStyle(ancestor), rect = ancestor.getBoundingClientRect();
++          visible &&= style.visibility === 'visible' && style.display !== 'none' && Number(style.opacity) >= 0.99;
++          innerClips.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom,
++            x: style.overflowX !== 'visible', y: style.overflowY !== 'visible' });
++        }
++        for (let offset = 0; offset < node.length; offset++) {
++          const range = document.createRange(); range.setStart(node, offset); range.setEnd(node, offset + 1);
++          const rect = range.getBoundingClientRect();
++          chars.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, height: rect.height, innerClips });
++        }
+       }
+       const tokens = [...text.matchAll(/<?\$[\d,]+(?:\.\d+)?|\/day|[A-Za-z]+/g)].map((match) => {
+         const rects = chars.slice(match.index, match.index + match[0].length);
+         return { text: match[0], oneLine: rects.length > 0 && rects.every(r => r.height > 0 && Math.abs(r.top - rects[0].top) <= 1),
+           contained: rects.every(r => r.left >= Math.max(box.left, card.left) - 1 && r.right <= Math.min(box.right, card.right) + 1 &&
+             r.top >= Math.max(box.top, card.top) - 1 && r.bottom <= Math.min(box.bottom, card.bottom) + 1 &&
+-            clips.every(c => (!c.x || (r.left >= c.left - 1 && r.right <= c.right + 1)) && (!c.y || (r.top >= c.top - 1 && r.bottom <= c.bottom + 1)))) };
++            [...clips, ...r.innerClips].every(c => (!c.x || (r.left >= c.left - 1 && r.right <= c.right + 1)) && (!c.y || (r.top >= c.top - 1 && r.bottom <= c.bottom + 1)))) };
+       });
+       return { text, tokens, visible, glyphTop: Math.min(...chars.map(r => r.top)), glyphBottom: Math.max(...chars.map(r => r.bottom)),
+         fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
+@@ -84,18 +93,29 @@ function assertVitalLayout(layout, context) {
+ 
+ async function checkVitalOracleControls(page) {
+   const before = await vitalLayout(page, 375), controls = [];
+-  for (const kind of ['hidden-value', 'invisible-value', 'hidden-ancestor', 'vertical-clip', 'ancestor-clip', 'label-collision', 'empty-value']) {
++  for (const kind of ['hidden-value', 'invisible-value', 'hidden-ancestor', 'vertical-clip', 'ancestor-clip', 'label-collision', 'empty-value', 'unit-opacity', 'unit-visibility', 'unit-clip']) {
+     const target = page.getByTestId(kind === 'hidden-value' ? 'dashboard-mobile-vital-next-move' : 'dashboard-mobile-vital-interest-burn');
+-    const saved = await target.evaluate((article, kind) => {
++    const saved = await target.evaluateHandle((article, kind) => {
+       const [label, value] = article.querySelectorAll('p');
+-      const saved = { styles: [label, value, article, article.parentElement].map(el => el.getAttribute('style')), text: value.textContent };
++      const walker = document.createTreeWalker(value, NodeFilter.SHOW_ALL), textNodes = [], nodes = [];
++      let node;
++      while ((node = walker.nextNode())) { nodes.push(node); if (node.nodeType === Node.TEXT_NODE) textNodes.push(node); }
++      const unit = value.querySelector('span');
++      const styled = [label, value, article, article.parentElement, unit].filter(Boolean);
++      const saved = { kind, styled, styles: styled.map(el => el.getAttribute('style')), css: styled.map(el => el.style.cssText),
++        textNodes, texts: textNodes.map(n => n.data), nodes };
+       if (kind === 'hidden-value') value.style.opacity = '0';
+       if (kind === 'invisible-value') value.style.visibility = 'hidden';
+       if (kind === 'hidden-ancestor') article.style.opacity = '0';
+       if (kind === 'vertical-clip') { value.style.height = '1px'; value.style.overflow = 'hidden'; }
+       if (kind === 'ancestor-clip') { article.parentElement.style.height = '1px'; article.parentElement.style.overflow = 'hidden'; }
+       if (kind === 'label-collision') label.style.transform = `translateY(${value.getBoundingClientRect().top - label.getBoundingClientRect().top}px)`;
+-      if (kind === 'empty-value') value.textContent = '';
++      if (kind === 'empty-value') {
++        for (const node of textNodes) node.data = '';
++      }
++      if (kind === 'unit-opacity') unit.style.opacity = '0';
++      if (kind === 'unit-visibility') unit.style.visibility = 'hidden';
++      if (kind === 'unit-clip') { unit.style.height = '1px'; unit.style.overflow = 'hidden'; }
+       return saved;
+     }, kind);
+     try {
+@@ -107,13 +127,20 @@ async function checkVitalOracleControls(page) {
+       }
+       controls.push({ kind, rejected, layout });
+     } finally {
+-      await target.evaluate((article, { saved, kind }) => {
+-        const [label, value] = article.querySelectorAll('p');
+-        [label, value, article, article.parentElement].forEach((el, i) => {
+-          if (saved.styles[i] === null) el.removeAttribute('style'); else el.setAttribute('style', saved.styles[i]);
+-        });
+-        if (kind === 'empty-value') value.textContent = saved.text;
+-      }, { saved, kind });
++      try {
++        const restoration = await target.evaluate((article, saved) => {
++          saved.styled.forEach((el, i) => { if (saved.styles[i] === null) el.removeAttribute('style'); else el.setAttribute('style', saved.styles[i]); });
++          saved.textNodes.forEach((node, i) => { node.data = saved.texts[i]; });
++          const walker = document.createTreeWalker(article.querySelectorAll('p')[1], NodeFilter.SHOW_ALL), nodes = [];
++          let node;
++          while ((node = walker.nextNode())) nodes.push(node);
++          return { originalNodes: nodes.length === saved.nodes.length && nodes.every((n, i) => n === saved.nodes[i]),
++            originalText: saved.textNodes.every((n, i) => n.data === saved.texts[i]),
++            originalStyles: saved.styled.every((el, i) => el.style.cssText === saved.css[i]) };
++        }, saved);
++        assert.ok(Object.values(restoration).every(Boolean), kind + ': controls must restore original nodes, text and styles');
++        if (controls.at(-1)?.kind === kind) controls.at(-1).restoration = restoration;
++      } finally { await saved.dispose(); }
+     }
+     assert.deepEqual(await vitalLayout(page, 375), before, 'oracle controls must restore the real UI');
+   }
+@@ -223,6 +250,19 @@ async function checkVitalOracleControls(page) {
+         assert.ok(heroVisibleHeight >= 48,
+           'readable vitals must leave a visible part of the asset hero in the first viewport');
+         if (width === 375 && scenario.id === 'house') await checkVitalOracleControls(page);
++        if (width === 280 && scenario.id === 'large-import') {
++          const font = await amount.getAttribute('style');
++          try {
++            await amount.evaluate(el => { el.style.fontFamily = 'Verdana, sans-serif'; });
++            const fallback = await vitalLayout(page, width);
++            fs.writeFileSync(path.join(output, 'fallback-font-280.json'), JSON.stringify(fallback, null, 2) + '\n');
++            await page.screenshot({ path: path.join(output, 'fallback-font-280.png') });
++            assertVitalLayout(fallback, 'large-import wider fallback font 280px');
++          } finally {
++            await amount.evaluate((el, font) => { if (font === null) el.removeAttribute('style'); else el.setAttribute('style', font); }, font);
++          }
++          assert.deepEqual(await vitalLayout(page, width), layout, 'font probe must restore the real UI');
++        }
+         if (width === 1440 && ['house', 'large-import'].includes(scenario.id)) {
+           for (const boundaryWidth of [768, 1264]) {
+             await page.setViewportSize({ width: boundaryWidth, height: 900 });
+diff --git a/apps/web/src/app/page.tsx b/apps/web/src/app/page.tsx
+index 81f9d97..5b7998e 100644
+--- a/apps/web/src/app/page.tsx
++++ b/apps/web/src/app/page.tsx
+@@ -134,7 +134,9 @@ export default function Dashboard() {
+                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
+                 </div>
+                 <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
+-                  {vital.value}
++                  {vital.id === 'interest-burn' && vital.value.endsWith('/day') ? (
++                    <>{vital.value.slice(0, -4)}<wbr /><span className="inline-block whitespace-nowrap">/day</span></>
++                  ) : vital.value}
+                 </p>
+                 <p className="sr-only">
+                   {vital.caption}

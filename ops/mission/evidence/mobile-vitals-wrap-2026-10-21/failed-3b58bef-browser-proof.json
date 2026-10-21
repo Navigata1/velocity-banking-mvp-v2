@@ -1,0 +1,19 @@
+{
+  "url": "https://velocity-banking-mvp-v2-mxe28o2cf-islanddevcrew.vercel.app/",
+  "domain": "house",
+  "vitalsCount": 4,
+  "before": {
+    "cashFlow": "$3,500",
+    "interest": "Est. $51.50/day"
+  },
+  "after": {
+    "cashFlow": "$3,600",
+    "interest": "Est. $51.50/day"
+  },
+  "restored": {
+    "cashFlow": "$3,500",
+    "interest": "Est. $51.50/day"
+  },
+  "logs": [],
+  "interactionVerified": true
+}
