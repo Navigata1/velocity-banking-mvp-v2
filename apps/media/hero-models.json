@@ -2,22 +2,23 @@
   {
     "id": "car",
     "quality": "refined-textured",
-    "bytes": 2049728,
+    "bytes": 2232520,
     "meshes": 95,
     "triangles": 134971,
-    "sha256": "8b47003fb31a8d1e41f271a05bf64bf6f68b84625d18992f1201a7f66e65ce54",
+    "sha256": "5d7fb0b2aa1457ce7e0013d3b7e04ba6568c3dd21941dc5df05a3bf969489225",
     "sourceSha256": "c272098089d78c5cd9fd9f24ff50ee8acf8d932c55f2d55fc10adb6c8998966b",
     "sourceUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/15cd02d304e54cb42a4db4eefe719f76190f4b68/Models/CarConcept/glTF-Binary/CarConcept.glb",
     "sourceRevision": "15cd02d304e54cb42a4db4eefe719f76190f4b68",
+    "recipeSha256": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94",
     "creator": "Eric Chadwick / Darmstadt Graphics Group GmbH",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
     "sourcePage": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept",
     "excludedTrademarkTextureSha256": "1453559c58526ec236ea7f90a72b0e49823061e6c26b571928b9ea3b91593e4d",
-    "modifications": "Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants; simplified within 0.03% mesh error; WebP textures <=1024 except byte-preserved source paint normal PNG; Meshopt; normalized stage units.",
+    "modifications": "Removed logo-bearing license plate, steering emblem and shared Khronos logo texture with all references; removed unused variants, final orphan image and stale optional iridescence; simplified within 0.03% mesh error; five full-resolution lossless WebP normal maps, byte-preserved source paint normal PNG, other textures including Tireside retain prior conversion; Meshopt; normalized stage units.",
     "sourcePaintNormalSha256": "3c4b65d9a8372147a41594eee96eae35127105de26142cc9e9b752c3f9754b8e",
     "provenance": "Adapted licensed Car Concept; not an AI reconstruction of the studio poster.",
-    "version": 2
+    "version": 3
   },
   {
     "id": "house",
