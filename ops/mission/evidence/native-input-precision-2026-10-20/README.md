@@ -60,6 +60,14 @@ Hermes exports; seven web routes; actual all-ten viewers/fallbacks;65 media
 contracts and27 fresh Remotion stills; ten unchanged videos rechecked, not rebuilt.
 Existing media warning/info notices remain disclosed. Exports are not device QA.
 
+Pre-postflight coverage inspection caught the15-case lane was wired through the
+native persistence suite, while main CI still called only the older root route
+contracts. Main push/PR CI now explicitly calls both commands. This substantive
+coverage follow-up supersedes15cd5d8; that head is not declared fully verified.
+The final head must prove both full native execution and both complete CI events.
+The standing structured-YAML guard also rejects removed, skipped or failure-ignored
+execution. Its old-wiring red proof is retained in `ci-coverage-red.log`.
+
 `artifact-receipt.json` binds final source, normalized retained logs, native
 exports/screenshots, timing records, unchanged models/videos and generated report.
 All financial-engine, scenario, model, shared studio/camera/animation, dependency,

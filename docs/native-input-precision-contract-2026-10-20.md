@@ -49,6 +49,8 @@ Real Chrome on the exported app runs375px/1440px fixtures: ten field no-ops,
 sequential money/APR typing, local drafts, exactly one submit/blur commit, ten
 invalid changes, feedback and exact saved inputs across navigation/reload.
 The existing35 route/viewport executions and focused first-tap navigation remain.
+Main push/PR CI now explicitly runs the full native persistence/input contract
+suite alongside route contracts, not only the previous route-only command.
 
 Independent review's three precision/fraction/locale findings were reproduced red
 and corrected. Final review, fresh Hermes exports, current exact-head CI/SQL and

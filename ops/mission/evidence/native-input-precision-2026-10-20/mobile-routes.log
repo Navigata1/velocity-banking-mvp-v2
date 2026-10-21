@@ -36,4 +36,5 @@ PASS shared mobile cockpit snapshot stays in review mode when cash flow or LOC s
 PASS shared mobile vault snapshot turns the active debt model into an outcome path
 PASS shared mobile learn snapshot teaches from current Money Loop inputs
 PASS native final-payment and zero-surplus snapshots match the web Money Loop without false guardrails
+PASS main CI requires native route and full persistence/input contracts
 Mobile port contract passed.

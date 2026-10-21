@@ -196,7 +196,9 @@ jobs:
         run: npm run smoke:accessibility:built
 
       - name: Run mobile contract tests
-        run: node scripts/mobile-port-contract-tests.cjs
+        run: |
+          node scripts/mobile-port-contract-tests.cjs
+          npm --prefix apps/mobile run test:supabase:mobile
 
       - name: Verify iOS smoke guard on Linux
         working-directory: apps/mobile

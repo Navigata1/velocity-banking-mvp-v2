@@ -1862,6 +1862,29 @@ test('native final-payment and zero-surplus snapshots match the web Money Loop w
   }
 });
 
+test('main CI requires native route and full persistence/input contracts', () => {
+  const yaml = require(path.join(repoRoot, 'apps/web/node_modules/js-yaml'));
+  const document = yaml.load(fs.readFileSync(path.join(repoRoot, '.github/workflows/ci.yml'), 'utf8'));
+  function verify(config) {
+    const job = Object.values(config.jobs).find(job => job.name === 'Web and mobile quality gates');
+    assert.ok(job); assert.equal(job.if, undefined);
+    const step = job.steps.find(step => step.name === 'Run mobile contract tests');
+    assert.ok(step); assert.equal(step.if, undefined); assert.notEqual(step['continue-on-error'], true);
+    const commands = step.run.trim().split(/\r?\n/).map(line => line.trim());
+    assert.ok(commands.includes('node scripts/mobile-port-contract-tests.cjs'));
+    assert.ok(commands.includes('npm --prefix apps/mobile run test:supabase:mobile'), 'main CI must execute the full native persistence/input suite');
+  }
+  verify(document);
+  for (const corrupt of ['remove', 'skip', 'ignore-failure']) {
+    const copy = structuredClone(document);
+    const step = Object.values(copy.jobs).find(job => job.name === 'Web and mobile quality gates').steps.find(step => step.name === 'Run mobile contract tests');
+    if (corrupt === 'remove') step.run = 'node scripts/mobile-port-contract-tests.cjs';
+    if (corrupt === 'skip') step.if = 'false';
+    if (corrupt === 'ignore-failure') step['continue-on-error'] = true;
+    assert.throws(() => verify(copy), `invalid ${corrupt} wiring must be rejected`);
+  }
+});
+
 if (process.exitCode) {
   console.error('Mobile port contract failed.');
   process.exit(process.exitCode);

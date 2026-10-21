@@ -427,7 +427,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/native-input-precision-2026-10-20/mobile-routes.log",
           "lastRun": "2026-10-21T01:34:34Z",
-          "notes": "Existing root mobile contracts pass; obsolete rounding/private-function assertions now exercise the real draft helper and platform wiring. Owner/revision/outbox/recovery contracts and15 numeric cases pass separately. Lifecycle wiring assertions are static, not signed-in native-device proof."
+          "notes": "Existing root mobile contracts pass; obsolete rounding/private-function assertions now exercise the real draft helper and platform wiring. Main CI now explicitly calls the full native persistence/input suite too, including15 numeric cases and owner/revision/outbox/recovery. Final exact-head execution still required. Lifecycle wiring assertions are static, not signed-in native-device proof."
         },
         {
           "id": "R5-G3",
