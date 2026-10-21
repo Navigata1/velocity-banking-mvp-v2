@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
+import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import type { DebtItem } from '@/engine/portfolio';
 import { usePortfolioStore } from '@/stores/portfolio-store';
 import { ALL_CATEGORIES, categoryIcon, categoryLabel, paymentSourceLabel } from './portfolio-formatters';

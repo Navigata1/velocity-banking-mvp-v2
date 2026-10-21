@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CountUp from '@/components/CountUp';
-import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/EditableNumber';
+import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import PortfolioPayoffPath from '@/components/PortfolioPayoffPath';
 import ScrollReveal from '@/components/ScrollReveal';
 import { formatCurrency, formatDate } from '@/engine/calculations';

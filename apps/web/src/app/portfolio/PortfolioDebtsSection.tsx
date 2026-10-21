@@ -1,6 +1,6 @@
 'use client';
 
-import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
+import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import ScrollReveal from '@/components/ScrollReveal';
 import { formatCurrency } from '@/engine/calculations';
 import type { DebtItem, DebtPriorityRationale } from '@/engine/portfolio';
@@ -122,7 +122,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
 
   return (
     <ScrollReveal variant="fadeUp" delay={0.1}>
-      <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
+      <section className={`${classes.glass} rounded-3xl p-4 md:p-8`}>
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className={`text-xl font-bold ${classes.text}`}>Your Debts</h2>
@@ -183,7 +183,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div className={`${classes.glass} rounded-xl p-3`}>
                         <p className={`${classes.textMuted} text-[11px] mb-1`}>Balance</p>
                         <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
@@ -218,7 +218,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
             </div>
 
             <div className="hidden overflow-x-auto md:block">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[76rem] text-sm">
                 <thead>
                   <tr className={`${classes.textMuted} text-xs border-b ${classes.border}`}>
                     <th className="py-3 text-left">Debt</th>
@@ -255,13 +255,13 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                           </div>
                         </td>
                         <td className="py-3 pr-3">{renderCategorySelect(d)}</td>
-                        <td className="py-3 pr-3">
+                        <td className="min-w-[9rem] py-3 pr-3">
                           <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                         </td>
-                        <td className="py-3 pr-3">
+                        <td className="min-w-[14rem] py-3 pr-3">
                           <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} ariaLabel={`${d.name} APR`} size="md" />
                         </td>
-                        <td className="py-3 pr-3">
+                        <td className="min-w-[8rem] py-3 pr-3">
                           {d.minPaymentRule.type === 'fixed' ? (
                             <EditableCurrency
                               value={d.minPaymentRule.amount}
