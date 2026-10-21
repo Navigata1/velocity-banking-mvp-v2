@@ -8439,7 +8439,7 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
 
   assert.ok(source.includes('data-testid="dashboard-mobile-vitals"'), 'expected a stable mobile vitals hook');
-  assert.ok(source.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected mobile vitals to show all four cards in one compact row');
+  // Token fit and first-screen visibility are exercised by smoke-dashboard-interest.cjs.
   assert.ok(source.includes('min-h-[82px]'), 'expected mobile vital cards to fit the first screen summary');
   assert.ok(source.includes('data-testid="dashboard-mobile-money-loop-bridge"'), 'expected the Money Loop bridge to remain on the mobile first screen');
   assert.ok(
@@ -8492,7 +8492,6 @@ test('dashboard mobile vital cards keep coach copy available without first-scree
   const mobileVitalsSource = source.slice(mobileVitalsStart, mobileBridgeStart);
 
   assert.ok(mobileVitalsStart >= 0 && mobileBridgeStart > mobileVitalsStart, 'expected mobile vitals section before the mobile bridge');
-  assert.ok(mobileVitalsSource.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected all four mobile vitals to fit in one row');
   assert.ok(mobileVitalsSource.includes('min-h-[82px]'), 'expected mobile vital cards to reserve compact first-screen height');
   assert.ok(!mobileVitalsSource.includes('line-clamp'), 'expected mobile vital captions not to be line-clamped');
   assert.ok(!mobileVitalsSource.includes('truncate'), 'expected mobile vital captions not to be truncated');

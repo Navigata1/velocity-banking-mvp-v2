@@ -116,7 +116,7 @@ export default function Dashboard() {
 
         <section
           data-testid="dashboard-mobile-vitals"
-          className="grid grid-cols-4 gap-1.5 md:hidden"
+          className="grid grid-cols-2 gap-1.5 md:hidden"
           aria-label="Dashboard vitals"
         >
           {model.vitals.map((vital) => {
@@ -125,7 +125,7 @@ export default function Dashboard() {
               <article
                 key={vital.id}
                 data-testid={`dashboard-mobile-vital-${vital.id}`}
-                className={`${classes.glass} ${style.card} min-h-[82px] rounded-xl border p-2`}
+                className={`${classes.glass} ${style.card} min-h-[82px] min-w-0 rounded-xl border p-2`}
               >
                 <div className="flex items-start justify-between gap-1">
                   <p className={`text-[9px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
@@ -133,7 +133,7 @@ export default function Dashboard() {
                   </p>
                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
                 </div>
-                <p className={`mt-1.5 text-sm font-bold leading-tight break-words ${style.value}`}>
+                <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
                   {vital.value}
                 </p>
                 <p className="sr-only">
