@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 5000",
     "lint": "eslint",
-    "test": "node scripts/hero-resource-tests.cjs && node scripts/hero-contract-tests.cjs && node scripts/three-stage-helpers-tests.cjs && node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs && node scripts/metadata-contract.cjs && node scripts/public-asset-budget.cjs",
+    "test": "node scripts/hero-resource-tests.cjs && node scripts/hero-contract-tests.cjs && node scripts/three-stage-helpers-tests.cjs && node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/portfolio-common-month-tests.cjs && node scripts/portfolio-common-month-reference-tests.cjs && node scripts/accessibility-route-contract.cjs && node scripts/metadata-contract.cjs && node scripts/public-asset-budget.cjs",
     "test:heroes": "node scripts/smoke-heroes.cjs && node scripts/hero-fallback-smoke.cjs",
     "test:reference": "node scripts/financial-reference-tests.cjs",
     "test:supabase": "node scripts/supabase-ci-contract.cjs && node scripts/supabase-schema-contract.cjs && node scripts/supabase-client-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/supabase-account-contract.cjs && cd ../.. && npx --yes supabase@2.109.1 test db --local supabase/tests",
@@ -21,7 +21,7 @@
     "smoke:dashboard:built": "node scripts/smoke-dashboard-interest.cjs",
     "smoke:comparison:built": "node scripts/smoke-comparison.cjs",
     "smoke:vault:built": "node scripts/smoke-vault-comparison.cjs",
-    "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs",
+    "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs",
     "test:3d": "npm run build && npm run test:3d:built",
     "test:3d:built": "node scripts/test-three-stage.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"

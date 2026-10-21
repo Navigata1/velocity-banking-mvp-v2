@@ -5,6 +5,7 @@ const http = require('node:http');
 const path = require('node:path');
 const verifyFinancialInputs = require('./financial-input-smoke.cjs');
 const { runPortfolioBookFixtures } = require('./portfolio-book-smoke.cjs');
+const { runCommonMonthFixtures } = require('../../web/scripts/smoke-portfolio-common-month.cjs');
 const { chromium } = require(path.resolve(__dirname, '..', '..', 'web', 'node_modules', 'playwright-core'));
 const {
   findBrowserExecutable,
@@ -139,6 +140,7 @@ async function main() {
   try {
     await waitForServer(origin);
     browser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
+    await runCommonMonthFixtures({ browser, origin, output: outputDirectory, native: true });
     await verifyFinancialInputs(browser, origin, outputDirectory);
     await runPortfolioBookFixtures({ browser, origin, output: outputDirectory });
     for (const [viewportLabel, viewport] of viewports) {

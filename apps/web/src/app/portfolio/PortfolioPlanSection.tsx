@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import PortfolioCommonMonth from './PortfolioCommonMonth';
 import CountUp from '@/components/CountUp';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import PortfolioPayoffPath from '@/components/PortfolioPayoffPath';
@@ -27,6 +28,11 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
   const [importText, setImportText] = useState('');
+  const comparisonBook = useMemo(() => ({ monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
+    extraMonthlyPayment: store.extraMonthlyPayment, chunkAmount: store.chunkAmount, loc: store.loc,
+    strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts }),
+    [store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment, store.chunkAmount, store.loc,
+      store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
 
   const result = store.lastResult;
   const payoffMonths = result?.payoffMonths ?? 0;
@@ -422,6 +428,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
             )}
           </div>
         </div>
+        <PortfolioCommonMonth book={comparisonBook} classes={classes} />
       </section>
   );
 }

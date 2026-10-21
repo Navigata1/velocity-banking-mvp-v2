@@ -8,6 +8,7 @@ import { useMobileAuth } from '@/components/mobile-auth-provider';
 import { PortfolioControls } from '@/components/portfolio/portfolio-controls';
 import { PortfolioDebtEditor } from '@/components/portfolio/portfolio-debt-editor';
 import { PortfolioPayoffPath } from '@/components/portfolio/portfolio-payoff-path';
+import { PortfolioCommonMonth } from '@/components/portfolio/portfolio-common-month';
 import { PortfolioTransfer } from '@/components/portfolio/portfolio-transfer';
 import { buildMobilePortfolioBookView, copyMobileScenarioToPortfolio, createBlankMobilePortfolio } from '@/lib/mobile-portfolio-model';
 import { MobileRouteScreen } from './route-screen';
@@ -71,6 +72,7 @@ function PortfolioWorkspace({ input, scenarioReady }: { input: MobileDashboardIn
         <PortfolioPayoffPath path={view.path} />
         <PortfolioControls book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
         <PortfolioDebtEditor book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
+        <PortfolioCommonMonth book={book} disabled={disabled} />
         <PortfolioTransfer book={book} storageScope={portfolio.storageScope} revision={portfolio.revision}
           disabled={disabled || status === 'saving'} onReplace={(next, revision) => portfolio.replace(next, undefined, revision)} />
       </View> : null}
