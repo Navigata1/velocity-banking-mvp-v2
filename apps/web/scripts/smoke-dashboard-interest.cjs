@@ -188,7 +188,7 @@ async function checkVitalOracleControls(page) {
           await input.fill(String(value)); await input.press('Enter');
           await page.waitForFunction(v => JSON.parse(localStorage.getItem('velocity-bank-storage')).state.monthlyIncome === v, value);
         };
-        // The partial fixture gains existing default fields on its first persisted edit.
+        // The legacy partial fixture gains existing defaults only after a real persisted edit.
         if (scenario.id === 'large-import') {
           for (const [label, expected, read] of [
             ['Mortgage balance', scenario.balance, s => s.debts.house.balance],
@@ -207,7 +207,14 @@ async function checkVitalOracleControls(page) {
             assert.equal(Number(displayed), expected, `${label} editor must show the actual imported value`);
           }
         }
+        const untouched = await page.evaluate(() => localStorage.getItem('velocity-bank-storage'));
         await changeIncome(state.monthlyIncome);
+        assert.equal(await page.evaluate(() => localStorage.getItem('velocity-bank-storage')), untouched,
+          'a no-op income edit must preserve exact stored bytes');
+        if (scenario.id === 'house') {
+          await changeIncome(state.monthlyIncome + 1);
+          await changeIncome(state.monthlyIncome);
+        }
         const before = await storedInputs(page);
         assert.equal(before.debts[domain].balance, scenario.balance);
         assert.equal(before.debts[domain].interestRate, scenario.apr);

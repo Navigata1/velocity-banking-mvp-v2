@@ -4,6 +4,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { normalizeApr } from '@interestshield/financial-engine';
 import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import MoneyLoopArtifactRail from '@/components/MoneyLoopArtifactRail';
@@ -243,7 +244,7 @@ function TargetDashboard() {
             <p className="mt-2 text-3xl font-semibold tabular-nums">{formatCurrency(activeDebt.balance)}</p>
             <p className={`mt-1 text-sm ${classes.textSecondary}`}>Remaining principal</p>
             <div className={`my-5 grid grid-cols-2 gap-4 border-y border-current/15 py-4 text-sm ${classes.textSecondary}`}>
-              <div><p>APR</p><strong className={`mt-1 block font-medium ${classes.text}`}>{(activeDebt.interestRate * 100).toFixed(2)}%</strong></div>
+              <div><p>APR</p><strong className={`mt-1 block font-medium ${classes.text}`}>{new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(normalizeApr(activeDebt.interestRate))}</strong></div>
               <div><p>Monthly payment</p><strong className={`mt-1 block font-medium ${classes.text}`}>{formatCurrency(activeDebt.minimumPayment)}</strong></div>
             </div>
             <p className={`text-sm font-semibold ${nextMoveStyle.value}`}>{model.nextMove.title}</p>

@@ -675,7 +675,7 @@ export default function VaultPage() {
 
   return (
     <PageTransition>
-    <div className="p-6 md:p-10 max-w-2xl mx-auto">
+    <div className="p-6 md:p-10 max-w-2xl mx-auto max-sm:[&_.flex:has(>[data-financial-editor])]:flex-col max-sm:[&_.flex:has(>[data-financial-editor])]:items-stretch max-sm:[&_.flex:has(>[data-financial-editor])]:gap-1">
       <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Wealth Transfer Timeline</h1>
         <p className={classes.textSecondary}>See the true cost of your mortgage</p>
@@ -730,7 +730,7 @@ export default function VaultPage() {
       )}
 
       <ScrollReveal variant="scaleIn">
-      <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
+      <div className={`${classes.glass} rounded-3xl p-3 sm:p-8 mb-8`}>
         <div className="text-center mb-6">
           <h2 className={`text-xl font-semibold ${classes.text}`}>{stepTitles[step].title}</h2>
           <p className={classes.textSecondary}>{stepTitles[step].subtitle}</p>

@@ -81,7 +81,7 @@ export default function SimulatorPage() {
 
   return (
     <PageTransition>
-    <div className="p-6 md:p-10 max-w-6xl mx-auto">
+    <div className="p-6 md:p-10 max-w-6xl mx-auto max-sm:[&_.flex:has(>[data-financial-editor])]:flex-col max-sm:[&_.flex:has(>[data-financial-editor])]:items-stretch max-sm:[&_.flex:has(>[data-financial-editor])]:gap-1">
       <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>What-If Simulator</h1>
         <p className={classes.textSecondary}>Compare payoff plans using your current balances</p>

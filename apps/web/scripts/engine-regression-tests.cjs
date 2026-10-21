@@ -4,6 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
+const React = require('react');
+const { renderToStaticMarkup } = require('react-dom/server');
 const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
 require('./portfolio-apr-unit-tests.cjs');
 require('./portfolio-book-tests.cjs');
@@ -52,6 +54,7 @@ function loadTsFile(filename) {
       esModuleInterop: true,
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2020,
+      jsx: ts.JsxEmit.ReactJSX,
     },
   }).outputText;
 
@@ -70,6 +73,9 @@ function loadTsFile(filename) {
     }
     if (request === '@interestshield/financial-engine/portfolio-book') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-book.ts'));
+    }
+    if (request === '@interestshield/financial-engine/input-draft') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/input-draft.ts'));
     }
 
     if (request.startsWith('.')) {
@@ -3903,21 +3909,12 @@ test('shared persistence contract builds deterministic owner-scoped snapshot ups
 });
 
 test('editable financial controls expose contextual screen-reader labels', () => {
-  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
+  const controls = loadTsModule('src/components/EditableNumber.tsx');
   const dashboardSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
-
-  assert.ok(
-    componentSource.includes('ariaLabel?: string'),
-    'expected EditableNumber to accept a caller-provided screen-reader label'
-  );
-  assert.ok(
-    componentSource.includes('aria-label={editLabel}'),
-    'expected editable display buttons to expose a contextual edit label'
-  );
-  assert.ok(
-    componentSource.includes('aria-label={inputLabel}'),
-    'expected edit-mode inputs to expose a contextual input label'
-  );
+  const html = renderToStaticMarkup(React.createElement(controls.EditableCurrency,
+    { value: 8200, onChange() {}, ariaLabel: 'Audit monthly income' }));
+  assert.match(html, /aria-label="Edit Audit monthly income, current value \$8,200"/);
+  assert.match(html, /<button[^>]*type="button"/);
   assert.ok(
     dashboardSource.includes('ariaLabel="Monthly income"'),
     'expected Dashboard income editor to provide a contextual label'
@@ -3932,33 +3929,26 @@ test('editable financial controls expose contextual screen-reader labels', () =>
   );
 });
 
-test('editable financial controls sanitize non-finite display values', () => {
-  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
-
-  assert.ok(
-    componentSource.includes('function sanitizeValue(value: number, min: number, max: number): number'),
-    'expected EditableNumber to centralize finite display sanitization'
-  );
-  assert.ok(
-    componentSource.includes('const finiteValue = Number.isFinite(value) ? value : min'),
-    'expected EditableNumber to fall back from non-finite values before formatting'
-  );
-  assert.ok(
-    componentSource.includes('const safeValue = sanitizeValue(value, min, max)'),
-    'expected EditableNumber to sanitize the incoming value prop'
-  );
-  assert.ok(
-    componentSource.includes('formatDisplay(safeValue)'),
-    'expected EditableNumber display and aria labels to use sanitized values'
-  );
-  assert.ok(
-    componentSource.includes('setTempValue((safeValue * 100).toFixed(1))'),
-    'expected percent editing to avoid non-finite temp values'
-  );
-  assert.ok(
-    componentSource.includes('setTempValue(safeValue.toString())'),
-    'expected edit and escape flows to reset to sanitized values'
-  );
+test('editable financial controls disclose non-finite values and preserve actual APR units', () => {
+  const controls = loadTsModule('src/components/EditableNumber.tsx');
+  const canonical = loadTsModule('src/components/PortfolioEditableNumber.tsx');
+  const cases = [
+    [controls.EditableCurrency, Number.NaN, 'Not available'],
+    [controls.EditableCurrency, Number.POSITIVE_INFINITY, 'Not available'],
+    [controls.EditableCurrency, Number.NEGATIVE_INFINITY, 'Not available'],
+    [controls.EditableCurrency, 100000000, '$100,000,000'],
+    [controls.EditablePercentage, 0.069, '6.9%'],
+    [controls.EditablePercentage, 0.069123456, '6.9123456%'],
+    [controls.EditablePercentage, 6.5, '6.5%'],
+    [controls.EditablePercentage, 2, '2%'],
+    [controls.EditablePercentage, 200, '200%'],
+    [canonical.EditablePercentage, 2, '200%'],
+  ];
+  const observed = cases.map(([Component, value]) => {
+    const html = renderToStaticMarkup(React.createElement(Component, { value, onChange() {}, ariaLabel: 'Audit value' }));
+    return html.match(/aria-label="Edit Audit value, current value ([^"]*)"/)?.[1];
+  });
+  assert.deepEqual(observed, cases.map(([, , expected]) => expected));
 });
 
 test('simulator editable controls expose contextual screen-reader labels', () => {

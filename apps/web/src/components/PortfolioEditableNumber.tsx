@@ -18,6 +18,7 @@ export interface EditableNumberProps {
   className?: string;
   label?: string;
   ariaLabel?: string;
+  percentPolicy?: 'decimal' | 'legacy';
 }
 
 type Baseline = {
@@ -36,13 +37,13 @@ function sameBaseline(a: Baseline, b: Baseline): boolean {
     && a.kind === b.kind && a.format === b.format && a.controlLabel === b.controlLabel;
 }
 
-function formatDisplay(value: number, format: EditableNumberProps['format']): string {
+function formatDisplay(value: number, format: EditableNumberProps['format'], kind: FinancialInputKind): string {
   if (!Number.isFinite(value)) return 'Not available';
   switch (format) {
     case 'currency':
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD',
         minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
-    case 'percent': return `${formatFinancialInput(value, 'percent')}%`;
+    case 'percent': return `${formatFinancialInput(value, kind)}%`;
     case 'years': return `${value} yr${value !== 1 ? 's' : ''}`;
     case 'months': return `${value} mo`;
     default: return value.toLocaleString('en-US');
@@ -53,9 +54,9 @@ const inputSizes = { sm: 'text-sm px-2 py-1', md: 'text-sm px-2 py-2', lg: 'text
 const displaySizes = { sm: 'text-sm', md: 'text-sm', lg: 'text-2xl', xl: 'text-3xl' };
 
 export function EditableNumber({ value, onChange, prefix = '', suffix = '', min = 0, max, step = 1,
-  format = 'number', size = 'md', className = '', label, ariaLabel }: EditableNumberProps) {
+  format = 'number', size = 'md', className = '', label, ariaLabel, percentPolicy = 'decimal' }: EditableNumberProps) {
   const { theme } = useThemeStore();
-  const kind: FinancialInputKind = format === 'percent' ? 'percent'
+  const kind: FinancialInputKind = format === 'percent' ? percentPolicy === 'legacy' ? 'legacy-percent' : 'percent'
     : format === 'months' || format === 'years' ? 'whole' : 'money';
   const controlLabel = ariaLabel ?? label ?? 'Editable number';
   const baseline: Baseline = { value, kind, min, max, format, controlLabel };
@@ -110,7 +111,7 @@ export function EditableNumber({ value, onChange, prefix = '', suffix = '', min 
     setEditor(null); setFeedback(null);
   }
 
-  const display = formatDisplay(value, format);
+  const display = formatDisplay(value, format, kind);
   const draft = editor && sameBaseline(editor.baseline, baseline) ? editor.draft : formatFinancialInput(value, kind);
   const error = feedback && sameBaseline(feedback.baseline, baseline) ? feedback.message : '';
   const textClass = theme === 'light' ? 'text-slate-800' : 'text-white';
@@ -119,7 +120,7 @@ export function EditableNumber({ value, onChange, prefix = '', suffix = '', min 
   const hoverClass = theme === 'light' ? 'hover:bg-gray-200/50' : 'hover:bg-slate-700/50';
 
   return (
-    <div className={`inline-flex w-full min-w-0 max-w-full flex-col ${className}`}>
+    <div data-financial-editor className={`inline-flex w-full min-w-0 max-w-full flex-col ${className}`}>
       {label ? <span className={`mb-1 text-xs ${mutedClass}`}>{label}</span> : null}
       {isEditing ? (
         <div className="flex min-w-0 max-w-full items-center gap-1">
@@ -151,7 +152,7 @@ export function EditableNumber({ value, onChange, prefix = '', suffix = '', min 
           <Pencil aria-hidden="true" className="h-3 w-3 shrink-0 text-emerald-500 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
         </button>
       )}
-      {error ? <p id={feedbackId} role="alert" className="mt-1 text-xs leading-5 text-amber-600 [overflow-wrap:anywhere]">{error}</p> : null}
+      {error ? <p id={feedbackId} role="alert" className={`mt-1 text-xs leading-5 [overflow-wrap:anywhere] ${theme === 'light' ? 'text-amber-800' : 'text-amber-300'}`}>{error}</p> : null}
     </div>
   );
 }
