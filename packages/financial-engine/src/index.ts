@@ -11,6 +11,8 @@ export interface LOCDetails {
   balance: number;
 }
 
+export type APRUnit = 'legacy' | 'decimal';
+
 export type AmortizedPayoffFailureReason = 'payment-below-interest' | 'payoff-horizon-exceeded';
 
 export interface AmortizedPayoffMonth {
@@ -166,6 +168,7 @@ export interface MoneyLoopPayoffInputs {
 }
 
 export interface MoneyLoopMonthInputs {
+  aprUnit?: APRUnit;
   month: number;
   debtBalance: number;
   debtApr: number;
@@ -199,6 +202,7 @@ export interface LOCAccrualCalendar {
 }
 
 export interface LOCInterestAccrualInputs {
+  aprUnit?: APRUnit;
   startBalance: number;
   apr: number;
   monthlyIncome: number;
@@ -491,9 +495,9 @@ function finiteNonNegative(value: number): number {
   return Math.max(0, finiteNumber(value));
 }
 
-function normalizeApr(apr: number): number {
+export function normalizeApr(apr: number, aprUnit: APRUnit = 'legacy'): number {
   const safeApr = finiteNumber(apr);
-  return safeApr > 1 ? safeApr / 100 : safeApr;
+  return aprUnit !== 'decimal' && safeApr > 1 ? safeApr / 100 : safeApr;
 }
 
 function clampLoopPressure(value: number): number {
@@ -602,12 +606,12 @@ function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashb
   };
 }
 
-export function calculateMonthlyRate(apr: number): number {
-  return finiteNonNegative(normalizeApr(apr)) / 12;
+export function calculateMonthlyRate(apr: number, aprUnit: APRUnit = 'legacy'): number {
+  return finiteNonNegative(normalizeApr(apr, aprUnit)) / 12;
 }
 
-export function calculateDailyRate(apr: number): number {
-  return finiteNonNegative(normalizeApr(apr)) / 365;
+export function calculateDailyRate(apr: number, aprUnit: APRUnit = 'legacy'): number {
+  return finiteNonNegative(normalizeApr(apr, aprUnit)) / 365;
 }
 
 export function calculateRequiredDebtPayment(balance: number, apr: number, scheduledPayment: number): number {
@@ -615,8 +619,8 @@ export function calculateRequiredDebtPayment(balance: number, apr: number, sched
     finiteNonNegative(balance) * (1 + calculateMonthlyRate(apr)));
 }
 
-export function calculateDailyInterest(balance: number, apr: number): number {
-  return finiteNonNegative(balance) * calculateDailyRate(apr);
+export function calculateDailyInterest(balance: number, apr: number, aprUnit: APRUnit = 'legacy'): number {
+  return finiteNonNegative(balance) * calculateDailyRate(apr, aprUnit);
 }
 
 export function calculateCashFlow(income: number, expenses: number): number {
@@ -752,7 +756,7 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
     const balance = Math.max(0, netBorrowing);
     const totalDailyBalance = dailyClosingBalances.reduce((total, dailyBalance) => total + dailyBalance, 0);
     const averageDailyBalance = totalDailyBalance / calendarDays;
-    const interest = totalDailyBalance * calculateDailyRate(inputs.apr);
+    const interest = totalDailyBalance * calculateDailyRate(inputs.apr, inputs.aprUnit);
 
     return {
       method: 'transaction-calendar',
@@ -779,7 +783,7 @@ export function calculateLOCInterestAccrual(inputs: LOCInterestAccrualInputs): L
   ));
   const totalDailyBalance = dailyClosingBalances.reduce((total, dailyBalance) => total + dailyBalance, 0);
   const averageDailyBalance = totalDailyBalance / daysInMonth;
-  const interest = totalDailyBalance * calculateDailyRate(inputs.apr);
+  const interest = totalDailyBalance * calculateDailyRate(inputs.apr, inputs.aprUnit);
   const endingNetBorrowing = balanceAfterDeposit + totalExpenses;
   const endingBalanceBeforeInterest = Math.max(0, endingNetBorrowing);
 
@@ -899,7 +903,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
     ? Math.ceil(effectiveChunkAmount / recoverySurplus)
     : 999;
 
-  const debtInterest = debtBalance * calculateMonthlyRate(debtApr);
+  const debtInterest = debtBalance * calculateMonthlyRate(debtApr, inputs.aprUnit);
 
   events.push({
     type: 'debt-interest',
@@ -944,6 +948,7 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
   });
 
   const locAccrual = calculateLOCInterestAccrual({
+    aprUnit: inputs.aprUnit,
     startBalance: locBalance,
     apr: loc.apr,
     monthlyIncome: locDepositAmount,

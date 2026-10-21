@@ -5,6 +5,7 @@ const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
 const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
+require('./portfolio-apr-unit-tests.cjs');
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
@@ -360,6 +361,24 @@ test('Portfolio paid-off comparisons do not describe valid zero months as unproj
   const summary = portfolioRunDiff.summarizePortfolioRun(input, portfolio.simulatePortfolio(input));
   const comparison = portfolioRunDiff.comparePortfolioRuns(undefined, summary);
   assert.equal(comparison.changes[0].value, 'Paid off');
+});
+
+test('Portfolio numeric overflow is a rejected projection with an explicit comparison reason', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 1,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 6, apr: 0, minPaymentRule: { type: 'fixed', amount: 1 } }],
+    loc: { limit: 0, balance: 0, apr: 0 } };
+  const normal = portfolio.simulatePortfolio(input);
+  assert.equal(normal.isPayoffPossible, true);
+  const overflowInput = { ...input, monthlyIncome: 1e308 };
+  const rejected = portfolio.simulatePortfolio(overflowInput);
+  assert.equal(rejected.isPayoffPossible, false);
+  assert.equal(rejected.failureReason, 'numeric-range-exceeded');
+  const comparison = portfolioRunDiff.comparePortfolioRuns(
+    portfolioRunDiff.summarizePortfolioRun(input, normal),
+    portfolioRunDiff.summarizePortfolioRun(overflowInput, rejected)
+  );
+  assert.match(comparison.changes.find(change => change.id === 'projection').body, /numeric range/i);
+  assert.ok(!comparison.changes.some(change => ['payoff-months', 'total-interest'].includes(change.id)));
 });
 
 test('Portfolio suppresses unsupported LOC interest claims and inactive draw controls', () => {
@@ -1188,8 +1207,8 @@ test('daily interest burn uses the shared financial-engine helper', () => {
     'expected cockpit/store daily interest to use the shared helper'
   );
   assert.ok(
-    portfolioSource.includes('calculateDailyInterest(balance, getEffectiveApr(debt))') &&
-      portfolioSource.includes('calculateDailyInterest(balance, aprUsedForBurn)'),
+    portfolioSource.includes("calculateDailyInterest(balance, getEffectiveApr(debt), 'decimal')") &&
+      portfolioSource.includes("calculateDailyInterest(balance, aprUsedForBurn, 'decimal')"),
     'expected portfolio priority burn math to use the shared helper'
   );
   assert.ok(

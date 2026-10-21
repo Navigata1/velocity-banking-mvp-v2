@@ -97,6 +97,7 @@ function failureReasonLabel(reason?: PortfolioFailureReason): string {
   if (reason === 'loc-setup') return 'LOC setup needed';
   if (reason === 'loc-no-capacity') return 'no LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'numeric-range-exceeded') return 'amounts exceed the numeric range';
   if (reason === 'payoff-horizon-exceeded') return 'projection horizon exceeded';
   return 'review the warnings';
 }

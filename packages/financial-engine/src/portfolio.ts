@@ -9,10 +9,13 @@
 
 import {
   simulateMoneyLoopMonth,
+  normalizeApr,
+  type APRUnit,
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
 } from './index';
 import { calculateDailyInterest, calculateMonthlyRate, formatCurrency } from './index';
+import { hasFiniteNonNegativeSum } from './numeric-range';
 
 export type DebtCategory =
   | 'mortgage'
@@ -36,6 +39,7 @@ export type PortfolioFailureReason =
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'numeric-range-exceeded'
   | 'payoff-horizon-exceeded';
 
 export type MinPaymentRule =
@@ -70,6 +74,7 @@ export interface PortfolioPlanSettings {
 }
 
 export interface PortfolioSimulationInputs {
+  aprUnit?: APRUnit;
   monthlyIncome: number;
   monthlyExpenses: number;
   extraMonthlyPayment: number;
@@ -149,6 +154,13 @@ function finitePositiveInteger(value: number, fallback: number): number {
   return Math.max(1, Math.trunc(value));
 }
 
+function finiteProjectionNumbers(value: unknown): boolean {
+  if (typeof value === 'number') return Number.isFinite(value);
+  return !value || typeof value !== 'object' || Object.values(value).every(finiteProjectionNumbers);
+}
+
+const NUMERIC_RANGE_WARNING = 'Projection stopped: amounts exceed the supported numeric range.';
+
 function getMinPaymentForBalance(debt: DebtItem, balance: number = debt.balance): number {
   if (debt.minPaymentRule.type === 'fixed') {
     return finiteNonNegative(debt.minPaymentRule.amount);
@@ -174,7 +186,7 @@ function getEffectiveApr(debt: DebtItem): number {
 }
 
 function estimateMonthlyInterest(balance: number, apr: number): number {
-  return finiteNonNegative(balance) * calculateMonthlyRate(apr);
+  return finiteNonNegative(balance) * calculateMonthlyRate(apr, 'decimal');
 }
 
 /**
@@ -185,7 +197,7 @@ function estimateMonthlyInterest(balance: number, apr: number): number {
  */
 function velocityScore(debt: DebtItem, balance: number): number {
   const unlock = getMinPaymentForBalance(debt, balance);
-  const burn = calculateDailyInterest(balance, getEffectiveApr(debt));
+  const burn = calculateDailyInterest(balance, getEffectiveApr(debt), 'decimal');
   const promoMonths = debt.promo?.monthsRemaining ?? null;
   const promoRisk =
     promoMonths === null ? 0 :
@@ -203,7 +215,7 @@ function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: P
     case 'snowball':
       return active.sort((a, b) => (balances.get(a.id) ?? 0) - (balances.get(b.id) ?? 0));
     case 'avalanche':
-      return active.sort((a, b) => calculateMonthlyRate(getEffectiveApr(b)) - calculateMonthlyRate(getEffectiveApr(a)));
+      return active.sort((a, b) => calculateMonthlyRate(getEffectiveApr(b), 'decimal') - calculateMonthlyRate(getEffectiveApr(a), 'decimal'));
     case 'velocity':
     default:
       return active.sort((a, b) => velocityScore(b, balances.get(b.id) ?? 0) - velocityScore(a, balances.get(a.id) ?? 0));
@@ -219,7 +231,7 @@ function rankAllocationTargets(debts: DebtItem[], balances: Map<string, number>,
     .map(debt => ({ debt, balance: balances.get(debt.id) ?? 0, apr: getEffectiveApr(debt) }));
   if (locBalance > 0.01) targets.push({ balance: locBalance, apr: locApr });
   if (settings.strategy === 'snowball') targets.sort((a, b) => a.balance - b.balance);
-  if (settings.strategy === 'avalanche') targets.sort((a, b) => calculateMonthlyRate(b.apr) - calculateMonthlyRate(a.apr));
+  if (settings.strategy === 'avalanche') targets.sort((a, b) => calculateMonthlyRate(b.apr, 'decimal') - calculateMonthlyRate(a.apr, 'decimal'));
   return targets;
 }
 
@@ -242,7 +254,7 @@ function allocateExtra(capacities: number[], budget: number, settings: Portfolio
 }
 
 function formatPercent(apr: number): string {
-  const normalizedApr = Number.isFinite(apr) ? (apr > 1 ? apr / 100 : apr) : 0;
+  const normalizedApr = Number.isFinite(apr) ? apr : 0;
   const percent = normalizedApr * 100;
   return `${percent.toFixed(percent >= 10 ? 1 : 2)}%`;
 }
@@ -263,7 +275,7 @@ function buildDebtRationales(
     const balance = balances.get(debt.id) ?? debt.balance;
     const monthlyPaymentUnlock = getMinPaymentForBalance(debt, balance);
     const aprUsedForBurn = debt.promo?.postIntroApr ?? finiteNonNegative(debt.apr);
-    const dailyInterestBurn = calculateDailyInterest(balance, aprUsedForBurn);
+    const dailyInterestBurn = calculateDailyInterest(balance, aprUsedForBurn, 'decimal');
     const rank = ranks.get(debt.id) ?? debts.length;
     const isCurrentTarget = targetIds.includes(debt.id);
     const strategyIntro =
@@ -326,7 +338,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   const debts = inputs.debts.map((debt) => ({
     ...debt,
     balance: finiteNonNegative(debt.balance),
-    apr: finiteNonNegative(debt.apr),
+    apr: finiteNonNegative(normalizeApr(debt.apr, inputs.aprUnit)),
     minPaymentRule: debt.minPaymentRule.type === 'fixed'
       ? { type: 'fixed' as const, amount: finiteNonNegative(debt.minPaymentRule.amount) }
       : {
@@ -337,16 +349,16 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     termMonths: debt.termMonths === undefined ? undefined : finitePositiveInteger(debt.termMonths, 0),
     promo: debt.promo
       ? {
-          introApr: finiteNonNegative(debt.promo.introApr),
+          introApr: finiteNonNegative(normalizeApr(debt.promo.introApr, inputs.aprUnit)),
           monthsRemaining: finitePositiveInteger(debt.promo.monthsRemaining, 0),
-          postIntroApr: finiteNonNegative(debt.promo.postIntroApr),
+          postIntroApr: finiteNonNegative(normalizeApr(debt.promo.postIntroApr, inputs.aprUnit)),
         }
       : undefined,
   }));
   const sanitizedLoc = inputs.loc
     ? {
         limit: finiteNonNegative(inputs.loc.limit),
-        apr: finiteNonNegative(inputs.loc.apr),
+        apr: finiteNonNegative(normalizeApr(inputs.loc.apr, inputs.aprUnit)),
         balance: finiteNonNegative(inputs.loc.balance),
       }
     : undefined;
@@ -406,7 +418,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   if (cashFlow <= 0) {
     warnings.push(`Cash flow is negative (${fmt(cashFlow)}/mo). Keep the Money Loop in review mode until income is higher than expenses.`);
   }
-  const initialRequired = totalMinimums + (hasUsableVelocityLoc ? 0 : calculateDailyInterest(sanitizedLoc?.balance ?? 0, sanitizedLoc?.apr ?? 0) * 30);
+  const initialRequired = totalMinimums + (hasUsableVelocityLoc ? 0 : calculateDailyInterest(sanitizedLoc?.balance ?? 0, sanitizedLoc?.apr ?? 0, 'decimal') * 30);
   if (cashFlow + 1e-8 < initialRequired) {
     warnings.push(`Cash flow (${fmt(cashFlow)}/mo) doesn't cover modeled obligations (${fmt(initialRequired)}/mo), including the clipped loan payments and direct LOC interest reserve.`);
   }
@@ -453,6 +465,15 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   const payoffOrder: DebtPayoffEvent[] = [];
   const monthResults: MonthResult[] = [];
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
+
+  if (!finiteProjectionNumbers([cashFlow, initialRequired, totalMinimums, debtRationales,
+    debts.map(debt => estimateMonthlyInterest(debt.balance, getEffectiveApr(debt))),
+    debts.reduce((sum, debt) => sum + debt.balance, sanitizedLoc?.balance ?? 0)])
+    || !hasFiniteNonNegativeSum([...debts.map(debt => debt.balance), sanitizedLoc?.balance ?? 0])) {
+    return { payoffMonths: 0, totalInterest: 0, isPayoffPossible: false,
+      failureReason: 'numeric-range-exceeded', payoffOrder, monthResults, debtRationales: {},
+      locInterestPaid: 0, moneyLoopMonthlyData, assumptions, warnings: [NUMERIC_RANGE_WARNING], cashAtPayoff: 0 };
+  }
 
   const clearedInputsValid = Number.isFinite(inputs.monthlyIncome) && Number.isFinite(inputs.monthlyExpenses)
     && inputs.debts.every(debt => Number.isFinite(debt.balance)) && Number.isFinite(inputs.loc?.balance ?? 0);
@@ -501,15 +522,19 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   );
   let month = 0;
   let allocationFailure: PortfolioFailureReason | undefined;
+  let acceptedInterest = 0;
+  let acceptedLocInterest = 0;
 
   while (month < maxMonths) {
     const allPaidOff = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
     if (allPaidOff && locBalance <= 0.01) break;
 
     month++;
+    const loopStart = moneyLoopMonthlyData.length;
+    const payoffStart = payoffOrder.length;
     let usedMoneyLoopThisMonth = false;
     const startingLocBalance = locBalance;
-    let monthLocInterest = hasUsableVelocityLoc ? 0 : calculateDailyInterest(locBalance, sanitizedLoc?.apr ?? 0) * 30;
+    let monthLocInterest = hasUsableVelocityLoc ? 0 : calculateDailyInterest(locBalance, sanitizedLoc?.apr ?? 0, 'decimal') * 30;
     let monthLocPayment = monthLocInterest;
     let monthLocDraw = 0;
 
@@ -572,6 +597,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
         const locCashFlowPaydown = Math.max(0, cashFlow - payment - otherActivePayments);
 
         const monthResult = simulateMoneyLoopMonth({
+          aprUnit: 'decimal',
           month,
           debtBalance: bal,
           debtApr: effectiveApr,
@@ -638,6 +664,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
 
     if (hasUsableVelocityLoc && sanitizedLoc && !usedMoneyLoopThisMonth) {
       const locRecoveryMonth = simulateMoneyLoopMonth({
+        aprUnit: 'decimal',
         month,
         debtBalance: 0,
         debtApr: 0,
@@ -670,7 +697,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       });
     }
     if (hasUsableVelocityLoc) {
-      monthLocPayment = startingLocBalance + monthLocDraw + monthLocInterest - locBalance;
+      monthLocPayment = Math.max(0, startingLocBalance + monthLocDraw + monthLocInterest - locBalance);
     } else {
       locBalance = Math.max(0, locBalance - locExtra);
       monthLocPayment += locExtra;
@@ -687,7 +714,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       }
     }
 
-    monthResults.push({
+    const completedMonth: MonthResult = {
       month,
       balances: monthBalances,
       interestCharges: monthInterest,
@@ -699,10 +726,28 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       locDraw: monthLocDraw,
       cashBalance: locCashBalance,
       locIsTarget: rankedTargets.slice(0, settings.focusMode === 'split' ? 2 : 1).some(target => !target.debt),
-    });
+    };
+    const cumulativeInterest = Array.from(totalInterestPaid.values()).reduce((sum, value) => sum + value, 0) + locInterestPaid;
+    // An overflowing partial month cannot become a chart row or a payoff claim.
+    if (!finiteProjectionNumbers([completedMonth, cumulativeInterest, locInterestPaid, moneyLoopMonthlyData.slice(loopStart),
+      Object.values(monthBalances).reduce((sum, value) => sum + value, locBalance),
+      Object.values(monthInterest).reduce((sum, value) => sum + value, monthLocInterest),
+      Object.values(monthPayments).reduce((sum, value) => sum + value, monthLocPayment)])
+      || ![ [...Object.values(monthBalances), locBalance], [...Object.values(monthInterest), monthLocInterest],
+        [...Object.values(monthPayments), monthLocPayment] ].every(hasFiniteNonNegativeSum)) {
+      allocationFailure = 'numeric-range-exceeded';
+      moneyLoopMonthlyData.splice(loopStart);
+      payoffOrder.splice(payoffStart);
+      warnings.push(NUMERIC_RANGE_WARNING);
+      month--;
+      break;
+    }
+    acceptedInterest = cumulativeInterest;
+    acceptedLocInterest = locInterestPaid;
+    monthResults.push(completedMonth);
   }
 
-  const totalInterest = Array.from(totalInterestPaid.values()).reduce((s, v) => s + v, 0) + locInterestPaid;
+  const totalInterest = acceptedInterest;
   const isPayoffPossible = !allocationFailure && debts.every(d => (balances.get(d.id) ?? 0) <= 0.01) && locBalance <= 0.01;
 
   return {
@@ -713,7 +758,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     payoffOrder,
     monthResults,
     debtRationales,
-    locInterestPaid,
+    locInterestPaid: acceptedLocInterest,
     moneyLoopMonthlyData,
     assumptions,
     warnings,

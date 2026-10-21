@@ -192,13 +192,21 @@ for (let index = 1; index <= 25; index += 1) {
   }
 }
 const portfolioPath = path.join(repoRoot, 'packages/financial-engine/src/portfolio.ts');
+const rangePath = path.join(repoRoot, 'packages/financial-engine/src/numeric-range.ts');
+const rangeModule = { exports: {} };
+new vm.Script(ts.transpileModule(fs.readFileSync(rangePath, 'utf8'), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+}).outputText, { filename: rangePath }).runInContext(vm.createContext({ module: rangeModule, exports: rangeModule.exports }));
 const portfolioModule = { exports: {} };
 const portfolioOutput = ts.transpileModule(fs.readFileSync(portfolioPath, 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
 }).outputText;
 new vm.Script(portfolioOutput, { filename: portfolioPath }).runInContext(vm.createContext({
   module: portfolioModule, exports: portfolioModule.exports,
-  require: specifier => { assert.equal(specifier, './index'); return engine; },
+  require: specifier => {
+    assert.ok(['./index', './numeric-range'].includes(specifier), `unexpected Portfolio dependency: ${specifier}`);
+    return specifier === './index' ? engine : rangeModule.exports;
+  },
 }));
 let portfolioCases = 0;
 for (let index = 1; index <= 40; index += 1) {
