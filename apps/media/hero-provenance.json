@@ -51,13 +51,20 @@
   },
   {
     "id": "medical",
-    "generated": "2026-10-20",
+    "generated": "2026-10-21",
     "tool": "OpenAI image_gen",
-    "source": "exec-f2604576-9027-410e-8f4e-9eb674801c16.png",
-    "sourceSha256": "5a6977f9194a9cd2c5860318bdb639b910927462a892ea4c2f9190f9f5211325",
-    "posterSha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2",
-    "bytes": 143410,
-    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+    "source": "exec-f539b88b-9084-4456-be6a-96426589c10c.png",
+    "sourceFile": "apps/media/sources/medical/poster.png",
+    "sourceSha256": "30dd8c59ba54ce8608863eaf9f8835c40296e829d1e97f635fb1f1d2b732e41f",
+    "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1",
+    "bytes": 130728,
+    "role": "Edited generated product-render reference and transparent static fallback; original emerald shield badge, not a reconstructed mesh.",
+    "revision": 2,
+    "previous": {
+      "source": "exec-f2604576-9027-410e-8f4e-9eb674801c16.png",
+      "sourceSha256": "5a6977f9194a9cd2c5860318bdb639b910927462a892ea4c2f9190f9f5211325",
+      "posterSha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2"
+    }
   },
   {
     "id": "personal",

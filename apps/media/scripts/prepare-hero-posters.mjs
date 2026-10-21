@@ -1,7 +1,9 @@
 import { createRequire } from 'node:module';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { prepareMedicalPoster } from './prepare-medical-poster.mjs';
+import { publishHeroPosters } from './hero-poster-publication.mjs';
 
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const sharp = require('sharp');
@@ -21,16 +23,20 @@ const files = {
 };
 const destination = new URL('../../web/public/heroes/', import.meta.url);
 await mkdir(destination, { recursive: true });
-const provenance = [];
+const prepared = [];
 for (const [id, filename] of Object.entries(files)) {
+  if(id === 'medical') {
+    prepared.push(await prepareMedicalPoster());
+    continue;
+  }
   const bytes = await readFile(path.join(source, filename));
   const output = await sharp(bytes).resize(1200, 1000, { fit: 'inside', withoutEnlargement: true })
     .webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer();
-  await writeFile(new URL(`${id}.webp`, destination), output);
-  provenance.push({ id, generated: '2026-10-20', tool: 'OpenAI image_gen', source: filename,
+  const record={ id, generated: '2026-10-20', tool: 'OpenAI image_gen', source: filename,
     sourceSha256: createHash('sha256').update(bytes).digest('hex'),
     posterSha256: createHash('sha256').update(output).digest('hex'), bytes: output.length,
-    role: 'Generated product-render reference and static fallback; not a reconstructed mesh.' });
+    role: 'Generated product-render reference and static fallback; not a reconstructed mesh.' };
+  prepared.push({output,record});
   console.log(`${id}: ${(output.length / 1024).toFixed(0)} KiB`);
 }
-await writeFile(new URL('../hero-provenance.json', import.meta.url), JSON.stringify(provenance, null, 2) + '\n');
+await publishHeroPosters(prepared);
