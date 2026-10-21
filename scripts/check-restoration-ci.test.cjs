@@ -103,6 +103,10 @@ test('workflow isolates graphics without changing the per-job cap or backend',()
   }
   const primary=workflow.jobs['web-mobile-quality'],hero=workflow.jobs['asset-hero-quality'];
   assert.ok(primary.steps.find(step=>step.name==='Upload Portfolio budget proof').with.path.split('\n').includes('apps/web/test-results/shared-portfolio-dashboard'));
+  const dashboardProof=primary.steps.find(step=>step.name==='Upload dashboard interest proof');
+  assert.equal(dashboardProof.if,'always()');
+  assert.deepEqual(dashboardProof.with.path.trim().split('\n'),[
+    'apps/web/test-results/dashboard-interest','apps/web/test-results/legacy-web-truth']);
   assert.equal(hero.needs,undefined);
   assert.ok(!primary.steps.some(step=>step.run==='npm run test:heroes'));
   assert.deepEqual(hero.steps.filter(step=>step.run).map(step=>[step['working-directory'],step.run]),[

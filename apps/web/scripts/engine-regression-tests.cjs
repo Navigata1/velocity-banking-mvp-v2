@@ -7582,10 +7582,12 @@ for (const overflow of [
 test('CI retains the rendered dashboard daily-interest gate and its failure artifacts', () => {
   const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'));
   const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
-  assert.equal(pkg.scripts['smoke:dashboard:built'], 'node scripts/smoke-dashboard-interest.cjs');
+  assert.equal(pkg.scripts['smoke:dashboard:built'], 'node scripts/smoke-dashboard-interest.cjs && node scripts/smoke-legacy-web-truth.cjs');
   assert.ok(workflow.includes('run: npm run smoke:dashboard:built'));
   assert.match(workflow, /name: Upload dashboard interest proof\s+if: always\(\)/);
-  assert.ok(workflow.includes('path: apps/web/test-results/dashboard-interest'));
+  const primary = require('js-yaml').load(workflow).jobs['web-mobile-quality'];
+  const proof = primary.steps.find(step => step.name === 'Upload dashboard interest proof');
+  assert.deepEqual(proof.with.path.trim().split(/\r?\n/), ['apps/web/test-results/dashboard-interest', 'apps/web/test-results/legacy-web-truth']);
 });
 
 test('dashboard model treats a missing LOC limit as setup needed instead of maxed out', () => {
