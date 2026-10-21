@@ -1,0 +1,77 @@
+{
+  "verifiedAt": "2026-10-21T00:50:08.106Z",
+  "baseline": "52ab3a6f1f4277c87e2a1ebbb3f6e06330c314e4",
+  "creditCard": {
+    "id": "creditCard",
+    "quality": "refined-textured",
+    "bytes": 516984,
+    "meshes": 11,
+    "triangles": 18008,
+    "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
+    "sourceSha256": "f31365f04526ada5b3381f89f9ce18f7dfe57b6422e7dcb2a66c394aa0373f4c",
+    "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
+    "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and procedural material sources",
+    "provenance": "Original authored silver/emerald cards with real engraved recesses, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "units": "normalized stage units",
+    "version": 2
+  },
+  "vendorSha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17",
+  "video": {
+    "id": "creditCard",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 3309415,
+    "sha256": "dc5ef1e58e53d73c0fcc365515ed2ab1c4f6c36b01c54ab7e461bfbe428a120f",
+    "motion": {
+      "changedCellCount": 27,
+      "maxCellDistance": 131.7397511884058,
+      "meanCellDistance": 21.680785066699602
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.02476490118577601,
+      "meanCellDistance": 0.0037701559617904223
+    }
+  },
+  "publicCollection": {
+    "bytes": 10415192,
+    "cap": 10485760,
+    "headroom": 70568
+  },
+  "otherNineModels": "records and binary hashes unchanged",
+  "report": {
+    "bytes": 95816,
+    "sha256": "fddc3f108c96cc84ea9edf2e1e8df214d5573458e1a4c2b0dbe0b4480b614046",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "runtimeBrowserVerification": "not claimed; previous local-file policy block not retried"
+  },
+  "logs": {
+    "build.log": "c4b3f54a654e3febed4a86a1dc2ac6ead83efab0e237f34f35fdafd21b2bb9fa",
+    "tests.log": "2e79d3c1a3a8beb860522ac7968d0aaed1c94e9e2b91ff652c024b4047ce6cb8",
+    "web-tests.log": "c2d601b308944334c4981995ce339f2a38f75e65798210d47b0bd139cea40105",
+    "web-build.log": "33a3cbfa03c91e3279f668549bd6e2b986704b7e20e5767da5eab29e3be6f015",
+    "web-lint.log": "f9a21ecb409cdea1f61b7e813acc2fe2b2231e6d75fde4df7ab8eb89fc078bd7",
+    "heroes.log": "b0eae0b70300003957dd413e13e964059117557dc51616ebdda1466a81f2e079",
+    "routes.log": "274dfe32df895f8c8e9480dd05f1df140d546858501e9d986a16a55183b22a40",
+    "media-check.log": "1fa0fee98cef3537ab3c4d9a66abf0f54fa7cd65be3d20a87ae7b4fb9744e653",
+    "regeneration.log": "563626fc50ce6c3cd9e96f68b4cf46347022f5e251f8b19e23e47a5f7efd521c",
+    "rebuild.log": "193cca5dd5333a0f7e795708a43843f63701b577d28066cd8b08c989c0cd6085",
+    "prepare.log": "3a6120f7cda1f1f312ad5fe4ed94fa53ad289d89d8f5f47235800ccceabef4b1",
+    "render.log": "2486339fa0617be56e64e4fafa1a818779a4a2babcc27146607c5d34c084eeea",
+    "turntables.log": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd",
+    "red.log": "fc8f3f3ae1ed885edf552a975dd2621585bb6d2ae8e637e1f8c418d230e27c61",
+    "build-size-red.log": "c0521cb77ba9bb25526caf575e438f8816ab7a927e97dcad2792722708ceaf33",
+    "caps-red.log": "2ff18f2f9841417c1e2cba6df199eba748fdcb8a95891984db388089629d257e",
+    "review-red.log": "9c301b3e721a962e5794f3492fc4b6a756e7dfa0a212d80fcd7a6ef12694a363",
+    "tangents-red.log": "b0f9b541b6d4d3fa6c77b9ec18426cfc4f66c79357c074791a0e3711d1fe4cca"
+  },
+  "frames": {
+    "front.png": "1b0a521917f268d01eb5208abd0eb55b924e17739333d35e9b3f5b170e3964bb",
+    "reverse.png": "e13c0976426823fd65238624e68dc2263e2e71b6c8cb0b4966bb018b9b8257b5"
+  },
+  "note": "Local preflight, not final exact-head CI or production approval. Rejected tangent experiment retained as diagnostic evidence only."
+}

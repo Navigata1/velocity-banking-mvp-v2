@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T00:08:00Z",
-    "sessionCount": 12
+    "updated": "2026-10-21T00:52:00Z",
+    "sessionCount": 13
   },
   "policies": {
     "merge": "review",
@@ -54,27 +54,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T00:08:00Z",
-          "notes": "340 regressions, all prior reference lanes, 480 Portfolio closed-form policies and 360 repeatable seeded paths (240 direct-oracle matches) pass. New display/overflow tests preserve raw values and scope; actual oversized Dashboard no-op edits are covered separately. Assets unchanged at 9.96 MiB. Local draft evidence, not production proof."
+          "evidence": "ops/mission/evidence/credit-card-refinement-2026-10-20/web-tests.log",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "340 regressions and all prior reference lanes pass unchanged. Credit Card is now a 516984-byte textured candidate with nine focused contracts; public assets total10415192bytes under the unchanged10MiB cap. No financial/scenario/runtime change. Local draft evidence, not production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/routes.log",
-          "lastRun": "2026-10-21T00:08:00Z",
-          "notes": "All seven built routes pass at1440px/390px. Dedicated Dashboard12 cases at1440px/375px cover precision, amount bounds, saved inputs and seven oversized currency no-op edits. Standing Portfolio24/Vault20/Simulator16 cases pass. Both final exact-head pipelines must repeat their gates. No release promotion."
+          "evidence": "ops/mission/evidence/credit-card-refinement-2026-10-20/routes.log",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "All seven built routes pass freshly at1440px/390px. Baseline52ab3a6 exact hosted proof retained Dashboard12/Portfolio24/Vault20/Simulator16 at1440px/375px. Both new final pipelines and hosted checks must repeat their gates. No release promotion."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6304488154",
-          "lastRun": "2026-10-21T00:08:00Z",
-          "notes": "232b503 passed complete push/PR CI39516617998/39516623494, real SQL, exact Vercel and hosted checks. This new Dashboard checkpoint needs its own exact-head full pipelines and hosted receipt. Previous green is not production approval; fold new postflight proof into the next substantive update."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6304878175",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "52ab3a6 passed complete push/PR CI39519532696/39519537664, real SQL, exact Vercel and hosted routes/Dashboard12/comparison60. This Credit Card checkpoint needs its own exact-head full pipelines and hosted receipt. Previous green is not production approval; fold new postflight proof into the next substantive update."
         }
       ]
     },
@@ -104,10 +104,10 @@
         {
           "id": "R1-T3",
           "title": "Refine the remaining six debt-domain models",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "Credit Card is a516984-byte,18008-triangle original silver/emerald card-and-coin candidate with six embedded maps. Nine decoded-geometry/provenance/fresh-budget cases and independent review pass. Identical/protected regeneration retained all ten records/bytes. Student Loan, Medical, Personal, Recreation and Custom remain studies; final all-ten art approval remains open. See docs/credit-card-refinement-contract-2026-10-20.md."
         },
         {
           "id": "R1-T4",
@@ -115,7 +115,7 @@
           "status": "done",
           "dependsOn": [],
           "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
-          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and all ten desktop/375px checks. Publication serializes imports/rebuilds with Windows sharing retries; Land rechecks aggregate bytes inside the lock. Collection art approval and six further textured models remain unfinished; every new head must re-pass hosted gates."
+          "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and all ten desktop/375px checks. Publication serializes imports/rebuilds with Windows sharing retries; Land/Credit Card recheck aggregate bytes inside the lock. Collection art approval and five further textured models remain unfinished; every new head must re-pass hosted gates."
         }
       ],
       "gates": [
@@ -124,27 +124,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/land-refinement-2026-10-20/contracts.log",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "56 contracts pass, including nine Land cases for source/PBR hashes, terrain/pond/path/stakes, tree contact, cut faces, winding/underside and locked budget rejection. Negative in-memory branch/face/guard mutations are rejected. Six House and prior Vault/publication cases retained. Six studies and all four candidates need collection art approval."
+          "evidence": "ops/mission/evidence/credit-card-refinement-2026-10-20/media-check.log",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "65 contracts pass, including nine Credit Card cases for source/PBR hashes, actual recesses, XYZ chip contact, two-sided coin grooves/96 reeds, compressed cap winding/UV/nonoverlap and fresh locked-budget dataflow. Deliberate in-memory corruptions rejected. Prior Land/House/Vault/publication cases retained. Five studies and all five candidates need final art approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/heroes.log",
-          "lastRun": "2026-10-21T00:08:00Z",
-          "notes": "All ten heroes pass fresh1440px/375px actual-geometry movement/framing checks, no pre-opt-in downloads, reduced motion and injected network/decode failures after Dashboard changes. Asset/camera/studio/timing bytes unchanged. Final hosted proof mandatory."
+          "evidence": "ops/mission/evidence/credit-card-refinement-2026-10-20/heroes.log",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "All ten heroes pass fresh1440px/375px actual-geometry movement/framing checks, no pre-opt-in downloads, reduced motion and injected network/decode failures with the final Credit Card. Nine other models and shared camera/studio/timing unchanged. Final hosted proof mandatory."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/land-refinement-2026-10-20/turntable-verification.json",
-          "lastRun": "2026-10-20T23:38:00Z",
-          "notes": "Land 1080p nine-second turn rebuilt and checked for nonblank movement/return/rest; model/vendor bytes match. Nine unchanged videos rechecked, not newly rebuilt. No shared camera/studio/timing or financial change; final collection art review remains open."
+          "evidence": "ops/mission/evidence/credit-card-refinement-2026-10-20/turntable-verification.json",
+          "lastRun": "2026-10-21T00:52:00Z",
+          "notes": "Credit Card1080p nine-second turn rebuilt and checked for nonblank movement/return/rest; model/vendor bytes match. Nine unchanged videos rechecked, not newly rebuilt. No shared camera/studio/timing or financial change; final collection art review remains open."
         }
       ]
     },
@@ -454,7 +454,7 @@
     {
       "label": "Textured refined model candidates",
       "baseline": "0",
-      "current": "4",
+      "current": "5",
       "target": "10",
       "direction": "up"
     },
@@ -482,9 +482,9 @@
   ],
   "risks": [
     {
-      "title": "Six models remain studies; candidates need art review",
+      "title": "Five models remain studies; candidates need art review",
       "severity": "high",
-      "note": "Auto, original Vault, House and Land have textured candidate geometry, not final photorealism approval. Six heroes need refinement. Public collection is 10447116 bytes, only 38644 bytes below the unchanged 10 MiB cap; future refinements must recover space. Public GPU quota is limited and Hugging Face is not connected."
+      "note": "Auto, original Vault, House, Land and Credit Card have textured candidate geometry, not final photorealism approval. Five heroes need refinement. Public collection is10415192bytes,70568bytes below the unchanged10MiB cap; future refinements must recover space. Public GPU quota is limited and Hugging Face is not connected."
     },
     {
       "title": "Financial coherence gates remain open",
@@ -494,7 +494,7 @@
     {
       "title": "Exact-SHA CI must be re-proven",
       "severity": "high",
-      "note": "232b503 passed both complete CI runs, SQL, Vercel and hosted proof. The current Dashboard checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
+      "note": "52ab3a6 passed both complete CI runs, SQL, Vercel and hosted proof. The current Credit Card checkpoint needs fresh exact-head proof. No prior receipt authorizes production."
     },
     {
       "title": "Media toolchain advisories remain open",
@@ -797,13 +797,13 @@
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Push the reviewed Dashboard estimate/editor checkpoint, then require both final exact-head full CI runs, SQL, exact Vercel and hosted routes/Dashboard12/comparison60 proof.232b503 passed; receipt PR256 issuecomment-6304488154. Append postflight proof to PR256 and fold into the next substantive update, avoiding report-only push loops. This report is preflight, not production approval.",
+      "Push the reviewed Credit Card checkpoint, then require both final exact-head full CI runs, SQL, exact Vercel and hosted routes/Dashboard12/comparison60/served-model proof.52ab3a6 passed; receipt PR256 issuecomment-6304878175. Append postflight proof to PR256 and fold into the next substantive update, avoiding report-only push loops. This report is preflight, not production approval.",
       "Dashboard display rounding and imported currency no-op loss are corrected with explicit estimates/independent-rounding disclosure and existing per-field preservation bounds. Read docs/dashboard-display-contract-2026-10-20.md and retain the standing browser gate. Do not round the engine or present this as complete lender/posting/rounding or cross-route coherence.",
-      "Next refine Credit Card or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land are candidates, six studies remain. Public assets have only38644bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/land-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
+      "Next refine Student Loan or another remaining study with provenance and all-model web/video proof. Auto/Vault/House/Land/Credit Card are candidates, five studies remain. Public assets have70568bytes headroom: recover bytes through measured optimization, not a larger cap. Read docs/credit-card-refinement-contract-2026-10-20.md. No paid GPU or broad layout redesign.",
       "Remaining R2 work: dashboard helper scope, native aggregate Portfolio adoption, safe shared scenario ownership and common-date cash/wealth. Read docs/portfolio-funding-contract-2026-10-20.md; preserve saved caps as funded allocations, not added income, and retain separate explicit policies. Add failing reproductions first.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address any exact-SHA CI failure without weakening gates. The stale native demo fixtures and software GPU locator screenshot issues have local regression proof; retain the 20-minute CI job cap.",
-      "Continue six remaining domain refinements and final art review of all ten. Vault, Auto, House and Land are textured candidates, not final collection approval. Preserve publication locking, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
+      "Continue five remaining domain refinements and final art review of all ten. Vault, Auto, House, Land and Credit Card are textured candidates, not final collection approval. Preserve publication locking, original identity, real geometry and per-model/aggregate shipping caps. Re-run all-model web/video gates after shared lighting edits.",
       "When external art generation is blocked, advance R2/R3 with failing reproductions and no destructive scenario migration.",
       "Resolve the 13 media-toolchain advisories through a focused pinned upgrade with full HyperFrames/Remotion and hero export regression proof.",
       "Finish supported remediation/exposure review for the 40 noncritical mobile findings and 12 web development-toolchain findings. The shell-quote critical issue is patched and exports pass; keep all final-device gates open.",
