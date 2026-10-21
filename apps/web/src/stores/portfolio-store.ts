@@ -13,8 +13,16 @@ import type {
 import { simulatePortfolio } from '@/engine/portfolio';
 import type { PortfolioRunComparison, PortfolioRunSummary } from '@/engine/portfolio-run-diff';
 import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-run-diff';
+import { decodePortfolioBook, decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { createPortfolioPersistence, LEGACY_PORTFOLIO_KEY } from './portfolio-persistence';
 
 export type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
+
+function browserPortfolioStorage() {
+  try { return typeof window === 'undefined' ? null : window.localStorage; }
+  catch { return null; }
+}
+export const portfolioPersistence = createPortfolioPersistence(browserPortfolioStorage());
 
 export interface PortfolioLOC {
   limit: number;
@@ -297,6 +305,12 @@ type PersistedPortfolioFields = Pick<
   | 'splitRatioPrimary'
 >;
 
+function portfolioBookFromState(state: PersistedPortfolioFields): PortfolioBook {
+  return decodePortfolioBook({ monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
+    extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount, loc: state.loc,
+    strategy: state.strategy, focusMode: state.focusMode, splitRatioPrimary: state.splitRatioPrimary, debts: state.debts });
+}
+
 export function sanitizePersistedPortfolioState(
   persistedState: unknown,
   currentState: PortfolioState
@@ -428,58 +442,23 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
 
       exportState: () => {
-        const state = get();
-        return JSON.stringify({
-          version: 1,
-          exportedAt: new Date().toISOString(),
-          data: {
-            monthlyIncome: state.monthlyIncome,
-            monthlyExpenses: state.monthlyExpenses,
-            extraMonthlyPayment: state.extraMonthlyPayment,
-            chunkAmount: state.chunkAmount,
-            loc: state.loc,
-            strategy: state.strategy,
-            focusMode: state.focusMode,
-            splitRatioPrimary: state.splitRatioPrimary,
-            debts: state.debts,
-          },
-        }, null, 2);
+        return encodePortfolioDocument(portfolioBookFromState(get()));
       },
 
       importState: (jsonStr) => {
         try {
-          const parsed = JSON.parse(jsonStr);
-          const data = parsed?.data ?? parsed;
-          if (!data) return { ok: false as const, error: 'Invalid file format.' };
-          const debts = Array.isArray(data.debts) ? data.debts : null;
-          if (!debts) return { ok: false as const, error: 'No debts found in file.' };
-          const importedDebts = debts.map(sanitizeImportedDebt);
-          const monthlyIncome = nonNegativeNumber(data.monthlyIncome, 0, 'Monthly income');
-          const monthlyExpenses = nonNegativeNumber(data.monthlyExpenses, 0, 'Monthly expenses');
-          const extraMonthlyPayment = nonNegativeNumber(data.extraMonthlyPayment, 0, 'Extra monthly payment');
-          const chunkAmount = nonNegativeNumber(data.chunkAmount, 1000, 'Velocity chunk');
-          const loc = {
-            limit: nonNegativeNumber(data.loc?.limit, 25000, 'LOC limit'),
-            balance: nonNegativeNumber(data.loc?.balance, 3200, 'LOC balance'),
-            apr: nonNegativeNumber(data.loc?.apr ?? data.loc?.interestRate, 0.085, 'LOC APR'),
-          };
-          const splitRatioPrimary = Math.min(1, Math.max(0, finiteNumber(data.splitRatioPrimary, 0.7, 'Split ratio')));
-
-          set({
-            monthlyIncome,
-            monthlyExpenses,
-            extraMonthlyPayment,
-            chunkAmount,
-            loc,
-            strategy: selectKnownValue(data.strategy, ['velocity', 'snowball', 'avalanche'], 'velocity') as PayoffStrategy,
-            focusMode: selectKnownValue(data.focusMode, ['single', 'split'], 'single') as FocusMode,
-            splitRatioPrimary,
-            debts: importedDebts,
-          });
+          const book = decodePortfolioDocument(jsonStr);
+          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error('Portfolio storage needs review before replacement.');
+          if (encodePortfolioDocument(book) === encodePortfolioDocument(portfolioBookFromState(get()))) return { ok: true as const };
+          portfolioPersistence.setItem(LEGACY_PORTFOLIO_KEY, { state: book, version: 2 });
+          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
+          set({ ...book, lastResult: undefined, lastRunSummary: undefined, lastRunComparison: undefined });
           get().recompute();
+          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
           return { ok: true as const };
         } catch (e: unknown) {
-          return { ok: false as const, error: e instanceof Error ? e.message : 'Failed to parse JSON.' };
+          return { ok: false as const, error: e && typeof e === 'object' && 'message' in e && typeof e.message === 'string'
+            ? e.message : 'Failed to parse JSON.' };
         }
       },
 
@@ -491,6 +470,7 @@ export const usePortfolioStore = create<PortfolioState>()(
           splitRatioPrimary: state.splitRatioPrimary,
         };
         const inputs: PortfolioSimulationInputs = {
+          aprUnit: 'decimal',
           monthlyIncome: state.monthlyIncome,
           monthlyExpenses: state.monthlyExpenses,
           extraMonthlyPayment: state.extraMonthlyPayment,
@@ -512,8 +492,13 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
     }),
     {
-      name: 'interestshield-portfolio-v1',
-      version: 1,
+      name: LEGACY_PORTFOLIO_KEY,
+      version: 2,
+      storage: {
+        getItem: portfolioPersistence.getItem,
+        setItem: (key, value) => portfolioPersistence.setItem(key, { state: value.state, version: value.version ?? 0 }),
+        removeItem: portfolioPersistence.removeItem,
+      },
       partialize: (state) => ({
         debts: state.debts,
         monthlyIncome: state.monthlyIncome,
@@ -527,7 +512,7 @@ export const usePortfolioStore = create<PortfolioState>()(
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,
-        ...sanitizePersistedPortfolioState(persistedState, currentState),
+        ...(persistedState == null ? {} : decodePortfolioBook(persistedState)),
       }),
     }
   )
