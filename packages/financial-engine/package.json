@@ -30,6 +30,11 @@
       "types": "./src/portfolio-book.ts",
       "react-native": "./src/portfolio-book.ts",
       "default": "./src/portfolio-book.ts"
+    },
+    "./portfolio-common-month": {
+      "types": "./src/portfolio-common-month.ts",
+      "react-native": "./src/portfolio-common-month.ts",
+      "default": "./src/portfolio-common-month.ts"
     }
   },
   "sideEffects": false
