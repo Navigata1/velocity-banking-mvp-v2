@@ -1,0 +1,852 @@
+Command: node .superpowers/sdd/2026-10-21-recreation/review-pipeline-probes.mjs
+Exit: 0
+PASS current pins, manifests, shared source identities and exact retained bytes {}
+PASS actual retained-source guard rejects one-bit corruption of either source without filesystem edits {}
+prune: Removed types... Accessor (13)
+prune: Removed types... Accessor (189)
+prune: Removed types... Accessor (93)
+PASS old exact-hash candidate reconstructed CPU/in-memory with saver intercepted and writer functions forbidden {"sourceSha256":"59b21beb85fa14bb504caf04650fa25526512e2da291faa82525d2950c53e0c4","modelSha256":"84e463c9f477aa7c1dae9be705198d3df198327f9dd98b5af5abba60e8483176","bytes":501456}
+prune: Removed types... Accessor (13)
+prune: Removed types... Accessor (189)
+prune: Removed types... Accessor (93)
+prune: Removed types... Accessor (13)
+prune: Removed types... Accessor (189)
+prune: Removed types... Accessor (93)
+PASS current exact recipe reproduces actual GLB and manifest record entirely in memory; publication callback not executed {}
+PASS current roof-clear candidate keeps all 12 maps and material factors identical to exact in-memory 6aab candidate {}
+PASS material-only delta verified against exact old 501456-byte candidate {"geometryAndNodeDigest":"836aeba002de9e0a460663f2916d49f0dce0a401e9ea7889743a8d8fad4dc589","changedTextures":["R-Timber-Color"],"changedFactors":["R-Glass","R-Timber"]}
+PASS actual rendered material slots, linear-sRGB factors, alpha, no emission, repeat UV transforms and installed loader color/data roles {}
+PASS actual 16-bit normalized position/UV accessors and unchanged unique/rendered caps {"unique":19296,"rendered":25112,"meshes":47,"precision":{"POSITION:5122":48,"TEXCOORD_0:5123":45}}
+MAP {"name":"R-Canvas-Color","sha256":"9f369951ddbada8a49b38b502cc0dacd95c2b623257eb2f25317279cdab807b9","bytes":39370,"size":512,"channels":3,"chunks":["VP8 "],"ranges":[[193,248],[193,248],[193,248]],"maxCodecError":[13,13,13],"distinctPixels":48,"mean":[224.01330184936523,224.01330184936523,224.01330184936523]}
+MAP {"name":"R-Canvas-Normal","sha256":"e106fca6ca17f954dc22d64bdfb4d523355024863a636f7f17965e16b1b4f66a","bytes":102836,"size":256,"channels":3,"chunks":["VP8L"],"ranges":[[94,166],[91,165],[247,255]],"maxCodecError":[0,0,0],"distinctPixels":2976,"mean":[127.51083374023438,127.55714416503906,253.8817901611328],"normalLength":[0.9952057316400059,1.0045570905114778]}
+MAP {"name":"R-Canvas-Roughness","sha256":"752ef58b4ca44e43f6543b22634b79d0a688b59a605262046ad40f93e7b65b0b","bytes":3500,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[247,255],[206,220],[0,6]],"maxCodecError":[8,10,6],"distinctPixels":110,"mean":[254.19927978515625,213.877685546875,0.5772247314453125]}
+MAP {"name":"R-Timber-Color","sha256":"8ccd9063584c394c4c3a4fd955c632b079690065d28d688eb090d1a70920da54","bytes":27130,"size":512,"channels":3,"chunks":["VP8 "],"ranges":[[146,212],[146,212],[146,212]],"maxCodecError":[12,12,12],"distinctPixels":57,"mean":[177.83850860595703,177.81918334960938,177.83850860595703]}
+MAP {"name":"R-Timber-Normal","sha256":"8f93acb985a90eae47654cd4469ac818043924f460bab0fad1df080b88f94048","bytes":52464,"size":256,"channels":3,"chunks":["VP8L"],"ranges":[[118,136],[110,143],[254,255]],"maxCodecError":[0,0,0],"distinctPixels":365,"mean":[127.537841796875,127.51106262207031,254.9941864013672],"normalLength":[0.996194218992007,1.0037607101520292]}
+MAP {"name":"R-Timber-Roughness","sha256":"d84c38c7a75b61e47dc32e4988ee5eba0e0881d4afa968a6c13147690680a644","bytes":560,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[252,255],[144,151],[0,2]],"maxCodecError":[3,5,2],"distinctPixels":16,"mean":[254.80979919433594,147.99404907226562,0.046600341796875]}
+MAP {"name":"R-Paint-Color","sha256":"9ce1230a197d5bd8fd4d3112bf809fefb4d96d856ed6ea5963ac7fe33042a02f","bytes":786,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[220,231],[220,231],[220,231]],"maxCodecError":[4,4,4],"distinctPixels":10,"mean":[224.5849609375,224.5849609375,224.5849609375]}
+MAP {"name":"R-Paint-Normal","sha256":"d2f7b88dd992a21469fd3e98aabe640ad9f5a9b776c69dbc95158e0a6557b483","bytes":3134,"size":256,"channels":3,"chunks":["VP8L"],"ranges":[[124,131],[122,132],[255,255]],"maxCodecError":[0,0,0],"distinctPixels":77,"mean":[127.50045776367188,127.49264526367188,255],"normalLength":[1.0000153785822494,1.0011220156768963]}
+MAP {"name":"R-Paint-Roughness","sha256":"1d09af47260af683aaa1d3f2bd71939053e6484ba46d6c13b0061dd82d85bfad","bytes":1076,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[253,255],[64,70],[0,3]],"maxCodecError":[2,2,3],"distinctPixels":19,"mean":[254.63880920410156,66.33316040039062,0.106231689453125]}
+MAP {"name":"R-Steel-Color","sha256":"baa2eceac59595711a32f32ba40cb1e2a48aedc0cdf702693f377a24c51d53d9","bytes":876,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[218,229],[218,229],[218,229]],"maxCodecError":[6,6,6],"distinctPixels":11,"mean":[224.61093139648438,224.61093139648438,224.61093139648438]}
+MAP {"name":"R-Steel-Normal","sha256":"2d8d9cb0764416454d0bad0a66b9376f180a9b21f43ead862542349af1443dc6","bytes":3490,"size":256,"channels":3,"chunks":["VP8L"],"ranges":[[124,131],[117,138],[255,255]],"maxCodecError":[0,0,0],"distinctPixels":160,"mean":[127.50041198730469,127.50099182128906,255],"normalLength":[1.0000153785822494,1.0037607101520292]}
+MAP {"name":"R-Steel-Roughness","sha256":"8ba38844ef6a86e7411028d94f5977d8a65ac6353dd5d3e1d04ad909a1882bdc","bytes":748,"size":256,"channels":3,"chunks":["VP8 "],"ranges":[[252,255],[67,71],[252,255]],"maxCodecError":[3,3,3],"distinctPixels":13,"mean":[254.32369995117188,68.68951416015625,254.024169921875]}
+PASS all 12 shipped maps equal actual current recipe; independently reconstructed scalar fields and zero lossless normal codec error {}
+PASS actual preflight model/unique/rendered/public caps; locked callback fresh totals, replacement arithmetic, exact boundary, all callback exceptions and stale/removed-guard mutations {}
+LOCK {"throws":false,"events":["lock","read","read","callback","manifest-write","manifest-rename","manifest-write","manifest-rename","close","unlock"]}
+LOCK {"throws":true,"events":["lock","read","read","callback","close","unlock"]}
+PASS unchanged real saveRefinedHero helper acquires lock before callback; callback abort preserves both manifests and releases lock {}
+PASS correct ten distinct IDs: other nine GLBs, all ten posters, manifest records, pipeline APIs/dependencies and retained originals match baseline {}
+PASS actual legacy build function protected-skip branches execute with in-memory IO; no protected constructors or model writes {"protectedCount":9}
+PASS live recursive public budget, no symlink ambiguity and unchanged caps {"publicBytes":9931410,"publicCap":10485760,"publicHeadroom":554350,"modelBytes":521060,"modelCap":524288,"modelHeadroom":3228}
+REPORT {
+  "baseline": "a162c10c4ad9590ffcd12dbbffe189d6371d5e52",
+  "node": "v22.22.2",
+  "pins": {
+    "apps/web/public/heroes/recreation.glb": {
+      "sha256": "d21f57de6792d5af53d575e2c6d2c9aa27bd8d1b944a00544a9cb3229fa97a0d",
+      "bytes": 521060
+    },
+    "apps/media/scripts/build-refined-recreation.mjs": {
+      "sha256": "7f9d61b7c2a490450857fcf6562ae51d5ee966e427c9489d888fca72204c82b0",
+      "bytes": 20252
+    },
+    "apps/media/scripts/recreation-refinement.test.mjs": {
+      "sha256": "34e4fe99b5d9f612e5a7f53c1798e1f16150b9a2d8c85cfb55062142fce900d8",
+      "bytes": 34461
+    },
+    "apps/media/sources/recreation/materials.json": {
+      "sha256": "6b5776151c1b052c82e4a408b81be0e72a3047ec1392b0492a3b9f38a0bcac04",
+      "bytes": 1653
+    }
+  },
+  "checks": [
+    {
+      "name": "current pins, manifests, shared source identities and exact retained bytes"
+    },
+    {
+      "name": "actual retained-source guard rejects one-bit corruption of either source without filesystem edits"
+    },
+    {
+      "name": "old exact-hash candidate reconstructed CPU/in-memory with saver intercepted and writer functions forbidden",
+      "sourceSha256": "59b21beb85fa14bb504caf04650fa25526512e2da291faa82525d2950c53e0c4",
+      "modelSha256": "84e463c9f477aa7c1dae9be705198d3df198327f9dd98b5af5abba60e8483176",
+      "bytes": 501456
+    },
+    {
+      "name": "current exact recipe reproduces actual GLB and manifest record entirely in memory; publication callback not executed"
+    },
+    {
+      "name": "current roof-clear candidate keeps all 12 maps and material factors identical to exact in-memory 6aab candidate"
+    },
+    {
+      "name": "material-only delta verified against exact old 501456-byte candidate",
+      "geometryAndNodeDigest": "836aeba002de9e0a460663f2916d49f0dce0a401e9ea7889743a8d8fad4dc589",
+      "changedTextures": [
+        "R-Timber-Color"
+      ],
+      "changedFactors": [
+        "R-Glass",
+        "R-Timber"
+      ]
+    },
+    {
+      "name": "actual rendered material slots, linear-sRGB factors, alpha, no emission, repeat UV transforms and installed loader color/data roles"
+    },
+    {
+      "name": "actual 16-bit normalized position/UV accessors and unchanged unique/rendered caps",
+      "unique": 19296,
+      "rendered": 25112,
+      "meshes": 47,
+      "precision": {
+        "POSITION:5122": 48,
+        "TEXCOORD_0:5123": 45
+      }
+    },
+    {
+      "name": "all 12 shipped maps equal actual current recipe; independently reconstructed scalar fields and zero lossless normal codec error"
+    },
+    {
+      "name": "actual preflight model/unique/rendered/public caps; locked callback fresh totals, replacement arithmetic, exact boundary, all callback exceptions and stale/removed-guard mutations"
+    },
+    {
+      "name": "real helper with mocked IO success",
+      "events": [
+        "lock",
+        "read",
+        "read",
+        "callback",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-write",
+        "manifest-rename",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "real helper with mocked IO callback abort",
+      "events": [
+        "lock",
+        "read",
+        "read",
+        "callback",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "unchanged real saveRefinedHero helper acquires lock before callback; callback abort preserves both manifests and releases lock"
+    },
+    {
+      "name": "correct ten distinct IDs: other nine GLBs, all ten posters, manifest records, pipeline APIs/dependencies and retained originals match baseline"
+    },
+    {
+      "name": "actual legacy build function protected-skip branches execute with in-memory IO; no protected constructors or model writes",
+      "protectedCount": 9
+    },
+    {
+      "name": "live recursive public budget, no symlink ambiguity and unchanged caps",
+      "publicBytes": 9931410,
+      "publicCap": 10485760,
+      "publicHeadroom": 554350,
+      "modelBytes": 521060,
+      "modelCap": 524288,
+      "modelHeadroom": 3228
+    }
+  ],
+  "maps": [
+    {
+      "name": "R-Canvas-Color",
+      "sha256": "9f369951ddbada8a49b38b502cc0dacd95c2b623257eb2f25317279cdab807b9",
+      "bytes": 39370,
+      "size": 512,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          193,
+          248
+        ],
+        [
+          193,
+          248
+        ],
+        [
+          193,
+          248
+        ]
+      ],
+      "maxCodecError": [
+        13,
+        13,
+        13
+      ],
+      "distinctPixels": 48,
+      "mean": [
+        224.01330184936523,
+        224.01330184936523,
+        224.01330184936523
+      ]
+    },
+    {
+      "name": "R-Canvas-Normal",
+      "sha256": "e106fca6ca17f954dc22d64bdfb4d523355024863a636f7f17965e16b1b4f66a",
+      "bytes": 102836,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8L"
+      ],
+      "ranges": [
+        [
+          94,
+          166
+        ],
+        [
+          91,
+          165
+        ],
+        [
+          247,
+          255
+        ]
+      ],
+      "maxCodecError": [
+        0,
+        0,
+        0
+      ],
+      "distinctPixels": 2976,
+      "mean": [
+        127.51083374023438,
+        127.55714416503906,
+        253.8817901611328
+      ],
+      "normalLength": [
+        0.9952057316400059,
+        1.0045570905114778
+      ]
+    },
+    {
+      "name": "R-Canvas-Roughness",
+      "sha256": "752ef58b4ca44e43f6543b22634b79d0a688b59a605262046ad40f93e7b65b0b",
+      "bytes": 3500,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          247,
+          255
+        ],
+        [
+          206,
+          220
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "maxCodecError": [
+        8,
+        10,
+        6
+      ],
+      "distinctPixels": 110,
+      "mean": [
+        254.19927978515625,
+        213.877685546875,
+        0.5772247314453125
+      ]
+    },
+    {
+      "name": "R-Timber-Color",
+      "sha256": "8ccd9063584c394c4c3a4fd955c632b079690065d28d688eb090d1a70920da54",
+      "bytes": 27130,
+      "size": 512,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          146,
+          212
+        ],
+        [
+          146,
+          212
+        ],
+        [
+          146,
+          212
+        ]
+      ],
+      "maxCodecError": [
+        12,
+        12,
+        12
+      ],
+      "distinctPixels": 57,
+      "mean": [
+        177.83850860595703,
+        177.81918334960938,
+        177.83850860595703
+      ]
+    },
+    {
+      "name": "R-Timber-Normal",
+      "sha256": "8f93acb985a90eae47654cd4469ac818043924f460bab0fad1df080b88f94048",
+      "bytes": 52464,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8L"
+      ],
+      "ranges": [
+        [
+          118,
+          136
+        ],
+        [
+          110,
+          143
+        ],
+        [
+          254,
+          255
+        ]
+      ],
+      "maxCodecError": [
+        0,
+        0,
+        0
+      ],
+      "distinctPixels": 365,
+      "mean": [
+        127.537841796875,
+        127.51106262207031,
+        254.9941864013672
+      ],
+      "normalLength": [
+        0.996194218992007,
+        1.0037607101520292
+      ]
+    },
+    {
+      "name": "R-Timber-Roughness",
+      "sha256": "d84c38c7a75b61e47dc32e4988ee5eba0e0881d4afa968a6c13147690680a644",
+      "bytes": 560,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          252,
+          255
+        ],
+        [
+          144,
+          151
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "maxCodecError": [
+        3,
+        5,
+        2
+      ],
+      "distinctPixels": 16,
+      "mean": [
+        254.80979919433594,
+        147.99404907226562,
+        0.046600341796875
+      ]
+    },
+    {
+      "name": "R-Paint-Color",
+      "sha256": "9ce1230a197d5bd8fd4d3112bf809fefb4d96d856ed6ea5963ac7fe33042a02f",
+      "bytes": 786,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          220,
+          231
+        ],
+        [
+          220,
+          231
+        ],
+        [
+          220,
+          231
+        ]
+      ],
+      "maxCodecError": [
+        4,
+        4,
+        4
+      ],
+      "distinctPixels": 10,
+      "mean": [
+        224.5849609375,
+        224.5849609375,
+        224.5849609375
+      ]
+    },
+    {
+      "name": "R-Paint-Normal",
+      "sha256": "d2f7b88dd992a21469fd3e98aabe640ad9f5a9b776c69dbc95158e0a6557b483",
+      "bytes": 3134,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8L"
+      ],
+      "ranges": [
+        [
+          124,
+          131
+        ],
+        [
+          122,
+          132
+        ],
+        [
+          255,
+          255
+        ]
+      ],
+      "maxCodecError": [
+        0,
+        0,
+        0
+      ],
+      "distinctPixels": 77,
+      "mean": [
+        127.50045776367188,
+        127.49264526367188,
+        255
+      ],
+      "normalLength": [
+        1.0000153785822494,
+        1.0011220156768963
+      ]
+    },
+    {
+      "name": "R-Paint-Roughness",
+      "sha256": "1d09af47260af683aaa1d3f2bd71939053e6484ba46d6c13b0061dd82d85bfad",
+      "bytes": 1076,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          253,
+          255
+        ],
+        [
+          64,
+          70
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "maxCodecError": [
+        2,
+        2,
+        3
+      ],
+      "distinctPixels": 19,
+      "mean": [
+        254.63880920410156,
+        66.33316040039062,
+        0.106231689453125
+      ]
+    },
+    {
+      "name": "R-Steel-Color",
+      "sha256": "baa2eceac59595711a32f32ba40cb1e2a48aedc0cdf702693f377a24c51d53d9",
+      "bytes": 876,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          218,
+          229
+        ],
+        [
+          218,
+          229
+        ],
+        [
+          218,
+          229
+        ]
+      ],
+      "maxCodecError": [
+        6,
+        6,
+        6
+      ],
+      "distinctPixels": 11,
+      "mean": [
+        224.61093139648438,
+        224.61093139648438,
+        224.61093139648438
+      ]
+    },
+    {
+      "name": "R-Steel-Normal",
+      "sha256": "2d8d9cb0764416454d0bad0a66b9376f180a9b21f43ead862542349af1443dc6",
+      "bytes": 3490,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8L"
+      ],
+      "ranges": [
+        [
+          124,
+          131
+        ],
+        [
+          117,
+          138
+        ],
+        [
+          255,
+          255
+        ]
+      ],
+      "maxCodecError": [
+        0,
+        0,
+        0
+      ],
+      "distinctPixels": 160,
+      "mean": [
+        127.50041198730469,
+        127.50099182128906,
+        255
+      ],
+      "normalLength": [
+        1.0000153785822494,
+        1.0037607101520292
+      ]
+    },
+    {
+      "name": "R-Steel-Roughness",
+      "sha256": "8ba38844ef6a86e7411028d94f5977d8a65ac6353dd5d3e1d04ad909a1882bdc",
+      "bytes": 748,
+      "size": 256,
+      "channels": 3,
+      "chunks": [
+        "VP8 "
+      ],
+      "ranges": [
+        [
+          252,
+          255
+        ],
+        [
+          67,
+          71
+        ],
+        [
+          252,
+          255
+        ]
+      ],
+      "maxCodecError": [
+        3,
+        3,
+        3
+      ],
+      "distinctPixels": 13,
+      "mean": [
+        254.32369995117188,
+        68.68951416015625,
+        254.024169921875
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "R-Paint-White",
+      "baseColor": [
+        0.8387990117372213,
+        0.8387990117372213,
+        0.7991027380100881,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.06,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Paint-Teal",
+      "baseColor": [
+        0.008568125615105716,
+        0.07227185067438519,
+        0.08021982030622662,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.06,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Timber",
+      "baseColor": [
+        0.3277780980458375,
+        0.12477181755144427,
+        0.03820437158923601,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.18,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Glass",
+      "baseColor": [
+        0.030713443727452196,
+        0.06847816983662762,
+        0.08021982030622662,
+        0.62
+      ],
+      "roughness": 0.14,
+      "metalness": 0,
+      "normalScale": 1,
+      "alphaMode": "BLEND"
+    },
+    {
+      "name": "R-Steel",
+      "baseColor": [
+        0.5775804404214573,
+        0.6104955708001716,
+        0.6307571363387763,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 1,
+      "normalScale": 0.1,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Canvas",
+      "baseColor": [
+        0.7912979403281553,
+        0.775822218312646,
+        0.6938717612856897,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.2,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Canvas-Cord",
+      "baseColor": [
+        0.46207699964472876,
+        0.47353149613845735,
+        0.43415363616478553,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.2,
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "name": "R-Rubber",
+      "baseColor": [
+        0.02955683443236377,
+        0.04231141061442144,
+        0.04373502925049377,
+        1
+      ],
+      "roughness": 0.86,
+      "metalness": 0,
+      "normalScale": 1,
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "preservation": [
+    {
+      "path": "apps/web/public/heroes/car.glb",
+      "bytes": 2013548,
+      "sha256": "15a8e84b4efa1ef896dbd244a87f065bc5da8e45ca912c3599b78f8ac56d6d11"
+    },
+    {
+      "path": "apps/web/public/heroes/car.webp",
+      "bytes": 166578,
+      "sha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "path": "apps/web/public/heroes/house.glb",
+      "bytes": 1144500,
+      "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639"
+    },
+    {
+      "path": "apps/web/public/heroes/house.webp",
+      "bytes": 244470,
+      "sha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "path": "apps/web/public/heroes/land.glb",
+      "bytes": 709260,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    {
+      "path": "apps/web/public/heroes/land.webp",
+      "bytes": 403746,
+      "sha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "path": "apps/web/public/heroes/creditCard.glb",
+      "bytes": 516984,
+      "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17"
+    },
+    {
+      "path": "apps/web/public/heroes/creditCard.webp",
+      "bytes": 112828,
+      "sha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "path": "apps/web/public/heroes/studentLoan.glb",
+      "bytes": 715276,
+      "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222"
+    },
+    {
+      "path": "apps/web/public/heroes/studentLoan.webp",
+      "bytes": 344514,
+      "sha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "path": "apps/web/public/heroes/medical.glb",
+      "bytes": 509120,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    {
+      "path": "apps/web/public/heroes/medical.webp",
+      "bytes": 130728,
+      "sha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "path": "apps/web/public/heroes/personal.glb",
+      "bytes": 519844,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"
+    },
+    {
+      "path": "apps/web/public/heroes/personal.webp",
+      "bytes": 298994,
+      "sha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "path": "apps/web/public/heroes/recreation.webp",
+      "bytes": 142004,
+      "sha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "path": "apps/web/public/heroes/custom.glb",
+      "bytes": 261576,
+      "sha256": "a1ab505e1cccfdaf2b4535989694d11d847c6e2ac102f7da9eb906a55aa5459b"
+    },
+    {
+      "path": "apps/web/public/heroes/custom.webp",
+      "bytes": 145068,
+      "sha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "path": "apps/web/public/heroes/vault.glb",
+      "bytes": 719996,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    },
+    {
+      "path": "apps/web/public/heroes/vault.webp",
+      "bytes": 171688,
+      "sha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "observations": [
+    "Original generated source lineage is locally cross-linked; no network origin verification or legal provenance certification performed.",
+    "Normals are lossless only against the filtered/re-normalized 256px field, not original generated height detail. Color and ORM use lossy WebP.",
+    "Common save helper is unchanged; multi-file asset/manifest failure rollback and noncooperating FS writers are not guaranteed by its cooperative lock.",
+    "CPU-only: no browser/GPU/render, real builder/rebuild/package/writer execution, network, installs, or cloud calls. Geometry topology/contact review is excluded.",
+    "Old candidate was reconstructed from its exact known source hash and evaluated CPU-only with saver intercepted; no publication callback or writer ran."
+  ],
+  "record": {
+    "id": "recreation",
+    "quality": "refined-textured",
+    "bytes": 521060,
+    "meshes": 47,
+    "triangles": 19296,
+    "sha256": "d21f57de6792d5af53d575e2c6d2c9aa27bd8d1b944a00544a9cb3229fa97a0d",
+    "sourceFile": "apps/media/scripts/build-refined-recreation.mjs",
+    "sourceSha256": "7f9d61b7c2a490450857fcf6562ae51d5ee966e427c9489d888fca72204c82b0",
+    "materialSourceSha256": "9626f5b8ba0714edc5ce55b3ef852fe27747cb653e88001b7cff53f8e6ffa59c",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and explicitly retained original generated oak/cloth sources",
+    "provenance": "Original hollow white/teal yacht, timber cockpit, glazed cabin, connected standing rigging, billowed thick sails with physical seams, helm and visible keel/rudder. Approximate authored PBR, not measured scans, exact poster reconstruction or marine certification.",
+    "units": "normalized stage units",
+    "version": 2
+  },
+  "budget": {
+    "publicBytes": 9931410,
+    "publicCap": 10485760,
+    "publicHeadroom": 554350,
+    "modelBytes": 521060,
+    "modelCap": 524288,
+    "modelHeadroom": 3228
+  },
+  "creditStatus": {
+    "hasRecreationSection": false,
+    "stillCallsRecreationStudy": true,
+    "collectionStillSaysTwoStudies": true
+  },
+  "endPins": {
+    "apps/web/public/heroes/recreation.glb": {
+      "sha256": "d21f57de6792d5af53d575e2c6d2c9aa27bd8d1b944a00544a9cb3229fa97a0d",
+      "sameAsStart": true
+    },
+    "apps/media/scripts/build-refined-recreation.mjs": {
+      "sha256": "7f9d61b7c2a490450857fcf6562ae51d5ee966e427c9489d888fca72204c82b0",
+      "sameAsStart": true
+    },
+    "apps/media/scripts/recreation-refinement.test.mjs": {
+      "sha256": "34e4fe99b5d9f612e5a7f53c1798e1f16150b9a2d8c85cfb55062142fce900d8",
+      "sameAsStart": true
+    },
+    "apps/media/sources/recreation/materials.json": {
+      "sha256": "6b5776151c1b052c82e4a408b81be0e72a3047ec1392b0492a3b9f38a0bcac04",
+      "sameAsStart": true
+    }
+  }
+}
+

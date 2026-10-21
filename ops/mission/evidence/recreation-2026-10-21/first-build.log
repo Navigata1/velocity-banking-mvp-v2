@@ -1,0 +1,8 @@
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-recreation.mjs:46
+const cockpit=rounded(0.74,0.50,0.045,T.Path);cockpit.translate(0.96,0);hole(deckShape,cockpit);
+                                                      ^
+
+TypeError: cockpit.translate is not a function
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-recreation.mjs:46:55
+
+Node.js v22.22.2

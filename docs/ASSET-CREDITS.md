@@ -124,12 +124,27 @@ artistic approximations, not scanned PBR or exact poster reconstruction. Protect
 manifests record builder/configuration/model hashes. The original poster is
 unchanged. This remains a candidate pending final collection-wide art approval.
 
+## Original Refined Recreation
+
+Original hollow white/teal sailing yacht, timber cockpit, glazed cabin, connected
+rigging, billowed sails, physical seam paths, helm and visible keel/rudder are
+authored in `apps/media/scripts/build-refined-recreation.mjs`. Twelve embedded WebP
+maps reuse the unchanged generated House oak and Student Loan cloth sources.
+`apps/media/sources/recreation/materials.json` records exact shared paths, hashes
+and original generation identities. Paint/steel maps and all geometry are original.
+
+512px timber/canvas color,256px remaining maps and lossless packed filtered normals
+are visual approximations, not measured scans/refraction or exact poster rebuilding.
+Original poster unchanged; source/config/model hashes protected in both manifests.
+No manufacturer branding, third-party boat mesh, financial records or marine
+certification. Final collection-wide art approval remains open; see its contract.
+
 ## Other Assets
 
 The ten studio posters were generated for InterestShield using OpenAI image
 generation. Original identities and SHA-256 hashes are in
 `apps/media/hero-provenance.json`.
 
-The other two base models (Recreation and Custom) remain locally authored 3D studies. They have not
+The remaining Custom base model is a locally authored 3D study. It has not
 passed the final photorealism gate and must not be represented as finished
-photorealistic assets or exact reconstructions of the posters.
+photorealistic artwork or an exact reconstruction of its poster.

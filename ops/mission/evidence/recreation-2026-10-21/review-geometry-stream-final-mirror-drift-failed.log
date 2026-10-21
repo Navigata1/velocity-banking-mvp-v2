@@ -1,0 +1,20 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'd21f57de6792d5af53d575e2c6d2c9aa27bd8d1b944a00544a9cb3229fa97a0d'
+- '6aab14611026767374e76e4bbc36200d2197c1a2d6545f0ebeb97ccc122b7173'
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-stream-compare.mjs:9:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'd21f57de6792d5af53d575e2c6d2c9aa27bd8d1b944a00544a9cb3229fa97a0d',
+  expected: '6aab14611026767374e76e4bbc36200d2197c1a2d6545f0ebeb97ccc122b7173',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
