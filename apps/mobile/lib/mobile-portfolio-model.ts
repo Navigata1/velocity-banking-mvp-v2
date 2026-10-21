@@ -38,8 +38,8 @@ export function buildMobilePortfolioBookView(book: PortfolioBook) {
     warnings.push('LOC utilization is above 80% or its limit is missing. Review capacity before relying on new borrowing.');
   }
   return { result, startingBalance, path, state,
-    targetLabel: state === 'review' ? 'Not projected' : state === 'cleared' ? 'No modeled balances' : targets.join(' + ') || 'No active target',
+    targetLabel: state === 'review' || centTolerance ? 'Not projected' : state === 'cleared' ? 'No modeled balances' : targets.join(' + ') || 'No active target',
     payoffLabel: centTolerance ? 'Within per-liability cent tolerance' : state === 'cleared' ? 'No modeled balances' : state === 'projected' ? `${result.payoffMonths} months estimated` : 'Review inputs',
-    interestLabel: state === 'review' ? 'Not projected' : formatCurrency(result.totalInterest),
-    cashLabel: state === 'review' ? 'Not projected' : formatCurrency(result.cashAtPayoff), warnings };
+    interestLabel: state === 'review' || centTolerance ? 'Not projected' : formatCurrency(result.totalInterest),
+    cashLabel: state === 'review' || centTolerance ? 'Not projected' : formatCurrency(result.cashAtPayoff), warnings };
 }

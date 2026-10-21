@@ -58,6 +58,7 @@ test('nonzero sub-cent liabilities are labeled as model tolerance rather than ab
   const v=call('buildMobilePortfolioBookView',b);
   assert.match(v.payoffLabel,/cent tolerance/i);assert.doesNotMatch(v.payoffLabel,/no modeled balances|paid off/i);
   assert.equal(v.path.startingBalance,0.01);assert.equal(v.path.sampledPoints[0].balance,0.01);
+  assert.equal(v.interestLabel,'Not projected');assert.equal(v.cashLabel,'Not projected');assert.equal(v.targetLabel,'Not projected');
   assert.match(v.warnings.join(' '),/lender|confirmation/i);
 });
 test('failed inputs and unapproved horizon do not become a payoff or zero interest claim',()=>{
