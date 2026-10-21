@@ -4,6 +4,31 @@
 
 Verified local restoration build, pushed as draft PR #256. Not a production release.
 
+Latest verified application checkpoint: cc09e2e. Both complete attempt1 CI events
+39627899764/39627912909 passed, including native70/full contracts, media145/27
+stills and SQL63 twice per event. Exact READY preview, hosted120, all ten served
+GLB/poster hashes and actual IAB edit/import/restore passed. Receipt:
+https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045
+
+The primary CI job took1198seconds against its unchanged1200-second cap. Current
+bounded maintenance moves the original hero test/upload to an independent20-minute
+job, retains the complete backend and all remaining primary steps, and requires
+BOTH exact-head events with every job/step successful.14 new verifier/workflow
+contracts pass after the old latest-only false acceptance was reproduced RED.
+The checker reads required steps from the committed HEAD workflow, so local
+uncommitted workflow edits cannot hide a missing committed SQL repeat step.
+No calculations, assets, application source, dependency or stored data changes.
+Both new three-job CI events remain required before this maintenance task closes.
+
+The Desktop report has728-file readback/recovery evidence. Its first published
+version failed an offline page-overflow check; an inherited word-wrap correction
+was then statically validated and published with backups. Final browser layout
+remains unverified after local-file navigation was policy-blocked; no workaround
+was attempted. The repository renderer now backports that wrap rule and correctly
+labels the PR list as tracked, not all merged, with four static regression tests.
+
+### Earlier Checks
+
 The789ae25 predecessor did not earn a verified release checkpoint: its complete
 push CI39612733144 failed a nearly edge-on Credit Card capture, while complete
 PR CI39612743542 succeeded. No789ae25 receipt or Desktop publication was issued.
@@ -36,7 +61,7 @@ with explicit creation/copy, owner-scoped persistence and paired snapshot recove
 The web reads legacy bytes without mutation and writes explicit canonical APR units.
 See `docs/native-portfolio-contract-2026-10-20.md`. Shared scenario ownership,
 other route comparison scopes and lender/device/backend/release approval remain
-open. A new shared web/Expo Portfolio same-month view is in final local preflight:
+open. A shared web/Expo Portfolio same-month view is verified at cc09e2e:
 cash minus all listed debts and LOC, signed differences against the selected
 policy, strict month0..600 drafts, accepted-prefix coverage and same-budget cash
 continuation only after exact payoff.31 focused contracts and23,247 synthetic

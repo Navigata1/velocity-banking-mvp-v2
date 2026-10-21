@@ -38,6 +38,9 @@ jobs:
         working-directory: apps/web
         run: npm ci
 
+      - name: Run CI verification contracts
+        run: node scripts/check-restoration-ci.test.cjs
+
       - name: Audit web runtime dependencies
         working-directory: apps/web
         run: npm audit --omit=dev
@@ -125,18 +128,6 @@ jobs:
             apps/web/test-results/portfolio-input
           if-no-files-found: warn
 
-      - name: Verify asset hero loading, rotation and reduced motion
-        working-directory: apps/web
-        run: npm run test:heroes
-
-      - name: Upload asset hero browser proof
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: asset-hero-browser-proof
-          path: apps/web/test-results/heroes
-          if-no-files-found: warn
-
       - name: Install media workspace dependencies
         working-directory: apps/media
         run: npm ci --ignore-scripts
@@ -157,6 +148,11 @@ jobs:
         env:
           CHROME_PATH: ${{ steps.remotion-chrome.outputs.chrome-path }}
         run: npm run check
+
+      - name: Run report renderer contracts
+        run: |
+          node ops/mission/test-renderer.mjs
+          node --test ops/mission/report-renderer-tests.mjs
 
       - name: Install report Worker dependencies
         working-directory: apps/report-worker
@@ -222,6 +218,42 @@ jobs:
           echo "$output"
           test "$status" -eq 1
           grep -F "iOS Expo Go smoke requires macOS with Xcode and Simulator." <<< "$output"
+
+  asset-hero-quality:
+    name: Asset hero quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Build web app
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Verify asset hero loading, rotation and reduced motion
+        working-directory: apps/web
+        run: npm run test:heroes
+
+      - name: Upload asset hero browser proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-hero-browser-proof
+          path: apps/web/test-results/heroes
+          if-no-files-found: warn
 
   backend-isolation:
     name: Isolated SQL and owner isolation

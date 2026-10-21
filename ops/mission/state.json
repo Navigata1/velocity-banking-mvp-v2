@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Recognizable assets, conserved cash, trustworthy comparisons. Task progress is not production readiness.",
+    "tagline": "Verified application baseline cc09e2e. CI margin and report accuracy improvements in progress; not production approval.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-21T15:41:00Z",
-    "sessionCount": 20
+    "updated": "2026-10-21T16:31:00Z",
+    "sessionCount": 21
   },
   "policies": {
     "merge": "review",
@@ -44,7 +44,11 @@
           "title": "Require exact-SHA GitHub CI and preview evidence",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "Exact-SHA verification is established:14ad261 passed both complete CI runs39508261387/39508267033 including real SQL, Vercel and hosted checks. Receipt: PR256 issuecomment-6303443438. Each subsequent push needs its own standing gate. No production promotion."
         },
         {
@@ -52,8 +56,26 @@
           "title": "Restore readable narrow-screen dashboard vitals",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "Bounded correction verified at1aec5bf: complete push39592109336/PR39592115293 attempt1,348 regressions,145 media/27stills,native49/full contracts,SQL63 twice/event; exact READY preview/hosted88/routes/all ten GLB/poster hashes and actual IAB income edit/restore. Receipt6315242743,322-file Desktop readback. Original3b58bef remains failed at actual280px font overflow. Fixed atomic/day break,12px minimum and ten original-node negative controls retained. Not full accessibility/device or production approval."
+        },
+        {
+          "id": "R0-T4",
+          "title": "Isolate graphics CI and require both complete exact-head events",
+          "status": "in_progress",
+          "dependsOn": [
+            "R0-T2"
+          ],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "cc09e2e push web job passed in1198s versus1200s cap, PR799s. Current slice moves original hero test/upload into an independent20-minute job with the same prerequisites; no thresholds, runtime, assets or financial changes. Real latest-only false acceptance reproduced RED;14 CLI/workflow contracts GREEN. Report body wrapping and truthful PRs tracked label have4 static contracts, not viewport proof. Both NEW full three-job events required before marking this maintenance task done. Requirements come from committed HEAD, with a genuine working-copy masking RED closed by git-show binding."
         }
       ],
       "gates": [
@@ -62,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-tests-final.log",
-          "lastRun": "2026-10-21T15:41:00Z",
-          "notes": "Full npm test passes348 existing regressions/reference lanes,31 common-month contracts and23247 seeded probes. Actual null/dust/cancellation/positive-range REDs preceded fixes; independent fixture-specific cutoff preserves all horizons/seed/tolerances/direct ledger. Font and later capture-harness corrections preserve all six math modules, data, assets and dependencies. Current293 source inventory:279 old unchanged/6 old modified/8 new, including permanent eleven-width currency regression and existing hero test harness. Local numerical proof is not both complete new exact-head CI events."
+          "evidence": "ops/mission/evidence/ci-isolation-2026-10-21/local-preflight.json",
+          "lastRun": "2026-10-21T16:24:59.000Z",
+          "notes": "Fresh local348 regressions,31 common-month contracts and23247 seeded probes pass.14 new CI-verifier/workflow contracts reject missing/failed push or PR events, jobs and steps. All292 protected sources except ci.yml, all ten GLBs/posters/videos and all numerical/data code match verified cc09e2e; old conservation/reference tolerances remain. No new financial calculation is introduced."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/rendered-final.log",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
           "lastRun": "2026-10-21T15:36:01Z",
-          "notes": "New6231DB4E fixed-cadence sampler passes full11-stage standard matrix: strict unclockedThree700/300ms,20 hero views/reduced-motion/fallbacks,seven HTTP/rendered routes and old88 workflows. Separate software20 cases/40 current raw images and actual sampled frozen-rAF negative pass. Equally primed actual GPU endpoint comparison passes original visibility/movement and16/8 spatial limits; observed6.49x one-case ratio is not universal performance. Primer16ms plus15x100ms is fixed10Hz two-pose sampling, not FPS/full-turn/device approval. Unchanged local build/native70/media14527/video logs remain inherited byte-identically, not rerun; BOTH new complete CI events must freshly execute them. All assets/runtime/math unchanged. Hosted120 and new actual IAB still required."
+          "notes": "Verified cc09e2e baseline: complete push39627899764/PR39627912909, hosted10 suites/120 cases, seven HTTP/rendered routes, all ten served model/poster hashes and actual IAB House income/Portfolio import/horizon restore. CI maintenance does not change app source, assets, storage or budgets. Those hosted results remain explicitly inherited, not new-head runs. New CI must freshly execute all existing native/media/SQL/browser commands. Final device/art/production approval remains open."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39621121164",
-          "lastRun": "2026-10-21T15:15:40Z",
-          "notes": "d6f6f50 is NOT verified: push39621111192 SUCCESS, PR39621121164 CANCELLED at original20m0s job cap after813-second hero step/15 passed cases; later media/native skipped, both SQL jobs pass. No assertion failure before cancellation, no same-head retry/receipt/Desktop publication. Earlier789 push visibility failure and7bd both currency failures remain failed. New fixed10Hz harness preserves actual assets/runtime/math/all pixel/700ms/300ms/20-minute limits; local standard/software20 plus deadline5/sampler5/actual frozen-rAF controls pass. BOTH NEW complete exact-head CI/build/native70/media14527/SQL63 twice/event/READY/hosted120/hashes/new IAB required. Previous1aec5bf receipt6315242743/322 Desktop files stays baseline;4134 baseline checks are not new app tests. No production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "lastRun": "2026-10-21T16:24:59.000Z",
+          "notes": "cc09e2e is verified: BOTH complete attempt1 events39627899764/39627912909, full native70/media14527/SQL63 twice/event, READY/hosted120/new IAB and728-file Desktop readback. Earlier7bd/789/D6 failures stay historical and unapproved. Current CI-isolation change needs BOTH NEW complete exact-head push/PR events with all THREE jobs/every step successful under unchanged20-minute caps. The standing verifier now rejects missing/failed events and missing/skipped/duplicate/reordered execution; preview success cannot override CI. No production promotion."
         }
       ]
     },
@@ -122,7 +144,11 @@
           "title": "Harden loading, GPU cleanup, licensing and mobile budgets",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval remains unfinished; every new head must re-pass hosted gates."
         }
       ],
@@ -141,9 +167,9 @@
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/heroes-final.log",
-          "lastRun": "2026-10-21T14:46:12.451Z",
-          "notes": "All ten heroes pass1440/375 in standard and software-renderer runs;20 cases each, reduced motion and network/texture fallbacks pass. Source6231DB4E is stable in independent12-pin review; no new bounded P1/P2. Primer16ms plus15x100ms uses real scheduled renderer callbacks; existing2%/edge/color/spatial/overflow/error guards remain. Actual sampled frozen-rAF rejects stationary geometry; equally primed reference/sampler GPU comparison passes16/8 spatial limits. Forty current software images retained separately from old1D629EA0. StrictThree remains separately unclocked700/300ms. Fixed10Hz endpoint proof is not full-turn/FPS/device certification. Failed789 and cancelledD6 histories stay explicit. No runtime/asset/camera/math change or final-art/production approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "lastRun": "2026-10-21T16:24:59.000Z",
+          "notes": "All ten actual GLBs, posters and HyperFrames videos unchanged atcc09e2e: full CI145 media/27 stills in both events, standard/software20 hero cases, endpoint/frozen-rAF controls and exact served hashes. Fixed10Hz pose samples are not FPS/full-turn/device proof. Current CI only moves the existing test/upload to its own bounded job; all runtime geometry/materials/limits remain. Final all-angle photoreal review remains open."
         },
         {
           "id": "R1-G3",
@@ -177,14 +203,18 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Shared Portfolio31 contracts/23247 probes,9rem/10rem tracks,21 web+21 native,11 maximum-currency widths and42 extra font probes are unchanged.789ae25 passed full PR CI39612743542 but push39612733144 failed unrelated original hero capture, so no receipt/Desktop publication. Narrow browser-harness clock correction does not recompute or migrate data; all six numerical modules remain pinned. Actual280/690 font REDs and both failed7bd72ac runs stay explicit. Fresh BOTH final-head CI/hosted120 required. Other route scopes,shared ownership,lender/calendar/device and entire R2 remain open."
+          "notes": "Bounded Portfolio same-month feature verified atcc09e2e: shared31 contracts/23247 probes,21 web+21 native,11 maximum-currency widths, both full CI/hosted120/new actual IAB and receipt6320460045. Earlier failed7bd/789/D6 histories remain explicit, not retroactively approved. Same-budget cash-minus-debt/LOC comparisons do not complete other route scopes, shared ownership or lender/calendar/device gates; entire R2 remains open."
         },
         {
           "id": "R2-T3",
           "title": "Implement or remove ineffective chunk-frequency controls",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "Unused weekly/biweekly mortgage buttons removed from Simulator/Vault; monthly estimate and annual-extra approximation disclosed. Guardian frequency and minimum-only baseline claims corrected across the answer bank and independently re-reviewed. Legacy chunkFrequency/paymentFrequency values survive a real unrelated edit and route navigation at desktop/375px. No dated-frequency capability is claimed."
         },
         {
@@ -192,7 +222,11 @@
           "title": "Port the funded aggregate Portfolio safely to Expo",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "Bounded implementation and exact-head2fe733c proof complete: full push39542919815/PR39542924399,49 actual native browser cases/new contracts, SQL63 twice/event, READY preview and hosted82/routes. ReceiptPR256 issuecomment-6308099018. Shared strict canonical book/path, explicit APR units/range guards, native editor, owner/CAS/session storage and paired recovery retained. Legacy bytes survive; failed imports never activate. Shared ownership/common-date/lender/device/cloud/release approval remain separate open gates."
         }
       ],
@@ -247,8 +281,8 @@
           "title": "Rendered daily estimates and Dashboard saved-value preservation",
           "command": "npm --prefix apps/web run smoke:dashboard:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/mobile-vitals-wrap-2026-10-21/dashboard-verification.json",
-          "lastRun": "2026-10-21T11:26:43.279Z",
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "lastRun": "2026-10-21T16:24:59.000Z",
           "notes": "Bounded1aec5bf final exact-head hosted18 workflows/four responsive probes/wider-font positive/ten controls pass, receipt6315242743. Exact daily estimates, saved inputs and original-node restoration retained. Failed3b58bef history stays explicit. Current feature must rerun these unchanged standing checks; not arbitrary-font/device or lender approval."
         },
         {
@@ -256,18 +290,18 @@
           "title": "Same-month full-inventory numerical contracts",
           "command": "node apps/web/scripts/portfolio-common-month-tests.cjs && node apps/web/scripts/portfolio-common-month-reference-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-tests-final.log",
-          "lastRun": "2026-10-21T12:56:00Z",
-          "notes": "Fresh full command31 focused/23247 reference probes passes.57,696 zero-rate snapshots cover all0..600 horizons; independent direct ledger/seed253draws/final3883181796/tolerances remain unchanged. Exact posted-ledger447/727/512 units justify one literal rate4/split cutoff8, with earlier H7 and direct columns retained. Four genuine review REDs fixed and independently verified; previous failed pin check retained, authorized oracle/capture edits reconciled in new stable239-pin review. Generic Number estimates, not lender-posting or whole R2 approval."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "lastRun": "2026-10-21T16:24:59.000Z",
+          "notes": "cc09e2e full local and both CI events pass31 focused common-month contracts and23247 adjudicated seeded probes. Typed cash/debt/LOC snapshots, exact-zero continuation, accepted prefixes, signed differences and strict month0..600 retained. Six numerical modules remain unchanged in this CI slice. Not lender posting, scenario ownership or full R2 approval."
         },
         {
           "id": "R2-G8",
           "title": "Web and Expo same-month rendered comparison",
           "command": "node apps/web/scripts/smoke-portfolio-common-month.cjs && node apps/web/scripts/smoke-portfolio-currency-width.cjs && npm --prefix apps/mobile run smoke:accessibility:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-common-month-2026-10-21/web-common-month-verification.json",
-          "lastRun": "2026-10-21T12:58:00Z",
-          "notes": "Current web build/lint/native export/types and21 web+70 native cases pass. Permanent eleven-width maximum-standard-currency book catches690px gap before10rem correction; full text/one-line/containment/font>=12/error guards remain.42 additional stress executions pass. Default21 includes reversible wider-font280 positive; four DOM controls/node restoration/storage checks unchanged. Hosted gate becomes ten suites/120 checks (109 primary+11 boundaries). 7bd72ac stays failed; both NEW complete CI/hosted passes required. Not owner-switch/screen-reader/device/production certification."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "lastRun": "2026-10-21T16:24:59.000Z",
+          "notes": "cc09e2e verified21 web+21 native common-month cases at1440/375/280; native total70 includes49 preserved cases. Four actual DOM negatives restore original nodes/styles; stored bytes preserved. Separate11 currency-width boundaries on one fictional book preserve full signed-billion values, >=12px, fit/containment and no page overflow. Hosted120/new IAB corroborate bounded comparisons; not lender/device/shared-scenario approval."
         }
       ]
     },
@@ -320,7 +354,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-        "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md."
+          "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md."
         },
         {
           "id": "R4-T2",
@@ -351,7 +385,11 @@
           "title": "Patch vulnerable web framework and preserve a standing runtime audit gate",
           "status": "done",
           "dependsOn": [],
-          "pr": { "number": 256, "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256", "mergedAt": null },
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
           "notes": "60ab957 patches Next/ESLint to 16.4.2 and PostCSS to 8.5.31; runtime audit remains zero. Patch and audit enforcement passed both hosted 30b810e jobs with full hero/media/native gates. Implementation task is complete, but production promotion is explicitly a separate open release task."
         }
       ],
@@ -405,10 +443,10 @@
           "id": "R4-G6",
           "title": "Fresh isolated SQL and row-isolation proof",
           "command": "npm --prefix apps/web run test:supabase",
-        "status": "passed",
-        "evidence": "ops/mission/evidence/backend-isolation-2026-10-20/review-and-verification.md",
-        "lastRun": "2026-10-20T20:42:40Z",
-        "notes": "Fresh 37d1880 push/PR database jobs 118873389468/118873424261 passed four-migration replay, 63 pgTAP assertions twice per job, lint/security advisors, project cleanup and proof upload. Original logs/receipts retained. Standing CI enforces future runs. This passes isolated SQL correctness only, not hosted-project binding, API auth, backup recovery or current-provider patch alignment. Local Docker and production were untouched."
+          "status": "passed",
+          "evidence": "ops/mission/evidence/backend-isolation-2026-10-20/review-and-verification.md",
+          "lastRun": "2026-10-20T20:42:40Z",
+          "notes": "Fresh 37d1880 push/PR database jobs 118873389468/118873424261 passed four-migration replay, 63 pgTAP assertions twice per job, lint/security advisors, project cleanup and proof upload. Original logs/receipts retained. Standing CI enforces future runs. This passes isolated SQL correctness only, not hosted-project binding, API auth, backup recovery or current-provider patch alignment. Local Docker and production were untouched."
         }
       ]
     },
@@ -531,9 +569,9 @@
       "note": "Simulator web/Expo, Vault and both Portfolios use funded liability books with explicit cash. Canonical units and native full-book persistence/recovery are implemented. Dashboard helpers, shared scenario ownership, common-date wealth and lender/calendar/rounding/credit-availability integration remain open."
     },
     {
-      "title": "Exact-SHA CI must be re-proven",
+      "title": "Verified draft is not production approval",
       "severity": "high",
-      "note": "caefd80 passed both complete pipelines39581976729/39581984357 attempt1,145 media/27stills/348 regressions/native49/full contracts/SQL, READY preview and hosted82/routes; receipt6313685208. Predecessor3b58bef failed both CI events39587774650/39587777183 at280px large-import overflow while both SQL jobs passed; no verified receipt. New unit-wrap follow-up needs both fresh complete events and hosted88/routes/all ten model/poster hashes. Prior hero PR stage was slower but passed unchanged; no rerun or gate relaxation. No prior receipt authorizes production."
+      "note": "cc09e2e passed both full CI events, but primary job1198s had only2s margin against1200s. Isolate existing graphics checks under the same per-job cap and require both events/all3 jobs. Final art, scenario/lender/calendar/backend/security/device/release gates remain open."
     },
     {
       "title": "Rendering test reliability needs further evidence",
@@ -841,11 +879,11 @@
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "Previous1aec5bf remains verified: complete events39592109336/39592115293, receipt6315242743 and322 Desktop files/324 journal entries/48 backups. LatestD6 push39621111192 SUCCESS but PR39621121164 CANCELLED at unchanged20-minute cap after813-second hero step/15 passed views; later native/media skipped. No same-head retry/receipt/Desktop publication. Earlier789/7bd failures remain failed. New fixed10Hz sampler needs BOTH new complete exact-head CI/native70/media14527/SQL63 twice/event/READY/ten hosted suites120/all hashes/new IAB and staged Desktop readback.4134 baseline checks are not new app tests. No production promotion.",
+      "Current verified app checkpoint cc09e2e / receipt6320460045: BOTH full CI events, READY/hosted120/IAB and728-file Desktop revision. Current substantive slice isolates hero CI and strengthens exact-head verification to require both events/all3 jobs/all steps, with no20-minute cap increase. Commit/push after review and local gates, then run node scripts/check-restoration-ci.cjs against the new clean HEAD. Do not call inherited cc09 hosted evidence a new-head smoke.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
       "Dashboard precise estimates and oversized no-op preservation remain unchanged. Narrow mobile vital fragments are corrected with two columns/fixed12-14px content-based type. Read docs/mobile-vitals-contract-2026-10-21.md and dashboard-display contract; retain18 workflow/four boundary/ten negative-control gate. Not lender/posting/rounding or cross-route coherence completion.",
       "Custom preserves silver brushed-metal compass with hollow stepped case, seated dial, faceted enamel needle, clear lens, hollow upright lid, five barrel hinge/five brackets and open bail. Read docs/custom-refinement-contract-2026-10-21.md.16 focused cases and independent exact-artifact reviews follow assembled bore/clearance/contact/normal REDs/fixes.145 media/27stills, protected309 raw sources/all videos/40 payloads;285 normalized source fingerprints. Ten candidates,577598bytes public headroom, unchanged caps. Final collection art approval remains open; no paid GPU or broad redesign.",
-      "Latest corrective executable source is only smoke-heroes.cjs beyondD6:16ms primer plus15x100ms callbacks, shared120-second budget and permanent cadence/failure controls. Source6231DB4E independent12-pin review has no new bounded P1/P2; deadline5/sampler5 pass. New software20/standard20/final11-stage matrix/strictThree700/300 and actual sampled frozen-rAF negative pass. GPU equally primed reference comparison stays inside original16/8 spatial limits;10Hz two-pose sampling is not FPS/full-turn/device proof. Forty current software images retained. Inventory293:279 old unchanged/6 modified/8 new;147 helper+3projection checks. Unchanged local build/native70/media14527/video proofs inherited byte-identically, not rerun; BOTH fresh full CI events must execute them. Commit/push correction with evidence once, then exact READY/hosted120/new IAB/staged Desktop proof. No runtime/asset/financial/storage change, production promotion or old failed-head approval. Whole R2/scenarios/lender/device/art/backend remain open.",
+      "CI/report maintenance: original hero test/upload moved intact to independent job; full backend and every remaining primary step structurally identical, including pinned Remotion Chrome/native wiring.14 CLI/workflow and4 static report contracts pass after genuine REDs. Repository renderer backports body overflow-wrap:anywhere and says PRs tracked, not merged. Last Desktop report's browser overflow was followed by static-only artifact correction; final file-browser recheck is UNVERIFIED and file:// navigation is policy-blocked. No browser/serving workaround. Fold final new CI results into next substantive work, no report-only push loop.",
       "R2-T3 is implemented: do not restore ineffective timing controls or delete legacy timing data. Shared/single-target, Vault and web Portfolio funding/final/cleared boundaries pass. Lender minimums, fees, dated calendars, posting/rounding and intra-month capacity remain open; Velocity interest capitalization is disclosed, not verified lender compliance.",
       "Address exact-SHA failures without weakening gates. Read docs/canvas-timing-diagnostics-contract-2026-10-20.md; use actual invocation budgets and overlapping phase data. Serial timing and observed hero reruns pass, but causes of earlier misses are not resolved. Retain the20-minute CI cap and every pixel/deadline assertion.",
       "All ten textured candidates still need full-size/all-angle material/art review; preserved artwork is the default. Custom checkpoint single-frame side-by-side triage remains candidly illustrative in places. Do not relabel this as photoreal approval or restart broad redesign. Preserve all source lineage, publication locking, validated Buffer packaging and caps. Mobile readability is implemented; next substantive work R2/R3 shared scenarios/common-date wealth/lender/calendar.",
