@@ -100,13 +100,19 @@
   },
   {
     "id": "personal",
-    "bytes": 580536,
-    "meshes": 95,
-    "triangles": 56988,
-    "sha256": "664ace31388fcd98cee407d7399977b3fd8a0c6eefcab37a408cde6d121023bc",
-    "provenance": "Locally authored deterministic geometry. Not a TRELLIS reconstruction of the generated poster.",
+    "quality": "refined-textured",
+    "bytes": 519844,
+    "meshes": 29,
+    "triangles": 22016,
+    "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79",
+    "sourceFile": "apps/media/scripts/build-refined-personal.mjs",
+    "sourceSha256": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+    "materialSourceSha256": "3377df695d1a66ace34911e0e5bc2e5bf5fd0b6a6b2479ed1f5c05208df47523",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and retained original generated leather albedo source",
+    "provenance": "Original hollow cognac satchel with thick curved flap, brass buckle/handle/shoulder assemblies, punched leather straps, real stitches/piping, key aperture and inserted illustrative papers. Approximate PBR, not measured scans or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 1
+    "version": 2
   },
   {
     "id": "recreation",
