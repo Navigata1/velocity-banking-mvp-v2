@@ -1,0 +1,371 @@
+{
+  "baseline": "462a218342dfa95343bde6882546e99e882e5c99",
+  "verifiedAt": "2026-10-22T00:57:16.696Z",
+  "stage": "Local replay continuity proof; both NEW full exact-head CI events/READY/hosted138/manual required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6329619148",
+  "sources": {
+    "apps/web/scripts/hero-resource-tests.cjs": "b5fdcd0607cc004e00ac651f376491f736b9f42d1612a2085e7c8e0139928e69",
+    "apps/web/scripts/smoke-heroes.cjs": "09134334a2f0b7a1abb97a07ffdd0c915078423fdc2e77f92dc7595619bbd0c5",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe"
+  },
+  "normalizedSources": {
+    "apps/web/scripts/hero-resource-tests.cjs": "b5fdcd0607cc004e00ac651f376491f736b9f42d1612a2085e7c8e0139928e69",
+    "apps/web/scripts/smoke-heroes.cjs": "09134334a2f0b7a1abb97a07ffdd0c915078423fdc2e77f92dc7595619bbd0c5",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe"
+  },
+  "boundary": {
+    "changed": [
+      "apps/web/scripts/hero-resource-tests.cjs",
+      "apps/web/scripts/smoke-heroes.cjs",
+      "apps/web/src/components/hero/HeroModelStage.tsx"
+    ],
+    "added": [
+      "apps/web/scripts/hero-lifecycle-tests.cjs"
+    ],
+    "protectedStructuredSources": 353,
+    "financialSources": 9,
+    "unchangedModels": 10,
+    "unchangedPosters": 10,
+    "unchangedManifests": 3,
+    "freshVideos": 10,
+    "unchangedRenderingMaterials": true
+  },
+  "tests": {
+    "localStages": 28,
+    "additionalFinalSourceWebTestsAndLint": true,
+    "media": 219,
+    "stills": 27,
+    "regressions": 348,
+    "overview": 21,
+    "cockpit": 31,
+    "commonMonth": 31,
+    "reference": 23247,
+    "webWorkflows": 138,
+    "legacyAssertions": 711,
+    "replayCases": 20,
+    "lifecycleMarkers": 8,
+    "lifecycleMutantsRejected": 3,
+    "reducedMotionReplay": true,
+    "observedBrowserRed": true,
+    "baselineBuildId": "7Oj6RnCT3THD2sZycdVty"
+  },
+  "review": {
+    "independent": "replay-independent-review.md",
+    "materialDiagnosis": "material-response-survey.md",
+    "photorealApproved": false
+  },
+  "models": [
+    {
+      "id": "car",
+      "bytes": 2232520,
+      "sha256": "5d7fb0b2aa1457ce7e0013d3b7e04ba6568c3dd21941dc5df05a3bf969489225",
+      "recipeSha256": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94"
+    },
+    {
+      "id": "house",
+      "bytes": 1145320,
+      "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33"
+    },
+    {
+      "id": "land",
+      "bytes": 709260,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    {
+      "id": "creditCard",
+      "bytes": 523764,
+      "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025"
+    },
+    {
+      "id": "studentLoan",
+      "bytes": 723868,
+      "sha256": "56dfe51ad199bdafcc0cc5ced65321a16a4e087693f645d6d12c6bc14fb98d12"
+    },
+    {
+      "id": "medical",
+      "bytes": 509120,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    {
+      "id": "personal",
+      "bytes": 519844,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"
+    },
+    {
+      "id": "recreation",
+      "bytes": 521544,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7"
+    },
+    {
+      "id": "custom",
+      "bytes": 237844,
+      "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b"
+    },
+    {
+      "id": "vault",
+      "bytes": 719996,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "id": "house",
+      "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "id": "land",
+      "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "id": "creditCard",
+      "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "id": "studentLoan",
+      "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "id": "medical",
+      "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "id": "personal",
+      "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "id": "recreation",
+      "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "id": "custom",
+      "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "id": "vault",
+      "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "videos": [
+    {
+      "id": "car",
+      "sha256": "57ce7df9d14a3ead27e2bf1548860b831c0cfdb08a0d59cf4fd038bf97bbadb7",
+      "bytes": 22770117
+    },
+    {
+      "id": "house",
+      "sha256": "8137916311e6055eb772362c927d517f609d3845e430cf318b8914375a6082a3",
+      "bytes": 11383617
+    },
+    {
+      "id": "land",
+      "sha256": "e179bb2c02bf8ddc39e9383fe457f5be542b6b6fa202fb130f943d9a127ec82f",
+      "bytes": 17928139
+    },
+    {
+      "id": "creditCard",
+      "sha256": "bf9d798dd7cea074ca71531686a623324e2d2365d680aaed2166739954d005bf",
+      "bytes": 3632302
+    },
+    {
+      "id": "studentLoan",
+      "sha256": "e90bbdace925b32a34cc6a7b5c7af62528db1553e9eb2226ac5f8e3ac6ca0527",
+      "bytes": 8638610
+    },
+    {
+      "id": "medical",
+      "sha256": "4b160da9fa22967861cd5efe659c4a6aa54fc4f9c56907486f598f975a42c5dd",
+      "bytes": 5336987
+    },
+    {
+      "id": "personal",
+      "sha256": "5de93211e5a609291e0c6a99698fd5dd9feda0c2cbfadfae6edd464581f740f1",
+      "bytes": 8319827
+    },
+    {
+      "id": "recreation",
+      "sha256": "a1d22ef4e04266113db7df0001c7dd2b980eaf233dba00a22c3223cb8e763ece",
+      "bytes": 5260280
+    },
+    {
+      "id": "custom",
+      "sha256": "9f397895e9d162f33401029b7d3eb2cfd562ad6a5e1d8288e2ab9461ccf305f9",
+      "bytes": 4304197
+    },
+    {
+      "id": "vault",
+      "sha256": "2e34635e531d35ea4abf9686f52adce376edc51c42c4046f4db5a5783dc351d6",
+      "bytes": 7527596
+    }
+  ],
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-hero-replay",
+    "files": {
+      "gates.json": {
+        "bytes": 4758,
+        "sha256": "863ed3eb94e4b975ae402abfe4b253b4165643448652d1adfbafece8506fa64b"
+      },
+      "final-source.json": {
+        "bytes": 790,
+        "sha256": "7748068da65b5450fe316fe1defe789bac64f40422146adad486728aea828879"
+      },
+      "final-web-tests.log": {
+        "bytes": 48521,
+        "sha256": "2708fb9ee533508fe83557c2660fdd2e540c4cc9f7f2ee0df5474e821d299c2f"
+      },
+      "final-web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "replay-red-confirmed.log": {
+        "bytes": 1302,
+        "sha256": "a9ddb168c88ce9dd3d82a8129ed8d89f572246763bee7d9e0746794eb91c62a5"
+      },
+      "replay-green.log": {
+        "bytes": 6101,
+        "sha256": "67c1e61111a1726a3fcadcd98543b3734f23c988f21a99ad18ae0062e3624d26"
+      },
+      "replay-independent-review.md": {
+        "bytes": 15398,
+        "sha256": "859a499598a51785ce4f8ad71709c2b75fefc12cade707ff74183fb1a40d9fc8"
+      },
+      "material-response-survey.md": {
+        "bytes": 26633,
+        "sha256": "45ecbc79c11b218ee4efc2a641e9f675d7c0b0902a1c131cc69851d1dacd3b66"
+      },
+      "review-lifecycle.json": {
+        "bytes": 2931,
+        "sha256": "bac6ed39ec005e975f00544ea6603f3178a9dc0d1d9e60c6f2d0aaf72bdb2b8f"
+      },
+      "review-final-verification.json": {
+        "bytes": 4028,
+        "sha256": "113190ec449f4bc82c47d79d9b37c6953743c907d631ac6493d753c49059267e"
+      },
+      "web-tests.log": {
+        "bytes": 47861,
+        "sha256": "83756c5c63ffbaf72a21065639d71527110985bd2d41b2acc36e99aec7db65ac"
+      },
+      "web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "media-check.log": {
+        "bytes": 72392,
+        "sha256": "94a9292c35c8956328ddbdf1b3e4682b378bc7cbb286c67400a89720db1a04df"
+      },
+      "native-types.log": {
+        "bytes": 54,
+        "sha256": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9"
+      },
+      "native-contracts.log": {
+        "bytes": 20068,
+        "sha256": "3f9e3a884df6e54422c8835298da5f3149aefc2e93446bab5e0b19a4837e2ce7"
+      },
+      "mobile-port.log": {
+        "bytes": 3288,
+        "sha256": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57"
+      },
+      "ci-contracts.log": {
+        "bytes": 2620,
+        "sha256": "ec772c8c6bf6c194fd90abb720fc05617fec7fad01b79a1e5b5f6607de559cbe"
+      },
+      "renderer-existing.log": {
+        "bytes": 34,
+        "sha256": "f73bc01951b76b00ed25bbf1911dd5205720b88aa1d3ff3efd244f5bb02e19d7"
+      },
+      "renderer-contracts.log": {
+        "bytes": 935,
+        "sha256": "d8be03e20d58107fd13c6f34ec927edd5b843b5951aedf24c7bed47fe0bf82e0"
+      },
+      "web-build.log": {
+        "bytes": 957,
+        "sha256": "576d351752b2d922dc85cecab8c1c4d195fa581e9aad9b322729f97ab99e58ca"
+      },
+      "legacy-truth.log": {
+        "bytes": 1214,
+        "sha256": "bcb8e4bf6e953d1199cd1af04343e52aac6635f1de67f5f8ba40cc1f4fcd5a5b"
+      },
+      "shared-dashboard.log": {
+        "bytes": 314,
+        "sha256": "abdb719a7761f3a5eb0f93478b2e85344f8a55c35fd4a4bfb01f84abc1a56e21"
+      },
+      "three.log": {
+        "bytes": 46658,
+        "sha256": "fde5de69e735ba2f0f9bedd4d08f84942aba26d7689af107e61a58feaffd0886"
+      },
+      "heroes.log": {
+        "bytes": 6005,
+        "sha256": "7326880225df84290b32b67903391859741958f17ad7c7a169227fbb29f74780"
+      },
+      "fallbacks.log": {
+        "bytes": 138,
+        "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+      },
+      "routes.log": {
+        "bytes": 353,
+        "sha256": "f35efe56c940a80a60c20b088a0185cdd41dbb836ebbd310ba3399e767660727"
+      },
+      "rendered.log": {
+        "bytes": 541,
+        "sha256": "f8823fb066e14a4cb1a868ec15c16c617fc546c8189b7a48d350894bb4276703"
+      },
+      "dashboard.log": {
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "portfolio.log": {
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "vault.log": {
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "comparison.log": {
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "portability.log": {
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "input.log": {
+        "bytes": 268,
+        "sha256": "8ede01e31ce06693a42b924205328ef91733c91ae6601f8af96a6a4ed72e4500"
+      },
+      "common-month.log": {
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "currency-width.log": {
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      },
+      "turntable-software.log": {
+        "bytes": 1302,
+        "sha256": "6eb398924a210006c0f9a617f72672ddfc02102ed81f859e7799b1233e70ff7d"
+      },
+      "render-all.log": {
+        "bytes": 387881,
+        "sha256": "0cf8d348f149c55e7a62681a7acfaa6e28ee4328854c24317401279349025a4e"
+      },
+      "verify-turntables.log": {
+        "bytes": 1196,
+        "sha256": "4b47ed9d283a40824f6a8541cc6cdb232f75293cb6feae8a02908f0bc76caed3"
+      }
+    }
+  },
+  "remaining": [
+    "Full-size/all-angle material/identity/photoreal approval remains open; no material or asset change in this slice.",
+    "Car Tireside unchanged lossy; preserve six source-exact normal groups and caps.",
+    "Inherited hardware/D3D X4122 remains open; strict software is not hardware clearance.",
+    "Canonical scenario/lender/calendar/backend/recovery/accessibility/physical-device/native/release gates remain open.",
+    "No merge/promotion/new dependencies/paid GPU/cloud-data-access changes."
+  ]
+}
