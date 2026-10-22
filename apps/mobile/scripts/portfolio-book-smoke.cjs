@@ -323,6 +323,7 @@ async function runPortfolioBookFixtures({ browser, origin, output }) {
   for(const [name,run] of [['imported-no-op',importedNoOps],['transfer',transferReview]]) {
     receipts.push(await freshFixture({browser,origin,output,width:280,name,book:importedBook,run}));
   }
+  receipts.push(...await require('./portfolio-lender-smoke.cjs').runNativeLenderFixtures({ browser, origin, output: path.join(output, 'lender-terms') }));
   fs.writeFileSync(path.join(output, 'portfolio-verification.json'), JSON.stringify({ origin, receipts }, null, 2) + '\n');
   assert.equal(receipts.filter(receipt => !receipt.passed).length, 0,
     `Portfolio rendered fixtures failed: ${receipts.filter(receipt => !receipt.passed).map(receipt => `${receipt.name}@${receipt.width}`).join(', ')}`);
