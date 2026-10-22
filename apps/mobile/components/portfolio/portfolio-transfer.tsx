@@ -9,9 +9,9 @@ type Props = {
   book: PortfolioBook;
   storageScope: string;
   revision: number;
-  documentVersion?: 3;
+  documentVersion?: 3 | 4;
   disabled?: boolean;
-  onReplace: (book: PortfolioBook, expectedRevision: number, documentVersion?: 3) => Promise<unknown>;
+  onReplace: (book: PortfolioBook, expectedRevision: number, documentVersion?: 3 | 4) => Promise<unknown>;
 };
 
 export function PortfolioTransfer(props: Props) {

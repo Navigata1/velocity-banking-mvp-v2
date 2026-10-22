@@ -5,7 +5,7 @@ export interface PortfolioTransferCurrent {
   book: PortfolioBook;
   storageScope: string;
   revision: number;
-  documentVersion?: 3;
+  documentVersion?: 3 | 4;
   disabled?: boolean;
 }
 
@@ -15,7 +15,7 @@ export interface PortfolioTransferReview {
   readonly destinationSignature: string;
   readonly storageScope: string;
   readonly revision: number;
-  readonly sourceVersion: 1 | 2 | 3;
+  readonly sourceVersion: 1 | 2 | 3 | 4;
   readonly debtCount: number;
   readonly locBalance: number;
   readonly locLimit: number;
@@ -27,16 +27,18 @@ function assertEditable(current: PortfolioTransferCurrent): void {
   if (current.disabled) throw new Error('Portfolio editing is unavailable. Review again when editing is available.');
   if (typeof current.storageScope !== 'string' || !current.storageScope.trim()) throw new Error('Portfolio storage scope is missing.');
   if (!Number.isSafeInteger(current.revision) || current.revision < 0) throw new Error('Portfolio revision is invalid.');
-  if (current.documentVersion !== undefined && current.documentVersion !== 3) throw new Error('Portfolio document version is unsupported.');
+  if (current.documentVersion !== undefined && current.documentVersion !== 3 && current.documentVersion !== 4) throw new Error('Portfolio document version is unsupported.');
 }
 
 export function makePortfolioTransferReview(current: PortfolioTransferCurrent): PortfolioTransferReview {
   assertEditable(current);
   const book = decodePortfolioDocument(current.sourceJSON);
-  const sourceVersion = (JSON.parse(current.sourceJSON) as { version: 1 | 2 | 3 }).version;
+  const sourceVersion = (JSON.parse(current.sourceJSON) as { version: 1 | 2 | 3 | 4 }).version;
+  const documentVersion = sourceVersion === 4 || current.documentVersion === 4 ? 4
+    : sourceVersion === 3 || current.documentVersion === 3 ? 3 : undefined;
   return Object.freeze({
     sourceJSON: current.sourceJSON,
-    canonicalDocument: encodePortfolioDocument(book, sourceVersion === 3 || current.documentVersion === 3 ? 3 : undefined),
+    canonicalDocument: encodePortfolioDocument(book, documentVersion),
     destinationSignature: encodePortfolioDocument(current.book, current.documentVersion),
     storageScope: current.storageScope,
     revision: current.revision,
@@ -64,14 +66,15 @@ export function validatePortfolioTransferReview(review: PortfolioTransferReview,
 
 export function beginPortfolioTransferConfirmation(review: PortfolioTransferReview, current: PortfolioTransferCurrent): {
   review: PortfolioTransferReview;
-  replacement: { book: PortfolioBook; expectedRevision: number; documentVersion?: 3 } | null;
+  replacement: { book: PortfolioBook; expectedRevision: number; documentVersion?: 3 | 4 } | null;
 } {
   const book = validatePortfolioTransferReview(review, current);
   const unchanged = review.canonicalDocument === review.destinationSignature;
+  const version = (JSON.parse(review.canonicalDocument) as { version: 2 | 3 | 4 }).version;
   return {
     review: Object.freeze({ ...review, phase: unchanged ? 'complete' : 'pending' }),
     replacement: unchanged ? null : { book, expectedRevision: review.revision,
-      ...(JSON.parse(review.canonicalDocument).version === 3 ? { documentVersion: 3 as const } : {}) },
+      ...(version === 3 || version === 4 ? { documentVersion: version } : {}) },
   };
 }
 

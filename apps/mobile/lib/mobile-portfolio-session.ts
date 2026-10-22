@@ -12,7 +12,7 @@ export interface MobilePortfolioSessionState {
   readonly status: Status;
   readonly isHydrated: boolean;
   readonly error: string | null;
-  readonly documentVersion?: 3;
+  readonly documentVersion?: 3 | 4;
 }
 interface Dependencies {
   load: typeof loadMobilePortfolioForOwner;
@@ -27,7 +27,7 @@ export interface MobilePortfolioSession {
   deactivate: () => void;
   create: (book: PortfolioBook) => Promise<DurableBackend>;
   update: (change: (book: PortfolioBook) => PortfolioBook) => Promise<DurableBackend>;
-  replace: (book: PortfolioBook, ownerLock?: MobileSnapshotOwnerLock, expectedRevision?: number, documentVersion?: 3) => Promise<DurableBackend>;
+  replace: (book: PortfolioBook, ownerLock?: MobileSnapshotOwnerLock, expectedRevision?: number, documentVersion?: 3 | 4) => Promise<DurableBackend>;
   flush: () => Promise<void>;
 }
 function initialState(): MobilePortfolioSessionState {
@@ -35,6 +35,11 @@ function initialState(): MobilePortfolioSessionState {
 }
 function frozenBook(value: PortfolioBook): PortfolioBook {
   const book = decodePortfolioBook(value);
+  if (book.datedPlan) {
+    for (const event of book.datedPlan.cashEvents) Object.freeze(event);
+    Object.freeze(book.datedPlan.cashEvents);
+    Object.freeze(book.datedPlan);
+  }
   if (book.loc.lenderTerms) {
     if (book.loc.lenderTerms.minimumPayment) Object.freeze(book.loc.lenderTerms.minimumPayment);
     if (book.loc.lenderTerms.sources) Object.freeze(book.loc.lenderTerms.sources);
@@ -146,8 +151,11 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
       assertCurrent();
       if (!state.isHydrated) throw new Error('Portfolio is still loading.');
       if (ownerLock && !isMobileSnapshotOwnerLock(ownerLock, owner ?? 'guest')) throw new Error('Portfolio replacement lock is invalid.');
-      if (documentVersion !== undefined && documentVersion !== 3) throw new Error('Portfolio replacement document version is unsupported.');
-      const candidate = frozenBook(book), before = queue, version = ++epoch;
+      if (documentVersion !== undefined && documentVersion !== 3 && documentVersion !== 4) throw new Error('Portfolio replacement document version is unsupported.');
+      const candidate = frozenBook(book);
+      // Reject invalid format requests before cancelling any valid queued work.
+      encodePortfolioDocument(candidate, documentVersion);
+      const before = queue, version = ++epoch;
       pending = 1;
       publish({ status: 'replacing', error: null });
       const operation = (ownerLock ? Promise.resolve() : before).then(async () => {

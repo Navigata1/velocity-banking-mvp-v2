@@ -7,6 +7,7 @@ import { createChunkedSecureAuthStorage, createWebAuthStorage, isMobileSnapshotO
 
 export const MOBILE_PORTFOLIO_STORAGE_KEY = 'interestshield.mobile.portfolio.v1';
 export const MOBILE_PORTFOLIO_V3_STORAGE_KEY = 'interestshield.mobile.portfolio.v3';
+export const MOBILE_PORTFOLIO_V4_STORAGE_KEY = 'interestshield.mobile.portfolio.v4';
 const OWNER_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const encrypted = createChunkedSecureAuthStorage(SecureStore, undefined, { strictRead: true });
 type OwnerId = string | null;
@@ -15,12 +16,12 @@ export interface MobilePortfolioStorageResult {
   backend: MobileAssumptionStorageBackend;
   book: PortfolioBook | null;
   revision: number;
-  documentVersion?: 3;
+  documentVersion?: 3 | 4;
 }
 export interface MobilePortfolioSaveOptions {
   expectedRevision: number;
   ownerLock?: MobileSnapshotOwnerLock;
-  documentVersion?: 3;
+  documentVersion?: 3 | 4;
 }
 
 function normalizedOwner(ownerId: OwnerId): OwnerId {
@@ -34,8 +35,9 @@ export function mobilePortfolioStorageKey(ownerId: OwnerId): string {
   return owner === null ? MOBILE_PORTFOLIO_STORAGE_KEY : `${MOBILE_PORTFOLIO_STORAGE_KEY}.owner.${owner}`;
 }
 
-function activePortfolioStorageKey(owner: OwnerId): string {
-  return owner === null ? MOBILE_PORTFOLIO_V3_STORAGE_KEY : `${MOBILE_PORTFOLIO_V3_STORAGE_KEY}.owner.${owner}`;
+function activePortfolioStorageKey(owner: OwnerId, version: 3 | 4): string {
+  const key = version === 4 ? MOBILE_PORTFOLIO_V4_STORAGE_KEY : MOBILE_PORTFOLIO_V3_STORAGE_KEY;
+  return owner === null ? key : `${key}.owner.${owner}`;
 }
 
 function withBookLock<T>(owner: OwnerId, lock: MobileSnapshotOwnerLock | undefined, action: () => Promise<T>): Promise<T> {
@@ -58,7 +60,7 @@ async function storagePort(): Promise<{ backend: DurableBackend; storage: AsyncA
   } catch { return null; }
 }
 
-function storedBook(raw: string | null, owner: OwnerId, documentVersion?: 3): { book: PortfolioBook | null; revision: number } {
+function storedBook(raw: string | null, owner: OwnerId, documentVersion?: 3 | 4): { book: PortfolioBook | null; revision: number } {
   if (raw === null) return { book: null, revision: 0 };
   try {
     const payload = JSON.parse(raw) as Record<string, unknown>;
@@ -70,7 +72,7 @@ function storedBook(raw: string | null, owner: OwnerId, documentVersion?: 3): { 
       || payload.ownerId !== null && typeof payload.ownerId !== 'string'
       || normalizedOwner(payload.ownerId as OwnerId) !== owner) throw new Error('Invalid saved Portfolio.');
     const innerVersion = JSON.parse(payload.document).version;
-    if (documentVersion === 3 ? innerVersion !== 3 : innerVersion !== 1 && innerVersion !== 2) throw new Error('Invalid Portfolio document version for this storage channel.');
+    if (documentVersion !== undefined ? innerVersion !== documentVersion : innerVersion !== 1 && innerVersion !== 2) throw new Error('Invalid Portfolio document version for this storage channel.');
     return { book: decodePortfolioDocument(payload.document), revision: payload.revision as number };
   } catch {
     throw new Error('Saved Portfolio is unreadable or belongs to another owner. Existing data was not replaced.');
@@ -78,11 +80,13 @@ function storedBook(raw: string | null, owner: OwnerId, documentVersion?: 3): { 
 }
 
 async function currentPortfolio(storage: AsyncAuthStorage, owner: OwnerId) {
-  const key = activePortfolioStorageKey(owner), raw = await storage.getItem(key);
-  // A present active channel is authoritative, even if its contents cannot decode.
-  if (raw !== null) return { ...storedBook(raw, owner, 3), active: true, key };
+  // A present newer channel is authoritative, even if its contents cannot decode.
+  for (const documentVersion of [4, 3] as const) {
+    const key = activePortfolioStorageKey(owner, documentVersion), raw = await storage.getItem(key);
+    if (raw !== null) return { ...storedBook(raw, owner, documentVersion), documentVersion, key };
+  }
   const legacyKey = mobilePortfolioStorageKey(owner);
-  return { ...storedBook(await storage.getItem(legacyKey), owner), active: false, key: legacyKey };
+  return { ...storedBook(await storage.getItem(legacyKey), owner), documentVersion: undefined, key: legacyKey };
 }
 
 export async function loadMobilePortfolioForOwner(ownerId: OwnerId, ownerLock?: MobileSnapshotOwnerLock): Promise<MobilePortfolioStorageResult> {
@@ -90,21 +94,21 @@ export async function loadMobilePortfolioForOwner(ownerId: OwnerId, ownerLock?: 
   return withBookLock(owner, ownerLock, async () => {
     const port = await storagePort();
     if (!port) return { backend: 'unavailable', book: null, revision: 0 };
-    const { book, revision, active } = await currentPortfolio(port.storage, owner);
-    return { backend: port.backend, book, revision, ...(active ? { documentVersion: 3 as const } : {}) };
+    const { book, revision, documentVersion } = await currentPortfolio(port.storage, owner);
+    return { backend: port.backend, book, revision, ...(documentVersion === undefined ? {} : { documentVersion }) };
   });
 }
 
-export async function saveMobilePortfolioForOwner(ownerId: OwnerId, book: PortfolioBook, options: MobilePortfolioSaveOptions): Promise<{ backend: DurableBackend; revision: number; documentVersion?: 3 }> {
+export async function saveMobilePortfolioForOwner(ownerId: OwnerId, book: PortfolioBook, options: MobilePortfolioSaveOptions): Promise<{ backend: DurableBackend; revision: number; documentVersion?: 3 | 4 }> {
   const owner = normalizedOwner(ownerId);
   const expectedRevision = options?.expectedRevision;
   const ownerLock = options?.ownerLock;
   const documentVersion = options?.documentVersion;
   if (typeof expectedRevision !== 'number' || !Number.isSafeInteger(expectedRevision) || expectedRevision < 0) throw new Error('Portfolio save requires a safe expected revision.');
-  if (documentVersion !== undefined && documentVersion !== 3) throw new Error('Portfolio save document version is unsupported.');
+  if (documentVersion !== undefined && documentVersion !== 3 && documentVersion !== 4) throw new Error('Portfolio save document version is unsupported.');
   // Freeze the candidate before awaiting an owner queue; callers may keep editing.
   const capturedDocument = encodePortfolioDocument(book, documentVersion);
-  const suppliedVersion = (JSON.parse(capturedDocument) as { version: 2 | 3 }).version;
+  const suppliedVersion = (JSON.parse(capturedDocument) as { version: 2 | 3 | 4 }).version;
   return withBookLock(owner, ownerLock, async () => {
     const port = await storagePort();
     if (!port) throw new Error('Portfolio persistence is unavailable.');
@@ -112,12 +116,13 @@ export async function saveMobilePortfolioForOwner(ownerId: OwnerId, book: Portfo
     if (current.revision !== expectedRevision) throw new Error('Saved Portfolio changed in another tab. Reload before saving again.');
     const revision = current.revision + 1;
     if (!Number.isSafeInteger(revision)) throw new Error('Portfolio revision limit reached.');
-    const active = current.active || suppliedVersion === 3;
-    const key = active ? activePortfolioStorageKey(owner) : current.key;
-    const document = active && suppliedVersion !== 3
-      ? encodePortfolioDocument(decodePortfolioDocument(capturedDocument), 3) : capturedDocument;
+    const activeVersion = current.documentVersion === 4 || suppliedVersion === 4 ? 4
+      : current.documentVersion === 3 || suppliedVersion === 3 ? 3 : undefined;
+    const key = activeVersion === undefined ? current.key : activePortfolioStorageKey(owner, activeVersion);
+    const document = activeVersion !== undefined && suppliedVersion !== activeVersion
+      ? encodePortfolioDocument(decodePortfolioDocument(capturedDocument), activeVersion) : capturedDocument;
     const payload = JSON.stringify({ version: 1, ownerId: owner, revision, savedAt: new Date().toISOString(), document });
     await port.storage.setItem(key, payload);
-    return { backend: port.backend, revision, ...(active ? { documentVersion: 3 as const } : {}) };
+    return { backend: port.backend, revision, ...(activeVersion === undefined ? {} : { documentVersion: activeVersion }) };
   });
 }

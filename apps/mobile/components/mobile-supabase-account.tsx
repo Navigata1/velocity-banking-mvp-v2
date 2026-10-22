@@ -114,7 +114,7 @@ export function MobileSupabaseAccount({
   renderOwnerId.current = currentOwnerId;
   const recoveryRequestVersion = useRef(0);
   const currentDestination = useRef<{ ownerId: string | null; assumptions: MobileDashboardInput;
-    assumptionsReady: boolean; book: PortfolioBook | null; bookReady: boolean; bookStatus: string; documentVersion?: 3 } | null>(null);
+    assumptionsReady: boolean; book: PortfolioBook | null; bookReady: boolean; bookStatus: string; documentVersion?: 3 | 4 } | null>(null);
   useLayoutEffect(() => {
     currentDestination.current = { ownerId: currentOwnerId, assumptions, assumptionsReady,
       book: portfolio.book, bookReady: portfolio.isHydrated, bookStatus: portfolio.status,

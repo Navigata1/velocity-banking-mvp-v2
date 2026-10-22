@@ -45,7 +45,7 @@ interface SnapshotRow {
 export interface MobileSnapshotRecoveryPreview {
   assumptions: MobileDashboardInput | null;
   portfolio: PortfolioBook | null;
-  portfolioDocumentVersion?: 3;
+  portfolioDocumentVersion?: 3 | 4;
   clientRevision: number;
   snapshotId: string;
   snapshotIdempotencyKey: string;
@@ -55,7 +55,7 @@ export interface MobileSnapshotRecoveryPreview {
 export interface MobileSnapshotRecoveryOptions {
   guestAssumptions: MobileDashboardInput | null;
   guestPortfolio: PortfolioBook | null;
-  guestPortfolioDocumentVersion?: 3;
+  guestPortfolioDocumentVersion?: 3 | 4;
   rejectedCount: number;
   selectedSnapshotId: null;
   snapshots: MobileSnapshotRecoveryPreview[];
@@ -63,8 +63,8 @@ export interface MobileSnapshotRecoveryOptions {
 }
 
 export type MobileSnapshotRecoverySource =
-  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; portfolioDocumentVersion?: 3; kind: 'device' }
-  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; portfolioDocumentVersion?: 3; kind: 'guest' }
+  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; portfolioDocumentVersion?: 3 | 4; kind: 'device' }
+  | { assumptions: MobileDashboardInput | null; portfolio?: PortfolioBook | null; portfolioDocumentVersion?: 3 | 4; kind: 'guest' }
   | { kind: 'remote'; snapshot: MobileSnapshotRecoveryPreview };
 
 export type MobileSnapshotRecoveryConfirmation =
@@ -129,7 +129,7 @@ interface MobileSnapshotRecoveryDependencies {
     book: PortfolioBook,
     ownerLock?: MobileSnapshotOwnerLock,
     expectedRevision?: number,
-    documentVersion?: 3
+    documentVersion?: 3 | 4
   ) => Promise<MobileAssumptionStorageBackend>;
 }
 
@@ -296,7 +296,7 @@ export async function applyMobileSnapshotRecovery(
   const options = await loadMobileSnapshotRecoveryOptions(client, ownerId);
   let assumptions: MobileDashboardInput | null;
   let sourcePortfolio: PortfolioBook | null;
-  let sourcePortfolioDocumentVersion: 3 | undefined;
+  let sourcePortfolioDocumentVersion: 3 | 4 | undefined;
 
   if (input.source.kind === 'remote') {
     if ('kind' in input.confirmation) {
@@ -380,8 +380,9 @@ export async function applyMobileSnapshotRecovery(
     }
     const targetAssumptions = assumptions ?? local.input;
     const targetPortfolio = sourcePortfolio ?? localPortfolio.book;
-    // Active3 cannot downgrade, even when an older source supplies the replacement book.
-    const targetPortfolioDocumentVersion = sourcePortfolioDocumentVersion ?? localPortfolio.documentVersion;
+    // Keep the highest adopted format, including context-free4 from either side.
+    const targetPortfolioDocumentVersion = sourcePortfolioDocumentVersion === 4 || localPortfolio.documentVersion === 4 ? 4
+      : sourcePortfolioDocumentVersion === 3 || localPortfolio.documentVersion === 3 ? 3 : undefined;
 
     const staged = await outbox.stageRecovery({
       assumptions: targetAssumptions,

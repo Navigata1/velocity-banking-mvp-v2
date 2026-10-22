@@ -82,13 +82,13 @@ interface StoredMobileSnapshotRecovery {
 export interface MobileSnapshotPendingRecovery extends StoredMobileSnapshotRecovery {
   assumptions: MobileDashboardInput;
   portfolio?: PortfolioBook | null;
-  portfolioDocumentVersion?: 3;
+  portfolioDocumentVersion?: 3 | 4;
 }
 
 export interface MobileSnapshotStageRecoveryInput {
   assumptions: MobileDashboardInput;
   portfolio?: PortfolioBook | null;
-  portfolioDocumentVersion?: 3;
+  portfolioDocumentVersion?: 3 | 4;
   expectedLocalAssumptions: string;
   expectedLocalPortfolio?: string;
   expectedOwnerId: string;

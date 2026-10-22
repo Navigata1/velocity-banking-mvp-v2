@@ -15,7 +15,7 @@ import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
 export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
   portfolio?: PortfolioBook | null;
-  portfolioDocumentVersion?: 3;
+  portfolioDocumentVersion?: 3 | 4;
   clientRevision: number;
   displayName?: string;
   expectedOwnerId: string;
