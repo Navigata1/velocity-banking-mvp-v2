@@ -809,3 +809,48 @@ GoalACTIVE,draftPR256 open,productionReady=false. Photoreal,lender/calendar,
 backend/security,physical native and final-release gates remain open. No merge,
 manualdeployment,promotion,paidGPU,cloud/data/access/DNS/settings mutation or
 Desktop HTML republishing.
+
+## 2026-10-22 - Lender Confidence Prerequisite, State37
+
+Strict lender input preservation now separates completeness, provenance and actual
+model support. Explicit Portfolio document3 and active3 copy-on-write storage keep
+old1/2 bytes. Web/native transfer, snapshots, immutable queues and recovery carry
+terms and version markers. Unsupported lender extensions in legacy single-target
+storage block that source without disabling its separate Portfolio or Settings.
+Optional editors retain unknowns, explicit zeros and user provenance assertions.
+Normal forecasts with supplied unmodeled terms withhold payoff dates, interest
+savings and payment targets. Three complete educational ledgers remain exact.
+This does NOT implement lender fees/minimums/rates/draw rules or dated calendars;
+R3-T1 is in progress and R3-G1 remains pending. The new bounded R3-G3 records only
+lossless input/storage/basis support, not numerical lender compliance.
+
+Independent review closed four shared/web and both native physical findings,
+with17 final shared edge checks and45 native integration checks. The native probes
+use real modules, locks and chunking with memory platform IO, not device SecureStore.
+Full local attempt1 stopped at two stale generated Remotion-data checks. The
+existing generator refreshed contract3/source provenance and a truthful blocked
+assumption; strict schema3/obsolete-version RED then GREEN. Both educational story
+payloads remain exact. No failed output was removed or validation weakened.
+
+Full attempt2 reran all29 serialized gates on445 unchanged source-file hashes:
+360 existing regressions,23247 reference probes,21 model/6 wiring contracts,
+183 web workflow layouts,97 native workflows+1navigation,full native contracts,
+fresh web/Android/iOS Hermes exports,223 media contracts/27 fresh Remotion stills,
+existing ten turntables,Worker/report checks.495 local evidence files indexed at
+.superpowers/sdd/2026-10-22-lender-confidence/local-evidence-index.json.
+
+Prior d03a7c1 is sealed and remotely verified: receipt6339608765, complete
+push39764855337 attempt1/PR39764859371 attempt2,known automatic READY,hosted168,
+20 served asset hashes and actual IAB. Prior256shipping/96local and older immutable
+checkpoints remain intact. The earlier screenshot deadline failures and nine
+known Three warnings remain unresolved; this task does not fix them.
+
+State37 intentionally precedes the new push. Finish both complete exact-head CI
+events, known automatic READY,hosted183/20assets/final IAB/receipt/seal on draftPR256.
+If the lender-confidence current-checkpoint.json exists, its later sealed proof
+supersedes this pending snapshot. Fold that receipt into the next substantive
+improvement, not a metadata-only push loop. Continue actual numerical R3 work and
+all-ten photographic art review. General legacy-corruption fallback, old-client
+rollout/rollback, dedicated backend/security, physical native/accessibility and
+final production release remain unverified/open. No production/cloud/data/access/
+DNS mutation, paid GPU, merge or promotion; no Desktop HTML republishing.
