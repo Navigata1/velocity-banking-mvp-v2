@@ -1,0 +1,330 @@
+{
+  "baseline": "78530883fa0f25c63f4eb131ae56d124f85d3199",
+  "verifiedAt": "2026-10-22T06:57:07.012Z",
+  "productionReady": false,
+  "stage": "Locally verified Portfolio history continuity and accepted payoff authority; new remote verification pending",
+  "localStages": 30,
+  "serializedMainStages": 27,
+  "actualSupplementalAudits": 3,
+  "stages": [
+    {
+      "name": "ci-contracts",
+      "code": 0,
+      "log": "full-gates-attempt1-ci-contracts.log"
+    },
+    {
+      "name": "runtime-contracts",
+      "code": 0,
+      "log": "full-gates-attempt1-runtime-contracts.log"
+    },
+    {
+      "name": "sql-wiring",
+      "code": 0,
+      "log": "full-gates-attempt1-sql-wiring.log"
+    },
+    {
+      "name": "web-tests",
+      "code": 0,
+      "log": "full-gates-attempt1-web-tests.log"
+    },
+    {
+      "name": "web-lint",
+      "code": 0,
+      "log": "full-gates-attempt1-web-lint.log"
+    },
+    {
+      "name": "web-build",
+      "code": 0,
+      "log": "full-gates-attempt1-web-build.log"
+    },
+    {
+      "name": "three-stage",
+      "code": 0,
+      "log": "full-gates-attempt1-three-stage.log"
+    },
+    {
+      "name": "web-routes",
+      "code": 0,
+      "log": "full-gates-attempt1-web-routes.log"
+    },
+    {
+      "name": "web-rendered",
+      "code": 0,
+      "log": "full-gates-attempt1-web-rendered.log"
+    },
+    {
+      "name": "simulator-comparison",
+      "code": 0,
+      "log": "full-gates-attempt1-simulator-comparison.log"
+    },
+    {
+      "name": "dashboard",
+      "code": 0,
+      "log": "full-gates-attempt1-dashboard.log"
+    },
+    {
+      "name": "vault",
+      "code": 0,
+      "log": "full-gates-attempt1-vault.log"
+    },
+    {
+      "name": "portfolio",
+      "code": 0,
+      "log": "full-gates-attempt1-portfolio.log"
+    },
+    {
+      "name": "heroes",
+      "code": 0,
+      "log": "full-gates-attempt1-heroes.log"
+    },
+    {
+      "name": "media-check",
+      "code": 0,
+      "log": "full-gates-attempt1-media-check.log"
+    },
+    {
+      "name": "hero-video-verification",
+      "code": 0,
+      "log": "full-gates-attempt1-hero-video-verification.log"
+    },
+    {
+      "name": "native-types",
+      "code": 0,
+      "log": "full-gates-attempt1-native-types.log"
+    },
+    {
+      "name": "native-contracts",
+      "code": 0,
+      "log": "full-gates-attempt1-native-contracts.log"
+    },
+    {
+      "name": "native-port",
+      "code": 0,
+      "log": "full-gates-attempt1-native-port.log"
+    },
+    {
+      "name": "native-web-build",
+      "code": 0,
+      "log": "full-gates-attempt1-native-web-build.log"
+    },
+    {
+      "name": "native-web-smoke",
+      "code": 0,
+      "log": "full-gates-attempt1-native-web-smoke.log"
+    },
+    {
+      "name": "native-accessibility",
+      "code": 0,
+      "log": "full-gates-attempt1-native-accessibility.log"
+    },
+    {
+      "name": "worker-check",
+      "code": 0,
+      "log": "full-gates-attempt1-worker-check.log"
+    },
+    {
+      "name": "worker-tests",
+      "code": 0,
+      "log": "full-gates-attempt1-worker-tests.log"
+    },
+    {
+      "name": "worker-dry-build",
+      "code": 0,
+      "log": "full-gates-attempt1-worker-dry-build.log"
+    },
+    {
+      "name": "report-renderer",
+      "code": 0,
+      "log": "full-gates-attempt1-report-renderer.log"
+    },
+    {
+      "name": "report-contracts",
+      "code": 0,
+      "log": "full-gates-attempt1-report-contracts.log"
+    },
+    {
+      "name": "web-runtime",
+      "code": 0,
+      "log": "audit-web-runtime.log"
+    },
+    {
+      "name": "worker-runtime",
+      "code": 0,
+      "log": "audit-worker-runtime.log"
+    },
+    {
+      "name": "native-critical",
+      "code": 0,
+      "log": "audit-native-critical.log"
+    }
+  ],
+  "sourcePins": {
+    "file": "full-gates-attempt1.json",
+    "sha256": "ee72101d6303eeb12d263ef3e5598acd3335cd57f86c03355d2910499a5eb59e",
+    "count": 408,
+    "scope": "Candidate working tree pinned from test start through completion; not an exact committed-head claim"
+  },
+  "protectedSourceBoundary": "Shared numerical packages, persistence package, all models/posters/media/manifests, native/Worker, dependencies/locks and CI workflow unchanged from785; six web presentation/store files and three test files intentionally changed",
+  "regressions": 351,
+  "modelContracts": 21,
+  "wiringContracts": 6,
+  "referenceProbes": 23247,
+  "canonicalSimulator": {
+    "id": "322a9a59-a36c-4e51-9f41-a7b1d7ad13ce",
+    "workflows": 18,
+    "widths": [
+      280,
+      375,
+      1440
+    ],
+    "themes": 3,
+    "financialTextElements": 90,
+    "minimumContrast": 6.8913283630388324,
+    "originalDomControls": 15,
+    "contextsClosed": 18,
+    "screenshots": 18,
+    "historyNavigation": [
+      {
+        "width": 280,
+        "incomeHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n+$50\n\nMonthly cash flow moved from $100 to $150.",
+        "expenseHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n-$25\n\nMonthly cash flow moved from $150 to $125.",
+        "reloadHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nBaseline\n\nBASELINE CAPTURED\n\n2 mo\n\nThe next edit will compare against this projection.",
+        "sessionOnly": true
+      },
+      {
+        "width": 375,
+        "incomeHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n+$50\n\nMonthly cash flow moved from $100 to $150.",
+        "expenseHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n-$25\n\nMonthly cash flow moved from $150 to $125.",
+        "reloadHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nBaseline\n\nBASELINE CAPTURED\n\n2 mo\n\nThe next edit will compare against this projection.",
+        "sessionOnly": true
+      },
+      {
+        "width": 1440,
+        "incomeHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n+$50\n\nMonthly cash flow moved from $100 to $150.",
+        "expenseHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nUpdated\n\nCASH FLOW\n\n-$25\n\nMonthly cash flow moved from $150 to $125.",
+        "reloadHistory": "What changed since last run\n\nCompared against the previous Portfolio projection.\n\nBaseline\n\nBASELINE CAPTURED\n\n2 mo\n\nThe next edit will compare against this projection.",
+        "sessionOnly": true
+      }
+    ],
+    "residualDateControl": "All3widths assert review history/no dates, genuine settlement restores dates, returning to residual withdraws success"
+  },
+  "originalWebWorkflows": 138,
+  "totalWebWorkflows": 156,
+  "captures": [
+    {
+      "file": "dashboard-interest__verification.json",
+      "source": "apps/web/test-results/dashboard-interest/verification.json",
+      "workflows": 18,
+      "sha256": "0c9e8a1b6756704f4514550d763316b753539002cf5ddf05a015babc1a13399d",
+      "bytes": 123760
+    },
+    {
+      "file": "portfolio-budget__verification.json",
+      "source": "apps/web/test-results/portfolio-budget/verification.json",
+      "workflows": 24,
+      "sha256": "5a9b25cbf9d1dfa72a06c09364b764e1f1260e097ec07b6165c46827f18a06c1",
+      "bytes": 35747
+    },
+    {
+      "file": "vault-comparison__verification.json",
+      "source": "apps/web/test-results/vault-comparison/verification.json",
+      "workflows": 20,
+      "sha256": "b1a1cbc93183bcd00088705f62a4b71c03d704a7c351e28083bce5c56f5e279c",
+      "bytes": 21859
+    },
+    {
+      "file": "comparison__verification.json",
+      "source": "apps/web/test-results/comparison/verification.json",
+      "workflows": 16,
+      "sha256": "755e27f8aff1835673dbd2f6c1493bb6f7dcfbb5972897607b38388cff4b86f2",
+      "bytes": 2905
+    },
+    {
+      "file": "portfolio-portability__verification.json",
+      "source": "apps/web/test-results/portfolio-portability/verification.json",
+      "workflows": 6,
+      "sha256": "a0574da952248e5bb04c2e672aa4184d3bbf53beb955994b93c7542cc011f909",
+      "bytes": 602
+    },
+    {
+      "file": "portfolio-input__portfolio-input-verification.json",
+      "source": "apps/web/test-results/portfolio-input/portfolio-input-verification.json",
+      "workflows": 4,
+      "sha256": "856b878bd5078bba933876e80158aa30650a2dc40d0c4e6f80c386f8e22aefcd",
+      "bytes": 1887
+    },
+    {
+      "file": "portfolio-common-month__verification.json",
+      "source": "apps/web/test-results/portfolio-common-month/verification.json",
+      "workflows": 21,
+      "sha256": "0ce91a5f107cd00118dd1118f31f918787a45e7020527bc188d636fdb262b78a",
+      "bytes": 174331
+    },
+    {
+      "file": "currency-width__verification.json",
+      "source": "apps/web/test-results/currency-width/verification.json",
+      "workflows": 11,
+      "sha256": "24218fe1c517c93ced4c77ecc9109c3b622f2e01fc317ae548fbd79beeb26783",
+      "bytes": 3668
+    },
+    {
+      "file": "shared-portfolio-dashboard__verification.json",
+      "source": "apps/web/test-results/shared-portfolio-dashboard/verification.json",
+      "workflows": 6,
+      "sha256": "8d7554ce11f59a786c29a636afe37d7dc1267bbe16ecd21c65e3f264b90976d9",
+      "bytes": 6565
+    },
+    {
+      "file": "legacy-web-truth__verification.json",
+      "source": "apps/web/test-results/legacy-web-truth/verification.json",
+      "workflows": 12,
+      "sha256": "5870d413aa2c61614fa6e3dfb48f459b576d65909d93ba2135543693c1210f2f",
+      "bytes": 1386495
+    },
+    {
+      "file": "portfolio-simulator__verification.json",
+      "source": "apps/web/test-results/portfolio-simulator/verification.json",
+      "workflows": 18,
+      "sha256": "e08cdadad46c91b03c7127d9d60e91a66a1c2fc6b89270b73c406e7a9dc90987",
+      "bytes": 602333
+    }
+  ],
+  "review": {
+    "independentPreFixGroups": 16,
+    "preFixActionSubcases": 13,
+    "scope": "Reviewer accepted navigation guard and independently reproduced two existing Important residual claims. Parent fixed both in one TDD pass; no post-fix independent-review claim.",
+    "fixedImportant": [
+      "Residual history successful-payoff interpretation",
+      "Per-debt dated payoff without accepted whole-plan settlement"
+    ],
+    "parentAdditionalRedGreen": "A provided acceptance flag cannot promote a failed numerical projection",
+    "adapterMove": "Exact old implementation after symbol renaming/newline normalization"
+  },
+  "priorVerifiedCheckpoint": {
+    "head": "78530883fa0f25c63f4eb131ae56d124f85d3199",
+    "push": 39728931442,
+    "pullRequest": 39728938532,
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6334018102",
+    "shippingFiles": 80,
+    "localFiles": 148
+  },
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-portfolio-history",
+    "index": "local-evidence-index.json",
+    "sha256": "27bec6df1f064dd51ea83b2e3787a517b721e2873eec2b2b6eb1e8324f4a59ef",
+    "entries": 202,
+    "note": "Explicit immutable selection only. Mutable live ledger and future shipping helpers excluded; exact ledger snapshot included."
+  },
+  "remaining": [
+    "Both complete new exact-head CI events, known automatic READY deployment, fresh hosted156/20assets/manual/receipt",
+    "All-ten photoreal/full-angle art and remaining Car/Card/hardware/clock work",
+    "Further history/scenario semantics, lender/calendar/rounding/credit rules, backend recovery/security and physical native/release gates"
+  ],
+  "freshTurntableExports": false,
+  "nativeAccessibility": {
+    "workflowChecks": 82,
+    "focusedNavigationAssertions": 1,
+    "passLines": 83,
+    "scope": "Expo web export in browser viewports; not physical iOS/Android or signed-in native proof"
+  }
+}
