@@ -68,6 +68,7 @@ async function runPortfolioPortabilityFixtures({browser,origin,output:destinatio
       await page.screenshot({path:path.join(destination,`${name}-${width}-failure.png`),fullPage:true}).catch(()=>{});
     }finally{await context.close();}
   }
+  receipts.push(...await require('./smoke-lender-terms.cjs').runLenderTermsFixtures({browser,origin,output:path.join(destination,'lender-terms')}));
   fs.writeFileSync(path.join(destination,'verification.json'),JSON.stringify({origin,receipts},null,2)+'\n');
   assert.equal(receipts.filter(r=>!r.passed).length,0,'Portfolio portability browser fixtures must all pass');return receipts;
 }
