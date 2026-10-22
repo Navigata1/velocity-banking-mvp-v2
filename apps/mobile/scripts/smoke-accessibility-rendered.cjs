@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { spawn } = require('node:child_process');
+const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
@@ -145,7 +146,9 @@ async function main() {
     await runCommonMonthFixtures({ browser, origin, output: outputDirectory, native: true });
     await verifyFinancialInputs(browser, origin, outputDirectory);
     await runPortfolioBookFixtures({ browser, origin, output: outputDirectory });
-    await require('./portfolio-dated-smoke.cjs').runNativeDatedFixtures({ browser, origin, output: path.join(outputDirectory, 'dated-plan') });
+    const datedOutput = path.join(outputDirectory, 'dated-plan', randomUUID());
+    console.log('Native dated smoke evidence: ' + datedOutput);
+    await require('./portfolio-dated-smoke.cjs').runNativeDatedFixtures({ browser, origin, output: datedOutput });
     await runLegacyAprFixtures({ browser, origin, output: outputDirectory });
     await runCoachingSafetyFixtures({ browser, origin, output: outputDirectory });
     for (const [viewportLabel, viewport] of viewports) {
