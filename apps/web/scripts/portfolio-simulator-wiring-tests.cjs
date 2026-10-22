@@ -39,4 +39,28 @@ test('linked Dashboard and Portfolio path cannot overrule accepted payoff review
   assert.ok(nodes(dashboard,n=>ts.isPropertyAccessExpression(n)&&ident(n.expression,'payoff')&&n.name.text==='payoffMonths').length);
   assert.ok(nodes(portfolio,n=>ts.isConditionalExpression(n)&&ts.isBinaryExpression(n.condition)&&member(n.condition.left,'payoffPlan','state')&&n.condition.right.text==='residual'&&ts.isJsxElement(n.whenTrue)&&ts.isJsxSelfClosingElement(n.whenFalse)&&ident(n.whenFalse.tagName,'PortfolioPayoffPath')).length);
 });
+test('Portfolio entry preserves a current comparison and initializes a missing result once',()=>{
+  const tree=parse(path.join(root,'portfolio/page.tsx'));
+  const effects=nodes(tree,n=>ts.isCallExpression(n)&&ident(n.expression,'useEffect'));
+  assert.equal(effects.length,1);
+  const effect=new Function('persistence','recompute','usePortfolioStore',`return (${effects[0].arguments[0].getText(tree)})();`);
+  let calls=0,state={lastResult:{payoffMonths:2},lastRunComparison:{status:'changed'}};
+  const store={getState:()=>state},recompute=()=>{calls++;state={lastResult:{payoffMonths:2},lastRunComparison:{status:'baseline'}};};
+  const original=state;
+  effect({status:'ready'},recompute,store);assert.equal(calls,0,'read-only entry must not replace an existing edit comparison');assert.equal(state,original);
+  state={lastResult:undefined,lastRunComparison:undefined};
+  effect({status:'ready'},recompute,store);assert.equal(calls,1,'a fresh ready entry still computes a baseline');const initialized=state;
+  effect({status:'ready'},recompute,store);assert.equal(calls,1,'a repeated effect must read the latest result, not a stale render');assert.equal(state,initialized);
+  for(const status of ['error','unavailable']){state={lastResult:undefined,lastRunComparison:undefined};effect({status},recompute,store);assert.equal(calls,1,status+' storage cannot compute a fallback');}
+});
+test('per-debt paid-off dates require accepted whole-book authority as well as the numerical result',()=>{
+  const tree=parse(path.join(root,'portfolio/PortfolioPayoffOrder.tsx'));
+  const condition=nodes(tree,ts.isVariableDeclaration).find(n=>ident(n.name,'portfolioProjectionValid'));
+  assert.ok(condition?.initializer);const accepted=new Function('result','store',`return (${condition.initializer.getText(tree)});`);
+  assert.equal(accepted({isPayoffPossible:true},{lastRunSummary:{isPayoffPossible:false}}),false,'tolerance-based numerical success is not accepted settlement');
+  assert.equal(accepted({isPayoffPossible:true},{lastRunSummary:{isPayoffPossible:true}}),true);
+  assert.equal(accepted({isPayoffPossible:false},{lastRunSummary:{isPayoffPossible:true}}),false);
+  assert.equal(accepted({isPayoffPossible:true},{}),false);
+  assert.equal(accepted(undefined,{}),false);
+});
 if(failures){console.error(`${failures}/${tests} Portfolio Simulator wiring contracts failed.`);process.exitCode=1;}else console.log(`${tests} Portfolio Simulator wiring contracts passed.`);

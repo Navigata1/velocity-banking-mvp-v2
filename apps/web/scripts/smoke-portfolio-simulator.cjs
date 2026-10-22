@@ -27,8 +27,13 @@ async function plan(page,strategy,payoff,interest='Not available',cash='Not avai
   assert.equal(await page.getByTestId('simulator-cash-'+strategy).innerText(),cash);
 }
 async function readable(page){await settled(page);const proof=await page.getByTestId('portfolio-simulator').evaluate(geometry);assertGeometry(proof);return proof;}
+async function history(page,status,body){
+  const panel=page.getByTestId('portfolio-run-comparison');await panel.waitFor();
+  const text=await panel.innerText();assert.equal(await panel.getByText(status,{exact:true}).count(),1,'expected '+status+' comparison; actual '+text);assert.ok(text.includes(body),text);return text;
+}
 async function sharedEdits(page,origin,output,width){
-  await page.goto(origin+'/simulator?scenario=portfolio',{waitUntil:'networkidle'});
+  await page.goto(origin+'/portfolio',{waitUntil:'networkidle'});await history(page,'Baseline','The next edit will compare against this projection.');
+  await page.getByRole('link',{name:'Compare strategies',exact:true}).click();
   try{await page.getByTestId('portfolio-simulator').waitFor({timeout:15000});}catch{throw new Error('explicit shared route must render canonical Simulator; actual headings='+JSON.stringify(await page.locator('h1').allTextContents()));}
   assert.equal(await page.getByTestId('portfolio-simulator').count(),1);assert.equal(await page.getByRole('heading',{name:'What-If Simulator',exact:true}).count(),0);
   assert.equal(await stored(page),encode(fixture()));
@@ -38,16 +43,23 @@ async function sharedEdits(page,origin,output,width){
   await edit(page,'Shared simulator monthly income','abc');await page.getByRole('alert').filter({hasText:'Enter a valid non-negative number.'}).waitFor();await page.getByRole('textbox',{name:'Shared simulator monthly income value',exact:true}).press('Escape');assert.equal(await stored(page),original);
   await edit(page,'Shared simulator monthly income','150');const expected=fixture();expected.monthlyIncome=150;assert.deepEqual(JSON.parse(await stored(page)).data,expected);
   await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();await page.getByRole('button',{name:/^Edit Portfolio monthly income, current value \$150/}).waitFor();
-  await edit(page,'Portfolio monthly expenses','25');expected.monthlyExpenses=25;await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();
+  const incomeHistory=await history(page,'Updated','Monthly cash flow moved from $100 to $150.');assert.ok(incomeHistory.includes('+$50'));
+  assert.equal(await page.getByTestId('portfolio-payoff-a').count(),1,'accepted plans retain their per-debt payoff dates');
+  await edit(page,'Portfolio monthly expenses','25');expected.monthlyExpenses=25;const expenseHistory=await history(page,'Updated','Monthly cash flow moved from $150 to $125.');assert.ok(expenseHistory.includes('-$25'));
+  await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();
+  await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();assert.equal(await history(page,'Updated','Monthly cash flow moved from $150 to $125.'),expenseHistory,'read-only navigation must preserve the exact previous/current edit comparison');
+  await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();
   assert.equal(await page.getByTestId('portfolio-simulator-cash-flow').innerText(),'$125.00');await page.reload({waitUntil:'networkidle'});assert.deepEqual(JSON.parse(await stored(page)).data,expected);
   await page.getByRole('link',{name:'Portfolio dashboard',exact:true}).click();await page.getByTestId('shared-portfolio-dashboard').waitFor();assert.equal(await page.getByTestId('shared-value-cash-flow').innerText(),'$125.00');
+  await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();
+  await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();const reloadHistory=await history(page,'Baseline','The next edit will compare against this projection.');assert.ok(!reloadHistory.includes('+$50')&&!reloadHistory.includes('-$25'),'session-only comparison must not fabricate history after a fresh reload');
   await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();await settled(page);await unchangedLegacy(page);
   await page.keyboard.press('Control+Home');await page.screenshot({path:path.join(output,`shared-edits-${width}-viewport.png`)});
   if(width!==280){await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();const stage=page.getByTestId('asset-hero-canvas');await stage.scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true'&&getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');presentationBounds(decodePngRgba(await stage.locator('canvas').screenshot()),'car');}
   const proof=await readable(page),controls=await originalNodeControls(page),contrasts=[];
   for(const theme of ['light','dark','original']){await page.evaluate(theme=>localStorage.setItem('interestshield-theme',JSON.stringify({state:{theme},version:0})),theme);await page.reload({waitUntil:'networkidle'});const proof=await readable(page);contrasts.push({theme,minimum:Math.min(...proof.metrics.map(m=>m.contrast)),values:proof.metrics.length});}
   await unchangedLegacy(page);assert.deepEqual(JSON.parse(await stored(page)).data,expected);
-  return {bidirectional:true,canonicalWrites:true,legacyBytesPreserved:true,modelChecked:width!==280,geometry:proof,controls,contrasts};
+  return {bidirectional:true,canonicalWrites:true,legacyBytesPreserved:true,historyNavigation:{incomeHistory,expenseHistory,reloadHistory,sessionOnly:true},modelChecked:width!==280,geometry:proof,controls,contrasts};
 }
 async function sourceIsolation(page,origin){
   await open(page,origin);const before=await stored(page);
@@ -76,6 +88,9 @@ async function residuals(page,origin){
   for(const target of ['debt','loc']){const b=fixture();b.debts=target==='debt'?[{...b.debts[0],balance:.005}]:[];b.loc.balance=target==='loc'?.005:0;await importBook(page,origin,b);for(const s of ['velocity','snowball','avalanche'])await plan(page,s,'Nonzero balance remains');assert.notEqual(await page.getByTestId('portfolio-simulator-total-debt').innerText(),'$0.00');await readable(page);}
   const own=fixture();own.monthlyIncome=10;own.chunkAmount=0;own.loc.limit=0;own.debts[0].balance=10.005;own.debts[0].minPaymentRule.amount=10;await importBook(page,origin,own);for(const s of ['velocity','snowball','avalanche'])await plan(page,s,'Nonzero balance remains');
   await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();await page.getByTestId('portfolio-payoff-summary').filter({hasText:/Nonzero balance remains|Review inputs/}).waitFor();assert.match(await page.getByTestId('portfolio-payoff-summary').innerText(),/Nonzero balance remains|Review inputs/,'Portfolio must not contradict shared Simulator residual review');assert.match(await page.getByTestId('portfolio-cash-at-payoff').innerText(),/Not projected/);assert.equal(await page.getByTestId('portfolio-payoff-path-review').count(),1);assert.equal(await page.getByTestId('portfolio-payoff-path-visual').count(),0);
+  const residualHistory=page.getByTestId('portfolio-run-comparison');assert.deepEqual({reviewLabels:await residualHistory.getByText('Review inputs',{exact:true}).count(),paidDates:await page.getByTestId('portfolio-payoff-a').count()},{reviewLabels:1,paidDates:0},'unpaid residual cannot receive history payoff success or a paid-off date; '+await residualHistory.innerText());
+  await edit(page,'Portfolio monthly income','20');assert.match(await residualHistory.innerText(),/Projection restored/);assert.equal(await page.getByTestId('portfolio-payoff-a').count(),1,'genuine accepted payoff restores the dated order');
+  await edit(page,'Portfolio monthly income','10');assert.match(await residualHistory.innerText(),/Needs review/);assert.equal(await page.getByTestId('portfolio-payoff-a').count(),0,'returning to residual removes dated success');
   await page.getByRole('link',{name:'Open dashboard',exact:true}).click();await page.getByTestId('shared-value-eta').waitFor();assert.equal(await page.getByTestId('shared-value-eta').innerText(),'Below model tolerance');assert.equal(await page.getByTestId('shared-value-next-move').innerText(),'Review payoff inputs');await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();
   const early=fixture();early.monthlyIncome=2;early.extraMonthlyPayment=1;early.chunkAmount=0;early.loc.limit=0;early.debts=[{...early.debts[0],balance:1.000005,minPaymentRule:{type:'fixed',amount:1}},{...early.debts[0],id:'b',name:'Loan B',balance:5,minPaymentRule:{type:'fixed',amount:1}}];await importBook(page,origin,early);for(const s of ['velocity','snowball','avalanche'])await plan(page,s,'Nonzero balance remains');
   await unchangedLegacy(page);return {clearedAndTinyDistinct:true,ownResidual:true,earlyToleranceErasure:true,geometry:await readable(page)};

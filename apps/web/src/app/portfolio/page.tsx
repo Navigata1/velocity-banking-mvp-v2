@@ -22,7 +22,7 @@ export default function PortfolioPage() {
   const persistence = useSyncExternalStore(portfolioPersistence.subscribe, portfolioPersistence.getStatus, portfolioPersistence.getStatus);
 
   useEffect(() => {
-    if (persistence.status === 'ready') recompute();
+    if (persistence.status === 'ready' && !usePortfolioStore.getState().lastResult) recompute();
   }, [recompute, persistence.status]);
 
   if (!mounted) {

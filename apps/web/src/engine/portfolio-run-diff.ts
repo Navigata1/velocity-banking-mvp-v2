@@ -123,7 +123,8 @@ function findPrimaryTargetName(
 
 export function summarizePortfolioRun(
   inputs: PortfolioSimulationInputs,
-  result: PortfolioSimulationResult
+  result: PortfolioSimulationResult,
+  payoffAccepted: boolean = result.isPayoffPossible
 ): PortfolioRunSummary {
   return {
     cashFlow: inputs.monthlyIncome - inputs.monthlyExpenses,
@@ -131,7 +132,7 @@ export function summarizePortfolioRun(
     totalMinimums: inputs.debts.reduce((sum, debt) => sum + getMinPayment(debt), 0),
     payoffMonths: result.payoffMonths,
     totalInterest: result.totalInterest,
-    isPayoffPossible: result.isPayoffPossible,
+    isPayoffPossible: result.isPayoffPossible && payoffAccepted,
     failureReason: result.failureReason,
     strategy: inputs.settings.strategy,
     focusMode: inputs.settings.focusMode,

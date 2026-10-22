@@ -71,6 +71,9 @@ function loadTsFile(filename) {
     if (request === '@interestshield/financial-engine/portfolio-path') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-path.ts'));
     }
+    if (request === '@interestshield/financial-engine/portfolio-common-month') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-common-month.ts'));
+    }
     if (request === '@interestshield/financial-engine/portfolio-book') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-book.ts'));
     }
@@ -4833,6 +4836,64 @@ test('portfolio store records a comparison against the previous run', () => {
       lastRunComparison: undefined,
     });
   }
+});
+
+test('canonical Portfolio history cannot publish a successful payoff for unpaid residuals', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const debt = (id, balance, minimum = 10) => ({ id, name: id, category: 'auto', kind: 'amortized', balance, apr: 0,
+    minPaymentRule: { type: 'fixed', amount: minimum }, paymentSource: 'checking' });
+  const book = { monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 0, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'velocity', focusMode: 'single', splitRatioPrimary: .7, debts: [debt('a', 10.005)] };
+  const cases = [book, { ...book, debts: [debt('a', .005)] }, { ...book, debts: [], loc: { limit: 1, balance: .005, apr: 0 } },
+    { ...book, monthlyIncome: 2, extraMonthlyPayment: 1, debts: [debt('a', 1.000005, 1), debt('b', 5, 1)] }];
+  try {
+    for (const fixture of cases) for (const strategy of ['velocity', 'snowball', 'avalanche']) {
+      assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: { ...fixture, strategy } })).ok, true);
+      const state = portfolioStore.usePortfolioStore.getState();
+      assert.equal(state.lastResult.isPayoffPossible, true, 'legacy numerical result stays unchanged');
+      assert.equal(state.lastRunSummary.isPayoffPossible, false, `${strategy} history cannot treat an unpaid residual as cleared`);
+      assert.equal(state.lastRunComparison.status, 'baseline');
+      assert.equal(state.lastRunComparison.changes[0].value, 'Review inputs');
+    }
+  } finally { store.importState(original); }
+});
+
+test('canonical Portfolio history restores only accepted payoff and retains valid timing comparisons', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const book = { monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 0, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'snowball', focusMode: 'single', splitRatioPrimary: .7,
+    debts: [{ id: 'a', name: 'Loan A', category: 'auto', kind: 'amortized', balance: 10.005, apr: 0,
+      minPaymentRule: { type: 'fixed', amount: 10 }, paymentSource: 'checking' }] };
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().lastRunSummary.isPayoffPossible, false);
+    store.setMonthlyIncome(20);
+    let state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'projection').value, 'Projection restored');
+    store.setMonthlyIncome(10);state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, false);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'projection').value, 'Needs review');
+    book.debts[0].balance = 20;
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().lastRunSummary.payoffMonths, 2);
+    store.setMonthlyIncome(30);state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'payoff-months').value, '1 mo sooner');
+    book.debts = [];
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    state = portfolioStore.usePortfolioStore.getState();assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes[0].value, 'Paid off');
+  } finally { store.importState(original); }
+});
+
+test('accepted history metadata cannot override a failed numerical projection', () => {
+  const inputs = { aprUnit: 'decimal', monthlyIncome: 0, monthlyExpenses: 0, extraMonthlyPayment: 0,
+    chunkAmount: 0, loc: { limit: 0, balance: 0, apr: 0 }, settings: { strategy: 'snowball', focusMode: 'single', splitRatioPrimary: .7 },
+    debts: [{ id: 'a', name: 'Loan A', category: 'auto', kind: 'amortized', balance: 10, apr: 0,
+      minPaymentRule: { type: 'fixed', amount: 10 }, paymentSource: 'checking' }] };
+  const result = portfolio.simulatePortfolio(inputs);assert.equal(result.isPayoffPossible, false);
+  assert.equal(portfolioRunDiff.summarizePortfolioRun(inputs, result, true).isPayoffPossible, false);
 });
 
 test('portfolio backup export and import preserve Money Loop planning inputs', () => {

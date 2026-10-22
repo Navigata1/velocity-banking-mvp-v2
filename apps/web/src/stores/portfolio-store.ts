@@ -13,6 +13,7 @@ import type {
 import { simulatePortfolio } from '@/engine/portfolio';
 import type { PortfolioRunComparison, PortfolioRunSummary } from '@/engine/portfolio-run-diff';
 import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-run-diff';
+import { buildPortfolioPayoffModel } from '@/engine/portfolio-payoff-model';
 import { decodePortfolioBook, decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
 import { createPortfolioPersistence, LEGACY_PORTFOLIO_KEY } from './portfolio-persistence';
 
@@ -481,7 +482,12 @@ export const usePortfolioStore = create<PortfolioState>()(
           maxMonths: 600,
         };
         const result = simulatePortfolio(inputs);
-        const summary = summarizePortfolioRun(inputs, result);
+        const payoff = buildPortfolioPayoffModel({
+          monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
+          extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount,
+          loc: state.loc, debts: state.debts, ...settings,
+        }).plans.find(plan => plan.strategy === state.strategy);
+        const summary = summarizePortfolioRun(inputs, result, payoff?.state === 'projected' || payoff?.state === 'cleared');
         const comparison = comparePortfolioRuns(state.lastRunSummary, summary);
         set({
           lastResult: result,

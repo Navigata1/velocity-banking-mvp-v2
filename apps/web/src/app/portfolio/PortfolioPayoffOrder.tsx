@@ -10,7 +10,7 @@ export default function PortfolioPayoffOrder({ classes }: { classes: PortfolioTh
   const store = usePortfolioStore();
   const result = store.lastResult;
   const payoffOrder = result?.payoffOrder ?? [];
-  const portfolioProjectionValid = result?.isPayoffPossible !== false;
+  const portfolioProjectionValid = result?.isPayoffPossible === true && store.lastRunSummary?.isPayoffPossible === true;
 
   if (!portfolioProjectionValid || payoffOrder.length === 0) return null;
 
