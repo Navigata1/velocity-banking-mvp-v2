@@ -10,8 +10,14 @@ const { readReachableSource } = require('../../../scripts/source-contract-helper
 require('./portfolio-apr-unit-tests.cjs');
 require('./portfolio-book-tests.cjs');
 require('./portfolio-persistence-tests.cjs');
+require('./lender-snapshot-tests.cjs').runLenderSnapshotTests();
 require('./portfolio-store-storage-tests.cjs');
 require('./portfolio-browser-harness-tests.cjs');
+require('./lender-terms-tests.cjs').runLenderTermsTests();
+require('./lender-portfolio-tests.cjs').runLenderPortfolioTests();
+require('./forecast-basis-tests.cjs').runForecastBasisTests();
+require('./lender-draft-tests.cjs').runLenderDraftTests();
+require('./legacy-scenario-guard-tests.cjs').runLegacyScenarioGuardTests();
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
@@ -1243,7 +1249,8 @@ test('web Dashboard coaching prioritizes the actual projected capacity failure',
 test('lender terms contract versions confidence and blocks projections with missing terms', () => {
   const missing = sharedFinancialEngine.buildLenderTermsContract({});
 
-  assert.equal(missing.version, '2.0.0');
+  assert.equal(missing.version, '3.0.0');
+  assert.equal(missing.inputComplete, false);
   assert.equal(missing.confidence, 'incomplete');
   assert.equal(missing.projectionReady, false);
   assert.deepEqual(Array.from(missing.missingFields), [
@@ -1267,7 +1274,9 @@ test('lender terms contract versions confidence and blocks projections with miss
   };
   const estimated = sharedFinancialEngine.buildLenderTermsContract(input);
   assert.equal(estimated.confidence, 'estimated');
-  assert.equal(estimated.projectionReady, true);
+  assert.equal(estimated.inputComplete, true);
+  assert.equal(estimated.projectionReady, false);
+  assert.deepEqual(Array.from(estimated.unmodeledFields), Array.from(missing.missingFields));
   assert.deepEqual(Array.from(estimated.estimatedFields), Array.from(missing.missingFields));
 
   const verified = sharedFinancialEngine.buildLenderTermsContract({
@@ -1275,12 +1284,20 @@ test('lender terms contract versions confidence and blocks projections with miss
     sources: Object.fromEntries(missing.missingFields.map((field) => [field, 'lender-document'])),
   });
   assert.equal(verified.confidence, 'complete');
-  assert.equal(verified.projectionReady, true);
+  assert.equal(verified.inputComplete, true);
+  assert.equal(verified.projectionReady, false);
   assert.deepEqual(Array.from(verified.estimatedFields), []);
 
-  const invalidMinimum = sharedFinancialEngine.buildLenderTermsContract({
+  const zeroMinimum = sharedFinancialEngine.buildLenderTermsContract({
     ...input,
     minimumPayment: { mode: 'fixed', value: 0 },
+  });
+  assert.equal(zeroMinimum.confidence, 'estimated');
+  assert.equal(zeroMinimum.inputComplete, true);
+  assert.deepEqual(Array.from(zeroMinimum.missingFields), []);
+  const invalidMinimum = sharedFinancialEngine.buildLenderTermsContract({
+    ...input,
+    minimumPayment: { mode: 'fixed', value: -1 },
   });
   assert.equal(invalidMinimum.confidence, 'incomplete');
   assert.deepEqual(Array.from(invalidMinimum.missingFields), ['minimumPayment']);
