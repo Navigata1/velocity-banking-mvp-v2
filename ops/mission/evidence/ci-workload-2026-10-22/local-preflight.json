@@ -1,0 +1,142 @@
+{
+  "baseline": "04753ee112d2b706faaf06e3fc747d6f5b325035",
+  "verifiedAt": "2026-10-22T03:49:13.613Z",
+  "stage": "Local CI-only workload/source-binding correction; new both actual-head complete CI/READY/hosted/manual required",
+  "productionReady": false,
+  "lastCompleteEventSourceHead": "dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8",
+  "priorReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6330585894",
+  "historyQualification": "Prior PR checkout commit differs, identical Git tree independently confirmed; not literal checkout-SHA identity.",
+  "sources": {
+    ".github/workflows/ci.yml": "3b91898a03b7249be44d8ec2c871c9dc84ff383f1f0a5baa9fb8c7ff88c04387",
+    "apps/media/scripts/media-workspace-contract.test.mjs": "e70643d463638cf7490a3939193e33a38d8c7b8fb27916203032cc24d22dd4fc",
+    "scripts/check-restoration-ci.test.cjs": "e5719255b0c34054badc15061dae8d8c0660a2ff929b0007cb48aad5e2610aca",
+    "scripts/mobile-port-contract-tests.cjs": "3acf1d7f6ac8e8d3f21970631eb909290ed9807c0dca4732e02e4e95852abca3",
+    "scripts/fixtures/restoration-ci-step-contract.json": "569b63c0f0409f7782819a6380557ce8d2bc623e8fb30570441c57d1ca7a93ef"
+  },
+  "normalizedSources": {
+    ".github/workflows/ci.yml": "3b91898a03b7249be44d8ec2c871c9dc84ff383f1f0a5baa9fb8c7ff88c04387",
+    "apps/media/scripts/media-workspace-contract.test.mjs": "e70643d463638cf7490a3939193e33a38d8c7b8fb27916203032cc24d22dd4fc",
+    "scripts/check-restoration-ci.test.cjs": "e5719255b0c34054badc15061dae8d8c0660a2ff929b0007cb48aad5e2610aca",
+    "scripts/mobile-port-contract-tests.cjs": "3acf1d7f6ac8e8d3f21970631eb909290ed9807c0dca4732e02e4e95852abca3",
+    "scripts/fixtures/restoration-ci-step-contract.json": "569b63c0f0409f7782819a6380557ce8d2bc623e8fb30570441c57d1ca7a93ef"
+  },
+  "boundary": {
+    "changed": [
+      ".github/workflows/ci.yml",
+      "apps/media/scripts/media-workspace-contract.test.mjs",
+      "scripts/check-restoration-ci.test.cjs",
+      "scripts/mobile-port-contract-tests.cjs"
+    ],
+    "added": [
+      "scripts/fixtures/restoration-ci-step-contract.json"
+    ],
+    "protectedFiles": 419,
+    "originalStepMeanings": 55,
+    "newGuards": 4,
+    "currentSteps": 59,
+    "jobs": 3,
+    "jobCapsMinutes": 20,
+    "movedSteps": 16,
+    "installs": 6,
+    "fullTreeInstallAuditRetained": true,
+    "appMathHeroMaterialDependenciesLocksUnchanged": true
+  },
+  "tests": {
+    "freshLocalStages": 15,
+    "ciContracts": 20,
+    "prerequisitePairs": 49,
+    "sourceShellCases": 6,
+    "runtimeContracts": 58,
+    "sqlWiring": 3,
+    "regressions": 348,
+    "reference": 23247,
+    "media": 222,
+    "stills": 27,
+    "nativeContractsFresh": true,
+    "workerFresh": true,
+    "independentProbeGroups": 11,
+    "parentProbeGroups": 11
+  },
+  "inherited": {
+    "material": {
+      "file": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
+      "sha256": "5548e5916b7b9705f53b025f7d3e3ba4e6f24da871cea873071faee0ac1207c9",
+      "localStages": 31,
+      "videos": 10,
+      "notFreshExportsHere": true
+    },
+    "cancelledCI": {
+      "head": "04753ee112d2b706faaf06e3fc747d6f5b325035",
+      "runs": [
+        {
+          "id": 39714399076,
+          "attempt": 1,
+          "conclusion": "cancelled"
+        },
+        {
+          "id": 39714404043,
+          "attempt": 1,
+          "conclusion": "cancelled"
+        }
+      ],
+      "noRerunOrAgentCancellation": true
+    },
+    "functionalHosted": {
+      "head": "04753ee112d2b706faaf06e3fc747d6f5b325035",
+      "id": "b6a84b3c-c747-4a9a-97cc-c9f0d6b4d3c9",
+      "workflows": 138,
+      "legacyAssertions": 711,
+      "servedHashes": 20,
+      "manualObservations": 14,
+      "priorFailedAttemptRetained": true,
+      "notFullCIApproval": true
+    },
+    "checkoutTrees": [
+      {
+        "label": "current-not-verified",
+        "eventHead": "04753ee112d2b706faaf06e3fc747d6f5b325035",
+        "checkoutCommit": "a5dca08bfca0de1a91800ea48aa173c40c87d597",
+        "headTree": "5ca84e93c6d859b1aabadfea152dfa7bc7e40adf",
+        "checkoutTree": "5ca84e93c6d859b1aabadfea152dfa7bc7e40adf",
+        "sameCommit": false,
+        "sameTree": true
+      },
+      {
+        "label": "previous-complete-events",
+        "eventHead": "dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8",
+        "checkoutCommit": "e437cef7bc08277926c86af2f92d484ddec8c967",
+        "headTree": "173e1f2ebb10e9fbc48a545d79ba0541b8a250b2",
+        "checkoutTree": "173e1f2ebb10e9fbc48a545d79ba0541b8a250b2",
+        "sameCommit": false,
+        "sameTree": true
+      }
+    ]
+  },
+  "houseStudy": {
+    "candidateRejected": true,
+    "productUnchanged": true,
+    "matchedPoses": 7,
+    "originalFrames": 14,
+    "meaningfulVisualGain": false,
+    "notByteIdentical": true,
+    "notFinalPhotorealApproval": true
+  },
+  "review": {
+    "file": "independent-concrete-review.md",
+    "fiveFinalRawPins": true,
+    "originalFailuresRetained": true
+  },
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-install-audit-study",
+    "index": "ops/mission/evidence/ci-workload-2026-10-22/raw-evidence-index.json",
+    "indexSha256": "a24f786e24fb65f8038baefb7eff955ff24000ae36eb1aca5ae6db306a4a1a06",
+    "entries": 82
+  },
+  "remaining": [
+    "All-ten final photoreal/material/full-angle identity approval remains open. Car broad hotspots and Card dark emerald reverse are not solved by these refinements.",
+    "Car Tireside unchanged lossy; inherited hardware/D3D X4122 and software ReadPixels performance warnings remain open, no suppression or hardware clearance.",
+    "Original initial Date.now+100 cross-RPC clock setup fragility remains an explicit P2.",
+    "Media/native security, canonical scenario/lender/calendar/backend/recovery/accessibility/physical-device/native/release gates remain open.",
+    "No merge/promotion/new dependencies/paid GPU/cloud-data-access changes or Desktop HTML republishing."
+  ]
+}
