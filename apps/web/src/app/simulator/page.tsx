@@ -1,6 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { runSimulation, formatCurrency, SimulationInputs, calculateMortgageAnalysis, compareSingleDebtStrategies, SIMULATOR_COMPARISON_SCOPE, SIMULATOR_COMPARISON_ASSUMPTIONS, SIMULATOR_COMPARISON_TIMING } from '@/engine/calculations';
 import DomainTabs from '@/components/DomainTabs';
 import DualSlider from '@/components/DualSlider';
@@ -20,7 +23,18 @@ import {
   formatSimulatorPercentLabel,
 } from '@/app/simulator-model';
 
+const PortfolioSimulator = dynamic(() => import('./PortfolioSimulator'));
+
+function SimulatorSource() {
+  const params = useSearchParams();
+  return params.get('scenario') === 'portfolio' ? <PortfolioSimulator /> : <TargetSimulator />;
+}
+
 export default function SimulatorPage() {
+  return <Suspense fallback={<p role="status" className="p-6">Loading simulator...</p>}><SimulatorSource /></Suspense>;
+}
+
+function TargetSimulator() {
   const mounted = useIsClient();
   const store = useFinancialStore();
   const { theme } = useThemeStore();
@@ -85,6 +99,7 @@ export default function SimulatorPage() {
       <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>What-If Simulator</h1>
         <p className={classes.textSecondary}>Compare payoff plans using your current balances</p>
+        <Link href="/simulator?scenario=portfolio" className={`mt-2 inline-flex min-h-11 items-center text-sm underline underline-offset-4 ${classes.text}`}>Portfolio scenario</Link>
       </ScrollReveal>
 
       <div className="relative z-50">

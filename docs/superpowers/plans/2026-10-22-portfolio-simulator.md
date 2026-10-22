@@ -33,12 +33,12 @@
 
 **Interfaces:** Consumes `PortfolioBook` and `preparePortfolioComparison(book)`. Produces `buildPortfolioSimulatorModel(book): PortfolioSimulatorModel` with nullable `cashFlow`/`totalDebt` and three ordered `plans`; each has `strategy`, `state` (`projected|cleared|review|residual`), nullable `payoffMonths`, `totalInterest`, `endingCash` and optional `reason`. No new engine API.
 
-- [ ] Write tests for the literal zero-APR fixture (all2months/0interest/0cash), full liability/LOC scope, selected-reference independence, exact-zero and tiny-positive residuals, failed/partial plans and blocked Velocity with available direct policies.
-- [ ] Add decimalAPR2/active-expired promo/frozen-input/invalid-book/overflow cases. Compare mixed-rate summaries to independently invoked `simulatePortfolio(portfolioBookInputs(book))` for each policy, not another call to this presentation model.
-- [ ] Run `node apps/web/scripts/portfolio-simulator-tests.cjs`; retain a meaningful RED before implementing the model.
-- [ ] Build initial statistics from the accepted month-zero comparison. For each possible payoff, request that policy's accepted own-payoff snapshot; with unavailable or nonzero remaining liabilities, return review/residual with null outcomes. Cleared requires actual zero debt and LOC at month0. Never mutate input.
-- [ ] Re-run the model tests GREEN and existing common-month31/reference23247/overview21 contracts. Add the test command to the existing web test chain, retaining every command and dependency field.
-- [ ] Commit the focused model/contracts when reviewed; do not push an incomplete feature.
+- [x] Write tests for the literal zero-APR fixture (all2months/0interest/0cash), full liability/LOC scope, selected-reference independence, exact-zero and tiny-positive residuals, failed/partial plans and blocked Velocity with available direct policies.
+- [x] Add decimalAPR2/active-expired promo/frozen-input/invalid-book/overflow cases. Compare mixed-rate summaries to independently invoked `simulatePortfolio(portfolioBookInputs(book))` for each policy, not another call to this presentation model.
+- [x] Run `node apps/web/scripts/portfolio-simulator-tests.cjs`; retain a meaningful RED before implementing the model.
+- [x] Build initial statistics from the accepted month-zero comparison. For each possible payoff, request that policy's accepted own-payoff snapshot; with unavailable or nonzero remaining liabilities, return review/residual with null outcomes. Cleared requires actual zero debt and LOC at month0. Never mutate input.
+- [x] Re-run the model tests GREEN and existing common-month31/reference23247/overview21 contracts. Add the test command to the existing web test chain, retaining every command and dependency field.
+- [x] Commit the focused model/contracts when reviewed; do not push an incomplete feature.
 
 ### Task 2: Explicit Canonical View And Entry Links
 
@@ -46,14 +46,14 @@
 
 **Interfaces:** Canonical view uses the SAME `usePortfolioStore`/`portfolioPersistence` APIs and existing `PortfolioCommonMonth({book,classes})`, `AssetHero` and canonical numeric editors. Source boundary selects canonical only for exact `scenario=portfolio`; legacy implementation remains unchanged below the boundary.
 
-- [ ] Write source wiring/route boundary checks and run RED: canonical view must not import the legacy financial store, normalize APRs or define a new store; actual explicit entry/query/default selection and preservation are also exercised by Task3.
-- [ ] Implement the source boundary under Suspense with lazy canonical import, mirroring the existing Dashboard pattern. Preserve legacy controls and default rendering.
-- [ ] Implement mounted/storage-ready gating with the established reload/discard-unsaved pattern. Memoize only the nine canonical book fields; do not persist or recompute store state on read-only entry.
-- [ ] Add current-book scope, income/expense/extra cap/LOC/applicable chunk inputs using canonical actions; include the existing asset stage with local inspection selection that never alters liabilities. Link debt/focus editing to Portfolio.
-- [ ] Show compact policy summaries from Task1 with own-payoff scope; use `formatCommonMonthAmount`, no fake zero/unavailable success. Render the existing same-month panel from the same memoized book.
-- [ ] Add explicit canonical Dashboard/Portfolio/Simulator links and a single-target demo exit. Keep existing Portfolio copy accurate about the default Simulator's separate source.
-- [ ] Run model/source contracts, web lint/build, existing sharedDashboard/common-month/legacy comparisons. Review diff for unrelated redesign and accidental persistence writes.
-- [ ] Commit the focused usable view; keep each commit within400changedlines.
+- [x] Write source wiring/route boundary checks and run RED: canonical view must not import the legacy financial store, normalize APRs or define a new store; actual explicit entry/query/default selection and preservation are also exercised by Task3.
+- [x] Implement the source boundary under Suspense with lazy canonical import, mirroring the existing Dashboard pattern. Preserve legacy controls and default rendering.
+- [x] Implement mounted/storage-ready gating with the established reload/discard-unsaved pattern. Memoize only the nine canonical book fields; do not persist or recompute store state on read-only entry.
+- [x] Add current-book scope, income/expense/extra cap/LOC/applicable chunk inputs using canonical actions; include the existing asset stage with local inspection selection that never alters liabilities. Link debt/focus editing to Portfolio.
+- [x] Show compact policy summaries from Task1 with own-payoff scope; use `formatCommonMonthAmount`, no fake zero/unavailable success. Render the existing same-month panel from the same memoized book.
+- [x] Add explicit canonical Dashboard/Portfolio/Simulator links and a single-target demo exit. Keep existing Portfolio copy accurate about the default Simulator's separate source.
+- [x] Run model/source contracts, web lint/build, existing sharedDashboard/common-month/legacy comparisons. Review diff for unrelated redesign and accidental persistence writes.
+- [x] Commit the focused usable view; keep each commit within400changedlines.
 
 ### Task 3: Rendered Coherence And Shipping Evidence
 

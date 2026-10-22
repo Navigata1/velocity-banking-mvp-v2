@@ -184,7 +184,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                 </div>
                 <p data-testid="portfolio-strategy-alignment-note" className={`${classes.textMuted} mt-3 text-xs leading-5`}>
                   Velocity Mode is the Portfolio planning default, not a promise that it is the fastest or lowest-interest path.
-                  These policies use this saved Portfolio. The Simulator has separate scenario inputs.
+                  These policies use this saved Portfolio. The single-target Simulator demo uses separate inputs.
                 </p>
                 {store.strategy === 'velocity' && (
                   <p data-testid="portfolio-velocity-modeling-note" className={`${classes.textSecondary} mt-2 text-xs leading-5`}>

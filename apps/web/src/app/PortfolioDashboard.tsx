@@ -4,20 +4,15 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { ArrowRight, RefreshCw } from 'lucide-react';
 import { buildPortfolioOverview } from '@interestshield/financial-engine/portfolio-overview';
-import type { DebtItem } from '@/engine/portfolio';
 import AssetHero from '@/components/hero/AssetHero';
 import PageTransition from '@/components/PageTransition';
 import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
-import type { HeroId } from '@/data/hero-assets';
+import { portfolioDebtHeroes } from '@/data/portfolio-hero';
 import { useIsClient } from '@/hooks/useIsClient';
 import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-store';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
 import { strategyLabel } from './portfolio/portfolio-formatters';
 
-const debtHeroes: Record<DebtItem['category'], HeroId> = {
-  auto: 'car', mortgage: 'house', land: 'land', credit_card: 'creditCard', student_loan: 'studentLoan',
-  personal_loan: 'personal', medical: 'medical', purchase_plan: 'custom', custom: 'custom',
-};
 function money(value: number): string {
   if (!Number.isFinite(value)) return 'Not available';
   const scientific = Math.abs(value) >= 1e21 || value !== 0 && Math.abs(value) < 0.01;
@@ -77,6 +72,7 @@ export default function PortfolioDashboard() {
         <h1 className="text-xl font-semibold md:text-2xl">Portfolio Dashboard</h1>
         <p className={`mt-1 text-xs ${classes.textSecondary}`}>{strategyLabel(store.strategy)} / {store.focusMode === 'split' ? 'Split focus' : 'Single focus'}</p></div>
       <nav aria-label="Dashboard scenario" className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        <Link href="/simulator?scenario=portfolio" className="inline-flex min-h-11 items-center gap-2 underline underline-offset-4">Compare strategies<ArrowRight aria-hidden="true" size={16} /></Link>
         <Link href="/portfolio" className="inline-flex min-h-11 items-center gap-2 underline underline-offset-4">Edit portfolio<ArrowRight aria-hidden="true" size={16} /></Link>
         <Link href="/" className={`inline-flex min-h-11 items-center ${classes.textSecondary}`}>Single-target demo</Link>
       </nav>
@@ -90,7 +86,7 @@ export default function PortfolioDashboard() {
       </article>)}
     </section>
     <section aria-label="Portfolio debt inspection" className={`grid min-w-0 items-center gap-4 border-b pb-5 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] ${classes.border}`}>
-      <div className="min-w-0">{selected ? <AssetHero key={selected.id} id={debtHeroes[selected.category]} />
+      <div className="min-w-0">{selected ? <AssetHero key={selected.id} id={portfolioDebtHeroes[selected.category]} />
         : <div className={`flex min-h-64 items-center justify-center ${classes.textSecondary}`}>{store.debts.length ? 'Choose a listed debt' : 'No listed debts'}</div>}</div>
       <div className="min-w-0 space-y-4">
         <label className={`block text-xs ${classes.textSecondary}`} htmlFor="portfolio-dashboard-debt">Inspect debt</label>

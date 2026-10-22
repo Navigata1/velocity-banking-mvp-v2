@@ -2897,8 +2897,8 @@ test('portfolio strategy picker distinguishes planning default from fastest payo
     'expected Portfolio to avoid implying Velocity is always fastest or lowest-interest'
   );
   assert.ok(
-    source.includes('The Simulator has separate scenario inputs.'),
-    'expected Portfolio to disclose separate scenario ownership instead of claiming matching comparison inputs'
+    source.includes('The single-target Simulator demo uses separate inputs.') && source.includes('href="/simulator?scenario=portfolio"'),
+    'expected Portfolio to distinguish the separate single-target demo from its explicit shared Simulator view'
   );
   assert.ok(
     source.includes('data-testid="portfolio-velocity-modeling-note"'),

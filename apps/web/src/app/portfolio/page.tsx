@@ -58,6 +58,9 @@ export default function PortfolioPage() {
           <Link href="/?scenario=portfolio" className={`inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4 ${classes.text}`}>
             Open dashboard<ArrowUpRight aria-hidden="true" size={16} />
           </Link>
+          <Link href="/simulator?scenario=portfolio" className={`inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4 ${classes.text}`}>
+            Compare strategies<ArrowUpRight aria-hidden="true" size={16} />
+          </Link>
           <p className={`${classes.textSecondary} max-w-3xl`}>
             Build a complete picture of your debts, then choose a payoff approach.{' '}
             <span className="text-emerald-400">Velocity Mode</span> prioritizes{' '}
