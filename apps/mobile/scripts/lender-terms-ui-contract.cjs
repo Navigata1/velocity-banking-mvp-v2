@@ -28,8 +28,11 @@ module.exports = ({ React, createRoot, hostElement, document }) => async () => {
       } }, { filename: file }); return loaded.exports;
     }
     const Component = load(path.resolve(__dirname, '../components/portfolio/portfolio-lender-terms.tsx')).PortfolioLenderTerms;
+    const simulate = load(fs.realpathSync(require.resolve('@interestshield/financial-engine/portfolio'))).simulatePortfolio;
     const container = hostElement('div'); container.ownerDocument = document; const root = createRoot(container);
-    const renderCurrent = () => root.render(React.createElement(Component, { ...props, onSave: async value => {
+    const renderCurrent = () => root.render(React.createElement(Component, { ...props, basis: simulate({ aprUnit: 'decimal', monthlyIncome: 1000,
+      monthlyExpenses: 0, extraMonthlyPayment: 0, debts: [], settings: { strategy: 'avalanche', focusMode: 'single', splitRatioPrimary: 0.7 },
+      loc: { limit: 1000, balance: 0, apr: 0.1, ...(props.terms === undefined ? {} : { lenderTerms: props.terms }) } }).forecastBasis, onSave: async value => {
       saves.push(value); if (gate) await gate;
       if (fail) throw new Error('Synthetic publication failure');
       props = { ...props, terms: value === null ? undefined : value }; renderCurrent();

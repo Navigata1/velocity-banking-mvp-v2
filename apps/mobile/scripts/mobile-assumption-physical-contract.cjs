@@ -76,7 +76,8 @@ function harness(platform) {
       'restored-secure-store', 'restored-local-storage'].map(status => [status, { value: status, detail: 'Storage status.' }]));
     for (const [module, component] of [['portfolio-controls', 'PortfolioControls'], ['portfolio-debt-editor', 'PortfolioDebtEditor'],
       ['portfolio-payoff-path', 'PortfolioPayoffPath'], ['portfolio-common-month', 'PortfolioCommonMonth'],
-      ['portfolio-transfer', 'PortfolioTransfer'], ['portfolio-lender-terms', 'PortfolioLenderTerms']]) {
+      ['portfolio-transfer', 'PortfolioTransfer'], ['portfolio-lender-terms', 'PortfolioLenderTerms'],
+      ['portfolio-dated-plan', 'PortfolioDatedPlan'], ['portfolio-dated-ledger', 'PortfolioDatedLedger']]) {
       mocks[`@/components/portfolio/${module}`] = { [component]: captureWidget(component) };
     }
     const api = load(path.join(root, 'hooks/use-persisted-mobile-assumptions.ts'));
@@ -126,7 +127,30 @@ async function run() {
     }
     assert.throws(() => h.storage.encodeMobileAssumptions({ ...base, loc: { ...base.loc, lenderTerms: undefined } }), unsupported);
   });
+  await test('legacy codecs reject top-level datedPlan even when null or explicitly undefined', async () => {
+    const h = harness('web');
+    for (const datedPlan of [null, undefined, {}, require('./dated-storage-contract.cjs').plan()]) {
+      const input = { ...clone(base), datedPlan };
+      assert.throws(() => h.storage.encodeMobileAssumptions(input), unsupported);
+      if (datedPlan !== undefined) assert.equal(h.storage.decodeMobileAssumptions(payload(input, ownerId), ownerId), null);
+    }
+  });
   for (const platform of ['ios', 'web']) {
+    for (const owner of [ownerId, null]) await test(`${platform}/${owner ?? 'guest'}: datedPlan null and supplied context fail closed without replacing any bytes`, async () => {
+      for (const datedPlan of [null, require('./dated-storage-contract.cjs').plan()]) {
+        const h = harness(platform), key = h.key(owner), raw = payload({ ...clone(base), datedPlan }, owner); h.values.set(key, raw);
+        await assert.rejects(() => h.storage.loadMobileAssumptionsForOwner(owner), unsupported);
+        await assert.rejects(() => h.storage.saveMobileAssumptionsForOwner(owner, base, { expectedRevision: 4 }), unsupported);
+        await assert.rejects(() => h.storage.saveMobileAssumptionsForOwner(owner, { ...base, datedPlan }), unsupported);
+        const probe = h.hook(owner);
+        try {
+          await probe.render(); assert.equal(probe.current().isHydrated, false);
+          await assert.rejects(() => probe.current().resetAssumptions());
+          await assert.rejects(() => probe.current().replaceAssumptions(base));
+          assert.equal(h.values.get(key), raw);
+        } finally { await probe.close(); }
+      }
+    });
     await test(`${platform}: legacy storage errors block legacy routes but preserve Portfolio and Settings content with unready scenario context`, async () => {
       const h = harness(platform), key = h.key(ownerId), raw = payload(extended(), ownerId); h.values.set(key, raw); const probe = h.hook(ownerId);
       try {
@@ -274,6 +298,7 @@ async function run() {
   console.log(`${count} physical legacy assumption contracts ${process.exitCode ? 'failed' : 'passed'}. CPU real-module ports only.`);
 }
 module.exports = run;
+module.exports.nullHost = nullHost;
 if (require.main === module) {
   const watchdog = setTimeout(() => { console.error('Physical assumptions contracts timed out.'); process.exit(1); }, 15000);
   run().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => clearTimeout(watchdog));

@@ -37,18 +37,18 @@ export class UnsupportedMobileAssumptionsError extends Error {
   readonly code = 'unsupported-mobile-assumptions';
 
   constructor() {
-    super('Legacy scenario storage does not support lender terms. Existing data was not replaced. Review the source or use a Portfolio document3.');
+    super('Legacy scenario storage does not support lender terms or dated plans. Existing data was not replaced. Review the source or use a Portfolio document3/4.');
     this.name = 'UnsupportedMobileAssumptionsError';
   }
 }
 
-function hasUnsupportedLenderTerms(value: unknown): boolean {
-  return !!value && typeof value === 'object' && 'loc' in value && !!value.loc
-    && typeof value.loc === 'object' && 'lenderTerms' in value.loc;
+function hasUnsupportedExtensions(value: unknown): boolean {
+  return !!value && typeof value === 'object' && ('datedPlan' in value
+    || 'loc' in value && !!value.loc && typeof value.loc === 'object' && 'lenderTerms' in value.loc);
 }
 
 function assertSupportedMobileAssumptions(value: unknown): void {
-  if (hasUnsupportedLenderTerms(value)) throw new UnsupportedMobileAssumptionsError();
+  if (hasUnsupportedExtensions(value)) throw new UnsupportedMobileAssumptionsError();
 }
 
 interface StoredMobileAssumptionsPayload {
@@ -76,7 +76,7 @@ function isFiniteNumber(value: unknown): value is number {
 
 function normalizeMobileDashboardInput(value: unknown): MobileDashboardInput | null {
   if (!value || typeof value !== 'object') return null;
-  if (hasUnsupportedLenderTerms(value)) return null;
+  if (hasUnsupportedExtensions(value)) return null;
 
   const candidate = value as Partial<MobileDashboardInput>;
   const activeDebt = candidate.activeDebt;

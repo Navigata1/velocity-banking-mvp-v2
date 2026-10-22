@@ -1,6 +1,7 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
 import { useMobileAuth } from './mobile-auth-provider';
 import { usePersistedMobilePortfolio } from '@/hooks/use-persisted-mobile-portfolio';
+import { isMobileSnapshotOwnerLock } from '@/lib/supabase/auth-storage';
 
 type Value = ReturnType<typeof usePersistedMobilePortfolio>;
 const Context = createContext<Value | null>(null);
@@ -9,7 +10,10 @@ export function MobilePortfolioProvider({ children }: PropsWithChildren) {
   const portfolio = usePersistedMobilePortfolio(ownerId, authReady);
   const value = { ...portfolio,
     create: (...args: Parameters<typeof portfolio.create>) => isRecoveryBusy() ? Promise.reject(new Error('Recovery is applying.')) : portfolio.create(...args),
-    update: (...args: Parameters<typeof portfolio.update>) => isRecoveryBusy() ? Promise.reject(new Error('Recovery is applying.')) : portfolio.update(...args) };
+    update: (...args: Parameters<typeof portfolio.update>) => isRecoveryBusy() ? Promise.reject(new Error('Recovery is applying.')) : portfolio.update(...args),
+    replace: (...args: Parameters<typeof portfolio.replace>) => isRecoveryBusy() && !isMobileSnapshotOwnerLock(args[1], ownerId ?? 'guest')
+      ? Promise.reject(new Error('Recovery is applying.')) : portfolio.replace(...args),
+    setDatedPlan: (...args: Parameters<typeof portfolio.setDatedPlan>) => isRecoveryBusy() ? Promise.reject(new Error('Recovery is applying.')) : portfolio.setDatedPlan(...args) };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export function useMobilePortfolio(): Value {
