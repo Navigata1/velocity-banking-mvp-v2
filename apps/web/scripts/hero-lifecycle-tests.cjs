@@ -20,7 +20,9 @@ function compile(text, imports = {}, globals = {}) {
 }
 const turntable = compile(read('turntable.ts'));
 const geometryBounds = compile(read('hero-geometry-bounds.ts'), { three: THREE });
-const once = { geometry: 1, material: 1, texture: 1, image: 1 };
+const heroMaterials = compile(read('hero-materials.ts'), { three: THREE });
+const once = { geometry: 1, material: 2, texture: 1, image: 1 };
+const cardOnce = { geometry: 1, material: 3, texture: 1, image: 1 };
 const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected) < 1e-12, label);
 
 // Only browser/GPU boundaries are simulated; execute the actual component and math.
@@ -67,7 +69,7 @@ function mount(text = source, options = {}) {
       if (options.environmentFails) throw new Error('injected environment failure');
       return { texture: {}, dispose() { state.environment++; } };
     } },
-    './hero-geometry-bounds': geometryBounds, './turntable': turntable,
+    './hero-geometry-bounds': geometryBounds, './turntable': turntable, './hero-materials': heroMaterials,
   }, {
     window: { devicePixelRatio: 1, matchMedia: () => ({ matches: !!options.reduced }) }, document: { hidden: false },
     ResizeObserver: class { observe() {} disconnect() { state.observer++; } },
@@ -75,7 +77,7 @@ function mount(text = source, options = {}) {
     requestAnimationFrame(fn) { const id = nextFrame++; frames.set(id, fn); return id; },
     cancelAnimationFrame: id => frames.delete(id),
   }).default;
-  let props = { model: '/heroes/car.glb', replay: 0,
+  let props = { model: options.model ?? '/heroes/car.glb', replay: 0,
     onReady: value => state.ready.push(value), onError: () => state.errors++ };
   function update(changes = {}) {
     props = { ...props, ...changes }; cursor = 0; effects = [];
@@ -85,11 +87,25 @@ function mount(text = source, options = {}) {
   }
   function resolve(index = loads.length - 1) {
     const object = new THREE.Group(), counts = { geometry: 0, material: 0, texture: 0, image: 0 };
-    const texture = new THREE.Texture({ close() { counts.image++; } });
-    const geometry = new THREE.BoxGeometry(), material = new THREE.MeshStandardMaterial({ map: texture, normalMap: texture });
-    for (const [name, resource] of Object.entries({ geometry, material, texture })) resource.addEventListener('dispose', () => counts[name]++);
-    object.add(new THREE.Mesh(geometry, material), new THREE.Mesh(geometry, material));
-    models.push({ object, counts }); loads[index].success({ scene: object });
+    const card = loads[index].model === '/heroes/creditCard.glb';
+    const image = { close() { counts.image++; } };
+    if (card) Object.assign(image, { data: new Uint8Array([255, 255, 255, 255]), width: 1, height: 1 });
+    const texture = new THREE.Texture(image);
+    const geometry = new THREE.BoxGeometry();
+    const materials = card
+      ? [options.missingSilver ? 'Missing silver' : 'CC-Brushed-Silver', 'CC-Emerald-Metal', 'CC-Turned-Silver'].map((name, i) =>
+        new THREE.MeshPhysicalMaterial({ name, map: texture, normalMap: texture, normalScale: new THREE.Vector2(.08, -.08), anisotropy: [.65, .5, .25][i] }))
+      : ['Paint 1 Carmine', options.missingPaint ? 'Missing paint' : 'Paint 2 Carmine'].map(name =>
+        new THREE.MeshStandardMaterial({ name, map: texture, normalMap: texture, normalScale: new THREE.Vector2(.3, -.3) }));
+    if (card && options.invalidSilver) materials[0].anisotropy = NaN;
+    for (const [name, resource] of Object.entries({ geometry, texture })) resource.addEventListener('dispose', () => counts[name]++);
+    for (const material of materials) material.addEventListener('dispose', () => counts.material++);
+    if (card) object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, [materials[0], materials[0]]),
+      new THREE.Mesh(geometry, materials[1]), new THREE.Mesh(geometry, materials[2]));
+    else object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[1]));
+    const loaded = { object, counts, materials };
+    models.push(loaded); loads[index].success({ scene: object });
+    return loaded;
   }
   update();
   return { state, frames, loads, renderers, models, host, resolve, update,
@@ -102,7 +118,7 @@ function mount(text = source, options = {}) {
     unmount() { for (const slot of slots) { slot?.cleanup?.(); if (slot) slot.cleanup = undefined; } },
   };
 }
-function released(h) {
+function released(h, expected = once) {
   h.unmount(); h.unmount();
   assert.equal(h.frames.size, 0, 'unmount must cancel all RAF');
   assert.equal(h.state.environment, 1); assert.equal(h.state.observer, 1);
@@ -110,7 +126,7 @@ function released(h) {
     assert.equal(renderer.disposals, 1); assert.equal(renderer.losses, 1);
     assert.equal(renderer.domElement.isConnected, false); assert.equal(renderer.domElement.listeners.size, 0);
   }
-  for (const model of h.models) assert.deepEqual(model.counts, once);
+  for (const model of h.models) assert.deepEqual(model.counts, expected);
 }
 function fullTurn(h) {
   close(h.angle(), -0.55, 'turn must start at original pose'); h.tick(16);
@@ -129,6 +145,8 @@ function replayContract(text) {
   const h = mount(text);
   try {
     assert.deepEqual(h.state.ready, [false]); h.resolve(); fullTurn(h);
+    const normalScales = () => h.models[0].object.children.map(mesh => mesh.material.normalScale.toArray());
+    assert.deepEqual(normalScales(), [[.15,-.15],[.15,-.15],[.15,-.15]], 'loaded Car must apply shared material refinement');
     const canvas = h.renderers[0].domElement, object = h.models[0].object, scene = h.renderers[0].scene;
     for (let i = 0; i < 4; i++) {
       h.replay(); assert.equal(h.frames.size, 1, 'rapid replay must leave exactly one RAF');
@@ -136,6 +154,7 @@ function replayContract(text) {
       h.tick(16); h.tick(62.5);
     }
     h.replay(); assert.equal(h.frames.size, 1, 'rapid replay must leave exactly one RAF'); fullTurn(h);
+    assert.deepEqual(normalScales(), [[.15,-.15],[.15,-.15],[.15,-.15]], 'Replay must not compound material refinement');
     assert.equal(h.renderers.length, 1); assert.equal(h.loads.length, 1); assert.equal(h.models.length, 1);
     assert.equal(h.renderers[0].domElement, canvas); assert.equal(canvas.isConnected, true);
     assert.equal(h.renderers[0].scene, scene); assert.ok(scene.children.includes(object));
@@ -150,6 +169,7 @@ console.log('PASS hero lifecycle finite endpoint: initial and replay reach 360 d
 console.log('PASS hero lifecycle RAF stop: zero pending and no renders after both turns');
 console.log('PASS hero lifecycle replay cancellation: rapid replay leaves exactly one pending RAF');
 console.log('PASS hero lifecycle retention and cleanup: one renderer/model/canvas, stable ready, resources released once');
+console.log('PASS hero lifecycle material refinement: applied on load, unchanged through full turns and repeated Replay');
 
 const reduced = mount(source, { reduced: true }); reduced.resolve();
 assert.equal(reduced.frames.size, 0, 'reduced-motion load must not schedule RAF');
@@ -167,10 +187,11 @@ assert.deepEqual(pending.state.ready, [false, true]); fullTurn(pending); release
 const late = mount(); late.replay(); released(late); late.resolve(); late.loads[0].failure();
 assert.equal(late.frames.size, 0); assert.deepEqual(late.models[0].counts, once);
 assert.deepEqual(late.state.ready, [false]); assert.equal(late.state.errors, 0);
-for (const failure of ['network', 'texture', 'context']) {
-  const h = mount();
+for (const failure of ['network', 'texture', 'context', 'material']) {
+  const h = mount(source, { missingPaint: failure === 'material' });
   if (failure === 'network') h.loads[0].failure();
   if (failure === 'texture') { h.loads[0].manager.onError('blob:failed'); h.resolve(); assert.deepEqual(h.state.revoked, ['blob:failed']); }
+  if (failure === 'material') h.resolve();
   if (failure === 'context') {
     h.resolve(); h.replay(); let prevented = false;
     h.renderers[0].domElement.listeners.get('webglcontextlost')({ preventDefault() { prevented = true; } });
@@ -186,6 +207,84 @@ for (const options of [{ rendererFails: true }, { environmentFails: true }]) {
   for (const renderer of h.renderers) { assert.equal(renderer.disposals, 1); assert.equal(renderer.domElement.isConnected, false); }
 }
 console.log('PASS hero lifecycle edge paths: reduced motion, loading replay, late load, errors, context loss');
+
+function cardReplayContract(text) {
+  const h = mount(text, { model: '/heroes/creditCard.glb' });
+  try {
+    assert.deepEqual(h.state.ready, [false]);
+    const loaded = h.resolve();
+    assert.equal(h.state.errors, 0, 'Card load must refine its own material path');
+    assert.deepEqual(h.state.ready, [false, true]);
+    assert.deepEqual(loaded.materials.map(material => material.anisotropy), [.3, .5, .25], 'loaded Card must refine only brushed silver');
+    assert.deepEqual(loaded.materials.map(material => material.normalScale.toArray()), [[.08, -.08], [.08, -.08], [.08, -.08]]);
+    const before = loaded.materials.map(material => material.toJSON());
+    const canvas = h.renderers[0].domElement, scene = h.renderers[0].scene;
+    fullTurn(h);
+    for (let i = 0; i < 4; i++) {
+      h.replay(); assert.equal(h.frames.size, 1, 'Card replay must leave exactly one RAF');
+      h.tick(16); h.tick(62.5);
+    }
+    h.replay(); fullTurn(h);
+    assert.deepEqual(loaded.materials.map(material => material.toJSON()), before, 'Card Replay must not alter any material state');
+    assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1); assert.equal(h.models.length, 1);
+    assert.equal(h.renderers[0].domElement, canvas); assert.equal(canvas.isConnected, true);
+    assert.equal(h.renderers[0].scene, scene); assert.ok(scene.children.includes(loaded.object));
+    assert.deepEqual(h.state.ready, [false, true]); assert.equal(h.state.errors, 0);
+    assert.deepEqual(loaded.counts, { geometry: 0, material: 0, texture: 0, image: 0 });
+    h.replay(); released(h, cardOnce); assert.equal(h.state.errors, 0);
+  } finally { h.unmount(); }
+}
+cardReplayContract(source);
+console.log('PASS hero lifecycle Card load and Replay: silver 0.3, other alloys stable, one model/canvas, resources released once');
+
+for (const options of [{ missingSilver: true }, { invalidSilver: true }]) {
+  const h = mount(source, { model: '/heroes/creditCard.glb', ...options });
+  try {
+    const loaded = h.resolve();
+    assert.equal(h.state.errors, 1); assert.deepEqual(h.state.ready, [false]);
+    assert.equal(h.frames.size, 0); assert.deepEqual(loaded.counts, cardOnce);
+    assert.equal(loaded.materials[1].anisotropy, .5); assert.equal(loaded.materials[2].anisotropy, .25);
+    if (options.invalidSilver) assert.ok(Number.isNaN(loaded.materials[0].anisotropy));
+    else assert.equal(loaded.materials[0].anisotropy, .65);
+    h.replay(); assert.equal(h.frames.size, 0);
+    released(h, cardOnce); assert.equal(h.state.errors, 1);
+  } finally { h.unmount(); }
+}
+console.log('PASS hero lifecycle Card rejection: missing or invalid silver never ready, resources released once');
+
+const switched = mount();
+try {
+  switched.update({ model: '/heroes/creditCard.glb' });
+  assert.deepEqual(switched.loads.map(load => load.model), ['/heroes/car.glb', '/heroes/creditCard.glb']);
+  assert.deepEqual(switched.state.ready, [false, false]);
+  const staleCar = switched.resolve(0);
+  assert.deepEqual(staleCar.counts, once);
+  assert.deepEqual(staleCar.materials.map(material => material.normalScale.toArray()), [[.3, -.3], [.3, -.3]], 'late Car must be disposed before material refinement');
+  switched.loads[0].failure(); assert.equal(switched.state.errors, 0);
+  const currentCard = switched.resolve(1);
+  assert.deepEqual(currentCard.materials.map(material => material.anisotropy), [.3, .5, .25]);
+  assert.deepEqual(switched.state.ready, [false, false, true]);
+  assert.ok(!switched.renderers[1].scene.children.includes(staleCar.object));
+  assert.ok(switched.renderers[1].scene.children.includes(currentCard.object));
+  fullTurn(switched); switched.replay(); fullTurn(switched);
+  assert.deepEqual(currentCard.materials.map(material => material.anisotropy), [.3, .5, .25]);
+  assert.deepEqual(currentCard.counts, { geometry: 0, material: 0, texture: 0, image: 0 });
+  switched.unmount(); switched.unmount();
+  assert.deepEqual(staleCar.counts, once); assert.deepEqual(currentCard.counts, cardOnce);
+  assert.equal(switched.loads.length, 2); assert.equal(switched.models.length, 2);
+  assert.equal(switched.state.environment, 2); assert.equal(switched.state.observer, 2);
+  assert.equal(switched.frames.size, 0); assert.equal(switched.state.errors, 0);
+  for (const renderer of switched.renderers) {
+    assert.equal(renderer.disposals, 1); assert.equal(renderer.losses, 1);
+    assert.equal(renderer.domElement.isConnected, false); assert.equal(renderer.domElement.listeners.size, 0);
+  }
+} finally { switched.unmount(); }
+console.log('PASS hero lifecycle stale Car->Card: late Car unrefined and released, Card isolated through Replay and teardown');
+
+const hardcodedCar = source.replace('refineHeroMaterials(gltf.scene, model)', "refineHeroMaterials(gltf.scene, '/heroes/car.glb')");
+assert.notEqual(hardcodedCar, source, 'hardcoded Car material path: mutation must apply');
+assert.throws(() => cardReplayContract(hardcodedCar), error => error.code === 'ERR_ASSERTION' && /Card load must refine its own material path/.test(error.message));
+console.log('PASS hero lifecycle negative control rejected: hardcoded Car material path');
 
 // Permanent negative controls must fail behavior assertions, not merely parse differently.
 for (const [name, pattern, replacement, message] of [

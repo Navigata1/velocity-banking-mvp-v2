@@ -45,4 +45,8 @@ const bounds = await readFile(new URL('../web/src/components/hero/hero-geometry-
 await writeFile(new URL('hero-geometry-bounds.js', vendorRoot), ts.transpileModule(bounds, {
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
 }).outputText);
+const materials = await readFile(new URL('../web/src/components/hero/hero-materials.ts', mediaRoot), 'utf8');
+await writeFile(new URL('hero-materials.js', vendorRoot), ts.transpileModule(materials, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
+}).outputText);
 await cp(vendorRoot, new URL('hero-turntables/vendor/', mediaRoot), { recursive: true });

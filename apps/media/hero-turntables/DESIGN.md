@@ -13,6 +13,12 @@ It uses Three.js 0.185.1 from apps/web and HyperFrames 0.7.56 from apps/media.
   Credits and the completion index stay outside that viewport, not over the model.
 - `createHeroEnvironment` is likewise shared: soft reflection cards, local diffusion
   and neutral studio contrast. No remote HDRI or render-time asset request.
+- `refineHeroMaterials` is shared with the web viewer and applied once after load.
+  Car's two authored Carmine paint normal scales are halved, retaining source
+  maps, tiling, signs and zeros; Card's brushed-silver anisotropy is 0.30 instead
+  of 0.65. These bounded presentation adaptations leave GLB bytes unchanged.
+  Matched seven-angle studies support finer paint grain and clearer brushed
+  shading, not final photorealism or a general hotspot/dark-backface solution.
 - The slim progress index indicates completion of the single revolution.
 - Local GLBs, local modules and local GSAP only. No render-time remote assets.
 - Auto is adapted licensed geometry; Vault, House, Land, Credit Card, Student

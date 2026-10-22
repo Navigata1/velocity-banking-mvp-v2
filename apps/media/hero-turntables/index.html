@@ -28,6 +28,7 @@
     import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     import { createHeroEnvironment } from './vendor/studio-environment.js';
     import { measureHeroRotationBounds } from './vendor/hero-geometry-bounds.js';
+    import { refineHeroMaterials } from './vendor/hero-materials.js';
     import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR } from './vendor/hero-turntable.js';
 
     const names = ['car','house','land','creditCard','studentLoan','medical','personal','recreation','custom','vault'];
@@ -55,6 +56,7 @@
     };
     const gltf = await new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).loadAsync(`vendor/heroes/${selected}.glb`);
     if (assetFailed) throw new Error('Hero texture loading failed; refusing an incomplete render.');
+    refineHeroMaterials(gltf.scene, `/heroes/${selected}.glb`);
     scene.add(gltf.scene);
     const bounds = measureHeroRotationBounds(gltf.scene);
     const target = new THREE.Vector3(0, (bounds.minY + bounds.maxY) / 2, 0);

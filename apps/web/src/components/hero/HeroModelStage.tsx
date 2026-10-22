@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { createHeroEnvironment } from './studio-environment';
 import { measureHeroRotationBounds } from './hero-geometry-bounds';
+import { refineHeroMaterials } from './hero-materials';
 import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR, HERO_TURN_SECONDS, type HeroRotationBounds } from './turntable';
 
 interface Props { model: string; replay: number; onError: () => void; onReady: (ready: boolean) => void; }
@@ -93,7 +94,7 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
         if (!disposed) onError();
         return;
       }
-      try { bounds = measureHeroRotationBounds(gltf.scene); }
+      try { refineHeroMaterials(gltf.scene, model); bounds = measureHeroRotationBounds(gltf.scene); }
       catch { disposeModel(gltf.scene); onError(); return; }
       object = gltf.scene; scene.add(object);
       if (!fitCamera()) return;
