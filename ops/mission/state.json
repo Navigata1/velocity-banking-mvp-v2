@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "CI workload and actual-source checks locally verified. Prior 047 CI cancelled despite clean runtime audits; new complete actual-head verification pending. Original application preserved; production gates remain open.",
+    "tagline": "Canonical Portfolio Simulator locally verified. Shared whole-book summaries reject unpaid residuals. New exact-head remote verification pending; photoreal and production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T03:47:44.992Z",
-    "sessionCount": 32
+    "updated": "2026-10-22T05:33:40.136Z",
+    "sessionCount": 33
   },
   "policies": {
     "merge": "review",
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/ci-workload-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T03:47:44.992Z",
-          "notes": "Fresh15localstages:20CIcontracts/49prerequisitepairs/6sourceshellcases,58runtime/3SQLwiring,full348regressions/ref23247/lint/build,222media/27freshstills,nativeTypes/fullcontracts/mobileport,Workercheck/tests/drybuild,report4. Independent11groups and parent11rerun pass. OnlyCI/test source changed; app/math/heroes/materials/dependencies/locks exact to047. Ten prior exports/material31stages remain inherited, not new exports. New full actual-head CI still required."
+          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T05:33:40.136Z",
+          "notes": "Fresh 30 local stages: 27 serialized functional gates plus actual web runtime/Worker runtime/native critical audits. Full348 regressions,21 new model/4 wiring, overview21/common-month31/reference23247,20 CI/58 runtime contracts, media222/27 fresh Remotion stills, native82/full contracts and Worker/report checks pass. Existing ten turntable videos were inspected, not freshly exported. Engine packages/stores/editors/assets/materials/manifests/dependencies/locks/CI source unchanged from46; new view and summary presentation are explicit changes."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/ci-workload-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T03:47:44.992Z",
-          "notes": "App/source preserved from047. Its serialized exact READY hostedb6a84b3c passed12suites/138workflows/711assertions/20servedhashes; new IABCarHouseCardVault/Replay/defaultposter/credit/logs[]/14rawobservations inside window. First785ca8 last-suite300stimeout remains failed/archived; overlap observed, cause unknown. New final head needs fresh hosted/manual. No DesktopHTML republishing."
+          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T05:33:40.136Z",
+          "notes": "Local original138 plus new18 browser workflows pass. New canonical matrix covers280/375/1440,3 themes,90 shared-edit financial/scenario text elements, minimum contrast6.8913,15 live-DOM negatives and18 closed contexts/hashed PNGs. Per-debt Order/history claims remain outside this summary correction. New exact READY hosted156/20 hashes/manual evidence still required. No Desktop HTML republishing."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/ci-workload-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T03:47:44.992Z",
-          "notes": "047 attempt1 push39714399076/PR39714404043 bothCANCELLED near20min; primaryPortfolio/media and onehero interrupted. Bothruntimeaudits/SQL and otherhero passed, not fullCI. No rerun/cancel requested; operation-cancelled logs do not prove timeoutcause. dd32/receipt6330585894 remains prior complete source-tree checkpoint: PRcheckoute437cef differscommit but authenticatedGitTREE matchesdd32; current047/a5dca08 also sameTREE. New3job59step actualHEAD checks/20mincaps/bothcompleteevents/READY/hosted138/manual/receipt required. No merge/promotion."
+          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T05:33:40.136Z",
+          "notes": "Prior46a6867 VERIFIED both complete actual-head39718984403/39718988817 attempts1,all3jobs/59steps and6 literal source guards; hosted138/711/20hashes/manual14 and receipt6332579568 freshly read back. Folded into this substantive feature, not a metadata-only push. New head must re-pass both complete events/actual sources/original20-minute caps/READY/hosted156/manual/receipt. Prior047 cancelled/failed histories remain explicit; no merge or promotion."
         }
       ]
     },
@@ -240,6 +240,18 @@
             "mergedAt": null
           },
           "notes": "Implemented and locally verified bounded web safety slice. Invalid drafts cannot save zero/clamp; exact no-ops and mixed legacy/canonical APR units preserved. Cockpit uses existing equal-budget/debt+LOC runSimulation for both sides, actual availability/signed difference, labeled balance scale and precise daily burn. Reviewer F1 caught unequal minimum-only baseline; default now -294.47, not apparent+2056.87. F2 exactzero stayscleared despite futureLOC/zeroCF setup.600 drill/alternate routing remainunmodeled withoutsavedwrites.31 literal/actual-engine contracts and12 workflows pass after REDs/targeted contrast/mobile corrections and re-review. Not full source adoption, lender/calendar or final release; final-head CI/hosted pending. Verified4320a0c: both full CI events39665392060/39665396547 and hosted138/711assertions/freshIAB; receipt6325520362. Current Car-only slice preserves every financial/UI source and rechecks locally, not new source adoption."
+        },
+        {
+          "id": "R2-T6",
+          "title": "Adopt the canonical Portfolio in an explicit Simulator view",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Implementation locally verified in39c4c03/eb7a6a8/98e7a9a/1446bae. Exact /simulator?scenario=portfolio shares all9 book fields/actions with Portfolio/Dashboard; default/unknown queries retain the separate target demo. No mirror, migration or read-only writes. Own accepted payoff snapshots suppress failed prefixes and residuals; Portfolio summary/Dashboard ETA/path follow that authority.21 model/4 wiring/18 new workflows and12 independent CPU groups pass. Remaining per-debt Payoff Order/history, other route adoption and lender/calendar are not approved. New exact-head CI/hosted/manual shipping remains pending; R2 not complete."
         }
       ],
       "gates": [
@@ -332,6 +344,15 @@
           "evidence": "ops/mission/evidence/legacy-web-truth-2026-10-21/local-preflight.json",
           "lastRun": "2026-10-21T19:50:35.347Z",
           "notes": "31 literal/actual-engine projection contracts plus12 workflows at280/375/1440. Equal-budget/LOC-inclusive comparison and exactzero authority regressions address independent F1/F2 findings. Separate canonical/old Portfolio sentinels, exact bytes, draft/Enter+blur/Escape/focus/route preservation, mixed APR units, failed/cleared/dust/healthy/drill/routing, rendered contrast and long-value fit. Original126 retained. Baseline12 assertion-RED workflows/0setup; repeated assertions are not unique bugs. Existing dashboard CI uploads both proof trees; all caps/assertions remain."
+        },
+        {
+          "id": "R2-G11",
+          "title": "Canonical Portfolio Simulator source and rendered coherence",
+          "command": "npm --prefix apps/web run smoke:comparison:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T05:33:40.136Z",
+          "notes": "Original16 comparison workflows retained, new18 at280/375/1440 added to the same standing command/upload without changing59 CI steps or caps. Literal/independent model results, shared edits/navigation, exact legacy bytes, whole-book inspection independence, adverse policies, APR200/promo/large values and storage failures pass. Live-DOM negatives restore original nodes;3-theme text contrast passes. Existing per-debt Order/history still needs R2 review. Local proof is not new remote or production approval."
         }
       ]
     },
@@ -509,7 +530,7 @@
           "status": "pending",
           "dependsOn": [],
           "pr": null,
-          "notes": "6e900d0 patches shell-quote 1.8.4 to compatible 1.12.0 without changing the Expo SDK. Audit critical count is now zero; 40 noncritical findings (28 high, 12 moderate) remain, including build tools. Quoting regression, typecheck, contracts, web/Android/iOS exports pass. Do not accept audit's suggested major SDK downgrades; device exposure review remains open."
+          "notes": "6e900d0 patches shell-quote 1.8.4 to compatible 1.12.0 without changing the Expo SDK. Audit critical count is now zero; 40 noncritical findings (28 high, 12 moderate) remain, including build tools. Quoting regression, typecheck, contracts, web/Android/iOS exports pass. Do not accept audit's suggested major SDK downgrades; device exposure review remains open. October22 fresh critical-floor report:36 noncritical(28high/8moderate),unchanged dependencies/locks; not a remediation or device-exposure conclusion."
         },
         {
           "id": "R5-T4",
@@ -562,16 +583,16 @@
           "status": "failed",
           "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-after.json",
           "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "40 noncritical findings remain in a tree including SDK build tools. Critical finding fixed; the complete audit still fails. Scope actual exposure and use supported versions; do not treat these as confirmed phone exploits."
+          "notes": "Historical full audit remains failed. Fresh October22 critical-floor report lists36 noncritical findings(28high/8moderate), down from the historical40 with no dependency/lock change. The full all-severity command was not newly invoked in this slice. Scope actual exposure and use supported versions; do not treat all findings as confirmed phone exploits or critical-floor success as clearance."
         },
         {
           "id": "R5-G4",
           "title": "Critical native dependency audit",
           "command": "npm --prefix apps/mobile audit --omit=dev --audit-level=critical",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/mobile-tree-after.json",
-          "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "Critical count zero; CI enforces this floor. The full audit above still fails on 40 noncritical findings, so native release is not approved."
+          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T05:33:40.136Z",
+          "notes": "Fresh critical-floor audit passes with zero critical findings, but its complete report still lists36 noncritical findings(28high/8moderate). Dependencies/locks are unchanged; lower advisory count is not a remediation claim or native release approval."
         }
       ]
     }
@@ -604,6 +625,13 @@
       "current": "0",
       "target": "1",
       "direction": "up"
+    },
+    {
+      "label": "Canonical Simulator browser workflows passing locally",
+      "baseline": "0",
+      "current": "18",
+      "target": "18",
+      "direction": "up"
     }
   ],
   "risks": [
@@ -615,12 +643,12 @@
     {
       "title": "Ten textured candidates still require final art review",
       "severity": "high",
-      "note": "All ten models are textured candidates, not final photorealism approval. Public collection is9908162bytes,577598bytes below unchanged10MiB cap; Custom has286444bytes model headroom. Maps are authored approximations, not measured scans; global final art review remains open. No paid GPU or new dependency used."
+      "note": "All ten remain textured candidates, not final photoreal approval. Public assets total10143326bytes,342434bytes below the unchanged10MiB cap. Model/poster/material/manifests remain identical to46. Private House normal/Car clearcoat/direct-light studies did not earn adoption; baseline retained. Car hotspots/lossy Tireside and Card reverse remain open. No fresh turntable export or paid GPU in this feature."
     },
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Four existing persisted source families are now explicitly inventoried (web target, web Portfolio, native target, native Portfolio); no new store is added. Explicit shared-source Dashboard begins canonical adoption, not full consolidation. Simulator/Vault/Expo adoption, lender/calendar/rounding/credit-availability and final release remain open. Existing same-month Portfolio comparisons are bounded proof."
+      "note": "Four persisted source families remain; no new store is added. Explicit canonical Dashboard and Simulator share the existing Portfolio book; original target demos remain separate. Whole-book summary and residual-path guards are locally verified, not all-route approval. Older per-debt Payoff Order and change-since-last-run interpretations still need accepted-payoff review before production. Cockpit/Vault/Expo adoption, lender/calendar/rounding/credit availability and final release remain open."
     },
     {
       "title": "Verified draft is not production approval",
@@ -998,18 +1026,25 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R0",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "title": "Add canonical Portfolio Simulator and accepted whole-book payoff summaries (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R2",
+      "mergedAt": null
     }
   ],
   "resume": {
-    "activePhase": "R1",
+    "activePhase": "R2",
     "nextActions": [
-      "Current CI/test-only workload/source binding passes15localstages/20CIcontracts/58runtime/222media27stills/nativeWorker/full348ref23247 and independent11groups. 04753ee remains NOTVERIFIED: both39714399076/39714404043 cancelled; runtime/SQLpassed, hostedserial138passed but nofullCI. Statuscomment6331922075 is NOTsuccessreceipt. Require NEWboth complete3jobs/59declaredsteps/actualgitHEAD ineachjob/original20mincaps/automaticREADY/hosted138+20hashes/freshinvocationIAB/receipt. Keepdraft/no merge/promotion; fold proof into next substantive work, not metadata-only pushes.",
-      "Read docs/ci-workload-source-contract-2026-10-22.md. Same3IDs/names/caps; primary !cancelled needsbothothers with exact-successguard. SQLstopsDB/uploadsproof BEFOREclosed16stepmediaWorkerNative block.55oldstep meanings+4guards=59. All6installs explicitaudit=true/60srequest1retry1s3s options, notaggregatebound. Nativecritical/Worker/runtime audits unchanged; implicitfulltree advisory visibility retained. Cancellationmay skipprimary: wholeevent verifierrejects, providerBPunknown. Observer60m notcaprelaxation. PRheadref+actual40hexgitHEAD checks distinguish event identity from checkedsource.",
-      "Historical source qualification: authenticatedAPI proves dd32event/e437cefPRmerge sharetree173e1f2e and047event/a5dca08merge sharetree5ca84e93. ThoseknownPRcheckouts were differentcommits but identicalcontent, not evidence of computational drift. No blanketolderhistoryclaim. House limestone half-normal PRIVATEcandidate rejected after14frames/7poses/10unit/19independent/18seek probes: no usefulgain; keepbaseline. FoursoftwareReadPixels warnings retained, no causalperformanceclaim. Actual467drawcalls may informfuture measured nonvisual work, not speculative changes.",
+      "Current Simulator feature source1446bae passes30 local gates/original138+new18 workflows/348regressions/model21/wiring4/ref23247/media222+27stills/native82/Worker/report;12 independent groups and parent12 pass. Read docs/portfolio-simulator-contract-2026-10-22.md and current SDD ledger. Commit evidence/state/report with the substantive code, then require NEW both complete3job/59step CI events with6 actual-head source guards/original20-minute caps. Keep PR256 draft; no merge, manual deployment or production promotion.",
+      "Prior46a6867 is fully VERIFIED: push39718984403/PR39718988817 attempt1,all3jobs/all59steps/6 actual HEADs, exact automatic READY preview, hosted138/711/20 hashes/manual14; receipt6332579568 freshly read back. Prior047 cancelled full runs and failed first hosted attempt remain failed history, not current blockers. For the new head authenticate the known Vercel team/project, bind READY/null-target deployment to exact SHA, then fresh13 suites/156 workflows/20 assets and actual IAB canonical import/edit/navigation/screenshot evidence. Prepared private run-hosted.cjs is not itself verified shipping evidence.",
+      "Complete current plan Task3 shipping before calling the bounded feature done. Raw local evidence has148 immutable pins; live ledger and unexecuted hosted helper are excluded, original146 index plus exact ledger snapshot retained. Full batch1 was explicitly interrupted for the linked Dashboard/path residual fix, not a test pass; full batch2 passed all27 plus3 actual audits. Next R2 target is older per-debt Payoff Order/history accepted-payoff authority; do not imply those claims or all navigation are already fixed. Keep source families/legacy bytes and all gates intact.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
-      "R1: read docs/hero-material-refinement-2026-10-22.md and independent reviews. Accepted Car .30->.15 normal/Card silver .65->.30 anisotropy are bounded refinements, NOT final photoreal approval. Next compare House/Land/Vault materials and remaining identities in controlled multi-angle studies, preserve all source pins/caps. Car hotspots/lossyTireside/Card dark reverse/hardwareX4122/software warnings/initial Date.now+100 clock fragility remain open. Continue scenario/lender/calendar/backend/device/native/security/release gates without visual drift.",
+      "R1: preserve the original calm asset-centered identity. Accepted Car .30->.15 normals/Card silver .65->.30 anisotropy remain bounded prior refinements, not final photoreal approval. House half-normal, Car clearcoat and direct-light studies were rejected; do not adopt darker renders or repeat failed scalar studies without a new measured hypothesis. All10 real models/posters/materials remain unchanged in this Simulator feature. Continue Car Tireside/hotspots/Card reverse/all-angle art/hardware/clock work without broad redesign or paid GPU.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
-      "Shared-source Dashboard is verified17457cc: /?scenario=portfolio uses existing canonical PortfolioBook/store; original / retains legacy target data. Preserve all21 overview contracts/new6 workflows and original126. Next R2 work is deliberate adoption and shared source across Simulator/Cockpit/Vault/Expo without migration/automatic merge; R3 lender/calendar/posting/routing remains open.",
+      "Shared-source adoption now includes explicit /?scenario=portfolio, /portfolio and /simulator?scenario=portfolio in local proof. Default Dashboard/Simulator remain separate legacy demos. Preserve the18 new matrix plus original138 and21 overview contracts. Complete current exact-head remote verification first, then continue per-debt/history, Cockpit/Vault/Expo ownership and deliberate adoption without automatic merge/migration. R3 lender/calendar/posting/routing remains open.",
       "Read docs/native-coaching-safety-contract-2026-10-21.md. Actual Velocity availability guards chunk advice. Preserve cashflow/LOC warning priorities, exactly80 boundary and valid clipped-final/zero-surplus Pause. All original numerical modules/index remain unchanged in the new shared-view slice; source-bound references/media must still pass. Prior native exports are inherited until fresh exact-head CI, not new device proof.",
       "Read docs/native-legacy-apr-contract-2026-10-21.md. Single-scenario legacy-percent and canonical Portfolio percent remain separate; unchanged/equivalent bytes stay exact, new200 storesraw200/copiesdecimal2, oldraw2 remains2%. Original19 drafts/15APR/6browser cases stay intact. Historical counting-wrapperexit1 is explicitly reconciled as70+6cases plus1navigation assertion, never erased.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",

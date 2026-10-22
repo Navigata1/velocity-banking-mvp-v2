@@ -664,3 +664,42 @@ SubstantiveCI-only patch preserves3originaljobs/names/20mincaps/permissions/all5
 RED18tests14pass4fail;sourcebindingRED20tests15pass5fail; intermediateYAMLindentparsefailure retained then20GREEN. NativeplacementRED fixedwith3old+2newnegatives; initial15gates failedmedia221of222 oldplacement, fixedtestonlywith5negativecontrols/LFformat. Fresh15alllocalstages nowpass20CI/49pairs/6sourcecases/58runtime/3SQLwiring/full348ref23247/lint/build/222media27stills/nativeWorker/report4. Independent11groups and parent11rerun/latestfivepins passed. App/math/hero/material/dependency/locks frozen. Newactualhead bothfullCI/READY/hosted/manual/receipt pending.
 
 PrivateHouse half-normal study rejected:14frames/7poses onlytiny8bchannel0.00149..0.008856 differences, no usefulfrontvisualgain. Keeporiginal, no375/videoapproval;10unit/19independent/18seek proofs andraw4ReadPixelswarnings retained, no performancecausalityclaim. Allphotoreal/hardware/scenario/lender/calendar/backend/recovery/security/accessibility/physicaldevice/native/release gates stayopen. No merge/promotion/newdeps/paidGPU/cloud-data-access/DesktopHTMLrepublishing.
+
+## 2026-10-22 / Session 33 / Canonical Portfolio Simulator (Local)
+
+Prior46a6867 is verified, not pending: both complete attempts39718984403/39718988817,
+all3jobs/59steps/6 literal actual-source guards, hosted138/711/20 hashes and
+manual14. Receipt6332579568 freshly read back. This proof rides with substantive
+Simulator work; prior047 cancelled/failed histories remain explicit.
+
+Code39c4c03/eb7a6a8/98e7a9a/1446bae adds explicit canonical Simulator ownership,
+all9 existing book fields/actions, whole-book own-payoff summaries and separate
+same-month wealth. No new store, mirror, migration or engine formula change.
+Default/unknown queries retain the original target demo. Linked summary/ETA/path
+guards suppress unpaid residual claims; older per-debt Order/history still need
+R2 review. Asset inspection never shrinks the simulated cohort or writes data.
+
+Thirty local stages pass:27 serialized functional gates plus actual web/Worker
+runtime and native critical audits.348 regressions/model21/wiring4/ref23247,
+old138+new18 workflows,711 legacy assertions/70 closed contexts, all20 hero
+viewports/Replay/fallbacks, media222/27 fresh stills, native82/contracts and
+Worker/report checks pass. Existing ten9s turntables were inspected, not freshly
+exported. Code/math/assets/materials/dependencies/locks/CI boundaries held.
+
+Independent review12 CPU groups and parent12 readback pass; linked Dashboard1mo
+and Portfolio100% path were regraded and fixed with actual RED/GREEN. Initial
+route RED, contrast failures, transient probe setup and explicitly interrupted
+first full batch remain evidence, not retroactive passes. Second full batch
+passed. Current matrixb163f1d7-d393-4370-a876-1b14141c71e2 passes18 at280/375/1440,
+3themes/90 financial text elements/minimum6.8913 contrast/15 live-DOM controls.
+
+Local proof has148 immutable pins. Original146 index and its exact ledger
+snapshot are retained; mutable ledger/unexecuted hosted helper were excluded
+before continuing. No test/source evidence changed in that index correction.
+Native critical count0 but36 noncritical(28high/8moderate) remain with unchanged
+dependencies; not remediation or all-toolchain clearance. Private House/Car
+normal/clearcoat/direct-light candidates remain unshipped. All-ten photoreal,
+lender/calendar, backend recovery/security, native physical-device and release
+gates stay open. New exact-head CI/READY/hosted156/20 hashes/manual/receipt still
+required. PR256 remains draft; no merge, production promotion, paidGPU, new
+dependencies, cloud/data/access changes or Desktop HTML republishing.
