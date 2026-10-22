@@ -1,0 +1,6 @@
+Error: Cannot fast-forward to the past
+    at Object.pauseAt (C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-22-hero-replay\replay-clock-tests.cjs:34:59)
+    at pauseAtVisibleHero (evalmachine.<anonymous>:34:20)
+    at async Object.verifyReplay (evalmachine.<anonymous>:47:3)
+    at async protocol (C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-22-hero-replay\replay-clock-tests.cjs:51:3)
+    at async C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-22-hero-replay\replay-clock-tests.cjs:61:3
