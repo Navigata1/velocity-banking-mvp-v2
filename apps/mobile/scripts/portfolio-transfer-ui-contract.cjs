@@ -8,6 +8,7 @@ const root=path.resolve(__dirname,'..');
 const book={monthlyIncome:7200,monthlyExpenses:4500,extraMonthlyPayment:50,chunkAmount:1000,
   loc:{limit:1000,balance:50,apr:0.12},strategy:'avalanche',focusMode:'single',splitRatioPrimary:0.7,debts:[]};
 const clone=value=>JSON.parse(JSON.stringify(value));
+const {plan}=require('./dated-storage-contract.cjs');
 
 // Reuse the existing CPU null host. These are real component callbacks, not rendered UI proof.
 module.exports=({React,createRoot,hostElement,document})=>async()=>{
@@ -72,6 +73,27 @@ module.exports=({React,createRoot,hostElement,document})=>async()=>{
   await test('Portfolio route threads active3 into export and the fourth replacement argument',async h=>{
     assert.equal(h.transfer().documentVersion,3);await h.transfer().onReplace(clone(book),7,3);
     assert.equal(h.replacements.length,1);assert.equal(h.replacements[0][3],3);assert.equal(h.replacements[0][2],7);
+  },true);
+  await test('active4 export and Share preserve ordered dated context and sticky context-free format',async h=>{
+    await h.render({documentVersion:4,book:{...clone(book),datedPlan:plan()}});await h.press('Share portfolio JSON');
+    for(const raw of [h.texts.get('Portfolio export JSON'),h.shares[0].message]){
+      const document=JSON.parse(raw);assert.equal(document.version,4);assert.deepEqual(document.data.datedPlan,plan());
+    }
+    await h.render({book:clone(book)});assert.equal(JSON.parse(h.texts.get('Portfolio export JSON')).version,4);
+  });
+  await test('explicit4 import adopts context-free format for an otherwise identical old book',async h=>{
+    await h.render({documentVersion:undefined});await h.draft(JSON.stringify({version:4,aprUnit:'decimal',data:book}));
+    await h.press('Review imported portfolio');await h.press('Confirm replace portfolio');
+    assert.equal(h.replacements.length,1);assert.equal(h.replacements[0][2],4);assert.equal(h.replacements[0][1],7);
+  });
+  await test('active4 destination keeps4 while importing an older3 document',async h=>{
+    await h.render({documentVersion:4});await h.draft(JSON.stringify({version:3,aprUnit:'decimal',data:{...book,monthlyIncome:9000}}));
+    await h.press('Review imported portfolio');await h.press('Confirm replace portfolio');
+    assert.equal(h.replacements.length,1);assert.equal(h.replacements[0][2],4);assert.equal(h.replacements[0][0].monthlyIncome,9000);
+  });
+  await test('Portfolio route threads active4 into export and the fourth replacement argument',async h=>{
+    await h.render({documentVersion:4});assert.equal(h.transfer().documentVersion,4);await h.transfer().onReplace({...clone(book),datedPlan:plan()},7,4);
+    assert.equal(h.replacements.length,1);assert.equal(h.replacements[0][3],4);assert.deepEqual(h.replacements[0][0].datedPlan,plan());
   },true);
   console.log(`${cases} Portfolio transfer callback contracts complete. CPU null host only.`);
 };

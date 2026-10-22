@@ -24,6 +24,7 @@ function load(file) {
 }
 const api = load(path.resolve(__dirname, '../lib/portfolio-transfer-review.ts'));
 const plain = value => JSON.parse(JSON.stringify(value));
+const { plan } = require('./dated-storage-contract.cjs');
 function call(name, ...args) {
   assert.equal(typeof api[name], 'function', `native portable Portfolio review helper ${name} must exist`);
   return api[name](...args);
@@ -102,7 +103,7 @@ test('missing malformed and unsupported documents reject instead of defaulting t
   make(current());
   for (const sourceJSON of [undefined, null, '', ' ', '{', 'null', '[]', '{}',
     JSON.stringify({ version: 2, aprUnit: 'decimal' }),
-    JSON.stringify({ version: 4, aprUnit: 'decimal', data: incoming }),
+    JSON.stringify({ version: 5, aprUnit: 'decimal', data: incoming }),
     JSON.stringify({ version: 2, aprUnit: 'percent', data: incoming })]) {
     assert.throws(() => make({ ...current(), sourceJSON }), undefined, `reject ${String(sourceJSON)}`);
   }
@@ -111,6 +112,26 @@ test('missing malformed and unsupported documents reject instead of defaulting t
   const result = begin(make(input), input);
   assert.equal(result.review.debtCount, 0);
   assert.deepEqual(plain(result.replacement.book), empty, 'explicit empty is a valid reviewed replacement');
+});
+
+test('explicit4 preserves ordered dated context and replaces using the reviewed revision', () => {
+  const input = { ...current(), sourceJSON: JSON.stringify({ version: 4, aprUnit: 'decimal', data: { ...incoming, datedPlan: plan() } }) };
+  const review = make(input), result = begin(review, input);
+  assert.equal(review.sourceVersion, 4); assert.equal(result.replacement.documentVersion, 4);
+  assert.equal(result.replacement.expectedRevision, 7); assert.deepEqual(plain(result.replacement.book.datedPlan), plan());
+});
+test('import from3 cannot downgrade4 after removal and source4 cannot downgrade to3', () => {
+  for (const [source, destination, expected] of [[3, 4, 4], [4, 3, 4], [2, 4, 4]]) {
+    const input = { ...current(), documentVersion: destination, sourceJSON: JSON.stringify({ version: source, aprUnit: 'decimal', data: incoming }) };
+    const review = make(input), result = begin(review, input);
+    assert.equal(JSON.parse(review.canonicalDocument).version, expected); assert.equal(result.replacement.documentVersion, expected);
+  }
+});
+test('dated-only and transport-only destination changes invalidate import review', () => {
+  const input = { ...current(), documentVersion: 4, book: { ...plain(destination), datedPlan: plan() } }, review = make(input);
+  input.book.datedPlan.cashEvents.reverse(); assert.throws(() => validate(review, input), /changed/i);
+  const old = current(), oldReview = make(old); old.documentVersion = 4;
+  assert.throws(() => validate(oldReview, old), /changed/i);
 });
 
 test('strict codec rules still reject strings duplicate IDs unknown fields and nonfinite amounts', () => {

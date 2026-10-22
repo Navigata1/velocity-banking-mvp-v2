@@ -47,6 +47,7 @@ const base = {
     minPaymentRule: { type: 'fixed', amount: 30.005 }, paymentSource: 'checking' }],
 };
 const clone = value => JSON.parse(JSON.stringify(value));
+const { plan } = require('./dated-storage-contract.cjs');
 function deferred() {
   let resolve;
   const promise = new Promise(done => { resolve = done; });
@@ -63,6 +64,7 @@ function createHarness() {
     [ownerB, { book: { ...clone(base), monthlyIncome: 9100 }, revision: 1 }],
   ]);
   const calls = { loads: [], saves: [] };
+  let failSave = false;
   const gates = { load: new Map(), save: new Map() };
   const moduleCache = new Map();
   const scope = owner => `portfolio-contract.${owner ?? 'guest'}`;
@@ -86,17 +88,18 @@ function createHarness() {
       await waitForGate('load', owner);
       const saved = records.get(owner);
       return { backend: 'local-storage', book: saved ? clone(saved.book) : null, revision: saved?.revision ?? 0,
-        ...(saved?.documentVersion===3?{documentVersion:3}:{}) };
+        ...(saved?.documentVersion===3||saved?.documentVersion===4?{documentVersion:saved.documentVersion}:{}) };
     },
     async saveMobilePortfolioForOwner(owner, book, options) {
       const candidate = clone(book), expectedRevision = options.expectedRevision;
       calls.saves.push({ owner, book: candidate, expectedRevision });
       await waitForGate('save', owner);
+      if (failSave) { failSave = false; throw new Error('injected durable save failure'); }
       const revision = records.get(owner)?.revision ?? 0;
       if (revision !== expectedRevision) throw new Error('stale revision');
-      const documentVersion=options.documentVersion??records.get(owner)?.documentVersion??(candidate.loc.lenderTerms?3:undefined);
-      records.set(owner, { book: candidate, revision: revision + 1,...(documentVersion===3?{documentVersion:3}:{}) });
-      return { backend: 'local-storage', revision: revision + 1,...(documentVersion===3?{documentVersion:3}:{}) };
+      const documentVersion=Math.max(options.documentVersion??2,records.get(owner)?.documentVersion??2,candidate.datedPlan?4:candidate.loc.lenderTerms?3:2);
+      records.set(owner, { book: candidate, revision: revision + 1,...(documentVersion>2?{documentVersion}:{}) });
+      return { backend: 'local-storage', revision: revision + 1,...(documentVersion>2?{documentVersion}:{}) };
     },
   };
   function loadModule(file) {
@@ -144,7 +147,7 @@ function createHarness() {
     return strict ? React.createElement(React.StrictMode, null, content) : content;
   }
   return {
-    calls, renders, scope,
+    calls, renders, scope, failSave: () => { failSave = true; },
     committed: () => committed,
     effectCounts: () => ({ commits, cleanups }),
     stored: owner => clone(records.get(owner)),
@@ -199,6 +202,66 @@ async function main() {
     await React.act(async()=>{await h.committed().update(book=>{delete book.loc.lenderTerms;return book;});await h.committed().reload();});
     assert.equal(h.committed().documentVersion,3);assert.equal('lenderTerms' in h.committed().book.loc,false);
     await h.render(ownerB);assert.equal('documentVersion' in h.committed(),false);
+  });
+  await test('dated setter persists before publishing, captures input, and keeps4 after removal', async h => {
+    await h.render(ownerA); const gate = h.holdNext('save', ownerA), input = plan(); let saving;
+    try {
+      await React.act(async () => {
+        saving = outcome(h.committed().setDatedPlan(input)); await gate.started.promise;
+      });
+      assert.equal(h.committed().status, 'replacing'); assert.equal('datedPlan' in h.committed().book, false);
+      input.cashEvents.reverse(); input.cashEvents[0].amount = 1;
+      await React.act(async () => { gate.release.resolve(); assert.equal((await saving).status, 'fulfilled'); });
+      assert.deepEqual(clone(h.committed().book.datedPlan), plan()); assert.equal(h.committed().documentVersion, 4);
+      const saves = h.calls.saves.length;
+      await React.act(async () => { await h.committed().setDatedPlan(plan()); });
+      assert.equal(h.calls.saves.length, saves, 'equal dated plan is a no-op');
+      await React.act(async () => { await h.committed().setDatedPlan(null); await h.committed().reload(); });
+      assert.equal('datedPlan' in h.committed().book, false); assert.equal(h.committed().documentVersion, 4);
+    } finally { gate.release.resolve(); }
+  });
+  await test('an earlier same-session setter uses latest book and revision without erasing edits', async h => {
+    await h.render(ownerA); const setter = h.committed().setDatedPlan;
+    await React.act(async () => { await h.committed().update(b => ({ ...b, monthlyIncome: 9999 })); });
+    await React.act(async () => { await setter(plan()); });
+    assert.equal(h.calls.saves[1].expectedRevision, 2); assert.equal(h.stored(ownerA).book.monthlyIncome, 9999);
+    assert.deepEqual(h.stored(ownerA).book.datedPlan, plan());
+  });
+  await test('stale dated setter cannot write after owner switch or unmount', async h => {
+    await h.render(ownerA); const stale = h.committed().setDatedPlan;
+    await h.render(ownerB);
+    assert.equal((await outcome(stale(plan()))).status, 'rejected'); assert.equal(h.calls.saves.length, 0);
+    const latest = h.committed().setDatedPlan; await h.unmount();
+    assert.equal((await outcome(latest(null))).status, 'rejected'); assert.equal(h.calls.saves.length, 0);
+  });
+  await test('uncommitted owner render leaves the visible dated setter active', async h => {
+    await h.render(ownerA); const setter = h.committed().setDatedPlan; await h.transition(ownerB);
+    await React.act(async () => { await setter(plan()); });
+    assert.deepEqual(h.stored(ownerA).book.datedPlan, plan()); assert.equal(h.stored(ownerB).book.datedPlan, undefined);
+  });
+  await test('dated setter rejects invalid context without changing state or issuing IO', async h => {
+    await h.render(ownerA); const before = h.committed().book;
+    await React.act(async () => { assert.equal((await outcome(h.committed().setDatedPlan({ ...plan(), startDate: '2026-02-30' }))).status, 'rejected'); });
+    assert.equal(h.committed().book, before); assert.equal(h.committed().status, 'saved'); assert.equal(h.calls.saves.length, 0);
+  });
+  await test('failed dated publication leaves the prior book intact until explicit reload and retry', async h => {
+    await h.render(ownerA); h.failSave();
+    await React.act(async () => { assert.equal((await outcome(h.committed().setDatedPlan(plan()))).status, 'rejected'); });
+    assert.equal(h.committed().book.datedPlan, undefined); assert.equal(h.stored(ownerA).book.datedPlan, undefined);
+    assert.equal(h.committed().status, 'error'); assert.equal(h.committed().revision, 1);
+    await React.act(async () => { await h.committed().reload(); await h.committed().setDatedPlan(plan()); });
+    assert.equal(h.committed().status, 'saved'); assert.equal(h.committed().revision, 2);
+  });
+  await test('late dated save cannot publish into the next owner or accept duplicate setters', async h => {
+    await h.render(ownerA); const gate = h.holdNext('save', ownerA); let saving;
+    try {
+      await React.act(async () => { saving = outcome(h.committed().setDatedPlan(plan())); await gate.started.promise; });
+      const duplicate = await outcome(h.committed().setDatedPlan(null)); assert.equal(duplicate.status, 'rejected');
+      assert.equal(h.calls.saves.length, 1); await h.render(ownerB);
+      await React.act(async () => { gate.release.resolve(); assert.equal((await saving).status, 'rejected'); });
+      assert.deepEqual(h.stored(ownerA).book.datedPlan, plan()); assert.equal(h.committed().book.datedPlan, undefined);
+      assert.equal(h.committed().book.monthlyIncome, 9100); assert.equal(h.committed().documentVersion, undefined);
+    } finally { gate.release.resolve(); }
   });
   await test('uncommitted suspended owner renders preserve committed-owner callbacks', async h => {
     await h.render(ownerA);

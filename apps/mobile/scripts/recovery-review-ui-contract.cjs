@@ -50,7 +50,7 @@ function deferred() {
 }
 // Fingerprint services are deterministic memory ports, not replacements for component guards.
 const fingerprint = value => JSON.stringify(value);
-const portfolioFingerprint = (value, version) => version===3?JSON.stringify({documentVersion:3,book:value}):fingerprint(value);
+const portfolioFingerprint = (value, version) => version===3||version===4?JSON.stringify({documentVersion:version,book:value}):fingerprint(value);
 
 function harness() {
   let owner = ownerA, assumptions = clone(scenario), portfolioBook = clone(book), portfolioStatus = 'saved', mounted = true;
@@ -119,11 +119,11 @@ function harness() {
     '@/components/mobile-portfolio-provider': { useMobilePortfolio: () => {
       const boundOwner = owner;
       return { book: portfolioBook, isHydrated: true, status: portfolioStatus, backend: 'local-storage', revision: 1,
-        ...(documentVersion===3?{documentVersion:3}:{}),
+        ...(documentVersion===3||documentVersion===4?{documentVersion}:{}),
         replace: async (input,lock,revision,version) => {
           replacements.push({book:clone(input),version});
           physical.get(boundOwner).book = clone(input);
-          if(version===3)physical.get(boundOwner).documentVersion=3;
+          if(version===3||version===4)physical.get(boundOwner).documentVersion=version;
           writes.push({ owner: boundOwner, kind: 'portfolio' });
           return 'local-storage';
         } };
@@ -322,6 +322,22 @@ async function main() {
     const input=h.applyCalls[0];assert.ok(input);assert.equal(input.source.portfolioDocumentVersion,3);
     assert.equal(JSON.parse(input.confirmation.reviewedPortfolio).documentVersion,3);
     assert.equal(JSON.parse(input.reviewedLocalPortfolio).documentVersion,3);
+  });
+  await test('account sync includes sticky4 after context removal',async h=>{
+    await h.version(4,true);await h.press('Sync local assumptions');assert.equal(h.queued[0].portfolioDocumentVersion,4);
+  });
+  await test('format-only4 adoption expires review before recovery API',async h=>{
+    await h.review();await h.version(4);await h.confirm();assert.equal(h.applyCalls.length,0);assert.equal(h.writes.length,0);
+  });
+  await test('remote4 marker reaches recovery source and four-argument replacement unchanged',async h=>{
+    h.sourceVersion(4);await h.review();await h.confirm();
+    assert.equal(h.applyCalls[0].source.snapshot.portfolioDocumentVersion,4);assert.equal(h.replacements[0].version,4);
+  });
+  await test('device4 source and both reviewed fingerprints retain format',async h=>{
+    await h.version(4,true);await h.press('Review snapshot recovery options');await h.press('Current device assumptions');await h.confirm();
+    const input=h.applyCalls[0];assert.ok(input);assert.equal(input.source.portfolioDocumentVersion,4);
+    assert.equal(JSON.parse(input.confirmation.reviewedPortfolio).documentVersion,4);
+    assert.equal(JSON.parse(input.reviewedLocalPortfolio).documentVersion,4);
   });
   await require('./portfolio-transfer-ui-contract.cjs')({React,createRoot,hostElement,document})();
   await require('./lender-terms-ui-contract.cjs')({React,createRoot,hostElement,document})();

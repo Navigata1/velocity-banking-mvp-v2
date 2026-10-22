@@ -24,11 +24,12 @@ function environment(){
     saveMobileAssumptionsForOwner:async(id,input,{expectedRevision,ownerLock}={})=>{assert.ok(tokens.has(ownerLock));assert.equal(expectedRevision,revision);order.push('scenario');
       if(fail==='scenario'){fail='';throw new Error('scenario interrupted');}local=clone(input);return{backend:'secure-store',revision:++revision};}};
   const portfolioPort={loadMobilePortfolioForOwner:async id=>({backend:'secure-store',book:clone(id===null?guestBook:portfolio),revision:bookRevision,
-      ...((id===null?guestVersion:portfolioVersion)===3?{documentVersion:3}:{})}),
+      ...([3,4].includes(id===null?guestVersion:portfolioVersion)?{documentVersion:id===null?guestVersion:portfolioVersion}:{})}),
     saveMobilePortfolioForOwner:async(id,input,{expectedRevision,ownerLock,documentVersion}={})=>{assert.ok(tokens.has(ownerLock));assert.equal(expectedRevision,bookRevision);order.push('book');
       if(fail==='book'){fail='';throw new Error('book interrupted');}portfolio=clone(input);
-      if(documentVersion===3||portfolioVersion===3||input.loc.lenderTerms!==undefined)portfolioVersion=3;
-      return{backend:'secure-store',revision:++bookRevision,...(portfolioVersion===3?{documentVersion:3}:{})};}};
+      const version=Math.max(documentVersion??2,portfolioVersion??2,input.datedPlan?4:input.loc.lenderTerms!==undefined?3:2);
+      portfolioVersion=version>2?version:undefined;
+      return{backend:'secure-store',revision:++bookRevision,...(portfolioVersion===undefined?{}:{documentVersion:portfolioVersion})};}};
   const auth={withMobileSnapshotOwnerLock:withLock,isMobileSnapshotOwnerLock:(l,id)=>tokens.has(l)&&l.ownerId===id,createMobileAuthStorage:()=>storage};
   function load(file){
     if(cache.has(file))return cache.get(file).exports;
@@ -75,6 +76,87 @@ function environment(){
 let count=0;
 async function test(name,run){count++;try{await run();console.log(`PASS Portfolio snapshot ${name}`);}catch(e){console.error(`FAIL Portfolio snapshot ${name}`);console.error(e);process.exitCode=1;}}
 async function main(){
+  const { plan } = require('./dated-storage-contract.cjs');
+  const dated = () => ({ ...book(7200), datedPlan: plan() });
+  await test('explicit4 no-context fingerprints retain identity and validate during paired staging',async()=>{
+    const e=environment(),outbox=e.createOutbox(),signature=e.recovery.serializeMobileRecoveryPortfolio(book(7200),4);
+    assert.equal(JSON.parse(signature).version,4);
+    await outbox.stageRecovery({assumptions:scenario(7200),portfolio:book(7200),portfolioDocumentVersion:4,
+      expectedLocalAssumptions:e.signatures().reviewedLocalAssumptions,expectedLocalPortfolio:signature,
+      expectedOwnerId:owner,serverRevision:7,snapshotIdempotencyKey:stream,sourceKind:'remote'});
+    assert.equal((await outbox.readRecovery(owner)).portfolioDocumentVersion,4);
+  });
+  await test('new document4 snapshots preserve ordered context with the original logical key',async()=>{
+    const e=environment(),input={assumptions:scenario(7200),portfolio:dated(),expectedOwnerId:owner,clientRevision:1,
+      operationIdempotencyKey:'operation:dated-sync-1234',snapshotIdempotencyKey:stream};
+    const preparing=e.sync.prepareMobileSnapshotSync(input);input.portfolio.datedPlan.cashEvents.reverse();const prepared=await preparing;
+    const entry=prepared.assumptionsJson.storage.find(x=>x.key===logical),document=JSON.parse(entry.value);
+    assert.equal(document.version,4);assert.deepEqual(document.data.datedPlan,plan());
+    e.addRow(null,entry.value);const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);
+    assert.equal(options.snapshots[0].portfolioDocumentVersion,4);assert.deepEqual(clone(options.snapshots[0].portfolio.datedPlan),plan());
+  });
+  for(const versions of [[4,3],[3,4],[4,2]])await test(`paired recovery retains highest document version ${versions}`,async()=>{
+    const e=environment();e.setPortfolio(e.portfolio(),versions[0]);
+    e.addRow(scenario(8100),JSON.stringify({version:versions[1],aprUnit:'decimal',data:book(9000)}));
+    await e.recovery.applyMobileSnapshotRecovery(e.client,await e.review(),e.dependencies(e.createOutbox()));
+    assert.equal(e.portfolioVersion(),4);assert.equal(JSON.parse(e.sent[0].assumptionsJson.storage.find(x=>x.key===logical).value).version,4);
+  });
+  await test('dated outbox capture, restart and identical replay never rebuild queued bodies',async()=>{
+    const e=environment();let release;const gate=new Promise(r=>{release=r;});const outbox=e.createOutbox({getSnapshotIdempotencyKey:()=>gate});
+    const input={assumptions:scenario(7200),portfolio:dated(),portfolioDocumentVersion:4,expectedOwnerId:owner};
+    const pending=outbox.enqueue(input);input.portfolio.datedPlan.cashEvents.reverse();input.portfolioDocumentVersion=3;release(stream);await pending;
+    const frozen=clone((await outbox.read(owner))[0]);assert.equal(JSON.parse(frozen.assumptionsJson.storage.find(x=>x.key===logical).value).version,4);
+    assert.deepEqual(JSON.parse(frozen.assumptionsJson.storage.find(x=>x.key===logical).value).data.datedPlan,plan());
+    e.setPortfolio(book(9999));const fresh=e.createOutbox();assert.deepEqual(clone((await fresh.read(owner))[0]),frozen);
+    await fresh.flush(e.client,owner);assert.deepEqual(e.sent[0],frozen);
+  });
+  await test('dated paired interruption resumes the exact prepared4 body and original ordered context',async()=>{
+    const e=environment();e.addRow(scenario(8100),dated());const outbox=e.createOutbox();e.fail('book');
+    const input=await e.review();await assert.rejects(()=>e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(outbox)),/pending/i);
+    const pending=await outbox.readRecovery(owner);assert.equal(pending.portfolioDocumentVersion,4);const frozen=clone(pending.item);
+    const fresh=e.createOutbox();await e.recovery.resumePendingMobileSnapshotRecovery(owner,e.dependencies(fresh));
+    assert.deepEqual(e.portfolio().datedPlan,plan());assert.equal(e.portfolioVersion(),4);assert.deepEqual(clone((await fresh.read(owner))[0]),frozen);
+    await fresh.flush(e.client,owner);assert.deepEqual(e.sent[0],frozen);
+  });
+  await test('guest4 without context adopts and guest dated context stays independent',async()=>{
+    for(const context of [false,true]){
+      const e=environment();e.guest(null,context?dated():book(8100),4);const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);
+      assert.equal(options.guestPortfolioDocumentVersion,4);
+      const source={kind:'guest',assumptions:null,portfolio:options.guestPortfolio,portfolioDocumentVersion:4},outbox=e.createOutbox();
+      const input={...e.signatures(),expectedOwnerId:owner,source,confirmation:{kind:'guest',ownerId:owner,reviewedAssumptions:'null',
+        reviewedPortfolio:e.recovery.serializeMobileRecoveryPortfolio(source.portfolio,4)}};
+      await e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(outbox));assert.equal(e.portfolioVersion(),4);
+      assert.deepEqual(e.portfolio(),clone(source.portfolio));
+    }
+  });
+  await test('dated-only local mutation invalidates review before staging',async()=>{
+    const e=environment();e.setPortfolio(dated(),4);e.addRow(scenario(8100),book(9000));const input=await e.review(),outbox=e.createOutbox();
+    const changed=e.portfolio();changed.datedPlan.cashEvents.reverse();e.setPortfolio(changed,4);
+    await assert.rejects(()=>e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(outbox)),/changed|review/i);
+    assert.equal(await outbox.readRecovery(owner),null);assert.equal(e.sent.length,0);
+  });
+  await test('legacy scenario snapshots reject dated context instead of stripping it',async()=>{
+    const e=environment(),input=scenario(7200);input.datedPlan=plan();
+    assert.throws(()=>e.recovery.serializeMobileRecoveryAssumptions(input),/dated|version|scenario/i);
+    e.addRow(input,dated());const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);
+    assert.equal(options.snapshots.length,0);assert.equal(options.rejectedCount,1);
+  });
+  await test('explicit lower document versions reject new dated context without writing a journal',async()=>{
+    const e=environment(),outbox=e.createOutbox();
+    for(const version of [1,2,3,5])e.addRow(null,JSON.stringify({version,aprUnit:'decimal',data:dated()}));
+    const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);assert.equal(options.snapshots.length,0);assert.equal(options.rejectedCount,4);
+    await assert.rejects(()=>outbox.enqueue({assumptions:scenario(7200),portfolio:dated(),portfolioDocumentVersion:3,expectedOwnerId:owner}),/downgrade|version4/i);
+    assert.equal(e.values.size,0);
+  });
+  await test('failed document4 replay retries identical nested prepared bodies and operation ids',async()=>{
+    const e=environment(),attempts=[];let fail=true;
+    const sendSnapshot=async(_client,input)=>{attempts.push(clone(input));if(fail){fail=false;throw new Error('offline');}
+      return{ownerId:owner,snapshotId:'receipt',clientRevision:input.clientRevision};};
+    const first=e.createOutbox({sendSnapshot});await first.enqueue({assumptions:scenario(7200),portfolio:dated(),portfolioDocumentVersion:4,expectedOwnerId:owner});
+    const frozen=clone((await first.read(owner))[0]);await assert.rejects(()=>first.flush(e.client,owner),/offline/);
+    const raw=[...e.values];const fresh=e.createOutbox({sendSnapshot});assert.deepEqual([...e.values],raw);
+    await fresh.flush(e.client,owner);assert.deepEqual(attempts,[frozen,frozen]);assert.equal((await fresh.read(owner)).length,0);
+  });
   await test('new prepared bodies use canonical logical entries and do not leak physical owner storage',async()=>{
     const e=environment(),prepared=await e.sync.prepareMobileSnapshotSync({assumptions:scenario(7200),portfolio:book(7200),expectedOwnerId:owner,clientRevision:1,operationIdempotencyKey:'operation:prepared-1234'});
     const entries=clone(prepared.assumptionsJson.storage);assert.equal(entries.length,2);const entry=entries.find(x=>x.key===logical);assert.ok(entry);

@@ -240,7 +240,7 @@ async function run() {
         { minimumPayment: { mode: 'fixed', value: 0, surprise: true } }]) {
         await assert.rejects(() => h.save({ ...base, loc: { ...base.loc, lenderTerms } }, { expectedRevision: 7 }));
       }
-      for (const documentVersion of [1, 2, 4, '3', null]) {
+      for (const documentVersion of [1, 2, 5, '3', null]) {
         await assert.rejects(() => h.save(base, { expectedRevision: 7, documentVersion }), /version/i);
       }
       assert.deepEqual([...h.values], before);
@@ -316,6 +316,9 @@ async function run() {
 }
 
 module.exports = run;
+module.exports.harness = harness;
+module.exports.base = base;
+module.exports.deferred = deferred;
 if (require.main === module) {
   const watchdog = setTimeout(() => { console.error('Portfolio v3 contracts timed out.'); process.exit(1); }, 10000);
   run().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => clearTimeout(watchdog));
