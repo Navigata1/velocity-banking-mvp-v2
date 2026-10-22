@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Lender inputs preserved; unsupported terms cannot produce false forecasts. Application checkpoint55a passed both CI events and hosted183 checks. Exact-head CI read revalidation is locally verified; new maintenance-head remote proof and production gates remain open.",
+    "tagline": "Explicit fixed-rate daily LOC planning now reaches canonical web and Expo workflows with separate fees, reserves and inspectable postings. Fresh local gates pass; this is a pre-push snapshot, not production approval.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T15:15:22.766Z",
-    "sessionCount": 38
+    "updated": "2026-10-22T18:12:36.552Z",
+    "sessionCount": 39
   },
   "policies": {
     "merge": "review",
@@ -96,36 +96,36 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T13:55:28.510Z",
-          "notes": "INHERITED from55a application:29serialized local gates on445pinned sources,360regressions/ref23247/web183/native97+1/media223+27freshstills/fullcontracts/Hermes/Worker/report. Maintenance changes only CI discovery/test files among those pins; all443other pins remain identical. Original495local evidence files retained unchanged. Fresh maintenance tests are R0-G4; no fresh full29 claim."
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T18:11:39.225Z",
+          "notes": "Fresh29 serialized local gates on frozen sources,360 original regressions plus116 dated groups,corrected web27/Expo web15 workflows. Existing media/hero/export/Worker/report checks pass; no new art approval or physical-device claim."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T13:55:28.510Z",
-          "notes": "INHERITED55a: hosted14suites/183workflow-layout executions/20exactservedGLB+poster hashes,plus six actualIAB Portfolio states (educational,save,reload,complete-unmodeled,reload,remove). No app/assets changed in CI-header maintenance. Fresh current-head deployment proof must be recorded separately; inherited browser coverage is not fresh-head smoke or physical-device approval."
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T18:11:39.225Z",
+          "notes": "Fresh29 serialized local gates on frozen sources,360 original regressions plus116 dated groups,corrected web27/Expo web15 workflows. Existing media/hero/export/Worker/report checks pass; no new art approval or physical-device claim."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/ci-read-freshness-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T15:15:22.766Z",
-          "notes": "State38 is intentionally a pre-push CI-read maintenance snapshot.55a actualfullCIpush2/PR1 and hosted183/20assets/IAB passed, but originalcanonicalreportfailedcache and is retained. Newhead must pass BOTH complete exact-head events/all3jobs/every59declaredsteps+cleanup/sixactualsourceguards/knownautomaticREADY. Read .superpowers/sdd/2026-10-22-ci-read-freshness/current-checkpoint.json when present; later sealed proof supersedes pending snapshot. Do not rerun old sealed helpers or make a metadata-only follow-up push."
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T18:12:36.552Z",
+          "notes": "State39 is PRE-PUSH. Prior93dcf67 sealed receipt6344946083 passed BOTHcomplete attempt1 events39803306099/39803316007,3jobs/59steps+cleanup/6sourceguards,automaticREADY,hosted183/20asset hashes/IAB6. Its first hosted selection timeout and canonical API empty/stale reads remain unresolved despite bounded retries. NEWdated head needs its own full CI/preview/hosted210/IAB/seal. Read dated-lender-plan/current-checkpoint.json when present; no metadata-only push loop."
         },
         {
           "id": "R0-G4",
           "title": "Fresh exact-head CI discovery and report contracts",
           "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/ci-read-freshness-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T15:15:22.766Z",
-          "notes": "Fresh focused maintenance tests:22actualCLI/workflow cases include stale-empty and stale-green attempt regressions. Strong Cache-Control no-cache/no-store/max-age0 and Pragma requested; all strict event/attempt/job/step/cleanup rules unchanged. No universal API freshness or cache-layer root-cause claim. Runtime audit and mission renderer contracts rerun; no app/math/assets/dependencies/backend/workflow/cap mutation."
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T18:11:39.225Z",
+          "notes": "Fresh CI-discovery/runtime/SQL-wiring/report contracts included in full29. Strict events,job/step/source requirements and20min CI caps unchanged. Strong request headers do not establish universal API freshness; prior failures retained."
         }
       ]
     },
@@ -408,15 +408,15 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Bounded prerequisite implemented and locally verified: strict lossless seven-field/provenance input, explicit Portfolio document3, archived old bytes, web/native active3 priority, fail-closed unsupported legacy channels, immutable snapshots/outboxes/recovery and optional editors. Normal direct/MoneyLoop/Portfolio/mortgage comparisons separate educational basis from supplied incomplete/unmodeled terms; no false payoff/savings/target. Three complete educational ledger hashes unchanged. Independent four shared/web and two native findings closed,17shared edges/45native memory-IO probes. Preliminary RED failures retained, final29 standing gates pass. This is not numerical fees/minimums/rate/draw/calendar enforcement and must not become a permanent blocked-mode substitute; task remains in progress. See docs/superpowers/specs/2026-10-22-lender-confidence-design.md and plan."
+          "notes": "Lossless lender input prerequisite retained. Normal canonical Portfolio now computes support for fixed-loc-daily-v1: fixed APR/fixed inclusive minimum,daily actual365 simple accrual,half-up monthly cents/per-draw fees,financed annual fee,minimum draw/exclusive expiry/maturity. Same-day entry order and atomic fee-capacity checks are enforced. Shared editor fee fractions are used exactly once:1%=0.01. Initial double-conversion and misleading fixtures were caught before commit; old acceptance superseded, actual editor-to-engine RED/GREEN and independent30group/78grid review pass. Variable/percentage/interest-only/compounding/other lender rules remain unsupported; full task not complete."
         },
         {
           "id": "R3-T2",
           "title": "Integrate real transaction calendars and explicit cash reserves",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": ""
+          "notes": "First bounded calendar implemented: explicit month-start/account/expiry/maturity/fee dates,opening cash/reserve,bill/debt days and ordered recurring monthly cash entries. Income/expense totals must exactly match budget; no guessed dates. Accepted month-end payoff/common-month closed-account checking continuation conserve exact cents and fees. Other debts still use educational monthly calendars; holds/reversals/irregular dated schedules and actual lender reconciliation remain open."
         },
         {
           "id": "R3-T3",
@@ -429,6 +429,18 @@
             "mergedAt": null
           },
           "notes": "Bounded month-end capacity guard verified at dfdfe249: receipt6337764821, both complete CI events push2/PR1,hosted162/20assets/manual6. Original32local/360regressions/39independentCPU/23247reference proof retained. A forecast stops before an over-limit closing month, excludes attempted sibling rows, retains diagnostic attempted balance and withholds payoff claims. No clamping/invented cash/schema migration. This UI-only selection correction leaves all financial source unchanged. Full lender/intraday/calendar/fees/minimums compliance remains pending R3-T1/T2/G1."
+        },
+        {
+          "id": "R3-T4",
+          "title": "Deliver the bounded fixed-rate dated LOC workflow",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Implemented and locally verified only; NEWHEAD remote shipping pending. Strict document4/sticky removal/old1-3 archives,web active4 optimistic stale-source checks,native owner/revision/lease guarded persistence,immutable queues/snapshots/recovery,compact web/native editors and daily posting ledgers. Three canonical web surfaces show computed support,real dates,separate fees and honest failure states. Corrected browser27/native15 at280/375/1440; old educational runtime/body exact parity. Native proof uses Expo web/null-host IO,not physical SecureStore/cloud. Full R3 and production remain open."
         }
       ],
       "gates": [
@@ -437,9 +449,9 @@
           "title": "Financial contract and conservation tests",
           "command": "npm --prefix apps/web test",
           "status": "pending",
-          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
           "lastRun": null,
-          "notes": "Full numerical lender/calendar gate remains pending. Lender-confidence integration now preserves supplied terms and stops unsupported forecasts honestly, but does not enforce annual/transaction fees, lender minimums, variable rates, draw expiry/minimum draw, dated posting/rounding or intraday availability/reserves. Original educational no-profile rows remain exact. Next work must implement and integrate actual numerical/calendar behavior, not mark this pending gate passed from guard/disclosure tests."
+          "notes": "Full lender/calendar gate remains pending. First fixed-loc-daily-v1 fees/fixed minimum/draw constraints/dated reserves/posting/rounding/intraday cash are numerically implemented and locally tested. This does NOT support variable rates,percentage/interest-only minima,compounding,holds/reversals,undeclared fees or verified other-debt lender calendars. Do not promote bounded G4 proof to fullR3 approval."
         },
         {
           "id": "R3-G2",
@@ -458,6 +470,15 @@
           "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
           "lastRun": "2026-10-22T13:55:28.510Z",
           "notes": "Bounded input/storage/basis gate only: explicit document3,15web+15native workflows,strict preservation/failed-save/corrupt-source/owner-CAS/outbox/recovery/legacy-source independence. Independent CPU review uses memory platform IO, not device SecureStore or hosted backend. Full R3-G1 stays pending."
+        },
+        {
+          "id": "R3-G4",
+          "title": "Bounded fixed-rate daily LOC and document4 workflows",
+          "command": "npm --prefix apps/web test && npm --prefix apps/web run smoke:portfolio:built && npm --prefix apps/mobile run test:dated && npm --prefix apps/mobile run smoke:accessibility:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/dated-loc-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T18:11:39.225Z",
+          "notes": "Fresh full29 local gates on481frozen source pins.116focused dated groups plus360original regressions and unchanged reference lane; corrected actualweb27/native15 workflow-layout cases,allcontextsclosed. Independent fee30groups/78grid and persistence74actualmodule probes retained. Original fee acceptance,invalid parent native-unit guard and fullattempt1lint/attempt2manual-stop evidence explicitly superseded; original files retained. Optimistic localStorage guard is NOT atomicCAS; browser/native exports are not physical/cloud approval. New-head CI/hosted/manualIAB pending."
         }
       ]
     },
@@ -711,6 +732,20 @@
     },
     {
       "label": "Lender profile browser workflows passing per surface",
+      "baseline": "0",
+      "current": "15",
+      "target": "15",
+      "direction": "up"
+    },
+    {
+      "label": "Corrected dated web workflows passing locally",
+      "baseline": "0",
+      "current": "27",
+      "target": "27",
+      "direction": "up"
+    },
+    {
+      "label": "Corrected dated Expo web workflows passing locally",
       "baseline": "0",
       "current": "15",
       "target": "15",
@@ -1144,14 +1179,21 @@
       "mergedAt": null,
       "title": "Preserve lender inputs and distinguish unsupported forecasts (draft)",
       "phase": "R3"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Add explicit fixed-rate daily LOC plans and lossless document4 workflows (draft)",
+      "phase": "R3"
     }
   ],
   "resume": {
     "activePhase": "R3",
     "nextActions": [
-      "State38 PRE-PUSH CI-read maintenance. Read docs/superpowers/specs/2026-10-22-ci-read-freshness.md and .superpowers/sdd/2026-10-22-ci-read-freshness/progress.md. FIRST inspect current-checkpoint.json/receipt there: later sealed proof supersedes this pending snapshot. Fresh22CLI/workflow plus runtime/report contracts;445source pins with only2CI script changes,443unchanged;495oldlocal files immutable. No fresh full29/hosted183/IAB claim for maintenance; those application checks are inherited55a.",
-      "If maintenance not sealed, finish BOTHcompleteexact-headCIevents/all3jobs/every59declaredsteps+cleanup/6literalstdoutsourceguards/unchanged20mincaps,knownautomaticREADY and exactservedassetproof. Record inherited55ahosted183/20assets/sixmanualIAB separately from fresh checks. Preserve55a originalcanonicalcachefailure and firstpush54322collision/exactlyonewhole rerun; no root-cause/reliabilityfix. No merge/manualdeployment/promotion. Fold receipt into NEXTsubstantive work,notmetadata-onlypushloop.",
-      "NEXT substantive R3 work: implement actual numerical lender fees/minimum payments/draw constraints/rate schedules and integrate dated cash/reserves/posting/rounding/intraday availability. Lender-confidence guard is only a prerequisite, not a permanent blocked/disclosure substitute. Preserve strict document3/provenance,explicit zeros/unknowns,active3 archives,old1/2 semantics,immutable queues/owner-CAS and all original reference rows. Do not allow caller-supplied modeled/support flags. Read CONTEXT.md; R3-G1 remains pending.",
+      "State39 PRE-PUSH dated-lender-plan checkpoint. FIRST read .superpowers/sdd/2026-10-22-dated-lender-plan/current-checkpoint.json when present: later sealed receipt supersedes this pending snapshot. Read progress.md and fee-unit-correction.md. Fresh full29 gates/481frozen sources/360original+116dated groups/correctedweb27/native15 are local proof,not new-head remote approval. Prior93dcf67 CI-read checkpoint sealed at receipt6344946083; original timing/API failures remain unresolved.",
+      "Finish focused <=400line commits and ONE tested-tip push on existing branch/draftPR256. Require BOTHcomplete exact-headCI events/all3jobs/every59declaredsteps+cleanup/6literalstdout sourceguards/unchanged20mincaps,knownautomaticREADY,hosted15suites/210workflows/20asset hashes,actual corrected-fee IAB and immutable receipt/seal. Preserve every failure;no merge/manualdeploy/promotion. Do not rerun sealed older helpers or metadata-onlypushloop.",
+      "After sealed bounded protocol,continue R3 unsupported lender/calendar cases and actual lender statement reconciliation. Fixed APR/fixed inclusive minimum only; other debt calendars remain educational. Retain stored fractionalfee semantics,strict4/source provenance/sticky removal/oldarchives/immutablequeues/ownerCAS. Web synchronous stale-source checks are optimistic,not atomiclocalStorageCAS. Do not claim full R3,physicalnative/backend or all-ten photoreal approval.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",

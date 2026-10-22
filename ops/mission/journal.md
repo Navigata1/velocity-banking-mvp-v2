@@ -881,3 +881,38 @@ Later private ci-read-freshness/current-checkpoint.json and immutable receipt
 supersede this intentional pre-push snapshot; no metadata-only follow-up push.
 Actual numerical R3, all-ten photoreal approval, backend/security/recovery,
 physical native and release remain open. PR256 stays draft; no promotion.
+
+## State 39 - Explicit fixed-rate daily LOC plans (2026-10-22)
+
+Tier2 implementation and independent numerical/persistence/UI reviews. First
+fixed-loc-daily-v1 protocol now reaches normal canonical web and Expo workflows:
+declared dates, ordered recurring cash, daily accrual, fixed minimums, per-draw
+and annual fees, draw expiry/minimum, maturity, reserves and accepted month-end
+payoff/common-month conservation. Other debt calendars remain educational.
+Strict document4, sticky removal, archived older bytes, guarded persistence and
+immutable recovery/queues remain. Web stale-source checking is optimistic, not
+atomic cross-tab CAS. No scenario adoption or destructive rate migration.
+
+Initial new-ledger fee division used already-fractional rates twice; original
+fixtures/review acceptance and a parent native-unit guard were misleading and
+are explicitly superseded. Caught before commit/push.1%=0.01; actual editor to
+engine RED/GREEN plus independent30groups/78rounding cases pass. Original old3
+raw1 still means100%. Core bill-credit/earmark/cent and persistence findings
+were also corrected with retained RED/GREEN. Old educational runtime/body exact.
+
+Fresh full29 attempt3 passes on481frozen source pins:360original regressions,
+116dated groups,unchanged reference lane,corrected web27/Expo web15 workflows,
+all-context closure,media223contracts/27fresh Remotion stills,all-ten render and
+existing finite-video verification,native contracts/Hermes,Worker/report gates.
+Fullattempt1 lint failure and attempt2 manual stop remain; neither is a pass.
+Capture helper initially found9old July stills beside27fresh matrix outputs;
+partial copy retained, explicit fresh-file capture2 passes3275artifacts.
+Prior93dcf sealed receipt6344946083 is folded here;5764old artifact hashes match.
+Its hosted timing/API read failures and earlier collision/Three warnings remain.
+
+This is PRE-PUSH: newhead needs both complete exact-headCI events,automaticREADY,
+hosted210/20assets,corrected actualIAB and immutable receipt/seal. Later private
+dated-lender-plan/current-checkpoint.json supersedes pending remote status; fold
+into next substantive work without metadata-only push. FullR3,photoreal art,
+dedicatedbackend/security/recovery,physicalnative/accessibility and release open.
+PR256 remains draft; no merge,promotion,paidGPU or cloud/data/access/DNS mutation.
