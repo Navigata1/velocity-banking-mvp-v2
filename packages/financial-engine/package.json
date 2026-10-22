@@ -6,6 +6,11 @@
   "react-native": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
+    "./dated-plan": {
+      "types": "./src/dated-plan.ts",
+      "react-native": "./src/dated-plan.ts",
+      "default": "./src/dated-plan.ts"
+    },
     ".": {
       "types": "./src/index.ts",
       "react-native": "./src/index.ts",

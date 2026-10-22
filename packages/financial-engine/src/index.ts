@@ -287,6 +287,7 @@ export interface LenderMinimumPayment {
 
 export interface LenderTermsInput {
   annualFee?: number;
+  /** Fractional rate: 0.01 means 1%, matching the existing percent editor. */
   transactionFeePercent?: number;
   rateMode?: LenderRateMode;
   drawPeriodMonths?: number;
@@ -687,7 +688,8 @@ export function buildLenderTermsContract(input: LenderTermsInput): LenderTermsCo
 export type LenderForecastFailureReason = 'lender-terms-incomplete' | 'lender-terms-unmodeled';
 export type ForecastBasis =
   | { kind: 'educational-monthly'; label: 'Model estimate'; canProject: true; reasons: string[] }
-  | { kind: 'lender-review'; label: 'Terms incomplete' | 'Terms not modeled'; canProject: false;
+  | { kind: 'lender-dated'; label: 'Declared dated estimate'; canProject: true; lenderTerms: LenderTermsContract; reasons: string[] }
+  | { kind: 'lender-review'; label: 'Terms incomplete' | 'Terms not modeled' | 'Dated inputs need review'; canProject: false;
       reason: LenderForecastFailureReason; lenderTerms: LenderTermsContract; reasons: string[] };
 
 export function assessForecastBasis(input?: LenderTermsInput): ForecastBasis {

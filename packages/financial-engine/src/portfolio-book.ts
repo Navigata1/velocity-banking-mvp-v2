@@ -1,6 +1,7 @@
 import { decodeLenderTerms, normalizeApr, type MoneyLoopLOC } from './index';
 import type { DebtItem, FocusMode, PayoffStrategy, PortfolioSimulationInputs } from './portfolio';
 import { hasFiniteNonNegativeSum } from './numeric-range';
+import { decodeDatedPortfolioPlan, type DatedPortfolioPlan } from './dated-plan';
 
 export interface PortfolioBook {
   monthlyIncome: number;
@@ -12,6 +13,7 @@ export interface PortfolioBook {
   focusMode: FocusMode;
   splitRatioPrimary: number;
   debts: DebtItem[];
+  datedPlan?: DatedPortfolioPlan;
 }
 
 type RecordValue = Record<string, unknown>;
@@ -75,7 +77,13 @@ function debt(value: unknown): DebtItem {
 }
 
 export function decodePortfolioBook(value: unknown): PortfolioBook {
-  const raw = record(value, ['monthlyIncome','monthlyExpenses','extraMonthlyPayment','chunkAmount','loc','strategy','focusMode','splitRatioPrimary','debts'], 'Portfolio book');
+  const raw = record(value, ['monthlyIncome','monthlyExpenses','extraMonthlyPayment','chunkAmount','loc','strategy','focusMode','splitRatioPrimary','debts','datedPlan'], 'Portfolio book');
+  let datedPlan: DatedPortfolioPlan | undefined;
+  if ('datedPlan' in raw) {
+    const property = Object.getOwnPropertyDescriptor(raw, 'datedPlan');
+    if (!property?.enumerable || !('value' in property)) throw new Error('Dated plan must be an own enumerable data field.');
+    datedPlan = decodeDatedPortfolioPlan(property.value);
+  }
   const loc = record(raw.loc, ['limit','balance','apr','lenderTerms'], 'LOC');
   if (!Array.isArray(raw.debts)) throw new Error('Portfolio debts must be an array.');
   const debts = raw.debts.map(debt), identities = new Set<string>();
@@ -94,6 +102,7 @@ export function decodePortfolioBook(value: unknown): PortfolioBook {
       ...('lenderTerms' in loc ? { lenderTerms: decodeLenderTerms(loc.lenderTerms) } : {}) },
     strategy: choice(raw.strategy, ['velocity','snowball','avalanche'] as const, 'Strategy'),
     focusMode: choice(raw.focusMode, ['single','split'] as const, 'Focus mode'), splitRatioPrimary, debts,
+    ...(datedPlan === undefined ? {} : { datedPlan }),
   };
   if (!hasFiniteNonNegativeSum([...debts.map(d => d.balance), book.loc.balance])) throw new Error('Total Portfolio balance must be finite.');
   return book;
@@ -102,11 +111,12 @@ export function decodePortfolioBook(value: unknown): PortfolioBook {
 export function decodePortfolioDocument(json: string): PortfolioBook {
   if (typeof json !== 'string') throw new Error('Portfolio document must be JSON text.');
   const raw = record(JSON.parse(json), ['version','aprUnit','data','state','exportedAt'], 'Portfolio document');
-  if (raw.version !== 1 && raw.version !== 2 && raw.version !== 3) throw new Error('Portfolio document version is unsupported.');
+  if (raw.version !== 1 && raw.version !== 2 && raw.version !== 3 && raw.version !== 4) throw new Error('Portfolio document version is unsupported.');
   if (raw.version !== 1 ? raw.aprUnit !== 'decimal' : raw.aprUnit !== undefined) throw new Error('Portfolio document APR units are unsupported.');
   if (('data' in raw) === ('state' in raw)) throw new Error('Portfolio document requires exactly one data or state book.');
   const book = decodePortfolioBook('data' in raw ? raw.data : raw.state);
-  if (raw.version !== 3 && book.loc.lenderTerms !== undefined) throw new Error('Lender terms require Portfolio document version3.');
+  if (raw.version !== 3 && raw.version !== 4 && book.loc.lenderTerms !== undefined) throw new Error('Lender terms require Portfolio document version3 or4.');
+  if (raw.version !== 4 && book.datedPlan !== undefined) throw new Error('Dated plans require Portfolio document version4.');
   if (raw.version !== 1) return book;
   // Version1 stored the legacy mixed-unit contract. Convert once, without changing its source.
   return { ...book, loc: { ...book.loc, apr: normalizeApr(book.loc.apr) },
@@ -114,11 +124,12 @@ export function decodePortfolioDocument(json: string): PortfolioBook {
       ...(d.promo ? { promo: { ...d.promo, introApr: normalizeApr(d.promo.introApr), postIntroApr: normalizeApr(d.promo.postIntroApr) } } : {}) })) };
 }
 
-export function encodePortfolioDocument(book: PortfolioBook, requestedVersion?: 2 | 3): string {
+export function encodePortfolioDocument(book: PortfolioBook, requestedVersion?: 2 | 3 | 4): string {
   const data = decodePortfolioBook(book);
-  const version = requestedVersion ?? (data.loc.lenderTerms === undefined ? 2 : 3);
-  if (version !== 2 && version !== 3) throw new Error('Portfolio document version is unsupported.');
-  if (version !== 3 && data.loc.lenderTerms !== undefined) throw new Error('Lender terms cannot be downgraded to Portfolio document version2.');
+  const version = requestedVersion ?? (data.datedPlan !== undefined ? 4 : data.loc.lenderTerms === undefined ? 2 : 3);
+  if (version !== 2 && version !== 3 && version !== 4) throw new Error('Portfolio document version is unsupported.');
+  if (version === 2 && data.loc.lenderTerms !== undefined) throw new Error('Lender terms cannot be downgraded to Portfolio document version2.');
+  if (version !== 4 && data.datedPlan !== undefined) throw new Error('Dated plans cannot be downgraded below Portfolio document version4.');
   return JSON.stringify({ version, aprUnit: 'decimal', data }, null, 2);
 }
 
@@ -126,5 +137,6 @@ export function portfolioBookInputs(book: PortfolioBook): PortfolioSimulationInp
   const value = decodePortfolioBook(book);
   return { aprUnit: 'decimal', monthlyIncome: value.monthlyIncome, monthlyExpenses: value.monthlyExpenses,
     extraMonthlyPayment: value.extraMonthlyPayment, chunkAmount: value.chunkAmount, loc: value.loc, debts: value.debts,
-    settings: { strategy: value.strategy, focusMode: value.focusMode, splitRatioPrimary: value.splitRatioPrimary }, maxMonths: 600 };
+    settings: { strategy: value.strategy, focusMode: value.focusMode, splitRatioPrimary: value.splitRatioPrimary }, maxMonths: 600,
+    ...(value.datedPlan === undefined ? {} : { datedPlan: value.datedPlan }) };
 }
