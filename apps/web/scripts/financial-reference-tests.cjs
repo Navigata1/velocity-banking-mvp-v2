@@ -201,12 +201,20 @@ const portfolioModule = { exports: {} };
 const portfolioOutput = ts.transpileModule(fs.readFileSync(portfolioPath, 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
 }).outputText;
+const sharedModules = new Map([['./index', { exports: engine }], ['./numeric-range', rangeModule]]);
+function requireShared(specifier) {
+  assert.ok(['./index', './numeric-range', './dated-portfolio', './dated-portfolio-policy', './dated-loc', './dated-plan', './portfolio-book'].includes(specifier), `unexpected Portfolio dependency: ${specifier}`);
+  if (sharedModules.has(specifier)) return sharedModules.get(specifier).exports;
+  const file = path.join(path.dirname(portfolioPath), specifier + '.ts'), dependencyModule = { exports: {} };
+  sharedModules.set(specifier, dependencyModule);
+  new vm.Script(ts.transpileModule(fs.readFileSync(file, 'utf8'), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText, { filename: file }).runInContext(vm.createContext({ module: dependencyModule, exports: dependencyModule.exports, require: requireShared }));
+  return dependencyModule.exports;
+}
 new vm.Script(portfolioOutput, { filename: portfolioPath }).runInContext(vm.createContext({
   module: portfolioModule, exports: portfolioModule.exports,
-  require: specifier => {
-    assert.ok(['./index', './numeric-range'].includes(specifier), `unexpected Portfolio dependency: ${specifier}`);
-    return specifier === './index' ? engine : rangeModule.exports;
-  },
+  require: requireShared,
 }));
 let portfolioCases = 0;
 for (let index = 1; index <= 40; index += 1) {
