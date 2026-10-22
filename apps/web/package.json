@@ -19,7 +19,7 @@
     "smoke:rendered": "npm run build && npm run smoke:rendered:built",
     "smoke:rendered:built": "node scripts/smoke-rendered.cjs",
     "smoke:dashboard:built": "node scripts/smoke-dashboard-interest.cjs && node scripts/smoke-legacy-web-truth.cjs",
-    "smoke:comparison:built": "node scripts/smoke-comparison.cjs",
+    "smoke:comparison:built": "node scripts/smoke-comparison.cjs && node scripts/smoke-portfolio-simulator.cjs",
     "smoke:vault:built": "node scripts/smoke-vault-comparison.cjs",
     "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs && node scripts/smoke-portfolio-currency-width.cjs && node scripts/smoke-shared-portfolio-dashboard.cjs",
     "test:3d": "npm run build && npm run test:3d:built",

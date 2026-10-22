@@ -74,7 +74,7 @@ export default function PortfolioSimulator() {
       </div>
     </section>
     <section aria-label="Portfolio simulation inputs">
-      <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3 [&_button>span]:whitespace-normal [&_button>span]:[overflow-wrap:anywhere]">
+      <div className={`grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3 [&_button>span]:whitespace-normal [&_button>span]:[overflow-wrap:anywhere] ${theme === 'light' ? '[&_[data-financial-editor]>span]:text-slate-600' : ''}`}>
         <EditableCurrency label="Monthly income" ariaLabel="Shared simulator monthly income" value={store.monthlyIncome} onChange={store.setMonthlyIncome} />
         <EditableCurrency label="Monthly expenses" ariaLabel="Shared simulator monthly expenses" value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} />
         <EditableCurrency label="Extra allocation cap (0 = automatic)" ariaLabel="Shared simulator extra allocation" value={store.extraMonthlyPayment} onChange={store.setExtraMonthlyPayment} />
@@ -102,7 +102,7 @@ export default function PortfolioSimulator() {
         </article>;
       })}</div>
     </section>
-    <PortfolioCommonMonth book={book} classes={classes} />
+    <PortfolioCommonMonth book={book} classes={{ ...classes, textMuted: classes.textSecondary }} warningClass={warning} />
     <p className={`text-xs leading-5 ${classes.textSecondary}`}>Monthly educational estimates. Lender fees, compounding, minimums and statement timing may change actual outcomes. Educational tool. Not financial advice.</p>
   </div></PageTransition>;
 }

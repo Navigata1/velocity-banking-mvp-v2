@@ -6,7 +6,7 @@ import { commonMonthStatusLabel, preparePortfolioComparison, formatCommonMonthAm
 import { strategyLabel } from './portfolio-formatters';
 import type { PortfolioThemeClasses } from './portfolio-types';
 
-export default function PortfolioCommonMonth({ book, classes }: { book: PortfolioBook; classes: PortfolioThemeClasses }) {
+export default function PortfolioCommonMonth({ book, classes, warningClass = 'text-amber-400' }: { book: PortfolioBook; classes: PortfolioThemeClasses; warningClass?: string }) {
   const [draft, setDraft] = useState('60');
   const month = parseCommonMonthDraft(draft);
   const prepared = useMemo(() => preparePortfolioComparison(book), [book]);
@@ -26,7 +26,7 @@ export default function PortfolioCommonMonth({ book, classes }: { book: Portfoli
             className={`h-12 w-24 rounded border ${classes.border} ${classes.bgTertiary} ${classes.text} px-3 text-sm tabular-nums outline-none focus:border-emerald-400`} />
         </label>
       </div>
-      {month === null && <p role="alert" data-testid="common-month-error" className="mt-2 text-sm text-amber-400">Month must be a whole number from 0 to 600.</p>}
+      {month === null && <p role="alert" data-testid="common-month-error" className={`mt-2 text-sm ${warningClass}`}>Month must be a whole number from 0 to 600.</p>}
       <p id="common-month-scope" className={`mt-3 text-xs leading-5 ${classes.textSecondary}`}>
         Same listed debts, LOC and household cash flow. Net modeled wealth is cash minus those liabilities, not total household wealth. After exact payoff, unchanged cash flow accumulates without returns or new debt. Amounts are independently rounded.
       </p>
@@ -40,7 +40,7 @@ export default function PortfolioCommonMonth({ book, classes }: { book: Portfoli
             <article key={plan.strategy} data-testid={`common-month-plan-${plan.strategy}`} className="min-w-0 py-4">
               <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <h3 className={`text-sm font-semibold ${classes.text}`}>{strategyLabel(plan.strategy)}</h3>
-                <p className={`text-xs ${s.status === 'unavailable' ? 'text-amber-400' : classes.textSecondary}`}>{commonMonthStatusLabel(s)}</p>
+                <p className={`text-xs ${s.status === 'unavailable' ? warningClass : classes.textSecondary}`}>{commonMonthStatusLabel(s)}</p>
               </div>
               <dl className="grid min-w-0 grid-cols-[repeat(auto-fit,minmax(min(100%,9rem),1fr))] gap-x-4 gap-y-3 sm:grid-cols-[repeat(auto-fit,minmax(min(100%,10rem),1fr))]">
                 {metrics.map(([id, label, value]) => <div key={id} className="min-w-0">

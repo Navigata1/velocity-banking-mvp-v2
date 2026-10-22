@@ -17,6 +17,7 @@ import {
   strategyLabel,
 } from './portfolio-formatters';
 import type { PortfolioThemeClasses } from './portfolio-types';
+import { buildPortfolioSimulatorModel } from '../simulator/portfolio-simulator-model';
 
 interface PortfolioPlanSectionProps {
   classes: PortfolioThemeClasses;
@@ -34,14 +35,15 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
     [store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment, store.chunkAmount, store.loc,
       store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
 
+  const payoffModel = useMemo(() => buildPortfolioSimulatorModel(comparisonBook), [comparisonBook]);
+  const payoffPlan = payoffModel.plans.find(plan => plan.strategy === store.strategy);
   const result = store.lastResult;
-  const payoffMonths = result?.payoffMonths ?? 0;
-  const payoffDateStr = payoffMonths ? formatDate(payoffMonths) : '—';
-  const totalInterest = result?.totalInterest ?? 0;
-  const portfolioProjectionValid = result?.isPayoffPossible === true;
-  const displayedPayoffDateStr = result
-    ? portfolioProjectionValid ? payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths) : 'Review inputs'
-    : payoffDateStr;
+  const payoffMonths = payoffPlan?.payoffMonths ?? 0;
+  const totalInterest = payoffPlan?.totalInterest ?? 0;
+  const portfolioProjectionValid = payoffPlan?.state === 'projected' || payoffPlan?.state === 'cleared';
+  const displayedPayoffDateStr = portfolioProjectionValid
+    ? payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths)
+    : payoffPlan?.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs';
   const totalInterestLabel = portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected';
   const warnings = result?.warnings ?? [];
   const assumptions = result?.assumptions ?? [];
@@ -288,7 +290,9 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
               </div>
             )}
 
-            <PortfolioPayoffPath model={payoffPathModel} />
+            {payoffPlan?.state === 'residual' ? <p data-testid="portfolio-payoff-path-review" className={`text-sm leading-6 ${classes.textSecondary}`}>
+              An unpaid balance remains or was removed by model tolerance. Verify the lender balance before using a payoff path.
+            </p> : <PortfolioPayoffPath model={payoffPathModel} />}
           </div>
 
           <div className="w-full lg:w-[320px] space-y-3 flex-shrink-0">
@@ -316,7 +320,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
             <div data-testid="portfolio-cash-at-payoff" className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Cash at payoff</p>
               <p className={`mt-1 text-xl font-semibold ${classes.text}`}>
-                {portfolioProjectionValid ? formatCurrency(result?.cashAtPayoff ?? 0) : 'Not projected'}
+                {portfolioProjectionValid ? formatCurrency(payoffPlan?.endingCash ?? 0) : 'Not projected'}
               </p>
               <p className={`${classes.textMuted} mt-1 text-xs`}>Unused budget held as cash. Not incremental savings.</p>
             </div>

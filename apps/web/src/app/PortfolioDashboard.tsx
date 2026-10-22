@@ -12,6 +12,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-store';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
 import { strategyLabel } from './portfolio/portfolio-formatters';
+import { buildPortfolioSimulatorModel } from './simulator/portfolio-simulator-model';
 
 function money(value: number): string {
   if (!Number.isFinite(value)) return 'Not available';
@@ -36,6 +37,7 @@ export default function PortfolioDashboard() {
       strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts });
   }, [mounted, persistence.status, store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment,
     store.chunkAmount, store.loc, store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
+  const payoff = useMemo(() => overview ? buildPortfolioSimulatorModel(overview.book).plans.find(plan => plan.strategy === overview.book.strategy) : null, [overview]);
 
   if (!mounted) return <p role="status" className="p-6">Loading saved portfolio...</p>;
   if (persistence.status !== 'ready') return <div data-testid="shared-dashboard-storage-error" className="mx-auto max-w-6xl space-y-4 p-4 md:p-8">
@@ -49,13 +51,14 @@ export default function PortfolioDashboard() {
   if (!overview) return null;
 
   const selected = inspectedId === null ? store.debts[0] : store.debts.find(debt => debt.id === inspectedId);
-  const review = overview.state === 'review' || overview.state === 'tolerance';
+  const state = payoff?.state === 'residual' ? 'tolerance' : payoff?.state ?? 'review';
+  const review = state === 'review' || state === 'tolerance';
   const utilizationWarning = store.loc.balance > store.loc.limit * 0.8;
   const nextMove = overview.cashFlow <= 0 ? 'Review cash flow' : utilizationWarning ? 'Review LOC utilization'
-    : review ? 'Review payoff inputs' : overview.state === 'cleared' ? 'Plan your next goal'
+    : review ? 'Review payoff inputs' : state === 'cleared' ? 'Plan your next goal'
       : overview.nextTargetLabels.length ? overview.nextTargetLabels.join(' + ') : 'Review target allocation';
-  const eta = overview.state === 'cleared' ? 'No debt remaining' : overview.state === 'tolerance' ? 'Below model tolerance'
-    : overview.state === 'projected' ? `${overview.payoffMonths} mo` : 'Review inputs';
+  const eta = state === 'cleared' ? 'No debt remaining' : state === 'tolerance' ? 'Below model tolerance'
+    : state === 'projected' && payoff ? `${payoff.payoffMonths} mo` : 'Review inputs';
   const burn = overview.dailyInterestBurn === null ? 'Not available'
     : overview.dailyInterestBurn > 0 && overview.dailyInterestBurn < 0.01 ? '<$0.01/day' : `${money(overview.dailyInterestBurn)}/day`;
   const vitals = [

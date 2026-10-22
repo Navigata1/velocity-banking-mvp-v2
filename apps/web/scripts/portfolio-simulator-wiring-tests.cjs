@@ -33,4 +33,10 @@ test('only the exact explicit query selects a lazy canonical view under Suspense
   assert.ok(branches.some(n=>ts.isCallExpression(n.condition.left)&&member(n.condition.left.expression,'params','get')&&n.condition.left.arguments[0]?.text==='scenario'&&n.condition.right.text==='portfolio'&&ts.isJsxSelfClosingElement(n.whenTrue)&&ident(n.whenTrue.tagName,'PortfolioSimulator')&&ts.isJsxSelfClosingElement(n.whenFalse)&&ident(n.whenFalse.tagName,'TargetSimulator')));
   assert.ok(nodes(entry,n=>ts.isJsxOpeningElement(n)&&ident(n.tagName,'Suspense')).length===1);
 });
+test('linked Dashboard and Portfolio path cannot overrule accepted payoff review',()=>{
+  const dashboard=parse(path.join(root,'PortfolioDashboard.tsx')),portfolio=parse(path.join(root,'portfolio/PortfolioPlanSection.tsx'));
+  assert.equal(nodes(dashboard,n=>ts.isCallExpression(n)&&ident(n.expression,'buildPortfolioSimulatorModel')).length,1);
+  assert.ok(nodes(dashboard,n=>ts.isPropertyAccessExpression(n)&&ident(n.expression,'payoff')&&n.name.text==='payoffMonths').length);
+  assert.ok(nodes(portfolio,n=>ts.isConditionalExpression(n)&&ts.isBinaryExpression(n.condition)&&member(n.condition.left,'payoffPlan','state')&&n.condition.right.text==='residual'&&ts.isJsxElement(n.whenTrue)&&ts.isJsxSelfClosingElement(n.whenFalse)&&ident(n.whenFalse.tagName,'PortfolioPayoffPath')).length);
+});
 if(failures){console.error(`${failures}/${tests} Portfolio Simulator wiring contracts failed.`);process.exitCode=1;}else console.log(`${tests} Portfolio Simulator wiring contracts passed.`);

@@ -2834,7 +2834,9 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
 
   assert.ok(source.includes('portfolioProjectionValid'), 'expected Portfolio page to derive projection validity');
-  assert.ok(source.includes("payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths) : 'Review inputs'"));
+  assert.ok(source.includes("payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths)"));
+  assert.ok(source.includes("payoffPlan?.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs'"));
+  assert.ok(source.includes("payoffPlan?.state === 'projected' || payoffPlan?.state === 'cleared'"));
   assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
   assert.ok(
     source.includes('if (!portfolioProjectionValid || payoffOrder.length === 0) return null;'),
