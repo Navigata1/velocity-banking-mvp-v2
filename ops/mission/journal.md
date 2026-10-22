@@ -916,3 +916,42 @@ dated-lender-plan/current-checkpoint.json supersedes pending remote status; fold
 into next substantive work without metadata-only push. FullR3,photoreal art,
 dedicatedbackend/security/recovery,physicalnative/accessibility and release open.
 PR256 remains draft; no merge,promotion,paidGPU or cloud/data/access/DNS mutation.
+
+## State 40 - Unshipped canvas candidate and failed media gate
+
+Strict canvas snapshot/failure diagnostics are implemented locally, not pushed.
+20capturegroups/128boundarycases pass; independent cleanup and publication P2s
+closed,147private fixtures pass. No app/math/art/native/dependency/SQL/cap change.
+
+Full1failedtestlint; full2failedoriginaldesktopprincipal701ms>700. One whole
+unchanged local full3 passed14commands, then Remotion Chrome closed its target
+capturing BlockedPlan-Landscape frame18. The full run FAILED. One isolated
+frame replay passed, not a full matrix or rootcausefix. Remaining14commands
+were collected separately without retrying media; total 27/29 commands passed,
+2 failed. This collection is NOT a successful full29 checkpoint.
+
+f7821ba remote remains FAILED at comment6349085540/10433sealedartifacts. Last
+verified93dcf67/receipt6344946083. No new commit/push/receipt/release approval.
+State40 records the failure and next diagnosis; all earlier failures retained.
+FullR3,all-ten photoreal,backend/security/physicalnative/accessibility and release
+remain open. Goalactive/PR256draft; no merge,manualdeploy or production promotion.
+
+## State 41 - Repeatable native receipts and strict canvas capture
+
+The native caller reused a protected dated receipt. Per-main UUID children now
+preserve the old receipt and unchanged fixture guard; no exclusive-directory or
+atomic nonce claim. Actual caller/guard CPU RED1pass2fail/GREEN3pass,standing
+feeoracle and independent review retained. Two complete real smokes produce
+distinct15case outputs/allstandingchecks/contextsclosed with oldhash unchanged.
+
+Fresh NEWsource full29 passes/485pins,20capture+3nativeCPU,360original+116dated,
+webdated27/native15,alltenrender/replay/fallbacks,223media/27freshstills,existing
+finitevideos,nativeHermes/Worker/report checks.162publicationfixtures pass.
+State40 overall27/29 remains FAILED/sealed3574artifacts;701ms/CPU2/Remotion
+failures and isolated-frame diagnostic are not rewritten as rootcause fixes.
+
+PRE-PUSH:newhead needs complete CI pair,automaticREADY,hosted210/20assets,
+actualIAB8/restore,freshprovider readback and sealed receipt. f782remote remains
+FAILED/comment6349085540/10433artifacts;lastverified93dcf67/receipt6344946083.
+FullR3,all-ten photoreal,backend/security/physicalnative/accessibility/release
+remain open. Goalactive/PR256draft;no merge,manualdeploy or production promotion.
