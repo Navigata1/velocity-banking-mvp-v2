@@ -703,3 +703,48 @@ lender/calendar, backend recovery/security, native physical-device and release
 gates stay open. New exact-head CI/READY/hosted156/20 hashes/manual/receipt still
 required. PR256 remains draft; no merge, production promotion, paidGPU, new
 dependencies, cloud/data/access changes or Desktop HTML republishing.
+
+## 2026-10-22 - Portfolio History And Accepted Payoff Authority
+
+Previous goal turn classified PROGRESS:7853088 passed both complete actual-head
+CI39728931442/39728938532 and hosted156/711legacy/20served hashes/manual8;
+receipt6334018102 was posted/read back. That proof is folded into this
+substantive source checkpoint, not a metadata-only push. Prior80shipping and
+148local evidence files remain unchanged. Mission Control Tier2; existing
+approved codex/restoration/asset-heroes and draftPR256 retained.
+
+Actual IAB showed Updated/+$50 after a fictional income edit, then Stable after
+Portfolio->Simulator->Portfolio. The entry effect now reads fresh current state
+and computes only missing results. Independent16group CPU review accepted this
+guard and reproduced two Important residual claims in history/order. Parent
+fixed both in one TDD pass: the existing accepted-payoff adapter moves unchanged
+to shared web presentation; canonical history requires accepted AND raw numerical
+success, and Order requires that authority before showing dates. A further
+RED/GREEN proves that supplied acceptance cannot promote a failed raw result.
+All numerical packages/formulas and durable input/action behavior are unchanged.
+
+Focused source5318a88:229insertions/52deletions across10files.30local stages
+passed(27serialized functional+3actual audits),351regressions/21model/6wiring/
+23247reference probes/all156web workflows. Three-width rendered controls reject
+residual success/dates, restore dates on genuine settlement, and withdraw them
+when returning to residual. All18canonical contexts closed/PNGs pinned,3themes/
+90financial texts/15originalDOM negatives retained. Media222/27freshstills and
+existing ten turntable verification pass; no fresh ten-video export claim.
+Expo-web82workflow checks+1focus-navigation assertion, nativecontracts/Worker/
+report pass, not physical-device clearance. Nativecritical0 still has36
+noncritical(28high/8moderate); web/Worker runtime0, no dependency/lock remediation.
+
+202immutable evidence files include an exact ledger snapshot, not the mutable
+ledger or unexecuted shipping helpers. Initial CLI baseline-reset setup failure
+and all actual REDs are retained. Local tests pin candidate working-tree bytes;
+they are not falsely labeled as having started on committed5318a88. New both
+complete exact-head CI/known automatic READY/hosted156/20assets/manual/receipt
+remain required before this checkpoint ships. No merge or promotion.
+
+Read-only R1 research records a licensed photographic studio candidate and the
+current five procedural reflection cards. Its1kHDR/EXR choices exceed342434bytes
+public headroom; no asset was downloaded locally, rendered or adopted. Installed
+HDRLoader is available; deprecated RGBELoader would emit a warning. Private
+reduced-HDR/all-angle work remains unverified. All-ten photoreal/lender/calendar/
+backend/security/physical native/release goals stay open. No paidGPU, cloud/data/
+access mutation, broad visual redesign or Desktop HTML republishing.

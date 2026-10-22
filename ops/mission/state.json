@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Canonical Portfolio Simulator locally verified. Shared whole-book summaries reject unpaid residuals. New exact-head remote verification pending; photoreal and production gates remain open.",
+    "tagline": "Portfolio edit history survives navigation. History and Payoff Order now share accepted payoff authority in local proof. New remote verification pending; photoreal and release gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T05:33:40.136Z",
-    "sessionCount": 33
+    "updated": "2026-10-22T06:57:50.466Z",
+    "sessionCount": 34
   },
   "policies": {
     "merge": "review",
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T05:33:40.136Z",
-          "notes": "Fresh 30 local stages: 27 serialized functional gates plus actual web runtime/Worker runtime/native critical audits. Full348 regressions,21 new model/4 wiring, overview21/common-month31/reference23247,20 CI/58 runtime contracts, media222/27 fresh Remotion stills, native82/full contracts and Worker/report checks pass. Existing ten turntable videos were inspected, not freshly exported. Engine packages/stores/editors/assets/materials/manifests/dependencies/locks/CI source unchanged from46; new view and summary presentation are explicit changes."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "Fresh30 local stages:27 serialized standing gates plus3 actual runtime/critical audits.351 regressions,21 model/6 wiring,overview21/common31/ref23247,20CI/58runtime,media222/27fresh stills,native82/full contracts,Worker/report pass. Six web presentation/store files intentionally change; numerical packages,actions/persisted input fields,models/posters/materials/media/native/Worker/dependencies/locks/CI source remain unchanged from785. Existing ten turntable exports inspected, not freshly rendered."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T05:33:40.136Z",
-          "notes": "Local original138 plus new18 browser workflows pass. New canonical matrix covers280/375/1440,3 themes,90 shared-edit financial/scenario text elements, minimum contrast6.8913,15 live-DOM negatives and18 closed contexts/hashed PNGs. Per-debt Order/history claims remain outside this summary correction. New exact READY hosted156/20 hashes/manual evidence still required. No Desktop HTML republishing."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "Fresh156 local workflow-layout executions(original138+18canonical),280/375/1440,3themes/90financial texts/15DOMnegatives/18closed contexts/18PNG hashes. History+$50/-$25 persists across navigation; reload creates baseline. Residual history/date claims are withheld, genuine settlement restores dates, returning to residual withdraws them. Local proof is not new hosted or production approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T05:33:40.136Z",
-          "notes": "Prior46a6867 VERIFIED both complete actual-head39718984403/39718988817 attempts1,all3jobs/59steps and6 literal source guards; hosted138/711/20hashes/manual14 and receipt6332579568 freshly read back. Folded into this substantive feature, not a metadata-only push. New head must re-pass both complete events/actual sources/original20-minute caps/READY/hosted156/manual/receipt. Prior047 cancelled/failed histories remain explicit; no merge or promotion."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "Prior7853088 VERIFIED both complete push39728931442/PR39728938532 attempt1,all3jobs/59declared steps+cleanup/6actual HEAD guards,known READY preview,hosted156/711legacy/20served hashes/manual8 and exact receipt6334018102. Folded into substantive history/authority work. New head must repeat both full CI events, original20-minute caps,READY/hosted156/20/manual/receipt. No merge or promotion."
         }
       ]
     },
@@ -244,14 +244,28 @@
         {
           "id": "R2-T6",
           "title": "Adopt the canonical Portfolio in an explicit Simulator view",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Implementation locally verified in39c4c03/eb7a6a8/98e7a9a/1446bae. Exact /simulator?scenario=portfolio shares all9 book fields/actions with Portfolio/Dashboard; default/unknown queries retain the separate target demo. No mirror, migration or read-only writes. Own accepted payoff snapshots suppress failed prefixes and residuals; Portfolio summary/Dashboard ETA/path follow that authority.21 model/4 wiring/18 new workflows and12 independent CPU groups pass. Remaining per-debt Payoff Order/history, other route adoption and lender/calendar are not approved. New exact-head CI/hosted/manual shipping remains pending; R2 not complete."
+          "notes": "Verified7853088: both full exact-head CI events39728931442/39728938532,6actual source guards,automatic known READY deployment,hosted156/20assets/manual8 and receipt6334018102. Explicit canonical Simulator source adoption is complete within its recorded scope. Older residual history/order findings were not certified by that receipt; they are now corrected in local proof underR2-T7. R2 overall remains open."
+        },
+        {
+          "id": "R2-T7",
+          "title": "Preserve edit history and align payoff dates with accepted settlement",
+          "status": "in_progress",
+          "dependsOn": [
+            "R2-T6"
+          ],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Source 5318a88ddc9f919df8979067381c355f5e4bc0a0 locally verified via pinned candidate hashes. Ready entry retains a current result and initializes missing results once. Existing accepted-payoff adapter moves unchanged into shared web presentation layer with compatible Simulator exports. Canonical history requires accepted selected-policy payoff AND raw numerical success; Order requires that authority before dated claims. Numerical result and durable fields unchanged. Actual IAB lost-historyRED,2Important residual findings and public-overrideRED all corrected;351regressions/6wiring/21model/18renderedcases/full30 pass. Independent16group pre-fix review is historical; parent single TDD fix pass is explicit. New exact-head shipping still pending; no production approval."
         }
       ],
       "gates": [
@@ -260,17 +274,17 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247; nine financial modules and all other protected structured sources match dd32. No engine recomputation, schema/backend, scenario/calendar or dependency change."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "351 regressions pass, including12 residual/strategy subcases,accepted restoration/withdrawal,valid/cleared timing and failed-result override rejection. Original numerical packages unchanged. Not lender-calendar certification."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-portfolio-2026-10-20/web-tests.log",
-          "lastRun": "2026-10-21T01:34:34Z",
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
           "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
         },
         {
@@ -278,8 +292,8 @@
           "title": "Rendered Simulator comparison edge cases",
           "command": "npm --prefix apps/web run smoke:comparison:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/comparison-verification.json",
-          "lastRun": "2026-10-21T00:08:00Z",
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
           "notes": "All 16 existing cases pass at 1440px/375px, including exact final payments, signed outcomes and saved timing surviving edit/navigation. Vault's actual Financial assumptions disclosure is opened and checked. No scenario migration."
         },
         {
@@ -296,8 +310,8 @@
           "title": "Rendered funded Portfolio controls and full liability book",
           "command": "npm --prefix apps/web run smoke:portfolio:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/dashboard-display-2026-10-20/portfolio-verification.json",
-          "lastRun": "2026-10-21T00:08:00Z",
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
           "notes": "24 Chrome executions at1440px/375px cover funded caps/cash, ranked/split LOC, final/cent-short, interest shortfall, cleared and large imports. Real policy/cap edits,100m loan/LOC and200m limit no-op edits pass; separate timing stays intact. Failed LOC claims suppressed and inactive chunk controls absent. Focus labels follow current allocation, not eventual payoff order. Stable-opacity screenshots replace rejected dark captures. No overflow/errors."
         },
         {
@@ -332,8 +346,8 @@
           "title": "Shared-source Portfolio Dashboard and storage failures",
           "command": "node apps/web/scripts/smoke-shared-portfolio-dashboard.cjs",
           "status": "passed",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6323921807",
-          "lastRun": "2026-10-21T18:51:00Z",
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
           "notes": "17457ccd7db7cb83cf7ddecaa3a206ee7e345800 VERIFIED full attempt1 push39654164516/PR39654174317 all3jobs/every step, native82/media14527/SQL63 twice/event, fresh READY preview/hosted126/all20 served hashes/actual IAB. Receipt6323921807. Six standing shared Dashboard workflows are also rerun unchanged in the new local batch. Other routes/native and legacy adoption remain open."
         },
         {
@@ -350,9 +364,9 @@
           "title": "Canonical Portfolio Simulator source and rendered coherence",
           "command": "npm --prefix apps/web run smoke:comparison:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T05:33:40.136Z",
-          "notes": "Original16 comparison workflows retained, new18 at280/375/1440 added to the same standing command/upload without changing59 CI steps or caps. Literal/independent model results, shared edits/navigation, exact legacy bytes, whole-book inspection independence, adverse policies, APR200/promo/large values and storage failures pass. Live-DOM negatives restore original nodes;3-theme text contrast passes. Existing per-debt Order/history still needs R2 review. Local proof is not new remote or production approval."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "Original16 comparisons plus18canonical retained in same command/upload. History roundtrips and baseline, exact saved/legacy bytes, whole-book scope/adverse policies/APR/promo/storage/3theme/90text/15DOMnegative tests pass. Residual dated-order and history success are rejected; actual accepted settlement restores dates. New remote proof pending."
         }
       ]
     },
@@ -590,9 +604,9 @@
           "title": "Critical native dependency audit",
           "command": "npm --prefix apps/mobile audit --omit=dev --audit-level=critical",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-simulator-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T05:33:40.136Z",
-          "notes": "Fresh critical-floor audit passes with zero critical findings, but its complete report still lists36 noncritical findings(28high/8moderate). Dependencies/locks are unchanged; lower advisory count is not a remediation claim or native release approval."
+          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T06:57:50.466Z",
+          "notes": "Fresh native critical-floor command passes, not all-severity or physical-device clearance. Read the preserved complete audit report for remaining noncritical findings. No dependency or lock change/remediation claim."
         }
       ]
     }
@@ -608,8 +622,8 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "348",
-      "target": "348",
+      "current": "351",
+      "target": "351",
       "direction": "up"
     },
     {
@@ -643,12 +657,12 @@
     {
       "title": "Ten textured candidates still require final art review",
       "severity": "high",
-      "note": "All ten remain textured candidates, not final photoreal approval. Public assets total10143326bytes,342434bytes below the unchanged10MiB cap. Model/poster/material/manifests remain identical to46. Private House normal/Car clearcoat/direct-light studies did not earn adoption; baseline retained. Car hotspots/lossy Tireside and Card reverse remain open. No fresh turntable export or paid GPU in this feature."
+      "note": "All ten remain textured candidates,not final photoreal approval. All models/posters/materials/manifests stay byte-identical to785 in this slice. Public assets remain under original10MiB budget. Existing ten turntable exports inspected;27Remotionstills fresh. Rejected normal/clearcoat/direct-light/lossless repeats remain unshipped. Car hotspots/lossy Tireside,Card reverse,all-angle/hardware/clock approval remainopen; no paidGPU or broad redesign."
     },
     {
       "title": "Financial coherence gates remain open",
       "severity": "high",
-      "note": "Four persisted source families remain; no new store is added. Explicit canonical Dashboard and Simulator share the existing Portfolio book; original target demos remain separate. Whole-book summary and residual-path guards are locally verified, not all-route approval. Older per-debt Payoff Order and change-since-last-run interpretations still need accepted-payoff review before production. Cockpit/Vault/Expo adoption, lender/calendar/rounding/credit availability and final release remain open."
+      "note": "Four persisted source families remain. Canonical Dashboard/Simulator/Portfolio share one book. Whole-book summaries and now history/order availability follow accepted payoff in local proof, not all-history/lender approval. Navigation no longer resets captured edit comparisons; reload remains session-only. Core numerical tolerance remains disclosed, not silently erased or certified as lender settlement. Other route adoption,lender/calendar/rounding/credit availability and final release remain open."
     },
     {
       "title": "Verified draft is not production approval",
@@ -1033,18 +1047,25 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R2",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "title": "Preserve Portfolio history and reject unaccepted paid-off claims (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R2",
+      "mergedAt": null
     }
   ],
   "resume": {
     "activePhase": "R2",
     "nextActions": [
-      "Current Simulator feature source1446bae passes30 local gates/original138+new18 workflows/348regressions/model21/wiring4/ref23247/media222+27stills/native82/Worker/report;12 independent groups and parent12 pass. Read docs/portfolio-simulator-contract-2026-10-22.md and current SDD ledger. Commit evidence/state/report with the substantive code, then require NEW both complete3job/59step CI events with6 actual-head source guards/original20-minute caps. Keep PR256 draft; no merge, manual deployment or production promotion.",
-      "Prior46a6867 is fully VERIFIED: push39718984403/PR39718988817 attempt1,all3jobs/all59steps/6 actual HEADs, exact automatic READY preview, hosted138/711/20 hashes/manual14; receipt6332579568 freshly read back. Prior047 cancelled full runs and failed first hosted attempt remain failed history, not current blockers. For the new head authenticate the known Vercel team/project, bind READY/null-target deployment to exact SHA, then fresh13 suites/156 workflows/20 assets and actual IAB canonical import/edit/navigation/screenshot evidence. Prepared private run-hosted.cjs is not itself verified shipping evidence.",
-      "Complete current plan Task3 shipping before calling the bounded feature done. Raw local evidence has148 immutable pins; live ledger and unexecuted hosted helper are excluded, original146 index plus exact ledger snapshot retained. Full batch1 was explicitly interrupted for the linked Dashboard/path residual fix, not a test pass; full batch2 passed all27 plus3 actual audits. Next R2 target is older per-debt Payoff Order/history accepted-payoff authority; do not imply those claims or all navigation are already fixed. Keep source families/legacy bytes and all gates intact.",
+      "Current Portfolio history/accepted-order source 5318a88ddc9f919df8979067381c355f5e4bc0a0 passes30 local gates/351regressions/21model/6wiring/ref23247/original156 workflows/media222+27stills/native82/Worker/report. Read docs/portfolio-history-contract-2026-10-22.md and .superpowers/sdd/2026-10-22-portfolio-history/progress.md. Finish exact-head shipping on existing draftPR256; new bothcomplete CI/6actual sources/original20minute caps/known READY/hosted156/20assets/manual/receipt required. No merge/manualdeployment/promotion.",
+      "Prior7853088 VERIFIED complete push39728931442/PR39728938532 attempt1,all3jobs/59declared steps+cleanup/6actual HEADs,automatic known READY preview,hosted156/711legacy/20assets/manual8 and receipt6334018102. Prior80shipping/148local pins remain unchanged. Browser JPEG originally had PNG suffix; byte-identical .jpg/MIME correction and original RED retained. This prior receipt is folded into substantive source work, not a status-only push loop.",
+      "Current independent Faraday16CPU groups/13action subcases accepted navigation guard and independently reproduced two Important residual-history/order contradictions. Parent fixed both in one TDD pass plus override rejection; no post-fix independent-review claim. New browser residual controls show review/no dates -> genuine settlement/restored dates -> residual/withdrawn dates at3widths. Full new sourcepins are candidate hashes, not a false committed-head test claim. Keep all failures and explicit immutable index; never pin the live ledger or unexecuted helpers.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
-      "R1: preserve the original calm asset-centered identity. Accepted Car .30->.15 normals/Card silver .65->.30 anisotropy remain bounded prior refinements, not final photoreal approval. House half-normal, Car clearcoat and direct-light studies were rejected; do not adopt darker renders or repeat failed scalar studies without a new measured hypothesis. All10 real models/posters/materials remain unchanged in this Simulator feature. Continue Car Tireside/hotspots/Card reverse/all-angle art/hardware/clock work without broad redesign or paid GPU.",
+      "R1: preserve calm asset-centered identity/all-ten geometry/provenance/finite turns. No art changes adopted here. Read .superpowers/sdd/2026-10-22-portfolio-history/next-r1-photographic-environment.md and its primary sources: current studio uses five procedural cards; StudioSmall09 has a recorded CC0 license, but1kHDR1615248/EXR1319434 exceed342434bytes remaining public headroom. No binary downloaded or rendered. Installed Three HDRLoader is available; deprecated RGBELoader emits a warning and should not be used. A private reduced-HDR/all-angle probe remains unverified; do not raise caps,repeat rejected scalar/lossless studies,or treat this research as visual adoption. No paidGPU/broad redesign.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
-      "Shared-source adoption now includes explicit /?scenario=portfolio, /portfolio and /simulator?scenario=portfolio in local proof. Default Dashboard/Simulator remain separate legacy demos. Preserve the18 new matrix plus original138 and21 overview contracts. Complete current exact-head remote verification first, then continue per-debt/history, Cockpit/Vault/Expo ownership and deliberate adoption without automatic merge/migration. R3 lender/calendar/posting/routing remains open.",
+      "Canonical source adoption includes explicit /?scenario=portfolio,/portfolio,/simulator?scenario=portfolio. Default Dashboard/Simulator remain separate legacy demos; do not auto-merge four stored families. New local history/order availability correction is not broader lender/calendar or all-history certification. Complete current remote gates, then continue deliberate Cockpit/Vault/Expo source adoption and R3 minimums/fees/posting/routing/rounding rules.",
       "Read docs/native-coaching-safety-contract-2026-10-21.md. Actual Velocity availability guards chunk advice. Preserve cashflow/LOC warning priorities, exactly80 boundary and valid clipped-final/zero-surplus Pause. All original numerical modules/index remain unchanged in the new shared-view slice; source-bound references/media must still pass. Prior native exports are inherited until fresh exact-head CI, not new device proof.",
       "Read docs/native-legacy-apr-contract-2026-10-21.md. Single-scenario legacy-percent and canonical Portfolio percent remain separate; unchanged/equivalent bytes stay exact, new200 storesraw200/copiesdecimal2, oldraw2 remains2%. Original19 drafts/15APR/6browser cases stay intact. Historical counting-wrapperexit1 is explicitly reconciled as70+6cases plus1navigation assertion, never erased.",
       "Read docs/native-portfolio-contract-2026-10-20.md. Native full-book create/copy/edit/transfer and paired recovery are implemented with explicit units and owner/CAS/session guards. Preserve old physical v1 bytes, strict v2/decimal writes, missing-source destination preservation and immutable queued bodies. Browser/null-host/exports are not signed-in device, cloud or locale-complete keyboard approval.",
