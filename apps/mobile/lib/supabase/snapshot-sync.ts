@@ -7,14 +7,15 @@ import {
 } from '@interestshield/persistence-contract';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
-import { encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
-import { PORTFOLIO_SNAPSHOT_KEY } from './portfolio-snapshot';
+import type { PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { captureMobileSnapshotAssumptions, PORTFOLIO_SNAPSHOT_KEY, serializeMobileRecoveryPortfolio } from './portfolio-snapshot';
 import { encodeMobileAssumptions } from '../mobile-assumption-storage';
 import { getOrCreateMobileSyncIdempotencyKey } from './sync-identity';
 
 export interface MobileSnapshotSyncInput {
   assumptions: MobileDashboardInput;
   portfolio?: PortfolioBook | null;
+  portfolioDocumentVersion?: 3;
   clientRevision: number;
   displayName?: string;
   expectedOwnerId: string;
@@ -46,15 +47,19 @@ function syncError(stage: string, error: { message?: string } | null): Error {
 export async function prepareMobileSnapshotSync(
   input: MobileSnapshotSyncInput
 ): Promise<PreparedMobileSnapshotSync> {
+  input = { ...input };
   if (!isSafeSnapshotRevision(input.clientRevision)) {
     throw new Error('Mobile snapshot sync requires a positive safe client revision.');
   }
+  if (input.portfolioDocumentVersion !== undefined && input.portfolio == null) {
+    throw new Error('A Portfolio document version requires a Portfolio target.');
+  }
   const storage: SnapshotStorageEntry[] = [{
     key: 'interestshield-mobile-assumptions-v1',
-    value: encodeMobileAssumptions(input.assumptions, undefined, input.expectedOwnerId),
+    value: encodeMobileAssumptions(captureMobileSnapshotAssumptions(input.assumptions), undefined, input.expectedOwnerId),
   }];
   if (input.portfolio !== undefined && input.portfolio !== null) {
-    storage.push({ key: PORTFOLIO_SNAPSHOT_KEY, value: encodePortfolioDocument(input.portfolio) });
+    storage.push({ key: PORTFOLIO_SNAPSHOT_KEY, value: serializeMobileRecoveryPortfolio(input.portfolio, input.portfolioDocumentVersion) });
   }
   const plan = buildSnapshotSyncPlan({
     displayName: input.displayName,

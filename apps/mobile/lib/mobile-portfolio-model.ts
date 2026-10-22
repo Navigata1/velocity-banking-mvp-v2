@@ -1,4 +1,4 @@
-import { formatCurrency, normalizeApr, type MobileDashboardInput } from '@interestshield/financial-engine';
+import { decodeLenderTerms, formatCurrency, normalizeApr, type MobileDashboardInput } from '@interestshield/financial-engine';
 import { simulatePortfolio } from '@interestshield/financial-engine/portfolio';
 import { decodePortfolioBook, portfolioBookInputs, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
 import { buildPortfolioPathVisualModel } from '@interestshield/financial-engine/portfolio-path';
@@ -11,7 +11,8 @@ export function createBlankMobilePortfolio(): PortfolioBook {
 export function copyMobileScenarioToPortfolio(input: MobileDashboardInput, id: string): PortfolioBook {
   return decodePortfolioBook({ ...createBlankMobilePortfolio(), monthlyIncome: input.monthlyIncome,
     monthlyExpenses: input.monthlyExpenses, chunkAmount: input.chunkAmount, strategy: 'velocity',
-    loc: { limit: input.loc.limit, balance: input.loc.balance, apr: normalizeApr(input.loc.apr) },
+    loc: { limit: input.loc.limit, balance: input.loc.balance, apr: normalizeApr(input.loc.apr),
+      ...(input.loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(input.loc.lenderTerms) }) },
     debts: [{ id, name: input.activeDebtName, category: 'custom', kind: 'amortized',
       balance: input.activeDebt.balance, apr: normalizeApr(input.activeDebt.apr), paymentSource: 'checking',
       minPaymentRule: { type: 'fixed', amount: input.activeDebt.monthlyPayment },

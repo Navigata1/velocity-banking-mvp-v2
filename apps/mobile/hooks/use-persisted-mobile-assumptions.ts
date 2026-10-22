@@ -35,6 +35,11 @@ function toSavedStatus(backend: MobileAssumptionStorageBackend): MobileAssumptio
   return 'unavailable';
 }
 
+function storageReviewMessage(error: unknown): string | null {
+  if (!error || typeof error !== 'object' || !('code' in error) || error.code !== 'unsupported-mobile-assumptions') return null;
+  return 'message' in error && typeof error.message === 'string' ? error.message : 'Saved scenario requires review. Existing data was not replaced.';
+}
+
 function cloneDefaultMobileInput(): MobileDashboardInput {
   return {
     ...defaultMobileDashboardInput,
@@ -52,6 +57,7 @@ export function usePersistedMobileAssumptions(
   const [loadedScope, setLoadedScope] = useState<string | null>(null);
   const [storageStatus, setStorageStatus] = useState<MobileAssumptionStorageStatus>('loading');
   const [canPersist, setCanPersist] = useState(false);
+  const [storageError, setStorageError] = useState<string | null>(null);
   const lastPersistedInput = useRef<MobileDashboardInput | null>(null);
   const saveQueue = useRef<Promise<void>>(Promise.resolve());
   const saveVersion = useRef(0);
@@ -59,7 +65,7 @@ export function usePersistedMobileAssumptions(
   const storageRevision = useRef(0);
   const scope = mobileAssumptionsStorageKey(ownerId);
   const activeScope = useRef<string | null>(null);
-  const isHydrated = authReady && loadedScope === scope;
+  const isHydrated = authReady && loadedScope === scope && storageError === null;
   const fallbackInput = useMemo(() => cloneDefaultMobileInput(), [scope]);
 
   useLayoutEffect(() => {
@@ -77,6 +83,7 @@ export function usePersistedMobileAssumptions(
     setLoadedScope(null);
     setStorageStatus('loading');
     setCanPersist(false);
+    setStorageError(null);
     lastPersistedInput.current = null;
     saveVersion.current += 1;
     persistenceEpoch.current += 1;
@@ -94,7 +101,7 @@ export function usePersistedMobileAssumptions(
         setCanPersist(result.backend !== 'unavailable');
         setStorageStatus(toRestoredStatus(result.backend, result.restored));
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         if (!shouldApply || !isMounted.current) return;
         const fallback = cloneDefaultMobileInput();
         lastPersistedInput.current = fallback;
@@ -103,6 +110,7 @@ export function usePersistedMobileAssumptions(
         setLoadedScope(scope);
         setCanPersist(false);
         setStorageStatus('unavailable');
+        setStorageError(storageReviewMessage(error));
       });
 
     return () => {
@@ -132,10 +140,12 @@ export function usePersistedMobileAssumptions(
           setStorageStatus(toSavedStatus(result.backend));
         }
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
           setCanPersist(false);
           setStorageStatus('unavailable');
+          const review = storageReviewMessage(error);
+          if (review) setStorageError(review);
         }
       });
   }, [authReady, canPersist, input, loadedScope, ownerId, scope]);
@@ -177,6 +187,8 @@ export function usePersistedMobileAssumptions(
       if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
         setCanPersist(false);
         setStorageStatus('unavailable');
+        const review = storageReviewMessage(error);
+        if (review) setStorageError(review);
       }
       throw error;
     }
@@ -236,6 +248,8 @@ export function usePersistedMobileAssumptions(
       ) {
         setCanPersist(false);
         setStorageStatus('unavailable');
+        const review = storageReviewMessage(error);
+        if (review) setStorageError(review);
       }
       throw error;
     }
@@ -249,5 +263,6 @@ export function usePersistedMobileAssumptions(
     setInput: updateAssumptions,
     storageStatus,
     storageScope: scope,
+    ...(storageError === null ? {} : { storageError }),
   };
 }

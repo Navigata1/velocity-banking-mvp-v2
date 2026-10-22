@@ -5,6 +5,7 @@ export interface PortfolioTransferCurrent {
   book: PortfolioBook;
   storageScope: string;
   revision: number;
+  documentVersion?: 3;
   disabled?: boolean;
 }
 
@@ -14,7 +15,7 @@ export interface PortfolioTransferReview {
   readonly destinationSignature: string;
   readonly storageScope: string;
   readonly revision: number;
-  readonly sourceVersion: 1 | 2;
+  readonly sourceVersion: 1 | 2 | 3;
   readonly debtCount: number;
   readonly locBalance: number;
   readonly locLimit: number;
@@ -26,18 +27,20 @@ function assertEditable(current: PortfolioTransferCurrent): void {
   if (current.disabled) throw new Error('Portfolio editing is unavailable. Review again when editing is available.');
   if (typeof current.storageScope !== 'string' || !current.storageScope.trim()) throw new Error('Portfolio storage scope is missing.');
   if (!Number.isSafeInteger(current.revision) || current.revision < 0) throw new Error('Portfolio revision is invalid.');
+  if (current.documentVersion !== undefined && current.documentVersion !== 3) throw new Error('Portfolio document version is unsupported.');
 }
 
 export function makePortfolioTransferReview(current: PortfolioTransferCurrent): PortfolioTransferReview {
   assertEditable(current);
   const book = decodePortfolioDocument(current.sourceJSON);
+  const sourceVersion = (JSON.parse(current.sourceJSON) as { version: 1 | 2 | 3 }).version;
   return Object.freeze({
     sourceJSON: current.sourceJSON,
-    canonicalDocument: encodePortfolioDocument(book),
-    destinationSignature: encodePortfolioDocument(current.book),
+    canonicalDocument: encodePortfolioDocument(book, sourceVersion === 3 || current.documentVersion === 3 ? 3 : undefined),
+    destinationSignature: encodePortfolioDocument(current.book, current.documentVersion),
     storageScope: current.storageScope,
     revision: current.revision,
-    sourceVersion: (JSON.parse(current.sourceJSON) as { version: 1 | 2 }).version,
+    sourceVersion,
     debtCount: book.debts.length,
     locBalance: book.loc.balance,
     locLimit: book.loc.limit,
@@ -52,7 +55,7 @@ export function validatePortfolioTransferReview(review: PortfolioTransferReview,
   if (current.storageScope !== review.storageScope) throw new Error('Portfolio owner scope changed. Review the imported portfolio again.');
   if (current.revision !== review.revision) throw new Error('Portfolio revision changed. Review the imported portfolio again.');
   if (current.sourceJSON !== review.sourceJSON) throw new Error('Imported source JSON changed. Review the imported portfolio again.');
-  if (encodePortfolioDocument(current.book) !== review.destinationSignature) {
+  if (encodePortfolioDocument(current.book, current.documentVersion) !== review.destinationSignature) {
     throw new Error('Destination portfolio changed. Review the imported portfolio again.');
   }
   // Only decode the frozen canonical document here: never reinterpret legacy rates twice.
@@ -61,13 +64,14 @@ export function validatePortfolioTransferReview(review: PortfolioTransferReview,
 
 export function beginPortfolioTransferConfirmation(review: PortfolioTransferReview, current: PortfolioTransferCurrent): {
   review: PortfolioTransferReview;
-  replacement: { book: PortfolioBook; expectedRevision: number } | null;
+  replacement: { book: PortfolioBook; expectedRevision: number; documentVersion?: 3 } | null;
 } {
   const book = validatePortfolioTransferReview(review, current);
   const unchanged = review.canonicalDocument === review.destinationSignature;
   return {
     review: Object.freeze({ ...review, phase: unchanged ? 'complete' : 'pending' }),
-    replacement: unchanged ? null : { book, expectedRevision: review.revision },
+    replacement: unchanged ? null : { book, expectedRevision: review.revision,
+      ...(JSON.parse(review.canonicalDocument).version === 3 ? { documentVersion: 3 as const } : {}) },
   };
 }
 

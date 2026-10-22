@@ -12,6 +12,7 @@ export interface MobilePortfolioSessionState {
   readonly status: Status;
   readonly isHydrated: boolean;
   readonly error: string | null;
+  readonly documentVersion?: 3;
 }
 interface Dependencies {
   load: typeof loadMobilePortfolioForOwner;
@@ -26,7 +27,7 @@ export interface MobilePortfolioSession {
   deactivate: () => void;
   create: (book: PortfolioBook) => Promise<DurableBackend>;
   update: (change: (book: PortfolioBook) => PortfolioBook) => Promise<DurableBackend>;
-  replace: (book: PortfolioBook, ownerLock?: MobileSnapshotOwnerLock, expectedRevision?: number) => Promise<DurableBackend>;
+  replace: (book: PortfolioBook, ownerLock?: MobileSnapshotOwnerLock, expectedRevision?: number, documentVersion?: 3) => Promise<DurableBackend>;
   flush: () => Promise<void>;
 }
 function initialState(): MobilePortfolioSessionState {
@@ -34,6 +35,11 @@ function initialState(): MobilePortfolioSessionState {
 }
 function frozenBook(value: PortfolioBook): PortfolioBook {
   const book = decodePortfolioBook(value);
+  if (book.loc.lenderTerms) {
+    if (book.loc.lenderTerms.minimumPayment) Object.freeze(book.loc.lenderTerms.minimumPayment);
+    if (book.loc.lenderTerms.sources) Object.freeze(book.loc.lenderTerms.sources);
+    Object.freeze(book.loc.lenderTerms);
+  }
   Object.freeze(book.loc);
   for (const debt of book.debts) {
     Object.freeze(debt.minPaymentRule);
@@ -58,7 +64,9 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
   const current = () => active && isCurrent();
   const publish = (patch: Partial<MobilePortfolioSessionState>) => {
     if (!current()) return;
-    state = Object.freeze({ ...state, ...patch });
+    const next = { ...state, ...patch };
+    if (next.documentVersion === undefined) delete next.documentVersion;
+    state = Object.freeze(next);
     for (const listener of listeners) listener();
   };
   const assertCurrent = () => { if (!current()) throw new Error('Portfolio session changed or is inactive.'); };
@@ -85,7 +93,7 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
       revision = Math.max(revision, result.revision);
       assertOperation(version);
       pending--;
-      publish({ revision, backend: result.backend, status: pending ? 'saving' : 'saved', error: null });
+      publish({ revision, documentVersion: result.documentVersion, backend: result.backend, status: pending ? 'saving' : 'saved', error: null });
       return result.backend;
     }).catch(error => { fail(error, version); throw error; });
     queue = operation.then(() => undefined, () => undefined);
@@ -101,7 +109,7 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
       active = true;
       const version = ++epoch;
       pending = 0;
-      publish({ ...initialState() });
+      publish({ ...initialState(), documentVersion: undefined });
       try {
         await queue;
         assertOperation(version);
@@ -110,7 +118,7 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
         if (result.backend === 'unavailable') { publish({ status: 'unavailable', error: 'Portfolio persistence is unavailable.' }); return; }
         if (!Number.isSafeInteger(result.revision) || result.revision < 0) throw new Error('Portfolio revision is invalid.');
         revision = result.revision;
-        publish({ book: result.book === null ? null : frozenBook(result.book), revision, backend: result.backend,
+        publish({ book: result.book === null ? null : frozenBook(result.book), revision, documentVersion: result.documentVersion, backend: result.backend,
           status: result.book === null ? 'empty' : 'saved', isHydrated: true, error: null });
       } catch (error) {
         if (current() && epoch === version) publish({ status: 'error', isHydrated: false, error: message(error) });
@@ -134,19 +142,21 @@ export function createMobilePortfolioSession(ownerId: string | null, overrides: 
       }
       return enqueue(candidate);
     },
-    async replace(book, ownerLock, expectedRevision) {
+    async replace(book, ownerLock, expectedRevision, documentVersion) {
       assertCurrent();
       if (!state.isHydrated) throw new Error('Portfolio is still loading.');
       if (ownerLock && !isMobileSnapshotOwnerLock(ownerLock, owner ?? 'guest')) throw new Error('Portfolio replacement lock is invalid.');
+      if (documentVersion !== undefined && documentVersion !== 3) throw new Error('Portfolio replacement document version is unsupported.');
       const candidate = frozenBook(book), before = queue, version = ++epoch;
       pending = 1;
       publish({ status: 'replacing', error: null });
       const operation = (ownerLock ? Promise.resolve() : before).then(async () => {
         assertOperation(version);
-        const result = await save(owner, candidate, { expectedRevision: expectedRevision ?? revision, ownerLock });
+        const result = await save(owner, candidate, { expectedRevision: expectedRevision ?? revision, ownerLock,
+          ...(documentVersion === undefined ? {} : { documentVersion }) });
         revision = Math.max(revision, result.revision);
         assertOperation(version); pending = 0;
-        publish({ book: candidate, revision, backend: result.backend, status: 'saved', error: null });
+        publish({ book: candidate, revision, documentVersion: result.documentVersion, backend: result.backend, status: 'saved', error: null });
         return result.backend;
       }).catch(error => { fail(error, version); throw error; });
       // A leased restore cannot await an old save that is waiting for that same lock.
