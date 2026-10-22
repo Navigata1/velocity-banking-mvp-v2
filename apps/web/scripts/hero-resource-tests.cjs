@@ -47,3 +47,4 @@ for(const fails of [false,true]) {
 }
 console.log('Shared studio releases all temporary reflection resources on success and failure.');
 require('./hero-lifecycle-tests.cjs');
+require('./hero-replay-clock-tests.cjs');

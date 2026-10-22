@@ -111,7 +111,6 @@ async function captureStage(page, stage) {
   return page.screenshot({ clip, timeout: 120000 });
 }
 async function verifyReplay(page,stage,id,width,requests,initialBytes,movedBytes) {
-  await pauseAtVisibleHero(page);
   const canvas=await stage.locator('canvas').elementHandle();assert.ok(canvas,'loaded canvas required');
   const count=()=>requests.filter(url=>new URL(url).pathname.endsWith('.glb')).length,before=count();
   try {
@@ -194,7 +193,6 @@ async function run() {
         const a=await captureStage(page,stage);
         await advanceMotionSample(page);
         const b=await captureStage(page,stage);
-        await page.clock.resume();
         fs.writeFileSync(path.join(output,`${width}-${id}-3d-start.png`),a);
         fs.writeFileSync(path.join(output,`${width}-${id}-3d.png`),b);
         const image=decodePngRgba(a),lastImage=decodePngRgba(b);
@@ -225,7 +223,6 @@ async function run() {
       const endBytes=await captureStage(page,vault);
       fs.writeFileSync(path.join(output,`${width}-vault-3d.png`),endBytes);
       const end=decodePngRgba(endBytes);
-      await page.clock.resume();
       const va=presentationBounds(start,'vault'),vb=visibleBounds(end);
       const region={left:Math.min(va.left,vb.left),right:Math.max(va.right,vb.right),top:Math.min(va.top,vb.top),bottom:Math.max(va.bottom,vb.bottom)};
       assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(samplePngPixels(start,31,region).stabilityDescriptor,samplePngPixels(end,31,region).stabilityDescriptor)),'vault did not rotate');
