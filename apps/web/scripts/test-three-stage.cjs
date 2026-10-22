@@ -46,9 +46,6 @@ const shutdown = createGracefulShutdown({
   exit: (code) => process.exit(code),
 });
 
-process.once('SIGINT', () => { void shutdown(130); });
-process.once('SIGTERM', () => { void shutdown(143); });
-
 function remainingTimeout(deadline) {
   return Math.max(1, deadline - Date.now());
 }
@@ -720,6 +717,7 @@ async function run() {
       await verifyNormalViewport(activeBrowser, started.origin, viewportLabel, viewport, expectedRenderMode, expectedDpr);
     }
     await verifyReducedMotionFallback(activeBrowser, started.origin);
+    await require('./smoke-three-selection.cjs').runSelectionSmoke({ browser: activeBrowser, origin: started.origin, output: path.join(evidenceDirectory, 'selection') });
     console.log(`Three-stage screenshots: ${evidenceDirectory}`);
   } finally {
     await activeBrowser?.close();
@@ -729,7 +727,12 @@ async function run() {
   }
 }
 
-run().catch((error) => {
-  console.error(error.stack || error.message);
-  process.exitCode = 1;
-});
+module.exports = { waitForNormalStage, waitForStageSettled, assertGenuineWebgl2, captureIsolatedCanvasPng, proveCanvasPng, prepareStageAndTargetForClick };
+if (require.main === module) {
+  process.once('SIGINT', () => { void shutdown(130); });
+  process.once('SIGTERM', () => { void shutdown(143); });
+  run().catch((error) => {
+    console.error(error.stack || error.message);
+    process.exitCode = 1;
+  });
+}

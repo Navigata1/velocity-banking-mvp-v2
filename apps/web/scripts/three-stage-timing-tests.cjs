@@ -22,7 +22,9 @@ function loadHarness(clock) {
     __dirname, module: testModule, Date: { now: clock.now }, process: { once() {} }, console,
   };
   // Load the real capture function without the browser/server entry point or signal hooks.
-  vm.runInNewContext(source.slice(0, source.lastIndexOf('\nrun().catch(')) + `
+  const entry = source.indexOf('\nmodule.exports =');
+  assert.ok(entry > 0, 'expected an explicit helper export boundary before the standalone entry point');
+  vm.runInNewContext(source.slice(0, entry) + `
     module.exports = { captureCanvasElementPng, exerciseSelection,
       createPhaseTiming: typeof createPhaseTiming === 'function' ? createPhaseTiming : null };`, context, { filename });
   return { ...testModule.exports, context };
