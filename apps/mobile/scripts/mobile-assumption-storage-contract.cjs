@@ -103,6 +103,7 @@ async function main() {
   assert.equal(durable.revision, 1);
   assert.equal(durable.input.monthlyIncome, 9100);
   console.log('Expo assumption storage contract rejected a stale-tab overwrite after recovery.');
+  await require('./mobile-assumption-physical-contract.cjs')();
 }
 
 main().catch((error) => {

@@ -85,7 +85,8 @@ function createHarness() {
       calls.loads.push(owner);
       await waitForGate('load', owner);
       const saved = records.get(owner);
-      return { backend: 'local-storage', book: saved ? clone(saved.book) : null, revision: saved?.revision ?? 0 };
+      return { backend: 'local-storage', book: saved ? clone(saved.book) : null, revision: saved?.revision ?? 0,
+        ...(saved?.documentVersion===3?{documentVersion:3}:{}) };
     },
     async saveMobilePortfolioForOwner(owner, book, options) {
       const candidate = clone(book), expectedRevision = options.expectedRevision;
@@ -93,8 +94,9 @@ function createHarness() {
       await waitForGate('save', owner);
       const revision = records.get(owner)?.revision ?? 0;
       if (revision !== expectedRevision) throw new Error('stale revision');
-      records.set(owner, { book: candidate, revision: revision + 1 });
-      return { backend: 'local-storage', revision: revision + 1 };
+      const documentVersion=options.documentVersion??records.get(owner)?.documentVersion??(candidate.loc.lenderTerms?3:undefined);
+      records.set(owner, { book: candidate, revision: revision + 1,...(documentVersion===3?{documentVersion:3}:{}) });
+      return { backend: 'local-storage', revision: revision + 1,...(documentVersion===3?{documentVersion:3}:{}) };
     },
   };
   function loadModule(file) {
@@ -188,6 +190,15 @@ async function main() {
     assert.equal(h.committed().status, 'saved');
     assert.equal(h.committed().revision, 2);
     assert.equal(h.stored(ownerA).book.monthlyIncome, 9000);
+  });
+  await test('active3 metadata survives replacement removal reload and is absent for a new owner', async h => {
+    await h.render(ownerA);assert.equal('documentVersion' in h.committed(),false);
+    await React.act(async()=>{await h.committed().replace(clone(base),undefined,1,3);});
+    assert.equal(h.committed().documentVersion,3);
+    await React.act(async()=>{await h.committed().update(book=>({...book,loc:{...book.loc,lenderTerms:{annualFee:0}}}));});
+    await React.act(async()=>{await h.committed().update(book=>{delete book.loc.lenderTerms;return book;});await h.committed().reload();});
+    assert.equal(h.committed().documentVersion,3);assert.equal('lenderTerms' in h.committed().book.loc,false);
+    await h.render(ownerB);assert.equal('documentVersion' in h.committed(),false);
   });
   await test('uncommitted suspended owner renders preserve committed-owner callbacks', async h => {
     await h.render(ownerA);
