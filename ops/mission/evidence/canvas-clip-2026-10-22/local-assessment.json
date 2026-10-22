@@ -1,0 +1,251 @@
+{
+  "verifiedAt": "2026-10-22T20:13:16.860Z",
+  "baseline": "f7821ba9e928b34038dadb75ea41e2512f4172fb",
+  "status": "failed",
+  "productionReady": false,
+  "publicationAllowed": false,
+  "scope": "Frozen-source collection of29 standing commands: failed fullattempt3 plus14 previously unattempted commands. NOT a successful full29 run or retry acceptance.",
+  "fresh": {
+    "attempted": 29,
+    "passed": 27,
+    "failed": 2,
+    "sourcePins": 484,
+    "captureGroups": 20,
+    "privateShippingFixtures": 147
+  },
+  "gates": [
+    {
+      "name": "ci-contracts",
+      "command": "node scripts/check-restoration-ci.test.cjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:41:57.395Z"
+    },
+    {
+      "name": "runtime-contracts",
+      "command": "node --test scripts/audit-web-runtime.test.cjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:41:58.349Z"
+    },
+    {
+      "name": "sql-wiring",
+      "command": "node apps/web/scripts/supabase-ci-contract.cjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:41:58.452Z"
+    },
+    {
+      "name": "web-tests",
+      "command": "npm --prefix apps/web test",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:43:37.655Z"
+    },
+    {
+      "name": "web-lint",
+      "command": "npm --prefix apps/web run lint",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:43:49.706Z"
+    },
+    {
+      "name": "web-build",
+      "command": "npm --prefix apps/web run build",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:43:59.379Z"
+    },
+    {
+      "name": "three-stage",
+      "command": "npm --prefix apps/web run test:3d:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:44:38.901Z"
+    },
+    {
+      "name": "web-routes",
+      "command": "npm --prefix apps/web run smoke:routes",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:44:41.028Z"
+    },
+    {
+      "name": "web-rendered",
+      "command": "npm --prefix apps/web run smoke:rendered:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:44:58.055Z"
+    },
+    {
+      "name": "simulator-comparison",
+      "command": "npm --prefix apps/web run smoke:comparison:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:48:29.323Z"
+    },
+    {
+      "name": "dashboard",
+      "command": "npm --prefix apps/web run smoke:dashboard:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:53:05.967Z"
+    },
+    {
+      "name": "vault",
+      "command": "npm --prefix apps/web run smoke:vault:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:53:39.761Z"
+    },
+    {
+      "name": "portfolio",
+      "command": "npm --prefix apps/web run smoke:portfolio:built",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T19:59:00.427Z"
+    },
+    {
+      "name": "heroes",
+      "command": "npm --prefix apps/web run test:heroes",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:01:05.941Z"
+    },
+    {
+      "name": "media-check",
+      "command": "npm --prefix apps/media run check",
+      "code": 1,
+      "signal": null,
+      "completedAt": "2026-10-22T20:03:48.026Z"
+    },
+    {
+      "name": "hero-video-verification",
+      "command": "npm --prefix apps/media run verify:heroes",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:07:10.044Z"
+    },
+    {
+      "name": "native-types",
+      "command": "npm --prefix apps/mobile run check",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:07:16.091Z"
+    },
+    {
+      "name": "native-contracts",
+      "command": "npm --prefix apps/mobile run test:supabase:mobile",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:08:09.519Z"
+    },
+    {
+      "name": "native-port",
+      "command": "node scripts/mobile-port-contract-tests.cjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:08:10.813Z"
+    },
+    {
+      "name": "native-web-build",
+      "command": "npm --prefix apps/mobile run build:web",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:08:36.452Z"
+    },
+    {
+      "name": "native-web-smoke",
+      "command": "npm --prefix apps/mobile run smoke:web-export",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:08:37.534Z"
+    },
+    {
+      "name": "native-accessibility",
+      "command": "npm --prefix apps/mobile run smoke:accessibility:built",
+      "code": 1,
+      "signal": null,
+      "completedAt": "2026-10-22T20:09:47.141Z"
+    },
+    {
+      "name": "native-android-bundle",
+      "command": "npm --prefix apps/mobile run smoke:android-bundle",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:14.141Z"
+    },
+    {
+      "name": "native-ios-bundle",
+      "command": "npm --prefix apps/mobile run smoke:ios-bundle",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:38.891Z"
+    },
+    {
+      "name": "worker-check",
+      "command": "npm --prefix apps/report-worker run check",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:41.979Z"
+    },
+    {
+      "name": "worker-tests",
+      "command": "npm --prefix apps/report-worker test",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:44.818Z"
+    },
+    {
+      "name": "worker-dry-build",
+      "command": "npm --prefix apps/report-worker run build:dry-run",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:46.799Z"
+    },
+    {
+      "name": "report-renderer",
+      "command": "node ops/mission/test-renderer.mjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:47.223Z"
+    },
+    {
+      "name": "report-contracts",
+      "command": "node --test ops/mission/report-renderer-tests.mjs",
+      "code": 0,
+      "signal": null,
+      "completedAt": "2026-10-22T20:10:47.821Z"
+    }
+  ],
+  "sourcePinsSha256": "a6f0bc628dbf993c527d4005751829144c849b0ecca319c63b1fb8bcebec23a5",
+  "evidence": [
+    {
+      "file": ".superpowers/sdd/2026-10-22-canvas-capture-consolidation/full-gates-attempt3.json",
+      "bytes": 62830,
+      "sha256": "3c69eabf4497b763397e68ac9db88850c548d2cba2eabcafb65b815983be6c52"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-22-canvas-capture-consolidation/remaining-gate-runs/624808eb-f3a8-4324-a2fa-ad1030302781/verification.json",
+      "bytes": 63323,
+      "sha256": "aa22ae9158f30fede205a28d882d5f05de311d37758ba726d28f238befee26e3"
+    }
+  ],
+  "failures": [
+    "Fullattempt1 test-local lint names; corrected without runtime change.",
+    "Fullattempt2 original desktopprincipal decoded701ms>700; retained. One whole unchanged local revalidation only.",
+    "Fullattempt3 passed14 commands, then Remotion Chrome Page.captureScreenshot Target closed at BlockedPlan-Landscape frame18. Cause unconfirmed; no fourth unchanged full retry.",
+    "One diagnostic replay of only that frame passed in unique output with verbose logs. It does not pass the full media matrix or prove a fix.",
+    "Native accessibility smoke later rejected its reused dated-plan output directory. Existing protected receipts were not overwritten; the caller needs fresh per-run dated output.",
+    "ArtificialCPU2 remains failed: original4/6,candidate5/6,desktopnine ms late (709ms saved epoch). No reliability/speed/rootcause claim."
+  ],
+  "remaining": [
+    "Fix native smoke repeatability with actual-guard regression tests and per-run dated output; preserve prior receipts. Media browser-crash cause remains unconfirmed. A legitimate new-source complete gate result is needed before commit/push.",
+    "Both new-head full CI events,automaticREADY,hosted/IAB and receipt remain unattempted for this unshipped candidate.",
+    "FullR3,all-ten photoreal approval,backend/security/recovery,physicalnative/accessibility and final production remain open."
+  ],
+  "lastVerifiedHead": "93dcf67b7b19946f3fb599c1a6dcc4d7110a968a",
+  "lastVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6344946083",
+  "failedRemoteHead": "f7821ba9e928b34038dadb75ea41e2512f4172fb",
+  "failureComment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6349085540"
+}
