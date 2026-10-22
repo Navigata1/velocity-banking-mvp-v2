@@ -8,6 +8,8 @@ export interface PortfolioPayoffPlan {
   payoffMonths: number | null;
   totalInterest: number | null;
   endingCash: number | null;
+  totalFees?: number;
+  payoffDate?: string;
   reason?: string;
 }
 export interface PortfolioPayoffModel {
@@ -36,6 +38,8 @@ export function buildPortfolioPayoffModel(book: PortfolioBook): PortfolioPayoffM
     return {
       strategy: plan.strategy, state: cleared ? 'cleared' : 'projected', payoffMonths: plan.payoff.months,
       totalInterest: snapshot.interestThroughMonth, endingCash: snapshot.cashBalance,
+      ...(snapshot.feesThroughMonth === undefined ? {} : { totalFees: snapshot.feesThroughMonth }),
+      ...(plan.payoff.date === undefined ? {} : { payoffDate: plan.payoff.date }),
     };
   });
   return {

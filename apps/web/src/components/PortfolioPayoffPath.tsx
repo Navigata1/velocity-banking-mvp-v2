@@ -175,9 +175,7 @@ export default function PortfolioPayoffPath({ model }: PortfolioPayoffPathProps)
           </div>
           <div className={`${classes.glassButton} rounded-xl border ${classes.border} p-3`}>
             <p className={`text-[11px] font-semibold uppercase ${classes.textMuted}`}>Modeled progress</p>
-            <p className={`mt-1 text-lg font-bold ${model.isProjected ? 'text-emerald-300' : 'text-amber-200'}`}>
-              {Math.round(progressPercent)}%
-            </p>
+            <p data-testid="portfolio-path-progress" className={`mt-1 text-lg font-bold ${model.isProjected ? 'text-emerald-300' : 'text-amber-200'}`}>{model.isProjected ? `${Math.round(progressPercent)}%` : 'Not projected'}</p>
           </div>
           <div className={`${classes.glassButton} rounded-xl border ${classes.border} p-3`}>
             <p className={`text-[11px] font-semibold uppercase ${classes.textMuted}`}>Interest estimate</p>
