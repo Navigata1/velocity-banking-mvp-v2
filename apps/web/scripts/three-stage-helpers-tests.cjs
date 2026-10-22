@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const assert = require('node:assert/strict');
 const zlib = require('node:zlib');
+const { execFileSync } = require('node:child_process');
+const path = require('node:path');
 const { createGracefulShutdown } = require('./built-server-harness.cjs');
 const { runTimingTests } = require('./three-stage-timing-tests.cjs');
 const { runSelectionTests } = require('./three-selection-tests.cjs');
@@ -190,6 +192,9 @@ async function run() {
   await testGracefulShutdownServerFailure();
   await runTimingTests();
   runSelectionTests();
+  for (const file of ['canvas-clip-tests.cjs', 'selection-phase-tests.cjs', 'canvas-overlay-tests.cjs']) {
+    execFileSync(process.execPath, ['--test', path.join(__dirname, file)], { stdio: 'inherit', windowsHide: true });
+  }
   console.log('Three stage PNG and lifecycle helper tests passed.');
 }
 

@@ -160,12 +160,17 @@ function proveCanvasPng(screenshot, viewportLabel) {
 
 async function resolveCanvasClip(page, viewportLabel) {
   const canvas = page.getByTestId('money-loop-three-stage').locator('canvas');
-  const box = await canvas.boundingBox();
-  const viewport = await page.evaluate(() => ({ height: window.innerHeight, scrollY: window.scrollY, width: window.innerWidth }));
-  if (!box || box.width <= 0 || box.height <= 0 || box.x < 0 || box.y < 0 || box.x + box.width > viewport.width || box.y + box.height > viewport.height) {
+  const { box, viewport, scrollY } = await canvas.evaluate(node => {
+    const rect = node.getBoundingClientRect();
+    return { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
+  });
+  if (!box || ![box.x, box.y, box.width, box.height, viewport.width, viewport.height, scrollY].every(Number.isFinite) ||
+      box.width <= 0 || box.height <= 0 || viewport.width <= 0 || viewport.height <= 0 ||
+      box.x < 0 || box.y < 0 || box.x + box.width > viewport.width || box.y + box.height > viewport.height) {
     throw new Error(`${viewportLabel} canvas was not fully visible for clipped PNG capture.`);
   }
-  return { box, scrollY: viewport.scrollY };
+  return { box, scrollY };
 }
 
 async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {

@@ -4,6 +4,7 @@ const {createHash,randomUUID}=require('node:crypto'),{chromium}=require('playwri
 const {startBuiltServer,stopServer,createGracefulShutdown}=require('./built-server-harness.cjs');
 const {findBrowserExecutable,getHeadlessChromiumArgs}=require('./browser-harness.cjs');
 const {compareSpatialDescriptors,MAX_SETTLED_SPATIAL_CELL_DISTANCE,MAX_SETTLED_SPATIAL_MEAN_DISTANCE}=require('./png-pixel-proof.cjs');
+const {createPhaseTiming}=require('./three-stage-timing.cjs');
 const {waitForNormalStage,waitForStageSettled,assertGenuineWebgl2,captureIsolatedCanvasPng,proveCanvasPng,prepareStageAndTargetForClick}=require('./test-three-stage.cjs');
 const root=path.resolve(__dirname,'..'),motionMs=450,settleMs=700,stabilityMs=300;
 const keys=['velocity-bank-storage','interestshield-portfolio-v2','interestshield-portfolio-v1'];
@@ -16,15 +17,19 @@ const state=page=>page.getByTestId('money-loop-three-stage').evaluate(element=>(
 const vitals=page=>page.locator('[data-testid^="dashboard-vital-"],[data-testid^="dashboard-mobile-vital-"]').allTextContents();
 const bytes=page=>page.evaluate(keys=>keys.map(key=>localStorage.getItem(key)),keys);
 async function settledPixels(page,started,id,label,output){
- const deadline=started+settleMs;await waitForStageSettled(page,id,deadline);
- const candidate=await captureIsolatedCanvasPng(page,label,deadline),proof=proveCanvasPng(candidate.screenshot,label),decodedAt=Date.now();
+ const deadline=started+settleMs,timing=createPhaseTiming();
+ const snapshot={label,startedAt:started,deadline,phaseOriginElapsedMs:Date.now()-started,phases:timing.phases};
+ try{
+ await timing.measure('selection.settled.wait',()=>waitForStageSettled(page,id,deadline));
+ const candidate=await captureIsolatedCanvasPng(page,label,deadline,null,timing,'candidate'),proof=timing.measureSync('candidate.decode',()=>proveCanvasPng(candidate.screenshot,label)),decodedAt=Date.now();
  assert.ok(decodedAt<=deadline,'decode and overlay restoration must remain inside the unchanged700ms bound');
- const confirmationDeadline=decodedAt+stabilityMs,confirmation=await captureIsolatedCanvasPng(page,label,confirmationDeadline,candidate.canvasClip),confirmed=proveCanvasPng(confirmation.screenshot,label);
+ const confirmationDeadline=decodedAt+stabilityMs,confirmation=await captureIsolatedCanvasPng(page,label,confirmationDeadline,candidate.canvasClip,timing,'confirmation'),confirmed=timing.measureSync('confirmation.decode',()=>proveCanvasPng(confirmation.screenshot,label));
  assert.ok(Date.now()<=confirmationDeadline,'stability decode and restoration must remain inside300ms');
  const distance=compareSpatialDescriptors(proof.stabilityDescriptor,confirmed.stabilityDescriptor);
  assert.ok(distance.maxCellDistance<=MAX_SETTLED_SPATIAL_CELL_DISTANCE&&distance.meanCellDistance<=MAX_SETTLED_SPATIAL_MEAN_DISTANCE,'completed rapid selection must retain stable actual canvas pixels: '+JSON.stringify(distance));
  const file=label+'-canvas.png';fs.writeFileSync(path.join(output,file),candidate.screenshot);
- return{settledAndDecodedMs:decodedAt-started,stableThroughMs:Date.now()-started,colors:proof.colorCount,opaquePixels:proof.opaquePixels,distance,file,bytes:candidate.screenshot.length,sha256:createHash('sha256').update(candidate.screenshot).digest('hex')};
+ return{settledAndDecodedMs:decodedAt-started,stableThroughMs:Date.now()-started,colors:proof.colorCount,opaquePixels:proof.opaquePixels,distance,file,bytes:candidate.screenshot.length,sha256:createHash('sha256').update(candidate.screenshot).digest('hex'),timing:snapshot};
+ }catch(error){error.selectionTiming=snapshot;throw error;}
 }
 async function runSelectionSmoke({browser,origin,output=path.join(root,'test-results/three-selection')}){
  fs.mkdirSync(output,{recursive:true});const receipts=[],resources={contextsOpened:0,contextsClosed:0},runId=randomUUID(),startedAt=new Date().toISOString();
@@ -55,7 +60,7 @@ async function runSelectionSmoke({browser,origin,output=path.join(root,'test-res
    }
    assert.deepEqual(await bytes(page),documents);assert.deepEqual(await vitals(page),baseline);assert.deepEqual(errors,[]);
    await page.screenshot({path:path.join(output,name+'-viewport.png')});receipts.push({name,width,height,mode,passed:true,webgl,details,errors,sourceBytesPreserved:true,financialVitalsUnchanged:true});console.log('PASS Three selection '+name);
-  }catch(error){receipts.push({name,width,height,mode,passed:false,error:error.message,errors});await page.screenshot({path:path.join(output,name+'-failure.png')}).catch(()=>{});console.error(error.stack);}
+  }catch(error){receipts.push({name,width,height,mode,passed:false,error:error.message,errors,selectionTiming:error.selectionTiming??null});console.error(error.stack);if(error.selectionTiming)console.error('THREE_SELECTION_TIMING '+JSON.stringify(error.selectionTiming));await page.screenshot({path:path.join(output,name+'-failure.png')}).catch(()=>{});}
   finally{await context.close();resources.contextsClosed++;}
  }
  const files=fs.readdirSync(output).filter(file=>file.endsWith('.png')).sort().map(file=>{const data=fs.readFileSync(path.join(output,file));return{file,bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')};});
