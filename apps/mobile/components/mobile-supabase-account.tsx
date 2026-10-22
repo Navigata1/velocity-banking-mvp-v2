@@ -114,16 +114,17 @@ export function MobileSupabaseAccount({
   renderOwnerId.current = currentOwnerId;
   const recoveryRequestVersion = useRef(0);
   const currentDestination = useRef<{ ownerId: string | null; assumptions: MobileDashboardInput;
-    assumptionsReady: boolean; book: PortfolioBook | null; bookReady: boolean; bookStatus: string } | null>(null);
+    assumptionsReady: boolean; book: PortfolioBook | null; bookReady: boolean; bookStatus: string; documentVersion?: 3 } | null>(null);
   useLayoutEffect(() => {
     currentDestination.current = { ownerId: currentOwnerId, assumptions, assumptionsReady,
-      book: portfolio.book, bookReady: portfolio.isHydrated, bookStatus: portfolio.status };
+      book: portfolio.book, bookReady: portfolio.isHydrated, bookStatus: portfolio.status,
+      ...(portfolio.documentVersion === undefined ? {} : { documentVersion: portfolio.documentVersion }) };
   });
   useLayoutEffect(() => () => { currentDestination.current = null; }, []);
   const beginReview = (source: MobileSnapshotRecoverySource) => {
     if (!currentOwnerId || !assumptionsReady || !portfolio.isHydrated || !['saved','empty'].includes(portfolio.status)) return;
     reviewedDestination.current = { ownerId: currentOwnerId, assumptions: serializeMobileRecoveryAssumptions(assumptions),
-      portfolio: serializeMobileRecoveryPortfolio(portfolio.book) };
+      portfolio: serializeMobileRecoveryPortfolio(portfolio.book, portfolio.documentVersion) };
     setPendingRecovery(JSON.parse(JSON.stringify(source)) as MobileSnapshotRecoverySource);
   };
 
@@ -203,6 +204,7 @@ export function MobileSupabaseAccount({
       await mobileSnapshotOutbox.enqueue({
         assumptions,
         portfolio: portfolio.book,
+        ...(portfolio.documentVersion === undefined ? {} : { portfolioDocumentVersion: portfolio.documentVersion }),
         expectedOwnerId,
       });
       queued = true;
@@ -293,7 +295,7 @@ export function MobileSupabaseAccount({
       return current?.ownerId === expectedOwnerId && current.assumptionsReady && current.bookReady
         && ['saved','empty'].includes(current.bookStatus)
         && serializeMobileRecoveryAssumptions(current.assumptions) === reviewed.assumptions
-        && serializeMobileRecoveryPortfolio(current.book) === reviewed.portfolio;
+        && serializeMobileRecoveryPortfolio(current.book, current.documentVersion) === reviewed.portfolio;
     };
     if (!destinationMatches()) { setStatus('Local inputs changed or are still saving. Review recovery again.'); return; }
     const requestVersion = ++recoveryRequestVersion.current;
@@ -317,7 +319,7 @@ export function MobileSupabaseAccount({
           kind: source.kind,
           ownerId: expectedOwnerId,
           reviewedAssumptions: serializeMobileRecoveryAssumptions(source.assumptions),
-          reviewedPortfolio: serializeMobileRecoveryPortfolio(source.portfolio ?? null),
+          reviewedPortfolio: serializeMobileRecoveryPortfolio(source.portfolio ?? null, source.portfolioDocumentVersion),
         };
       const result = await runRecovery(expectedOwnerId, () => applyMobileSnapshotRecovery(client, {
         confirmation,
@@ -523,7 +525,8 @@ export function MobileSupabaseAccount({
                     disabled={work !== 'idle'}
                     onPress={() => {
                       setSelectedSnapshotId(null);
-                      beginReview({ assumptions: currentRecoveryOptions.guestAssumptions, portfolio: currentRecoveryOptions.guestPortfolio, kind: 'guest' });
+                      beginReview({ assumptions: currentRecoveryOptions.guestAssumptions, portfolio: currentRecoveryOptions.guestPortfolio, kind: 'guest',
+                        ...(currentRecoveryOptions.guestPortfolioDocumentVersion === undefined ? {} : { portfolioDocumentVersion: currentRecoveryOptions.guestPortfolioDocumentVersion }) });
                     }}
                     style={({ pressed }) => [{ alignItems: 'center', borderColor: '#38bdf8', borderRadius: 12, borderWidth: 1, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
                   >
@@ -541,7 +544,8 @@ export function MobileSupabaseAccount({
                   disabled={work !== 'idle'}
                   onPress={() => {
                     setSelectedSnapshotId(null);
-                    beginReview({ assumptions, portfolio: portfolio.book, kind: 'device' });
+                    beginReview({ assumptions, portfolio: portfolio.book, kind: 'device',
+                      ...(portfolio.documentVersion === undefined ? {} : { portfolioDocumentVersion: portfolio.documentVersion }) });
                   }}
                   style={({ pressed }) => [{ borderColor: '#34d399', borderRadius: 12, borderWidth: 1, gap: 4, minHeight: 48, padding: 12 }, { opacity: pressed || work !== 'idle' ? 0.65 : 1 }]}
                 >

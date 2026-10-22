@@ -69,7 +69,10 @@ export function MobileRouteScreen({
       </View>
 
       <MobileModeNavigation activeMode={mode} onModeChange={handleModeChange} />
-      {renderContent(context)}
+      {context.storageError
+        ? <Text accessibilityRole="alert" style={{ color: '#fbbf24', fontSize: 14, lineHeight: 20 }}>{context.storageError}</Text>
+        : null}
+      {!context.storageError || mode === 'portfolio' || mode === 'settings' ? renderContent(context) : null}
       {showAssumptionControls ? <AssumptionControls key={context.storageScope} disabled={!context.isHydrated} input={context.input} onChange={context.setInput} /> : null}
       <StorageStatusCard status={context.storageStatus} />
 

@@ -21,7 +21,7 @@ export function PortfolioControls({ book, disabled = false, onChange }: Props) {
     if (disabled) return;
     onChange(current => Object.is(current[key], value) ? current : { ...current, [key]: value });
   }
-  function changeLOC(key: keyof PortfolioBook['loc'], value: number) {
+  function changeLOC(key: 'limit' | 'balance' | 'apr', value: number) {
     if (disabled) return;
     onChange(current => Object.is(current.loc[key], value) ? current
       : { ...current, loc: { ...current.loc, [key]: value } });

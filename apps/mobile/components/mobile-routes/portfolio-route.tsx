@@ -1,4 +1,4 @@
-import { formatCurrency, type MobileDashboardInput } from '@interestshield/financial-engine';
+import { decodeLenderTerms, formatCurrency, type MobileDashboardInput } from '@interestshield/financial-engine';
 import * as Crypto from 'expo-crypto';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -10,6 +10,7 @@ import { PortfolioDebtEditor } from '@/components/portfolio/portfolio-debt-edito
 import { PortfolioPayoffPath } from '@/components/portfolio/portfolio-payoff-path';
 import { PortfolioCommonMonth } from '@/components/portfolio/portfolio-common-month';
 import { PortfolioTransfer } from '@/components/portfolio/portfolio-transfer';
+import { PortfolioLenderTerms } from '@/components/portfolio/portfolio-lender-terms';
 import { buildMobilePortfolioBookView, copyMobileScenarioToPortfolio, createBlankMobilePortfolio } from '@/lib/mobile-portfolio-model';
 import { MobileRouteScreen } from './route-screen';
 
@@ -71,10 +72,17 @@ function PortfolioWorkspace({ input, scenarioReady }: { input: MobileDashboardIn
         </View>
         <PortfolioPayoffPath path={view.path} />
         <PortfolioControls book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
+        <PortfolioLenderTerms terms={book.loc.lenderTerms} disabled={disabled || status === 'saving'} onSave={async terms => {
+          const loc = { ...book.loc };
+          if (terms === null) delete loc.lenderTerms;
+          else loc.lenderTerms = decodeLenderTerms(terms);
+          await portfolio.replace({ ...book, loc }, undefined, portfolio.revision, 3);
+        }} />
         <PortfolioDebtEditor book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
         <PortfolioCommonMonth book={book} disabled={disabled} />
         <PortfolioTransfer book={book} storageScope={portfolio.storageScope} revision={portfolio.revision}
-          disabled={disabled || status === 'saving'} onReplace={(next, revision) => portfolio.replace(next, undefined, revision)} />
+          documentVersion={portfolio.documentVersion} disabled={disabled || status === 'saving'}
+          onReplace={(next, revision, documentVersion) => portfolio.replace(next, undefined, revision, documentVersion)} />
       </View> : null}
     </View>
   );

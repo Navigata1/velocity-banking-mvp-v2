@@ -9,8 +9,9 @@ type Props = {
   book: PortfolioBook;
   storageScope: string;
   revision: number;
+  documentVersion?: 3;
   disabled?: boolean;
-  onReplace: (book: PortfolioBook, expectedRevision: number) => Promise<unknown>;
+  onReplace: (book: PortfolioBook, expectedRevision: number, documentVersion?: 3) => Promise<unknown>;
 };
 
 export function PortfolioTransfer(props: Props) {
@@ -40,15 +41,16 @@ function PortfolioTransferForm(props: Props) {
   }, []);
 
   const exported = useMemo(() => {
-    try { return { document: encodePortfolioDocument(props.book), error: '' }; }
+    try { return { document: encodePortfolioDocument(props.book, props.documentVersion), error: '' }; }
     catch (cause) { return { document: '', error: errorMessage(cause) }; }
-  }, [props.book]);
+  }, [props.book, props.documentVersion]);
   const disabled = Boolean(props.disabled || work);
 
   function currentInput(): PortfolioTransferCurrent {
     const current = latest.current;
     return { sourceJSON: draftRef.current, book: current.book, storageScope: current.storageScope,
-      revision: current.revision, disabled: current.disabled };
+      revision: current.revision, disabled: current.disabled,
+      ...(current.documentVersion === undefined ? {} : { documentVersion: current.documentVersion }) };
   }
   function updateReview(next: PortfolioTransferReview | null) {
     reviewRef.current = next;
@@ -77,7 +79,7 @@ function PortfolioTransferForm(props: Props) {
       pendingReview = next.review;
       busy.current = true;
       setWork('replace');
-      await latest.current.onReplace(next.replacement.book, next.replacement.expectedRevision);
+      await latest.current.onReplace(next.replacement.book, next.replacement.expectedRevision, next.replacement.documentVersion);
       if (active.current && reviewRef.current === pendingReview) {
         updateReview(finishPortfolioTransferConfirmation(pendingReview, 'saved'));
         setStatus('Portfolio replaced.');
@@ -97,7 +99,7 @@ function PortfolioTransferForm(props: Props) {
     busy.current = true;
     setWork('share'); setError('');
     try {
-      const message = encodePortfolioDocument(latest.current.book);
+      const message = encodePortfolioDocument(latest.current.book, latest.current.documentVersion);
       await Share.share({ title: 'Portfolio JSON', message });
     } catch (cause) { if (active.current) setError(errorMessage(cause)); }
     finally { busy.current = false; if (active.current) setWork(null); }
@@ -141,7 +143,7 @@ function PortfolioTransferForm(props: Props) {
             LOC limit: ${formatFinancialInput(review.locLimit, 'money')}{'\n'}
             LOC APR: {formatFinancialInput(review.locAPR, 'percent')}%</Text>
           <Text style={styles.detail}>{review.sourceVersion === 1
-            ? 'Version 1 import. Legacy rates were converted once.' : 'Version 2 import. Rates are decimal APRs.'}</Text>
+            ? 'Version 1 import. Legacy rates were converted once.' : `Version ${review.sourceVersion} import. Rates are decimal APRs.`}</Text>
           <Text style={styles.detail}>Stored APRs use decimals: 0.065 = 6.5%; 2 = 200%.</Text>
           <Text style={styles.detail}>This replaces this simulated portfolio, including its household inputs and LOC.</Text>
           <View style={styles.commands}>
