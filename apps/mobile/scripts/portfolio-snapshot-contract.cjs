@@ -15,7 +15,7 @@ const book=n=>({monthlyIncome:n,monthlyExpenses:4500,extraMonthlyPayment:50,chun
 const encoded=(input,id=owner)=>JSON.stringify({version:1,ownerId:id,input,savedAt:'2026-10-20T00:00:00Z'});
 function environment(){
   const values=new Map(),order=[],tokens=new WeakSet();let seq=0,local=scenario(7200),portfolio=book(7200),revision=5,bookRevision=11;
-  let guest=null,guestBook=null,fail='',activeOwner=owner;
+  let guest=null,guestBook=null,fail='',activeOwner=owner,portfolioVersion,guestVersion,claimsGate;
   const cache=new Map();
   const withLock=async(id,action)=>{const token=Object.freeze({ownerId:id});tokens.add(token);try{return await action(token);}finally{tokens.delete(token);}};
   const storage={getItem:async k=>values.get(k)??null,setItem:async(k,v)=>{order.push('journal');if(fail==='stage'){fail='';throw new Error('stage interrupted');}values.set(k,v);},removeItem:async k=>values.delete(k)};
@@ -23,9 +23,12 @@ function environment(){
     loadMobileAssumptionsForOwner:async id=>({backend:'secure-store',input:clone(id===null?(guest??scenario(0)):local),restored:id===null?guest!==null:true,revision}),
     saveMobileAssumptionsForOwner:async(id,input,{expectedRevision,ownerLock}={})=>{assert.ok(tokens.has(ownerLock));assert.equal(expectedRevision,revision);order.push('scenario');
       if(fail==='scenario'){fail='';throw new Error('scenario interrupted');}local=clone(input);return{backend:'secure-store',revision:++revision};}};
-  const portfolioPort={loadMobilePortfolioForOwner:async id=>({backend:'secure-store',book:clone(id===null?guestBook:portfolio),revision:bookRevision}),
-    saveMobilePortfolioForOwner:async(id,input,{expectedRevision,ownerLock}={})=>{assert.ok(tokens.has(ownerLock));assert.equal(expectedRevision,bookRevision);order.push('book');
-      if(fail==='book'){fail='';throw new Error('book interrupted');}portfolio=clone(input);return{backend:'secure-store',revision:++bookRevision};}};
+  const portfolioPort={loadMobilePortfolioForOwner:async id=>({backend:'secure-store',book:clone(id===null?guestBook:portfolio),revision:bookRevision,
+      ...((id===null?guestVersion:portfolioVersion)===3?{documentVersion:3}:{})}),
+    saveMobilePortfolioForOwner:async(id,input,{expectedRevision,ownerLock,documentVersion}={})=>{assert.ok(tokens.has(ownerLock));assert.equal(expectedRevision,bookRevision);order.push('book');
+      if(fail==='book'){fail='';throw new Error('book interrupted');}portfolio=clone(input);
+      if(documentVersion===3||portfolioVersion===3||input.loc.lenderTerms!==undefined)portfolioVersion=3;
+      return{backend:'secure-store',revision:++bookRevision,...(portfolioVersion===3?{documentVersion:3}:{})};}};
   const auth={withMobileSnapshotOwnerLock:withLock,isMobileSnapshotOwnerLock:(l,id)=>tokens.has(l)&&l.ownerId===id,createMobileAuthStorage:()=>storage};
   function load(file){
     if(cache.has(file))return cache.get(file).exports;
@@ -51,7 +54,7 @@ function environment(){
     getSnapshotIdempotencyKey:async()=>stream,createOperationIdempotencyKey:()=>`operation:portfolio-${String(++seq).padStart(8,'0')}`,
     sendSnapshot:async(_client,input)=>{order.push('send');sent.push(clone(input));return{ownerId:owner,snapshotId:'receipt',clientRevision:input.clientRevision};},...overrides});
   const rows=[];
-  const client={auth:{getClaims:async()=>({data:{claims:{sub:activeOwner}},error:null})},from:()=>{
+  const client={auth:{getClaims:async()=>{const gate=claimsGate;claimsGate=null;if(gate)await gate.promise;return{data:{claims:{sub:activeOwner}},error:null};}},from:()=>{
     const filters=[];const query={select:()=>query,eq:(k,v)=>{filters.push([k,v]);return query;},order:()=>query,limit:()=>query,
       then:resolve=>Promise.resolve({data:rows.filter(r=>filters.every(([k,v])=>r[k]===v)),error:null}).then(resolve)};return query;}};
   const addRow=(input,p=undefined)=>{const entries=[];if(input!==null)entries.push({key:'interestshield-mobile-assumptions-v1',value:encoded(input)});
@@ -59,14 +62,15 @@ function environment(){
     const row={owner_id:owner,id:`snapshot-${rows.length}`,idempotency_key:stream,client_revision:7,snapshot_version:1,updated_at:'2026-10-20T00:00:00Z',assumptions_json:{contract_version:1,storage:entries}};
     rows.push(row);return row;};
   const signatures=()=>{assert.equal(typeof recovery.serializeMobileRecoveryPortfolio,'function','paired Portfolio review fingerprint must exist');return{
-    reviewedLocalAssumptions:recovery.serializeMobileRecoveryAssumptions(local),reviewedLocalPortfolio:recovery.serializeMobileRecoveryPortfolio(portfolio)};};
+    reviewedLocalAssumptions:recovery.serializeMobileRecoveryAssumptions(local),reviewedLocalPortfolio:recovery.serializeMobileRecoveryPortfolio(portfolio,portfolioVersion)};};
   const review=async()=>{const options=await recovery.loadMobileSnapshotRecoveryOptions(client,owner),snapshot=options.snapshots[0];assert.ok(snapshot);return{...signatures(),
     expectedOwnerId:owner,source:{kind:'remote',snapshot},confirmation:{snapshotId:snapshot.snapshotId,clientRevision:snapshot.clientRevision}};};
   const dependencies=outbox=>({outbox,replaceAssumptions:async(input,l,r)=>(await assumptionPort.saveMobileAssumptionsForOwner(owner,input,{ownerLock:l,expectedRevision:r})).backend,
-    replacePortfolio:async(input,l,r)=>(await portfolioPort.saveMobilePortfolioForOwner(owner,input,{ownerLock:l,expectedRevision:r})).backend});
+    replacePortfolio:async(input,l,r,documentVersion)=>(await portfolioPort.saveMobilePortfolioForOwner(owner,input,{ownerLock:l,expectedRevision:r,documentVersion})).backend});
   return{codec,sync,recovery,rows,client,order,sent,values,createOutbox,addRow,signatures,review,dependencies,
-    local:()=>clone(local),portfolio:()=>clone(portfolio),setLocal:x=>{local=clone(x);},setPortfolio:x=>{portfolio=clone(x);},
-    fail:x=>{fail=x;},guest:(s,b)=>{guest=s;guestBook=b;},setOwner:x=>{activeOwner=x;}};
+    local:()=>clone(local),portfolio:()=>clone(portfolio),portfolioVersion:()=>portfolioVersion,setLocal:x=>{local=clone(x);},setPortfolio:(x,v)=>{portfolio=clone(x);portfolioVersion=v;},
+    fail:x=>{fail=x;},guest:(s,b,v)=>{guest=s;guestBook=b;guestVersion=v;},setOwner:x=>{activeOwner=x;},
+    holdClaims:()=>{let resolve;const promise=new Promise(r=>{resolve=r;});claimsGate={promise,resolve};return claimsGate;}};
 }
 let count=0;
 async function test(name,run){count++;try{await run();console.log(`PASS Portfolio snapshot ${name}`);}catch(e){console.error(`FAIL Portfolio snapshot ${name}`);console.error(e);process.exitCode=1;}}
@@ -164,6 +168,107 @@ async function main(){
     await assert.rejects(()=>e.recovery.applyMobileSnapshotRecovery(e.client,input,{...e.dependencies(outbox),replacePortfolio:async()=> 'unavailable'}),/durable Portfolio/i);
     assert.equal(e.sent.length,0);assert.ok(await outbox.readRecovery(owner));assert.deepEqual(e.portfolio(),book(7200));
     await e.recovery.resumePendingMobileSnapshotRecovery(owner,e.dependencies(e.createOutbox()));assert.deepEqual(e.portfolio(),book(9000));
+  });
+  await test('explicit3 no-profile sync preparation and fingerprint retain document identity',async()=>{
+    const e=environment(),prepared=await e.sync.prepareMobileSnapshotSync({assumptions:scenario(7200),portfolio:book(7200),portfolioDocumentVersion:3,
+      expectedOwnerId:owner,clientRevision:1,operationIdempotencyKey:'operation:prepared-1234',snapshotIdempotencyKey:stream});
+    assert.equal(JSON.parse(prepared.assumptionsJson.storage.find(x=>x.key===logical).value).version,3);
+    const signature=e.recovery.serializeMobileRecoveryPortfolio(book(7200),3);assert.equal(JSON.parse(signature).version,3);
+  });
+  await test('remote and guest previews expose optional3 without changing old preview shapes',async()=>{
+    const e=environment();e.addRow(null,JSON.stringify({version:3,aprUnit:'decimal',data:book(8000)}));e.addRow(scenario(8000),book(8000));
+    e.guest(null,book(8100),3);const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);
+    assert.equal(options.snapshots[0].portfolioDocumentVersion,3);assert.equal('portfolioDocumentVersion' in options.snapshots[1],false);
+    assert.equal(options.guestPortfolioDocumentVersion,3);
+  });
+  await test('recovery explicitly adopts3 without terms even when semantic books match',async()=>{
+    const e=environment();e.addRow(null,JSON.stringify({version:3,aprUnit:'decimal',data:e.portfolio()}));
+    const input=await e.review();await e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(e.createOutbox()));
+    assert.equal(e.portfolioVersion(),3);assert.equal(JSON.parse(e.sent[0].assumptionsJson.storage.find(x=>x.key===logical).value).version,3);
+  });
+  await test('active3 after profile removal remains3 when recovering a scenario-only source',async()=>{
+    const e=environment();e.setPortfolio(e.portfolio(),3);e.addRow(scenario(8100));
+    await e.recovery.applyMobileSnapshotRecovery(e.client,await e.review(),e.dependencies(e.createOutbox()));
+    assert.equal(e.portfolioVersion(),3);assert.equal(JSON.parse(e.sent[0].assumptionsJson.storage.find(x=>x.key===logical).value).version,3);
+  });
+  await test('explicit3 survives interrupted recovery and resumes without rebuilding prepared operations',async()=>{
+    const e=environment();e.addRow(scenario(8000),JSON.stringify({version:3,aprUnit:'decimal',data:book(9000)}));const outbox=e.createOutbox();e.fail('book');
+    const input=await e.review();await assert.rejects(()=>e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(outbox)));
+    const pending=await outbox.readRecovery(owner);assert.equal(pending.portfolioDocumentVersion,3);const frozen=clone(pending.item);
+    const fresh=e.createOutbox();await e.recovery.resumePendingMobileSnapshotRecovery(owner,e.dependencies(fresh));
+    assert.equal(e.portfolioVersion(),3);assert.deepEqual(clone((await fresh.read(owner))[0]),frozen);
+    await fresh.flush(e.client,owner);assert.deepEqual(e.sent[0],frozen);
+  });
+  await test('transport-only local adoption and terms-only edits invalidate recovery reviews before staging',async()=>{
+    for(const mode of ['version','terms']){
+      const e=environment();e.addRow(scenario(8000),book(9000));const input=await e.review(),outbox=e.createOutbox();
+      const changed=e.portfolio();if(mode==='terms')changed.loc.lenderTerms={annualFee:0};e.setPortfolio(changed,mode==='version'?3:undefined);
+      await assert.rejects(()=>e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(outbox)),/changed|review/i);
+      assert.equal(await outbox.readRecovery(owner),null);assert.equal(e.sent.length,0);
+    }
+  });
+  await test('outbox captures nested profile values and explicit version before asynchronous identity work',async()=>{
+    const e=environment();let release;const gate=new Promise(r=>{release=r;});const outbox=e.createOutbox({getSnapshotIdempotencyKey:()=>gate});
+    const input={assumptions:scenario(7200),portfolio:book(7200),portfolioDocumentVersion:3,expectedOwnerId:owner};
+    input.portfolio.loc.lenderTerms={annualFee:0,minimumPayment:{mode:'fixed',value:0},sources:{annualFee:'lender-document'}};
+    const queued=outbox.enqueue(input);input.portfolio.loc.lenderTerms.annualFee=999;input.portfolio.loc.lenderTerms.minimumPayment.value=999;
+    input.portfolio.loc.lenderTerms.sources.annualFee='model-default';input.portfolioDocumentVersion=undefined;release(stream);await queued;
+    const first=clone((await outbox.read(owner))[0]),data=JSON.parse(first.assumptionsJson.storage.find(x=>x.key===logical).value);
+    assert.equal(data.version,3);assert.deepEqual(data.data.loc.lenderTerms,{annualFee:0,minimumPayment:{mode:'fixed',value:0},sources:{annualFee:'lender-document'}});
+    await e.createOutbox().enqueue({assumptions:scenario(7300),portfolio:book(7300),portfolioDocumentVersion:3,expectedOwnerId:owner});
+    assert.deepEqual(clone((await outbox.read(owner))[0]),first);
+    assert.equal(JSON.parse((await outbox.read(owner))[1].assumptionsJson.storage.find(x=>x.key===logical).value).version,3);
+  });
+  await test('staging rejects preparation that silently downgrades an explicit3 target',async()=>{
+    const e=environment(),outbox=e.createOutbox({prepareSnapshot:input=>e.sync.prepareMobileSnapshotSync({...input,portfolioDocumentVersion:undefined})});
+    await assert.rejects(()=>outbox.stageRecovery({assumptions:scenario(7200),portfolio:book(7200),portfolioDocumentVersion:3,
+      expectedLocalAssumptions:e.signatures().reviewedLocalAssumptions,expectedLocalPortfolio:e.signatures().reviewedLocalPortfolio,
+      expectedOwnerId:owner,serverRevision:7,snapshotIdempotencyKey:stream,sourceKind:'remote'}),/target|Portfolio/i);
+    assert.equal(await outbox.readRecovery(owner),null);
+  });
+  await test('recovery deep-captures nested source profiles before its first owner check',async()=>{
+    const e=environment(),incoming=book(9000);incoming.loc.lenderTerms={annualFee:0,minimumPayment:{mode:'fixed',value:0},sources:{annualFee:'lender-document'}};
+    e.addRow(scenario(8000),incoming);const input=await e.review(),gate=e.holdClaims();
+    const applied=e.recovery.applyMobileSnapshotRecovery(e.client,input,e.dependencies(e.createOutbox()));
+    input.source.snapshot.portfolio.loc.lenderTerms.minimumPayment.value=999;input.source.snapshot.portfolio.loc.lenderTerms.sources.annualFee='model-default';
+    gate.resolve();await applied;assert.deepEqual(e.portfolio().loc.lenderTerms,incoming.loc.lenderTerms);
+  });
+  await test('scenario1 fingerprint and new preparation reject supplied lender extensions instead of stripping',async()=>{
+    const e=environment(),input=scenario(7200);input.loc.lenderTerms={annualFee:0};
+    assert.throws(()=>e.recovery.serializeMobileRecoveryAssumptions(input),/terms|version|scenario/i);
+    await assert.rejects(()=>e.sync.prepareMobileSnapshotSync({assumptions:input,expectedOwnerId:owner,clientRevision:1,
+      operationIdempotencyKey:'operation:legacy-1234',snapshotIdempotencyKey:stream}),/terms|version|scenario/i);
+    const outbox=e.createOutbox(),before=clone([...e.values]);await assert.rejects(()=>outbox.enqueue({assumptions:input,expectedOwnerId:owner}),/terms|version|scenario/i);
+    assert.deepEqual(clone([...e.values]),before);
+  });
+  await test('remote scenario1 term extensions are rejected even beside a valid Portfolio',async()=>{
+    const e=environment(),input=scenario(7200);input.loc.lenderTerms={annualFee:0};e.addRow(input,book(9000));
+    const options=await e.recovery.loadMobileSnapshotRecoveryOptions(e.client,owner);assert.equal(options.snapshots.length,0);assert.equal(options.rejectedCount,1);
+  });
+  await test('pending recovery with unsupported scenario1 extensions fails without mutating its frozen body',async()=>{
+    const e=environment(),outbox=e.createOutbox();await outbox.stageRecovery({assumptions:scenario(8000),
+      expectedLocalAssumptions:e.signatures().reviewedLocalAssumptions,expectedOwnerId:owner,serverRevision:7,snapshotIdempotencyKey:stream,sourceKind:'remote'});
+    const [key,raw]=[...e.values][0],payload=JSON.parse(raw),entry=payload.recovery.item.assumptionsJson.storage[0],assumptions=JSON.parse(entry.value);
+    assumptions.input.loc.lenderTerms={annualFee:0};entry.value=JSON.stringify(assumptions);e.values.set(key,JSON.stringify(payload));const before=e.values.get(key);
+    await assert.rejects(()=>outbox.readRecovery(owner),/assumptions|scenario|terms/i);assert.equal(e.values.get(key),before);
+  });
+  await test('direct preparation captures transport identity before asynchronous installation lookup',async()=>{
+    const e=environment(),input={assumptions:scenario(7200),portfolio:book(7200),portfolioDocumentVersion:3,
+      expectedOwnerId:owner,clientRevision:1,operationIdempotencyKey:'operation:captured-1234'};
+    const preparing=e.sync.prepareMobileSnapshotSync(input);input.expectedOwnerId='00000000-0000-4000-8000-00000000000b';
+    input.clientRevision=99;input.operationIdempotencyKey='operation:mutated-1234';input.portfolio.monthlyIncome=9999;
+    const prepared=await preparing;assert.equal(prepared.expectedOwnerId,owner);assert.equal(prepared.clientRevision,1);
+    assert.equal(prepared.operationIdempotencyKey,'operation:captured-1234');
+    const document=JSON.parse(prepared.assumptionsJson.storage.find(x=>x.key===logical).value);assert.equal(document.version,3);assert.equal(document.data.monthlyIncome,7200);
+  });
+  await test('transport markers without a Portfolio target reject instead of disappearing into scenario1',async()=>{
+    const e=environment(),outbox=e.createOutbox();
+    for(const portfolio of [null,undefined]){
+      await assert.rejects(()=>e.sync.prepareMobileSnapshotSync({assumptions:scenario(7200),portfolio,portfolioDocumentVersion:3,
+        expectedOwnerId:owner,clientRevision:1,operationIdempotencyKey:'operation:missing-1234',snapshotIdempotencyKey:stream}),/Portfolio|version|target/i);
+      await assert.rejects(()=>outbox.enqueue({assumptions:scenario(7200),portfolio,portfolioDocumentVersion:3,expectedOwnerId:owner}),/Portfolio|version|target/i);
+    }
+    assert.equal(e.values.size,0);
   });
   console.log(`${count} paired Portfolio snapshot contracts ${process.exitCode?'failed':'passed'}. Memory ports, not device or hosted API proof.`);
 }

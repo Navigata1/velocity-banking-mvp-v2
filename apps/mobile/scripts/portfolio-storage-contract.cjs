@@ -110,6 +110,7 @@ async function main(){
     await assert.rejects(()=>reused.setItem('book','next'),/generation/i);
     assert.equal(JSON.stringify([...h.values]),before);assert.equal(await h.strict.getItem('book'),'prior');
   });
+  await require('./portfolio-v3-storage-contract.cjs')();
   console.log(`${cases} Portfolio encrypted storage contracts ${process.exitCode?'failed':'passed'}. Owner-book persistence and device QA remain separate.`);
 }
 const watchdog=setTimeout(()=>{console.error('Portfolio encrypted storage contracts timed out before completion.');process.exit(1);},10000);

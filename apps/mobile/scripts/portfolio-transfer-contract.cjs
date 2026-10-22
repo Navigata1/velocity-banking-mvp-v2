@@ -102,7 +102,7 @@ test('missing malformed and unsupported documents reject instead of defaulting t
   make(current());
   for (const sourceJSON of [undefined, null, '', ' ', '{', 'null', '[]', '{}',
     JSON.stringify({ version: 2, aprUnit: 'decimal' }),
-    JSON.stringify({ version: 3, aprUnit: 'decimal', data: incoming }),
+    JSON.stringify({ version: 4, aprUnit: 'decimal', data: incoming }),
     JSON.stringify({ version: 2, aprUnit: 'percent', data: incoming })]) {
     assert.throws(() => make({ ...current(), sourceJSON }), undefined, `reject ${String(sourceJSON)}`);
   }
@@ -219,6 +219,44 @@ test('replacement books cannot mutate frozen review contents or the destination 
   assert.equal(review.canonicalDocument, frozen);
   assert.equal(input.book.debts[0].notes, '  Exact notes\nsecond line  ');
   assert.equal(JSON.parse(review.canonicalDocument).data.loc.apr, 2);
+});
+
+test('explicit3 without terms retains format and requests adoption even for the same book', () => {
+  const input = { ...current(), sourceJSON: JSON.stringify({ version: 3, aprUnit: 'decimal', data: destination }) };
+  const review = make(input), result = begin(review, input);
+  assert.equal(review.sourceVersion, 3); assert.equal(JSON.parse(review.canonicalDocument).version, 3);
+  assert.ok(result.replacement); assert.equal(result.replacement.documentVersion, 3);
+  assert.deepEqual(plain(result.replacement.book), destination);
+  const adopted = { ...input, documentVersion: 3 }, adoptedReview = make(adopted);
+  assert.equal(begin(adoptedReview, adopted).replacement, null);
+});
+
+test('active3 destination remains3 on old imports and transport-only changes expire review', () => {
+  const input = { ...current(), documentVersion: 3 }, review = make(input);
+  assert.equal(JSON.parse(review.destinationSignature).version, 3);
+  assert.equal(begin(review, input).replacement.documentVersion, 3);
+  assert.throws(() => begin(review, { ...input, documentVersion: undefined }), /destination|changed/i);
+});
+
+test('nested terms and provenance participate in destination stale-review detection', () => {
+  const input = current(); input.book.loc.lenderTerms = { annualFee: 0,
+    minimumPayment: { mode: 'fixed', value: 0 }, sources: { annualFee: 'lender-document' } };
+  const review = make(input);
+  for (const mutate of [b => { b.loc.lenderTerms.annualFee = 1; },
+    b => { b.loc.lenderTerms.minimumPayment.value = 1; }, b => { b.loc.lenderTerms.sources.annualFee = 'model-default'; }]) {
+    const changed = plain(input.book); mutate(changed);
+    assert.throws(() => begin(review, { ...input, book: changed }), /destination|changed/i);
+  }
+});
+
+test('term-bearing3 replacement is detached from both source and prior review', () => {
+  const imported = plain(incoming); imported.loc.lenderTerms = { annualFee: 0,
+    minimumPayment: { mode: 'fixed', value: 0 }, sources: { annualFee: 'lender-document' } };
+  const input = { ...current(), sourceJSON: JSON.stringify({ version: 3, aprUnit: 'decimal', data: imported }) };
+  const review = make(input), result = begin(review, input); assert.equal(result.replacement.documentVersion, 3);
+  result.replacement.book.loc.lenderTerms.minimumPayment.value = 999;
+  result.replacement.book.loc.lenderTerms.sources.annualFee = 'user-provided';
+  assert.deepEqual(JSON.parse(review.canonicalDocument).data.loc.lenderTerms, imported.loc.lenderTerms);
 });
 
 console.log(`${count} portable Portfolio transfer contracts ${process.exitCode ? 'failed' : 'passed'}. No server, storage writes or native Share sheet exercised.`);
