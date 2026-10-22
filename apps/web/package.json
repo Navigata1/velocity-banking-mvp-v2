@@ -21,7 +21,7 @@
     "smoke:dashboard:built": "node scripts/smoke-dashboard-interest.cjs && node scripts/smoke-legacy-web-truth.cjs",
     "smoke:comparison:built": "node scripts/smoke-comparison.cjs && node scripts/smoke-portfolio-simulator.cjs",
     "smoke:vault:built": "node scripts/smoke-vault-comparison.cjs",
-    "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs && node scripts/smoke-portfolio-currency-width.cjs && node scripts/smoke-shared-portfolio-dashboard.cjs",
+    "smoke:portfolio:built": "node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs && node scripts/smoke-portfolio-currency-width.cjs && node scripts/smoke-shared-portfolio-dashboard.cjs && node scripts/smoke-dated-plan.cjs",
     "test:3d": "npm run build && npm run test:3d:built",
     "test:3d:built": "node scripts/test-three-stage.cjs",
     "smoke:production": "node scripts/smoke-production.cjs"

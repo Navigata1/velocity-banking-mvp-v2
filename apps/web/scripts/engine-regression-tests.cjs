@@ -18,6 +18,17 @@ require('./lender-portfolio-tests.cjs').runLenderPortfolioTests();
 require('./forecast-basis-tests.cjs').runForecastBasisTests();
 require('./lender-draft-tests.cjs').runLenderDraftTests();
 require('./legacy-scenario-guard-tests.cjs').runLegacyScenarioGuardTests();
+require('./dated-plan-tests.cjs').runDatedPlanTests();
+require('./dated-codec-tests.cjs').runDatedCodecTests();
+require('./dated-loc-tests.cjs').runDatedLOCTests();
+require('./dated-fee-unit-tests.cjs').runDatedFeeUnitTests();
+require('./dated-portfolio-tests.cjs').runDatedPortfolioTests();
+require('./dated-comparison-tests.cjs').runDatedComparisonTests();
+require('./dated-review-regression-tests.cjs').runDatedReviewRegressionTests();
+require('./dated-presentation-tests.cjs').runDatedPresentationTests();
+require('./dated-ui-contract-tests.cjs').runDatedUIContractTests();
+require('./dated-storage-tests.cjs').runDatedStorageTests();
+require('node:child_process').execFileSync(process.execPath, [path.join(__dirname, 'dated-snapshot-tests.cjs')], { stdio: 'inherit' });
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
@@ -85,6 +96,9 @@ function loadTsFile(filename) {
     }
     if (request === '@interestshield/financial-engine/input-draft') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/input-draft.ts'));
+    }
+    if (request === '@interestshield/financial-engine/dated-plan') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/dated-plan.ts'));
     }
 
     if (request.startsWith('.')) {
@@ -408,7 +422,7 @@ test('Portfolio numeric overflow is a rejected projection with an explicit compa
 
 test('Portfolio suppresses unsupported LOC interest claims and inactive draw controls', () => {
   const source = readPortfolioRouteSource();
-  assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(locInterestPaid) : 'Not projected'"));
+  assert.ok(source.includes("portfolioProjectionValid ? formatAmount(locInterestPaid) : 'Not projected'"));
   assert.ok(source.includes("store.strategy === 'velocity' && store.focusMode === 'single'"));
 });
 
@@ -3001,10 +3015,10 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
 
   assert.ok(source.includes('portfolioProjectionValid'), 'expected Portfolio page to derive projection validity');
-  assert.ok(source.includes("payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths)"));
+  assert.ok(source.includes("payoffMonths === 0 ? 'Already paid off' : payoffPlan?.payoffDate ?? formatDate(payoffMonths)"));
   assert.ok(source.includes("payoffPlan?.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs'"));
   assert.ok(source.includes("payoffPlan?.state === 'projected' || payoffPlan?.state === 'cleared'"));
-  assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
+  assert.ok(source.includes("portfolioProjectionValid ? formatAmount(totalInterest) : 'Not projected'"));
   assert.ok(
     source.includes('if (!portfolioProjectionValid || payoffOrder.length === 0) return null;'),
     'expected the payoff-order module to suppress invalid or empty projections'
