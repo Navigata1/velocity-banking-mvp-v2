@@ -39,11 +39,13 @@ jobs:
         run: npm ci
 
       - name: Run CI verification contracts
-        run: node scripts/check-restoration-ci.test.cjs
+        run: |
+          node scripts/check-restoration-ci.test.cjs
+          node --test scripts/audit-web-runtime.test.cjs
 
       - name: Audit web runtime dependencies
         working-directory: apps/web
-        run: npm audit --omit=dev
+        run: node ../../scripts/audit-web-runtime.cjs
 
       - name: Run web regression tests
         working-directory: apps/web
