@@ -10,6 +10,9 @@
 import {
   simulateMoneyLoopMonth,
   normalizeApr,
+  assessForecastBasis,
+  type ForecastBasis,
+  type LenderForecastFailureReason,
   type APRUnit,
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
@@ -35,6 +38,7 @@ export type PaymentSource = 'checking' | 'loc' | 'either';
 export type PayoffStrategy = 'velocity' | 'snowball' | 'avalanche';
 export type FocusMode = 'single' | 'split';
 export type PortfolioFailureReason =
+  | LenderForecastFailureReason
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
   | 'payment-below-interest'
@@ -127,6 +131,7 @@ export interface DebtPriorityRationale {
 }
 
 export interface PortfolioSimulationResult {
+  forecastBasis: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
   isPayoffPossible: boolean;
@@ -330,6 +335,15 @@ function buildDebtRationales(
 }
 
 export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioSimulationResult {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    isPayoffPossible: false, failureReason: forecastBasis.reason, payoffOrder: [], monthResults: [],
+    debtRationales: {}, locInterestPaid: 0, moneyLoopMonthlyData: [], assumptions: [...forecastBasis.reasons],
+    warnings: [`${forecastBasis.label}. Lender-specific payoff dates, interest savings and next moves are not projected.`], cashAtPayoff: 0 };
+  return { ...simulateEducationalPortfolio(inputs), forecastBasis };
+}
+
+function simulateEducationalPortfolio(inputs: PortfolioSimulationInputs): Omit<PortfolioSimulationResult, 'forecastBasis'> {
   const monthlyIncome = finiteNonNegative(inputs.monthlyIncome);
   const monthlyExpenses = finiteNonNegative(inputs.monthlyExpenses);
   const extraMonthlyPayment = finiteNonNegative(inputs.extraMonthlyPayment);

@@ -1,4 +1,5 @@
 import { decodePortfolioBook, portfolioBookInputs, type PortfolioBook } from './portfolio-book';
+import { assessForecastBasis, type ForecastBasis } from './index';
 import { simulatePortfolio, type PayoffStrategy } from './portfolio';
 import { isCommonMonth, snapshotAtMonth, sumCommonMonthTerms, unavailableCommonMonth, type CommonMonthSnapshot } from './common-month';
 
@@ -10,6 +11,7 @@ export interface PortfolioCommonMonthPlan {
   payoff: { possible: boolean; months: number; reason?: string } | null;
 }
 export interface PortfolioCommonMonthComparison {
+  forecastBasis?: ForecastBasis;
   horizonMonths: number | null;
   monthlyBudget: number | null;
   referenceStrategy: PayoffStrategy | null;
@@ -61,7 +63,8 @@ export function preparePortfolioComparison(value: PortfolioBook): PreparedPortfo
       plan.wealthDifference = sumCommonMonthTerms([snapshot.cashBalance, -reference.cashBalance,
         ...ids.flatMap(id => [reference.balances[id], -snapshot.balances[id]]), reference.locBalance, -snapshot.locBalance]);
     }
-    return { horizonMonths, monthlyBudget, referenceStrategy: book.strategy, plans };
+    return { horizonMonths, monthlyBudget, referenceStrategy: book.strategy, plans,
+      forecastBasis: assessForecastBasis(book.loc.lenderTerms) };
   } });
 }
 

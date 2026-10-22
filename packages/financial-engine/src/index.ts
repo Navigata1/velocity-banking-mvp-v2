@@ -9,6 +9,7 @@ export interface LOCDetails {
   limit: number;
   apr: number;
   balance: number;
+  lenderTerms?: LenderTermsInput;
 }
 
 export type APRUnit = 'legacy' | 'decimal';
@@ -64,11 +65,12 @@ export interface DirectRepaymentMonth {
 }
 
 export interface DirectRepaymentResult {
+  forecastBasis: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
   monthlyData: DirectRepaymentMonth[];
   isPayoffPossible: boolean;
-  failureReason?: AmortizedPayoffFailureReason | 'negative-cashflow' | 'cashflow-below-minimums';
+  failureReason?: AmortizedPayoffFailureReason | 'negative-cashflow' | 'cashflow-below-minimums' | LenderForecastFailureReason;
 }
 
 export const SIMULATOR_COMPARISON_SCOPE = 'Same active debt, existing LOC balance and available monthly budget. Other household debts are excluded.';
@@ -102,6 +104,7 @@ export interface MortgageStrategyProjection extends MortgagePlanProjection {
 }
 
 export interface MortgageComparisonResult {
+  forecastBasis: ForecastBasis;
   monthlyBudget: number;
   standard: MortgagePlanProjection;
   biweekly: MortgageStrategyProjection & { extraAmount: number };
@@ -113,9 +116,11 @@ export interface MoneyLoopLOC {
   limit: number;
   apr: number;
   balance: number;
+  lenderTerms?: LenderTermsInput;
 }
 
 export type MoneyLoopFailureReason =
+  | LenderForecastFailureReason
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
@@ -243,6 +248,7 @@ export interface LOCProjectionLimitBreach {
 }
 
 export interface MoneyLoopPayoffResult {
+  forecastBasis: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
   debtInterestPaid: number;
@@ -253,7 +259,7 @@ export interface MoneyLoopPayoffResult {
   locLimitBreach?: LOCProjectionLimitBreach;
 }
 
-export const LENDER_TERMS_CONTRACT_VERSION = '2.0.0' as const;
+export const LENDER_TERMS_CONTRACT_VERSION = '3.0.0' as const;
 
 export type LenderTermField =
   | 'annualFee'
@@ -293,7 +299,9 @@ export interface LenderTermsInput {
 export interface LenderTermsContract {
   version: typeof LENDER_TERMS_CONTRACT_VERSION;
   confidence: LenderTermsConfidence;
+  inputComplete: boolean;
   projectionReady: boolean;
+  unmodeledFields: LenderTermField[];
   missingFields: LenderTermField[];
   estimatedFields: LenderTermField[];
   assumptions: string[];
@@ -310,6 +318,7 @@ export interface LenderTermsContract {
 }
 
 export type MobilePayoffFailureReason =
+  | LenderForecastFailureReason
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
@@ -536,7 +545,7 @@ function optionalNonNegative(value: unknown): number | null {
 }
 
 function optionalPositiveInteger(value: unknown): number | null {
-  return typeof value === 'number' && Number.isInteger(value) && value > 0 ? value : null;
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0 ? value : null;
 }
 
 function normalizeMinimumPayment(value: LenderMinimumPaymentInput | undefined): LenderMinimumPayment | null {
@@ -544,9 +553,84 @@ function normalizeMinimumPayment(value: LenderMinimumPaymentInput | undefined): 
   const mode = value.mode;
   if (mode !== 'fixed' && mode !== 'percent-of-balance' && mode !== 'interest-only') return null;
   if (mode === 'interest-only') return { mode, value: null };
-  if (typeof value.value !== 'number' || !Number.isFinite(value.value) || value.value <= 0) return null;
+  if (typeof value.value !== 'number' || !Number.isFinite(value.value) || value.value < 0) return null;
   if (mode === 'percent-of-balance' && value.value > 1) return null;
   return { mode, value: value.value };
+}
+
+function lenderInputRecord(value: unknown, allowed: readonly string[], label: string): Record<string, unknown> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} must be an object.`);
+  const prototype = Object.getPrototypeOf(value);
+  const constructor = prototype === null ? null : Object.getOwnPropertyDescriptor(prototype, 'constructor');
+  const intrinsicConstructor = constructor && 'value' in constructor && typeof constructor.value === 'function'
+    && Function.prototype.toString.call(constructor.value) === Function.prototype.toString.call(Object);
+  if (prototype !== null && (Object.getPrototypeOf(prototype) !== null || !constructor || !('value' in constructor)
+    || !intrinsicConstructor || constructor.value.prototype !== prototype)) {
+    throw new Error(`${label} must be a plain data object.`);
+  }
+  for (const key of Reflect.ownKeys(value)) {
+    if (typeof key !== 'string' || !allowed.includes(key)) throw new Error(`${label} contains an unknown field: ${String(key)}.`);
+    const property = Object.getOwnPropertyDescriptor(value, key);
+    if (!property?.enumerable || !('value' in property)) throw new Error(`${label} must contain enumerable data fields.`);
+  }
+  if (Object.prototype.toString.call(value) !== '[object Object]') throw new Error(`${label} must be an object.`);
+  return value as Record<string, unknown>;
+}
+
+function lenderOwnField(value: object, field: string): boolean {
+  return Object.prototype.hasOwnProperty.call(value, field);
+}
+
+function lenderInputAmount(value: unknown, label: string): number {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) throw new Error(`${label} must be a finite non-negative number.`);
+  return value;
+}
+
+function lenderInputPeriod(value: unknown, label: string): number {
+  const number = lenderInputAmount(value, label);
+  if (!Number.isSafeInteger(number) || number <= 0) throw new Error(`${label} must be a positive safe whole number.`);
+  return number;
+}
+
+function lenderInputMinimum(value: unknown): LenderMinimumPaymentInput {
+  const raw = lenderInputRecord(value, ['mode', 'value'], 'Lender minimum payment');
+  const result: LenderMinimumPaymentInput = {};
+  if (lenderOwnField(raw, 'mode')) {
+    if (raw.mode !== 'fixed' && raw.mode !== 'percent-of-balance' && raw.mode !== 'interest-only') throw new Error('Lender minimum payment mode is unsupported.');
+    result.mode = raw.mode;
+  }
+  if (lenderOwnField(raw, 'value')) result.value = lenderInputAmount(raw.value, 'Lender minimum payment value');
+  if (result.mode === 'interest-only' && lenderOwnField(raw, 'value')) throw new Error('Interest-only minimum payment cannot contain a fixed or percent value.');
+  if (result.mode === 'percent-of-balance' && result.value !== undefined && result.value > 1) throw new Error('Lender minimum percent must be a decimal fraction no greater than1.');
+  return result;
+}
+
+/** Lossless input decoding is deliberately separate from derived confidence. */
+export function decodeLenderTerms(value: unknown): LenderTermsInput {
+  const raw = lenderInputRecord(value, [...LENDER_TERM_FIELDS, 'sources'], 'Lender terms');
+  const result: LenderTermsInput = {};
+  for (const field of ['annualFee', 'transactionFeePercent', 'minimumDraw'] as const) {
+    if (lenderOwnField(raw, field)) result[field] = lenderInputAmount(raw[field], field);
+  }
+  for (const field of ['drawPeriodMonths', 'repaymentPeriodMonths'] as const) {
+    if (lenderOwnField(raw, field)) result[field] = lenderInputPeriod(raw[field], field);
+  }
+  if (lenderOwnField(raw, 'rateMode')) {
+    if (raw.rateMode !== 'fixed' && raw.rateMode !== 'variable') throw new Error('Lender rate mode is unsupported.');
+    result.rateMode = raw.rateMode;
+  }
+  if (lenderOwnField(raw, 'minimumPayment')) result.minimumPayment = lenderInputMinimum(raw.minimumPayment);
+  if (lenderOwnField(raw, 'sources')) {
+    const sources = lenderInputRecord(raw.sources, LENDER_TERM_FIELDS, 'Lender term sources');
+    result.sources = {};
+    for (const field of LENDER_TERM_FIELDS) {
+      if (!lenderOwnField(sources, field)) continue;
+      const source = sources[field];
+      if (source !== 'lender-document' && source !== 'user-provided' && source !== 'model-default') throw new Error(`Lender term source is unsupported: ${field}.`);
+      result.sources[field] = source as LenderTermSource;
+    }
+  }
+  return result;
 }
 
 export function buildLenderTermsContract(input: LenderTermsInput): LenderTermsContract {
@@ -578,21 +662,41 @@ export function buildLenderTermsContract(input: LenderTermsInput): LenderTermsCo
     : estimatedFields.length > 0
       ? 'estimated'
       : 'complete';
+  const inputComplete = missingFields.length === 0;
+  const unmodeledFields = LENDER_TERM_FIELDS.filter(field => !missingFields.includes(field));
   const assumptions = [
     ...missingFields.map((field) => `${field} is missing; lender-specific projections are blocked.`),
     ...estimatedFields.map((field) => `${field} is ${sources[field] === 'model-default' ? 'a model default' : 'user provided'} and must be verified against lender documents.`),
+    ...unmodeledFields.map(field => `${field} is not enforced by the monthly model; lender-specific projections are blocked.`),
   ];
 
   return {
     version: LENDER_TERMS_CONTRACT_VERSION,
     confidence,
-    projectionReady: missingFields.length === 0,
+    inputComplete,
+    projectionReady: inputComplete && unmodeledFields.length === 0,
+    unmodeledFields,
     missingFields,
     estimatedFields,
     assumptions,
     sources,
     terms,
   };
+}
+
+export type LenderForecastFailureReason = 'lender-terms-incomplete' | 'lender-terms-unmodeled';
+export type ForecastBasis =
+  | { kind: 'educational-monthly'; label: 'Model estimate'; canProject: true; reasons: string[] }
+  | { kind: 'lender-review'; label: 'Terms incomplete' | 'Terms not modeled'; canProject: false;
+      reason: LenderForecastFailureReason; lenderTerms: LenderTermsContract; reasons: string[] };
+
+export function assessForecastBasis(input?: LenderTermsInput): ForecastBasis {
+  if (input === undefined) return { kind: 'educational-monthly', label: 'Model estimate', canProject: true,
+    reasons: ['Monthly educational estimate. Lender fees, minimums, rate changes and dated posting are not verified.'] };
+  const lenderTerms = buildLenderTermsContract(decodeLenderTerms(input));
+  return { kind: 'lender-review', label: lenderTerms.inputComplete ? 'Terms not modeled' : 'Terms incomplete',
+    canProject: false, reason: lenderTerms.inputComplete ? 'lender-terms-unmodeled' : 'lender-terms-incomplete',
+    lenderTerms, reasons: [...lenderTerms.assumptions] };
 }
 
 function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashboardInput {
@@ -613,6 +717,7 @@ function normalizeMobileDashboardInput(input: MobileDashboardInput): MobileDashb
       limit: finiteNonNegative(input.loc.limit),
       apr: finiteNonNegative(input.loc.apr),
       balance: finiteNonNegative(input.loc.balance),
+      ...(input.loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(input.loc.lenderTerms) }),
     },
   };
 }
@@ -825,6 +930,13 @@ export function formatCurrency(amount: number): string {
 
 /** Educational two-liability model; LOC interest-only is an assumption, not lender terms. */
 export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRepaymentResult {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
+  return { ...simulateEducationalDirectRepayment(inputs), forecastBasis };
+}
+
+function simulateEducationalDirectRepayment(inputs: DirectRepaymentInputs): Omit<DirectRepaymentResult, 'forecastBasis'> {
   let debtBalance = finiteNonNegative(inputs.principalBalance);
   let locBalance = finiteNonNegative(inputs.loc?.balance ?? 0);
   const debtRate = calculateMonthlyRate(inputs.debtApr);
@@ -836,7 +948,7 @@ export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRe
   const monthlyData: DirectRepaymentMonth[] = [];
   let totalInterest = 0;
   let cashBalance = 0;
-  const result = (failureReason?: DirectRepaymentResult['failureReason']): DirectRepaymentResult => ({
+  const result = (failureReason?: DirectRepaymentResult['failureReason']): Omit<DirectRepaymentResult, 'forecastBasis'> => ({
     payoffMonths: monthlyData.length,
     totalInterest,
     monthlyData,
@@ -886,6 +998,8 @@ export function simulateDirectRepayment(inputs: DirectRepaymentInputs): DirectRe
 }
 
 export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopMonthResult {
+  const forecastBasis = assessForecastBasis(inputs.loc.lenderTerms);
+  if (!forecastBasis.canProject) throw new Error(`${forecastBasis.label}. Supplied lender terms are not enforced by this monthly ledger.`);
   const chunkAmount = finiteNonNegative(inputs.chunkAmount);
   const events: MoneyLoopEvent[] = [];
   const loc = {
@@ -1024,6 +1138,13 @@ export function simulateMoneyLoopMonth(inputs: MoneyLoopMonthInputs): MoneyLoopM
 }
 
 export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoopPayoffResult {
+  const forecastBasis = assessForecastBasis(inputs.loc.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    debtInterestPaid: 0, locInterestPaid: 0, monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
+  return { ...simulateEducationalMoneyLoopPayoff(inputs), forecastBasis };
+}
+
+function simulateEducationalMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): Omit<MoneyLoopPayoffResult, 'forecastBasis'> {
   const maxMonths = finitePositiveInteger(inputs.maxMonths ?? 600, 600);
   const chunkAmount = finiteNonNegative(inputs.chunkAmount);
   const principalBalance = finiteNonNegative(inputs.principalBalance);
@@ -1173,6 +1294,19 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
 
 /** Four allocation policies share the same household budget and both starting liabilities. */
 export function compareMortgageRepayment(input: MortgageRepaymentInputs): MortgageComparisonResult {
+  const forecastBasis = assessForecastBasis(input.loc.lenderTerms);
+  if (!forecastBasis.canProject) {
+    const standard: MortgagePlanProjection = { months: 0, totalInterest: 0, cashAtPayoff: 0,
+      isPayoffPossible: false, failureReason: forecastBasis.reason };
+    const difference = { ...standard, saved: 0, monthsSaved: 0, canCompare: false };
+    return { forecastBasis, monthlyBudget: finiteNumber(input.monthlyIncome) - finiteNonNegative(input.monthlyExpenses),
+      standard, biweekly: { ...difference, extraAmount: 0 }, extraPayment: { ...difference, extraAmount: 0 },
+      velocity: { ...difference, chunkSize: 0 } };
+  }
+  return { ...compareEducationalMortgageRepayment(input), forecastBasis };
+}
+
+function compareEducationalMortgageRepayment(input: MortgageRepaymentInputs): Omit<MortgageComparisonResult, 'forecastBasis'> {
   const principalBalance = finiteNonNegative(input.principalBalance);
   const debtApr = finiteNonNegative(input.debtApr);
   const debtPayment = finiteNonNegative(input.debtPayment);
@@ -1380,7 +1514,10 @@ export function buildMobilePortfolioSnapshot(
   const dailyInterestBurn = calculateDailyInterest(totalDebt, model.activeDebt.apr);
 
   let guardrail: string | null = null;
-  if (cashFlow <= 0) {
+  const forecastBasis = assessForecastBasis(model.loc.lenderTerms);
+  if (!forecastBasis.canProject) {
+    guardrail = `${forecastBasis.label}. Supplied lender terms are not enforced by the monthly model.`;
+  } else if (cashFlow <= 0) {
     guardrail = 'Cash flow is not positive, so portfolio payoff claims stay in review mode.';
   } else if (cashFlowAfterMinimums < 0) {
     guardrail = 'Cash flow does not cover the modeled minimum payment yet.';
@@ -1422,6 +1559,8 @@ export function buildMobilePortfolioSnapshot(
 }
 
 function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
+  if (reason === 'lender-terms-incomplete') return 'Terms incomplete';
+  if (reason === 'lender-terms-unmodeled') return 'Terms not modeled';
   if (reason === 'invalid-routing') return 'Review routed cash flows';
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
@@ -1698,7 +1837,10 @@ export function buildMobileSimulatorSnapshot(
     .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
 
   let guardrail: string | null = null;
-  if (cashFlow <= 0) {
+  const forecastBasis = assessForecastBasis(model.loc.lenderTerms);
+  if (!forecastBasis.canProject) {
+    guardrail = `${forecastBasis.label}. Supplied lender terms are not enforced by the monthly model.`;
+  } else if (cashFlow <= 0) {
     guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
   } else if (model.loc.limit <= 0) {
     guardrail = 'Enter known LOC terms before trusting velocity payoff projections.';

@@ -1,4 +1,4 @@
-import { normalizeApr, type MoneyLoopLOC } from './index';
+import { decodeLenderTerms, normalizeApr, type MoneyLoopLOC } from './index';
 import type { DebtItem, FocusMode, PayoffStrategy, PortfolioSimulationInputs } from './portfolio';
 import { hasFiniteNonNegativeSum } from './numeric-range';
 
@@ -76,7 +76,7 @@ function debt(value: unknown): DebtItem {
 
 export function decodePortfolioBook(value: unknown): PortfolioBook {
   const raw = record(value, ['monthlyIncome','monthlyExpenses','extraMonthlyPayment','chunkAmount','loc','strategy','focusMode','splitRatioPrimary','debts'], 'Portfolio book');
-  const loc = record(raw.loc, ['limit','balance','apr'], 'LOC');
+  const loc = record(raw.loc, ['limit','balance','apr','lenderTerms'], 'LOC');
   if (!Array.isArray(raw.debts)) throw new Error('Portfolio debts must be an array.');
   const debts = raw.debts.map(debt), identities = new Set<string>();
   for (const d of debts) {
@@ -90,7 +90,8 @@ export function decodePortfolioBook(value: unknown): PortfolioBook {
     monthlyExpenses: amount(raw.monthlyExpenses, 'Monthly expenses'),
     extraMonthlyPayment: amount(raw.extraMonthlyPayment, 'Extra payment cap'),
     chunkAmount: amount(raw.chunkAmount, 'Chunk amount'),
-    loc: { limit: amount(loc.limit, 'LOC limit'), balance: amount(loc.balance, 'LOC balance'), apr: amount(loc.apr, 'LOC APR') },
+    loc: { limit: amount(loc.limit, 'LOC limit'), balance: amount(loc.balance, 'LOC balance'), apr: amount(loc.apr, 'LOC APR'),
+      ...('lenderTerms' in loc ? { lenderTerms: decodeLenderTerms(loc.lenderTerms) } : {}) },
     strategy: choice(raw.strategy, ['velocity','snowball','avalanche'] as const, 'Strategy'),
     focusMode: choice(raw.focusMode, ['single','split'] as const, 'Focus mode'), splitRatioPrimary, debts,
   };
@@ -101,19 +102,24 @@ export function decodePortfolioBook(value: unknown): PortfolioBook {
 export function decodePortfolioDocument(json: string): PortfolioBook {
   if (typeof json !== 'string') throw new Error('Portfolio document must be JSON text.');
   const raw = record(JSON.parse(json), ['version','aprUnit','data','state','exportedAt'], 'Portfolio document');
-  if (raw.version !== 1 && raw.version !== 2) throw new Error('Portfolio document version is unsupported.');
-  if (raw.version === 2 ? raw.aprUnit !== 'decimal' : raw.aprUnit !== undefined) throw new Error('Portfolio document APR units are unsupported.');
+  if (raw.version !== 1 && raw.version !== 2 && raw.version !== 3) throw new Error('Portfolio document version is unsupported.');
+  if (raw.version !== 1 ? raw.aprUnit !== 'decimal' : raw.aprUnit !== undefined) throw new Error('Portfolio document APR units are unsupported.');
   if (('data' in raw) === ('state' in raw)) throw new Error('Portfolio document requires exactly one data or state book.');
   const book = decodePortfolioBook('data' in raw ? raw.data : raw.state);
-  if (raw.version === 2) return book;
+  if (raw.version !== 3 && book.loc.lenderTerms !== undefined) throw new Error('Lender terms require Portfolio document version3.');
+  if (raw.version !== 1) return book;
   // Version1 stored the legacy mixed-unit contract. Convert once, without changing its source.
   return { ...book, loc: { ...book.loc, apr: normalizeApr(book.loc.apr) },
     debts: book.debts.map(d => ({ ...d, apr: normalizeApr(d.apr),
       ...(d.promo ? { promo: { ...d.promo, introApr: normalizeApr(d.promo.introApr), postIntroApr: normalizeApr(d.promo.postIntroApr) } } : {}) })) };
 }
 
-export function encodePortfolioDocument(book: PortfolioBook): string {
-  return JSON.stringify({ version: 2, aprUnit: 'decimal', data: decodePortfolioBook(book) }, null, 2);
+export function encodePortfolioDocument(book: PortfolioBook, requestedVersion?: 2 | 3): string {
+  const data = decodePortfolioBook(book);
+  const version = requestedVersion ?? (data.loc.lenderTerms === undefined ? 2 : 3);
+  if (version !== 2 && version !== 3) throw new Error('Portfolio document version is unsupported.');
+  if (version !== 3 && data.loc.lenderTerms !== undefined) throw new Error('Lender terms cannot be downgraded to Portfolio document version2.');
+  return JSON.stringify({ version, aprUnit: 'decimal', data }, null, 2);
 }
 
 export function portfolioBookInputs(book: PortfolioBook): PortfolioSimulationInputs {

@@ -26,6 +26,11 @@
       "react-native": "./src/input-draft.ts",
       "default": "./src/input-draft.ts"
     },
+    "./lender-terms-draft": {
+      "types": "./src/lender-terms-draft.ts",
+      "react-native": "./src/lender-terms-draft.ts",
+      "default": "./src/lender-terms-draft.ts"
+    },
     "./portfolio-book": {
       "types": "./src/portfolio-book.ts",
       "react-native": "./src/portfolio-book.ts",
