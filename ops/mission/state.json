@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Native dated smoke preserves prior receipts across repeated real browser runs. Fresh local gates pass on the capture and native-caller fixes; new-head remote proof and production approval remain pending.",
+    "tagline": "Card-only shared studio strip improves rear readability while preserving the silver face and other nine heroes. Fresh local gates pass; new-head remote proof and final photoreal/production approval remain pending.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T21:00:07.142Z",
-    "sessionCount": 41
+    "updated": "2026-10-22T23:36:46.748Z",
+    "sessionCount": 42
   },
   "policies": {
     "merge": "review",
@@ -92,24 +92,28 @@
         {
           "id": "R0-T6",
           "title": "Retain strict canvas capture evidence and diagnose the media gate failure",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "R0-T5"
           ],
-          "pr": null,
-          "notes": "Implemented and locally gated:one strict post-isolation snapshot,exact supplied clips,finite/fullviewport checks,buffered wait/capture/restore/decode failure phases.20CPUgroups/8fixed crossover interiorpairs/128actualboundarycases; independent bounded review and cleanup P2 closure. No universal coordinate/pixel/timing/reliability or CI rootcause claim. State40 full2 desktop701ms/full3Remotion targetclosure and artificialCPU2 nine-ms-late failures remain. Fresh new-source local29 pass; remote pending."
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Implemented and locally gated:one strict post-isolation snapshot,exact supplied clips,finite/fullviewport checks,buffered wait/capture/restore/decode failure phases.20CPUgroups/8fixed crossover interiorpairs/128actualboundarycases; independent bounded review and cleanup P2 closure. No universal coordinate/pixel/timing/reliability or CI rootcause claim. State40 full2 desktop701ms/full3Remotion targetclosure and artificialCPU2 nine-ms-late failures remain. Fresh new-source local29 pass; remote pending. Verified at da04699/receipt6351915021:both complete first-attempt CI39854282873/39854293255,all3jobs/59steps+cleanup/6sourceguards,known automaticREADY,hosted15/210/20assets,IAB8/originalportfolio restored,sealed6593current+19774inherited artifacts. This supersedes State41 pending remote snapshot; not a general timing/rootcause or production claim."
         },
         {
           "id": "R0-T7",
           "title": "Preserve protected dated receipts across repeat native smokes",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Caller now chooses/logs dated-plan/UUID inside each main invocation,retaining default/environment parent and unchanged fixture guard. Old verification receipt bytes stay exact; protected-receipt collision still rejects. Not exclusive directory reservation or atomic nonce claim. GenuineCPU RED1pass2fail/GREEN3pass,standing feeoracle retained,independent bounded review. Two complete real browser smokes at same parent produce distinct15case outputs/allstandingchecks/contextsclosed,oldhash unchanged. Browser/CPU proof,not physical device. New-head shipping pending."
+          "notes": "Caller now chooses/logs dated-plan/UUID inside each main invocation,retaining default/environment parent and unchanged fixture guard. Old verification receipt bytes stay exact; protected-receipt collision still rejects. Not exclusive directory reservation or atomic nonce claim. GenuineCPU RED1pass2fail/GREEN3pass,standing feeoracle retained,independent bounded review. Two complete real browser smokes at same parent produce distinct15case outputs/allstandingchecks/contextsclosed,oldhash unchanged. Browser/CPU proof,not physical device. New-head shipping pending. Verified at da04699/receipt6351915021:both complete first-attempt CI39854282873/39854293255,all3jobs/59steps+cleanup/6sourceguards,known automaticREADY,hosted15/210/20assets,IAB8/originalportfolio restored,sealed6593current+19774inherited artifacts. This supersedes State41 pending remote snapshot; not a general timing/rootcause or production claim."
         }
       ],
       "gates": [
@@ -118,36 +122,36 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh29 serialized gates/485frozen source pins:20captureCPUgroups,3native-outputCPUgroups,360original+116dated groups and standing reference lane. Original18Three actions/sixworkflows/hiddennegative/reducedmotion and all20model/Replay layouts pass,unchanged450/700/300. Actual native repeats2x15dated cases plus full native smoke preserve the old protected receipt.162private publication fixtures pass. This is local proof,not new-head remote or final production approval."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh29 serialized gates/485frozen source pins:20captureCPUgroups,3native-outputCPUgroups,360original+116dated groups and standing reference lane. Original18Three actions/sixworkflows/hiddennegative/reducedmotion and all20model/Replay layouts pass,unchanged450/700/300. Actual native repeats2x15dated cases plus full native smoke preserve the old protected receipt.162private publication fixtures pass. This is local proof,not new-head remote or final production approval."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T21:00:07.142Z",
-          "notes": "State41 PRE-PUSH. New source fixes native caller receipt reuse; canvas State40 overall27/29 is a retained FAILED collection,not a pass. f782remote mandatory pair also FAILED/comment6349085540,noverifiedreceipt/no thirdunchangedretry. Lastverified93dcf67/receipt6344946083. Require both new-head complete CI events/alljobs/59steps+cleanup/6sourceguards,automaticREADY,hosted210/20assets,IAB8/restoration,freshreadback/seal. No merge/promotion or metadata-onlypushloop."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:46.748Z",
+          "notes": "State42 PRE-PUSH. da04699 is VERIFIED at receipt6351915021; new source needs both complete exactheadCI events/alljobs/steps/sourceguards,automaticREADY,hosted15/210/20assets,actualIAB/restoration,freshproviderreadback and sealedreceipt. No unchanged retries or metadata-onlypushloop."
         },
         {
           "id": "R0-G4",
           "title": "Fresh exact-head CI discovery and report contracts",
           "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh29 serialized gates/485frozen source pins:20captureCPUgroups,3native-outputCPUgroups,360original+116dated groups and standing reference lane. Original18Three actions/sixworkflows/hiddennegative/reducedmotion and all20model/Replay layouts pass,unchanged450/700/300. Actual native repeats2x15dated cases plus full native smoke preserve the old protected receipt.162private publication fixtures pass. This is local proof,not new-head remote or final production approval."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         }
       ]
     },
@@ -193,6 +197,14 @@
             "mergedAt": null
           },
           "notes": "Hardening is established. Local studio retains poster fallback, resource cleanup and desktop/375px checks. Publication serializes imports/rebuilds; refined models/posters recheck aggregate bytes inside the existing shared lock. Poster revisions are positive safe integers and packaging delivers the same validated Buffer/captured manifests. Not whole-set crash atomicity or realpath confinement. Collection art approval remains unfinished; every new head must re-pass hosted gates."
+        },
+        {
+          "id": "R1-T5",
+          "title": "Adopt bounded Card-only shared studio strip",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Actual Card5vs6 and missing-model-argument REDs followed by GREEN. Exact model path adds sixth1.5x3/intensity1.2 reflector at measured center; default/unknown/othernine original rooms unchanged. Independent original21frame study approves strong5s/modest4s gain and restored2s silver gradient,not final artwork. Fresh29local/485pins,all20GLBReplay/fallbacks,Card9s30fps270decodedframes nonblank/finalsecondstable;9otherMP4s and allGLB/poster/material/camera/yaw/math unchanged. Independent source review; new-head shipping pending. R1 remains OPEN."
         }
       ],
       "gates": [
@@ -201,27 +213,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh full29 verifies223media contracts,HyperFrames checks,27fresh Remotion stills,all20desktop/phone GLB+Replay cases/fallbacks and existing ten finite360/rest videos. No new artwork/material/geometry/poster/video adoption; all-ten photoreal/hardware approval stays open. Earlier Remotion targetclosure and isolated-frame replay remain evidence; this pass does not diagnose the crash."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh full29 verifies223media contracts,HyperFrames checks,27fresh Remotion stills,all20desktop/phone GLB+Replay cases/fallbacks and existing ten finite360/rest videos. No new artwork/material/geometry/poster/video adoption; all-ten photoreal/hardware approval stays open. Earlier Remotion targetclosure and isolated-frame replay remain evidence; this pass does not diagnose the crash."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/native-smoke-repeatability-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T20:55:19.253Z",
-          "notes": "Fresh full29 verifies223media contracts,HyperFrames checks,27fresh Remotion stills,all20desktop/phone GLB+Replay cases/fallbacks and existing ten finite360/rest videos. No new artwork/material/geometry/poster/video adoption; all-ten photoreal/hardware approval stays open. Earlier Remotion targetclosure and isolated-frame replay remain evidence; this pass does not diagnose the crash."
+          "evidence": "ops/mission/evidence/card-studio-lighting-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T23:36:31.108Z",
+          "notes": "Fresh29serialized gates on485frozen source pins; Card-only shared studio/runtime parity,all20desktop375pxGLB+Replay/fallback/reduced-motion,standing financial/native/Worker/report contracts. FreshCard9s30fps270nonblankdecodedframes/finalsecondstable,other9MP4hashesunchanged. Bounded lighting refinement,not alltenphotoreal/hardware/production approval."
         }
       ]
     },
@@ -1227,9 +1239,9 @@
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "State41 PRE-PUSH native-smoke-repeatability. FIRST read its current-checkpoint.json when present:later sealed receipt supersedes this pending snapshot. Fresh local29/485pins/20capture+3nativeCPU/2realrepeat runs/162publicationfixtures pass. State40 canvas failed-local-checkpoint3574artifacts and f782remote failed10433artifacts stay immutable. No metadata-only push loop or old sealed helper reruns.",
-      "Finish focused <=400line commits and one tested-tip push on existing branch/draftPR256. Require BOTHcomplete exact-head firstattempt CI events/all3jobs/every59steps+cleanup/6stdout sourceguards/unchangedcaps,knownautomaticREADY,hosted15/210/20servedhashes,actualIAB8/restore/nativeJPEGs,freshproviderfinalreadback,truthful receipt and immutable seal. Do not claim the native receipt fix diagnoses Remotion,CPU2 or701ms timing. Do not weaken assertions or repeat unchanged until green.",
-      "After a verified checkpoint,continue substantive R1 material/art work and R3 actual lender reconciliation/backend/native readiness,not another metadata-only push. Fixed APR/fixed inclusive minimum is bounded support; other lender calendars remain educational. Preserve fractionalfees once,strict4/oldarchives/stickyremoval/immutablequeues/ownerCAS; web stale-source guard is optimistic,not atomic. All-ten photoreal/fullR3/backend/security/physicaldevice/production remain OPEN. No merge/manualdeploy/promotion/paidGPU/cloud/data/access/DNS mutation.",
+      "State42 PRE-PUSH Card-only shared studio. FIRST read .superpowers/sdd/2026-10-22-card-studio-adoption/current-checkpoint.json when present:later sealed receipt supersedes this snapshot. Full29local/485pins,newCard270nonblankframes/rest,all20GLBReplay/fallbacks,independent review; model/material/math/backend/deps/locks/workflows/caps unchanged. See docs/card-studio-lighting-contract-2026-10-22.md.",
+      "Complete focused<=400line commits and one verified-tip push on existingbranch/draftPR256. Require both complete exactheadCIevents/all3jobs/59steps+cleanup/6sourceguards,knownautomaticREADY,hosted15/210/20servedhashes,actualIAB/restoration,freshproviderreadback/receipt/seal. Retain failures; no merge/manualdeploy/promotion or metadata-onlypushloop.",
+      "After verified Card lighting,continue substantive all-angle asset refinements and R3 lender/calendar reconciliation. Card4sdepth/chipengraving/coinrelief,other9material/art approval,physicalhardware/accessibility,backend/security/recovery/native and production remain OPEN. Prefer real improvements over more redundant private metadata studies. No paidGPU/cloud/data/access/DNS mutation.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",

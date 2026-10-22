@@ -955,3 +955,25 @@ actualIAB8/restore,freshprovider readback and sealed receipt. f782remote remains
 FAILED/comment6349085540/10433artifacts;lastverified93dcf67/receipt6344946083.
 FullR3,all-ten photoreal,backend/security/physicalnative/accessibility/release
 remain open. Goalactive/PR256draft;no merge,manualdeploy or production promotion.
+
+## State 42 - Card-only shared studio strip
+
+Tier2 independent source verification; preserve original calm asset-centered layout.
+Fold VERIFIED da04699/receipt6351915021, complete CI39854282873/39854293255,
+READY/hosted210/20assets/IAB8/restoration/sealed6593current+19774inherited.
+State41 was PRE-PUSH; its pending remote text is superseded, not failed evidence.
+
+Measured private1900records/3surfaces/4poses/11readouts with actualGLuniform;
+all21originals independently reviewed. Narrow1.5x3 strip yields strong5s/modest4s
+rear gain and restores2s silver gradient versus broad fill. Not final artwork.
+Sealed665privateartifacts; old blank270frame MIME-error export remainsFAILED.
+Corrected JS/readiness export passes; reusable v2bindingP2 reproduced/v3CPUfixed
+without retroactively changing the matching retained exact v2 receipt.
+
+Actual source Card5vs6/missing-model-argument REDs thenGREEN. Exact Card path
+only; firstfive/default/unknown/othernine rooms unchanged. Fresh29local/485pins,
+all20desktop375pxGLBReplay/fallbacks,Card9s30fps270nonblankframes/rest;9otherMP4
+hashes and all10GLB/poster/material/camera/yaw/clock/math/backend bytes preserved.
+Independent source review. FullR1photoreal/R3/backend/security/native/a11y/release
+stayOPEN. NewheadCI/READY/hosted/IAB/finalreceipt pending in thisPRE-PUSHsnapshot.
+No merge/manualdeploy/promotion; goalACTIVE/PR256draft.
