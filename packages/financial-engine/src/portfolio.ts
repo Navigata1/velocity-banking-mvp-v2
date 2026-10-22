@@ -21,6 +21,9 @@ import {
 } from './index';
 import { calculateDailyInterest, calculateMonthlyRate, formatCurrency } from './index';
 import { hasFiniteNonNegativeSum } from './numeric-range';
+import type { DatedPortfolioPlan } from './dated-plan';
+import { simulateDatedPortfolio, type DatedPortfolioLedger } from './dated-portfolio';
+import type { DatedFailureReason } from './dated-loc';
 
 export type DebtCategory =
   | 'mortgage'
@@ -38,6 +41,7 @@ export type PaymentSource = 'checking' | 'loc' | 'either';
 export type PayoffStrategy = 'velocity' | 'snowball' | 'avalanche';
 export type FocusMode = 'single' | 'split';
 export type PortfolioFailureReason =
+  | DatedFailureReason
   | LenderForecastFailureReason
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
@@ -81,6 +85,7 @@ export interface PortfolioPlanSettings {
 }
 
 export interface PortfolioSimulationInputs {
+  datedPlan?: DatedPortfolioPlan;
   aprUnit?: APRUnit;
   monthlyIncome: number;
   monthlyExpenses: number;
@@ -93,12 +98,15 @@ export interface PortfolioSimulationInputs {
 }
 
 export interface DebtPayoffEvent {
+  paidOffOn?: string;
   id: string;
   name: string;
   monthPaidOff: number;
 }
 
 export interface MonthResult {
+  date?: string;
+  locFees?: number;
   month: number;
   balances: Record<string, number>;
   interestCharges: Record<string, number>;
@@ -131,6 +139,9 @@ export interface DebtPriorityRationale {
 }
 
 export interface PortfolioSimulationResult {
+  totalFees?: number;
+  payoffDate?: string;
+  datedLedger?: DatedPortfolioLedger;
   forecastBasis: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
@@ -217,8 +228,8 @@ function velocityScore(debt: DebtItem, balance: number): number {
   return (unlock * 0.55) + (burn * 30 * 0.35) + (promoRisk * 200 * 0.10);
 }
 
-function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: PayoffStrategy): DebtItem[] {
-  const active = debts.filter(d => (balances.get(d.id) ?? 0) > 0.01);
+function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: PayoffStrategy, threshold = 0.01): DebtItem[] {
+  const active = debts.filter(d => (balances.get(d.id) ?? 0) > threshold);
 
   switch (strategy) {
     case 'snowball':
@@ -235,10 +246,10 @@ function sortDebts(debts: DebtItem[], balances: Map<string, number>, strategy: P
 
 interface AllocationTarget { debt?: DebtItem; balance: number; apr: number }
 
-function rankAllocationTargets(debts: DebtItem[], balances: Map<string, number>, settings: PortfolioPlanSettings, locBalance: number, locApr: number): AllocationTarget[] {
-  const targets: AllocationTarget[] = sortDebts(debts, balances, settings.strategy)
+function rankAllocationTargets(debts: DebtItem[], balances: Map<string, number>, settings: PortfolioPlanSettings, locBalance: number, locApr: number, threshold = 0.01): AllocationTarget[] {
+  const targets: AllocationTarget[] = sortDebts(debts, balances, settings.strategy, threshold)
     .map(debt => ({ debt, balance: balances.get(debt.id) ?? 0, apr: getEffectiveApr(debt) }));
-  if (locBalance > 0.01) targets.push({ balance: locBalance, apr: locApr });
+  if (locBalance > threshold) targets.push({ balance: locBalance, apr: locApr });
   if (settings.strategy === 'snowball') targets.sort((a, b) => a.balance - b.balance);
   if (settings.strategy === 'avalanche') targets.sort((a, b) => calculateMonthlyRate(b.apr, 'decimal') - calculateMonthlyRate(a.apr, 'decimal'));
   return targets;
@@ -274,8 +285,9 @@ function buildDebtRationales(
   settings: PortfolioPlanSettings,
   locBalance = 0,
   locApr = 0,
+  threshold = 0.01,
 ): Record<string, DebtPriorityRationale> {
-  const targets = rankAllocationTargets(debts, balances, settings, locBalance, locApr);
+  const targets = rankAllocationTargets(debts, balances, settings, locBalance, locApr, threshold);
   const targetIds = targets.slice(0, settings.focusMode === 'split' ? 2 : 1).flatMap(target => target.debt ? [target.debt.id] : []);
   const ranks = new Map(targets.flatMap((target, index) => target.debt ? [[target.debt.id, index + 1] as const] : []));
   const rationales: Record<string, DebtPriorityRationale> = {};
@@ -335,6 +347,11 @@ function buildDebtRationales(
 }
 
 export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioSimulationResult {
+  if (inputs && typeof inputs === 'object' && 'datedPlan' in inputs) return simulateDatedPortfolio(inputs, {
+    apr: getEffectiveApr,
+    targets: (debts, balances, settings, loc, apr) => rankAllocationTargets(debts, balances, settings, loc, apr, 0),
+    rationales: (debts, balances, settings, loc, apr) => buildDebtRationales(debts, balances, settings, loc, apr, 0),
+  });
   const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
   if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
     isPayoffPossible: false, failureReason: forecastBasis.reason, payoffOrder: [], monthResults: [],
