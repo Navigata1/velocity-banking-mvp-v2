@@ -1,4 +1,4 @@
-import { formatCurrency, type PayoffFailureReason, type SingleDebtStrategyResult } from '../engine/calculations';
+import { formatCurrency, LOC_PROJECTION_OVER_LIMIT_LABEL, type PayoffFailureReason, type SingleDebtStrategyResult } from '../engine/calculations';
 
 export interface SimulatorStrategyCard {
   name: SingleDebtStrategyResult['name'];
@@ -52,6 +52,7 @@ function formatFailure(reason?: PayoffFailureReason): string {
   if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return LOC_PROJECTION_OVER_LIMIT_LABEL;
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
 }

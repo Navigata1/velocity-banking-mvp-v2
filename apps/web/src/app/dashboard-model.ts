@@ -1,4 +1,4 @@
-import { calculateDailyInterest, formatCurrency } from '../engine/calculations';
+import { calculateDailyInterest, formatCurrency, LOC_PROJECTION_OVER_LIMIT_LABEL, LOC_PROJECTION_OVER_LIMIT_WARNING } from '../engine/calculations';
 
 export type DashboardTone = 'emerald' | 'sky' | 'amber' | 'rose';
 
@@ -47,7 +47,7 @@ export interface DashboardVital {
 }
 
 export interface DashboardWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-no-capacity' | 'loc-overlimit' | 'loc-utilization' | 'payoff';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-no-capacity' | 'loc-overlimit' | 'loc-projection-overlimit' | 'loc-utilization' | 'payoff';
   title: string;
   body: string;
 }
@@ -377,6 +377,11 @@ function buildNextMove(
     };
   }
 
+  if (input.velocity.failureReason === 'loc-projection-overlimit') {
+    return { title: 'Review LOC capacity', value: 'Review inputs', caption: LOC_PROJECTION_OVER_LIMIT_WARNING,
+      tone: 'rose', assumptions: ['A month-end balance above the entered LOC limit stops this modeled payoff path.'] };
+  }
+
   if (locUtilization > 0.8) {
     return {
       title: 'Pay down the LOC',
@@ -494,6 +499,8 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       title: 'No LOC room available',
       body: 'The LOC balance is at the entered limit. Pay it down before modeling another chunk.',
     });
+  } else if (safeInput.velocity.failureReason === 'loc-projection-overlimit') {
+    warnings.push({ kind: 'loc-projection-overlimit', title: LOC_PROJECTION_OVER_LIMIT_LABEL, body: LOC_PROJECTION_OVER_LIMIT_WARNING });
   } else if (locUtilization > 0.8) {
     warnings.push({
       kind: 'loc-utilization',

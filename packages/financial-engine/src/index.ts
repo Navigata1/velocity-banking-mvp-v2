@@ -74,6 +74,8 @@ export interface DirectRepaymentResult {
 export const SIMULATOR_COMPARISON_SCOPE = 'Same active debt, existing LOC balance and available monthly budget. Other household debts are excluded.';
 export const SIMULATOR_COMPARISON_ASSUMPTIONS = 'Educational estimate: constant APRs, no fees and no draw-period expiry. Direct repayment reserves LOC interest only, not a verified lender minimum. Check actual lender terms before acting.';
 export const SIMULATOR_COMPARISON_TIMING = 'Direct strategies pay at month end; LOC interest uses 30 days / 365. Velocity estimates income at the start and expenses across 30 days. Unused money stays as cash, not an automatic extra debt payment. Cash is measured at each plan\'s own payoff month, not a common date.';
+export const LOC_PROJECTION_OVER_LIMIT_LABEL = 'Projected LOC limit exceeded';
+export const LOC_PROJECTION_OVER_LIMIT_WARNING = 'The modeled LOC balance exceeds the entered limit. Review cash flow, planned draws and lender terms before relying on a payoff date.';
 
 export interface MortgageRepaymentInputs {
   principalBalance: number;
@@ -121,6 +123,7 @@ export type MoneyLoopFailureReason =
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'loc-projection-overlimit'
   | 'payoff-horizon-exceeded';
 
 export type MoneyLoopEventType =
@@ -233,6 +236,12 @@ export interface MoneyLoopMonthResult extends MoneyLoopMonthlyResult {
   didChunk: boolean;
 }
 
+export interface LOCProjectionLimitBreach {
+  month: number;
+  balance: number;
+  limit: number;
+}
+
 export interface MoneyLoopPayoffResult {
   payoffMonths: number;
   totalInterest: number;
@@ -241,6 +250,7 @@ export interface MoneyLoopPayoffResult {
   monthlyData: MoneyLoopMonthlyResult[];
   isPayoffPossible: boolean;
   failureReason?: MoneyLoopFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
 }
 
 export const LENDER_TERMS_CONTRACT_VERSION = '2.0.0' as const;
@@ -307,6 +317,7 @@ export type MobilePayoffFailureReason =
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'loc-projection-overlimit'
   | 'payoff-horizon-exceeded';
 
 export type MobileSimulatorStrategyName = 'Traditional' | 'Snowball' | 'Avalanche' | 'Velocity';
@@ -1112,6 +1123,8 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
   let month = 0;
   let monthsSinceChunk = finitePositiveInteger(inputs.initialMonthsSinceChunk ?? 0, 0);
   let cashBalance = 0;
+  let projectedLocOverLimit = false;
+  let locLimitBreach: LOCProjectionLimitBreach | undefined;
 
   while ((debtBalance > 0.01 || locBalance > 0.01) && month < maxMonths) {
     month += 1;
@@ -1129,6 +1142,12 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
       monthsSinceChunk,
       cashBalance,
     });
+    if (monthResult.locBalance > loc.limit) {
+      projectedLocOverLimit = true;
+      if (Number.isFinite(monthResult.locBalance)) locLimitBreach = { month, balance: monthResult.locBalance, limit: loc.limit };
+      month--;
+      break;
+    }
     debtBalance = monthResult.debtBalance;
     locBalance = monthResult.locBalance;
     cashBalance = monthResult.cashBalance;
@@ -1138,7 +1157,7 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     monthlyData.push(monthResult);
   }
 
-  const isPayoffPossible = debtBalance <= 0.01 && locBalance <= 0.01;
+  const isPayoffPossible = !projectedLocOverLimit && debtBalance <= 0.01 && locBalance <= 0.01;
 
   return {
     payoffMonths: month,
@@ -1147,7 +1166,8 @@ export function simulateMoneyLoopPayoff(inputs: MoneyLoopPayoffInputs): MoneyLoo
     locInterestPaid,
     monthlyData,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
+    failureReason: isPayoffPossible ? undefined : projectedLocOverLimit ? 'loc-projection-overlimit' : 'payoff-horizon-exceeded',
+    ...(locLimitBreach ? { locLimitBreach } : {}),
   };
 }
 
@@ -1259,6 +1279,9 @@ export function buildMobileDashboardSnapshot(
   } else if (locNoCapacity) {
     nextMove = 'Create LOC room';
     warning = LOC_NO_CAPACITY_WARNING;
+  } else if (velocityProjection.failureReason === 'loc-projection-overlimit') {
+    nextMove = 'Review LOC capacity';
+    warning = LOC_PROJECTION_OVER_LIMIT_WARNING;
   } else if (!locNeedsSetup && locUtilization > 0.8) {
     nextMove = 'Pay down the LOC';
     warning = LOC_HIGH_UTILIZATION_WARNING;
@@ -1406,6 +1429,7 @@ function formatPayoffFailure(reason?: MobilePayoffFailureReason): string {
   if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return LOC_PROJECTION_OVER_LIMIT_LABEL;
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
 }
@@ -1682,6 +1706,8 @@ export function buildMobileSimulatorSnapshot(
     guardrail = LOC_OVER_LIMIT_WARNING;
   } else if (model.loc.balance === model.loc.limit) {
     guardrail = LOC_NO_CAPACITY_WARNING;
+  } else if (velocityProjection.failureReason === 'loc-projection-overlimit') {
+    guardrail = LOC_PROJECTION_OVER_LIMIT_WARNING;
   } else if (model.loc.balance / model.loc.limit > 0.8) {
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
   } else if (cashFlow + 1e-8 < calculateRequiredDebtPayment(model.activeDebt.balance, model.activeDebt.apr, model.activeDebt.monthlyPayment)) {

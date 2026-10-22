@@ -14,6 +14,8 @@ import {
   type LOCDetails,
   type MortgageComparisonResult,
   type MortgageRepaymentInputs,
+  type LOCProjectionLimitBreach,
+  LOC_PROJECTION_OVER_LIMIT_WARNING,
 } from '@interestshield/financial-engine';
 import {
   simulateMoneyLoopMonth,
@@ -25,6 +27,8 @@ export {
   SIMULATOR_COMPARISON_SCOPE,
   SIMULATOR_COMPARISON_ASSUMPTIONS,
   SIMULATOR_COMPARISON_TIMING,
+  LOC_PROJECTION_OVER_LIMIT_LABEL,
+  LOC_PROJECTION_OVER_LIMIT_WARNING,
 } from '@interestshield/financial-engine';
 
 export {
@@ -118,6 +122,7 @@ export type PayoffFailureReason =
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'loc-projection-overlimit'
   | 'payoff-horizon-exceeded';
 
 export interface PayoffSimulation {
@@ -126,6 +131,7 @@ export interface PayoffSimulation {
   monthlyData: MonthlyResult[];
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
 }
 
 export interface SimulationResult {
@@ -142,6 +148,7 @@ export interface Warning {
     | 'negative-cashflow'
     | 'cashflow-below-minimums'
     | 'loc-overlimit'
+    | 'loc-projection-overlimit'
     | 'loc-no-capacity'
     | 'loc-overutilization'
     | 'negative-amortization'
@@ -156,6 +163,7 @@ export interface MultiDebtResult {
   debts: DebtPayoffResult[];
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
   totalInterestPaid: number;
   locInterestPaid: number;
   moneyLoopMonthlyData: MoneyLoopMonthlyResult[];
@@ -164,7 +172,7 @@ export interface MultiDebtResult {
   totalMonths: number;
   baselineTotalMonths: number;
   monthsSaved: number;
-  freedomDate: Date;
+  freedomDate: Date | null;
   warnings: Warning[];
 }
 
@@ -476,6 +484,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     })),
     isPayoffPossible: moneyLoop.isPayoffPossible,
     failureReason: moneyLoop.failureReason,
+    ...(moneyLoop.locLimitBreach ? { locLimitBreach: moneyLoop.locLimitBreach } : {}),
   };
 }
 
@@ -580,7 +589,7 @@ export function simulateMultiDebt(
       totalMonths: 0,
       baselineTotalMonths: baselineMaxMonths,
       monthsSaved: 0,
-      freedomDate: new Date(),
+      freedomDate: null,
       warnings,
     };
   };
@@ -648,6 +657,8 @@ export function simulateMultiDebt(
     0,
     safeChunkAmount ?? Math.min(Math.max(0, cashFlow) * 3, (safeLoc?.limit ?? 0) * 0.4)
   );
+  let projectedLocOverLimit = false;
+  let locLimitBreach: LOCProjectionLimitBreach | undefined;
 
   while (month < 600) {
     const allPaidOff = sortedDebts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
@@ -655,6 +666,12 @@ export function simulateMultiDebt(
     if (allPaidOff && !hasOutstandingVelocityLoc) break;
 
     month++;
+
+    const monthStart = strategy === 'velocity' && safeLoc ? {
+      balances: new Map(balances), interestPaid: new Map(interestPaid), payoffMonths: new Map(payoffMonths),
+      details: new Map([...monthlyDetails].map(([id, rows]) => [id, rows.length])),
+      locBalance, locCashBalance, locInterestPaid, loopLength: moneyLoopMonthlyData.length,
+    } : null;
 
     let freedPayments = 0;
     let usedMoneyLoopThisMonth = false;
@@ -765,8 +782,27 @@ export function simulateMultiDebt(
       locInterestPaid += locInterest;
       locBalance = Math.max(0, locBalance - cashFlow + locInterest);
     }
+    if (strategy === 'velocity' && safeLoc && monthStart && locBalance > safeLoc.limit) {
+      projectedLocOverLimit = true;
+      if (Number.isFinite(locBalance)) locLimitBreach = { month, balance: locBalance, limit: safeLoc.limit };
+      // Commit no sibling rows or payoff events from an unfunded modeled month.
+      for (const debt of safeDebts) {
+        balances.set(debt.id, monthStart.balances.get(debt.id)!);
+        interestPaid.set(debt.id, monthStart.interestPaid.get(debt.id)!);
+        payoffMonths.set(debt.id, monthStart.payoffMonths.get(debt.id)!);
+        monthlyDetails.get(debt.id)!.length = monthStart.details.get(debt.id)!;
+      }
+      locBalance = monthStart.locBalance; locCashBalance = monthStart.locCashBalance; locInterestPaid = monthStart.locInterestPaid;
+      moneyLoopMonthlyData.length = monthStart.loopLength;
+      month--;
+      warnings.push({ type: 'loc-projection-overlimit', severity: 'critical', message: LOC_PROJECTION_OVER_LIMIT_WARNING });
+      break;
+    }
   }
 
+  const debtsPaidOff = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
+  const velocityLocRecovered = strategy !== 'velocity' || !loc || locBalance <= 0.01;
+  const isPayoffPossible = !projectedLocOverLimit && debtsPaidOff && velocityLocRecovered;
   // Compile results
   const debtResults: DebtPayoffResult[] = safeDebts.map(d => {
     const baseline = baselineResults.find(b => b.id === d.id)!;
@@ -780,32 +816,30 @@ export function simulateMultiDebt(
       baselinePayoffMonths: baseline.payoffMonths,
       totalInterest: totalInt,
       baselineInterest: baseline.totalInterest,
-      interestSaved: Math.max(0, baseline.totalInterest - totalInt),
+      interestSaved: isPayoffPossible ? Math.max(0, baseline.totalInterest - totalInt) : 0,
       monthlyData: monthlyDetails.get(d.id) ?? [],
     };
   });
 
   const debtInterest = debtResults.reduce((s, d) => s + d.totalInterest, 0);
   const totalInterest = debtInterest + (strategy === 'velocity' ? locInterestPaid : 0);
-  const debtsPaidOff = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
-  const velocityLocRecovered = strategy !== 'velocity' || !loc || locBalance <= 0.01;
-  const isPayoffPossible = debtsPaidOff && velocityLocRecovered;
-  const freedomDate = new Date();
-  freedomDate.setMonth(freedomDate.getMonth() + month);
+  const freedomDate = isPayoffPossible ? new Date() : null;
+  freedomDate?.setMonth(freedomDate.getMonth() + month);
 
   return {
     strategy,
     debts: debtResults,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
+    failureReason: isPayoffPossible ? undefined : projectedLocOverLimit ? 'loc-projection-overlimit' : 'payoff-horizon-exceeded',
+    ...(locLimitBreach ? { locLimitBreach } : {}),
     totalInterestPaid: totalInterest,
     locInterestPaid: strategy === 'velocity' ? locInterestPaid : 0,
     moneyLoopMonthlyData: strategy === 'velocity' ? moneyLoopMonthlyData : [],
     baselineTotalInterest: baselineTotal,
-    totalInterestSaved: Math.max(0, baselineTotal - totalInterest),
+    totalInterestSaved: isPayoffPossible ? Math.max(0, baselineTotal - totalInterest) : 0,
     totalMonths: month,
     baselineTotalMonths: baselineMaxMonths,
-    monthsSaved: Math.max(0, baselineMaxMonths - month),
+    monthsSaved: isPayoffPossible ? Math.max(0, baselineMaxMonths - month) : 0,
     freedomDate,
     warnings,
   };
@@ -864,6 +898,9 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
     safeInputs.monthlyExpenses,
     safeInputs.loc,
   );
+  if (velocity.failureReason === 'loc-projection-overlimit') {
+    warnings.push({ type: 'loc-projection-overlimit', severity: 'critical', message: LOC_PROJECTION_OVER_LIMIT_WARNING });
+  }
 
   return {
     baseline,

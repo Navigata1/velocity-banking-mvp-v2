@@ -112,9 +112,40 @@ async function storageFailures(page,origin){
   await page.addInitScript(()=>Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('Synthetic storage unavailable','SecurityError');}}));await page.reload({waitUntil:'networkidle'});await page.getByTestId('portfolio-simulator-storage-error').waitFor();assert.match(await page.getByTestId('portfolio-simulator-storage-error').innerText(),/storage is unavailable/);assert.equal(await page.getByTestId('portfolio-simulator').count(),0);
   return {failedWritePaused:true,reloadRestoredPhysicalData:true,malformedPaused:true,deniedPaused:true,noDemoFallback:true};
 }
+const capacityWarning='The modeled LOC balance exceeds the entered limit. Review cash flow, planned draws and lender terms before relying on a payoff date.';
+async function projectedCapacity(page,origin){
+  const book=fixture();book.monthlyIncome=2000;book.monthlyExpenses=500;book.chunkAmount=0;book.loc={limit:100000,balance:99990,apr:.12};book.debts[0].balance=10000;book.debts[0].minPaymentRule.amount=1000;
+  await importBook(page,origin,book);await plan(page,'velocity','Review inputs');
+  assert.ok((await page.getByTestId('simulator-plan-velocity').innerText()).includes(capacityWarning));
+  const month=page.getByLabel('Comparison month',{exact:true});await month.fill('1');await month.press('Tab');assert.equal(await page.getByTestId('common-month-net-velocity').innerText(),'Not available');
+  const proof=await readable(page);await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();
+  async function rejected(){assert.match(await page.getByTestId('portfolio-payoff-summary').innerText(),/Review inputs/);const path=await page.getByTestId('portfolio-payoff-path-visual').innerText();assert.match(path,/Review inputs/);assert.match(path,/Timeline unavailable/);assert.doesNotMatch(path,/100%|Projected path/);assert.equal(await page.getByTestId('portfolio-payoff-path-node').count(),1);assert.equal(await page.getByTestId('portfolio-payoff-a').count(),0);assert.match(await page.getByTestId('portfolio-cash-at-payoff').innerText(),/Not projected/);}
+  await rejected();await page.getByRole('link',{name:'Open dashboard',exact:true}).click();await page.getByTestId('shared-portfolio-dashboard').waitFor();
+  assert.equal(await page.getByTestId('shared-value-eta').innerText(),'Review inputs');assert.equal(await page.getByTestId('shared-value-next-move').innerText(),'Review LOC capacity');
+  await page.getByRole('link',{name:'Edit portfolio',exact:true}).click();await edit(page,'Portfolio line of credit APR','0');book.loc.apr=0;
+  assert.equal(await page.getByTestId('portfolio-payoff-a').count(),1,'zero-APR high utilization remains an accepted positive control');await history(page,'Updated','Projection restored');
+  await edit(page,'Portfolio line of credit APR','12');book.loc.apr=.12;await rejected();await history(page,'Updated','Needs review');
+  assert.deepEqual(JSON.parse(await stored(page)).data,book);await page.reload({waitUntil:'networkidle'});await rejected();assert.deepEqual(JSON.parse(await stored(page)).data,book);await unchangedLegacy(page);
+  await page.getByRole('link',{name:'Compare strategies',exact:true}).click();await page.getByTestId('portfolio-simulator').waitFor();await plan(page,'velocity','Review inputs');
+  return {laterCapacityRejected:true,invalidMonthNotComparable:true,noPayoffOrderOrCash:true,capacityNextMove:true,healthyRestoresAndAdverseWithdraws:true,reloadPreservesInputs:true,legacyBytesPreserved:true,geometry:proof};
+}
+async function legacyCapacity(page,origin){
+  const canonical=encode(fixture());await page.goto(origin+'/simulator',{waitUntil:'networkidle'});await page.getByRole('heading',{name:'What-If Simulator',exact:true}).waitFor();
+  for(const [label,value]of [['Simulator monthly income','2000'],['Simulator monthly expenses','500'],['Car balance','10000'],['Car APR','0'],['Car monthly payment','1000'],['Simulator line of credit limit','100000'],['Simulator line of credit balance','99990'],['Simulator line of credit APR','12'],['Simulator extra payment chunk','0']])await edit(page,label,value);
+  const card=page.getByTestId('strategy-projection-velocity');assert.match(await card.innerText(),/Review inputs/);assert.match(await card.innerText(),/Projected LOC limit exceeded/);assert.match(await card.innerText(),/Not projected/);assert.doesNotMatch(await card.innerText(),/127 mo|Fastest|months faster/);
+  await page.getByTestId('simulator-strategy-comparison').scrollIntoViewIfNeeded();
+  const bounds=await card.evaluate(element=>{const b=element.getBoundingClientRect(),s=[...element.querySelectorAll('p,span')].map(node=>{const box=node.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(node);return{text:node.textContent,contained:[...range.getClientRects()].every(r=>r.left>=b.left-1&&r.right<=b.right+1&&r.top>=b.top-1&&r.bottom<=b.bottom+1),fits:node.scrollWidth<=node.clientWidth+1,font:parseFloat(getComputedStyle(node).fontSize),box:{width:box.width,height:box.height}};});return{overflow:document.documentElement.scrollWidth>innerWidth+1,text:s};});
+  assert.equal(bounds.overflow,false);assert.ok(bounds.text.every(t=>t.contained&&t.fits&&t.font>=12),'legacy capacity label must fit: '+JSON.stringify(bounds));
+  await edit(page,'Simulator line of credit APR','0');assert.doesNotMatch(await card.innerText(),/Review inputs|Projected LOC limit exceeded/);assert.match(await card.innerText(),/\d+ mo/);
+  await edit(page,'Simulator line of credit APR','12');assert.match(await card.innerText(),/Projected LOC limit exceeded/);await page.reload({waitUntil:'networkidle'});assert.match(await card.innerText(),/Projected LOC limit exceeded/);
+  const saved=JSON.parse(await page.evaluate(k=>localStorage.getItem(k),legacyKey)).state;assert.equal(saved.monthlyIncome,2000);assert.equal(saved.monthlyExpenses,500);assert.deepEqual(saved.loc,{limit:100000,balance:99990,interestRate:.12});assert.equal(saved.chunkAmount,0);assert.equal(saved.debts.car.balance,10000);assert.equal(saved.debts.car.minimumPayment,1000);assert.equal(saved.debts.car.interestRate,0);
+  assert.equal(await stored(page),canonical);assert.equal(await page.evaluate(k=>localStorage.getItem(k),oldKey),oldPortfolio);
+  await page.goto(origin+'/',{waitUntil:'networkidle'});const nextMove=page.locator('[data-testid="dashboard-mobile-vital-next-move"]:visible,[data-testid="dashboard-vital-next-move"]:visible');await nextMove.getByText('Review LOC capacity',{exact:true}).waitFor();assert.ok((await page.locator('main').innerText()).includes(capacityWarning));assert.equal(await stored(page),canonical);assert.equal(await page.evaluate(k=>localStorage.getItem(k),oldKey),oldPortfolio);
+  return{legacyCapacityLabel:true,noFalsePayoffOrSavings:true,healthyRestoresAndAdverseWithdraws:true,reloadPreservesInputs:true,dashboardCapacityNextMove:true,canonicalAndOlderBytesPreserved:true,geometry:bounds};
+}
 async function runPortfolioSimulator({browser,origin,output=path.join(root,'test-results/portfolio-simulator')}){
   fs.mkdirSync(output,{recursive:true});const receipts=[],resources={contextsOpened:0,contextsClosed:0},runId=randomUUID(),startedAt=new Date().toISOString();
-  const workflows={'shared-edits':sharedEdits,'source-isolation':sourceIsolation,'adverse-policies':adverse,'residuals':residuals,'precision':precision,'storage-failures':storageFailures};
+  const workflows={'shared-edits':sharedEdits,'source-isolation':sourceIsolation,'adverse-policies':adverse,'residuals':residuals,'precision':precision,'storage-failures':storageFailures,'projected-capacity':projectedCapacity,'legacy-capacity':legacyCapacity};
   for(const width of [280,375,1440])for(const [name,workflow]of Object.entries(workflows)){
     const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});resources.contextsOpened++;
     await context.addInitScript(({key,legacyKey,oldKey,document,legacy,oldPortfolio})=>{if(localStorage.getItem('portfolio-simulator-seeded'))return;localStorage.setItem(key,document);localStorage.setItem(legacyKey,legacy);localStorage.setItem(oldKey,oldPortfolio);localStorage.setItem('portfolio-simulator-seeded','yes');},{key,legacyKey,oldKey,document:encode(fixture()),legacy,oldPortfolio});
@@ -125,10 +156,10 @@ async function runPortfolioSimulator({browser,origin,output=path.join(root,'test
   }
   const screenshots=receipts.map(r=>`${r.name}-${r.width}${r.passed?'':'-failure'}.png`).filter(file=>fs.existsSync(path.join(output,file)));
   const evidence=screenshots.map(file=>{const bytes=fs.readFileSync(path.join(output,file));return{file,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};});
-  fs.writeFileSync(path.join(output,'verification.json'),JSON.stringify({runId,startedAt,completedAt:new Date().toISOString(),origin,scope:'Six workflows at three widths; financial/scenario text excludes existing asset attribution; synthetic records only',receipts,resources,screenshots:evidence},null,2)+'\n');
+  fs.writeFileSync(path.join(output,'verification.json'),JSON.stringify({runId,startedAt,completedAt:new Date().toISOString(),origin,scope:'Eight workflows at three widths; financial/scenario text excludes existing asset attribution; synthetic records only',receipts,resources,screenshots:evidence},null,2)+'\n');
   // Retain the existing CI upload identity and path while including the new proof.
   if(output===path.join(root,'test-results/portfolio-simulator')){const upload=path.join(root,'test-results/comparison/portfolio-simulator');fs.mkdirSync(upload,{recursive:true});for(const file of ['verification.json',...screenshots])fs.copyFileSync(path.join(output,file),path.join(upload,file));}
-  assert.equal(receipts.length,18);assert.ok(receipts.every(r=>r.passed),'Portfolio Simulator workflows must all pass');return receipts;
+  assert.equal(receipts.length,24);assert.ok(receipts.every(r=>r.passed),'Portfolio Simulator workflows must all pass');return receipts;
 }
 module.exports={runPortfolioSimulator};
 async function main(){let browser,server;try{server=process.env.PORTFOLIO_SIMULATOR_ORIGIN?null:await startBuiltServer(root);browser=await chromium.launch({executablePath:findBrowserExecutable(),headless:true,args:getHeadlessChromiumArgs()});await runPortfolioSimulator({browser,origin:process.env.PORTFOLIO_SIMULATOR_ORIGIN??server.origin});}finally{await browser?.close();await stopServer(server?.server);}}

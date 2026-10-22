@@ -1093,6 +1093,153 @@ test('Money Loop LOC event balances stay continuous after income and expense rou
   assert.equal(roundCents(month.locBalance), roundCents(expectedEndingBalance));
 });
 
+function projectedLocLimitFixture() {
+  const loc = { limit: 100000, balance: 99990, apr: 0.12 };
+  const loan = { balance: 10000, apr: 0, monthlyPayment: 1000, termMonths: 10 };
+  return {
+    loc, loan,
+    single: { principalBalance: 10000, debtApr: 0, debtPayment: 1000, loc, chunkAmount: 0,
+      cashFlowPaydown: 500, locDepositAmount: 2000, locExpenseAmount: 1500, maxMonths: 600 },
+    web: { monthlyIncome: 2000, monthlyExpenses: 500, carLoan: loan, loc, useVelocity: true, extraPayment: 0 },
+    book: { monthlyIncome: 2000, monthlyExpenses: 500, extraMonthlyPayment: 0, chunkAmount: 0, loc,
+      aprUnit: 'decimal', settings: { strategy: 'velocity', focusMode: 'single', splitRatioPrimary: 0.7 },
+      debts: [{ id: 'capacity', name: 'Capacity fixture', kind: 'amortized', category: 'auto', balance: 10000,
+        apr: 0, minPaymentRule: { type: 'fixed', amount: 1000 }, paymentSource: 'checking' }] },
+  };
+}
+
+test('shared and web Velocity stop a payoff projection when a later LOC balance exceeds capacity', () => {
+  const fixture = projectedLocLimitFixture();
+  for (const result of [sharedFinancialEngine.simulateMoneyLoopPayoff(fixture.single), calculations.simulateVelocity(fixture.web)]) {
+    assert.equal(result.isPayoffPossible, false, 'a later recovery cannot validate an earlier over-limit month');
+    assert.equal(result.failureReason, 'loc-projection-overlimit');
+    assert.equal(result.monthlyData.length, 0, 'the over-limit month is not an accepted projection row');
+    assert.equal(result.locLimitBreach.month, 1);
+    assert.ok(result.locLimitBreach.balance > fixture.loc.limit, 'retain the calculated breach without clamping it');
+    assert.equal(result.locLimitBreach.limit, fixture.loc.limit);
+  }
+  assert.ok(calculations.runSimulation(fixture.web).warnings.some(warning => warning.type === 'loc-projection-overlimit'));
+});
+
+test('canonical Portfolio stops an over-capacity Velocity path without mutating the book', () => {
+  const fixture = projectedLocLimitFixture(), before = JSON.stringify(fixture.book);
+  const result = portfolio.simulatePortfolio(fixture.book);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.monthResults.length, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.locLimitBreach.month, 1);
+  assert.ok(Math.abs(result.locLimitBreach.balance - 100464.1205479452) < 1e-8);
+  assert.equal(result.payoffOrder.length, 0, 'no fabricated later debt payoff order');
+  assert.equal(result.cashAtPayoff, 0);
+  assert.ok(result.warnings.some(warning => warning.includes('modeled LOC balance') && warning.includes('entered limit')));
+  assert.equal(JSON.stringify(fixture.book), before);
+});
+
+test('legacy multi-debt Velocity also stops at projected capacity and cannot claim saved time', () => {
+  const fixture = projectedLocLimitFixture();
+  const debt = { id: 'capacity', name: 'Capacity fixture', type: 'auto', ...fixture.loan };
+  const result = calculations.simulateMultiDebt([debt], 2000, 500, fixture.loc, 'velocity', 0);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.totalMonths, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.equal(result.locLimitBreach.month, 1);
+  assert.ok(result.locLimitBreach.balance > fixture.loc.limit);
+  assert.equal(result.debts[0].monthlyData.length, 0);
+  assert.equal(result.debts[0].interestSaved, 0);
+  assert.equal(result.monthsSaved, 0);
+  assert.equal(result.totalInterestSaved, 0);
+  assert.equal(result.freedomDate, null);
+});
+
+test('multi-debt capacity failure rolls back the entire unaccepted month, including earlier siblings', () => {
+  const fixture = projectedLocLimitFixture();
+  const other = { id: 'other', name: 'Earlier sibling', type: 'auto', balance: 50, apr: 0, monthlyPayment: 50, termMonths: 1 };
+  const focus = { id: 'focus', name: 'Higher rate focus', type: 'auto', balance: 10000, apr: 0.01, monthlyPayment: 1000, termMonths: 11 };
+  const result = calculations.simulateMultiDebt([other, focus], 2000, 500, fixture.loc, 'velocity', 0);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.totalMonths, 0);
+  for (const debt of result.debts) {
+    assert.equal(debt.monthlyData.length, 0, 'no sibling rows from a partly processed invalid month');
+    assert.equal(debt.payoffMonths, 0);
+    assert.equal(debt.totalInterest, 0);
+    assert.equal(debt.interestSaved, 0);
+  }
+});
+
+test('common-month comparison cannot accept the projected over-limit breach as a funded prefix', () => {
+  const fixture = projectedLocLimitFixture(), { settings, aprUnit, ...book } = fixture.book;
+  void aprUnit;
+  const api = loadTsFile(path.resolve(__dirname, '../../../packages/financial-engine/src/portfolio-common-month.ts'));
+  const prepared = api.preparePortfolioComparison({ ...book, ...settings });
+  const initial = prepared.atMonth(0).plans.find(plan => plan.strategy === 'velocity');
+  assert.equal(initial.snapshot.status, 'initial');
+  const first = prepared.atMonth(1).plans.find(plan => plan.strategy === 'velocity');
+  assert.equal(first.payoff.possible, false);
+  assert.equal(first.payoff.reason, 'loc-projection-overlimit');
+  assert.equal(first.snapshot.status, 'unavailable');
+  assert.equal(first.snapshot.coveredThroughMonth, 0);
+  assert.equal(first.snapshot.netModeledWealth, null);
+});
+
+test('projected capacity guard permits equality and genuinely funded high-utilization paths', () => {
+  const fixture = projectedLocLimitFixture();
+  const boundary = { ...fixture.single, loc: { limit: 10026.5, balance: 10000, apr: 0.73 }, maxMonths: 1 };
+  const exact = sharedFinancialEngine.simulateMoneyLoopPayoff(boundary);
+  assert.equal(exact.monthlyData[0].locBalance, boundary.loc.limit);
+  assert.equal(exact.failureReason, 'payoff-horizon-exceeded', 'equality is not an over-limit violation');
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...boundary, loc: { ...boundary.loc, limit: 10026.49 } }).failureReason, 'loc-projection-overlimit');
+  for (const loc of [{ ...fixture.loc, balance: 20000 }, { ...fixture.loc, apr: 0 }]) {
+    const single = sharedFinancialEngine.simulateMoneyLoopPayoff({ ...fixture.single, loc });
+    const book = portfolio.simulatePortfolio({ ...fixture.book, loc });
+    assert.equal(single.isPayoffPossible, true);
+    assert.equal(book.isPayoffPossible, true);
+    assert.ok(single.monthlyData.every(row => row.locBalance <= loc.limit));
+    assert.ok(book.monthResults.every(row => row.locBalance <= loc.limit));
+  }
+});
+
+test('web and native Simulator distinguish projected capacity failure and withhold payoff labels', () => {
+  const fixture = projectedLocLimitFixture();
+  const web = simulatorModel.buildSimulatorStrategyCards(calculations.compareSingleDebtStrategies(fixture.web)).find(card => card.name === 'Velocity');
+  const mobile = sharedFinancialEngine.buildMobileSimulatorSnapshot({ monthlyIncome: 2000, monthlyExpenses: 500,
+    activeDebtName: 'Capacity fixture', activeDebt: fixture.loan, loc: fixture.loc, chunkAmount: 0 });
+  const native = mobile.strategies.find(strategy => strategy.name === 'Velocity');
+  for (const card of [web, native]) {
+    assert.equal(card.isPayoffPossible, false);
+    assert.equal(card.failureReason, 'loc-projection-overlimit');
+    assert.equal(card.monthsLabel, 'Review inputs');
+    assert.equal(card.interestLabel, 'Not projected');
+    assert.equal(card.statusLabel, 'Projected LOC limit exceeded');
+  }
+  assert.equal(mobile.velocity.monthsSavedLabel, 'Review inputs');
+  assert.ok(mobile.guardrail.includes('modeled LOC balance'), 'projected capacity takes priority over an initial utilization warning');
+});
+
+test('Vault explains projected over-capacity separately from an initially over-limit balance', () => {
+  const vault = loadTsModule('src/app/vault-model.ts');
+  assert.equal(vault.formatVaultProjectionFailure('loc-projection-overlimit'), 'Projected LOC limit exceeded');
+  const warning = vault.buildVaultVelocitySetupWarning({ isPayoffPossible: false, failureReason: 'loc-projection-overlimit' });
+  assert.equal(warning.title, 'Projected LOC limit exceeded');
+  assert.ok(warning.body.includes('modeled LOC balance') && warning.body.includes('entered limit'));
+  assert.ok(!warning.body.includes('entered LOC balance is above'), 'do not claim the starting balance was over limit');
+});
+
+test('web Dashboard coaching prioritizes the actual projected capacity failure', () => {
+  const fixture = projectedLocLimitFixture(), simulation = calculations.runSimulation(fixture.web);
+  const projection = value => ({ months: value.payoffMonths, totalInterest: value.totalInterest,
+    isPayoffPossible: value.isPayoffPossible, failureReason: value.failureReason });
+  const debt = { name: 'Capacity fixture', balance: 10000, interestRate: 0, minimumPayment: 1000 };
+  const result = dashboardModel.buildDashboardModel({ monthlyIncome: 2000, monthlyExpenses: 500, chunkAmount: 0,
+    activeDebt: debt, allDebts: [debt], loc: { limit: 100000, balance: 99990, interestRate: 0.12 },
+    baseline: projection(simulation.baseline), velocity: { ...projection(simulation.velocity), savings: 0 } });
+  assert.equal(result.nextMove.title, 'Review LOC capacity');
+  assert.ok(result.warnings.some(warning => warning.kind === 'loc-projection-overlimit' && warning.title === 'Projected LOC limit exceeded'));
+  assert.ok(!result.warnings.some(warning => warning.kind === 'loc-overlimit'), 'current balance is still below the entered limit');
+});
+
 test('lender terms contract versions confidence and blocks projections with missing terms', () => {
   const missing = sharedFinancialEngine.buildLenderTermsContract({});
 

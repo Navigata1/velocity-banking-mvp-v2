@@ -1,4 +1,4 @@
-import { formatCurrency, formatCurrencyPrecise } from '../engine/calculations';
+import { formatCurrency, formatCurrencyPrecise, LOC_PROJECTION_OVER_LIMIT_LABEL, LOC_PROJECTION_OVER_LIMIT_WARNING } from '../engine/calculations';
 
 interface VaultVelocityProjection {
   months: number;
@@ -73,6 +73,7 @@ export function formatVaultProjectionFailure(reason?: string): string {
   if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return LOC_PROJECTION_OVER_LIMIT_LABEL;
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below payment';
   if (reason === 'payment-below-interest') return 'Payment below interest';
@@ -107,6 +108,10 @@ export function buildVaultVelocitySetupWarning(
       body: 'The entered LOC balance is above the limit. Bring it back within the entered terms before relying on Vault velocity projections.',
       severity: 'critical',
     };
+  }
+
+  if (velocity.failureReason === 'loc-projection-overlimit') {
+    return { title: LOC_PROJECTION_OVER_LIMIT_LABEL, body: LOC_PROJECTION_OVER_LIMIT_WARNING, severity: 'critical' };
   }
 
   if (velocity.failureReason === 'negative-cashflow' || velocity.failureReason === 'cashflow-below-minimums') {

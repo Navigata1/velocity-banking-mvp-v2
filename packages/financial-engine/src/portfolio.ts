@@ -13,6 +13,8 @@ import {
   type APRUnit,
   type MoneyLoopLOC,
   type MoneyLoopMonthlyResult,
+  type LOCProjectionLimitBreach,
+  LOC_PROJECTION_OVER_LIMIT_WARNING,
 } from './index';
 import { calculateDailyInterest, calculateMonthlyRate, formatCurrency } from './index';
 import { hasFiniteNonNegativeSum } from './numeric-range';
@@ -39,6 +41,7 @@ export type PortfolioFailureReason =
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'loc-projection-overlimit'
   | 'numeric-range-exceeded'
   | 'payoff-horizon-exceeded';
 
@@ -128,6 +131,7 @@ export interface PortfolioSimulationResult {
   totalInterest: number;
   isPayoffPossible: boolean;
   failureReason?: PortfolioFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
   payoffOrder: DebtPayoffEvent[];
   monthResults: MonthResult[];
   debtRationales: Record<string, DebtPriorityRationale>;
@@ -522,6 +526,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
   );
   let month = 0;
   let allocationFailure: PortfolioFailureReason | undefined;
+  let locLimitBreach: LOCProjectionLimitBreach | undefined;
   let acceptedInterest = 0;
   let acceptedLocInterest = 0;
 
@@ -742,6 +747,15 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
       month--;
       break;
     }
+    if (hasUsableVelocityLoc && sanitizedLoc && locBalance > sanitizedLoc.limit) {
+      allocationFailure = 'loc-projection-overlimit';
+      locLimitBreach = { month, balance: locBalance, limit: sanitizedLoc.limit };
+      moneyLoopMonthlyData.splice(loopStart);
+      payoffOrder.splice(payoffStart);
+      warnings.push(LOC_PROJECTION_OVER_LIMIT_WARNING);
+      month--;
+      break;
+    }
     acceptedInterest = cumulativeInterest;
     acceptedLocInterest = locInterestPaid;
     monthResults.push(completedMonth);
@@ -755,6 +769,7 @@ export function simulatePortfolio(inputs: PortfolioSimulationInputs): PortfolioS
     totalInterest,
     isPayoffPossible,
     failureReason: isPayoffPossible ? undefined : allocationFailure ?? 'payoff-horizon-exceeded',
+    ...(locLimitBreach ? { locLimitBreach } : {}),
     payoffOrder,
     monthResults,
     debtRationales,

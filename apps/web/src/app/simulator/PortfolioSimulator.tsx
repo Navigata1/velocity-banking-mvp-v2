@@ -4,6 +4,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { ArrowRight, RefreshCw } from 'lucide-react';
 import { formatCommonMonthAmount } from '@interestshield/financial-engine/portfolio-common-month';
+import { LOC_PROJECTION_OVER_LIMIT_WARNING } from '@interestshield/financial-engine';
 import AssetHero from '@/components/hero/AssetHero';
 import PageTransition from '@/components/PageTransition';
 import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
@@ -98,7 +99,8 @@ export default function PortfolioSimulator() {
             <div className="min-w-0"><dt className={`min-h-8 text-xs leading-4 ${classes.textSecondary}`}>Interest at own payoff</dt><dd data-testid={`simulator-interest-${plan.strategy}`} className="text-sm font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(plan.totalInterest)}</dd></div>
             <div className="min-w-0"><dt className={`min-h-8 text-xs leading-4 ${classes.textSecondary}`}>Cash at own payoff</dt><dd data-testid={`simulator-cash-${plan.strategy}`} className="text-sm font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(plan.endingCash)}</dd></div>
           </dl>
-          {!available ? <p className={`text-xs leading-5 ${classes.textSecondary}`}>{plan.state === 'residual' ? 'An unpaid balance remains or was removed by model tolerance. Verify the lender balance.' : 'A complete funded payoff is not confirmed for this policy.'}</p> : null}
+          {!available ? <p className={`text-xs leading-5 ${classes.textSecondary}`}>{plan.reason === 'loc-projection-overlimit' ? LOC_PROJECTION_OVER_LIMIT_WARNING
+            : plan.state === 'residual' ? 'An unpaid balance remains or was removed by model tolerance. Verify the lender balance.' : 'A complete funded payoff is not confirmed for this policy.'}</p> : null}
         </article>;
       })}</div>
     </section>

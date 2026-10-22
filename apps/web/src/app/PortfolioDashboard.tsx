@@ -54,7 +54,8 @@ export default function PortfolioDashboard() {
   const state = payoff?.state === 'residual' ? 'tolerance' : payoff?.state ?? 'review';
   const review = state === 'review' || state === 'tolerance';
   const utilizationWarning = store.loc.balance > store.loc.limit * 0.8;
-  const nextMove = overview.cashFlow <= 0 ? 'Review cash flow' : utilizationWarning ? 'Review LOC utilization'
+  const nextMove = overview.cashFlow <= 0 ? 'Review cash flow' : payoff?.reason === 'loc-projection-overlimit' ? 'Review LOC capacity'
+    : utilizationWarning ? 'Review LOC utilization'
     : review ? 'Review payoff inputs' : state === 'cleared' ? 'Plan your next goal'
       : overview.nextTargetLabels.length ? overview.nextTargetLabels.join(' + ') : 'Review target allocation';
   const eta = state === 'cleared' ? 'No debt remaining' : state === 'tolerance' ? 'Below model tolerance'

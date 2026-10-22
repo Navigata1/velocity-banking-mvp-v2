@@ -65,7 +65,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {strategies.map((strategy, i) => {
           const colors = colorMap[strategy.color] || colorMap.red;
           const card = comparison.cards[i];
@@ -79,7 +79,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
               key={strategy.name}
               data-testid={`strategy-projection-${strategy.name.toLowerCase()}`}
               className={`
-                relative overflow-hidden rounded-xl border transition-all duration-500
+                relative min-w-0 overflow-hidden rounded-xl border transition-all duration-500
                 ${colors.bg} ${colors.border}
                 ${isThisWinner ? colors.glow + ' ring-1 ring-emerald-500/40' : ''}
               `}
@@ -93,7 +93,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
               </div>
 
               {/* Content overlay */}
-              <div className="relative z-10 p-4 min-h-[140px] flex flex-col justify-between">
+              <div className="relative z-10 p-4 min-h-[140px] flex flex-col justify-between [overflow-wrap:anywhere]">
                 {/* Header */}
                 <div>
                   <div className="flex items-center gap-1.5 mb-1">

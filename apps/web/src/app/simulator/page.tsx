@@ -102,7 +102,7 @@ function TargetSimulator() {
         <Link href="/simulator?scenario=portfolio" className={`mt-2 inline-flex min-h-11 items-center text-sm underline underline-offset-4 ${classes.text}`}>Portfolio scenario</Link>
       </ScrollReveal>
 
-      <div className="relative z-50">
+      <div className="relative z-50 max-[400px]:[&_[role=tablist]]:flex-wrap max-[400px]:[&_[role=tablist]]:justify-start">
         <DomainTabs 
           activeTab={store.activeDomain} 
           onTabChange={(tab) => store.setActiveDomain(tab as Domain)} 
