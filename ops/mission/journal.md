@@ -776,3 +776,36 @@ events/automatic READY/hosted162/20assets/manual/receipt. GoalACTIVE,draftPR256 
 full lender/calendar/intraday,photoreal/backend/security/device/release gates remain
 open. No merge,production promotion,paidGPU,cloud/data/access/DNS/settings mutation
 or Desktop HTML republishing.
+
+## 2026-10-22 - Bounded Money Loop selection settlement (pre-push snapshot)
+
+Tier2 implement/verify split. Source f374a1f/tests ee4a720/local evidence ec2ee79.
+Actual old-build IAB premature settlement and desktop/mobile rapid-return REDs
+retained; four settled/no-op controls pass. Ephemeral ID+revision selections now
+reject old completions, retain batched returns and current-item no-ops, restart
+the correct DOM token and avoid false first-frame settlement. Seven CPU groups
+pass. An introduced empty-scene exception and test-helper lint naming error were
+caught and corrected, with failed runs preserved. Independent Godel CPU review
+found no actionable issue in the gated path; unreachable empty-to-full recovery
+is documented, not claimed fixed. No independent browser/GPU/art review.
+
+Complete local attempt2:29 serialized gates,360regressions,7selection groups,
+ref23247/21model/6wiring,original162workflow-layouts+6newselection workflows,
+original18normalThreeactions/reduced-motion/negative controls,media222/27fresh
+Remotion stills,native82workflow+1navigation/fullcontracts/fresh Android+iOS
+Hermes,Worker/report.96 immutable local files indexed. Parent inspected genuine
+desktop/mobile PNGs. Motion450ms/DOM650ms and700ms/300ms pixel bounds unchanged;
+no financial,storage,asset,dependency,lock or CI edits. Existing videos verified,
+not freshly exported. User previews53143/53144 retained; rebuilt53145 is available.
+
+Prior dfdfe249 is remotely verified: push39750776370 attempt2/PR39750785887
+attempt1,known automatic READY,hosted162/20served hashes/manual6/receipt6337764821.
+Prior116shipping/138local/92/202/art12/69/29/68 pins remain unchanged. The earlier
+700.91ms screenshot failure is retained and remains unresolved; selection identity
+is not claimed as its cause or reliability fix. State36 intentionally precedes
+the new push; final CI/preview/hosted168/manual/receipt proof belongs in the sealed
+checkpoint, then the NEXT substantive change. No status-only push loop.
+GoalACTIVE,draftPR256 open,productionReady=false. Photoreal,lender/calendar,
+backend/security,physical native and final-release gates remain open. No merge,
+manualdeployment,promotion,paidGPU,cloud/data/access/DNS/settings mutation or
+Desktop HTML republishing.

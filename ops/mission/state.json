@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Pre-push local checkpoint: projected LOC-limit failures withhold payoff claims. Prior history checkpoint is remotely verified. Photoreal, lender, backend and final-release gates remain open.",
+    "tagline": "Pre-push local checkpoint: rapid Money Loop returns no longer borrow old completion. Prior LOC-capacity checkpoint is remotely verified. Photoreal, lender, backend and final-release gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T08:49:31.618Z",
-    "sessionCount": 35
+    "updated": "2026-10-22T10:39:45Z",
+    "sessionCount": 36
   },
   "policies": {
     "merge": "review",
@@ -76,6 +76,18 @@
             "mergedAt": null
           },
           "notes": "Verified8561784: BOTH full attempt1 events39635731600/39635740696 passed all three jobs/every step. Receipt6321350077. Primary489/510s, heroes306/529s, SQL152/168s versus prior combined1198/799s; unchanged1200s caps, not a future-speed guarantee.14 CI contracts and4 static report contracts pass. Requirements come from committed HEAD; no app, asset, calculation or data changes in that maintenance slice. Hosted120/IAB remains explicitly inherited fromcc09e2e. Not production or final report-viewport approval."
+        },
+        {
+          "id": "R0-T5",
+          "title": "Keep rapid Money Loop return selections in flight",
+          "status": "done",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Locally verified bounded correction: f374a1f source/ee4a720 tests. Actual old-build desktop/mobile rapid-return REDs and four positive controls retained. Seven CPU groups and six actual browser workflows pass; revision-aware completion, functional owner updates and no-op token identity. Financial data/math/assets/motion unchanged. Current new-head remote verification remains separately pending R0-G3; not production or photoreal approval."
         }
       ],
       "gates": [
@@ -84,27 +96,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/projected-loc-limit-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T08:49:31.618Z",
-          "notes": "Fresh32 local stages:29 serialized standing/bundle gates and3 runtime/critical audits.360 regressions(9new),39 independentCPU probes,21model/6wiring/ref23247,media222/27fresh stills,native82workflow+1navigation/fullcontracts/fresh Android+iOS Hermes,Worker/report pass. Six monthly numerical functions unchanged; feasibility guard/accepted prefixes/presenters intentionally change. Remotion digest regenerated with identical illustration values. No persisted input/schema/asset/material/dependency/lock/workflow changes."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Fresh29 serialized local gates on pinned candidate source:360regressions,7selection CPU groups,ref23247/21model/6wiring,media222/27fresh Remotion stills,native82workflow+1navigation/fullcontracts/fresh Android+iOS Hermes,Worker/report. Test-local lint naming error retained then corrected before complete attempt2. No financial, storage, asset, dependency, lock or CI changes."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/projected-loc-limit-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T08:49:31.618Z",
-          "notes": "Fresh162 local workflow-layout executions(original138+24matrix),280/375/1440. Original18matrix cases preserved;6new projected-capacity/legacy cases reject false127mo payoff,restore a genuine valid plan,withdraw renewed failure,retain saved scenario isolation/reload and readable narrow labels. Earlier browserRED6/24 and setup/test-assumption failures retained. Local proof is not new hosted or device approval."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Original162 workflow-layout executions plus6 new desktop/full and mobile/efficient selection workflows pass locally. Original18normal Three actions/reduced-motion/negative controls and unchanged450/650ms motion,700ms decoded capture/300ms stability retained. All three saved source byte strings and financial vitals preserved. Parent inspected actual desktop/mobile PNGs.96immutable local evidence files indexed; not physical-device or new hosted proof."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/projected-loc-limit-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T08:49:31.618Z",
-          "notes": "Prioraf9eb916 VERIFIED complete push39737773728/PR39737780925 attempt1,all3jobs/59declaredsteps+cleanup/6actual source guards,automatic known READY preview,hosted156/711legacy/20served hashes/manual9 and receipt6335271348. Immutable92shipping/202local pins retained. New head still needs both complete CI events, unchanged20-minute caps,READY/hosted162/20/manual/receipt. No merge or promotion."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Prior dfdfe249 VERIFIED both complete events push39750776370 attempt2/PR39750785887 attempt1,all3jobs/59declaredsteps+cleanup/6actualsources,known automatic READY,hosted162/20assets/manual6/receipt6337764821. Prior116shipping/138local immutable. Push1 screenshot deadline failure retained; identical-head whole-workflow rerun passed, but cause/reliability remains unresolved. New selection head still needs both full CI events,READY/hosted168/20assets/manual/receipt; no merge or promotion."
         }
       ]
     },
@@ -158,27 +170,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Ten GLBs/posters/three manifests and all budgets/source pins unchanged. Shared load-only presentation policy halves two Carmine normal scales and changes Card brushed-silver anisotropy0.65->0.30 only. All maps/tiling/signs/zeros/geometry/camera/lights preserved; Car six exact normal groups and lossyTireside remain as delivered."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Fresh222 media contracts pass with all ten GLB/poster/manifest payloads, source lineage and budgets unchanged. This selection fix changes no hero materials or geometry. Prior accepted material refinements retained; no all-ten photoreal approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Fresh all20desktop/phone models and Replay proofs retain canvas/no-fetch/poster-hidden/reset/motion. New unit and actual-component Card/stale-load/cleanup controls plus shared-media wiring controls. Independent review finds no blocking runtime defect. Scene clones sharing materials remain outside fresh-load ownership contract. Full photoreal/device approval OPEN."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Fresh all20 desktop/phone actual-GLB and Replay checks plus fallbacks pass in full local29. Canvas, no-fetch replay, poster-hidden state, motion and containment retained. Six new Money Loop selection workflows concern a separate five-item scene. Functional rendering proof is not independent photoreal or physical-device approval."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Ten newly rendered actual1080p9s HyperFrames exports pass finite360/rest, framing and pixel proofs. Four matched seven-angle A/B studies prefer smoother Car grain and clearer Card brushed shading. Not all-ten final photoreal approval; broad Car hotspots/Card dark reverse and inherited hardwareX4122/software ReadPixels diagnostics stay OPEN, not suppressed."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Existing ten finite360/rest HyperFrames videos re-verified without fresh turntable exports.27fresh Remotion scenario stills pass. Original studio and all assets remain unchanged; rejected private photographic experiments remain unshipped. Car hotspots/grain, Card dark reverse and hardware/lifecycle/all-ten art approval stay open."
         }
       ]
     },
@@ -396,14 +408,14 @@
         {
           "id": "R3-T3",
           "title": "Reject payoff forecasts that exceed entered month-end LOC capacity",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Source f4e7431632206fa48709b35a210936b316a965d5 locally verified. Shared/canonical/legacyMulti stop before the first over-limit closing month; all sibling rows are atomic and a finite attempted-balance diagnostic is separate. No clamping, fictional cash or failed-plan payoff date/savings. Shared native and web presenters distinguish projected vs initial failure. Browser restoration/withdrawal/reload/isolation pass. Conservative planning boundary only, not intraday/lender agreement enforcement. New exact-head shipping pending."
+          "notes": "Bounded month-end capacity guard verified at dfdfe249: receipt6337764821, both complete CI events push2/PR1,hosted162/20assets/manual6. Original32local/360regressions/39independentCPU/23247reference proof retained. A forecast stops before an over-limit closing month, excludes attempted sibling rows, retains diagnostic attempted balance and withholds payoff claims. No clamping/invented cash/schema migration. This UI-only selection correction leaves all financial source unchanged. Full lender/intraday/calendar/fees/minimums compliance remains pending R3-T1/T2/G1."
         }
       ],
       "gates": [
@@ -607,9 +619,9 @@
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:35:00Z",
-          "notes": "Fresh root and full persistence/input/owner/revision/outbox/recovery contracts pass, preserving19 original/15APR and adding16 coaching cases. Actual exported-browser original76+6coaching pass, with1 separate focused-navigation assertion. No fixture shrinkage. New exact-head CI required; not signed-in physical-device or cloud approval."
+          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T10:39:45Z",
+          "notes": "Fresh native82workflow+1navigation checks, full contracts, web export and Android/iOS Hermes export checks pass in local29. Native source/dependencies unchanged in this web-only correction. No physical or signed-in device or all-toolchain security clearance."
         },
         {
           "id": "R5-G3",
@@ -666,6 +678,13 @@
       "baseline": "0",
       "current": "24",
       "target": "24",
+      "direction": "up"
+    },
+    {
+      "label": "Money Loop selection workflows passing locally",
+      "baseline": "0",
+      "current": "6",
+      "target": "6",
       "direction": "up"
     }
   ],
@@ -1082,14 +1101,21 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R3",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Prevent stale completion on rapid Money Loop returns (draft)",
+      "phase": "R0"
     }
   ],
   "resume": {
     "activePhase": "R3",
     "nextActions": [
-      "Current projected-capacity source f4e7431632206fa48709b35a210936b316a965d5 passes32 local gates/360regressions/39independentCPU/ref23247/original138+24matrix=162 workflows/media222+27stills/native82/fullcontracts/Android+iOS Hermes/Worker/report. Read docs/projected-loc-capacity-contract-2026-10-22.md and .superpowers/sdd/2026-10-22-projected-loc-limit/progress.md. Finish both complete exact-head CI events/6literal sources/original20minute caps/known automatic READY/hosted162/20assets/manual/receipt on draftPR256. No merge/manualdeployment/promotion.",
-      "Prioraf9eb916 VERIFIED both full CI events39737773728/39737780925 attempt1,all3jobs/59declaredsteps+cleanup/6actualsources,automatic READY preview,hosted156/711legacy/20assets/manual9/receipt6335271348. Prior92shipping/202local and older80/148 proof immutable. Fold into this substantive capacity correction; no status-only push loop.",
-      "IndependentRawls39CPU probes/0findings compare againstaf9: later-month accepted-prefix/interest conservation,sibling ordering,LOC-only recovery,equality/onecent and original guards/common coverage/web/native nofalsepayoff. Parent reran39/0. This is CPU review before narrow presentation changes,not independent browser/GPU/art review. All originalREDs/failures retained; sourcepins are candidate hashes,not a false committed-head execution claim.",
+      "State36 is an intentionally PRE-PUSH local snapshot of f374a1f/ee4a720/ec2ee79 selection correction:29local/360regressions/7selectionCPU/ref23247/original162+6selection workflows/media222+27stills/native82+1/fullcontracts/Android+iOS Hermes/Worker/report. Read docs/money-loop-selection-contract-2026-10-22.md and .superpowers/sdd/2026-10-22-selection-settlement/progress.md. FIRST inspect current-checkpoint.json/receipt in that folder if present: later sealed remote proof supersedes the pending snapshot. Do not rerun sealed mutating helpers.",
+      "If not yet sealed, finish both complete exact-head CI events/all3jobs/59declaredsteps+cleanup/6literal source guards/unchanged20minute caps, known automatic READY,hosted14suites/168workflows/20assets/actual IAB and immutable receipt on draftPR256. No merge/manualdeployment/promotion. Fold final receipt into the NEXT substantive improvement, not a metadata-only push loop.",
+      "Prior dfdfe249 VERIFIED: push39750776370 attempt2/PR39750785887 attempt1,known READY/hosted162/20assets/manual6/receipt6337764821. Prior116shipping/138local and92/202/art12/69/29/68 pins intact. Push1 existing screenshot deadline failed at700.91ms; identical-head complete rerun passed once. Selection identity correction is NOT claimed as that failure cause or reliability fix. Godel CPU review:7groups pass/no actionable finding in gated path; empty-to-full scene edge documented, no independent GPU/art approval.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
