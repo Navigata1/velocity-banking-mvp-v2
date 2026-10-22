@@ -12,6 +12,7 @@ import AddDebtDialog from './AddDebtDialog';
 import PortfolioDebtsSection from './PortfolioDebtsSection';
 import PortfolioPayoffOrder from './PortfolioPayoffOrder';
 import PortfolioPlanSection from './PortfolioPlanSection';
+import PortfolioLenderTerms from './PortfolioLenderTerms';
 
 export default function PortfolioPage() {
   const mounted = useIsClient();
@@ -71,6 +72,7 @@ export default function PortfolioPage() {
           </p>
         </ScrollReveal>
 
+        <PortfolioLenderTerms classes={classes} />
         <PortfolioPlanSection classes={classes} onAddDebt={() => setShowAdd(true)} />
         <PortfolioDebtsSection classes={classes} onAddDebt={() => setShowAdd(true)} />
         <PortfolioPayoffOrder classes={classes} />

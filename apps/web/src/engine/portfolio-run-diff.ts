@@ -91,6 +91,8 @@ function focusLabel(focusMode: FocusMode): string {
 }
 
 function failureReasonLabel(reason?: PortfolioFailureReason): string {
+  if (reason === 'lender-terms-incomplete') return 'lender terms incomplete';
+  if (reason === 'lender-terms-unmodeled') return 'lender terms not modeled';
   if (reason === 'negative-cashflow') return 'negative cash flow';
   if (reason === 'cashflow-below-minimums') return 'cash flow below minimums';
   if (reason === 'payment-below-interest') return 'payment below interest';

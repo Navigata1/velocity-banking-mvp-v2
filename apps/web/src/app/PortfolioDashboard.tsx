@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, RefreshCw } from 'lucide-react';
 import { buildPortfolioOverview } from '@interestshield/financial-engine/portfolio-overview';
 import AssetHero from '@/components/hero/AssetHero';
+import ForecastBasisStatus from '@/components/ForecastBasisStatus';
 import PageTransition from '@/components/PageTransition';
 import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import { portfolioDebtHeroes } from '@/data/portfolio-hero';
@@ -81,6 +82,7 @@ export default function PortfolioDashboard() {
         <Link href="/" className={`inline-flex min-h-11 items-center ${classes.textSecondary}`}>Single-target demo</Link>
       </nav>
     </header>
+    <ForecastBasisStatus terms={store.loc.lenderTerms} />
     <section aria-label="Portfolio dashboard vitals" className="grid grid-cols-2 gap-2 lg:grid-cols-4">
       {vitals.map(vital => <article key={vital.id} data-testid={`shared-vital-${vital.id}`}
         className={`min-h-32 min-w-0 rounded-lg border p-3 ${classes.border} ${classes.bgSecondary}`}>

@@ -1,5 +1,9 @@
 import {
   calculateADBInterest,
+  assessForecastBasis,
+  decodeLenderTerms,
+  type ForecastBasis,
+  type LenderForecastFailureReason,
   calculateAmortizationPayment,
   calculateCashFlow,
   calculateDailyInterest,
@@ -115,6 +119,7 @@ export interface MonthlyResult {
 }
 
 export type PayoffFailureReason =
+  | LenderForecastFailureReason
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
@@ -126,6 +131,7 @@ export type PayoffFailureReason =
   | 'payoff-horizon-exceeded';
 
 export interface PayoffSimulation {
+  forecastBasis?: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
   monthlyData: MonthlyResult[];
@@ -153,12 +159,14 @@ export interface Warning {
     | 'loc-overutilization'
     | 'negative-amortization'
     | 'payment-too-low'
+    | 'lender-terms'
     | 'no-loc';
   severity: 'info' | 'warning' | 'critical';
   message: string;
 }
 
 export interface MultiDebtResult {
+  forecastBasis?: ForecastBasis;
   strategy: 'velocity' | 'snowball' | 'avalanche';
   debts: DebtPayoffResult[];
   isPayoffPossible: boolean;
@@ -217,6 +225,7 @@ function sanitizeLoc(loc: LOCDetails | undefined): LOCDetails | undefined {
     limit: safeNonNegative(loc.limit),
     apr: safeNonNegative(loc.apr),
     balance: safeNonNegative(loc.balance),
+    ...(loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(loc.lenderTerms) }),
   };
 }
 
@@ -262,6 +271,9 @@ export function generateWarnings(
   const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
   const safeLoc = sanitizeLoc(loc);
   const safeDebts = debts?.map(sanitizeDebtItem);
+  const forecastBasis = assessForecastBasis(safeLoc?.lenderTerms);
+  if (!forecastBasis.canProject) warnings.push({ type: 'lender-terms', severity: 'warning',
+    message: `${forecastBasis.label}. Supplied lender terms are retained but are not enforced by the monthly model.` });
   const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
 
   if (cashFlow <= 0) {
@@ -353,6 +365,9 @@ export function generateWarnings(
 // ─── Baseline Simulation (Standard Amortization) ─────────────────────
 
 export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
   const projection = simulateAmortizedPayoff({
@@ -364,6 +379,7 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
 
   return {
     payoffMonths: projection.payoffMonths,
+    forecastBasis,
     totalInterest: projection.totalInterest,
     monthlyData: projection.monthlyData.map((month) => ({
       month: month.month,
@@ -392,6 +408,9 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
  * LOC balance increases by chunk amount, then gets paid down by cash flow over time.
  */
 export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
   const safeInputs = sanitizeSimulationInputs(inputs);
 
   if (!safeInputs.loc) {
@@ -547,6 +566,7 @@ export function simulateMultiDebt(
   const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
   const safeLoc = sanitizeLoc(loc);
   const safeChunkAmount = chunkAmount === undefined ? undefined : safeNonNegative(chunkAmount);
+  const forecastBasis = assessForecastBasis(safeLoc?.lenderTerms);
   const warnings = generateWarnings(safeMonthlyIncome, safeMonthlyExpenses, safeLoc, safeDebts);
   const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
   const totalMinPayments = safeDebts.reduce((sum, d) => sum + d.monthlyPayment, 0);
@@ -578,6 +598,7 @@ export function simulateMultiDebt(
 
     return {
       strategy,
+      forecastBasis,
       debts: invalidDebtResults,
       isPayoffPossible: false,
       failureReason,
@@ -593,6 +614,8 @@ export function simulateMultiDebt(
       warnings,
     };
   };
+
+  if (!forecastBasis.canProject) return buildInvalidResult(forecastBasis.reason);
 
   const underInterestDebt = safeDebts.find((debt) => {
     const monthlyInterest = debt.balance * calculateMonthlyRate(debt.apr);
@@ -1299,6 +1322,8 @@ export function comparePaymentStrategies(
   monthlyExpenses: number,
   chunkAmount: number
 ): StrategyComparison {
+  const forecastBasis = assessForecastBasis(loc?.lenderTerms);
+  if (!forecastBasis.canProject) throw new Error(`${forecastBasis.label}. Lender terms are not modeled by this legacy comparison.`);
   const payoffHorizonMonths = Math.max(termMonths * 4, termMonths, 600);
   const monthlyProjection = simulateAmortizedPayoff({
     principalBalance: balance,
@@ -1313,7 +1338,7 @@ export function comparePaymentStrategies(
     monthlyIncome,
     monthlyExpenses,
     carLoan: { balance, apr, monthlyPayment },
-    loc: loc ? { limit: loc.limit, apr: loc.apr, balance: loc.balance } : undefined,
+    loc: sanitizeLoc(loc),
     useVelocity: true,
     extraPayment: chunkAmount,
   };

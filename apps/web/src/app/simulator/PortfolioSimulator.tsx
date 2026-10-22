@@ -6,6 +6,7 @@ import { ArrowRight, RefreshCw } from 'lucide-react';
 import { formatCommonMonthAmount } from '@interestshield/financial-engine/portfolio-common-month';
 import { LOC_PROJECTION_OVER_LIMIT_WARNING } from '@interestshield/financial-engine';
 import AssetHero from '@/components/hero/AssetHero';
+import ForecastBasisStatus from '@/components/ForecastBasisStatus';
 import PageTransition from '@/components/PageTransition';
 import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import { portfolioDebtHeroes } from '@/data/portfolio-hero';
@@ -52,6 +53,7 @@ export default function PortfolioSimulator() {
         <Link href="/simulator" className={`inline-flex min-h-11 items-center ${classes.textSecondary}`}>Single-target demo</Link>
       </nav>
     </header>
+    <ForecastBasisStatus terms={store.loc.lenderTerms} />
     <section aria-label="Portfolio simulation scope" className="space-y-4">
       <div className="flex flex-wrap gap-x-8 gap-y-3">
         <div><h2 className={`text-xs ${classes.textSecondary}`}>Monthly cash flow</h2><p data-testid="portfolio-simulator-cash-flow" className="text-xl font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(model.cashFlow)}</p></div>

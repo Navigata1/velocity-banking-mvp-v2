@@ -1,4 +1,5 @@
 import type { PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import type { ForecastBasis } from '@interestshield/financial-engine';
 import { preparePortfolioComparison } from '@interestshield/financial-engine/portfolio-common-month';
 
 export interface PortfolioPayoffPlan {
@@ -10,6 +11,7 @@ export interface PortfolioPayoffPlan {
   reason?: string;
 }
 export interface PortfolioPayoffModel {
+  forecastBasis: ForecastBasis | null;
   cashFlow: number | null;
   totalDebt: number | null;
   plans: PortfolioPayoffPlan[];
@@ -37,6 +39,7 @@ export function buildPortfolioPayoffModel(book: PortfolioBook): PortfolioPayoffM
     };
   });
   return {
+    forecastBasis: initial.forecastBasis ?? null,
     cashFlow: observed.status === 'unavailable' ? null : initial.monthlyBudget,
     totalDebt: observed.status === 'unavailable' ? null : observed.debtBalance + observed.locBalance,
     plans,
