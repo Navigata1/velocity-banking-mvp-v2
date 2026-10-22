@@ -17,7 +17,7 @@ export default function PortfolioCommonMonth({ book, classes, warningClass = 'te
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 space-y-1">
           <h2 className={`text-lg font-semibold ${classes.text}`}>Same-Month Comparison</h2>
-          <p data-testid="common-month-period" className={`text-sm ${classes.textSecondary}`}>{month === null ? 'Month not selected' : `Month ${month}`}</p>
+          <p data-testid="common-month-period" className={`text-sm ${classes.textSecondary}`}>{month === null ? 'Month not selected' : `Month ${month}${comparison.horizonDate ? ` / ${comparison.horizonDate}` : ''}`}</p>
         </div>
         <label className={`flex flex-col gap-1 text-xs ${classes.textSecondary}`}>
           Comparison month
@@ -29,6 +29,7 @@ export default function PortfolioCommonMonth({ book, classes, warningClass = 'te
       {month === null && <p role="alert" data-testid="common-month-error" className={`mt-2 text-sm ${warningClass}`}>Month must be a whole number from 0 to 600.</p>}
       <p id="common-month-scope" className={`mt-3 text-xs leading-5 ${classes.textSecondary}`}>
         Same listed debts, LOC and household cash flow. Net modeled wealth is cash minus those liabilities, not total household wealth. After exact payoff, unchanged cash flow accumulates without returns or new debt. Amounts are independently rounded.
+        {book.datedPlan ? ' Dated continuation replays cash entries in checking only, protecting the reserve. An earlier unfunded expense makes that future horizon unavailable; the closed LOC is not reused.' : ''}
       </p>
       <div className="mt-4 divide-y divide-current/10">
         {comparison.plans.map(plan => {
@@ -48,6 +49,8 @@ export default function PortfolioCommonMonth({ book, classes, warningClass = 'te
                   <dd data-testid={`common-month-${id}-${plan.strategy}`} className={`mt-1 text-xs font-semibold tabular-nums sm:text-sm ${classes.text}`}>{formatCommonMonthAmount(value)}</dd>
                 </div>)}
               </dl>
+              {s.feesThroughMonth !== undefined ? <p className={`mt-2 text-xs ${classes.textSecondary}`}>Modeled fees through this month: {formatCommonMonthAmount(s.feesThroughMonth)}</p> : null}
+              {plan.dateFailure ? <p className={`mt-2 text-xs ${warningClass}`}>Cash continuation stops {plan.dateFailure}.</p> : null}
               {plan.payoff && !plan.payoff.possible && <p className={`mt-2 text-xs ${classes.textSecondary}`}>Payoff projection needs review.</p>}
             </article>
           );

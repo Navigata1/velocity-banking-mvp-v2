@@ -6,6 +6,7 @@ import CountUp from '@/components/CountUp';
 import { EditableCurrency, EditableNumber, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import PortfolioPayoffPath from '@/components/PortfolioPayoffPath';
 import { formatCurrency, formatDate } from '@/engine/calculations';
+import { formatCommonMonthAmount } from '@interestshield/financial-engine/portfolio-common-month';
 import { buildPortfolioPathVisualModel } from '@/engine/portfolio-path-visual';
 import type { PayoffStrategy } from '@/engine/portfolio';
 import { usePortfolioStore } from '@/stores/portfolio-store';
@@ -31,9 +32,10 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   const [importText, setImportText] = useState('');
   const comparisonBook = useMemo(() => ({ monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
     extraMonthlyPayment: store.extraMonthlyPayment, chunkAmount: store.chunkAmount, loc: store.loc,
-    strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts }),
+    strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts,
+    ...(store.datedPlan === undefined ? {} : { datedPlan: store.datedPlan }) }),
     [store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment, store.chunkAmount, store.loc,
-      store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
+      store.strategy, store.focusMode, store.splitRatioPrimary, store.debts, store.datedPlan]);
 
   const payoffModel = useMemo(() => buildPortfolioSimulatorModel(comparisonBook), [comparisonBook]);
   const payoffPlan = payoffModel.plans.find(plan => plan.strategy === store.strategy);
@@ -41,14 +43,15 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   const payoffMonths = payoffPlan?.payoffMonths ?? 0;
   const totalInterest = payoffPlan?.totalInterest ?? 0;
   const portfolioProjectionValid = payoffPlan?.state === 'projected' || payoffPlan?.state === 'cleared';
+  const formatAmount = store.datedPlan ? formatCommonMonthAmount : formatCurrency;
   const displayedPayoffDateStr = portfolioProjectionValid
-    ? payoffMonths === 0 ? 'Already paid off' : formatDate(payoffMonths)
+    ? payoffMonths === 0 ? 'Already paid off' : payoffPlan?.payoffDate ?? formatDate(payoffMonths)
     : payoffPlan?.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs';
-  const totalInterestLabel = portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected';
+  const totalInterestLabel = portfolioProjectionValid ? formatAmount(totalInterest) : 'Not projected';
   const warnings = result?.warnings ?? [];
   const assumptions = result?.assumptions ?? [];
   const locInterestPaid = result?.locInterestPaid ?? 0;
-  const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0;
+  const moneyLoopActive = (result?.moneyLoopMonthlyData?.length ?? 0) > 0 || result?.datedLedger !== undefined;
   const supportsChunkDraws = store.strategy === 'velocity' && store.focusMode === 'single';
   const velocityNeedsReview = store.strategy === 'velocity' && (!portfolioProjectionValid || warnings.length > 0);
   const velocityBadgeLabel = velocityNeedsReview
@@ -67,7 +70,9 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
   const payoffPathModel = buildPortfolioPathVisualModel(result, totalDebt);
 
   const handleExport = () => {
-    const text = store.exportState();
+    let text: string;
+    try { text = store.exportState(); }
+    catch (cause) { setImportStatus(cause instanceof Error ? cause.message : 'Portfolio backup could not be exported.'); return; }
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -190,7 +195,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                 </p>
                 {store.strategy === 'velocity' && (
                   <p data-testid="portfolio-velocity-modeling-note" className={`${classes.textSecondary} mt-2 text-xs leading-5`}>
-                    {moneyLoopActive
+                    {result?.datedLedger ? 'Dated LOC postings, financed fees and checking cash appear in the transaction ledger.' : moneyLoopActive
                       ? 'This single-lane plan includes a LOC event ledger and LOC interest estimate.'
                       : 'This plan uses direct month-end allocations, including existing LOC interest and repayment. No LOC chunk draws are modeled.'}
                   </p>
@@ -239,7 +244,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
                           <div>
                             <p className={`font-semibold ${classes.text}`}>Split Mode</p>
                             <p className={`${classes.textSecondary} text-xs mt-1`}>
-                              Allocate extra budget across the top two targets. This is planning guidance, not a LOC event ledger.
+                              {result?.datedLedger ? 'Allocate extra budget across the top two targets within the dated cash schedule.' : 'Allocate extra budget across the top two targets. This is planning guidance, not a LOC event ledger.'}
                             </p>
                           </div>
                           <span className={`text-sm ${classes.text}`}>
@@ -306,6 +311,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
               <p className={`${classes.textSecondary} text-sm mt-1`}>
                 {portfolioProjectionValid ? `${payoffMonths} mo` : 'Plan needs review'} • Interest est. {totalInterestLabel}
               </p>
+              {payoffPlan?.totalFees !== undefined ? <p data-testid="portfolio-total-fees" className={`${classes.textSecondary} mt-1 text-sm`}>Modeled fees: {formatAmount(payoffPlan.totalFees)}</p> : null}
             </div>
             <div className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Monthly Cash Flow</p>
@@ -320,7 +326,7 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
             <div data-testid="portfolio-cash-at-payoff" className={`${classes.glassButton} rounded-2xl p-4`}>
               <p className={`${classes.textMuted} text-xs`}>Cash at payoff</p>
               <p className={`mt-1 text-xl font-semibold ${classes.text}`}>
-                {portfolioProjectionValid ? formatCurrency(payoffPlan?.endingCash ?? 0) : 'Not projected'}
+                {portfolioProjectionValid ? formatAmount(payoffPlan?.endingCash ?? 0) : 'Not projected'}
               </p>
               <p className={`${classes.textMuted} mt-1 text-xs`}>Unused budget held as cash. Not incremental savings.</p>
             </div>
@@ -357,9 +363,9 @@ export default function PortfolioPlanSection({ classes, onAddDebt }: PortfolioPl
             )}
               <div data-testid="portfolio-loc-summary" className={`${classes.glassButton} rounded-2xl p-4`}>
                 <p className={`${classes.textMuted} text-xs`}>LOC Interest Est.</p>
-                <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{portfolioProjectionValid ? formatCurrency(locInterestPaid) : 'Not projected'}</p>
+                <p className={`text-2xl font-bold mt-1 ${classes.text}`}>{portfolioProjectionValid ? formatAmount(locInterestPaid) : 'Not projected'}</p>
                 <p className={`${classes.textMuted} text-[11px] mt-1`}>
-                  {moneyLoopActive ? 'Money Loop ledger active' : 'Direct month-end LOC estimate'}
+                  {result?.datedLedger ? 'Declared daily LOC ledger' : moneyLoopActive ? 'Money Loop ledger active' : 'Direct month-end LOC estimate'}
                 </p>
               </div>
             <div className="grid grid-cols-2 gap-3">

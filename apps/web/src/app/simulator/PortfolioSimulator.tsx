@@ -25,9 +25,10 @@ export default function PortfolioSimulator() {
   const [inspectedId, setInspectedId] = useState<string | null>(null);
   const book = useMemo(() => ({ monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
     extraMonthlyPayment: store.extraMonthlyPayment, chunkAmount: store.chunkAmount, loc: store.loc,
-    strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts }),
+    strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts,
+    ...(store.datedPlan === undefined ? {} : { datedPlan: store.datedPlan }) }),
     [store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment, store.chunkAmount, store.loc,
-      store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
+      store.strategy, store.focusMode, store.splitRatioPrimary, store.debts, store.datedPlan]);
   const model = useMemo(() => mounted && persistence.status === 'ready' ? buildPortfolioSimulatorModel(book) : null,
     [mounted, persistence.status, book]);
   if (!mounted) return <p role="status" className="p-6">Loading saved portfolio...</p>;
@@ -53,7 +54,7 @@ export default function PortfolioSimulator() {
         <Link href="/simulator" className={`inline-flex min-h-11 items-center ${classes.textSecondary}`}>Single-target demo</Link>
       </nav>
     </header>
-    <ForecastBasisStatus terms={store.loc.lenderTerms} />
+    <ForecastBasisStatus terms={store.loc.lenderTerms} computed={model.forecastBasis} />
     <section aria-label="Portfolio simulation scope" className="space-y-4">
       <div className="flex flex-wrap gap-x-8 gap-y-3">
         <div><h2 className={`text-xs ${classes.textSecondary}`}>Monthly cash flow</h2><p data-testid="portfolio-simulator-cash-flow" className="text-xl font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(model.cashFlow)}</p></div>
@@ -95,18 +96,19 @@ export default function PortfolioSimulator() {
         return <article key={plan.strategy} data-testid={`simulator-plan-${plan.strategy}`} className={`min-w-0 space-y-3 border-t py-4 ${classes.border}`}>
           <h3 className="text-base font-semibold">{strategyLabel(plan.strategy)}</h3>
           <p data-testid={`simulator-payoff-${plan.strategy}`} className={`min-h-12 text-xl font-semibold leading-snug [overflow-wrap:anywhere] ${available ? classes.text : warning}`}>
-            {plan.state === 'cleared' ? 'Already paid off' : plan.state === 'projected' ? `${plan.payoffMonths} mo` : plan.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs'}
+            {plan.state === 'cleared' ? 'Already paid off' : plan.state === 'projected' ? plan.payoffDate ?? `${plan.payoffMonths} mo` : plan.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs'}
           </p>
           <dl className="grid min-w-0 grid-cols-2 gap-3">
             <div className="min-w-0"><dt className={`min-h-8 text-xs leading-4 ${classes.textSecondary}`}>Interest at own payoff</dt><dd data-testid={`simulator-interest-${plan.strategy}`} className="text-sm font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(plan.totalInterest)}</dd></div>
             <div className="min-w-0"><dt className={`min-h-8 text-xs leading-4 ${classes.textSecondary}`}>Cash at own payoff</dt><dd data-testid={`simulator-cash-${plan.strategy}`} className="text-sm font-semibold [overflow-wrap:anywhere]">{formatCommonMonthAmount(plan.endingCash)}</dd></div>
           </dl>
+          {plan.totalFees !== undefined ? <p data-testid={`simulator-fees-${plan.strategy}`} className={`text-xs ${classes.textSecondary}`}>Fees at own payoff: {formatCommonMonthAmount(plan.totalFees)}</p> : null}
           {!available ? <p className={`text-xs leading-5 ${classes.textSecondary}`}>{plan.reason === 'loc-projection-overlimit' ? LOC_PROJECTION_OVER_LIMIT_WARNING
             : plan.state === 'residual' ? 'An unpaid balance remains or was removed by model tolerance. Verify the lender balance.' : 'A complete funded payoff is not confirmed for this policy.'}</p> : null}
         </article>;
       })}</div>
     </section>
     <PortfolioCommonMonth book={book} classes={{ ...classes, textMuted: classes.textSecondary }} warningClass={warning} />
-    <p className={`text-xs leading-5 ${classes.textSecondary}`}>Monthly educational estimates. Lender fees, compounding, minimums and statement timing may change actual outcomes. Educational tool. Not financial advice.</p>
+    <p className={`text-xs leading-5 ${classes.textSecondary}`}>{model.forecastBasis?.kind === 'lender-dated' ? 'Declared dated LOC estimate; other debts use monthly educational rules. Actual lender rules may differ.' : 'Monthly educational estimates. Lender fees, compounding, minimums and statement timing may change actual outcomes.'} Educational tool. Not financial advice.</p>
   </div></PageTransition>;
 }

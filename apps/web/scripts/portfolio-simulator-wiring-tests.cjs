@@ -21,8 +21,13 @@ test('whole canonical book reaches the model without inspecting a smaller cohort
   assert.ok(book&&ts.isCallExpression(book.initializer)&&ident(book.initializer.expression,'useMemo'));
   let value=book.initializer.arguments[0]?.body;while(value&&ts.isParenthesizedExpression(value))value=value.expression;
   assert.ok(value&&ts.isObjectLiteralExpression(value));
-  assert.deepEqual(value.properties.map(p=>p.name.text).sort(),[...keys].sort());
-  for(const key of keys){const p=value.properties.find(p=>p.name.text===key);assert.ok(ts.isPropertyAssignment(p)&&member(p.initializer,'store',key),key+' must retain canonical source');}
+  const assigned=value.properties.filter(ts.isPropertyAssignment);
+  assert.deepEqual(assigned.map(p=>p.name.text).sort(),[...keys].sort());
+  for(const key of keys){const p=assigned.find(p=>p.name.text===key);assert.ok(ts.isPropertyAssignment(p)&&member(p.initializer,'store',key),key+' must retain canonical source');}
+  assert.equal(value.properties.filter(ts.isSpreadAssignment).length,1,'one optional dated-context spread');
+  const make=new Function('store',`return (${value.getText(view)});`),source=Object.fromEntries(keys.map(key=>[key,{key}]));
+  assert.deepEqual(Object.keys(make(source)).sort(),[...keys].sort(),'old books cannot acquire undefined dated fields');
+  const datedPlan={contract:'fixed-loc-daily-v1',cashEvents:[]};assert.equal(make({...source,datedPlan}).datedPlan,datedPlan,'full dated context must reach the normal model');
   const calls=nodes(view,n=>ts.isCallExpression(n)&&ident(n.expression,'buildPortfolioSimulatorModel'));
   assert.equal(calls.length,1);assert.ok(ident(calls[0].arguments[0],'book'));
 });

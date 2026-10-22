@@ -35,9 +35,10 @@ export default function PortfolioDashboard() {
     if (!mounted || persistence.status !== 'ready') return null;
     return buildPortfolioOverview({ monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
       extraMonthlyPayment: store.extraMonthlyPayment, chunkAmount: store.chunkAmount, loc: store.loc,
-      strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts });
+      strategy: store.strategy, focusMode: store.focusMode, splitRatioPrimary: store.splitRatioPrimary, debts: store.debts,
+      ...(store.datedPlan === undefined ? {} : { datedPlan: store.datedPlan }) });
   }, [mounted, persistence.status, store.monthlyIncome, store.monthlyExpenses, store.extraMonthlyPayment,
-    store.chunkAmount, store.loc, store.strategy, store.focusMode, store.splitRatioPrimary, store.debts]);
+    store.chunkAmount, store.loc, store.strategy, store.focusMode, store.splitRatioPrimary, store.debts, store.datedPlan]);
   const payoff = useMemo(() => overview ? buildPortfolioSimulatorModel(overview.book).plans.find(plan => plan.strategy === overview.book.strategy) : null, [overview]);
 
   if (!mounted) return <p role="status" className="p-6">Loading saved portfolio...</p>;
@@ -60,7 +61,7 @@ export default function PortfolioDashboard() {
     : review ? 'Review payoff inputs' : state === 'cleared' ? 'Plan your next goal'
       : overview.nextTargetLabels.length ? overview.nextTargetLabels.join(' + ') : 'Review target allocation';
   const eta = state === 'cleared' ? 'No debt remaining' : state === 'tolerance' ? 'Below model tolerance'
-    : state === 'projected' && payoff ? `${payoff.payoffMonths} mo` : 'Review inputs';
+    : state === 'projected' && payoff ? payoff.payoffDate ?? `${payoff.payoffMonths} mo` : 'Review inputs';
   const burn = overview.dailyInterestBurn === null ? 'Not available'
     : overview.dailyInterestBurn > 0 && overview.dailyInterestBurn < 0.01 ? '<$0.01/day' : `${money(overview.dailyInterestBurn)}/day`;
   const vitals = [
@@ -82,7 +83,7 @@ export default function PortfolioDashboard() {
         <Link href="/" className={`inline-flex min-h-11 items-center ${classes.textSecondary}`}>Single-target demo</Link>
       </nav>
     </header>
-    <ForecastBasisStatus terms={store.loc.lenderTerms} />
+    <ForecastBasisStatus terms={store.loc.lenderTerms} computed={overview.result.forecastBasis} />
     <section aria-label="Portfolio dashboard vitals" className="grid grid-cols-2 gap-2 lg:grid-cols-4">
       {vitals.map(vital => <article key={vital.id} data-testid={`shared-vital-${vital.id}`}
         className={`min-h-32 min-w-0 rounded-lg border p-3 ${classes.border} ${classes.bgSecondary}`}>
@@ -119,7 +120,7 @@ export default function PortfolioDashboard() {
       {utilizationWarning ? <p className={`text-sm ${tones.warning}`}>LOC utilization is above 80%. Review available room and lender terms.</p> : null}
       {overview.state === 'tolerance' ? <p className={`text-sm ${tones.warning}`}>A nonzero balance remains below the model&apos;s payoff threshold. Verify the lender&apos;s final balance.</p> : null}
       {overview.result.warnings.map((warning, index) => <p key={index} className={`text-sm [overflow-wrap:anywhere] ${tones.warning}`}>{warning}</p>)}
-      <p className={`text-xs leading-5 ${classes.textSecondary}`}>Monthly interest estimates. Lender fees, compounding, minimums and statement timing may change actual outcomes.</p>
+      <p className={`text-xs leading-5 ${classes.textSecondary}`}>{overview.result.forecastBasis?.kind === 'lender-dated' ? 'Declared dated LOC estimate; other debts use educational monthly rules. Actual lender terms may differ.' : 'Monthly interest estimates. Lender fees, compounding, minimums and statement timing may change actual outcomes.'}</p>
     </section>
     <section aria-label="Portfolio household inputs" className={`space-y-4 [&_button>span]:whitespace-normal [&_button>span]:[overflow-wrap:anywhere] ${theme === 'light' ? '[&_[role=alert]]:text-amber-700' : ''}`}>
       <h2 className="text-base font-semibold">Household &amp; line of credit</h2>

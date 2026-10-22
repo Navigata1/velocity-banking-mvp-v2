@@ -33,7 +33,7 @@ export default function PortfolioPayoffOrder({ classes }: { classes: PortfolioTh
                   </span>
                   <div>
                     <p className={`font-semibold ${classes.text}`}>{p.name}</p>
-                    <p className={`${classes.textSecondary} text-sm`}>Paid off around {formatDate(p.monthPaidOff)}</p>
+                    <p className={`${classes.textSecondary} text-sm`}>Paid off around {p.paidOffOn ?? formatDate(p.monthPaidOff)}</p>
                   </div>
                 </div>
                 <div className="text-right">

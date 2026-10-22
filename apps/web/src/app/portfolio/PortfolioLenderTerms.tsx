@@ -10,9 +10,10 @@ import type { PortfolioThemeClasses } from './portfolio-types';
 
 export default function PortfolioLenderTerms({ classes }: { classes: PortfolioThemeClasses }) {
   const terms = usePortfolioStore(state => state.loc.lenderTerms);
+  const computed = usePortfolioStore(state => state.lastResult?.forecastBasis);
   const [notice, setNotice] = useState('');
   return <section className={`min-w-0 space-y-3 border-t py-4 ${classes.border} ${classes.text}`}>
-    <ForecastBasisStatus terms={terms} />
+    <ForecastBasisStatus terms={terms} computed={computed} />
     <details><summary className="min-h-11 cursor-pointer text-sm">Lender terms</summary>
       <LenderTermsForm key={JSON.stringify(terms) ?? 'no-profile'} classes={classes} onSaved={setNotice} onEdit={() => setNotice('')} />
     </details>
@@ -35,7 +36,7 @@ function LenderTermsForm({ classes, onSaved, onEdit }: { classes: PortfolioTheme
     try {
       const input = remove ? null : readLenderTermsDraft(draft, terms), result = save(input);
       if (!result.ok) throw new Error(result.error);
-      onSaved(remove ? 'Profile removed. Monthly educational assumptions apply.' : 'Lender terms saved. Forecast remains in review.'); setError('');
+      onSaved(remove ? 'Lender profile removed. Check forecast availability above.' : 'Lender terms saved. Check the computed forecast above.'); setError('');
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Terms could not be saved.'); onEdit(); }
   }
   return <form onSubmit={event => { event.preventDefault(); publish(); }} className="min-w-0 space-y-4 pt-2">

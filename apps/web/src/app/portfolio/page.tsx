@@ -13,12 +13,15 @@ import PortfolioDebtsSection from './PortfolioDebtsSection';
 import PortfolioPayoffOrder from './PortfolioPayoffOrder';
 import PortfolioPlanSection from './PortfolioPlanSection';
 import PortfolioLenderTerms from './PortfolioLenderTerms';
+import PortfolioDatedPlan from './PortfolioDatedPlan';
+import PortfolioDatedLedger from './PortfolioDatedLedger';
 
 export default function PortfolioPage() {
   const mounted = useIsClient();
   const { theme } = useThemeStore();
   const classes = themeClasses[mounted ? theme : 'original'];
   const recompute = usePortfolioStore((state) => state.recompute);
+  const result = usePortfolioStore((state) => state.lastResult);
   const [showAdd, setShowAdd] = useState(false);
   const persistence = useSyncExternalStore(portfolioPersistence.subscribe, portfolioPersistence.getStatus, portfolioPersistence.getStatus);
 
@@ -73,7 +76,9 @@ export default function PortfolioPage() {
         </ScrollReveal>
 
         <PortfolioLenderTerms classes={classes} />
+        <PortfolioDatedPlan classes={classes} />
         <PortfolioPlanSection classes={classes} onAddDebt={() => setShowAdd(true)} />
+        <PortfolioDatedLedger result={result} classes={classes} />
         <PortfolioDebtsSection classes={classes} onAddDebt={() => setShowAdd(true)} />
         <PortfolioPayoffOrder classes={classes} />
         <AddDebtDialog classes={classes} open={showAdd} onClose={() => setShowAdd(false)} />
