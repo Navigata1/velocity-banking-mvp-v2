@@ -110,6 +110,32 @@ async function captureStage(page, stage) {
   // Fixed stage bounds avoid locator screenshot stability polling during GPU work.
   return page.screenshot({ clip, timeout: 120000 });
 }
+async function verifyReplay(page,stage,id,width,requests,initialBytes,movedBytes) {
+  await pauseAtVisibleHero(page);
+  const canvas=await stage.locator('canvas').elementHandle();assert.ok(canvas,'loaded canvas required');
+  const count=()=>requests.filter(url=>new URL(url).pathname.endsWith('.glb')).length,before=count();
+  try {
+    await page.getByRole('button',{name:'Replay full turn',exact:true}).click();
+    await primeMotionFrame(page);
+    assert.equal(await canvas.evaluate(node=>node.isConnected),true,`${id} replay must retain the decoded canvas`);
+    assert.equal(await stage.getAttribute('data-ready'),'true','replay must stay ready');
+    assert.equal(await page.getByTestId('asset-hero').locator('img').evaluate(image=>getComputedStyle(image).opacity),'0','replay must not reveal the old artwork');
+    const resetBytes=await captureStage(page,stage);
+    await advanceMotionSample(page);
+    const movingBytes=await captureStage(page,stage);
+    assert.equal(count(),before,'replay must not fetch another model');
+    const images=[initialBytes,movedBytes,resetBytes,movingBytes].map(decodePngRgba),boxes=images.map(image=>visibleBounds(image));
+    const bounds={left:Math.min(...boxes.map(b=>b.left)),right:Math.max(...boxes.map(b=>b.right)),top:Math.min(...boxes.map(b=>b.top)),bottom:Math.max(...boxes.map(b=>b.bottom))};
+    const descriptors=images.map(image=>samplePngPixels(image,31,bounds).stabilityDescriptor);
+    assert.equal(hasMaterialSpatialChange(compareSpatialDescriptors(descriptors[0],descriptors[2])),false,'replay must restart at the initial pose');
+    assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(descriptors[1],descriptors[2])),'no-op replay must fail pose reset');
+    assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(descriptors[2],descriptors[3])),'replay must visibly move again');
+    assert.equal(hasMaterialSpatialChange(compareSpatialDescriptors(descriptors[1],descriptors[3])),false,'replay must keep the original turn cadence');
+    fs.writeFileSync(path.join(output,`${width}-${id}-replay-start.png`),resetBytes);
+    fs.writeFileSync(path.join(output,`${width}-${id}-replay.png`),movingBytes);
+    console.log(`PASS ${width}px ${id} replay: decoded canvas retained, no fetch, poster hidden, restarted and moving`);
+  } finally {await canvas.dispose();await page.clock.resume();}
+}
 async function run() {
   verifyVisibilityControls();
   await verifyDeadlineControls();
@@ -180,6 +206,7 @@ async function run() {
         console.log(`${width}px ${id} color samples: ${first.colorCount}, ${second.colorCount}`);
         assert.ok(first.colorCount>12,`${id} blank canvas`);
         assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(first.stabilityDescriptor,second.stabilityDescriptor)),`${id} did not visibly rotate`);
+        await verifyReplay(page,stage,id,width,requests,a,b);
         const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
         assert.ok(overflow<=1,`${width} ${id} overflows by ${overflow}px`);
         console.log(`PASS ${width}px ${id}: poster, real GLB, nonblank pixels, visible rotation, containment`);
@@ -202,6 +229,7 @@ async function run() {
       const va=presentationBounds(start,'vault'),vb=visibleBounds(end);
       const region={left:Math.min(va.left,vb.left),right:Math.max(va.right,vb.right),top:Math.min(va.top,vb.top),bottom:Math.max(va.bottom,vb.bottom)};
       assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(samplePngPixels(start,31,region).stabilityDescriptor,samplePngPixels(end,31,region).stabilityDescriptor)),'vault did not rotate');
+      await verifyReplay(page,vault,'vault',width,requests,startBytes,endBytes);
       console.log(`PASS ${width}px vault: nonblank, framed, moving`);
       await page.screenshot({path:path.join(output,`${width}-vault.png`)});
       assert.deepEqual(errors,[]); await context.close();
@@ -215,6 +243,16 @@ async function run() {
     const stage=page.getByTestId('asset-hero-canvas');
     const first=await captureStage(page,stage); await page.waitForTimeout(1200); const last=await captureStage(page,stage);
     assert.equal(samplePngPixels(decodePngRgba(first)).fingerprint,samplePngPixels(decodePngRgba(last)).fingerprint,'reduced-motion must be still');
+    const canvas=await stage.locator('canvas').elementHandle();assert.ok(canvas,'reduced-motion canvas required');
+    try {
+      await page.getByRole('button',{name:'Replay full turn',exact:true}).click();
+      await page.waitForTimeout(1200);
+      assert.equal(await canvas.evaluate(node=>node.isConnected),true,'reduced-motion replay must retain its canvas');
+      assert.equal(await stage.getAttribute('data-ready'),'true','reduced-motion replay must remain ready');
+      assert.equal(await page.getByTestId('asset-hero').locator('img').evaluate(image=>getComputedStyle(image).opacity),'0','reduced-motion replay must not expose the poster');
+      assert.equal(samplePngPixels(decodePngRgba(await captureStage(page,stage))).fingerprint,samplePngPixels(decodePngRgba(first)).fingerprint,'reduced-motion replay must stay at the original still pose');
+    } finally {await canvas.dispose();}
+    console.log('PASS reduced-motion replay: canvas retained, poster hidden, original still pose');
     await context.close(); console.log('PASS reduced-motion still frame');
   } finally { await browser.close(); await stopServer(started.server); }
 }

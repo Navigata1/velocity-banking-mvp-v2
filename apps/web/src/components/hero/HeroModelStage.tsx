@@ -12,6 +12,7 @@ interface Props { model: string; replay: number; onError: () => void; onReady: (
 
 export default function HeroModelStage({ model, replay, onError, onReady }: Props) {
   const host = useRef<HTMLDivElement>(null);
+  const restartTurn = useRef<(() => void) | undefined>(undefined);
   useEffect(() => {
     const element = host.current;
     if (!element) return;
@@ -70,6 +71,14 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
       object.rotation.y = heroAngleAt(elapsed); render();
       if (elapsed < HERO_TURN_SECONDS && !reduced.matches) frame = requestAnimationFrame(animate);
     };
+    const restart = () => {
+      if (disposed || !object) return;
+      cancelAnimationFrame(frame);
+      elapsed = 0; previous = 0;
+      object.rotation.y = heroAngleAt(0); render();
+      if (!reduced.matches) frame = requestAnimationFrame(animate);
+    };
+    restartTurn.current = restart;
     const manager = new THREE.LoadingManager();
     let assetFailed = false;
     manager.onError = url => {
@@ -88,19 +97,20 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
       catch { disposeModel(gltf.scene); onError(); return; }
       object = gltf.scene; scene.add(object);
       if (!fitCamera()) return;
-      object.rotation.y = heroAngleAt(0); render();
+      restart();
       element.dataset.ready = 'true';
       onReady(true);
-      if (!reduced.matches) frame = requestAnimationFrame(animate);
     }, undefined, () => { if (!disposed) onError(); });
     return () => {
       disposed = true; cancelAnimationFrame(frame); observer.disconnect();
+      restartTurn.current = undefined;
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
       if (object) disposeModel(object);
       environment.dispose(); renderer.dispose(); renderer.forceContextLoss();
       renderer.domElement.remove();
     };
-  }, [model, replay, onError, onReady]);
+  }, [model, onError, onReady]);
+  useEffect(() => { restartTurn.current?.(); }, [replay]);
   return <div ref={host} data-testid="asset-hero-canvas" className="absolute inset-0 [&_canvas]:h-full [&_canvas]:w-full" aria-hidden="true" />;
 }
 

@@ -46,3 +46,4 @@ for(const fails of [false,true]) {
   assert.deepEqual(released,{geometry:5,material:5,texture:1,generator:1});
 }
 console.log('Shared studio releases all temporary reflection resources on success and failure.');
+require('./hero-lifecycle-tests.cjs');
