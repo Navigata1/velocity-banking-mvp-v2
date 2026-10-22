@@ -854,3 +854,30 @@ all-ten photographic art review. General legacy-corruption fallback, old-client
 rollout/rollback, dedicated backend/security, physical native/accessibility and
 final production release remain unverified/open. No production/cloud/data/access/
 DNS mutation, paid GPU, merge or promotion; no Desktop HTML republishing.
+
+## State 38 - Exact-head CI read freshness (2026-10-22)
+
+The 55a lender-input checkpoint was pushed. Both complete CI events passed:
+push39791788358 attempt2 and PR39791798657 attempt1, all3jobs, all59declared
+steps plus cleanup and six actual checked-out-source stdout guards. Known
+automatic preview was READY; hosted14suites/183layouts/20exactasset hashes
+and six actualIAB Portfolio save/reload/complete/remove states passed.
+Its original canonical checker failed on a stale empty run listing and that
+failed report is retained, not rewritten. No-cache-only headers also failed
+live after passing fixtures. Strong no-cache/no-store/max-age0 plus Pragma
+returned both events, and the corrected actual checker passed. Cache-layer
+root cause and universal API freshness are not proven; missing runs still fail.
+
+This focused maintenance changes only the CI discovery request/test among445
+source pins;443others and the495-file old local evidence cut remain identical.
+Fresh22CLI/workflow contracts cover stale-empty and stale-green/newfailedattempt
+responses; runtime-audit and renderer tests rerun. The29 application gates,
+hosted183/20assets and actualIAB coverage are explicitly INHERITED55a, not
+fresh maintenance-head coverage. No app/math/art/dependency/workflow/cap/backend
+change. First55apush54322host-port collision and exactlyonewhole rerun retained;
+port owner/reliability cause unresolved. Older screenshot misses/Three warnings
+are not closed. Newhead requires both full CI events and knownautomaticREADY.
+Later private ci-read-freshness/current-checkpoint.json and immutable receipt
+supersede this intentional pre-push snapshot; no metadata-only follow-up push.
+Actual numerical R3, all-ten photoreal approval, backend/security/recovery,
+physical native and release remain open. PR256 stays draft; no promotion.

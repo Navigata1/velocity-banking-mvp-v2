@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Locally verified lender-input preservation and truthful forecast basis. Supplied terms are not yet numerically enforced. Prior selection checkpoint remotely verified; new exact-head shipping and full production gates remain open.",
+    "tagline": "Lender inputs preserved; unsupported terms cannot produce false forecasts. Application checkpoint55a passed both CI events and hosted183 checks. Exact-head CI read revalidation is locally verified; new maintenance-head remote proof and production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T13:56:35.643Z",
-    "sessionCount": 37
+    "updated": "2026-10-22T15:15:22.766Z",
+    "sessionCount": 38
   },
   "policies": {
     "merge": "review",
@@ -87,7 +87,7 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Verified d03a7c1: receipt6339608765; complete push39764855337 attempt1 and PR39764859371 attempt2,all3jobs/59declaredsteps+cleanup/6actualsource guards,known automatic READY,hosted168/20assets/actualIAB.256shipping/96local/385source pins sealed. PR attempt1 screenshot35ms remaining failure retained; one unchanged full-workflow retry passed. No root-cause/reliability fix or photoreal approval claimed."
+          "notes": "d03 selection checkpoint remains sealed at receipt6339608765. Subsequent application55a passed push39791788358 attempt2/PR39791798657 attempt1,all3jobs/59declaredsteps+cleanup/6actualsource guards,known READY,hosted14suites/183layouts/20asset hashes/sixmanualIAB states. Original canonical checker reported missing runs from a stale empty listing; its failed report is retained. Corrected revalidation headers subsequently verified both events. First55a push host-port54322 collision and exactlyonewhole rerun retained; port owner/reliability cause unknown. No photoreal or production approval."
         }
       ],
       "gates": [
@@ -98,7 +98,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
           "lastRun": "2026-10-22T13:55:28.510Z",
-          "notes": "Fresh29serialized gates on445pinned sources, including untracked new files:360 original regressions,15term/12codec/12basis/6draft/9snapshot groups,ref23247/21model/6wiring,media223/27freshstills,native97workflow+1navigation/fullcontracts/freshAndroid+iOS Hermes,Worker/report. Explicit version3 and copy-on-write archives; no dependency,lock,3D asset,SQL or CI mutation. Attempt1 media stale-data failure retained; generated scenario source hash/contract3 and strict schema refreshed, both educational stories unchanged. 495 local evidence files indexed. Not complete R3 numerical enforcement."
+          "notes": "INHERITED from55a application:29serialized local gates on445pinned sources,360regressions/ref23247/web183/native97+1/media223+27freshstills/fullcontracts/Hermes/Worker/report. Maintenance changes only CI discovery/test files among those pins; all443other pins remain identical. Original495local evidence files retained unchanged. Fresh maintenance tests are R0-G4; no fresh full29 claim."
         },
         {
           "id": "R0-G2",
@@ -107,16 +107,25 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
           "lastRun": "2026-10-22T13:55:28.510Z",
-          "notes": "Fresh built web183 workflow-layout checks: prior168 plus15 lender/storage cases at280/375/1440. Original18normalThree actions/reduced-motion/negative controls/6selection workflows retain deadlines. Web/native15each cover edit,reload,terms-only import,unsupported legacy isolation,corrupt active and failed adoption. Parent final screenshot inspection and final actualIAB are separately recorded in the new checkpoint. No physical-device claim."
+          "notes": "INHERITED55a: hosted14suites/183workflow-layout executions/20exactservedGLB+poster hashes,plus six actualIAB Portfolio states (educational,save,reload,complete-unmodeled,reload,remove). No app/assets changed in CI-header maintenance. Fresh current-head deployment proof must be recorded separately; inherited browser coverage is not fresh-head smoke or physical-device approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T13:55:28.510Z",
-          "notes": "This is intentionally a pre-push local snapshot. Prior d03a7c1 is fully verified at receipt6339608765, with complete push1/PR2,READY,hosted168/20assets/IAB. New lender-confidence head must independently pass BOTH full CI events/all3jobs/every declared step+cleanup/six actual source guards,known automatic READY,hosted183/20assets/finalIAB/receipt/seal. Read .superpowers/sdd/2026-10-22-lender-confidence/current-checkpoint.json if present; later sealed proof supersedes this pending snapshot. Do not rerun sealed mutating helpers or create a metadata-only push loop."
+          "evidence": "ops/mission/evidence/ci-read-freshness-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T15:15:22.766Z",
+          "notes": "State38 is intentionally a pre-push CI-read maintenance snapshot.55a actualfullCIpush2/PR1 and hosted183/20assets/IAB passed, but originalcanonicalreportfailedcache and is retained. Newhead must pass BOTH complete exact-head events/all3jobs/every59declaredsteps+cleanup/sixactualsourceguards/knownautomaticREADY. Read .superpowers/sdd/2026-10-22-ci-read-freshness/current-checkpoint.json when present; later sealed proof supersedes pending snapshot. Do not rerun old sealed helpers or make a metadata-only follow-up push."
+        },
+        {
+          "id": "R0-G4",
+          "title": "Fresh exact-head CI discovery and report contracts",
+          "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/ci-read-freshness-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T15:15:22.766Z",
+          "notes": "Fresh focused maintenance tests:22actualCLI/workflow cases include stale-empty and stale-green attempt regressions. Strong Cache-Control no-cache/no-store/max-age0 and Pragma requested; all strict event/attempt/job/step/cleanup rules unchanged. No universal API freshness or cache-layer root-cause claim. Runtime audit and mission renderer contracts rerun; no app/math/assets/dependencies/backend/workflow/cap mutation."
         }
       ]
     },
@@ -1140,8 +1149,8 @@
   "resume": {
     "activePhase": "R3",
     "nextActions": [
-      "State37 is an intentional PRE-PUSH local lender-confidence snapshot. Read docs/superpowers/specs/2026-10-22-lender-confidence-design.md, its implementation plan and .superpowers/sdd/2026-10-22-lender-confidence/progress.md. FIRST inspect current-checkpoint.json/receipt there if present: later sealed exact-head proof supersedes this pending snapshot. Local29/445sources/360regressions/ref23247/web183/native97+1/media223+27freshstills/fullcontracts/Hermes/Worker/report; no new 3D assets or numerical lender enforcement. Attempt1 stale-media-data failure retained and corrected by generated contract3 provenance/schema, not waived. Never rerun sealed mutating helpers.",
-      "If the new checkpoint is not sealed, finish BOTH complete exact-head CI events/all3jobs/every59declaredsteps+cleanup/6literal source guards/unchanged20minute caps, known automatic READY preview,hosted14suites/183workflows/20assets,finalactualIAB and immutable receipt on draftPR256. No merge/manualdeployment/promotion. Fold the final receipt into the NEXT substantive change, not a metadata-only push loop.",
+      "State38 PRE-PUSH CI-read maintenance. Read docs/superpowers/specs/2026-10-22-ci-read-freshness.md and .superpowers/sdd/2026-10-22-ci-read-freshness/progress.md. FIRST inspect current-checkpoint.json/receipt there: later sealed proof supersedes this pending snapshot. Fresh22CLI/workflow plus runtime/report contracts;445source pins with only2CI script changes,443unchanged;495oldlocal files immutable. No fresh full29/hosted183/IAB claim for maintenance; those application checks are inherited55a.",
+      "If maintenance not sealed, finish BOTHcompleteexact-headCIevents/all3jobs/every59declaredsteps+cleanup/6literalstdoutsourceguards/unchanged20mincaps,knownautomaticREADY and exactservedassetproof. Record inherited55ahosted183/20assets/sixmanualIAB separately from fresh checks. Preserve55a originalcanonicalcachefailure and firstpush54322collision/exactlyonewhole rerun; no root-cause/reliabilityfix. No merge/manualdeployment/promotion. Fold receipt into NEXTsubstantive work,notmetadata-onlypushloop.",
       "NEXT substantive R3 work: implement actual numerical lender fees/minimum payments/draw constraints/rate schedules and integrate dated cash/reserves/posting/rounding/intraday availability. Lender-confidence guard is only a prerequisite, not a permanent blocked/disclosure substitute. Preserve strict document3/provenance,explicit zeros/unknowns,active3 archives,old1/2 semantics,immutable queues/owner-CAS and all original reference rows. Do not allow caller-supplied modeled/support flags. Read CONTEXT.md; R3-G1 remains pending.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",

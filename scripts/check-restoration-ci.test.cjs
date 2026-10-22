@@ -15,7 +15,7 @@ const valid=()=>({headSha:head,status:'completed',conclusion:'success',url:'http
   jobs:Object.values(workflow.jobs).map(job=>({name:job.name,status:'completed',conclusion:'success',steps:job.steps.map(step=>({name:step.name,status:'completed',conclusion:'success'}))}))});
 
 // Execute the real CLI without network, credentials or a subprocess; only gh/git responses are fixtures.
-function runCli({runs=entries,details={10:valid(),11:valid()},workingWorkflow=workflowText}={}) {
+function runCli({runs=entries,cachedRuns,details={10:valid(),11:valid()},workingWorkflow=workflowText}={}) {
   const calls=[],logs=[],processFixture={env:{GH_TOKEN:'test-only-token'},exitCode:0,exit(code){this.exitCode=code;throw stop;}};
   const stop={};
   const execFileSync=(command,args)=>{
@@ -26,10 +26,14 @@ function runCli({runs=entries,details={10:valid(),11:valid()},workingWorkflow=wo
       return workflowText;
     }
     assert.equal(command,'gh');
-    if(args[0]==='api')return JSON.stringify({workflow_runs:runs});
+    if(args[0]==='api') {
+      const revalidate=['Cache-Control: no-cache, no-store, max-age=0','Pragma: no-cache'].every(header=>args.some((arg,index)=>arg==='-H'&&args[index+1]===header));
+      return JSON.stringify({workflow_runs:revalidate||cachedRuns===undefined?runs:cachedRuns});
+    }
     assert.equal(args[0],'run');assert.equal(args[1],'view');
     assert.ok(details[args[2]],'unexpected run selected');
-    return JSON.stringify(details[args[2]]);
+    const detail=details[args[2]];
+    return JSON.stringify(typeof detail==='function'?detail(args[args.indexOf('--attempt')+1]):detail);
   };
   const moduleFixture={exports:{}};
   const requireFixture=name=>name==='node:child_process'?{execFileSync}:name==='node:fs'?{...fs,readFileSync:()=>workingWorkflow}:require(name);
@@ -53,6 +57,21 @@ test('checks both complete events and pins their explicit attempts',()=>{
   const result=runCli();assert.equal(result.code,0);
   const views=result.calls.filter(call=>call[1]==='run');assert.equal(views.length,2);
   for(const call of views)assert.equal(call[call.indexOf('--attempt')+1],'1');
+});
+test('revalidates the exact-head listing instead of accepting a cached empty response',()=>{
+  const result=runCli({cachedRuns:[]});assert.equal(result.code,0);
+  const listing=result.calls.find(call=>call[1]==='api');
+  assert.equal(listing[listing.indexOf('-H')+1],'Cache-Control: no-cache, no-store, max-age=0');
+  assert.ok(listing.some((arg,index)=>arg==='-H'&&listing[index+1]==='Pragma: no-cache'));
+  assert.ok(listing.includes(`repos/Navigata1/velocity-banking-mvp-v2/actions/runs?head_sha=${head}&per_page=100`));
+});
+test('a cached green listing cannot hide a newer failed rerun attempt',()=>{
+  const runs=structuredClone(entries);runs.find(run=>run.event==='push').run_attempt=2;
+  const result=runCli({runs,cachedRuns:entries,details:{10:attempt=>attempt==='2'?{...valid(),conclusion:'failure'}:valid(),11:valid()}});
+  assert.equal(result.code,1);
+  const push=result.calls.find(call=>call[1]==='run'&&call[3]==='10');
+  assert.equal(push[push.indexOf('--attempt')+1],'2');
+  assert.ok(result.logs.some(line=>line.includes('push not successful')));
 });
 test('latest failed event cannot fall back to older green',()=>rejected(o=>{
   o.runs.push({...o.runs.find(r=>r.event==='push'),id:12,conclusion:'failure'});o.details[12]={...valid(),conclusion:'failure'};

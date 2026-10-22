@@ -16,7 +16,7 @@ try {
   const env={...process.env};
   if(!env.GH_TOKEN)env.GH_TOKEN=execFileSync('gh',['auth','token','--hostname','github.com','--user','Navigata1'],{encoding:'utf8',windowsHide:true}).trim();
   const gh=args=>JSON.parse(execFileSync('gh',args,{env,encoding:'utf8',windowsHide:true,maxBuffer:16*1024*1024}));
-  const runs=gh(['api',`repos/Navigata1/velocity-banking-mvp-v2/actions/runs?head_sha=${sha}&per_page=100`]).workflow_runs;
+  const runs=gh(['api','-H','Cache-Control: no-cache, no-store, max-age=0','-H','Pragma: no-cache',`repos/Navigata1/velocity-banking-mvp-v2/actions/runs?head_sha=${sha}&per_page=100`]).workflow_runs;
   assert.ok(Array.isArray(runs),'Workflow run listing required');
   for(const event of ['push','pull_request']) {
     const latest=runs.filter(run=>run.head_sha===sha&&run.name==='CI'&&run.event===event).sort((a,b)=>b.id-a.id)[0];
