@@ -27,7 +27,8 @@
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     import { createHeroEnvironment } from './vendor/studio-environment.js';
-    import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV } from './vendor/hero-turntable.js';
+    import { measureHeroRotationBounds } from './vendor/hero-geometry-bounds.js';
+    import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR } from './vendor/hero-turntable.js';
 
     const names = ['car','house','land','creditCard','studentLoan','medical','personal','recreation','custom','vault'];
     const selected = window.__hfVariables?.hero || 'car';
@@ -35,10 +36,11 @@
     const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas'), antialias: true, alpha: true });
     renderer.setSize(1920, 1080, false);
     renderer.setPixelRatio(1);
+    renderer.setViewport(0, 110, 1920, 920);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1920 / 1080, 0.1, 50);
+    const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1920 / 920, HERO_CAMERA_NEAR, HERO_CAMERA_FAR);
     camera.position.set(3.3,2.5,4.8); camera.lookAt(0,1.15,0);
     scene.environment = createHeroEnvironment(renderer).texture;
     scene.add(new THREE.HemisphereLight(0xffffff,0x414d52,2.5));
@@ -54,9 +56,10 @@
     const gltf = await new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).loadAsync(`vendor/heroes/${selected}.glb`);
     if (assetFailed) throw new Error('Hero texture loading failed; refusing an incomplete render.');
     scene.add(gltf.scene);
-    const sphere = new THREE.Box3().setFromObject(gltf.scene).getBoundingSphere(new THREE.Sphere());
-    camera.position.copy(sphere.center).add(new THREE.Vector3(3.3,1.35,4.8).normalize().multiplyScalar(heroFrameDistance(sphere.radius,camera.aspect)));
-    camera.lookAt(sphere.center);
+    const bounds = measureHeroRotationBounds(gltf.scene);
+    const target = new THREE.Vector3(0, (bounds.minY + bounds.maxY) / 2, 0);
+    camera.position.copy(target).add(new THREE.Vector3(...HERO_CAMERA_OFFSET).normalize().multiplyScalar(heroFrameDistance(bounds,camera.aspect)));
+    camera.lookAt(target);
     function renderAt(time) {
       gltf.scene.rotation.y = heroAngleAt(time);
       renderer.render(scene,camera);

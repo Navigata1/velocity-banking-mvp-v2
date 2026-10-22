@@ -15,7 +15,7 @@ assert.ok(Math.abs(heroAngleAt(HERO_TURN_SECONDS) - heroAngleAt(0) - Math.PI * 2
 assert.equal(heroAngleAt(100), heroAngleAt(HERO_TURN_SECONDS));
 assert.equal(heroAngleAt(NaN), heroAngleAt(0));
 for (const aspect of [0.8,1.3,1.8]) {
-  const distance=heroFrameDistance(2,aspect);
+  const distance=heroFrameDistance({minY:-2,maxY:2,profile:[2,-2,2,2]},aspect);
   assert.ok(distance*Math.sin(HERO_CAMERA_FOV*Math.PI/360)>2);
 }
 let previous = heroAngleAt(0);

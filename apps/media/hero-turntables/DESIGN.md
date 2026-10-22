@@ -6,6 +6,11 @@ It uses Three.js 0.185.1 from apps/web and HyperFrames 0.7.56 from apps/media.
 - Nine-second 1920 x 1080 composition, 30 fps export.
 - One full eight-second revolution with zero endpoint velocity; one-second hold.
 - `heroAngleAt` is transpiled from the web viewer, not reimplemented here.
+- Framing uses the same referenced-geometry radial/height profile as the web viewer,
+  including instance transforms. Exact full-yaw frustum supports replace the old
+  coarse sphere; models, materials, FOV and camera direction are unchanged.
+- The video art viewport is x=0..1920, y=50..970 inside the 1080p composition.
+  Credits and the completion index stay outside that viewport, not over the model.
 - `createHeroEnvironment` is likewise shared: soft reflection cards, local diffusion
   and neutral studio contrast. No remote HDRI or render-time asset request.
 - The slim progress index indicates completion of the single revolution.

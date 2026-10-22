@@ -5,7 +5,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { createHeroEnvironment } from './studio-environment';
-import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_TURN_SECONDS } from './turntable';
+import { measureHeroRotationBounds } from './hero-geometry-bounds';
+import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR, HERO_TURN_SECONDS, type HeroRotationBounds } from './turntable';
 
 interface Props { model: string; replay: number; onError: () => void; onReady: (ready: boolean) => void; }
 
@@ -36,18 +37,25 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     scene.add(new THREE.HemisphereLight(0xffffff, 0x414d52, 2.5));
     const key = new THREE.DirectionalLight(0xffffff, 4); key.position.set(-3, 6, 5); scene.add(key);
     const rim = new THREE.DirectionalLight(0xb8d9e6, 3); rim.position.set(4, 3, -4); scene.add(rim);
-    const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1, 0.1, 50);
-    let center = new THREE.Vector3(0,1,0), radius = 1.8;
+    const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1, HERO_CAMERA_NEAR, HERO_CAMERA_FAR);
+    const center = new THREE.Vector3(0,1,0);
+    let bounds: HeroRotationBounds | undefined;
     const fitCamera = () => {
-      camera.position.copy(center).add(new THREE.Vector3(3.3,1.35,4.8).normalize().multiplyScalar(heroFrameDistance(radius,camera.aspect)));
-      camera.lookAt(center);
+      if (!bounds) return true;
+      try {
+        center.set(0, (bounds.minY + bounds.maxY) / 2, 0);
+        camera.position.copy(center).add(new THREE.Vector3(...HERO_CAMERA_OFFSET).normalize().multiplyScalar(heroFrameDistance(bounds,camera.aspect)));
+        camera.lookAt(center);
+        return true;
+      } catch { onError(); return false; }
     };
     camera.position.set(3.3, 2.5, 4.8); camera.lookAt(0, 1.15, 0);
     const render = () => renderer.render(scene, camera);
     const resize = () => {
       const width = element.clientWidth, height = element.clientHeight;
-      renderer.setSize(width, height, false); camera.aspect = width / Math.max(height, 1);
-      fitCamera();
+      if (width <= 0 || height <= 0) return;
+      renderer.setSize(width, height, false); camera.aspect = width / height;
+      if (!fitCamera()) return;
       camera.updateProjectionMatrix(); render();
     };
     const observer = new ResizeObserver(resize); observer.observe(element); resize();
@@ -76,9 +84,10 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
         if (!disposed) onError();
         return;
       }
+      try { bounds = measureHeroRotationBounds(gltf.scene); }
+      catch { disposeModel(gltf.scene); onError(); return; }
       object = gltf.scene; scene.add(object);
-      const sphere = new THREE.Box3().setFromObject(object).getBoundingSphere(new THREE.Sphere());
-      center = sphere.center; radius = sphere.radius; fitCamera();
+      if (!fitCamera()) return;
       object.rotation.y = heroAngleAt(0); render();
       element.dataset.ready = 'true';
       onReady(true);
