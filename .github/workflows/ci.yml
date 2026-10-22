@@ -19,24 +19,44 @@ jobs:
     name: Web and mobile quality gates
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    needs: [asset-hero-quality, backend-isolation]
+    if: ${{ !cancelled() }}
 
     steps:
+      - name: Require prerequisite quality jobs
+        env:
+          HERO_RESULT: ${{ needs.asset-hero-quality.result }}
+          SQL_RESULT: ${{ needs.backend-isolation.result }}
+        run: |
+          set -euo pipefail
+          test "$HERO_RESULT" = success
+          test "$SQL_RESULT" = success
+
       - name: Check out repository
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
 
       - name: Set up Node
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            apps/web/package-lock.json
-            apps/mobile/package-lock.json
-            apps/media/package-lock.json
+          cache-dependency-path: apps/web/package-lock.json
 
       - name: Install web dependencies
         working-directory: apps/web
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Run CI verification contracts
         run: |
@@ -133,9 +153,140 @@ jobs:
             apps/web/test-results/shared-portfolio-dashboard
           if-no-files-found: warn
 
+  asset-hero-quality:
+    name: Asset hero quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Build web app
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Verify asset hero loading, rotation and reduced motion
+        working-directory: apps/web
+        run: npm run test:heroes
+
+      - name: Upload asset hero browser proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-hero-browser-proof
+          path: apps/web/test-results/heroes
+          if-no-files-found: warn
+
+  backend-isolation:
+    name: Isolated SQL and owner isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            apps/web/package-lock.json
+            apps/media/package-lock.json
+            apps/report-worker/package-lock.json
+            apps/mobile/package-lock.json
+
+      - name: Install web contract dependencies
+        run: npm --prefix apps/web ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Check isolated database wiring
+        run: node apps/web/scripts/supabase-ci-contract.cjs
+
+      - name: Install pinned Supabase CLI
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+        with:
+          version: 2.109.1
+
+      - name: Start disposable database
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/backend-isolation"
+          supabase --version | tee "$RUNNER_TEMP/backend-isolation/cli-version.log"
+          supabase db start 2>&1 | tee "$RUNNER_TEMP/backend-isolation/start.log"
+
+      - name: Replay all migrations without seed data
+        shell: bash
+        run: supabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"
+
+      - name: Verify client contracts and SQL owner isolation
+        shell: bash
+        run: npm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"
+
+      - name: Lint application database functions
+        shell: bash
+        run: supabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"
+
+      - name: Check database security advisors
+        shell: bash
+        run: supabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"
+
+      - name: Repeat SQL tests to verify fixture rollback
+        shell: bash
+        run: supabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"
+
+      - name: Stop disposable database
+        if: always()
+        timeout-minutes: 2
+        run: supabase stop --project-id Interest_Shield --no-backup
+
+      - name: Upload database isolation proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-isolation-proof
+          path: ${{ runner.temp }}/backend-isolation
+          if-no-files-found: warn
+
       - name: Install media workspace dependencies
         working-directory: apps/media
-        run: npm ci --ignore-scripts
+        run: npm ci --ignore-scripts --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Read pinned Remotion Chrome version
         id: remotion-chrome-version
@@ -161,7 +312,7 @@ jobs:
 
       - name: Install report Worker dependencies
         working-directory: apps/report-worker
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Check and test report Worker
         working-directory: apps/report-worker
@@ -173,7 +324,7 @@ jobs:
 
       - name: Install mobile dependencies
         working-directory: apps/mobile
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Audit critical native dependency advisories
         working-directory: apps/mobile
@@ -223,106 +374,3 @@ jobs:
           echo "$output"
           test "$status" -eq 1
           grep -F "iOS Expo Go smoke requires macOS with Xcode and Simulator." <<< "$output"
-
-  asset-hero-quality:
-    name: Asset hero quality gates
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Set up Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
-
-      - name: Install web dependencies
-        working-directory: apps/web
-        run: npm ci
-
-      - name: Build web app
-        working-directory: apps/web
-        run: npm run build
-
-      - name: Verify asset hero loading, rotation and reduced motion
-        working-directory: apps/web
-        run: npm run test:heroes
-
-      - name: Upload asset hero browser proof
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: asset-hero-browser-proof
-          path: apps/web/test-results/heroes
-          if-no-files-found: warn
-
-  backend-isolation:
-    name: Isolated SQL and owner isolation
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Set up Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
-
-      - name: Install web contract dependencies
-        run: npm --prefix apps/web ci
-
-      - name: Check isolated database wiring
-        run: node apps/web/scripts/supabase-ci-contract.cjs
-
-      - name: Install pinned Supabase CLI
-        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
-        with:
-          version: 2.109.1
-
-      - name: Start disposable database
-        shell: bash
-        run: |
-          mkdir -p "$RUNNER_TEMP/backend-isolation"
-          supabase --version | tee "$RUNNER_TEMP/backend-isolation/cli-version.log"
-          supabase db start 2>&1 | tee "$RUNNER_TEMP/backend-isolation/start.log"
-
-      - name: Replay all migrations without seed data
-        shell: bash
-        run: supabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"
-
-      - name: Verify client contracts and SQL owner isolation
-        shell: bash
-        run: npm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"
-
-      - name: Lint application database functions
-        shell: bash
-        run: supabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"
-
-      - name: Check database security advisors
-        shell: bash
-        run: supabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"
-
-      - name: Repeat SQL tests to verify fixture rollback
-        shell: bash
-        run: supabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"
-
-      - name: Stop disposable database
-        if: always()
-        timeout-minutes: 2
-        run: supabase stop --project-id Interest_Shield --no-backup
-
-      - name: Upload database isolation proof
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-isolation-proof
-          path: ${{ runner.temp }}/backend-isolation
-          if-no-files-found: warn
