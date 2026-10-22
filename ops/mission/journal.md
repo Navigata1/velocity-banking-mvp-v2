@@ -748,3 +748,31 @@ HDRLoader is available; deprecated RGBELoader would emit a warning. Private
 reduced-HDR/all-angle work remains unverified. All-ten photoreal/lender/calendar/
 backend/security/physical native/release goals stay open. No paidGPU, cloud/data/
 access mutation, broad visual redesign or Desktop HTML republishing.
+
+## 2026-10-22 - Projected LOC Capacity Pre-Push Checkpoint
+
+Source e351435 and evidence f4e7431 reject a Velocity payoff forecast after its
+first over-limit closing month. Shared, canonical Portfolio and legacy multi-debt
+paths preserve only accepted prefixes, retain a separate finite breach diagnostic,
+roll back sibling rows atomically, and withhold failed-plan payoff dates/savings.
+Six monthly numerical/APR functions and all financial illustration amounts are
+unchanged. Remotion source-digest metadata is regenerated. Narrow legacy comparison
+cards and scoped domain tabs now fit the warning without a shared-nav redesign.
+
+Fresh32 local stages pass:360regressions/39independentCPU/21model/6wiring/ref23247,
+original138+24matrix=162browserworkflows,media222/27freshstills,native82workflow+1
+navigation/fullcontracts/fresh web+Android+iOS Hermes,Worker/report and3audits.
+An additional3 painted-warning checks pass with opaque ancestors/in-viewport text;
+parent inspected280/375PNG evidence. Nativecritical0 retains36noncritical findings.
+138 immutable local files are indexed. OriginalREDs and setup/test-assumption
+failures remain preserved. No persisted input/schema/dependency/lock/asset changes.
+
+Prioraf9eb916 is fully verified by both complete CI events39737773728/39737780925,
+automatic READY preview,hosted156/20assets/manual9 and receipt6335271348;92shipping/
+202local pins remain immutable. Private photographic/orientation/calibration
+studies12/69/29/68 remain unshipped: calibrated Car still has grain/hotspots.
+State35 is a pre-push local snapshot; the new head still requires both complete CI
+events/automatic READY/hosted162/20assets/manual/receipt. GoalACTIVE,draftPR256 open;
+full lender/calendar/intraday,photoreal/backend/security/device/release gates remain
+open. No merge,production promotion,paidGPU,cloud/data/access/DNS/settings mutation
+or Desktop HTML republishing.
