@@ -1,0 +1,30 @@
+PASS car presentation height 80.0%
+PASS house presentation height 80.0%
+PASS land presentation height 80.0%
+PASS creditCard presentation height 80.0%
+PASS studentLoan presentation height 80.0%
+PASS medical presentation height 80.0%
+PASS personal presentation height 80.0%
+PASS recreation presentation height 80.0%
+PASS custom presentation height 80.0%
+PASS vault presentation height 80.0%
+PASS hero presentation controls: small silhouettes rejected for all ten models
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+PASS hero readiness deadline controls: late results and pending waits rejected
+PASS hero cadence controls: primer 16ms and 15x100ms samples
+PASS 1440px slow-network poster continuity and selected-mode stability
+PASS car presentation height 56.2%
+1440px car color samples: 454, 498
+AssertionError [ERR_ASSERTION]: car replay must retain the decoded canvas
+
+false !== true
+
+    at verifyReplay (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:120:12)
+    at async run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:209:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

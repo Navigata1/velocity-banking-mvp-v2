@@ -1,0 +1,96 @@
+PASS car presentation height 80.0%
+PASS house presentation height 80.0%
+PASS land presentation height 80.0%
+PASS creditCard presentation height 80.0%
+PASS studentLoan presentation height 80.0%
+PASS medical presentation height 80.0%
+PASS personal presentation height 80.0%
+PASS recreation presentation height 80.0%
+PASS custom presentation height 80.0%
+PASS vault presentation height 80.0%
+PASS hero presentation controls: small silhouettes rejected for all ten models
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+PASS hero readiness deadline controls: late results and pending waits rejected
+PASS hero cadence controls: primer 16ms and 15x100ms samples
+PASS 1440px slow-network poster continuity and selected-mode stability
+PASS car presentation height 56.2%
+1440px car color samples: 456, 482
+PASS 1440px car replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS house presentation height 66.7%
+1440px house color samples: 408, 452
+PASS 1440px house replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS land presentation height 65.5%
+1440px land color samples: 489, 534
+PASS 1440px land replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS creditCard presentation height 82.4%
+1440px creditCard color samples: 208, 87
+PASS 1440px creditCard replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS studentLoan presentation height 69.5%
+1440px studentLoan color samples: 429, 421
+PASS 1440px studentLoan replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS medical presentation height 74.3%
+1440px medical color samples: 270, 291
+PASS 1440px medical replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS personal presentation height 72.1%
+1440px personal color samples: 412, 427
+PASS 1440px personal replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS recreation presentation height 85.2%
+1440px recreation color samples: 352, 246
+PASS 1440px recreation replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS custom presentation height 81.4%
+1440px custom color samples: 347, 310
+PASS 1440px custom replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS vault presentation height 67.3%
+PASS 1440px vault replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 1440px vault: nonblank, framed, moving
+PASS 375px slow-network poster continuity and selected-mode stability
+PASS car presentation height 43.3%
+375px car color samples: 512, 514
+PASS 375px car replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px car: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS house presentation height 66.7%
+375px house color samples: 417, 452
+PASS 375px house replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px house: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS land presentation height 65.6%
+375px land color samples: 487, 543
+PASS 375px land replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px land: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS creditCard presentation height 82.6%
+375px creditCard color samples: 209, 90
+PASS 375px creditCard replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS studentLoan presentation height 69.6%
+375px studentLoan color samples: 428, 413
+PASS 375px studentLoan replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS medical presentation height 74.1%
+375px medical color samples: 283, 291
+PASS 375px medical replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS personal presentation height 72.6%
+375px personal color samples: 411, 426
+PASS 375px personal replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS recreation presentation height 85.2%
+375px recreation color samples: 362, 256
+PASS 375px recreation replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS custom presentation height 81.5%
+375px custom color samples: 350, 315
+PASS 375px custom replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS vault presentation height 67.1%
+PASS 375px vault replay: decoded canvas retained, no fetch, poster hidden, restarted and moving
+PASS 375px vault: nonblank, framed, moving
+PASS reduced-motion replay: canvas retained, poster hidden, original still pose
+PASS reduced-motion still frame
