@@ -1,0 +1,1010 @@
+{
+  "reviewedAt": "2026-10-21T23:58:55.072Z",
+  "ids": [
+    "car",
+    "house",
+    "land",
+    "creditCard",
+    "studentLoan",
+    "medical",
+    "personal",
+    "recreation",
+    "custom",
+    "vault"
+  ],
+  "photorealApproved": false,
+  "scope": "Parent visual review of the actual sampled files enumerated under each asset.viewed. All90 browser/0-4-8.5s files are hash-sealed, not all claimed visually inspected. Independent continuous-yaw geometry and pixel/closure tests are separate; no full-angle photoreal/device approval.",
+  "assets": [
+    {
+      "id": "car",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-car-3d-start.png",
+        "apps/web/test-results/heroes/1440-car-3d.png",
+        "apps/web/test-results/heroes/375-car-3d-start.png",
+        "apps/media/hyperframes/output/heroes/car-0.png",
+        "apps/media/hyperframes/output/heroes/car-4.png"
+      ],
+      "observation": "Larger complete coupe silhouette with visible interior, wheels and front details at both sampled poses. Highly speckled paint highlights/dark lower surfaces and concept-versus-poster identity remain art issues. Framing approved for this checkpoint, not photoreal materials.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected. Full-size wheel/tire lettering is still visible; this is not asset-content or branding release clearance."
+    },
+    {
+      "id": "house",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-house-3d-start.png",
+        "apps/web/test-results/heroes/1440-house-3d.png",
+        "apps/media/hyperframes/output/heroes/house-0.png",
+        "apps/media/hyperframes/output/heroes/house-4.png"
+      ],
+      "observation": "Roof/chimney, actual window/reveal openings, entry, garage and planted base are complete and easier to inspect at both poses. Limestone/glazing/interior response remains illustrative rather than photographic.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "land",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-land-3d-start.png",
+        "apps/web/test-results/heroes/1440-land-3d.png",
+        "apps/media/hyperframes/output/heroes/land-0.png",
+        "apps/media/hyperframes/output/heroes/land-4.png"
+      ],
+      "observation": "Pond, rocks/reeds, connected trunks/foliage, draped path, survey stakes and four cutaway layers are fully visible at both poses. Grass/leaf/soil responses and water remain stylized; size improvement is not natural-surface photoreal approval.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "creditCard",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-creditCard-3d-start.png",
+        "apps/web/test-results/heroes/1440-creditCard-3d.png",
+        "apps/web/test-results/heroes/375-creditCard-3d-start.png",
+        "apps/media/hyperframes/output/heroes/creditCard-0.png",
+        "apps/media/hyperframes/output/heroes/creditCard-4.png"
+      ],
+      "observation": "Both cards, contact chip, curved engraving and reeded coin remain complete. Fine edge/engraving details are more inspectable, but silver response is flat gray and rear emerald is very dark under this studio; brushed-metal art refinement remains important.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "studentLoan",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-studentLoan-3d-start.png",
+        "apps/web/test-results/heroes/1440-studentLoan-3d.png",
+        "apps/media/hyperframes/output/heroes/studentLoan-0.png",
+        "apps/media/hyperframes/output/heroes/studentLoan-4.png"
+      ],
+      "observation": "Cap/board/crown, tassel, layered books, rolled diploma and green ribbon are complete and distinct. Board/cloth, leather and paper shading are clean but simplified; no photographic textile/page approval.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected. Page faces show conspicuous regular diagonal hatching that remains an art-review item."
+    },
+    {
+      "id": "medical",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-medical-3d-start.png",
+        "apps/web/test-results/heroes/1440-medical-3d.png",
+        "apps/web/test-results/heroes/375-medical-3d-start.png",
+        "apps/media/hyperframes/output/heroes/medical-0.png",
+        "apps/media/hyperframes/output/heroes/medical-4.png"
+      ],
+      "observation": "Case/handle/latches/hinges/front shield and complete stethoscope are clearly framed at both poses. White shell and chrome details remain graphic/flat in places; material depth still needs work.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "personal",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-personal-3d-start.png",
+        "apps/web/test-results/heroes/1440-personal-3d.png",
+        "apps/media/hyperframes/output/heroes/personal-0.png",
+        "apps/media/hyperframes/output/heroes/personal-4.png"
+      ],
+      "observation": "Leather satchel, stitch rows, buckles/strap/handle, inserted chart and key are complete. Grain/stitch detail is visible and size is better; broad leather variation and metal response are not final photoreal approval.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "recreation",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-recreation-3d-start.png",
+        "apps/web/test-results/heroes/1440-recreation-3d.png",
+        "apps/media/hyperframes/output/heroes/recreation-0.png",
+        "apps/media/hyperframes/output/heroes/recreation-4.png"
+      ],
+      "observation": "Full mast, both sails, rigging, railings, deck/cabin, hull, keel and rudder remain contained through the two sampled poses. Rigging and deck read well; sail fabric and hull finish still look authored rather than photographic.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "custom",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-custom-3d-start.png",
+        "apps/web/test-results/heroes/1440-custom-3d.png",
+        "apps/media/hyperframes/output/heroes/custom-0.png",
+        "apps/media/hyperframes/output/heroes/custom-4.png"
+      ],
+      "observation": "Open lid, concentric brushed surface, dial/needle/lens, hinge and bail remain complete and front detail is visible at both controlled poses. Metal light response varies strongly during the turn; final brushed/lens realism remains unapproved.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    },
+    {
+      "id": "vault",
+      "viewed": [
+        "apps/web/test-results/heroes/1440-vault-3d-start.png",
+        "apps/web/test-results/heroes/1440-vault-3d.png",
+        "apps/web/test-results/heroes/375-vault-3d-start.png",
+        "apps/media/hyperframes/output/heroes/vault-0.png",
+        "apps/media/hyperframes/output/heroes/vault-4.png"
+      ],
+      "observation": "Full cabinet, open circular door, wheel/spokes, hinges and fasteners are complete at both poses in the compact Vault stage. Large metal faces and wheel response remain simplified; open-door geometry is not a photographic safe approval.",
+      "videoObservation": "Fresh 1080p initial and 4s opposite-side views are complete, inside the reserved artwork region and clear of progress/credit. Material limits above remain; 8.5s closure is pixel-tested, not claimed visually inspected."
+    }
+  ],
+  "frames": [
+    {
+      "id": "car",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/car-0.png",
+      "stage": "render-all",
+      "bytes": 669872,
+      "sha256": "f4c60aae817ea33f2a09bd1fafc2ac73828c73537b4b65806713e13b8ce926fe"
+    },
+    {
+      "id": "car",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/car-4.png",
+      "stage": "render-all",
+      "bytes": 672178,
+      "sha256": "0b7a1d08026586f7f7ce5fc0556fb10a1c9654049fb9e46569acc3c1513e474c"
+    },
+    {
+      "id": "car",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/car-8.5.png",
+      "stage": "render-all",
+      "bytes": 699353,
+      "sha256": "44aebf8278937d2961fed91c4ba557193c3dd7138f4e31117309a902a1ed92b8"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-car-poster.png",
+      "stage": "heroes",
+      "bytes": 291447,
+      "sha256": "e80e6e341b0405ffc6dafa333dcfe6e63d53caf7164223434e621abfc17dba28"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-car-3d-start.png",
+      "stage": "heroes",
+      "bytes": 157270,
+      "sha256": "b6e4f01101bec3729e55e9c04b0b1eb2d6b3723fadb0ce39d65dee02335531f2"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-car-3d.png",
+      "stage": "heroes",
+      "bytes": 156368,
+      "sha256": "4103667d2b88166036e9ea2d056ff8b7ad5d65762ff360b8bd1830e42913226b"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-car-poster.png",
+      "stage": "heroes",
+      "bytes": 98135,
+      "sha256": "ea95c6bf671972feb10a635d45fe6d0bbaf1dbe36a7b6013caa29baa93dd8340"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-car-3d-start.png",
+      "stage": "heroes",
+      "bytes": 48747,
+      "sha256": "5355b2db55d26f652431e00c461e54871eedd682e4d2b381fac364286ad4fbdf"
+    },
+    {
+      "id": "car",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-car-3d.png",
+      "stage": "heroes",
+      "bytes": 47165,
+      "sha256": "06b09bf5bec1e065efd1aecf99aec2afe50e843673aa324e8023dd4dd657b8c7"
+    },
+    {
+      "id": "house",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/house-0.png",
+      "stage": "render-all",
+      "bytes": 437897,
+      "sha256": "03de2c3b2bd63aa989350d0eea1cb1b43219da860cabb388a458f3c91b3cb841"
+    },
+    {
+      "id": "house",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/house-4.png",
+      "stage": "render-all",
+      "bytes": 387110,
+      "sha256": "ff50acb47bdc4eb351a8648a704fad9758d6d5e3e123ea22960c572b62ee37b5"
+    },
+    {
+      "id": "house",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/house-8.5.png",
+      "stage": "render-all",
+      "bytes": 474246,
+      "sha256": "114b4544c0f7b9c140883a70f30c6c2d2ade5c1154b472f05439a3a743d2d737"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-house-poster.png",
+      "stage": "heroes",
+      "bytes": 377110,
+      "sha256": "e4625d75c355f710c4dc0a8b25684c8d89074eeab9d71d6d0aaa1cf179050a95"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-house-3d-start.png",
+      "stage": "heroes",
+      "bytes": 96983,
+      "sha256": "c297ecf81935994c699420726690b8877108ee7928e85991c604ac9f37013e8d"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-house-3d.png",
+      "stage": "heroes",
+      "bytes": 106035,
+      "sha256": "eaeb810d2f047becf9816579d6943c419cb460cee0247264ecd8b889b8aa3a82"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-house-poster.png",
+      "stage": "heroes",
+      "bytes": 121661,
+      "sha256": "d902182c4b389e4c8cec0b510f51a3d22db3d38d6823c3be4eb876bfafa92899"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-house-3d-start.png",
+      "stage": "heroes",
+      "bytes": 45413,
+      "sha256": "1bf539772702bb900ff3a7be7119274b0a74b1236ee8f6103cec0e691c799562"
+    },
+    {
+      "id": "house",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-house-3d.png",
+      "stage": "heroes",
+      "bytes": 49789,
+      "sha256": "1e871e15331a832cdca90d337db6ada9003523ae99ab979f8b98780d8ad1d51d"
+    },
+    {
+      "id": "land",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/land-0.png",
+      "stage": "render-all",
+      "bytes": 497021,
+      "sha256": "494853e9426bdfbaeafe8e014f01bd650cfb03505fdfba1d60733a6a289bcf51"
+    },
+    {
+      "id": "land",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/land-4.png",
+      "stage": "render-all",
+      "bytes": 525598,
+      "sha256": "2dea1033ff4ce8e04464d451ec24568729e040aecda06d71df2546b1fd41bb54"
+    },
+    {
+      "id": "land",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/land-8.5.png",
+      "stage": "render-all",
+      "bytes": 508565,
+      "sha256": "4238fec4f407e861cae049578c621e4087671c992ce2716b232bf86dd840174f"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-land-poster.png",
+      "stage": "heroes",
+      "bytes": 426508,
+      "sha256": "58f6f701b63f323f029e3b057d404063809227c265fe365f14f2c3553f85f15a"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-land-3d-start.png",
+      "stage": "heroes",
+      "bytes": 107550,
+      "sha256": "697ab6659b77585fa57156353f994e2a8f7a2cb148779826bc2e3b6c45b6c8a2"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-land-3d.png",
+      "stage": "heroes",
+      "bytes": 122538,
+      "sha256": "036c86f9c17b225590b600e9e03b8df23637f1e666d92a8a9a730157a860e889"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-land-poster.png",
+      "stage": "heroes",
+      "bytes": 133439,
+      "sha256": "a45c6b6e39dba5d4d2a564c305b4f56d165693bf27fdb444e61d2789c84c01b7"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-land-3d-start.png",
+      "stage": "heroes",
+      "bytes": 46890,
+      "sha256": "2e0902c77234a4bc78cce8b4421365298889df3d8ef1d0179d9d97980ddbb8cc"
+    },
+    {
+      "id": "land",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-land-3d.png",
+      "stage": "heroes",
+      "bytes": 54642,
+      "sha256": "a01e392a6e4c000873c64fd6217c0d8394e0a4811ef738fb1e4e62c9cdab873e"
+    },
+    {
+      "id": "creditCard",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/creditCard-0.png",
+      "stage": "render-all",
+      "bytes": 166250,
+      "sha256": "64887f213c677530648b8952269c91ba1b4467bc276cce1e15c9ce7e600d184c"
+    },
+    {
+      "id": "creditCard",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/creditCard-4.png",
+      "stage": "render-all",
+      "bytes": 107710,
+      "sha256": "5e1d14a8d071d3cfc913deec878e4f9d549589d47e158f5f0344ec8a1b249583"
+    },
+    {
+      "id": "creditCard",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/creditCard-8.5.png",
+      "stage": "render-all",
+      "bytes": 189952,
+      "sha256": "fac2b2ee1e0d9aa2ff18536c07866765b45b48d9421abaef02a9c71436d7447f"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-creditCard-poster.png",
+      "stage": "heroes",
+      "bytes": 253853,
+      "sha256": "060be46ea721dce4d6931a7b379e0170ba1522cd97636f39859170f8cde61a62"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-creditCard-3d-start.png",
+      "stage": "heroes",
+      "bytes": 46613,
+      "sha256": "d7f03e7405f693978b90775135ef0ec3bee76b399a0f5c855f2e42efdb0dfcda"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-creditCard-3d.png",
+      "stage": "heroes",
+      "bytes": 34900,
+      "sha256": "5244d3a5cc21d64a7b017e0f76196850e0fe25566bb7eefc0f67a6c18a513e9e"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-creditCard-poster.png",
+      "stage": "heroes",
+      "bytes": 90280,
+      "sha256": "babca40b2319f40d5c88ceb67895e682b5eed933c04ab64fedb03cc8ebd3a3af"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-creditCard-3d-start.png",
+      "stage": "heroes",
+      "bytes": 22152,
+      "sha256": "7e377bf3ed2db4508227d91ef0567cd9f4f7932e5a2bd6a5cffac9952fe77a00"
+    },
+    {
+      "id": "creditCard",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-creditCard-3d.png",
+      "stage": "heroes",
+      "bytes": 16817,
+      "sha256": "0b94b653259734af67e835e6d37d311b2fcbd873fca7f70a9219601d548ce4c7"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/studentLoan-0.png",
+      "stage": "render-all",
+      "bytes": 382179,
+      "sha256": "cd1a544b867bf77803a3515688cec51deeb31784eafa8361691ae7bd1431e6f1"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/studentLoan-4.png",
+      "stage": "render-all",
+      "bytes": 379273,
+      "sha256": "18533a9f30efc2430aa47eed957b668b3e9991f315dde19460f104052a5325fb"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/studentLoan-8.5.png",
+      "stage": "render-all",
+      "bytes": 419029,
+      "sha256": "8b9a4b602ef57f463fb0caaa948ee07aa9d7930258de88af619623491882128a"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-studentLoan-poster.png",
+      "stage": "heroes",
+      "bytes": 342226,
+      "sha256": "73cad23975ac1a209572eb520949661bb5c52a36977daaa4ff7d348e37c364dc"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-studentLoan-3d-start.png",
+      "stage": "heroes",
+      "bytes": 84661,
+      "sha256": "5cb6c45916a1ece4513b9c5defcf1c35e67943a7a0b3ffe131674a8e9294708f"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-studentLoan-3d.png",
+      "stage": "heroes",
+      "bytes": 59666,
+      "sha256": "0649973e1990020ca824d5fd2068653c72b32f3a10f24bf822d171bf4acfb829"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-studentLoan-poster.png",
+      "stage": "heroes",
+      "bytes": 124494,
+      "sha256": "e4a6496e4059151ca51e7114f8889e47a6a276e167409de1faf3beb6cfdc072d"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-studentLoan-3d-start.png",
+      "stage": "heroes",
+      "bytes": 39288,
+      "sha256": "266492780fcc8a6247be4f926f99e7c5167fe71b47a6d563be06685c750ce1b6"
+    },
+    {
+      "id": "studentLoan",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-studentLoan-3d.png",
+      "stage": "heroes",
+      "bytes": 26662,
+      "sha256": "2e42518ce1e4e868e1a523c33e91fb8563ed21456f57239886f679d00a9648ab"
+    },
+    {
+      "id": "medical",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/medical-0.png",
+      "stage": "render-all",
+      "bytes": 239996,
+      "sha256": "ea78eabce07be324ab171c3a40f6aedf9360a8f04c3bdc3580929afcb4346a71"
+    },
+    {
+      "id": "medical",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/medical-4.png",
+      "stage": "render-all",
+      "bytes": 173061,
+      "sha256": "b885defc6af66c915ee246e7b35c665862ff1c3954414829f0b735ba7b74904f"
+    },
+    {
+      "id": "medical",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/medical-8.5.png",
+      "stage": "render-all",
+      "bytes": 258711,
+      "sha256": "146afade5099b66dd33fb7141e96deec737e90c9f15dcf88f016019e854f9c7f"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-medical-poster.png",
+      "stage": "heroes",
+      "bytes": 271822,
+      "sha256": "e59b1d99128389d291a33dd80da81ba138a984cd5b81bd5cb7cc897174ff4bf2"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-medical-3d-start.png",
+      "stage": "heroes",
+      "bytes": 65119,
+      "sha256": "a66c3500c41f8df08197574f8ba43509d8a8008b8b767490b03148dca29b2532"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-medical-3d.png",
+      "stage": "heroes",
+      "bytes": 59600,
+      "sha256": "fd598151b00afcc8f94c874cb5add947567f286667ed44869119f329b9cbefdd"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-medical-poster.png",
+      "stage": "heroes",
+      "bytes": 99071,
+      "sha256": "be0205d6f19cc501f60e4580d0b5a3d462fbc861f2d774e42e392943dd613254"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-medical-3d-start.png",
+      "stage": "heroes",
+      "bytes": 31508,
+      "sha256": "4191aa1be6c935eaf8a769ea359d6c84a8df2102ea7fe77467210b21e68aa127"
+    },
+    {
+      "id": "medical",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-medical-3d.png",
+      "stage": "heroes",
+      "bytes": 29148,
+      "sha256": "cef53fcbef3bb253e8564bc0b024927072cc10c4971687fc6f4893d5bad53bfb"
+    },
+    {
+      "id": "personal",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/personal-0.png",
+      "stage": "render-all",
+      "bytes": 360655,
+      "sha256": "ab0a939343344215e94924b630efc5db65ff3693a6c1bfc74e46d3514f163d67"
+    },
+    {
+      "id": "personal",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/personal-4.png",
+      "stage": "render-all",
+      "bytes": 399213,
+      "sha256": "4947e85ea8b3d4bfc5003f08a6a649e19721075a295003bd51044ac99ae3ff63"
+    },
+    {
+      "id": "personal",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/personal-8.5.png",
+      "stage": "render-all",
+      "bytes": 382949,
+      "sha256": "dd0fab8ac85b64b52ea475c620947eb3f77a020f8df6d85850069cde42d6fb8f"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-personal-poster.png",
+      "stage": "heroes",
+      "bytes": 320395,
+      "sha256": "8cd37119a76e8406e451a05ff398cb98a0094257c8fc460a168175c80442c4f6"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-personal-3d-start.png",
+      "stage": "heroes",
+      "bytes": 74744,
+      "sha256": "84709391af6ece6fa9b53e905ddb3ad3ca2acf18514e29d7b35706873cfe9939"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-personal-3d.png",
+      "stage": "heroes",
+      "bytes": 65072,
+      "sha256": "10b41f448b3a56999349cc38b2384d480ef06d3d908f5fa6ace582a29a7f705d"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-personal-poster.png",
+      "stage": "heroes",
+      "bytes": 123434,
+      "sha256": "9c51fc23538c78238ed44eeb89e02465a252f8fdd78159556c440f7722ffaac5"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-personal-3d-start.png",
+      "stage": "heroes",
+      "bytes": 32850,
+      "sha256": "c15a89abe3d08dbf8d02a19870662990f9eeceb1bbad308093a801400d91e9b2"
+    },
+    {
+      "id": "personal",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-personal-3d.png",
+      "stage": "heroes",
+      "bytes": 29344,
+      "sha256": "82b6b9b468f61c12d42c28c406c2429382a30fd53bdb77f06eecfa4479ad6d80"
+    },
+    {
+      "id": "recreation",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/recreation-0.png",
+      "stage": "render-all",
+      "bytes": 209860,
+      "sha256": "22f5297377504ba0e9421db3f4b279289264983418b5f305b557761f762906d8"
+    },
+    {
+      "id": "recreation",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/recreation-4.png",
+      "stage": "render-all",
+      "bytes": 212575,
+      "sha256": "491d20b5f41f63afb8dca4ff2c96ea22a15bae11b74fed354261058e74aa948b"
+    },
+    {
+      "id": "recreation",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/recreation-8.5.png",
+      "stage": "render-all",
+      "bytes": 227851,
+      "sha256": "59216ea5d652429254aa6cd7a3282320ebc690e7d26f915044802f2dfb0df59e"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-recreation-poster.png",
+      "stage": "heroes",
+      "bytes": 191894,
+      "sha256": "9444554a8d2647cc124a300d4c3d1b3f226a5206ad69f4149000fca8b1f98682"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-recreation-3d-start.png",
+      "stage": "heroes",
+      "bytes": 49289,
+      "sha256": "b45bb11aa51ba45e69405202429ff03d7dc17a0ef54b4e400f8c515965bfd0ea"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-recreation-3d.png",
+      "stage": "heroes",
+      "bytes": 40418,
+      "sha256": "0525ef302256af7e09b06372fb5a71d7d3f271a728dcb7586ac68c019bd1b226"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-recreation-poster.png",
+      "stage": "heroes",
+      "bytes": 77434,
+      "sha256": "e9a0cc8cf5b592259a91a5dca35a0a5294c02d13ae33dd193794ca0f3acb2edd"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-recreation-3d-start.png",
+      "stage": "heroes",
+      "bytes": 24478,
+      "sha256": "eaec6c371525d0263ddea6e3c1544ccfcd53846703b40af0a8e7203e50ecbe7c"
+    },
+    {
+      "id": "recreation",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-recreation-3d.png",
+      "stage": "heroes",
+      "bytes": 20461,
+      "sha256": "87a606f6efcce706a301e41f8bc622a950b0b104fdc061c93c6a0c1ce803ca64"
+    },
+    {
+      "id": "custom",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/custom-0.png",
+      "stage": "render-all",
+      "bytes": 242312,
+      "sha256": "0726d22f01bd1ebb6b728808526618311fc56bf6d8b4aece96c07c36ac4dcae4"
+    },
+    {
+      "id": "custom",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/custom-4.png",
+      "stage": "render-all",
+      "bytes": 153053,
+      "sha256": "de1b597d693e634e5c1fb467e5ac0b7378b9031b783f6efebca7814f88c0ef34"
+    },
+    {
+      "id": "custom",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/custom-8.5.png",
+      "stage": "render-all",
+      "bytes": 252170,
+      "sha256": "5e1eadeb73cbc412ce33c16c6aa21bcc81a71c81f7fe3c112bec44220bd72044"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/1440-custom-poster.png",
+      "stage": "heroes",
+      "bytes": 243913,
+      "sha256": "e5367661c97dcc433518a31bad8c53697bf6b90d40242d515b4fbe51e7eebe3e"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-custom-3d-start.png",
+      "stage": "heroes",
+      "bytes": 69802,
+      "sha256": "386b58ef6d43c952f3300c74090dfc99f0e5a929668ea94bcc435b0feabc0df0"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-custom-3d.png",
+      "stage": "heroes",
+      "bytes": 62772,
+      "sha256": "3c615430a1e4754422581b936d77421221a9c10e70ddce5f77bb2c3437a64c51"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 375,
+      "phase": "poster",
+      "path": "apps/web/test-results/heroes/375-custom-poster.png",
+      "stage": "heroes",
+      "bytes": 96541,
+      "sha256": "ff9d0f423f1c40c6a7873a60a01d4857e3f35eaa934ea86b6e9dedb29f06ad37"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-custom-3d-start.png",
+      "stage": "heroes",
+      "bytes": 31697,
+      "sha256": "0472bd03b1cd67a56ee4a9ba4ca7e3bb925f84807222abb1a4580a550d4826e9"
+    },
+    {
+      "id": "custom",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-custom-3d.png",
+      "stage": "heroes",
+      "bytes": 29280,
+      "sha256": "a87b1cf3942367545d587367b2a634671821112df92578a3a2dd4dcee7de051f"
+    },
+    {
+      "id": "vault",
+      "kind": "turntable",
+      "phase": 0,
+      "path": "apps/media/hyperframes/output/heroes/vault-0.png",
+      "stage": "render-all",
+      "bytes": 336459,
+      "sha256": "476346bf577bbfaca1caa5e91268d6f10c91f5d5ebb8083b5ca0e7b0ba7f8766"
+    },
+    {
+      "id": "vault",
+      "kind": "turntable",
+      "phase": 4,
+      "path": "apps/media/hyperframes/output/heroes/vault-4.png",
+      "stage": "render-all",
+      "bytes": 279681,
+      "sha256": "2135839570ff9a70d90f56b4ae0742ca062e230eb4aef46fa3b0cc74b9e12e74"
+    },
+    {
+      "id": "vault",
+      "kind": "turntable",
+      "phase": 8.5,
+      "path": "apps/media/hyperframes/output/heroes/vault-8.5.png",
+      "stage": "render-all",
+      "bytes": 391648,
+      "sha256": "f8be295e6cf0c45933695769ccd19da6ba0cd0e8e26032c62b3a7609448dd6e1"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "page-3d",
+      "path": "apps/web/test-results/heroes/1440-vault.png",
+      "stage": "heroes",
+      "bytes": 112071,
+      "sha256": "ca4e0d9830b6e0256ebf7225c759590eeb42fc33dddfbf64bcb2d8a546294406"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/1440-vault-3d-start.png",
+      "stage": "heroes",
+      "bytes": 51612,
+      "sha256": "7a3f8b19a50704343f59286361dc24743912070f50c757f0b0f594c8981c18ec"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 1440,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/1440-vault-3d.png",
+      "stage": "heroes",
+      "bytes": 44264,
+      "sha256": "7f7a20c9549551e3bc59b15e8aef9a94a152e824f34ce47f3b0b5979f2cd99d2"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 375,
+      "phase": "page-3d",
+      "path": "apps/web/test-results/heroes/375-vault.png",
+      "stage": "heroes",
+      "bytes": 61337,
+      "sha256": "22ae40fc76d59c9daf6c43652ba2fa95450d0aaa43830f847629b3846f3b530b"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d-start",
+      "path": "apps/web/test-results/heroes/375-vault-3d-start.png",
+      "stage": "heroes",
+      "bytes": 33816,
+      "sha256": "cf777b7376b0cb79525f2308bf71d3fe3ca1ee34829c06ea9e38bf81020f1278"
+    },
+    {
+      "id": "vault",
+      "kind": "browser",
+      "width": 375,
+      "phase": "3d",
+      "path": "apps/web/test-results/heroes/375-vault-3d.png",
+      "stage": "heroes",
+      "bytes": 29467,
+      "sha256": "746863ab5ef2096d05e60f85a6c2826a69a4ad98a4144a1121147a9c90f3496c"
+    }
+  ],
+  "remaining": [
+    "Material/lighting/identity and full-angle photoreal approval remain open. Framing improvement does not alter or approve material maps.",
+    "Physical-device, hardware X4122, unchanged Tireside and broader production gates remain open.",
+    "Confirm remaining visible wheel/tire lettering against intended asset identity and provenance before release; no legal/trademark clearance asserted."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "baseline": "c9d3acccb8ee22fd6f08b29d7eacca91eee6ec49",
+  "startedAt": "2026-10-21T23:33:06.976Z",
+  "status": "failed",
+  "knownOpen": "Inherited hardware/D3D X4122 diagnostic, Tireside fidelity and final collection photoreal review remain open; explicit strict software checker, no console suppression.",
+  "stages": [
+    {
+      "name": "web-tests",
+      "startedAt": "2026-10-21T23:33:06.978Z",
+      "finishedAt": "2026-10-21T23:34:40.839Z",
+      "exitCode": 0
+    },
+    {
+      "name": "web-lint",
+      "startedAt": "2026-10-21T23:34:40.841Z",
+      "finishedAt": "2026-10-21T23:34:52.046Z",
+      "exitCode": 1
+    }
+  ],
+  "finishedAt": "2026-10-21T23:34:52.047Z"
+}
