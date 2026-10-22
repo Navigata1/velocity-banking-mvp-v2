@@ -104,7 +104,7 @@ function runLenderSnapshotTests() {
   test('explicit full local reset clears all three physical Portfolio channels only within its allowlist', () => {
     const io = storage({ [legacy]: 'one', [canonical]: 'two', [active]: 'three', unrelated: 'keep' });
     const result = reset.clearLocalDemoData(io);
-    assert.equal(result.cleared, 3); assert.equal(result.attempted, reset.LOCAL_DEMO_STORAGE_KEYS.length + 2);
+    assert.equal(result.cleared, 3); assert.equal(result.attempted, reset.LOCAL_DEMO_STORAGE_KEYS.length + 3);
     for (const key of [legacy, canonical, active]) assert.equal(io.getItem(key), null);
     assert.equal(io.getItem('unrelated'), 'keep');
   });

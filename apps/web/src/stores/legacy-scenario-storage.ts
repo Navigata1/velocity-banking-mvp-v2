@@ -1,8 +1,9 @@
 const LEGACY_SCENARIO_KEY = 'velocity-bank-storage';
-const unsupported = 'The saved single-target scenario contains unsupported lender terms. Its original bytes were preserved. Use Portfolio document3 for lender profiles.';
+const unsupported = 'The saved single-target scenario contains unsupported lender terms or a dated plan. Its original bytes were preserved. Use Portfolio document3 for lender profiles or document4 for dated plans.';
 
 export function assertLegacyScenarioState(value: unknown): void {
-  if (value && typeof value === 'object' && 'loc' in value && value.loc && typeof value.loc === 'object' && 'lenderTerms' in value.loc) {
+  if (value && typeof value === 'object' && ('datedPlan' in value
+    || 'loc' in value && value.loc && typeof value.loc === 'object' && ('lenderTerms' in value.loc || 'datedPlan' in value.loc))) {
     throw new Error(unsupported);
   }
 }
@@ -10,7 +11,8 @@ export function assertLegacyScenarioState(value: unknown): void {
 export function assertLegacyScenarioDocument(raw: string): void {
   let value: unknown;
   try { value = JSON.parse(raw); } catch { return; }
-  assertLegacyScenarioState(value && typeof value === 'object' && 'state' in value ? value.state : value);
+  assertLegacyScenarioState(value);
+  if (value && typeof value === 'object' && 'state' in value) assertLegacyScenarioState(value.state);
 }
 
 interface StoragePort { getItem(key: string): string | null; setItem(key: string, value: string): void; removeItem(key: string): void }

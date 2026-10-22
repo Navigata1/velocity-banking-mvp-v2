@@ -56,7 +56,9 @@ export default function SettingsPage() {
   }
 
   const handleExport = () => {
-    const text = portfolioStore.exportState();
+    let text: string;
+    try { text = portfolioStore.exportState(); }
+    catch (cause) { setImportStatus(cause instanceof Error ? cause.message : 'Portfolio backup could not be exported.'); return; }
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

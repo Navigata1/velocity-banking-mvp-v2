@@ -86,7 +86,7 @@ function runLenderPortfolioTests() {
   test('version3 rejects unknown units and preserves source objects on rejection', () => {
     const value = withTerms({ annualFee: 0 }), before = JSON.stringify(value);
     assert.throws(() => codec.decodePortfolioDocument(JSON.stringify({ version: 3, aprUnit: 'legacy', data: value })));
-    assert.throws(() => codec.decodePortfolioDocument(JSON.stringify({ version: 4, aprUnit: 'decimal', data: value })));
+    assert.throws(() => codec.decodePortfolioDocument(JSON.stringify({ version: 5, aprUnit: 'decimal', data: value })));
     assert.equal(JSON.stringify(value), before);
   });
   assert.equal(failures, 0, `${failures}/${cases} lender Portfolio contracts failed`);

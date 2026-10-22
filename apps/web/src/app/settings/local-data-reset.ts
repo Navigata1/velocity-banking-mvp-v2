@@ -1,4 +1,4 @@
-import { CANONICAL_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY } from '@/stores/portfolio-persistence';
+import { CANONICAL_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY, DATED_PORTFOLIO_KEY } from '@/stores/portfolio-persistence';
 
 export interface StorageLike {
   getItem: (key: string) => string | null;
@@ -25,14 +25,14 @@ export function clearLocalDemoData(storage: StorageLike | null = browserStorage(
   cleared: number;
 } {
   if (!storage) {
-    return { attempted: LOCAL_DEMO_STORAGE_KEYS.length + 2, cleared: 0 };
+    return { attempted: LOCAL_DEMO_STORAGE_KEYS.length + 3, cleared: 0 };
   }
 
   let cleared = 0;
-  for (const key of [...LOCAL_DEMO_STORAGE_KEYS, CANONICAL_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY]) {
+  for (const key of [...LOCAL_DEMO_STORAGE_KEYS, CANONICAL_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY, DATED_PORTFOLIO_KEY]) {
     if (storage.getItem(key) != null) cleared += 1;
     storage.removeItem(key);
   }
 
-  return { attempted: LOCAL_DEMO_STORAGE_KEYS.length + 2, cleared };
+  return { attempted: LOCAL_DEMO_STORAGE_KEYS.length + 3, cleared };
 }

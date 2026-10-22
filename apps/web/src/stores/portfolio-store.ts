@@ -16,6 +16,7 @@ import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-
 import { buildPortfolioPayoffModel } from '@/engine/portfolio-payoff-model';
 import { decodePortfolioBook, decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
 import { decodeLenderTerms, type LenderTermsInput, type MoneyLoopLOC } from '@interestshield/financial-engine';
+import { decodeDatedPortfolioPlan, type DatedPortfolioPlan } from '@interestshield/financial-engine/dated-plan';
 import { createPortfolioPersistence, LEGACY_PORTFOLIO_KEY } from './portfolio-persistence';
 
 export type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
@@ -38,6 +39,7 @@ export interface PortfolioState {
   strategy: PayoffStrategy;
   focusMode: FocusMode;
   splitRatioPrimary: number;
+  datedPlan?: DatedPortfolioPlan;
   lastResult?: PortfolioSimulationResult;
   lastRunSummary?: PortfolioRunSummary;
   lastRunComparison?: PortfolioRunComparison;
@@ -48,6 +50,7 @@ export interface PortfolioState {
   setChunkAmount: (v: number) => void;
   updateLOC: (patch: Partial<Pick<PortfolioLOC, 'limit' | 'balance' | 'apr'>>) => void;
   setLenderTerms: (input: LenderTermsInput | null) => { ok: true } | { ok: false; error: string };
+  setDatedPlan: (plan: DatedPortfolioPlan | null) => { ok: true } | { ok: false; error: string };
   setStrategy: (s: PayoffStrategy) => void;
   setFocusMode: (m: FocusMode) => void;
   setSplitRatioPrimary: (r: number) => void;
@@ -302,12 +305,14 @@ type PersistedPortfolioFields = Pick<
   | 'strategy'
   | 'focusMode'
   | 'splitRatioPrimary'
+  | 'datedPlan'
 >;
 
 function portfolioBookFromState(state: PersistedPortfolioFields): PortfolioBook {
   return decodePortfolioBook({ monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
     extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount, loc: state.loc,
-    strategy: state.strategy, focusMode: state.focusMode, splitRatioPrimary: state.splitRatioPrimary, debts: state.debts });
+    strategy: state.strategy, focusMode: state.focusMode, splitRatioPrimary: state.splitRatioPrimary, debts: state.debts,
+    ...(state.datedPlan === undefined ? {} : { datedPlan: state.datedPlan }) });
 }
 
 export function sanitizePersistedPortfolioState(
@@ -322,6 +327,8 @@ export function sanitizePersistedPortfolioState(
 
   return {
     debts: sanitizePersistedDebts(persisted.debts, currentState.debts),
+    ...('datedPlan' in persisted ? { datedPlan: decodeDatedPortfolioPlan(persisted.datedPlan) }
+      : currentState.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(currentState.datedPlan) }),
     monthlyIncome: safeNonNegativeNumber(persisted.monthlyIncome, currentState.monthlyIncome, 'Monthly income'),
     monthlyExpenses: safeNonNegativeNumber(persisted.monthlyExpenses, currentState.monthlyExpenses, 'Monthly expenses'),
     extraMonthlyPayment: safeNonNegativeNumber(
@@ -401,9 +408,21 @@ export const usePortfolioStore = create<PortfolioState>()(
           const book = portfolioBookFromState(get());
           if (input === null) delete book.loc.lenderTerms;
           else book.loc.lenderTerms = decodeLenderTerms(input);
-          return get().importState(encodePortfolioDocument(book, 3));
+          const version = book.datedPlan !== undefined || portfolioPersistence.getDocumentVersion() === 4 ? 4 : 3;
+          return get().importState(encodePortfolioDocument(book, version));
         } catch (cause) {
           return { ok: false as const, error: cause instanceof Error ? cause.message : 'Lender terms are invalid.' };
+        }
+      },
+
+      setDatedPlan: (plan) => {
+        try {
+          const book = portfolioBookFromState(get());
+          if (plan === null) delete book.datedPlan;
+          else book.datedPlan = decodeDatedPortfolioPlan(plan);
+          return get().importState(encodePortfolioDocument(book, 4));
+        } catch (cause) {
+          return { ok: false as const, error: cause instanceof Error ? cause.message : 'Dated plan is invalid.' };
         }
       },
 
@@ -454,21 +473,31 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
 
       exportState: () => {
-        return encodePortfolioDocument(portfolioBookFromState(get()), portfolioPersistence.getDocumentVersion() === 3 ? 3 : undefined);
+        const version = portfolioPersistence.getDocumentVersion();
+        if (!portfolioPersistence.canWrite() && portfolioPersistence.getStatus().status === 'error') {
+          throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio storage needs review before export.');
+        }
+        return encodePortfolioDocument(portfolioBookFromState(get()), version === 3 || version === 4 ? version : undefined);
       },
 
       importState: (jsonStr) => {
         try {
           const book = decodePortfolioDocument(jsonStr);
-          const documentVersion = JSON.parse(jsonStr).version === 3 ? 3 : undefined;
+          const version = JSON.parse(jsonStr).version;
+          const documentVersion = version === 3 || version === 4 ? version : undefined;
+          const activeVersion = portfolioPersistence.getDocumentVersion() ?? 2;
           if (!portfolioPersistence.canWrite()) throw new Error('Portfolio storage needs review before replacement.');
           const unchanged = encodePortfolioDocument(book) === encodePortfolioDocument(portfolioBookFromState(get()));
-          if (unchanged && portfolioPersistence.getStatus().status === 'ready'
-            && (documentVersion !== 3 || portfolioPersistence.getDocumentVersion() === 3)) return { ok: true as const };
+          if (unchanged) {
+            // Preflight even a no-op, without migrating equivalent old1/default state just to acknowledge it.
+            const stored = portfolioPersistence.getItem(LEGACY_PORTFOLIO_KEY);
+            if (portfolioPersistence.getStatus().status === 'ready' && activeVersion >= (documentVersion ?? 2)
+              && (stored === null || encodePortfolioDocument(stored.state) === encodePortfolioDocument(book))) return { ok: true as const };
+          }
           portfolioPersistence.setItem(LEGACY_PORTFOLIO_KEY, { state: book, version: 2 }, documentVersion);
           if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
           if (unchanged) return { ok: true as const };
-          set({ ...book, lastResult: undefined, lastRunSummary: undefined, lastRunComparison: undefined });
+          set({ ...book, datedPlan: book.datedPlan, lastResult: undefined, lastRunSummary: undefined, lastRunComparison: undefined });
           get().recompute();
           if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
           return { ok: true as const };
@@ -495,12 +524,14 @@ export const usePortfolioStore = create<PortfolioState>()(
           loc: state.loc,
           chunkAmount: state.chunkAmount,
           maxMonths: 600,
+          ...(state.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(state.datedPlan) }),
         };
         const result = simulatePortfolio(inputs);
         const payoff = buildPortfolioPayoffModel({
           monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
           extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount,
           loc: state.loc, debts: state.debts, ...settings,
+          ...(state.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(state.datedPlan) }),
         }).plans.find(plan => plan.strategy === state.strategy);
         const summary = summarizePortfolioRun(inputs, result, payoff?.state === 'projected' || payoff?.state === 'cleared');
         const comparison = comparePortfolioRuns(state.lastRunSummary, summary);
@@ -530,11 +561,13 @@ export const usePortfolioStore = create<PortfolioState>()(
         strategy: state.strategy,
         focusMode: state.focusMode,
         splitRatioPrimary: state.splitRatioPrimary,
+        ...(state.datedPlan === undefined ? {} : { datedPlan: state.datedPlan }),
       }),
-      merge: (persistedState, currentState) => ({
-        ...currentState,
-        ...(persistedState == null ? {} : decodePortfolioBook(persistedState)),
-      }),
+      merge: (persistedState, currentState) => {
+        if (persistedState == null) return currentState;
+        const book = decodePortfolioBook(persistedState);
+        return { ...currentState, ...book, datedPlan: book.datedPlan };
+      },
     }
   )
 );

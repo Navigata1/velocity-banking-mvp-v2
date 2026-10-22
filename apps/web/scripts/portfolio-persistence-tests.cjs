@@ -27,6 +27,7 @@ const api = load(adapterFile);
 const legacyKey = 'interestshield-portfolio-v1';
 const canonicalKey = 'interestshield-portfolio-v2';
 const termsKey = 'interestshield-portfolio-v3';
+const datedKey = 'interestshield-portfolio-v4';
 const plain = value => JSON.parse(JSON.stringify(value));
 const book = {
   monthlyIncome: 8200.45123, monthlyExpenses: 4700.121, extraMonthlyPayment: 50.125, chunkAmount: 1000.005,
@@ -83,7 +84,7 @@ test('constructor and absent hydration never write defaults or probe before a re
   assert.deepEqual(plain(initial), { status: 'ready', error: null });
   assert.ok(Object.isFrozen(initial));
   assert.equal(adapter.getItem(legacyKey), null);
-  assert.deepEqual(io.calls, [['get', termsKey], ['get', canonicalKey], ['get', legacyKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey], ['get', canonicalKey], ['get', legacyKey]]);
   assert.equal(io.entries.size, 0);
   assert.equal(adapter.getStatus(), initial);
 });
@@ -104,7 +105,7 @@ test('canonical 2 means 200-percent and takes precedence without even reading co
   assert.equal(result.state.debts[0].apr, 2);
   assert.equal(result.state.loc.apr, 2);
   assert.equal(result.state.debts[1].promo.postIntroApr, 2);
-  assert.deepEqual(io.calls, [['get', termsKey], ['get', canonicalKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey], ['get', canonicalKey]]);
   assert.equal(io.entries.get(canonicalKey), bytes);
 });
 
@@ -116,7 +117,7 @@ test('present corrupt or misplaced-v1 canonical data never falls back to legacy'
     const io = storage({ [canonicalKey]: bytes, [legacyKey]: legacyBytes }), adapter = create(io.port);
     assert.equal(adapter.getItem(legacyKey), null);
     assertError(adapter, /read|version|Portfolio/i);
-    assert.deepEqual(io.calls, [['get', termsKey], ['get', canonicalKey]]);
+    assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey], ['get', canonicalKey]]);
     assert.equal(io.entries.get(canonicalKey), bytes);
     assert.equal(io.entries.get(legacyKey), legacyBytes);
   }
@@ -201,7 +202,7 @@ test('failed canonical set preserves its old bytes and freezes mutable error det
 test('remove deletes canonical only; the retained legacy book is visible on a later read', () => {
   const io = storage({ [canonicalKey]: canonical(book), [legacyKey]: legacyBytes, unrelated: 'keep' }), adapter = create(io.port);
   assert.doesNotThrow(() => adapter.removeItem(legacyKey));
-  assert.deepEqual(io.calls, [['get', termsKey], ['remove', canonicalKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey], ['remove', canonicalKey]]);
   assert.equal(io.entries.has(canonicalKey), false);
   assert.equal(io.entries.get(legacyKey), legacyBytes);
   assert.equal(io.entries.get('unrelated'), 'keep');
@@ -279,7 +280,7 @@ test('read I/O failure never falls back or permits an unchecked write', () => {
   io.failures.get = new Error('synthetic read denied');
   assert.doesNotThrow(() => assert.equal(adapter.getItem(legacyKey), null));
   assertError(adapter, /synthetic read denied/);
-  assert.deepEqual(io.calls, [['get', termsKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey]]);
   io.failures.get = null;
   adapter.setItem(legacyKey, { state: book, version: 2 });
   assert.equal(io.calls.length, 1);
@@ -380,7 +381,7 @@ test('active v3 reads first, preserves decimal APR and returns independent neste
   assert.equal(api.TERMS_PORTFOLIO_KEY, termsKey);
   const read = adapter.getItem(legacyKey);
   assert.deepEqual(plain(read), { state: supplied, version: 2 });
-  assert.deepEqual(io.calls, [['get', termsKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey]]);
   read.state.loc.lenderTerms.minimumPayment.value = 900;
   read.state.loc.lenderTerms.sources.minimumPayment = 'model-default';
   assert.deepEqual(plain(adapter.getItem(legacyKey).state), supplied);
@@ -395,7 +396,7 @@ test('present corrupt v3 blocks reads and writes instead of falling through to e
     assert.equal(adapter.getItem(legacyKey), null);
     assertError(adapter, /read|version|Portfolio/i);
     adapter.setItem(legacyKey, { state: book, version: 2 });
-    assert.deepEqual(io.calls, [['get', termsKey]]);
+    assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey]]);
     assert.equal(io.entries.get(termsKey), bytes);
     assert.equal(io.entries.get(canonicalKey), old);
     assert.equal(io.entries.get(legacyKey), legacyBytes);
@@ -424,7 +425,7 @@ test('explicit document3 adoption with no terms creates a copy even when source 
 });
 
 test('invalid explicit document versions reject before any storage I/O', () => {
-  for (const version of [null, 1, 2, 4, '3']) {
+  for (const version of [null, 1, 2, 5, '3']) {
     const io = storage({ [canonicalKey]: canonical(book) }), adapter = create(io.port);
     adapter.setItem(legacyKey, { state: book, version: 2 }, version);
     assertError(adapter, /version/i);
@@ -454,7 +455,7 @@ test('v3 snapshot encoding keeps explicit document version after terms are remov
   const bytes = JSON.stringify({ version: 3, aprUnit: 'decimal', data: book });
   const io = storage({ [termsKey]: bytes, [canonicalKey]: '{invalid archive' });
   assert.deepEqual(JSON.parse(api.readPortfolioSnapshotDocument(io.port)), JSON.parse(bytes));
-  assert.deepEqual(io.calls, [['get', termsKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey]]);
 });
 
 test('explicit active v3 removal preserves both old channels and cannot clear a corruption latch', () => {
@@ -476,7 +477,7 @@ test('unchecked save preflights active v3 and cannot overwrite corrupt present b
   const io = storage({ [termsKey]: '{broken active', [canonicalKey]: canonical(book) }), adapter = create(io.port);
   adapter.setItem(legacyKey, { state: book, version: 2 });
   assertError(adapter, /read/i);
-  assert.deepEqual(io.calls, [['get', termsKey]]);
+  assert.deepEqual(io.calls, [['get', datedKey], ['get', termsKey]]);
   assert.equal(io.entries.get(termsKey), '{broken active');
 });
 
