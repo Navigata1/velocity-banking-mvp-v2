@@ -39,7 +39,7 @@ test('commits deterministic scenario JSON generated from the shared financial en
   const engine = await readFile(engineSource, 'utf8');
   assert.equal(scenarios.version, 1);
   assert.match(scenarios.engineContractVersion, /^source-sha256:[a-f0-9]{12}$/);
-  assert.equal(scenarios.lenderTermsContractVersion, '2.0.0');
+  assert.equal(scenarios.lenderTermsContractVersion, '3.0.0');
   const portableEngineSource = engine.replace(/\r\n/g, '\n');
   assert.equal(scenarios.engineSourceDigest, createHash('sha256').update(portableEngineSource).digest('hex'));
   assert.deepEqual(scenarios.scenarios.map((scenario) => scenario.id), [
@@ -49,6 +49,8 @@ test('commits deterministic scenario JSON generated from the shared financial en
   ]);
 
   const [baseline, month, blocked] = scenarios.scenarios;
+  assert.equal(createHash('sha256').update(JSON.stringify(scenarios.scenarios.slice(0, 2))).digest('hex'),
+    '11706c6eeb91da7bfb924425ea6c4572ba000bb00aa542f8db42298884973694');
   assert.equal(baseline.status, 'modeled');
   assert.equal(baseline.output.compatible, true);
   assert.equal(baseline.output.baseline.isPayoffPossible, true);
@@ -70,6 +72,19 @@ test('commits deterministic scenario JSON generated from the shared financial en
   assert.match(generator, /simulateMoneyLoopMonth/);
   assert.match(generator, /buildLenderTermsContract/);
   assert.match(generator, /--check/);
+});
+
+test('accepts lender contract3 and rejects obsolete bundle contracts without weakening the schema', () => {
+  const result = spawnSync(process.execPath, [require.resolve('tsx/cli'), '--eval', `
+    const assert = require('node:assert/strict');
+    const { scenarioBundleSchema } = require('./remotion/src/scenario-schema.ts');
+    const data = require('./remotion/data/scenarios.v1.json');
+    assert.equal(scenarioBundleSchema.safeParse(data).success, true);
+    for (const version of ['1.0.0', '2.0.0', '4.0.0', null]) {
+      assert.equal(scenarioBundleSchema.safeParse({ ...data, lenderTermsContractVersion: version }).success, false);
+    }
+  `], { cwd: fileURLToPath(mediaRoot), encoding: 'utf8' });
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
 });
 
 test('accepts a CRLF scenario checkout when generated financial data is unchanged', async () => {

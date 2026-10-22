@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "engineContractVersion": "source-sha256:e0231be7884e",
-  "lenderTermsContractVersion": "2.0.0",
-  "engineSourceDigest": "e0231be7884e9d821ad0bfc5f8c6d29f7c80bf806267d003a96f1bfd9011d6cf",
+  "engineContractVersion": "source-sha256:62613fe1245a",
+  "lenderTermsContractVersion": "3.0.0",
+  "engineSourceDigest": "62613fe1245ac680b6394585ad5498099fe87003b6620d105b54c38c1de9f828",
   "generatedBy": [
     "simulateAmortizedPayoff",
     "simulateMoneyLoopMonth",
@@ -241,7 +241,8 @@
           "repaymentPeriodMonths is missing; lender-specific projections are blocked.",
           "minimumDraw is missing; lender-specific projections are blocked.",
           "minimumPayment is missing; lender-specific projections are blocked.",
-          "rateMode is user provided and must be verified against lender documents."
+          "rateMode is user provided and must be verified against lender documents.",
+          "rateMode is not enforced by the monthly model; lender-specific projections are blocked."
         ]
       },
       "cards": [
