@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const {decodePngRgba,samplePngPixels,compareSpatialDescriptors}=require('../../web/scripts/png-pixel-proof.cjs');
+const {presentationBounds,visibleBounds}=require('../../web/scripts/hero-presentation-proof.cjs');
 const directory=new URL('../hyperframes/output/heroes/',import.meta.url);
 const results=[];
 for(const id of ['car','house','land','creditCard','studentLoan','medical','personal','recreation','custom','vault']) {
@@ -14,11 +15,17 @@ for(const id of ['car','house','land','creditCard','studentLoan','medical','pers
   const stream=metadata.streams.find(s=>s.codec_type==='video');
   assert.equal(stream.width,1920); assert.equal(stream.height,1080);
   assert.ok(Math.abs(Number(metadata.format.duration)-9)<0.1);
-  const frames=[];
+  const frames=[];let presentation;
   for(const time of [0,4,8.5]) {
     const bytes=execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-ss',String(time),'-i',filename,'-frames:v','1','-f','image2pipe','-c:v','png','-'],{maxBuffer:32*1024*1024,windowsHide:true});
     await writeFile(new URL(`${id}-${time}.png`,directory),bytes);
     const image=decodePngRgba(bytes);
+    const region={left:0,right:1920,top:50,bottom:970};
+    visibleBounds(image,region);
+    if(time===0) {
+      const visible=presentationBounds(image,id,region);
+      presentation={bounds:visible,heightFraction:(visible.bottom-visible.top)/(region.bottom-region.top),region};
+    }
     const bounds={left:300,right:1620,top:50,bottom:970};
     const proof=samplePngPixels(image,41,bounds);
     assert.ok(proof.colorCount>20,`${id} at ${time}s is blank`);
@@ -30,7 +37,7 @@ for(const id of ['car','house','land','creditCard','studentLoan','medical','pers
   assert.ok(closure.meanCellDistance<3,`${id} does not return to its initial orientation`);
   const bytes=await readFile(filename);
   results.push({id,width:stream.width,height:stream.height,duration:Number(metadata.format.duration),
-    bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),motion,closure});
+    bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),motion,closure,presentation});
   console.log(`PASS ${id}: 1080p, 9s, visible movement, complete revolution and rest`);
 }
 await writeFile(new URL('verification.json',directory),JSON.stringify(results,null,2)+'\n');

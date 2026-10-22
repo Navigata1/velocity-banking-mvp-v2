@@ -6,22 +6,11 @@ const { chromium } = require('playwright-core');
 const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-harness.cjs');
 const { startBuiltServer, stopServer } = require('./built-server-harness.cjs');
 const { decodePngRgba, samplePngPixels, compareSpatialDescriptors, hasMaterialSpatialChange } = require('./png-pixel-proof.cjs');
+const { visibleBounds, presentationBounds, minimumHeight } = require('./hero-presentation-proof.cjs');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'test-results/heroes');
 fs.mkdirSync(output, { recursive: true });
 const stageTimeout = 120000;
-function visibleBounds(image) {
-  let left=image.width,top=image.height,right=0,bottom=0,foreground=0;
-  for(let y=0;y<image.height;y++) for(let x=0;x<image.width;x++) {
-    const i=(y*image.width+x)*image.bytesPerPixel;
-    const delta=Math.abs(image.pixels[i]-image.pixels[0])+Math.abs(image.pixels[i+1]-image.pixels[1])+Math.abs(image.pixels[i+2]-image.pixels[2]);
-    if(delta<=40) continue;
-    foreground++; left=Math.min(left,x);right=Math.max(right,x+1);top=Math.min(top,y);bottom=Math.max(bottom,y+1);
-  }
-  assert.ok(foreground>image.width*image.height*0.02,'insufficient visible geometry');
-  assert.ok(left>1 && top>1 && right<image.width-1 && bottom<image.height-1,'model touches canvas edge');
-  return {left,right,top,bottom};
-}
 const domains = [['car','Auto'],['house','House'],['land','Land'],['creditCard','Credit Card'],
   ['studentLoan','Student Loan'],['medical','Medical'],['personal','Personal'],['recreation','Recreation'],['custom','Custom']];
 function verifyVisibilityControls() {
@@ -35,6 +24,11 @@ function verifyVisibilityControls() {
   assert.throws(()=>visibleBounds(fixture(40,40,50,50)),/insufficient visible geometry/);
   assert.throws(()=>visibleBounds(fixture(0,20,30,80)),/model touches canvas edge/);
   assert.deepEqual(visibleBounds(fixture(20,20,80,80)),{left:20,right:80,top:20,bottom:80});
+  for(const id of Object.keys(minimumHeight)) {
+    assert.throws(()=>presentationBounds(fixture(20,40,80,60),id),/model height/);
+    presentationBounds(fixture(10,10,90,90),id);
+  }
+  console.log('PASS hero presentation controls: small silhouettes rejected for all ten models');
   console.log('PASS hero visibility controls: blank, undersized and clipped frames rejected');
 }
 async function beforeDeadline(deadline, action, label) {
@@ -178,7 +172,7 @@ async function run() {
         fs.writeFileSync(path.join(output,`${width}-${id}-3d-start.png`),a);
         fs.writeFileSync(path.join(output,`${width}-${id}-3d.png`),b);
         const image=decodePngRgba(a),lastImage=decodePngRgba(b);
-        const boundsA=visibleBounds(image),boundsB=visibleBounds(lastImage);
+        const boundsA=presentationBounds(image,id),boundsB=visibleBounds(lastImage);
         const bounds={left:Math.min(boundsA.left,boundsB.left),top:Math.min(boundsA.top,boundsB.top),
           right:Math.max(boundsA.right,boundsB.right),bottom:Math.max(boundsA.bottom,boundsB.bottom)};
         const first=samplePngPixels(image,31,bounds),second=samplePngPixels(lastImage,31,bounds);
@@ -205,7 +199,7 @@ async function run() {
       fs.writeFileSync(path.join(output,`${width}-vault-3d.png`),endBytes);
       const end=decodePngRgba(endBytes);
       await page.clock.resume();
-      const va=visibleBounds(start),vb=visibleBounds(end);
+      const va=presentationBounds(start,'vault'),vb=visibleBounds(end);
       const region={left:Math.min(va.left,vb.left),right:Math.max(va.right,vb.right),top:Math.min(va.top,vb.top),bottom:Math.max(va.bottom,vb.bottom)};
       assert.ok(hasMaterialSpatialChange(compareSpatialDescriptors(samplePngPixels(start,31,region).stabilityDescriptor,samplePngPixels(end,31,region).stabilityDescriptor)),'vault did not rotate');
       console.log(`PASS ${width}px vault: nonblank, framed, moving`);
