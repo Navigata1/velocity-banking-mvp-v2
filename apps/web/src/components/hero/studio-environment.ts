@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 // Reflection cards, not visible scene decoration. Shared by web and video.
-export function createHeroEnvironment(renderer: THREE.WebGLRenderer): THREE.WebGLRenderTarget {
+export function createHeroEnvironment(renderer: THREE.WebGLRenderer, model?: string): THREE.WebGLRenderTarget {
   const studio = new THREE.Scene();
   studio.background = new THREE.Color('#15191c');
   const pixels = new Uint8Array(64 * 64 * 4);
@@ -30,6 +30,10 @@ export function createHeroEnvironment(renderer: THREE.WebGLRenderer): THREE.WebG
   card(4, 2, [0, -2, 4], 1);
   card(6, 1.5, [0, 5, 0], 4);
   card(1.5, 4, [-2, 2, -5], 2.5);
+  // Narrow rear reflection preserves the Card's silver-face gradient through its turn.
+  if (model === '/heroes/creditCard.glb') {
+    card(1.5, 3, [3.73215474204762, -2.468225341834624, 3.997359709025046], 1.2);
+  }
   let pmrem: THREE.PMREMGenerator | undefined;
   try {
     pmrem = new THREE.PMREMGenerator(renderer);

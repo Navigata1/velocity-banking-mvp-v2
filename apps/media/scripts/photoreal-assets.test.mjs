@@ -6,6 +6,8 @@ import { NodeIO, getBounds } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
 import sharp from 'sharp';
+import ts from 'typescript';
+import { parse } from 'parse5';
 import { Matrix4, Vector3 } from '../../web/node_modules/three/build/three.module.js';
 
 test('refined car carries textured PBR materials and compressed self-contained geometry', async () => {
@@ -102,4 +104,29 @@ test('web and HyperFrames share the same photographic studio reflections', async
   assert.match(web,/createHeroEnvironment/);
   assert.match(video,/createHeroEnvironment/);
   assert.match(preparation,/studio-environment\.ts/);
+  function environmentArgs(code,kind) {
+    const file=ts.createSourceFile('source.tsx',code,ts.ScriptTarget.Latest,true,kind);
+    assert.equal(file.parseDiagnostics.length,0);
+    const calls=[];
+    function visit(node) {
+      if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='createHeroEnvironment') {
+        calls.push(node.arguments.map(arg=>arg.getText(file)));
+      }
+      ts.forEachChild(node,visit);
+    }
+    visit(file);return calls;
+  }
+  assert.deepEqual(environmentArgs(web,ts.ScriptKind.TSX),[['renderer','model']]);
+  const modules=[];
+  function visitHtml(node) {
+    if(node.tagName==='script'&&node.attrs.some(a=>a.name==='type'&&a.value==='module'))modules.push(node.childNodes[0].value);
+    for(const child of node.childNodes??[])visitHtml(child);
+  }
+  visitHtml(parse(video));assert.equal(modules.length,1);
+  assert.deepEqual(environmentArgs(modules[0],ts.ScriptKind.JS),[['renderer','`/heroes/${selected}.glb`']]);
+  const studio=await readFile(new URL('../../web/src/components/hero/studio-environment.ts',import.meta.url),'utf8');
+  const expected=ts.transpileModule(studio,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+  for(const file of ['../hyperframes/vendor/studio-environment.js','../hero-turntables/vendor/studio-environment.js']) {
+    assert.equal((await readFile(new URL(file,import.meta.url),'utf8')).replaceAll('\r\n','\n'),expected.replaceAll('\r\n','\n'));
+  }
 });

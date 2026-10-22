@@ -43,7 +43,7 @@
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(HERO_CAMERA_FOV, 1920 / 920, HERO_CAMERA_NEAR, HERO_CAMERA_FAR);
     camera.position.set(3.3,2.5,4.8); camera.lookAt(0,1.15,0);
-    scene.environment = createHeroEnvironment(renderer).texture;
+    scene.environment = createHeroEnvironment(renderer, `/heroes/${selected}.glb`).texture;
     scene.add(new THREE.HemisphereLight(0xffffff,0x414d52,2.5));
     const light = new THREE.DirectionalLight(0xffffff,4); light.position.set(-3,6,5); scene.add(light);
     const rim = new THREE.DirectionalLight(0xb8d9e6,3); rim.position.set(4,3,-4); scene.add(rim);

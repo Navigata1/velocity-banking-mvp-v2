@@ -30,7 +30,7 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     element.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
     let environment: THREE.WebGLRenderTarget;
-    try { environment = createHeroEnvironment(renderer); }
+    try { environment = createHeroEnvironment(renderer, model); }
     catch {
       renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
       onError(); return;
