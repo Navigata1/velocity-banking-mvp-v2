@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Pre-push local checkpoint: rapid Money Loop returns no longer borrow old completion. Prior LOC-capacity checkpoint is remotely verified. Photoreal, lender, backend and final-release gates remain open.",
+    "tagline": "Locally verified lender-input preservation and truthful forecast basis. Supplied terms are not yet numerically enforced. Prior selection checkpoint remotely verified; new exact-head shipping and full production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T10:39:45Z",
-    "sessionCount": 36
+    "updated": "2026-10-22T13:56:35.643Z",
+    "sessionCount": 37
   },
   "policies": {
     "merge": "review",
@@ -87,7 +87,7 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "Locally verified bounded correction: f374a1f source/ee4a720 tests. Actual old-build desktop/mobile rapid-return REDs and four positive controls retained. Seven CPU groups and six actual browser workflows pass; revision-aware completion, functional owner updates and no-op token identity. Financial data/math/assets/motion unchanged. Current new-head remote verification remains separately pending R0-G3; not production or photoreal approval."
+          "notes": "Verified d03a7c1: receipt6339608765; complete push39764855337 attempt1 and PR39764859371 attempt2,all3jobs/59declaredsteps+cleanup/6actualsource guards,known automatic READY,hosted168/20assets/actualIAB.256shipping/96local/385source pins sealed. PR attempt1 screenshot35ms remaining failure retained; one unchanged full-workflow retry passed. No root-cause/reliability fix or photoreal approval claimed."
         }
       ],
       "gates": [
@@ -96,27 +96,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T10:39:45Z",
-          "notes": "Fresh29 serialized local gates on pinned candidate source:360regressions,7selection CPU groups,ref23247/21model/6wiring,media222/27fresh Remotion stills,native82workflow+1navigation/fullcontracts/fresh Android+iOS Hermes,Worker/report. Test-local lint naming error retained then corrected before complete attempt2. No financial, storage, asset, dependency, lock or CI changes."
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "Fresh29serialized gates on445pinned sources, including untracked new files:360 original regressions,15term/12codec/12basis/6draft/9snapshot groups,ref23247/21model/6wiring,media223/27freshstills,native97workflow+1navigation/fullcontracts/freshAndroid+iOS Hermes,Worker/report. Explicit version3 and copy-on-write archives; no dependency,lock,3D asset,SQL or CI mutation. Attempt1 media stale-data failure retained; generated scenario source hash/contract3 and strict schema refreshed, both educational stories unchanged. 495 local evidence files indexed. Not complete R3 numerical enforcement."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T10:39:45Z",
-          "notes": "Original162 workflow-layout executions plus6 new desktop/full and mobile/efficient selection workflows pass locally. Original18normal Three actions/reduced-motion/negative controls and unchanged450/650ms motion,700ms decoded capture/300ms stability retained. All three saved source byte strings and financial vitals preserved. Parent inspected actual desktop/mobile PNGs.96immutable local evidence files indexed; not physical-device or new hosted proof."
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "Fresh built web183 workflow-layout checks: prior168 plus15 lender/storage cases at280/375/1440. Original18normalThree actions/reduced-motion/negative controls/6selection workflows retain deadlines. Web/native15each cover edit,reload,terms-only import,unsupported legacy isolation,corrupt active and failed adoption. Parent final screenshot inspection and final actualIAB are separately recorded in the new checkpoint. No physical-device claim."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T10:39:45Z",
-          "notes": "Prior dfdfe249 VERIFIED both complete events push39750776370 attempt2/PR39750785887 attempt1,all3jobs/59declaredsteps+cleanup/6actualsources,known automatic READY,hosted162/20assets/manual6/receipt6337764821. Prior116shipping/138local immutable. Push1 screenshot deadline failure retained; identical-head whole-workflow rerun passed, but cause/reliability remains unresolved. New selection head still needs both full CI events,READY/hosted168/20assets/manual/receipt; no merge or promotion."
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "This is intentionally a pre-push local snapshot. Prior d03a7c1 is fully verified at receipt6339608765, with complete push1/PR2,READY,hosted168/20assets/IAB. New lender-confidence head must independently pass BOTH full CI events/all3jobs/every declared step+cleanup/six actual source guards,known automatic READY,hosted183/20assets/finalIAB/receipt/seal. Read .superpowers/sdd/2026-10-22-lender-confidence/current-checkpoint.json if present; later sealed proof supersedes this pending snapshot. Do not rerun sealed mutating helpers or create a metadata-only push loop."
         }
       ]
     },
@@ -392,10 +392,14 @@
         {
           "id": "R3-T1",
           "title": "Wire lender term confidence into normal simulation entry points",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [],
-          "pr": null,
-          "notes": ""
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Bounded prerequisite implemented and locally verified: strict lossless seven-field/provenance input, explicit Portfolio document3, archived old bytes, web/native active3 priority, fail-closed unsupported legacy channels, immutable snapshots/outboxes/recovery and optional editors. Normal direct/MoneyLoop/Portfolio/mortgage comparisons separate educational basis from supplied incomplete/unmodeled terms; no false payoff/savings/target. Three complete educational ledger hashes unchanged. Independent four shared/web and two native findings closed,17shared edges/45native memory-IO probes. Preliminary RED failures retained, final29 standing gates pass. This is not numerical fees/minimums/rate/draw/calendar enforcement and must not become a permanent blocked-mode substitute; task remains in progress. See docs/superpowers/specs/2026-10-22-lender-confidence-design.md and plan."
         },
         {
           "id": "R3-T2",
@@ -424,9 +428,9 @@
           "title": "Financial contract and conservation tests",
           "command": "npm --prefix apps/web test",
           "status": "pending",
-          "evidence": null,
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
           "lastRun": null,
-          "notes": "Full lender/calendar gate remains pending. The bounded R3-T3 month-end capacity guard has360regressions/39independentCPU/local162browser proof; six monthly arithmetic/APR functions are unchanged. Fees/minimums/draw expiry/posting/rounding/intraday checks are not enforced by this task."
+          "notes": "Full numerical lender/calendar gate remains pending. Lender-confidence integration now preserves supplied terms and stops unsupported forecasts honestly, but does not enforce annual/transaction fees, lender minimums, variable rates, draw expiry/minimum draw, dated posting/rounding or intraday availability/reserves. Original educational no-profile rows remain exact. Next work must implement and integrate actual numerical/calendar behavior, not mark this pending gate passed from guard/disclosure tests."
         },
         {
           "id": "R3-G2",
@@ -436,6 +440,15 @@
           "evidence": "ops/mission/evidence/projected-loc-limit-2026-10-22/local-preflight.json",
           "lastRun": "2026-10-22T08:49:31.618Z",
           "notes": "Local32/162,360regressions and independent39CPU. Not the complete R3-G1 lender/calendar gate or production approval."
+        },
+        {
+          "id": "R3-G3",
+          "title": "Lossless lender inputs and truthful forecast basis",
+          "command": "npm --prefix apps/web test && npm --prefix apps/web run smoke:portfolio:built && npm --prefix apps/mobile run test:supabase:mobile && npm --prefix apps/mobile run smoke:accessibility:built",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "Bounded input/storage/basis gate only: explicit document3,15web+15native workflows,strict preservation/failed-save/corrupt-source/owner-CAS/outbox/recovery/legacy-source independence. Independent CPU review uses memory platform IO, not device SecureStore or hosted backend. Full R3-G1 stays pending."
         }
       ]
     },
@@ -561,7 +574,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Coaching slice freshly rebuilds web export and Android/iOS Hermes bundles, with original76+6 coaching browser cases and separate focused-navigation assertion passing.19 original/15 APR/16 coaching contracts and full owner/CAS/session/transfer/recovery suite pass. Earlier APR counting-wrapperexit1 remains preserved historical evidence, not repeated here. Signed-in physical-device, screen-reader, locale-complete keyboard and cloud cross-device QA remain open."
+          "notes": "Lender-confidence slice freshly rebuilds Expo web and Android/iOS Hermes bundles.97 native workflows plus1navigation assertion pass, including15new lender/storage cases. Full existing plus43physical/44v3/8editor callback contracts and owner/CAS/transfer/outbox/recovery fixtures retained. Independent45 integration probes use real modules/locks/chunking with memory platform IO. Not physical-device SecureStore, signed-in cross-device/cloud,screen-reader or locale-complete keyboard approval."
         },
         {
           "id": "R5-T2",
@@ -610,18 +623,18 @@
           "title": "Mobile type check",
           "command": "npm --prefix apps/mobile run check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/coaching-safety-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-21T17:35:00Z",
-          "notes": "Fresh typecheck, web export and Android/iOS Hermes exports pass with projection-aware shared coaching. No storage schema or numerical allocation/accrual change; not physical-device proof."
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "Fresh native types/route contracts/full persistence and recovery contracts,web export,97workflow+1navigation checks,Android+iOS Hermes exports pass in local29. Lender profiles survive active3 copy-on-write and transfer; unsupported legacy terms cannot overwrite old sources. No physical-device,cloud or complete security approval."
         },
         {
           "id": "R5-G2",
           "title": "Native route contracts",
           "command": "node scripts/mobile-port-contract-tests.cjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/selection-settlement-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T10:39:45Z",
-          "notes": "Fresh native82workflow+1navigation checks, full contracts, web export and Android/iOS Hermes export checks pass in local29. Native source/dependencies unchanged in this web-only correction. No physical or signed-in device or all-toolchain security clearance."
+          "evidence": "ops/mission/evidence/lender-confidence-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T13:55:28.510Z",
+          "notes": "Fresh native types/route contracts/full persistence and recovery contracts,web export,97workflow+1navigation checks,Android+iOS Hermes exports pass in local29. Lender profiles survive active3 copy-on-write and transfer; unsupported legacy terms cannot overwrite old sources. No physical-device,cloud or complete security approval."
         },
         {
           "id": "R5-G3",
@@ -685,6 +698,13 @@
       "baseline": "0",
       "current": "6",
       "target": "6",
+      "direction": "up"
+    },
+    {
+      "label": "Lender profile browser workflows passing per surface",
+      "baseline": "0",
+      "current": "15",
+      "target": "15",
       "direction": "up"
     }
   ],
@@ -1108,14 +1128,22 @@
       "mergedAt": null,
       "title": "Prevent stale completion on rapid Money Loop returns (draft)",
       "phase": "R0"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Preserve lender inputs and distinguish unsupported forecasts (draft)",
+      "phase": "R3"
     }
   ],
   "resume": {
     "activePhase": "R3",
     "nextActions": [
-      "State36 is an intentionally PRE-PUSH local snapshot of f374a1f/ee4a720/ec2ee79 selection correction:29local/360regressions/7selectionCPU/ref23247/original162+6selection workflows/media222+27stills/native82+1/fullcontracts/Android+iOS Hermes/Worker/report. Read docs/money-loop-selection-contract-2026-10-22.md and .superpowers/sdd/2026-10-22-selection-settlement/progress.md. FIRST inspect current-checkpoint.json/receipt in that folder if present: later sealed remote proof supersedes the pending snapshot. Do not rerun sealed mutating helpers.",
-      "If not yet sealed, finish both complete exact-head CI events/all3jobs/59declaredsteps+cleanup/6literal source guards/unchanged20minute caps, known automatic READY,hosted14suites/168workflows/20assets/actual IAB and immutable receipt on draftPR256. No merge/manualdeployment/promotion. Fold final receipt into the NEXT substantive improvement, not a metadata-only push loop.",
-      "Prior dfdfe249 VERIFIED: push39750776370 attempt2/PR39750785887 attempt1,known READY/hosted162/20assets/manual6/receipt6337764821. Prior116shipping/138local and92/202/art12/69/29/68 pins intact. Push1 existing screenshot deadline failed at700.91ms; identical-head complete rerun passed once. Selection identity correction is NOT claimed as that failure cause or reliability fix. Godel CPU review:7groups pass/no actionable finding in gated path; empty-to-full scene edge documented, no independent GPU/art approval.",
+      "State37 is an intentional PRE-PUSH local lender-confidence snapshot. Read docs/superpowers/specs/2026-10-22-lender-confidence-design.md, its implementation plan and .superpowers/sdd/2026-10-22-lender-confidence/progress.md. FIRST inspect current-checkpoint.json/receipt there if present: later sealed exact-head proof supersedes this pending snapshot. Local29/445sources/360regressions/ref23247/web183/native97+1/media223+27freshstills/fullcontracts/Hermes/Worker/report; no new 3D assets or numerical lender enforcement. Attempt1 stale-media-data failure retained and corrected by generated contract3 provenance/schema, not waived. Never rerun sealed mutating helpers.",
+      "If the new checkpoint is not sealed, finish BOTH complete exact-head CI events/all3jobs/every59declaredsteps+cleanup/6literal source guards/unchanged20minute caps, known automatic READY preview,hosted14suites/183workflows/20assets,finalactualIAB and immutable receipt on draftPR256. No merge/manualdeployment/promotion. Fold the final receipt into the NEXT substantive change, not a metadata-only push loop.",
+      "NEXT substantive R3 work: implement actual numerical lender fees/minimum payments/draw constraints/rate schedules and integrate dated cash/reserves/posting/rounding/intraday availability. Lender-confidence guard is only a prerequisite, not a permanent blocked/disclosure substitute. Preserve strict document3/provenance,explicit zeros/unknowns,active3 archives,old1/2 semantics,immutable queues/owner-CAS and all original reference rows. Do not allow caller-supplied modeled/support flags. Read CONTEXT.md; R3-G1 remains pending.",
+      "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
