@@ -145,6 +145,7 @@ async function main() {
     await runCommonMonthFixtures({ browser, origin, output: outputDirectory, native: true });
     await verifyFinancialInputs(browser, origin, outputDirectory);
     await runPortfolioBookFixtures({ browser, origin, output: outputDirectory });
+    await require('./portfolio-dated-smoke.cjs').runNativeDatedFixtures({ browser, origin, output: path.join(outputDirectory, 'dated-plan') });
     await runLegacyAprFixtures({ browser, origin, output: outputDirectory });
     await runCoachingSafetyFixtures({ browser, origin, output: outputDirectory });
     for (const [viewportLabel, viewport] of viewports) {
