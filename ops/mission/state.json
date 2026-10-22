@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Controlled Car/Card material refinements locally verified. Prior dd32 checkpoint fully verified; new complete CI/preview/hosted proof required. Original dashboard, assets and financial engine preserved; production gates remain open.",
+    "tagline": "Car/Card refinements pushed but d496 CI did not fully pass. Mandatory online runtime audit hardened and locally verified; new full CI/preview proof required. Last fully verified dd32. Production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T02:22:25.968Z",
-    "sessionCount": 30
+    "updated": "2026-10-22T02:59:13.752Z",
+    "sessionCount": 31
   },
   "policies": {
     "merge": "review",
@@ -84,9 +84,9 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Fresh31localstages:28standing plus3final-source after retained review controls. Full348regressions/21overview/31Cockpit/core31/ref23247,13lifecycle/3clock/9material markers,lint/build/all20heroes/replays/fallbacks,222media/27stills/native contracts and ten fresh1080p9s exports. No caps relaxed. New final-head CI/preview/hosted138/manual still required."
+          "evidence": "ops/mission/evidence/runtime-audit-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T02:59:13.752Z",
+          "notes": "Fresh7localCI-onlycode/teststages:58protocol/14CIcontracts/4reportcontracts/full348regressions/ref23247/lint/build;65independentCPU/config review. Final live audit FAILED CLOSED after3Quicktimeouts/no report, not waived; earlier0runtime report is invocation-specific. Application/math/material/asset/dependency/locks unchanged from d496. Previous31material-localstages/222media/27stills/tenvideos explicitly inherited, not fresh exports. Security clearance/new exact-head full CI/preview/hosted/manual pending."
         },
         {
           "id": "R0-G2",
@@ -102,9 +102,9 @@
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T02:22:25.968Z",
-          "notes": "Prior dd32e87 VERIFIED: both full attempt1 CI39704961343/39704966783/all3jobs/every step, READY automatic preview, hosted12/138/20hashes/IAB and exact receipt6330585894. Folded into this substantive material slice. New head needs its own both full CI/READY/hosted/manual/receipt. Failed6ce6e5e remains failed; no metadata-only push loop."
+          "evidence": "ops/mission/evidence/runtime-audit-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T02:59:13.752Z",
+          "notes": "dd32/receipt6330585894 remains last fully verified. d496 attempt1 PR39711132713 failed mandatoryaudit after301s; push39711131110 cancelled at media install after1217s, cause not proven. Both hero/SQL jobs succeeded, not both full events. No agent rerun/cancellation. New bounded fail-closed online npm audit retains original3jobs/20mincaps/allmandatory steps. Require NEWboth complete exact-head CI/READY/hosted138/20hashes/IAB/receipt before verified checkpoint. No merge/promotion."
         }
       ]
     },
@@ -984,12 +984,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R1",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "title": "Keep mandatory web runtime audit online and fail closed (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R0",
+      "mergedAt": null
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "Prior dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8 VERIFIED by full CI39704961343/39704966783/receipt6330585894/READY/hosted138/IAB. Current substantive Car/Card material slice locally passes31stages with fresh all-ten exports, matched A/B and independent review. Require NEWboth complete exact-head3jobCI/READY/hosted138/20hashes/IAB/receipt. Keep draft/no merge/promotion; fold receipt into next substantive work, not metadata-only pushes.",
+      "Current audit hardening code passes58protocol/7localstages/65independentCPU/config probes; final live audit FAILED CLOSED after3Quicktimeouts/no report, security UNKNOWN/notwaived/no rerun. Earlier0runtime report is invocation-specific. App/material/math/dependencies unchanged from d496. dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8/receipt6330585894 remains last FULLY VERIFIED. d496 NOTFULLYVERIFIED: PR39711132713 auditfailure/push39711131110 cancellation, originalattempt1 terminal/no agent rerun/cancel. Require NEWboth complete3job exactheadCI/automaticREADY/hosted138/20hashes/invocation-boundIAB/receipt. Fold proof into next substantive work, not metadata-only push.",
+      "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: read docs/hero-material-refinement-2026-10-22.md and independent reviews. Accepted Car .30->.15 normal/Card silver .65->.30 anisotropy are bounded refinements, NOT final photoreal approval. Next compare House/Land/Vault materials and remaining identities in controlled multi-angle studies, preserve all source pins/caps. Car hotspots/lossyTireside/Card dark reverse/hardwareX4122/software warnings/initial Date.now+100 clock fragility remain open. Continue scenario/lender/calendar/backend/device/native/security/release gates without visual drift.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
       "Shared-source Dashboard is verified17457cc: /?scenario=portfolio uses existing canonical PortfolioBook/store; original / retains legacy target data. Preserve all21 overview contracts/new6 workflows and original126. Next R2 work is deliberate adoption and shared source across Simulator/Cockpit/Vault/Expo without migration/automatic merge; R3 lender/calendar/posting/routing remains open.",

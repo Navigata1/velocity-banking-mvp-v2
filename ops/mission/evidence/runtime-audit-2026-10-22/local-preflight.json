@@ -1,0 +1,107 @@
+{
+  "baseline": "d496f3df5e2ba2d4a82c23546623bd8a9b5b9846",
+  "verifiedAt": "2026-10-22T02:59:02.398Z",
+  "stage": "Local CI-only runtime-audit hardening; new both full exact-head CI/READY/hosted/manual required",
+  "productionReady": false,
+  "lastFullyVerifiedHead": "dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8",
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6330585894",
+  "sources": {
+    ".github/workflows/ci.yml": "36e31120be66c6a65e153a4f13295a0b77f11433ba6b0dc6d161380f47c32bf9",
+    "scripts/audit-web-runtime.cjs": "2b0bd50e6a4c90681a8c73bda2530db8ab10de32772a0f13d39687f43a89142a",
+    "scripts/audit-web-runtime.test.cjs": "65c56332b792249dee464e1cb9b16326cb405b8ec0e7defdc10d832ae7b7f326"
+  },
+  "normalizedSources": {
+    ".github/workflows/ci.yml": "36e31120be66c6a65e153a4f13295a0b77f11433ba6b0dc6d161380f47c32bf9",
+    "scripts/audit-web-runtime.cjs": "2b0bd50e6a4c90681a8c73bda2530db8ab10de32772a0f13d39687f43a89142a",
+    "scripts/audit-web-runtime.test.cjs": "65c56332b792249dee464e1cb9b16326cb405b8ec0e7defdc10d832ae7b7f326"
+  },
+  "boundary": {
+    "changed": [
+      ".github/workflows/ci.yml"
+    ],
+    "added": [
+      "scripts/audit-web-runtime.cjs",
+      "scripts/audit-web-runtime.test.cjs"
+    ],
+    "protectedFiles": 420,
+    "applicationFinancialMaterialAssetDependencyLocksUnchanged": true,
+    "noRegistryConfigMutation": true,
+    "noGateCapRelaxation": true
+  },
+  "tests": {
+    "freshLocalStages": 7,
+    "protocol": 58,
+    "ciContracts": 14,
+    "reportContracts": 4,
+    "regressions": 348,
+    "reference": 23247,
+    "onlineAudit": {
+      "passed": false,
+      "status": "failed-closed-external-service-timeouts",
+      "attempts": 3,
+      "npm": "10.9.7",
+      "runtimeVulnerabilities": null,
+      "completeReportReceived": false,
+      "earlierSuccessfulInvocation": {
+        "attempts": 1,
+        "runtimeVulnerabilities": 0,
+        "notFinalSourceClearance": true
+      },
+      "notWaived": true,
+      "noUnchangedSourceRerunToSeekGreen": true
+    }
+  },
+  "inheritedMaterial": {
+    "head": "d496f3df5e2ba2d4a82c23546623bd8a9b5b9846",
+    "fullyVerified": false,
+    "file": "ops/mission/evidence/hero-materials-2026-10-22/local-preflight.json",
+    "sha256": "5548e5916b7b9705f53b025f7d3e3ba4e6f24da871cea873071faee0ac1207c9",
+    "normalizedSha256": "5548e5916b7b9705f53b025f7d3e3ba4e6f24da871cea873071faee0ac1207c9",
+    "localStages": 31,
+    "media": 222,
+    "stills": 27,
+    "videos": 10,
+    "notFreshAuditSliceExports": true
+  },
+  "priorFailedCI": {
+    "head": "d496f3df5e2ba2d4a82c23546623bd8a9b5b9846",
+    "notVerified": true,
+    "events": [
+      {
+        "id": 39711131110,
+        "attempt": 1,
+        "conclusion": "cancelled"
+      },
+      {
+        "id": 39711132713,
+        "attempt": 1,
+        "conclusion": "failure"
+      }
+    ],
+    "noAgentRerunOrCancellation": true,
+    "originalBulkFailureUnknown": true,
+    "pushTimeoutUnproven": true
+  },
+  "independentReview": {
+    "file": "independent-review.md",
+    "initialFindings": 3,
+    "additionalExactNoticeFinding": 1,
+    "independentTests": 65,
+    "parentRerun": 65,
+    "initialFailuresRetained": true,
+    "finalSourcePinsRequired": true
+  },
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-audit-gate",
+    "index": "ops/mission/evidence/runtime-audit-2026-10-22/raw-evidence-index.json",
+    "indexSha256": "1f0d1501117a6470fc7e1f2404e03d0d2ba19049aaf3044bff38db6cfbce53a6",
+    "entries": 38
+  },
+  "remaining": [
+    "All-ten final photoreal/material/full-angle identity approval remains open. Car broad hotspots and Card dark emerald reverse are not solved by these refinements.",
+    "Car Tireside unchanged lossy; inherited hardware/D3D X4122 and software ReadPixels performance warnings remain open, no suppression or hardware clearance.",
+    "Original initial Date.now+100 cross-RPC clock setup fragility remains an explicit P2.",
+    "Media/native security, canonical scenario/lender/calendar/backend/recovery/accessibility/physical-device/native/release gates remain open.",
+    "No merge/promotion/new dependencies/paid GPU/cloud-data-access changes or Desktop HTML republishing."
+  ]
+}
