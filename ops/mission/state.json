@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Verified c9d3acc Car fidelity checkpoint. All-ten geometry-aware stage presence locally verified; new exact-head CI/hosted138 required. Photoreal art, tire data and production remain open.",
+    "tagline": "Verified462a218 all-ten stage-presence checkpoint. Replay continuity locally verified; new exact-head CI/hosted138 required. Material diagnosis recorded, photoreal and production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-22T00:01:45.510Z",
-    "sessionCount": 27
+    "updated": "2026-10-22T00:57:20.624Z",
+    "sessionCount": 28
   },
   "policies": {
     "merge": "review",
@@ -84,27 +84,27 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-presence-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-22T00:01:45.510Z",
-          "notes": "Fresh348 regressions/21overview/31Cockpit/core31/ref23247, lint/build, native contracts/types,14CI/4renderer pass.28 serial stages initially219media, then final-source219media/27freshstills. All10models/posters/3manifests and9financial modules unchanged. BOTH new complete final-head CI/hosted138/manual required."
+          "evidence": "ops/mission/evidence/hero-replay-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T00:57:20.624Z",
+          "notes": "Fresh28serialstages:348regressions/21overview/31Cockpit/core31/ref23247,219media/27freshstills,lint/build/native/CI/report contracts pass. Additional final-source fullwebtests/lint after review-added test-only patch;8CPU lifecycle markers/3mutants rejected. Prior session27 initially216media then final-source219; corrected prior notes typo. New BOTH complete final-head CI/hosted138/manual required."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-presence-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-22T00:01:45.510Z",
-          "notes": "Fresh138 browser workflows/711legacyassertions, unclockedThree700/300ms, all20desktop/375px heroes and fallbacks/sevenHTTP+rendered routes pass. Added minimum silhouette guards without relaxing prior visibility/cadence/readiness/budget checks. All10 fresh1080p9s exports pass size/pixels/motion/closure/rest. Not physical-device or new-hosted proof."
+          "evidence": "ops/mission/evidence/hero-replay-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T00:57:20.624Z",
+          "notes": "Fresh138browserworkflows/711legacyassertions,20desktop/phone heroes/fallbacks/routes pass. Added20 Replay canvas/no-fetch/hidden-poster/reset/motion/original-cadence checks plus reduced-motion Replay. Actual old compiled462a218 RED retained. All10 actual1080p9s turns freshly rendered/verified; no changed art or physical-device approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6328395226",
-          "lastRun": "2026-10-22T00:01:45.510Z",
-          "notes": "c9d3acc VERIFIED fullattempt1 push39688135329/PR39688142772 all3jobs/every step; READY/hosted138/all20servedhashes/actualIAB; receipt6328395226. Current substantive framing/presentation work requires BOTH new complete exact-head CI/READY/hosted138/all20hashes/manual. No metadata-only push loop or promotion."
+          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6329619148",
+          "lastRun": "2026-10-22T00:57:20.624Z",
+          "notes": "462a218 VERIFIED: fullattempt1 push39697242192/PR39697250837 all3jobs/every step/original1200s caps, exactREADY automatic preview, hosted138/20servedhashes/actualIAB; receipt6329619148. New substantive Replay fix requires BOTH new complete exact-head CI/READY/hosted138/manual. No metadata-only push loop or production promotion."
         }
       ]
     },
@@ -121,7 +121,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Source-faithful Car paint repair:2049728bytes,134971triangles,13embedded images/12active texture objects. Original128x128 paintnormal PNG and decodedRGB exact source hashes restored after lossy conversion; strength/filter/30x30tiling unchanged. Independent review confirms508 decodedaccessors/all410 compressed geometry payloads/all12otherimages/materials/JSON boundary unchanged; six actual-test negative controls.146media/27stills and fresh actualGLB/video gates pass locally. Remaining normals, deadimage/stale extension and art approval remain open; see car-paint-fidelity contract. Verified189eeae source-fidelity receipt6326605424 folded into this substantive threeheroUV work; Car remains byte-identical. Hardwarewarning/remainingnormal/deadimage/art work remainsopen. Verified35745b7 depthUV receipt6327498132 folded into this substantive Car work. Fiveadditional normalimages restoredsourceRGB exactly; paintPNG retained (6/7groups), Tireside unchangedlossyOPEN. Targeted optionalunattachedIRI/orphancleanup, lockedaggregate recheck and recipe provenance added. Car2232520bytes/public10143326 underoriginalcaps; geometry/sampling/other9models/all10posters unchanged. Not photorealapproval. Verified c9d3acc/receipt6328395226 folded into substantive collection stage-presence work. Exact referenced transformed radial/height profiles replace oversized bounding spheres, retaining perspective depth and full-yaw containment. Shared browser/video silhouette guards reject old compiledCar28.3% and inheritedvideo34.1% against38% minimum. All10 model/poster/3manifest bytes unchanged; materials/photoreal/all-angle art remain OPEN."
+          "notes": "Source-faithful Car paint repair:2049728bytes,134971triangles,13embedded images/12active texture objects. Original128x128 paintnormal PNG and decodedRGB exact source hashes restored after lossy conversion; strength/filter/30x30tiling unchanged. Independent review confirms508 decodedaccessors/all410 compressed geometry payloads/all12otherimages/materials/JSON boundary unchanged; six actual-test negative controls.146media/27stills and fresh actualGLB/video gates pass locally. Remaining normals, deadimage/stale extension and art approval remain open; see car-paint-fidelity contract. Verified189eeae source-fidelity receipt6326605424 folded into this substantive threeheroUV work; Car remains byte-identical. Hardwarewarning/remainingnormal/deadimage/art work remainsopen. Verified35745b7 depthUV receipt6327498132 folded into this substantive Car work. Fiveadditional normalimages restoredsourceRGB exactly; paintPNG retained (6/7groups), Tireside unchangedlossyOPEN. Targeted optionalunattachedIRI/orphancleanup, lockedaggregate recheck and recipe provenance added. Car2232520bytes/public10143326 underoriginalcaps; geometry/sampling/other9models/all10posters unchanged. Not photorealapproval. Verified c9d3acc/receipt6328395226 folded into substantive collection stage-presence work. Exact referenced transformed radial/height profiles replace oversized bounding spheres, retaining perspective depth and full-yaw containment. Shared browser/video silhouette guards reject old compiledCar28.3% and inheritedvideo34.1% against38% minimum. All10 model/poster/3manifest bytes unchanged; materials/photoreal/all-angle art remain OPEN. Verified462a218/receipt6329619148 folded into Replay continuity work: retain decoded scene/canvas/ready, cancel/reset existing finite turn instead of reload. Fresh20desktop/phone replay cases plus reduced-motion; initial loading/failure fallbacks retained. Independent CPU material survey identifies Car authored flake strength and Card very weak grain/anisotropy as isolated A/B hypotheses, not completed render experiments or material approval. All assets/materials/posters/math frozen."
         },
         {
           "id": "R1-T2",
@@ -167,9 +167,9 @@
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-presence-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-22T00:01:45.510Z",
-          "notes": "All10 actualmodels desktop/375px pass original pixel/motion/containment checks plus minimum silhouette heights. Profile extracted once/load, scalar fit on load/resize only; original artwork default, fourvitals, opt-in and fallback retained. Camera direction/FOV/lighting/materials/timing unchanged. Full-size/all-angle photoreal and physical-device review remain OPEN."
+          "evidence": "ops/mission/evidence/hero-replay-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T00:57:20.624Z",
+          "notes": "All20 model views and Replay checks pass locally: same connected canvas, no model refetch, poster remains hidden, initial-pose reset and renewed original-cadence motion. Reduced-motion Replay remains still. Independent lifecycle review closed; baselineRED retained. Original artwork/fourvitals/camera/materials/finite8sec360 unchanged. Photoreal/full-angle/device approval remains OPEN."
         },
         {
           "id": "R1-G3",
@@ -248,9 +248,9 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/hero-presence-2026-10-21/local-preflight.json",
-          "lastRun": "2026-10-22T00:01:45.510Z",
-          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247 pass. All9 financialengine modules preserved versus verifiedc9d3acc. No solver/schema/store/dependency/backend/routing/calendar change. Required production gates remain OPEN."
+          "evidence": "ops/mission/evidence/hero-replay-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-22T00:57:20.624Z",
+          "notes": "Fresh348regressions/21overview/31Cockpit/core31/ref23247; all9financial modules preserved against verified462a218. No math/store/schema/calendar/dependency/backend changes in replay slice; production gates remain OPEN."
         },
         {
           "id": "R2-G2",
@@ -963,13 +963,20 @@
       "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
       "phase": "R1",
       "mergedAt": null
+    },
+    {
+      "number": 256,
+      "title": "Retain decoded hero scenes on Replay (draft)",
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "phase": "R1",
+      "mergedAt": null
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "c9d3acccb8ee22fd6f08b29d7eacca91eee6ec49 VERIFIED: fullattempt1 push39688135329/PR39688142772 all3jobs/every step, READY/hosted138/all20hashes/actualIAB; receipt6328395226. Current all-ten stage-presence work:28localstages initially216media then final-source219media/27stills/138webworkflows/711legacyassertions and all10freshturns. Require BOTH NEW complete exact-head CI and fresh READY/hosted138/all20hashes/actualIAB before current receipt; no metadata-only push loop/merge/promotion.",
-      "R1 next: read docs/hero-presence-contract-2026-10-21.md and independent math/integration reviews. Framing improves visible size without new asset/material bytes; NOT photoreal completion. Review controlled all-angle material/identity/pose against original artwork; preserve camera guarantees, source-exact6Car normalgroups, unchangedlossyTireside,508accessors/410payloads/posters/budgets. HardwareX4122 remains OPEN. Continue canonical scenario/lender/calendar/backend/device/native/release gates after focused R1 proof.",
+      "462a218342dfa95343bde6882546e99e882e5c99 VERIFIED: fullpush39697242192/PR39697250837 all3jobs/every step, READY/hosted138/20servedhashes/IAB; receipt6329619148. Current Replay continuity preflight:28localstages/219media/27stills/138workflows/711legacyassertions/20replays/reducedmotion/all10freshturns. Require BOTH NEW complete exact-head CI/READY/hosted138/20hashes/manual before receipt; keep draft/no merge/promotion.",
+      "NextR1: read docs/hero-replay-continuity-2026-10-22.md and evidence material-response-survey.md. Controlled newly captured Car .30vs.15 normal strength and Card silver .65vs.30 anisotropy A/B are proposals only, not shipped or approved. Keep assets/pins/caps/source-exact6Car normalgroups/lossyTireside/camera guarantees; no blanket lighting rewrite. HardwareX4122, media-toolchain security, scenario/lender/calendar/backend/device/native/release remain OPEN.",
       "Read docs/superpowers/specs/2026-10-21-legacy-web-truth-design.md and plan. Validated editor defaultdecimal/legacy facade are deliberate; preserve oldraw2/6.5/new200, no-op bytes, invalid drafts and independent canonical source. Cockpit shows actual availability/signed difference, labeled balance scale and precise debt+LOC burn.600 drill and alternate routing are explicitly unmodeled, not modeled expense paths.",
       "Shared-source Dashboard is verified17457cc: /?scenario=portfolio uses existing canonical PortfolioBook/store; original / retains legacy target data. Preserve all21 overview contracts/new6 workflows and original126. Next R2 work is deliberate adoption and shared source across Simulator/Cockpit/Vault/Expo without migration/automatic merge; R3 lender/calendar/posting/routing remains open.",
       "Read docs/native-coaching-safety-contract-2026-10-21.md. Actual Velocity availability guards chunk advice. Preserve cashflow/LOC warning priorities, exactly80 boundary and valid clipped-final/zero-surplus Pause. All original numerical modules/index remain unchanged in the new shared-view slice; source-bound references/media must still pass. Prior native exports are inherited until fresh exact-head CI, not new device proof.",
