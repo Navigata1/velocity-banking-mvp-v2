@@ -5,17 +5,35 @@ import type {
 
 export const MONEY_LOOP_SELECTION_DURATION_SECONDS = 0.45;
 
+export interface MoneyLoopSelectionIdentity {
+  id: MoneyLoopVisualArtifact['id'];
+  revision: number;
+}
+
+export interface MoneyLoopSelectionState extends MoneyLoopSelectionIdentity {
+  startedAt: number;
+}
+
+export function advanceMoneyLoopSelection(current: MoneyLoopSelectionState, id: MoneyLoopVisualArtifact['id'], startedAt: number): MoneyLoopSelectionState {
+  return current.id === id ? current : { id, startedAt, revision: current.revision + 1 };
+}
+
+export function isMoneyLoopSelectionSettled(completed: MoneyLoopSelectionIdentity | null, active: MoneyLoopSelectionIdentity): boolean {
+  return completed?.id === active.id && completed.revision === active.revision;
+}
+
 export function getSelectionMotionElapsedSeconds(selectionStartedAtMs: number, nowMs: number): number {
   if (!Number.isFinite(selectionStartedAtMs) || !Number.isFinite(nowMs)) return 0;
   return Math.max(0, (nowMs - selectionStartedAtMs) / 1000);
 }
 
-export function createSelectionSettledNotifier(onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => void) {
-  let lastSettledId: MoneyLoopVisualArtifact['id'] | null = null;
-  return (id: MoneyLoopVisualArtifact['id']) => {
-    if (lastSettledId === id) return false;
-    lastSettledId = id;
-    onSelectionSettled(id);
+export function createSelectionSettledNotifier(onSelectionSettled: (id: MoneyLoopVisualArtifact['id'], revision: number) => void) {
+  let lastSettled: MoneyLoopSelectionIdentity | null = null;
+  return (id: MoneyLoopVisualArtifact['id'], revision: number) => {
+    const completed = { id, revision };
+    if (isMoneyLoopSelectionSettled(lastSettled, completed)) return false;
+    lastSettled = completed;
+    onSelectionSettled(id, revision);
     return true;
   };
 }

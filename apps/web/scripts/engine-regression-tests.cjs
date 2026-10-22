@@ -8497,12 +8497,14 @@ test('Money Loop lazy Three stage remains a client-only visual enhancement behin
   assert.ok(stageSource.includes('data-testid="money-loop-three-stage"'));
   assert.ok(stageSource.includes('data-render-mode={renderMode}'));
   assert.ok(stageSource.includes('data-active-artifact={activeArtifactId}'));
-  assert.ok(stageSource.includes("data-selection-state={settledArtifactId === activeArtifactId ? 'settled' : 'transitioning'}"));
+  assert.ok(stageSource.includes('data-selection-revision={selectionRevision}'));
+  assert.ok(stageSource.includes("data-selection-state={isMoneyLoopSelectionSettled(settledSelection, { id: activeArtifactId, revision: selectionRevision }) ? 'settled' : 'transitioning'}"));
+  assert.ok(railSource.includes('selectionRevision={selectionRevision}') && stageSource.includes('selectionRevision={selectionRevision}') && sceneSource.includes('selectionRevision={selectionRevision}'));
   assert.ok(stageSource.includes('aria-hidden="true"'));
   assert.ok(stageSource.includes('h-64 w-64 md:h-72 md:w-72'));
   assert.ok(stageSource.includes('<Canvas'));
   assert.ok(stageSource.includes('onSelectionSettled={onSelectionSettled}'));
-  assert.ok(sceneSource.includes('onSelectionSettled(activeArtifact.id)') && sceneSource.includes('onFirstFrame()'), 'expected first-frame and terminal Three callbacks to settle the active artifact');
+  assert.ok(sceneSource.includes('onSelectionSettled(activeArtifact.id, selectionRevision)') && sceneSource.includes('onFirstFrame()'), 'expected terminal callbacks to identify the actual selection instance');
 
   const meshesSource = fs.existsSync(meshesPath) ? fs.readFileSync(meshesPath, 'utf8') : '';
   assert.ok(meshesSource.includes('DepositReservoirMesh'));
@@ -8561,9 +8563,9 @@ test('Money Loop Three selection runtime contracts preserve exact selection and 
   assert.equal(selectionMotion.getSelectionMotionElapsedSeconds(Number.NaN, 2000), 0, 'expected an invalid selection timestamp to stay bounded');
   const settledIds = [];
   const notifySettled = selectionMotion.createSelectionSettledNotifier((id) => settledIds.push(id));
-  assert.equal(notifySettled('loc'), true);
-  assert.equal(notifySettled('loc'), false, 'expected one terminal notification per active artifact');
-  assert.equal(notifySettled('expenses'), true);
+  assert.equal(notifySettled('loc', 0), true);
+  assert.equal(notifySettled('loc', 0), false, 'expected one terminal notification per selection instance');
+  assert.equal(notifySettled('expenses', 1), true);
   assert.deepEqual(settledIds, ['loc', 'expenses']);
 
   const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
@@ -8756,7 +8758,7 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
 
   assert.ok(source.includes('useState'), 'expected artifact rail to track the selected artifact');
-  assert.ok(source.includes('setActiveArtifactId'), 'expected artifact selector controls to update the active artifact');
+  assert.ok(source.includes('setSelection(current => advanceMoneyLoopSelection(current, id, selectionStartedAt))'), 'expected artifact selection to use the latest state and advance its revision atomically');
   assert.ok(source.includes('data-testid="money-loop-artifact-active"'), 'expected a stable active artifact smoke hook');
   assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');

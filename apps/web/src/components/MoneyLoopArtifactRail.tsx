@@ -10,6 +10,7 @@ import {
 import type { DashboardLoopArtifact, DashboardTone } from '@/app/dashboard-model';
 import { useIsClient } from '@/hooks/useIsClient';
 import { themeClasses, useThemeStore } from '@/stores/theme-store';
+import { advanceMoneyLoopSelection, type MoneyLoopSelectionState } from './money-loop-3d/selection-motion';
 
 const MoneyLoopThreeStage = dynamic(
   () => import('@/components/money-loop-3d/MoneyLoopThreeStage'),
@@ -104,8 +105,8 @@ export default function MoneyLoopArtifactRail({
   const classes = themeClasses[mounted ? theme : 'original'];
   const visualContract = buildMoneyLoopVisualContract(artifacts);
   const displayArtifacts = selectSafeMoneyLoopDomArtifacts(artifacts);
-  const [activeArtifactId, setActiveArtifactId] = useState<DashboardLoopArtifact['id']>(displayArtifacts[0]?.id ?? 'income');
-  const [selectionStartedAt, setSelectionStartedAt] = useState(0);
+  const [selection, setSelection] = useState<MoneyLoopSelectionState>({ id: displayArtifacts[0]?.id ?? 'income', startedAt: 0, revision: 0 });
+  const { id: activeArtifactId, startedAt: selectionStartedAt, revision: selectionRevision } = selection;
   const [renderMode, setRenderMode] = useState<MoneyLoopRenderMode>('static');
   const activeArtifact = displayArtifacts.find((artifact) => artifact.id === activeArtifactId) ?? displayArtifacts[0];
   const activeVisualArtifact = visualContract.artifacts.find((artifact) => artifact.id === activeArtifact?.id);
@@ -143,10 +144,8 @@ export default function MoneyLoopArtifactRail({
   }
 
   function selectArtifactById(id: DashboardLoopArtifact['id'], selectionStartedAt = 0) {
-    if (!displayArtifacts.some((artifact) => artifact.id === id) || id === activeArtifactId) return;
-
-    setSelectionStartedAt(selectionStartedAt);
-    setActiveArtifactId(id);
+    if (!displayArtifacts.some((artifact) => artifact.id === id)) return;
+    setSelection(current => advanceMoneyLoopSelection(current, id, selectionStartedAt));
   }
 
   function selectRelativeArtifact(direction: -1 | 1, selectionStartedAt = 0) {
@@ -212,6 +211,7 @@ export default function MoneyLoopArtifactRail({
               visualContract={visualContract}
               activeArtifactId={activeArtifact.id}
               selectionStartedAt={selectionStartedAt}
+              selectionRevision={selectionRevision}
               onSelect={selectArtifactById}
               onRenderModeChange={setRenderMode}
             />
@@ -253,7 +253,7 @@ export default function MoneyLoopArtifactRail({
 
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 md:h-40 md:w-40">
               <div
-                key={activeArtifact.id}
+                key={`${activeArtifact.id}:${selectionRevision}`}
                 data-testid="money-loop-active-artifact-token"
                 className={`artifact-carousel-token artifact-carousel-token--${activeTokenSelectionMotion} relative isolate h-full w-full rounded-full border border-white/15 shadow-2xl`}
                 style={activeTokenStyle}
