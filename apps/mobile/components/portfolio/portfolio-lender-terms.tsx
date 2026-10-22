@@ -1,20 +1,20 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { assessForecastBasis, decodeLenderTerms, type LenderTermField, type LenderTermsInput } from '@interestshield/financial-engine';
+import { decodeLenderTerms, type ForecastBasis, type LenderTermField, type LenderTermsInput } from '@interestshield/financial-engine';
 import { createLenderTermsDraft, lenderTermFields, lenderTermLabels, readLenderTermsDraft, type LenderTermsDraft } from '@interestshield/financial-engine/lender-terms-draft';
 import { ChoiceControl } from './choice-control';
 
-type Props = { terms?: LenderTermsInput; disabled?: boolean; onSave: (terms: LenderTermsInput | null) => Promise<unknown> };
+type Props = { basis: ForecastBasis; terms?: LenderTermsInput; disabled?: boolean; onSave: (terms: LenderTermsInput | null) => Promise<unknown> };
 const sources = [{ value: '', label: 'Unspecified' }, { value: 'user-provided', label: 'User provided' },
   { value: 'lender-document', label: 'Lender document' }, { value: 'model-default', label: 'Model default' }] as const;
 const rateModes = [{ value: '', label: 'Unknown' }, { value: 'fixed', label: 'Fixed' }, { value: 'variable', label: 'Variable' }] as const;
 const minimumModes = [{ value: '', label: 'Unknown' }, { value: 'fixed', label: 'Fixed amount' },
   { value: 'percent-of-balance', label: 'Percent of balance' }, { value: 'interest-only', label: 'Interest only' }] as const;
 
-export function PortfolioLenderTerms({ terms, disabled = false, onSave }: Props) {
-  const basis = assessForecastBasis(terms), busy = useRef(false);
-  const latest = useRef<Props | null>({ terms, disabled, onSave });
-  useLayoutEffect(() => { latest.current = { terms, disabled, onSave }; });
+export function PortfolioLenderTerms({ basis, terms, disabled = false, onSave }: Props) {
+  const busy = useRef(false);
+  const latest = useRef<Props | null>({ basis, terms, disabled, onSave });
+  useLayoutEffect(() => { latest.current = { basis, terms, disabled, onSave }; });
   useLayoutEffect(() => () => { latest.current = null; }, []);
   const [expanded, setExpanded] = useState(false), [working, setWorking] = useState(false);
   const [error, setError] = useState(''), [status, setStatus] = useState('');
@@ -25,16 +25,19 @@ export function PortfolioLenderTerms({ terms, disabled = false, onSave }: Props)
       && JSON.stringify(decodeLenderTerms(input)) === JSON.stringify(decodeLenderTerms(current.terms));
     if (unchanged) { setStatus('Terms unchanged.'); setError(''); return; }
     busy.current = true; setWorking(true); setError(''); setStatus('');
-    try { await current.onSave(input); if (latest.current) setStatus(input === null ? 'Profile removed. Monthly educational assumptions apply.' : 'Terms saved. Forecast remains in review.'); }
+    try { await current.onSave(input); if (latest.current) setStatus(input === null ? 'Profile removed.' : 'Terms saved.'); }
     catch (cause) { if (latest.current) setError(cause instanceof Error ? cause.message : 'Lender terms could not be saved.'); }
     finally { busy.current = false; if (latest.current) setWorking(false); }
   }
   return <View testID="native-lender-terms" style={styles.section}>
     <Text testID="native-forecast-basis" accessibilityRole="header" style={styles.heading}>{basis.label}</Text>
-    <Text style={styles.detail}>{basis.canProject
+    <Text style={styles.detail}>{basis.kind === 'lender-dated'
+      ? 'Declared fixed-rate dated LOC estimate. Other debt interest and minimums retain educational monthly rules. This is not lender verification.'
+      : basis.canProject
       ? 'Monthly educational estimate. Lender fees, minimums, rate changes and dated posting are not verified.'
       : 'Supplied terms are retained. Lender-specific payoff dates, savings and payment targets are not projected; these terms are not enforced by the monthly model.'}</Text>
     {!basis.canProject ? <>
+      {basis.reasons.map((reason, index) => <Text key={index} style={styles.detail}>{reason}</Text>)}
       {basis.lenderTerms.missingFields.length ? <Text style={styles.detail}>Missing: {basis.lenderTerms.missingFields.map(field => lenderTermLabels[field]).join(', ')}.</Text> : null}
       {basis.lenderTerms.unmodeledFields.length ? <Text style={styles.detail}>Not modeled: {basis.lenderTerms.unmodeledFields.map(field => lenderTermLabels[field]).join(', ')}.</Text> : null}
       <Text style={styles.detail}>Document-sourced is your provenance assertion, not verification by InterestShield.</Text>
@@ -50,7 +53,7 @@ export function PortfolioLenderTerms({ terms, disabled = false, onSave }: Props)
   </View>;
 }
 
-function LenderTermsFields({ terms, disabled, onSave, onError, onEdit }: Props & {
+function LenderTermsFields({ terms, disabled, onSave, onError, onEdit }: Pick<Props, 'terms' | 'disabled' | 'onSave'> & {
   onError: (message: string) => void; onEdit: () => void;
 }) {
   const [draft, setDraft] = useState(() => createLenderTermsDraft(terms));

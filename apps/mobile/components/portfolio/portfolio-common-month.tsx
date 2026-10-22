@@ -15,7 +15,7 @@ export function PortfolioCommonMonth({ book, disabled = false }: { book: Portfol
     <View style={styles.header}>
       <View style={styles.title}>
         <Text accessibilityRole="header" style={styles.heading}>Same-Month Comparison</Text>
-        <Text testID="common-month-period" style={styles.detail}>{month === null ? 'Month not selected' : `Month ${month}`}</Text>
+        <Text testID="common-month-period" style={styles.detail}>{month === null ? 'Month not selected' : `Month ${month}${comparison.horizonDate ? ` / ${comparison.horizonDate}` : ''}`}</Text>
       </View>
       <View style={styles.control}>
         <Text style={styles.detail}>Comparison month</Text>
@@ -26,6 +26,7 @@ export function PortfolioCommonMonth({ book, disabled = false }: { book: Portfol
     </View>
     {month === null ? <Text testID="common-month-error" accessibilityRole="alert" style={styles.warning}>Month must be a whole number from 0 to 600.</Text> : null}
     <Text style={styles.detail}>Same listed debts, LOC and household cash flow. Net modeled wealth is cash minus those liabilities, not total household wealth. After exact payoff, unchanged cash flow accumulates without returns or new debt. Amounts are independently rounded.</Text>
+    {book.datedPlan ? <Text style={styles.detail}>Dated continuation replays cash entries in checking only, protecting the reserve. An earlier unfunded expense makes that horizon unavailable; the closed LOC is not reused.</Text> : null}
     {comparison.plans.map(plan => {
       const s = plan.snapshot;
       const metrics = [['cash', 'Cash', s.cashBalance], ['debt', 'Listed debts', s.debtBalance],
@@ -40,6 +41,8 @@ export function PortfolioCommonMonth({ book, disabled = false }: { book: Portfol
             <Text testID={`common-month-${id}-${plan.strategy}`} style={styles.amount}>{formatCommonMonthAmount(value)}</Text>
           </View>)}
         </View>
+        {s.feesThroughMonth !== undefined ? <Text style={styles.detail}>Modeled fees through this month: {formatCommonMonthAmount(s.feesThroughMonth)}</Text> : null}
+        {plan.dateFailure ? <Text style={styles.warning}>Cash continuation stops {plan.dateFailure}.</Text> : null}
         {plan.payoff && !plan.payoff.possible ? <Text style={styles.detail}>Payoff projection needs review.</Text> : null}
       </View>;
     })}

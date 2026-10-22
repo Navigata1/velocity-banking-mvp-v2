@@ -11,6 +11,8 @@ import { PortfolioPayoffPath } from '@/components/portfolio/portfolio-payoff-pat
 import { PortfolioCommonMonth } from '@/components/portfolio/portfolio-common-month';
 import { PortfolioTransfer } from '@/components/portfolio/portfolio-transfer';
 import { PortfolioLenderTerms } from '@/components/portfolio/portfolio-lender-terms';
+import { PortfolioDatedPlan } from '@/components/portfolio/portfolio-dated-plan';
+import { PortfolioDatedLedger } from '@/components/portfolio/portfolio-dated-ledger';
 import { buildMobilePortfolioBookView, copyMobileScenarioToPortfolio, createBlankMobilePortfolio } from '@/lib/mobile-portfolio-model';
 import { MobileRouteScreen } from './route-screen';
 
@@ -62,22 +64,29 @@ function PortfolioWorkspace({ input, scenarioReady }: { input: MobileDashboardIn
       </View> : null}
       {book && view ? <View key={portfolio.storageScope} testID="native-portfolio-book" style={styles.workspace}>
         <FinancialCard title="Modeling Mode" value={view.payoffLabel}
-          detail="Funded monthly estimate: household cash flow covers minimums, then extra payments within the saved cap. LOC interest uses a 30-day/365-day daily-balance estimate. Lender fees, posting rules and dated calendars are not modeled." />
+          detail={book.datedPlan === undefined
+            ? 'Funded monthly estimate: household cash flow covers minimums, then extra payments within the saved cap. LOC interest uses a 30-day/365-day daily-balance estimate. Lender fees, posting rules and dated calendars are not modeled.'
+            : view.forecastBasis.kind === 'lender-dated'
+              ? 'Declared calendar-day LOC estimate. Statement interest and financed fees are separate; other listed debts use educational monthly rules. Payoff is observed at an accepted month end, not lender confirmation.'
+              : 'Dated inputs need review. No lender-specific payoff date is projected.'} />
         {view.warnings.map((warning, index) => <Text key={`${index}-${warning}`} style={styles.warning}>{warning}</Text>)}
         <View style={styles.summaries}>
           <FinancialCard title="First Modeled Target" value={view.targetLabel} />
           <FinancialCard title="Interest Estimate" value={view.interestLabel} />
+          {book.datedPlan !== undefined ? <FinancialCard title="Modeled Fees" value={view.feeLabel} /> : null}
           <FinancialCard title="Retained Cash at Modeled Payoff" value={view.cashLabel}
             detail="Not interest savings or a common-date wealth comparison. Display amounts are independently rounded; stored inputs retain their precision." />
         </View>
         <PortfolioPayoffPath path={view.path} />
         <PortfolioControls book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
-        <PortfolioLenderTerms terms={book.loc.lenderTerms} disabled={disabled || status === 'saving'} onSave={async terms => {
+        <PortfolioLenderTerms basis={view.forecastBasis} terms={book.loc.lenderTerms} disabled={disabled || status === 'saving'} onSave={async terms => {
           const loc = { ...book.loc };
           if (terms === null) delete loc.lenderTerms;
           else loc.lenderTerms = decodeLenderTerms(terms);
-          await portfolio.replace({ ...book, loc }, undefined, portfolio.revision, 3);
+          await portfolio.replace({ ...book, loc }, undefined, portfolio.revision, portfolio.documentVersion === 4 || book.datedPlan !== undefined ? 4 : 3);
         }} />
+        <PortfolioDatedPlan plan={book.datedPlan} disabled={disabled || status === 'saving'} onSave={portfolio.setDatedPlan} />
+        <PortfolioDatedLedger result={view.result} />
         <PortfolioDebtEditor book={book} disabled={disabled} onChange={change => perform(() => portfolio.update(change))} />
         <PortfolioCommonMonth book={book} disabled={disabled} />
         <PortfolioTransfer book={book} storageScope={portfolio.storageScope} revision={portfolio.revision}

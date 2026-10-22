@@ -9,6 +9,7 @@ export function createBlankMobilePortfolio(): PortfolioBook {
 }
 
 export function copyMobileScenarioToPortfolio(input: MobileDashboardInput, id: string): PortfolioBook {
+  if ('datedPlan' in input) throw new Error('Legacy scenario copies cannot discard dated plans. Import an explicit Portfolio document4.');
   return decodePortfolioBook({ ...createBlankMobilePortfolio(), monthlyIncome: input.monthlyIncome,
     monthlyExpenses: input.monthlyExpenses, chunkAmount: input.chunkAmount, strategy: 'velocity',
     loc: { limit: input.loc.limit, balance: input.loc.balance, apr: normalizeApr(input.loc.apr),
@@ -19,12 +20,18 @@ export function copyMobileScenarioToPortfolio(input: MobileDashboardInput, id: s
       ...(input.activeDebt.termMonths === undefined ? {} : { termMonths: input.activeDebt.termMonths }) }] });
 }
 
+export function formatMobileDatedAmount(amount: number): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
+}
+
 export function buildMobilePortfolioBookView(book: PortfolioBook) {
   const input = portfolioBookInputs(book), result = simulatePortfolio(input);
   const startingBalance = book.debts.reduce((sum, debt) => sum + debt.balance, 0) + book.loc.balance;
   const visual = buildPortfolioPathVisualModel(result, startingBalance);
   const state = result.isPayoffPossible ? (result.payoffMonths === 0 ? 'cleared' : 'projected') : 'review';
-  const centTolerance = state === 'cleared' && startingBalance > 0;
+  const dated = book.datedPlan !== undefined;
+  const centTolerance = !dated && state === 'cleared' && startingBalance > 0;
+  const money = dated ? formatMobileDatedAmount : formatCurrency;
   const path = centTolerance ? { ...visual, isProjected: false, statusLabel: 'Within per-liability cent tolerance',
     startingBalance, endingBalance: startingBalance, maxBalance: Math.max(1, startingBalance),
     sampledPoints: [{ month: 0, balance: startingBalance, interest: 0, targetCount: 0 }] } : visual;
@@ -38,9 +45,11 @@ export function buildMobilePortfolioBookView(book: PortfolioBook) {
   if (book.loc.balance > 0 && (book.loc.limit <= 0 || book.loc.balance / book.loc.limit > 0.8)) {
     warnings.push('LOC utilization is above 80% or its limit is missing. Review capacity before relying on new borrowing.');
   }
-  return { result, startingBalance, path, state,
+  return { result, forecastBasis: result.forecastBasis, startingBalance, path, state,
     targetLabel: state === 'review' || centTolerance ? 'Not projected' : state === 'cleared' ? 'No modeled balances' : targets.join(' + ') || 'No active target',
-    payoffLabel: centTolerance ? 'Within per-liability cent tolerance' : state === 'cleared' ? 'No modeled balances' : state === 'projected' ? `${result.payoffMonths} months estimated` : 'Review inputs',
-    interestLabel: state === 'review' || centTolerance ? 'Not projected' : formatCurrency(result.totalInterest),
-    cashLabel: state === 'review' || centTolerance ? 'Not projected' : formatCurrency(result.cashAtPayoff), warnings };
+    payoffLabel: state === 'review' ? 'Review inputs' : dated && result.payoffDate ? `${result.payoffDate} estimated`
+      : centTolerance ? 'Within per-liability cent tolerance' : state === 'cleared' ? 'No modeled balances' : `${result.payoffMonths} months estimated`,
+    interestLabel: state === 'review' || centTolerance ? 'Not projected' : money(result.totalInterest),
+    feeLabel: dated ? state === 'review' ? 'Not projected' : money(result.totalFees ?? 0) : undefined,
+    cashLabel: state === 'review' || centTolerance ? 'Not projected' : money(result.cashAtPayoff), warnings };
 }
