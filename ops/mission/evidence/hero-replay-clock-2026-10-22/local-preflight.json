@@ -1,0 +1,346 @@
+{
+  "baseline": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+  "verifiedAt": "2026-10-22T01:18:00.799Z",
+  "stage": "Local test-only Replay clock-boundary repair; BOTH NEW full exact-head CI/READY/hosted138/manual required",
+  "productionReady": false,
+  "lastVerifiedHead": "462a218342dfa95343bde6882546e99e882e5c99",
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6329619148",
+  "sources": {
+    "apps/web/scripts/hero-resource-tests.cjs": "b0bf799ede1d74fbccaacadec5723b113583d5c428cb16fbab4b24f098e0e459",
+    "apps/web/scripts/smoke-heroes.cjs": "b07901d78c6f6ee9726d16645df78700b7363dc4313315524cecf254601783a6",
+    "apps/web/scripts/hero-replay-clock-tests.cjs": "9881504b4114d958c26d7d4bd44c0b24b5389804367e8f317a1d188da3be68b5"
+  },
+  "normalizedSources": {
+    "apps/web/scripts/hero-resource-tests.cjs": "b0bf799ede1d74fbccaacadec5723b113583d5c428cb16fbab4b24f098e0e459",
+    "apps/web/scripts/smoke-heroes.cjs": "b07901d78c6f6ee9726d16645df78700b7363dc4313315524cecf254601783a6",
+    "apps/web/scripts/hero-replay-clock-tests.cjs": "9881504b4114d958c26d7d4bd44c0b24b5389804367e8f317a1d188da3be68b5"
+  },
+  "boundary": {
+    "changed": [
+      "apps/web/scripts/hero-resource-tests.cjs",
+      "apps/web/scripts/smoke-heroes.cjs"
+    ],
+    "added": [
+      "apps/web/scripts/hero-replay-clock-tests.cjs"
+    ],
+    "protectedStructuredSources": 355,
+    "financialSources": 9,
+    "unchangedRuntime": true,
+    "runtimeSha256": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+    "unchangedModels": 10,
+    "unchangedPosters": 10,
+    "unchangedManifests": 3,
+    "unchangedVideos": 10
+  },
+  "tests": {
+    "localStages": 4,
+    "regressions": 348,
+    "overview": 21,
+    "cockpit": 31,
+    "commonMonth": 31,
+    "reference": 23247,
+    "replayCases": 20,
+    "lifecycleMarkers": 8,
+    "replayClockMarkers": 3,
+    "clockNegativeControls": 2,
+    "reducedMotionReplay": true,
+    "media": 219,
+    "stills": 27,
+    "mediaFresh": false,
+    "nativeFresh": false,
+    "videosFresh": false
+  },
+  "inherited": {
+    "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+    "localPreflight": "ops/mission/evidence/hero-replay-2026-10-22/local-preflight.json",
+    "localPreflightSha256": "b4e8f29d4e13892ee5dc840cde6a3224e492129ec1fa21ad174052ccf0e743d4",
+    "localStages": 28,
+    "additionalFinalSourceWebTestsAndLint": true,
+    "media": 219,
+    "stills": 27,
+    "nativeContracts": true,
+    "hosted": {
+      "id": "42b0f0a7-abfc-4ca3-a9d6-450347ce0da7",
+      "suites": 12,
+      "workflows": 138,
+      "servedHashes": 20,
+      "status": "completed"
+    },
+    "notAVerifiedCheckpoint": true
+  },
+  "failedCi": [
+    {
+      "id": 39702904111,
+      "attempt": 1,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39702904111",
+      "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "name": "Web and mobile quality gates",
+          "conclusion": "success"
+        },
+        {
+          "name": "Isolated SQL and owner isolation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Asset hero quality gates",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 39702908995,
+      "attempt": 1,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39702908995",
+      "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "name": "Isolated SQL and owner isolation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Asset hero quality gates",
+          "conclusion": "failure"
+        },
+        {
+          "name": "Web and mobile quality gates",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "independent": "clock-boundary-review.md",
+    "mutantProbe": "review-clock-probe.json",
+    "photorealApproved": false
+  },
+  "models": [
+    {
+      "id": "car",
+      "bytes": 2232520,
+      "sha256": "5d7fb0b2aa1457ce7e0013d3b7e04ba6568c3dd21941dc5df05a3bf969489225",
+      "recipeSha256": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94"
+    },
+    {
+      "id": "house",
+      "bytes": 1145320,
+      "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33"
+    },
+    {
+      "id": "land",
+      "bytes": 709260,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    {
+      "id": "creditCard",
+      "bytes": 523764,
+      "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025"
+    },
+    {
+      "id": "studentLoan",
+      "bytes": 723868,
+      "sha256": "56dfe51ad199bdafcc0cc5ced65321a16a4e087693f645d6d12c6bc14fb98d12"
+    },
+    {
+      "id": "medical",
+      "bytes": 509120,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    {
+      "id": "personal",
+      "bytes": 519844,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"
+    },
+    {
+      "id": "recreation",
+      "bytes": 521544,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7"
+    },
+    {
+      "id": "custom",
+      "bytes": 237844,
+      "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b"
+    },
+    {
+      "id": "vault",
+      "bytes": 719996,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "id": "house",
+      "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "id": "land",
+      "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "id": "creditCard",
+      "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "id": "studentLoan",
+      "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "id": "medical",
+      "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "id": "personal",
+      "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "id": "recreation",
+      "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "id": "custom",
+      "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "id": "vault",
+      "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "videos": [
+    {
+      "id": "car",
+      "sha256": "57ce7df9d14a3ead27e2bf1548860b831c0cfdb08a0d59cf4fd038bf97bbadb7",
+      "bytes": 22770117
+    },
+    {
+      "id": "house",
+      "sha256": "8137916311e6055eb772362c927d517f609d3845e430cf318b8914375a6082a3",
+      "bytes": 11383617
+    },
+    {
+      "id": "land",
+      "sha256": "e179bb2c02bf8ddc39e9383fe457f5be542b6b6fa202fb130f943d9a127ec82f",
+      "bytes": 17928139
+    },
+    {
+      "id": "creditCard",
+      "sha256": "bf9d798dd7cea074ca71531686a623324e2d2365d680aaed2166739954d005bf",
+      "bytes": 3632302
+    },
+    {
+      "id": "studentLoan",
+      "sha256": "e90bbdace925b32a34cc6a7b5c7af62528db1553e9eb2226ac5f8e3ac6ca0527",
+      "bytes": 8638610
+    },
+    {
+      "id": "medical",
+      "sha256": "4b160da9fa22967861cd5efe659c4a6aa54fc4f9c56907486f598f975a42c5dd",
+      "bytes": 5336987
+    },
+    {
+      "id": "personal",
+      "sha256": "5de93211e5a609291e0c6a99698fd5dd9feda0c2cbfadfae6edd464581f740f1",
+      "bytes": 8319827
+    },
+    {
+      "id": "recreation",
+      "sha256": "a1d22ef4e04266113db7df0001c7dd2b980eaf233dba00a22c3223cb8e763ece",
+      "bytes": 5260280
+    },
+    {
+      "id": "custom",
+      "sha256": "9f397895e9d162f33401029b7d3eb2cfd562ad6a5e1d8288e2ab9461ccf305f9",
+      "bytes": 4304197
+    },
+    {
+      "id": "vault",
+      "sha256": "2e34635e531d35ea4abf9686f52adce376edc51c42c4046f4db5a5783dc351d6",
+      "bytes": 7527596
+    }
+  ],
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-replay-clock",
+    "previousDirectory": ".superpowers/sdd/2026-10-22-hero-replay",
+    "files": {
+      "gates.json": {
+        "bytes": 1092,
+        "sha256": "eab1376308ee57be815632a20c9d63fe6a0cd8514d111e5e2325e7edbd131ef6"
+      },
+      "failed-ci-final.json": {
+        "bytes": 42520,
+        "sha256": "0e05f9cba53e2b92de88b38926f283b944f3954cf785fa39a37cd2aafb05929b"
+      },
+      "web-tests.log": {
+        "bytes": 48770,
+        "sha256": "da4952dff548569290e69cea0ffc64a575d0ad23b7f2d98aea3877c36337d871"
+      },
+      "web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "web-build.log": {
+        "bytes": 955,
+        "sha256": "c036ee5605158342cf2bd3a44654cddad3e0bfa942ac656ab3d90352e5bc1c5a"
+      },
+      "heroes.log": {
+        "bytes": 6241,
+        "sha256": "ad1b635ee409544ff81c6640bb511c641903ba984f490f76d0af56d8f0ddbb6f"
+      },
+      "failed-39702904111-primary.log": {
+        "bytes": 636299,
+        "sha256": "1af57e06d930d8f95ca1639633ca68270ac2e8bc7db51ee89e8a93436fb2ce2e"
+      },
+      "failed-39702904111-heroes.log": {
+        "bytes": 35528,
+        "sha256": "391ee1998eeb013ecc8462e1d491b11fddc1483d9bd8ff19c24200cbce834bc3"
+      },
+      "failed-39702904111-sql.log": {
+        "bytes": 118179,
+        "sha256": "7df69430cef976227c03bd971a08fc9a328a35eda5301bbc0d17a74ac2ad1b41"
+      },
+      "failed-39702908995-primary.log": {
+        "bytes": 637917,
+        "sha256": "d78168c814a1afd3eea2557b49c517e19ffa0f7068cfa648112937cc567e86fb"
+      },
+      "failed-39702908995-heroes.log": {
+        "bytes": 36346,
+        "sha256": "84942aaaa90044135fcdfcf8e8059a6667245781cab5ac9bf8087e0a23f35456"
+      },
+      "failed-39702908995-sql.log": {
+        "bytes": 119189,
+        "sha256": "795ddedc95c6485ef70c34b1b5e449729811412fdb31176647a8c5685d4499fb"
+      },
+      "clock-boundary-review.md": {
+        "bytes": 8900,
+        "sha256": "ebf6ab1badc7c4959d3c9c62884948677887001a3af2d6a77c805e69b9453beb"
+      },
+      "review-clock-probe.json": {
+        "bytes": 2191,
+        "sha256": "68c95dab7b94c6a4e29d4936489a31fd302e8a164dc4d2db933ad55c2b2f3682"
+      },
+      "replay-clock-red.log": {
+        "bytes": 580,
+        "sha256": "7c2ff08456754a964a0c6dc9f948b8ef1f66d1fddc333d3c0e2699696b14a86f"
+      },
+      "replay-clock-green.log": {
+        "bytes": 253,
+        "sha256": "7a9ee8d9d74a50f781753dd386827b90243e65b2536fd23f52db6c2f4a70331f"
+      }
+    }
+  },
+  "remaining": [
+    "Original initial pauseAt Date.now+100 cross-RPC setup fragility remains; this removes the newly introduced Replay boundary only.",
+    "All-ten photoreal/full-angle/material identity approval remains open; no rendering or asset changes.",
+    "Car Tireside unchanged lossy; inherited hardware/D3D X4122 remains open, software success is not hardware clearance.",
+    "Media/native security, canonical scenario/lender/calendar/backend/recovery/accessibility/physical-device/native/release gates remain open.",
+    "No merge/promotion/new dependencies/paid GPU/cloud-data-access changes."
+  ]
+}
