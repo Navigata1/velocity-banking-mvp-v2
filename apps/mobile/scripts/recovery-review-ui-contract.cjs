@@ -50,15 +50,16 @@ function deferred() {
 }
 // Fingerprint services are deterministic memory ports, not replacements for component guards.
 const fingerprint = value => JSON.stringify(value);
+const portfolioFingerprint = (value, version) => version===3?JSON.stringify({documentVersion:3,book:value}):fingerprint(value);
 
 function harness() {
   let owner = ownerA, assumptions = clone(scenario), portfolioBook = clone(book), portfolioStatus = 'saved', mounted = true;
-  let assumptionsReady = true, nextNetworkGate = null;
+  let assumptionsReady = true, nextNetworkGate = null, documentVersion;
   const physical = new Map([
     [ownerA, { assumptions: clone(scenario), book: clone(book) }],
     [ownerB, { assumptions: { ...clone(scenario), monthlyIncome: 9200 }, book: { ...clone(book), monthlyIncome: 9300 } }],
   ]);
-  const controls = new Map(), applyCalls = [], writes = [], runs = [], frames = new Set();
+  const controls = new Map(), applyCalls = [], writes = [], runs = [], frames = new Set(), queued = [], replacements = [];
   const source = { assumptions: clone(remoteScenario), portfolio: clone(remoteBook), clientRevision: 7,
     snapshotId, snapshotIdempotencyKey: 'memory-remote-stream', updatedAt: '2026-10-20T12:00:00Z' };
   const client = { auth: {
@@ -68,8 +69,8 @@ function harness() {
   const runRecovery = async (expectedOwner, action) => { runs.push(expectedOwner); return action(); };
   const outbox = {
     readRecovery: async () => null,
-    enqueue: async () => { throw new Error('Unexpected snapshot enqueue'); },
-    flush: async () => { throw new Error('Unexpected snapshot flush'); },
+    enqueue: async input => { queued.push(clone(input)); },
+    flush: async () => ({remaining:0,sent:1}),
   };
   function Pressable(props) {
     const id = React.useRef(Symbol('pressable'));
@@ -82,17 +83,17 @@ function harness() {
   const services = {
     MobileSnapshotRecoveryPendingError: PendingRecoveryError,
     serializeMobileRecoveryAssumptions: fingerprint,
-    serializeMobileRecoveryPortfolio: fingerprint,
+    serializeMobileRecoveryPortfolio: portfolioFingerprint,
     loadMobileSnapshotRecoveryOptions: async () => ({ guestAssumptions: null, guestPortfolio: null,
       rejectedCount: 0, selectedSnapshotId: null, snapshots: [clone(source)], streamRevisions: {} }),
     applyMobileSnapshotRecovery: async (_client, input, dependencies) => {
       applyCalls.push(clone(input));
       const saved = physical.get(input.expectedOwnerId);
       assert.equal(input.reviewedLocalAssumptions, fingerprint(saved.assumptions), 'memory API checks physical scenario only');
-      assert.equal(input.reviewedLocalPortfolio, fingerprint(saved.book), 'memory API checks physical Portfolio only');
-      const target = input.source.snapshot;
+      assert.equal(input.reviewedLocalPortfolio, portfolioFingerprint(saved.book,saved.documentVersion), 'memory API checks physical Portfolio only');
+      const target = input.source.kind==='remote'?input.source.snapshot:input.source;
       await dependencies.replaceAssumptions(clone(target.assumptions), Object.freeze({ ownerId: input.expectedOwnerId }), 1);
-      await dependencies.replacePortfolio(clone(target.portfolio), Object.freeze({ ownerId: input.expectedOwnerId }), 1);
+      await dependencies.replacePortfolio(clone(target.portfolio), Object.freeze({ ownerId: input.expectedOwnerId }), 1,target.portfolioDocumentVersion);
       return { discarded: 0, synced: false };
     },
   };
@@ -118,8 +119,11 @@ function harness() {
     '@/components/mobile-portfolio-provider': { useMobilePortfolio: () => {
       const boundOwner = owner;
       return { book: portfolioBook, isHydrated: true, status: portfolioStatus, backend: 'local-storage', revision: 1,
-        replace: async input => {
+        ...(documentVersion===3?{documentVersion:3}:{}),
+        replace: async (input,lock,revision,version) => {
+          replacements.push({book:clone(input),version});
           physical.get(boundOwner).book = clone(input);
+          if(version===3)physical.get(boundOwner).documentVersion=3;
           writes.push({ owner: boundOwner, kind: 'portfolio' });
           return 'local-storage';
         } };
@@ -159,7 +163,9 @@ function harness() {
     await React.act(async () => { await props.onPress(); });
   }
   return {
-    applyCalls, writes, runs, control, render,
+    applyCalls, writes, runs, control, render, queued, replacements, press,
+    sourceVersion:version=>{source.portfolioDocumentVersion=version;},
+    async version(value,physicalAlso=false){documentVersion=value;if(physicalAlso)physical.get(owner).documentVersion=value;await render();},
     stored: id => clone(physical.get(id)),
     async review() {
       await press('Review snapshot recovery options');
@@ -300,6 +306,25 @@ async function main() {
     assert.deepEqual(h.stored(ownerA), beforeA);
     assert.deepEqual(h.stored(ownerB), beforeB);
   });
+  await test('account sync includes active3 marker after profile removal and omits it for old books',async h=>{
+    await h.press('Sync local assumptions');assert.equal('portfolioDocumentVersion' in h.queued[0],false);
+    await h.version(3,true);await h.press('Sync local assumptions');assert.equal(h.queued[1].portfolioDocumentVersion,3);
+  });
+  await test('format-only destination adoption expires review before recovery API',async h=>{
+    await h.review();await h.version(3);await h.confirm();assert.equal(h.applyCalls.length,0);assert.equal(h.writes.length,0);
+  });
+  await test('remote3 marker reaches recovery source and four-argument replacement unchanged',async h=>{
+    h.sourceVersion(3);await h.review();await h.confirm();
+    assert.equal(h.applyCalls[0].source.snapshot.portfolioDocumentVersion,3);assert.equal(h.replacements[0].version,3);
+  });
+  await test('device3 source and both reviewed fingerprints retain format',async h=>{
+    await h.version(3,true);await h.press('Review snapshot recovery options');await h.press('Current device assumptions');await h.confirm();
+    const input=h.applyCalls[0];assert.ok(input);assert.equal(input.source.portfolioDocumentVersion,3);
+    assert.equal(JSON.parse(input.confirmation.reviewedPortfolio).documentVersion,3);
+    assert.equal(JSON.parse(input.reviewedLocalPortfolio).documentVersion,3);
+  });
+  await require('./portfolio-transfer-ui-contract.cjs')({React,createRoot,hostElement,document})();
+  await require('./lender-terms-ui-contract.cjs')({React,createRoot,hostElement,document})();
   console.log(`${count} Recovery review UI contracts: ${count - failures} passed, ${failures} failed. Memory ports only; no browser, device, native accessibility, physical storage, or cloud proof.`);
   if (failures) process.exitCode = 1;
 }
