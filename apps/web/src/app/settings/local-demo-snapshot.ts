@@ -1,6 +1,7 @@
 import { LOCAL_DEMO_STORAGE_KEYS, type StorageLike } from './local-data-reset';
-import { CANONICAL_PORTFOLIO_KEY, LEGACY_PORTFOLIO_KEY, readPortfolioSnapshotDocument } from '@/stores/portfolio-persistence';
+import { CANONICAL_PORTFOLIO_KEY, LEGACY_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY, readPortfolioSnapshotDocument } from '@/stores/portfolio-persistence';
 import { decodePortfolioDocument, encodePortfolioDocument } from '@interestshield/financial-engine/portfolio-book';
+import { assertLegacyScenarioDocument } from '@/stores/legacy-scenario-storage';
 import { BACKEND_HANDOFF_TARGETS } from './backend-readiness';
 import {
   buildBackendMigrationContract,
@@ -110,18 +111,30 @@ export function importLocalDemoSnapshot(
       if (typeof entry.value !== 'string') {
         throw new Error('Snapshot storage value is invalid.');
       }
+      if (entry.key === 'velocity-bank-storage') assertLegacyScenarioDocument(entry.value);
 
-      return entry.key === LEGACY_PORTFOLIO_KEY ? { ...entry, value: encodePortfolioDocument(decodePortfolioDocument(entry.value)) } : entry;
+      if (entry.key !== LEGACY_PORTFOLIO_KEY) return entry;
+      const book = decodePortfolioDocument(entry.value);
+      return { ...entry, value: encodePortfolioDocument(book, JSON.parse(entry.value).version === 3 ? 3 : undefined) };
     });
     if (new Set(entries.map(entry => entry.key)).size !== entries.length) throw new Error('Snapshot contains duplicate storage keys.');
     const portfolio = entries.find(entry => entry.key === LEGACY_PORTFOLIO_KEY);
+    let portfolioKey = CANONICAL_PORTFOLIO_KEY;
+    if (portfolio) {
+      const active = storage.getItem(TERMS_PORTFOLIO_KEY);
+      if (active !== null) readPortfolioSnapshotDocument(storage);
+      if (active !== null || JSON.parse(portfolio.value).version === 3) {
+        portfolioKey = TERMS_PORTFOLIO_KEY;
+        portfolio.value = encodePortfolioDocument(decodePortfolioDocument(portfolio.value), 3);
+      }
+    }
     const bookOnly = entries.length === 1 && portfolio !== undefined;
     const replacedKeys = LOCAL_DEMO_STORAGE_KEYS.filter(key => key !== LEGACY_PORTFOLIO_KEY
       && (!bookOnly || key !== 'velocity-bank-storage'));
-    const physicalKeys = [...replacedKeys, CANONICAL_PORTFOLIO_KEY];
+    const physicalKeys = [...replacedKeys, ...(portfolio ? [portfolioKey] : [])];
     const before = physicalKeys.map(key => ({ key, value: storage.getItem(key) }));
     try {
-      if (portfolio) storage.setItem(CANONICAL_PORTFOLIO_KEY, portfolio.value);
+      if (portfolio) storage.setItem(portfolioKey, portfolio.value);
       for (const key of replacedKeys) storage.removeItem(key);
       for (const entry of entries) if (entry.key !== LEGACY_PORTFOLIO_KEY) storage.setItem(entry.key, entry.value);
     } catch (error) {

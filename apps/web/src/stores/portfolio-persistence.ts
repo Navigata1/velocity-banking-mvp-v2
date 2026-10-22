@@ -2,6 +2,7 @@ import { decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } 
 
 export const LEGACY_PORTFOLIO_KEY = 'interestshield-portfolio-v1';
 export const CANONICAL_PORTFOLIO_KEY = 'interestshield-portfolio-v2';
+export const TERMS_PORTFOLIO_KEY = 'interestshield-portfolio-v3';
 
 export interface StorageLike {
   getItem(key: string): string | null;
@@ -16,7 +17,9 @@ export interface PortfolioPersistenceStatus {
 
 export interface PortfolioPersistence {
   getItem(logicalKey: string): { state: PortfolioBook; version: 2 } | null;
-  setItem(logicalKey: string, value: { state: PortfolioBook; version: number }): void;
+  setItem(logicalKey: string, value: { state: PortfolioBook; version: number }, documentVersion?: 3): void;
+  getDocumentVersion(): 2 | 3 | null;
+  canWrite(): boolean;
   removeItem(logicalKey: string): void;
   getStatus(): PortfolioPersistenceStatus;
   subscribe(listener: () => void): () => void;
@@ -34,7 +37,7 @@ function errorDetail(cause: unknown): string {
   return 'The storage operation could not complete.';
 }
 
-function decodeStoredDocument(raw: string, version: 1 | 2): PortfolioBook {
+function decodeStoredDocument(raw: string, version: 1 | 2 | 3): PortfolioBook {
   const document: unknown = JSON.parse(raw);
   if (!document || typeof document !== 'object' || Array.isArray(document)
     || !('version' in document) || document.version !== version) {
@@ -43,16 +46,18 @@ function decodeStoredDocument(raw: string, version: 1 | 2): PortfolioBook {
   return decodePortfolioDocument(raw);
 }
 
-function readStoredPortfolio(port: Pick<StorageLike, 'getItem'>): { state: PortfolioBook; canonical: boolean } | null {
+function readStoredPortfolio(port: Pick<StorageLike, 'getItem'>): { state: PortfolioBook; documentVersion: 1 | 2 | 3 } | null {
+  const terms = port.getItem(TERMS_PORTFOLIO_KEY);
+  if (terms !== null) return { state: decodeStoredDocument(terms, 3), documentVersion: 3 };
   const primary = port.getItem(CANONICAL_PORTFOLIO_KEY);
-  if (primary !== null) return { state: decodeStoredDocument(primary, 2), canonical: true };
+  if (primary !== null) return { state: decodeStoredDocument(primary, 2), documentVersion: 2 };
   const legacy = port.getItem(LEGACY_PORTFOLIO_KEY);
-  return legacy === null ? null : { state: decodeStoredDocument(legacy, 1), canonical: false };
+  return legacy === null ? null : { state: decodeStoredDocument(legacy, 1), documentVersion: 1 };
 }
 
 export function readPortfolioSnapshotDocument(storage: Pick<StorageLike, 'getItem'>): string | null {
   const stored = readStoredPortfolio(storage);
-  return stored ? encodePortfolioDocument(stored.state) : null;
+  return stored ? encodePortfolioDocument(stored.state, stored.documentVersion === 3 ? 3 : 2) : null;
 }
 
 export function createPortfolioPersistence(storage: StorageLike | null): PortfolioPersistence {
@@ -88,6 +93,7 @@ export function createPortfolioPersistence(storage: StorageLike | null): Portfol
   }
 
   return {
+    canWrite: () => storage !== null && !writesBlocked,
     getItem(logicalKey) {
       if (!supported(logicalKey) || !available() || !storage || writesBlocked) return null;
       try {
@@ -99,13 +105,26 @@ export function createPortfolioPersistence(storage: StorageLike | null): Portfol
         return null;
       }
     },
-    setItem(logicalKey, value) {
+    getDocumentVersion() {
+      if (!available() || !storage || writesBlocked) return null;
+      try {
+        const stored = readStoredPortfolio(storage);
+        return stored ? (stored.documentVersion === 3 ? 3 : 2) : null;
+      } catch (cause) {
+        fail(`Saved Portfolio could not be read: ${errorDetail(cause)}`, true);
+        return null;
+      }
+    },
+    setItem(logicalKey, value, documentVersion) {
       if (!supported(logicalKey) || !available() || !storage || writesBlocked) return;
       let document: string;
       try {
         if (!value || typeof value !== 'object' || Array.isArray(value) || value.version !== 2
           || Object.keys(value).some(key => key !== 'state' && key !== 'version')) {
           throw new Error('Portfolio writes require a version 2 state wrapper.');
+        }
+        if (documentVersion !== undefined && documentVersion !== 3) {
+          throw new Error('Explicit Portfolio document version must be 3.');
         }
         document = encodePortfolioDocument(value.state);
       } catch (cause) {
@@ -120,8 +139,10 @@ export function createPortfolioPersistence(storage: StorageLike | null): Portfol
         return;
       }
       try {
-        if (!stored?.canonical || encodePortfolioDocument(stored.state) !== document) {
-          storage.setItem(CANONICAL_PORTFOLIO_KEY, document);
+        const targetVersion = stored?.documentVersion === 3 || documentVersion === 3 || value.state.loc.lenderTerms !== undefined ? 3 : 2;
+        if (targetVersion === 3) document = encodePortfolioDocument(value.state, 3);
+        if (stored?.documentVersion !== targetVersion || encodePortfolioDocument(stored.state, targetVersion) !== document) {
+          storage.setItem(targetVersion === 3 ? TERMS_PORTFOLIO_KEY : CANONICAL_PORTFOLIO_KEY, document);
         }
         publish('ready', null);
       } catch (cause) {
@@ -131,7 +152,7 @@ export function createPortfolioPersistence(storage: StorageLike | null): Portfol
     removeItem(logicalKey) {
       if (!supported(logicalKey) || !available() || !storage) return;
       try {
-        storage.removeItem(CANONICAL_PORTFOLIO_KEY);
+        storage.removeItem(storage.getItem(TERMS_PORTFOLIO_KEY) !== null ? TERMS_PORTFOLIO_KEY : CANONICAL_PORTFOLIO_KEY);
         if (!writesBlocked) publish('ready', null);
       } catch (cause) {
         fail(`Portfolio canonical data was not removed: ${errorDetail(cause)}`);

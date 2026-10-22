@@ -1,7 +1,8 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { assertLegacyScenarioState, legacyScenarioStorage } from './legacy-scenario-storage';
 import {
   calculateDailyInterest,
   simulateBaseline,
@@ -354,6 +355,7 @@ export function sanitizePersistedFinancialState(
   persistedState: unknown,
   currentState: FinancialState
 ): Partial<PersistedFinancialFields> {
+  assertLegacyScenarioState(persistedState);
   if (!persistedState || typeof persistedState !== 'object' || Array.isArray(persistedState)) {
     return {};
   }
@@ -379,6 +381,7 @@ export function sanitizePersistedFinancialState(
 }
 
 const createSimulationInputs = (state: FinancialState, type: DebtType): SimulationInputs | null => {
+  if (legacyScenarioStorage.getStatus().blocked) return null;
   const debt = state.debts[type];
   if (!debt) return null;
 
@@ -644,6 +647,7 @@ export const useFinancialStore = create<FinancialState>()(
     }),
     {
       name: 'velocity-bank-storage',
+      storage: createJSONStorage(() => legacyScenarioStorage),
       partialize: (state) => ({
         monthlyIncome: state.monthlyIncome,
         monthlyExpenses: state.monthlyExpenses,

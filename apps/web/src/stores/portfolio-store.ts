@@ -15,6 +15,7 @@ import type { PortfolioRunComparison, PortfolioRunSummary } from '@/engine/portf
 import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-run-diff';
 import { buildPortfolioPayoffModel } from '@/engine/portfolio-payoff-model';
 import { decodePortfolioBook, decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { decodeLenderTerms, type LenderTermsInput, type MoneyLoopLOC } from '@interestshield/financial-engine';
 import { createPortfolioPersistence, LEGACY_PORTFOLIO_KEY } from './portfolio-persistence';
 
 export type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
@@ -25,11 +26,7 @@ function browserPortfolioStorage() {
 }
 export const portfolioPersistence = createPortfolioPersistence(browserPortfolioStorage());
 
-export interface PortfolioLOC {
-  limit: number;
-  balance: number;
-  apr: number;
-}
+export type PortfolioLOC = MoneyLoopLOC;
 
 export interface PortfolioState {
   debts: DebtItem[];
@@ -49,7 +46,8 @@ export interface PortfolioState {
   setMonthlyExpenses: (v: number) => void;
   setExtraMonthlyPayment: (v: number) => void;
   setChunkAmount: (v: number) => void;
-  updateLOC: (patch: Partial<PortfolioLOC>) => void;
+  updateLOC: (patch: Partial<Pick<PortfolioLOC, 'limit' | 'balance' | 'apr'>>) => void;
+  setLenderTerms: (input: LenderTermsInput | null) => { ok: true } | { ok: false; error: string };
   setStrategy: (s: PayoffStrategy) => void;
   setFocusMode: (m: FocusMode) => void;
   setSplitRatioPrimary: (r: number) => void;
@@ -336,6 +334,9 @@ export function sanitizePersistedPortfolioState(
       limit: safeNonNegativeNumber(persisted.loc?.limit, currentState.loc.limit, 'LOC limit'),
       balance: safeNonNegativeNumber(persisted.loc?.balance, currentState.loc.balance, 'LOC balance'),
       apr: safeNonNegativeNumber(persisted.loc?.apr, currentState.loc.apr, 'LOC APR'),
+      ...(persisted.loc && 'lenderTerms' in persisted.loc
+        ? { lenderTerms: decodeLenderTerms(persisted.loc.lenderTerms) }
+        : currentState.loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(currentState.loc.lenderTerms) }),
     },
     strategy: selectKnownValue(persisted.strategy, payoffStrategies, currentState.strategy),
     focusMode: selectKnownValue(persisted.focusMode, focusModes, currentState.focusMode),
@@ -387,13 +388,23 @@ export const usePortfolioStore = create<PortfolioState>()(
         set((state) => ({
           loc: {
             ...state.loc,
-            ...patch,
             limit: safeNonNegativeNumber(patch.limit, state.loc.limit, 'LOC limit'),
             balance: safeNonNegativeNumber(patch.balance, state.loc.balance, 'LOC balance'),
             apr: safeNonNegativeNumber(patch.apr, state.loc.apr, 'LOC APR'),
           },
         }));
         get().recompute();
+      },
+
+      setLenderTerms: (input) => {
+        try {
+          const book = portfolioBookFromState(get());
+          if (input === null) delete book.loc.lenderTerms;
+          else book.loc.lenderTerms = decodeLenderTerms(input);
+          return get().importState(encodePortfolioDocument(book, 3));
+        } catch (cause) {
+          return { ok: false as const, error: cause instanceof Error ? cause.message : 'Lender terms are invalid.' };
+        }
       },
 
       setStrategy: (s) => { set({ strategy: s }); get().recompute(); },
@@ -443,16 +454,20 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
 
       exportState: () => {
-        return encodePortfolioDocument(portfolioBookFromState(get()));
+        return encodePortfolioDocument(portfolioBookFromState(get()), portfolioPersistence.getDocumentVersion() === 3 ? 3 : undefined);
       },
 
       importState: (jsonStr) => {
         try {
           const book = decodePortfolioDocument(jsonStr);
-          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error('Portfolio storage needs review before replacement.');
-          if (encodePortfolioDocument(book) === encodePortfolioDocument(portfolioBookFromState(get()))) return { ok: true as const };
-          portfolioPersistence.setItem(LEGACY_PORTFOLIO_KEY, { state: book, version: 2 });
+          const documentVersion = JSON.parse(jsonStr).version === 3 ? 3 : undefined;
+          if (!portfolioPersistence.canWrite()) throw new Error('Portfolio storage needs review before replacement.');
+          const unchanged = encodePortfolioDocument(book) === encodePortfolioDocument(portfolioBookFromState(get()));
+          if (unchanged && portfolioPersistence.getStatus().status === 'ready'
+            && (documentVersion !== 3 || portfolioPersistence.getDocumentVersion() === 3)) return { ok: true as const };
+          portfolioPersistence.setItem(LEGACY_PORTFOLIO_KEY, { state: book, version: 2 }, documentVersion);
           if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
+          if (unchanged) return { ok: true as const };
           set({ ...book, lastResult: undefined, lastRunSummary: undefined, lastRunComparison: undefined });
           get().recompute();
           if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
