@@ -1,0 +1,54 @@
+{
+  "observedAt": "2026-10-23T03:47:21.302Z",
+  "head": "8dfba166b3326a2fd3787c9f0f16708a2190f858",
+  "productionReady": false,
+  "adopted": false,
+  "currentMediaFindings": {
+    "total": 13,
+    "high": 8,
+    "moderate": 5
+  },
+  "candidateHyperframes": "0.7.111",
+  "actualHyperframes": "0.7.56",
+  "actualPackageSha256": "de55ed3793da7d51fdf319fb5940b4911a0f1dadd1c851a5f5c2c41451156f75",
+  "actualLockSha256": "de10e0c7531e32bb6e1d654b22f443b551e1823ffea31d959f6145c49b350870",
+  "cold": {
+    "id": "compat-2b85d9f9-8f30-4c90-aa11-88b1912a3660",
+    "installs": 1,
+    "ignoreScripts": true,
+    "exit": 0,
+    "elapsedMs": 66496,
+    "installedPackages": 340,
+    "compressedTarballIntegrities": 340,
+    "unchangedPinTest": {
+      "passed": 9,
+      "failed": 1,
+      "expected": "0.7.56",
+      "actual": "0.7.111"
+    },
+    "cliHelpAndVersion": "SKIPPED_NOT_VETTED",
+    "originalVendor": "FAILED_firstmkdir_zerooutputs"
+  },
+  "freshVendorOnly": {
+    "id": "vendor-probe-abd76f26-ce0b-4018-b9b8-ed2321399602",
+    "status": "FAILED",
+    "attempts": 1,
+    "primaryFiles": 25,
+    "primaryBytes": 10328496,
+    "missingMirrors": 25,
+    "cause": "Node22 fs.cp ancestor-stat read outside deliberately narrow grants; harness blocker, not candidate incompatibility",
+    "trackedFilesPreservedDuringProbe": 2586,
+    "priorFilesPreserved": 21268,
+    "mutableParentLedgerChangedByParent": true,
+    "originalBroaderPreservationFailureRetained": true
+  },
+  "independentReviews": [
+    "review-f81db251-1675-431a-9b25-c05c36854f57",
+    "review-fdf6fbf2-af07-471c-9b4e-5ca33ec4847c"
+  ],
+  "limits": [
+    "Lifecycle/native/CLI/browser/fullmedia runtime compatibility unproved",
+    "Lock-only historical audit0 is not installed app remediation",
+    "No retry, permission broadening, dependency or production adoption"
+  ]
+}
