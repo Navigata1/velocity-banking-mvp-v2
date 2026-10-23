@@ -1140,3 +1140,122 @@ Allten final photoreal, lender/cloud recovery, native physical, accessibility an
 production gates remain open. Baseline617 CI remainsFAILED5367/6358275114.
 New exact-head push/CI/READY/hosted/browser proof is pending in this snapshot;
 a later sealed receipt supersedes it. GoalACTIVE/PR256draft, no promotion.
+
+## State 50 - Verified Code, Controlled House Depth Study
+
+GitHub6ff5568 is verified at PR256 receipt6360930706. Fresh29 local stages
+ran from scratch on486 inputs/222web copies. Both complete first-attempt CI
+events39919549667/39919555513 pass all3jobs/steps/sixactual-source guards.
+The original log-download HTTP2CANCEL and REST/canonical URL-shape failure
+remain retained; read-only log recovery and fresh canonical check passed.
+
+Hosted first attempt remains FAILED at Portfolio ERR_NETWORK_CHANGED after
+five suites/eleven partial cases, with27directory files preserved. Exactly one
+full second15-suite/210-layout/20-asset run passed from scratch; all processes
+closed and source bytes unchanged. No third unchanged retry or network workaround.
+
+Actual IAB27 eight states agree on dated fees, reload, scope and canonical
+Portfolio/Dashboard/Simulator outputs. Original financial data/APR unit restored
+through UI; version2 archive became stickyversion4, so bytes are NOT identical.
+Eight native images/four real UI exports are bound. Actual Chrome Car canvas,
+Replay and settled LOC detail also work; nine inherited shader/deprecation
+warnings stay open. Its transitional first LOC image and all warnings remain.
+
+The5351-artifact current checkpoint and5368 inherited entries are sealed,
+readback passed. PR256 remains DRAFT, no merge or production promotion.
+
+Next is an agent-selected PRIVATE House self-shadow comparison under standing
+autonomous approval. No artwork/source asset/light/main-camera/math/storage
+change yet. Preserve baseline if matched full-size frames do not earn adoption.
+All-ten photographic/hardware, full lender/calendar, cloud security/recovery,
+physical native/accessibility and production gates remain OPEN. This working
+State50/report/evidence refresh will ride with later substantive work, not a
+metadata-only push.
+
+## State51 - House Depth Evaluated, Mobile Cost Held
+
+Verifiedhead6ff5568/receipt6360930706 stays unchanged; branch was rechecked
+at10:38UTC. Private House self-shadows give useful modest eave/sill/planting
+depth, but independent fullsize/mobile/video review does not justify permanent
+fixed2k policy. No product source/artifact adoption. All486protected inputs
+and20GLB/poster files remain exact.
+
+Helper16CPU/3controls and corrected readiness7CPU/37mock cases are bounded
+acceptances. Fullsize14frames and actual4desktop/mobile art-lifecycle cases
+finish, with32pose PNGs/Replay/oneGLB/sourceHTML+33staticbindings each. Candidate
+video is1080p/9s/30fps/270frames with formal motion/closure checks, not full
+continuous-motion/physical-device photo approval. Submission counters nearly
+double; configured atlas reductions cannot imply an equivalent hardware saving.
+
+The overall web capture remains FAILED: unknown RSCabort counts4/12/8/6.
+Original failed run also stays failed. Metadata/stream trace establishes no
+intentional cause. TLSHTTP1 andh2 both reproduce aborts; no transport fix,
+prefetch disable, request exemption, timeout or pixel waiver was adopted. All
+owned resources close. The late-callback pure guard fix has6passing cases and
+four independent controls, not a rewritten historical browser receipt.
+
+New bounded1024 phone-map study is next; its spec/plan precede implementation.
+Independent reserve/ordered-event/postpayoff audit62+8groups found no mismatch,
+not global lender/math approval. Backend/security/recovery/native/accessibility
+and finalproduction gates stay OPEN. State51/report/evidence are working
+metadata to ride with later substantive verified work, not a status-only push.
+
+## State52 - Phone Shadows Held, Opaque Reuse Measured
+
+Private1024map retains the useful modest2k depth at351x270DPR1, but submission work remains890draws/90432triangles/10textures. Independent review holds ALLlive-shadowadoption. CPU8+16+8independent probes/3controls and22PNG/11seeks each are bounded evidence, not physical/device/networkapproval.
+
+A separate no-shadow nativeThreeinstancing study preserves GLB/names/geometry/materials and reduces measured submissions467to211 at14matched phone/desktop poses, with45480triangles/8textures unchanged. Predeclaredpixelbounds pass;44PNGs/11seeks per4fixtures/onefetch/requestedcleanup,33nativeprocesses0active. Parent individually viewed28requiredoriginals. Whole-study independentreview is pending; source486 and20assets remain exact. No adoption/push.
+
+ProductRSCnetworkfinding remainsFAILED and unexplained; no exemption/workaround. Finalphoto/hardware/native/security/backend/lender/accessibility/production gates remainopen. Reports are generated working metadata, not a status-onlypush.
+
+## State53 - Instance Evaluation Accepted, Contract Repairs Required
+
+Independent628d5c0b accepted old14pairedpixels/counters but requiredFIXbeforeadoption: weakpostcleanup exclusion/identity tests, existinginstancedgeometry eligibility and failedpublicationownership. Oldstudy frozen. Newprivatehardening reproduces12pass4fail, then18CPUand16specificregressioncontrols pass; supplementalinterleaved17/1REDretained. FiniteFloat32/nativebounds and transactionalpublication/independentcleanup are included. Targetedreviewpending, no productedit/push/adoption. OldgraphicsNOTrerunorrelabeledfornewhelper. Source486/runtime13/20assets exact; RSCFAILED/shadowHELD and all broaderreleasegates remainOPEN.
+
+## State54 - Working House Integration, Verification In Progress
+
+Targeted hardeningaccepted18CPU/16mutants/5probes. Workingtypedhelper/web/media/lifecycle/ASTintegration now has10plannedfiles/491sourceinputs;5existingchanges+5new,20assetsunchanged. Focusedactualcompiled18cases/strictTypeScript/componentRedtoGreen/mediaASTpass. Newshared-modulegraphics ecd86d16 passes14pairedphone/desktop poses/44PNGs,467to211draws/45480triangles/8textures;45nativeprocesses0active. This is not actualUI/network/physical/photoapproval.
+
+Full29run97fa04cc isrunning on491frozeninputs/224exactwebcopies, sourceintegrationreview67965a2a also running. No newpush/adoptionclaim;6ff5568remainsverified. Oldvideosareverifiedstoredexports, notnewexportsfromthissource. A mistakennewwiringgreenfolderwasaddedtooldfrozenrootwithoutrewritingexistingartifacts; deviationretained/documented andauthoritativefreshwiringproofmovedtonewadoptionroot. Localexcludeonlyhidesownedgeneratedbuild/tempdirsfromaccidentalstaging. RootNext/userpreviewsprotected. AllbroaderreleasegatesremainOPEN.
+
+## State55 - Full Run Failed, Failure-Only Diagnostics Under Review
+
+The491-source full run97fa04cc passed12 stages then failedPortfolio at1440px: Car canvas never appeared after Inspect within the unchanged deadline. Failure retained; all owned native jobs closed. Integration review67965a2a accepted, and parent viewed28 original paired graphics images. This does not override failed whole-app verification. Passive diagnostic05bcd9e4 passed six instrumented workflows but establishes no cause or reliability closure; raw RSC failures and early/late storage errors remain unclassified.
+
+A new493-source/226webcopy candidate adds read-only catch-only diagnostics. Eight actual callback/wiring tests went RED toGREEN; five corrected intended negative controls reject regressions. Initial control-run error was an ineffective precedence mutation, retained and corrected without changing app code. Full-run preparation initially stopped on a wrong expected replacement count before writing outputs; fixed after reading actual source. Independent QA review is pending; ONE fresh complete run requires that ruling. No source push, no metadata-only push, no deployment or production claim.6ff5568 remains verified.
+
+## State56 - QA Reviewed, Fresh Whole Run Active
+
+Independentreview firstfound unboundeddiagnosticwait; actualpending-catch probes close it with2000msNode-only watchdog, generic outcome and cleanup.10tests/7specificcontrols pass. A separatelintmodulebinding/error and unuseddirective were fixed by exactmechanicalrename/commentremoval; v3supplement13edad96 checks493pins/10tests/cleanlint and reuses sixv2probes, notnewexecutions. OldHOLDreports/findings retained.
+
+ONE freshfull29 c7b6d6d0 isactive fromstage1 on493frozeninputs/226exactwebcopies, no inheritedprefix. Atthissnapshot passed: ci-contracts, runtime-contracts, sql-wiring. Original97fa04cc remainsFAILED and passive05bcd9e4 NONCAUSAL; no root/reliability claim. House-only canonicalvideo fixture7fe0fb53 has27exactcopiedfiles, notrendered; GPUserializedafterfull. Actualnewmanual/CI/READY/hosted/verifiedpush arepending.6ff5568 remainslastverified; productionOPEN.
+
+## State57 - Fresh Full Run Failed At Rapid-Return Screenshot
+
+Full493-source/226webcopy c7b6d6d0 FAILED stage7Three after6passes;22stages notrun. Desktoprapidreturn candidate PNG startedwith34msremaining under unchanged700msdeadline, then46.44ms capturetimedout. Pre-phase244ms/settle403ms/isolation18.73ms/restore64.75ms areobservations, notcause. Otherfive selectionworkflows and6contextcloses pass, allsevennativejobs0active. Exec47736terminal1 at12:48:01UTC. No unchangedfullretry orsuccessfulprefix inheritance allowed. OriginalPortfolioCarcanvasfailure remainsseparate/unexplained.
+
+Source493/20assets/runtime13/rootNextq9 remainexact. CanonicalHousefixture7fe prepared27files, notrendered; guardcontinues toholdvideo. Sevenprivatepublicationfiles werepreparedonly and areunderCPUreview, notexecuted; actualnewmanual/CI/READY/hosted/push/receipt remainpending. Nextgatheronebounded passiveinput/API diagnostic beforeproposinganyfix.6ff5568 remainsverified; productionOPEN.
+
+## State58 - Direct QA Reader Candidate, Not A Historical Fix
+
+OnebuiltinAPI diagnostic57f45c51 completed six unchanged selectioncases onfailed493build with736web/static/serverpins exact,45nativeprocesses0active. AllpassunderloggingisNONCAUSAL. Desktoprapidclick108ms/read9ms versusoldfailedcombined244msunsplit; readerdominanceunproved. New495-source fourfileQA delta usesonefreshdirectnativeDOMread withstrictunique/connected/currentguards. Exactworkflow/packageinverses preserve allactions/assertions/450-700-300budgets.8unitgroupsRED→GREEN/7intendedcontrols/cleanlint pass.
+
+Predeclaredpaired bf7c34a7 matches100settledpairs acrossfiveartifacts/twowidths onUNCHANGEDcompiled493app;35nativeprocesses0active/twocontexts/browser/serverclosed androot495/runtime/assets protected. Medianslowerall10groups, butfourdesktop sample-max/p95worse; nottail/transition/protocolcount/causeproof. Twooriginalcontextimagesviewed. ReviewerArchimedes01a168e1 active; full495runnerpreparednotlaunched, freshfullrulingpending. No sourcepush orproductionclaim. Priorpublicationdraftseparately HOLD3P2, notexecuted; canonical7fe notrendered.6ff5568 remainsverified.
+
+## State59 - Reviewed Reader, Fresh495 Whole Run Active
+
+Reviewd5451d1b acceptsboundedfourfileQAreader atcandidate5c93d990, fresh8tests/7controls/exactinverses/1344protectedevidencepaths. ONEnew495-source29run d67ed893-0b4c-4439-b372-75913012e59d launchedfromscratch on228exactnewwebcopies (exec2092), no original6/12prefix inherited. PriorfullsremainFAILEDandpairedtail/cause/reliabilitylimitsremainexplicit. ParentkeepsotherownCPU/probesquietduring3D stage, notsource-onlycausalcontrol or any changedbrowser/action/budget. Allownreviewersclosed.
+
+Privatepublicationguardlibrary7groups wentRED→GREEN forfreshCI/attestationretention/samehostlock+uniqueness, butnotintegratedintoapprovedpublisher orindependentlyreviewed;3P2executionHOLD remains. No newcanonicalrender/manual/CI/READY/hosted/commit/push/receipt.6ff5568 remainsverified; productionOPEN.
+
+## State60 - Complete Local29, Canonical House Render Active
+
+Fresh495-source/228web d67ed893 COMPLETED29/29 at13:57:08UTC, allownedjobs0active, exec2092terminal0. Current3D/sharedDashboard6/hero20/media227tests+27stills/stored10videos/nativeexports/Worker/report pass. Earlier491and493fullfailures remainFAILED/unexplained; currentpassnotroot/tail/hardwareapproval.
+
+Current495Housecanonicalfixture d19c4c3a has27exactfiles, render313fc595 nowactive(exec83768) afterall29closed. No newrenderedvideo/parentartapprovalyet. TENfilepublicationcode reviewb6b3a3f6 accepts3P2closures with42selectedCPU/4mutants;actualcapturedependentcase stillpending, notexecutionapproval. No newcommit/push/CI/READY/hosted/actualmanual/receipt.6ff5568 remainsverified; productionOPEN.
+
+## State61 - Local Release Candidate, Remote Verification Pending
+
+Current495source/228web full29 d67ed893 passes from scratch with allownedjobsclosed. CurrentcanonicalHouse313fc595 completed14:05:30UTC:1080p/30fps/270frames/9s,41nativeprocesses0active. Sevenoriginalframes individuallyparentviewed andboundedaccepted; plaininteriors/angularfoliage stillnotfinalphoto, no continuousfullmotion/physicalapproval.
+
+TENfilepublicationcodereviewb6b3a3f6 accepts3P2closures; allownreviewersclosed. Finalmetadata/evidencecapture andactual12thcontractcase next, then focusedcommits/one testedtip push andexact-headCI/READY/hosted/IAB+Chrome/freshguardedreceipt. No newcommit/push/remoteclaim at thissnapshot;6ff5568 remainsverified. Historical491/493failedrunsretained, productionOPEN.
