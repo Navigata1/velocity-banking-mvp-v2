@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-23T08:46:52.211Z",
+  "status": "verified-bounded-checkpoint",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "productionReady": false,
+  "goalActive": true,
+  "prDraft": true,
+  "receipt": {
+    "id": 6360930706,
+    "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6360930706",
+    "bodySha256": "41f2f6779727d8712382ded0d111e14735e2580e7f3f26afc363e23459d4bc48"
+  },
+  "sourceBoundary": {
+    "total": 486,
+    "oldProtectedUnchanged": 480,
+    "oldChanged": 5,
+    "newTest": 1,
+    "financialEngineAssetsAndDependenciesUnchanged": true
+  },
+  "local": {
+    "gates": 29,
+    "allFromScratch": true,
+    "webCopies": 222,
+    "originalBuildAndPreviewsPreserved": true
+  },
+  "ci": {
+    "events": [
+      {
+        "event": "push",
+        "id": 39919549667,
+        "attempt": 1,
+        "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39919549667/attempts/1",
+        "conclusion": "success"
+      },
+      {
+        "event": "pull_request",
+        "id": 39919555513,
+        "attempt": 1,
+        "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39919555513/attempts/1",
+        "conclusion": "success"
+      }
+    ],
+    "allThreeJobsAndStepsPass": true,
+    "actualSourceGuards": 6,
+    "canonicalPass": true,
+    "workflowReruns": 0,
+    "originalLogDownloadAndUrlShapeFailuresRetained": true
+  },
+  "hosted": {
+    "attempts": 2,
+    "firstStatus": "failed",
+    "firstError": "ERR_NETWORK_CHANGED",
+    "firstCompletedSuites": 5,
+    "firstPartialPortfolioPassLines": 11,
+    "partialDirectoryFilesRetained": 27,
+    "secondStatus": "passed",
+    "secondRun": "704b0308-ebf3-4cb9-8911-77d90e1bc041",
+    "secondAllFromScratch": true,
+    "suites": 15,
+    "workflowLayouts": 210,
+    "servedAssetHashes": 20,
+    "sourcePinsUnchanged": true,
+    "allOwnedJobProcessesClosed": true,
+    "noThirdUnchangedAttempt": true
+  },
+  "manual": {
+    "actualIabStates": 8,
+    "nativeImages": 8,
+    "actualUiArchives": 4,
+    "financialFlowConsoleErrors": 0,
+    "originalFinancialDataAndAprUnitRestored": true,
+    "wholeArchiveByteIdentical": false,
+    "originalArchiveVersion": 2,
+    "restoredArchiveVersion": 4,
+    "notEveryBrowserHistoryOrPreferenceRestored": true,
+    "feeInputPercent": 1.25,
+    "storedFeeDecimal": 0.0125,
+    "drawFeeDollars": 2.5,
+    "datedPayoff": "2026-04-30",
+    "velocityInterest": 31.14,
+    "fees": 35,
+    "cashAtOwnPayoff": 233.86,
+    "scope": "One explicit synthetic dated record across Portfolio, canonical Dashboard and Simulator; not full lender reconciliation"
+  },
+  "chrome": {
+    "actualCarCanvasAndReplay": true,
+    "settledLocDetailChecked": true,
+    "unsupportedGaugeAbsent": true,
+    "errors": 0,
+    "inheritedWarnings": 9,
+    "transitionalFirstNativeLocCaptureRetained": true,
+    "initialPresentationRestored": true,
+    "ownTabClosed": true,
+    "notAllTenHardwarePhotoApproval": true
+  },
+  "seal": {
+    "artifacts": 5351,
+    "inheritedArtifacts": 5368,
+    "sha256": "0b0cc0fa60fcd626a7665d5c0b0a35efdbf69104ba8c47d71e4e4b765339c686",
+    "readbackPassed": true
+  },
+  "privateTooling": {
+    "independentBoundedClosure": true,
+    "tests": 38,
+    "liveGatesNotApprovedByReviewer": true
+  },
+  "backend": {
+    "metadataOnly": true,
+    "knownVercelSupabaseEntries": 0,
+    "nameMatchedCandidateUnbound": true,
+    "candidateReferencePrivate": true,
+    "sqlQueries": 0,
+    "cloudMutations": 0
+  },
+  "remaining": [
+    "All ten final photographic/all-angle material and physical-GPU approval",
+    "Shared scenario ownership and lender/calendar reconciliation",
+    "Dedicated backend association, patch, negative ownership coverage, backup/restore and account recovery",
+    "Physical native/accessibility/store/locale release proof",
+    "Known toolchain findings and production approval"
+  ],
+  "limits": [
+    "Original617 CI and earlier local/network/observer/setup failures remain failed or incomplete in retained evidence",
+    "Local29/CI/hosted/manual success is a bounded code checkpoint, not production release",
+    "No network workaround, error filtering, changed450/700/300 deadlines or pixel waiver",
+    "No merge, manual deployment, promotion, paid GPU or cloud/data/access/DNS mutation"
+  ]
+}
