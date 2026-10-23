@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-23T23:09:38.293Z",
+  "status": "PRIVATE_CANDIDATE_OPERATIONAL_ADOPTION_HELD",
+  "appCheckpoint": {
+    "head": "b5b9fe1f45d7bc917b7d95477835f8b62c16d6b0",
+    "pushed": true,
+    "pushRun": 40029553699,
+    "pullRequestRun": 40029560995,
+    "bothCompleteAttemptOneSuccess": true,
+    "scopedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6375870805",
+    "automaticPreview": "https://velocity-banking-mvp-v2-i2j332khi-islanddevcrew.vercel.app",
+    "verifiedScope": "Native-instance ownership; both full CI events, exact automatic READY and bounded Auto/House Chrome controls. Not a new whole-app hosted/manual baseline."
+  },
+  "candidateScope": {
+    "coreChecks": 53,
+    "portableCombinedChecks": 155,
+    "independentAdapterControls": 16,
+    "implementerAdapterChecks": 102,
+    "medicalCompatibilityCases": 1,
+    "medicalCompatibilityBranches": 2,
+    "originalMedicalTestsPreserved": 6,
+    "originalTurntableProofBodiesPreserved": 3,
+    "originalVerifierAssertionsPreserved": 6,
+    "sourceAssemblyFiles": 120,
+    "originalImages": 9,
+    "fullTenFixedInputs": 103,
+    "actualPrecheck": {
+      "treeSides": 6,
+      "tools": 4,
+      "sources": 129,
+      "status": "passed"
+    },
+    "actualNewRenders": 0,
+    "actualNewVideosVerified": 0,
+    "actualNewCollectionsDelivered": 0
+  },
+  "holds": [
+    {
+      "id": "OPERATOR-01",
+      "severity": "P1",
+      "status": "open",
+      "note": "Reproducible operator staging entrypoint is missing. Do not replace working root npm aliases with stage-only adapters."
+    },
+    {
+      "id": "PARENT-01",
+      "severity": "P2",
+      "status": "open",
+      "note": "Supervisor environment and executable identity must be explicitly enforced."
+    },
+    {
+      "id": "PARENT-02",
+      "severity": "P2",
+      "status": "open",
+      "note": "An outer deadline must cover supervisor startup and silent hangs."
+    },
+    {
+      "id": "PARENT-03",
+      "severity": "P2",
+      "status": "open",
+      "note": "Non-control operations must enforce anchored pre/post source/runtime checks, including failed jobs."
+    },
+    {
+      "id": "PARENT-04",
+      "severity": "P2",
+      "status": "open",
+      "note": "Checker must anchor accepted manifests and require complete nonempty scope."
+    }
+  ],
+  "limitations": [
+    "Private synthetic CPU controls are not real media or GPU proof.",
+    "All ten app GLBs/posters, financial functions and running user previews are unchanged.",
+    "The held implementation and full raw logs remain local, not adopted or presented as shipped GitHub source.",
+    "Final photographic quality, physical-device performance, backend binding and production release remain open."
+  ],
+  "localEvidencePins": [
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/core-current/result.json",
+      "bytes": 775,
+      "sha256": "4024702681c3d77da1a44e4de0bbb278405118f90ad6cfc9ffaea59ef86b8a35"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/integration-cpu/result.json",
+      "bytes": 918,
+      "sha256": "8002eabbc183f784f69f7d8f54ff556dabe0b0f6f030642c6242a2d905ff3fdf"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/medical-compat/result.json",
+      "bytes": 386,
+      "sha256": "14caac0c95a5fab1041115626bc19153511c2472dc88589a70a6668392f7ccc7"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/medical-test-preservation.json",
+      "bytes": 255,
+      "sha256": "e8089915c9593d6d0f4d7adf9a42b24a79ffeefa1d1455cb0365749adcd7a5e6"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/stage-check-pre-render.json",
+      "bytes": 28996,
+      "sha256": "89db678909fb4b03fa8a8026b917ce85a54665c937ef8ba49fe79e4246ad94a1"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/adapters/evidence/review-v2-packet-pins.json",
+      "bytes": 25431,
+      "sha256": "3a0236b96220ff5859740ccd88a8aea1287abd58009e9b419790181e66c2e054"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/review-parent-38210d02-a730-4f29-bde1-d8db684f9b07/decision.json",
+      "bytes": 2381,
+      "sha256": "550784a7aca1db2b58c55eedf1e6e95dd5972a99fa54f1f9adc0a0a9494f2e12"
+    },
+    {
+      "localPath": ".superpowers/sdd/2026-10-23-generation-runtime-adoption/review-adapters-b758c926-755e-43c2-94b8-c33d25af9567/REVIEW.md",
+      "bytes": 9996,
+      "sha256": "3cada15f173e4d45b05c95da98031fa23198b6f1a39c88ab9df6958e4e159288"
+    }
+  ],
+  "implementationAdopted": false,
+  "productionReady": false,
+  "wholeApplicationVerified": false
+}

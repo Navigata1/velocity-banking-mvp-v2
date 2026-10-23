@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "285-case disposable permission matrix verified on both CI events. Native-instance cleanup tested locally; focused push pending. Heavier House prototype rejected. Final art and production gates remain open.",
+    "tagline": "Native-instance cleanup verified on both CI events. Generation-bound hero delivery passes private CPU review but remains held for execution-boundary and operator staging fixes. No new art or production release.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T21:47:46.147Z",
-    "sessionCount": 72
+    "updated": "2026-10-23T23:09:38.293Z",
+    "sessionCount": 73
   },
   "policies": {
     "merge": "review",
@@ -387,12 +387,24 @@
           "title": "Explicitly dispose loaded native GPU instances",
           "status": "done",
           "dependsOn": [],
-          "notes": "Three-line component fix plus preserved/expanded standing tests. Independent private23/23 and root web regression/lint/type checks passed. Runtime batches keep separate release-before-model ownership; shared resources remain deduplicated. No rendering/finance/assets changed. Throwing disposal callbacks retain existing fail-fast limits; no physical memory claim. Exact new push/CI/preview pending in this dated snapshot.",
+          "notes": "Three-line component fix plus preserved/expanded standing tests. Independent private23/23 and root web regression/lint/type checks passed. Runtime batches keep separate release-before-model ownership; shared resources remain deduplicated. No rendering/finance/assets changed. Throwing disposal callbacks retain existing fail-fast limits; no physical memory claim. Exact new push/CI/preview pending in this dated snapshot. State73: b5b9fe1 is pushed and scoped-verified: both complete first-attempt CI events40029553699/40029560995, all six jobs and six source guards, exact automatic READY and bounded Chrome Auto/House3D+Replay. Scoped receipt6375870805. This supersedes the pre-push note, not the historical f708 whole-app hosted/manual baseline. No new art or physical memory approval.",
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           }
+        },
+        {
+          "id": "R1-T20",
+          "title": "Bind actual hero renders to their source and runtime generation",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "PRIVATE, NOT ADOPTED. Core53 and portable155 CPU checks pass; independent155+16 adapter controls and retained3proofbodies/6assertions pass. Complete controlled runtime/source staging and actual precheck6trees/4tools/129records pass. No actual new render, verified video or delivery. Independent parentreview finds4P2 launch/checker gaps; operatorreview P1 requires reproducible staging before root alias replacement. New private fixes underway, followed by fresh reviews and real finite360 trials. Existing app/art/math/dependencies/workflows/managedbackend unchanged. Evidence ops/mission/evidence/hero-generation-runtime-2026-10-23/candidate.json."
         }
       ],
       "gates": [
@@ -1486,8 +1498,9 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State72 is a dated pre-push native-cleanup checkpoint.2d4ef44 is pushed: both full CI events40019475148/40019480601 attempt1 passed, expanded285 SQL proof complete, scoped receipt6374788102. No new READY/hosted whole-app verification was claimed; f708 remains the prior bounded whole-app verified baseline. Preserve historical111/d842/36e failures.",
-      "Native cleanup: read docs/native-instance-disposal-contract-2026-10-23.md. Three production lines and two existing test files changed. Private independent23/23 plus root npm test/lint/types passed. Commit/push focused source+state once to draftPR256, then require both complete exact-head CI events/all jobs/steps/source guards. Do not merge/promote on CPU evidence alone.",
+      "State73 is a documentation checkpoint, not source adoption. b5b9fe1 native cleanup is already pushed/scoped-verified by both full CI events40029553699/40029560995, exact automatic READY and bounded Chrome controls; receipt6375870805. Preserve all earlier failures and f708 as the prior bounded whole-app hosted/manual baseline.",
+      "Read docs/hero-generation-readiness-2026-10-23.md and R1-T20 evidence. Private generation candidate155CPU+16independent controls passes; no new actual videos/art. Fix4parent P2 boundary gaps in the separate new parent-v2 lane, obtain fresh independent source review, then parent alone executes bounded process controls/canonical renders. Do not use held old helpers or backfill receipts onto old MP4s.",
+      "Resolve operator P1 before adopting stage-only adapters: provide a reproducible configured staging entrypoint and preserve original npm workflow ergonomics. Keep approved CPU/source artifacts and rejected attempts, require real complete-ten render/decoded proof/delivery and root standing gates. No root alias break, weakened deadline/pixel/budget check or production promotion.",
       "House detailed native-leaf c2a4 prototype rejected by parent and independent review after14 original canonical INLINE exact-seek captures. House1534584bytes/public10532762bytes fail unchanged caps. Modest planting benefit does not justify+34%bytes/+69%referenced triangles. Originalec008a remains. Preserve retained source/CPU/decoded/pixels; no repeated unchanged export/render or budget waiver. Target materially different glass/interior/material depth next.",
       "Before adopting any native-instanced art, require instance-aware actual-GLB normalization/semantic tests, separate stored/rendered triangle budgets and same-generation GLB/vendor/composition/helper-to-video binding. Cleanup CPU coverage does not prove physical FPS/memory/energy or app/mobile/native behavior. Current packaging verifies output integrity but lacks same-generation model/video binding.",
       "For the browser deadline, read the frozen36e next-diagnostic notes. Actual caller smoke-three-selection.cjs records returnStarted before real previous.click and stage-state read; the179ms pre-phase gap is not measured pure click/GPU cost. Preserve450ms return observation,700ms/300ms, all18normal/sixadditional workflows, genuine pixels and all caps. New instrumented success alone is NONCAUSAL; classify input/read/render/host boundaries before a product fix.",
@@ -1517,8 +1530,8 @@
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
-      "Prior bounded whole-app verified f708 remains the hosted/manual baseline. Exact2d both full CI events now pass and285-case disposable SQL gate is complete, receipt6374788102. Current native cleanup local checks passed; exact new push/CI/READY/hosted verification remains pending. Managed backend, final photographic art and physical-device gates remain open.",
-      "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open."
+      "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open.",
+      "Native cleanup b5 is scoped-verified; generation delivery remains private and held for4execution-boundary P2s and1operator P1. These are actionable implementation tasks, not a global-goal block. Final photographic art, managed backend, physical-device and production release gates remain open."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",
