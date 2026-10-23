@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Local release candidate: all29 gates pass on495source inputs and current House1080p turntable passes bounded frame review. GitHub/hosted/browser verification pending;6ff5568 remains the last verified head. ProductionOPEN.",
+    "tagline": "Current cleanup candidate passes fresh495-source local29 and one current9sHouse export/seven original frames. Still UNPUSHED; verified489 remains current remote. ProductionOPEN.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T14:10:30.637Z",
-    "sessionCount": 61
+    "updated": "2026-10-23T16:37:06.192Z",
+    "sessionCount": 66
   },
   "policies": {
     "merge": "review",
@@ -293,25 +293,52 @@
         {
           "id": "R1-T10",
           "title": "Integrate and verify House instancing in web and media",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "R1-T9"
           ],
-          "notes": "Working House integration remains unpushed. Source review67965a2a accepted; parent viewed all28 required original paired images from typed-module graphics ecd86d16.467to211 draw calls, same45480triangles/8textures, not measured physical performance or photoreal approval. Full491-source29run97fa04cc FAILED at stage13portfolio after12passes:1440shared-edits Carcanvas absent. All owned native jobs cleaned. Passive diagnostic05bcd9e4 passed six workflows under added instrumentation, NOT causal resolution or complete29approval. Original failure remains open. New493-source QA-only delta adds failure snapshots, not renderer changes. Fresh493-source runc7b6d6d0 is now active fromstage1 with226exactwebcopies and no inherited12-stage prefix. Both source integration and newQA reviews accept boundedscope. House-only canonicalvideo fixture7fe0fb53 prepared27exactcopies, notrendered; actualrender mustserializeafterfull29. No newsourcepush. UpdateState57: full493c7b6d6d0 FAILED at stage7Three after6passes,22notrun. Desktoprapidreturn PNG startedwith34msleft inunchanged700msbudget; capture46.44ms timedout. Phaseorigin244ms, settle403ms, isolation18.73ms, restore64.75ms; causeunproven. Other5selectionworkflows and all6contextcloses pass; all7nativejobs0active. Canonicalvideo NOTRENDERED, no sourcepush. No unchanged fullretry; collect boundedinput/API evidence beforeanyfix. State60: fresh495full d67ed893 COMPLETED29/29 at13:57:08UTC, allownednativejobs0active/rootq9protected. Includescurrent3D/sharedDashboard6/hero20/media227tests+27stills/stored10videos/nativeexports/Worker/report checks. Thisdoesnotcloseoldfailures. Current495canonicalHousefixture d19c4c3a27files nowrender313fc595 (exec83768) active, notyetaccepted; newCI/hosted/manual/pushpending. State61: current495Housecanonical313fc595 COMPLETED14:05:30UTC,1920x1080/30fps/270frames/9s,41nativeprocesses0active; seven originalframes parentviewed/boundedaccepted. Plain interiors/angular foliage stillnotfinalphoto. Localreleasecandidate only; exact-headCI/READY/hosted/IAB+Chrome/pushpending."
+          "notes": "VERIFIED4896106/receipt6367684288: House-only instancing integrated with source review, current typed standalone graphics467to211reported calls/same45480triangles/8textures, fresh495-source local29, both complete attempt1CI39968035200/39968041920/all3jobs/every step/sixsourceguards, known READYgit preview/hosted15-210-20, actual IAB5/Chrome5 and one current1080p9sHousecanonical export/seven originalframes. No asset/financial/dependency/backend changes or finalphoto/physical approval. Historical working chronology follows; prior unpushed/pending statements are dated history, not current status. Working House integration remains unpushed. Source review67965a2a accepted; parent viewed all28 required original paired images from typed-module graphics ecd86d16.467to211 draw calls, same45480triangles/8textures, not measured physical performance or photoreal approval. Full491-source29run97fa04cc FAILED at stage13portfolio after12passes:1440shared-edits Carcanvas absent. All owned native jobs cleaned. Passive diagnostic05bcd9e4 passed six workflows under added instrumentation, NOT causal resolution or complete29approval. Original failure remains open. New493-source QA-only delta adds failure snapshots, not renderer changes. Fresh493-source runc7b6d6d0 is now active fromstage1 with226exactwebcopies and no inherited12-stage prefix. Both source integration and newQA reviews accept boundedscope. House-only canonicalvideo fixture7fe0fb53 prepared27exactcopies, notrendered; actualrender mustserializeafterfull29. No newsourcepush. UpdateState57: full493c7b6d6d0 FAILED at stage7Three after6passes,22notrun. Desktoprapidreturn PNG startedwith34msleft inunchanged700msbudget; capture46.44ms timedout. Phaseorigin244ms, settle403ms, isolation18.73ms, restore64.75ms; causeunproven. Other5selectionworkflows and all6contextcloses pass; all7nativejobs0active. Canonicalvideo NOTRENDERED, no sourcepush. No unchanged fullretry; collect boundedinput/API evidence beforeanyfix. State60: fresh495full d67ed893 COMPLETED29/29 at13:57:08UTC, allownednativejobs0active/rootq9protected. Includescurrent3D/sharedDashboard6/hero20/media227tests+27stills/stored10videos/nativeexports/Worker/report checks. Thisdoesnotcloseoldfailures. Current495canonicalHousefixture d19c4c3a27files nowrender313fc595 (exec83768) active, notyetaccepted; newCI/hosted/manual/pushpending. State61: current495Housecanonical313fc595 COMPLETED14:05:30UTC,1920x1080/30fps/270frames/9s,41nativeprocesses0active; seven originalframes parentviewed/boundedaccepted. Plain interiors/angular foliage stillnotfinalphoto. Localreleasecandidate only; exact-headCI/READY/hosted/IAB+Chrome/pushpending."
         },
         {
           "id": "R1-T11",
           "title": "Capture missing-canvas failures without changing successful workflows",
           "status": "done",
           "dependsOn": [],
-          "notes": "Bounded QA implementation accepted atv3:10focused tests/7intendednegativecontrols/cleanlint. FirstreviewP2 unboundedcapturewait fixed with failure-only2000msNodewatchdog and late-settlement/timercleanup tests. Review76be5cea actualpending-catch proves primarymessage/stack/rawerrors/screenshot/contextcleanup; no hardbrowsercancellationclaim. Initialv2 lintmodulebinding fixed by exactlocalrename/commentremoval; supplement13edad96 verifies full493pins/10tests/cleanlint and reuses sixv2probes underexactequivalence. ONE newfull29cleared/launched; no additionalunchangedretry. This closesobservabilityworkonly, not historicalcanvascause/reliability or releaseapproval."
+          "notes": "Bounded QA implementation accepted atv3:10focused tests/7intendednegativecontrols/cleanlint. FirstreviewP2 unboundedcapturewait fixed with failure-only2000msNodewatchdog and late-settlement/timercleanup tests. Review76be5cea actualpending-catch proves primarymessage/stack/rawerrors/screenshot/contextcleanup; no hardbrowsercancellationclaim. Initialv2 lintmodulebinding fixed by exactlocalrename/commentremoval; supplement13edad96 verifies full493pins/10tests/cleanlint and reuses sixv2probes underexactequivalence. ONE newfull29cleared/launched; no additionalunchangedretry. This closesobservabilityworkonly, not historicalcanvascause/reliability or releaseapproval. State62: included in verified489checkpoint/receipt6367684288 with complete exact-head CI and hosted/browser checks; no historical cause or timing-tail closure."
         },
         {
           "id": "R1-T12",
           "title": "Reduce selection-test state-reading overhead without changing timing rules",
           "status": "done",
           "dependsOn": [],
-          "notes": "WorkingfourfileQA reader delta gives495source/228webinputs. Onefresh read-only pageevaluate requiresuniqueconnectednativeHTMLElement/currentartifact+state/rawnullablerevision. Exactinverse reproduces prior493workflow/package; allfive statecalls/originalactions/assertions/450-700-300budgets unchanged.8groups genuineRED→GREEN,7intendedcontrols,cleanlint. PairedactualDOM bf7c34a7:100pairs equal onunchangedcompiled493app,35nativeprocesses0active/2contextsclosed; medianslowerall10groups butfourdesktop tailsworse. This is NOT dominant-cause/transition/reliability or full495build proof. IndependentArchimedes01a168e1 running; onefreshfull495rulingpending. PriorfullsremainFAILED, no unchangedretry. Boundedreviewd5451d1b accepts exactcandidate5c93d990 afterfresh8tests/7controls/exactinverse/1344evidencepins. ONEfresh495-source29fromscratchcleared, nowactive with228exactnewwebcopies. ReaderQAfeatureclosesonly; standing/fullreleaseproofpending."
+          "notes": "WorkingfourfileQA reader delta gives495source/228webinputs. Onefresh read-only pageevaluate requiresuniqueconnectednativeHTMLElement/currentartifact+state/rawnullablerevision. Exactinverse reproduces prior493workflow/package; allfive statecalls/originalactions/assertions/450-700-300budgets unchanged.8groups genuineRED→GREEN,7intendedcontrols,cleanlint. PairedactualDOM bf7c34a7:100pairs equal onunchangedcompiled493app,35nativeprocesses0active/2contextsclosed; medianslowerall10groups butfourdesktop tailsworse. This is NOT dominant-cause/transition/reliability or full495build proof. IndependentArchimedes01a168e1 running; onefreshfull495rulingpending. PriorfullsremainFAILED, no unchangedretry. Boundedreviewd5451d1b accepts exactcandidate5c93d990 afterfresh8tests/7controls/exactinverse/1344evidencepins. ONEfresh495-source29fromscratchcleared, nowactive with228exactnewwebcopies. ReaderQAfeatureclosesonly; standing/fullreleaseproofpending. State62: included in verified489checkpoint/receipt6367684288 with complete exact-head CI and hosted/browser checks; no historical cause or timing-tail closure."
+        },
+        {
+          "id": "R1-T13",
+          "title": "Study bounded House depth with instancing and self-shadowing",
+          "status": "done",
+          "dependsOn": [
+            "R1-T10"
+          ],
+          "notes": "PRIVATE STUDY ONLY, default-shadow adoption HOLD. Collection93eea29f:44PNGs/14pairs/4contextsclosed/87nativeprocesses0active; actual211to378calls/45480to90432triangles/8to10textures. Parent and independentfca75291 reviewall28primaryoriginals;696enumeratedinputsunchanged. Useful modest depth, no obvious new acne/glass/clipping in sampled poses, still miniature/plain interiors/angular foliage. Screening passes but added167calls and no physical evidence do not justify product adoption. Source495/runtime13/assets20unchanged. HDEP-001P3 in three aggregators remains open; separate shipped-instance fixTask14. Evidence ops/mission/evidence/house-instanced-depth-2026-10-23/decision.json."
+        },
+        {
+          "id": "R1-T14",
+          "title": "Preserve all thrown values during House instance cleanup",
+          "status": "in_progress",
+          "dependsOn": [
+            "R1-T13"
+          ],
+          "notes": "Current four-file candidate9accd841typed/696b0dfeESM accepted independently71c0228a:33standing/15separate/227media/fullweb/lint/types pass,6selectedcontrols and120independentprobes,5additionalbaselinevisibilityREDs.495sourcepins/exact4changes/13runtime/20assets protected. One fresh unchanged29run90cf838d-1421-4685-92e8-9210c8c73d09 ACTIVE fromscratch, no inherited prefix; exec90492. Private oldinstance/shadow/combined helpers remain frozen/unfixed/unadopted. No new commit/push or rendering/release/production claim. State65progress: full90cf838d completed16:25:59UTC/29of29/2729recordedownedprocesses0active. Exec90492TERMINAL0. CurrentHousefixture04a64366 rendering93522987 exec43317 ACTIVE; no second render or own parallelGPU. No newcommit/push. State66: full495/228run90cf838d-1421-4685-92e8-9210c8c73d09 COMPLETED29/29fromscratch/allrecordedjobs0active; currentHouse93522987-5d6b-45b7-9d82-a410bad2b20f COMPLETED1080p/30fps/270frames/9s/seven originalframes boundedaccepted. No newpublicasset/financial/dependency/backendbytes. Localcandidateonly: capture/full43/commits/push/CI/READY/hosted/manual/receipt pending. Privateclockprototypepreparednotyettested/adopted; separateTask15."
+        },
+        {
+          "id": "R1-T15",
+          "title": "Keep finite hero rotation timing under slow visible rendering",
+          "status": "pending",
+          "dependsOn": [
+            "R1-T14"
+          ],
+          "notes": "Private actual-component lifecycle probe953b7824:8visible seconds at500ms cadence leaves angle0.10345vsendpoint5.73319 and1RAF. Proposed7-case clock contracte652f4c4 has2pass/5intendedAssertionErrors, no setupfailure:slow/irregular/long-visible-gap, hidden-gap leakage and Replay slow timing. Current100msdelta clamp loses visible time in this CPU simulation; not historicalChrome/GPU/hardware cause proof. No implementation/source change. After cleanup checkpoint verified, preserve hidden-time pause/reducedmotion/easing/pose/ownership while fixing visible duration; source/independent/fullrelease gates required. See ops/mission/evidence/hero-clock-2026-10-23/reproduction.json."
         }
       ],
       "gates": [
@@ -320,27 +347,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T16:25:59.196Z",
+          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T16:25:59.196Z",
+          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T16:25:59.196Z",
+          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
         }
       ]
     },
@@ -1374,14 +1401,22 @@
       "mergedAt": null,
       "title": "Remove unsupported detail percentage and preserve strict canvas proof (draft)",
       "phase": "R2"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Verified House instancing and canvas evidence at4896106 (draft)",
+      "phase": "R1"
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State61pre-pushsnapshot:495source/228web full29 d67ed893 COMPLETED29/29, alljobsclosed; current House canonical313fc595 COMPLETED1080p/30fps/270frames/9s,seven originalframes parentviewed/boundedaccepted. Frozen candidate5c93d990/rootq9/assets20/runtime13/source495 exact. LocalHEADstill6ff5568; no newpush. Earlier49197faPortfolio and493c7Three remainFAILED/unexplained.",
-      "Next capture-local ONCE after this final pre-push metadata; run all12checkpoint-contract groups using the actual index. Then focused≤400line commits, explicit-force-add only the two generated house-instances.js vendors, verify all495tested source blobs, one tested-tip nonforcepush to existing draft PR256. Preserve all old evidence/user servers/previews, no metadata-only push.",
-      "Afterpush require both complete exact-head first-attempt CI events/all3jobs/every step/sixsourceguards; knownproject/team READYgit targetnull; hosted15/210/20 and actual IAB+Chrome5hero states each with bound images. TENfilepublicationcode review accepts3P2closures, but actual execution remains gated by real evidence/freshprovider+liveCI/workspacepublicationlock/unique receipt. GoalACTIVE, PRdraft, productionOPEN; no merge/manualdeploy/paidGPU/data/DNS mutation. Continue bounded photo refinement only after current checkpoint verified.",
+      "State66: latest VERIFIED remote4896106/receipt6367684288 unchanged. New cleanup candidate passes fresh495source/228webcopy local29run90cf838d-1421-4685-92e8-9210c8c73d09 and currentHousecanonical93522987-5d6b-45b7-9d82-a410bad2b20f/seven originals; allrecordednativejobsclosed. StillUNPUSHED/localonly, not remote/productionapproval.",
+      "Source33standing/15separate/227media/fullweb/lint/types/6controls and independent71c0228a120probes accepted exactfourchangedsourcefiles.495sources/13runtime/20assetsprotected. Private oldthreehelpersunfixed/unadopted. Publicationreview12b35d56 boundedcodeaccepted/CLOSED, exacttenpins/fiveASTpublisherdelta; preflight42pass1ENOENTactualcapturemissingretained. BothownreviewersCLOSED.",
+      "Next currentcleanupshipping: execute capture-local ONCE afterfinalState66metadata, run wholeunskipped43publicationtests/actualcapturecase12; validateactualtenreviewpins+43andwriteclearances. Fourfocusedcommits≤400lines, verifyall495committedworkingbytes (onlyinheritedCRLF/LFexception), ONE nonforcepush existingdraftPR256. Requirebothcompleteexactheadattempt1CI/all3jobs/allsteps/sixguards, knownautomaticgitREADY, hosted15/210/20, actualIAB5+Chrome5 andfreshguardedunique sealedreceipt. No metadata-onlypush/merge/manualdeployment/cloudmutation. Preserveuserpreviews/rootq9/oldseals.",
+      "After currentcheckpoint VERIFIED, R1-T15: .superpowers/sdd/2026-10-23-hero-low-cadence/next-action.md. ActualcomponentCPU7contract2pass5intendedAssertionErrorREDs; 100msdelta cap discards slowvisibleframe time. Privateprototype prepared only, NOT tested/adopted. Preservevisibleintervalduration/hiddenpause/replay/reducedmotion/easing/pose/resources/listenercleanup, independentreview/newreleasegates. This doesnotclosehistoricalChrome/GPUcause. Backendreadmetadatahealthy17.6.1.063doesnotproveassociation/patch/recovery; noSQL/keys/mutation.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",

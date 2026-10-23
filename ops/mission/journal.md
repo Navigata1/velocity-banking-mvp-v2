@@ -1259,3 +1259,37 @@ Current495Housecanonicalfixture d19c4c3a has27exactfiles, render313fc595 nowacti
 Current495source/228web full29 d67ed893 passes from scratch with allownedjobsclosed. CurrentcanonicalHouse313fc595 completed14:05:30UTC:1080p/30fps/270frames/9s,41nativeprocesses0active. Sevenoriginalframes individuallyparentviewed andboundedaccepted; plaininteriors/angularfoliage stillnotfinalphoto, no continuousfullmotion/physicalapproval.
 
 TENfilepublicationcodereviewb6b3a3f6 accepts3P2closures; allownreviewersclosed. Finalmetadata/evidencecapture andactual12thcontractcase next, then focusedcommits/one testedtip push andexact-headCI/READY/hosted/IAB+Chrome/freshguardedreceipt. No newcommit/push/remoteclaim at thissnapshot;6ff5568 remainsverified. Historical491/493failedrunsretained, productionOPEN.
+
+## State62 - Verified489, Private Combined-Depth Study
+
+Nine focused commits end4896106, one nonforcepush. Receipt6367684288/byte seal08f7981a records5648direct artifacts: fresh495source/228web local29, one current House1080p9s export/seven originals, both complete attempt1CI39968035200/39968041920/all3jobs/every step/sixsourceguards, known READYgit preview, hosted15/210/20/source495/1139processes0active, actual IAB5/Chrome5. Original491/493failures, Chrome capture timeout/37partial images, ready-DOM poster images and delayed instrumented rest observations retained. No finalphoto/physical/production approval. Final Chrome test tab closed; earlier interrupted agent-created1056555311 cleanup unconfirmed after debugger errors. No user tabs/processes closed.
+
+R1-T10 bounded integration done; R1/all-ten realism remains open. New private combined-depth study pins verified489/495source/13runtime/20assets and exact helper copies, no product changes. CPU TDD/ownership/rollback/reverse cleanup/bounds/independent review first, then one declared matched four-fixture A/B.378draw is hypothesis, not measured. State62 report is local continuation metadata to ride with future substantive accepted work, not a metadata-only push. GoalACTIVE, PR256DRAFT/OPEN.
+
+## State63 - Depth Study Complete, Adoption Held
+
+Private93eea29f collection passes44PNGs/14pairs/4closedcontexts/87processes0active. Parent and independentfca75291 viewedall28primaryoriginals;696enumeratedinputsunchanged. Actual211to378calls/45480to90432triangles/8to10textures. Useful modest depth, not finalphoto; added167calls and absentphysicalproof mean default-shadow adoptionHOLD. ReadPixels/eighteenGit warning lines retained. Verified489 remains latest remote; no new push.
+
+SeparateR1-T14 cleanup-observability repair starts from15realThreecases:REDf6023f86 has5pass/10namedAssertionError failures for0,false,empty,null,undefined first-disposal/removal identity; setup rollback alreadypasses. Product typedinstancing only, private shadow/composed helpers remain frozen/unfixed. GoalACTIVE/PR256draft/productionOPEN; local metadata to ride with substantiveacceptedwork.
+
+## State64 - Cleanup Accepted, Fresh Full Run Active
+
+HDEP-001 public typed+twoESM bounded closure:33standing/15separate/227media/fullweb/lint/types pass; independent71c0228a adds120probes/5intendedbaselinevisibilityREDs and rechecks6controls, no findings.495sourcepins/exact4changes/13runtime/20assets protected; typed9accd841, ESM696b0dfe. ReviewerCLOSED. Private three helpers remain frozen/unfixed/unadopted.
+
+One fresh full29run90cf838d-1421-4685-92e8-9210c8c73d09 exec90492 ACTIVE fromscratch, no inherited stages. CurrentHousefixture04a64366 prepared27exactfiles, not rendered. Publicationpreflight42pass/1missingactualcapture-index retained; no43green claim before currentcapture. Independentpublicationreview01a1696d ACTIVE; source/tenpublicationinputs frozen. No new commit/push, verified489 remains currentremote, productionOPEN.
+
+## State65 - Next Clock Issue Reproduced, Current Candidate Frozen
+
+While current cleanup full29 continues, actual-component CPUprobe953b7824 finds8visible seconds at500mscadence advances only1.6seconds under100msdelta cap.7casecontracte652f4c4 has2pass/5intendedAssertionError failures, no setup/import errors. Normalcadence andinitialreducedmotion pass; slow/irregular/visiblegap/hidden-gap/Replaytiming fail. SeparateR1-T15pending, no sourceimplementation or historicalChrome/GPU/hardwarecause claim. Current cleanup495sources/exact4changes/13runtime/20assets remain frozen.
+
+Publication reviewerEpicurus01a1696d boundedly accepts exacttenfiles/fiveASTpublisherdelta, CLOSED; actualpreflight42pass/1ENOENTcurrentcapturemissing retained and stillheld untilcurrentfull43. Source reviewerBernoulli alreadyCLOSED. Read-onlySupabasemetadataagain candidateghxb healthy/us-east-1/17.6.1.063, notdedicatedassociation/patch/recoveryproof; noSQL/keys/configuration mutation. Verified489 remainsremote, no newpush, productionOPEN.
+
+### State65 Progress - Full29 Pass, Current Video Active
+
+Full90cf838d completed16:25:59UTC/29of29fromscratch/495sources228webcopies/2729recordedownedprocesses0active; exec90492TERMINAL0. Currentexact27fileHousefixture04a64366 rendering93522987 exec43317 ACTIVE. No secondrender/ownparallelGPU. Bothsource/publicationreviewersCLOSED; actualcapture/full43/remotegatespending. Clockprototypepreparednot tested/adopted. Verified489stillremote, no newpush, productionOPEN.
+
+## State66 - Complete Local Cleanup Candidate
+
+Fresh495source/228exactwebcopy full2990cf838d-1421-4685-92e8-9210c8c73d09 COMPLETEDfromscratch, allrecordednativejobs0active/rootq9previewsunchanged. OnecurrentHousecanonical93522987-5d6b-45b7-9d82-a410bad2b20f COMPLETED1080p30fps270frames9s, sevenoriginalframesparentviewed/boundedaccepted; notcontinuousmotion/photo/hardwareapproval.33standing/15separate/227media/fullweb/lint/types/6controls/120independentprobes retained. Fourchangedsourcefilesonly,13runtime20assetsunchanged.
+
+LocalUNPUSHEDcandidateonly: currentcapture/full43/fourfocusedcommits/onepush/exactheadcompleteCI/knownREADY/hosted/manual/freshguardedreceiptpending. Publicationcode12b35d56 accepted/CLOSED but42/1missingactualcapture preflight stillretained. BothownreviewersCLOSED; no globalHDEPclosure. Privateclockprototypeprepared, nottested/adopted, separateTask15 afterverifiedcheckpoint. Prior491/493failuresandalltenphoto/backend/native/dependency/productiongatesOPEN. No newpush; remote489stillverified.
