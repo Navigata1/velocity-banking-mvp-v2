@@ -12,7 +12,7 @@ class Style {
 }
 
 class Element {
-  constructor(rect, style) { this.rect = rect; this.style = style; this.children = []; }
+  constructor(rect, style) { this.rect = rect; this.style = style; this.children = []; this.isConnected = true; }
   getBoundingClientRect() {
     const { left, top, width, height } = this.rect;
     return { left, top, width, height, right: left + width, bottom: top + height };
@@ -26,7 +26,7 @@ class HTMLCanvasElement extends HTMLElement {}
 
 class SVGElement extends Element {}
 
-function overlayFixture({ state = 'important', invalidAfterIsolation = false, moveAfterIsolation = false, geometryThrowsAfterIsolation = false, overlayThrowsAfterIsolation = false, screenshotError = null, svgOverlaps = true, stageSource = fs.readFileSync(filename, 'utf8') } = {}) {
+function overlayFixture({ state = 'important', invalidAfterIsolation = false, moveAfterIsolation = false, geometryThrowsAfterIsolation = false, overlayThrowsAfterIsolation = false, screenshotError = null, svgOverlaps = true, canvasMatches = 1, detached = false, foreignCanvas = false, stageSource = fs.readFileSync(filename, 'utf8') } = {}) {
   const events = [];
   const window = { innerWidth: 1440, innerHeight: 900, scrollY: 987.75, scrollX: 31.5 };
   const rect = { left: 12.25, top: 23.5, width: 400.5, height: 200.25 };
@@ -43,7 +43,8 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
     if (geometryThrowsAfterIsolation && stage.style.getPropertyValue('background-color') === 'rgb(0 0 0)') throw geometryFailure;
     return readRect();
   };
-  stage.children = [canvas];
+  stage.children = foreignCanvas ? [] : [canvas];
+  canvas.isConnected = !detached;
   const overlayRect = { left: 50, top: 60, width: 40, height: 40 };
   const svg = new SVGElement(svgOverlaps ? overlayRect : { ...overlayRect, left: 1200 }, new Style(initial('visibility')));
   const overlayFailure = new Error('overlay mutation sentinel');
@@ -54,7 +55,10 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
   orbit.children = [stage, svg, html, outside];
   const nodes = [stage, canvas, svg, html, outside];
   const before = nodes.map(node => node.style.snapshot());
-  const document = { querySelector(selector) {
+  const document = { querySelectorAll(selector) {
+    assert.equal(selector, '[data-testid="money-loop-three-stage"] canvas');
+    return Array.from({ length: canvasMatches }, () => canvas);
+  }, querySelector(selector) {
     if (selector === '[data-testid="money-loop-three-stage"] canvas') return canvas;
     if (selector === '[data-testid="money-loop-three-stage"]') return stage;
     if (selector === '[data-testid="money-loop-payoff-orbit"]') return orbit;
@@ -75,7 +79,7 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
         return { evaluate: async (fn, arg) => { events.push(String(fn).includes('window.__moneyLoopPixelCaptureOverlays =') ? 'isolate+geometry' : 'geometry'); return fn(canvas, arg); } };
       } };
     },
-    evaluate: async fn => { events.push(String(fn).includes('delete window.__moneyLoopPixelCaptureOverlays') ? 'restore' : 'isolate'); return fn(); },
+    evaluate: async (fn, arg) => { events.push(String(fn).includes('delete window.__moneyLoopPixelCaptureOverlays') ? 'restore' : 'isolate+geometry'); return fn(arg); },
     screenshot: async options => {
       events.push('screenshot');
       assert.equal(stage.style.getPropertyValue('background-color'), 'rgb(0 0 0)');
@@ -97,6 +101,18 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
 
 test('isolation and post-mutation geometry use one strict browser evaluation before capture',async()=>{
   const x=overlayFixture();await x.capture();x.restored();assert.deepEqual(x.events,['isolate+geometry','screenshot','restore']);
+});
+
+test('isolation queries the current canvas directly without resolving a locator handle',async()=>{
+  const x=overlayFixture();x.page.getByTestId=()=>{throw new Error('isolation must not resolve a locator handle');};
+  await x.capture();x.restored();assert.deepEqual(x.events,['isolate+geometry','screenshot','restore']);
+});
+
+test('actual isolation callback rejects missing,ambiguous,detached and foreign-stage canvases',async()=>{
+  for(const options of [{canvasMatches:0},{canvasMatches:2},{detached:true},{foreignCanvas:true}]){
+    const x=overlayFixture(options);await assert.rejects(x.capture(),/one connected canvas/);x.restored();
+    assert.equal(x.events.includes('screenshot'),false);
+  }
 });
 
 test('post-isolation geometry exceptions restore every changed inline style and preserve the error',async()=>{

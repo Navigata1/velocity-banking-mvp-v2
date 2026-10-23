@@ -21,9 +21,9 @@ function fixture({rect={left:12.25,top:23.5,width:400.5,height:200.25},width=144
   };
   const page={
     getByTestId:id=>{assert.equal(id,'money-loop-three-stage');return{locator:selector=>{assert.equal(selector,'canvas');return locator;}};},
-    evaluate:async fn=>{
+    evaluate:async (fn,includeClip)=>{
       if(String(fn).includes('delete window.__moneyLoopPixelCaptureOverlays')){calls.push('restore');isolated=false;return;}
-      if(String(fn).includes('window.__moneyLoopPixelCaptureOverlays =')){calls.push('isolate');isolated=true;return{hiddenOverlayCount:2,isolatedSvgOverlayCount:1};}
+      if(String(fn).includes('window.__moneyLoopPixelCaptureOverlays =')){strict();calls.push('isolate');isolated=true;return{hiddenOverlayCount:2,isolatedSvgOverlayCount:1,...(includeClip?{snapshot:{box:{x:rect.left,y:rect.top,width:rect.width,height:rect.height},viewport:{width,height},scrollY}}:{})};}
       calls.push('page.evaluate');return wire(fn());
     },
     screenshot:async()=>{calls.push('screenshot');assert.equal(isolated,true);if(screenshotError)throw screenshotError;return Buffer.from('CPU fixture only,not rendered pixel evidence');},
