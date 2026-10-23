@@ -29,6 +29,7 @@
     import { createHeroEnvironment } from './vendor/studio-environment.js';
     import { measureHeroRotationBounds } from './vendor/hero-geometry-bounds.js';
     import { refineHeroMaterials } from './vendor/hero-materials.js';
+    import { configureHouseInstances } from './vendor/house-instances.js';
     import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR } from './vendor/hero-turntable.js';
 
     const names = ['car','house','land','creditCard','studentLoan','medical','personal','recreation','custom','vault'];
@@ -59,6 +60,8 @@
     refineHeroMaterials(gltf.scene, `/heroes/${selected}.glb`);
     scene.add(gltf.scene);
     const bounds = measureHeroRotationBounds(gltf.scene);
+    const releaseInstances = configureHouseInstances({ THREE, scene: gltf.scene, model: `/heroes/${selected}.glb` });
+    window.addEventListener('pagehide', releaseInstances, { once: true });
     const target = new THREE.Vector3(0, (bounds.minY + bounds.maxY) / 2, 0);
     camera.position.copy(target).add(new THREE.Vector3(...HERO_CAMERA_OFFSET).normalize().multiplyScalar(heroFrameDistance(bounds,camera.aspect)));
     camera.lookAt(target);

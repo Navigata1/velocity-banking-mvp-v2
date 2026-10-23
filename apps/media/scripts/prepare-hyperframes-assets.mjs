@@ -49,4 +49,8 @@ const materials = await readFile(new URL('../web/src/components/hero/hero-materi
 await writeFile(new URL('hero-materials.js', vendorRoot), ts.transpileModule(materials, {
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
 }).outputText);
+const instances = await readFile(new URL('../web/src/components/hero/house-instances.ts', mediaRoot), 'utf8');
+await writeFile(new URL('house-instances.js', vendorRoot), ts.transpileModule(instances, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
+}).outputText);
 await cp(vendorRoot, new URL('hero-turntables/vendor/', mediaRoot), { recursive: true });
