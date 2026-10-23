@@ -1021,3 +1021,81 @@ media/backend/dependency/workflow/cap changes. State44 PRE-PUSH requires new
 complete CI/READY/hosted/IAB/restore/finalreceipt. Allfinalphotoreal, fullR3,
 backend/recovery/security/physicalnative/a11y/production gates remainOPEN.
 GoalACTIVE/PR256draft; no merge/manualdeploy/promotion.
+
+## State 45 - Mixed CI retained, bounded follow-ups
+
+Current8df source/helper checkpoint isFAILED mixedCI, not releaseapproved.
+Push39885182341fullypasses; PR39885186378failsdesktoprapidreturn PNGwith17ms
+remaining. BothSQL+hero jobs pass,all6actualsourceguards retained. Freshlocal29/
+485 andhosted15/210/20 pass. Sealed7346/comment6355703127; lastverifiedda04699/
+6351915021. No unchangedretry, deadlinewaiver or productionpromotion.
+
+ActuallocalIAB25reload/Cardready/Replay/Auto-restored checks nofinancialinput
+edits. Croppedimages retained/qualified. No newremote8financialstates forfailedhead.
+Two explicitplans nowguidepassiveinput/DOM/capture timingobservations and a
+separatecoldmedia compatibilityprobe. R4privatecandidate13to7to0lockaudit is
+NOT installed/adopted/remediated;236entrychanges/23otherdirectpins and638ranges
+reviewed,10negativecontrols; oldpincontract/browser/ONNX/Hono/Sharp/privateCLI
+risks remain. Existingapppackage/lock andall485sourcehashes unchanged.
+
+WorkingState45plans/reportchanges stayuncommitted until a substantive tested
+implementation warrants a push. No newsourcefixselected or deployment. GoalACTIVE.
+
+## State 46 - Bounded Observations, No Product Adoption
+
+GitHub still matches8df. The mandatory first-attempt CI pair remains failed.
+Six unchanged workflows ran once normally and once at2xCPU; all12 executions
+passed. The phone sample decoded at693ms, leaving7ms. This is not a robust
+reserve or a CI root cause. Historical12 rows/28 PNGs remain unchanged.
+Private F1-F4 and RF1-RF2 fixes pass42 focused and41 standing cases, with
+overlap; independent review also ran38 safe standing/3 skips and77 probes.
+The original browser run did not use the new cleanup code. Disposition: bounded-closure-accepted.
+Parent-authored mutable-ledger appends caused broader freeze predicates to
+fail; original failures stay retained. Application and historical inputs
+were preserved during the reviewed windows.
+
+The private0.7.111 cold install passed340 packages with scripts disabled.
+Actual app dependencies are unchanged. Exact pin remains RED; CLI is unvetted.
+A separate vendor probe produced25 exact files but missed25 mirrors after
+an ancestor-read denial. Both independent reviews accept partial evidence
+only. Current media13 findings remain unwaived; no permission broadening.
+
+The first polished-chip study remains private due to its3s tradeoff. The
+softer contact candidate passed CPU/source/build binding. Three failed
+Chrome setups remain failed. Consistent Windows metadata plus a fresh owned
+profile passed subsequent configuration checks; exact prior cause is unknown.
+New app28 frames are functional evidence, not exact mid-turn comparisons.
+The unchanged HyperFrames composition then supplied14 exact-seek reference
+frames. Art disposition: KEEP_FOCUSED_SOURCE_PROPOSAL_NOT_PHOTOREAL_APPROVAL. No product asset was adopted.
+
+All485 product/formula/asset/dependency/workflow hashes remain unchanged.
+The existing build and all three previews stayed intact. New summaries and
+working report remain uncommitted until substantive verified source work.
+Goal ACTIVE; no merge, deployment, production, paid GPU or cloud/data/DNS action.
+
+## State 47 - Focused Card Chip Finish, Local Verification
+
+Adopted the exact reviewed softer contact candidate through the real builder.
+Binding after optimization preserves the complete BIN and unrelated GLB JSON.
+The first pre-optimization variant failed containment and remains retained.
+Card523936bytes (+172); caps unchanged. Ten Card tests and11 permanent
+negative controls pass. The sole required framing SHA update retains all
+camera/frustum assertions; original223/1RED and fresh224/224CPU are retained.
+
+New Card HyperFrames export:1080p,9seconds,30fps,270 nonblank frames and
+stable rest. Other9videos and24publicfiles unchanged. All29 local gates pass
+on the same485 frozen inputs. Fourteen successful stages are retained only
+from final-source294; after a missing standard PowerShell PATH probe stopped
+Remotion, the failed full media command and15remaining gates ran fresh.
+This is not a single-attempt29 claim. Old failed receipts stay failed.
+The actual exported finder proved the PATH-only correction; no browser pin
+or download changed. All five setup failures and source-pin REDs are retained.
+Original .next/previews stayed intact through isolated web build/browser copies.
+
+This modest chip separation gain is not photographic metal approval.
+Card face/coin and all-ten photo quality remain open. Formulas, app behavior,
+backend, dependencies and workflows are unchanged. Commit/push and exact-head
+CI/READY/hosted/browser proof remain pending in this snapshot; a later sealed
+current/failed-checkpoint receipt supersedes it. Known8df CI stays FAILED.
+No timing cure or release approval. Goal ACTIVE; PR256 draft; no merge,
+manual deployment, promotion, paid GPU or cloud/data/access/DNS mutation.
