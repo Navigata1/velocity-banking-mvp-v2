@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-23T17:27:45.902Z",
+  "baselineVerifiedHead": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "baselineReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6370542236",
+  "sourcePins": 495,
+  "changedSources": [
+    "apps/web/scripts/hero-lifecycle-tests.cjs",
+    "apps/web/src/components/hero/HeroModelStage.tsx"
+  ],
+  "stageSha256": "b510593d5766fe02b9751cbf1771414cab1b027e64bd4de74514086042bdc669",
+  "lifecycleSha256": "1b7ba20d6fbe33bca40c9e5fec24756d7747bbd670c1e0a5a5a5c42ddb589bad",
+  "red": {
+    "id": "7d8be1c7-d037-4d7d-9363-893a92933c40",
+    "pass": 3,
+    "intendedAssertionFailures": 7
+  },
+  "green": {
+    "id": "46ed2969-25e0-4edc-a22a-b0c6bdcd51b0",
+    "pass": 11,
+    "fail": 0,
+    "selectedPermanentMutationControls": 6
+  },
+  "focused": {
+    "id": "7c919336-914a-404f-9bb2-0553670993dc",
+    "results": [
+      {
+        "name": "web-tests",
+        "status": 0,
+        "signal": null,
+        "error": null
+      },
+      {
+        "name": "media-tests",
+        "status": 0,
+        "signal": null,
+        "error": null
+      },
+      {
+        "name": "web-lint",
+        "status": 0,
+        "signal": null,
+        "error": null
+      },
+      {
+        "name": "web-types",
+        "status": 0,
+        "signal": null,
+        "error": null
+      }
+    ],
+    "mediaContracts": 227
+  },
+  "parentPolicy": {
+    "id": "3da940f5-caa0-4437-a267-fea28a713ff2",
+    "pass": 4,
+    "fail": 0,
+    "actualSources": true,
+    "boundary": "Synchronous simulated hooks/events and child lifecycle harness; not actual React scheduling, browser, same-object/no-refetch resume or physical proof.",
+    "earlierHarnessFailuresRetained": [
+      "e9b921de: 0/4 recursive walker RangeErrors, not product RED",
+      "a8904af1: 3/1 cross-VM prototype comparison failure, not wrong resource values"
+    ]
+  },
+  "candidateStatus": "Local CPU candidate; independent review and fresh complete release gates pending",
+  "unchanged": {
+    "publicAssets": 20,
+    "runtimePins": 13,
+    "parentVisibilityPolicy": true,
+    "financialCalculations": true,
+    "mediaComposition": true
+  },
+  "limits": [
+    "Eight accumulated visible seconds from first RAF, not exact click-to-rest or physical FPS/smoothness/energy guarantee.",
+    "Controlled clamp reproduction does not resolve historical instrumented Chrome delays.",
+    "Source review, new full29, exact-head CI, current hosted/manual proof and guarded receipt are still required.",
+    "All-ten final photoreal, lender/calendar, dedicated backend/recovery, dependencies, physical native/accessibility and production remain open."
+  ],
+  "productionReady": false,
+  "goalActive": true,
+  "pushed": false
+}
