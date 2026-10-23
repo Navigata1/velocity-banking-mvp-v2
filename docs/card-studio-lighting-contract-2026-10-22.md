@@ -56,3 +56,23 @@ and fixed in private v3 CPU controls, not retroactively rewritten or GPU-reteste
 Final photoreal/all-angle/hardware/accessibility, full lender reconciliation,
 dedicated backend/security/recovery, physical native and production remain OPEN.
 Educational tool. Not financial advice.
+
+## Cold-Checkout Correction
+
+Head `0486666` is not release-verified. Both SQL-named CI jobs passed 63 SQL
+assertions twice, then failed this new sharing test because ignored vendor files
+had not been prepared. Warm local files hid that test-setup dependency.
+
+The sharing test now runs the existing local preparation through a bounded Node
+subprocess before checking both exact generated copies. No assertion is skipped,
+and no workflow, dependency, renderer or financial behavior changes. A fresh
+tracked-file-only checkout first reproduced two passes and one missing-file
+failure, then passed all three tests after the correction. It uses existing
+installed dependencies, not a clean dependency install or a Linux runner.
+
+Separately, the push hero job timed out waiting for Vault visibility after the
+nine desktop domain models passed; the PR hero job passed. That clock/visibility
+failure is not diagnosed or fixed by the setup correction. Required time limits
+and pixel assertions stay unchanged. A new source revision needs its own complete
+CI pair and preview proof. Failed checkpoint: 6,686 artifacts, PR comment
+`6353969005`; last verified tip remains `da04699` and receipt `6351915021`.
