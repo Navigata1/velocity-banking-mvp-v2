@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Clean-checkout CPU fixture repaired locally without changing the app. Both d842 CI runs failed and remain recorded. Final photoreal and production gates are still open.",
+    "tagline": "Six-table permission matrix wired for285 expected SQL assertions; real database proof pending. Prior36e push passed but PR browser timing failed. Final art and production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T19:46:48.881Z",
-    "sessionCount": 70
+    "updated": "2026-10-23T20:26:18.850Z",
+    "sessionCount": 71
   },
   "policies": {
     "merge": "review",
@@ -375,7 +375,7 @@
           "dependsOn": [
             "R1-T14"
           ],
-          "notes": "One QA fixture file only. Unchanged clean copy reproduced25/24/1 ENOENT; two permanent regressions gave27/24/3 before the fix. The VM fixture now validates and captures exact debug PNG byte pairs in memory. Real browser debug writer, transport, PNG decoder, material/stability/timing checks and production app are unchanged. Clean candidate27/27/0, independent source review and full focused CPU/media227/lint/types pass. New exact-head remote verification remains required. Evidence: ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json.",
+          "notes": "One QA fixture file only. Unchanged clean copy reproduced25/24/1 ENOENT; two permanent regressions gave27/24/3 before the fix. The VM fixture now validates and captures exact debug PNG byte pairs in memory. Real browser debug writer, transport, PNG decoder, material/stability/timing checks and production app are unchanged. Clean candidate27/27/0, independent source review and full focused CPU/media227/lint/types pass. New exact-head remote verification remains required. Evidence: ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json. State71: pushed36e passed local checks and both CI CPU regression steps; companion push40014272810 passed all jobs/every step, but PR40014277151 failed the real rapid-return PNG with42ms remaining. Status6373868068 and914 frozen files retain it. No global verification, cap change or unchanged retry; cause remains unclassified.",
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
@@ -717,7 +717,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md. State49 metadata-only refresh:knownappVercelproject returns onlyproductionSITE_URL,0Supabase/0hiddenproductionenvrecords withdecrypt=false. Name-matcheddatabasecandidate remainsUNBOUND; reference/release details private, no SQL/keys/backupinspection/settingsmutation. CurrentofficialPostgres/TLSnotices in docs/backend-provider-readiness-2026-10-23.md; association/patch/recovery stillOPEN."
+          "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md. State49 metadata-only refresh:knownappVercelproject returns onlyproductionSITE_URL,0Supabase/0hiddenproductionenvrecords withdecrypt=false. Name-matcheddatabasecandidate remainsUNBOUND; reference/release details private, no SQL/keys/backupinspection/settingsmutation. CurrentofficialPostgres/TLSnotices in docs/backend-provider-readiness-2026-10-23.md; association/patch/recovery stillOPEN. State71: the exact independently reviewed222-assertion six-table matrix is added beside old63, with a standing discovery/plan/rollback check. Four migrations, schema/grants, app/client behavior and managed cloud remain unchanged. Local wiring RED3/1 then GREEN4/0 and eight focused commands pass; actual285 SQL execution is pending, not replaced by static checks. Dedicated cloud association/API/recovery/provider state remain open."
         },
         {
           "id": "R4-T2",
@@ -761,6 +761,18 @@
           "status": "in_progress",
           "dependsOn": [],
           "notes": "New private captures observe HTTP200 prefetch-shaped RSC requests aborted beforeHouse/model load in unchanged baseline and candidate. Metadata/stream trace establishes no intentional cause; TLSHTTP1 andh2 both show aborts, soHTTP2 not sufficient. No URL/error exemption, prefetch disable, network/deadline or app workaround. Overallcapture/productionnetworkapproval remainsFAILED; all rawfailures and ownedjobcleanup preserved. This is an unresolved baseline finding, not an attributed House regression or globalgoal block."
+        },
+        {
+          "id": "R4-T7",
+          "title": "Execute complete six-table owner permission matrix",
+          "status": "in_progress",
+          "dependsOn": [],
+          "notes": "New222 assertions preserve191 source-reviewed cases and add31 missing null/foreign operations. Literal four-context CRUD coverage is96 source cells; it is not executed RLS evidence. Exact reviewed SQL, integrated discovery contract and local backend/web/lint/types pass. Require both exact-head disposable jobs to report both named files/285 assertions twice with clean replay/lint/advisors/cleanup/source guards. Preserve old63/all4migrations and unrelated36e browser failure. Evidence: ops/mission/evidence/owner-matrix-adoption-2026-10-23/candidate.json.",
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          }
         }
       ],
       "gates": [
@@ -769,18 +781,18 @@
           "title": "Persistence client contracts",
           "command": "npm --prefix apps/web run test:supabase:client",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-client-contracts.log",
-          "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "Client identity and ordered-sync contracts only; not live SQL/RLS owner-isolation proof."
+          "evidence": "ops/mission/evidence/owner-matrix-adoption-2026-10-23/candidate.json",
+          "lastRun": "2026-10-23T20:26:18.850Z",
+          "notes": "Fresh local client/account contract commands passed. These are static/mocked client checks, not live API/JWT, SQL isolation or managed recovery proof."
         },
         {
           "id": "R4-G2",
           "title": "Account isolation contracts",
           "command": "npm --prefix apps/web run test:supabase:account",
           "status": "passed",
-          "evidence": "ops/mission/evidence/security-refresh-2026-10-20/backend-account-contracts.log",
-          "lastRun": "2026-10-20T17:59:00Z",
-          "notes": "Browser snapshot identity and Settings contracts only. Backend is unconfigured; no claim of live account isolation."
+          "evidence": "ops/mission/evidence/owner-matrix-adoption-2026-10-23/candidate.json",
+          "lastRun": "2026-10-23T20:26:18.850Z",
+          "notes": "Fresh local client/account contract commands passed. These are static/mocked client checks, not live API/JWT, SQL isolation or managed recovery proof."
         },
         {
           "id": "R4-G3",
@@ -813,10 +825,10 @@
           "id": "R4-G6",
           "title": "Fresh isolated SQL and row-isolation proof",
           "command": "npm --prefix apps/web run test:supabase",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/backend-isolation-2026-10-20/review-and-verification.md",
-          "lastRun": "2026-10-20T20:42:40Z",
-          "notes": "Fresh 37d1880 push/PR database jobs 118873389468/118873424261 passed four-migration replay, 63 pgTAP assertions twice per job, lint/security advisors, project cleanup and proof upload. Original logs/receipts retained. Standing CI enforces future runs. This passes isolated SQL correctness only, not hosted-project binding, API auth, backup recovery or current-provider patch alignment. Local Docker and production were untouched."
+          "status": "pending",
+          "evidence": "ops/mission/evidence/owner-matrix-adoption-2026-10-23/candidate.json",
+          "lastRun": null,
+          "notes": "Expanded gate now requires old63 + new222 =285 across two files, twice per exact-head disposable job. New matrix has not executed. Historical old63 evidence, including both36e SQL jobs, remains preserved but cannot pass the expanded gate. Commands/migrations/CLI/caps are unchanged. Managed association/JWT/backup/recovery/provider patching remain separate open requirements."
         }
       ]
     },
@@ -1462,12 +1474,12 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State70: d842 is CLOSED FAILED, not verified. Push40010779271 and PR40010782452 attempt1 both failed clean-checkout CPU test20; all four hero/SQL prerequisite jobs passed. Failure-status6373224401 and229 frozen artifacts preserve it. f708/receipt6370542236 remains the prior whole-app verified checkpoint;111 remains failed too.",
-      "The current candidate changes only canvas-overlay-tests.cjs. Unchanged clean reproduction25/24/1 and permanent RED27/24/3 precede GREEN27/27/0 with no output directory before/after. Strict in-memory diagnostic writes retain exact PNG byte pairs. The real browser debug writer, capture transport, PNG decoder, checks, deadlines, app, assets and finance remain unchanged. Read docs/overlay-fixture-isolation-contract-2026-10-23.md and ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json.",
-      "After exact495 committed/working input checks, commit and push the focused fixture/state change once to draft PR256. Require both complete NEW exact-head CI events, all three jobs/every step/six source guards and known automatic git READY. No unchanged CI retry, merge, manual deployment, production promotion or metadata-only push.",
-      "Use the independent fixture-only risk ruling and full focused CPU/media227/lint/types results. No new local29/House video/hosted/manual run was performed for this CPU-only boundary; do not imply otherwise. Historical111/491/493 and RSC failures remain open. The failed d842 private success-publisher has three unresolved independent-review findings and must not be reused unchanged.",
-      "The Car paint study is complete and neither arm was adopted. All18 originals were viewed; sampling and coat changes were too subtle to qualify as a photoreal upgrade. The actual HyperFrames CLI check failed module/GSAP/timeline validation, with five fixtures not run. Keep the study frozen except progress.md. Do not repeat the same arms unchanged or upgrade the pinned toolchain as a workaround. A new art direction must use materially different evidence and the known canonical inline composition.",
-      "The six-table backend matrix is a257-line private draft with191 planned assertions, HELD after two P2 review findings: nine missing null-JWT CRUD cases,11 missing foreign-target cases per owner, and eight unordered matrix queries. Fix and independently re-review before adoption; sqlExecuted=false. Actual disposable SQL CI must include the original63 twice with rollback/lint/advisors. RootSQL/config sit outside495 app pins. Preserve all four migrations and do not mutate hosted data or guess a cloud association.",
+      "State71: new backend-test candidate is local/pre-push. Baseline36e is pushed but NOT VERIFIED: push40014272810 succeeded all jobs/steps, PR40014277151 failed desktop-rapid-return PNG capture with42ms remaining. Failure-status6373868068/914 frozen files preserve both outcomes. f708 remains the prior whole-app verified checkpoint.",
+      "Read docs/owner-permission-matrix-contract-2026-10-23.md and ops/mission/evidence/owner-matrix-adoption-2026-10-23/candidate.json. New exact reviewed rootSQL has222 declared assertions, alongside unchanged old63. All4migrations, schema/grants, app/math/art/workflow/dependencies remain. Local wiring RED3/1 toGREEN4/0 and eight focused commands are not SQL execution. RootSQL/config/test pins are explicit outside495 app inputs; one private coverage-plan pin is context-only, not a committed file.",
+      "After exact committed/working verification, push the focused test/state commits once to existing draftPR256. Require both exact-head SQL jobs to name both files, Files=2/Tests=285/Result:PASS twice, clean replay/lint/advisors/cleanup and source guards. Observe both complete workflows/all jobs/steps; scoped SQL success does not reverse unrelated aggregate browser failure. No workflow rerun until green, merge, manual deployment, promotion or metadata-only push.",
+      "Use the independent integration review and focused backend/webCPU/lint/types evidence. No unrelated local29/House GPU/export or duplicate hosted/manual run was performed for this test-only slice. Broader gates remain open. Never reuse the held d842 private success-publisher with its three unresolved review findings.",
+      "For the browser deadline, read the frozen36e next-diagnostic notes. Actual caller smoke-three-selection.cjs records returnStarted before real previous.click and stage-state read; the179ms pre-phase gap is not measured pure click/GPU cost. Preserve450ms return observation,700ms/300ms, all18normal/sixadditional workflows, genuine pixels and all caps. New instrumented success alone is NONCAUSAL; classify input/read/render/host boundaries before a product fix.",
+      "Car material study remains not adopted after18 original views; pinned HyperFrames validation failed module/GSAP/timeline. Do not repeat unchanged rejected arms or upgrade as a workaround. Final all-ten photoreal/all-angle/hardware approval remains open; any new art study needs a materially new direction and known canonical inline composition.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
@@ -1493,7 +1505,7 @@
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
-      "Prior whole-app verified f708 remains the baseline. Revision111 and both d842 CI events failed; honest statuses6372381653/6373224401 preserve them. New clean-fixture candidate still needs complete new-head remote verification. Draft PR256 remains unmerged. Final art, lender, cloud recovery/security, physical native/accessibility and production gates remain open.",
+      "Prior whole-app verified f708 remains the baseline. Later111/d842/36e failures remain;36e push passed but PR browser timing failed, status6373868068. Expanded285 SQL gate is pending real execution; local/source review is not RLS proof. DraftPR256 remains unmerged. Final art/lender/cloud recovery/security/physical native/accessibility/production remain open.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open."
     ],
     "conventions": [
