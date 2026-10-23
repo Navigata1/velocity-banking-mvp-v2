@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-23T14:10:30.637Z",
+  "baselineHead": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "local-release-candidate-remote-verification-pending",
+  "pushed": false,
+  "productionReady": false,
+  "sourceCount": 495,
+  "webCopies": 228,
+  "candidatePinsSha256": "5c93d99088ded0090f2c94cad256840e7306ce1c1aa8d4853db14d13d0d20f4a",
+  "local29": {
+    "run": "d67ed893-0b4c-4439-b372-75913012e59d",
+    "completedAt": "2026-10-23T13:57:08.540Z",
+    "passed": 29,
+    "allOwnedJobsClosed": true,
+    "fromScratch": true
+  },
+  "canonicalHouse": {
+    "run": "313fc595-8aa6-4563-ad10-1dc2e80a1372",
+    "completedAt": "2026-10-23T14:05:30.644Z",
+    "sha256": "786f32ca6a36896ffbb0a1768f87ed6b387a166bf452d1b0bf62d5ae1bcbdf6a",
+    "width": 1920,
+    "height": 1080,
+    "fps": "30/1",
+    "frames": 270,
+    "sampledOriginalsViewed": 7,
+    "boundedAccepted": true
+  },
+  "publicationCode": {
+    "accepted": true,
+    "reviewId": "b6b3a3f6-4e80-4ab6-a504-5918564bb7d5",
+    "executionApproved": false
+  },
+  "assetsUnchanged": 20,
+  "financeEngineDependenciesWorkflowsBackendUnchanged": true,
+  "pending": [
+    "Actual final metadata/evidence capture and its twelfth contract case.",
+    "Focused commits and one tested-tip push to draft PR256.",
+    "Both complete exact-head first-attempt CI events, known READY git preview, hosted15/210/20, actual IAB and Chrome five hero states each.",
+    "Fresh provider/CI readback and guarded unique receipt before any verified shipping claim."
+  ],
+  "limits": [
+    "Earlier491Portfolio and493Three full failures remain failed and unexplained; current green is not root-cause closure.",
+    "The100 settled native-DOM pairs show lower medians but four desktop group maxima/p95 worsen; no transition or tail guarantee.",
+    "All-ten final photoreal, lender/calendar reconciliation, dedicated backend/security/backup/recovery, physical native/accessibility and production gates remain open."
+  ]
+}

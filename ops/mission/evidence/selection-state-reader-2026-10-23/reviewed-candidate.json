@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-23T13:18:25.941Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "reviewed495-source-fresh-full29-active",
+  "pushed": false,
+  "productionReady": false,
+  "sourceCount": 495,
+  "webCopies": 228,
+  "candidatePinsSha256": "5c93d99088ded0090f2c94cad256840e7306ce1c1aa8d4853db14d13d0d20f4a",
+  "review": {
+    "id": "d5451d1b-83aa-4a04-89e5-008b2dd54e5d",
+    "accepted": true,
+    "scope": "bounded-four-file-QA-reader-source-and-retained-evidence-only",
+    "fullRunRuling": {
+      "justified": true,
+      "maximumFreshRuns": 1,
+      "performedByThisReview": false,
+      "reason": "Genuinely changed and independently checked QA observation method; not a claimed root fix or favorable unchanged retry.",
+      "conditions": [
+        "Exact reviewed 495-source candidate and runtime/assets pinned before and after.",
+        "New private fixture copied and built from scratch; no compiled493 app reuse as495 evidence.",
+        "Complete original29 from stage1 with original actions/assertions/flags/errors and450-700-300 budgets.",
+        "Fresh owned server/browser/contexts and retained result; no filtered failures or favorable unchanged repeat.",
+        "Parent private runner/metadata implementation remains outside this review.",
+        "Any source-byte change requires a new bounded source review."
+      ]
+    }
+  },
+  "local29": {
+    "id": "d67ed893-0b4c-4439-b372-75913012e59d",
+    "directory": ".superpowers/sdd/2026-10-23-selection-state-reader/full-gates-d67ed893-0b4c-4439-b372-75913012e59d",
+    "status": "running",
+    "passedStagesAtSnapshot": [
+      "ci-contracts",
+      "runtime-contracts",
+      "sql-wiring"
+    ]
+  },
+  "sourcePins": {
+    "apps/web/src/components/hero/house-instances.ts": "e732d45e7a8b94797c7c376ee29cbfb02a21bc5c57a94ea7b02438e4364b500c",
+    "apps/web/scripts/house-instance-tests.cjs": "c9f78650b76cf6b56905b1688be22f8c0934a23cb478b69f6af9989e3ed1b17e",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "80f1395a2e59056531102d2e6163dd68a8a057441f3533ade646e480e7418a77",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7299a706eb992f0360e4df7f86e85d61cd1adf2eb17de639a945d486fe939285",
+    "apps/web/package.json": "0e51157dca1e94c4c9a19ffc8e38dbccf413ed1f347b9af087f4292ee97bc4c2",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "9c9b128e93f3c75cb8a12804b2dad3d2d62090bbf1fe1dba152e812175b198e1",
+    "apps/media/hero-turntables/index.html": "0d4d3fc4050456653b1980d998f373e6fbcf263aa87fb4afba3f9e0b6126d42d",
+    "apps/media/scripts/house-instance-wiring.test.mjs": "17d22705ba3870eef981be753f21be2a5079fa3da8b4794ac8dfdef789582f49",
+    "apps/media/hyperframes/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/media/hero-turntables/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "0e2978e2e1e40cb2cd665aeb6abf2c30718a8a01a53c1d33e9e0068ae4051c15",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics.cjs": "600a9cdac1fd1dcdc80f8b905c7e44a2ed9ad11677538c3f1837aef6326a09be",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics-tests.cjs": "249cf3cabf04be0610d53bc4bbfef58e6e1495779178236aaf5fcfcffc69a72f",
+    "apps/web/scripts/smoke-three-selection.cjs": "a3e8ca64b2c105d5474358f624e69f74135b6b786203b42e38c07e3002fddb9c",
+    "apps/web/scripts/selection-stage-state.cjs": "8aa1fa012d74e4b8c6a51f9d656eea6c7055d659ddb5c4784a100ef38eb8fe7d",
+    "apps/web/scripts/selection-stage-state-tests.cjs": "00ee6666ae7446b6bc2e5727a1f64ec1c6fefe66a8fd452e671a32e1b0ecce02"
+  },
+  "publicationSafety": {
+    "guardLibraryUnitGroups": 7,
+    "green": true,
+    "integratedIntoPublisher": false,
+    "independentReview": false,
+    "publicationApproved": false
+  },
+  "limits": [
+    "Revieweracceptance isfourfileQA/parity, not renderer/math/production approval.",
+    "Parentkeeping ownCPU/probes quiet during3D stage isoperational ordering, not controlledcausal evidence or a source-only speedclaim.",
+    "Prior493and491fullsremainFAILED; lowerpairedmedianswithfourdesktop tailregressions do not close historicalcause/reliability.",
+    "No canonicalrender/newmanual/CI/READY/hosted/commit/push/receipt yet;6ff5568 remainsverified."
+  ]
+}

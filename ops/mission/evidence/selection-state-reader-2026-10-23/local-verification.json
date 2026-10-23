@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-23T14:00:39.154Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "complete495-local29-pass-canonical-render-running",
+  "pushed": false,
+  "productionReady": false,
+  "sourceCount": 495,
+  "webCopies": 228,
+  "local29": {
+    "id": "d67ed893-0b4c-4439-b372-75913012e59d",
+    "directory": ".superpowers/sdd/2026-10-23-selection-state-reader/full-gates-d67ed893-0b4c-4439-b372-75913012e59d",
+    "status": "completed",
+    "completedAt": "2026-10-23T13:57:08.540Z",
+    "stagesPassed": 29,
+    "allOwnedJobsClosed": true,
+    "fromScratch": true
+  },
+  "canonicalVideo": {
+    "id": "313fc595-8aa6-4563-ad10-1dc2e80a1372",
+    "directory": ".superpowers/sdd/2026-10-23-selection-state-reader/video-313fc595-8aa6-4563-ad10-1dc2e80a1372",
+    "status": "running",
+    "rendered": false,
+    "scope": "Current495-source House only, stillrunning"
+  },
+  "publicationCode": {
+    "reviewId": "b6b3a3f6-4e80-4ab6-a504-5918564bb7d5",
+    "accepted": true,
+    "priorP2Closed": 3,
+    "selectedCpuGroups": 42,
+    "actualCaptureCasePending": true,
+    "executionApproved": false
+  },
+  "sourcePins": {
+    "apps/web/src/components/hero/house-instances.ts": "e732d45e7a8b94797c7c376ee29cbfb02a21bc5c57a94ea7b02438e4364b500c",
+    "apps/web/scripts/house-instance-tests.cjs": "c9f78650b76cf6b56905b1688be22f8c0934a23cb478b69f6af9989e3ed1b17e",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "80f1395a2e59056531102d2e6163dd68a8a057441f3533ade646e480e7418a77",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7299a706eb992f0360e4df7f86e85d61cd1adf2eb17de639a945d486fe939285",
+    "apps/web/package.json": "0e51157dca1e94c4c9a19ffc8e38dbccf413ed1f347b9af087f4292ee97bc4c2",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "9c9b128e93f3c75cb8a12804b2dad3d2d62090bbf1fe1dba152e812175b198e1",
+    "apps/media/hero-turntables/index.html": "0d4d3fc4050456653b1980d998f373e6fbcf263aa87fb4afba3f9e0b6126d42d",
+    "apps/media/scripts/house-instance-wiring.test.mjs": "17d22705ba3870eef981be753f21be2a5079fa3da8b4794ac8dfdef789582f49",
+    "apps/media/hyperframes/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/media/hero-turntables/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "0e2978e2e1e40cb2cd665aeb6abf2c30718a8a01a53c1d33e9e0068ae4051c15",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics.cjs": "600a9cdac1fd1dcdc80f8b905c7e44a2ed9ad11677538c3f1837aef6326a09be",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics-tests.cjs": "249cf3cabf04be0610d53bc4bbfef58e6e1495779178236aaf5fcfcffc69a72f",
+    "apps/web/scripts/smoke-three-selection.cjs": "a3e8ca64b2c105d5474358f624e69f74135b6b786203b42e38c07e3002fddb9c",
+    "apps/web/scripts/selection-stage-state.cjs": "8aa1fa012d74e4b8c6a51f9d656eea6c7055d659ddb5c4784a100ef38eb8fe7d",
+    "apps/web/scripts/selection-stage-state-tests.cjs": "00ee6666ae7446b6bc2e5727a1f64ec1c6fefe66a8fd452e671a32e1b0ecce02"
+  },
+  "assetsUnchanged": 20,
+  "limits": [
+    "All29 current gates pass; earlier491Portfolio and493Three failures remainFAILED/unexplained.",
+    "This is not exact-headCI/READY/hosted/actualmanual/push or production approval.",
+    "Reader steady-state median/tail and inherited renderer/photoreal/physical limits remain unchanged."
+  ]
+}
