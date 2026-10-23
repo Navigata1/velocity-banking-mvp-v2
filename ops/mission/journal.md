@@ -1099,3 +1099,44 @@ CI/READY/hosted/browser proof remain pending in this snapshot; a later sealed
 current/failed-checkpoint receipt supersedes it. Known8df CI stays FAILED.
 No timing cure or release approval. Goal ACTIVE; PR256 draft; no merge,
 manual deployment, promotion, paid GPU or cloud/data/access/DNS mutation.
+
+## State 48 - Pushed Card Finish, Mandatory CI Still Failed
+
+Five focused commits pushed once to617a2f8; source9b57c2b includes the exact
+reviewed Card finish and necessary framing pin. Local29same485inputs pass
+(14retained/15fresh after PATH-only correction), hosted15/210/20 pass, and
+both hero/SQL jobs pass. Both primary jobs fail rapid-return PNG capture
+with5ms/35ms remaining. Six actual-source guards and complete logs retained.
+No unchanged retry or clock/deadline/pixel relaxation. Failed5367packet and
+PRcomment6358275114 sealed; last fullyverifiedda04699 remains reference.
+
+Start R0-T11 capture-path investigation in a new private workspace. No new
+app/art/math/dependency edits yet. Earlier timing observations do not prove
+remote causality. Candidate changes need strict actual-pixel/geometry/restore
+equivalence and fresh exact-head validation. Wider photo/backend/financial
+reconciliation/security/native/a11y/production tasks stay open.
+All owned test jobs and reviewers closed; existing three previews intact.
+Working report/evidence ride next substantive push; goal ACTIVE/PRdraft.
+
+## State 49 - Truthful Detail, Strict Canvas Proof
+
+Removed only the selected detail gauge that displayed a deliberately floored
+visual value as Modeled pressure. Actual dollars, utilization, notes, model,
+geometry channels and selection stay unchanged. Genuine1pass/5fail RED, then
+independent source confirmation and nine final selected-subtree SSR groups.
+Reviewer-exposed duplicate-value masking gap reproduced7pass/2fail and fixed
+with actual detail-node AST scoping; field-deletion controls reject regressions.
+
+The separately reviewed three-file canvas helper uses fresh direct evaluation,
+preserving all450/700/300 and actual PNG requirements. Fresh29combined gates
+rerun fromscratch on486pins/222webcopies; allstagejobsclosed/rootNextq9 intact.
+Original485-source local run remains FAILED after12stages at Portfolio network
+ERR_NO_BUFFER_SPACE. Bounded325navigation probe hit its declared64MiB log limit
+without reproducing the error; no completed comparison or workaround adoption.
+
+Backend read-only metadata confirms no project-level Supabase environment keys;
+one unbound candidate is kept private. No SQL, keys, settings or cloud mutation.
+Allten final photoreal, lender/cloud recovery, native physical, accessibility and
+production gates remain open. Baseline617 CI remainsFAILED5367/6358275114.
+New exact-head push/CI/READY/hosted/browser proof is pending in this snapshot;
+a later sealed receipt supersedes it. GoalACTIVE/PR256draft, no promotion.

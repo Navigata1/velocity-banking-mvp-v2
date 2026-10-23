@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Local Card chip refinement verified with unchanged geometry and a fresh 360-degree export. New GitHub checkpoint pending; wider photoreal, backend and release gates remain open.",
+    "tagline": "Local truth-first detail correction and strict canvas-checker optimization pass fresh29-stage gates. New exact-head shipping proof pending; photoreal, backend, lender and production gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T05:11:30.546Z",
-    "sessionCount": 47
+    "updated": "2026-10-23T07:41:49.701Z",
+    "sessionCount": 49
   },
   "policies": {
     "merge": "review",
@@ -144,6 +144,15 @@
           "dependsOn": [],
           "pr": null,
           "notes": "One predetermined normal+2x collection:12executions of6originalworkflows PASS,12contexts/2browsersclosed,28PNGhashes/485sourcepins. Normalphone693ms/7msmargin, CPU2desktop675/25ms. Bounded noncausal evidence, not CI fix or robust reserve. PrivateF1-F4/RF1-RF2 repairs:focused42/standing41 withoverlap, independentsafe38pass3skip/77probes, historical12rows/28PNGs unchanged. Oldrun didNOTuse newcleanup. Parentacknowledges ownmutableprogressappend; originalbroaderreviewfreezeFAILretained, immutableinputs/sourcepreserved. Independent disposition:bounded-closure-accepted. See ops/mission/evidence/input-timing-observation-2026-10-22/summary.json. Current8df CI remainsFAILED."
+        },
+        {
+          "id": "R0-T11",
+          "title": "Measure and reduce strict real-canvas capture overhead",
+          "status": "in_progress",
+          "dependsOn": [
+            "R0-T10"
+          ],
+          "notes": "Start from sealed617failed5367. Inspect actual Playwright locator/page evaluation and screenshot implementations; measure any proposed lower-overhead capture with strict fresh canvas binding, identical clipping/pixels/opacity and complete restoration. No app/art/math changes during diagnosis, no time-origin/deadline/pixel changes or unchanged CI reruns. A root cause or robust margin is not yet established. Private study .superpowers/sdd/2026-10-23-canvas-evaluation-path/. State49:bounded3-file helper optimization stays exact reviewed33403406; all450/700/300/pixel checks unchanged. Combined with a separate10-line unsupported detail gauge deletion; fresh29local/486pins pass. Priorlocal12/485portfolioERR_NO_BUFFER_SPACE staysFAILED, incomplete325navigationprobe doesnotjustifyaworkaround. Newexact-headCI/hosted/browser pending. See ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json."
         }
       ],
       "gates": [
@@ -152,36 +161,36 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
+          "lastRun": "2026-10-23T07:41:49.701Z",
+          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
+          "lastRun": "2026-10-23T07:41:49.701Z",
+          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "failed",
-          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/failed-ci.json",
-          "lastRun": "2026-10-23T02:17:18.018Z",
-          "notes": "8df firstattempt push39885182341 PASS / PR39885186378 FAIL at17msremaining rapidreturn PNG. Both SQL+hero jobs pass/all6sourceguards. Sealed7346/comment6355703127; hosted210/20 passes; no hostedmanual8states for failedhead. No unchangedretry or productionpromotion. Last fullyverifiedda04699/6351915021."
+          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/failed-ci.json",
+          "lastRun": "2026-10-23T05:43:27.929Z",
+          "notes": "617a2f8 firstattempt push39904442756 andPR39904449992 bothFAILED only MoneyLoopdesktoprapidreturn PNG; captures began5ms/35ms remaining. Bothhero+SQLjobsPASS,6sourceguards/alllogs. Sealed5367/comment6358275114; hosted15/210/20PASS; no hostedmanual8states forfailedhead. Original450/700/300/pixels unchanged, no unchangedretry. Lastfullyverifiedda04699/6351915021."
         },
         {
           "id": "R0-G4",
           "title": "Fresh exact-head CI discovery and report contracts",
           "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-chip-finish-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T05:11:30.546Z",
-          "notes": "29local gates on same485frozen inputs:14passed stages retained from final-source run,15fresh after a standard WindowsPowerShell PATH correction; not a single-attempt29claim. Original .next/previews preserved with221byte-identical isolated web sources; CPU/lint original paths. Card chip-only model+finite360video; other assets/posters/formulas/dependencies unchanged. Not photographic, physical-device or production approval."
+          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
+          "lastRun": "2026-10-23T07:41:49.701Z",
+          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
         }
       ]
     },
@@ -214,7 +223,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Current Card study accepts brushed-silver anisotropy0.30 after matching seven-angle study, independent review and permanent Card/stale-load/media wiring controls. Emerald/turned materials and all source bytes remain unchanged. Dark reverse and full collection photoreal approval stay open. Credit Card/Student Loan/Medical/Personal/Recreation retained. Custom is now the original silver brushed-metal compass with hollow stepped case, seated dial/rose/ticks, faceted enamel needles, closed clear lens, upright hollow lid, five hollow hinge barrels with positive pin clearance, five connected brackets and open bail:237844bytes,13200unique/21240rendered triangles,12 original procedural maps.16 cases and exact independent geometry/pipeline re-reviews follow observed assembled-channel/pin-clearance/contact-oracle/corner-normal REDs/fixes. Protected full rebuilds and real40-payload package preserve other nine models/all ten posters;309 raw source snapshots and before/after all-ten video records reject mutation. See docs/custom-refinement-contract-2026-10-21.md. Ten textured candidates, not final all-ten art approval. Card v3 fixes2704collapsededgecharts at523764bytes (only524bytes below originalcap); Student v3 fixes1040ribboncharts at723868bytes. Orientedgeometry/normals/preservedUVs/materials/all15images/copyright exact.19newfocused tests include review-found nonfiniteoracle RED/fix. No finalphotorealapproval; see depthUVcontract. WorkingState46: firstpolish28stage/4contextPNGs improvesfront/rest/2s but3ssegmentationtradeoff;KEEPPRIVATEONLY. Softer0.84contactcandidate adds172bytes withincap;2CPU/3bindingCPUtests/freshisolated221sourcebuild pass. Original3ChromeFAILs kept; validconsistentOSmetadata/privateprofileconfigurationpassed. NewAPP28frames+33servedstaticbindings/fixtureFUNCTIONALONLY(midturnposephaseunconfirmed); separateUNCHANGEDHyperFramesexact-seek14referencePNGs isolatevisiblechip/4s5sidentity. Independentart:KEEP_FOCUSED_SOURCE_PROPOSAL_NOT_PHOTOREAL_APPROVAL. No productadoption;Card face/coin/alltenquality remainsOPEN. See ops/mission/evidence/card-contact-finish-study-2026-10-22/summary.json. State47 supersedes prior private-only softness status: exact reviewed0e11e543 soft candidate is now generated by the real builder, assigning finish AFTER optimization.523936/+172bytes; complete BIN and unrelated JSON exact;10Cardtests/11negativecontrols/independent source ACCEPT. New9s30fps270-frame Card video nonblank/rest-stable;9otherMP4s exact. Fresh29local/485pins on isolated web build; known8df CI remainsFAILED, newhead verification pending. Fullface/coin/alltenphotoreal remainOPEN. See ops/mission/evidence/card-chip-finish-2026-10-23/summary.json."
+          "notes": "Current Card study accepts brushed-silver anisotropy0.30 after matching seven-angle study, independent review and permanent Card/stale-load/media wiring controls. Emerald/turned materials and all source bytes remain unchanged. Dark reverse and full collection photoreal approval stay open. Credit Card/Student Loan/Medical/Personal/Recreation retained. Custom is now the original silver brushed-metal compass with hollow stepped case, seated dial/rose/ticks, faceted enamel needles, closed clear lens, upright hollow lid, five hollow hinge barrels with positive pin clearance, five connected brackets and open bail:237844bytes,13200unique/21240rendered triangles,12 original procedural maps.16 cases and exact independent geometry/pipeline re-reviews follow observed assembled-channel/pin-clearance/contact-oracle/corner-normal REDs/fixes. Protected full rebuilds and real40-payload package preserve other nine models/all ten posters;309 raw source snapshots and before/after all-ten video records reject mutation. See docs/custom-refinement-contract-2026-10-21.md. Ten textured candidates, not final all-ten art approval. Card v3 fixes2704collapsededgecharts at523764bytes (only524bytes below originalcap); Student v3 fixes1040ribboncharts at723868bytes. Orientedgeometry/normals/preservedUVs/materials/all15images/copyright exact.19newfocused tests include review-found nonfiniteoracle RED/fix. No finalphotorealapproval; see depthUVcontract. WorkingState46: firstpolish28stage/4contextPNGs improvesfront/rest/2s but3ssegmentationtradeoff;KEEPPRIVATEONLY. Softer0.84contactcandidate adds172bytes withincap;2CPU/3bindingCPUtests/freshisolated221sourcebuild pass. Original3ChromeFAILs kept; validconsistentOSmetadata/privateprofileconfigurationpassed. NewAPP28frames+33servedstaticbindings/fixtureFUNCTIONALONLY(midturnposephaseunconfirmed); separateUNCHANGEDHyperFramesexact-seek14referencePNGs isolatevisiblechip/4s5sidentity. Independentart:KEEP_FOCUSED_SOURCE_PROPOSAL_NOT_PHOTOREAL_APPROVAL. No productadoption;Card face/coin/alltenquality remainsOPEN. See ops/mission/evidence/card-contact-finish-study-2026-10-22/summary.json. State47 supersedes prior private-only softness status: exact reviewed0e11e543 soft candidate is now generated by the real builder, assigning finish AFTER optimization.523936/+172bytes; complete BIN and unrelated JSON exact;10Cardtests/11negativecontrols/independent source ACCEPT. New9s30fps270-frame Card video nonblank/rest-stable;9otherMP4s exact. Fresh29local/485pins on isolated web build; known8df CI remainsFAILED, newhead verification pending. Fullface/coin/alltenphotoreal remainOPEN. See ops/mission/evidence/card-chip-finish-2026-10-23/summary.json. State48: six-file Card source/refinement/framing-pin change is committed/pushed9b57c2b..617a2f8. BothheroCIjobs andhosted20servedhashespass; bothprimaryjobsfailtheindependentrapidPNGdeadline5/35ms. This is not a material/math regression or fullphotoapproval. Sealed5367/comment6358275114."
         },
         {
           "id": "R1-T4",
@@ -351,6 +360,18 @@
             "mergedAt": null
           },
           "notes": "Verifiedaf9eb916 with both complete exact-head CI events39737773728/39737780925,automatic READY deployment,hosted156/711legacy/20assets/manual9 and receipt6335271348. History continuity and accepted payoff-order authority are complete within that scope. Numerical lender/credit rules were not certified by this receipt. Prior92shipping/202local proof remains immutable."
+        },
+        {
+          "id": "R2-T8",
+          "title": "Remove unsupported Money Loop detail percentage",
+          "status": "in_progress",
+          "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Implemented locally:deleteonly10gauge lines, no new ratio or visual-floor/model change. Genuine1pass5failRED; final9selected-subtreeSSRgroups/15fixturecases+4controls, independentfinding/sourceconfirmation andtestscopeacceptance, exactvalues/signals/notes preserved. Fresh29combinedlocal gates pass; exact-headCI/hosted/browser stillpending. Not a coreinterest-math correction. See ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json."
         }
       ],
       "gates": [
@@ -559,7 +580,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md."
+          "notes": "Both 37d1880 hosted database jobs passed migration replay, 63-assertion owner/RPC suite twice, lint/security advisors, cleanup and artifact upload. No production writes or credentials added; preview remains local-only. Dedicated cloud association, provider patch/backup state, API/JWT sign-in and cross-device behavior remain open. CLI2.109.1/PG17.6.1.143 is a repeatable functional baseline, not final provider-version approval. See docs/backend-isolation-contract-2026-10-20.md. State49 metadata-only refresh:knownappVercelproject returns onlyproductionSITE_URL,0Supabase/0hiddenproductionenvrecords withdecrypt=false. Name-matcheddatabasecandidate remainsUNBOUND; reference/release details private, no SQL/keys/backupinspection/settingsmutation. CurrentofficialPostgres/TLSnotices in docs/backend-provider-readiness-2026-10-23.md; association/patch/recovery stillOPEN."
         },
         {
           "id": "R4-T2",
@@ -1271,14 +1292,21 @@
       "mergedAt": null,
       "title": "Separate Card chip finish without geometry drift; bounded local verification (draft)",
       "phase": "R1"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Remove unsupported detail percentage and preserve strict canvas proof (draft)",
+      "phase": "R2"
     }
   ],
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "State47 PRE-PUSH snapshot: FIRST read .superpowers/sdd/2026-10-23-card-chip-adoption/current-checkpoint.json or failed-checkpoint.json when present; later sealed receipt supersedes this snapshot. Focused real Card chip source/model/provenance/test change. Fresh29local/485sourcepins;10Cardtests/11negativecontrols; new9s30fps270decodedframes/rest,9otherMP4s/24publicfiles exact. See ops/mission/evidence/card-chip-finish-2026-10-23/summary.json. Next pending at snapshot: verified focused commits plus mission/report/evidence in ONE push to existing draftPR256; no metadata-only push. Preserve original .nextq9 and user53143/4/owned53145.",
-      "Require BOTH complete exact-new-head CI events/all3jobs/allsteps/sourceguards, automatic known-project READY preview, fresh hosted15suites/210layoutworkflows/20servedasset hashes and actualbrowser financial-state restoration before calling the checkpoint verified.8df remainsFAILEDmixedCI sealed7346/6355703127; last fullyverifiedda04699/6351915021. No unchanged retry, deadline relaxation or claim that this material change fixes timing.",
-      "R1 continue bounded whole Card face/coin surface-detail refinement and other-nine final photo reviews while preserving original calm composition/palette/geometry. Chip has paper-white tradeoff; exact source ACCEPT is not photographic completion. R2store unification/R3lender reconciliation/R4backend/security/native/physicaldevice/a11y/release remainOPEN. Current media13findings unchanged; candidate0.7.111 partial private install/vendor evidence is NOT adoption. Timing12samples noncausal/no robust reserve. Read committed evidence summaries and plans. No merge/manualdeploy/promotion/paidGPU/cloud-data-access-DNS changes.",
+      "State49 PRE-PUSH snapshot:latercurrent-checkpoint.json orfailed-checkpoint.json in .superpowers/sdd/2026-10-23-money-loop-metric-truth/ supersedes thissnapshot. Sixfocusedsourcefiles (5oldchanges+1newtest) havefresh29localfromscratch/486pins/222webcopies; no inheritancefrompriorfailedlocal485run. NextONEtestedtip push ofsource/docs/evidence/mission toexistingdraftPR256, thenBOTHcompleteexact-headCI/READY/hosted15-210-20/actualbrowserrestoration. Baseline617 remainsFAILED5367/6358275114, lastfullyverifiedda04699/6351915021. No metadata-onlypush or unchangedCIretry.",
+      "Currentstudy ownsallnewoutputs/shipping. SourceUI3ae74293 deletesonly unsupportedModeledpressure gauge; finaltest3d187628 usesselected-detailJSXSSR9groups,notwhole-rail/GPUproof. R0checker33403406 preserves450/700/300/pixels; earlierq9 static8parity/6+6workflows arefinite/noncausal. Backendprojectenv0Supabase metadataonly, candidateUNBOUND/referenceprivate. No model/formula/persistence/asset/dependency/workflow changes. Allnewsource needsitsownsealedverificationreceipt.",
+      "PriorCardroot SEALED5367 exceptprogress.md; neverrerunitswriters. PriorCanvasfull5b322775 FAILEDlocalPortfolioERR_NO_BUFFER_SPACE after12successes; alljobsclosed/source485/copy221exact. Windowslabdefault325/600 noerrors then64MiBcap;other3variantsNOTRUN, nofeatureworkaround/causeclaim. Newcombinedgates allfromscratch. Root.Nextq9/user53143/4/owned53145preserved. All-tenphoto/R2unification/R3lender/R4cloud-security/native/physical/a11y/production stayOPEN.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
@@ -1304,7 +1332,7 @@
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
-      "Mandatory8df firstattemptCIpair is notgreen. Timingobservations complete boundedlocaldata, no causalapplicationfix. Known screenshot17msfailure remains releaseblocker, not a globalgoalblock."
+      "Mandatorybaseline617 firstattemptCIpair remainsFAILED. Newlocallyverified source6 stillneeds freshcompleteexact-headCI/READY/hosted/browser. LocalWindowsnetworkfailurecauseremainsunproven; no suppression/workaroundadopted. This is a releaseblocker,not a globalgoalblock."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",
