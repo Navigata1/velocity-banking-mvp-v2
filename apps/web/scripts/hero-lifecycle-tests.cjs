@@ -21,6 +21,7 @@ function compile(text, imports = {}, globals = {}) {
 const turntable = compile(read('turntable.ts'));
 const geometryBounds = compile(read('hero-geometry-bounds.ts'), { three: THREE });
 const heroMaterials = compile(read('hero-materials.ts'), { three: THREE });
+const houseInstances = compile(read('house-instances.ts'));
 const once = { geometry: 1, material: 2, texture: 1, image: 1 };
 const cardOnce = { geometry: 1, material: 3, texture: 1, image: 1 };
 const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected) < 1e-12, label);
@@ -70,6 +71,7 @@ function mount(text = source, options = {}) {
       return { texture: {}, dispose() { state.environment++; } };
     } },
     './hero-geometry-bounds': geometryBounds, './turntable': turntable, './hero-materials': heroMaterials,
+    './house-instances': houseInstances,
   }, {
     window: { devicePixelRatio: 1, matchMedia: () => ({ matches: !!options.reduced }) }, document: { hidden: false },
     ResizeObserver: class { observe() {} disconnect() { state.observer++; } },
@@ -88,6 +90,7 @@ function mount(text = source, options = {}) {
   function resolve(index = loads.length - 1) {
     const object = new THREE.Group(), counts = { geometry: 0, material: 0, texture: 0, image: 0 };
     const card = loads[index].model === '/heroes/creditCard.glb';
+    const house = loads[index].model === '/heroes/house.glb';
     const image = { close() { counts.image++; } };
     if (card) Object.assign(image, { data: new Uint8Array([255, 255, 255, 255]), width: 1, height: 1 });
     const texture = new THREE.Texture(image);
@@ -100,10 +103,18 @@ function mount(text = source, options = {}) {
     if (card && options.invalidSilver) materials[0].anisotropy = NaN;
     for (const [name, resource] of Object.entries({ geometry, texture })) resource.addEventListener('dispose', () => counts[name]++);
     for (const material of materials) material.addEventListener('dispose', () => counts.material++);
-    if (card) object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, [materials[0], materials[0]]),
+    if (house) {
+      materials[0].name = 'House-Limestone'; materials[1].name = 'House-Glass';
+      materials[1].transparent = true; materials[1].opacity = .3;
+      for (let i = 0; i < 4; i++) {
+        const mesh = new THREE.Mesh(geometry, materials[0]); mesh.position.x = i * .4; object.add(mesh);
+      }
+      object.add(new THREE.Mesh(geometry, materials[1]));
+      if (options.houseAttachFails) object.addEventListener('childadded', () => { throw new Error('injected House attachment'); });
+    } else if (card) object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, [materials[0], materials[0]]),
       new THREE.Mesh(geometry, materials[1]), new THREE.Mesh(geometry, materials[2]));
     else object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[1]));
-    const loaded = { object, counts, materials };
+    const loaded = { object, counts, materials, originalMeshes: object.children.slice() };
     models.push(loaded); loads[index].success({ scene: object });
     return loaded;
   }
@@ -115,7 +126,7 @@ function mount(text = source, options = {}) {
       for (const id of [...frames.keys()]) { const fn = frames.get(id); if (frames.delete(id)) fn(now); }
     },
     angle: () => models.at(-1).object.rotation.y,
-    unmount() { for (const slot of slots) { slot?.cleanup?.(); if (slot) slot.cleanup = undefined; } },
+    unmount() { for (const slot of slots) { const cleanup = slot?.cleanup; if (slot) slot.cleanup = undefined; cleanup?.(); } },
   };
 }
 function released(h, expected = once) {
@@ -280,6 +291,73 @@ try {
   }
 } finally { switched.unmount(); }
 console.log('PASS hero lifecycle stale Car->Card: late Car unrefined and released, Card isolated through Replay and teardown');
+
+function houseReplayContract(text) {
+  const h = mount(text, { model: '/heroes/house.glb' });
+  try {
+    const loaded = h.resolve(), instances = loaded.object.children.filter(node => node.isInstancedMesh);
+    assert.equal(instances.length, 1, 'House must configure its repeated opaque parts once per load');
+    const batch = instances[0], canvas = h.renderers[0].domElement;
+    assert.equal(batch.count, 4); assert.equal(batch.material, loaded.materials[0]);
+    assert.ok(loaded.originalMeshes.slice(0, 4).every(node => !node.visible));
+    assert.equal(loaded.originalMeshes[4].visible, true, 'House glass remains outside the batch');
+    let disposed = 0; batch.addEventListener('dispose', () => disposed++);
+    fullTurn(h);
+    for (let i = 0; i < 4; i++) { h.replay(); h.tick(16); h.tick(62.5); }
+    h.replay(); fullTurn(h);
+    assert.equal(h.renderers[0].domElement, canvas); assert.equal(h.loads.length, 1);
+    assert.deepEqual(loaded.object.children.filter(node => node.isInstancedMesh), [batch]);
+    assert.equal(disposed, 0); assert.equal(h.state.errors, 0);
+    released(h);
+    assert.equal(disposed, 1, 'House teardown must release the owned instance exactly once');
+    assert.ok(loaded.originalMeshes.every(node => node.visible), 'House teardown restores original visibility');
+    assert.equal(loaded.object.children.some(node => node.isInstancedMesh), false);
+  } finally { h.unmount(); }
+}
+houseReplayContract(source);
+for (const failure of ['attach', 'late', 'context']) {
+  const h = mount(source, { model: '/heroes/house.glb', houseAttachFails: failure === 'attach' });
+  try {
+    if (failure === 'late') h.unmount();
+    const loaded = h.resolve();
+    if (failure === 'context') h.renderers[0].domElement.listeners.get('webglcontextlost')({ preventDefault() {} });
+    h.unmount(); h.unmount();
+    assert.deepEqual(loaded.counts, once);
+    assert.ok(loaded.originalMeshes.every(node => node.visible));
+    assert.equal(loaded.object.children.some(node => node.isInstancedMesh), false);
+    assert.equal(h.state.errors, failure === 'late' ? 0 : 1);
+    assert.equal(h.frames.size, 0);
+  } finally { h.unmount(); }
+}
+console.log('PASS House lifecycle: one instance setup across Replay, borrowed resources and owned teardown, late/error paths');
+
+function houseCleanupFailureContract(text) {
+  const h = mount(text, { model: '/heroes/house.glb' });
+  try {
+    const loaded = h.resolve(), batch = loaded.object.children.find(node => node.isInstancedMesh);
+    assert.ok(batch);
+    batch.addEventListener('dispose', () => { throw new Error('injected House owned disposal'); });
+    assert.throws(() => h.unmount(), /injected House owned disposal/);
+    assert.deepEqual(loaded.counts, once, 'House cleanup errors must still dispose borrowed model resources');
+    assert.equal(h.state.environment, 1); assert.equal(h.state.observer, 1);
+    assert.equal(h.renderers[0].disposals, 1); assert.equal(h.renderers[0].losses, 1);
+    assert.equal(h.renderers[0].domElement.isConnected, false);
+    assert.ok(loaded.originalMeshes.every(node => node.visible));
+  } finally { h.unmount(); }
+}
+houseCleanupFailureContract(source);
+const withoutCleanupFinally = source.replace('try { releaseInstances?.(); }\n      finally {', 'releaseInstances?.();\n      {');
+assert.notEqual(withoutCleanupFinally, source);
+assert.throws(() => houseCleanupFailureContract(withoutCleanupFinally), error => error.code === 'ERR_ASSERTION');
+console.log('PASS House teardown error: renderer/model/environment release survives owned-disposal failure; missing finally rejected');
+
+for (const [from, name] of [
+  ['releaseInstances = configureHouseInstances({ THREE, scene: gltf.scene, model });', 'missing House instance setup'],
+  ['releaseInstances?.();', 'missing House instance cleanup'],
+]) {
+  const mutant = source.replace(from, ''); assert.notEqual(mutant, source, name + ': mutation must apply');
+  assert.throws(() => houseReplayContract(mutant), error => error.code === 'ERR_ASSERTION', name);
+}
 
 const hardcodedCar = source.replace('refineHeroMaterials(gltf.scene, model)', "refineHeroMaterials(gltf.scene, '/heroes/car.glb')");
 assert.notEqual(hardcodedCar, source, 'hardcoded Car material path: mutation must apply');

@@ -7,6 +7,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { createHeroEnvironment } from './studio-environment';
 import { measureHeroRotationBounds } from './hero-geometry-bounds';
 import { refineHeroMaterials } from './hero-materials';
+import { configureHouseInstances } from './house-instances';
 import { heroAngleAt, heroFrameDistance, HERO_CAMERA_FOV, HERO_CAMERA_OFFSET, HERO_CAMERA_NEAR, HERO_CAMERA_FAR, HERO_TURN_SECONDS, type HeroRotationBounds } from './turntable';
 
 interface Props { model: string; replay: number; onError: () => void; onReady: (ready: boolean) => void; }
@@ -20,6 +21,7 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     onReady(false);
     let disposed = false, frame = 0;
     let object: THREE.Group | undefined;
+    let releaseInstances: (() => void) | undefined;
     let renderer: THREE.WebGLRenderer;
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' }); }
     catch { onError(); return; }
@@ -94,7 +96,10 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
         if (!disposed) onError();
         return;
       }
-      try { refineHeroMaterials(gltf.scene, model); bounds = measureHeroRotationBounds(gltf.scene); }
+      try {
+        refineHeroMaterials(gltf.scene, model); bounds = measureHeroRotationBounds(gltf.scene);
+        releaseInstances = configureHouseInstances({ THREE, scene: gltf.scene, model });
+      }
       catch { disposeModel(gltf.scene); onError(); return; }
       object = gltf.scene; scene.add(object);
       if (!fitCamera()) return;
@@ -106,9 +111,12 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
       disposed = true; cancelAnimationFrame(frame); observer.disconnect();
       restartTurn.current = undefined;
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
-      if (object) disposeModel(object);
-      environment.dispose(); renderer.dispose(); renderer.forceContextLoss();
-      renderer.domElement.remove();
+      try { releaseInstances?.(); }
+      finally {
+        if (object) disposeModel(object);
+        environment.dispose(); renderer.dispose(); renderer.forceContextLoss();
+        renderer.domElement.remove();
+      }
     };
   }, [model, onError, onReady]);
   useEffect(() => { restartTurn.current?.(); }, [replay]);
