@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-23T14:57:09.762Z",
+  "head": "4896106c967011a75806f4b49447db64318110d9",
+  "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6367684288",
+  "verified": true,
+  "productionReady": false,
+  "missionActive": true,
+  "prDraftOpen": true,
+  "local": {
+    "fromScratch": true,
+    "gates": 29,
+    "sourcePins": 495,
+    "webCopies": 228,
+    "capturedFiles": 1271,
+    "publicationCpuGroups": 43
+  },
+  "ci": [
+    {
+      "event": "push",
+      "id": 39968035200,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": 3,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39968035200/attempts/1"
+    },
+    {
+      "event": "pull_request",
+      "id": 39968041920,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": 3,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39968041920/attempts/1"
+    }
+  ],
+  "automaticPreview": {
+    "origin": "https://velocity-banking-mvp-v2-gi3x8e27v-islanddevcrew.vercel.app",
+    "deploymentId": "dpl_GYJVY4ed6q8At2hXhmUE6Z3ddADw",
+    "source": "git",
+    "state": "READY",
+    "target": null
+  },
+  "hosted": {
+    "suites": 15,
+    "workflowLayouts": 210,
+    "servedAssetHashes": 20,
+    "sourcePinsUnchanged": 495,
+    "ownedProcesses": 1139,
+    "activeAfterCleanup": 0,
+    "legacyAssertions": 711
+  },
+  "actualManual": {
+    "newHeroStates": 10,
+    "surfaces": [
+      "iab",
+      "chrome"
+    ],
+    "inheritedFinancialStates": 8,
+    "noNewFinancialInputEdits": true,
+    "scope": "Recorded CUA observations, not cryptographic execution or physical performance proof"
+  },
+  "canonicalHouse": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 270,
+    "seconds": 9,
+    "originalFramesViewed": 7,
+    "newExports": 1,
+    "scope": "One current House export; standing ten-video check validates stored exports"
+  },
+  "artifactSeal": {
+    "sha256": "08f7981aca7fd5ca9190f1656f00d67f4336892d11d8e03ff107a792d4e096c7",
+    "directArtifacts": 5648,
+    "inheritedPredecessorArtifacts": 5352
+  },
+  "limits": [
+    "No final all-ten photoreal, physical FPS/memory/energy or production approval.",
+    "Earlier491Portfolio and493Three failures and raw RSC/storage findings remain unexplained, not fixed by a later green run.",
+    "Original Chrome40-frame capture timeout/37partial images, ready-DOM poster captures and instrumented delayed rest observations are retained; no nine-second wall-clock UI guarantee.",
+    "IAB five-state metadata recovered from actual successful tool results after later REPL reset; original images/hashes match.",
+    "Last final Chrome test tab closed. Earlier interrupted agent-created Chrome tab1056555311 cleanup remains unconfirmed after documented debugger errors; no user tabs/processes were closed.",
+    "Lender/calendar reconciliation, shared scenario ownership, dedicated backend/security/recovery, native physical/accessibility and dependency gates remain open."
+  ]
+}

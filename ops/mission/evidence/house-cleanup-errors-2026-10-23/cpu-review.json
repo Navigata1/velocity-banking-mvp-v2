@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-23T15:46:55.441Z",
+  "baselineHead": "4896106c967011a75806f4b49447db64318110d9",
+  "candidateSourceChanges": [
+    "apps/media/hero-turntables/vendor/house-instances.js",
+    "apps/media/hyperframes/vendor/house-instances.js",
+    "apps/web/scripts/house-instance-tests.cjs",
+    "apps/web/src/components/hero/house-instances.ts"
+  ],
+  "sourcePins": 495,
+  "unchangedOtherSources": 491,
+  "runtimePinsUnchanged": 13,
+  "publicAssetsUnchanged": 20,
+  "typedSha256": "9accd84136ada962ad5d719b83b4f767148f570888cafac4c8b737a623842842",
+  "generatedSha256": "696b0dfe50fefb02499af2a98d72cb435bbd1f1fb217ff94f3455b1ef9b1db1b",
+  "unchangedSourceRed": {
+    "standing": {
+      "pass": 23,
+      "fail": 10
+    },
+    "separate": {
+      "pass": 5,
+      "fail": 10
+    },
+    "intendedAssertionFailuresOnly": true
+  },
+  "green": {
+    "standing": 33,
+    "separate": 15,
+    "mediaContracts": 227,
+    "fullWebSuitePassed": true,
+    "lintPassed": true,
+    "typesPassed": true
+  },
+  "independent": {
+    "verdict": "ACCEPT_BOUNDED",
+    "findings": [],
+    "focusedCases": 33,
+    "adversarialCases": 120,
+    "baselineVisibilityAssertionReds": 5,
+    "selectedControlsRejected": 6,
+    "reviewFile": ".superpowers/sdd/2026-10-23-house-cleanup-errors/review-71c0228a-76e7-469c-a196-0291af298f28/REVIEW.md",
+    "reviewSha256": "581a781637ddee3abc89d5a1e0d56054ad9b983f3cbf6136d19b9212dfd7c048"
+  },
+  "closure": "Current public typed House instance helper and its two generated ESM copies only. Private old instance/shadow/combined helpers remain frozen, unfixed and unadopted.",
+  "fullGateRun": {
+    "id": "90cf838d-1421-4685-92e8-9210c8c73d09",
+    "statusAtThisSnapshot": "running",
+    "fromScratch": true,
+    "noInheritedStages": true
+  },
+  "remoteStatus": "No new commit/push; verified489 remains the current remote checkpoint.",
+  "productionReady": false,
+  "limits": [
+    "CPU contracts are not rendering, real hardware, all-ten realism or production approval.",
+    "Publication preflight42pass/1missing actual-capture index is retained; require full43after current capture, not a waived assertion.",
+    "Historical491/493failures remain open."
+  ]
+}

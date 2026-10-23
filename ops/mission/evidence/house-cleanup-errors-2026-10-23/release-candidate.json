@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-23T16:37:06.192Z",
+  "baselineVerifiedHead": "4896106c967011a75806f4b49447db64318110d9",
+  "baselineReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6367684288",
+  "candidate": "Unpushed local cleanup release candidate, not a verified remote checkpoint",
+  "sourcePins": 495,
+  "sourceChanges": [
+    "apps/media/hero-turntables/vendor/house-instances.js",
+    "apps/media/hyperframes/vendor/house-instances.js",
+    "apps/web/scripts/house-instance-tests.cjs",
+    "apps/web/src/components/hero/house-instances.ts"
+  ],
+  "runtimePinsUnchanged": 13,
+  "publicAssetsUnchanged": 20,
+  "sourceReview": {
+    "id": "71c0228a-76e7-469c-a196-0291af298f28",
+    "standingCases": 33,
+    "separateCases": 15,
+    "independentCases": 120,
+    "controls": 6,
+    "mediaCases": 227
+  },
+  "local": {
+    "id": "90cf838d-1421-4685-92e8-9210c8c73d09",
+    "gates": 29,
+    "fromScratch": true,
+    "webCopies": 228,
+    "startedAt": "2026-10-23T15:45:50.384Z",
+    "finishedAt": "2026-10-23T16:25:59.196Z",
+    "reportSha256": "eaf160f1c57d504aa47762c7574cb4ee8dade118c5136c9ff614ac6986213f03",
+    "ownedProcesses": 2729,
+    "activeAfterAllRecordedCleanup": 0,
+    "originalBuildIdPreserved": "q9-LUQ84V55MwthjHnK99"
+  },
+  "canonicalHouse": {
+    "id": "93522987-5d6b-45b7-9d82-a410bad2b20f",
+    "fixtureId": "04a64366-3c42-4970-ae73-6a66560caef9",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 270,
+    "seconds": 9,
+    "sha256": "786f32ca6a36896ffbb0a1768f87ed6b387a166bf452d1b0bf62d5ae1bcbdf6a",
+    "originalFramesViewed": 7,
+    "boundedAccepted": true,
+    "ownedProcesses": 45,
+    "activeAfterCleanup": 0,
+    "newExports": 1,
+    "standingTenVideoCheckUsesStoredExports": true
+  },
+  "codeScope": "First-thrown-value cleanup fix in typed House helper and two generated ESM copies, plus standing tests. No visual, financial, dependency or backend change.",
+  "open": [
+    "Current local artifact capture/full43publication contracts, focused commits/onepush and exact-head completeCI/knownREADY/hosted/actualIAB+Chrome/guardedreceipt remain pending.",
+    "All-ten final photoreal/all-angle and physical FPS/memory/energy approval.",
+    "Private instanced-depth candidate accepted only as a study; default shadows held for cost. Private old instance/shadow/combined aggregators remain unfixed and unadopted.",
+    "Separate visible-time hero clock issue: actual-component CPU7contract2pass5intendedAssertionError failures. Private prototype prepared, NOT tested or adopted in this slice.",
+    "Earlier491/493missing-canvas/deadline failures and raw RSC/storage observations remain unexplained; later green does not close them.",
+    "Lender/calendar, dedicated backend/account isolation/backup/recovery, physical native/accessibility and dependency gates."
+  ],
+  "productionReady": false,
+  "prDraftOpen": true,
+  "goalActive": true
+}
