@@ -1,0 +1,171 @@
+{
+  "observedAt": "2026-10-23T03:47:21.302Z",
+  "head": "8dfba166b3326a2fd3787c9f0f16708a2190f858",
+  "productionReady": false,
+  "missionActive": true,
+  "applicationChanged": false,
+  "remoteCiStillFailed": true,
+  "uniqueWorkflows": 6,
+  "fixedFixtureExecutions": 12,
+  "fixtureOrder": [
+    "normal",
+    "cpu2"
+  ],
+  "browserVersion": "155.0.8059.85",
+  "requirements": {
+    "motionMs": 450,
+    "candidateMs": 700,
+    "confirmationMs": 300,
+    "unchangedPixelChecks": true,
+    "retriesOfUnchangedApplicationWorkflow": 0
+  },
+  "timings": [
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "desktop-rapid-return",
+      "passed": true,
+      "decodedMs": 602,
+      "marginMs": 98
+    },
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "desktop-settled-return",
+      "passed": true,
+      "decodedMs": 564,
+      "marginMs": 136
+    },
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "desktop-current-noop",
+      "passed": true,
+      "decodedMs": 105,
+      "marginMs": 595
+    },
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "mobile-rapid-return",
+      "passed": true,
+      "decodedMs": 693,
+      "marginMs": 7
+    },
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "mobile-settled-return",
+      "passed": true,
+      "decodedMs": 550,
+      "marginMs": 150
+    },
+    {
+      "fixture": "normal",
+      "rate": 1,
+      "name": "mobile-current-noop",
+      "passed": true,
+      "decodedMs": 108,
+      "marginMs": 592
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "desktop-rapid-return",
+      "passed": true,
+      "decodedMs": 675,
+      "marginMs": 25
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "desktop-settled-return",
+      "passed": true,
+      "decodedMs": 601,
+      "marginMs": 99
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "desktop-current-noop",
+      "passed": true,
+      "decodedMs": 118,
+      "marginMs": 582
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "mobile-rapid-return",
+      "passed": true,
+      "decodedMs": 599,
+      "marginMs": 101
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "mobile-settled-return",
+      "passed": true,
+      "decodedMs": 603,
+      "marginMs": 97
+    },
+    {
+      "fixture": "cpu2",
+      "rate": 2,
+      "name": "mobile-current-noop",
+      "passed": true,
+      "decodedMs": 117,
+      "marginMs": 583
+    }
+  ],
+  "sourceRun": {
+    "file": ".superpowers/sdd/2026-10-22-money-loop-input-timing/runs/e38ed080-e18f-4bd5-955f-e654cfcd3b34/verification.json",
+    "sha256": "e5670b914fbd96e9ad9467d5772bd647081a06a158ead8517e7c53a43e84bcca"
+  },
+  "historicalResources": [
+    {
+      "fixture": "normal",
+      "contextsOpened": 6,
+      "contextsClosed": 6,
+      "browserClosed": true
+    },
+    {
+      "fixture": "cpu2",
+      "contextsOpened": 6,
+      "contextsClosed": 6,
+      "browserClosed": true
+    }
+  ],
+  "privateFailurePathFixes": {
+    "report": ".superpowers/sdd/2026-10-22-money-loop-input-timing/fixes-590648db-cca5-4c66-b353-500c82dfdb6d/REPORT.md",
+    "initialCpuTests": 41,
+    "initialNewTests": 21,
+    "residualFixes": "fixes-8e78a4ea-79db-43fe-913c-d9803bdf209e",
+    "focusedSuitePassed": 42,
+    "standingSuitePassed": 41,
+    "suitesOverlap": true,
+    "not83NewTests": true,
+    "safeIndependentStanding": {
+      "passed": 38,
+      "skipped": 3
+    },
+    "independentProbeChecks": 77,
+    "oldRunExecutedNewCode": false,
+    "independentReview": ".superpowers/sdd/2026-10-22-money-loop-input-timing/review-rf-d06d39b2-df1a-4818-9172-43a58ed8cd5c/REVIEW.md",
+    "disposition": "bounded-closure-accepted",
+    "preservationException": {
+      "author": "parent",
+      "file": ".superpowers/sdd/2026-10-22-money-loop-input-timing/progress.md",
+      "appendBytes": 1238,
+      "strictBroaderPredicate": "FAILED_RETAINED",
+      "matchingFiles": 1454,
+      "checkedFiles": 1455,
+      "trackedFilesAndHistoricalInputsPreserved": true
+    }
+  },
+  "limits": [
+    "One fixed sample per fixture, no distribution or robust margin claim",
+    "Cross-process timestamps uncalibrated; observer overhead unquantified; DOM callbacks are not paint",
+    "Private harness fixes do not repair original remote screenshot deadline failure",
+    "No new full29gate rerun, artifact adoption, production or physical-device claim"
+  ]
+}
