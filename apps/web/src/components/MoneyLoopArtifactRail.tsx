@@ -309,16 +309,6 @@ export default function MoneyLoopArtifactRail({
             <p className={`mt-2 text-3xl font-semibold leading-tight md:text-4xl ${activeTone.text}`}>{activeArtifact.value}</p>
             <p className={`mt-3 max-w-xl text-sm leading-6 ${classes.textSecondary}`}>{activeArtifact.note}</p>
 
-            <div className="mt-6 flex items-center justify-between text-xs">
-              <span className={classes.textSecondary}>Modeled pressure</span>
-              <span className={`font-semibold ${activeTone.text}`}>{activeArtifact.fillPercent}%</span>
-            </div>
-            <div className="mt-2 h-1.5 rounded-full bg-slate-700/60">
-              <div
-                className={`h-full rounded-full ${activeTone.fill}`}
-                style={{ width: `${activeArtifact.fillPercent}%` }}
-              />
-            </div>
           </div>
         </div>
       </div>

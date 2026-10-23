@@ -185,6 +185,8 @@ function test(name, fn) {
   tests.push({ name, fn });
 }
 
+require('./money-loop-detail-truth-tests.cjs').registerMoneyLoopDetailTruthTests({test,loadTsModule});
+
 function roundCents(value) {
   return Math.round(value * 100) / 100;
 }
