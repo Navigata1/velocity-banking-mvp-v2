@@ -1,0 +1,203 @@
+{
+  "observedAt": "2026-10-23T07:41:49.701Z",
+  "status": "local-verified-remote-pending",
+  "productionReady": false,
+  "goalActive": true,
+  "baseHead": "617a2f845297ad5966fb86826e55ff0be8d2acec",
+  "sourcePins": {
+    "apps/web/scripts/test-three-stage.cjs": "334034066b20bc67b25e56f531c90f3712a01903f1186ab857a4c5f004ce0876",
+    "apps/web/scripts/canvas-overlay-tests.cjs": "39ae34b8ef7ce4c10dc0f9c3f29e667729447948869fceb1494a286ecfa95b86",
+    "apps/web/scripts/canvas-clip-tests.cjs": "2b99d789bed72f69c4d34083cb0aff4a1285b1dc93c5d14f17d46f87529b51c1",
+    "apps/web/scripts/engine-regression-tests.cjs": "a9f2761bacfa15abd829d7009f0f92a41d51abbbe4e18a1ceee9ecc823d668bb",
+    "apps/web/scripts/money-loop-detail-truth-tests.cjs": "3d1876283ba0bd0fdf340d0f914c868a7ec15cf77cac7ebead80ac4f99287274",
+    "apps/web/src/components/MoneyLoopArtifactRail.tsx": "3ae74293e02dfa35aa763c27adab192831c7d6f70ded9fc1c081a2a3a09a1712"
+  },
+  "sourceBoundary": {
+    "oldChanged": 5,
+    "newTestFiles": 1,
+    "oldProtectedUnchanged": 480,
+    "totalCurrentPins": 486
+  },
+  "app": {
+    "change": "Remove only the unsupported selected-detail percentage and horizontal gauge; decorative fill has a12percent floor even at zero",
+    "deletedLines": 10,
+    "actualValueSignalNotePreserved": true,
+    "modelAndVisualChannelsUnchanged": true,
+    "notCoreInterestFormulaChange": true,
+    "tests": {
+      "initialRed": {
+        "pass": 1,
+        "fail": 5
+      },
+      "initialGreenGroups": 6,
+      "scopeGapRed": {
+        "pass": 7,
+        "fail": 2
+      },
+      "finalGroups": 9,
+      "baseSsrCases": 15,
+      "reintroductionAndFieldDeletionControls": 4,
+      "scope": "Actual selected-detail JSX subtree with original component bindings; synthetic fixtures; dynamic Three child stubbed. Not full-rail/hydrated/GPU/model proof."
+    }
+  },
+  "checker": {
+    "change": "Fresh strict unique connected current-stage canvas query in one page evaluation, avoiding locator handle resolution/disposal",
+    "permanentOverlayTests": 11,
+    "clipTests": 10,
+    "phaseTests": 5,
+    "motionMs": 450,
+    "candidateDecodeRestoreMs": 700,
+    "confirmationMs": 300,
+    "allAcceptanceChecksUnchanged": true,
+    "privateStatic": {
+      "run": "31b37be8-88d1-48fd-b94d-166686c80f4d",
+      "samples": 8,
+      "decodedParity": true,
+      "hiddenCanvasControls": 2,
+      "notCompiled617": true
+    },
+    "privateSelection": {
+      "run": "ac429c74-2564-43e5-bc55-641ada13b6a8",
+      "baseline": 6,
+      "candidate": 6,
+      "worstCandidateMs": 611,
+      "overallTotalsMixed": true,
+      "notCompiled617": true
+    },
+    "limits": "Finite local observations, not protocol counts, CI cause or guaranteed reserve. Page evaluation has no hard per-call cancellation."
+  },
+  "independentReviews": [
+    {
+      "role": "checker source",
+      "directory": "../2026-10-23-canvas-evaluation-path/review-46b2ad71-7fef-4b28-81cd-42d21308acb2",
+      "reviewSha256": "7d034403961455b30d4a1ddc69a60df83ac2ecfcbef03fea451e81838a59b352",
+      "probeSha256": "2947f9c4260e7a31cdb57c5f20b611141bdc14256155e22625db389841898ef7",
+      "closed": true
+    },
+    {
+      "role": "UI source/finding confirmation",
+      "directory": "review-58830cd8-12b6-4cfb-8909-53f430169d58",
+      "reviewSha256": "74347852e69db6bce480d7603d488238d97d0536056ff19c552bdc083492c147",
+      "evidenceSha256": "101861f010af730a40cb4d0fbad8f7a513fa494b5454a05938407e8ea67214fd",
+      "closed": true
+    },
+    {
+      "role": "final selected-detail test scope",
+      "directory": "review-61393c5a-d5f2-4457-b12c-40cc1b364fd3",
+      "reviewSha256": "6677c7e459cabc6204dbdf1c2a6a3f56fe6d8e4c77d9ed61659120c27402b68f",
+      "evidenceSha256": "d29428fabbb7c155f6fc1c64212ef2e4369766fac96e9645e541b2b751854e96",
+      "closed": true
+    }
+  ],
+  "localSuite": {
+    "gates": 29,
+    "allFromScratch": true,
+    "inheritedStages": 0,
+    "run": "5cb63ff9-ce69-4af3-88d6-ee23011bb559",
+    "receiptSha256": "9e697bd9b2ef095be30cf9d692756debc7e19759a971fedaeae6495f66348bd3",
+    "sources": 486,
+    "webCopies": 222,
+    "webFixture": ".superpowers/card-contact-soft-build-5cb63ff9-ce69-4af3-88d6-ee23011bb559",
+    "privateBuildId": "7iz7v0vy7rycNs7Lm_cJJ",
+    "originalBuildIdPreserved": "q9-LUQ84V55MwthjHnK99",
+    "allStageJobsClosed": true,
+    "stageLogSha256": {
+      "ci-contracts": "70c3af449c3c134375d1a38d691e058900308d16100ed6524009fcc0eec99058",
+      "runtime-contracts": "f4719653c270716aceceaeb219131cdf3f5a00e8a52eace30cc68a72038ed7b1",
+      "sql-wiring": "06a08750e61cbb26892456ab0c82b49efa972822f8ffb30acfaabb27a4cead4d",
+      "web-tests": "9d796d4790da365ced23ccc40696571e6e7483620ad32c5772fbee967fb81e4f",
+      "web-lint": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98",
+      "web-build": "126c10af3fcd494586de7f52da1a7fe85c5608eae92a196202f0138083671446",
+      "three-stage": "4e7c222ec504633e1876703fad408296b9dfd3bf0bf983d3401fc7e7a65961d9",
+      "web-routes": "7abab6935020eeb5fd02f4a89b5e28b645bf47ddb0ac1e5471a2ad8771cf6d49",
+      "web-rendered": "8fe8ce5d5503182f14139e9268d802ef0770802dbdce9d77af97399aa82c4c1d",
+      "simulator-comparison": "943fb16a18fd9bf5f519f860b3baf8aef1124e86cd72cfd4bf2665785c307683",
+      "dashboard": "a7055873b1303ac9b53aebf46bec8f418647a58dc69034ca2917ae40f9d7874d",
+      "vault": "8dd9a02e4bb652301d8eb827c8ea9fb0ba2c20c760840b25c4bd1f68f72734e2",
+      "portfolio": "e39ecd42abc993a029644e37739504dc167bdd70f35176a7921fc1caf48858db",
+      "heroes": "caf3857701589b660355a0d69cca5ea69a1a2632c04c4da6ddd41b8df9520663",
+      "media-check": "b306c91d8c72bdd36fedc6728ea259f77ed7db94614f4ae540ac260ae93eb5ff",
+      "hero-video-verification": "4b47ed9d283a40824f6a8541cc6cdb232f75293cb6feae8a02908f0bc76caed3",
+      "native-types": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9",
+      "native-contracts": "eac488373f5f983749805656a35f5d459a42bebf70a95ee0afe425742b1636db",
+      "native-port": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57",
+      "native-web-build": "12a8aa72412478978294d1acc5db6a5ff8a6985847e125cb2c5e325de8e22593",
+      "native-web-smoke": "f72c717abf79f0881c9075b74947462d7faa882bd078794eec90ddd0e333ef56",
+      "native-accessibility": "050c1b44def2ee1c7743d842a9d866435488548d6ea0fe7cb22348bfa2141abf",
+      "native-android-bundle": "1e1d4092d6eb6c8e9f0a1eeafbadf11f93fba9db8004bb82dda2f5ad7e3efa1b",
+      "native-ios-bundle": "10372b776e363bc4e331ccf4230438798b3b14dde3be3b0262de4ed3e78ef0d0",
+      "worker-check": "40f85b9c1a84298120823147c152eda3cd7e1c86289cb6c61ae440ed1842b4e8",
+      "worker-tests": "bc458fc2ba3777fba316ae59c7ed3b475fa710f32b035ef51de62cd4ecac8a22",
+      "worker-dry-build": "a9434fb6598732af15f6f59007bcbc378d196b9edb960821d5cfdc2dee271ad1",
+      "report-renderer": "f73bc01951b76b00ed25bbf1911dd5205720b88aa1d3ff3efd244f5bb02e19d7",
+      "report-contracts": "8c93b85691b3aedaa64faca1b5f69065bcf7e225d29575bf99b878a8b369fd14"
+    }
+  },
+  "retainedFailures": {
+    "baselineCi": {
+      "head": "617a2f845297ad5966fb86826e55ff0be8d2acec",
+      "push": 39904442756,
+      "pullRequest": 39904449992,
+      "remainingMs": [
+        5,
+        35
+      ],
+      "status": "failed",
+      "artifacts": 5367,
+      "receipt": 6358275114
+    },
+    "priorLocal": {
+      "run": "5b322775-b1b9-4e91-923b-2472c53c8d36",
+      "status": "failed",
+      "reportSha256": "28d643881a9d7bd51037ddbbab7837360c235f14a825e653455b33488c56867e",
+      "passedStages": 12,
+      "failedStage": "portfolio",
+      "error": "ERR_NO_BUFFER_SPACE",
+      "requestUrlUnknown": true
+    },
+    "networkProbe": {
+      "status": "incomplete",
+      "defaultNavigations": 325,
+      "errorsObserved": 0,
+      "stopReason": "Declared64MiB NetLog bound",
+      "otherVariantsRun": 0,
+      "workaroundAdopted": false,
+      "rootCauseKnown": false
+    },
+    "privateSetup": [
+      "Static decoder data/pixels mismatch, retained then CPU-corrected",
+      "Smoke VM/Node prototype mismatch before timing, retained then CPU-corrected",
+      "Private pin attribution gap fixed for future collections; historical copies matched",
+      "Network CDP command-line attestation required explicit shared automation flag; first setup0requests retained",
+      "Review-only indentation comparison and clearance9-vs5 row-shape assumptions retained; no product assertions waived"
+    ]
+  },
+  "backend": {
+    "knownProjectEnvironmentMetadataOnly": true,
+    "decryptionRequested": false,
+    "totalEnvRecords": 1,
+    "supabaseEnvEntries": 0,
+    "hiddenProductionEnvCount": 0,
+    "nameMatchedDatabaseCandidateStillUnbound": true,
+    "candidateReferenceKeptPrivate": true,
+    "sqlQueries": 0,
+    "mutations": 0,
+    "doc": "docs/backend-provider-readiness-2026-10-23.md"
+  },
+  "unchanged": [
+    "Financial model/engine, input values, persistence and backend",
+    "All ten GLBs/posters, materials/textures, dependencies/locks and CI workflows",
+    "Original orbit/token dimensions, palette, motion, selection/keyboard and actual financial detail",
+    "User53143/53144 and owned53145 previews, original.Nextq9"
+  ],
+  "lastFullyVerified": {
+    "head": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": 6351915021
+  },
+  "limits": [
+    "Fresh complete exact-new-head push/PR CI, automatic READY preview, hosted and actual browser restoration remain pending",
+    "No unchanged CI rerun, error filtering, network feature workaround or450/700/300/pixel waiver",
+    "All-ten final photoreal, lender reconciliation, cloud association/recovery, physical native device, accessibility and production gates remain open",
+    "No merge, manual deployment, promotion, paid GPU or cloud/data/access/DNS mutation"
+  ]
+}
