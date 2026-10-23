@@ -1293,3 +1293,19 @@ Full90cf838d completed16:25:59UTC/29of29fromscratch/495sources228webcopies/2729r
 Fresh495source/228exactwebcopy full2990cf838d-1421-4685-92e8-9210c8c73d09 COMPLETEDfromscratch, allrecordednativejobs0active/rootq9previewsunchanged. OnecurrentHousecanonical93522987-5d6b-45b7-9d82-a410bad2b20f COMPLETED1080p30fps270frames9s, sevenoriginalframesparentviewed/boundedaccepted; notcontinuousmotion/photo/hardwareapproval.33standing/15separate/227media/fullweb/lint/types/6controls/120independentprobes retained. Fourchangedsourcefilesonly,13runtime20assetsunchanged.
 
 LocalUNPUSHEDcandidateonly: currentcapture/full43/fourfocusedcommits/onepush/exactheadcompleteCI/knownREADY/hosted/manual/freshguardedreceiptpending. Publicationcode12b35d56 accepted/CLOSED but42/1missingactualcapture preflight stillretained. BothownreviewersCLOSED; no globalHDEPclosure. Privateclockprototypeprepared, nottested/adopted, separateTask15 afterverifiedcheckpoint. Prior491/493failuresandalltenphoto/backend/native/dependency/productiongatesOPEN. No newpush; remote489stillverified.
+
+## State67 - Verified Cleanup, Local Clock Correction
+
+f708bda is VERIFIED at receipt6370542236/seal418305ee with6066direct artifacts. Both complete first-attempt CI events39988785819/39988789782 pass all three jobs/every step/six source guards. Local29/495, hosted15/210/20, actual IAB5+Chrome5 and current House9s export/seven original frames are retained. No merge or production promotion.
+
+The next substantive source change fixes visible-time clock accounting without art, finance or media-composition changes. Actual unchanged-source permanent RED is3pass/7intended assertions; GREEN11/0 and six selected mutations pass. Full focused web/media227/lint/types pass. Independent review and fresh full release gates remain pending. The parent-policy CPU bridge passes4/0; its prior recursion and cross-VM comparison failures remain harness failures, not product REDs. Parent hidden/offscreen unmount policy is unchanged. State67 metadata rides this code; no metadata-only push. All broader production gates remain open.
+
+### State67 Progress - Independent Clock Acceptance
+
+Source669ff2b6 accepted/CLOSED: standing11/0 once, six selected mutations, seven actual baseline refutations and27distinct probes (24first-pass plus3realm-safe supplements, original reviewer comparator/over-freeze recorder failures retained). Required537inputaudit preserves495sources/13runtime/20assets. One new full29ab510193 is ACTIVE from scratch on228exact web copies, unchanged actions/caps/assertions. No concurrent ownGPU/browser. The exact27-file canonical Housefixture34355f79 is prepared, NOT rendered. Publication-code review01a169d2 active; actual current capture/full43 still pending. No new commit/push or production claim.
+
+## State68 - Complete Local Clock Candidate
+
+Fresh495-source/228-copy full29ab510193-abb8-46cf-96fc-10f7ad686b4d passes from scratch, all recorded owned native jobs closed and originalq9/user previews preserved. One current House exportc13118c0-d850-4956-9cef-f4c6737e0a13 passes1080p/30fps/270frames/9seconds; seven original frames individually parent-viewed/bounded accepted. This is unchanged artwork/media composition, not all-ten photoreal, continuous-motion, exact web wall-clock or physical approval.
+
+The two-file clock change retains RED3pass/7intended failures, GREEN11/0, six selected mutations, independent source acceptance and focused web/media227/lint/types. Parent-policy4/0 is a simulated bridge; earlier parent/reviewer harness failures remain retained. Both own reviewers are closed. Current capture/full43/commits/push/new-head CI/READY/hosted/manual/fresh guarded receipt remain required. State68 is a dated pre-push snapshot; no metadata-only push. Verified f708bda/receipt6370542236 remains the remote baseline. Separate Car/material and six-tableSQL work is prepared only, not implemented. Production remains open.

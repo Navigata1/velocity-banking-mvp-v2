@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Current cleanup candidate passes fresh495-source local29 and one current9sHouse export/seven original frames. Still UNPUSHED; verified489 remains current remote. ProductionOPEN.",
+    "tagline": "Local candidate snapshot: the web clock correction passes all 29 checks and one 9-second House export. GitHub baseline f708bda is verified; this candidate still needs its own remote gates. Production remains gated.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T16:37:06.192Z",
-    "sessionCount": 66
+    "updated": "2026-10-23T18:16:46.809Z",
+    "sessionCount": 68
   },
   "policies": {
     "merge": "review",
@@ -325,20 +325,25 @@
         {
           "id": "R1-T14",
           "title": "Preserve all thrown values during House instance cleanup",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "R1-T13"
           ],
-          "notes": "Current four-file candidate9accd841typed/696b0dfeESM accepted independently71c0228a:33standing/15separate/227media/fullweb/lint/types pass,6selectedcontrols and120independentprobes,5additionalbaselinevisibilityREDs.495sourcepins/exact4changes/13runtime/20assets protected. One fresh unchanged29run90cf838d-1421-4685-92e8-9210c8c73d09 ACTIVE fromscratch, no inherited prefix; exec90492. Private oldinstance/shadow/combined helpers remain frozen/unfixed/unadopted. No new commit/push or rendering/release/production claim. State65progress: full90cf838d completed16:25:59UTC/29of29/2729recordedownedprocesses0active. Exec90492TERMINAL0. CurrentHousefixture04a64366 rendering93522987 exec43317 ACTIVE; no second render or own parallelGPU. No newcommit/push. State66: full495/228run90cf838d-1421-4685-92e8-9210c8c73d09 COMPLETED29/29fromscratch/allrecordedjobs0active; currentHouse93522987-5d6b-45b7-9d82-a410bad2b20f COMPLETED1080p/30fps/270frames/9s/seven originalframes boundedaccepted. No newpublicasset/financial/dependency/backendbytes. Localcandidateonly: capture/full43/commits/push/CI/READY/hosted/manual/receipt pending. Privateclockprototypepreparednotyettested/adopted; separateTask15."
+          "notes": "Current four-file candidate9accd841typed/696b0dfeESM accepted independently71c0228a:33standing/15separate/227media/fullweb/lint/types pass,6selectedcontrols and120independentprobes,5additionalbaselinevisibilityREDs.495sourcepins/exact4changes/13runtime/20assets protected. One fresh unchanged29run90cf838d-1421-4685-92e8-9210c8c73d09 ACTIVE fromscratch, no inherited prefix; exec90492. Private oldinstance/shadow/combined helpers remain frozen/unfixed/unadopted. No new commit/push or rendering/release/production claim. State65progress: full90cf838d completed16:25:59UTC/29of29/2729recordedownedprocesses0active. Exec90492TERMINAL0. CurrentHousefixture04a64366 rendering93522987 exec43317 ACTIVE; no second render or own parallelGPU. No newcommit/push. State66: full495/228run90cf838d-1421-4685-92e8-9210c8c73d09 COMPLETED29/29fromscratch/allrecordedjobs0active; currentHouse93522987-5d6b-45b7-9d82-a410bad2b20f COMPLETED1080p/30fps/270frames/9s/seven originalframes boundedaccepted. No newpublicasset/financial/dependency/backendbytes. Localcandidateonly: capture/full43/commits/push/CI/READY/hosted/manual/receipt pending. Privateclockprototypepreparednotyettested/adopted; separateTask15. State67: VERIFIED at f708bda/receipt6370542236. Both complete first-attempt CI events39988785819/39988789782 pass all3jobs/every step/six source guards. Known READY preview passes hosted15/210/20 and new actual IAB5+Chrome5. Current House9s export/seven originals inspected;6066direct artifacts sealed418305ee. Rendering-neutral cleanup only; private old shadow/combined helpers remain unfixed/unadopted. No merge or production promotion.",
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          }
         },
         {
           "id": "R1-T15",
           "title": "Keep finite hero rotation timing under slow visible rendering",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [
             "R1-T14"
           ],
-          "notes": "Private actual-component lifecycle probe953b7824:8visible seconds at500ms cadence leaves angle0.10345vsendpoint5.73319 and1RAF. Proposed7-case clock contracte652f4c4 has2pass/5intendedAssertionErrors, no setupfailure:slow/irregular/long-visible-gap, hidden-gap leakage and Replay slow timing. Current100msdelta clamp loses visible time in this CPU simulation; not historicalChrome/GPU/hardware cause proof. No implementation/source change. After cleanup checkpoint verified, preserve hidden-time pause/reducedmotion/easing/pose/ownership while fixing visible duration; source/independent/fullrelease gates required. See ops/mission/evidence/hero-clock-2026-10-23/reproduction.json."
+          "notes": "Private actual-component lifecycle probe953b7824:8visible seconds at500ms cadence leaves angle0.10345vsendpoint5.73319 and1RAF. Proposed7-case clock contracte652f4c4 has2pass/5intendedAssertionErrors, no setupfailure:slow/irregular/long-visible-gap, hidden-gap leakage and Replay slow timing. Current100msdelta clamp loses visible time in this CPU simulation; not historicalChrome/GPU/hardware cause proof. No implementation/source change. After cleanup checkpoint verified, preserve hidden-time pause/reducedmotion/easing/pose/ownership while fixing visible duration; source/independent/fullrelease gates required. See ops/mission/evidence/hero-clock-2026-10-23/reproduction.json. State67: bounded web-stage correction b510593d and lifecycle1b7ba20d. Permanent unchanged-source RED3pass7intended failures; GREEN11/0 plus6selected mutation controls and all prior lifecycle groups. Focused web/media227/lint/types pass; private parent-policy4/0 uses simulated hooks/event bridge, not actual React scheduling or browser resume proof. Exactly2of495sources change,13runtime/20assets unchanged. Independent review and one fresh full release run pending. See docs/hero-visible-time-clock-contract-2026-10-23.md and cpu-candidate.json. No financial or media-composition changes. State67 progress: independent669ff2b6 accepts exacttwo frozen files, no actionable source findings. Standing11/0once,6specific controls,7fresh baseline refutations,27distinct probes (24firstpass plus3realm-safe supplements; original comparator and over-freeze recorder failures retained). Required537inputaudit exact495/13/20. ReviewerCLOSED. Onefreshfull29ab510193-abb8-46cf-96fc-10f7ad686b4d ACTIVE fromscratch on228exactwebcopies; no ownparallelGPU/browser. Not current remote/production approval. State68: current495-source/228-copy full29ab510193-abb8-46cf-96fc-10f7ad686b4d passes from scratch, all recorded owned processes closed. Current canonicalHousec13118c0-d850-4956-9cef-f4c6737e0a13 passes1080p/30fps/270frames/9s with seven original frames parent-viewed and bounded accepted. No new artwork, finance or media-composition bytes; no physical/continuous-motion/photoreal approval. Current capture/full43/commits/push/CI/READY/hosted/manual/guardedreceipt remain pending. R1-T15 remains in_progress until current remote verification."
         }
       ],
       "gates": [
@@ -347,27 +352,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
-          "lastRun": "2026-10-23T16:25:59.196Z",
-          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
+          "evidence": "ops/mission/evidence/hero-clock-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T18:07:26.346Z",
+          "notes": "Current frozen495-source/228-copy local29 from scratch passes, including media227/27stills/all-ten desktop+phone heroes/Replay/reducedmotion/fallback and stored ten-video checks. One current House9s export/seven originals bounded accepted. Not final photoreal, physical-device or exact-head remote/production approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
-          "lastRun": "2026-10-23T16:25:59.196Z",
-          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
+          "evidence": "ops/mission/evidence/hero-clock-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T18:07:26.346Z",
+          "notes": "Current frozen495-source/228-copy local29 from scratch passes, including media227/27stills/all-ten desktop+phone heroes/Replay/reducedmotion/fallback and stored ten-video checks. One current House9s export/seven originals bounded accepted. Not final photoreal, physical-device or exact-head remote/production approval."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/house-cleanup-errors-2026-10-23/release-candidate.json",
-          "lastRun": "2026-10-23T16:25:59.196Z",
-          "notes": "Current495source/228exactwebcopy local29fromscratch passes, ownedjobsclosed/rootq9preserved. Includesmedia227/27stills/alltenherochecks/storedtenvideochecks. SeparatecurrentHouse1080p30fps270frame9sexport/seven originalframes boundedaccepted. Cleanup-onlycode; not finalphoto/physical/production or exact-headremoteverification."
+          "evidence": "ops/mission/evidence/hero-clock-2026-10-23/release-candidate.json",
+          "lastRun": "2026-10-23T18:07:26.346Z",
+          "notes": "Current frozen495-source/228-copy local29 from scratch passes, including media227/27stills/all-ten desktop+phone heroes/Replay/reducedmotion/fallback and stored ten-video checks. One current House9s export/seven originals bounded accepted. Not final photoreal, physical-device or exact-head remote/production approval."
         }
       ]
     },
@@ -1408,15 +1413,24 @@
       "mergedAt": null,
       "title": "Verified House instancing and canvas evidence at4896106 (draft)",
       "phase": "R1"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Verified first-thrown House cleanup values at f708bda (draft)",
+      "phase": "R1"
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State66: latest VERIFIED remote4896106/receipt6367684288 unchanged. New cleanup candidate passes fresh495source/228webcopy local29run90cf838d-1421-4685-92e8-9210c8c73d09 and currentHousecanonical93522987-5d6b-45b7-9d82-a410bad2b20f/seven originals; allrecordednativejobsclosed. StillUNPUSHED/localonly, not remote/productionapproval.",
-      "Source33standing/15separate/227media/fullweb/lint/types/6controls and independent71c0228a120probes accepted exactfourchangedsourcefiles.495sources/13runtime/20assetsprotected. Private oldthreehelpersunfixed/unadopted. Publicationreview12b35d56 boundedcodeaccepted/CLOSED, exacttenpins/fiveASTpublisherdelta; preflight42pass1ENOENTactualcapturemissingretained. BothownreviewersCLOSED.",
-      "Next currentcleanupshipping: execute capture-local ONCE afterfinalState66metadata, run wholeunskipped43publicationtests/actualcapturecase12; validateactualtenreviewpins+43andwriteclearances. Fourfocusedcommits≤400lines, verifyall495committedworkingbytes (onlyinheritedCRLF/LFexception), ONE nonforcepush existingdraftPR256. Requirebothcompleteexactheadattempt1CI/all3jobs/allsteps/sixguards, knownautomaticgitREADY, hosted15/210/20, actualIAB5+Chrome5 andfreshguardedunique sealedreceipt. No metadata-onlypush/merge/manualdeployment/cloudmutation. Preserveuserpreviews/rootq9/oldseals.",
-      "After currentcheckpoint VERIFIED, R1-T15: .superpowers/sdd/2026-10-23-hero-low-cadence/next-action.md. ActualcomponentCPU7contract2pass5intendedAssertionErrorREDs; 100msdelta cap discards slowvisibleframe time. Privateprototype prepared only, NOT tested/adopted. Preservevisibleintervalduration/hiddenpause/replay/reducedmotion/easing/pose/resources/listenercleanup, independentreview/newreleasegates. This doesnotclosehistoricalChrome/GPUcause. Backendreadmetadatahealthy17.6.1.063doesnotproveassociation/patch/recovery; noSQL/keys/mutation.",
+      "State68 pre-push snapshot: latest VERIFIED remote f708bda/receipt6370542236/seal418305ee/6066direct artifacts. Current clock candidate passes fresh495/228 local29ab510193-abb8-46cf-96fc-10f7ad686b4d and canonicalHousec13118c0-d850-4956-9cef-f4c6737e0a13/seven originals; all recorded owned jobs closed. Current remote verification still pending.",
+      "Source669ff2b6 and publication40213787 reviewers CLOSED. Permanent RED3pass7intended failures, GREEN11/0,6selected mutations,7fresh baseline refutations; independent27distinct scenarios retain original comparator/over-freeze failures. Parent-policy4/0 uses a simulated bridge and retains two earlier harness failures. Exact2source changes,13runtime20assets unchanged.",
+      "Next: execute current capture-local ONCE after this final metadata; run wholeUNSKIPPED43 publication tests with actual currentcase12; clear exactten reviewer pins/current capture. Then prepared four focused commits<=400lines, verify all495 committed/working inputs (only unchanged inherited CRLF/LF exceptions), ONE nonforcepush to existing draftPR256. No metadata-only push, merge or production promotion.",
+      "Require this new pushed tip: BOTH complete exact-head attempt1CI/all3jobs/every step/six actual source guards, known automaticgitREADY targetnull, hosted15/210/20, actual IAB5+Chrome5 with NEWcurrent-lab capture writers (old saveF708 points at SEALEDpriorlab), and fresh provider readback/guarded unique receipt/seal. Preserve rootq9/userpreviews/oldseals; no parallel local GPU jobs.",
+      "Only after the clock checkpoint is sealed: separate Car paint-sampling/clearcoat study in .superpowers/sdd/2026-10-23-car-paint-sampling/next-action.md. Source inspection only:128x128normal/nearest sampling, mipmaps already exist,30x30tiling and clearcoat roughness0. Linear-filter and roughness0.08 arms are unimplemented hypotheses, not photoreal approval. Do not repeat rejected environment studies.",
+      "Separate backend follow-up .superpowers/sdd/2026-10-23-owner-matrix/next-action.md pins11current source inputs, identifies missing symmetric6tableCRUD test coverage without proving a vulnerability. No new SQL/cloud execution. Preserve original63cases/migrations, add a separate disposable test file, explicitly pin all rootSQL/config inputs and require actual GitHub SQL proof.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
@@ -1442,7 +1456,7 @@
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
-      "Latest6ff5568 bounded checkpoint is verified. Historical617 failed pair remains sealed5367/receipt6358275114. PR256 is still draft/unmerged; final art, lender, cloud recovery/security, physical native/accessibility and production gates remain release blockers, not a global goal block.",
+      "Latest f708bda bounded cleanup checkpoint is verified at receipt6370542236. Earlier failed checkpoints remain failed. PR256 stays draft/unmerged; final art, lender, cloud recovery/security, physical native/accessibility and production gates remain release blockers, not a global goal block.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open."
     ],
     "conventions": [
