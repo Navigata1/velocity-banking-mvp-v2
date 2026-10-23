@@ -1,0 +1,68 @@
+{
+  "observedAt": "2026-10-23T02:17:18.018Z",
+  "head": "8dfba166b3326a2fd3787c9f0f16708a2190f858",
+  "verified": false,
+  "productionReady": false,
+  "missionActive": true,
+  "ciEvents": [
+    {
+      "event": "push",
+      "id": 39885182341,
+      "conclusion": "success"
+    },
+    {
+      "event": "pull_request",
+      "id": 39885186378,
+      "conclusion": "failure"
+    }
+  ],
+  "failedStep": "PR Web and mobile / Verify built Money Loop Three stage / desktop-rapid-return PNG capture",
+  "timing": {
+    "candidateBudgetMs": 700,
+    "phaseOriginMs": 250,
+    "settlementWaitMs": 397.871868,
+    "isolationMs": 35.027793,
+    "clipValidationMs": 0.008773,
+    "screenshotRemainingMs": 17,
+    "screenshotFailedDurationMs": 17.995286,
+    "restorationMs": 0.95072
+  },
+  "preservedRequirements": {
+    "motionMs": 450,
+    "candidateMs": 700,
+    "confirmationMs": 300,
+    "pixelGuardsUnchanged": true,
+    "unchangedWorkflowRetry": false
+  },
+  "passed": {
+    "localGateGroups": 29,
+    "frozenSourceHashes": 485,
+    "hostedSuites": 15,
+    "hostedWorkflowLayouts": 210,
+    "servedAssetHashes": 20,
+    "sqlAndHeroJobs": 4,
+    "actualSourceGuards": 6,
+    "localIabHeroChecks": 3
+  },
+  "manualHostedFinancialStates": 0,
+  "checkpoint": {
+    "file": ".superpowers/sdd/2026-10-22-canvas-isolation-snapshot/failed-checkpoint.json",
+    "sha256": "a5ac0bb318e7b6a64aa0caaabd1e799c374b4ca3098da472801d4cdd86fdbede",
+    "artifacts": 7346,
+    "comment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6355703127"
+  },
+  "lastFullyVerified": {
+    "head": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6351915021"
+  },
+  "next": {
+    "timingPlan": "docs/superpowers/plans/2026-10-22-money-loop-input-timing.md",
+    "dependencyPlan": "docs/superpowers/plans/2026-10-22-media-toolchain-compatibility.md",
+    "candidate": "Private lock-only audit13to7to0, NOT installed/adopted/remediated; browser/native/private CLI compatibility unproved"
+  },
+  "limits": [
+    "Opposite CI event outcomes between863and8df do not establish timing causality",
+    "Current source485hashes unchanged; no new full gate run claimed for dependency candidate",
+    "No final artwork/lender/backend/security/recovery/physicalnative/accessibility/production approval"
+  ]
+}
