@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-23T12:24:14.305Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "working-candidate-full-run-failed-failure-only-QA-under-review",
+  "pushed": false,
+  "productionReady": false,
+  "sourceInputs": 493,
+  "webCopies": 226,
+  "sourcePins": {
+    "apps/web/src/components/hero/house-instances.ts": "e732d45e7a8b94797c7c376ee29cbfb02a21bc5c57a94ea7b02438e4364b500c",
+    "apps/web/scripts/house-instance-tests.cjs": "c9f78650b76cf6b56905b1688be22f8c0934a23cb478b69f6af9989e3ed1b17e",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "80f1395a2e59056531102d2e6163dd68a8a057441f3533ade646e480e7418a77",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7299a706eb992f0360e4df7f86e85d61cd1adf2eb17de639a945d486fe939285",
+    "apps/web/package.json": "db3035d4441da8b578139a95c8687a57d3c5830196f21e7aae34f4900bf57913",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "9c9b128e93f3c75cb8a12804b2dad3d2d62090bbf1fe1dba152e812175b198e1",
+    "apps/media/hero-turntables/index.html": "0d4d3fc4050456653b1980d998f373e6fbcf263aa87fb4afba3f9e0b6126d42d",
+    "apps/media/scripts/house-instance-wiring.test.mjs": "17d22705ba3870eef981be753f21be2a5079fa3da8b4794ac8dfdef789582f49",
+    "apps/media/hyperframes/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/media/hero-turntables/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "0e2978e2e1e40cb2cd665aeb6abf2c30718a8a01a53c1d33e9e0068ae4051c15",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics.cjs": "3abc151731fd84ac7ca58b0e4ba05bcd712516327a0b56d0d17ac00d19353264",
+    "apps/web/scripts/shared-dashboard-canvas-diagnostics-tests.cjs": "37139db723933097a4c55bb1b67a9acfb6fb2dfd73f6bc50851d0c27d5282fe9"
+  },
+  "assetsUnchanged": 20,
+  "rendererReview": "67965a2a-228f-4936-9c48-37a3aa192dd6 bounded acceptance",
+  "rendererGraphics": {
+    "id": "ecd86d16-9303-4d30-b7a2-bad247a37d6b",
+    "parentViewedRequiredOriginals": 28,
+    "drawCalls": [
+      467,
+      211
+    ],
+    "triangles": [
+      45480,
+      45480
+    ],
+    "textures": [
+      8,
+      8
+    ],
+    "scope": "Unchanged renderer/helper/assets; prior491-source standalone comparison, not new493-source UI or physical performance"
+  },
+  "originalFullRun": {
+    "id": "97fa04cc-60a0-4e81-adb9-abc6aeaa27a6",
+    "status": "failed",
+    "passedStages": 12,
+    "failedStage": "portfolio",
+    "reason": "Shared-edits1440 timed out waiting for asset-hero-canvas after Inspect, Car selected",
+    "activeAfterCleanup": 0
+  },
+  "passiveDiagnostic": {
+    "id": "shared-canvas-diagnostic-05bcd9e4-c1ec-4e74-845e-f0ddd10a35a5",
+    "status": "six workflow cases passed under instrumentation",
+    "causal": false,
+    "rootCauseEstablished": false,
+    "rawErrorsPreserved": true
+  },
+  "qa": {
+    "unitCases": 8,
+    "controls": 5,
+    "review": "pending",
+    "full493Run": "prepared, not launched"
+  },
+  "limits": [
+    "Original intermittent missing-canvas failure is unresolved; diagnostics are not an application fix.",
+    "Early/late storage errors and RSC failures in the instrumented run remain unclassified, not benign by assertion.",
+    "No source push, metadata-only push, merge, deployment or production approval. Latest verified checkpoint remains6ff5568."
+  ]
+}
