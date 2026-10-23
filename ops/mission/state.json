@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Cold-checkout studio parity now prepares its local inputs without skipping assertions. Full local gates rerun; new-head CI and final photoreal/production approval remain pending.",
+    "tagline": "Isolated canvas capture uses one post-mutation browser snapshot and restores partial failures. Math and artwork unchanged; new-head release verification remains pending.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T00:31:20.557Z",
-    "sessionCount": 43
+    "updated": "2026-10-23T01:38:26.367Z",
+    "sessionCount": 44
   },
   "policies": {
     "merge": "review",
@@ -118,10 +118,24 @@
         {
           "id": "R0-T8",
           "title": "Prepare studio artifacts before cold CI parity checks",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "0486666 CI FAILED at unprepared ignored vendor reads despite warm local29/hosted15-210-20 success. Both SQL-named jobs passed63SQL assertions twice; primary jobs correctly stopped at prerequisites. Separate push Vault timeout remains unresolved; PRhero passed. Minimal3line test-only correction preserves all38assertions, fresh tracked-only RED2pass1ENOENT/GREEN3pass, independent6CPUcontrols, full29rerun on485pins with hero software path requested. New-head remote proof pending. Failed6686artifacts/comment6353969005 retained; lastverifiedda04699/receipt6351915021. Cold correction verified in BOTH863 SQL/isolation jobs and both hero jobs. PR39878674423 complete passes; push39878666772 failed separate primary screenshot deadline.7653-artifact FAILED checkpoint/comment6354821267 preserves mixed results; no release approval."
+        },
+        {
+          "id": "R0-T9",
+          "title": "Combine isolated canvas snapshot and restore partial failures",
+          "status": "in_progress",
+          "dependsOn": [
+            "R0-T8"
+          ],
           "pr": null,
-          "notes": "0486666 CI FAILED at unprepared ignored vendor reads despite warm local29/hosted15-210-20 success. Both SQL-named jobs passed63SQL assertions twice; primary jobs correctly stopped at prerequisites. Separate push Vault timeout remains unresolved; PRhero passed. Minimal3line test-only correction preserves all38assertions, fresh tracked-only RED2pass1ENOENT/GREEN3pass, independent6CPUcontrols, full29rerun on485pins with hero software path requested. New-head remote proof pending. Failed6686artifacts/comment6353969005 retained; lastverifiedda04699/receipt6351915021."
+          "notes": "Three helper/test files only; one strict post-isolation RPC, early restoration stash and finally cover partial isolation.450/700/300 deadlines/pixel checks unchanged. ActualRED then10/5/9 standing groups; independent15probes/5killedmutants,8crossoverpairs/40negativecases,128direct+128combined boundary cases. Finite proof only, not universal timing/geometry or CI cause. New-head remote gates pending."
         }
       ],
       "gates": [
@@ -130,36 +144,36 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:31:20.557Z",
-          "notes": "State43 PRE-PUSH corrected test source. Prior048CI failed/sealed6686/comment6353969005 despite hosted210/20 success. Lastverifiedda04699/receipt6351915021. Require both complete NEW-head CI events/all3jobs/every59steps+cleanup/6sourceguards,automaticREADY,hosted/IAB/restore/finalproviderreadback/receipt. No old unchanged retry or production promotion."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:38:26.367Z",
+          "notes": "State44 PRE-PUSH.863 mixed CI is FAILED/sealed7653/comment6354821267, coldsetup remotelyverified but push screenshotdeadline failed; PRwholepasses. Require both complete NEW-head first attempts/all3jobs/59steps+cleanup/6sourceguards,automaticREADY,hosted15/210/20,IAB8+hero3/originalrestore/finalprovider/receipt. Lastverifiedda04699."
         },
         {
           "id": "R0-G4",
           "title": "Fresh exact-head CI discovery and report contracts",
           "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         }
       ]
     },
@@ -221,27 +235,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/card-studio-cold-contract-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-23T00:30:59.643Z",
-          "notes": "Fresh full29 serialized gates /485 frozen source hashes after the3line cold setup correction; requested Windows software hero path, not Linux/hardware proof. All original assertions/caps remain. Runtime/assets/math/backend unchanged from048. Existing Card MP4 bytes retained; all-ten video verification freshly rerun. Final artwork/production remain open."
+          "evidence": "ops/mission/evidence/canvas-isolation-snapshot-2026-10-22/local-preflight.json",
+          "lastRun": "2026-10-23T01:37:57.069Z",
+          "notes": "Fresh29 serialized local gates/485 frozen source pins. Three helper/test files changed; app/math/art/media/backend/deps/workflows/caps preserved. Windows software hero path requested; not physical device or final photoreal/production approval."
         }
       ]
     },
@@ -1247,9 +1261,9 @@
   "resume": {
     "activePhase": "R0",
     "nextActions": [
-      "State43 PRE-PUSH cold media sharing setup correction. FIRST read .superpowers/sdd/2026-10-22-card-studio-cold-contract/current-checkpoint.json when present:later sealed receipt supersedes this snapshot. Full29fresh/485pins, coldRED2pass1ENOENT/GREEN3pass, independent6controls. Runtime/model/math/workflow/deps/caps unchanged. See appended cold correction in docs/card-studio-lighting-contract-2026-10-22.md.",
-      "0486666 is FAILED, sealed6686artifacts/comment6353969005; bothSQL-named jobs passed63SQL twice then cold sharingtest failed, primary guard stopped, push Vault visibility timeout while PRhero passed. Do not relabel or rerun oldSHA unchanged. New corrected tip needs bothcomplete firstattemptCI events/all3jobs/59steps+cleanup/6sourceguards,knownautomaticREADY,hosted15/210/20hashes,IAB8dated+restore and3CardReplayAuto checks,freshproviderreadback/receipt/seal.",
-      "After corrected checkpoint continue substantive asset depth/material and actual lender/calendar/backend/native readiness. Cardfront/chip/coin/all-angle photoreal approval and separate Vault controlled-clock visibility cause remain OPEN. No weak assertions, metadata-only push loop, merge/manualdeploy/promotion/paidGPU or cloud/data/access/DNS mutation.",
+      "State44 PRE-PUSH combined isolated canvas snapshot. FIRST read .superpowers/sdd/2026-10-22-canvas-isolation-snapshot/current-checkpoint.json when present; sealed later receipt supersedes this snapshot. Fresh29/485pins, independent15probes/5mutants,8crossoverpairs/40negativecases and128direct+128combined boundaries. See docs/canvas-isolation-snapshot-contract-2026-10-22.md. App/math/art unchanged.",
+      "8633824 is FAILED mixedCI/sealed7653/comment6354821267. BothSQL+hero jobs pass and PR39878674423 fullypasses; push39878666772 fails rapidreturn screenshot33ms remaining. Coldsetup corrected; timingcause/reliability unresolved. Newtip needs bothcomplete firstattemptCI events/all3jobs/59steps+cleanup/6sourceguards,READY,hosted210/20,IAB8+hero3/restore/finalreadback/receipt. No unchanged retry.",
+      "After verified checkpoint review R4-T4 isolated candidate .superpowers/sdd/2026-10-22-media-audit-followup/candidate-lockfile-20261022-863-sidecar/README.md: lock-only audit13to7to0,HyperFrames0.7.111,23otherdirect exactpins preserved,236changedentries including transitive majors/onnx downgrade. NOTadopted/installed/render-tested. Then continue substantive front/chip/coin/all-angle art and full lender/calendar/backend/native readiness. No universal speed/parity/oldVaultcause claim, metadata-only pushloop, weakgates, merge/manualdeploy/promotion/paidGPU or cloud/data/access/DNS mutation.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",

@@ -999,3 +999,25 @@ alltenvideoverification fresh. Separate Vaulttimeout NOT diagnosed by thisfix.
 State43 PRE-PUSH:newcomplete CIpair/READY/hosted/IAB/restore/finalreceipt pending.
 Allfinalphotoreal/R3/backend/security/physicalnative/a11y/release stillOPEN.
 GoalACTIVE/PR256draft,no merge/manualdeploy/productionpromotion.
+
+## State 44 - Combined isolated canvas snapshot
+
+8633824 remains FAILED mixedCI: bothSQL and hero jobs pass; PR39878674423
+fullypasses, push39878666772 times out desktop rapidreturn screenshot with33ms
+left. Coldsetup corrected; not releaseverified.7653artifacts/comment6354821267
+sealed; lastverifiedda04699/receipt6351915021. No unchanged rerun.
+
+Three helper/test files combine strict canvas isolation and post-mutation CSS
+snapshot in one RPC, preserve exact supplied clips, stash styles before mutation
+and restore partial failures insidefinally.450/700/300 bounds/pixelchecks retained.
+ActualRED then10/5/9 standing groups; independent15CPUprobes/5killedmutants.
+Eight desktop/mobile crossoverpairs have equal observed decodedpixelsets/exact
+coordinates;40negativecases and128direct+128combinedboundarycases pass.
+Finitefixture proof only, not universal performance/parity/schedulingcause.
+Cleanup failure/reentrancy/page-death limitations remain.
+
+Fresh29serialized/485pins softwarehero path requested; no application/math/art/
+media/backend/dependency/workflow/cap changes. State44 PRE-PUSH requires new
+complete CI/READY/hosted/IAB/restore/finalreceipt. Allfinalphotoreal, fullR3,
+backend/recovery/security/physicalnative/a11y/production gates remainOPEN.
+GoalACTIVE/PR256draft; no merge/manualdeploy/promotion.
