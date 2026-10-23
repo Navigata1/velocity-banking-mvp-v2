@@ -74,13 +74,18 @@ export function configureHouseInstances(options) {
     let closed = false;
     const releaseOwned = () => {
         let error;
+        let failed = false;
+        const remember = (value) => { if (!failed) {
+            failed = true;
+            error = value;
+        } };
         for (const group of plans)
             for (const member of group.members) {
                 try {
                     member.node.visible = member.visible;
                 }
                 catch (e) {
-                    error ??= e;
+                    remember(e);
                 }
             }
         // Borrowed geometry, materials and maps remain owned by the original model.
@@ -89,24 +94,24 @@ export function configureHouseInstances(options) {
                 scene.remove(batch);
             }
             catch (e) {
-                error ??= e;
+                remember(e);
             }
             try {
                 batch.dispose();
             }
             catch (e) {
-                error ??= e;
+                remember(e);
             }
         }
         active.delete(scene);
-        return error;
+        return { failed, error };
     };
     const cleanup = () => {
         if (closed)
             return;
         closed = true;
-        const error = releaseOwned();
-        if (error)
+        const { failed, error } = releaseOwned();
+        if (failed)
             throw error;
     };
     try {

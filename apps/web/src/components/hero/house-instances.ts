@@ -75,22 +75,24 @@ export function configureHouseInstances(options?: Options): Cleanup {
   let closed = false;
   const releaseOwned = () => {
     let error: unknown;
+    let failed = false;
+    const remember = (value: unknown) => { if (!failed) { failed = true; error = value; } };
     for (const group of plans) for (const member of group.members) {
-      try { member.node.visible = member.visible; } catch (e) { error ??= e; }
+      try { member.node.visible = member.visible; } catch (e) { remember(e); }
     }
     // Borrowed geometry, materials and maps remain owned by the original model.
     for (const batch of batches) {
-      try { scene.remove(batch); } catch (e) { error ??= e; }
-      try { batch.dispose(); } catch (e) { error ??= e; }
+      try { scene.remove(batch); } catch (e) { remember(e); }
+      try { batch.dispose(); } catch (e) { remember(e); }
     }
     active.delete(scene);
-    return error;
+    return { failed, error };
   };
   const cleanup: Cleanup = () => {
     if (closed) return;
     closed = true;
-    const error = releaseOwned();
-    if (error) throw error;
+    const { failed, error } = releaseOwned();
+    if (failed) throw error;
   };
   try {
     for (const group of plans) {

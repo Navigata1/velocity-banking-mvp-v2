@@ -39,3 +39,37 @@ test('multi-batch removal errors still dispose every owner and release ownership
 test('nonfinite native bounds reject before hiding original meshes',()=>{const f=fixture(),before=state(f);class Batch extends THREE.InstancedMesh{computeBoundingSphere(){super.computeBoundingSphere();this.boundingSphere.radius=NaN;}}assert.throws(()=>configureHouseInstances({...f,THREE:{...THREE,InstancedMesh:Batch}}),/bounds/);assert.deepEqual(state(f),before);assert.equal(batches(f).length,0);});
 test('multi-batch disposal failure still attempts every owned instance without touching borrowed maps',()=>{const f=twoGroups();f.material.map=new THREE.Texture();const before=state(f);let disposed=0,borrowed=0;for(const r of new Set([f.material.map,f.material,...f.meshes.map(m=>m.geometry)]))r.addEventListener('dispose',()=>borrowed++);const clean=configureHouseInstances(f),owned=batches(f);assert.equal(owned.length,2);owned[0].addEventListener('dispose',()=>{disposed++;throw Error('first owned disposal');});owned[1].addEventListener('dispose',()=>disposed++);assert.throws(()=>clean(),/first owned disposal/);assert.equal(disposed,2);assert.equal(borrowed,0);assert.deepEqual(state(f),before);clean();const next=configureHouseInstances(f);next();assert.equal(borrowed,0);assert.deepEqual(state(f),before);});
 
+function thrownValue(fn) { try { fn(); return { threw: false }; } catch (value) { return { threw: true, value }; } }
+for (const [label, payload] of [['zero', 0], ['false', false], ['empty', ''], ['null', null], ['undefined', undefined]]) {
+  for (const operation of ['dispose', 'remove']) test(`first ${operation} ${label} throw survives later errors and full cleanup`, () => {
+    const f = twoGroups(), before = state(f), clean = configureHouseInstances(f), owned = batches(f);
+    let disposed = 0, removed = 0, borrowed = 0;
+    const later = new Error('later cleanup failure');
+    for (const r of new Set([f.material, ...f.meshes.map(m => m.geometry)])) r.addEventListener('dispose', () => borrowed++);
+    const listener = () => { removed++; if (operation === 'remove') throw removed === 1 ? payload : later; };
+    f.scene.addEventListener('childremoved', listener);
+    owned.forEach((b, i) => b.addEventListener('dispose', () => { disposed++; if (operation === 'dispose') throw i === 0 ? payload : later; }));
+    assert.equal(owned.length, 2);
+    const actual = thrownValue(clean);
+    assert.equal(disposed, 2); assert.equal(removed, 2); assert.equal(borrowed, 0);
+    assert.equal(batches(f).length, 0); assert.ok(f.meshes.every(m => m.visible)); assert.deepEqual(state(f), before);
+    assert.equal(actual.threw, true, 'falsy cleanup failure must remain observable');
+    assert.equal(Object.is(actual.value, payload), true, 'the first thrown value must retain identity');
+    assert.deepEqual(thrownValue(clean), { threw: false });
+    f.scene.removeEventListener('childremoved', listener);
+    const next = configureHouseInstances(f); assert.notEqual(next, clean); assert.equal(batches(f).length, 2);
+    next(); assert.deepEqual(state(f), before); assert.equal(borrowed, 0);
+  });
+  test(`setup ${label} throw survives failing rollback`, () => {
+    const f = twoGroups(), before = state(f), later = new Error('rollback failure'); let disposed = 0;
+    class Batch extends THREE.InstancedMesh {
+      constructor(...args) { super(...args); this.addEventListener('dispose', () => { disposed++; throw later; }); }
+    }
+    const listener = () => { throw payload; }; f.scene.addEventListener('childadded', listener);
+    const actual = thrownValue(() => configureHouseInstances({ ...f, THREE: { ...THREE, InstancedMesh: Batch } }));
+    assert.equal(disposed, 2); assert.equal(batches(f).length, 0); assert.deepEqual(state(f), before);
+    assert.equal(actual.threw, true); assert.equal(Object.is(actual.value, payload), true, 'setup error takes precedence over rollback');
+    f.scene.removeEventListener('childadded', listener);
+    const next = configureHouseInstances(f); next(); assert.deepEqual(state(f), before);
+  });
+}
