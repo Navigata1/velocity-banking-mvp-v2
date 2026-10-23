@@ -6,6 +6,7 @@ const { chromium } = require('playwright-core');
 const { startBuiltServer, stopServer } = require('./built-server-harness.cjs');
 const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-harness.cjs');
 const { decodePngRgba } = require('./png-pixel-proof.cjs');
+const { captureSharedDashboardCanvas } = require('./shared-dashboard-canvas-diagnostics.cjs');
 const root = path.resolve(__dirname, '..'), key = 'interestshield-portfolio-v2';
 const legacyKey = 'velocity-bank-storage', oldKey = 'interestshield-portfolio-v1';
 const legacy = ' \n' + JSON.stringify({ state: { monthlyIncome: 8111, monthlyExpenses: 4222 }, version: 0 }) + '\n';
@@ -173,7 +174,8 @@ async function runSharedPortfolioDashboard({ browser, origin, output = path.join
       const details = await (name === 'shared-edits' ? sharedEdits : adverseStates)(page, origin, output, width);
       assert.deepEqual(errors, []); receipts.push({ name, width, passed: true, details, errors }); console.log(`PASS shared Portfolio Dashboard ${name} ${width}px`);
     } catch (error) {
-      receipts.push({ name, width, passed: false, message: error.message, errors }); console.error(`FAIL shared Portfolio Dashboard ${name} ${width}px: ${error.stack}`);
+      const canvasDiagnostics = await captureSharedDashboardCanvas(page);
+      receipts.push({ name, width, passed: false, message: error.message, errors, canvasDiagnostics }); console.error(`FAIL shared Portfolio Dashboard ${name} ${width}px: ${error.stack}`);
       await page.screenshot({ path: path.join(output, `${name}-${width}-failure.png`), fullPage: true }).catch(() => {});
     } finally { await context.close(); }
   }

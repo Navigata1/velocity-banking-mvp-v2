@@ -5,6 +5,7 @@ const {startBuiltServer,stopServer,createGracefulShutdown}=require('./built-serv
 const {findBrowserExecutable,getHeadlessChromiumArgs}=require('./browser-harness.cjs');
 const {compareSpatialDescriptors,MAX_SETTLED_SPATIAL_CELL_DISTANCE,MAX_SETTLED_SPATIAL_MEAN_DISTANCE}=require('./png-pixel-proof.cjs');
 const {createPhaseTiming}=require('./three-stage-timing.cjs');
+const {readSelectionStageState}=require('./selection-stage-state.cjs');
 const {waitForNormalStage,waitForStageSettled,assertGenuineWebgl2,captureIsolatedCanvasPng,proveCanvasPng,prepareStageAndTargetForClick}=require('./test-three-stage.cjs');
 const root=path.resolve(__dirname,'..'),motionMs=450,settleMs=700,stabilityMs=300;
 const keys=['velocity-bank-storage','interestshield-portfolio-v2','interestshield-portfolio-v1'];
@@ -13,7 +14,7 @@ const documents=[
  JSON.stringify({version:2,aprUnit:'decimal',data:{monthlyIncome:9876,monthlyExpenses:4321,extraMonthlyPayment:0,chunkAmount:0,loc:{limit:1000,balance:0,apr:0},strategy:'velocity',focusMode:'single',splitRatioPrimary:.7,debts:[]}}),
  '{"untouched":"original selection QA portfolio"}',
 ];
-const state=page=>page.getByTestId('money-loop-three-stage').evaluate(element=>({id:element.dataset.activeArtifact,state:element.dataset.selectionState,revision:element.dataset.selectionRevision??null}));
+const state=readSelectionStageState;
 const vitals=page=>page.locator('[data-testid^="dashboard-vital-"],[data-testid^="dashboard-mobile-vital-"]').allTextContents();
 const bytes=page=>page.evaluate(keys=>keys.map(key=>localStorage.getItem(key)),keys);
 async function settledPixels(page,started,id,label,output){
