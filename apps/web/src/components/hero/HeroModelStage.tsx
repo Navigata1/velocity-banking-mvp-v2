@@ -127,12 +127,14 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
 }
 
 function disposeModel(object: THREE.Object3D) {
+  const instances = new Set<THREE.InstancedMesh>();
   const geometries = new Set<THREE.BufferGeometry>();
   const materials = new Set<THREE.Material>();
   const textures = new Set<THREE.Texture>();
   const images = new Set<{ close: () => void }>();
   object.traverse(node => {
     if (!(node instanceof THREE.Mesh)) return;
+    if (node instanceof THREE.InstancedMesh) instances.add(node);
     geometries.add(node.geometry);
     for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
       materials.add(material);
@@ -149,4 +151,5 @@ function disposeModel(object: THREE.Object3D) {
   images.forEach(image => image.close());
   materials.forEach(material => material.dispose());
   geometries.forEach(geometry => geometry.dispose());
+  instances.forEach(instance => instance.dispose());
 }

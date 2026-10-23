@@ -98,6 +98,7 @@ function mount(text = source, options = {}) {
   }
   function resolve(index = loads.length - 1) {
     const object = new THREE.Group(), counts = { geometry: 0, material: 0, texture: 0, image: 0 };
+    const nativeMeshes = [], nativeDisposals = [], runtimeBatches = [], runtimeDisposals = [], ownershipEvents = [];
     const card = loads[index].model === '/heroes/creditCard.glb';
     const house = loads[index].model === '/heroes/house.glb';
     const image = { close() { counts.image++; } };
@@ -119,11 +120,26 @@ function mount(text = source, options = {}) {
         const mesh = new THREE.Mesh(geometry, materials[0]); mesh.position.x = i * .4; object.add(mesh);
       }
       object.add(new THREE.Mesh(geometry, materials[1]));
-      if (options.houseAttachFails) object.addEventListener('childadded', () => { throw new Error('injected House attachment'); });
     } else if (card) object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, [materials[0], materials[0]]),
       new THREE.Mesh(geometry, materials[1]), new THREE.Mesh(geometry, materials[2]));
     else object.add(new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[0]), new THREE.Mesh(geometry, materials[1]));
-    const loaded = { object, counts, materials, originalMeshes: object.children.slice() };
+    if (options.nativeLeaves) {
+      for (let i = 0; i < 2; i++) {
+        const mesh = new THREE.InstancedMesh(geometry, materials[0], 2); mesh.name = 'Loaded-Native-Leaf-' + i;
+        mesh.setMatrixAt(1, new THREE.Matrix4().makeTranslation(.2, .3, .1)); nativeDisposals.push(0);
+        mesh.addEventListener('dispose', () => { nativeDisposals[i]++; ownershipEvents.push('native-' + i); });
+        nativeMeshes.push(mesh); object.add(mesh);
+      }
+      if (options.badNativeBounds) nativeMeshes[0].instanceMatrix.array[0] = NaN;
+      for (const [name, resource] of Object.entries({ geometry, texture, material: materials[0] })) resource.addEventListener('dispose', () => ownershipEvents.push(name));
+      object.addEventListener('childadded', ({ child }) => {
+        if (!child.name.startsWith('InterestShield-House-Instance-Batch-')) return;
+        const i = runtimeBatches.length; runtimeBatches.push(child); runtimeDisposals.push(0);
+        child.addEventListener('dispose', () => { runtimeDisposals[i]++; ownershipEvents.push('runtime'); });
+      });
+    }
+    if (house && options.houseAttachFails) object.addEventListener('childadded', () => { throw new Error('injected House attachment'); });
+    const loaded = { object, counts, materials, originalMeshes: object.children.slice(), nativeMeshes, nativeDisposals, runtimeBatches, runtimeDisposals, ownershipEvents };
     models.push(loaded); loads[index].success({ scene: object });
     return loaded;
   }
@@ -345,6 +361,65 @@ for (const failure of ['attach', 'late', 'context']) {
   } finally { h.unmount(); }
 }
 console.log('PASS House lifecycle: one instance setup across Replay, borrowed resources and owned teardown, late/error paths');
+
+function nativeLifecycleContract(text, phase) {
+  const h = mount(text, { model: '/heroes/house.glb', nativeLeaves: true, badNativeBounds: phase === 'bounds',
+    houseAttachFails: phase === 'setup', ...(phase === 'material' ? { model: '/heroes/car.glb', missingPaint: true } : {}) });
+  try {
+    if (phase === 'late') h.unmount();
+    if (phase === 'decode') h.loads[0].manager.onError('blob:native-decode');
+    const loaded = h.resolve();
+    const active = ['normal', 'context', 'runtime-error'].includes(phase);
+    assert.equal(loaded.runtimeBatches.length, active || phase === 'setup' ? 1 : 0, 'runtime batch setup follows the real load path');
+    if (active) {
+      assert.deepEqual(loaded.nativeDisposals, [0, 0]);
+      assert.deepEqual(loaded.counts, { geometry: 0, material: 0, texture: 0, image: 0 });
+      const children = loaded.object.children.slice(), matrices = loaded.nativeMeshes.map(n => Array.from(n.instanceMatrix.array));
+      fullTurn(h); for (let i = 0; i < 4; i++) { h.replay(); h.tick(16); h.tick(62.5); }
+      assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1); assert.equal(h.models.length, 1);
+      assert.deepEqual(loaded.object.children, children, 'Replay neither rebuilds nor rebatches native leaves');
+      assert.deepEqual(loaded.nativeMeshes.map(n => Array.from(n.instanceMatrix.array)), matrices);
+      assert.ok(loaded.nativeMeshes.every(n => n.visible)); assert.deepEqual(loaded.nativeDisposals, [0, 0]);
+    }
+    if (phase === 'context') {
+      let prevented = false; h.renderers[0].domElement.listeners.get('webglcontextlost')({ preventDefault() { prevented = true; } });
+      assert.equal(prevented, true); assert.deepEqual(loaded.nativeDisposals, [0, 0], 'context-loss notification alone does not release the model');
+    }
+    if (phase === 'runtime-error') {
+      loaded.runtimeBatches[0].addEventListener('dispose', () => { throw new Error('runtime batch disposal'); });
+      assert.throws(() => h.unmount(), /runtime batch disposal/);
+    }
+    released(h);
+    assert.deepEqual(loaded.nativeDisposals, [1, 1], phase + ': each loaded native disposed exactly once');
+    assert.deepEqual(loaded.runtimeDisposals, loaded.runtimeBatches.map(() => 1), phase + ': runtime ownership released once');
+    if (loaded.runtimeBatches.length) {
+      for (const name of ['geometry', 'texture', 'material', 'native-0', 'native-1']) assert.ok(loaded.ownershipEvents.indexOf('runtime') < loaded.ownershipEvents.indexOf(name), 'runtime release must precede model disposal: ' + name);
+    }
+    assert.equal(h.state.errors, ['normal', 'late', 'runtime-error'].includes(phase) ? 0 : 1);
+    assert.deepEqual(h.state.ready, active ? [false, true] : [false]);
+    if (phase === 'decode') assert.deepEqual(h.state.revoked, ['blob:native-decode']);
+  } finally { h.unmount(); }
+}
+for (const phase of ['normal', 'late', 'decode', 'bounds', 'material', 'setup', 'context', 'runtime-error']) {
+  test('loaded native + real House lifecycle: ' + phase, () => nativeLifecycleContract(source, phase));
+}
+test('remove-native-dispose mutation is rejected by actual component lifecycle', () => {
+  const mutant = source.replace('instances.forEach(instance => instance.dispose());', '');
+  assert.ok(mutant !== source, 'native-dispose mutation must apply');
+  assert.throws(() => nativeLifecycleContract(mutant, 'normal'), error => error.code === 'ERR_ASSERTION' && /each loaded native disposed exactly once/.test(error.message));
+});
+for (const kind of ['native', 'texture']) test('existing fail-fast cleanup scope is not generalized: ' + kind, () => {
+  const h = mount(source, { model: '/heroes/house.glb', nativeLeaves: true });
+  try {
+    const loaded = h.resolve(), error = new Error('injected ' + kind + ' disposal');
+    (kind === 'native' ? loaded.nativeMeshes[0] : loaded.materials[0].map).addEventListener('dispose', () => { throw error; });
+    assert.throws(() => h.unmount(), value => value === error);
+    assert.deepEqual(loaded.runtimeDisposals, [1], 'runtime owner was already released');
+    assert.equal(h.state.environment, 0); assert.equal(h.renderers[0].disposals, 0);
+    assert.equal(h.renderers[0].losses, 0); assert.equal(h.renderers[0].domElement.isConnected, true);
+    if (kind === 'native') { assert.deepEqual(loaded.nativeDisposals, [1, 0]); assert.deepEqual(loaded.counts, once); }
+  } finally { h.unmount(); }
+});
 
 function houseCleanupFailureContract(text) {
   const h = mount(text, { model: '/heroes/house.glb' });

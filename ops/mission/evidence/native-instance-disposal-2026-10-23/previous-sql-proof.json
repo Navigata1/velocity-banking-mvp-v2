@@ -1,0 +1,201 @@
+{
+  "at": "2026-10-23T21:09:08.215Z",
+  "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+  "scope": "Disposable local SQL permission isolation only",
+  "finalSqlGateComplete": true,
+  "distinctAssertions": 285,
+  "assertionExecutions": 1140,
+  "sql": [
+    {
+      "event": "push",
+      "runId": 40019475148,
+      "attempt": 1,
+      "jobId": 120639979299,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40019475148/job/120639979299",
+      "jobConclusion": "success",
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "migrations": 4,
+      "distinctAssertions": 285,
+      "assertionExecutions": 570,
+      "runs": [
+        {
+          "step": "Verify client contracts and SQL owner isolation",
+          "files": 2,
+          "tests": 285,
+          "suites": [
+            "owner_isolation_test.sql",
+            "owner_permission_matrix_test.sql"
+          ],
+          "result": "PASS"
+        },
+        {
+          "step": "Repeat SQL tests to verify fixture rollback",
+          "files": 2,
+          "tests": 285,
+          "suites": [
+            "owner_isolation_test.sql",
+            "owner_permission_matrix_test.sql"
+          ],
+          "result": "PASS"
+        }
+      ],
+      "scope": "isolated SQL only",
+      "artifact": {
+        "id": 12530730269,
+        "name": "backend-isolation-proof",
+        "digest": "sha256:9a7f8d6a297bf80aa5f666d51d5a539c096cad880546651cc5c6a670357c2100"
+      },
+      "earlyArtifactWasNotFinalGate": true
+    },
+    {
+      "event": "pull_request",
+      "runId": 40019480601,
+      "attempt": 1,
+      "jobId": 120640001564,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40019480601/job/120640001564",
+      "jobConclusion": "success",
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "migrations": 4,
+      "distinctAssertions": 285,
+      "assertionExecutions": 570,
+      "runs": [
+        {
+          "step": "Verify client contracts and SQL owner isolation",
+          "files": 2,
+          "tests": 285,
+          "suites": [
+            "owner_isolation_test.sql",
+            "owner_permission_matrix_test.sql"
+          ],
+          "result": "PASS"
+        },
+        {
+          "step": "Repeat SQL tests to verify fixture rollback",
+          "files": 2,
+          "tests": 285,
+          "suites": [
+            "owner_isolation_test.sql",
+            "owner_permission_matrix_test.sql"
+          ],
+          "result": "PASS"
+        }
+      ],
+      "scope": "isolated SQL only",
+      "artifact": {
+        "id": 12529803000,
+        "name": "backend-isolation-proof",
+        "digest": "sha256:6fa820f604f7d9326e0ebb50db7ee61c779e486af2cc612bf4c470766dbca4b2"
+      },
+      "earlyArtifactWasNotFinalGate": true
+    }
+  ],
+  "wholeCi": {
+    "observerStatus": "passed",
+    "allCiSuccess": true,
+    "events": [
+      {
+        "event": "push",
+        "id": 40019475148,
+        "attempt": 1,
+        "conclusion": "success",
+        "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40019475148/attempts/1",
+        "jobs": [
+          {
+            "name": "Isolated SQL and owner isolation",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "Asset hero quality gates",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "Web and mobile quality gates",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ]
+      },
+      {
+        "event": "pull_request",
+        "id": 40019480601,
+        "attempt": 1,
+        "conclusion": "success",
+        "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40019480601/attempts/1",
+        "jobs": [
+          {
+            "name": "Asset hero quality gates",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "Isolated SQL and owner isolation",
+            "conclusion": "success",
+            "failedSteps": []
+          },
+          {
+            "name": "Web and mobile quality gates",
+            "conclusion": "success",
+            "failedSteps": []
+          }
+        ]
+      }
+    ]
+  },
+  "sourceGuards": [
+    {
+      "event": "push",
+      "runId": 40019475148,
+      "jobId": 120639979299,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-push-attempt1-120639979299.log"
+    },
+    {
+      "event": "push",
+      "runId": 40019475148,
+      "jobId": 120639979721,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-push-attempt1-120639979721.log"
+    },
+    {
+      "event": "push",
+      "runId": 40019475148,
+      "jobId": 120645855764,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-push-attempt1-120645855764.log"
+    },
+    {
+      "event": "pull_request",
+      "runId": 40019480601,
+      "jobId": 120640001248,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-pull_request-attempt1-120640001248.log"
+    },
+    {
+      "event": "pull_request",
+      "runId": 40019480601,
+      "jobId": 120640001564,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-pull_request-attempt1-120640001564.log"
+    },
+    {
+      "event": "pull_request",
+      "runId": 40019480601,
+      "jobId": 120644785409,
+      "head": "2d4ef4445342e4a34ac9aadf734c9d60cf713a9f",
+      "file": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/ci-pull_request-attempt1-120644785409.log"
+    }
+  ],
+  "sourceProofSha256": "46a83d7d4167c744b7116b80e45a6d060b03a1a9cdc9778ec1e5851c3fb99120",
+  "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6374788102",
+  "managedBackendBound": false,
+  "wholeApplicationVerified": false,
+  "productionReady": false,
+  "limitations": [
+    "285 distinct assertions repeated twice on each event are1140 executions, not1140 distinct cases.",
+    "A disposable schema/owner permission test does not prove managed-project binding, API/JWT, cross-device recovery, backup/restore or production operations.",
+    "Any failed aggregate CI/browser result remains failed; no unchanged workflow retry.",
+    "This does not replace the last bounded whole-app verified checkpoint f708bda933d8adcd12947a08f2e2c6183ee00915."
+  ]
+}

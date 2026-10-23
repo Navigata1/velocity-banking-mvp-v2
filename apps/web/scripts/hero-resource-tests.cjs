@@ -20,6 +20,21 @@ moduleOutput.exports.disposeModel(model);
 assert.deepEqual(count,{geometry:1,material:1,texture:1,image:1});
 console.log('Hero resource cleanup releases shared geometry, materials, textures and decoded images exactly once.');
 
+require('node:test')('native instances and regular meshes release identities once while sharing all model resources',()=>{
+  const counts={geometry:0,material:0,texture:0,image:0},nativeCounts=[0,0];
+  const image={close(){counts.image++;}},textures=[new THREE.Texture(image),new THREE.Texture(image)];
+  const geometry=new THREE.BoxGeometry(),material=new THREE.MeshStandardMaterial({map:textures[0],normalMap:textures[1]});
+  geometry.addEventListener('dispose',()=>counts.geometry++);material.addEventListener('dispose',()=>counts.material++);
+  for(const texture of textures)texture.addEventListener('dispose',()=>counts.texture++);
+  const native=textures.map((_,i)=>{
+    const mesh=new THREE.InstancedMesh(geometry,material,2);mesh.addEventListener('dispose',()=>nativeCounts[i]++);return mesh;
+  });
+  const object=new THREE.Group();object.add(new THREE.Mesh(geometry,[material,material]),...native);
+  moduleOutput.exports.disposeModel(object);
+  assert.deepEqual(nativeCounts,[1,1],'each loaded native instance must receive one explicit dispose event');
+  assert.deepEqual(counts,{geometry:1,material:1,texture:2,image:1},'shared identities stay deduplicated across native and regular meshes');
+});
+
 const studioSource=fs.readFileSync(path.join(__dirname,'../src/components/hero/studio-environment.ts'),'utf8');
 for(const fails of [false,true]) {
   const released={geometry:0,material:0,texture:0,generator:0};

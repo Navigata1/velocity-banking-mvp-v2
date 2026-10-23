@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-23T21:48:32.500Z",
+  "status": "local-tested-pre-push",
+  "files": {
+    "apps/web/scripts/hero-lifecycle-tests.cjs": {
+      "bytes": 36176,
+      "sha256": "ee30c26cd1c37bf081913b4bfdbb2e3bfb9e447da2c3ef9fda998905f9e0e5d4"
+    },
+    "apps/web/scripts/hero-resource-tests.cjs": {
+      "bytes": 7457,
+      "sha256": "977640207d931a7dfe78d3ac1fb3174408f81bd9ca310c71af896c503951795e"
+    },
+    "apps/web/src/components/hero/HeroModelStage.tsx": {
+      "bytes": 7398,
+      "sha256": "6c4843f4621a75b21e2c7aaf9cabed369f7cc919776fb2b775d680b80b13c000"
+    }
+  },
+  "unchangedNamedInputs": "All other495 source /13 runtime /20 asset /18 context-backend pins match the previous checkpoint",
+  "implementationAddedLines": 3,
+  "checks": [
+    {
+      "name": "private-independent-tests",
+      "startedAt": "2026-10-23T21:45:13.267Z",
+      "completedAt": "2026-10-23T21:45:15.335Z",
+      "executable": "node",
+      "args": [
+        "--permission",
+        "--allow-fs-read=*",
+        "--experimental-test-isolation=none",
+        "--test",
+        ".superpowers/sdd/2026-10-23-native-instance-disposal/mirror/apps/web/scripts/hero-resource-tests.cjs"
+      ],
+      "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdoutSha256": "67c39b2ca38452a496672fb2470453e46bd555bcf0768a9957e32f79fb063ec9",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "root-web-tests",
+      "startedAt": "2026-10-23T21:45:37.547Z",
+      "completedAt": "2026-10-23T21:47:21.643Z",
+      "executable": "node",
+      "args": [
+        "C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js",
+        "test"
+      ],
+      "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdoutSha256": "fb8919755cbf4dff90e8e36d8265c43e20105bd1a0dbfb9793931571ab6ff0dc",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "root-web-lint",
+      "startedAt": "2026-10-23T21:45:53.260Z",
+      "completedAt": "2026-10-23T21:46:09.872Z",
+      "executable": "node",
+      "args": [
+        "C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "lint"
+      ],
+      "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdoutSha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "root-web-types",
+      "startedAt": "2026-10-23T21:46:20.385Z",
+      "completedAt": "2026-10-23T21:46:28.625Z",
+      "executable": "node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--incremental",
+        "false"
+      ],
+      "cwd": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\web",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "focusedRegisteredTests": 23,
+  "webEngineRegressionCases": 369,
+  "oldHouseRetained": {
+    "bytes": 1145320,
+    "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33"
+  },
+  "artDecision": "Reject detailed native-leaf candidate; fourteen canonical exact-seek observations, not a video or physical performance test",
+  "sourceReview": {
+    "at": "2026-10-23T21:45:25.928Z",
+    "reviewer": "Parent, independently from implementer",
+    "explicitArtifactPins": 38,
+    "allMatched": true,
+    "componentOnlyThreeAdditions": true,
+    "independentNativeTests": {
+      "tests": 23,
+      "pass": 23,
+      "fail": 0
+    },
+    "scope": "CPU and source only; original rendering and financial calculations unchanged",
+    "physicalMemoryVerified": false,
+    "artAdopted": false
+  },
+  "rootBuildId": "q9-LUQ84V55MwthjHnK99",
+  "freshBuildPerformed": false,
+  "newExactHeadCiVerified": false,
+  "managedBackendBound": false,
+  "productionReady": false,
+  "limitations": [
+    "Existing throwing-disposal callbacks remain fail-fast.",
+    "CPU tests do not prove physical memory reclamation or a permanent leak.",
+    "All ten final photographic assets, model/video generation binding, physical-device and managed-backend gates remain open."
+  ]
+}
