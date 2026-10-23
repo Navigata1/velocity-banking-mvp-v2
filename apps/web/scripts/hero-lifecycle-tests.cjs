@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const ts = require('typescript');
 const THREE = require('three');
+const test = require('node:test');
 const read = name => fs.readFileSync(path.join(__dirname, '../src/components/hero', name), 'utf8');
 const source = read('HeroModelStage.tsx');
 function compile(text, imports = {}, globals = {}) {
@@ -29,8 +30,16 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
 // Only browser/GPU boundaries are simulated; execute the actual component and math.
 function mount(text = source, options = {}) {
   const slots = [], frames = new Map(), loads = [], renderers = [], models = [];
+  const documentListeners = new Map();
+  const documentProbe = { hidden: false,
+    addEventListener(name, listener) {
+      const listeners = documentListeners.get(name) ?? new Set();
+      listeners.add(listener); documentListeners.set(name, listeners);
+    },
+    removeEventListener(name, listener) { documentListeners.get(name)?.delete(listener); },
+  };
   const state = { renders: 0, errors: 0, ready: [], environment: 0, observer: 0, revoked: [] };
-  let cursor = 0, effects = [], nextFrame = 1, now = 10000;
+  let cursor = 0, effects = [], nextFrame = 1, now = options.now ?? 10000;
   const host = { clientWidth: 400, clientHeight: 300, dataset: {}, appendChild(node) { node.isConnected = true; } };
   class Renderer {
     constructor() {
@@ -73,7 +82,7 @@ function mount(text = source, options = {}) {
     './hero-geometry-bounds': geometryBounds, './turntable': turntable, './hero-materials': heroMaterials,
     './house-instances': houseInstances,
   }, {
-    window: { devicePixelRatio: 1, matchMedia: () => ({ matches: !!options.reduced }) }, document: { hidden: false },
+    window: { devicePixelRatio: 1, matchMedia: () => ({ matches: !!options.reduced }) }, document: documentProbe,
     ResizeObserver: class { observe() {} disconnect() { state.observer++; } },
     URL: { revokeObjectURL: url => state.revoked.push(url) },
     requestAnimationFrame(fn) { const id = nextFrame++; frames.set(id, fn); return id; },
@@ -119,7 +128,12 @@ function mount(text = source, options = {}) {
     return loaded;
   }
   update();
-  return { state, frames, loads, renderers, models, host, resolve, update,
+  return { state, frames, loads, renderers, models, host, resolve, update, documentListeners,
+    hidden(value) {
+      documentProbe.hidden = value;
+      for (const listener of documentListeners.get('visibilitychange') ?? []) listener({ type: 'visibilitychange' });
+    },
+    skip(ms) { now += ms; },
     replay() { update({ replay: props.replay + 1 }); },
     tick(ms) {
       now += ms;
@@ -132,6 +146,7 @@ function mount(text = source, options = {}) {
 function released(h, expected = once) {
   h.unmount(); h.unmount();
   assert.equal(h.frames.size, 0, 'unmount must cancel all RAF');
+  assert.equal([...h.documentListeners.values()].reduce((n, listeners) => n + listeners.size, 0), 0, 'unmount must remove owned document listeners');
   assert.equal(h.state.environment, 1); assert.equal(h.state.observer, 1);
   for (const renderer of h.renderers) {
     assert.equal(renderer.disposals, 1); assert.equal(renderer.losses, 1);
@@ -373,4 +388,115 @@ for (const [name, pattern, replacement, message] of [
   const mutant = source.replace(pattern, replacement); assert.notEqual(mutant, source, `${name}: mutation must apply`);
   assert.throws(() => replayContract(mutant), error => error.code === 'ERR_ASSERTION' && message.test(error.message), name);
   console.log(`PASS hero lifecycle negative control rejected: ${name}`);
+}
+
+function visibleClockContract(text, intervals, now = 10000) {
+  const h = mount(text, { now });
+  try {
+    h.resolve(); h.tick(0);
+    let elapsed = 0;
+    for (const interval of intervals) {
+      h.tick(interval); elapsed += interval;
+      if (elapsed < 8000) assert.equal(h.frames.size, 1, 'visible turn must not finish early');
+    }
+    close(h.angle(), 2 * Math.PI - .55, 'eight visible seconds must complete one revolution');
+    assert.equal(h.frames.size, 0, 'visible endpoint must stop RAF');
+    const renders = h.state.renders; h.tick(1000);
+    assert.equal(h.state.renders, renders, 'resting clock must not render again');
+  } finally { released(h); }
+}
+
+const clockCadences = [
+  ['normal', Array(128).fill(62.5)],
+  ['slow', Array(16).fill(500)],
+  ['irregular', [10, 490, 1200, 300, 2000, 500, 1000, 1000, 1500]],
+  ['single visible gap', [8000]],
+];
+for (const [name, intervals] of clockCadences) {
+  test(`hero clock: ${name} cadence completes a finite eight-second visible turn`, () => visibleClockContract(source, intervals));
+}
+test('hero clock: timestamp zero is a valid first RAF', () => visibleClockContract(source, [8000], 0));
+
+function hiddenClockContract(text, deliverHiddenFrames) {
+  const h = mount(text);
+  try {
+    h.resolve(); h.tick(16); h.tick(62.5); const angle = h.angle();
+    h.hidden(true);
+    if (deliverHiddenFrames) for (let i = 0; i < 4; i++) h.tick(15000);
+    else h.skip(60000);
+    close(h.angle(), angle, 'hidden delivery must not advance pose');
+    h.hidden(false); h.tick(16);
+    close(h.angle(), angle, 'hidden gap and first resumed RAF must not advance the turn');
+    for (let i = 0; i < 127; i++) h.tick(62.5);
+    close(h.angle(), 2 * Math.PI - .55, 'remaining visible time must complete the turn');
+    assert.equal(h.frames.size, 0, 'resumed endpoint must stop RAF');
+  } finally { released(h); }
+}
+for (const delivered of [false, true]) {
+  test(`hero clock: hidden gap excludes time with${delivered ? '' : 'out'} hidden callbacks`, () => hiddenClockContract(source, delivered));
+}
+
+function pausedReplayClockContract(text) {
+  const h = mount(text);
+  try {
+    const loaded = h.resolve(), canvas = h.renderers[0].domElement;
+    h.tick(16); h.tick(62.5); h.hidden(true); h.skip(10000); h.replay();
+    close(h.angle(), -.55, 'paused Replay must reset the pose');
+    assert.equal(h.frames.size, 1, 'paused Replay must keep exactly one RAF');
+    h.skip(10000); h.hidden(false); h.tick(16);
+    close(h.angle(), -.55, 'hidden time must not shorten Replay');
+    for (let i = 0; i < 16; i++) h.tick(500);
+    close(h.angle(), 2 * Math.PI - .55, 'paused Replay must complete its own visible revolution');
+    assert.equal(h.frames.size, 0); assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1);
+    assert.equal(h.renderers[0].domElement, canvas); assert.equal(h.models[0], loaded);
+    assert.deepEqual(loaded.counts, { geometry: 0, material: 0, texture: 0, image: 0 });
+  } finally { released(h); }
+}
+test('hero clock: Replay during hidden pause resets without refetch or another renderer', () => pausedReplayClockContract(source));
+
+function replayOriginClockContract(text) {
+  const h = mount(text);
+  try {
+    h.resolve(); h.tick(16); h.tick(500); h.skip(1000); h.replay(); h.tick(500);
+    close(h.angle(), -.55, 'first Replay RAF must establish a fresh visible-time origin');
+    for (let i = 0; i < 16; i++) h.tick(500);
+    close(h.angle(), 2 * Math.PI - .55, 'Replay must accrue its own eight seconds');
+    assert.equal(h.frames.size, 0); assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1);
+  } finally { released(h); }
+}
+test('hero clock: visible Replay discards the old timestamp and elapsed time', () => replayOriginClockContract(source));
+
+test('hero clock: unmount while hidden removes callbacks and owned listeners', () => {
+  const h = mount();
+  h.resolve(); h.tick(16); h.hidden(true); released(h);
+  const renders = h.state.renders; h.hidden(false); h.tick(8000);
+  assert.equal(h.state.renders, renders); assert.equal(h.state.errors, 0);
+});
+test('hero clock: reduced motion stays at rest through visibility and Replay', () => {
+  const h = mount(source, { reduced: true });
+  try {
+    h.resolve(); h.hidden(true); h.skip(60000); h.replay(); h.hidden(false); h.tick(8000);
+    close(h.angle(), -.55, 'reduced-motion clock must retain original rest pose');
+    assert.equal(h.frames.size, 0); assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1);
+  } finally { released(h); }
+});
+
+for (const [name, from, to, contract, message] of [
+  ['visible 100ms cap', 'Math.max((now - previous) / 1000, 0)', 'Math.min((now - previous) / 1000, 0.1)',
+    mutant => visibleClockContract(mutant, Array(16).fill(500)), /eight visible seconds must complete one revolution/],
+  ['truthy timestamp sentinel', 'previous !== undefined', 'previous',
+    mutant => visibleClockContract(mutant, [8000], 0), /eight visible seconds must complete one revolution/],
+  ['missing visibility reset', 'const visibilityChanged = () => { previous = undefined; };', 'const visibilityChanged = () => {};',
+    mutant => hiddenClockContract(mutant, false), /hidden gap and first resumed RAF must not advance the turn/],
+  ['missing visibility cleanup', "document.removeEventListener('visibilitychange', visibilityChanged);", '',
+    mutant => visibleClockContract(mutant, [8000]), /unmount must remove owned document listeners/],
+  ['stale Replay timestamp', 'elapsed = 0; previous = undefined;', 'elapsed = 0;',
+    mutant => replayOriginClockContract(mutant), /first Replay RAF must establish a fresh visible-time origin/],
+  ['stale Replay elapsed time', 'elapsed = 0; previous = undefined;', 'previous = undefined;',
+    mutant => replayOriginClockContract(mutant), /first Replay RAF must establish a fresh visible-time origin/],
+]) {
+  assert.equal(source.split(from).length, 2, `${name}: mutation must target exactly one expression`);
+  const mutant = source.replace(from, to);
+  assert.throws(() => contract(mutant), error => error.code === 'ERR_ASSERTION' && message.test(error.message), name);
+  console.log(`PASS hero clock negative control rejected: ${name}`);
 }

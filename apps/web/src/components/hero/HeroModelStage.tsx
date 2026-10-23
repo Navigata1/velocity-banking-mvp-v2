@@ -66,10 +66,12 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contextLost = (event: Event) => { event.preventDefault(); onError(); };
     renderer.domElement.addEventListener('webglcontextlost', contextLost);
-    let elapsed = 0, previous = 0;
+    let elapsed = 0, previous: number | undefined;
+    const visibilityChanged = () => { previous = undefined; };
+    document.addEventListener('visibilitychange', visibilityChanged);
     const animate = (now: number) => {
       if (disposed || !object) return;
-      if (!document.hidden && previous) elapsed += Math.min((now - previous) / 1000, 0.1);
+      if (!document.hidden && previous !== undefined) elapsed += Math.max((now - previous) / 1000, 0);
       previous = now;
       object.rotation.y = heroAngleAt(elapsed); render();
       if (elapsed < HERO_TURN_SECONDS && !reduced.matches) frame = requestAnimationFrame(animate);
@@ -77,7 +79,7 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     const restart = () => {
       if (disposed || !object) return;
       cancelAnimationFrame(frame);
-      elapsed = 0; previous = 0;
+      elapsed = 0; previous = undefined;
       object.rotation.y = heroAngleAt(0); render();
       if (!reduced.matches) frame = requestAnimationFrame(animate);
     };
@@ -109,6 +111,7 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     }, undefined, () => { if (!disposed) onError(); });
     return () => {
       disposed = true; cancelAnimationFrame(frame); observer.disconnect();
+      document.removeEventListener('visibilitychange', visibilityChanged);
       restartTurn.current = undefined;
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
       try { releaseInstances?.(); }
