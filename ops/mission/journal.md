@@ -977,3 +977,25 @@ hashes and all10GLB/poster/material/camera/yaw/clock/math/backend bytes preserve
 Independent source review. FullR1photoreal/R3/backend/security/native/a11y/release
 stayOPEN. NewheadCI/READY/hosted/IAB/finalreceipt pending in thisPRE-PUSHsnapshot.
 No merge/manualdeploy/promotion; goalACTIVE/PR256draft.
+
+## State 43 - Cold media input preparation
+
+0486666 is FAILED, not verified: both SQL-named jobs passed63SQLassertions twice
+then sharingtest failed ENOENT for ignored unprepared studio vendors. Warm local
+29 and hosted15/210/20 pass remain exact-artifact evidence, not full CI approval.
+Pushhero timed out120000ms at Vaultvisibility after9desktopdomains passed;
+PRhero passed. PrimaryWeb/mobile correctlystopped at prerequisite guard.
+Sealed6686artifacts/comment6353969005; lastverifiedda04699/receipt6351915021.
+
+Test-only3line correction invokesexisting local preparation through boundedNode
+beforeboth exactparityreads. All38assertions/wiring unchanged. Freshtracked-only
+RED2pass1ENOENT/GREEN3pass,324trackedfiles each,50ignored generated files;
+independent6CPUcontrols cover spaces/percent/hash URLs,bothbadcopies,missing/exit/
+timeout failures. Existingdependencyjunctions,not cleaninstall/Linux proof.
+
+Fresh29serialized/485pins requestedheroSoftwarepath; no app/model/material/math/
+backend/workflow/dependency/capchange. Same frozenCard270decodedvideo bytes;
+alltenvideoverification fresh. Separate Vaulttimeout NOT diagnosed by thisfix.
+State43 PRE-PUSH:newcomplete CIpair/READY/hosted/IAB/restore/finalreceipt pending.
+Allfinalphotoreal/R3/backend/security/physicalnative/a11y/release stillOPEN.
+GoalACTIVE/PR256draft,no merge/manualdeploy/productionpromotion.
