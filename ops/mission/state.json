@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Canvas capture QA candidate passes CPU and built Money Loop checks without changing the app. Previous111push failed CI; f708bda remains the verified baseline. Photoreal and production gates remain open.",
+    "tagline": "Clean-checkout CPU fixture repaired locally without changing the app. Both d842 CI runs failed and remain recorded. Final photoreal and production gates are still open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T19:18:03.006Z",
-    "sessionCount": 69
+    "updated": "2026-10-23T19:46:48.881Z",
+    "sessionCount": 70
   },
   "policies": {
     "merge": "review",
@@ -352,7 +352,7 @@
           "dependsOn": [
             "R1-T14"
           ],
-          "notes": "QA-only candidate: two of495 source inputs changed;13 runtime modules and20 assets are unchanged. Corrected RED21/2, GREEN25/0, nine targeted mutation rejections and full web tests, media227 contracts, lint and types passed. Independent CPU review accepted the exact files after54 checks, including13 mutation rejections; original reviewer fixture and launcher failures remain recorded. One real built-app run passed18 normal actions, six selection workflows and reduced motion without changing700ms/300ms or pixel checks. It used an exact copy of the source-bound existing build, not a fresh build or another full29 run. New-head GitHub CI and READY deployment verification remain pending. No root-cause or reliability claim. Evidence: ops/mission/evidence/canvas-capture-fusion-2026-10-23/candidate.json.",
+          "notes": "QA-only candidate: two of495 source inputs changed;13 runtime modules and20 assets are unchanged. Corrected RED21/2, GREEN25/0, nine targeted mutation rejections and full web tests, media227 contracts, lint and types passed. Independent CPU review accepted the exact files after54 checks, including13 mutation rejections; original reviewer fixture and launcher failures remain recorded. One real built-app run passed18 normal actions, six selection workflows and reduced motion without changing700ms/300ms or pixel checks. It used an exact copy of the source-bound existing build, not a fresh build or another full29 run. New-head GitHub CI and READY deployment verification remain pending. No root-cause or reliability claim. Evidence: ops/mission/evidence/canvas-capture-fusion-2026-10-23/candidate.json. State70: d842 was pushed but both first-attempt CI events40010779271/40010782452 FAILED the new CPU test20 because real debug PNG writes require a missing output directory. All four hero/SQL prerequisite jobs passed. Honest failure status6373224401 and229 immutable artifacts retain it. No success seal. Local output had masked the fixture dependency; this is not an app or timing cause claim.",
           "pr": {
             "number": 256,
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
@@ -367,6 +367,20 @@
             "R1-T10"
           ],
           "notes": "Private study completed; neither arm was adopted. All18 original images were inspected. The standalone graphics comparison passed in six fresh contexts with39 owned processes closed and unchanged214 draw calls/269942 triangles/15 textures. Differences were too subtle; harsh highlights remain. The pinned HyperFrames check failed its first fixture on module loading, missing GSAP and timeline advancement; five fixtures were not run. Its11 owned processes closed. The earlier favicon404 failure, routing diagnostic, corrected comparison and four stronger CPU safety counterexamples are retained. No app, material, GLB, dependency or financial changes and no new video. Final photoreal and hardware approval remain open."
+        },
+        {
+          "id": "R1-T18",
+          "title": "Isolate CPU diagnostic PNG writes from clean checkouts",
+          "status": "in_progress",
+          "dependsOn": [
+            "R1-T14"
+          ],
+          "notes": "One QA fixture file only. Unchanged clean copy reproduced25/24/1 ENOENT; two permanent regressions gave27/24/3 before the fix. The VM fixture now validates and captures exact debug PNG byte pairs in memory. Real browser debug writer, transport, PNG decoder, material/stability/timing checks and production app are unchanged. Clean candidate27/27/0, independent source review and full focused CPU/media227/lint/types pass. New exact-head remote verification remains required. Evidence: ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json.",
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          }
         }
       ],
       "gates": [
@@ -375,27 +389,27 @@
           "title": "Texture and provenance contracts",
           "command": "npm --prefix apps/media run test:contracts",
           "status": "passed",
-          "evidence": "ops/mission/evidence/canvas-capture-fusion-2026-10-23/candidate.json",
-          "lastRun": "2026-10-23T19:18:03.006Z",
-          "notes": "Current media227 CPU contracts passed; media and asset bytes are unchanged. No new export or final art approval."
+          "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
+          "lastRun": "2026-10-23T19:46:48.881Z",
+          "notes": "Current227 media CPU contracts pass; no media/art/dependency changes or final art approval."
         },
         {
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/canvas-capture-fusion-2026-10-23/candidate.json",
+          "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
           "lastRun": "2026-10-23T18:07:26.346Z",
-          "notes": "Inherited local29/stored-export evidence on byte-unchanged runtime and assets. This QA-only slice did not rerun local hero/export rendering. Current exact-head remote gates remain required; final photoreal and physical approval are open."
+          "notes": "Unchanged app/runtime/assets. Both d842 asset-hero CI jobs passed, but both aggregate workflows FAILED CPU test20. Prior stored export evidence is inherited; this fixture-only slice adds no GPU render/video/manual approval. Final photoreal and physical gates remain open."
         },
         {
           "id": "R1-G3",
           "title": "Rendered full-revolution pixel proof",
           "command": "npm --prefix apps/media run verify:heroes",
           "status": "passed",
-          "evidence": "ops/mission/evidence/canvas-capture-fusion-2026-10-23/candidate.json",
+          "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
           "lastRun": "2026-10-23T18:07:26.346Z",
-          "notes": "Inherited local29/stored-export evidence on byte-unchanged runtime and assets. This QA-only slice did not rerun local hero/export rendering. Current exact-head remote gates remain required; final photoreal and physical approval are open."
+          "notes": "Unchanged app/runtime/assets. Both d842 asset-hero CI jobs passed, but both aggregate workflows FAILED CPU test20. Prior stored export evidence is inherited; this fixture-only slice adds no GPU render/video/manual approval. Final photoreal and physical gates remain open."
         }
       ]
     },
@@ -1448,12 +1462,12 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State69: revision111 is pushed but NOT VERIFIED. Push CI40002265265 attempt1 failed; its companion PR run passed all three jobs and every step. Failure-status comment6372381653 and5655 frozen artifacts preserve that outcome. f708 / receipt6370542236 remains the verified baseline. Do not rerun unchanged CI until green or publish a false success seal.",
-      "The canvas-capture candidate changes only test-three-stage.cjs and canvas-overlay-tests.cjs. Application, media, financial, workflow and dependency bytes are unchanged. RED21/2, GREEN25/0, nine targeted controls, four focused commands, independent review and one built Money Loop run passed. That run covered18 normal actions, six selection workflows and reduced motion using a provenance-bound inherited build. Read docs/canvas-capture-fusion-contract-2026-10-23.md and the current evidence; do not call it a fresh build or full29 rerun.",
-      "Commit and push the focused QA change with this mission state/report after checking all495 working/committed source inputs. Only unchanged inherited CRLF/LF differences are permitted. Keep draft PR256 open and unmerged. Require both complete new exact-head CI events, all three jobs/every step/six source guards, and a positively known automatic git READY deployment. No manual deployment or production promotion.",
-      "Do not infer timing root cause, FPS or reliability from CPU tests or one browser pass. Preserve the historical111/491/493 failures. The cache threshold below1px, pre-isolation fresh crop,700ms/300ms bounds, pixel checks, action list and CI caps remain. Concurrent moving-layout and simultaneous-failure priority limits are disclosed.",
+      "State70: d842 is CLOSED FAILED, not verified. Push40010779271 and PR40010782452 attempt1 both failed clean-checkout CPU test20; all four hero/SQL prerequisite jobs passed. Failure-status6373224401 and229 frozen artifacts preserve it. f708/receipt6370542236 remains the prior whole-app verified checkpoint;111 remains failed too.",
+      "The current candidate changes only canvas-overlay-tests.cjs. Unchanged clean reproduction25/24/1 and permanent RED27/24/3 precede GREEN27/27/0 with no output directory before/after. Strict in-memory diagnostic writes retain exact PNG byte pairs. The real browser debug writer, capture transport, PNG decoder, checks, deadlines, app, assets and finance remain unchanged. Read docs/overlay-fixture-isolation-contract-2026-10-23.md and ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json.",
+      "After exact495 committed/working input checks, commit and push the focused fixture/state change once to draft PR256. Require both complete NEW exact-head CI events, all three jobs/every step/six source guards and known automatic git READY. No unchanged CI retry, merge, manual deployment, production promotion or metadata-only push.",
+      "Use the independent fixture-only risk ruling and full focused CPU/media227/lint/types results. No new local29/House video/hosted/manual run was performed for this CPU-only boundary; do not imply otherwise. Historical111/491/493 and RSC failures remain open. The failed d842 private success-publisher has three unresolved independent-review findings and must not be reused unchanged.",
       "The Car paint study is complete and neither arm was adopted. All18 originals were viewed; sampling and coat changes were too subtle to qualify as a photoreal upgrade. The actual HyperFrames CLI check failed module/GSAP/timeline validation, with five fixtures not run. Keep the study frozen except progress.md. Do not repeat the same arms unchanged or upgrade the pinned toolchain as a workaround. A new art direction must use materially different evidence and the known canonical inline composition.",
-      "The six-table backend owner matrix is still preparation only. Root SQL/config files sit outside the495-input app map and need explicit pins. Preserve the original63 assertions and four migrations, add a separate disposable matrix, and obtain real SQL CI proof. Do not mutate managed cloud data or infer project association from a name.",
+      "The six-table backend matrix is a257-line private draft with191 planned assertions, HELD after two P2 review findings: nine missing null-JWT CRUD cases,11 missing foreign-target cases per owner, and eight unordered matrix queries. Fix and independently re-review before adoption; sqlExecuted=false. Actual disposable SQL CI must include the original63 twice with rollback/lint/advisors. RootSQL/config sit outside495 app pins. Preserve all four migrations and do not mutate hosted data or guess a cloud association.",
       "Prior d03a7c1 VERIFIED: receipt6339608765,complete push39764855337 attempt1/PR39764859371 attempt2,known READY/hosted168/20assets/actualIAB/256shipping/96local/385source pins. Original PR attempt1 screenshot35ms remaining failure and old dfd700.91ms miss are retained; causes/reliability unresolved despite bounded full retries. Original18Three actions and all pixel/deadline checks remain unchanged.",
       "Read docs/runtime-audit-contract-2026-10-22.md. Preserve mandatory fail-closed complete zero report/allseverities, fixed online flags, narrow realQuick error parsing and bounded3processes/30sHTTP/90schild. Independent offline/schema/serializer/fullnotice REDs are retained. OriginalBulk cause/lockdefect/push timeout are unproven; local0runtime is not all-toolchain security or CI. No npm/lock/registry/config mutation.",
       "R1: production studio retained. Private unscaled and energy-calibrated photographic Car studies rejected; do not repeat them as progress. Read .superpowers/sdd/2026-10-22-environment-calibration/decision.md and orientation/photographic checkpoints. CorrectSwiftShader orientation,216GPU readings and ratio.23363526595580578 reduce broad wash but not paintgrain/hotspots. Original12/69/29/68 pins immutable;342434publicbytes headroom. No adoption/allten/mobile/hardware/lifecycle/newMP4/independent visual approval. Choose a materially new evidence-led art action; no paidGPU/broad redesign.",
@@ -1479,7 +1493,7 @@
     "blockers": [
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
-      "The verified f708 checkpoint remains the baseline. Later111 push CI failed despite a passing companion run; failure-status comment6372381653 preserves it. The new test-transport candidate still needs current remote verification. Draft PR256 remains unmerged. Final art, lender, cloud recovery/security, physical native/accessibility and production gates remain open.",
+      "Prior whole-app verified f708 remains the baseline. Revision111 and both d842 CI events failed; honest statuses6372381653/6373224401 preserve them. New clean-fixture candidate still needs complete new-head remote verification. Draft PR256 remains unmerged. Final art, lender, cloud recovery/security, physical native/accessibility and production gates remain open.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open."
     ],
     "conventions": [
