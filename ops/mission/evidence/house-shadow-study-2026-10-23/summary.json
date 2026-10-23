@@ -1,0 +1,159 @@
+{
+  "at": "2026-10-23T10:45:36.676Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "private-study-evaluated-fixed-2k-not-adopted",
+  "productionReady": false,
+  "adopted": false,
+  "sourcePinsUnchanged": 486,
+  "heroAssetsUnchanged": 20,
+  "selectedEvidenceOnly": true,
+  "selectedEvidencePins": {
+    ".superpowers/sdd/2026-10-23-house-self-shadow/baseline.json": "b33a2739fcc3ca0333b680931f5135d520cb20c47d6df5e2085a163140f361c4",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/self-shadow.mjs": "88622162a1d9c40b098a2b60709ba56651060551fc221983cba9e0ded91c0490",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/self-shadow.test.mjs": "f650fe1f0a29e026a6a713f2fc56245dad607cafd0a7b02b0efbe2e53babd11f",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/review-helper-8b671c48-43af-415f-95d5-947bb6bbb4f0/review.md": "d36952ed8b15fa6d0fb6c3658d4207b9c091a9ccf50237e050218a3056a3505a",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/review-fixtures-supplement-1a9ff27a-b48d-4f4d-88ce-dcc811e1056e/closure.md": "a056b6b052e113099ba1b32ef9dc7d879f45e5771381a87b03e49f7de162a59b",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/review-visual-3ace3a77-b700-4a9b-8bff-f1dcb4640cbf/review.md": "d58f8fdda57ce227376784d6a79bc601c43bca455c1f6de9ffdba989999a2657",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/review-mobile-9e00c057-246f-41e9-96c7-795a3a34d52d/review.md": "8a17dd9267bd31f7e7085582412e96f6eeb1be2ea8e6e018b7bd0c30d91806c9",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/runtime-capture-d692c9ad-ed55-4b58-970c-82912cc8e873/runtime-proof.json": "0f1cff759b01c766452c8b78f76d7e487fd444a7d7b9958d4d3590ef2dbb596c",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/runtime-capture-d692c9ad-ed55-4b58-970c-82912cc8e873/verification.json": "0d1eb9b689c3e5131480c02ccb691632e228c9e76befc50c2c82f09ae27d9ccb",
+    ".superpowers/sdd/2026-10-23-house-self-shadow/video-07fb4e98-4b8e-4906-ba19-87f47ee5b4ca/video-proof.json": "d710312f913ba138da2d577a5271940b2d74852043f83a4fe8d4ccf686a84441"
+  },
+  "localOnlyRawArtifacts": true,
+  "fullSize": {
+    "collection": "af5f24fb-e02b-4a6c-bf3e-032d8685d33c",
+    "poses": 7,
+    "nativeImages": 14,
+    "seeksPerScene": [
+      11,
+      11
+    ],
+    "modelFetches": [
+      1,
+      1
+    ],
+    "reportedCounters": [
+      {
+        "name": "house-a",
+        "draws": 467,
+        "triangles": 45480,
+        "textures": 8
+      },
+      {
+        "name": "house-b",
+        "draws": 890,
+        "triangles": 90432,
+        "textures": 10
+      }
+    ],
+    "physicalPerformanceApproved": false
+  },
+  "web": {
+    "collection": "d692c9ad-ed55-4b58-970c-82912cc8e873",
+    "status": "failed",
+    "artAndLifecycleSubcases": 4,
+    "posePngs": 32,
+    "eachCaseModelFetches": 1,
+    "contextsClosed": 4,
+    "serversClosed": 2,
+    "cases": [
+      {
+        "variant": "a",
+        "width": 1440,
+        "artAndLifecyclePassed": true,
+        "networkStatus": "failed",
+        "rawAbortCount": 4,
+        "staticBindings": 33,
+        "pageErrors": 0
+      },
+      {
+        "variant": "a",
+        "width": 375,
+        "artAndLifecyclePassed": true,
+        "networkStatus": "failed",
+        "rawAbortCount": 12,
+        "staticBindings": 33,
+        "pageErrors": 0
+      },
+      {
+        "variant": "b",
+        "width": 1440,
+        "artAndLifecyclePassed": true,
+        "networkStatus": "failed",
+        "rawAbortCount": 8,
+        "staticBindings": 33,
+        "pageErrors": 0
+      },
+      {
+        "variant": "b",
+        "width": 375,
+        "artAndLifecyclePassed": true,
+        "networkStatus": "failed",
+        "rawAbortCount": 6,
+        "staticBindings": 33,
+        "pageErrors": 0
+      }
+    ],
+    "allNetworkFailuresRemainRejecting": true
+  },
+  "video": {
+    "file": "house-self-shadow.mp4",
+    "bytes": 11822973,
+    "sha256": "ac9c9b2faad759fda427c7e575bd0646c08769bd7d7933cb73a5e5441070157a",
+    "width": 1920,
+    "height": 1080,
+    "fps": "30/1",
+    "frames": 270,
+    "duration": 9,
+    "collection": "07fb4e98-4b8e-4906-ba19-87f47ee5b4ca",
+    "formalChecksPassed": true,
+    "continuousMotionAestheticsApproved": false,
+    "hardwareSpeedApproved": false
+  },
+  "network": {
+    "causeEstablished": false,
+    "originalFailedRunRetained": true,
+    "metadataCases": [
+      {
+        "name": "metadata-only",
+        "rawFailuresAtCutoff": 14
+      },
+      {
+        "name": "instrumented",
+        "rawFailuresAtCutoff": 4
+      }
+    ],
+    "tlsProtocolCases": [
+      {
+        "mode": "http1",
+        "actualProtocols": [
+          "http/1.1"
+        ],
+        "rawFailedRequests": 7
+      },
+      {
+        "mode": "http2",
+        "actualProtocols": [
+          "h2"
+        ],
+        "rawFailedRequests": 10
+      }
+    ],
+    "http2SufficientRemedy": false,
+    "noExemptionsOrAppWorkaround": true
+  },
+  "independent": {
+    "helperAcceptedCpuOnly": true,
+    "readinessP2ClosedCpuOnly": true,
+    "artGain": "useful but modest",
+    "fixed2kPermanentPolicy": "held",
+    "finalPhotoApproved": false,
+    "allTenApproved": false
+  },
+  "next": "Separate private1024 phone-map evaluation; preserve existing matrices/materials/bias semantics/ownership/failure gates. No automatic production policy.",
+  "limits": [
+    "Renderer counters and configured texels are not physical FPS/energy/thermal/memory measurements.",
+    "A failed aggregate runtime/network run remains failed despite completed art subcases.",
+    "No merge, manual deployment, promotion, paidGPU, production/cloud/account/data/DNS mutation."
+  ]
+}
