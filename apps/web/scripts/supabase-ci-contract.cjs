@@ -40,3 +40,15 @@ test('database job preserves logs and always cleans up only its own project', ()
   assert.match(databaseJob, /tee "\$RUNNER_TEMP\/backend-isolation\/pgtap\.log"/);
   assert.match(databaseJob, /tee "\$RUNNER_TEMP\/backend-isolation\/pgtap-repeat\.log"/);
 });
+
+test('database test discovery includes the original and complete owner matrix suites', () => {
+  const directory = path.join(root, 'supabase/tests');
+  for (const [file, plan] of [['owner_isolation_test.sql', 63], ['owner_permission_matrix_test.sql', 222]]) {
+    const filename = path.join(directory, file);
+    assert.ok(fs.existsSync(filename), 'disposable SQL suite is missing: ' + file);
+    const sql = fs.readFileSync(filename, 'utf8');
+    assert.match(sql, /^BEGIN;\r?$/m, file + ' needs a transaction');
+    assert.ok(sql.split(/\r?\n/).includes('SELECT plan(' + plan + ');'), file + ' needs its declared assertion plan');
+    assert.match(sql, /SELECT \* FROM finish\(\);\s*ROLLBACK;\s*$/, file + ' must finish and roll back');
+  }
+});

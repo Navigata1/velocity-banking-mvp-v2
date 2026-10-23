@@ -20,7 +20,8 @@ link, push, deployment or cloud migration command.
   migrations. Auth tables/roles are not mocked or manually substituted.
 - `supabase db reset --local --no-seed` proves a clean replay of all migrations.
 - `npm --prefix apps/web run test:supabase` runs schema/client/outbox/account
-  contracts, then the existing 63-assertion pgTAP suite against the local database.
+  contracts, then the unchanged63-assertion suite and the222-assertion six-table
+  owner matrix against the local database. The expanded285 plan awaits real CI.
 - Public-schema function lint fails on warnings; security advisors fail on errors.
   Any advisor warnings remain visible and require review, not silent suppression.
 - A second pgTAP run checks fixture rollback/repeatability without another reset.
@@ -36,10 +37,12 @@ CLI pin/local target, and bounded cleanup/evidence wiring were absent. All three
 pass after implementation. These tests inspect configuration; they do not execute
 SQL and are not owner-isolation evidence by themselves.
 
-The live gate must report `Files=1, Tests=63` and `Result: PASS` twice on the exact
-pushed source, with migration replay and lint/advisors successful. Save the hosted
-run URL and artifact receipt. A failed run must not be relabeled a pass because
-client/static checks succeeded.
+The expanded gate must report `Files=2, Tests=285` and `Result: PASS` twice on the
+exact pushed source, with migration replay and lint/advisors successful. Both
+named files must appear. Save raw logs, source guards and the hosted run URL.
+The original one-file63 results below remain historical evidence, not proof of
+the new matrix. A failed run cannot pass because client/static checks succeeded.
+See `docs/owner-permission-matrix-contract-2026-10-23.md` for scope and limits.
 
 Hosted-project binding, API/JWT sign-in, cross-device recovery, backup/restore,
 deletion, project settings and final environment separation remain separate gates.
