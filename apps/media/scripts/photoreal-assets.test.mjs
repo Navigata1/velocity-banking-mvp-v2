@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { NodeIO, getBounds } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
@@ -126,6 +128,7 @@ test('web and HyperFrames share the same photographic studio reflections', async
   assert.deepEqual(environmentArgs(modules[0],ts.ScriptKind.JS),[['renderer','`/heroes/${selected}.glb`']]);
   const studio=await readFile(new URL('../../web/src/components/hero/studio-environment.ts',import.meta.url),'utf8');
   const expected=ts.transpileModule(studio,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+  execFileSync(process.execPath,[fileURLToPath(new URL('./prepare-hyperframes-assets.mjs',import.meta.url))],{windowsHide:true,timeout:30000});
   for(const file of ['../hyperframes/vendor/studio-environment.js','../hero-turntables/vendor/studio-environment.js']) {
     assert.equal((await readFile(new URL(file,import.meta.url),'utf8')).replaceAll('\r\n','\n'),expected.replaceAll('\r\n','\n'));
   }
