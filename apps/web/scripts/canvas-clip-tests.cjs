@@ -9,7 +9,15 @@ function fixture({rect={left:12.25,top:23.5,width:400.5,height:200.25},width=144
   const wire=value=>structuredClone(value);
   const locator={
     boundingBox:async()=>{calls.push('boundingBox');strict();return{ x:rect.left,y:rect.top,width:rect.width,height:rect.height };},
-    evaluate:async fn=>{calls.push('locator.evaluate');strict();return wire(fn(node));},
+    evaluate:async (fn,includeClip,options)=>{
+      strict();
+      if(String(fn).includes('window.__moneyLoopPixelCaptureOverlays =')){
+        assert.equal(options?.timeout,700,'isolation locator wait must use the original remaining budget');
+        calls.push('isolate');isolated=true;
+        return{hiddenOverlayCount:2,isolatedSvgOverlayCount:1,...(includeClip?{snapshot:{box:{x:rect.left,y:rect.top,width:rect.width,height:rect.height},viewport:{width,height},scrollY}}:{})};
+      }
+      calls.push('locator.evaluate');return wire(fn(node));
+    },
   };
   const page={
     getByTestId:id=>{assert.equal(id,'money-loop-three-stage');return{locator:selector=>{assert.equal(selector,'canvas');return locator;}};},
@@ -57,6 +65,13 @@ test('canvas clip keeps strict missing,ambiguous and detached locator rejection'
 test('invalid post-isolation geometry retains the existing exactly-once restoration path',async()=>{
   const x=fixture({rect:{left:-1,top:0,width:1,height:1}});await assert.rejects(x.captureIsolatedCanvasPng(x.page,'invalid',1700),/not fully visible/);
   assert.equal(x.calls.filter(c=>c==='restore').length,1);assert.equal(x.calls.includes('screenshot'),false);assert.equal(x.isolated,false);
+});
+
+test('isolated capture rejects missing,ambiguous and detached canvases without screenshot',async()=>{
+  for(const options of [{matches:0},{matches:2},{detached:true}]){
+    const x=fixture(options);await assert.rejects(x.captureIsolatedCanvasPng(x.page,'strict',1700),/strict canvas locator/);
+    assert.deepEqual(x.calls,['restore']);assert.equal(x.isolated,false);
+  }
 });
 test('supplied clips keep exact object precedence and screenshot errors retain restoration and cause',async()=>{
   const original=new Error('compositor failed'),x=fixture({screenshotError:original}),clip={box:{x:1,y:2,width:3,height:4},scrollY:7};

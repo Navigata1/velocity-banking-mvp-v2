@@ -158,19 +158,23 @@ function proveCanvasPng(screenshot, viewportLabel) {
   return proof;
 }
 
-async function resolveCanvasClip(page, viewportLabel) {
-  const canvas = page.getByTestId('money-loop-three-stage').locator('canvas');
-  const { box, viewport, scrollY } = await canvas.evaluate(node => {
-    const rect = node.getBoundingClientRect();
-    return { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
-      viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
-  });
+function validateCanvasClip({ box, viewport, scrollY }, viewportLabel) {
   if (!box || ![box.x, box.y, box.width, box.height, viewport.width, viewport.height, scrollY].every(Number.isFinite) ||
       box.width <= 0 || box.height <= 0 || viewport.width <= 0 || viewport.height <= 0 ||
       box.x < 0 || box.y < 0 || box.x + box.width > viewport.width || box.y + box.height > viewport.height) {
     throw new Error(`${viewportLabel} canvas was not fully visible for clipped PNG capture.`);
   }
   return { box, scrollY };
+}
+
+async function resolveCanvasClip(page, viewportLabel) {
+  const canvas = page.getByTestId('money-loop-three-stage').locator('canvas');
+  const snapshot = await canvas.evaluate(node => {
+    const rect = node.getBoundingClientRect();
+    return { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
+  });
+  return validateCanvasClip(snapshot, viewportLabel);
 }
 
 async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {
@@ -187,9 +191,8 @@ async function captureCanvasElementPng(page, viewportLabel, deadline, clip = nul
   return { canvasClip, completedAt, screenshot };
 }
 
-async function hideCanvasOverlaysForPixelCapture(page) {
-  return page.evaluate(() => {
-    const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
+async function hideCanvasOverlaysForPixelCapture(page, includeClip, deadline) {
+  return page.getByTestId('money-loop-three-stage').locator('canvas').evaluate((canvas, includeClip) => {
     const stage = document.querySelector('[data-testid="money-loop-three-stage"]');
     const orbit = document.querySelector('[data-testid="money-loop-payoff-orbit"]');
     if (!(canvas instanceof HTMLCanvasElement) || !(stage instanceof HTMLElement) || !(orbit instanceof HTMLElement)) {
@@ -203,6 +206,7 @@ async function hideCanvasOverlaysForPixelCapture(page) {
       priority: stage.style.getPropertyPriority('background-color'),
       value: stage.style.getPropertyValue('background-color'),
     };
+    window.__moneyLoopPixelCaptureOverlays = { hidden, stageBackground };
     stage.style.setProperty('background-color', 'rgb(0 0 0)', 'important');
     for (const node of orbit.children) {
       if (!(node instanceof HTMLElement || node instanceof SVGElement) || node === stage || node.contains(stage)) continue;
@@ -212,9 +216,14 @@ async function hideCanvasOverlaysForPixelCapture(page) {
       if (node instanceof SVGElement) isolatedSvgOverlayCount += 1;
       node.style.setProperty('visibility', 'hidden', 'important');
     }
-    window.__moneyLoopPixelCaptureOverlays = { hidden, stageBackground };
-    return { hiddenOverlayCount: hidden.length, isolatedSvgOverlayCount };
-  });
+    let snapshot;
+    if (includeClip) {
+      const rect = canvas.getBoundingClientRect();
+      snapshot = { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+        viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
+    }
+    return { hiddenOverlayCount: hidden.length, isolatedSvgOverlayCount, snapshot };
+  }, includeClip, { timeout: remainingTimeout(deadline) });
 }
 
 async function restoreCanvasOverlaysAfterPixelCapture(page) {
@@ -235,10 +244,11 @@ async function restoreCanvasOverlaysAfterPixelCapture(page) {
 }
 
 async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {
-  const isolation = await timing.measure(`${phase}.isolation`, () => hideCanvasOverlaysForPixelCapture(page));
   try {
+    const { snapshot, ...isolation } = await timing.measure(`${phase}.isolation`, () => hideCanvasOverlaysForPixelCapture(page, clip == null, deadline));
     if (isolation.isolatedSvgOverlayCount < 1) throw new Error(`${viewportLabel} canvas isolation did not hide an overlapping SVG orbit overlay.`);
-    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, clip, timing, phase), isolation };
+    const canvasClip = clip ?? timing.measureSync(`${phase}.clip`, () => validateCanvasClip(snapshot, viewportLabel));
+    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, canvasClip, timing, phase), isolation };
   } finally {
     await timing.measure(`${phase}.restore`, () => restoreCanvasOverlaysAfterPixelCapture(page));
   }

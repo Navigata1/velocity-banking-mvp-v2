@@ -26,7 +26,7 @@ class HTMLCanvasElement extends HTMLElement {}
 
 class SVGElement extends Element {}
 
-function overlayFixture({ state = 'important', invalidAfterIsolation = false, moveAfterIsolation = false, screenshotError = null, svgOverlaps = true, stageSource = fs.readFileSync(filename, 'utf8') } = {}) {
+function overlayFixture({ state = 'important', invalidAfterIsolation = false, moveAfterIsolation = false, geometryThrowsAfterIsolation = false, overlayThrowsAfterIsolation = false, screenshotError = null, svgOverlaps = true, stageSource = fs.readFileSync(filename, 'utf8') } = {}) {
   const events = [];
   const window = { innerWidth: 1440, innerHeight: 900, scrollY: 987.75, scrollX: 31.5 };
   const rect = { left: 12.25, top: 23.5, width: 400.5, height: 200.25 };
@@ -37,9 +37,17 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
     if (moveAfterIsolation) { rect.left = 33.75; rect.top = 44.5; window.innerWidth = 800; window.innerHeight = 700; window.scrollY = 123.5; }
   }));
   const canvas = new HTMLCanvasElement(rect, new Style([['visibility', ['visible', '']]]));
+  const geometryFailure = new Error('post-isolation geometry sentinel');
+  const readRect = canvas.getBoundingClientRect.bind(canvas);
+  canvas.getBoundingClientRect = () => {
+    if (geometryThrowsAfterIsolation && stage.style.getPropertyValue('background-color') === 'rgb(0 0 0)') throw geometryFailure;
+    return readRect();
+  };
   stage.children = [canvas];
   const overlayRect = { left: 50, top: 60, width: 40, height: 40 };
   const svg = new SVGElement(svgOverlaps ? overlayRect : { ...overlayRect, left: 1200 }, new Style(initial('visibility')));
+  const overlayFailure = new Error('overlay mutation sentinel');
+  svg.style.onSet = (name, value) => { if (overlayThrowsAfterIsolation && name === 'visibility' && value === 'hidden') throw overlayFailure; };
   const html = new HTMLElement(overlayRect, new Style(initial('visibility')));
   const outside = new SVGElement({ ...overlayRect, left: 1200 }, new Style(initial('visibility')));
   const orbit = new HTMLElement(rect, new Style([]));
@@ -64,7 +72,7 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
       assert.equal(id, 'money-loop-three-stage');
       return { locator(selector) {
         assert.equal(selector, 'canvas');
-        return { evaluate: async fn => { events.push('geometry'); return fn(canvas); } };
+        return { evaluate: async (fn, arg) => { events.push(String(fn).includes('window.__moneyLoopPixelCaptureOverlays =') ? 'isolate+geometry' : 'geometry'); return fn(canvas, arg); } };
       } };
     },
     evaluate: async fn => { events.push(String(fn).includes('delete window.__moneyLoopPixelCaptureOverlays') ? 'restore' : 'isolate'); return fn(); },
@@ -84,20 +92,34 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
     assert.deepEqual(nodes.map(node => node.style.snapshot()), before);
     assert.equal(window.__moneyLoopPixelCaptureOverlays, undefined);
   };
-  return { page, events, window, restored, capture: () => loaded.exports.captureIsolatedCanvasPng(page, 'private-cpu', 1700) };
+  return { page, events, window, restored, geometryFailure, overlayFailure, capture: () => loaded.exports.captureIsolatedCanvasPng(page, 'private-cpu', 1700) };
 }
 
+test('isolation and post-mutation geometry use one strict browser evaluation before capture',async()=>{
+  const x=overlayFixture();await x.capture();x.restored();assert.deepEqual(x.events,['isolate+geometry','screenshot','restore']);
+});
+
+test('post-isolation geometry exceptions restore every changed inline style and preserve the error',async()=>{
+  const x=overlayFixture({geometryThrowsAfterIsolation:true});await assert.rejects(x.capture(),error=>error===x.geometryFailure);x.restored();
+  assert.deepEqual(x.events.filter(event=>event==='restore'),['restore']);assert.equal(x.events.includes('screenshot'),false);
+});
+
+test('overlay mutation exceptions restore even the property whose setter failed',async()=>{
+  const x=overlayFixture({overlayThrowsAfterIsolation:true});await assert.rejects(x.capture(),error=>error===x.overlayFailure);x.restored();
+  assert.deepEqual(x.events.filter(event=>event==='restore'),['restore']);assert.equal(x.events.includes('screenshot'),false);
+});
+
 test('real overlay callbacks restore absent,normal and important properties after success',async()=>{
-  for(const state of ['absent','normal','important']){const x=overlayFixture({state});await x.capture();x.restored();assert.deepEqual(x.events,['isolate','geometry','screenshot','restore']);}
+  for(const state of ['absent','normal','important']){const x=overlayFixture({state});await x.capture();x.restored();assert.deepEqual(x.events,['isolate+geometry','screenshot','restore']);}
 });
 test('actual callbacks restore styles after post-isolation invalid geometry',async()=>{
-  const x=overlayFixture({invalidAfterIsolation:true});await assert.rejects(x.capture(),/not fully visible/);x.restored();assert.deepEqual(x.events,['isolate','geometry','restore']);
+  const x=overlayFixture({invalidAfterIsolation:true});await assert.rejects(x.capture(),/not fully visible/);x.restored();assert.deepEqual(x.events,['isolate+geometry','restore']);
 });
 test('actual callbacks restore styles and original cause after screenshot rejection',async()=>{
   const error=new Error('CPU compositor sentinel'),x=overlayFixture({screenshotError:error});await assert.rejects(x.capture(),failure=>failure.cause===error);x.restored();
 });
 test('actual callbacks restore on missing SVG and retain the measurable canvas visibility',async()=>{
-  const x=overlayFixture({svgOverlaps:false});await assert.rejects(x.capture(),/overlapping SVG/);x.restored();assert.deepEqual(x.events,['isolate','restore']);
+  const x=overlayFixture({svgOverlaps:false});await assert.rejects(x.capture(),/overlapping SVG/);x.restored();assert.deepEqual(x.events,['isolate+geometry','restore']);
 });
 test('post-isolation snapshot coherently reads changed geometry,viewport and scroll',async()=>{
   const x=overlayFixture({moveAfterIsolation:true}),capture=await x.capture();x.restored();assert.deepEqual(structuredClone(capture.canvasClip),{box:{x:33.75,y:44.5,width:400.5,height:200.25},scrollY:123.5});
