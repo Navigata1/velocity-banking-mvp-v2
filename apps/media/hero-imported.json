@@ -70,18 +70,18 @@
   {
     "id": "creditCard",
     "quality": "refined-textured",
-    "bytes": 523764,
+    "bytes": 523936,
     "meshes": 11,
     "triangles": 18008,
-    "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025",
-    "sourceSha256": "db342fc5cfb51b6ba12da512ac6a3b738bab2b4e5fcdc0bbcf1a6b5bc8b264b5",
+    "sha256": "0e11e543cc85a5e34fd45df982bcca847dc43ac1f936326f7ec34becd15a8466",
+    "sourceSha256": "280f3278bbf1eda27af785dfcdc40f8ef903ad34a0884f757539f77d1dc0cce5",
     "sourceFile": "apps/media/scripts/build-refined-credit-card.mjs",
     "materialSourceSha256": "bcd64f53d1bc34b15cb745b2faaa283c90a3060ccbdb25f9b93afe0b0fea2752",
     "creator": "InterestShield project",
     "license": "Original project geometry and procedural material sources",
-    "provenance": "Original authored silver/emerald cards with real engraved recesses, depth-aware edge UV charts, eight inset contacts, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "provenance": "Original authored silver/emerald cards with real engraved recesses, depth-aware edge UV charts, eight inset contacts with a separate softer polished silver finish, detailed backs and reeded two-face silver coin; procedural approximate PBR maps. Not a scan or exact poster reconstruction.",
     "units": "normalized stage units",
-    "version": 3
+    "version": 4
   },
   {
     "id": "studentLoan",

@@ -123,6 +123,61 @@ test('Credit Card keeps eight inset chip contacts connected to their recessed su
   assert.throws(connected,{code:'ERR_ASSERTION'},'connection verifier must reject lateral detachment, not just Z gaps');
 });
 
+test('Credit Card reserves its softer polished silver finish for exactly eight chip contacts',async()=>{
+  const {bytes}=await card();
+  const json=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString());
+  function verify(gltf) {
+    const find=name=>{
+      const matches=gltf.materials.filter(m=>m.name===name);
+      assert.equal(matches.length,1,name+' must be unique');return matches[0];
+    };
+    const chip=find('CC-Chip-Silver'),polish=find('CC-Polished-Edge');
+    const expected=structuredClone(polish);expected.name='CC-Chip-Silver';
+    expected.pbrMetallicRoughness.metallicFactor=0.84;
+    assert.deepEqual(chip,expected,'chip finish must only clone the polish with softer metal response');
+    assert.equal(chip.pbrMetallicRoughness.roughnessFactor,0.17);
+    const contacts=gltf.nodes.filter(n=>n.name?.startsWith('CC-Chip-Contact-'));
+    assert.deepEqual(contacts.map(n=>n.name).sort(),Array.from({length:8},(_,i)=>'CC-Chip-Contact-'+i));
+    const mesh=contacts[0].mesh;
+    assert.ok(Number.isInteger(mesh));
+    assert.ok(contacts.every(n=>n.mesh===mesh),'contacts must share their original mesh');
+    assert.equal(gltf.nodes.filter(n=>n.mesh===mesh).length,8,'no unrelated mesh owner');
+    const primitives=gltf.meshes[mesh].primitives;
+    assert.equal(primitives.length,1);
+    assert.equal(gltf.materials[primitives[0].material],chip);
+    for(const [i,m]of gltf.meshes.entries())if(i!==mesh)
+      assert.ok(m.primitives.every(p=>gltf.materials[p.material]!==chip),'chip material leaked to another mesh');
+    for(const [node,material]of [
+      ['CC-Silver-Card-Body','CC-Brushed-Silver'],['CC-Silver-Card-Engraved-Face','CC-Brushed-Silver'],
+      ['CC-Emerald-Card-Body','CC-Emerald-Metal'],['CC-Emerald-Card-Engraved-Face','CC-Emerald-Metal'],
+      ['CC-Coin-Body','CC-Turned-Silver'],['CC-Coin-Front-Engraving','CC-Turned-Silver'],
+      ['CC-Coin-Rear-Engraving','CC-Turned-Silver'],['CC-Coin-Front-Rim','CC-Polished-Edge'],
+      ['CC-Coin-Rear-Rim','CC-Polished-Edge'],['CC-Chip-Substrate','CC-Inset-Polymer'],
+    ]) {
+      const n=gltf.nodes.find(n=>n.name===node);assert.ok(n,node);
+      assert.ok(gltf.meshes[n.mesh].primitives.every(p=>gltf.materials[p.material]===find(material)),node+' changed finish');
+    }
+  }
+  verify(json);
+  const reject=mutate=>{
+    const copy=structuredClone(json);mutate(copy);
+    assert.throws(()=>verify(copy),{code:'ERR_ASSERTION'});
+  };
+  const contact=g=>g.nodes.find(n=>n.name==='CC-Chip-Contact-0');
+  const chip=g=>g.materials.find(m=>m.name==='CC-Chip-Silver');
+  for(const old of ['CC-Brushed-Silver','CC-Polished-Edge'])
+    reject(g=>{g.meshes[contact(g).mesh].primitives[0].material=g.materials.findIndex(m=>m.name===old);});
+  reject(g=>{chip(g).pbrMetallicRoughness.metallicFactor=1;});
+  reject(g=>{chip(g).pbrMetallicRoughness.roughnessFactor=0.25;});
+  reject(g=>{chip(g).emissiveFactor=[0.1,0.1,0.1];});
+  reject(g=>{g.nodes.push(structuredClone(contact(g)));});
+  reject(g=>{g.nodes=g.nodes.filter(n=>n.name!=='CC-Chip-Contact-7');});
+  reject(g=>{g.nodes.push({name:'Unexpected-contact-owner',mesh:contact(g).mesh});});
+  reject(g=>{const n=contact(g);g.meshes.push(structuredClone(g.meshes[n.mesh]));n.mesh=g.meshes.length-1;});
+  reject(g=>{g.materials.push(structuredClone(chip(g)));});
+  reject(g=>{const n=g.nodes.find(n=>n.name==='CC-Silver-Card-Engraved-Face');g.meshes[n.mesh].primitives[0].material=g.materials.indexOf(chip(g));});
+});
+
 test('Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles',async()=>{
   const {named,triangles}=await card();
   const area=t=>(t[1].x-t[0].x)*(t[2].y-t[0].y)-(t[1].y-t[0].y)*(t[2].x-t[0].x);
