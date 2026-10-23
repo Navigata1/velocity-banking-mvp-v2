@@ -27,7 +27,7 @@ class HTMLCanvasElement extends HTMLElement {}
 class SVGElement extends Element {}
 
 function overlayFixture({ state = 'important', invalidAfterIsolation = false, moveAfterIsolation = false, geometryThrowsAfterIsolation = false, overlayThrowsAfterIsolation = false, screenshotError = null, svgOverlaps = true, canvasMatches = 1, detached = false, foreignCanvas = false, clock = { now: () => 1000 }, afterDecode = () => {}, stageSource = fs.readFileSync(filename, 'utf8') } = {}) {
-  const events = [];
+  const events = [], debugImages = [];
   const window = { innerWidth: 1440, innerHeight: 900, scrollY: 987.75, scrollX: 31.5 };
   const rect = { left: 12.25, top: 23.5, width: 400.5, height: 200.25 };
   const initial = property => [['outline', ['1px solid red', '']], ...(state === 'absent' ? [] : [[property, [property === 'visibility' ? 'visible' : 'rgb(12 34 56)', state === 'important' ? 'important' : '']]])];
@@ -69,6 +69,11 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
     require: id => {
       if (id === 'playwright-core') return {};
       const actual = request(id);
+      if (id === 'node:fs') return { ...actual, writeFileSync(file, bytes) {
+        assert.equal(path.dirname(file), path.resolve(path.dirname(filename), '../test-results/three-stage'));
+        assert.match(path.basename(file), /^normal-cpu-(candidate|confirmation)\.png$/);
+        assert.ok(Buffer.isBuffer(bytes)); debugImages.push({ file, bytes: Buffer.from(bytes) });
+      } };
       return id === './png-pixel-proof.cjs' ? { ...actual, decodePngRgba: bytes => { const decoded = actual.decodePngRgba(bytes); afterDecode(); return decoded; } } : actual;
     },
     __dirname: path.dirname(filename), module: loaded, process: { once() {} }, console, Date: { now: clock.now } };
@@ -100,7 +105,7 @@ function overlayFixture({ state = 'important', invalidAfterIsolation = false, mo
     assert.deepEqual(nodes.map(node => node.style.snapshot()), before);
     assert.equal(window.__moneyLoopPixelCaptureOverlays, undefined);
   };
-  return { page, events, window, restored, geometryFailure, overlayFailure, context, helpers: loaded.exports, canvas, capture: () => loaded.exports.captureIsolatedCanvasPng(page, 'private-cpu', 1700) };
+  return { page, events, debugImages, window, restored, geometryFailure, overlayFailure, context, helpers: loaded.exports, canvas, capture: () => loaded.exports.captureIsolatedCanvasPng(page, 'private-cpu', 1700) };
 }
 
 test('isolation and post-mutation geometry use one strict browser evaluation before capture',async()=>{
@@ -253,6 +258,17 @@ test('normal caller really decodes PNGs and rejects corrupt, unchanged and unsta
     [{ confirmation: unstablePng }, /was not stable through/, 2]]) {
     const x = normalFixture(options); await assert.rejects(x.run(), pattern); x.restored(); assert.equal(x.captures, captures);
   }
+});
+test('CPU negative PNG probes retain exact diagnostic image pairs without checkout writes', async () => {
+  for (const [confirmation, pattern] of [[beforePng, /confirmation did not materially retain/], [unstablePng, /was not stable through/]]) {
+    const x = normalFixture({ confirmation }); await assert.rejects(x.run(), pattern); x.restored();
+    assert.equal(x.debugImages.length, 2);
+    assert.deepEqual(x.debugImages.map(image => path.basename(image.file)), ['normal-cpu-candidate.png', 'normal-cpu-confirmation.png']);
+    assert.ok(x.debugImages[0].bytes.equals(selectedPng)); assert.ok(x.debugImages[1].bytes.equals(confirmation));
+  }
+});
+test('successful CPU captures produce no diagnostic image writes', async () => {
+  const x = normalFixture(); await x.run(); x.restored(); assert.deepEqual(x.debugImages, []);
 });
 test('normal caller preserves canvas-isolation and SVG guards without screenshots after failure', async () => {
   for (const options of [{ svgOverlaps: false }, { canvasMatches: 0 }, { canvasMatches: 2 }, { detached: true }, { foreignCanvas: true }]) {
