@@ -25,9 +25,9 @@ function review(snapshot, reason) {
   assert.equal(next(snapshot).tone, 'watch');
 }
 
-test('healthy default still offers the bounded principal chunk', () => {
+test('healthy default asks for comparison before a bounded principal chunk', () => {
   const input = fresh(), snapshot = engine.buildMobileDashboardSnapshot(input);
-  assert.equal(velocity(input).isPayoffPossible, true); assert.equal(snapshot.nextMove, 'Send $1,000 to principal'); assert.equal(snapshot.warning, null);
+  assert.equal(velocity(input).isPayoffPossible, true); assert.equal(snapshot.nextMove, 'Compare payoff paths'); assert.equal(snapshot.warning, null);
 });
 test('non-amortizing debt cannot earn a positive chunk suggestion', () => {
   const input = failed(); assert.equal(velocity(input).failureReason, 'payment-below-interest');

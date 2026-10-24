@@ -90,8 +90,7 @@ function TargetDashboard() {
   const domain = store.activeDomain;
   const debtType = store.getActiveDebtType();
   const activeDebt = store.debts[debtType];
-  const baseline = store.getBaselinePayoff(debtType);
-  const velocity = store.getVelocityPayoff(debtType);
+  const { baseline, velocity } = store.getPayoffComparison(debtType);
   const model = buildDashboardModel({
     monthlyIncome: store.monthlyIncome,
     monthlyExpenses: store.monthlyExpenses,

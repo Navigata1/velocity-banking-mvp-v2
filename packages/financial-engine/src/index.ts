@@ -1427,7 +1427,7 @@ export function buildMobileDashboardSnapshot(
   } else if (!locNeedsSetup && cashFlow <= model.activeDebt.monthlyPayment) {
     nextMove = 'Pause new chunks';
   } else if (!locNeedsSetup && safeChunk > 0) {
-    nextMove = `Send ${formatCurrency(safeChunk)} to principal`;
+    nextMove = 'Compare payoff paths';
   }
 
   return {
@@ -1464,7 +1464,9 @@ export function buildMobileDashboardSnapshot(
         value: nextMove,
         detail: nextMove === 'Pause new chunks'
           ? 'Educational estimate: the scheduled-payment policy pauses new chunks. Unused final payments can still recover the LOC.'
-          : 'Educational estimate, not a money movement instruction.',
+          : nextMove === 'Compare payoff paths'
+            ? 'A feasible chunk does not establish an advantage. Compare the same budget, debts and cash at the same date.'
+            : 'Educational estimate, not a money movement instruction.',
         tone: warning || nextMove === 'Pause new chunks' ? 'watch' : 'good',
       },
     ],

@@ -7,6 +7,7 @@ import {
   calculateDailyInterest,
   simulateBaseline,
   simulateVelocity,
+  runSimulation,
   type PayoffFailureReason,
   type SimulationInputs,
 } from '../engine/calculations';
@@ -192,6 +193,7 @@ export interface FinancialState {
   getTotalDebt: () => number;
   getBaselinePayoff: (type: DebtType) => PayoffProjection;
   getVelocityPayoff: (type: DebtType) => VelocityPayoffProjection;
+  getPayoffComparison: (type: DebtType) => { baseline: PayoffProjection; velocity: VelocityPayoffProjection };
 }
 
 const debtTypes: DebtType[] = [
@@ -611,6 +613,22 @@ export const useFinancialStore = create<FinancialState>()(
         return Object.values(state.debts).reduce((sum, debt) => sum + debt.balance, 0);
       },
       
+      getPayoffComparison: (type) => {
+        const state = get();
+        const inputs = debtTypes.includes(type) && Object.hasOwn(state.debts, type) ? createSimulationInputs(state, type) : null;
+        if (!inputs) return {
+          baseline: { months: 0, totalInterest: 0, isPayoffPossible: false },
+          velocity: { months: 0, totalInterest: 0, savings: 0, isPayoffPossible: false },
+        };
+        const { baseline, velocity } = runSimulation(inputs);
+        return {
+          baseline: { months: baseline.payoffMonths, totalInterest: baseline.totalInterest,
+            isPayoffPossible: baseline.isPayoffPossible, failureReason: baseline.failureReason },
+          velocity: { months: velocity.payoffMonths, totalInterest: velocity.totalInterest,
+            savings: velocity.interestSaved, isPayoffPossible: velocity.isPayoffPossible, failureReason: velocity.failureReason },
+        };
+      },
+
       getBaselinePayoff: (type) => {
         const state = get();
         const inputs = createSimulationInputs(state, type);

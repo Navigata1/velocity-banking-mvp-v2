@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Prior53 passed both CI events. Exclusive hero handoff is integrated for fresh verification; House depth and video delivery remain gated. No production release.",
+    "tagline": "545 passed both complete CI events. Guarded equal-budget Dashboard comparison and compare-first web/Expo coaching pass local proof; new-source CI and final art/release gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-24T02:56:09Z",
-    "sessionCount": 76
+    "updated": "2026-10-24T04:20:24.440Z",
+    "sessionCount": 77
   },
   "policies": {
     "merge": "review",
@@ -202,9 +202,9 @@
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
           "status": "pending",
-          "evidence": "ops/mission/evidence/hero-handoff-2026-10-24/summary.json",
+          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
           "lastRun": "2026-10-24T02:12:02.705Z",
-          "notes": "Historicalcd20 push40045629097 passed/PR40045632074 failed actualThree17ms remaining; canonicalexit1/receipt6377941309 retained, cause unproven. State76:53e69170 both complete attempt1 events40050422119/40050426295/all6guards/canonical0 verified, receipt6378603653; actual285SQL assertions twice/event(1140executions,not distinct). Newly integrated handoff requires its own complete pair; no inherited new-head approval or unchanged rerun."
+          "notes": "Historicalcd20 push40045629097 passed/PR40045632074 failed actualThree17ms remaining; canonicalexit1/receipt6377941309 retained, cause unproven. State76:53e69170 both complete attempt1 events40050422119/40050426295/all6guards/canonical0 verified, receipt6378603653; actual285SQL assertions twice/event(1140executions,not distinct). Newly integrated handoff requires its own complete pair; no inherited new-head approval or unchanged rerun. 545 now fully verified at6379361182. State77 comparison/coaching source is independently accepted with local376/23247; its own complete automatic push/PR CI pair is still required, not inherited or rerun."
         },
         {
           "id": "R0-G4",
@@ -408,8 +408,11 @@
             "mergedAt": null
           }
         },
-        { "id": "R1-T21", "title": "Make studio-to-model handoff exclusive across stage lifetimes", "status": "in_progress",
-          "notes": "State76 integrates exact independently accepted V3 source26a488d5: no poster fade, mounted invisible loading stage, generation key and generation-scoped readiness. V1 smoke-order race and V2 coalesced-return latch remain retained. Durable9presentation/6actual-parent-stage schedules/8controls; unchanged38Stage cases, independent611cases/5behavioralmutants. Constant-key control proves fixture ownership, not independent functional-stuck proof. One extra owned load on coalesced negative events; Replay retains stage. Five product/test files295churn; actual fullweb369financial/23247common-month,lint/types/CI22 and report1+4 pass. NewCI/preview pending. Assets, renderer clock and financials unchanged. Blank StudentLoan CI poster capture remains unresolved; not all-102-nonblank or art/production approval."
+        {
+          "id": "R1-T21",
+          "title": "Make studio-to-model handoff exclusive across stage lifetimes",
+          "status": "done",
+          "notes": "State76 integrates exact independently accepted V3 source26a488d5: no poster fade, mounted invisible loading stage, generation key and generation-scoped readiness. V1 smoke-order race and V2 coalesced-return latch remain retained. Durable9presentation/6actual-parent-stage schedules/8controls; unchanged38Stage cases, independent611cases/5behavioralmutants. Constant-key control proves fixture ownership, not independent functional-stuck proof. One extra owned load on coalesced negative events; Replay retains stage. Five product/test files295churn; actual fullweb369financial/23247common-month,lint/types/CI22 and report1+4 pass. NewCI/preview pending. Assets, renderer clock and financials unchanged. Blank StudentLoan CI poster capture remains unresolved; not all-102-nonblank or art/production approval. Bounded closure at545fc53: both complete attempt1 CI40056745792/40056747647, all6guards/canonical0, receipt6379361182; READY Git preview, actual Chrome Car/House readiness/Replay/offscreen return and Student poster checked. No all-angle/photo/capture-reliability or production approval."
         },
         {
           "id": "R1-T20",
@@ -421,7 +424,7 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "State74 PRIVATE, NOT ADOPTED. Core53/portable155 and independent155+16 remain accepted CPU lineage. V3 parent boundary fixed4P2 and late-close findings; three actual old-stage controls and prepare pass. First real long-stage render FAILED ENOENT at a283-character mkdtemp template; no MP4 or backfill. Operator-v2 fixes .env-prefix exclusion and passes56+30+2review checks. Reviewed short-stage copy517c6dd2 has214-character template,120+9sources and3runtime trees; postcreation DATA and fixed controller graph accepted separately. Fresh short controls passed at this snapshot: 2/3; remaining controls/prepare/render/decoded proof/delivery still required. Generic root workflow/aliases P1 OPEN. Existing assets, composition, financials and dependencies unchanged. No final art or production approval. Original candidate record is a dated State73 snapshot, not the latest execution verdict."
+          "notes": "State74 PRIVATE, NOT ADOPTED. Core53/portable155 and independent155+16 remain accepted CPU lineage. V3 parent boundary fixed4P2 and late-close findings; three actual old-stage controls and prepare pass. First real long-stage render FAILED ENOENT at a283-character mkdtemp template; no MP4 or backfill. Operator-v2 fixes .env-prefix exclusion and passes56+30+2review checks. Reviewed short-stage copy517c6dd2 has214-character template,120+9sources and3runtime trees; postcreation DATA and fixed controller graph accepted separately. Fresh short controls passed at this snapshot: 2/3; remaining controls/prepare/render/decoded proof/delivery still required. Generic root workflow/aliases P1 OPEN. Existing assets, composition, financials and dependencies unchanged. No final art or production approval. Original candidate record is a dated State73 snapshot, not the latest execution verdict. Latest State77: old fullten render failed mandatoryPOST; videos UNAPPROVED. HP3 consumedHOLD beforefirstcapture at glass-role assertion, source/runtimePOSTpassed, raw materialrow unknown. HP4 source HELD adapterdoublecount; new HP5 adapter-aware source/CPU proposal under independent review, no runtime/binding/gate/capture authority. Generic root operatorP1 remains open."
         }
       ],
       "gates": [
@@ -475,7 +478,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "Bounded Portfolio same-month feature verified atcc09e2e: shared31 contracts/23247 probes,21 web+21 native,11 maximum-currency widths, both full CI/hosted120/new actual IAB and receipt6320460045. Earlier failed7bd/789/D6 histories remain explicit, not retroactively approved. Same-budget cash-minus-debt/LOC comparisons do not complete other route scopes, shared ownership or lender/calendar/device gates; entire R2 remains open."
+          "notes": "Bounded Portfolio same-month feature verified atcc09e2e: shared31 contracts/23247 probes,21 web+21 native,11 maximum-currency widths, both full CI/hosted120/new actual IAB and receipt6320460045. Earlier failed7bd/789/D6 histories remain explicit, not retroactively approved. Same-budget cash-minus-debt/LOC comparisons do not complete other route scopes, shared ownership or lender/calendar/device gates; entire R2 remains open. State77 NM01: guarded store comparison now uses one existing equal-budget/target+LOC runSimulation, signed facts and owned-target/storage guards; Dashboard and shared Expo healthy coaching say Compare payoff paths. Seven new actual-function tests,376 total/23247probes, source reviewV2 accepted after inherited-car RED/fix. Not automatic strategy ranking; NM02 exact-cleared/dust/LOC-only is separate and open. New-source CI/hosted web proof pending."
         },
         {
           "id": "R2-T3",
@@ -550,6 +553,16 @@
             "mergedAt": null
           },
           "notes": "Implemented locally:deleteonly10gauge lines, no new ratio or visual-floor/model change. Genuine1pass5failRED; final9selected-subtreeSSRgroups/15fixturecases+4controls, independentfinding/sourceconfirmation andtestscopeacceptance, exactvalues/signals/notes preserved. Fresh29combinedlocal gates pass; exact-headCI/hosted/browser stillpending. Not a coreinterest-math correction. See ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json. State50: source correction verified at6ff5568/receipt6360930706. Actual Chrome LOC detail retains$21,800open/13%used without the unsupported gauge; current486source unchanged, both CI/full second hosted/IAB8 pass. Not a core interest-formula change."
+        },
+        {
+          "id": "R2-T9",
+          "title": "Distinguish cleared, residual and LOC-only coaching across actual consumers",
+          "status": "in_progress",
+          "dependsOn": [
+            "R2-T5"
+          ],
+          "pr": null,
+          "notes": "Independent NM02 confirms seven expected RED groups: exact-cleared cohorts can receive setup/invalid coaching, nonzero dust can inherit zero-month/Send0, and LOC-only can solicit a starter chunk. Source/CPU proposal in preparation; no solver tolerance/normalization/ownership change or completion claim."
         }
       ],
       "gates": [
@@ -558,18 +571,18 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T06:57:50.466Z",
-          "notes": "351 regressions pass, including12 residual/strategy subcases,accepted restoration/withdrawal,valid/cleared timing and failed-result override rejection. Original numerical packages unchanged. Not lender-calendar certification."
+          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T04:11:16.966Z",
+          "notes": "351 regressions pass, including12 residual/strategy subcases,accepted restoration/withdrawal,valid/cleared timing and failed-result override rejection. Original numerical packages unchanged. Not lender-calendar certification. State77 fresh fullweb-v2 passes376 regressions/23247 common-month probes. Shared numerical declarations and all Remotion scenario inputs/results unchanged; only the coaching presenter/source identities change. Not lender certification."
         },
         {
           "id": "R2-G2",
           "title": "Independent reference scenarios",
           "command": "npm --prefix apps/web run test:reference",
           "status": "passed",
-          "evidence": "ops/mission/evidence/portfolio-history-2026-10-22/local-preflight.json",
-          "lastRun": "2026-10-22T06:57:50.466Z",
-          "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes."
+          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T04:11:16.966Z",
+          "notes": "Two anonymized fixtures,78 comparisons,25 zero-recovery,100 capped-mortgage and480 Portfolio zero-APR policies, plus360 deterministic seeded paths including240 direct-oracle row matches. Discarded historical reviewer probe counts are not repeatable proof or part of these totals. Not lender quotes. State77 fresh fullweb-v2 passes376 regressions/23247 common-month probes. Shared numerical declarations and all Remotion scenario inputs/results unchanged; only the coaching presenter/source identities change. Not lender certification."
         },
         {
           "id": "R2-G3",
@@ -602,10 +615,10 @@
           "id": "R2-G6",
           "title": "Rendered daily estimates and Dashboard saved-value preservation",
           "command": "npm --prefix apps/web run smoke:dashboard:built",
-          "status": "passed",
-          "evidence": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+          "status": "pending",
+          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
           "lastRun": "2026-10-21T16:24:59.000Z",
-          "notes": "Bounded1aec5bf final exact-head hosted18 workflows/four responsive probes/wider-font positive/ten controls pass, receipt6315242743. Exact daily estimates, saved inputs and original-node restoration retained. Failed3b58bef history stays explicit. Current feature must rerun these unchanged standing checks; not arbitrary-font/device or lender approval."
+          "notes": "Bounded1aec5bf final exact-head hosted18 workflows/four responsive probes/wider-font positive/ten controls pass, receipt6315242743. Exact daily estimates, saved inputs and original-node restoration retained. Failed3b58bef history stays explicit. Current feature must rerun these unchanged standing checks; not arbitrary-font/device or lender approval. State77 changed Dashboard comparison/coaching source requires new built/hosted standing proof; protected old .next was not rebuilt or misrepresented. Existing18/12 workflows, four boundaries, ten controls and all caps retained."
         },
         {
           "id": "R2-G7",
@@ -638,10 +651,10 @@
           "id": "R2-G10",
           "title": "Legacy input safety and truthful Cockpit projections",
           "command": "npm --prefix apps/web run smoke:dashboard:built",
-          "status": "passed",
-          "evidence": "ops/mission/evidence/legacy-web-truth-2026-10-21/local-preflight.json",
+          "status": "pending",
+          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
           "lastRun": "2026-10-21T19:50:35.347Z",
-          "notes": "31 literal/actual-engine projection contracts plus12 workflows at280/375/1440. Equal-budget/LOC-inclusive comparison and exactzero authority regressions address independent F1/F2 findings. Separate canonical/old Portfolio sentinels, exact bytes, draft/Enter+blur/Escape/focus/route preservation, mixed APR units, failed/cleared/dust/healthy/drill/routing, rendered contrast and long-value fit. Original126 retained. Baseline12 assertion-RED workflows/0setup; repeated assertions are not unique bugs. Existing dashboard CI uploads both proof trees; all caps/assertions remain."
+          "notes": "31 literal/actual-engine projection contracts plus12 workflows at280/375/1440. Equal-budget/LOC-inclusive comparison and exactzero authority regressions address independent F1/F2 findings. Separate canonical/old Portfolio sentinels, exact bytes, draft/Enter+blur/Escape/focus/route preservation, mixed APR units, failed/cleared/dust/healthy/drill/routing, rendered contrast and long-value fit. Original126 retained. Baseline12 assertion-RED workflows/0setup; repeated assertions are not unique bugs. Existing dashboard CI uploads both proof trees; all caps/assertions remain. State77 changed Dashboard comparison/coaching source requires new built/hosted standing proof; protected old .next was not rebuilt or misrepresented. Existing18/12 workflows, four boundaries, ten controls and all caps retained."
         },
         {
           "id": "R2-G11",
@@ -980,7 +993,7 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "369",
+      "current": "376",
       "target": "360",
       "direction": "up"
     },
@@ -1510,12 +1523,20 @@
       "mergedAt": null,
       "title": "Verified first-thrown House cleanup values at f708bda (draft)",
       "phase": "R1"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Guarded Dashboard comparison and compare-first web/Expo coaching (draft)",
+      "phase": "R2"
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State76:53e69170 fullyCIverified at6378603653, not production. New V3 exclusivehandoff integrated; fullweb369/23247,lint/types/CI22/report1+4 pass. Finish exact final root review, focused <=400line push and BOTH new complete CI events/READY/browser checks. Preserve450/700/300ms and alloldsmokeactions/pixels; no unchanged rerun. HouseHPV2 118576f4 HELD after falsy-rejection P2 despite HP001 repair; freshHP3 source prep, no parent gate/capture. Blank storedStudentLoan poster versus healthy settledChrome remains OPEN.",
+      "State77:545fc53 fully verified both complete CI events/all6guards/canonical0, receipt6379361182. Guarded same-budget Dashboard comparison + compare-first web/Expo coaching sourceV2 c02f25ff accepted; fullweb376/23247,lint/types/nativecontracts/media227/CI22 pass, fresh3platform exports/source maps + actual desktopChrome Expo edit/failure/restore/reload pass. Finish final metadata/report review, <=400line push, BOTH new complete CI events/READY/actualweb proof. No unchanged workflow rerun or production promotion. Source old HOLD and inherited-car RED retained.",
+      "NM02 remains open after NM01: exact-cleared/residual/LOC-only coaching must agree across actual web/shared consumers. Read independent nextmove-comparison audit and fresh source proposal when ready. Classify raw valid balances; never infer paid from normalization, display rounding or engine cent tolerance. Preserve safety priorities, monthly solvers, scenario ownership and saved bytes.",
       "Short-stage517c6dd2 controls and prepare passed; actual ten-video render837a0a33 FAILED mandatory POST despite childexit0/204processes/0active. Generation7d2c88ac videos remain UNAPPROVED. Hypatia confirmed only3literal%SystemDrive% cache additions, no baseline content edits; cause unproven. No verify/package, cleanup, ignorelist, rebaseline, unchanged retry or old-MP4 backfill. Read private progress.md before a new reviewed environment change.",
       "Generic production operator/root aliases P1 remains OPEN despite accepted configured copy and fixed private binding. Preserve ergonomic workflows; do not adopt stage-only adapters until reproducible configured root wiring is independently reviewed. Real complete-ten decoded proof and delivery still required.",
       "HouseV2 faca67dac5afea711c0efc117865720e089e341a8d653833f416fe762e210592 fixes two side clearances .72/.76,26producer+15independentCPU only; no images/adoption, public House unchanged. Paired fixture19CPU remains PENDING_RUNTIME_BIND. Chrome ENV probeV2 source fixes both V1 faults and is CPUaccepted, BUT actualone-shot STOPPED initial exact-map validation before either arm (a/bnull): unexpectedWindows environment keys. NoChrome/pwsh/Job, no cache-hypothesis result or retry. Investigate deterministic bootstrap contract before fresh review/new decision. CIstartupobserverV2 remains separate privateHOLD2.",
@@ -1549,7 +1570,7 @@
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open.",
-      "53 diagnostics CI pair passed; new handoff needs its own exact-head proof. cp78actualA corrected15keybootstrap/12processes/0active/runtime unchanged but no exactcache reproduction: INCONCLUSIVE_STOP/Bskipped, no retry. Ten-video generation FAILED/UNAPPROVED. HP1 held terminal-logcap; HP2 HELD falsy-rejection P2 (CPU injected,not observed Windows lstat failure), HP3 source prep/no capture. Generic operatorP1, blankposterpaintfinding, finalphoto, managedbackend, device/native and production OPEN."
+      "545 both complete CI events verified; new comparison/coaching checkpoint needs own exact-head pair. HP3 consumedHOLD/zero captures; HP4 sourceHOLD adapterdoublecount; HP5 source review only. PosterV1 twoP2 repaired inV2, but V2 new falsy-rejection sourceP2 HOLD; freshV3 repair pending. Blankposter cause/reliability, oldtenvideoFAILED/UNAPPROVED, genericoperatorP1, alltenphoto, NM02/scenarios/lender/calendar, managedbackend/security/a11y/device/release remainOPEN. No retry/rebaseline/cleanup or paidGPU authority."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",

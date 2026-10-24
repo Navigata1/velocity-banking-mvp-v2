@@ -445,13 +445,13 @@ function buildNextMove(
   }
 
   return {
-    title: 'Send the next chunk',
+    title: 'Compare payoff paths',
     value: formatCurrency(safeChunk),
-    caption: `Aim at ${input.activeDebt.name}, then use cash flow to pull the LOC back down.`,
-    tone: 'emerald',
+    caption: 'Compare the selected debt and existing LOC using the same monthly budget before modeling another chunk.',
+    tone: 'sky',
     assumptions: [
-      'The chunk is capped by the active debt balance and available LOC capacity.',
-      'This is an educational simulation step, not an instruction to move real funds.',
+      'Available LOC room and a feasible chunk do not establish lower interest or a faster payoff.',
+      'Compare cash and all included liabilities at the same date; this is not an instruction to move real funds.',
     ],
   };
 }
@@ -551,7 +551,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
         : 'No debt-free date shown until the plan is stable.',
       tone: velocityPossible ? 'sky' : 'rose',
       assumptions: [
-        baselinePossible ? 'The separate baseline covers the target loan only; its liability scope differs from target plus LOC.' : 'Baseline payoff is currently marked invalid by the engine.',
+        baselinePossible ? 'Direct repayment covers the selected target and existing LOC with the same monthly budget.' : 'Direct repayment is currently marked invalid by the engine.',
         'Velocity ETA uses the shared single-debt velocity engine for the active target.',
       ],
     },

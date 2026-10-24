@@ -250,6 +250,9 @@ async function checkVitalOracleControls(page) {
           await page.screenshot({ path: path.join(output, `${scenario.id}-${width}-viewport.png`) });
         }
         const layout = await vitalLayout(page, width), boundaries = [];
+        if (scenario.id === 'auto') {
+          assert.equal(layout.find(v => v.label.text.trim() === 'Next Move').value.text.trim(), 'Compare payoff paths');
+        }
         fs.writeFileSync(path.join(output, `${scenario.id}-${width}-layout.json`), JSON.stringify(layout, null, 2) + '\n');
         assertVitalLayout(layout, `${scenario.id} ${width}px`);
         const hero = await page.getByTestId('asset-hero').boundingBox();

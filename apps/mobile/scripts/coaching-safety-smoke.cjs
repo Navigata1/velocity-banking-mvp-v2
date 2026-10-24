@@ -143,7 +143,7 @@ async function commitApr(page, receipt, text, expectedApr, previousBytes) {
   return bytes;
 }
 async function failedProjection(page, receipt, initialBytes) {
-  check(receipt, 'healthy default suggestion before edit', await card(page, 'Next Move').getByText('Send $1,000 to principal', { exact: true }).count(), 1);
+  check(receipt, 'healthy default comparison before edit', await card(page, 'Next Move').getByText('Compare payoff paths', { exact: true }).count(), 1);
   const committed = await commitApr(page, receipt, '200', 200, initialBytes);
   receipt.committedBytes = committed;
   await tour(page, receipt, committed, 1, true);
@@ -151,11 +151,11 @@ async function failedProjection(page, receipt, initialBytes) {
   await page.waitForURL(`${receipt.origin}/`); await ready(page);
   const restored = await commitApr(page, receipt, '6.9', 0.069, committed);
   receipt.restoredBytes = restored;
-  check(receipt, 'healthy default suggestion resumes', await card(page, 'Next Move').getByText('Send $1,000 to principal', { exact: true }).count(), 1);
+  check(receipt, 'healthy default comparison resumes', await card(page, 'Next Move').getByText('Compare payoff paths', { exact: true }).count(), 1);
   check(receipt, 'healthy default warning clears', await page.getByRole('heading', { name: 'Review Before Modeling', exact: true }).count(), 0);
   await page.reload({ waitUntil: 'networkidle' }); await ready(page);
   await untouched(page, receipt, restored, 2, 'restored APR reload');
-  check(receipt, 'healthy default suggestion survives reload', await card(page, 'Next Move').getByText('Send $1,000 to principal', { exact: true }).count(), 1);
+  check(receipt, 'healthy default comparison survives reload', await card(page, 'Next Move').getByText('Compare payoff paths', { exact: true }).count(), 1);
   await screenshot(page, receipt, 'restored-default', card(page, 'Next Move'));
 }
 async function runCoachingSafetyFixtures({ browser, origin, output }) {
