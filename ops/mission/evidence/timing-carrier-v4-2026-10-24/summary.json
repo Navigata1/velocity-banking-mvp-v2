@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-24T16:13:37.060Z",
+  "id": "c9c3fab8-1f1c-4f48-a582-e8e04f6d3a7f",
+  "status": "PREPARATION_FAILED_NO_RUNNABLE_SETUP",
+  "tool": {
+    "session": 1004,
+    "exitCode": 1,
+    "terminalChunk": "0b746f"
+  },
+  "error": "ERR_ASSERTION: Dependency copy exceeded120s",
+  "sourceReview": "ACCEPT_LIMITED_SOURCE_4_CONTROLS",
+  "sourceReviewReceiptSHA256": "1aa09d480212cd8958333c77042a7d1798e1e07a8135f59115c7c9078707e6e6",
+  "completeSetupPublished": false,
+  "oneShotGranted": false,
+  "diagnosticBuffersBound": false,
+  "buildRan": false,
+  "browserObservationRan": false,
+  "preflight": {
+    "scope": "Read-only installed dependency metadata, NOT actual copied completeness",
+    "entries": 32368,
+    "files": 29776,
+    "bytes": 676309998,
+    "knownLocalLinks": 2,
+    "skippedNames": 1
+  },
+  "actualCopiedCompleteness": "UNKNOWN; partial private directory retained, no successful manifest published",
+  "originalRootBuildUnchanged": true,
+  "unchangedRetry": false,
+  "capIncreased": false,
+  "performanceFixed": false,
+  "artApproved": false,
+  "productionReady": false,
+  "conclusion": "Park this private carrier architecture after three distinct setup failures; reassess dependency/source binding before any new experiment. This is not a failure of the separately verified f85 app checkpoint or a global goal block."
+}
