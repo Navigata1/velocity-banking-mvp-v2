@@ -836,7 +836,12 @@ test('shared mobile default assumptions start with the verified web demo Money L
   assert.ok(webStoreSource.includes('chunkAmount: 1000'));
 
   assert.equal(dashboard.warning, null);
-  assert.equal(dashboard.nextMove, 'Send $1,000 to principal');
+  assert.equal(dashboard.nextMove, 'Compare payoff paths');
+  const nextMove = dashboard.vitals.find((vital) => vital.label === 'Next Move');
+  assert.equal(nextMove.value, dashboard.nextMove);
+  assert.match(nextMove.detail, /same budget, debts and cash at the same date/);
+  assert.ok(simulator.velocity.interestSaved < 0, 'default Velocity comparison must retain its higher modeled interest');
+  assert.ok(simulator.velocity.monthsSaved < 0, 'default Velocity comparison must retain its slower payoff');
   assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value.endsWith('mo'), true);
   assert.notEqual(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
   assert.equal(simulator.guardrail, null);

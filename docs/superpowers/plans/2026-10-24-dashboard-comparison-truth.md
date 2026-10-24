@@ -23,6 +23,8 @@ debts and stale source selection. No production promotion or managed-data change
   coaching; update only the corresponding old text assertions, not their flows.
 - [x] Run original and new regressions, lint/types, native contracts/exports,
   media source-identity contracts and report contracts. Preserve earlier failures.
+- [x] Run the root `node scripts/mobile-port-contract-tests.cjs` CI entry too;
+  retain ab9's stale-copy failure and strengthen its compare-first assertions.
 - [x] Independently review exact source/evidence; update mission state/journal and
   generated report with bounded completion and remaining full-goal requirements.
 - [ ] Push a focused reviewed checkpoint on the existing branch/PR; verify both
