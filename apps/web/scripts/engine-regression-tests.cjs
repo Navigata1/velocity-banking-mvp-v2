@@ -25,6 +25,7 @@ require('./dated-fee-unit-tests.cjs').runDatedFeeUnitTests();
 require('./dated-portfolio-tests.cjs').runDatedPortfolioTests();
 require('./dated-comparison-tests.cjs').runDatedComparisonTests();
 require('./dated-review-regression-tests.cjs').runDatedReviewRegressionTests();
+require('./dated-conservation-reference-tests.cjs').runDatedConservationReferenceTests();
 require('./dated-presentation-tests.cjs').runDatedPresentationTests();
 require('./dated-ui-contract-tests.cjs').runDatedUIContractTests();
 require('./dated-storage-tests.cjs').runDatedStorageTests();
