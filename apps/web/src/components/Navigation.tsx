@@ -24,7 +24,7 @@ import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-stor
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
-import { Suspense, useState, useCallback } from 'react';
+import { Suspense, useState, useCallback, useEffect, useRef } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 
 const themeOptions: { value: Theme; label: string }[] = [
@@ -63,6 +63,34 @@ function NavigationContent() {
   const store = useFinancialStore();
   const { theme, setTheme } = useThemeStore();
   const { teacherMode, setTeacherMode } = usePreferencesStore();
+  const aiDialogRef = useRef<HTMLDivElement>(null);
+  const aiInputRef = useRef<HTMLInputElement>(null);
+  const aiTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // Use IntroModal's focus lifecycle, but restore the exact clicked opener.
+  useEffect(() => {
+    if (!showAI) return;
+    const dialog = aiDialogRef.current, trigger = aiTriggerRef.current;
+    if (!dialog) return;
+    const focusable = () => Array.from(dialog.querySelectorAll<HTMLElement>('button:not([disabled]),input:not([disabled])'))
+      .filter(element => element.offsetParent !== null || element === document.activeElement);
+    aiInputRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setShowAI(false); return; }
+      if (event.key !== 'Tab') return;
+      const controls = focusable(), first = controls[0], last = controls[controls.length - 1];
+      if (!first) { event.preventDefault(); dialog.focus(); return; }
+      if (!controls.includes(document.activeElement as HTMLElement)
+        || event.shiftKey && document.activeElement === first || !event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); (event.shiftKey ? last : first).focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, [showAI]);
 
   const handleAISubmit = useCallback(() => {
     if (!aiQuery.trim()) return;
@@ -140,7 +168,7 @@ function NavigationContent() {
             
             <button
               type="button"
-              onClick={() => setShowAI(true)}
+              onClick={event => { aiTriggerRef.current = event.currentTarget; setShowAI(true); }}
               className="flex min-h-12 min-w-0 items-center justify-center rounded-md px-2 py-3 text-gray-400 transition-all hover:bg-gray-800 hover:text-white md:hidden"
               aria-label="Open Velocity Guardian"
               title="Velocity Guardian"
@@ -151,7 +179,7 @@ function NavigationContent() {
           
           <button
             type="button"
-            onClick={() => setShowAI(true)}
+            onClick={event => { aiTriggerRef.current = event.currentTarget; setShowAI(true); }}
             aria-label="Open Velocity Guardian"
             className={`group relative mt-5 hidden w-full items-center gap-3 rounded-md border border-white/10 bg-white/[0.025] p-3 text-left md:flex`}
             style={{ perspective: '500px' }}
@@ -238,6 +266,8 @@ function NavigationContent() {
       {showAI && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div
+            ref={aiDialogRef}
+            tabIndex={-1}
             role="dialog"
             aria-modal="true"
             aria-labelledby="velocity-guardian-title"
@@ -295,7 +325,7 @@ function NavigationContent() {
                       : `${classes.bgTertiary} ${classes.text}`
                   }`}>
                     {msg.source && <p className="mb-1 text-xs opacity-75">{msg.source}</p>}
-                    {msg.text}
+                    {msg.role === 'ai' ? <span className="whitespace-pre-line [overflow-wrap:anywhere]">{msg.text}</span> : msg.text}
                   </div>
                 </div>
               ))}
@@ -304,6 +334,7 @@ function NavigationContent() {
             <div className={`p-4 border-t ${classes.border}`}>
               <div className="flex gap-2">
                 <input
+                  ref={aiInputRef}
                   type="text"
                   aria-label="Ask Velocity Guardian a question"
                   value={aiQuery}

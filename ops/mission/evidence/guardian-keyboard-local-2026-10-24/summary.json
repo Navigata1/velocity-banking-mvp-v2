@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-24T15:23:26.993Z",
+  "status": "LOCAL_VERIFIED_REMOTE_PENDING",
+  "baselineHead": "72cca256b8298863dc7af665e725c4dec1354887",
+  "sourcePins": {
+    "apps/web/src/components/Navigation.tsx": "ce61c96fe4fdd8b69ab416089af4d622a95c22d4913912c767d3b8c7e18cb758",
+    "apps/web/scripts/portfolio-navigation-tests.cjs": "d671eeaa1c94e7b5975cde4251d5c2043023c71561303ea9fa834a45b0a0fbd5",
+    "apps/web/scripts/test-three-stage.cjs": "dfeb1226c4d50a0a338674ef86868528acae1633acbc918e3332fce7e5325c0c",
+    "apps/web/scripts/three-stage-failure-evidence.cjs": "5478854b6d0d96a3b09716ab6860518713cb19958de041bf083c89fbd7d83751",
+    "apps/web/scripts/three-stage-failure-evidence-tests.cjs": "d881426ce0550da757d71dc1659065d15988907e9cd8e934caf521cfca6d5890",
+    "apps/web/package.json": "35dfbc9228e9d9371e12a9e5cb1436e35ea8eca58d5ba614b1a429080b2c1e2e",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "a739375af032ca5b9f51a56ae8f4decfdbbb42a1c3783402d4d3f1dc1044f29b"
+  },
+  "scope": "Guardian input focus, Tab boundaries, Escape, exact connected trigger restoration and AI-only readable line breaks; no financial/route/answer-string changes",
+  "tdd": {
+    "rootCPURed": {
+      "passed": 38,
+      "assertionFailures": 7
+    },
+    "rootCPUGreen": 45,
+    "originalExpandedCases": 38,
+    "originalTestBodies": 16,
+    "actualBrowserBaseline": {
+      "focusAssertionFailures": 3,
+      "unaffectedAdversePasses": 3,
+      "firstCrossRealmHarnessFailureExcluded": true
+    }
+  },
+  "local": {
+    "gates": 15,
+    "main": 448,
+    "separateDatedReferences": 24,
+    "navGuardianWithinMain": 45,
+    "separateRetentionCPU": 11,
+    "sharedWorkflows": 6,
+    "questions": 15,
+    "keyboardVerified": 15,
+    "canonical950": 9,
+    "legacy3889": 6,
+    "widths": [
+      280,
+      375,
+      1440
+    ],
+    "threeBookKeysExact": true,
+    "normalThreeStage": "18normal+6shared+reduced, alloriginaldeadlines/pixels",
+    "layoutProbeWidths": 3,
+    "renderedRoutes": 14,
+    "moneyLoopNext": 1,
+    "reportContracts": 5,
+    "controlledNegative": "Expectedchild1exactmarker,realPNGretention;notworkflow/performanceapproval",
+    "allOwnedJobsClosed": true,
+    "protectedNamedRecords": 765
+  },
+  "reviews": {
+    "modal": "812fceafb627e643a22b7d97571324fee9cc9757feaacf0f8fcedaa3f7b32c95",
+    "browserOracle": "28d25892c0b50ae94fa7ad2a3962c27a52fd0b087e31a658a08b251c27d5b0fa"
+  },
+  "limits": [
+    "NewpushedheadneedsbothcompleteCI/READY/hosted/manualkeyboard verification",
+    "Resize-to-hidden-opener,modalstack,locale,screen-reader and physical-device approvalremainopen",
+    "Original72rapidreturnCI remainsfailed; thisisnotatimingsolution"
+  ],
+  "productionReady": false
+}

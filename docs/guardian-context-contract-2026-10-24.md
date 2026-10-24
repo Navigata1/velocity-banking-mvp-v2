@@ -34,3 +34,22 @@ input shrinkage while preserving the send button's dimensions. The standing smok
 requires horizontal dialog fit and contained input/button bounds. This is bounded
 layout coverage, not a general accessibility approval.
 Local, hosted, exact-head CI and final device evidence remain separate gates.
+
+## Keyboard Lifecycle
+
+Actual Chrome exposed background focus on opening, Escape doing nothing, Tab
+reaching the theme control, and missing focus restoration on close. Reuse the
+existing IntroModal lifecycle: focus the question input, wrap Tab boundaries,
+recover outside focus, dismiss with Escape and remove the exact listener on close.
+Restore the clicked opener only while it is connected. Resizing to hide that opener
+is not qualified by this bounded implementation. Only AI text gains preserved
+line breaks and long-word wrapping; answer strings and question-time facts stay exact.
+
+The focused CPU suite grows from 38 to 45 groups, with all original bodies intact.
+The stronger browser workflow also checks entry focus, both Tab boundaries, Escape
+and button-close restoration and rendered line breaks while retaining book-key and
+fit checks. Its baseline reproduces three focus assertion failures at the existing
+three widths. The fresh built candidate passes all six workflows and 15 question
+paths at those widths, including the new keyboard and rendered-line-break checks.
+This does not qualify resize-to-hidden-opener, modal stacks, every locale or final
+screen-reader/device behavior, and is not a fix for the separate graphics deadline.

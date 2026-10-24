@@ -153,10 +153,18 @@ async function guardianQuestionSources(page, origin, expected) {
     await page.getByRole('button', { name: 'Open Velocity Guardian', exact: true }).click();
     const dialog = page.getByRole('dialog', { name: 'Velocity Guardian', exact: true });
     await dialog.waitFor();
+    const opener = page.getByRole('button', { name: 'Open Velocity Guardian', exact: true });
+    const input = dialog.getByRole('textbox', { name: 'Ask Velocity Guardian a question', exact: true });
+    await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Ask Velocity Guardian a question', undefined, { timeout: 1000 })
+      .catch(error => { if (error.name !== 'TimeoutError') throw error; });
+    assert.equal(await input.evaluate(node => node === document.activeElement), true, 'Guardian must focus its question on opening');
     const teacher = dialog.getByRole('button', { name: /^Teacher Mode: (?:On|Off)$/ });
     if (await teacher.getAttribute('aria-pressed') === 'false') await teacher.click();
     await dialog.getByRole('button', { name: 'Teacher Mode: On', exact: true, pressed: true }).waitFor();
     assert.equal(await teacher.getAttribute('aria-pressed'), 'true');
+    const send = dialog.getByRole('button', { name: 'Send question', exact: true });
+    await send.press('Tab'); assert.equal(await teacher.evaluate(node => node === document.activeElement), true, 'Tab must wrap inside Guardian');
+    await teacher.press('Shift+Tab'); assert.equal(await send.evaluate(node => node === document.activeElement), true, 'Shift+Tab must wrap inside Guardian');
     const dialogGeometry = await dialog.evaluate(element => {
       const box = element.getBoundingClientRect();
       return { left: box.left, right: box.right, width: box.width, viewportWidth: innerWidth,
@@ -178,12 +186,18 @@ async function guardianQuestionSources(page, origin, expected) {
     const text = await answer.innerText();
     assert.ok(text.includes(cashLine), text);
     assert.match(text, /Teacher Mode/);
+    assert.equal(await answer.locator('span').evaluate(node => getComputedStyle(node).whiteSpace), 'pre-line');
     assert.ok(!text.includes(`Your current cash flow estimate: $${shared ? '3,889' : '950'} / month.`), text);
     assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    await input.press('Escape'); await dialog.waitFor({ state: 'hidden' });
+    assert.equal(await opener.evaluate(node => node === document.activeElement), true, 'Escape must restore the clicked opener');
+    assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    await opener.click(); await dialog.waitFor();
     await dialog.getByRole('button', { name: 'Close Velocity Guardian', exact: true }).click();
     await dialog.waitFor({ state: 'hidden' });
     assert.equal(await stored(page), saved); await unchangedLegacy(page);
-    receipts.push({ route, cashFlow, source, dialogGeometry, protectedBookBytesPreserved: true });
+    assert.equal(await opener.evaluate(node => node === document.activeElement), true, 'Close must restore the clicked opener');
+    receipts.push({ route, cashFlow, source, dialogGeometry, protectedBookBytesPreserved: true, keyboardVerified: true });
   }
   await page.goto(origin + '/?scenario=portfolio', { waitUntil: 'networkidle' });
   await page.getByTestId('shared-portfolio-dashboard').waitFor();

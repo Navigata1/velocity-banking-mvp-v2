@@ -95,13 +95,20 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
   vm.runInNewContext(ts.transpileModule(read('src/data/shield-guardian-qa.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText,
     { module: qa, exports: qa.exports, Math: Object.assign(Object.create(Math), { random: () => 0 }) });
   function guardianFixture(pathname, query = '', teacherMode = true) {
-    const state = [], timers = [], calls = [], mod = { exports: {} }, Icon = () => null;
-    let cursor = 0, reads = 0;
+    const state = [], refs = [], effects = [], pending = [], elements = new Map(), listeners = new Set(), timers = [], calls = [], mod = { exports: {} }, Icon = () => null;
+    let cursor = 0, refCursor = 0, effectCursor = 0, reads = 0, controls = [];
+    const document = { activeElement: null, addEventListener: (type, fn) => { assert.equal(type, 'keydown'); listeners.add(fn); },
+      removeEventListener: (type, fn) => { assert.equal(type, 'keydown'); listeners.delete(fn); } };
+    const element = id => { if (!elements.has(id)) elements.set(id, { id, isConnected: true, offsetParent: {}, focus() { document.activeElement = this; },
+      querySelectorAll: () => controls.filter(control => !control.disabled) }); return elements.get(id); };
     const current = { pathname, query, status: 'ready', book: { monthlyIncome: 2500, monthlyExpenses: 1550 } };
     const legacy = { monthlyIncome: 8200, monthlyExpenses: 4700, activeDomain: 'car' };
     const imports = {
       react: { ...React, useState: initial => { const i = cursor++; if (!(i in state)) state[i] = initial;
-        return [state[i], next => { state[i] = typeof next === 'function' ? next(state[i]) : next; }]; }, useCallback: fn => fn },
+        return [state[i], next => { state[i] = typeof next === 'function' ? next(state[i]) : next; }]; }, useCallback: fn => fn,
+        useRef: initial => { const i = refCursor++; return refs[i] ??= { current: initial }; },
+        useEffect: (run, deps) => { const i = effectCursor++, old = effects[i];
+          if (!old || deps.some((dep, n) => !Object.is(dep, old.deps[n]))) pending.push(() => { old?.cleanup?.(); effects[i] = { deps, cleanup: run() }; }); } },
       'react/jsx-runtime': runtime, 'next/link': { __esModule: true, default: Icon }, 'next/image': { __esModule: true, default: Icon },
       'next/navigation': { usePathname: () => current.pathname, useSearchParams: () => new URLSearchParams(current.query) },
       'lucide-react': new Proxy({}, { get: () => Icon }), '@/hooks/useIsClient': { useIsClient: () => true },
@@ -112,12 +119,27 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
       '@/data/shield-guardian-qa': { getGuardianResponse: (input, options) => { calls.push({ input, options }); return qa.exports.getGuardianResponse(input, options); } },
     };
     vm.runInNewContext(code, { module: mod, exports: mod.exports, require: id => { assert.ok(id in imports, id); return imports[id]; },
-      setTimeout: (run, delay) => timers.push({ run, delay }) });
-    const tree = () => { cursor = 0; return mod.exports.default().props.children.type(); };
+      document, setTimeout: (run, delay) => timers.push({ run, delay }) });
+    const walk = (node, visit) => { if (Array.isArray(node)) node.forEach(child => walk(child, visit));
+      else if (node?.props) { visit(node); walk(node.props.children, visit); } };
+    const tree = () => { cursor = refCursor = effectCursor = 0; pending.length = 0;
+      const result = mod.exports.default().props.children.type(); let trigger = 0; controls = [];
+      walk(result, node => { const p = node.props, id = p['aria-label'] === 'Open Velocity Guardian' ? `trigger${trigger++}`
+        : p['aria-label'] ?? p.role ?? (p['aria-pressed'] !== undefined ? 'teacher' : null);
+        if (id) { const target = element(id); target.disabled = !!p.disabled; if (p.ref) p.ref.current = target; } });
+      walk(result, node => { if (node.props.role === 'dialog') walk(node.props.children, child => {
+        if (['button', 'input'].includes(child.type)) controls.push(element(child.props['aria-label'] ?? 'teacher')); }); });
+      pending.splice(0).forEach(run => run()); return result; };
     const find = (node, label) => Array.isArray(node) ? node.map(child => find(child, label)).find(Boolean)
       : node?.props && (node.props['aria-label'] === label ? node : find(node.props.children, label));
-    return { current, legacy, calls, timers, reads: () => reads, tree, reply: () => state.find(Array.isArray).at(-1),
-      submit(input = 'cash flow') { find(tree(), 'Open Velocity Guardian').props.onClick();
+    const open = (index = 0) => { const buttons = []; walk(tree(), node => { if (node.props['aria-label'] === 'Open Velocity Guardian') buttons.push(node); });
+      buttons[index].props.onClick({ currentTarget: element(`trigger${index}`) }); tree(); };
+    return { current, legacy, calls, timers, reads: () => reads, tree, walk, element, open, active: () => document.activeElement,
+      controls: () => controls, listeners: () => listeners.size, unmount: () => effects.forEach(effect => effect.cleanup?.()),
+      key(key, shiftKey = false) { const event = { key, shiftKey, prevented: false, preventDefault() { this.prevented = true; } };
+        [...listeners].forEach(fn => fn(event)); tree(); return event; }, reply: () => state.find(Array.isArray).at(-1),
+      close() { find(tree(), 'Close Velocity Guardian').props.onClick(); tree(); },
+      submit(input = 'cash flow') { open();
         find(tree(), 'Ask Velocity Guardian a question').props.onChange({ target: { value: input } }); find(tree(), 'Send question').props.onClick(); },
       flush() { assert.equal(timers.length, 1); assert.equal(timers[0].delay, 300); assert.equal(calls.length, 0); timers.shift().run(); } };
   }
@@ -168,6 +190,43 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
   });
   test('Guardian blank questions remain inert', () => {
     const f = guardianFixture('/portfolio'); f.submit('   '); assert.equal(f.timers.length, 0); assert.equal(f.calls.length, 0); assert.equal(f.reads(), 0);
+  });
+  for (const trigger of [0, 1]) test('Guardian open focuses the question; Escape restores exact trigger ' + trigger, () => {
+    const f = guardianFixture('/portfolio'); f.element('Choose theme').focus(); f.open(trigger);
+    assert.equal(f.active(), f.element('Ask Velocity Guardian a question')); assert.equal(f.listeners(), 1);
+    assert.equal(f.key('Escape').prevented, true); assert.equal(f.active(), f.element('trigger' + trigger)); assert.equal(f.listeners(), 0);
+  });
+  test('Guardian traps Tab boundaries and recovers outside focus without replacing normal Tab', () => {
+    const f = guardianFixture('/portfolio'); f.open(); const controls = f.controls();
+    assert.deepEqual(controls.map(control => control.id), ['teacher', 'Close Velocity Guardian', 'Ask Velocity Guardian a question', 'Send question']);
+    controls[3].focus(); assert.equal(f.key('Tab').prevented, true); assert.equal(f.active(), controls[0]);
+    assert.equal(f.key('Tab', true).prevented, true); assert.equal(f.active(), controls[3]);
+    controls[2].focus(); assert.equal(f.key('Tab').prevented, false); assert.equal(f.key('Tab', true).prevented, false);
+    f.element('Choose theme').focus(); assert.equal(f.key('Tab').prevented, true); assert.equal(f.active(), controls[0]);
+    f.element('Choose theme').focus(); assert.equal(f.key('Tab', true).prevented, true); assert.equal(f.active(), controls[3]);
+  });
+  test('Guardian close and unmount clean listeners; disconnected triggers are not focused', () => {
+    const f = guardianFixture('/portfolio'); f.open(1); f.close(); assert.equal(f.active(), f.element('trigger1')); assert.equal(f.listeners(), 0);
+    f.open(0); f.unmount(); assert.equal(f.active(), f.element('trigger0')); assert.equal(f.listeners(), 0);
+    const gone = guardianFixture('/portfolio'); gone.open(1); gone.element('trigger1').isConnected = false; gone.unmount();
+    assert.notEqual(gone.active(), gone.element('trigger1')); assert.equal(gone.listeners(), 0);
+  });
+  test('Guardian focus stays put on query/reply renders and other keys remain untouched', () => {
+    const f = guardianFixture('/portfolio'); f.submit(); const send = f.element('Send question'); send.focus(); f.flush(); f.tree();
+    assert.equal(f.active(), send); assert.equal(f.listeners(), 1); assert.equal(f.key('ArrowRight').prevented, false);
+  });
+  test('Guardian empty focusable set falls back to the dialog; hidden and disabled controls stay excluded', () => {
+    const f = guardianFixture('/portfolio'); f.open(); f.controls().forEach(control => { control.offsetParent = null; });
+    f.element('Choose theme').focus(); assert.equal(f.key('Tab').prevented, true); assert.equal(f.active(), f.element('dialog'));
+    const g = guardianFixture('/portfolio'); g.open(); g.element('teacher').disabled = true; g.element('teacher').offsetParent = null;
+    g.element('Send question').focus(); assert.equal(g.key('Tab').prevented, true); assert.equal(g.active(), g.element('Close Velocity Guardian'));
+  });
+  test('Guardian AI text preserves real response linebreaks with scoped wrapping and unchanged source label', () => {
+    const f = guardianFixture('/portfolio'); f.submit(); f.flush(); const spans = [], labels = [];
+    f.walk(f.tree(), node => { if (node.type === 'span' && node.props.children === f.reply().text) spans.push(node);
+      if (node.type === 'p' && node.props.children === f.reply().source) labels.push(node); });
+    assert.equal(spans.length, 1); assert.match(spans[0].props.className, /whitespace-pre-line/); assert.match(spans[0].props.className, /overflow-wrap:anywhere/);
+    assert.ok(f.reply().text.includes('\n')); assert.equal(labels.length, 1);
   });
 }
 module.exports = { registerPortfolioNavigationTests };
