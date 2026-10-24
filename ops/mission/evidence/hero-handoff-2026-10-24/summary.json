@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-24T02:56:09Z",
+  "status": "integrated-source-local-checks-passed-new-remote-pending",
+  "binding": { "sourceBefore": "53e69170c8ce5c21b5375cfbd3e2acf727ec7873", "proposalSha256": "44cdde4f5d8b935ee995b3fdceb3b14bb52b7fc91dd0ea66833ff5f24b8f2734", "reviewDecisionSha256": "b9ff42df05a87c0b6f1c236e5f9a8a5c6727d518f7232e88ca18e842a9a6ffe0", "sourceSha256": "26a488d5a06d204fe0116fa334575da9d879bc3bf9cd2f1abe80a82292c7cfd0" },
+  "cpu": { "presentation": 9, "integrated": 6, "standingControls": 8, "inherited": 38, "independent": 611, "behavioralMutants": 5, "constantKeyQualification": "fixture ownership, not independent functional-stuck proof" },
+  "localChecks": { "webExit": 0, "financialRegressions": 369, "commonMonthProbes": 23247, "lintExit": 0, "semanticTypesExit": 0, "ciContracts": 22, "reportChecks": [1, 4] },
+  "prior": { "ci": { "head": "53e69170", "runs": [40050422119, 40050426295], "allJobsOrderedStepsAndSixGuards": true, "canonicalExit": 0, "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6378603653" }, "hosted": { "servedAssetHashes": 20, "heroPngsIntegrityDecoded": 102, "threeCandidatesDecoded": 6, "allNonblankOrPhotographicApproval": false, "blankStudentLoanCaptureFindingOpen": true } },
+  "preserved": { "publicAssets": 20, "stageClockSha256": "e340f95def47773e7ae9371cfe562062e90426245d468b794bdf837724eb66a9", "protectedBuildSha256": "6973996e367f032b5b37945cd1727c2d1172e0099c4388caa0f1becff0188e06", "financialAndDependenciesUnchanged": true },
+  "privateGraphics": { "houseCapturedOrAdopted": false, "hp2PacketSha256": "118576f457908a923d937e0e267d97c65954808562d96aec302a9bd1ed18aaff", "status": "HP1 log-cap P1; HP2 held injected falsy-rejection P2, not observed Windows failure; fresh HP3 source prep", "oldVideoGenerationApproved": false, "cacheCauseProven": false },
+  "approval": { "newHeadCiApproved": false, "productionReady": false }
+}

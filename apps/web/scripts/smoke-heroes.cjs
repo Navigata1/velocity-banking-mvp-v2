@@ -166,9 +166,12 @@ async function run() {
       finally { clearTimeout(timer); }
       const poster=page.getByTestId('asset-hero').locator('img');
       assert.equal(await poster.evaluate(image=>getComputedStyle(image).opacity),'1','artwork disappears before model is loaded');
+      assert.equal(await page.getByTestId('asset-hero-canvas').evaluate(stage=>getComputedStyle(stage).visibility),'hidden','pending stage must be hidden while mounted');
       releaseModel();
       await page.waitForFunction(()=>document.querySelector('[data-testid="asset-hero-canvas"]')?.dataset.ready==='true');
+      assert.equal(await poster.evaluate(image=>getComputedStyle(image).transitionProperty),'none','first ready poster handoff must not transition');
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-testid="asset-hero"] img')).opacity==='0');
+      assert.equal(await page.getByTestId('asset-hero-canvas').evaluate(stage=>getComputedStyle(stage).visibility),'visible','ready stage must be visible');
       await page.getByRole('button',{name:'Inspect 3D model',exact:true}).click();
       await page.waitForTimeout(250);
       assert.equal(await poster.evaluate(image=>getComputedStyle(image).opacity),'0','selected mode click reopens poster');
