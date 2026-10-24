@@ -1366,3 +1366,43 @@ Generic root workflow P1 remains open. New private House room-depth study is HEL
 for two side-window clearance defects; public art unchanged. This is a dated
 local checkpoint: new-source push, both complete CI events, READY/browser gates
 remain pending. DraftPR256 stays unmerged; full goal active, no production release.
+
+## Session 75 - Terminal Clock Evidence And Held Visual Delivery
+
+cd20f171 is pushed. Push40045629097 attempt1 passed every actual step; companion
+PR40045632074 attempt1 failed Money Loop rapid-return capture with17ms remaining.
+All6 checked-out source guards match. Both SQL jobs passed285 distinct assertions
+twice:1140 executions, not1140 distinct tests. Canonical CI checker returned1;
+raw failure and skipped dependent checks remain evidence, no rerun or waiver.
+Exact automatic READY preview and bounded actual Chrome Car/House/Replay checks
+are retained; allten desktop hero single-pose PNGs were viewed. Multiple materials
+remain illustrative. Receipt: PR256issuecomment6377941309.
+
+Short native controls/prepare passed, but actual ten-video generation7d2c88ac
+FAILED mandatory runtime postcheck despite childexit0/204processes/0active.
+Three literal%SystemDrive% cache additions are retained. No cleanup/rebaseline,
+video verification/package/adoption or full-generation retry. House V2 passed
+CPU geometry review only; matched captures/runtime binding remain pending.
+Independent source review held the fresh ENV probe at two faults before launch.
+Diagnostic V1 was also held: its private global shim masked a real standing-test
+ReferenceError. Fresh bounded V2 repairs are in progress, not root adoptions.
+Generic operator, final photoreal collection, managed backend, physical/native
+and production gates stay open. Original calm layout/public assets are unchanged.
+
+Session75 follow-up: V2 diagnostics received fresh limited CPU acceptance, then
+the exact4 source/test/workflow files were integrated. Full standing web tests
+passed369engine cases/23247common-month probes, the unshimmed phase suite7/7,
+lint/types and CI contracts22; audit protocol58 also passed. Two durable cases
+retain diagnostics before a pending/rejected debug screenshot. All37 original
+phase assertions and450/700/300ms/pixel/action boundaries remain. New remote proof
+is pending; no app/art/math/dependency changes or protected local build rebuild.
+
+ENV probeV2 source repaired both reviewed faults and was accepted for one shot,
+but that actual attempt STOPPED initial exact-map validation before either arm:
+a/bnull, no Chrome/pwsh/native Job. UnexpectedWindows environment keys were
+observed; origin and cache hypothesis are not proven by this readback. Both arms,
+originalChrome and all declared source/evidence pins remain unchanged. Attempt
+is consumed with evidence retained; no retry, generation or adoption follows.
+Parent's separate URI-path carrier failure was before driver/actual allocation;
+its old source/RED remain, corrected using fileURLToPath with1CPU test before the
+single consumed descriptor attempt. This is not a second environment experiment.

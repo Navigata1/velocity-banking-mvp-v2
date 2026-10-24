@@ -39,6 +39,7 @@ async function runSelectionSmoke({browser,origin,output=path.join(root,'test-res
   await context.addInitScript(({keys,documents})=>{Object.defineProperty(navigator,'hardwareConcurrency',{configurable:true,value:8});Object.defineProperty(navigator,'deviceMemory',{configurable:true,value:8});for(let i=0;i<keys.length;i++)localStorage.setItem(keys[i],documents[i]);},{keys,documents});
   const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
   const name=label+'-'+workflow;
+  let returnObservation;
   try{
    const response=await page.goto(origin,{waitUntil:'networkidle'});assert.equal(response.status(),200);
    await page.getByText('Explore the Money Loop',{exact:true}).click();await waitForNormalStage(page,label,mode);await waitForStageSettled(page,'income',Date.now()+15000);
@@ -52,16 +53,21 @@ async function runSelectionSmoke({browser,origin,output=path.join(root,'test-res
     const awayStarted=Date.now();await next.click();const away=await state(page);assert.equal(away.id,'loc');let awayPixels;
     if(workflow==='rapid-return'){assert.equal(away.state,'transitioning');assert.ok(Date.now()-awayStarted<motionMs,'rapid stimulus did not leave before the450ms transition');}
     else awayPixels=await settledPixels(page,awayStarted,'loc',name+'-away',output);
-    const returnStarted=Date.now();await previous.click();const returned=await state(page),readMs=Date.now()-returnStarted;
+    const returnStarted=Date.now();
+    const returnTiming=createPhaseTiming();
+    returnObservation={label:name,startedAt:returnStarted,scope:'Node client-call roundtrips; not DOM event or GPU timing',phases:returnTiming.phases};
+    await returnTiming.measure('return.previous.click.client-call',()=>previous.click());
+    const returned=await returnTiming.measure('return.state.read',()=>state(page)),readMs=Date.now()-returnStarted;
     assert.equal(returned.id,'income');assert.ok(readMs<motionMs,'return observation must precede the end of450ms motion');assert.equal(returned.state,'transitioning','return cannot reuse the previous Income completion');
     if(initial.revision!==null)assert.equal(Number(returned.revision),Number(initial.revision)+2);
     const pixels=await settledPixels(page,returnStarted,'income',name,output),final=await state(page);assert.equal(final.state,'settled');assert.equal(final.revision,returned.revision);
     assert.equal(await previous.evaluate(element=>element===document.activeElement),true,'visual callbacks cannot move focus from the explicit control');
-    details={initial,away,returned,returnReadMs:readMs,final,pixels,...(awayPixels?{awayPixels}:{})};
+    details={initial,away,returned,returnReadMs:readMs,returnObservation,final,pixels,...(awayPixels?{awayPixels}:{})};
    }
    assert.deepEqual(await bytes(page),documents);assert.deepEqual(await vitals(page),baseline);assert.deepEqual(errors,[]);
    await page.screenshot({path:path.join(output,name+'-viewport.png')});receipts.push({name,width,height,mode,passed:true,webgl,details,errors,sourceBytesPreserved:true,financialVitalsUnchanged:true});console.log('PASS Three selection '+name);
-  }catch(error){receipts.push({name,width,height,mode,passed:false,error:error.message,errors,selectionTiming:error.selectionTiming??null});console.error(error.stack);if(error.selectionTiming)console.error('THREE_SELECTION_TIMING '+JSON.stringify(error.selectionTiming));await page.screenshot({path:path.join(output,name+'-failure.png')}).catch(()=>{});}
+   if(returnObservation)console.log('THREE_SELECTION_RETURN_OBSERVATION '+JSON.stringify(returnObservation));
+  }catch(error){receipts.push({name,width,height,mode,passed:false,error:error.message,errors,selectionTiming:error.selectionTiming??null,returnObservation:returnObservation??null});console.error(error.stack);if(error.selectionTiming)console.error('THREE_SELECTION_TIMING '+JSON.stringify(error.selectionTiming));if(returnObservation)console.error('THREE_SELECTION_RETURN_OBSERVATION '+JSON.stringify(returnObservation));await page.screenshot({path:path.join(output,name+'-failure.png')}).catch(()=>{});}
   finally{await context.close();resources.contextsClosed++;}
  }
  const files=fs.readdirSync(output).filter(file=>file.endsWith('.png')).sort().map(file=>{const data=fs.readFileSync(path.join(output,file));return{file,bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')};});

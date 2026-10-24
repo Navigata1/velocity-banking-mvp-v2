@@ -61,8 +61,37 @@ test('actual workflow failure handler retains phase data in its receipt and CI s
   let block;function visit(node){if(ts.isCatchClause(node)&&node.block.getText(tree).includes('receipts.push'))block=node.block;ts.forEachChild(node,visit);}visit(tree);assert.ok(block);
   const body=block.getText(tree).slice(1,-1),AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
   const records=[],logs=[],timing={deadline:1700,phases:[{name:'candidate.capture',status:'failed'}]},error=Object.assign(new Error('controlled timing failure'),{selectionTiming:timing});let loggedBeforeFailureCapture=false;
-  const run=new AsyncFunction('error','receipts','page','output','name','width','height','mode','errors','path','console',body);
-  await run(error,records,{screenshot:async()=>{loggedBeforeFailureCapture=logs.some(line=>line.includes('THREE_SELECTION_TIMING'));return Buffer.from('CPU handler fixture');}},'CPU-output','desktop-rapid-return',1440,900,'full',[],path,{error:(...args)=>logs.push(args.join(' '))});
+  const run=new AsyncFunction('error','receipts','page','output','name','width','height','mode','errors','path','console','returnObservation',body);
+  await run(error,records,{screenshot:async()=>{loggedBeforeFailureCapture=logs.some(line=>line.includes('THREE_SELECTION_TIMING'));return Buffer.from('CPU handler fixture');}},'CPU-output','desktop-rapid-return',1440,900,'full',[],path,{error:(...args)=>logs.push(args.join(' '))},undefined);
   assert.strictEqual(records[0].selectionTiming,timing);assert.ok(logs.some(line=>line.includes('THREE_SELECTION_TIMING')&&line.includes(JSON.stringify(timing))));
   assert.equal(loggedBeforeFailureCapture,true,'phase evidence must survive a hanging or cancelled debug screenshot');
+});
+
+for(const hasCaptureTiming of [false,true])test('actual workflow catch retains return diagnostics before a pending/rejected debug screenshot '+(hasCaptureTiming?'with capture timing':'before pixels'),async()=>{
+  assert.equal(Object.hasOwn(globalThis,'returnObservation'),false,'the actual suite must not depend on a global observation shim');
+  const ts=request('typescript'),source=fs.readFileSync(sourceFile,'utf8'),tree=ts.createSourceFile(sourceFile,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
+  let block;function visit(node){if(ts.isCatchClause(node)&&node.block.getText(tree).includes('receipts.push'))block=node.block;ts.forEachChild(node,visit);}visit(tree);assert.ok(block);
+  const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+  const run=new AsyncFunction('error','receipts','page','output','name','width','height','mode','errors','path','console','returnObservation',block.getText(tree).slice(1,-1));
+  let now=1000;const timing=request('./three-stage-timing.cjs').createPhaseTiming(()=>now),cause=new Error('original return cause'),error=new Error('controlled return failure',{cause});
+  await timing.measure('return.previous.click.client-call',async()=>{now+=145;});
+  if(hasCaptureTiming)await timing.measure('return.state.read',async()=>{now+=66;});
+  else await assert.rejects(timing.measure('return.state.read',async()=>{now+=66;throw error;}),failure=>failure===error);
+  const returnObservation={label:'desktop-rapid-return',startedAt:1000,scope:'Node client-call roundtrips; not DOM event or GPU timing',phases:timing.phases};
+  const selectionTiming=hasCaptureTiming?{deadline:1700,phaseOriginElapsedMs:211,phases:[{name:'candidate.capture',status:'failed'}]}:undefined;
+  if(hasCaptureTiming)error.selectionTiming=selectionTiming;
+  const records=[],logs=[],debugFailure=new Error('secondary debug screenshot rejection');let release,screenshots=0,completed=false,beforeScreenshot;
+  const pending=run(error,records,{screenshot:()=>{screenshots++;beforeScreenshot={record:records[0],logs:logs.slice()};return new Promise((resolve,reject)=>{release=()=>reject(debugFailure);});}},'CPU-output','desktop-rapid-return',1440,900,'full',[],path,{error:(...args)=>logs.push(args)},returnObservation);
+  pending.then(()=>{completed=true;});
+  try{
+    await Promise.resolve();assert.equal(screenshots,1);assert.equal(completed,false,'debug screenshot remains pending while evidence is already available');
+    assert.strictEqual(records[0].returnObservation,returnObservation);assert.strictEqual(records[0].selectionTiming,selectionTiming??null);assert.equal(records[0].error,error.message);
+    assert.strictEqual(beforeScreenshot.record.returnObservation,returnObservation);assert.ok(beforeScreenshot.logs.some(args=>String(args[0]).startsWith('THREE_SELECTION_RETURN_OBSERVATION ')),'return receipt and log must already exist at debug screenshot invocation');
+    const line=logs.find(args=>String(args[0]).startsWith('THREE_SELECTION_RETURN_OBSERVATION '));assert.ok(line,'actual catch must log return observations before debug capture finishes');
+    assert.deepEqual(JSON.parse(line[0].slice(line[0].indexOf('{'))),returnObservation);assert.strictEqual(logs[0][0],error.stack);
+    assert.equal(logs.some(args=>String(args[0]).startsWith('THREE_SELECTION_TIMING ')),hasCaptureTiming);
+    assert.deepEqual(returnObservation.phases.map(phase=>[phase.name,phase.durationMs,phase.status]),[['return.previous.click.client-call',145,'passed'],['return.state.read',66,hasCaptureTiming?'passed':'failed']]);
+  }finally{release?.();await pending;}
+  assert.equal(screenshots,1,'a rejected debug screenshot cannot retry');assert.strictEqual(records[0].returnObservation,returnObservation);
+  assert.strictEqual(error.cause,cause);assert.equal(Object.hasOwn(error,'returnObservation'),false,'diagnostic receipt must not mutate or replace the original Error');
 });

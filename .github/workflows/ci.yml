@@ -80,11 +80,12 @@ jobs:
         run: npm run build
 
       - name: Verify built Money Loop Three stage
+        id: three_stage
         working-directory: apps/web
         run: npm run test:3d:built
 
       - name: Upload Money Loop Three stage proof
-        if: success()
+        if: ${{ !cancelled() && (steps.three_stage.outcome == 'success' || steps.three_stage.outcome == 'failure') }}
         uses: actions/upload-artifact@v4
         with:
           name: money-loop-three-stage

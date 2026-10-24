@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Millisecond hero clock is locally verified; exact new-source remote checks remain pending. Photographic art and source-bound delivery remain gated; no production release.",
+    "tagline": "Strict selection diagnostics are locally verified; new CI is pending. Prior clock push passed, companion PR failed. House depth and video delivery remain gated; no production release.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-24T00:27:25.118Z",
-    "sessionCount": 74
+    "updated": "2026-10-24T01:26:41.362Z",
+    "sessionCount": 75
   },
   "policies": {
     "merge": "review",
@@ -162,6 +162,20 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           }
+        },
+        {
+          "id": "R0-T12",
+          "title": "Retain selection return timing and failed CI artifacts",
+          "status": "in_progress",
+          "dependsOn": [
+            "R0-T10"
+          ],
+          "pr": {
+            "number": 256,
+            "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+            "mergedAt": null
+          },
+          "notes": "Four-file independently reviewed V2 diagnostics integrated;59focused CPU and actualstanding7case phase suite,fullweb/lint/types/CI22 pass. Original37phase assertions/actions/450/700/300ms retained. Explicitclick/read clientroundtrips and failureproofupload only; no causality or timing fix. New complete exact-head CI pair is pending."
         }
       ],
       "gates": [
@@ -170,9 +184,9 @@
           "title": "Web regressions and asset contracts",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T07:41:49.701Z",
-          "notes": "State74 current web regression command passes, including369engine regression cases and23247common-month reference probes. Focused hero resource/lifecycle38 pass. Not current browser/build/production proof."
+          "evidence": "ops/mission/evidence/selection-return-diagnostics-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T01:25:37.856Z",
+          "notes": "State75 full standing web regressions passed at01:25:37UTC, including369engine cases,23247common-month probes and actual unshimmed7case phase suite. Diagnostic/test/workflow change only; no app/art/math changes or local production rebuild. New remote gates remain pending."
         },
         {
           "id": "R0-G2",
@@ -187,19 +201,19 @@
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
-          "status": "pending",
-          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/verified-checkpoint.json",
-          "lastRun": "2026-10-23T08:17:01.414Z",
-          "notes": "Latest pushed770 docs event: push40038575336 success; PR40038578929 failed DBstartup before SQL and dependent primary,5not6source guards. Known automatic READY is not complete CI. New clock source requires its own exact-head pair. No unchanged rerun or failure waiver."
+          "status": "failed",
+          "evidence": "ops/mission/evidence/clock-terminal-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T01:06:20.683Z",
+          "notes": "cd20f171 attempt1 pair is terminal: push40045629097 passed all3jobs/every actual step; PR40045632074 failed actual Money Loop rapid-return capture17ms remaining, dependent checks skipped. All6actualsource guards match. Canonicalcheckerexit1 retained; cause unproven, no rerun or waiver. Both asset jobs and actual285SQL assertions twice/event passed. Receipt: PR256issuecomment6377941309. New checkpoint still needs its own exact-head pair."
         },
         {
           "id": "R0-G4",
           "title": "Fresh exact-head CI discovery and report contracts",
           "command": "node scripts/check-restoration-ci.test.cjs && node --test scripts/audit-web-runtime.test.cjs && node ops/mission/test-renderer.mjs && node --test ops/mission/report-renderer-tests.mjs",
           "status": "passed",
-          "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
-          "lastRun": "2026-10-23T07:41:49.701Z",
-          "notes": "State74 current CI contracts22 and runtime-audit protocol58 pass; report renderer contracts are rerun after generation. No workflow or audit policy changes."
+          "evidence": "ops/mission/evidence/selection-return-diagnostics-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T01:26:41.362Z",
+          "notes": "State75 current CI contracts22 and runtime-audit protocol58 pass; report renderer1+4 rerun after generation. Workflow change retains failed actualThree artifacts, preserving commands, paths,55steps and all caps; exactly2frozen hashes updated. No audit policy change or waived failure."
         }
       ]
     },
@@ -424,7 +438,7 @@
           "status": "pending",
           "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
           "lastRun": "2026-10-23T18:07:26.346Z",
-          "notes": "Current clock source requires fresh asset browser suite. Prior b5 scoped CI/Chrome is lineage, not changed-source evidence. No asset geometry/material/renderer/easing changes."
+          "notes": "cd20f171 both actual asset CI jobs passed and exact102PNG artifact was retained; desktop/phone Car/House and allten desktop single-pose models inspected. Actual Chrome Car/House/Replay bounded checks had no observed console errors. New checkpoint still needs its own exact-head pair; not all-angle photographic or physical-performance approval."
         },
         {
           "id": "R1-G3",
@@ -1498,10 +1512,10 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "Current State74 clock source e340f95d and appended lifecycle tests are locally verified, not yet remotely verified. Commit/push only the focused reviewed slice, observe both complete exact-head CI events and the automatic preview, then bounded browser checks. Keep draftPR256 unmerged; no production promotion.",
-      "Continue short-stage517c6dd2 source-bound generation trial from .superpowers/sdd/2026-10-23-generation-runtime-adoption/progress.md. Fixed graph/data accepted; require all3fresh short native controls, then guarded prepare/render/verify/package. Preserve long-stage ENOENT/failed Car invocation; no unchanged retry, old-MP4 backfill or relaxed checks.",
+      "State75 integrates independently accepted4-file selection diagnostics; full web regressions/lint/types/CI22 pass, remote gates still pending. Preserve450/700/300ms, actions and pixel checks. Push only focused exact reviewed checkpoint, then observe BOTH new complete CI events without an unchanged rerun. Priorcd20 push40045629097 fullsuccess/PR40045632074 failedactualThree17ms,6sourceguards/canonicalexit1/receipt6377941309 remain retained, not current approval. DraftPR256 unmerged; no production promotion.",
+      "Short-stage517c6dd2 controls and prepare passed; actual ten-video render837a0a33 FAILED mandatory POST despite childexit0/204processes/0active. Generation7d2c88ac videos remain UNAPPROVED. Hypatia confirmed only3literal%SystemDrive% cache additions, no baseline content edits; cause unproven. No verify/package, cleanup, ignorelist, rebaseline, unchanged retry or old-MP4 backfill. Read private progress.md before a new reviewed environment change.",
       "Generic production operator/root aliases P1 remains OPEN despite accepted configured copy and fixed private binding. Preserve ergonomic workflows; do not adopt stage-only adapters until reproducible configured root wiring is independently reviewed. Real complete-ten decoded proof and delivery still required.",
-      "The new House five-bay study is HELD for two side-window clearance defects; repair in a fresh candidate and retain prior evidence. Original House/public art stays unchanged. Passive CI startup observer is private and pending independent review; no workflow change or causal collision fix yet.",
+      "HouseV2 faca67dac5afea711c0efc117865720e089e341a8d653833f416fe762e210592 fixes two side clearances .72/.76,26producer+15independentCPU only; no images/adoption, public House unchanged. Paired fixture19CPU remains PENDING_RUNTIME_BIND. Chrome ENV probeV2 source fixes both V1 faults and is CPUaccepted, BUT actualone-shot STOPPED initial exact-map validation before either arm (a/bnull): unexpectedWindows environment keys. NoChrome/pwsh/Job, no cache-hypothesis result or retry. Investigate deterministic bootstrap contract before fresh review/new decision. CIstartupobserverV2 remains separate privateHOLD2.",
       "House detailed native-leaf c2a4 prototype rejected by parent and independent review after14 original canonical INLINE exact-seek captures. House1534584bytes/public10532762bytes fail unchanged caps. Modest planting benefit does not justify+34%bytes/+69%referenced triangles. Originalec008a remains. Preserve retained source/CPU/decoded/pixels; no repeated unchanged export/render or budget waiver. Target materially different glass/interior/material depth next.",
       "Before adopting any native-instanced art, require instance-aware actual-GLB normalization/semantic tests, separate stored/rendered triangle budgets and same-generation GLB/vendor/composition/helper-to-video binding. Cleanup CPU coverage does not prove physical FPS/memory/energy or app/mobile/native behavior. Current packaging verifies output integrity but lacks same-generation model/video binding.",
       "For the browser deadline, read the frozen36e next-diagnostic notes. Actual caller smoke-three-selection.cjs records returnStarted before real previous.click and stage-state read; the179ms pre-phase gap is not measured pure click/GPU cost. Preserve450ms return observation,700ms/300ms, all18normal/sixadditional workflows, genuine pixels and all caps. New instrumented success alone is NONCAUSAL; classify input/read/render/host boundaries before a product fix.",
@@ -1532,7 +1546,7 @@
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open.",
-      "Current clock is locally accepted but needs new exact-head remote/browser gates. Source-bound media remains private; fixed parent/operator copy accepted, short controls/trial and generic root P1 still open. Final photographic art, managed backend, physical-device and production gates remain open."
+      "New diagnostic checkpoint is locally verified, not yet remotely approved. Priorcd20 pushfullsuccess/PRThreefailure/canonicalexit1 retained. Ten-video generation FAILED Chrome postcheck and remains UNAPPROVED. Fresh ENV probeV2 CPUaccepted but actualbootstrap STOPPED before arms; cause/cache hypothesis unproven, no retry. Generic root P1, House matched images, final photographic collection, managed backend, physical-device and production gates remain open."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",
