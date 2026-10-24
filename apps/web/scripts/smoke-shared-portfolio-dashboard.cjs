@@ -134,13 +134,30 @@ async function primaryPortfolioNavigation(page, origin, expected) {
       assert.equal(await stored(page), saved); assert.deepEqual(JSON.parse(saved).data, expected); await unchangedLegacy(page);
     }
   }
+  const informationRoundTrips = [];
+  for (const [label, route] of [['Learn', '/learn'], ['Settings', '/settings']]) {
+    await page.goto(origin + '/portfolio', { waitUntil: 'networkidle' });
+    await nav.getByRole('link', { name: label, exact: true }).click();
+    await page.waitForURL(url => url.pathname === route);
+    assert.equal(new URL(page.url()).pathname + new URL(page.url()).search, route + '?scenario=portfolio',
+      'Portfolio information-page intent must survive entry: ' + label);
+    await nav.locator(`a[aria-label="${label}"][aria-current="page"]`).waitFor({ state: 'visible', timeout: 10000 });
+    assert.equal(await nav.getByRole('link', { name: label, exact: true }).getAttribute('aria-current'), 'page');
+    await nav.getByRole('link', { name: 'Dashboard', exact: true }).click();
+    await page.getByTestId('shared-portfolio-dashboard').waitFor();
+    assert.equal(new URL(page.url()).pathname + new URL(page.url()).search, '/?scenario=portfolio');
+    assert.equal(await page.getByTestId('shared-value-cash-flow').innerText(), '$950.00');
+    assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    informationRoundTrips.push({ route, returnRoute: '/?scenario=portfolio', originalSavedBytesPreserved: true });
+  }
+  await page.goto(origin + '/simulator?scenario=portfolio', { waitUntil: 'networkidle' });
   await page.getByRole('link', { name: 'Single-target demo', exact: true }).click();
   await page.getByRole('link', { name: 'Portfolio scenario', exact: true }).waitFor();
   assert.equal(new URL(page.url()).search, ''); assert.equal(await nav.getByRole('link', { name: 'Dashboard', exact: true }).getAttribute('href'), '/');
   assert.equal(await stored(page), saved); await unchangedLegacy(page);
   await page.goto(origin + '/?scenario=portfolio', { waitUntil: 'networkidle' });
   await page.getByTestId('shared-portfolio-dashboard').waitFor();
-  return { canonicalPrimaryTransitions: 6, explicitDemoExit: true, originalSavedBytesPreserved: true };
+  return { canonicalPrimaryTransitions: 6, informationRoundTrips, explicitDemoExit: true, originalSavedBytesPreserved: true };
 }
 async function guardianQuestionSources(page, origin, expected) {
   const saved = await stored(page), receipts = [];

@@ -1,0 +1,175 @@
+{
+  "at": "2026-10-24T17:19:33.286Z",
+  "baseHead": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+  "status": "LOCAL_SOURCE_CHECKPOINT_NOT_PRODUCTION",
+  "sourcePins": {
+    "apps/web/src/components/Navigation.tsx": "7abf5b17fcf33bbc29d41b1bef4fb3dc81ecea77f83b3de8f495a1f446fe46e7",
+    "apps/web/scripts/portfolio-navigation-tests.cjs": "75615bc3140e9ccb0a62337bc7b3ab86490247a96e3a8bf7ae4ac1117a35a5bb",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "82a76844007b1e204608b7381e96a2d2cef9ad866e97396182a149cc0bda379f",
+    "apps/web/scripts/test-three-stage.cjs": "dfeb1226c4d50a0a338674ef86868528acae1633acbc918e3332fce7e5325c0c",
+    "apps/web/scripts/three-stage-failure-evidence.cjs": "5478854b6d0d96a3b09716ab6860518713cb19958de041bf083c89fbd7d83751",
+    "apps/web/scripts/three-stage-failure-evidence-tests.cjs": "d881426ce0550da757d71dc1659065d15988907e9cd8e934caf521cfca6d5890",
+    "apps/web/package.json": "35dfbc9228e9d9371e12a9e5cb1436e35ea8eca58d5ba614b1a429080b2c1e2e",
+    "apps/media/scripts/hero-generation-inputs.mjs": "5e54ae751fd0c88169195fafeebb27442a1b28ff3d36aac19a0c5afb706c56d0",
+    "apps/media/scripts/hero-generation-proof.mjs": "8bb9ce1057817abdca4bf9bb0b9d39e16a79de79e8c88d79740f2b1fd3c8e306",
+    "apps/media/scripts/hero-generation-proof.d.mts": "fbc79315fc75e7db35ea551a37c230a4f261004159abca13b6b94304cf619503",
+    "apps/media/scripts/hero-generation-proof.test.mjs": "414b217480eca2da29941f206f050d8ab33ec9ae46f457e97671bd91f35c2df8"
+  },
+  "local": {
+    "gates": 16,
+    "mainRegressionGroups": 452,
+    "separateDatedReferences": 24,
+    "navigationCasesWithinMain": 49,
+    "mediaTests": 237,
+    "coreGroupsWithinMedia": 10,
+    "browserWorkflows": 6,
+    "widths": [
+      280,
+      375,
+      1440
+    ],
+    "informationRoundTrips": 6,
+    "guardianKeyboardQuestions": 15,
+    "allProtectedBookBytesPreserved": true,
+    "originalNormalAndSelectionAndReducedMotionChecks": true,
+    "deadlinesAndPixelAssertionsUnchanged": true,
+    "allJobsTerminated": true,
+    "stages": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "web-types",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "mobile-port",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "media-contracts",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "three-stage-normal",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "guardian-browser",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "guardian-layout",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      },
+      {
+        "name": "controlled-negative",
+        "exitCode": 0,
+        "activeAfterCleanup": 0
+      }
+    ],
+    "controlledNegative": {
+      "expectedChildExitCode": 1,
+      "retainedDecodedImages": 2,
+      "notSuccessOfInjectedWorkflow": true
+    },
+    "rawRunSHA256": "88125bd801f964ce990d22e8da1bae682aca0c0fd701d5f8eb739e1b0d1dc486"
+  },
+  "preservation": {
+    "originalContentHashes": 765,
+    "originalIdentities": 739,
+    "explicitPostFailedRunIdentities": 26,
+    "rootBuildPreserved": true,
+    "financeAndPublishedAssetsUnchanged": true
+  },
+  "retainedFailures": [
+    {
+      "run": "V5",
+      "status": "failed",
+      "mediaChildExitCode": 0,
+      "mediaTests": 237,
+      "cause": "Root QA preparation replaced26 generated vendor copies with identical bytes; original identities are not restored. Later QA uses isolated regular-file fixture."
+    },
+    {
+      "run": "V6",
+      "status": "failed",
+      "successfulStages": 10,
+      "browserFailures": 3,
+      "adversePasses": 3,
+      "cause": "New information roundtrips ended on Dashboard before an unchanged Simulator-only demo-exit assertion. One reviewed goto restores the original precondition; all71 assertions retained."
+    },
+    {
+      "run": "Earlier REPL runner",
+      "status": "timeout retained",
+      "kernelResetReported": true,
+      "oldOSTerminationIndependentlyAttested": false
+    }
+  ],
+  "implementation": {
+    "portfolioReturnIntentOnly": true,
+    "guardianFinancialOwnershipUnchanged": true,
+    "coreSourceFiles": 4,
+    "coreAddedLines": 366,
+    "renderConsumersAndAliasesUnchanged": true,
+    "newAssetOrVideo": false
+  },
+  "next": [
+    "Push focused source/evidence commits once",
+    "Both automatic exact-head CI events and canonical checker",
+    "Exact READY preview, served hashes, hosted and Chrome smoke",
+    "Continue reviewed delivery/wrapper/configured-operator work; P1 remains open"
+  ],
+  "limits": [
+    "Not final photoreal or complete-ten rotation approval",
+    "Not full scenario/lender/backend/accessibility/native or production readiness"
+  ],
+  "productionReady": false
+}

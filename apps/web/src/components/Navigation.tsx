@@ -53,6 +53,7 @@ function NavigationContent() {
   const pathname = usePathname();
   const scenario = useSearchParams().get('scenario');
   const portfolio = pathname === '/portfolio' || (pathname === '/' || pathname === '/simulator') && scenario === 'portfolio';
+  const portfolioReturnIntent = portfolio || (pathname === '/learn' || pathname === '/settings') && scenario === 'portfolio';
   const mounted = useIsClient();
   const [showAI, setShowAI] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
@@ -150,7 +151,7 @@ function NavigationContent() {
               return (
                 <Link
                   key={item.href}
-                  href={portfolio && (item.href === '/' || item.href === '/simulator') ? `${item.href}?scenario=portfolio` : item.href}
+                  href={portfolioReturnIntent && (item.href === '/' || item.href === '/simulator' || item.href === '/learn' || item.href === '/settings') ? `${item.href}?scenario=portfolio` : item.href}
                   aria-label={item.label}
                   aria-current={pathname === item.href ? 'page' : undefined}
                   title={item.label}

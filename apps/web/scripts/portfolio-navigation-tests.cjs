@@ -228,5 +228,50 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
     assert.equal(spans.length, 1); assert.match(spans[0].props.className, /whitespace-pre-line/); assert.match(spans[0].props.className, /overflow-wrap:anywhere/);
     assert.ok(f.reply().text.includes('\n')); assert.equal(labels.length, 1);
   });
+  test('Portfolio return intent survives the existing six information-route journeys', () => {
+    for (const [route, query] of [['/portfolio', ''], ['/', 'scenario=portfolio'], ['/simulator', 'scenario=portfolio']]) {
+      for (const [label, destination] of [['Learn', '/learn'], ['Settings', '/settings']]) {
+        const href = primary(render(route, query), label).href;
+        assert.equal(href, `${destination}?scenario=portfolio`);
+        const url = new URL(href, 'https://fixture.invalid'), arrival = render(url.pathname, url.search);
+        for (const [name, expected] of [['Dashboard', '/?scenario=portfolio'], ['Simulator', '/simulator?scenario=portfolio']]) {
+          assert.equal(primary(arrival, name).href, expected); assert.equal(owner(primary(arrival, name).href), true);
+        }
+      }
+    }
+  });
+  test('information-route intent crosses Learn and Settings while active paths and legacy destinations stay unchanged', () => {
+    for (const [route, active] of [['/learn', 'Learn'], ['/settings', 'Settings']]) {
+      for (const query of ['scenario=portfolio', 'module=2&scenario=portfolio&scenario=unknown']) {
+        const view = render(route, query); assert.equal(primary(view, active)['aria-current'], 'page');
+        for (const [label, destination] of [['Dashboard', '/'], ['Simulator', '/simulator'], ['Learn', '/learn'], ['Settings', '/settings']]) {
+          assert.equal(primary(view, label).href, `${destination}?scenario=portfolio`);
+        }
+        for (const [label, destination] of [['Portfolio', '/portfolio'], ['Cockpit', '/cockpit'], ['Wealth Timeline', '/vault']]) {
+          assert.equal(primary(view, label).href, destination);
+        }
+      }
+    }
+  });
+  test('return intent retains bare, first-query, case, unknown, lesson-focus and unsupported route boundaries', () => {
+    const cases = ['/', '/simulator', '/learn', '/settings'].flatMap(route =>
+      ['', 'scenario=Portfolio', 'scenario=unknown', 'scenario=x&scenario=portfolio', 'scenario=&scenario=portfolio'].map(query => [route, query]));
+    cases.push(['/simulator', 'focus=cashflow'], ['/cockpit', 'scenario=portfolio'], ['/vault', 'scenario=portfolio'],
+      ['/unknown', 'scenario=portfolio'], ['/learn/', 'scenario=portfolio']);
+    for (const [route, query] of cases) {
+      const view = render(route, query);
+      for (const [label, destination] of [['Dashboard', '/'], ['Simulator', '/simulator'], ['Learn', '/learn'], ['Settings', '/settings']]) {
+        assert.equal(primary(view, label).href, destination);
+      }
+    }
+  });
+  test('information-route return intent never widens Guardian financial ownership', () => {
+    for (const route of ['/learn', '/settings']) for (const query of ['scenario=portfolio', 'scenario=x&scenario=portfolio']) {
+      const f = guardianFixture(route, query); f.submit(); f.flush();
+      assert.equal(f.calls[0].options.context.cashFlow, 3500); assert.equal(f.calls[0].options.context.activeDomainLabel, 'car');
+      assert.equal(f.reads(), 0); assert.match(f.reply().text, /\$3,500 \/ month/);
+      assert.equal(f.reply().source, 'Single-target demo at question time');
+    }
+  });
 }
 module.exports = { registerPortfolioNavigationTests };
