@@ -66,20 +66,20 @@ export default function HeroModelStage({ model, replay, onError, onReady }: Prop
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contextLost = (event: Event) => { event.preventDefault(); onError(); };
     renderer.domElement.addEventListener('webglcontextlost', contextLost);
-    let elapsed = 0, previous: number | undefined;
+    let elapsedMs = 0, previous: number | undefined;
     const visibilityChanged = () => { previous = undefined; };
     document.addEventListener('visibilitychange', visibilityChanged);
     const animate = (now: number) => {
       if (disposed || !object) return;
-      if (!document.hidden && previous !== undefined) elapsed += Math.max((now - previous) / 1000, 0);
+      if (!document.hidden && previous !== undefined) elapsedMs += Math.max(now - previous, 0);
       previous = now;
-      object.rotation.y = heroAngleAt(elapsed); render();
-      if (elapsed < HERO_TURN_SECONDS && !reduced.matches) frame = requestAnimationFrame(animate);
+      object.rotation.y = heroAngleAt(elapsedMs / 1000); render();
+      if (elapsedMs < HERO_TURN_SECONDS * 1000 && !reduced.matches) frame = requestAnimationFrame(animate);
     };
     const restart = () => {
       if (disposed || !object) return;
       cancelAnimationFrame(frame);
-      elapsed = 0; previous = undefined;
+      elapsedMs = 0; previous = undefined;
       object.rotation.y = heroAngleAt(0); render();
       if (!reduced.matches) frame = requestAnimationFrame(animate);
     };

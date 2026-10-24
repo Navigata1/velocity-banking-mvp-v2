@@ -457,8 +457,8 @@ console.log('PASS hero lifecycle negative control rejected: hardcoded Car materi
 // Permanent negative controls must fail behavior assertions, not merely parse differently.
 for (const [name, pattern, replacement, message] of [
   ['missing restart cancellation', /(const restart = \(\) => \{[\s\S]*?)cancelAnimationFrame\(frame\);/, '$1', /rapid replay must leave exactly one RAF/],
-  ['shortened 1.6-second turn', 'elapsed < HERO_TURN_SECONDS', 'elapsed < 1.6', /four seconds must be the halfway pose/],
-  ['infinite RAF', 'elapsed < HERO_TURN_SECONDS', 'true', /eight-second turn must stop RAF/],
+  ['shortened 1.6-second turn', 'elapsedMs < HERO_TURN_SECONDS * 1000', 'elapsedMs < 1600', /four seconds must be the halfway pose/],
+  ['infinite RAF', 'elapsedMs < HERO_TURN_SECONDS * 1000', 'true', /eight-second turn must stop RAF/],
 ]) {
   const mutant = source.replace(pattern, replacement); assert.notEqual(mutant, source, `${name}: mutation must apply`);
   assert.throws(() => replayContract(mutant), error => error.code === 'ERR_ASSERTION' && message.test(error.message), name);
@@ -557,7 +557,7 @@ test('hero clock: reduced motion stays at rest through visibility and Replay', (
 });
 
 for (const [name, from, to, contract, message] of [
-  ['visible 100ms cap', 'Math.max((now - previous) / 1000, 0)', 'Math.min((now - previous) / 1000, 0.1)',
+  ['visible 100ms cap', 'Math.max(now - previous, 0)', 'Math.min(Math.max(now - previous, 0), 100)',
     mutant => visibleClockContract(mutant, Array(16).fill(500)), /eight visible seconds must complete one revolution/],
   ['truthy timestamp sentinel', 'previous !== undefined', 'previous',
     mutant => visibleClockContract(mutant, [8000], 0), /eight visible seconds must complete one revolution/],
@@ -565,9 +565,9 @@ for (const [name, from, to, contract, message] of [
     mutant => hiddenClockContract(mutant, false), /hidden gap and first resumed RAF must not advance the turn/],
   ['missing visibility cleanup', "document.removeEventListener('visibilitychange', visibilityChanged);", '',
     mutant => visibleClockContract(mutant, [8000]), /unmount must remove owned document listeners/],
-  ['stale Replay timestamp', 'elapsed = 0; previous = undefined;', 'elapsed = 0;',
+  ['stale Replay timestamp', 'elapsedMs = 0; previous = undefined;', 'elapsedMs = 0;',
     mutant => replayOriginClockContract(mutant), /first Replay RAF must establish a fresh visible-time origin/],
-  ['stale Replay elapsed time', 'elapsed = 0; previous = undefined;', 'previous = undefined;',
+  ['stale Replay elapsed time', 'elapsedMs = 0; previous = undefined;', 'previous = undefined;',
     mutant => replayOriginClockContract(mutant), /first Replay RAF must establish a fresh visible-time origin/],
 ]) {
   assert.equal(source.split(from).length, 2, `${name}: mutation must target exactly one expression`);
@@ -575,3 +575,68 @@ for (const [name, from, to, contract, message] of [
   assert.throws(() => contract(mutant), error => error.code === 'ERR_ASSERTION' && message.test(error.message), name);
   console.log(`PASS hero clock negative control rejected: ${name}`);
 }
+
+const fractionalClockDurationMs = turntable.HERO_TURN_SECONDS * 1000;
+const fractionalClockEnd = 2 * Math.PI - .55;
+function fractionalClockContract(text, intervals, pause = false, replay = false) {
+  const h = mount(text, { now: 0 });
+  try {
+    h.resolve(); h.tick(0);
+    if (replay) {
+      h.tick(4000); h.tick(3999.5); h.replay(); h.tick(0);
+    }
+    for (const [i, ms] of intervals.entries()) {
+      h.tick(ms);
+      if (i < intervals.length - 1) assert.equal(h.frames.size, 1, 'before deadline remains active');
+      if (pause && i === intervals.length - 2) {
+        const angle = h.angle(); h.hidden(true); h.skip(80000); h.hidden(false); h.tick(0);
+        assert.equal(h.angle(), angle, 'resumed origin cannot charge hidden time');
+      }
+    }
+    assert.ok(Math.abs(h.angle() - fractionalClockEnd) < 1e-12, 'endpoint pose');
+    assert.equal(h.frames.size, 0, 'exact visible endpoint must stop RAF');
+    const rendered = h.state.renders; h.tick(fractionalClockDurationMs);
+    assert.equal(h.state.renders, rendered, 'rest must not render again');
+    assert.equal(h.loads.length, 1); assert.equal(h.renderers.length, 1);
+  } finally { released(h); }
+}
+for (const intervals of [[4000, 3999.5, .5], [2001, 5694, 305], [5771.125, 2112.5, 31.875, 76.625, 7.875]]) {
+  for (const pause of [false, true]) test(`fractional clock: exact endpoint ${intervals.join('+')} pause=${pause}`, () => fractionalClockContract(source, intervals, pause));
+}
+test('fractional clock: partial turn then Replay owns a fresh endpoint', () => fractionalClockContract(source, [966, 2647, 4387], false, true));
+test('fractional clock: partial turn then Replay and hidden pause', () => fractionalClockContract(source, [4000, 3999.5, .5], true, true));
+test('fractional clock: submillisecond remainder stays active and overshoot settles once', () => {
+  const h = mount(source, { now: 0 });
+  try {
+    h.resolve(); h.tick(0); h.tick(fractionalClockDurationMs - .0009765625);
+    assert.equal(h.frames.size, 1, 'positive visible remainder stays active');
+    h.tick(.001953125);
+    assert.equal(h.frames.size, 0, 'overshoot settles once');
+    assert.ok(Math.abs(h.angle() - fractionalClockEnd) < 1e-12);
+  } finally { released(h); }
+});
+function fractionalClockIntermediate(text) {
+  const h = mount(text, { now: 0 });
+  try {
+    h.resolve(); h.tick(0); h.tick(fractionalClockDurationMs / 2);
+    assert.ok(Math.abs(h.angle() - (Math.PI - .55)) < 1e-12, 'half duration retains smoothstep halfway pose');
+    assert.equal(h.frames.size, 1, 'half duration remains active');
+  } finally { released(h); }
+}
+test('fractional clock: converts to seconds only at the angle boundary', () => fractionalClockIntermediate(source));
+function fractionalClockMutate(from, to, contract, message) {
+  assert.equal(source.split(from).length, 2, 'mutation targets exactly one current expression');
+  assert.throws(() => contract(source.replace(from, to)), error => error.code === 'ERR_ASSERTION' && message.test(error.message));
+}
+test('fractional control: missing angle conversion', () => fractionalClockMutate('heroAngleAt(elapsedMs / 1000)', 'heroAngleAt(elapsedMs)', fractionalClockIntermediate, /half duration retains/));
+test('fractional control: unscaled deadline', () => fractionalClockMutate('elapsedMs < HERO_TURN_SECONDS * 1000', 'elapsedMs < HERO_TURN_SECONDS', fractionalClockIntermediate, /half duration remains active/));
+test('fractional control: early rounded deadline', () => fractionalClockMutate('elapsedMs < HERO_TURN_SECONDS * 1000', 'Math.round(elapsedMs) < HERO_TURN_SECONDS * 1000',
+  text => fractionalClockContract(text, [4000, 3999.5, .5]), /before deadline remains active/));
+test('fractional control: reset of elapsed progress on visibility', () => fractionalClockMutate('const visibilityChanged = () => { previous = undefined; };',
+  'const visibilityChanged = () => { previous = undefined; elapsedMs = 0; };', text => fractionalClockContract(text, [4000, 3999.5, .5], true), /resumed origin cannot charge hidden time/));
+test('fractional control: interval-seconds rounding failure', () => {
+  const mutant = source.replace('elapsedMs += Math.max(now - previous, 0)', 'elapsedMs += Math.max((now - previous) / 1000, 0)')
+    .replace('heroAngleAt(elapsedMs / 1000)', 'heroAngleAt(elapsedMs)').replace('elapsedMs < HERO_TURN_SECONDS * 1000', 'elapsedMs < HERO_TURN_SECONDS');
+  assert.notEqual(mutant, source);
+  assert.throws(() => fractionalClockContract(mutant, [4000, 3999.5, .5]), error => error.code === 'ERR_ASSERTION' && /exact visible endpoint must stop RAF/.test(error.message));
+});

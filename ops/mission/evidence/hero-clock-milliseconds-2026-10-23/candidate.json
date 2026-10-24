@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "at": "2026-10-24T00:25:37.446Z",
+  "status": "integrated-locally-verified-remote-pending",
+  "pins": [
+    {
+      "file": "apps/web/src/components/hero/HeroModelStage.tsx",
+      "bytes": 7413,
+      "sha256": "e340f95def47773e7ae9371cfe562062e90426245d468b794bdf837724eb66a9"
+    },
+    {
+      "file": "apps/web/scripts/hero-lifecycle-tests.cjs",
+      "bytes": 40799,
+      "sha256": "b82188f51bd310dd75d8ad56e5ac885a85db3a49fdd268709a3fb6b8d568675d"
+    },
+    {
+      "file": "docs/hero-millisecond-clock-contract-2026-10-23.md",
+      "bytes": 2904,
+      "sha256": "20ed54f70db0cffb8e59c504bdbb111e448ccf458f15db5497e58af3aefc0e69"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-24-clock-ms-independent-8e9bab5c-8243-4da2-8c7e-071b550bb385/REVIEW.md",
+      "bytes": 8412,
+      "sha256": "da6d51e885f96de13475ba964b9ba5ee5145ea8e949f4c8d32568e5640b49c44"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-24-clock-root-independent-b0edbe55-7c72-426a-a537-2a1db18593e8/REVIEW.md",
+      "bytes": 4987,
+      "sha256": "a0ede27bea8d256c73577ac1ab28cd221660ef9c519d4228d01858d9fdc849d9"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-24-clock-millisecond/runs/baseline-red/receipt.json",
+      "bytes": 1055,
+      "sha256": "f4407a0ac132cab1ee7ca0470ccd3cf8a57f0466fd80b2006897bf1b7a8ae16d"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-24-clock-millisecond/runs/millisecond-controls-final/receipt.json",
+      "bytes": 799,
+      "sha256": "3f8bb5da6a507a4ea179cb24f14472b5b82464b906e7a0e366a631d461311194"
+    },
+    {
+      "file": ".superpowers/sdd/2026-10-24-clock-millisecond/root-resource-green.log",
+      "bytes": 10478,
+      "sha256": "12c40ffbe1c2d62e05c13c413b8113ea90faf15465799f0c97dbd5b0b0434228"
+    }
+  ],
+  "rootBeforeFix": {
+    "command": "node --test --test-name-pattern=\"fractional clock:\" scripts/hero-lifecycle-tests.cjs",
+    "pass": 6,
+    "fail": 4,
+    "failureKind": "endpoint ERR_ASSERTION",
+    "independentRecurrence": true
+  },
+  "rootFocused": {
+    "command": "node scripts/hero-resource-tests.cjs",
+    "pass": 38,
+    "fail": 0
+  },
+  "independent": {
+    "privateSuite": 49,
+    "privateIndependentCases": 7,
+    "generatedSchedules": 128,
+    "rootFollowUpCases": 6
+  },
+  "local": {
+    "webRegressionExitCode": 0,
+    "engineRegressionCases": 369,
+    "commonMonthReferenceProbes": 23247,
+    "commonMonthReferenceFailed": 0,
+    "eslintExitCode": 0,
+    "typesExitCode": 0,
+    "localProductionBuild": "not-run-protected-existing-build"
+  },
+  "rejected": {
+    "kind": "compensated-seconds",
+    "suppliedPasses": 59,
+    "independentPasses": 14,
+    "independentFailures": 2,
+    "adopted": false
+  },
+  "preservation": {
+    "sourceSections": 3,
+    "oldMutationRowsRetargeted": 5,
+    "appendedCasesAndControls": 15,
+    "oldAssertionBodiesPreserved": true,
+    "financialEngineChanged": false,
+    "publicAssetsChanged": false,
+    "dependenciesChanged": false
+  },
+  "remote": {
+    "exactNewHeadCi": "pending",
+    "preview": "pending",
+    "browser": "pending"
+  },
+  "limits": [
+    "CPU actual-component VM is not React/browser or physical performance proof",
+    "Parent visibility disposal/remount is unchanged",
+    "No universal floating-point, photoreal or production approval"
+  ],
+  "productionReady": false
+}

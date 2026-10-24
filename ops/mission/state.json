@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Native-instance cleanup verified on both CI events. Generation-bound hero delivery passes private CPU review but remains held for execution-boundary and operator staging fixes. No new art or production release.",
+    "tagline": "Millisecond hero clock is locally verified; exact new-source remote checks remain pending. Photographic art and source-bound delivery remain gated; no production release.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-23T23:09:38.293Z",
-    "sessionCount": 73
+    "updated": "2026-10-24T00:27:25.118Z",
+    "sessionCount": 74
   },
   "policies": {
     "merge": "review",
@@ -172,25 +172,25 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
           "lastRun": "2026-10-23T07:41:49.701Z",
-          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
+          "notes": "State74 current web regression command passes, including369engine regression cases and23247common-month reference probes. Focused hero resource/lifecycle38 pass. Not current browser/build/production proof."
         },
         {
           "id": "R0-G2",
           "title": "Built desktop/mobile routes",
           "command": "npm --prefix apps/web run smoke:rendered:built",
-          "status": "passed",
+          "status": "pending",
           "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
           "lastRun": "2026-10-23T07:41:49.701Z",
-          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
+          "notes": "New millisecond-clock source requires fresh built/hosted verification. Prior bounded whole-app hosted/manual baseline f708 remains historical; no inherited pass claimed for changed source."
         },
         {
           "id": "R0-G3",
           "title": "Exact pushed commit has successful CI",
           "command": "node scripts/check-restoration-ci.cjs",
-          "status": "passed",
+          "status": "pending",
           "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/verified-checkpoint.json",
           "lastRun": "2026-10-23T08:17:01.414Z",
-          "notes": "Both complete exact6ff first attempts39919549667/39919555513 pass all jobs/steps and six distinct actual-source stdout guards; canonical checker passes. Read-only log recovery preserves HTTP2CANCEL and private REST attempt-URL mismatch. No workflow rerun. Source5351 sealed/receipt6360930706. PR stays draft, not default-branch/production approval."
+          "notes": "Latest pushed770 docs event: push40038575336 success; PR40038578929 failed DBstartup before SQL and dependent primary,5not6source guards. Known automatic READY is not complete CI. New clock source requires its own exact-head pair. No unchanged rerun or failure waiver."
         },
         {
           "id": "R0-G4",
@@ -199,7 +199,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/money-loop-detail-truth-2026-10-23/summary.json",
           "lastRun": "2026-10-23T07:41:49.701Z",
-          "notes": "Fresh29allfromscratch/486pins/222isolatedwebcopies, no inherited12-stage prefix from priorfailed485-source run. Independent source/SSR/checker reviews, final9detailgroups, standingweb/lint/build/Three/routes/heroes/media/native/worker/report pass. Actuals/visualchannels/engine/assets unchanged; no networkworkaround or acceptancewaiver. Not remoteCI/release approval."
+          "notes": "State74 current CI contracts22 and runtime-audit protocol58 pass; report renderer contracts are rerun after generation. No workflow or audit policy changes."
         }
       ]
     },
@@ -224,7 +224,7 @@
           "status": "in_progress",
           "dependsOn": [],
           "pr": null,
-          "notes": "House limestone half-strength diagnostic rejected, not shipped:14fullframes/7matchedposes show only tiny below-threshold deltas; baseline retained after limited full-size front inspection. Ten helper/19independentCPU/18seek probes passed, but no phone/video/final-photoreal acceptance claimed. Land/Vault unchanged. Original Vault and House candidates retained. Land now has 49834 triangles, eight embedded maps and 709260 bytes: recessed pond, draped path, layered cut faces, four stakes and connected trees. Nine actual-geometry/provenance/locked-budget tests pass; independent review cleared the final artifact. Identical/protected regeneration and all-model web/video proof pass. All four candidates still require collection art approval; see docs/land-refinement-contract-2026-10-20.md. House v3 depth-aware revealUVs fix244collapsedsceneused triangles, actual1145320bytes. Independent postcompression geometry/normals/preservedfaceUVs/all6images exact; originalposters/studio/camera/lighting unchanged. See depth-uv-repair-contract-2026-10-21.md; collectionart remainsopen. State50: next private experiment isolates existing-key House self-shadows, not normal strength or room changes. Current full-size House still reads flat-lit; no benefit is claimed before matched images. Public GLB/poster/material/light/main-camera/math inputs stay unchanged."
+          "notes": "House limestone half-strength diagnostic rejected, not shipped:14fullframes/7matchedposes show only tiny below-threshold deltas; baseline retained after limited full-size front inspection. Ten helper/19independentCPU/18seek probes passed, but no phone/video/final-photoreal acceptance claimed. Land/Vault unchanged. Original Vault and House candidates retained. Land now has 49834 triangles, eight embedded maps and 709260 bytes: recessed pond, draped path, layered cut faces, four stakes and connected trees. Nine actual-geometry/provenance/locked-budget tests pass; independent review cleared the final artifact. Identical/protected regeneration and all-model web/video proof pass. All four candidates still require collection art approval; see docs/land-refinement-contract-2026-10-20.md. House v3 depth-aware revealUVs fix244collapsedsceneused triangles, actual1145320bytes. Independent postcompression geometry/normals/preservedfaceUVs/all6images exact; originalposters/studio/camera/lighting unchanged. See depth-uv-repair-contract-2026-10-21.md; collectionart remainsopen. State50: next private experiment isolates existing-key House self-shadows, not normal strength or room changes. Current full-size House still reads flat-lit; no benefit is claimed before matched images. Public GLB/poster/material/light/main-camera/math inputs stay unchanged. State74: new PRIVATE room-depth study replaces the broad backdrop with five recessed bays at1146448bytes(+1128), but independent source review HOLDS two opaque back-end/side-window clearance defects. Concurrent approved web-clock presentation-pin change is separate, not an asset-author defect. Original public House remains ec008a; repair in a fresh private candidate before any visual trial/adoption."
         },
         {
           "id": "R1-T3",
@@ -343,7 +343,7 @@
           "dependsOn": [
             "R1-T14"
           ],
-          "notes": "Private actual-component lifecycle probe953b7824:8visible seconds at500ms cadence leaves angle0.10345vsendpoint5.73319 and1RAF. Proposed7-case clock contracte652f4c4 has2pass/5intendedAssertionErrors, no setupfailure:slow/irregular/long-visible-gap, hidden-gap leakage and Replay slow timing. Current100msdelta clamp loses visible time in this CPU simulation; not historicalChrome/GPU/hardware cause proof. No implementation/source change. After cleanup checkpoint verified, preserve hidden-time pause/reducedmotion/easing/pose/ownership while fixing visible duration; source/independent/fullrelease gates required. See ops/mission/evidence/hero-clock-2026-10-23/reproduction.json. State67: bounded web-stage correction b510593d and lifecycle1b7ba20d. Permanent unchanged-source RED3pass7intended failures; GREEN11/0 plus6selected mutation controls and all prior lifecycle groups. Focused web/media227/lint/types pass; private parent-policy4/0 uses simulated hooks/event bridge, not actual React scheduling or browser resume proof. Exactly2of495sources change,13runtime/20assets unchanged. Independent review and one fresh full release run pending. See docs/hero-visible-time-clock-contract-2026-10-23.md and cpu-candidate.json. No financial or media-composition changes. State67 progress: independent669ff2b6 accepts exacttwo frozen files, no actionable source findings. Standing11/0once,6specific controls,7fresh baseline refutations,27distinct probes (24firstpass plus3realm-safe supplements; original comparator and over-freeze recorder failures retained). Required537inputaudit exact495/13/20. ReviewerCLOSED. Onefreshfull29ab510193-abb8-46cf-96fc-10f7ad686b4d ACTIVE fromscratch on228exactwebcopies; no ownparallelGPU/browser. Not current remote/production approval. State68: current495-source/228-copy full29ab510193-abb8-46cf-96fc-10f7ad686b4d passes from scratch, all recorded owned processes closed. Current canonicalHousec13118c0-d850-4956-9cef-f4c6737e0a13 passes1080p/30fps/270frames/9s with seven original frames parent-viewed and bounded accepted. No new artwork, finance or media-composition bytes; no physical/continuous-motion/photoreal approval. Current capture/full43/commits/push/CI/READY/hosted/manual/guardedreceipt remain pending. R1-T15 remains in_progress until current remote verification. State69: Revision111 passed its local29 gates, canonical House export, hosted15 suites/210 layouts/20 assets and ten current browser observations. Its push CI40002265265 attempt1 nevertheless FAILED the Money Loop screenshot deadline. The companion PR run passed every job and step; that does not reverse the failed push. All six source guards are retained. Both the canonical checker and success publisher refused approval. Failure-status comment6372381653 and5655 immutable artifacts are preserved. No success seal exists. f708 remains the verified baseline, and this task remains in progress. The hero clock is not established as the timing failure's cause."
+          "notes": "State74: old low-cadence correction already exists; seven old cases pass current baseline. Separate fractional endpoint RED6pass/4fail fixed by accumulating native RAF milliseconds, converting only at angle evaluation and scaling the deadline. Exact root source e340f95d; 38focused/49private plus7independent cases with128precise schedules/6root-review cases pass. Five old mutation targets use equivalent units; all old assertions retained. Full web regression,23247common-month probes,lint and types pass. Earlier Kahan proposal59green was correctly HELD after2independent endpoint regressions; not adopted. Current source still needs both complete exact-SHA CI events, READY and bounded browser checks. No actual-FPS/universal-floating-point/art/production claim. Historical clamp evidence and failed revision111 timing run remain retained in Git/evidence; do not reapply the old clamp fix. See docs/hero-millisecond-clock-contract-2026-10-23.md and ops/mission/evidence/hero-clock-milliseconds-2026-10-23/candidate.json."
         },
         {
           "id": "R1-T16",
@@ -404,7 +404,7 @@
             "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
             "mergedAt": null
           },
-          "notes": "PRIVATE, NOT ADOPTED. Core53 and portable155 CPU checks pass; independent155+16 adapter controls and retained3proofbodies/6assertions pass. Complete controlled runtime/source staging and actual precheck6trees/4tools/129records pass. No actual new render, verified video or delivery. Independent parentreview finds4P2 launch/checker gaps; operatorreview P1 requires reproducible staging before root alias replacement. New private fixes underway, followed by fresh reviews and real finite360 trials. Existing app/art/math/dependencies/workflows/managedbackend unchanged. Evidence ops/mission/evidence/hero-generation-runtime-2026-10-23/candidate.json."
+          "notes": "State74 PRIVATE, NOT ADOPTED. Core53/portable155 and independent155+16 remain accepted CPU lineage. V3 parent boundary fixed4P2 and late-close findings; three actual old-stage controls and prepare pass. First real long-stage render FAILED ENOENT at a283-character mkdtemp template; no MP4 or backfill. Operator-v2 fixes .env-prefix exclusion and passes56+30+2review checks. Reviewed short-stage copy517c6dd2 has214-character template,120+9sources and3runtime trees; postcreation DATA and fixed controller graph accepted separately. Fresh short controls passed at this snapshot: 2/3; remaining controls/prepare/render/decoded proof/delivery still required. Generic root workflow/aliases P1 OPEN. Existing assets, composition, financials and dependencies unchanged. No final art or production approval. Original candidate record is a dated State73 snapshot, not the latest execution verdict."
         }
       ],
       "gates": [
@@ -421,10 +421,10 @@
           "id": "R1-G2",
           "title": "Desktop/mobile actual-geometry checks",
           "command": "npm --prefix apps/web run test:heroes",
-          "status": "passed",
+          "status": "pending",
           "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
           "lastRun": "2026-10-23T18:07:26.346Z",
-          "notes": "Unchanged app/runtime/assets. Both d842 asset-hero CI jobs passed, but both aggregate workflows FAILED CPU test20. Prior stored export evidence is inherited; this fixture-only slice adds no GPU render/video/manual approval. Final photoreal and physical gates remain open."
+          "notes": "Current clock source requires fresh asset browser suite. Prior b5 scoped CI/Chrome is lineage, not changed-source evidence. No asset geometry/material/renderer/easing changes."
         },
         {
           "id": "R1-G3",
@@ -433,7 +433,7 @@
           "status": "passed",
           "evidence": "ops/mission/evidence/overlay-fixture-isolation-2026-10-23/candidate.json",
           "lastRun": "2026-10-23T18:07:26.346Z",
-          "notes": "Unchanged app/runtime/assets. Both d842 asset-hero CI jobs passed, but both aggregate workflows FAILED CPU test20. Prior stored export evidence is inherited; this fixture-only slice adds no GPU render/video/manual approval. Final photoreal and physical gates remain open."
+          "notes": "Stored-video evidence remains inherited. PRIVATE source-bound delivery has no successful new complete-ten render or decoded/delivery receipt; first actual long-path attempt failed and is retained. This historical stored-output gate does not close R1-T20."
         }
       ]
     },
@@ -849,10 +849,10 @@
           "id": "R4-G6",
           "title": "Fresh isolated SQL and row-isolation proof",
           "command": "npm --prefix apps/web run test:supabase",
-          "status": "passed",
+          "status": "pending",
           "evidence": "ops/mission/evidence/native-instance-disposal-2026-10-23/previous-sql-proof.json",
           "lastRun": "2026-10-23T21:09:08.215Z",
-          "notes": "Exact2d: both full CI events40019475148/40019480601 attempt1 passed; six source guards. Old63+new222=285 distinct assertions/two files passed twice per event,1140 executions total. Replay/lint/advisors/cleanup passed. This is disposable SQL proof, not managed-project/API/JWT/backup/cross-device or production approval."
+          "notes": "Historical exact2d both events executed285distinct SQL assertions twice/event(1140total). Latest770 push actually executed285+285PASS; PR failed host54322bind before SQL. No owner/cause established; failed current pair is not waived. Dedicated managed project/API/recovery remain unbound/open."
         }
       ]
     },
@@ -1498,9 +1498,10 @@
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State73 is a documentation checkpoint, not source adoption. b5b9fe1 native cleanup is already pushed/scoped-verified by both full CI events40029553699/40029560995, exact automatic READY and bounded Chrome controls; receipt6375870805. Preserve all earlier failures and f708 as the prior bounded whole-app hosted/manual baseline.",
-      "Read docs/hero-generation-readiness-2026-10-23.md and R1-T20 evidence. Private generation candidate155CPU+16independent controls passes; no new actual videos/art. Fix4parent P2 boundary gaps in the separate new parent-v2 lane, obtain fresh independent source review, then parent alone executes bounded process controls/canonical renders. Do not use held old helpers or backfill receipts onto old MP4s.",
-      "Resolve operator P1 before adopting stage-only adapters: provide a reproducible configured staging entrypoint and preserve original npm workflow ergonomics. Keep approved CPU/source artifacts and rejected attempts, require real complete-ten render/decoded proof/delivery and root standing gates. No root alias break, weakened deadline/pixel/budget check or production promotion.",
+      "Current State74 clock source e340f95d and appended lifecycle tests are locally verified, not yet remotely verified. Commit/push only the focused reviewed slice, observe both complete exact-head CI events and the automatic preview, then bounded browser checks. Keep draftPR256 unmerged; no production promotion.",
+      "Continue short-stage517c6dd2 source-bound generation trial from .superpowers/sdd/2026-10-23-generation-runtime-adoption/progress.md. Fixed graph/data accepted; require all3fresh short native controls, then guarded prepare/render/verify/package. Preserve long-stage ENOENT/failed Car invocation; no unchanged retry, old-MP4 backfill or relaxed checks.",
+      "Generic production operator/root aliases P1 remains OPEN despite accepted configured copy and fixed private binding. Preserve ergonomic workflows; do not adopt stage-only adapters until reproducible configured root wiring is independently reviewed. Real complete-ten decoded proof and delivery still required.",
+      "The new House five-bay study is HELD for two side-window clearance defects; repair in a fresh candidate and retain prior evidence. Original House/public art stays unchanged. Passive CI startup observer is private and pending independent review; no workflow change or causal collision fix yet.",
       "House detailed native-leaf c2a4 prototype rejected by parent and independent review after14 original canonical INLINE exact-seek captures. House1534584bytes/public10532762bytes fail unchanged caps. Modest planting benefit does not justify+34%bytes/+69%referenced triangles. Originalec008a remains. Preserve retained source/CPU/decoded/pixels; no repeated unchanged export/render or budget waiver. Target materially different glass/interior/material depth next.",
       "Before adopting any native-instanced art, require instance-aware actual-GLB normalization/semantic tests, separate stored/rendered triangle budgets and same-generation GLB/vendor/composition/helper-to-video binding. Cleanup CPU coverage does not prove physical FPS/memory/energy or app/mobile/native behavior. Current packaging verifies output integrity but lacks same-generation model/video binding.",
       "For the browser deadline, read the frozen36e next-diagnostic notes. Actual caller smoke-three-selection.cjs records returnStarted before real previous.click and stage-state read; the179ms pre-phase gap is not measured pure click/GPU cost. Preserve450ms return observation,700ms/300ms, all18normal/sixadditional workflows, genuine pixels and all caps. New instrumented success alone is NONCAUSAL; classify input/read/render/host boundaries before a product fix.",
@@ -1531,7 +1532,7 @@
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open.",
-      "Native cleanup b5 is scoped-verified; generation delivery remains private and held for4execution-boundary P2s and1operator P1. These are actionable implementation tasks, not a global-goal block. Final photographic art, managed backend, physical-device and production release gates remain open."
+      "Current clock is locally accepted but needs new exact-head remote/browser gates. Source-bound media remains private; fixed parent/operator copy accepted, short controls/trial and generic root P1 still open. Final photographic art, managed backend, physical-device and production gates remain open."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",

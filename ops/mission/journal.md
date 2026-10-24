@@ -1343,3 +1343,26 @@ Native cleanup b5b9fe1 is pushed and scoped-verified: both complete first-attemp
 The new generation-bound render/verify/package candidate remains PRIVATE and NOT ADOPTED. Core53 and portable155 CPU cases pass; independent155 plus16 separate controls pass with original3proofbodies/6assertions retained. Actual installed runtime/source copying and precheck6trees/4tools/129records match. No new actual video, delivery or artistic approval. Independent parent review found4P2 execution/checker gaps; operational review found1P1 missing reproducible staging workflow. Separate new private lanes address those holds before real rendering or root alias replacement. Old helper/source/evidence snapshots remain preserved.
 
 This is a documentation checkpoint, not implementation adoption or production certification. App/art/math/dependencies/workflows/backend and user previews remain unchanged. Exact checkpoint push/CI verification is pending; draftPR256 stays unmerged and the full goal active. See docs/hero-generation-readiness-2026-10-23.md and the committed candidate record.
+
+## State74 - Native Millisecond Hero Clock
+
+Current baseline already passes old low-cadence cases. A separate fractional
+endpoint RED6/4 is corrected with native RAF milliseconds, one angle conversion
+and a matching millisecond deadline. Root38, private49, independent7cases with128
+precise schedules, root-review6, full web regressions,23247common-month probes,
+lint and types pass. Original assertions remain; five mutation targets retain
+equivalent units. The earlier compensated-seconds proposal stays HELD after two
+independent regressions. No art, finance, dependency or renderer changes.
+
+State73 docs770 is pushed, not fully verified: push40038575336 passed; PR40038578929
+failed at DBstartup host54322bind before SQL, with dependent primary failure.
+Companion push executed285+285SQL assertions; five source guards, not six. Exact
+automatic READY is retained. No owner/cause or collision fix, no unchanged rerun.
+
+Private V3 parent controls/prepare pass; first long-stage canonical render failed
+at283-character temporary path, producing no MP4. New short214-character stage
+copy and data/controller reviews pass; fresh controls/trial still gate rendering.
+Generic root workflow P1 remains open. New private House room-depth study is HELD
+for two side-window clearance defects; public art unchanged. This is a dated
+local checkpoint: new-source push, both complete CI events, READY/browser gates
+remain pending. DraftPR256 stays unmerged; full goal active, no production release.
