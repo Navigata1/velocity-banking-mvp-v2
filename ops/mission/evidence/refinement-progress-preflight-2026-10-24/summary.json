@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-24T12:15:31.903Z",
+  "sourceHead": "3791fa8bb08a642546f562725f21577a80775c81",
+  "scope": "V6 actual failed preflight with bounded retained progress; no driver/render/candidate visual result",
+  "subject": {"packetSha256":"ee3c858a4153e6d683a8f8b6438119d22b5e6955a1c222804aa81fbfd7cca7f9","closureSha256":"7b13e15ac08d497362a0c233f20d57615f9bf00c365014d82b0528e07d7a2c74","parentDecisionSha256":"82f4e6cff159794fbbba0467f50b1ab17b4c40c6f5742352d37cd7b36fbb7f27","candidateSha256":"2ca6e2c207eed6bee659f371c76162e2c96e5e76227c694fc1ce7781b8c8fd0c"},
+  "reviews": {"Bohr":"58cab26f4595c8627a7506f39fdae8dde158c5cdf449797ae0b4ff173ec8eb29","Plato":"ee6550fa804a85eca6176b7f947511ecb9010ffe3cdd80e4a79a078c43b44ace","scope":"Limited source/CPU/data acceptance only; not prior native success"},
+  "actual": {"terminalAt":"2026-10-24T12:11:07.476Z","childPid":22996,"exitCode":1,"attemptedDriverLaunch":false,"completedPrePostChecks":0,"job":null,"pngs":0,"proofs":0,"browserLaunched":false,"failure":"independent-outer-pre check timeout","checkerLimitMs":180000,"observedBudgetAtSettlementMs":180020.66669999997,"workerExitObserved":true,"workerExitCode":1,"diagnosticTransportCleanupConfirmed":true,"noZeroActiveJobClaim":true},
+  "progress": {"workerOnline":true,"workerEntered":true,"receivedMarkers":27,"workerTerminal":null,"diagnosticFault":null,"lastReceivedSection":"stage.tree.0.staged","activeSections":["stage.tree.0.staged"],"originalMediaTreeBeginReceiptMs":2440,"originalMediaTreeEndReceiptMs":42660,"stagedMediaTreeBeginReceiptMs":42660,"stagedMediaTreeEndObserved":false,"treeRole":"media","expectedFiles":16599,"expectedBytes":788671521,"qualification":"Parent receipt intervals and active source boundary only, not worker profiling, throughput, a stalled syscall or cause"},
+  "retained": {"operationFiles":["outer-identity.json","outer-result.json"],"outerResultBytes":4551,"outerResultSha256":"47989de7c54e3e2ab450c17422d1bd78395142b98f48a127d5b4859da603e394","noRetryCleanupRebaselineBackfillOrScopeCapWaiver":true},
+  "next": "Fresh private SOURCE/CPU-only inventory scheduling proposal: bounded leaf-pin parallelism with every original guard/scope/hash/identity/cap retained. No real-stage benchmark, full binding or native authority. Any future success remains noncausal for old failures.",
+  "backend": {"association":"UNBOUND","zeroCostDedicatedEnvironmentVerified":false,"providerMutations":0,"qualification":"Read-only metadata and estimate research did not establish authorized zero-cost eligibility; no billing details or identifiers published"},
+  "candidateVisualAccepted": false,
+  "productionReady": false
+}
