@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useFinancialStore } from '@/stores/financial-store';
+import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
@@ -56,7 +57,7 @@ function NavigationContent() {
   const [showAI, setShowAI] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [aiQuery, setAiQuery] = useState('');
-  const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
+  const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string, source?: string}[]>([
     { role: 'ai', text: "Hi! I'm your Velocity Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
   ]);
   const store = useFinancialStore();
@@ -66,21 +67,28 @@ function NavigationContent() {
   const handleAISubmit = useCallback(() => {
     if (!aiQuery.trim()) return;
     const userMessage = aiQuery.trim();
+    const book = portfolio && teacherMode && portfolioPersistence.getStatus().status === 'ready'
+      ? usePortfolioStore.getState() : null;
+    const context = portfolio ? book && Number.isFinite(book.monthlyIncome) && Number.isFinite(book.monthlyExpenses)
+      && Number.isFinite(book.monthlyIncome - book.monthlyExpenses) ? {
+        monthlyIncome: book.monthlyIncome, monthlyExpenses: book.monthlyExpenses,
+        cashFlow: book.monthlyIncome - book.monthlyExpenses, activeDomainLabel: 'Portfolio',
+      } : undefined : {
+        monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
+        cashFlow: store.monthlyIncome - store.monthlyExpenses, activeDomainLabel: store.activeDomain,
+      };
+    const source = teacherMode ? portfolio ? context ? 'Shared portfolio at question time'
+      : 'Shared portfolio unavailable at question time' : 'Single-target demo at question time' : undefined;
     setAiMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setAiQuery('');
     setTimeout(() => {
       const response = getGuardianResponse(userMessage, {
         teacherMode,
-        context: {
-          monthlyIncome: store.monthlyIncome,
-          monthlyExpenses: store.monthlyExpenses,
-          cashFlow: store.monthlyIncome - store.monthlyExpenses,
-          activeDomainLabel: store.activeDomain,
-        }
+        context,
       });
-      setAiMessages(prev => [...prev, { role: 'ai', text: response }]);
+      setAiMessages(prev => [...prev, { role: 'ai', text: response, source }]);
     }, 300);
-  }, [aiQuery, teacherMode, store]);
+  }, [aiQuery, teacherMode, store, portfolio]);
 
   const classes = themeClasses[mounted ? theme : 'original'];
   const ActiveThemeIcon = themeIcons[theme];
@@ -235,9 +243,9 @@ function NavigationContent() {
             aria-labelledby="velocity-guardian-title"
             className={`${classes.bgSecondary} rounded-2xl ${classes.border} border w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl`}
           >
-            <div className={`flex items-center justify-between p-4 border-b ${classes.border} bg-gradient-to-r from-emerald-900/30 to-transparent`}>
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14">
+            <div className={`grid grid-cols-[minmax(0,1fr)_2.25rem] items-center gap-x-2 gap-y-3 p-4 border-b ${classes.border} bg-gradient-to-r from-emerald-900/30 to-transparent sm:flex sm:justify-between`}>
+              <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+                <div className="relative h-10 w-10 shrink-0 sm:h-14 sm:w-14">
                   <Image
                     src="/shield-guardian.webp"
                     alt="Velocity Guardian"
@@ -250,12 +258,12 @@ function NavigationContent() {
                     }}
                   />
                 </div>
-                <div>
-                  <h3 id="velocity-guardian-title" className={`${classes.text} font-semibold text-lg`}>Velocity Guardian</h3>
+                <div className="min-w-0">
+                  <h3 id="velocity-guardian-title" className={`${classes.text} font-semibold text-base sm:text-lg`}>Velocity Guardian</h3>
                   <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>
-               <div className="flex items-center gap-2">
+               <div className="col-span-2 row-start-2 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setTeacherMode(!teacherMode)}
@@ -272,7 +280,7 @@ function NavigationContent() {
                 onClick={() => setShowAI(false)}
                 aria-label="Close Velocity Guardian"
                 title="Close Velocity Guardian"
-                className={`${classes.textSecondary} hover:${classes.text} p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
+                className={`${classes.textSecondary} hover:${classes.text} col-start-2 row-start-1 shrink-0 p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
               >
                 <X aria-hidden="true" className="h-5 w-5" />
               </button>
@@ -286,6 +294,7 @@ function NavigationContent() {
                       ? 'bg-emerald-600 text-white' 
                       : `${classes.bgTertiary} ${classes.text}`
                   }`}>
+                    {msg.source && <p className="mb-1 text-xs opacity-75">{msg.source}</p>}
                     {msg.text}
                   </div>
                 </div>
@@ -301,14 +310,14 @@ function NavigationContent() {
                   onChange={(e) => setAiQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAISubmit()}
                   placeholder="Ask about velocity banking..."
-                  className={`flex-1 ${classes.bgTertiary} ${classes.border} border rounded-xl px-4 py-3 ${classes.text} placeholder-gray-400 focus:outline-none focus:border-emerald-500`}
+                  className={`min-w-0 flex-1 ${classes.bgTertiary} ${classes.border} border rounded-xl px-4 py-3 ${classes.text} placeholder-gray-400 focus:outline-none focus:border-emerald-500`}
                 />
                 <button
                   type="button"
                   onClick={handleAISubmit}
                   aria-label="Send question"
                   title="Send question"
-                  className={`${classes.glassButton} flex h-12 w-12 items-center justify-center rounded-md text-emerald-400`}
+                  className={`${classes.glassButton} flex h-12 w-12 shrink-0 items-center justify-center rounded-md text-emerald-400`}
                 >
                   <Send aria-hidden="true" className="h-5 w-5" />
                 </button>

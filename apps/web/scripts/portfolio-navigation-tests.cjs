@@ -22,6 +22,8 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
       'lucide-react': new Proxy({}, { get: () => Icon }), '@/hooks/useIsClient': { useIsClient: () => true },
       '@/stores/theme-store': { useThemeStore: () => ({ theme: 'original' }), themeClasses: { original: {} } },
       '@/stores/financial-store': { useFinancialStore: () => ({ monthlyIncome: 0, monthlyExpenses: 0, activeDomain: 'car' }) },
+      '@/stores/portfolio-store': { usePortfolioStore: { getState: () => { throw Error('Link rendering must not read the Portfolio book'); } },
+        portfolioPersistence: { getStatus: () => { throw Error('Link rendering must not read Portfolio persistence'); } } },
       '@/stores/preferences-store': { usePreferencesStore: () => ({ teacherMode: false }) },
       '@/data/shield-guardian-qa': { getGuardianResponse: () => { throw Error('Guardian must not run in navigation tests'); } },
     };
@@ -87,6 +89,85 @@ function registerPortfolioNavigationTests({ test, webRoot = path.resolve(__dirna
   test('Expo retains explicit separate routes, not canonical query adoption', () => {
     const tree = parse(read('../mobile/components/mobile-shell/navigation.tsx')), routes = nodes(tree, n => ts.isVariableDeclaration(n) && n.name.getText(tree) === 'modeRoutes')[0].initializer;
     assert.deepEqual(Object.fromEntries(routes.properties.map(p => [p.name.getText(tree), p.initializer.text])), { dashboard: '/', simulator: '/simulator', cockpit: '/cockpit', portfolio: '/portfolio', learn: '/learn', vault: '/vault', settings: '/settings' });
+  });
+  // Execute the real component callback and real formatter with fixed hooks, stores and timers; no browser.
+  const qa = { exports: {} };
+  vm.runInNewContext(ts.transpileModule(read('src/data/shield-guardian-qa.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText,
+    { module: qa, exports: qa.exports, Math: Object.assign(Object.create(Math), { random: () => 0 }) });
+  function guardianFixture(pathname, query = '', teacherMode = true) {
+    const state = [], timers = [], calls = [], mod = { exports: {} }, Icon = () => null;
+    let cursor = 0, reads = 0;
+    const current = { pathname, query, status: 'ready', book: { monthlyIncome: 2500, monthlyExpenses: 1550 } };
+    const legacy = { monthlyIncome: 8200, monthlyExpenses: 4700, activeDomain: 'car' };
+    const imports = {
+      react: { ...React, useState: initial => { const i = cursor++; if (!(i in state)) state[i] = initial;
+        return [state[i], next => { state[i] = typeof next === 'function' ? next(state[i]) : next; }]; }, useCallback: fn => fn },
+      'react/jsx-runtime': runtime, 'next/link': { __esModule: true, default: Icon }, 'next/image': { __esModule: true, default: Icon },
+      'next/navigation': { usePathname: () => current.pathname, useSearchParams: () => new URLSearchParams(current.query) },
+      'lucide-react': new Proxy({}, { get: () => Icon }), '@/hooks/useIsClient': { useIsClient: () => true },
+      '@/stores/theme-store': { useThemeStore: () => ({ theme: 'original' }), themeClasses: { original: {} } },
+      '@/stores/financial-store': { useFinancialStore: () => legacy }, '@/stores/preferences-store': { usePreferencesStore: () => ({ teacherMode }) },
+      '@/stores/portfolio-store': { usePortfolioStore: { getState: () => { reads++; return current.book; } },
+        portfolioPersistence: { getStatus: () => ({ status: current.status }) } },
+      '@/data/shield-guardian-qa': { getGuardianResponse: (input, options) => { calls.push({ input, options }); return qa.exports.getGuardianResponse(input, options); } },
+    };
+    vm.runInNewContext(code, { module: mod, exports: mod.exports, require: id => { assert.ok(id in imports, id); return imports[id]; },
+      setTimeout: (run, delay) => timers.push({ run, delay }) });
+    const tree = () => { cursor = 0; return mod.exports.default().props.children.type(); };
+    const find = (node, label) => Array.isArray(node) ? node.map(child => find(child, label)).find(Boolean)
+      : node?.props && (node.props['aria-label'] === label ? node : find(node.props.children, label));
+    return { current, legacy, calls, timers, reads: () => reads, tree, reply: () => state.find(Array.isArray).at(-1),
+      submit(input = 'cash flow') { find(tree(), 'Open Velocity Guardian').props.onClick();
+        find(tree(), 'Ask Velocity Guardian a question').props.onChange({ target: { value: input } }); find(tree(), 'Send question').props.onClick(); },
+      flush() { assert.equal(timers.length, 1); assert.equal(timers[0].delay, 300); assert.equal(calls.length, 0); timers.shift().run(); } };
+  }
+  for (const [route, query] of [['/portfolio', 'scenario=unknown'], ['/', 'scenario=portfolio'], ['/simulator', 'scenario=portfolio']]) {
+    test('Guardian teacher uses the actual shared book ' + route, () => {
+      const f = guardianFixture(route, query); f.submit(); f.flush();
+      assert.equal(f.calls[0].options.context.cashFlow, 950); assert.equal(f.calls[0].options.context.monthlyIncome, 2500);
+      assert.equal(f.calls[0].options.context.monthlyExpenses, 1550); assert.match(f.reply().text, /\$950 \/ month/);
+      assert.doesNotMatch(f.reply().text, /3,500/); assert.equal(f.reply().source, 'Shared portfolio at question time');
+      assert.ok(JSON.stringify(f.tree()).includes(f.reply().source));
+    });
+  }
+  test('Guardian keeps bare, unknown, case, first-query and unsupported routes legacy', () => {
+    for (const [route, query] of [['/', ''], ['/simulator', ''], ['/', 'scenario=unknown'], ['/simulator', 'scenario=Portfolio'],
+      ['/', 'scenario=x&scenario=portfolio'], ['/cockpit', 'scenario=portfolio'], ['/vault', 'scenario=portfolio'], ['/unknown', 'scenario=portfolio']]) {
+      const f = guardianFixture(route, query); f.submit(); f.flush();
+      assert.equal(f.calls[0].options.context.cashFlow, 3500); assert.equal(f.calls[0].options.context.activeDomainLabel, 'car');
+      assert.match(f.reply().text, /\$3,500 \/ month/); assert.equal(f.reads(), 0);
+    }
+  });
+  test('Guardian unavailable or nonfinite shared data never borrows legacy personalization', () => {
+    for (const patch of [{ status: 'error' }, { status: 'unavailable' }, { status: 'unknown' }, { book: { monthlyIncome: NaN, monthlyExpenses: 1550 } },
+      { book: { monthlyIncome: 2500, monthlyExpenses: Infinity } }, { book: { monthlyIncome: Number.MAX_VALUE, monthlyExpenses: -Number.MAX_VALUE } }]) {
+      const f = guardianFixture('/portfolio'); Object.assign(f.current, patch); f.submit(); f.flush();
+      assert.equal(f.calls[0].options.context, undefined); assert.doesNotMatch(f.reply().text, /Your current cash flow estimate/);
+      assert.equal(f.reply().source, 'Shared portfolio unavailable at question time');
+    }
+  });
+  for (const shared of [false, true]) test('Guardian snapshots question context across a delayed route change ' + shared, () => {
+    const f = guardianFixture(shared ? '/portfolio' : '/'); f.submit();
+    f.current.pathname = shared ? '/' : '/portfolio'; f.current.book.monthlyIncome = 9000; f.legacy.monthlyIncome = 9900; f.tree(); f.flush();
+    assert.equal(f.calls[0].options.context.cashFlow, shared ? 950 : 3500);
+    assert.equal(f.reply().source, shared ? 'Shared portfolio at question time' : 'Single-target demo at question time');
+  });
+  test('Guardian reads current shared input at submit and preserves zero and negative dollar amounts', () => {
+    for (const income of [1550, 1450, 1550.25]) {
+      const f = guardianFixture('/portfolio'); f.tree(); f.current.book = { monthlyIncome: income, monthlyExpenses: 1550 };
+      f.submit(); f.flush(); assert.equal(f.calls[0].options.context.cashFlow, income - 1550);
+    }
+  });
+  test('Guardian teacher-off answers and query classification remain the real formatter output', () => {
+    for (const [route, query] of [['/portfolio', ''], ['/', 'scenario=portfolio'], ['/simulator', 'scenario=portfolio'], ['/', '']]) {
+      for (const input of ['cash flow', 'get started', 'chunk', 'LOC', 'interest', 'medical repair', 'dashboard', 'hello', '?']) {
+        const f = guardianFixture(route, query, false); f.submit(input); f.flush();
+        assert.equal(f.reply().text, qa.exports.getGuardianResponse(input, { teacherMode: false })); assert.equal(f.reply().source, undefined); assert.equal(f.reads(), 0);
+      }
+    }
+  });
+  test('Guardian blank questions remain inert', () => {
+    const f = guardianFixture('/portfolio'); f.submit('   '); assert.equal(f.timers.length, 0); assert.equal(f.calls.length, 0); assert.equal(f.reads(), 0);
   });
 }
 module.exports = { registerPortfolioNavigationTests };

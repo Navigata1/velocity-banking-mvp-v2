@@ -115,7 +115,8 @@ async function sharedEdits(page, origin, output, width) {
   assert.equal(lightContrast.length, 4); assert.ok(lightContrast.every(metric => metric.ratio >= 4.5), JSON.stringify(lightContrast));
   await fit(page); await unchangedLegacy(page);
   const primaryNavigation = await primaryPortfolioNavigation(page, origin, expected);
-  return { geometry, lightContrast, bidirectional: true, legacyBytesPreserved: true, modelChecked: width !== 280, primaryNavigation };
+  const guardianContext = await guardianQuestionSources(page, origin, expected);
+  return { geometry, lightContrast, bidirectional: true, legacyBytesPreserved: true, modelChecked: width !== 280, primaryNavigation, guardianContext };
 }
 async function primaryPortfolioNavigation(page, origin, expected) {
   const saved = await stored(page), nav = page.getByTestId('primary-navigation');
@@ -140,6 +141,54 @@ async function primaryPortfolioNavigation(page, origin, expected) {
   await page.goto(origin + '/?scenario=portfolio', { waitUntil: 'networkidle' });
   await page.getByTestId('shared-portfolio-dashboard').waitFor();
   return { canonicalPrimaryTransitions: 6, explicitDemoExit: true, originalSavedBytesPreserved: true };
+}
+async function guardianQuestionSources(page, origin, expected) {
+  const saved = await stored(page), receipts = [];
+  assert.deepEqual(JSON.parse(saved).data, expected);
+  assert.equal(expected.monthlyIncome - expected.monthlyExpenses, 950);
+  for (const [route, shared] of [['/portfolio', true], ['/?scenario=portfolio', true], ['/simulator?scenario=portfolio', true],
+    ['/', false], ['/?scenario=unknown', false]]) {
+    await page.goto(origin + route, { waitUntil: 'networkidle' });
+    assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    await page.getByRole('button', { name: 'Open Velocity Guardian', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Velocity Guardian', exact: true });
+    await dialog.waitFor();
+    const teacher = dialog.getByRole('button', { name: /^Teacher Mode: (?:On|Off)$/ });
+    if (await teacher.getAttribute('aria-pressed') === 'false') await teacher.click();
+    await dialog.getByRole('button', { name: 'Teacher Mode: On', exact: true, pressed: true }).waitFor();
+    assert.equal(await teacher.getAttribute('aria-pressed'), 'true');
+    const dialogGeometry = await dialog.evaluate(element => {
+      const box = element.getBoundingClientRect();
+      return { left: box.left, right: box.right, width: box.width, viewportWidth: innerWidth,
+        clientWidth: element.clientWidth, scrollWidth: element.scrollWidth,
+        controlsFit: [...element.querySelectorAll('input, button')].every(node => {
+          const rect = node.getBoundingClientRect(); return rect.left >= box.left - 1 && rect.right <= box.right + 1;
+        }) };
+    });
+    assert.ok(dialogGeometry.left >= 0 && dialogGeometry.right <= dialogGeometry.viewportWidth
+      && dialogGeometry.scrollWidth <= dialogGeometry.clientWidth + 1 && dialogGeometry.controlsFit, JSON.stringify(dialogGeometry));
+    await dialog.getByRole('textbox', { name: 'Ask Velocity Guardian a question', exact: true }).fill('What is my cash flow?');
+    await dialog.getByRole('button', { name: 'Send question', exact: true }).click();
+    const source = shared ? 'Shared portfolio at question time' : 'Single-target demo at question time';
+    const cashFlow = shared ? 950 : 3889, formatted = shared ? '950' : '3,889';
+    const sourceLabel = dialog.getByText(source, { exact: true }), answer = sourceLabel.locator('..');
+    const cashLine = `Your current cash flow estimate: $${formatted} / month.`;
+    await answer.filter({ hasText: cashLine }).waitFor();
+    assert.equal(await sourceLabel.count(), 1);
+    const text = await answer.innerText();
+    assert.ok(text.includes(cashLine), text);
+    assert.match(text, /Teacher Mode/);
+    assert.ok(!text.includes(`Your current cash flow estimate: $${shared ? '3,889' : '950'} / month.`), text);
+    assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    await dialog.getByRole('button', { name: 'Close Velocity Guardian', exact: true }).click();
+    await dialog.waitFor({ state: 'hidden' });
+    assert.equal(await stored(page), saved); await unchangedLegacy(page);
+    receipts.push({ route, cashFlow, source, dialogGeometry, protectedBookBytesPreserved: true });
+  }
+  await page.goto(origin + '/?scenario=portfolio', { waitUntil: 'networkidle' });
+  await page.getByTestId('shared-portfolio-dashboard').waitFor();
+  assert.equal(await stored(page), saved); await unchangedLegacy(page);
+  return receipts;
 }
 async function adverseStates(page, origin, output, width) {
   const debtOnly = () => { const book = fixture(); book.debts = book.debts.slice(0, 1); book.loc.balance = 0; return book; };
