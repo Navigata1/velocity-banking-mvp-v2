@@ -13,6 +13,25 @@ does not replace the earlier `f708bda` whole-app hosted/manual baseline.
 
 ## What Was Tested
 
+### 24 October Core Port
+
+The fixed-input contract, v2 generation-recording/verification library and its
+declarations are now tracked under `apps/media/scripts/`, with ten standing
+synthetic filesystem test groups. The three implementation/declaration files
+match the reviewed private source exactly. A separate real `node --test` run
+passed all ten groups in a controlled Windows Job. The complete 237-test media
+suite and all sixteen fresh local gates also pass in isolated fixtures; new-head
+remote gates remain required. The earlier REPL-runner timeout is retained, not
+called a pass. An earlier root-vendor identity failure is also retained: the
+unchanged preparer replaced 26 generated copies with identical bytes. Fresh QA
+now runs preparation inside its own fixture, preserving original content hashes
+and explicitly distinguishing those post-failure identities from originals.
+
+This is a source foundation only. The existing render/verify/package aliases
+still use their previous implementations. Delivery consumers, strict wrappers,
+configured staging and the fresh-stage launch bridge are not yet integrated.
+No new video, asset, decoded-art approval or generic operator P1 closure follows.
+
 Independent model and video hashes cannot prove a video used the current model.
 The candidate reserves fresh UUID outputs, binds model/vendor/source inputs and
 the entire media dependency tree, then requires same-generation decoded visual
