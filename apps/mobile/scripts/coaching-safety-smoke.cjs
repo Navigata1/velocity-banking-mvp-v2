@@ -28,9 +28,9 @@ function sourceHashes() {
   files.push(__filename, path.join(__dirname, 'smoke-accessibility-rendered.cjs'));
   return Object.fromEntries(files.map(file => [path.relative(root, file).replaceAll('\\', '/'), sha(fs.readFileSync(file))]));
 }
-function exportHashes() {
-  return Object.fromEntries(filesBelow(path.join(appRoot, 'dist-web')).map(file =>
-    [path.relative(path.join(appRoot, 'dist-web'), file).replaceAll('\\', '/'), sha(fs.readFileSync(file))]));
+function exportHashes(directory = path.join(appRoot, 'dist-web')) {
+  return Object.fromEntries(filesBelow(directory).map(file =>
+    [path.relative(directory, file).replaceAll('\\', '/'), sha(fs.readFileSync(file))]));
 }
 async function ready(page) {
   await field(page).waitFor({ state: 'visible' });
@@ -89,7 +89,8 @@ async function assess(page, receipt, label, failed, phase) {
     check(receipt, `${phase} simulator current plan`, await value('Current Plan', failed ? 'Review payoff inputs' : 'Pause new chunks'), 1);
     if (failed) check(receipt, `${phase} simulator failure reason`, await reason('Current Plan'), 1);
     else {
-      check(receipt, `${phase} simulator valid current plan`, await value('Current Plan', 'Inputs are ready for a simulator pass.'), 1);
+      check(receipt, `${phase} simulator valid current plan`, await value('Current Plan', 'Educational estimate: the scheduled-payment policy pauses new chunks. Unused final payments can still recover the LOC.'), 1);
+      check(receipt, `${phase} simulator has no stale generic readiness`, await value('Current Plan', 'Inputs are ready for a simulator pass.'), 0);
       check(receipt, `${phase} simulator actual one-month velocity`, await card(page, 'Strategy Comparison').getByText('Velocity: 1 mo', { exact: true }).count(), 1);
     }
   } else if (label === 'Cockpit') {
@@ -158,11 +159,13 @@ async function failedProjection(page, receipt, initialBytes) {
   check(receipt, 'healthy default comparison survives reload', await card(page, 'Next Move').getByText('Compare payoff paths', { exact: true }).count(), 1);
   await screenshot(page, receipt, 'restored-default', card(page, 'Next Move'));
 }
-async function runCoachingSafetyFixtures({ browser, origin, output }) {
+async function runCoachingSafetyFixtures({ browser, origin, output, exportDirectory = path.join(appRoot, 'dist-web') }) {
   const url = new URL(origin); assert.equal(url.protocol, 'http:');
   assert.ok(['127.0.0.1', 'localhost'].includes(url.hostname), 'synthetic loopback HTTP only');
   fs.mkdirSync(output, { recursive: true });
-  const sources = sourceHashes(), exported = exportHashes(), served = {};
+  const exportRoot = fs.realpathSync(exportDirectory);
+  assert.ok(fs.statSync(path.join(exportRoot, 'index.html')).isFile(), 'selected export needs its actual HTML');
+  const sources = sourceHashes(), exported = exportHashes(exportRoot), served = {};
   for (const file of Object.keys(exported).filter(file => file === 'index.html' || file.endsWith('.js'))) {
     const response = await fetch(`${origin}/${file}`); assert.equal(response.status, 200);
     served[file] = sha(Buffer.from(await response.arrayBuffer()));
@@ -215,7 +218,7 @@ async function runCoachingSafetyFixtures({ browser, origin, output }) {
       console.error(`FAIL native coaching safety ${name} ${width}px: ${error.message}`);
     } finally { delete receipt.output; receipts.push(receipt); await context.close(); }
   }
-  const sourcesAfter = sourceHashes(), exportedAfter = exportHashes();
+  const sourcesAfter = sourceHashes(), exportedAfter = exportHashes(exportRoot);
   const preserved = { sources: JSON.stringify(sources) === JSON.stringify(sourcesAfter), export: JSON.stringify(exported) === JSON.stringify(exportedAfter) };
   writeJson(path.join(output, 'coaching-verification.json'), { origin, capturedAt: new Date().toISOString(),
     scope: 'Existing Expo export over native HTTP, fresh synthetic contexts only, not physical-device QA. Original 76 cases and receipts unchanged.',
@@ -238,7 +241,7 @@ async function main() {
   const browser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
   const deadline = setTimeout(() => { console.error('Coaching safety fixture exceeded its finite 180s launcher deadline.');
     process.exitCode = 1; void browser.close(); }, 180000);
-  try { await runCoachingSafetyFixtures({ browser, origin, output: path.resolve(process.env.MOBILE_COACHING_OUTPUT) }); }
+  try { await runCoachingSafetyFixtures({ browser, origin, output: path.resolve(process.env.MOBILE_COACHING_OUTPUT), exportDirectory: process.env.MOBILE_COACHING_EXPORT_DIR }); }
   finally { clearTimeout(deadline); await browser.close(); }
 }
 if (require.main === module) main().catch(error => {

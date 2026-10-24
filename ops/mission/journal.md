@@ -1423,3 +1423,7 @@ Before source freeze:HP6 limited source/data/CPU review accepted372fcde6,78indep
 ## Session79: Liability-State Coaching
 Prior362 fully verified both automatic CI events/receipt6380392883. NM02 root integration passes403/23247, root40/nativecontracts/lint/types/media227 and fresh three-platform exact-source exports. Final actualChrome Expo states verify source/restoration/errors0. ActualRED22/standing-interestRED/independent-warningRED6/reviewed-LearnRED1 retained; numerical solvers and23art/build pins unchanged. New-head remote CI/preview and independent final review pending.
 Allten photoreal/approvedvideos/operator/backend/lender/calendar/security/a11y/device/release remain OPEN. No merge, production, DNS or managed-data mutation.
+
+## Session80: Rendered Coaching Contract Alignment
+1372 bothCI failed one stale genericReady detail assertion repeated six times; graphicsbothpass,4guards/canonical1/receipt6380935058, raw13MB PRartifact verified. ExactPause detail plus negativegenericReady and default-preserving explicitexport selection now pass17CPU/fullnativecontracts/root40/CI22 and actual6cases/168checks/69PNGs. All app/solver/art source unchanged; old76 cases not rerun by focused fixture. Newhead fullpair/preview and final review pending.
+All production/photo/lender/calendar/backend/security/a11y/physicaldevice gates remain OPEN. No unchanged rerun or production/managed-data mutation.

@@ -82,5 +82,19 @@ test('coaching does not mutate the saved scenario or its precise raw rates', () 
   for (const name of ['buildMobileDashboardSnapshot', 'buildMobileSimulatorSnapshot', 'buildMobileCockpitSnapshot', 'buildMobileLearnSnapshot', 'buildMobileVaultSnapshot']) engine[name](input);
   assert.equal(JSON.stringify(input), bytes);
 });
+test('rendered coaching hashes the explicitly selected export without changing its default', () => {
+  const file = path.join(__dirname, 'coaching-safety-smoke.cjs');
+  const source = ts.createSourceFile(file, fs.readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true);
+  const declaration = source.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'exportHashes');
+  assert.ok(declaration, 'inspect the real hash selector');
+  const visited = [], appRoot = path.resolve('C:/synthetic-mobile');
+  const select = vm.runInNewContext('(' + declaration.getText(source) + ')', {
+    appRoot, path, filesBelow: directory => { visited.push(directory); return [path.join(directory, 'index.html')]; },
+    fs: { readFileSync: () => Buffer.from('synthetic-export') }, sha: bytes => bytes.toString(),
+  });
+  assert.equal(select()['index.html'], 'synthetic-export');
+  assert.equal(select(path.join(appRoot, 'test-results', 'fresh-export'))['index.html'], 'synthetic-export');
+  assert.deepEqual(visited, [path.join(appRoot, 'dist-web'), path.join(appRoot, 'test-results', 'fresh-export')]);
+});
 console.log(`${tests} coaching safety contracts ${failures ? 'failed' : 'passed'}.`);
 if (failures) process.exitCode = 1;

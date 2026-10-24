@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-24T06:35:31.965Z",
+  "headBefore": "1372fb6d8a648e58560cef299ec21847ea89261f",
+  "scope": "Rendered mobile test contract and explicit preserved-export selection only; no app/engine/art/dependency/workflow change",
+  "priorCi": {"events":[{"id":40069686782,"event":"push","attempt":1,"conclusion":"failure"},{"id":40069689782,"event":"pull_request","attempt":1,"conclusion":"failure"}],"graphics":"both success","failedStep":"Smoke rendered Expo accessibility","failure":"healthy-final-payment generic-ready detail assertion repeated at navigation/reload and375/280/1440","validSourceGuards":4,"canonicalExit":1,"receipt":"https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6380935058","workflowRerun":false},
+  "artifact": {"id":12550629194,"bytes":13415887,"sha256":"95a80d02eea900cadaea9c7c3f56dd495849dd4b870af9a4f584fecc1cb832fd","failedChecks":6,"distinctStaleAssertions":1,"otherPayoffWarningChecksPassed":true},
+  "tdd": {"realRenderedRedChecks":6,"explicitExportSelectorCpuRed":1,"finalNativeCoachingCpuGroups":17,"originalGroupsRetained":16,"additionalGenericReadinessNegatives":6},
+  "local": {"actualLoopbackCases":6,"actualAssertions":168,"actualPngs":69,"widths":[375,280,1440],"routes":5,"navigationAndReload":true,"nativeContracts":0,"rootMobileGroups":40,"ciContracts":22,"standaloneDeadlineMs":180000},
+  "preservation": {"sourcesAndExport":{"sources":true,"export":true},"protectedArtBuildPins":23,"appAndEngineUnchanged":true,"oldExportOutputsUntouched":true,"original76CasesNotRerunLocally":true,"priorUnchangedWebRegressionGroups":403,"priorUnchangedCommonMonthProbes":23247},
+  "approval": {"newHeadCiApproved":false,"newPreviewApproved":false,"allTenPhotorealApproved":false,"mergeApproved":false,"productionReady":false}
+}
