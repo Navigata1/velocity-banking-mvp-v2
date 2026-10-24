@@ -1,0 +1,53 @@
+TAP version 13
+# Subtest: requires both events: successful PR must not hide failed push
+not ok 1 - requires both events: successful PR must not hide failed push
+  ---
+  duration_ms: 2.8315
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\scripts\\check-restoration-ci.test.cjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    0 !== 1
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    rejected (C:\Users\IslandDevCrew\Documents\Interest Shield\scripts\check-restoration-ci.test.cjs:41:10)
+    TestContext.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\scripts\check-restoration-ci.test.cjs:44:74)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+
+# Subtest: requirements come from the checked commit, not an edited local workflow
+not ok 13 - requirements come from the checked commit, not an edited local workflow
+  ---
+  duration_ms: 7.0687
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\scripts\\check-restoration-ci.test.cjs:90:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    dirty requirements must not hide a missing committed step
+
+    0 !== 1
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\scripts\check-restoration-ci.test.cjs:95:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...

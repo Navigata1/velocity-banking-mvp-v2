@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-21T12:56:49.887Z",
+  "file": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+  "initialHash": "8dd2a4063061f203454e1a001c382c7540d5e48110a5b399190d1f60af8d97a5",
+  "currentHash": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2",
+  "reverseFramingOnlyHash": "8dd2a4063061f203454e1a001c382c7540d5e48110a5b399190d1f60af8d97a5",
+  "exactTwoInsertionReverseMatchesInitial": true,
+  "startScrollCount": 1,
+  "actualScrolledAncestorPredicateCount": 1,
+  "noPrecedingGetByText": true,
+  "note": "Explicit late scope extension: capture-only start alignment plus existing 80px offset on a currently scrolled ancestor, otherwise window; actual screenshot adequacy remains parent browser QA."
+}

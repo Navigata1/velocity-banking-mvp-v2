@@ -1,0 +1,14 @@
+
+> @interestshield/media@0.1.0 verify:heroes
+> node scripts/verify-hero-turntables.mjs
+
+PASS car: 1080p, 9s, visible movement, complete revolution and rest
+PASS house: 1080p, 9s, visible movement, complete revolution and rest
+PASS land: 1080p, 9s, visible movement, complete revolution and rest
+PASS creditCard: 1080p, 9s, visible movement, complete revolution and rest
+PASS studentLoan: 1080p, 9s, visible movement, complete revolution and rest
+PASS medical: 1080p, 9s, visible movement, complete revolution and rest
+PASS personal: 1080p, 9s, visible movement, complete revolution and rest
+PASS recreation: 1080p, 9s, visible movement, complete revolution and rest
+PASS custom: 1080p, 9s, visible movement, complete revolution and rest
+PASS vault: 1080p, 9s, visible movement, complete revolution and rest

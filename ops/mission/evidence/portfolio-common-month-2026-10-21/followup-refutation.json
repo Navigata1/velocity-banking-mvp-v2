@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-21T12:47:37.590Z",
+  "confirmed": "new generic cumulative positive-range regression; in-range and exact-MAX controls pass",
+  "cases": [
+    {
+      "first": 8.988465674311579e+307,
+      "second": 1,
+      "withinRange": true,
+      "rawResidual": 0,
+      "actual": {
+        "status": "modeled",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 2,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 1,
+        "cashBalance": 0,
+        "netModeledWealth": -1,
+        "interestThroughMonth": 8.988465674311579e+307,
+        "budgetThroughMonth": 0
+      }
+    },
+    {
+      "first": 1.7976931348623157e+308,
+      "second": 0,
+      "withinRange": true,
+      "rawResidual": 0,
+      "actual": {
+        "status": "modeled",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 2,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 0,
+        "netModeledWealth": 0,
+        "interestThroughMonth": 1.7976931348623157e+308,
+        "budgetThroughMonth": 0
+      }
+    },
+    {
+      "first": 1.7976931348623157e+308,
+      "second": 1,
+      "withinRange": false,
+      "rawResidual": 0,
+      "actual": {
+        "status": "modeled",
+        "horizonMonths": 2,
+        "coveredThroughMonth": 2,
+        "balances": {},
+        "debtBalance": 0,
+        "locBalance": 1,
+        "cashBalance": 0,
+        "netModeledWealth": -1,
+        "interestThroughMonth": 1.7976931348623157e+308,
+        "budgetThroughMonth": 0
+      }
+    }
+  ]
+}

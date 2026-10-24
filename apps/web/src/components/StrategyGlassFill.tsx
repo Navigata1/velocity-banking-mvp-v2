@@ -20,6 +20,7 @@ interface StrategyResult {
   monthsLabel?: string;
   interestLabel?: string;
   statusLabel?: string;
+  endingCashLabel?: string;
 }
 
 interface StrategyGlassFillProps {
@@ -64,21 +65,21 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {strategies.map((strategy, i) => {
           const colors = colorMap[strategy.color] || colorMap.red;
           const card = comparison.cards[i];
           const isValid = card.isValid;
           const fillPercent = card.fillPercent;
-          const monthsSaved = card.monthsSaved;
           const isThisWinner = card.isWinner;
           const isBaseline = card.isBaseline;
 
           return (
             <div
               key={strategy.name}
+              data-testid={`strategy-projection-${strategy.name.toLowerCase()}`}
               className={`
-                relative overflow-hidden rounded-xl border transition-all duration-500
+                relative min-w-0 overflow-hidden rounded-xl border transition-all duration-500
                 ${colors.bg} ${colors.border}
                 ${isThisWinner ? colors.glow + ' ring-1 ring-emerald-500/40' : ''}
               `}
@@ -92,7 +93,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
               </div>
 
               {/* Content overlay */}
-              <div className="relative z-10 p-4 min-h-[140px] flex flex-col justify-between">
+              <div className="relative z-10 p-4 min-h-[140px] flex flex-col justify-between [overflow-wrap:anywhere]">
                 {/* Header */}
                 <div>
                   <div className="flex items-center gap-1.5 mb-1">
@@ -116,6 +117,9 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
                   <p className="text-xs text-gray-400 mt-0.5">
                     {isValid ? `${formatCurrency(strategy.totalInterest)} interest` : strategy.interestLabel ?? 'Not projected'}
                   </p>
+                  {isValid && strategy.endingCashLabel && (
+                    <p className="text-xs text-gray-400 mt-1">{strategy.endingCashLabel}</p>
+                  )}
                   {!isValid && (
                     <p className="mt-2 w-fit rounded-lg bg-black/30 px-2 py-1 text-xs font-medium text-amber-300">
                       {strategy.statusLabel ?? 'Review inputs'}
@@ -124,7 +128,7 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
                 </div>
 
                 {/* Modeled difference badge in the empty space. */}
-                {!isBaseline && isValid && baselineValid && monthsSaved > 0 && (
+                {!isBaseline && isValid && baselineValid && (
                   <div className={`mt-2 text-xs font-medium ${colors.text} bg-black/30 rounded-lg px-2 py-1 inline-block w-fit`}>
                     {formatStrategyDeltaBadge({
                       baselineMonths,
@@ -132,11 +136,6 @@ export default function StrategyGlassFill({ strategies, className = '' }: Strate
                       strategyMonths: strategy.months,
                       strategyInterest: strategy.totalInterest,
                     })}
-                  </div>
-                )}
-                {!isBaseline && isValid && baselineValid && monthsSaved <= 0 && (
-                  <div className="mt-2 text-xs text-gray-500 bg-black/20 rounded-lg px-2 py-1 inline-block w-fit">
-                    No modeled time difference
                   </div>
                 )}
               </div>

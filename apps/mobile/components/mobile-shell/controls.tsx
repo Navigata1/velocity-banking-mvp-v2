@@ -2,8 +2,7 @@ import type { MobileDashboardInput } from '@interestshield/financial-engine';
 import { InputAccessoryView, Keyboard, Pressable, Text, TextInput, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
 import type { MobileAssumptionStorageStatus } from '@/hooks/use-persisted-mobile-assumptions';
-
-const MOBILE_NUMBER_INPUT_ACCESSORY_ID = 'interestshield-mobile-number-inputs';
+import { FinancialNumberInput, MOBILE_NUMBER_INPUT_ACCESSORY_ID } from './number-input';
 
 export const mobileStorageStatusCopy: Record<
   MobileAssumptionStorageStatus,
@@ -35,37 +34,6 @@ export const mobileStorageStatusCopy: Record<
   },
 };
 
-function parseMoneyInput(value: string): number | null {
-  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
-  return Number.isFinite(parsed) ? Math.max(0, parsed) : null;
-}
-
-function parsePercentageInput(value: string): number | null {
-  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
-  return Number.isFinite(parsed) ? Math.max(0, parsed / 100) : null;
-}
-
-function parseWholeNumberInput(value: string): number | null {
-  const parsed = Number(value.replace(/[^0-9.-]/g, ''));
-  return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : null;
-}
-
-function finiteNonNegativeInputValue(value: number): number {
-  return Number.isFinite(value) ? Math.max(0, value) : 0;
-}
-
-function formatMoneyInputValue(value: number): string {
-  return String(Math.round(finiteNonNegativeInputValue(value)));
-}
-
-function formatWholeNumberInputValue(value: number): string {
-  return String(Math.round(finiteNonNegativeInputValue(value)));
-}
-
-function formatPercentageInputValue(value: number): string {
-  return String(Math.round(finiteNonNegativeInputValue(value) * 10000) / 100);
-}
-
 function MoneyInput({
   accessibilityLabel,
   disabled = false,
@@ -79,40 +47,7 @@ function MoneyInput({
   value: number;
   onChange: (value: number) => void;
 }) {
-  return (
-    <View style={{ gap: 6, minWidth: 150 }}>
-      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
-        {label}
-      </Text>
-      <TextInput
-        accessibilityLabel={accessibilityLabel}
-        editable={!disabled}
-        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
-        inputMode="numeric"
-        keyboardType="decimal-pad"
-        onChangeText={(nextValue) => {
-          const parsed = parseMoneyInput(nextValue);
-          if (parsed !== null) onChange(parsed);
-        }}
-        selectTextOnFocus
-        style={{
-          backgroundColor: '#020617',
-          borderColor: '#334155',
-          borderCurve: 'continuous',
-          borderRadius: 12,
-          borderWidth: 1,
-          color: '#f8fafc',
-          fontSize: 18,
-          fontVariant: ['tabular-nums'],
-          fontWeight: '800',
-          minHeight: 48,
-          paddingHorizontal: 12,
-          paddingVertical: 10,
-        }}
-        value={formatMoneyInputValue(value)}
-      />
-    </View>
-  );
+  return <FinancialNumberInput accessibilityLabel={accessibilityLabel} disabled={disabled} label={label} value={value} onChange={onChange} kind={'money'} />;
 }
 
 function TextValueInput({
@@ -171,40 +106,7 @@ function WholeNumberInput({
   value: number;
   onChange: (value: number) => void;
 }) {
-  return (
-    <View style={{ gap: 6, minWidth: 150 }}>
-      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
-        {label}
-      </Text>
-      <TextInput
-        accessibilityLabel={accessibilityLabel}
-        editable={!disabled}
-        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
-        inputMode="numeric"
-        keyboardType="number-pad"
-        onChangeText={(nextValue) => {
-          const parsed = parseWholeNumberInput(nextValue);
-          if (parsed !== null) onChange(parsed);
-        }}
-        selectTextOnFocus
-        style={{
-          backgroundColor: '#020617',
-          borderColor: '#334155',
-          borderCurve: 'continuous',
-          borderRadius: 12,
-          borderWidth: 1,
-          color: '#f8fafc',
-          fontSize: 18,
-          fontVariant: ['tabular-nums'],
-          fontWeight: '800',
-          minHeight: 48,
-          paddingHorizontal: 12,
-          paddingVertical: 10,
-        }}
-        value={formatWholeNumberInputValue(value)}
-      />
-    </View>
-  );
+  return <FinancialNumberInput accessibilityLabel={accessibilityLabel} disabled={disabled} label={label} value={value} onChange={onChange} kind={'whole'} />;
 }
 
 function PercentageInput({
@@ -220,40 +122,7 @@ function PercentageInput({
   value: number;
   onChange: (value: number) => void;
 }) {
-  return (
-    <View style={{ gap: 6, minWidth: 150 }}>
-      <Text accessible={false} style={{ color: '#94a3b8', fontSize: 12, fontWeight: '800', textTransform: 'uppercase' }}>
-        {label}
-      </Text>
-      <TextInput
-        accessibilityLabel={accessibilityLabel}
-        editable={!disabled}
-        inputAccessoryViewID={MOBILE_NUMBER_INPUT_ACCESSORY_ID}
-        inputMode="decimal"
-        keyboardType="decimal-pad"
-        onChangeText={(nextValue) => {
-          const parsed = parsePercentageInput(nextValue);
-          if (parsed !== null) onChange(parsed);
-        }}
-        selectTextOnFocus
-        style={{
-          backgroundColor: '#020617',
-          borderColor: '#334155',
-          borderCurve: 'continuous',
-          borderRadius: 12,
-          borderWidth: 1,
-          color: '#f8fafc',
-          fontSize: 18,
-          fontVariant: ['tabular-nums'],
-          fontWeight: '800',
-          minHeight: 48,
-          paddingHorizontal: 12,
-          paddingVertical: 10,
-        }}
-        value={formatPercentageInputValue(value)}
-      />
-    </View>
-  );
+  return <FinancialNumberInput accessibilityLabel={accessibilityLabel} disabled={disabled} label={label} value={value} onChange={onChange} kind={'legacy-percent'} />;
 }
 
 export function AssumptionControls({
@@ -267,7 +136,7 @@ export function AssumptionControls({
 }) {
   return (
     <>
-      <FinancialCard title="Tune Assumptions" detail="Native controls update the shared engine snapshot immediately.">
+      <FinancialCard title="Tune Assumptions">
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
         <TextValueInput
           accessibilityLabel="Active debt name"

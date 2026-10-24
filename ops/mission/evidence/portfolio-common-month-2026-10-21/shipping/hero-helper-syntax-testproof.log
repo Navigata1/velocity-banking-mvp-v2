@@ -1,0 +1,4 @@
+PASS syntax shipping-guards.mjs
+PASS syntax shipping-guards.test.mjs
+PASS syntax postflight.mjs
+PASS syntax publish-desktop.mjs

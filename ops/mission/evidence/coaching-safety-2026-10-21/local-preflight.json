@@ -1,0 +1,271 @@
+{
+  "baseline": "ef72dd7b11192418eb650aa2c6abf590b624bfb0",
+  "verifiedAt": "2026-10-21T17:40:02.239Z",
+  "stage": "Local coaching safety preflight; BOTH new complete exact-head CI events required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6322133013",
+  "sources": {
+    "apps/media/remotion/data/scenarios.v1.json": "6d8de0a1201975a29921fbb0854b697aa6c9c66424b689f7b296c9854ada11b9",
+    "apps/mobile/package.json": "77c2634b45014f6b5fbc9b68e83ea447235f2c4b26f7ae56eafe050f3f39416f",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "dbcb0e4c04d775e8c8c753bf14612a17ea86295cee1bea5a9b022d6cbfcdc895",
+    "packages/financial-engine/src/index.ts": "7bef8e23071fd107e7a05bac9bb8653fdbcb8d703945cd4dc9b976cb28fab3a6",
+    "apps/mobile/scripts/coaching-safety-contract.cjs": "ae4dd03ddcda3fb35327eb4d7428391134b9468f93aa57df9779bc51b64091f9",
+    "apps/mobile/scripts/coaching-safety-smoke.cjs": "911818e5ffbdf57c9118c4ce3688282fe22a29bd962b62b8a022b374ac383ec4"
+  },
+  "normalizedSources": {
+    "apps/media/remotion/data/scenarios.v1.json": "6d8de0a1201975a29921fbb0854b697aa6c9c66424b689f7b296c9854ada11b9",
+    "apps/mobile/package.json": "77c2634b45014f6b5fbc9b68e83ea447235f2c4b26f7ae56eafe050f3f39416f",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "dbcb0e4c04d775e8c8c753bf14612a17ea86295cee1bea5a9b022d6cbfcdc895",
+    "packages/financial-engine/src/index.ts": "7bef8e23071fd107e7a05bac9bb8653fdbcb8d703945cd4dc9b976cb28fab3a6",
+    "apps/mobile/scripts/coaching-safety-contract.cjs": "ae4dd03ddcda3fb35327eb4d7428391134b9468f93aa57df9779bc51b64091f9",
+    "apps/mobile/scripts/coaching-safety-smoke.cjs": "911818e5ffbdf57c9118c4ce3688282fe22a29bd962b62b8a022b374ac383ec4"
+  },
+  "sourceBoundary": {
+    "modified": [
+      "apps/media/remotion/data/scenarios.v1.json",
+      "apps/mobile/package.json",
+      "apps/mobile/scripts/smoke-accessibility-rendered.cjs",
+      "packages/financial-engine/src/index.ts"
+    ],
+    "added": [
+      "apps/mobile/scripts/coaching-safety-contract.cjs",
+      "apps/mobile/scripts/coaching-safety-smoke.cjs"
+    ],
+    "protectedSources": 295,
+    "models": 10,
+    "posters": 10,
+    "videos": 10
+  },
+  "engineScope": {
+    "baseline": "ef72dd7b11192418eb650aa2c6abf590b624bfb0",
+    "declarations": 111,
+    "changedDeclarations": [
+      "buildMobileDashboardSnapshot"
+    ],
+    "unchangedDeclarations": 110,
+    "engineSourceDigest": "7bef8e23071fd107e7a05bac9bb8653fdbcb8d703945cd4dc9b976cb28fab3a6",
+    "numericalFixturesUnchanged": true
+  },
+  "tests": {
+    "coachingContracts": 16,
+    "originalDrafts": 19,
+    "legacyAprDrafts": 15,
+    "webRegressions": 348,
+    "commonMonthContracts": 31,
+    "referenceProbes": 23247,
+    "mediaContracts": 145,
+    "freshStills": 27,
+    "ciContracts": 14,
+    "staticRendererContracts": 4,
+    "nativeOriginalBrowserCases": 76,
+    "nativeCoachingBrowserCases": 6,
+    "separateFocusedNavigationAssertions": 1,
+    "localWebStages": 13,
+    "nativeTypecheck": true,
+    "nativeFullContracts": true,
+    "androidBundle": true,
+    "iosBundle": true
+  },
+  "red": {
+    "unitFailures": 7,
+    "unitPositiveCases": 9,
+    "browserFailedProjectionCases": 3,
+    "browserHealthyPositiveCases": 3,
+    "parentActualIab": true
+  },
+  "manualActualIab": {
+    "origin": "http://127.0.0.1:53984",
+    "scope": "Actual IAB UI on rebuilt Expo; synthetic defaultAPR200, navigation across five screens, restored6.9; no hidden storage access",
+    "dashboard": {
+      "eta": "DEBT-FREE ETA\nReview inputs\nNo debt-free date shown until inputs support a stable projection.",
+      "next": "NEXT MOVE\nReview payoff inputs\nEducational estimate, not a money movement instruction.",
+      "warning": "REVIEW BEFORE MODELING\nReview payoff inputs\nPayment below interest. Review the assumptions before modeling another chunk."
+    },
+    "simulator": "CURRENT PLAN\nReview payoff inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+    "cockpit": "FLIGHT STATUS\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+    "learn": "LEARNING MODE\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+    "vault": "STABILIZE\nReview inputs\nPayment below interest. Review the assumptions before modeling another chunk.",
+    "restoredNext": "NEXT MOVE\nSend $1,000 to principal\nEducational estimate, not a money movement instruction.",
+    "logs": []
+  },
+  "rawLocalEvidence": {
+    "directory": ".superpowers/sdd/2026-10-21-coaching-safety",
+    "files": {
+      "baseline-probe.log": {
+        "bytes": 3518,
+        "sha256": "37f48523276f04170b7d3b2b6c3ef5aa67de3ff76fa3b3a62a637829c31c1d79"
+      },
+      "contracts-red.log": {
+        "bytes": 1903,
+        "sha256": "a5e807448799b26fac5e6534686e4ed1020fcd14725e6d7e87e82c10d032e84e"
+      },
+      "contracts-green.log": {
+        "bytes": 1393,
+        "sha256": "d76164624602b78b87c02cf17800e0df166fbb313a1ba4aa0aac5d73f12f944b"
+      },
+      "native-types.log": {
+        "bytes": 58,
+        "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+      },
+      "native-contracts.log": {
+        "bytes": 20280,
+        "sha256": "498fe6d4f2d72e75df830e7e5bb2cbf94725841b77dae35cb7062cbb2bfc8620"
+      },
+      "mobile-port.log": {
+        "bytes": 3329,
+        "sha256": "b5c4251b4b03a76580496168eefd7cea184d7f3bc27a75f966b6888b505d2274"
+      },
+      "native-build.log": {
+        "bytes": 2684,
+        "sha256": "bf38b6371c5d2ddeba922b48f85a34ba5829c6439885fd6e11d50f6680426c6f"
+      },
+      "android-bundle.log": {
+        "bytes": 325,
+        "sha256": "9b046c16f2bb9b6898c582c7a30e08319782b030a9cec3c0be0bca7b846a0ed9"
+      },
+      "ios-bundle.log": {
+        "bytes": 305,
+        "sha256": "9eb2ab4152356978184408109178024011b6f3b33883f258d3a6f84bb5eecf0d"
+      },
+      "web-tests.log": {
+        "bytes": 43944,
+        "sha256": "1259e49381ad4921004e1d115a363f423711e594b390b707c1d12fffb25f6848"
+      },
+      "web-lint.log": {
+        "bytes": 32,
+        "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+      },
+      "web-build.log": {
+        "bytes": 993,
+        "sha256": "9cda080829e6a302b4188a346d562db0f586eec0c7016d7e7a14fb3139117b0b"
+      },
+      "media-check.log": {
+        "bytes": 57217,
+        "sha256": "5c99898b05f5f98143273c9f9b049eb15bb1fadda8724dc4ab0182f58bad32fd"
+      },
+      "ci-contracts.log": {
+        "bytes": 2715,
+        "sha256": "198eab3eaa8a7d6096cf480ba03e79def7860d5f8e1162043826e99d94657fa5"
+      },
+      "renderer-contracts.log": {
+        "bytes": 970,
+        "sha256": "b5cf59d8fd5ae30de5cc5cc8b5403898c9e1f2bc5c2224a3e336abbc90d6cb3b"
+      },
+      "renderer-existing.log": {
+        "bytes": 35,
+        "sha256": "3b5fc60ebbc97238cbe9268a9770a2e7a57cd2302d5ed9cc254d6e3a4371b0d2"
+      },
+      "browser-red.log": {
+        "bytes": 1058,
+        "sha256": "02b485c7c005cc4fe993c1492b1d471f47468e61dc96bba2ab4d0ab9e97ebe44"
+      },
+      "browser-green.log": {
+        "bytes": 332,
+        "sha256": "8de6333ef3f146937342b337909abcb685e4bf91f48fd7d12dfb06cb5dc23ed1"
+      },
+      "browser-full82.log": {
+        "bytes": 3437,
+        "sha256": "732a47a3eceeb2952867edbbdf146ac7be250ca95cf8ce3ed96099887e78f924"
+      },
+      "browser-setup-diagnostics.md": {
+        "bytes": 1734,
+        "sha256": "4d123eacdab2b25dafb733f7574e5b7832a763376fc938ed7a9d9d53fefc34ce"
+      },
+      "manual-before.json": {
+        "bytes": 423,
+        "sha256": "af613a6c866f658e1693fa068dda3e94d0c8ac34db4c6962678be24980e30520"
+      },
+      "manual-before.jpg": {
+        "bytes": 56815,
+        "sha256": "7110cb9799f8cf0acc909df4ad14ff16e81042c7a58c34a0b2fe9db50afa3ef2"
+      },
+      "manual-after.json": {
+        "bytes": 1181,
+        "sha256": "42870092cbba4f38d64bde9edba50d428c89315d1dcc652f8bd7e0c8c7eff783"
+      },
+      "manual-after.jpg": {
+        "bytes": 59075,
+        "sha256": "793b300e273a8faa97e79c9a04780950160fe87f4c768823a801f56bf704614d"
+      },
+      "engine-scope.json": {
+        "bytes": 313,
+        "sha256": "840cb4397f74a91fc5892add0919177c4540a7487a6c04b42404027226f82fa5"
+      },
+      "web-gates.json": {
+        "bytes": 2715,
+        "sha256": "ae3c37e662164fe96c91051ba8f5b0176aeee95e7f6e294c7e4fb16353071084"
+      },
+      "three.log": {
+        "bytes": 46755,
+        "sha256": "1f8105e8a3f5cc3074d68945bd4bfed75ed9efc030ceef0967e8dfd3ef4b5d80"
+      },
+      "heroes.log": {
+        "bytes": 2711,
+        "sha256": "22f29879008d87fc1d1e7acc55aef286d37d7c8ea3254f9eb42dde71cd7a33b5"
+      },
+      "fallbacks.log": {
+        "bytes": 138,
+        "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+      },
+      "routes.log": {
+        "bytes": 353,
+        "sha256": "402f57bc00aaa2d6f41177610c0c76c0f821103feb6791e7c75ec42306318a97"
+      },
+      "rendered.log": {
+        "bytes": 541,
+        "sha256": "f6153062c17669a3fddfac421a2aa6bef2f72fff32b4dcfa7e69334308b9b8aa"
+      },
+      "dashboard.log": {
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "portfolio.log": {
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "vault.log": {
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "comparison.log": {
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "portability.log": {
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "input.log": {
+        "bytes": 268,
+        "sha256": "05d4fb68add3f028e1be5ad25a339a74250ead1e4d1a26ac0b26a56d80d90f8d"
+      },
+      "common-month.log": {
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "currency-width.log": {
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      },
+      "browser-full82/coaching-verification.json": {
+        "bytes": 111491,
+        "sha256": "7635ef141c6fe34bbe0308771d82dd0e5ff3333e36ef9ebb4d3c0d8098251c88"
+      },
+      "browser-worker-completion.json": {
+        "bytes": 3006,
+        "sha256": "f3cf8f98f9793b181bd5e263503f7ffbf98c3a7bd8d09fd97bbb5a52bf979bf5"
+      }
+    }
+  },
+  "inheritedHosted": {
+    "headSha": "cc09e2e3f560c380445333907469ba813035a7a2",
+    "cases": 120,
+    "note": "Inherited prior hosted web evidence, not a new hosted smoke of this pending source checkpoint. Fresh native HTTP/manual and local built web gates are separate."
+  },
+  "limitations": [
+    "No numerical algorithm or saved input migration.",
+    "No final photoreal, physical-device, locale-complete keyboard, signed-in or cloud flow approval.",
+    "Shared scenarios, lender/calendar, backend/security/device/release remain open.",
+    "No merge, production promotion, Desktop HTML publication/rehosting, paidGPU or cloud/schema/DNS/data/access/credential mutation."
+  ]
+}

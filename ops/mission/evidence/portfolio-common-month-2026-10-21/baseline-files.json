@@ -1,0 +1,202 @@
+{
+  "generatedAt": "2026-10-21T12:02:53.088Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "files": [
+    {
+      "name": "baseline-final.json",
+      "bytes": 7375,
+      "sha256": "350e9e3cff8e1636ad4a39c4f638a44263e2157eef29c60c85924c763fc03a9f",
+      "ignored": true
+    },
+    {
+      "name": "baseline-git-end.log",
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13",
+      "ignored": true
+    },
+    {
+      "name": "baseline-git-start.log",
+      "bytes": 8,
+      "sha256": "416b208b5a126e27cd2879b0aaf528f6fd43c755dbc5ce244f7ca5a75b37cc1e",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-archive-index.json",
+      "bytes": 12459,
+      "sha256": "b8fe37966109ae0b232b8c6975c203aabe79f5032bd1bcfdb64c87ce5a75ac2d",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-metadata.json",
+      "bytes": 18632,
+      "sha256": "26de665ac2f2836190c6e8666189488da254046c1710c5538df0ebe4434a0cb9",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-sql.log",
+      "bytes": 116029,
+      "sha256": "71dc5c517b51f11c7f482656277487eace5bc4feee754d946061b6aedd083dfc",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-web.log",
+      "bytes": 539577,
+      "sha256": "afde474e281c9429ee5d32dc90ee2a2ff9b371aeab81bb7762ff94cffd85f5f6",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-archive-index.json",
+      "bytes": 12459,
+      "sha256": "fef4f8cbe7d6301495f7437260b71eec7cb1270022ab4c6cbc3bf977469df7f7",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-metadata.json",
+      "bytes": 18616,
+      "sha256": "fb6cbe10beac4e28b1d367e591d5cb4a14dc8173d4adab7b6c83bac5080d7d3c",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-sql.log",
+      "bytes": 114590,
+      "sha256": "e7f5829550155848862877e06cf8e9187f684d1038266228538af8e96060923f",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-web.log",
+      "bytes": 537818,
+      "sha256": "4d8a72badc51c1901fbb1141ee8354198cfe14cba3c2e3efe8f97dba7b48e11a",
+      "ignored": true
+    },
+    {
+      "name": "baseline-receipt-comment.json",
+      "bytes": 374,
+      "sha256": "5d4da6b5f53c41e0d1f6b1c349aa8bff07d8b852fbf3207a2b524676216f9ba3",
+      "ignored": true
+    },
+    {
+      "name": "baseline-remote.json",
+      "bytes": 426,
+      "sha256": "c190ce0f4b8968abcdabf72beea29aa43a56b54d120149b1f44e5bf805961d09",
+      "ignored": true
+    },
+    {
+      "name": "baseline-report.md",
+      "bytes": 5103,
+      "sha256": "e8de4d6eaaf65a8449bbfe861f12f4492ef254ba066c9d039987efc5457d1fbe",
+      "ignored": true
+    },
+    {
+      "name": "baseline-results.json",
+      "bytes": 2065656,
+      "sha256": "90eb85942f5889930422a54d98dece2aaac30a27ec761ac1ccc460bb756a5189",
+      "ignored": true
+    },
+    {
+      "name": "baseline-seal.cjs",
+      "bytes": 10157,
+      "sha256": "a51022e1fb2919221b4a52d31ffae6d05ca751446f14bc0ae570b09236843e2a",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-git-end.log",
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-git-start.log",
+      "bytes": 133,
+      "sha256": "29321a4b68496a1d1abaa8105c014d38d0dab297d98aa4fe546bc2304f7aeb13",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-pull_request-archive-index.json",
+      "bytes": 12459,
+      "sha256": "b8fe37966109ae0b232b8c6975c203aabe79f5032bd1bcfdb64c87ce5a75ac2d",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-pull_request-metadata.json",
+      "bytes": 18632,
+      "sha256": "26de665ac2f2836190c6e8666189488da254046c1710c5538df0ebe4434a0cb9",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-pull_request-sql.log",
+      "bytes": 116029,
+      "sha256": "71dc5c517b51f11c7f482656277487eace5bc4feee754d946061b6aedd083dfc",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-pull_request-web.log",
+      "bytes": 539577,
+      "sha256": "afde474e281c9429ee5d32dc90ee2a2ff9b371aeab81bb7762ff94cffd85f5f6",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-push-archive-index.json",
+      "bytes": 12459,
+      "sha256": "fef4f8cbe7d6301495f7437260b71eec7cb1270022ab4c6cbc3bf977469df7f7",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-push-metadata.json",
+      "bytes": 18616,
+      "sha256": "fb6cbe10beac4e28b1d367e591d5cb4a14dc8173d4adab7b6c83bac5080d7d3c",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-push-sql.log",
+      "bytes": 114590,
+      "sha256": "e7f5829550155848862877e06cf8e9187f684d1038266228538af8e96060923f",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-push-web.log",
+      "bytes": 537818,
+      "sha256": "4d8a72badc51c1901fbb1141ee8354198cfe14cba3c2e3efe8f97dba7b48e11a",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-receipt-comment.json",
+      "bytes": 374,
+      "sha256": "5d4da6b5f53c41e0d1f6b1c349aa8bff07d8b852fbf3207a2b524676216f9ba3",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-remote.json",
+      "bytes": 426,
+      "sha256": "c190ce0f4b8968abcdabf72beea29aa43a56b54d120149b1f44e5bf805961d09",
+      "ignored": true
+    },
+    {
+      "name": "baseline-v2-results.json",
+      "bytes": 2067185,
+      "sha256": "23b66dbb2d1bee9328e3597ecb5d246be2436465eed9ea6b0ea4d33dce8e3036",
+      "ignored": true
+    },
+    {
+      "name": "baseline-vercel-selected.json",
+      "bytes": 898,
+      "sha256": "7aa8e20ff4a4ad9820f65b5e8b509fcfa2148ec0d2ddf3b650924956d7a0e419",
+      "ignored": true
+    },
+    {
+      "name": "baseline-verify-v2.cjs",
+      "bytes": 26048,
+      "sha256": "04587c7cf437fae7d77e684d6c6aa5ef964ccd75085f2034ae921bec1218eec2",
+      "ignored": true
+    },
+    {
+      "name": "baseline-verify.cjs",
+      "bytes": 25168,
+      "sha256": "efdc3187ca2ef62a8f5b69e495ac0f041cb02d1a7c789e47eac9d61c30efd908",
+      "ignored": true
+    }
+  ],
+  "self": {
+    "name": "baseline-files.json",
+    "note": "Self-hash omitted; returned separately"
+  }
+}

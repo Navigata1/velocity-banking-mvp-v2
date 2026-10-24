@@ -1,0 +1,67 @@
+{
+  "verifiedAt": "2026-10-20T23:40:26.235Z",
+  "baseline": "20b28f314f811485e8fe676192287330aa4c863a",
+  "land": {
+    "id": "land",
+    "quality": "refined-textured",
+    "bytes": 709260,
+    "meshes": 32,
+    "triangles": 49834,
+    "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+    "sourceSha256": "ab6edf9eac145c9ee23fa9324a11550c955b3309dd17379d6bf79100200db569",
+    "sourceFile": "apps/media/scripts/build-refined-land.mjs",
+    "materialSourceSha256": "ef8ebc33884c92bffc1ea3eed62101f9a43c5bc609d23c4ff399e24826b9d83e",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and generated material sources",
+    "provenance": "Original authored terrain with recessed pond, draped gravel path, exposed layers, grounded stakes and connected trees; generated meadow/leaf albedos with approximate authored surface maps. Not a scan or exact poster reconstruction.",
+    "units": "normalized stage units",
+    "version": 2
+  },
+  "vendorSha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de",
+  "video": {
+    "id": "land",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 16507687,
+    "sha256": "dd6206b7064f5b7d2f78ee333c2abdcc723fad4e0f5f32b9de2cee712d61c00a",
+    "motion": {
+      "changedCellCount": 26,
+      "maxCellDistance": 34.64673868774703,
+      "meanCellDistance": 4.994768609354411
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.037452827404479194,
+      "meanCellDistance": 0.0036252047101443807
+    }
+  },
+  "publicCollection": {
+    "bytes": 10447116,
+    "cap": 10485760,
+    "headroom": 38644
+  },
+  "otherNineModels": "records and binary hashes unchanged",
+  "report": {
+    "bytes": 93870,
+    "sha256": "50e37bb7fa5ab1dd2ca43d9c6eca336b2734ae52421278acfc374b81537af640",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "runtimeBrowserVerification": "not claimed; local-file opening policy-blocked, not retried"
+  },
+  "logs": {
+    "build.log": "0e870dc8e41416245edefcdf06cdb2bcfb4e76d9a06a13496f951e5afe38b021",
+    "contracts.log": "eaddd45ecead07fb5c159c58b248b18ac5732a5fe1b7454f25ec2a068b208dbe",
+    "heroes.log": "07ced0157f1ec33c4cf15017bce4f6c3e9745dcae896b13324c263a3867eeea2",
+    "land-tests.log": "18ad21fe6708f6e7038af52e49ed57b98040b5f0474eb626a1ff945158f7a05d",
+    "media-check.log": "9475c5549af1d363f24d03758c22f08f4ce0ad2878a837f31f82ac2b5f7dcf9c",
+    "rebuild.log": "e07f0768814e35577f40aee6401e0d2c2a1d7b69abfa53984c4e9a0acf67f726",
+    "regeneration.log": "0e870dc8e41416245edefcdf06cdb2bcfb4e76d9a06a13496f951e5afe38b021",
+    "render.log": "ac331815f7a53f6028fed49c1cfe35f0c179ebe7ca14393437864c9c9fd02960",
+    "routes.log": "496fb74f9e6d4a5ee8607d22d31e8dfd3aaf17a23767bb46fb62d6341814d927",
+    "turntables.log": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd",
+    "web-build.log": "21cca279ceff96e697cd968858159b88ff4ad4cd1e3c1438cf8df72467a396fe",
+    "web-lint.log": "f9a21ecb409cdea1f61b7e813acc2fe2b2231e6d75fde4df7ab8eb89fc078bd7",
+    "web-tests.log": "d0a41a188b3380362d06c7307fb849b6fad6437c8c76a4bdb07364116fbd3706"
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "baseline": "dd32e875c31eabf3a43d78f3b9ffd7623b5a79c8",
+  "verifiedAt": "2026-10-22T02:22:18.029Z",
+  "stage": "Fresh local Car/Card presentation refinements; new exact-head full CI/READY/hosted138/manual required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6330585894",
+  "sources": {
+    "apps/media/hero-turntables/DESIGN.md": "46913837900a923792de38880ff6a551e33f10177167b482bcd5bcfe46c9795f",
+    "apps/media/hero-turntables/index.html": "552f183eb26f8917d3d1b244a944d11a970a8c354c64e0083addb561e775b569",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "067af1b5397a31f38492a92bdb020cad7a698ce30dcf53a5aa217c903cf8ac16",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "bc867ca778e4674eb1acb0ce1a2b8159481092b2769fba50db24d3df4982e1f1",
+    "apps/web/scripts/hero-resource-tests.cjs": "55392e12884b276be7a04f8bd2fedd824b7d5cf32711b72ff21017850075375b",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "dabf53570e0557d79b7c77665d26b6e683bc64abe1c455f454b66c5786b39a15",
+    "apps/media/scripts/hero-material-wiring.test.mjs": "19b1210ec19231cf3dbcbc9827db1567d1e5330dd9a90245498384e702421b95",
+    "apps/web/scripts/hero-material-tests.cjs": "516bb7d7cc6c822009ade8396f774f89fb54d9035ffec19d3e5f8f6a879f9308",
+    "apps/web/src/components/hero/hero-materials.ts": "8546fa5b770094de939e5d22312c3ee1c3979e0c05b18ebf296bf092923ee2a2"
+  },
+  "normalizedSources": {
+    "apps/media/hero-turntables/DESIGN.md": "46913837900a923792de38880ff6a551e33f10177167b482bcd5bcfe46c9795f",
+    "apps/media/hero-turntables/index.html": "552f183eb26f8917d3d1b244a944d11a970a8c354c64e0083addb561e775b569",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "067af1b5397a31f38492a92bdb020cad7a698ce30dcf53a5aa217c903cf8ac16",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "bc867ca778e4674eb1acb0ce1a2b8159481092b2769fba50db24d3df4982e1f1",
+    "apps/web/scripts/hero-resource-tests.cjs": "55392e12884b276be7a04f8bd2fedd824b7d5cf32711b72ff21017850075375b",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "dabf53570e0557d79b7c77665d26b6e683bc64abe1c455f454b66c5786b39a15",
+    "apps/media/scripts/hero-material-wiring.test.mjs": "19b1210ec19231cf3dbcbc9827db1567d1e5330dd9a90245498384e702421b95",
+    "apps/web/scripts/hero-material-tests.cjs": "516bb7d7cc6c822009ade8396f774f89fb54d9035ffec19d3e5f8f6a879f9308",
+    "apps/web/src/components/hero/hero-materials.ts": "8546fa5b770094de939e5d22312c3ee1c3979e0c05b18ebf296bf092923ee2a2"
+  },
+  "boundary": {
+    "changed": [
+      "apps/media/hero-turntables/DESIGN.md",
+      "apps/media/hero-turntables/index.html",
+      "apps/media/scripts/prepare-hyperframes-assets.mjs",
+      "apps/web/scripts/hero-lifecycle-tests.cjs",
+      "apps/web/scripts/hero-resource-tests.cjs",
+      "apps/web/src/components/hero/HeroModelStage.tsx"
+    ],
+    "added": [
+      "apps/media/scripts/hero-material-wiring.test.mjs",
+      "apps/web/scripts/hero-material-tests.cjs",
+      "apps/web/src/components/hero/hero-materials.ts"
+    ],
+    "protectedStructuredSources": 354,
+    "financialSources": 9,
+    "unchangedModels": 10,
+    "unchangedPosters": 10,
+    "unchangedManifests": 3,
+    "freshVideos": 10,
+    "changedMaterialsOnly": [
+      "Car Carmine normalScale x0.5",
+      "Card brushed-silver anisotropy 0.65 -> 0.30"
+    ],
+    "unchangedCameraLightsGeometry": true
+  },
+  "tests": {
+    "localStages": 31,
+    "mainStages": 28,
+    "finalSourceStages": 3,
+    "regressions": 348,
+    "overview": 21,
+    "cockpit": 31,
+    "commonMonth": 31,
+    "reference": 23247,
+    "replayCases": 20,
+    "lifecycleMarkers": 13,
+    "replayClockMarkers": 3,
+    "materialContracts": 9,
+    "reducedMotionReplay": true,
+    "media": 222,
+    "stills": 27,
+    "mediaFresh": true,
+    "nativeFresh": true,
+    "videosFresh": true
+  },
+  "study": {
+    "strictFixtures": 4,
+    "freshFullFrames": 28,
+    "matchedPoses": 14,
+    "runtimeFixtures": 4,
+    "seeksPerFixture": 9,
+    "independentLoads": true,
+    "sourceModelsUnchanged": true,
+    "oneTimeApplication": true,
+    "rawWarnings": [
+      {
+        "fixture": "car-a",
+        "type": "warning",
+        "text": "[.WebGL-0x5f8c0017a000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+      },
+      {
+        "fixture": "car-a",
+        "type": "warning",
+        "text": "[.WebGL-0x5f8c0017a000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+      },
+      {
+        "fixture": "car-a",
+        "type": "warning",
+        "text": "[.WebGL-0x5f8c0017a000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+      },
+      {
+        "fixture": "car-a",
+        "type": "warning",
+        "text": "[.WebGL-0x5f8c0017a000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+      }
+    ],
+    "snapshotBackend": "Pinned HyperFrames0.7.56 snapshot defaults software; all A/B captures use same CLI/config. Separate readiness probes directly identify SwiftShader for all four.",
+    "accepted": [
+      "car-normal-half",
+      "card-aniso-030"
+    ],
+    "notFinalPhotoreal": true
+  },
+  "review": {
+    "cpu": "independent-material-review.md",
+    "visual": "independent-material-visual-review.md",
+    "production": "independent-production-review.md",
+    "photorealApproved": false
+  },
+  "models": [
+    {
+      "id": "car",
+      "bytes": 2232520,
+      "sha256": "5d7fb0b2aa1457ce7e0013d3b7e04ba6568c3dd21941dc5df05a3bf969489225",
+      "recipeSha256": "373efa27d4ed24c5542eb968842455bd5203e898267f7822537527c4acc6fd94"
+    },
+    {
+      "id": "house",
+      "bytes": 1145320,
+      "sha256": "ec008a1681930595a11579c6b19a1c02377d3211aea8a36b03e2aff9bd244f33"
+    },
+    {
+      "id": "land",
+      "bytes": 709260,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    {
+      "id": "creditCard",
+      "bytes": 523764,
+      "sha256": "b3f08cc7e2e081deee13f86f88bdc02a7ff7b46ac97beb3155d4f5c4b4188025"
+    },
+    {
+      "id": "studentLoan",
+      "bytes": 723868,
+      "sha256": "56dfe51ad199bdafcc0cc5ced65321a16a4e087693f645d6d12c6bc14fb98d12"
+    },
+    {
+      "id": "medical",
+      "bytes": 509120,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    {
+      "id": "personal",
+      "bytes": 519844,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"
+    },
+    {
+      "id": "recreation",
+      "bytes": 521544,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7"
+    },
+    {
+      "id": "custom",
+      "bytes": 237844,
+      "sha256": "2753182d024be862fc7ab5e5b18100cc6a7bbcc736213471b4a6e2083517aa7b"
+    },
+    {
+      "id": "vault",
+      "bytes": 719996,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    }
+  ],
+  "posters": [
+    {
+      "id": "car",
+      "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    {
+      "id": "house",
+      "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    {
+      "id": "land",
+      "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    {
+      "id": "creditCard",
+      "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    {
+      "id": "studentLoan",
+      "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    {
+      "id": "medical",
+      "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    {
+      "id": "personal",
+      "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    {
+      "id": "recreation",
+      "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    {
+      "id": "custom",
+      "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    {
+      "id": "vault",
+      "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  ],
+  "videos": [
+    {
+      "id": "car",
+      "bytes": 18401240,
+      "sha256": "72411fe627741c6ee75c67ec01792f06453cd1f2230d1e4a331a1602767d1b58"
+    },
+    {
+      "id": "house",
+      "bytes": 11383617,
+      "sha256": "8137916311e6055eb772362c927d517f609d3845e430cf318b8914375a6082a3"
+    },
+    {
+      "id": "land",
+      "bytes": 17928139,
+      "sha256": "e179bb2c02bf8ddc39e9383fe457f5be542b6b6fa202fb130f943d9a127ec82f"
+    },
+    {
+      "id": "creditCard",
+      "bytes": 3736506,
+      "sha256": "3ba8348e81a5728f8de4a7bb0981c8511ff640382a428e1c134af5900c169866"
+    },
+    {
+      "id": "studentLoan",
+      "bytes": 8638610,
+      "sha256": "e90bbdace925b32a34cc6a7b5c7af62528db1553e9eb2226ac5f8e3ac6ca0527"
+    },
+    {
+      "id": "medical",
+      "bytes": 5336987,
+      "sha256": "4b160da9fa22967861cd5efe659c4a6aa54fc4f9c56907486f598f975a42c5dd"
+    },
+    {
+      "id": "personal",
+      "bytes": 8319827,
+      "sha256": "5de93211e5a609291e0c6a99698fd5dd9feda0c2cbfadfae6edd464581f740f1"
+    },
+    {
+      "id": "recreation",
+      "bytes": 5261036,
+      "sha256": "3f325f4072177c47d4c917ac7be55c7a6afaec1d215abcab673abb0332aee6f8"
+    },
+    {
+      "id": "custom",
+      "bytes": 4304438,
+      "sha256": "de6005923c2043929ed51ce9e2251addbd565b7dbc1e68ac876bd924405c004e"
+    },
+    {
+      "id": "vault",
+      "bytes": 7527596,
+      "sha256": "2e34635e531d35ea4abf9686f52adce376edc51c42c4046f4db5a5783dc351d6"
+    }
+  ],
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-material-lab",
+    "index": "ops/mission/evidence/hero-materials-2026-10-22/raw-evidence-index.json",
+    "indexSha256": "eefe23bca876d8c30df13cdfdc97746aec07f39ec1665e04bf7c3ca3728c72e9",
+    "entries": 120
+  },
+  "remaining": [
+    "All-ten final photoreal/material/full-angle identity approval remains open. Car broad hotspots and Card dark emerald reverse are not solved by these refinements.",
+    "Car Tireside unchanged lossy; inherited hardware/D3D X4122 and software ReadPixels performance warnings remain open, no suppression or hardware clearance.",
+    "Original initial Date.now+100 cross-RPC clock setup fragility remains an explicit P2.",
+    "Media/native security, canonical scenario/lender/calendar/backend/recovery/accessibility/physical-device/native/release gates remain open.",
+    "No merge/promotion/new dependencies/paid GPU/cloud-data-access changes or Desktop HTML republishing."
+  ]
+}

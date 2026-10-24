@@ -1,0 +1,20 @@
+{
+  "scope": "Actual isolated browser RAF-disabled negative control, not a normal hero pass",
+  "sampled": true,
+  "samplingSourceHash": "6231db4e77516c3c811bdefee7d567265a80dee3406ea05a1f7888ac74cd7fe9",
+  "normalGeometryGuardPassed": true,
+  "colors": 206,
+  "motionRejected": true,
+  "first": {
+    "width": 725,
+    "height": 420,
+    "foreground": 36083,
+    "percent": 11.84991789819376
+  },
+  "second": {
+    "width": 725,
+    "height": 420,
+    "foreground": 36083,
+    "percent": 11.84991789819376
+  }
+}

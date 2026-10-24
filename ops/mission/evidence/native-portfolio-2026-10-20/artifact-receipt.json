@@ -1,0 +1,346 @@
+{
+  "verifiedAt": "2026-10-21T04:13:54.149Z",
+  "baseline": "b41b6a3bb32eae6d6541776c6fece609e2144068",
+  "localSourceCheckpoint": "43f6488f992fd4bf72b902882de5b7de8854082b",
+  "stage": "local preflight; final exact-head remote proof required",
+  "productionReady": false,
+  "web": {
+    "mainRegressions": 348,
+    "apr": 15,
+    "codecRange": 17,
+    "adapter": 22,
+    "actualStore": 3,
+    "portfolioBrowser": 34
+  },
+  "native": {
+    "bookBrowser": 12,
+    "precisionBrowser": 2,
+    "existingRoutes": 35,
+    "totalBrowser": 49,
+    "drafts": 19,
+    "chunks": 9,
+    "ownerCas": 14,
+    "sessions": 13,
+    "model": 8,
+    "actualBookHook": 7,
+    "transfer": 16,
+    "pairedSnapshot": 18,
+    "actualAssumptionsAuth": 16,
+    "actualReviewUI": 11,
+    "exports": {
+      "android": [
+        {
+          "path": "apps/mobile/dist-android/_expo/static/js/android/entry-ede180a91bd10cedf37dcae476547408.hbc",
+          "bytes": 3708311,
+          "sha256": "85f4c0c800deb5c54071dd10577fef51d01fbc00b2da5cde01bf5e9eccb131ff"
+        }
+      ],
+      "ios": [
+        {
+          "path": "apps/mobile/dist-ios/_expo/static/js/ios/entry-a3f624904868f39ae8f989ae9f696723.hbc",
+          "bytes": 3423072,
+          "sha256": "e3f7307815654a75037b1a179ba9f8830a4164f64c7d95ee7c1f101f46797d02"
+        }
+      ]
+    }
+  },
+  "media": {
+    "contracts": 65,
+    "freshStills": 27,
+    "unchangedVideosRechecked": 10,
+    "changedScenarioFields": [
+      "engineContractVersion",
+      "engineSourceDigest"
+    ],
+    "scenarioInputsAndResultsUnchanged": true
+  },
+  "collection": {
+    "texturedCandidates": 5,
+    "remainingStudies": 5,
+    "allTenArtApproved": false,
+    "publicBytes": 10415192,
+    "cap": 10485760
+  },
+  "sources": {
+    ".github/workflows/ci.yml": "3ed7792c4637588aeda5b5e920d97323598be5212b3ac1606ffa427fb5954969",
+    "apps/media/remotion/data/scenarios.v1.json": "0dd5ac7ed3c16b88fff1be24e277b801cfbcf8af4c29ecf52603330ce8f7da0d",
+    "apps/mobile/app/_layout.tsx": "80777a64814a8619db988ea6f4d5ca00a6ee1757de3f738601443bbb164d3061",
+    "apps/mobile/components/mobile-assumptions-provider.tsx": "e3bc5abe447ce09ddc5e81b1f7f042ade0780938191d0800084ee8766ce5f111",
+    "apps/mobile/components/mobile-auth-provider.tsx": "0084c54712b78fb965c01c0d078cbdd81daa8f86db03407e9099251d0b65d58e",
+    "apps/mobile/components/mobile-portfolio-provider.tsx": "8889a266401e93817a0cd99d15582322451b85d03b24cae002d40b0833e8422d",
+    "apps/mobile/components/mobile-routes/portfolio-route.tsx": "3d507780ddc75750a162d7c215218d49f6de454278c0e971ddb9b619f7937b48",
+    "apps/mobile/components/mobile-shell/number-input.tsx": "3dc48a41c5d4bf0df38726add67b4e8698dba60657759efac010319763717487",
+    "apps/mobile/components/mobile-supabase-account.tsx": "052eab6e33304a3aaf65d1f6f401034626399ba880b384911c74f32fb1cae15a",
+    "apps/mobile/components/portfolio/choice-control.tsx": "57ef154b2a11a327f735b4ab9f9d706932875bbdeeb97b7d293ce67845d7cd9d",
+    "apps/mobile/components/portfolio/portfolio-controls.tsx": "fcc57cfdb3e809bcc3ef00e9b5d6f2cf474e8d11f9e56fbab5c988cca48518c9",
+    "apps/mobile/components/portfolio/portfolio-debt-editor.tsx": "2e822d5e37b31208293078f148e7ceb865a75e33be38e7dec893f34e36de43c9",
+    "apps/mobile/components/portfolio/portfolio-payoff-path.tsx": "9ce36a0cb8dcf03719882dd4643ddb18f971f525fd3c09d42cc8411715f49de3",
+    "apps/mobile/components/portfolio/portfolio-transfer.tsx": "bedbb5a069d80c64c134d24746ae4f8d5734380bf7bf1e0f0eebe174791868e5",
+    "apps/mobile/hooks/use-persisted-mobile-assumptions.ts": "6ee1edb1fcc9cd0d45729b9718469bd1c92c86f7f0c98404e8f415bc0b6e70a7",
+    "apps/mobile/hooks/use-persisted-mobile-portfolio.ts": "ed87a68ac7b5d32410c7b70d3dfe5f52e1881549d3fc0d9378c3305935bc991f",
+    "apps/mobile/lib/accessibility-labels.ts": "518a2dd4437c3c3ffe2099048472e37c814813fa7f837764432d96fb4519ac5a",
+    "apps/mobile/lib/financial-input-draft.ts": "62201daa7e5668d4d2d3ecfdf5433ade5bdc5bd2c572fc2b21fbddee167c13eb",
+    "apps/mobile/lib/mobile-portfolio-model.ts": "58afb924d6784d908c19610e563b39bafcf88d7ddd61e1173d1bf6bbee95da07",
+    "apps/mobile/lib/mobile-portfolio-session.ts": "69fa19610cbc7c04f98792f7745ea43c0c947bbf85e34d1f89b51c2aa03571a9",
+    "apps/mobile/lib/mobile-portfolio-storage.ts": "ebcf865105269ca1cdc12158304ba4ddd68acfe6bd7813117dafd1bf08ded994",
+    "apps/mobile/lib/portfolio-transfer-review.ts": "04ee66101fa3f85600ecf912d4bd434ffbebaf1f515cb0af82495af49090ec11",
+    "apps/mobile/lib/supabase/auth-storage.ts": "7b1378c3d9834e0761df76657370a27a5700c2fc913634a0182a34bf582900a5",
+    "apps/mobile/lib/supabase/portfolio-snapshot.ts": "7726f4ae647af8f032849c809cde90d37b17bbc2fb42b650f385b30f1fc10c56",
+    "apps/mobile/lib/supabase/snapshot-outbox.ts": "8b6c6c89d422e508bf254ed60ba67a192156cafca8f104b8b8e643153b0ee991",
+    "apps/mobile/lib/supabase/snapshot-recovery.ts": "5e924a54a0802e6348f163136fff30d88f9c1d3e7ef85c962adb0572de3d0e7d",
+    "apps/mobile/lib/supabase/snapshot-sync.ts": "8ea24ee0dfa855c5abbb27375ad2d39edac475cdec8c53b5d9cd61d230916f83",
+    "apps/mobile/package.json": "dfdedb6fec0fb13a2b7c439867e5980cda3530579ee520bcd390eca503417eb1",
+    "apps/mobile/scripts/financial-input-draft-contract.cjs": "2da544c4ef29927fca1fcd0a755bc7fc8479c32e4f766c560ac3c995e2522f46",
+    "apps/mobile/scripts/portfolio-book-smoke.cjs": "e2c8fcb9c7ad1338f0bf1e969d3407657235e86fdd1b0e1c85f9b0c1dceecab0",
+    "apps/mobile/scripts/portfolio-hook-contract.cjs": "852d52134fe5b9cbd46131ba132219d8938185203c0bece8bc5ca96c050f55ee",
+    "apps/mobile/scripts/portfolio-model-contract.cjs": "df704a6761cccfb557e73af17cb1463b0e91db0f9410fb398ebb491b28b93fd9",
+    "apps/mobile/scripts/portfolio-owner-storage-contract.cjs": "f2763ab2def253508bf562229300cd764d5c6c686c024583269a242cc6d63df7",
+    "apps/mobile/scripts/portfolio-session-contract.cjs": "5efdceb95e600b49bb5e4921273534af8e2a7793f0e07ae50cae55f3f7081fbd",
+    "apps/mobile/scripts/portfolio-snapshot-contract.cjs": "23acb4d33508c1b5ebf523c16c405de992a2efcead448877e0c9c54931526778",
+    "apps/mobile/scripts/portfolio-storage-contract.cjs": "4361b0f34678fd92ba2761ce163f0f41445a5ff9e7e73413e3abcb13c2772331",
+    "apps/mobile/scripts/portfolio-transfer-contract.cjs": "95b36400bd56008ce49da225b841a9e86f2a1ee2619785524df5d4dcd617087e",
+    "apps/mobile/scripts/recovery-hook-contract.cjs": "03b274518297e0196a53e19f95e04cca05de8edf1b445b3093ae4bd6ce3079c1",
+    "apps/mobile/scripts/recovery-review-ui-contract.cjs": "afe4017772a8b30bbe0510f1977fac642619a7fd3033e54b57c8da1a4f454c22",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "7699bfdaae526d8cb4cdd6bbc24416a802045dae4912929965774cc1d998d74c",
+    "apps/mobile/scripts/snapshot-outbox-contract.cjs": "69cb2d4913097f636d7f073e994c91597bb95f1cb62137f1c91af1cdf0602abf",
+    "apps/mobile/scripts/snapshot-recovery-contract.cjs": "fb2511bda212e25dbeea06c6d59337d6e61157c2f2591fce8e40340db17723e2",
+    "apps/mobile/scripts/supabase-account-contract.cjs": "e61a602f272fdd6f6519cf67bf8547009e52bc412ae1842b5111817201e9c848",
+    "apps/mobile/scripts/supabase-mobile-contract.cjs": "6ea1f044dbbbe382c2e6f6018d2fed3c39263ac7d1f9b22fec560c3e1e223dd4",
+    "apps/web/scripts/engine-regression-tests.cjs": "bc566151aa35a68167606c3f640fa188765938631539c475c0b2ab17ccdaac5e",
+    "apps/web/scripts/financial-reference-tests.cjs": "2332113ec79a756fa6d18e6a2adb0353459cd70188dc2e359877e41001e9deca",
+    "apps/web/scripts/portfolio-apr-unit-tests.cjs": "126d7655eafb086d0f23bc5527f36c70c6fe85a347f748f38ccd33ee70356ef7",
+    "apps/web/scripts/portfolio-book-tests.cjs": "36713324b4d74f358ec0fefb575aff0390756a8f4802145bc71f34e91461523c",
+    "apps/web/scripts/portfolio-browser-harness-tests.cjs": "840734d338918b91549346bbaed01f8b230a7fd9e0df6df0815e00199314da42",
+    "apps/web/scripts/portfolio-input-smoke.cjs": "69a72a8047f3f1b586216d098a24bb2a39d501c7508f634f33dab45d0d2e264c",
+    "apps/web/scripts/portfolio-persistence-tests.cjs": "831497453ea3f98f5b28a0ecb0259a25318d3a90a6841f8475968f9f4804e3c0",
+    "apps/web/scripts/portfolio-store-storage-tests.cjs": "7d519ad86f6692ec77504e8f7cafb5f328b47c7954ecffa235befa22e5bb7729",
+    "apps/web/scripts/smoke-portfolio-budget.cjs": "14d0aedfcecb6d940a60d578c6513daef279e851c4a8e5c589205adf1bd0fdb7",
+    "apps/web/scripts/smoke-portfolio-portability.cjs": "23ee9c409e6dfd3b879866cdc80b7fb81875403e938cb2454b4d33dc2ed7d52f",
+    "apps/web/scripts/supabase-account-contract.cjs": "380b48aac48a4d3c4015b71d358780cfd43fc2561ffb80e37036f1e81734ca69",
+    "apps/web/src/app/portfolio/AddDebtDialog.tsx": "ae391998083ae5e015a422685c01d227dd3462e278dd62a5971e0aaddc1e5178",
+    "apps/web/src/app/portfolio/PortfolioDebtsSection.tsx": "6638f0a1e825531a1c678ac99118de686e4db6555f473190f7b9a393c311b829",
+    "apps/web/src/app/portfolio/PortfolioPlanSection.tsx": "c48c9fcac9f32a087ed321617d71ea4a1d0a13e6b57a3efaedb87fe10034b7de",
+    "apps/web/src/app/portfolio/page.tsx": "dd802f48722acce0ea03f574edcdaebde66d41930f72b9656619b13dbe21c3af",
+    "apps/web/src/app/settings/SupabaseAccountPanel.tsx": "a7d23654d407e68129c73641bbfb5979c0d46acb9da37c266015785a17e5237e",
+    "apps/web/src/app/settings/local-data-reset.ts": "48fba0e4e0ce347d28b6b03ebdb7107ad339880f7e40bb6c66139e45e5888ec4",
+    "apps/web/src/app/settings/local-demo-snapshot.ts": "d802b292502e0f82940921a43c7bf252a9e54ada4d8e6e0daf25c14da7ecad6c",
+    "apps/web/src/components/PortfolioEditableNumber.tsx": "b118681d149d178d1d021e8145bc44b72e82df1d126f17104132b8906ae36e0e",
+    "apps/web/src/engine/portfolio-path-visual.ts": "94d60590f1f594dd75ea39671152218fcc923808dca0020e9653cf4f16797999",
+    "apps/web/src/engine/portfolio-run-diff.ts": "499e55455880aaa22a3a9d5a1c13edbe1ada7c53d02fabced07b2606a548f3cc",
+    "apps/web/src/lib/supabase/account-sync-source.ts": "ceddf8e9c1479872417fc8352f89dcf683b609068adf62c76fe43e0f51bc74db",
+    "apps/web/src/stores/portfolio-persistence.ts": "649c256d2f1937e9139f1a86e86e47ca6d0d45908fa7993920d48c7b338b980f",
+    "apps/web/src/stores/portfolio-store.ts": "3715918146b7b8b5463696e0baa2fe2eff46278b55f41369a29e67fb3980695b",
+    "packages/financial-engine/package.json": "6e312f67e9872dd3cdc01cf7145b8431d4357ee7e536e6e56560df75aeae598a",
+    "packages/financial-engine/src/index.ts": "23f7fa329e1c731323be4afdb4cc0a63d335eaca00eac2d6bec37e82f7abd477",
+    "packages/financial-engine/src/input-draft.ts": "0b6fc1ff9efcbcba59a6600af65b8a5ae9e0601e74385ebde43469478b710056",
+    "packages/financial-engine/src/numeric-range.ts": "fe7e9f46a18e8b97eecf4feab02d77b425ca0cc812bb4528b18074110f6ec21f",
+    "packages/financial-engine/src/portfolio-book.ts": "2fdc859e8fbf2b4c3927565c4cdd9b4e2c51c7a87009cd44b4734e746d1f57b5",
+    "packages/financial-engine/src/portfolio-path.ts": "e748b9ff2c59bfd7dd54b2bb3d296b8a520e55c0b7fdcac407da0e135b462812",
+    "packages/financial-engine/src/portfolio.ts": "b87133452f55d4c575c1392a71909f61ea1223d5991012ce4b6112ad4b7c5781",
+    "scripts/mobile-port-contract-tests.cjs": "1edb30e29d0db1de786a798d4eb8814b71119625cce9de54de4f8288407208e4"
+  },
+  "files": {
+    "web-tests.log": {
+      "bytes": 38605,
+      "sha256": "72582d68202fbae7cc6dfe598a4f29c9685fb424e62b0d0a5cb405806298a3d2"
+    },
+    "web-build.log": {
+      "bytes": 952,
+      "sha256": "754cfa9282f7215fab8d2440fa7bee93a7e49dfaf485d569b3f4a329961ae3ad"
+    },
+    "web-lint.log": {
+      "bytes": 28,
+      "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+    },
+    "http.log": {
+      "bytes": 412,
+      "sha256": "e65ffa8097cd1925d3cb61f2593ac40aeb3260081632d37d6bf2221ee1a89f88"
+    },
+    "routes.log": {
+      "bytes": 610,
+      "sha256": "dcbba06b8f8b9ada4398bae8d1b7dc255bc26883515a231d11d387c5a0fc36c2"
+    },
+    "portfolio.log": {
+      "bytes": 1727,
+      "sha256": "d9c1b48cf7c7f9ed6f08dcdadd3c139a315bf3db0516bc1b353a6926abd0ad49"
+    },
+    "dashboard.log": {
+      "bytes": 592,
+      "sha256": "834d28e47492d27dcd537836b7ab84566bb14aa08530e80c0a1c2268b822dbb0"
+    },
+    "comparison.log": {
+      "bytes": 955,
+      "sha256": "7f078324c65328045734a39c6c5db4c50e1452d3c5fb65cbec329fce9064c4c5"
+    },
+    "vault.log": {
+      "bytes": 830,
+      "sha256": "8dd9a02e4bb652301d8eb827c8ea9fb0ba2c20c760840b25c4bd1f68f72734e2"
+    },
+    "native-types.log": {
+      "bytes": 54,
+      "sha256": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9"
+    },
+    "native-contracts.log": {
+      "bytes": 17219,
+      "sha256": "14c933b11eac10d56031b506998776916d8ac21bf974b60411190e7572ee2e82"
+    },
+    "native-root.log": {
+      "bytes": 3288,
+      "sha256": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57"
+    },
+    "expo-export.log": {
+      "bytes": 2641,
+      "sha256": "9d552a0854aa3865a128b890d01e5b29a99e930f3132fbc4b7b7c0fb48c0631b"
+    },
+    "expo-smoke.log": {
+      "bytes": 286,
+      "sha256": "f72c717abf79f0881c9075b74947462d7faa882bd078794eec90ddd0e333ef56"
+    },
+    "native-browser.log": {
+      "bytes": 1923,
+      "sha256": "ff6959aee9d76e850162ab63f2511f870f9ecf0b2289e4bf35becd2b0a5cba81"
+    },
+    "android.log": {
+      "bytes": 293,
+      "sha256": "f08403408455dd309fee1ae1aa3b892d5d00e651c02c3d4dd6ab34ed515f914b"
+    },
+    "ios.log": {
+      "bytes": 273,
+      "sha256": "bb597b6615d10f3531ab6825b426af733a85c3eac28a4f39fa82fa441d96cf36"
+    },
+    "web-runtime-audit.log": {
+      "bytes": 24,
+      "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    },
+    "native-critical-audit.log": {
+      "bytes": 13543,
+      "sha256": "8aa10cd8732c17ba9d375b890b06079b19b3f74d94c5f58f9daa86e8bdf39954"
+    },
+    "client.log": {
+      "bytes": 82,
+      "sha256": "f7c3701acc6f268abe8ed2355fec9353587c02593a26f0b2b907a8e4f95f1b40"
+    },
+    "account.log": {
+      "bytes": 94,
+      "sha256": "6c5ba093768dc8ac620a9d9ff4cc9205c156c13d3c2e80ac1c7514ebdf52ec11"
+    },
+    "media-check.log": {
+      "bytes": 35047,
+      "sha256": "8d88ae325c490f5a109ad46d27d2d89f9abee8f646011e652f9d9c7154884d66"
+    },
+    "heroes.log": {
+      "bytes": 2732,
+      "sha256": "924a46b350c32799efc1923880b624bae0c279cc48185d85bb8cb4e16ea5c35b"
+    },
+    "three-stage.log": {
+      "bytes": 46721,
+      "sha256": "b2ae277f31c61fec1ec4563525b87b31dd25382e787e0124bc607bdecbf16916"
+    },
+    "turntables.log": {
+      "bytes": 807,
+      "sha256": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd"
+    },
+    "native-book-verification.json": {
+      "bytes": 1283,
+      "sha256": "be17915a5454f7199704d33f390aad5b50b9fe0f5e1e1b67763ac5b061d0926b"
+    },
+    "native-input-verification.json": {
+      "bytes": 569,
+      "sha256": "ff1b5925f2407cd2f121b835ef88324463fdeffb1f50ed633c24c82950faf35c"
+    },
+    "web-portability-verification.json": {
+      "bytes": 602,
+      "sha256": "349ed1f2f96919e24f2234e5c562ae7240b69a49adebc5c65f4df38d9cd09702"
+    },
+    "web-input-verification.json": {
+      "bytes": 1887,
+      "sha256": "af93c896ce66c21ba2ff8b1641f26b4057be4ffc59af450ee2084b69b30eb24b"
+    },
+    "web-input-280.png": {
+      "bytes": 124365,
+      "sha256": "6bf011df927ac5271d13fd70da42b70ac0614a102a882c8f4bfe7c048525234e"
+    },
+    "web-input-375.png": {
+      "bytes": 166435,
+      "sha256": "9af0a2b5d57b8cbc0515a82a034c7653be5206f16026ea80610eebb11230a3bd"
+    },
+    "web-input-1264.png": {
+      "bytes": 105204,
+      "sha256": "07d8af7b72426541975bd5c49deb2186ba92056141d0aee67ad52c5466a05188"
+    },
+    "web-input-1440.png": {
+      "bytes": 110347,
+      "sha256": "66fcafcdf0a8332cbb024b7406382e486b4ba28cddce30cea93ce835a644c9e8"
+    },
+    "native-book-375.png": {
+      "bytes": 45550,
+      "sha256": "832425d25bd4d75671f869a33a4f4109b4db791b29082c35dcf5b285e901f298"
+    },
+    "native-book-1440.png": {
+      "bytes": 59151,
+      "sha256": "fb2634a332ffa29a5961f0755d788e464e97575453729b2d9e45c603f340639f"
+    },
+    "task6-book-only-preserve-red.log": {
+      "bytes": 35115,
+      "sha256": "0b60bd5d83a8a7fd8812aabf88a562482de7f33c10dedd2c158df6a51cdfac3e"
+    },
+    "task6-import-write-red.log": {
+      "bytes": 3469,
+      "sha256": "6c8c113efe2c84e8d0ad944fce5bce992f087ba3e074a69478b6ae66c2bc4f91"
+    },
+    "task5-recovery-review-ui-red.log": {
+      "bytes": 7924,
+      "sha256": "0282e2d79354b0fad78b204cfa90b5872bc34795aee4faf0cb000c8a08b918c0"
+    },
+    "task5-review-apr-red.log": {
+      "bytes": 4734,
+      "sha256": "bf32723fe1a5a413f255625683b5818457b0c4451c50257cc9f1794220fb9290"
+    },
+    "task6-input-clipping-red.log": {
+      "bytes": 850,
+      "sha256": "daa2f83bc7eb70991606788823fa141c2bc0dafaff994bc3e0a349b23dee39bf"
+    },
+    "task6-currency-wrap-red.log": {
+      "bytes": 750,
+      "sha256": "028af457e7957c0319b7823175893838f8f6e789b8211c985119640c21a9f81e"
+    },
+    "task6-input-harness-red.log": {
+      "bytes": 424,
+      "sha256": "5d7c5d0d43f517d433071be1c080008d1f238ca78cf4e54771aeb27d10884173"
+    },
+    "rejected-transparent-web-input-375.png": {
+      "bytes": 7249,
+      "sha256": "06691a024192695cbffc278b05c912b57f3f937295fd927e3be4d1cf281b1ea7"
+    },
+    "compact-plan-fields-red.log": {
+      "bytes": 940,
+      "sha256": "e47ee96ad8e3ea1018ddfbcd50accb968528fe0f2d8b2ff85b7c1a0924f2b29c"
+    },
+    "precise-apr-display-red.log": {
+      "bytes": 2294,
+      "sha256": "0d164727e0a74aa2fbfd7ccb202bbd401d2a0df5e0f5d5730cf000a65c11d5db"
+    },
+    "02f3137-failed-push.log": {
+      "bytes": 4755,
+      "sha256": "5e86827a6f6424a63dbbd2e47e03feaa82344fe4ff2efa50b4a87aa7dc8b9bed"
+    },
+    "02f3137-failed-pr.log": {
+      "bytes": 4755,
+      "sha256": "c8085aed201b961496f98532b68e82a3ed56fa0e0b00a3924333f9a52342d80c"
+    },
+    "rejected-plan-02f3137.jpg": {
+      "bytes": 85585,
+      "sha256": "28db1f0d3c768fee362f74482de2fc817a67fd47a4ff078aa08692b4a5a07d1d"
+    }
+  },
+  "limitations": [
+    "No signed-in physical-device or cloud cross-device proof",
+    "Web caught-write rollback is not crash-atomic recovery",
+    "Number is not arbitrary-precision lender posting",
+    "No new art refinement or final photorealism approval in this slice",
+    "Remaining scenario/lender/calendar/backend/dependency/device/release gates remain open",
+    "Three timing gate retained700/300ms; it overlapped a read-only video verifier, not claimed serial",
+    "Rejected transparent and clipping captures retained, final images visually inspected",
+    "No production promotion"
+  ]
+}

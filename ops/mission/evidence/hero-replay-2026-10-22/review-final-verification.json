@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-10-22T00:39:51.701Z",
+  "method": "CPU-only; no browser/GPU/build/full suite",
+  "node": "v22.22.2",
+  "pins": {
+    "apps/web/scripts/hero-resource-tests.cjs": "b5fdcd0607cc004e00ac651f376491f736b9f42d1612a2085e7c8e0139928e69",
+    "apps/web/scripts/smoke-heroes.cjs": "09134334a2f0b7a1abb97a07ffdd0c915078423fdc2e77f92dc7595619bbd0c5",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe"
+  },
+  "rawEvidenceSha256": "bac6ed39ec005e975f00544ea6603f3178a9dc0d1d9e60c6f2d0aaf72bdb2b8f",
+  "newTestLines": 199,
+  "addedIntegrationLines": 1,
+  "command": "node apps/web/scripts/hero-resource-tests.cjs",
+  "exitCode": 0,
+  "stdout": "Hero resource cleanup releases shared geometry, materials, textures and decoded images exactly once.\nShared studio releases all temporary reflection resources on success and failure.\nPASS hero lifecycle finite endpoint: initial and replay reach 360 degrees at 8 seconds\nPASS hero lifecycle RAF stop: zero pending and no renders after both turns\nPASS hero lifecycle replay cancellation: rapid replay leaves exactly one pending RAF\nPASS hero lifecycle retention and cleanup: one renderer/model/canvas, stable ready, resources released once\nPASS hero lifecycle edge paths: reduced motion, loading replay, late load, errors, context loss\nPASS hero lifecycle negative control rejected: missing restart cancellation\nPASS hero lifecycle negative control rejected: shortened 1.6-second turn\nPASS hero lifecycle negative control rejected: infinite RAF\n",
+  "markers": [
+    "PASS hero lifecycle finite endpoint: initial and replay reach 360 degrees at 8 seconds",
+    "PASS hero lifecycle RAF stop: zero pending and no renders after both turns",
+    "PASS hero lifecycle replay cancellation: rapid replay leaves exactly one pending RAF",
+    "PASS hero lifecycle retention and cleanup: one renderer/model/canvas, stable ready, resources released once",
+    "PASS hero lifecycle edge paths: reduced motion, loading replay, late load, errors, context loss",
+    "PASS hero lifecycle negative control rejected: missing restart cancellation",
+    "PASS hero lifecycle negative control rejected: shortened 1.6-second turn",
+    "PASS hero lifecycle negative control rejected: infinite RAF"
+  ],
+  "markerCount": 8,
+  "negativeControlCount": 3,
+  "observedRed": [
+    {
+      "mode": "no-cancel",
+      "command": "node .superpowers/sdd/2026-10-22-hero-replay/review-regression-red.cjs no-cancel",
+      "generatedAt": "2026-10-22T00:38:35.010Z",
+      "node": "v22.22.2",
+      "sourceSha256": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+      "testSha256": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe",
+      "code": "ERR_ASSERTION",
+      "message": "rapid replay must leave exactly one RAF\n\n2 !== 1\n",
+      "exitCode": 1
+    },
+    {
+      "mode": "short",
+      "command": "node .superpowers/sdd/2026-10-22-hero-replay/review-regression-red.cjs short",
+      "generatedAt": "2026-10-22T00:38:35.886Z",
+      "node": "v22.22.2",
+      "sourceSha256": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+      "testSha256": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe",
+      "code": "ERR_ASSERTION",
+      "message": "four seconds must be the halfway pose",
+      "exitCode": 1
+    },
+    {
+      "mode": "infinite",
+      "command": "node .superpowers/sdd/2026-10-22-hero-replay/review-regression-red.cjs infinite",
+      "generatedAt": "2026-10-22T00:38:36.820Z",
+      "node": "v22.22.2",
+      "sourceSha256": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+      "testSha256": "7760968ac84d0c173ccd7788098651592ceba4090e3e66afa178dadd798f2cfe",
+      "code": "ERR_ASSERTION",
+      "message": "eight-second turn must stop RAF\n\n1 !== 0\n",
+      "exitCode": 1
+    }
+  ]
+}

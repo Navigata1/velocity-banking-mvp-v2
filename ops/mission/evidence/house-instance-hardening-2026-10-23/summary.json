@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-23T11:25:08.443Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "private-fix-cpu-passed-targeted-review-pending",
+  "productAdopted": false,
+  "pushed": false,
+  "productionReady": false,
+  "sourcePinsUnchanged": 486,
+  "assetPinsUnchanged": 20,
+  "selectedEvidenceOnly": true,
+  "selectedEvidencePins": {
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/baseline.json": "932516aff82b9fcb801a2e7c0b17f5ca4237a47d1746c972c67e3158c0dad98f",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/instances.mjs": "20787c4b5cef323f8526d27bbbcf07e186f73d6faa6d07b268b1a960c3694c5f",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/instances.test.mjs": "aaec3db65e43aaef24f77c6e16b4041a0393f5cc9be4c66e3132cf9ae08bd5e3",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/cpu-red-281a1dd5-52d6-4e1e-8997-8cd60e7613dc/verification.json": "4739f23f75307fab390ae232c9c9021bf7849ba16f9eeec49fa9e3d8398e1743",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/cpu-red-f9eb54e5-d40d-425b-94fa-9a9c2c6d9768/verification.json": "1e62ced009949cba4712847f752ea97b20ac18362501c0831ced00735c8977c6",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/cpu-green-42e12292-3cf3-4983-bffa-f961ac3db45b/verification.json": "15e1c8789f78088af35c76e8e232cf33ab990d68704db0473093bd1613ad265d",
+    ".superpowers/sdd/2026-10-23-house-instance-hardening/controls-a1048824-e19b-4498-9648-237d6b643346/verification.json": "bbd93602726e21ad7c96d1de192cb230b90443049ef4560c49dffca9e435dd84",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/review-instances-628d5c0b-553e-4a65-ba8f-3e839e2263c8/report.md": "70047601bd3c47ec52cd83f4183782d09c378802278123c779ad16ee2f0ea0f7"
+  },
+  "oldStudy": {
+    "graphicsAcceptedWithinScope": true,
+    "helperAdoption": "fix-required",
+    "findings": [
+      "F1 live-exclusion/identity/resource/culling regression gaps",
+      "F2 existing instanced geometry incorrectly eligible",
+      "F3 failed publication can strand hidden originals/owned batches",
+      "Finite double to Float32 storage boundary"
+    ]
+  },
+  "repair": {
+    "cpuGroups": 18,
+    "targetedControls": 16,
+    "eachSpecificIntendedFailureAsserted": true,
+    "initialRed": {
+      "pass": 12,
+      "fail": 4
+    },
+    "supplementalInterleavedRed": {
+      "pass": 17,
+      "fail": 1
+    },
+    "helperSha256": "20787c4b5cef323f8526d27bbbcf07e186f73d6faa6d07b268b1a960c3694c5f",
+    "testSha256": "aaec3db65e43aaef24f77c6e16b4041a0393f5cc9be4c66e3132cf9ae08bd5e3",
+    "targetedIndependentVerification": "pending",
+    "oldGraphicsRelabeledAsFixedCode": false
+  },
+  "limits": [
+    "No product source/asset/dependency/provider changes or source push.",
+    "Original saved graphics prove old code only; new source-bound graphics/integration/standing shipping gates are still required.",
+    "Product RSC/network FAILED, shadow policy HELD, physical/photo/production OPEN."
+  ]
+}

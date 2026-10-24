@@ -2,6 +2,8 @@ import {
   INTERESTSHIELD_STORAGE_KEYS,
   type SnapshotStorageEntry,
 } from '@interestshield/persistence-contract';
+import { LEGACY_PORTFOLIO_KEY, readPortfolioSnapshotDocument } from '@/stores/portfolio-persistence';
+import { assertLegacyScenarioDocument } from '@/stores/legacy-scenario-storage';
 
 const INSTALL_SYNC_KEY = 'interestshield.web.sync-install.v1';
 
@@ -24,7 +26,8 @@ export function getOrCreateBrowserSyncIdempotencyKey(
 export function collectBrowserSnapshotStorage(storage: BrowserSyncStorage): SnapshotStorageEntry[] {
   return INTERESTSHIELD_STORAGE_KEYS.flatMap((key) => {
     if (key === 'interestshield-mobile-assumptions-v1') return [];
-    const value = storage.getItem(key);
+    const value = key === LEGACY_PORTFOLIO_KEY ? readPortfolioSnapshotDocument(storage) : storage.getItem(key);
+    if (key === 'velocity-bank-storage' && value !== null) assertLegacyScenarioDocument(value);
     return value === null ? [] : [{ key, value }];
   });
 }

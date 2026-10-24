@@ -1,0 +1,18 @@
+{
+  "scope": "new targeted reference-oracle review plus explicitly disclosed capture-only source extension",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "findingsP1P2": [],
+  "exactUnitsExponent": -54,
+  "exactEnteredThroughMonth7": "447",
+  "exactLocalMonth7": "727",
+  "exactRecordedMonth7": "512",
+  "velocityCoverageThroughMonth": 7,
+  "velocityUnavailableFromMonth": 8,
+  "snowballAndAvalancheRetained": true,
+  "referenceSha256": "d6655109cfb91f96f832cc720f7d0a71b38e57857e7bc556b81a6c77d6e6e9ec",
+  "captureHelperSha256": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2",
+  "priorFailedFreezePreserved": true,
+  "fullReferenceExecuted": false,
+  "browserExecuted": false,
+  "wholeReleaseApproved": false
+}

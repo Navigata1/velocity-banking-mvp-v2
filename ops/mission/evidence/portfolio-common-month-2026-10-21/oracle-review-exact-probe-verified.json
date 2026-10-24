@@ -1,0 +1,220 @@
+{
+  "at": "2026-10-21T12:56:23.436Z",
+  "method": "Independent IEEE754 high/low Uint32 decoding, exact BigInt units at 2^-54. Production sums/guards not used as arithmetic oracle.",
+  "fixture": {
+    "debts": [
+      {
+        "id": "rate-4-0",
+        "name": "rate-4-0",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 461,
+        "apr": 0.03,
+        "minPaymentRule": {
+          "type": "fixed",
+          "amount": 36.83
+        },
+        "paymentSource": "checking"
+      },
+      {
+        "id": "rate-4-1",
+        "name": "rate-4-1",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 2055,
+        "apr": 0.04,
+        "minPaymentRule": {
+          "type": "percent",
+          "percent": 0.08,
+          "floor": 121.65
+        },
+        "paymentSource": "checking"
+      },
+      {
+        "id": "rate-4-2",
+        "name": "rate-4-2",
+        "category": "custom",
+        "kind": "amortized",
+        "balance": 1545,
+        "apr": 0.19,
+        "minPaymentRule": {
+          "type": "fixed",
+          "amount": 117.35
+        },
+        "paymentSource": "checking",
+        "promo": {
+          "introApr": 0,
+          "monthsRemaining": 2,
+          "postIntroApr": 0.36
+        }
+      }
+    ],
+    "loc": {
+      "limit": 50000,
+      "balance": 577,
+      "apr": 0.29
+    },
+    "monthlyIncome": 1610,
+    "monthlyExpenses": 956,
+    "focusMode": "split",
+    "extraMonthlyPayment": 0,
+    "chunkAmount": 20,
+    "splitRatioPrimary": 0.9,
+    "strategy": "snowball"
+  },
+  "draws": 154,
+  "state": 1900885999,
+  "exact": {
+    "unitsExponent": -54,
+    "enteredThrough7": "447",
+    "local7": "727",
+    "recorded7": "512",
+    "unsettledRemoval8": "512",
+    "seventh": {
+      "balance": 2.842170943040401e-14,
+      "interest": 0.49353985190178434,
+      "payment": 197.90948061261548
+    },
+    "eighth": {
+      "balance": 0,
+      "interest": 0,
+      "payment": 0,
+      "draw": 0
+    }
+  },
+  "negativeControls": {
+    "recordedSettlementRejected": true,
+    "offGridRejected": true
+  },
+  "defaultExpectedEquivalenceChecks": 42,
+  "comparisonQueries": 14,
+  "boundarySnapshots": [
+    {
+      "horizon": 7,
+      "strategy": "velocity",
+      "snapshot": {
+        "status": "modeled",
+        "horizonMonths": 7,
+        "coveredThroughMonth": 7,
+        "balances": {
+          "rate-4-0": 2.842170943040401e-14,
+          "rate-4-1": 0,
+          "rate-4-2": 0
+        },
+        "debtBalance": 2.842170943040401e-14,
+        "locBalance": 238.24305551363227,
+        "cashBalance": 1.8118839761882555e-13,
+        "netModeledWealth": -238.24305551363213,
+        "interestThroughMonth": 178.24305551363238,
+        "budgetThroughMonth": 4578
+      },
+      "wealthDifference": -4.165230867829447
+    },
+    {
+      "horizon": 7,
+      "strategy": "snowball",
+      "snapshot": {
+        "status": "modeled",
+        "horizonMonths": 7,
+        "coveredThroughMonth": 7,
+        "balances": {
+          "rate-4-0": 0,
+          "rate-4-1": 234.0778246458027,
+          "rate-4-2": 0
+        },
+        "debtBalance": 234.0778246458027,
+        "locBalance": 0,
+        "cashBalance": 3.552713678800501e-14,
+        "netModeledWealth": -234.07782464580268,
+        "interestThroughMonth": 174.0778246458027,
+        "budgetThroughMonth": 4578
+      },
+      "wealthDifference": 0
+    },
+    {
+      "horizon": 7,
+      "strategy": "avalanche",
+      "snapshot": {
+        "status": "modeled",
+        "horizonMonths": 7,
+        "coveredThroughMonth": 7,
+        "balances": {
+          "rate-4-0": 159.82460725645115,
+          "rate-4-1": 42.46433032864866,
+          "rate-4-2": 0
+        },
+        "debtBalance": 202.2889375850998,
+        "locBalance": 0,
+        "cashBalance": 5.684341886080802e-14,
+        "netModeledWealth": -202.28893758509975,
+        "interestThroughMonth": 142.28893758509963,
+        "budgetThroughMonth": 4578
+      },
+      "wealthDifference": 31.788887060702926
+    },
+    {
+      "horizon": 8,
+      "strategy": "velocity",
+      "snapshot": {
+        "status": "unavailable",
+        "horizonMonths": 8,
+        "coveredThroughMonth": 7,
+        "reason": "cent-tolerance",
+        "balances": null,
+        "debtBalance": null,
+        "locBalance": null,
+        "cashBalance": null,
+        "netModeledWealth": null,
+        "interestThroughMonth": null,
+        "budgetThroughMonth": null
+      },
+      "wealthDifference": null
+    },
+    {
+      "horizon": 8,
+      "strategy": "snowball",
+      "snapshot": {
+        "status": "modeled",
+        "horizonMonths": 8,
+        "coveredThroughMonth": 8,
+        "balances": {
+          "rate-4-0": 0,
+          "rate-4-1": 0,
+          "rate-4-2": 0
+        },
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 419.14191593871135,
+        "netModeledWealth": 419.14191593871135,
+        "interestThroughMonth": 174.85808406128874,
+        "budgetThroughMonth": 5232
+      },
+      "wealthDifference": 0
+    },
+    {
+      "horizon": 8,
+      "strategy": "avalanche",
+      "snapshot": {
+        "status": "modeled",
+        "horizonMonths": 8,
+        "coveredThroughMonth": 8,
+        "balances": {
+          "rate-4-0": 0,
+          "rate-4-1": 0,
+          "rate-4-2": 0
+        },
+        "debtBalance": 0,
+        "locBalance": 0,
+        "cashBalance": 451.16995312899695,
+        "netModeledWealth": 451.16995312899695,
+        "interestThroughMonth": 142.83004687100293,
+        "budgetThroughMonth": 5232
+      },
+      "wealthDifference": 32.0280371902856
+    }
+  ],
+  "referenceHash": "d6655109cfb91f96f832cc720f7d0a71b38e57857e7bc556b81a6c77d6e6e9ec",
+  "archiveHash": "15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd",
+  "exit": 0,
+  "milliseconds": 511
+}

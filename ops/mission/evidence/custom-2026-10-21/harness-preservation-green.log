@@ -1,0 +1,57 @@
+{
+(node:28732) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+  "harnessSha256": "ba1eed0b98e71f65fd9c9324a5f6dd1f8a5a4680b1392dbe821e4d5950441aaf",
+(Use `node --trace-warnings ...` to show where the warning was created)
+  "otherNineRecordsUnchanged": true,
+  "allTenPosterRecordsUnchanged": true,
+  "cases": [
+    {
+      "scenario": "control",
+      "harnessPassed": true,
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": false,
+      "trackedSourceFilesSelected": 306,
+      "sourceFingerprintsCaptured": 309,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs",
+        "apps/media/scripts/build-hero-models.mjs",
+        "apps/media/scripts/prepare-hero-posters.mjs",
+        "apps/media/scripts/package-hero-collection.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 40
+    },
+    {
+      "scenario": "retained-source-mutation",
+      "harnessPassed": false,
+      "errorCode": "ERR_ASSERTION",
+      "errorMessage": "identical Custom model regeneration retained source apps/media/sources/house/oak-albedo-v1.png\n+ actual - expected\n\n+ 'b94e199acc1fcbcbf29ba91caf733c59995b0a99310631434c3c868653c49e0f'\n- '78f9cbed87ec67f0522f1aa5047e0959dac32e0074e6ba60f262820a4d397b7a'\n",
+      "retainedSourceChanged": true,
+      "otherNineVideoChanged": false,
+      "trackedSourceFilesSelected": 306,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 0
+    },
+    {
+      "scenario": "personal-video-and-manifest-mutation",
+      "harnessPassed": false,
+      "errorCode": "ERR_ASSERTION",
+      "errorMessage": "identical Custom model regeneration video records\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      bytes: 9684496,\n      closure: {\n        changedCellCount: 0,\n...\n      },\n+     sha256: '27e89d7fbad7a98e12d3f59e22543018c88e22d36ab5d1d6560ad3c87bfaf065',\n-     sha256: 'd56a9ba0b17f0d62cf4a60e878c8366a29b9e209320295c91223ae02d85d4042',\n      width: 1920\n    },\n    {\n      bytes: 4773662,\n      closure: {\n",
+      "retainedSourceChanged": false,
+      "otherNineVideoChanged": true,
+      "trackedSourceFilesSelected": 306,
+      "commandsMocked": [
+        "apps/media/scripts/build-refined-custom.mjs"
+      ],
+      "realSpawnCount": 0,
+      "realFilesystemWriterCount": 0,
+      "packagedPayloadsChecked": 0
+    }
+  ]
+}
+PASS controlled source/video preservation adversaries

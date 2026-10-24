@@ -1,0 +1,46 @@
+DIAGNOSTIC navigation 200 http://127.0.0.1:57123/
+PASS 1440px slow-network poster continuity and selected-mode stability
+1440px car color samples: 533, 507
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px house color samples: 426, 390
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px land color samples: 482, 517
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px creditCard color samples: 182, 118
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px studentLoan color samples: 358, 407
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px medical color samples: 184, 226
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px personal color samples: 246, 252
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px recreation color samples: 115, 212
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px custom color samples: 181, 168
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+DIAGNOSTIC navigation 200 http://127.0.0.1:57123/vault
+PASS 1440px vault: nonblank, framed, moving
+DIAGNOSTIC navigation 200 http://127.0.0.1:57123/
+PASS 375px slow-network poster continuity and selected-mode stability
+375px car color samples: 567, 529
+PASS 375px car: poster, real GLB, nonblank pixels, visible rotation, containment
+375px house color samples: 439, 378
+PASS 375px house: poster, real GLB, nonblank pixels, visible rotation, containment
+375px land color samples: 497, 530
+PASS 375px land: poster, real GLB, nonblank pixels, visible rotation, containment
+375px creditCard color samples: 199, 136
+PASS 375px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+375px studentLoan color samples: 375, 412
+PASS 375px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+375px medical color samples: 202, 236
+PASS 375px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+375px personal color samples: 246, 254
+PASS 375px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+375px recreation color samples: 130, 210
+PASS 375px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+375px custom color samples: 197, 176
+PASS 375px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+DIAGNOSTIC navigation 200 http://127.0.0.1:57123/vault
+PASS 375px vault: nonblank, framed, moving
+DIAGNOSTIC navigation 200 http://127.0.0.1:57123/
+PASS reduced-motion still frame

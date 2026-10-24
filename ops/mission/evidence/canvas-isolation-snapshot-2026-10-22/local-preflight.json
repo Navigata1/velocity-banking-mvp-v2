@@ -1,0 +1,186 @@
+{
+  "verifiedAt": "2026-10-23T01:37:57.069Z",
+  "baseline": "863382443cb43b8d5361b7f953f6ed7ea5df7ae7",
+  "stage": "State44 PRE-PUSH combined isolated canvas snapshot",
+  "productionReady": false,
+  "change": {
+    "files": [
+      "apps/web/scripts/test-three-stage.cjs",
+      "apps/web/scripts/canvas-clip-tests.cjs",
+      "apps/web/scripts/canvas-overlay-tests.cjs"
+    ],
+    "preserved": "Other482 source hashes including application, financial engine, assets, media, native, backend, dependencies, workflows and caps"
+  },
+  "fresh": {
+    "localGates": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "three-stage",
+        "exitCode": 0
+      },
+      {
+        "name": "web-routes",
+        "exitCode": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0
+      },
+      {
+        "name": "simulator-comparison",
+        "exitCode": 0
+      },
+      {
+        "name": "dashboard",
+        "exitCode": 0
+      },
+      {
+        "name": "vault",
+        "exitCode": 0
+      },
+      {
+        "name": "portfolio",
+        "exitCode": 0
+      },
+      {
+        "name": "heroes",
+        "exitCode": 0
+      },
+      {
+        "name": "media-check",
+        "exitCode": 0
+      },
+      {
+        "name": "hero-video-verification",
+        "exitCode": 0
+      },
+      {
+        "name": "native-types",
+        "exitCode": 0
+      },
+      {
+        "name": "native-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "native-port",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "native-accessibility",
+        "exitCode": 0
+      },
+      {
+        "name": "native-android-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "native-ios-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-check",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-dry-build",
+        "exitCode": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0
+      }
+    ],
+    "sourcePins": 485,
+    "requestedHeroSoftwareGpu": true,
+    "standingCpuGroups": [
+      10,
+      5,
+      9
+    ],
+    "independentCpuProbes": 15,
+    "killedMutants": 5,
+    "crossoverPairs": 8,
+    "crossoverNegativeCases": 40,
+    "directBoundaryCases": 128,
+    "combinedCaptureBoundaryCases": 128
+  },
+  "evidence": {
+    "fullGateReport": ".superpowers/sdd/2026-10-22-canvas-isolation-snapshot/full-gates-12af1544-61bf-4884-aa28-e956512b2074/verification.json",
+    "fullGateReportSha256": "9f2e6ec6f97746d7e5cdd8a57ffe10a43400b9f340ea7bffcd401dce98e9b85b",
+    "sourcePinsSha256": "0b017cac0846873e17062f90fd769275166c026905c14d13c47fb9fa3b767257",
+    "reviewSha256": "57e782d9a2be1b58526a16bf48adcbf5dd4cdcc18e82a7ac81b7d8c23be2c05f",
+    "crossoverSha256": "2392b7a19d692f93a4147dd661323f58d6d3c9f6693354f9036674dcdf22a3dc"
+  },
+  "failedPredecessor": {
+    "head": "863382443cb43b8d5361b7f953f6ed7ea5df7ae7",
+    "artifacts": 7653,
+    "checkpointSha256": "f75d7beb9552ed13174eaaa1e8ca68b675d3e01d1c5174a6a15ca956d7967e53",
+    "comment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6354821267",
+    "events": [
+      {
+        "event": "push",
+        "id": 39878666772,
+        "attempt": 1,
+        "conclusion": "failure"
+      },
+      {
+        "event": "pull_request",
+        "id": 39878674423,
+        "attempt": 1,
+        "conclusion": "success"
+      }
+    ],
+    "summary": "Both SQL and hero jobs pass; PR complete passes; push primary screenshot times out with33ms left in700ms. Cold preparation verified, whole release NOT verified."
+  },
+  "lastVerified": {
+    "head": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6351915021"
+  },
+  "limits": [
+    "New exact-head CI/READY/hosted/IAB/final receipt pending",
+    "Finite observed geometry/pixel equality only, not universal parity or scheduling guarantee",
+    "Existing cleanup failure/reentrancy/page death limits remain",
+    "Windows software hero flag requested, not physical GPU/device proof",
+    "Final photoreal/lender/backend/recovery/security/accessibility/native/production gates OPEN"
+  ]
+}

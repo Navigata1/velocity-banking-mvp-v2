@@ -1,0 +1,1011 @@
+
+> @interestshield/media@0.1.0 check
+> npm run test:contracts && npm run check:hyperframes && npm run check:remotion
+
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 1 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 167.4501
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 2 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 58.6567
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 3 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 45.9071
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 4 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 384.7058
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 5 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 35.2186
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 6 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 107.9527
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 7 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 20.9373
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 8 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 8.6731
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 9 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 56.4989
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 10 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 15.9405
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 11 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 9.9847
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 12 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 5.63
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 13 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 3.7437
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 14 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 5.1484
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 15 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 2.5835
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 16 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 2.5871
+  type: 'test'
+  ...
+# Subtest: Land preserves generated sources, embedded PBR maps and the standing collection budget
+ok 17 - Land preserves generated sources, embedded PBR maps and the standing collection budget
+  ---
+  duration_ms: 264.25
+  type: 'test'
+  ...
+# Subtest: Land has real pond depth and non-flat terrain rather than a water disk over grass
+ok 18 - Land has real pond depth and non-flat terrain rather than a water disk over grass
+  ---
+  duration_ms: 135.4968
+  type: 'test'
+  ...
+# Subtest: Land gravel ribbon follows the actual triangulated terrain without floating
+ok 19 - Land gravel ribbon follows the actual triangulated terrain without floating
+  ---
+  duration_ms: 74.2767
+  type: 'test'
+  ...
+# Subtest: Land keeps four grounded survey stakes and three connected textured trees
+ok 20 - Land keeps four grounded survey stakes and three connected textured trees
+  ---
+  duration_ms: 77.1062
+  type: 'test'
+  ...
+# Subtest: Land cutaway layers meet the terrain and preserve finite normalized geometry
+ok 21 - Land cutaway layers meet the terrain and preserve finite normalized geometry
+  ---
+  duration_ms: 163.6966
+  type: 'test'
+  ...
+# Subtest: Land cut faces include actual stone/root detail and varied leaf shading
+ok 22 - Land cut faces include actual stone/root detail and varied leaf shading
+  ---
+  duration_ms: 22.6403
+  type: 'test'
+  ...
+# Subtest: Land woody components actually enter their trunks and reject detached branches
+ok 23 - Land woody components actually enter their trunks and reject detached branches
+  ---
+  duration_ms: 98.7349
+  type: 'test'
+  ...
+# Subtest: Land cutaway has outward-facing lower joins, corners and a closed underside
+ok 24 - Land cutaway has outward-facing lower joins, corners and a closed underside
+  ---
+  duration_ms: 308.2686
+  type: 'test'
+  ...
+# Subtest: Land rechecks the live collection budget inside locked asset publication
+ok 25 - Land rechecks the live collection budget inside locked asset publication
+  ---
+  duration_ms: 65.6056
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 26 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 12.7441
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 27 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 2.7794
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 28 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 72.3733
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 29 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 26.9334
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 30 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 295.0366
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 31 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 7.0962
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 32 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 71.0322
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 33 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 957.291
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 34 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 405.9298
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 35 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 288.4251
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 36 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 45.2794
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 37 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 5.1504
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 38 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 1051.655
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 39 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 2.7381
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 40 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 3.9539
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 41 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 5.0321
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 42 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 3.4144
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 43 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 34.8593
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 44 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 6.2935
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 45 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 2.1567
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 46 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.8088
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 47 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.8848
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 48 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 0.8218
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 49 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 0.2288
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 50 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.6413
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 51 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.4414
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 52 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.2934
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 53 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.2426
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 54 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 80.4424
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 55 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 2.7699
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 56 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3431
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2656.5383
+
+> @interestshield/media@0.1.0 check:hyperframes
+> node scripts/check-hyperframes.mjs
+
+
+[hyperframes] prepare local renderer assets
+Prepared 4 pinned HyperFrames assets.
+
+[hyperframes] lint composition structure
+◆  Linting hyperframes/3 files
+
+◇  0 errors, 0 warnings
+
+[hyperframes] strict runtime, layout, motion, and contrast check
+◆  Checking hyperframes
+
+Lint
+  ◇ 0 errors, 0 warnings
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ℹ t=12s text_occluded main.clip.composition inside #loop-income "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Text is hidden beneath an opaque element.
+        Fix: Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.
+  ℹ t=12s content_overlap main.clip.composition inside span.disclaimer "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  ℹ t=12s content_overlap main.clip.composition inside div.caption-group "Modeled, never promised KEEP YOUR AGENCY Model the tradeoffs before you move...." — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  0 error(s), 0 warning(s), 3 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 40/40 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+
+[hyperframes] map registered animation timelines
+Mapped 26 tweens across 2 timelines.
+
+> @interestshield/media@0.1.0 check:remotion
+> node scripts/check-remotion.mjs
+
+
+[remotion] prepare pinned local fonts
+Prepared 3 pinned Remotion fonts.
+
+[remotion] verify generated financial scenarios
+Remotion scenario JSON matches the shared engine.
+
+[remotion] type-check compositions
+
+[remotion] bundle and enumerate compositions
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling code        ━                  6%
+Bundling code        ━━                 13%
+Bundling code        ━━━━━━━━━━╸        61%
+Bundling code        ━━━━━━━━━━━━       69%
+Bundling code        ━━━━━━━━━━━━━      74%
+Bundling code        ━━━━━━━━━━━━━━     80%
+Bundling code        ━━━━━━━━━━━━━━━    85%
+Bundling code        ━━━━━━━━━━━━━━━━   90%
+Bundling code        ━━━━━━━━━━━━━━━━━  95%
+Bundling code        ━━━━━━━━━━━━━━━━━━ 100%
+Bundled code         ━━━━━━━━━━━━━━━━━━ 1429ms
+
+The following compositions are available:
+
+Baseline-Landscape               30      1920x1080      240 (8.00 sec)
+Baseline-Portrait                30      1080x1920      240 (8.00 sec)
+Baseline-Square                  30      1080x1080      240 (8.00 sec)
+MoneyLoopMonth-Landscape         30      1920x1080      240 (8.00 sec)
+MoneyLoopMonth-Portrait          30      1080x1920      240 (8.00 sec)
+MoneyLoopMonth-Square            30      1080x1080      240 (8.00 sec)
+BlockedPlan-Landscape            30      1920x1080      240 (8.00 sec)
+BlockedPlan-Portrait             30      1080x1920      240 (8.00 sec)
+BlockedPlan-Square               30      1080x1080      240 (8.00 sec)
+InterestShield-Scenario-Still            1920x1080      Still
+
+[remotion] render browser-verified aspect-ratio matrix
+Prepared 3 pinned Remotion fonts.
+
+[remotion] rendering Baseline-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-intro.png
+
+[remotion] rendering Baseline-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-story.png
+
+[remotion] rendering Baseline-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Landscape
+Format               png
+Output               remotion/out/matrix/Baseline-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Landscape-resolve.png
+
+[remotion] rendering Baseline-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-intro.png
+
+[remotion] rendering Baseline-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-story.png
+
+[remotion] rendering Baseline-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Portrait
+Format               png
+Output               remotion/out/matrix/Baseline-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Portrait-resolve.png
+
+[remotion] rendering Baseline-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-intro.png
+
+[remotion] rendering Baseline-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-story.png
+
+[remotion] rendering Baseline-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          Baseline-Square
+Format               png
+Output               remotion/out/matrix/Baseline-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/Baseline-Square-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-intro.png
+
+[remotion] rendering MoneyLoopMonth-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-story.png
+
+[remotion] rendering MoneyLoopMonth-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Landscape
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Landscape-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-intro.png
+
+[remotion] rendering MoneyLoopMonth-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-story.png
+
+[remotion] rendering MoneyLoopMonth-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Portrait
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Portrait-resolve.png
+
+[remotion] rendering MoneyLoopMonth-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-intro.png
+
+[remotion] rendering MoneyLoopMonth-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-story.png
+
+[remotion] rendering MoneyLoopMonth-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          MoneyLoopMonth-Square
+Format               png
+Output               remotion/out/matrix/MoneyLoopMonth-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/MoneyLoopMonth-Square-resolve.png
+
+[remotion] rendering BlockedPlan-Landscape intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-intro.png
+
+[remotion] rendering BlockedPlan-Landscape story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-story.png
+
+[remotion] rendering BlockedPlan-Landscape resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Landscape
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Landscape-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Landscape-resolve.png
+
+[remotion] rendering BlockedPlan-Portrait intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-intro.png
+
+[remotion] rendering BlockedPlan-Portrait story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-story.png
+
+[remotion] rendering BlockedPlan-Portrait resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Portrait
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Portrait-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Portrait-resolve.png
+
+[remotion] rendering BlockedPlan-Square intro frame 18
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-intro.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-intro.png
+
+[remotion] rendering BlockedPlan-Square story frame 120
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 61%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-story.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-story.png
+
+[remotion] rendering BlockedPlan-Square resolve frame 220
+[remotion] Chrome 150.0.7871.115 at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\remotion\.chrome-for-testing\chrome-win64\chrome.exe
+Bundling 6%
+Bundling 13%
+Bundling 62%
+Bundling 69%
+Bundling 74%
+Bundling 80%
+Bundling 85%
+Bundling 90%
+Bundling 95%
+Bundling 100%
+Getting composition
+Composition          BlockedPlan-Square
+Format               png
+Output               remotion/out/matrix/BlockedPlan-Square-resolve.png
+Rendered 0/1
+Rendered 0/1
+Rendered 1/1
+○                    remotion/out/matrix/BlockedPlan-Square-resolve.png
+
+Rendered 27 Remotion matrix stills.
+
+Remotion checks passed.

@@ -1,0 +1,18 @@
+import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert/strict';
+const repo = new URL('../../../', import.meta.url), req = createRequire(new URL('apps/media/package.json', repo)), { parse } = req('acorn'), { simple } = req('acorn-walk'), sha = b => createHash('sha256').update(b).digest('hex');
+const text = execFileSync(process.execPath, [fileURLToPath(new URL('./review-pipeline-boundary.mjs', import.meta.url)), '--candidate-bytes=519844'], { cwd: fileURLToPath(repo), encoding: 'utf8', windowsHide: true });
+const result = JSON.parse(text); assert.equal(result.status, 'PASS'); assert.equal(result.sourceLFSha256, '588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c');
+assert.deepEqual(result.fixture, { oldModelBytes: 512876, candidateBytes: 519844, growth: 6968 });
+const reviewedFiles = ['apps/media/scripts/personal-geometry-test-helpers.mjs', 'apps/media/scripts/personal-seating.test.mjs', 'apps/media/scripts/personal-refinement.test.mjs', 'apps/media/scripts/refined-hero-record.mjs'];
+const hashes = reviewedFiles.map(path => { const bytes = readFileSync(new URL(path, repo)); return { path, bytes: bytes.length, sha256: sha(bytes), sourceLFSha256: sha(bytes.toString().replace(/\r\n/g, '\n')) }; });
+const helper = readFileSync(new URL(reviewedFiles[0], repo), 'utf8'), ast = parse(helper, { ecmaVersion: 'latest', sourceType: 'module' }); let writes = 0, normalizedReads = 0;
+simple(ast, { CallExpression(n) { if (['writeFile', 'rename', 'unlink', 'open', 'mkdir'].includes(n.callee.name)) writes++; if (n.callee.property?.name === 'getElement') normalizedReads++; } }); assert.equal(writes, 0); assert.ok(normalizedReads >= 4);
+const seating = readFileSync(new URL(reviewedFiles[1], repo), 'utf8'), tests = []; simple(parse(seating, { ecmaVersion: 'latest', sourceType: 'module' }), { CallExpression(n) { if (n.callee.name === 'test') tests.push(n.arguments[0].value); } }); assert.equal(tests.length, 4);
+const log = readFileSync(new URL('.superpowers/sdd/2026-10-21-personal/final-personal-contracts.log', repo), 'utf8').replace(/^\uFEFF/, ''); assert.match(log, /# tests 18/); assert.match(log, /# pass 18/); assert.match(log, /# fail 0/);
+result.probe = 'final-publication-boundary-and-test-source-inspection'; result.inspectedFiles = hashes; result.testHelperReadOnly = true; result.helperReadsNormalizedElements = true; result.seatingTestsInspected = tests; result.parentEvidence = { file: 'final-personal-contracts.log', sha256: sha(log), tests: 18, pass: 18, fail: 0, independentlyRerun: false };
+console.log(JSON.stringify(result, null, 2));

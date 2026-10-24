@@ -6,10 +6,50 @@
   "react-native": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
+    "./dated-plan": {
+      "types": "./src/dated-plan.ts",
+      "react-native": "./src/dated-plan.ts",
+      "default": "./src/dated-plan.ts"
+    },
     ".": {
       "types": "./src/index.ts",
       "react-native": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./portfolio": {
+      "types": "./src/portfolio.ts",
+      "react-native": "./src/portfolio.ts",
+      "default": "./src/portfolio.ts"
+    },
+    "./portfolio-path": {
+      "types": "./src/portfolio-path.ts",
+      "react-native": "./src/portfolio-path.ts",
+      "default": "./src/portfolio-path.ts"
+    },
+    "./input-draft": {
+      "types": "./src/input-draft.ts",
+      "react-native": "./src/input-draft.ts",
+      "default": "./src/input-draft.ts"
+    },
+    "./lender-terms-draft": {
+      "types": "./src/lender-terms-draft.ts",
+      "react-native": "./src/lender-terms-draft.ts",
+      "default": "./src/lender-terms-draft.ts"
+    },
+    "./portfolio-book": {
+      "types": "./src/portfolio-book.ts",
+      "react-native": "./src/portfolio-book.ts",
+      "default": "./src/portfolio-book.ts"
+    },
+    "./portfolio-overview": {
+      "types": "./src/portfolio-overview.ts",
+      "react-native": "./src/portfolio-overview.ts",
+      "default": "./src/portfolio-overview.ts"
+    },
+    "./portfolio-common-month": {
+      "types": "./src/portfolio-common-month.ts",
+      "react-native": "./src/portfolio-common-month.ts",
+      "default": "./src/portfolio-common-month.ts"
     }
   },
   "sideEffects": false

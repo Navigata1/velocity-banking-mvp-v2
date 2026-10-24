@@ -1,0 +1,106 @@
+PASS Common month all strategies observe the same complete month-zero book
+PASS Common month same-month residual debts distinguish retained cash from net wealth
+PASS Common month post-payoff continuation carries only the same external budget
+PASS Common month all listed IDs plus existing LOC are included in different allocations
+PASS Common month signed adverse differences are not clamped or ranked by cash alone
+PASS Common month accepted prefix is usable even when a later attempted month fails
+PASS Common month blocked borrowing does not suppress independently usable direct columns
+PASS Common month LOC-only recovery needs no invented loan borrowing capacity
+PASS Common month canonical APR2 remains 200 percent rather than legacy2percent
+PASS Common month horizons are explicit safe whole months from0 through600
+PASS Common month zero-cleared books continue cash but do not invent deficit borrowing
+PASS Common month initial and terminal cent tolerance never become free exact-zero clearance
+PASS Common month a small existing LOC can remain in a valid covered month
+PASS Common month legacy loan tolerance cannot silently forgive residuals within float allowance
+PASS Common month malformed or numerically overflowing books do not sanitize to success
+FAIL Common month exact entered unpaid dust cannot become clearance below an epsilon bound
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'modeled'
+- 'unavailable'
+
+    at assertUnavailable (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:27:10)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:120:73
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:115:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'modeled',
+  expected: 'unavailable',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+PASS Common month captured selection and original policy outputs remain immutable
+PASS Common month generic reducer uses accepted inventory and exact-zero continuation
+PASS Common month elapsed counters cannot fill an uncovered failed month
+PASS Common month a generic accepted trace can account for an actually repaid sub-cent liability
+PASS Common month missing duplicate gap or corrupted trace facts fail closed
+PASS Common month a valid requested prefix is not replaced by unrequested future trace failure
+FAIL Common month null undefined and sparse required rows fail closed after their valid prefix
+AssertionError [ERR_ASSERTION]: Got unwanted exception.
+Actual message: "Cannot read properties of null (reading 'month')"
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:158:23
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:153:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: TypeError: Cannot read properties of null (reading 'month')
+      at Object.snapshotAtMonth (C:\Users\IslandDevCrew\Documents\Interest Shield\packages\financial-engine\src\common-month.ts:86:17)
+      at call (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:18:147)
+      at at (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:20:17)
+      at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:158:48
+      at getActual (node:assert:609:5)
+      at Function.doesNotThrow (node:assert:777:32)
+      at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:158:23
+      at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+      at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:153:1)
+      at Module._compile (node:internal/modules/cjs/loader:1705:14),
+  expected: undefined,
+  operator: 'doesNotThrow',
+  diff: 'simple'
+}
+FAIL Common month unrounded cumulative interest remains available to signed conservation
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'unavailable'
+- 'modeled'
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:166:33
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:33:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-common-month-tests.cjs:162:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'unavailable',
+  expected: 'modeled',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+PASS Common month the generic reducer never mutates or aliases trace positions
+PASS Common month same-month monetary formatting preserves signs and tiny nonzero values
+PASS Common month horizon drafts retain invalid values instead of numeric coercion
+PASS Common month coverage copy distinguishes starting inventory from continuation and failure
+PASS Common month a captured comparison prepares policies once and keeps queries private
+PASS Common month portable typed package subpath resolves for both web and native
+30 common-month contracts failed.

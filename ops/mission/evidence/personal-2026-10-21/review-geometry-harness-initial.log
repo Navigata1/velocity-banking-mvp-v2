@@ -1,0 +1,28 @@
+HARNESS INITIAL ERROR ONLY: one shared document leaked unrendered infill fixture resources between cases. Corrected to fresh document per case; this is not a candidate finding.
+PIN {"glb":"ae5bf9e062b060f4e1e0a7d150d606089550ec52e6006e1315447a1c509cb748","tests":"1aa90da5d38464c70710ed26719b2e25fb8c8b603700725e8e241f6a3497bd0a","transformation":"AST removes imports, injects only the decoded personal fixture, and substitutes original import.meta.url; callbacks/helpers otherwise unchanged"}
+BASELINE PASS Personal replaces the study with protected original provenance and explicitly reused leather
+BASELINE PASS Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+BASELINE PASS Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+BASELINE PASS Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+BASELINE PASS Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+BASELINE PASS Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+BASELINE PASS Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+BASELINE PASS Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+BASELINE PASS Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: surface normals missing
+    at Object.eval [as fn] (eval at register (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-contract-controls.mjs:36:9), <anonymous>:298:134)
+    at async file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-contract-controls.mjs:41:26 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
+

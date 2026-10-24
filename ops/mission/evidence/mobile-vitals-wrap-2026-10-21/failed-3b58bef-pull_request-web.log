@@ -1,0 +1,1007 @@
+Web and mobile quality gates	Set up job	﻿2026-10-21T10:52:39.1968694Z Current runner version: '2.337.0'
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2006101Z ##[group]Runner Image Provisioner
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2007550Z Hosted Compute Agent
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2008475Z Version: 20261015.610
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2009685Z Commit: 267fdb4e8bbec4ab5ea31367f3a00d5c480c7656
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2010953Z Build Date: 2026-10-14T17:06:54Z
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2012123Z Worker ID: {215719b5-a9a9-4b98-ad89-be8de5380bc4}
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2013336Z Region: eastus
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2014502Z Cloud: Azure
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2015466Z ##[endgroup]
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2017827Z ##[group]Operating System
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2018924Z Ubuntu
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2019893Z 24.04.5
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2020722Z LTS
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2021649Z ##[endgroup]
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2022597Z ##[group]Runner Image
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2023995Z Image: ubuntu-24.04
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2024976Z Version: 20261018.339.1
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2026756Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261018.339/images/ubuntu/Ubuntu2404-Readme.md
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2029910Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261018.339
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2031644Z ##[endgroup]
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2033519Z ##[group]GITHUB_TOKEN Permissions
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2036379Z Contents: read
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2037440Z Metadata: read
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2038428Z ##[endgroup]
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2041847Z Secret source: Actions
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2043420Z Cache mode: write
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2044896Z Prepare workflow directory
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2518686Z Prepare all required actions
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.2590766Z Getting action download info
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.4719451Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.5648536Z Download action repository 'actions/setup-node@v5' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.7155810Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Web and mobile quality gates	Set up job	2026-10-21T10:52:39.8271479Z Download action repository 'browser-actions/setup-chrome@e574b4b3a21156ab45dd6b5f67e884fd26eed829' (SHA:e574b4b3a21156ab45dd6b5f67e884fd26eed829)
+Web and mobile quality gates	Set up job	2026-10-21T10:52:40.1164358Z Complete job name: Web and mobile quality gates
+Web and mobile quality gates	Check out repository	﻿2026-10-21T10:52:40.2161044Z ##[group]Run actions/checkout@v5
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2161936Z with:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2162432Z   repository: Navigata1/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2166784Z   token: ***
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2167218Z   ssh-strict: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2167642Z   ssh-user: git
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2168073Z   persist-credentials: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2168544Z   clean: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2168984Z   sparse-checkout-cone-mode: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2169492Z   fetch-depth: 1
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2169908Z   fetch-tags: false
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2170339Z   show-progress: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2170768Z   lfs: false
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2171167Z   submodules: false
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2171598Z   set-safe-directory: true
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2172106Z   allow-unsafe-pr-checkout: false
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.2172860Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3239244Z Syncing repository: Navigata1/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3242356Z ##[group]Getting Git version info
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3244132Z Working directory is '/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2'
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3246214Z [command]/usr/bin/git version
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3335135Z git version 2.55.0
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3349065Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3362445Z Temporarily overriding HOME='/home/runner/work/_temp/0d9c1918-8d0e-4ccf-8ed1-f774f8241418' before making global git config changes
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3365033Z Adding repository directory to the temporary git global config as a safe directory
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3368458Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3424733Z Deleting the contents of '/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2'
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3429767Z ##[group]Initializing the repository
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3434394Z [command]/usr/bin/git init /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3548800Z hint: Using 'master' as the name for the initial branch. This default branch name
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3554324Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3556048Z hint: to use in all of your new repositories, which will suppress this warning,
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3557417Z hint: call:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3558280Z hint:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3559107Z hint: 	git config --global init.defaultBranch <name>
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3560175Z hint:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3561127Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3562728Z hint: 'development'. The just-created branch can be renamed via this command:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3564563Z hint:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3565283Z hint: 	git branch -m <name>
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3566040Z hint:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3567072Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3569078Z Initialized empty Git repository in /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/.git/
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3572090Z [command]/usr/bin/git remote add origin https://github.com/Navigata1/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3625348Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3626541Z ##[group]Disabling automatic garbage collection
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3629819Z [command]/usr/bin/git config --local gc.auto 0
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3664315Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3665431Z ##[group]Setting up auth
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3671702Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.3709459Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4094300Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4148389Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4410893Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4457901Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4704476Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4752626Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4754146Z ##[group]Fetching the repository
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:40.4762779Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f5f65ba1e962234aca24e48fde56f77c015a6ff:refs/remotes/pull/256/merge
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0066147Z From https://github.com/Navigata1/velocity-banking-mvp-v2
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0068010Z  * [new ref]         2f5f65ba1e962234aca24e48fde56f77c015a6ff -> pull/256/merge
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0072053Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0073017Z ##[group]Determining the checkout info
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0075563Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0083256Z [command]/usr/bin/git sparse-checkout disable
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0145812Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0195011Z ##[group]Checking out the ref
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.0198759Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/256/merge
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4184742Z Note: switching to 'refs/remotes/pull/256/merge'.
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4186106Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4186387Z You are in 'detached HEAD' state. You can look around, make experimental
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4187281Z changes and commit them, and you can discard any commits you make in this
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4187855Z state without impacting any branches by switching back to a branch.
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4188202Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4188447Z If you want to create a new branch to retain commits you create, you may
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4188992Z do so (now or later) by using -c with the switch command. Example:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4189288Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4189425Z   git switch -c <new-branch-name>
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4189636Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4189773Z Or undo this operation with:
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4189963Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4190070Z   git switch -
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4190236Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4190576Z Turn off this advice by setting config variable advice.detachedHead to false
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4190923Z 
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4191311Z HEAD is now at 2f5f65b Merge 3b58beffd14db959cedc667b1c892ef5c0cc672b into e8f41278c14b83db50d616babd058b2d38ae2771
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4220719Z ##[endgroup]
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4273971Z [command]/usr/bin/git log -1 --format=%H
+Web and mobile quality gates	Check out repository	2026-10-21T10:52:43.4308538Z 2f5f65ba1e962234aca24e48fde56f77c015a6ff
+Web and mobile quality gates	Set up Node	﻿2026-10-21T10:52:43.4602069Z ##[group]Run actions/setup-node@v5
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4602465Z with:
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4602731Z   node-version: 22
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4602987Z   cache: npm
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4603893Z   cache-dependency-path: apps/web/package-lock.json
+Web and mobile quality gates	Set up Node	apps/mobile/package-lock.json
+Web and mobile quality gates	Set up Node	apps/media/package-lock.json
+Web and mobile quality gates	Set up Node	
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4604603Z   always-auth: false
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4631288Z   check-latest: false
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4634335Z   token: ***
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4634630Z   package-manager-cache: true
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.4634937Z ##[endgroup]
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.6190420Z (node:2331) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.6192137Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.6194671Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:43.6195977Z ##[group]Environment details
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.0478658Z node: v22.23.3
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.0479587Z npm: 10.9.9
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.0480310Z yarn: 1.22.22
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.0481749Z ##[endgroup]
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.0506848Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.1764633Z /home/runner/.npm
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.2607683Z Cache hit for: node-cache-Linux-x64-npm-ce5d09904b85659bee2363956f88f9d8c7158e2c03eb969cdca65abb658f1c65
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:44.2725795Z (node:2331) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:45.2997622Z Received 209715200 of 607398139 (34.5%), 198.8 MBs/sec
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:46.3019932Z Received 440401920 of 607398139 (72.5%), 209.2 MBs/sec
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:46.9601905Z Received 607398139 of 607398139 (100.0%), 217.2 MBs/sec
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:46.9603188Z Cache Size: ~579 MB (607398139 B)
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:46.9639418Z [command]/usr/bin/tar -xf /home/runner/work/_temp/f48c9982-ef06-43ca-9c90-86383033ce29/cache.tzst -P -C /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2 --use-compress-program unzstd
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:48.1222438Z Cache restored successfully
+Web and mobile quality gates	Set up Node	2026-10-21T10:52:48.1490118Z Cache restored from key: node-cache-Linux-x64-npm-ce5d09904b85659bee2363956f88f9d8c7158e2c03eb969cdca65abb658f1c65
+Web and mobile quality gates	Install web dependencies	﻿2026-10-21T10:52:48.1866326Z ##[group]Run npm ci
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:52:48.1866664Z ^[[36;1mnpm ci^[[0m
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:52:48.2043569Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:52:48.2044160Z ##[endgroup]
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.6920638Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.6929899Z added 397 packages, and audited 400 packages in 14s
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.6930466Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.6930795Z 149 packages are looking for funding
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.6931356Z   run `npm fund` for details
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7401420Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7402330Z 12 vulnerabilities (2 moderate, 10 high)
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7403547Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7404287Z To address issues that do not require attention, run:
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7404946Z   npm audit fix
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7405237Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7405667Z To address all issues (including breaking changes), run:
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7406352Z   npm audit fix --force
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7406643Z 
+Web and mobile quality gates	Install web dependencies	2026-10-21T10:53:02.7406883Z Run `npm audit` for details.
+Web and mobile quality gates	Audit web runtime dependencies	﻿2026-10-21T10:53:02.8546349Z ##[group]Run npm audit --omit=dev
+Web and mobile quality gates	Audit web runtime dependencies	2026-10-21T10:53:02.8546720Z ^[[36;1mnpm audit --omit=dev^[[0m
+Web and mobile quality gates	Audit web runtime dependencies	2026-10-21T10:53:02.8602847Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Audit web runtime dependencies	2026-10-21T10:53:02.8603141Z ##[endgroup]
+Web and mobile quality gates	Audit web runtime dependencies	2026-10-21T10:53:03.3539907Z found 0 vulnerabilities
+Web and mobile quality gates	Run web regression tests	﻿2026-10-21T10:53:03.3664511Z ##[group]Run npm test
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.3664837Z ^[[36;1mnpm test^[[0m
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.3716598Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.3716886Z ##[endgroup]
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.4898509Z 
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.4899201Z > web@0.1.0 test
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.4901719Z > node scripts/hero-resource-tests.cjs && node scripts/hero-contract-tests.cjs && node scripts/three-stage-helpers-tests.cjs && node scripts/engine-regression-tests.cjs && node scripts/financial-reference-tests.cjs && node scripts/accessibility-route-contract.cjs && node scripts/metadata-contract.cjs && node scripts/public-asset-budget.cjs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.4903489Z 
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.8711482Z Hero resource cleanup releases shared geometry, materials, textures and decoded images exactly once.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:03.9377150Z Shared studio releases all temporary reflection resources on success and failure.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2299430Z Hero contracts passed: ten self-contained GLBs, ten optimized posters, finite full-turn timing.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2899263Z PASS testInvocationBudget
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2922114Z PASS testAbsoluteDeadline
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2941686Z PASS testPhaseTiming
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2957529Z PASS testDispatchFailureReporting
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.2958332Z Three stage PNG and lifecycle helper tests passed.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8495928Z PASS APR units legacy defaults remain mixed-unit compatible
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8505443Z PASS APR units explicit decimal scalars do not jump down at100 percent
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8506686Z PASS APR units dated and estimated LOC accrual retain the explicit APR
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8638938Z PASS APR units Money Loop month forwards units to loan and daily LOC charges
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8665877Z PASS APR units Portfolio decimal loan charge and retained cash have independent expected values
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8688467Z PASS APR units avalanche ranks decimal high-rate loans and LOC without legacy reinterpretation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8696317Z PASS APR units promo transition and rationale retain high decimal APR meaning
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8738704Z PASS APR units all policy/focus rows conserve high-rate debts LOC interest and funded cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8757564Z PASS APR units legacy whole-percent Portfolio results match equivalent decimal books
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8782129Z PASS APR units funded Velocity retains 99.99% loan and LOC APR through chunks, released payments and recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8799197Z PASS APR units funded Velocity retains 100% loan and LOC APR through chunks, released payments and recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8824892Z PASS APR units funded Velocity retains 100.01% loan and LOC APR through chunks, released payments and recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:04.8835251Z PASS APR units funded Velocity retains 200% loan and LOC APR through chunks, released payments and recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:05.0362563Z PASS APR units independent funded oracle rejects a missing Velocity target decimal argument
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:05.1771496Z PASS APR units independent funded oracle rejects a missing LOC-only recovery decimal argument
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:05.1773025Z 15 explicit APR unit contracts passed. Native UI adoption and lender rules remain separate.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:05.2585608Z PASS Portfolio book canonical document preserves every supported field and exact number
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.0644603Z PASS Portfolio book codec has a typed public web/native package entry
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.0663912Z PASS Portfolio book canonical validation and serialization never mutate their source
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.0665496Z PASS Portfolio book legacy exported and persisted documents convert mixed APR units exactly once
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1135842Z PASS Portfolio book canonical high rates reach the engine with explicit units and no hidden extra cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1155029Z PASS Portfolio book an explicitly empty book is valid but absence is never an empty default
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1201844Z PASS Portfolio book finite inputs that overflow future cash are not successful or nonfinite projections
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1213945Z PASS Portfolio book monthly liability aggregates must remain finite before a row is accepted
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1224134Z PASS Portfolio book aggregate range checks cannot hide debts behind a large LOC or change with order
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1230309Z PASS Portfolio book initial interest overflow is not mislabeled as zero-interest affordability
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1320159Z PASS Portfolio book rounding residue in a derived LOC payment cannot reject an ordinary funded plan
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1330278Z PASS Portfolio book overflow rollback retains accepted interest LOC charges and earlier payoff events
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1336317Z PASS Portfolio book large but representable cash is not subjected to an arbitrary money cap
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1339723Z PASS Portfolio book unknown versions units ambiguous wrappers and malformed JSON are rejected
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1345209Z PASS Portfolio book duplicate empty and prototype-sensitive debt identities are rejected
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1358202Z PASS Portfolio book invalid money APR terms ratios minimums and promo fields never coerce or clamp
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1362478Z PASS Portfolio book unknown present fields fail explicitly instead of disappearing on a round trip
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.1363441Z 17 portable Portfolio book contracts passed. Storage UI and paired recovery remain separate.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2286197Z PASS Portfolio persistence constructor and absent hydration never write defaults or probe before a read
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2291133Z PASS Portfolio persistence legacy hydration converts 6.5-percent once without touching original bytes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2294255Z PASS Portfolio persistence canonical 2 means 200-percent and takes precedence without even reading corrupt legacy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2317216Z PASS Portfolio persistence present corrupt or misplaced-v1 canonical data never falls back to legacy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2318591Z PASS Portfolio persistence legacy physical key accepts only strict v1 documents, never a default or misplaced v2
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2320149Z PASS Portfolio persistence legacy data export shape uses the same real codec without mutating persisted bytes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2328746Z PASS Portfolio persistence writes only the new canonical key and keeps exact input metadata, precision and legacy bytes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2332211Z PASS Portfolio persistence no-op canonical writes reuse original bytes and do not publish or rewrite
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2339434Z PASS Portfolio persistence failed explicit upgrade preserves legacy bytes and remains retryable without memory fallback
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2343175Z PASS Portfolio persistence failed canonical set preserves its old bytes and freezes mutable error details
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2346526Z PASS Portfolio persistence remove deletes canonical only; the retained legacy book is visible on a later read
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2347988Z PASS Portfolio persistence failed remove reports error without throwing or changing either physical key
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2357719Z PASS Portfolio persistence unknown write versions and invalid books reject without I/O or input mutation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2364026Z PASS Portfolio persistence set preflights existing data even if hydration was skipped or another writer corrupted it
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2367219Z PASS Portfolio persistence unreadable-present data blocks subsequent writes for that adapter even after bytes change
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2369394Z PASS Portfolio persistence read I/O failure never falls back or permits an unchecked write
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2371015Z PASS Portfolio persistence null storage is unavailable rather than a fake in-memory durable book
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2372579Z PASS Portfolio persistence wrong logical keys reject all operations without touching storage
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2375249Z PASS Portfolio persistence status snapshots are stable, frozen and notify only actual changes with safe unsubscribe
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2413904Z PASS Portfolio persistence subscriber exceptions cannot escape a storage event or suppress other subscribers
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.2417576Z PASS Portfolio persistence large finite values are not capped and returned books do not alias input or later reads
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.7830027Z PASS Portfolio persistence factory and public codec compile strictly without framework imports
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:06.7831995Z 22 canonical Portfolio persistence contracts passed. Store/UI/reset integration remains separate.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.0371790Z PASS web Portfolio store failed import cannot replace active state or be resurrected by a later unrelated edit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.1928199Z PASS web Portfolio store successful replacement is already durable before subscribers observe the new active book
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.3228601Z PASS web Portfolio store identical import does not publish state or rewrite storage
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.3230264Z 3 real-store Portfolio persistence contracts passed. Memory Web Storage, not browser quota durability.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5431214Z PASS Portfolio extra allocations never create money beyond entered household cash flow
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5439878Z PASS Portfolio manual extra caps retain unused cash without changing saved inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5511776Z PASS Every Portfolio strategy and focus includes an existing LOC until both liabilities clear
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5521196Z PASS Direct Portfolio policies reserve LOC interest before funding target extras
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5530133Z PASS Portfolio accepts a funded clipped final payment and rejects a one-cent shortfall
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5540020Z PASS Portfolio debt-first priorities include the LOC for snowball and effective-rate avalanche
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5722552Z PASS Portfolio monthly books conserve both liabilities, interest, household budget and cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5729732Z PASS Portfolio Velocity reserves scheduled payments and routes the funded residual to its LOC
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5734364Z PASS Web Portfolio delegates its calculation module to the portable shared engine
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5740731Z PASS Portfolio preserves unpaid post-promo interest instead of losing liability
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5758427Z PASS Portfolio path and run summaries include LOC debt after listed targets are cleared
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5770801Z PASS Portfolio presents funded allocations, LOC controls and retained cash in every strategy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5776191Z PASS Direct Portfolio manual caps include principal allocated to a ranked LOC
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5789190Z PASS Direct Portfolio split slots include a second-ranked LOC instead of a lower-priority loan
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5797052Z PASS Portfolio cleared and LOC-only books do not require a new borrowing setup
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5801557Z PASS Portfolio run comparisons retain a remaining LOC as the actual next target
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5803942Z PASS Portfolio paid-off comparisons do not describe valid zero months as unprojected
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5816137Z PASS Portfolio numeric overflow is a rejected projection with an explicit comparison reason
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5821753Z PASS Portfolio suppresses unsupported LOC interest claims and inactive draw controls
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5840558Z PASS Portfolio focus labels use current allocation targets rather than eventual payoff order
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5844264Z PASS capped direct repayment preserves the scheduled loan policy and accounts for unused cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5851335Z PASS all mortgage plans reject a scheduled payment that exceeds the available household budget
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5893823Z PASS mortgage comparison includes the existing LOC and accepts zero residual with no new chunks
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5901839Z PASS mortgage extra allocations are capped after the mortgage and modeled LOC interest reserve
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5922262Z PASS mortgage policies conserve the same starting liabilities and budget as debt or cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5941038Z PASS mortgage Velocity retains its existing chunk policy and uses the supplied gross cash routing
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5953831Z PASS mortgage comparison retains adverse signed interest differences instead of hiding them
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5958475Z PASS all mortgage plans accept a clipped final payment below the scheduled amount
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.5962297Z PASS an already paid mortgage and LOC need no new borrowing setup or payoff date
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6035417Z PASS mortgage web adapter rejects unfunded direct plans and delegates actual household routing
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6157351Z PASS Vault labels adverse outcomes and suppresses differences without a usable reference
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6161249Z PASS Vault comparison displays household routing, both liabilities and retained cash without a universal win claim
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6166712Z PASS Vault freedom illustration retains valid slower outcomes without inventing freed-payment growth
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6169984Z PASS Vault freed-payment illustration uses actual months rather than separately rounded payoff years
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6178700Z PASS Vault illustration contributions cannot exceed the actual funded monthly budget
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6181917Z PASS Vault timeline scales exclude failed payoff horizons
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6183062Z PASS Vault rejects fractional investment horizons before presenting growth
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6194159Z PASS Vault rejects overflowing investment illustrations instead of displaying zero
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6195415Z PASS Vault adverse sub-dollar differences remain visible in cents
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6196520Z PASS Vault formats large illustrations within a readable monetary label
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6197837Z PASS Vault acknowledges fully paid balances instead of requesting unusable projection inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6199766Z PASS restoration releases unused debt payments into LOC recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6206596Z PASS LOC-backed Velocity accepts an affordable clipped final payment and preserves cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6216989Z PASS zero cash after the scheduled payment can recover the LOC after that payment is released
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6219858Z PASS Money Loop cannot bypass zero recovery with a stale chunk-age sentinel
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6225263Z PASS Money Loop caps chunk recovery to routed surplus instead of trusting a larger hint
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6228490Z PASS Money Loop labels a routed shortfall without pretending retained cash is a new LOC paydown
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6233231Z PASS Money Loop uses valid calendar totals rather than optimistic summaries for chunk recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6234962Z PASS Money Loop payoff rejects routing that omits the scheduled loan outflow
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6244627Z PASS exactly affordable final payments tolerate floating-point reconstruction only
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6248262Z PASS shared payoff preflight uses routed household budget and refuses an unaffordable payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6281259Z PASS web and mobile coaching do not propose a chunk when scheduled payments consume recovery cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6285204Z PASS restoration reserves the minimum before allowing extra payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6286287Z PASS restoration refuses an unaffordable minimum without a LOC
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6287655Z PASS restoration accepts an affordable final payoff below the scheduled minimum
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6289022Z PASS restoration calendar retains excess deposits as cash instead of borrowing them again
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6317436Z PASS restoration LOC ledger conserves principal, posted interest and retained cash
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6319884Z PASS amortization payment matches a known 30-year fixed-rate fixture
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6322485Z PASS shared date and month formatters reject invalid payoff horizons
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6326577Z PASS precise currency formatter rejects non-finite amounts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6336255Z PASS biweekly payoff helper uses the shared amortized payoff engine
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6346929Z PASS single-debt strategy comparison standard path honors the actual monthly payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6353818Z PASS biweekly savings compare against the actual monthly payment baseline
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6358346Z PASS LOC ADB interest uses daily closing balances across web and shared engines
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6361609Z PASS Money Loop LOC event balances stay continuous after income and expense routing
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6367916Z PASS lender terms contract versions confidence and blocks projections with missing terms
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6372684Z PASS LOC transaction calendar accrues from dated closing balances and labels fallback estimates
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6376676Z PASS daily interest burn uses the shared financial-engine helper
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6379739Z PASS velocity targeting sanitizes non-finite debt inputs before scoring and ranking
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6388016Z PASS web calculations use shared financial-engine primitives
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6390231Z PASS web Money Loop module re-exports shared financial-engine ledger
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6396796Z PASS web single-debt amortized payoff paths use the shared helper
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6407014Z PASS amortization yearly breakdown uses the shared payoff schedule
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6424360Z PASS web multi-debt baseline comparisons use the shared amortized payoff helper
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6440058Z PASS multi-debt payoff distinguishes horizon misses from under-interest payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6441239Z PASS zero APR baseline payoff pays principal without charging interest
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6442476Z PASS baseline treats payment equal to monthly interest as an invalid payoff plan
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6444053Z PASS shared amortized payoff distinguishes horizon misses from under-interest payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6447947Z PASS shared financial-engine primitives sanitize non-finite inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6484811Z PASS shared mobile snapshots sanitize non-finite planning inputs before display contracts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6499193Z PASS legacy mobile planning labels remain compatible while the native book declares its actual model
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6502534Z PASS mobile mode navigation exposes native tab semantics and stable touch targets
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6504432Z PASS shared amortized payoff sanitizes non-finite inputs before building a schedule
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6505934Z PASS shared Money Loop payoff rejects payments below monthly interest before producing a timeline
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6507609Z PASS shared Money Loop payoff treats a missing LOC limit as setup needed instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6509187Z PASS shared Money Loop payoff treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6527455Z PASS shared Money Loop payoff distinguishes horizon misses from under-interest payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6536513Z PASS shared Money Loop sanitizes debt inputs without inventing cash from non-finite routing
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6540139Z PASS shared Money Loop caps LOC chunk draw to remaining principal
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6543957Z PASS shared Money Loop caps same-month debt payment after a LOC chunk reduces principal
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6552194Z PASS shared Money Loop caps LOC chunk draw to available credit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6560020Z PASS shared Money Loop payoff includes LOC recovery after the target debt is cleared
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6585744Z PASS multi-debt velocity includes LOC interest in its total interest
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6606872Z PASS multi-debt velocity exposes the shared Money Loop event ledger
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6657299Z PASS multi-debt velocity treats the focus payment as a cash outflow for LOC recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6662613Z PASS multi-debt velocity includes LOC recovery after the final debt payoff
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6667441Z PASS multi-debt velocity refuses over-limit LOC plans instead of returning payoff claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6669473Z PASS multi-debt velocity treats a missing LOC limit as setup needed instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6671471Z PASS multi-debt velocity treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6673373Z PASS shared warnings treat a LOC balance without a limit as setup needed instead of infinity utilization
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6675148Z PASS shared warnings treat a full LOC as no available room instead of high utilization
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6678820Z PASS shared warnings sanitize non-finite cash-flow LOC and debt inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6683123Z PASS multi-debt simulation sanitizes non-finite inputs before payoff math
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6687511Z PASS multi-debt velocity refuses under-interest debt plans instead of dropping unpaid interest
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6690844Z PASS multi-debt velocity refuses projections when cash flow cannot cover minimum payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6692582Z PASS negative cash flow does not deploy a negative velocity chunk
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6694175Z PASS velocity refuses over-limit LOC plans instead of chunking against unavailable credit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6695746Z PASS velocity treats a missing LOC limit as setup needed instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6697260Z PASS velocity treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6706495Z PASS single-debt legacy simulation sanitizes non-finite inputs before payoff math
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6823051Z PASS single-debt velocity treats the regular debt payment as a cash outflow for LOC recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6863024Z PASS single-debt velocity auto-sizes chunks from recoverable LOC cash flow
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6864806Z PASS single-debt velocity refuses projections when cash flow cannot cover the regular debt payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6866359Z PASS baseline marks payments below monthly interest as impossible payoff plans
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6877145Z PASS portfolio simulation does not mutate promo terms on input debts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6883866Z PASS portfolio promo APR lasts for the full remaining-month window before post-intro APR starts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6890711Z PASS portfolio simulation does not project payoff when a minimum payment is below monthly interest
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6898553Z PASS portfolio simulation distinguishes horizon misses from under-interest payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6905769Z PASS portfolio simulation does not project payoff when cash flow cannot cover minimums
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6911886Z PASS portfolio split focus allocates the full available extra payment across both targets
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6919752Z PASS portfolio percent minimum payments recalculate from the current simulated balance
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6928269Z PASS portfolio page blocks debt-free date claims for invalid projections
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6934475Z PASS portfolio page guards percent labels before display
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6940670Z PASS portfolio strategy picker distinguishes planning default from fastest payoff
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6947974Z PASS portfolio velocity strategy badge uses a wrapping compact header instead of competing with description copy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6967681Z PASS portfolio run comparison explains projection deltas after an edit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6968922Z PASS portfolio run comparison formats invalid projection reasons for users
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.6969816Z PASS portfolio run comparison formats restored projection reasons for users
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7034622Z PASS portfolio page mounts the what-changed-since-last-run panel
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7064734Z PASS portfolio payoff path visual model samples the simulated balance descent
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7087920Z PASS portfolio page mounts the engine-backed payoff path visual
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7108945Z PASS portfolio debt controls are labeled with the debt name
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7114820Z PASS theme controls expose selected state to assistive technology
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7115710Z PASS navigation exposes active page and mobile landmark state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7116691Z PASS navigation renders semantic Lucide icons with stable tap targets
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7117683Z PASS domain controls render semantic Lucide icons instead of stored glyph strings
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7118611Z PASS root layout exposes a keyboard skip link to main content
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7119473Z PASS intro modal exposes dialog semantics and traps keyboard focus
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7120302Z PASS intro copy keeps a coach tone and labels assumptions
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7121296Z PASS intro animation separates mobile beat content from captions
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7122430Z PASS settings exposes controls to restore the pre-app snapshot preview
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7122934Z PASS settings makes demo backend status explicit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7123446Z PASS settings backend readiness model keeps provider choice explicit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7124518Z PASS settings backend decision gates block premature production persistence
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7125171Z PASS settings backend migration contract requires ownership and provider shapes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7125840Z PASS repository documents a Supabase first-lane schema with explicit owner-scoped RLS
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7126522Z PASS repository proves an isolated Supabase backup restore and retention contract
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7127217Z PASS repository implements a secondary Cloudflare report lane without a D1 financial mirror
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7142791Z PASS backup controls label local-only export and import replacement behavior
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7144048Z PASS backup controls expose a pasted JSON import path
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7146566Z PASS settings exposes a local demo data reset path
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7147866Z PASS settings exposes a full local demo backend handoff snapshot path
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7148739Z PASS settings local demo data reset clears only InterestShield storage keys
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7153851Z PASS settings full local demo snapshot exports only known InterestShield storage keys
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7168087Z PASS Settings snapshots map canonical Portfolio bytes through the existing logical key and preserve legacy sources
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7178526Z PASS Settings book-only Portfolio snapshots preserve the destination scenario byte-for-byte
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7187269Z PASS Settings Portfolio snapshots with other entries retain full-snapshot scenario replacement semantics
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7195196Z PASS Settings snapshot rejects corrupt or duplicate present books before mutating any destination
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7201879Z PASS Settings snapshot rolls back both physical Portfolio and other demo keys after a write interruption
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7203340Z PASS settings full local demo snapshot import rejects unknown storage keys without mutating storage
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7205106Z PASS settings full local demo snapshot import rejects an invalid backend migration contract
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7206427Z PASS settings full local demo snapshot import replaces only known InterestShield storage keys
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7328721Z PASS shared persistence contract builds deterministic owner-scoped snapshot upserts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7329929Z PASS editable financial controls expose contextual screen-reader labels
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7331011Z PASS editable financial controls sanitize non-finite display values
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7333159Z PASS simulator editable controls expose contextual screen-reader labels
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7335330Z PASS simulator LOC balance is editable where LOC math and warnings are shown
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7337210Z PASS simulator mortgage option controls expose selected state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7344358Z PASS portfolio editable controls expose contextual screen-reader labels
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7346528Z PASS portfolio route keeps page orchestration small and feature ownership local
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7349888Z PASS vault and cockpit editable controls expose contextual screen-reader labels
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7351964Z PASS vault mortgage option controls expose selected state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7352930Z PASS cockpit emergency scenario uses recovery-oriented coach copy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7355034Z PASS cockpit routing controls are stateful educational toggles
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7356059Z PASS simulator quick adjust sliders sanitize non-finite values before display
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7364776Z PASS portfolio simulation explains each debt priority with money-loop rationale
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7369262Z PASS portfolio debt rationales display whole-percent APR inputs as percentages, not multipliers
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7379036Z PASS portfolio payoff math treats whole-percent APR inputs like decimal APR inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7383874Z PASS portfolio debt rationales do not leak non-finite display values
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7391582Z PASS portfolio simulation sanitizes non-finite inputs before payoff math
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7399225Z PASS portfolio velocity labels its ranking assumptions instead of implying LOC math
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7407252Z PASS portfolio velocity uses shared Money Loop LOC math when LOC inputs are present
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7412432Z PASS portfolio velocity does not label LOC math when cash flow cannot cover minimums
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7417066Z PASS portfolio velocity refuses over-limit LOC projections instead of ignoring the line
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7421069Z PASS portfolio velocity treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7425555Z PASS portfolio velocity treats an existing LOC balance without a limit as setup needed
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7442067Z PASS portfolio velocity warns when LOC utilization is high but still available
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7471632Z PASS portfolio velocity treats target debt payments as cash outflows for LOC recovery
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7472873Z PASS portfolio velocity includes LOC recovery after the final debt payoff
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.7474299Z PASS portfolio store passes LOC and chunk inputs into portfolio simulation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.8060292Z PASS portfolio store records a comparison against the previous run
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.8678490Z PASS portfolio backup export and import preserve Money Loop planning inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:07.9182438Z PASS web Portfolio accepts canonical 200-percent APR backups without legacy reinterpretation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.0381005Z PASS web Portfolio converts legacy rates once and rejects unsupported document units without mutation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.0386500Z PASS portfolio backup import rejects non-finite money inputs without corrupting state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.0406016Z PASS portfolio persisted state sanitizes corrupt browser storage before hydration
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.0414295Z PASS financial persisted state sanitizes corrupt browser storage before hydration
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6405134Z PASS portfolio live setters sanitize non-finite money inputs before recompute
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6434047Z PASS financial live setters sanitize non-finite dashboard inputs before payoff helpers read them
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6469663Z PASS dashboard payoff helpers use the canonical single-debt engine
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6475315Z PASS Simulator comparison keeps the existing LOC and full available budget in its baseline
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6477121Z PASS shared direct repayment accounts for payments, interest and retained cash each month
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6478973Z PASS direct repayment priorities include the LOC and transfer unused payments in the same month
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6480201Z PASS direct repayment rejects unaffordable obligations but clips the final target payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6494175Z PASS Simulator deltas retain slower and more-interest outcomes instead of clamping them to zero
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6531519Z PASS single-debt strategy comparison keeps velocity aligned with runSimulation
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6549632Z PASS single-debt velocity exposes a transparent monthly event ledger
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6567135Z PASS shared money-loop payoff engine emits the canonical LOC event ledger
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6571970Z PASS simulator strategy cards preserve invalid payoff states instead of claiming zero-month wins
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6574033Z PASS simulator strategy comparison explains how Portfolio Velocity differs from fastest payoff
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6576242Z PASS simulator strategy cards explain over-limit LOC failures plainly
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6577826Z PASS simulator strategy cards explain missing LOC limit failures plainly
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6579993Z PASS simulator strategy cards explain full LOC failures without calling them over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6581625Z PASS simulator warnings treat a missing LOC limit as setup needed instead of high utilization
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6583292Z PASS simulator warnings treat an exact-full LOC as no available room
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6593096Z PASS web warning models distinguish LOC over limit from high utilization
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6594389Z PASS simulator timeline status does not claim LOC interest visibility without events
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6596516Z PASS simulator balance chart bars clamp invalid and over-starting balances
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6599322Z PASS simulator visual percentages clamp payment split widths
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6672624Z PASS strategy glass copy labels comparison deltas as modeled outcomes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6675839Z PASS strategy glass model suppresses winners and savings when the baseline is invalid
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6682079Z PASS mortgage analysis warns when current balance exceeds original loan amount
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6683395Z PASS mortgage analysis clamps an overlarge down payment instead of showing a negative loan
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.6956948Z PASS mortgage purchase-mode analysis uses shared schedule without advancing unelapsed months
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7254941Z PASS mortgage purchase-mode strategies ignore hidden stale current balance inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7260808Z PASS mortgage analysis sanitizes non-finite history and payment split inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7262894Z PASS mortgage strategies sanitize non-finite horizon cash-flow and LOC inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7464873Z PASS mortgage standard strategy uses the actual current monthly payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7677926Z PASS mortgage strategy plans use the shared funded comparison and preserve scheduled amortization
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7682147Z PASS mortgage strategies do not replace a zero current payment with a derived payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7684118Z PASS vault freedom path does not replace an explicit zero current payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7698706Z PASS mortgage analysis and strategies preserve an explicit zero current rate
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7700839Z PASS vault strategy cards block invalid non-velocity mortgage projections
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7705474Z PASS vault strategy labels do not frame zero improvement as savings
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7707778Z PASS modeled payoff comparison labels do not promise savings
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7710167Z PASS vault comparison bars clamp invalid and slower payoff widths
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7714432Z PASS vault visual percentages clamp invalid and over-range values
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7716088Z PASS mortgage extra-payment strategy does not invent extra cash when cash flow is not positive
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7717500Z PASS mortgage biweekly strategy does not invent an extra annual payment when cash flow is not positive
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7718718Z PASS mortgage velocity strategy refuses over-limit LOC savings claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7730697Z PASS mortgage velocity strategy treats a missing LOC limit as setup needed instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7732408Z PASS vault page surfaces invalid velocity setup before mortgage projections are trusted
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7734093Z PASS mortgage velocity strategy treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7735699Z PASS mortgage velocity strategy refuses projections when cash flow cannot cover the mortgage payment
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7737255Z PASS vault freedom path blocks impact claims when velocity is invalid
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7738344Z PASS vault freedom path rejects non-finite inputs before projecting impact claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7769165Z PASS cockpit gauge dashes stay within SVG bounds
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7774967Z PASS vault default copy keeps a coach tone instead of fear language
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7779288Z PASS vault generation screen labels multiplier-based family scenarios as assumptions
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7784184Z PASS learn page labels sample savings instead of presenting them as universal outcomes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7787264Z PASS learn page avoids universal LOC rate-spread rules
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7798284Z PASS learn and dashboard LOC copy avoids hype and fear phrasing
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7800433Z PASS simulator comparison copy labels traditional as a baseline instead of an absolute rule
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7803001Z PASS learn progress sanitizes corrupt browser storage before hydration
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7805578Z PASS learn page mistake cascade example keeps LOC availability arithmetic consistent
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7808893Z PASS learn page ADB teaching example matches the shared daily closing-balance convention
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7811462Z PASS learn page uses neutral examples instead of unsupported named anecdotes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7815154Z PASS learn page common mistakes uses coach tone instead of fear directives
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7821391Z PASS Guardian teacher responses render as clean plain text
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7827092Z PASS Guardian answer bank avoids unqualified savings promises
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7829269Z PASS Guardian answer bank avoids unsupported population stats and named anecdotes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7833357Z PASS Guardian answer bank keeps mistake and recovery copy coach-toned
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7835939Z PASS Guardian answer bank avoids hard-coded LOC rate and qualification thresholds
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7836871Z PASS Guardian prioritizes HELOC intent over generic LOC matching
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7839192Z PASS Guardian answer bank avoids directive card and investment advice without modeling
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7841081Z PASS Guardian LOC and simulator guidance keeps buffer and timeline assumptions explicit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7853199Z PASS Guardian velocity guidance does not treat LOC use as automatically safe
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7855710Z PASS Guardian Simulator and frequency guidance matches the actual comparison contract
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7858175Z PASS legacy saved timing fields survive removal of inactive controls
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7859992Z PASS Vault labels the annual-extra approximation separately from dated biweekly payments
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7861775Z PASS Vault discloses its two-liability allocation scope before showing strategy deltas
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7865673Z PASS Guardian getting-started prompt routes to planning-first guidance
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7866700Z PASS Guardian routes mixed velocity credit-card prompts to card guidance
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7868654Z PASS Guardian debt-priority guidance uses modeled inputs instead of fixed-rate directives
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7870516Z PASS Guardian student-loan guidance preserves borrower protections before payoff modeling
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7873139Z PASS Guardian prerequisite and income guidance avoids universal start/apply claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7875624Z PASS Guardian answer bank avoids fixed mortgage and refinance shortcuts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7881978Z PASS Guardian cash-flow examples state income minus expenses correctly
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7892766Z PASS dashboard model keeps the first screen to four vitals and blocks unstable payoff claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7903865Z PASS dashboard daily-interest display preserves unrounded scope: House rounding
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7913122Z PASS dashboard daily-interest display preserves unrounded scope: Auto rounding
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7920794Z PASS dashboard daily-interest display preserves unrounded scope: cleared balances
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7929968Z PASS dashboard daily-interest display preserves unrounded scope: positive sub-cent
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7939362Z PASS dashboard daily-interest display preserves unrounded scope: one-cent boundary
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7951408Z PASS dashboard daily-interest display preserves unrounded scope: independent cent rounding
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7961711Z PASS dashboard daily-interest display preserves unrounded scope: large imported balances
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7970544Z PASS dashboard daily-interest display preserves unrounded scope: unrounded warning threshold
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7980324Z PASS dashboard daily-interest display rejects overflow: multiplication
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7987299Z PASS dashboard daily-interest display rejects overflow: sum of finite components
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7989113Z PASS CI retains the rendered dashboard daily-interest gate and its failure artifacts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.7996594Z PASS dashboard model treats a missing LOC limit as setup needed instead of maxed out
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8002550Z PASS dashboard model labels an existing LOC balance without a limit as missing limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8132995Z PASS dashboard model treats a full LOC as no available room instead of over-limit
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8146528Z PASS dashboard model sanitizes non-finite first-screen and artifact inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8161141Z PASS dashboard model provides a five-part Money Loop artifact rail without adding vitals
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8174814Z PASS Money Loop visual contract binds the five financial artifacts to stable 3D grammar
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8176096Z PASS Money Loop visual contract clamps every render channel and keeps warnings restrained
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8177301Z PASS Money Loop visual capability policy fails closed before the Three.js stage loads
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8294812Z PASS Money Loop render controls choose static mode for motion, data, WebGL, and contract stops
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8296303Z PASS Money Loop render controls reserve full rendering for known capable wide viewports
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8297503Z PASS Money Loop render controls constrain canvas cost by render mode
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8298686Z PASS Money Loop render controls unmount active rendering while offscreen or hidden
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8300705Z PASS Money Loop render controller pauses and reveals canvas work across observer and visibility transitions
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8305258Z PASS Money Loop render lifecycle binds and cleans listeners while forwarding observer callbacks
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8306681Z PASS Money Loop requires WebGL2 before canvas work can mount
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8310966Z PASS Money Loop releases WebGL2 probe contexts and context failures downgrade the active controller
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8313361Z PASS Money Loop renderer factory downgrades once before rethrowing a startup failure
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8315046Z PASS Money Loop static fallback policy disables decorative motion without hiding DOM controls
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8319799Z PASS Money Loop visual contract rejects incomplete duplicate and malformed runtime records
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8321186Z PASS Money Loop artifact rail consumes the versioned visual contract without replacing DOM controls
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8324942Z PASS Money Loop lazy Three stage remains a client-only visual enhancement behind DOM controls
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8326454Z PASS Money Loop Three stage keeps CSS orbit overlays transparent to canvas selection
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8358540Z PASS Money Loop Three selection runtime contracts preserve exact selection and bounded motion
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8368705Z PASS dashboard model explains why edited inputs change the plan without adding vitals
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8369606Z PASS dashboard home page mounts the Money Loop artifact rail
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8370464Z PASS dashboard home page exposes a compact mobile four-vital summary
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8371609Z PASS dashboard home page exposes a compact mobile Money Loop bridge
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8372814Z PASS dashboard mobile vital cards keep coach copy available without first-screen crowding
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8373563Z PASS dashboard home page mounts why-this-changed explanations
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8374897Z PASS Money Loop artifact child hooks do not collide with the rail smoke hook
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8377820Z PASS Money Loop artifact rail fits desktop while preserving narrow-screen carousel overflow
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8379331Z PASS Money Loop artifact rail exposes an item-selection carousel
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8381170Z PASS Money Loop artifact carousel renders selected artifact depth layers
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8382405Z PASS Money Loop artifact carousel supports keyboard roving focus
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8384938Z PASS Money Loop artifact rail renders a model-backed payoff orbit visual
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8386264Z PASS dashboard Money Loop rail is width-contained for mobile layouts
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8387819Z PASS CountUp starts from the supplied value instead of a zero placeholder
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8389077Z PASS CountUp hides animated financial ticks from assistive technology
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8390285Z PASS CountUp sanitizes non-finite animated values before formatting
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8391463Z PASS ProgressRing clamps progress and sanitizes SVG geometry inputs
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8392755Z PASS Learn animated progress counter hides visual ticks from assistive technology
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8394346Z PASS Learn decorative celebration canvases are hidden from assistive technology
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8395575Z PASS pre-app preview blocks unstable debt-free date claims
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8397499Z PASS pre-app preview snapshot ignores non-finite debt values at the model boundary
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8401833Z PASS pre-app preview rejects corrupted debt-free date inputs after payoff validity passes
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8403101Z PASS app startup defaults keep the dashboard ungated
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8404488Z PASS theme persisted state falls back from invalid browser storage
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8405615Z PASS preferences persisted state sanitizes local UI settings
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8406666Z PASS app persisted state sanitizes shell routing and demo user state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8408906Z PASS web app exposes a repeatable route smoke command
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8420110Z PASS web app exposes a built Three stage visual verification gate
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8421868Z PASS web app exposes a repeatable accessibility route contract
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8425761Z PASS web app exposes a repeatable production Vercel smoke command
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8426773Z PASS web app declares Vercel Next deployment configuration
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8427732Z PASS repository exposes a manual release deployment smoke workflow
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8429179Z PASS repository documents the verified Vercel release and custom-domain handoff
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.8430382Z PASS client mount hook notifies subscribers after hydration
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.9489877Z PASS first-run demo defaults open Dashboard, Vault, and Portfolio without warning states
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.9490628Z 348 regression tests passed.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:08.9517699Z Portfolio browser harness preserves failure status before cleanup; successful cleanup remains zero.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4224808Z Independent financial reference lane passed 2 anonymized scenarios, 78 closed-form comparison cases, 25 zero-recovery conservation cases, 100 capped-mortgage and 480 Portfolio closed-form policy cases; 360 repeatable seeded Portfolio paths including 240 direct-oracle matches.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4627865Z PASS src/app/layout.tsx: skip link targets main content
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4629981Z PASS src/app/layout.tsx: main content exposes a skip-link target
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4631070Z PASS src/app/layout.tsx: main content can receive programmatic focus
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4631873Z PASS src/app/layout.tsx: mobile shell exposes the required educational footer copy
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4632802Z PASS src/components/Navigation.tsx: primary navigation has a landmark label
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4634253Z PASS src/components/Navigation.tsx: primary navigation keeps the production freshness marker
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4635577Z PASS src/components/Navigation.tsx: active route is announced
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4636996Z PASS src/components/Navigation.tsx: Guardian chat opens as a dialog
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4638093Z PASS src/components/Navigation.tsx: Guardian dialog is labelled
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4639174Z PASS src/components/Navigation.tsx: Guardian chat input is named
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4640244Z PASS src/components/Navigation.tsx: Guardian close button is named
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4641345Z PASS src/components/DomainTabs.tsx: domain controls expose a grouped navigation control
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4642091Z PASS src/components/DomainTabs.tsx: domain controls expose tab semantics
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4642694Z PASS src/components/DomainTabs.tsx: domain controls expose selected state
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4643283Z PASS src/components/DomainTabs.tsx: domain dropdown state is announced
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4656308Z PASS scripts/smoke-routes.cjs: Dashboard is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4657324Z PASS src/app/page.tsx: Dashboard exposes keyboard-smoke marker "InterestShield"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4658347Z PASS src/app/page.tsx: Dashboard exposes keyboard-smoke marker "Dashboard vitals"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4659327Z PASS scripts/smoke-routes.cjs: Simulator is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4660390Z PASS src/app/simulator/page.tsx: Simulator exposes keyboard-smoke marker "What-If Simulator"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4661326Z PASS src/app/simulator/page.tsx: Simulator exposes keyboard-smoke marker "Money Loop Timeline"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4662274Z PASS scripts/smoke-routes.cjs: Cockpit is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4663180Z PASS src/app/cockpit/page.tsx: Cockpit exposes keyboard-smoke marker "Cockpit Mode"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4664232Z PASS src/app/cockpit/page.tsx: Cockpit exposes keyboard-smoke marker "Flight Controls"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4692186Z PASS scripts/smoke-routes.cjs: Portfolio is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4693166Z PASS src/app/portfolio/page.tsx: Portfolio exposes keyboard-smoke marker "Portfolio"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4694258Z PASS src/app/portfolio/page.tsx: Portfolio exposes keyboard-smoke marker "Your Debts"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4708149Z PASS scripts/smoke-routes.cjs: Learn is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4709084Z PASS src/app/learn/page.tsx: Learn exposes keyboard-smoke marker "Learn Center"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4709710Z PASS src/app/learn/page.tsx: Learn exposes keyboard-smoke marker "Glossary"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4717781Z PASS scripts/smoke-routes.cjs: Settings is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4718759Z PASS src/app/settings/page.tsx: Settings exposes keyboard-smoke marker "Settings"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4719662Z PASS src/app/settings/page.tsx: Settings exposes keyboard-smoke marker "Backend status"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4720790Z PASS scripts/smoke-routes.cjs: Vault is covered by built-route smoke
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4721923Z PASS src/app/vault/page.tsx: Vault exposes keyboard-smoke marker "Wealth Transfer Timeline"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4723228Z PASS src/app/vault/page.tsx: Vault exposes keyboard-smoke marker "Go to ${stepTitles[i].title}"
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4730698Z PASS src/app/portfolio/page.tsx: add-debt modal is a dialog
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4731681Z PASS src/app/portfolio/page.tsx: add-debt modal is labelled
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4732789Z PASS src/app/portfolio/page.tsx: debt table selects are named through shared helpers
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4734171Z PASS src/app/portfolio/page.tsx: split allocation editor is named
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4735189Z PASS src/app/vault/page.tsx: Vault stepper announces the current step
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4744775Z PASS src/app/vault/page.tsx: Vault stepper buttons are named
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.4845701Z Accessibility route contract passed.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:11.7559970Z Metadata contract passed canonical, install, crawl, sitemap, and social surfaces.
+Web and mobile quality gates	Run web regression tests	2026-10-21T10:53:12.2891928Z Public asset budget passed 25 files, 9.45 MiB total, 1.92 MiB largest.
+Web and mobile quality gates	Run web lint	﻿2026-10-21T10:53:12.3172263Z ##[group]Run npm run lint
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.3172575Z ^[[36;1mnpm run lint^[[0m
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.3224823Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.3225099Z ##[endgroup]
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.4224324Z 
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.4224865Z > web@0.1.0 lint
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.4225317Z > eslint
+Web and mobile quality gates	Run web lint	2026-10-21T10:53:12.4225471Z 
+Web and mobile quality gates	Build web app	﻿2026-10-21T10:53:22.0400779Z ##[group]Run npm run build
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.0401087Z ^[[36;1mnpm run build^[[0m
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.0450975Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.0451244Z ##[endgroup]
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.1453384Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.1454126Z > web@0.1.0 build
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.1454558Z > next build
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.1454720Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5268530Z ▲ Next.js 16.4.2 (Turbopack)
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5560735Z ✓ Running next.config.ts took 28ms
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5563242Z ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5662792Z Attention: Next.js now collects completely anonymous telemetry regarding usage.
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5664310Z This information is used to shape Next.js' roadmap and prioritize features.
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5665939Z You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5667156Z https://nextjs.org/telemetry
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.5667640Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.6111826Z - Experiments (use with caution):
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.6114789Z   ✓ externalDir
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.6115402Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:22.6600420Z   Creating an optimized production build ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:29.5291904Z ✓ Compiled successfully in 6.9s
+Web and mobile quality gates	Build web app	2026-10-21T10:53:29.5325056Z   Running TypeScript ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:37.1261446Z   Finished TypeScript in 7.6s ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:37.1300458Z   Collecting page data using 3 workers ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:37.8388302Z   Generating static pages using 3 workers (0/14) ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.3627248Z   Generating static pages using 3 workers (3/14) 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.3954678Z   Generating static pages using 3 workers (6/14) 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5161615Z   Generating static pages using 3 workers (10/14) 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5464884Z ✓ Generating static pages using 3 workers (14/14) in 708ms
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5513793Z   Finalizing page optimization ...
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5660356Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5687263Z Route (app)
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5687841Z ┌ ○ /
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5688224Z ├ ○ /_not-found
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5688540Z ├ ○ /cockpit
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5688896Z ├ ○ /learn
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5689228Z ├ ○ /manifest.webmanifest
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5689659Z ├ ○ /opengraph-image
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5690009Z ├ ○ /portfolio
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5690296Z ├ ○ /robots.txt
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5690623Z ├ ○ /settings
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5691045Z ├ ○ /simulator
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5691442Z ├ ○ /sitemap.xml
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5691936Z └ ○ /vault
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5692156Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5692343Z 
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5692994Z ○  (Static)  prerendered as static content
+Web and mobile quality gates	Build web app	2026-10-21T10:53:38.5693423Z 
+Web and mobile quality gates	Verify built Money Loop Three stage	﻿2026-10-21T10:53:38.7520269Z ##[group]Run npm run test:3d:built
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.7520811Z ^[[36;1mnpm run test:3d:built^[[0m
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.7579627Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.7579911Z ##[endgroup]
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.8577647Z 
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.8578348Z > web@0.1.0 test:3d:built
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.8579252Z > node scripts/test-three-stage.cjs
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:38.8579851Z 
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:42.6064959Z PASS desktop canvas effective DPR 1.500
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:42.7812219Z PASS desktop isolated canvas proof rejects a hidden WebGL canvas
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:44.9986056Z PASS desktop DOM token selection motion follows full, restrained, and blocked states
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:45.8094044Z TIMING desktop loc: {"selectionStartedAt":1792580025133,"selectionDeadline":1792580025833,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.021200000000135333,"status":"passed","endedAtMs":45.71882000000005,"durationMs":45.697619999999915},{"name":"selection.wait","startedAtMs":45.72497100000055,"status":"passed","endedAtMs":50.2306150000004,"durationMs":4.505643999999847},{"name":"stage.visible.wait","startedAtMs":46.20223200000055,"status":"passed","endedAtMs":50.41850599999998,"durationMs":4.21627399999943},{"name":"settled.wait","startedAtMs":46.41711300000043,"status":"passed","endedAtMs":541.350848,"durationMs":494.9337349999996},{"name":"stage.scroll","startedAtMs":50.421581999999944,"status":"passed","endedAtMs":126.22520700000041,"durationMs":75.80362500000047},{"name":"stage.render.wait","startedAtMs":126.22996600000079,"status":"passed","endedAtMs":128.64938500000062,"durationMs":2.4194189999998343},{"name":"stage.mode.read","startedAtMs":128.65522500000043,"status":"passed","endedAtMs":130.70563400000083,"durationMs":2.0504090000004},{"name":"candidate.clip","startedAtMs":541.6693530000002,"status":"passed","endedAtMs":562.4310770000002,"durationMs":20.76172399999996},{"name":"candidate.isolation","startedAtMs":562.4381400000002,"status":"passed","endedAtMs":566.1377090000005,"durationMs":3.699569000000338},{"name":"candidate.capture","timeoutMs":134,"deadline":1792580025833,"startedAtMs":566.1635970000007,"status":"passed","endedAtMs":612.5612870000004,"durationMs":46.397689999999784},{"name":"candidate.restore","startedAtMs":612.5807629999999,"status":"passed","endedAtMs":613.829686,"durationMs":1.2489230000001044},{"name":"candidate.decode","startedAtMs":613.9513230000002,"status":"passed","endedAtMs":619.6955500000004,"durationMs":5.744227000000137},{"name":"confirmation.isolation","startedAtMs":620.0842660000008,"status":"passed","endedAtMs":625.4461280000005,"durationMs":5.361861999999746},{"name":"confirmation.capture","timeoutMs":295,"deadline":1792580026053,"startedAtMs":625.4676290000007,"status":"passed","endedAtMs":670.1564320000007,"durationMs":44.68880300000001},{"name":"confirmation.restore","startedAtMs":670.1694860000007,"status":"passed","endedAtMs":671.0779650000004,"durationMs":0.9084789999997156},{"name":"confirmation.decode","startedAtMs":671.0818330000002,"status":"passed","endedAtMs":674.1635480000004,"durationMs":3.0817150000002584}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:45.8103240Z PASS desktop loc credit-aperture 25 PNG canvas colors; settled in 620ms; stable through 674ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:46.5565824Z TIMING desktop expenses: {"selectionStartedAt":1792580025899,"selectionDeadline":1792580026599,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.00701400000070862,"status":"passed","endedAtMs":49.74920600000041,"durationMs":49.742191999999704},{"name":"selection.wait","startedAtMs":49.755177,"status":"passed","endedAtMs":53.85253400000056,"durationMs":4.097357000000557},{"name":"stage.visible.wait","startedAtMs":50.028237000000445,"status":"passed","endedAtMs":54.13790700000027,"durationMs":4.109669999999824},{"name":"settled.wait","startedAtMs":50.166605000000345,"status":"passed","endedAtMs":535.4296250000007,"durationMs":485.2630200000003},{"name":"stage.scroll","startedAtMs":54.1421049999999,"status":"passed","endedAtMs":115.96496800000023,"durationMs":61.822863000000325},{"name":"stage.render.wait","startedAtMs":115.97091900000032,"status":"passed","endedAtMs":117.93763200000012,"durationMs":1.9667129999997996},{"name":"stage.mode.read","startedAtMs":117.94282100000055,"status":"passed","endedAtMs":120.03973700000006,"durationMs":2.09691599999951},{"name":"candidate.clip","startedAtMs":535.4408360000007,"status":"passed","endedAtMs":555.1751450000002,"durationMs":19.734308999999485},{"name":"candidate.isolation","startedAtMs":555.1818280000007,"status":"passed","endedAtMs":557.6324670000004,"durationMs":2.4506389999996827},{"name":"candidate.capture","timeoutMs":142,"deadline":1792580026599,"startedAtMs":557.6517120000008,"status":"passed","endedAtMs":601.6567590000004,"durationMs":44.00504699999965},{"name":"candidate.restore","startedAtMs":601.6739510000007,"status":"passed","endedAtMs":602.517159,"durationMs":0.843207999999322},{"name":"candidate.decode","startedAtMs":602.5216770000006,"status":"passed","endedAtMs":606.1608329999999,"durationMs":3.639155999999275},{"name":"confirmation.isolation","startedAtMs":606.1927530000003,"status":"passed","endedAtMs":609.2159230000007,"durationMs":3.023170000000391},{"name":"confirmation.capture","timeoutMs":296,"deadline":1792580026805,"startedAtMs":609.2294590000001,"status":"passed","endedAtMs":650.6100020000003,"durationMs":41.380543000000216},{"name":"confirmation.restore","startedAtMs":650.6267830000006,"status":"passed","endedAtMs":651.4421360000006,"durationMs":0.8153529999999591},{"name":"confirmation.decode","startedAtMs":651.4466950000005,"status":"passed","endedAtMs":654.6532020000004,"durationMs":3.206506999999874}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:46.5581715Z PASS desktop expenses outflow-gate 26 PNG canvas colors; settled in 606ms; stable through 655ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:47.3072750Z TIMING desktop cash-flow: {"selectionStartedAt":1792580026649,"selectionDeadline":1792580027349,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0034359999999651336,"status":"passed","endedAtMs":52.82912800000031,"durationMs":52.825692000000345},{"name":"selection.wait","startedAtMs":52.83617099999992,"status":"passed","endedAtMs":56.7560110000004,"durationMs":3.9198400000004767},{"name":"stage.visible.wait","startedAtMs":53.102388000000246,"status":"passed","endedAtMs":56.856228000000556,"durationMs":3.7538400000003094},{"name":"settled.wait","startedAtMs":53.25327000000016,"status":"passed","endedAtMs":542.6340650000002,"durationMs":489.38079500000003},{"name":"stage.scroll","startedAtMs":56.858212000000094,"status":"passed","endedAtMs":114.859152,"durationMs":58.0009399999999},{"name":"stage.render.wait","startedAtMs":114.86586500000067,"status":"passed","endedAtMs":117.07341700000052,"durationMs":2.2075519999998505},{"name":"stage.mode.read","startedAtMs":117.08625100000063,"status":"passed","endedAtMs":119.0411210000002,"durationMs":1.9548699999995733},{"name":"candidate.clip","startedAtMs":542.6486420000001,"status":"passed","endedAtMs":564.1488420000005,"durationMs":21.500200000000405},{"name":"candidate.isolation","startedAtMs":564.1564159999998,"status":"passed","endedAtMs":567.8278220000011,"durationMs":3.671406000001298},{"name":"candidate.capture","timeoutMs":132,"deadline":1792580027349,"startedAtMs":567.8462760000002,"status":"passed","endedAtMs":602.7276199999997,"durationMs":34.881343999999444},{"name":"candidate.restore","startedAtMs":602.7944550000011,"status":"passed","endedAtMs":603.6164829999998,"durationMs":0.8220279999986815},{"name":"candidate.decode","startedAtMs":603.6228549999996,"status":"passed","endedAtMs":606.8857179999995,"durationMs":3.262862999999925},{"name":"confirmation.isolation","startedAtMs":606.9054049999995,"status":"passed","endedAtMs":609.8487260000002,"durationMs":2.943321000000651},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580027556,"startedAtMs":609.8625420000008,"status":"passed","endedAtMs":652.1673069999997,"durationMs":42.30476499999895},{"name":"confirmation.restore","startedAtMs":652.2171400000007,"status":"passed","endedAtMs":653.1354190000002,"durationMs":0.9182789999995293},{"name":"confirmation.decode","startedAtMs":653.1417810000003,"status":"passed","endedAtMs":656.4057360000006,"durationMs":3.263955000000351}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:47.3082868Z PASS desktop cash-flow flow-core 24 PNG canvas colors; settled in 607ms; stable through 656ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:48.0405944Z TIMING desktop principal: {"selectionStartedAt":1792580027401,"selectionDeadline":1792580028101,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.00511000000005879,"status":"passed","endedAtMs":48.91921700000057,"durationMs":48.91410700000051},{"name":"selection.wait","startedAtMs":48.9272519999995,"status":"passed","endedAtMs":52.53384200000073,"durationMs":3.6065900000012334},{"name":"stage.visible.wait","startedAtMs":49.200151000000915,"status":"passed","endedAtMs":52.73450600000069,"durationMs":3.5343549999997776},{"name":"settled.wait","startedAtMs":49.30928500000118,"status":"passed","endedAtMs":522.7171880000005,"durationMs":473.40790299999935},{"name":"stage.scroll","startedAtMs":52.737371999999596,"status":"passed","endedAtMs":114.47050200000012,"durationMs":61.73313000000053},{"name":"stage.render.wait","startedAtMs":114.47679299999982,"status":"passed","endedAtMs":116.59598100000039,"durationMs":2.1191880000005767},{"name":"stage.mode.read","startedAtMs":116.59864600000037,"status":"passed","endedAtMs":119.05575400000089,"durationMs":2.4571080000005168},{"name":"candidate.clip","startedAtMs":522.7299110000004,"status":"passed","endedAtMs":545.162604000001,"durationMs":22.432693000000654},{"name":"candidate.isolation","startedAtMs":545.1713710000004,"status":"passed","endedAtMs":548.1977500000012,"durationMs":3.0263790000008157},{"name":"candidate.capture","timeoutMs":152,"deadline":1792580028101,"startedAtMs":548.2091209999999,"status":"passed","endedAtMs":583.9163050000006,"durationMs":35.70718400000078},{"name":"candidate.restore","startedAtMs":583.9240100000006,"status":"passed","endedAtMs":584.8436419999998,"durationMs":0.9196319999991829},{"name":"candidate.decode","startedAtMs":584.8517370000009,"status":"passed","endedAtMs":587.836080000001,"durationMs":2.984343000000081},{"name":"confirmation.isolation","startedAtMs":587.8582619999997,"status":"passed","endedAtMs":590.7636620000012,"durationMs":2.905400000001464},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580028289,"startedAtMs":590.7707360000004,"status":"passed","endedAtMs":633.54414,"durationMs":42.77340399999957},{"name":"confirmation.restore","startedAtMs":633.5526960000007,"status":"passed","endedAtMs":634.4007899999997,"durationMs":0.8480939999990369},{"name":"confirmation.decode","startedAtMs":634.4077130000005,"status":"passed","endedAtMs":637.386305,"durationMs":2.9785919999994803}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:48.0418729Z PASS desktop principal principal-shield 29 PNG canvas colors; settled in 588ms; stable through 637ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:48.8059845Z TIMING desktop income: {"selectionStartedAt":1792580028136,"selectionDeadline":1792580028836,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0038479999984701863,"status":"passed","endedAtMs":48.50962399999844,"durationMs":48.50577599999997},{"name":"selection.wait","startedAtMs":48.51595499999894,"status":"passed","endedAtMs":52.489087999998446,"durationMs":3.973132999999507},{"name":"stage.visible.wait","startedAtMs":48.76980000000003,"status":"passed","endedAtMs":52.50731199999973,"durationMs":3.737511999999697},{"name":"settled.wait","startedAtMs":48.898379999998724,"status":"passed","endedAtMs":544.8418579999998,"durationMs":495.94347800000105},{"name":"stage.scroll","startedAtMs":52.510628,"status":"passed","endedAtMs":122.99043199999869,"durationMs":70.4798039999987},{"name":"stage.render.wait","startedAtMs":122.99728399999913,"status":"passed","endedAtMs":150.8581610000001,"durationMs":27.860877000000983},{"name":"stage.mode.read","startedAtMs":150.86570599999868,"status":"passed","endedAtMs":153.0785479999995,"durationMs":2.212842000000819},{"name":"candidate.clip","startedAtMs":544.8563450000001,"status":"passed","endedAtMs":568.0340569999989,"durationMs":23.17771199999879},{"name":"candidate.isolation","startedAtMs":568.0452079999995,"status":"passed","endedAtMs":572.0651440000001,"durationMs":4.019936000000598},{"name":"candidate.capture","timeoutMs":128,"deadline":1792580028836,"startedAtMs":572.0761349999993,"status":"passed","endedAtMs":615.4484130000001,"durationMs":43.37227800000073},{"name":"candidate.restore","startedAtMs":615.4599549999984,"status":"passed","endedAtMs":616.5063129999999,"durationMs":1.046358000001419},{"name":"candidate.decode","startedAtMs":616.5147289999986,"status":"passed","endedAtMs":619.4705089999989,"durationMs":2.9557800000002317},{"name":"confirmation.isolation","startedAtMs":619.567579999999,"status":"passed","endedAtMs":622.6988499999989,"durationMs":3.1312699999998586},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580029055,"startedAtMs":622.7074749999992,"status":"passed","endedAtMs":664.6481709999989,"durationMs":41.94069599999966},{"name":"confirmation.restore","startedAtMs":664.6565369999989,"status":"passed","endedAtMs":665.4854449999984,"durationMs":0.828907999999501},{"name":"confirmation.decode","startedAtMs":665.4925279999989,"status":"passed","endedAtMs":668.4743159999998,"durationMs":2.981788000000961}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:48.8072580Z PASS desktop income deposit-reservoir 32 PNG canvas colors; settled in 619ms; stable through 668ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:49.5339546Z TIMING desktop loc: {"selectionStartedAt":1792580028901,"selectionDeadline":1792580029601,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.005679999998392304,"status":"passed","endedAtMs":7.303812999998627,"durationMs":7.2981330000002345},{"name":"selection.wait","startedAtMs":7.309002999998484,"status":"passed","endedAtMs":57.65774400000009,"durationMs":50.34874100000161},{"name":"stage.visible.wait","startedAtMs":7.565671999998813,"status":"passed","endedAtMs":57.93359899999996,"durationMs":50.367927000001146},{"name":"settled.wait","startedAtMs":7.745777999998609,"status":"passed","endedAtMs":492.0321100000001,"durationMs":484.2863320000015},{"name":"stage.scroll","startedAtMs":57.93960999999945,"status":"passed","endedAtMs":119.459836,"durationMs":61.52022600000055},{"name":"stage.render.wait","startedAtMs":119.46514500000012,"status":"passed","endedAtMs":122.23097699999926,"durationMs":2.7658319999991363},{"name":"stage.mode.read","startedAtMs":122.23522499999854,"status":"passed","endedAtMs":123.97283999999854,"durationMs":1.7376150000000052},{"name":"candidate.clip","startedAtMs":492.0447239999994,"status":"passed","endedAtMs":514.3549159999984,"durationMs":22.310191999999006},{"name":"candidate.isolation","startedAtMs":514.3623599999992,"status":"passed","endedAtMs":517.112122999999,"durationMs":2.7497629999998026},{"name":"candidate.capture","timeoutMs":183,"deadline":1792580029601,"startedAtMs":517.1205890000001,"status":"passed","endedAtMs":551.791514999999,"durationMs":34.67092599999887},{"name":"candidate.restore","startedAtMs":551.8005819999998,"status":"passed","endedAtMs":552.6863139999987,"durationMs":0.8857319999988249},{"name":"candidate.decode","startedAtMs":552.694739999999,"status":"passed","endedAtMs":557.3504739999989,"durationMs":4.6557339999999385},{"name":"confirmation.isolation","startedAtMs":557.3796079999993,"status":"passed","endedAtMs":561.6827589999994,"durationMs":4.303151000000071},{"name":"confirmation.capture","timeoutMs":296,"deadline":1792580029759,"startedAtMs":561.6897919999992,"status":"passed","endedAtMs":617.0409689999997,"durationMs":55.35117700000046},{"name":"confirmation.restore","startedAtMs":617.0512579999995,"status":"passed","endedAtMs":624.8837039999999,"durationMs":7.8324460000003455},{"name":"confirmation.decode","startedAtMs":624.8962779999983,"status":"passed","endedAtMs":629.4027529999985,"durationMs":4.506475000000137}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:49.5422281Z PASS desktop money-loop-artifact-next Enter selects loc and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:50.2928139Z TIMING desktop expenses: {"selectionStartedAt":1792580029673,"selectionDeadline":1792580030373,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.003666999999040854,"status":"passed","endedAtMs":6.994280999999319,"durationMs":6.990614000000278},{"name":"selection.wait","startedAtMs":7.0010330000004615,"status":"passed","endedAtMs":16.41362499999923,"durationMs":9.412591999998767},{"name":"stage.visible.wait","startedAtMs":7.314237999999023,"status":"passed","endedAtMs":16.59964299999956,"durationMs":9.285405000000537},{"name":"settled.wait","startedAtMs":7.552031999999599,"status":"passed","endedAtMs":505.32336100000066,"durationMs":497.77132900000106},{"name":"stage.scroll","startedAtMs":16.60345000000052,"status":"passed","endedAtMs":160.26990099999966,"durationMs":143.66645099999914},{"name":"stage.render.wait","startedAtMs":160.2759129999995,"status":"passed","endedAtMs":187.30292299999928,"durationMs":27.02700999999979},{"name":"stage.mode.read","startedAtMs":187.30898399999933,"status":"passed","endedAtMs":215.959245,"durationMs":28.650261000000683},{"name":"candidate.clip","startedAtMs":505.3393309999992,"status":"passed","endedAtMs":529.6436470000008,"durationMs":24.304316000001563},{"name":"candidate.isolation","startedAtMs":529.6520020000007,"status":"passed","endedAtMs":532.7340069999991,"durationMs":3.0820049999983894},{"name":"candidate.capture","timeoutMs":167,"deadline":1792580030373,"startedAtMs":532.7439759999997,"status":"passed","endedAtMs":572.3046209999993,"durationMs":39.56064499999957},{"name":"candidate.restore","startedAtMs":572.3125959999998,"status":"passed","endedAtMs":573.2175659999994,"durationMs":0.9049699999995937},{"name":"candidate.decode","startedAtMs":573.2244890000002,"status":"passed","endedAtMs":576.2089319999995,"durationMs":2.9844429999993736},{"name":"confirmation.isolation","startedAtMs":576.2435370000003,"status":"passed","endedAtMs":578.8626139999997,"durationMs":2.619076999999379},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580030549,"startedAtMs":578.8690169999991,"status":"passed","endedAtMs":610.6442759999991,"durationMs":31.775259000000005},{"name":"confirmation.restore","startedAtMs":610.6520409999994,"status":"passed","endedAtMs":612.238127999999,"durationMs":1.5860869999996794},{"name":"confirmation.decode","startedAtMs":612.246373,"status":"passed","endedAtMs":616.6161329999995,"durationMs":4.369759999999587}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:50.2948755Z PASS desktop money-loop-artifact-next Space selects expenses and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:51.0259706Z TIMING desktop loc: {"selectionStartedAt":1792580030408,"selectionDeadline":1792580031108,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0035760000009759096,"status":"passed","endedAtMs":13.682065000000875,"durationMs":13.6784889999999},{"name":"selection.wait","startedAtMs":13.692023000001427,"status":"passed","endedAtMs":56.93017599999985,"durationMs":43.23815299999842},{"name":"stage.visible.wait","startedAtMs":14.127086000000418,"status":"passed","endedAtMs":81.67298099999971,"durationMs":67.54589499999929},{"name":"settled.wait","startedAtMs":14.299877999999808,"status":"passed","endedAtMs":495.94423500000084,"durationMs":481.64435700000104},{"name":"stage.scroll","startedAtMs":81.67876100000103,"status":"passed","endedAtMs":180.97235600000022,"durationMs":99.29359499999919},{"name":"stage.render.wait","startedAtMs":180.98022000000128,"status":"passed","endedAtMs":212.5776249999999,"durationMs":31.597404999998616},{"name":"stage.mode.read","startedAtMs":212.5834960000011,"status":"passed","endedAtMs":217.25833600000078,"durationMs":4.674839999999676},{"name":"candidate.clip","startedAtMs":495.95971400000053,"status":"passed","endedAtMs":523.3015809999997,"durationMs":27.341866999999183},{"name":"candidate.isolation","startedAtMs":523.3086249999997,"status":"passed","endedAtMs":525.9689120000003,"durationMs":2.660287000000608},{"name":"candidate.capture","timeoutMs":174,"deadline":1792580031108,"startedAtMs":525.9762260000007,"status":"passed","endedAtMs":577.3423170000005,"durationMs":51.36609099999987},{"name":"candidate.restore","startedAtMs":577.3515640000005,"status":"passed","endedAtMs":578.3239700000013,"durationMs":0.9724060000007739},{"name":"candidate.decode","startedAtMs":578.3313429999998,"status":"passed","endedAtMs":583.6913629999999,"durationMs":5.360020000000077},{"name":"confirmation.isolation","startedAtMs":583.7203770000015,"status":"passed","endedAtMs":587.7893380000005,"durationMs":4.068960999999035},{"name":"confirmation.capture","timeoutMs":296,"deadline":1792580031292,"startedAtMs":587.7973430000002,"status":"passed","endedAtMs":610.8785470000003,"durationMs":23.08120400000007},{"name":"confirmation.restore","startedAtMs":610.8873430000003,"status":"passed","endedAtMs":611.7376409999997,"durationMs":0.850297999999384},{"name":"confirmation.decode","startedAtMs":611.7437520000003,"status":"passed","endedAtMs":614.7172550000014,"durationMs":2.973503000001074}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:51.0277498Z PASS desktop money-loop-artifact-previous Enter selects loc and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:51.7764756Z TIMING desktop income: {"selectionStartedAt":1792580031156,"selectionDeadline":1792580031856,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0033260000000154832,"status":"passed","endedAtMs":5.361752999999226,"durationMs":5.35842699999921},{"name":"selection.wait","startedAtMs":5.36547999999857,"status":"passed","endedAtMs":11.990731999998388,"durationMs":6.6252519999998185},{"name":"stage.visible.wait","startedAtMs":5.60595899999862,"status":"passed","endedAtMs":12.00155199999972,"durationMs":6.395593000001099},{"name":"settled.wait","startedAtMs":5.721704999999929,"status":"passed","endedAtMs":491.7324469999985,"durationMs":486.0107419999986},{"name":"stage.scroll","startedAtMs":12.003935999999158,"status":"passed","endedAtMs":110.48551999999836,"durationMs":98.4815839999992},{"name":"stage.render.wait","startedAtMs":110.4906489999994,"status":"passed","endedAtMs":114.69842699999936,"durationMs":4.207777999999962},{"name":"stage.mode.read","startedAtMs":114.70137199999954,"status":"passed","endedAtMs":116.97432200000003,"durationMs":2.272950000000492},{"name":"candidate.clip","startedAtMs":491.7482259999997,"status":"passed","endedAtMs":525.8333569999995,"durationMs":34.08513099999982},{"name":"candidate.isolation","startedAtMs":525.8454889999994,"status":"passed","endedAtMs":528.9550259999996,"durationMs":3.109537000000273},{"name":"candidate.capture","timeoutMs":171,"deadline":1792580031856,"startedAtMs":528.9663979999987,"status":"passed","endedAtMs":579.5523709999998,"durationMs":50.585973000001104},{"name":"candidate.restore","startedAtMs":579.5633819999985,"status":"passed","endedAtMs":580.4785209999991,"durationMs":0.9151390000006359},{"name":"candidate.decode","startedAtMs":580.4856339999988,"status":"passed","endedAtMs":585.7509059999993,"durationMs":5.26527200000055},{"name":"confirmation.isolation","startedAtMs":585.7795099999985,"status":"passed","endedAtMs":591.1379359999992,"durationMs":5.358426000000691},{"name":"confirmation.capture","timeoutMs":295,"deadline":1792580032042,"startedAtMs":591.1456999999991,"status":"passed","endedAtMs":613.8518619999995,"durationMs":22.706162000000404},{"name":"confirmation.restore","startedAtMs":613.861089,"status":"passed","endedAtMs":614.7881719999987,"durationMs":0.9270829999986745},{"name":"confirmation.decode","startedAtMs":614.7954059999993,"status":"passed","endedAtMs":618.0103490000001,"durationMs":3.214943000000858}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:51.7824922Z PASS desktop money-loop-artifact-previous Space selects income and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:51.8380459Z PASS desktop DOM tabs retain authority and roving focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:52.3211234Z PASS desktop Money Loop regions do not overlap
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:52.4886230Z PASS desktop full WebGL2 WebKit WebGL; screenshot /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/test-results/three-stage/desktop.png
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:54.1319910Z PASS mobile canvas effective DPR 1.000
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:56.2306286Z PASS mobile DOM token selection motion follows full, restrained, and blocked states
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:56.9553373Z TIMING mobile loc: {"selectionStartedAt":1792580036328,"selectionDeadline":1792580037028,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.008275000000139698,"status":"passed","endedAtMs":45.402366999998776,"durationMs":45.394091999998636},{"name":"selection.wait","startedAtMs":45.4094499999992,"status":"passed","endedAtMs":49.65937599999961,"durationMs":4.249926000000414},{"name":"stage.visible.wait","startedAtMs":45.63113399999929,"status":"passed","endedAtMs":50.005513000000064,"durationMs":4.374379000000772},{"name":"settled.wait","startedAtMs":45.74768200000108,"status":"passed","endedAtMs":514.4642290000011,"durationMs":468.716547},{"name":"stage.scroll","startedAtMs":50.00804699999935,"status":"passed","endedAtMs":122.92429899999843,"durationMs":72.91625199999908},{"name":"stage.render.wait","startedAtMs":122.9298889999991,"status":"passed","endedAtMs":126.56305399999837,"durationMs":3.6331649999992806},{"name":"stage.mode.read","startedAtMs":126.5669710000002,"status":"passed","endedAtMs":128.4629309999982,"durationMs":1.8959599999980128},{"name":"candidate.clip","startedAtMs":514.4870520000004,"status":"passed","endedAtMs":522.5065869999999,"durationMs":8.01953499999945},{"name":"candidate.isolation","startedAtMs":522.5135599999994,"status":"passed","endedAtMs":526.2783510000008,"durationMs":3.7647910000014235},{"name":"candidate.capture","timeoutMs":174,"deadline":1792580037028,"startedAtMs":526.2889910000013,"status":"passed","endedAtMs":571.1064259999985,"durationMs":44.817434999997204},{"name":"candidate.restore","startedAtMs":571.1149120000009,"status":"passed","endedAtMs":572.0426740000003,"durationMs":0.9277619999993476},{"name":"candidate.decode","startedAtMs":572.0511699999988,"status":"passed","endedAtMs":574.364830999999,"durationMs":2.3136610000001383},{"name":"confirmation.isolation","startedAtMs":574.3851590000013,"status":"passed","endedAtMs":577.2682630000018,"durationMs":2.8831040000004577},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580037202,"startedAtMs":577.2750850000011,"status":"passed","endedAtMs":620.1209689999996,"durationMs":42.84588399999848},{"name":"confirmation.restore","startedAtMs":620.1312990000006,"status":"passed","endedAtMs":621.1206910000001,"durationMs":0.9893919999994978},{"name":"confirmation.decode","startedAtMs":621.1279140000006,"status":"passed","endedAtMs":625.2490399999988,"durationMs":4.121125999998185}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:56.9568212Z PASS mobile loc credit-aperture 24 PNG canvas colors; settled in 574ms; stable through 625ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:57.6392648Z TIMING mobile expenses: {"selectionStartedAt":1792580037051,"selectionDeadline":1792580037751,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.004187999998976011,"status":"passed","endedAtMs":43.08736499999941,"durationMs":43.08317700000043},{"name":"selection.wait","startedAtMs":43.095289999997476,"status":"passed","endedAtMs":57.67734500000006,"durationMs":14.582055000002583},{"name":"stage.visible.wait","startedAtMs":43.39046099999905,"status":"passed","endedAtMs":57.69850399999996,"durationMs":14.308043000000907},{"name":"settled.wait","startedAtMs":43.55532899999889,"status":"passed","endedAtMs":507.9515509999983,"durationMs":464.3962219999994},{"name":"stage.scroll","startedAtMs":57.70310299999983,"status":"passed","endedAtMs":131.9049269999996,"durationMs":74.20182399999976},{"name":"stage.render.wait","startedAtMs":131.91063699999722,"status":"passed","endedAtMs":134.6809289999983,"durationMs":2.7702920000010636},{"name":"stage.mode.read","startedAtMs":134.6843349999981,"status":"passed","endedAtMs":136.18117999999959,"durationMs":1.4968450000014855},{"name":"candidate.clip","startedAtMs":507.9628419999972,"status":"passed","endedAtMs":515.0405680000003,"durationMs":7.077726000003167},{"name":"candidate.isolation","startedAtMs":515.0472709999995,"status":"passed","endedAtMs":518.2704999999987,"durationMs":3.2232289999992645},{"name":"candidate.capture","timeoutMs":182,"deadline":1792580037751,"startedAtMs":518.2807489999977,"status":"passed","endedAtMs":547.5780249999989,"durationMs":29.297276000001148},{"name":"candidate.restore","startedAtMs":547.5861000000004,"status":"passed","endedAtMs":548.4787399999987,"durationMs":0.8926399999982095},{"name":"candidate.decode","startedAtMs":548.4829769999997,"status":"passed","endedAtMs":550.7805979999976,"durationMs":2.297620999997889},{"name":"confirmation.isolation","startedAtMs":550.7979309999973,"status":"passed","endedAtMs":553.6783589999977,"durationMs":2.880428000000393},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580037902,"startedAtMs":553.6849309999998,"status":"passed","endedAtMs":580.6457889999983,"durationMs":26.960857999998552},{"name":"confirmation.restore","startedAtMs":580.6560489999974,"status":"passed","endedAtMs":581.5987789999999,"durationMs":0.9427300000024843},{"name":"confirmation.decode","startedAtMs":581.6043489999975,"status":"passed","endedAtMs":585.7001679999994,"durationMs":4.0958190000019385}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:57.6409054Z PASS mobile expenses outflow-gate 22 PNG canvas colors; settled in 551ms; stable through 586ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:58.3552391Z TIMING mobile cash-flow: {"selectionStartedAt":1792580037752,"selectionDeadline":1792580038452,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0032749999991210643,"status":"passed","endedAtMs":50.10924899999736,"durationMs":50.10597399999824},{"name":"selection.wait","startedAtMs":50.116642999997566,"status":"passed","endedAtMs":56.10029099999883,"durationMs":5.983648000001267},{"name":"stage.visible.wait","startedAtMs":50.419497999999294,"status":"passed","endedAtMs":56.24465099999725,"durationMs":5.825152999997954},{"name":"settled.wait","startedAtMs":50.53202899999815,"status":"passed","endedAtMs":506.9434119999969,"durationMs":456.41138299999875},{"name":"stage.scroll","startedAtMs":56.24719599999662,"status":"passed","endedAtMs":97.26410099999703,"durationMs":41.016905000000406},{"name":"stage.render.wait","startedAtMs":97.26987199999712,"status":"passed","endedAtMs":99.57000699999844,"durationMs":2.300135000001319},{"name":"stage.mode.read","startedAtMs":99.59611599999698,"status":"passed","endedAtMs":101.24330199999895,"durationMs":1.647186000001966},{"name":"candidate.clip","startedAtMs":506.9557149999964,"status":"passed","endedAtMs":513.624538,"durationMs":6.668823000003613},{"name":"candidate.isolation","startedAtMs":513.6309599999986,"status":"passed","endedAtMs":516.8816099999967,"durationMs":3.2506499999981315},{"name":"candidate.capture","timeoutMs":183,"deadline":1792580038452,"startedAtMs":516.890797,"status":"passed","endedAtMs":546.5279039999987,"durationMs":29.63710699999865},{"name":"candidate.restore","startedAtMs":546.5358589999996,"status":"passed","endedAtMs":548.6387399999985,"durationMs":2.102880999998888},{"name":"candidate.decode","startedAtMs":548.6435689999998,"status":"passed","endedAtMs":552.7364419999976,"durationMs":4.09287299999778},{"name":"confirmation.isolation","startedAtMs":552.7604369999972,"status":"passed","endedAtMs":555.6849379999985,"durationMs":2.924501000001328},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580038605,"startedAtMs":555.6923019999995,"status":"passed","endedAtMs":596.7064299999984,"durationMs":41.01412799999889},{"name":"confirmation.restore","startedAtMs":596.7165289999975,"status":"passed","endedAtMs":597.6634619999968,"durationMs":0.9469329999992624},{"name":"confirmation.decode","startedAtMs":597.6668889999964,"status":"passed","endedAtMs":600.2509839999984,"durationMs":2.5840950000019802}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:58.3568227Z PASS mobile cash-flow flow-core 22 PNG canvas colors; settled in 553ms; stable through 601ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:59.0369899Z TIMING mobile principal: {"selectionStartedAt":1792580038451,"selectionDeadline":1792580039151,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.002445000001898734,"status":"passed","endedAtMs":36.676462999999785,"durationMs":36.674017999997886},{"name":"selection.wait","startedAtMs":36.68155200000183,"status":"passed","endedAtMs":40.695448000002216,"durationMs":4.013896000000386},{"name":"stage.visible.wait","startedAtMs":36.958269000002474,"status":"passed","endedAtMs":40.70891300000221,"durationMs":3.7506439999997383},{"name":"settled.wait","startedAtMs":37.07063900000139,"status":"passed","endedAtMs":508.57877400000143,"durationMs":471.50813500000004},{"name":"stage.scroll","startedAtMs":40.7116980000028,"status":"passed","endedAtMs":100.23020100000213,"durationMs":59.51850299999933},{"name":"stage.render.wait","startedAtMs":100.23946799999976,"status":"passed","endedAtMs":103.18896600000153,"durationMs":2.9494980000017677},{"name":"stage.mode.read","startedAtMs":103.19223200000124,"status":"passed","endedAtMs":104.98350500000015,"durationMs":1.7912729999989097},{"name":"candidate.clip","startedAtMs":508.58804200000304,"status":"passed","endedAtMs":515.0604880000028,"durationMs":6.472445999999763},{"name":"candidate.isolation","startedAtMs":515.0682730000008,"status":"passed","endedAtMs":517.7134700000024,"durationMs":2.6451970000016445},{"name":"candidate.capture","timeoutMs":182,"deadline":1792580039151,"startedAtMs":517.7233379999998,"status":"passed","endedAtMs":546.9826590000011,"durationMs":29.259321000001364},{"name":"candidate.restore","startedAtMs":546.9907740000017,"status":"passed","endedAtMs":547.831932000001,"durationMs":0.8411579999992682},{"name":"candidate.decode","startedAtMs":547.8350080000018,"status":"passed","endedAtMs":550.1140440000017,"durationMs":2.2790359999999055},{"name":"confirmation.isolation","startedAtMs":550.1285910000006,"status":"passed","endedAtMs":552.766727000002,"durationMs":2.6381360000013956},{"name":"confirmation.capture","timeoutMs":298,"deadline":1792580039302,"startedAtMs":552.7723370000022,"status":"passed","endedAtMs":580.0947830000005,"durationMs":27.32244599999831},{"name":"confirmation.restore","startedAtMs":580.103750000002,"status":"passed","endedAtMs":581.003127,"durationMs":0.8993769999979122},{"name":"confirmation.decode","startedAtMs":581.0067640000016,"status":"passed","endedAtMs":583.2884950000007,"durationMs":2.2817309999991267}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:59.0379632Z PASS mobile principal principal-shield 24 PNG canvas colors; settled in 551ms; stable through 584ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:59.7198152Z TIMING mobile income: {"selectionStartedAt":1792580039136,"selectionDeadline":1792580039836,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0025449999993725214,"status":"passed","endedAtMs":48.9435659999981,"durationMs":48.94102099999873},{"name":"selection.wait","startedAtMs":48.94975799999884,"status":"passed","endedAtMs":53.16355399999884,"durationMs":4.213796000000002},{"name":"stage.visible.wait","startedAtMs":49.245238999999856,"status":"passed","endedAtMs":53.92984499999875,"durationMs":4.684605999998894},{"name":"settled.wait","startedAtMs":49.40073999999731,"status":"passed","endedAtMs":505.189019999998,"durationMs":455.78828000000067},{"name":"stage.scroll","startedAtMs":53.93260000000009,"status":"passed","endedAtMs":86.36860999999772,"durationMs":32.43600999999762},{"name":"stage.render.wait","startedAtMs":86.37531200000012,"status":"passed","endedAtMs":97.20820099999764,"durationMs":10.832888999997522},{"name":"stage.mode.read","startedAtMs":97.21422299999904,"status":"passed","endedAtMs":99.39238800000021,"durationMs":2.1781650000011723},{"name":"candidate.clip","startedAtMs":505.1989689999973,"status":"passed","endedAtMs":512.8904719999991,"durationMs":7.6915030000018305},{"name":"candidate.isolation","startedAtMs":512.8958619999976,"status":"passed","endedAtMs":515.9644320000007,"durationMs":3.068570000003092},{"name":"candidate.capture","timeoutMs":184,"deadline":1792580039836,"startedAtMs":515.9756930000003,"status":"passed","endedAtMs":544.9865549999995,"durationMs":29.01086199999918},{"name":"candidate.restore","startedAtMs":544.993567999998,"status":"passed","endedAtMs":545.8430279999993,"durationMs":0.8494600000012724},{"name":"candidate.decode","startedAtMs":545.8470559999987,"status":"passed","endedAtMs":549.8930110000001,"durationMs":4.045955000001413},{"name":"confirmation.isolation","startedAtMs":549.9153729999998,"status":"passed","endedAtMs":552.7753819999998,"durationMs":2.860008999999991},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580039986,"startedAtMs":552.7818829999997,"status":"passed","endedAtMs":578.2281629999998,"durationMs":25.446280000000115},{"name":"confirmation.restore","startedAtMs":578.2345749999986,"status":"passed","endedAtMs":579.0489190000008,"durationMs":0.8143440000021656},{"name":"confirmation.decode","startedAtMs":579.0526460000001,"status":"passed","endedAtMs":581.3168540000006,"durationMs":2.264208000000508}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:53:59.7210497Z PASS mobile income deposit-reservoir 29 PNG canvas colors; settled in 550ms; stable through 582ms
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:00.3708834Z TIMING mobile loc: {"selectionStartedAt":1792580039820,"selectionDeadline":1792580040520,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0026450000004842877,"status":"passed","endedAtMs":6.706920000000537,"durationMs":6.704275000000052},{"name":"selection.wait","startedAtMs":6.7106260000000475,"status":"passed","endedAtMs":21.333529999999882,"durationMs":14.622903999999835},{"name":"stage.visible.wait","startedAtMs":6.943420999999944,"status":"passed","endedAtMs":21.681590000000142,"durationMs":14.738169000000198},{"name":"settled.wait","startedAtMs":7.056111999998393,"status":"passed","endedAtMs":472.2518170000003,"durationMs":465.1957050000019},{"name":"stage.scroll","startedAtMs":21.685256999997364,"status":"passed","endedAtMs":62.27245799999946,"durationMs":40.587201000002096},{"name":"stage.render.wait","startedAtMs":62.2802929999998,"status":"passed","endedAtMs":64.52233999999953,"durationMs":2.2420469999997295},{"name":"stage.mode.read","startedAtMs":64.52569600000061,"status":"passed","endedAtMs":66.19758000000002,"durationMs":1.6718839999994088},{"name":"candidate.clip","startedAtMs":472.2641599999988,"status":"passed","endedAtMs":481.1638989999992,"durationMs":8.899739000000409},{"name":"candidate.isolation","startedAtMs":481.16931900000054,"status":"passed","endedAtMs":484.1972229999992,"durationMs":3.0279039999986708},{"name":"candidate.capture","timeoutMs":216,"deadline":1792580040520,"startedAtMs":484.2086339999987,"status":"passed","endedAtMs":510.97079099999974,"durationMs":26.762157000001025},{"name":"candidate.restore","startedAtMs":510.97968799999944,"status":"passed","endedAtMs":511.8884599999983,"durationMs":0.9087719999988622},{"name":"candidate.decode","startedAtMs":511.8917760000004,"status":"passed","endedAtMs":514.1410359999973,"durationMs":2.249259999996866},{"name":"confirmation.isolation","startedAtMs":514.1558430000005,"status":"passed","endedAtMs":517.0382989999998,"durationMs":2.8824559999993653},{"name":"confirmation.capture","timeoutMs":297,"deadline":1792580040634,"startedAtMs":517.0453720000005,"status":"passed","endedAtMs":543.7629589999997,"durationMs":26.717586999999185},{"name":"confirmation.restore","startedAtMs":543.7698119999986,"status":"passed","endedAtMs":544.6187019999998,"durationMs":0.8488900000011199},{"name":"confirmation.decode","startedAtMs":544.62284,"status":"passed","endedAtMs":548.7202609999986,"durationMs":4.097420999998576}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:00.3721537Z PASS mobile money-loop-artifact-next Enter selects loc and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:01.0362396Z TIMING mobile expenses: {"selectionStartedAt":1792580040468,"selectionDeadline":1792580041168,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0024839999969117343,"status":"passed","endedAtMs":3.380656999997882,"durationMs":3.37817300000097},{"name":"selection.wait","startedAtMs":3.3841639999991457,"status":"passed","endedAtMs":20.905902999998943,"durationMs":17.521738999999798},{"name":"stage.visible.wait","startedAtMs":3.644669999997859,"status":"passed","endedAtMs":20.918996999997034,"durationMs":17.274326999999175},{"name":"settled.wait","startedAtMs":3.796943999997893,"status":"passed","endedAtMs":473.37742199999775,"durationMs":469.58047799999986},{"name":"stage.scroll","startedAtMs":20.92300499999692,"status":"passed","endedAtMs":63.00147599999764,"durationMs":42.07847100000072},{"name":"stage.render.wait","startedAtMs":63.006475999998656,"status":"passed","endedAtMs":66.74174800000037,"durationMs":3.7352720000017143},{"name":"stage.mode.read","startedAtMs":66.745766,"status":"passed","endedAtMs":69.60431400000016,"durationMs":2.8585480000001553},{"name":"candidate.clip","startedAtMs":473.3887429999995,"status":"passed","endedAtMs":481.0525439999983,"durationMs":7.663800999998784},{"name":"candidate.isolation","startedAtMs":481.0613009999979,"status":"passed","endedAtMs":484.61855300000025,"durationMs":3.557252000002336},{"name":"candidate.capture","timeoutMs":215,"deadline":1792580041168,"startedAtMs":484.6288629999981,"status":"passed","endedAtMs":512.9032310000002,"durationMs":28.27436800000214},{"name":"candidate.restore","startedAtMs":512.9123179999988,"status":"passed","endedAtMs":513.8111719999979,"durationMs":0.898853999999119},{"name":"candidate.decode","startedAtMs":513.8159109999979,"status":"passed","endedAtMs":517.9753779999992,"durationMs":4.159467000001314},{"name":"confirmation.isolation","startedAtMs":517.9994530000004,"status":"passed","endedAtMs":521.5293349999993,"durationMs":3.5298819999989064},{"name":"confirmation.capture","timeoutMs":296,"deadline":1792580041286,"startedAtMs":521.5366479999975,"status":"passed","endedAtMs":562.6826979999969,"durationMs":41.14604999999938},{"name":"confirmation.restore","startedAtMs":562.6907729999984,"status":"passed","endedAtMs":563.605693999998,"durationMs":0.9149209999995946},{"name":"confirmation.decode","startedAtMs":563.6100420000002,"status":"passed","endedAtMs":565.8676079999968,"durationMs":2.2575659999965865}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:01.0377554Z PASS mobile money-loop-artifact-next Space selects expenses and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:01.6858287Z TIMING mobile loc: {"selectionStartedAt":1792580041134,"selectionDeadline":1792580041834,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.002423999998427462,"status":"passed","endedAtMs":6.282884000000195,"durationMs":6.280460000001767},{"name":"selection.wait","startedAtMs":6.287002000000939,"status":"passed","endedAtMs":21.009892999998556,"durationMs":14.722890999997617},{"name":"stage.visible.wait","startedAtMs":6.578185999998823,"status":"passed","endedAtMs":21.027444999999716,"durationMs":14.449259000000893},{"name":"settled.wait","startedAtMs":6.789197000001877,"status":"passed","endedAtMs":474.095193000001,"durationMs":467.30599599999914},{"name":"stage.scroll","startedAtMs":21.031533000001218,"status":"passed","endedAtMs":62.93916399999944,"durationMs":41.90763099999822},{"name":"stage.render.wait","startedAtMs":62.945104999998875,"status":"passed","endedAtMs":65.82890000000043,"durationMs":2.8837950000015553},{"name":"stage.mode.read","startedAtMs":65.83372900000177,"status":"passed","endedAtMs":67.34461100000044,"durationMs":1.5108819999986736},{"name":"candidate.clip","startedAtMs":474.1069749999988,"status":"passed","endedAtMs":479.16250299999956,"durationMs":5.055528000000777},{"name":"candidate.isolation","startedAtMs":479.16870500000005,"status":"passed","endedAtMs":481.88198900000134,"durationMs":2.7132840000012948},{"name":"candidate.capture","timeoutMs":218,"deadline":1792580041834,"startedAtMs":481.8916270000009,"status":"passed","endedAtMs":513.4568279999985,"durationMs":31.565200999997614},{"name":"candidate.restore","startedAtMs":513.4647530000002,"status":"passed","endedAtMs":514.3633410000002,"durationMs":0.8985880000000179},{"name":"candidate.decode","startedAtMs":514.3675690000018,"status":"passed","endedAtMs":516.6866890000019,"durationMs":2.3191200000001118},{"name":"confirmation.isolation","startedAtMs":516.7027290000005,"status":"passed","endedAtMs":520.1546449999987,"durationMs":3.451915999998164},{"name":"confirmation.capture","timeoutMs":296,"deadline":1792580041951,"startedAtMs":520.1611479999992,"status":"passed","endedAtMs":546.1588440000014,"durationMs":25.99769600000218},{"name":"confirmation.restore","startedAtMs":546.165186000002,"status":"passed","endedAtMs":546.9572049999988,"durationMs":0.7920189999967988},{"name":"confirmation.decode","startedAtMs":546.9602610000002,"status":"passed","endedAtMs":549.2134890000016,"durationMs":2.2532280000013998}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:01.6872425Z PASS mobile money-loop-artifact-previous Enter selects loc and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:02.3366918Z TIMING mobile income: {"selectionStartedAt":1792580041784,"selectionDeadline":1792580042484,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.0021639999977196567,"status":"passed","endedAtMs":3.338921999999002,"durationMs":3.336758000001282},{"name":"selection.wait","startedAtMs":3.341266999999789,"status":"passed","endedAtMs":16.75281299999915,"durationMs":13.411545999999362},{"name":"stage.visible.wait","startedAtMs":3.538314999997965,"status":"passed","endedAtMs":16.922679999999673,"durationMs":13.384365000001708},{"name":"settled.wait","startedAtMs":3.6510249999992084,"status":"passed","endedAtMs":473.9633169999979,"durationMs":470.3122919999987},{"name":"stage.scroll","startedAtMs":16.929392999998527,"status":"passed","endedAtMs":63.34821100000045,"durationMs":46.41881800000192},{"name":"stage.render.wait","startedAtMs":63.352789999997185,"status":"passed","endedAtMs":65.33368599999812,"durationMs":1.9808960000009392},{"name":"stage.mode.read","startedAtMs":65.33741299999747,"status":"passed","endedAtMs":67.06816499999695,"durationMs":1.7307519999994838},{"name":"candidate.clip","startedAtMs":473.97242299999925,"status":"passed","endedAtMs":480.26037599999836,"durationMs":6.287952999999106},{"name":"candidate.isolation","startedAtMs":480.26462399999946,"status":"passed","endedAtMs":482.8936909999975,"durationMs":2.629066999998031},{"name":"candidate.capture","timeoutMs":217,"deadline":1792580042484,"startedAtMs":482.90587400000004,"status":"passed","endedAtMs":514.0016779999969,"durationMs":31.09580399999686},{"name":"candidate.restore","startedAtMs":514.0096830000002,"status":"passed","endedAtMs":514.8338119999971,"durationMs":0.8241289999969013},{"name":"candidate.decode","startedAtMs":514.8368379999993,"status":"passed","endedAtMs":517.1232569999993,"durationMs":2.2864190000000235},{"name":"confirmation.isolation","startedAtMs":517.1383959999985,"status":"passed","endedAtMs":519.9800419999992,"durationMs":2.8416460000007646},{"name":"confirmation.capture","timeoutMs":298,"deadline":1792580042602,"startedAtMs":519.9865739999987,"status":"passed","endedAtMs":546.807550999998,"durationMs":26.820976999999402},{"name":"confirmation.restore","startedAtMs":546.8145939999995,"status":"passed","endedAtMs":547.597221,"durationMs":0.7826270000005024},{"name":"confirmation.decode","startedAtMs":547.6001159999978,"status":"passed","endedAtMs":550.061823,"durationMs":2.4617070000022068}]}
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:02.3382509Z PASS mobile money-loop-artifact-previous Space selects income and retains focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:02.3685387Z PASS mobile DOM tabs retain authority and roving focus
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:02.8404382Z PASS mobile Money Loop regions do not overlap
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:02.9074862Z PASS mobile efficient WebGL2 WebKit WebGL; screenshot /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/test-results/three-stage/mobile.png
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:04.4450480Z PASS reduced-motion static fallback has no WebGL canvas and preserves DOM tabs
+Web and mobile quality gates	Verify built Money Loop Three stage	2026-10-21T10:54:04.4519082Z Three-stage screenshots: /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/test-results/three-stage
+Web and mobile quality gates	Upload Money Loop Three stage proof	﻿2026-10-21T10:54:04.5800771Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5801122Z with:
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5801339Z   name: money-loop-three-stage
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5801631Z   path: apps/web/test-results/three-stage
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5801922Z   if-no-files-found: error
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5802166Z   compression-level: 6
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5802411Z   overwrite: false
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5802626Z   include-hidden-files: false
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.5802873Z ##[endgroup]
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.7580403Z (node:2863) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.7581329Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.7643313Z With the provided path, there will be 3 files uploaded
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.7650474Z Artifact name is valid!
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.7651245Z Root directory input is valid!
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:04.9802227Z Beginning upload of artifact content to blob storage
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.0204843Z (node:2863) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.0701383Z Uploaded bytes 465464
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.0849871Z Finished uploading artifact content to blob storage!
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.0851629Z SHA256 digest of uploaded artifact zip is e5429e163c2295770e639553ad783e52b1ce35ea7116cb3c0795aebecd84c679
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.0852754Z Finalizing artifact upload
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.3008240Z Artifact money-loop-three-stage.zip successfully finalized. Artifact ID 12341022027
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.3010305Z Artifact money-loop-three-stage has been successfully uploaded! Final size is 465464 bytes. Artifact ID is 12341022027
+Web and mobile quality gates	Upload Money Loop Three stage proof	2026-10-21T10:54:05.3015508Z Artifact download URL: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39587777183/artifacts/12341022027
+Web and mobile quality gates	Smoke built web routes	﻿2026-10-21T10:54:05.3180135Z ##[group]Run npm run smoke:routes
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.3180484Z ^[[36;1mnpm run smoke:routes^[[0m
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.3231053Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.3231334Z ##[endgroup]
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.4221829Z 
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.4222412Z > web@0.1.0 smoke:routes
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.4222869Z > node scripts/smoke-routes.cjs
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:05.4223095Z 
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0297547Z PASS Dashboard /
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0351565Z PASS Simulator /simulator
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0401215Z PASS Cockpit /cockpit
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0453202Z PASS Portfolio /portfolio
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0500466Z PASS Learn /learn
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0548006Z PASS Settings /settings
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0592521Z PASS Vault /vault
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0594298Z > web@0.1.0 start
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0594799Z > next start -H 0.0.0.0 -p 5000
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0595112Z 
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0595743Z ▲ Next.js 16.4.2
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0596468Z - Local:         http://localhost:5000
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0597297Z - Network:       http://0.0.0.0:5000
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0598186Z ✓ Ready in 143ms
+Web and mobile quality gates	Smoke built web routes	2026-10-21T10:54:06.0599201Z ✓ Running next.config.ts took 41ms
+Web and mobile quality gates	Smoke rendered web routes	﻿2026-10-21T10:54:06.0858317Z ##[group]Run npm run smoke:rendered:built
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.0858702Z ^[[36;1mnpm run smoke:rendered:built^[[0m
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.0910351Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.0910641Z ##[endgroup]
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.1968617Z 
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.1969028Z > web@0.1.0 smoke:rendered:built
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.1969433Z > node scripts/smoke-rendered.cjs
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:06.1969633Z 
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:07.2040760Z Rendered smoke origin: http://127.0.0.1:46125
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:07.2042367Z Browser executable: /usr/bin/google-chrome
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:08.9536266Z PASS desktop / 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:09.8424489Z PASS desktop /simulator 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:10.6475283Z PASS desktop /cockpit 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:11.6316814Z PASS desktop /portfolio 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:12.4278015Z PASS desktop /learn 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:13.2787653Z PASS desktop /settings 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:14.4909284Z PASS desktop /vault 1440px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:15.3510392Z PASS desktop Money Loop Next selects LOC
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:16.6822002Z PASS mobile / 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:17.5704157Z PASS mobile /simulator 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:18.3576625Z PASS mobile /cockpit 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:19.4678881Z PASS mobile /portfolio 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:20.2558995Z PASS mobile /learn 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:21.1336655Z PASS mobile /settings 390px
+Web and mobile quality gates	Smoke rendered web routes	2026-10-21T10:54:21.9796200Z PASS mobile /vault 390px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	﻿2026-10-21T10:54:22.1118184Z ##[group]Run npm run smoke:comparison:built
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.1118582Z ^[[36;1mnpm run smoke:comparison:built^[[0m
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.1168472Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.1168762Z ##[endgroup]
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.2240915Z 
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.2241619Z > web@0.1.0 smoke:comparison:built
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.2242151Z > node scripts/smoke-comparison.cjs
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:22.2242449Z 
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:25.7058047Z PASS Simulator affordable-final-payment at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:27.9646973Z PASS Simulator zero-after-minimum at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:30.1311499Z PASS Simulator exact-final-payment at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:31.4352948Z PASS Simulator zero-interest-two-liabilities at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:32.7851897Z PASS Simulator velocity-slower-and-more-interest at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:34.1670800Z PASS Simulator unaffordable-minimum at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:36.5888562Z PASS legacy weekly timing preserved without inactive controls at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:39.0580550Z PASS legacy biweekly timing preserved without inactive controls at 1440px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:41.7651699Z PASS Simulator affordable-final-payment at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:44.4440943Z PASS Simulator zero-after-minimum at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:47.1019468Z PASS Simulator exact-final-payment at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:49.0033276Z PASS Simulator zero-interest-two-liabilities at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:50.9355033Z PASS Simulator velocity-slower-and-more-interest at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:52.8525645Z PASS Simulator unaffordable-minimum at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:55.1543161Z PASS legacy weekly timing preserved without inactive controls at 375px
+Web and mobile quality gates	Verify same-liability Simulator comparisons	2026-10-21T10:54:57.4391960Z PASS legacy biweekly timing preserved without inactive controls at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	﻿2026-10-21T10:54:57.5746163Z ##[group]Run npm run smoke:dashboard:built
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.5746559Z ^[[36;1mnpm run smoke:dashboard:built^[[0m
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.5797298Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.5797590Z ##[endgroup]
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.6826271Z 
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.6827128Z > web@0.1.0 smoke:dashboard:built
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.6828214Z > node scripts/smoke-dashboard-interest.cjs
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:54:57.6828804Z 
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:02.1996585Z PASS Dashboard interest house at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:03.6655600Z PASS Dashboard interest auto at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:05.0912135Z PASS Dashboard interest cleared at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:06.4942081Z PASS Dashboard interest sub-cent at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:07.9429618Z PASS Dashboard interest cent-mismatch at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:09.8317920Z PASS Dashboard interest large-import at 375px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:12.9331503Z PASS Dashboard interest house at 280px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:14.3751755Z PASS Dashboard interest auto at 280px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:15.7655070Z PASS Dashboard interest cleared at 280px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:17.1452704Z PASS Dashboard interest sub-cent at 280px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:18.5479237Z PASS Dashboard interest cent-mismatch at 280px
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2719119Z AssertionError [ERR_ASSERTION]: large-import amount overflow: {"fits":false,"width":107,"height":30,"scroll":113,"client":107}
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2720289Z     at /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-dashboard-interest.cjs:205:16 {
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2720973Z   generatedMessage: false,
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2721287Z   code: 'ERR_ASSERTION',
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2721537Z   actual: false,
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2721767Z   expected: true,
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2721988Z   operator: '==',
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2722207Z   diff: 'simple'
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.2722417Z }
+Web and mobile quality gates	Verify daily-interest display and saved dashboard inputs	2026-10-21T10:55:20.3025663Z ##[error]Process completed with exit code 1.
+Web and mobile quality gates	Upload dashboard interest proof	﻿2026-10-21T10:55:20.3102890Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3103209Z with:
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3103433Z   name: dashboard-interest-proof
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3104088Z   path: apps/web/test-results/dashboard-interest
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3104426Z   if-no-files-found: warn
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3104669Z   compression-level: 6
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3104894Z   overwrite: false
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3105118Z   include-hidden-files: false
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.3105384Z ##[endgroup]
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.4926462Z (node:4376) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.4928056Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.5069640Z With the provided path, there will be 28 files uploaded
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.5076436Z Artifact name is valid!
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.5077685Z Root directory input is valid!
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.7130468Z Beginning upload of artifact content to blob storage
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.8805678Z (node:4376) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:20.9929826Z Uploaded bytes 3646365
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.0074947Z Finished uploading artifact content to blob storage!
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.0076439Z SHA256 digest of uploaded artifact zip is c4f16930f6d8af027fd617d723973285e44c694cd731c7bd6ed84f204a0c234d
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.0078158Z Finalizing artifact upload
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.2170931Z Artifact dashboard-interest-proof.zip successfully finalized. Artifact ID 12340073063
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.2173340Z Artifact dashboard-interest-proof has been successfully uploaded! Final size is 3646365 bytes. Artifact ID is 12340073063
+Web and mobile quality gates	Upload dashboard interest proof	2026-10-21T10:55:21.2178704Z Artifact download URL: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39587777183/artifacts/12340073063
+Web and mobile quality gates	Upload Simulator comparison proof	﻿2026-10-21T10:55:21.2389781Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2390341Z with:
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2390734Z   name: simulator-comparison-proof
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2391276Z   path: apps/web/test-results/comparison
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2391802Z   if-no-files-found: warn
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2392247Z   compression-level: 6
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2392654Z   overwrite: false
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2393052Z   include-hidden-files: false
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.2393512Z ##[endgroup]
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.4245010Z (node:4390) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.4246093Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.4347085Z With the provided path, there will be 17 files uploaded
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.4353859Z Artifact name is valid!
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.4356247Z Root directory input is valid!
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.6505578Z Beginning upload of artifact content to blob storage
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.7457566Z (node:4390) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.7934665Z Uploaded bytes 1492387
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.8076482Z Finished uploading artifact content to blob storage!
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.8077929Z SHA256 digest of uploaded artifact zip is cb836960618fc5b8179e683d47c8719cefaf1e51601d45677ea79bc27b73fcf7
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:21.8079099Z Finalizing artifact upload
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:22.0553596Z Artifact simulator-comparison-proof.zip successfully finalized. Artifact ID 12341117007
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:22.0555814Z Artifact simulator-comparison-proof has been successfully uploaded! Final size is 1492387 bytes. Artifact ID is 12341117007
+Web and mobile quality gates	Upload Simulator comparison proof	2026-10-21T10:55:22.0562617Z Artifact download URL: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39587777183/artifacts/12341117007
+Web and mobile quality gates	Upload Vault comparison proof	﻿2026-10-21T10:55:22.0747535Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0747876Z with:
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0748110Z   name: vault-comparison-proof
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0748430Z   path: apps/web/test-results/vault-comparison
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0748770Z   if-no-files-found: warn
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0749030Z   compression-level: 6
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0749266Z   overwrite: false
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0749505Z   include-hidden-files: false
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.0749767Z ##[endgroup]
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.2644775Z (node:4402) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.2645755Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload Vault comparison proof	2026-10-21T10:55:22.2678760Z ##[warning]No files were found with the provided path: apps/web/test-results/vault-comparison. No artifacts will be uploaded.
+Web and mobile quality gates	Upload Portfolio budget proof	﻿2026-10-21T10:55:22.2879544Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2879877Z with:
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2880104Z   name: portfolio-budget-proof
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2880711Z   path: apps/web/test-results/portfolio-budget
+Web and mobile quality gates	Upload Portfolio budget proof	apps/web/test-results/portfolio-portability
+Web and mobile quality gates	Upload Portfolio budget proof	apps/web/test-results/portfolio-input
+Web and mobile quality gates	Upload Portfolio budget proof	
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2881339Z   if-no-files-found: warn
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2881591Z   compression-level: 6
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2881823Z   overwrite: false
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2882058Z   include-hidden-files: false
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.2882319Z ##[endgroup]
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.4741861Z (node:4414) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.4743464Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.4798835Z Multiple search paths detected. Calculating the least common ancestor of all paths
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.4803857Z The least common ancestor is /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/test-results. This will be the root directory of the artifact
+Web and mobile quality gates	Upload Portfolio budget proof	2026-10-21T10:55:22.4808292Z ##[warning]No files were found with the provided path: apps/web/test-results/portfolio-budget
+Web and mobile quality gates	Upload Portfolio budget proof	apps/web/test-results/portfolio-portability
+Web and mobile quality gates	Upload Portfolio budget proof	apps/web/test-results/portfolio-input. No artifacts will be uploaded.
+Web and mobile quality gates	Upload asset hero browser proof	﻿2026-10-21T10:55:22.4992125Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4992474Z with:
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4992710Z   name: asset-hero-browser-proof
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4993002Z   path: apps/web/test-results/heroes
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4993314Z   if-no-files-found: warn
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4993572Z   compression-level: 6
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4994143Z   overwrite: false
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4994392Z   include-hidden-files: false
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.4994650Z ##[endgroup]
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.6910638Z (node:4426) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.6912272Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload asset hero browser proof	2026-10-21T10:55:22.6939276Z ##[warning]No files were found with the provided path: apps/web/test-results/heroes. No artifacts will be uploaded.
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	﻿2026-10-21T10:55:22.7206591Z ##[group]Run actions/upload-artifact@v4
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7206931Z with:
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7207187Z   name: native-portfolio-accessibility-proof
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7207551Z   path: apps/mobile/test-results/accessibility
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7207885Z   if-no-files-found: warn
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7208143Z   compression-level: 6
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7208398Z   overwrite: false
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7208637Z   include-hidden-files: false
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.7208896Z ##[endgroup]
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.9098645Z (node:4438) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.9099618Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Web and mobile quality gates	Upload native Portfolio and accessibility proof	2026-10-21T10:55:22.9119944Z ##[warning]No files were found with the provided path: apps/mobile/test-results/accessibility. No artifacts will be uploaded.
+Web and mobile quality gates	Post Check out repository	﻿2026-10-21T10:55:22.9498471Z Post job cleanup.
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0433947Z [command]/usr/bin/git version
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0485794Z git version 2.55.0
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0531463Z Temporarily overriding HOME='/home/runner/work/_temp/67dd3845-9af0-4201-a32a-3ade8555bb10' before making global git config changes
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0533319Z Adding repository directory to the temporary git global config as a safe directory
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0538336Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0584349Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0626479Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0901257Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0941335Z http.https://github.com/.extraheader
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0950383Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.0999280Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.1287901Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Web and mobile quality gates	Post Check out repository	2026-10-21T10:55:23.1338368Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Web and mobile quality gates	Complete job	﻿2026-10-21T10:55:23.1821273Z Cleaning up orphan processes
+Web and mobile quality gates	Complete job	2026-10-21T10:55:23.2135742Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

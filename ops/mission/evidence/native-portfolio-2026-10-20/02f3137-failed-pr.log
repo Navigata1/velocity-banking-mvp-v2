@@ -1,0 +1,32 @@
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	﻿2026-10-21T04:05:56.6931355Z ##[group]Run npm run smoke:portfolio:built
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.6931779Z ^[[36;1mnpm run smoke:portfolio:built^[[0m
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.6982504Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.6982812Z ##[endgroup]
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.8000563Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.8001172Z > web@0.1.0 smoke:portfolio:built
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.8002377Z > node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:56.8003434Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:05:59.5075829Z PASS Portfolio unfunded-extra at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:01.4011246Z PASS Portfolio retained-cash at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:03.2613855Z PASS Portfolio existing-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:04.8170749Z PASS Portfolio ranked-loc-cap at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:06.3466131Z PASS Portfolio split-ranked-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:07.8457044Z PASS Portfolio funded-final at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:09.3422783Z PASS Portfolio one-cent-short at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:10.8223919Z PASS Portfolio loc-interest-shortfall at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:12.3190251Z PASS Portfolio already-paid at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:13.9337341Z PASS Portfolio large-value at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:15.5916366Z PASS Portfolio large-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:17.8842989Z PASS Portfolio focus-not-first-payoff at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:19.6662501Z PASS Portfolio unfunded-extra at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:21.5729184Z PASS Portfolio retained-cash at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:23.8601780Z PASS Portfolio existing-loc at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:25.6145851Z PASS Portfolio ranked-loc-cap at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:27.3653920Z PASS Portfolio split-ranked-loc at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:06:29.1148869Z PASS Portfolio funded-final at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3638958Z page.waitForFunction: Timeout 30000ms exceeded.
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3640785Z     at /home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-portfolio-budget.cjs:126:22 {
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3641996Z   log: [],
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3642270Z   name: 'TimeoutError'
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3642642Z }
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T04:07:00.3880535Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,27 @@
+{
+  "origin": "http://127.0.0.1:51295",
+  "receipts": [
+    {
+      "width": 375,
+      "noOpFields": 10,
+      "typedDecimal": "120.70",
+      "storedBalance": 120.7,
+      "income": 8300.45,
+      "apr": 0.07123456789,
+      "invalidDrafts": 10,
+      "savedInputsPreserved": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "noOpFields": 10,
+      "typedDecimal": "120.70",
+      "storedBalance": 120.7,
+      "income": 8300.45,
+      "apr": 0.07123456789,
+      "invalidDrafts": 10,
+      "savedInputsPreserved": true,
+      "errors": []
+    }
+  ]
+}

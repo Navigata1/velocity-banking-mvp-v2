@@ -1,0 +1,607 @@
+{
+  "at": "2026-10-21T13:20:38.307Z",
+  "base": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+  "head": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+  "files": 239,
+  "changesVsFailedHead": [
+    {
+      "file": "apps/mobile/app.json",
+      "before": "3b8c851a2b03a0407519a4d8d4923f44be43cedf9259c5544f28a9c1438025f3",
+      "after": "bf6835b5aef9aa95fb29a1f7908f13f11f438a496cb009d9d30c02477fe22f94"
+    },
+    {
+      "file": "apps/mobile/app/cockpit.tsx",
+      "before": "e97fcea835c5e22a9ca9d688a0e8d394f0193a2f05c60cffd3465782288996a2",
+      "after": "e971321bbc663b53ee22715c76be8b2858da3e71c9022b09a6764f4962f6a4c8"
+    },
+    {
+      "file": "apps/mobile/app/index.tsx",
+      "before": "d70e52f3f7de0de2f19080abed18dfd02969ff4046cceeab942ed637bde3060f",
+      "after": "4951cd65c6ed168ad1265e89b2ecb6ac444901b1df14c46df827841007bb11ad"
+    },
+    {
+      "file": "apps/mobile/app/learn.tsx",
+      "before": "3baf211f5c48e6d3ecac706aa07f084912d48b1ceb8e6a9b0c848ae996eaa15d",
+      "after": "8338cc1befd629b58ff079879df0f08153710ad26eb2bd150aafcdc9fcb6b9f8"
+    },
+    {
+      "file": "apps/mobile/app/portfolio.tsx",
+      "before": "5073286b44e0db3a986b8144d127c6916794a532170d5a91948dd33e4d6de7fb",
+      "after": "bf3f3d153ee904a9b32230fd0ba22eaf63ca21434e3e1c5446a993135aaa2c92"
+    },
+    {
+      "file": "apps/mobile/app/settings.tsx",
+      "before": "d1c724823ca74f2cc5c14094c2839ed342d4c5e7ef5cc0c9557601e3ef36363f",
+      "after": "d12fae556cae78aaa1ecdba96546d4aed4c00e5b98015c4fca8011e01cab45b0"
+    },
+    {
+      "file": "apps/mobile/app/simulator.tsx",
+      "before": "346904f991a3a16a435f901ef1437bb4fc66ae55c5f9b10669064a7faf7c7cad",
+      "after": "905cdcb66b592cea6be4b4a05c869293e5773e621b0a24d99aecaabe9500bd57"
+    },
+    {
+      "file": "apps/mobile/app/vault.tsx",
+      "before": "b8b1df4ded36ce05256290ed2d3ec911d886f711effd041162e0c4aaa1798d09",
+      "after": "d87607020038f7db9c2e9e888bdb13ff09daf8c49b61b55b4f83bcd959969563"
+    },
+    {
+      "file": "apps/mobile/babel.config.js",
+      "before": "c07b85b47c4d914d11373e4094bd1e936d47c8a1602513df288301964a07f8e3",
+      "after": "0caaa6352d574639c28b0a180cb091fcbb1461726dd0cf21caa889112759af46"
+    },
+    {
+      "file": "apps/mobile/components/financial-card.tsx",
+      "before": "24a1e09e96557be553439a277bb6a33a9c3f69a6857f99f7ebfbdf14c988cdef",
+      "after": "b9cb3dc1ef82f8e7adbced91cbb6ade63290c5470d390754c7dbd7dd0b3d3324"
+    },
+    {
+      "file": "apps/mobile/components/mobile-routes/cockpit-route.tsx",
+      "before": "a70f612d344a6f4e5576b64d7409081bb07c98dad20ab8e95e38ac759cbbaf4a",
+      "after": "158f4d396a9474d6ae400175155f2c5d8065451d76090243e770381f1b755da2"
+    },
+    {
+      "file": "apps/mobile/components/mobile-routes/dashboard-route.tsx",
+      "before": "861c071f5e56c781796fb675fb8653b8f8f76b5ef6ce2cc899de3dc1bb6ca71b",
+      "after": "f7087bda2a3d550c67625bc377941c1b53c307a7b4ed552945891981a5121e69"
+    },
+    {
+      "file": "apps/mobile/components/mobile-routes/learn-route.tsx",
+      "before": "faa041b71965b5093b58ed066511adf08ea219b29319c9ce6981fd288fb4586c",
+      "after": "2b7a5e07602d6a97f052f08cc3f628f673e7cdcbe4f5ca3a278fef599ec846eb"
+    },
+    {
+      "file": "apps/mobile/components/mobile-routes/settings-route.tsx",
+      "before": "8a69a8a23c574bc07646b58bc859814ba707e82aab27fd65fb9625e50724f72c",
+      "after": "608a53a1630ddab7bf933192de893a65dd386a213891b0ae58bd47d82521bf55"
+    },
+    {
+      "file": "apps/mobile/components/mobile-routes/vault-route.tsx",
+      "before": "5c5d310cd7f0ec929152461bb142b3d7f34daa306441904fc5c4228556896731",
+      "after": "22a8c1f1bd8bbb1cbf30f9e37ac4faf3c3eea00e7ce019377c84919c4d167d83"
+    },
+    {
+      "file": "apps/mobile/components/mobile-shell/money-loop-visuals.tsx",
+      "before": "554b97acaa0d34040cdbade40854306e37313ec0a1fc95783b32b1b33a9a9b4f",
+      "after": "a6188dcb417522b28b5635770b7d639b024d531b638ecf29a706e9e03c0a50cd"
+    },
+    {
+      "file": "apps/mobile/components/mobile-shell/navigation.tsx",
+      "before": "754e8cebd870b51e62a952db31a5ab68c6ba63d8cfc6a0dc1de9b818d500f571",
+      "after": "c88676b026f25f19952617da08ccdee7a4a7c52561d5453be3245d5db0cb3b7a"
+    },
+    {
+      "file": "apps/mobile/components/mobile-shell/portfolio-path.tsx",
+      "before": "a99f6395a4b79edb98859c53ede47afdf8a584133b1d374f7a49ffccde5f50e8",
+      "after": "ce2e104ae8994fdae5a47b67c48de584ef0ede55774ed3d30720b723b3456ad4"
+    },
+    {
+      "file": "apps/mobile/eas.json",
+      "before": "fe8c092bba4062320ec6dcfa7bb7ecf4095a081efaba7046387779833a358585",
+      "after": "d58ab95150a8b25a73539794f7b539495c6e7f770008719f04a8f2a26d473eff"
+    },
+    {
+      "file": "apps/mobile/hooks/use-accessibility-announcement.ts",
+      "before": "21422e1f6e155ed0cd487aef05947fb44a891b60987125ad29a2fe169ae56449",
+      "after": "44199c5a15e5a361ade955903731689d96388d4b731ef119ceae1ba65aeaf6d7"
+    },
+    {
+      "file": "apps/mobile/lib/mobile-assumption-storage.ts",
+      "before": "85d273717069a8954bd0010bcc415cd2e33368a3ae382e88074e96ca431cb2f0",
+      "after": "d7fe2a0a7e0923c26b2e4d4395c7d3f38eb23ef32fb04d6636b177f04806ffb4"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/auth-deep-link.ts",
+      "before": "45ee3c19397a18521290d4b0de6000fc5a6d9917f7a86bceee799da61bb57494",
+      "after": "9f01b96efe4b01d25dfe3072d8f9775da62190e1fa0c2288355ef5e26bc394c1"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/auth-lifecycle.ts",
+      "before": "402f8983c748b7217c72a6693ade126e98a82e79a6054ff1b68cf64359389a8e",
+      "after": "09f3d11379f6b8964f07511b88290be518cbf2b85c502d6d4b778f3511d42116"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/client.ts",
+      "before": "ae2c99dc24ee9950283378eb52278251b33f0b89841f326745673a508b180212",
+      "after": "b7146892a786d2d5403fb276f90be895505dcbafaec68db60a30332215acf21e"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/config.ts",
+      "before": "d18a667cbdf047214c83af08d060a7bc13a820144bb8586c1b7b61f640168336",
+      "after": "13ebb65e5cee4a0972ddc6e0f598be161cfb8db4cf7bc2b39d9222a6f2d46226"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/snapshot-outbox-replay.ts",
+      "before": "d0f2773dc8dc40ca5ef40648726ef2adbcbbf2d793031e9e5e8972aca4696151",
+      "after": "c3ed4ac5807ae2a560d62f219790d0ae6ddfbb521ba527fd37380ddb1fc28d6c"
+    },
+    {
+      "file": "apps/mobile/lib/supabase/sync-identity.ts",
+      "before": "b51e93287fb01ecb2264ac957026940c11efb92dca934077bc3eba101902f92a",
+      "after": "c6fd4bac6ce9c705b85c77db5ae18073f443683c78840d336d9a211d1247359a"
+    },
+    {
+      "file": "apps/mobile/metro.config.js",
+      "before": "cb63f55ab93cdd2ebecbce46a16a984f312f683cab1fbd31d78b76bc8b4453d9",
+      "after": "42f21caafd3021b2f5bc5ff761319acb575d4324098fe0fd1527fc7d2b54d69f"
+    },
+    {
+      "file": "apps/mobile/scripts/native-preflight.cjs",
+      "before": "1df3bd74a977e4b957d94bbe50cf0f14ee0c536a6d8cf673448647371b35ba8f",
+      "after": "53fad8864d29adde0f03ef2be86db9b0ac492d4719324dfcdda1e8735368f118"
+    },
+    {
+      "file": "apps/mobile/scripts/serve-web-export.cjs",
+      "before": "ff80b9e6d9f34ae9cac2fec9c1923a4f9a18ccbb34da961740786b6bbf52c79f",
+      "after": "99f31b46554f723be593a942048afc5a1e5eb1cf633c602457a99a109ed9b466"
+    },
+    {
+      "file": "apps/mobile/scripts/smoke-android-bundle.cjs",
+      "before": "454df76b36a9060a44eea158412c4aa55fdcb44eb862dab42b83874d785e54e8",
+      "after": "c5c5fdce74cb8c5949d7b3394d1c81e0579433a969f8d47d122d9ad4a3e2761e"
+    },
+    {
+      "file": "apps/mobile/scripts/smoke-android-expo-go.cjs",
+      "before": "80e6aab70938faf1e6c8189fe902c71f838867128551d500ee3fa87b0f96165a",
+      "after": "08ec93278d741a5f241bc8ea82f4b4640ad38d1d4a0f9b2270b2844b06dd9710"
+    },
+    {
+      "file": "apps/mobile/scripts/smoke-ios-bundle.cjs",
+      "before": "ec591d49f4893d8cb94b006719e22491213993b1527f4c1b8db82a2eee9cee0a",
+      "after": "bd35c0406b16925c5eea4f2de931b95845065996b0ca4d7eb796c26cfa70ec4e"
+    },
+    {
+      "file": "apps/mobile/scripts/smoke-ios-expo-go.cjs",
+      "before": "cca819a03dac273aed62e16129673f38577a27a7d9b43abf29ba2215d69a7975",
+      "after": "7ce50b5c075a07772fa138e64a4fb193ed9b03f80808e4824a96d81170b4fb83"
+    },
+    {
+      "file": "apps/mobile/scripts/smoke-web-export.cjs",
+      "before": "922c1d8004175263b3d9f2661e3b37dce2f985e7cbea28912353501fb970d65b",
+      "after": "5f51c455ee63773e4281be585f7f8f0ec110535e4129f89e409e682e86bfec5f"
+    },
+    {
+      "file": "apps/mobile/scripts/snapshot-outbox-replay-contract.cjs",
+      "before": "3af10f6d6ad22fa20d1f0fefbc03afda5ab391abf8cb14db3f6b59287f04c36b",
+      "after": "e2cbe35b85d4ce8756c33f80ed5a11ab9155999079e6102b7d390164107605a7"
+    },
+    {
+      "file": "apps/mobile/tsconfig.json",
+      "before": "51a72685ddd1ad302aa6ed0ff21d1e87a14297c990a92f16169ad5dcf60341d0",
+      "after": "c30aaab6c9215dba05ca2b8d94acc3c49e3c77fff0a6988efd117533430ab375"
+    },
+    {
+      "file": "apps/mobile/vercel.json",
+      "before": "387e025e92d70d39f38c1f6682f8fc82168730559575388878687842d81dbfd3",
+      "after": "90188a212de85f709f6283d05a6497f57284c6ad4786d315cca0d904cc52b3ee"
+    },
+    {
+      "file": "apps/web/eslint.config.mjs",
+      "before": "870f1adccecf3051cbcd9fd307cef51d7633cf510979c181a81f4b1797273493",
+      "after": "275a07c13fc7c83a652efcfa9fb6a207c451a2f5088e6793415ce44281285720"
+    },
+    {
+      "file": "apps/web/next.config.ts",
+      "before": "2f9cd0dfa60c2a395cab3cbbb88b7ff9328f5a7c42fa46625bc0b4c0a5e5d778",
+      "after": "0bab03907101a9a037b1cff4c5ce5328c38498a715d5d0f4b027f5382a731554"
+    },
+    {
+      "file": "apps/web/postcss.config.mjs",
+      "before": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+      "after": "7b299d3d3b16699ddda397c0b2373b3af4f25f8fc9ccc9b3d9e64ef083bc1c21"
+    },
+    {
+      "file": "apps/web/scripts/browser-harness.cjs",
+      "before": "7c81347797a081f7b061cccdfc08460804c47847a6f8e6e4273fd8d570ed705f",
+      "after": "ca4832f7702c73d17ad07a8ee864ea7e009a217b18f3f9912d8a37d8f7082d80"
+    },
+    {
+      "file": "apps/web/scripts/built-server-harness.cjs",
+      "before": "2aba5828cf3f9be95b57197534e100a2b169900f9e7e9f66d7dffb59df860c54",
+      "after": "f496c89a23ddb01ca12e88e0f1eebe16ae948b77b2f8097586f1f91281660e63"
+    },
+    {
+      "file": "apps/web/scripts/png-pixel-proof.cjs",
+      "before": "632d1a0b82930b9d8cf404fc65c390f547ad85e39229b9c4f19ced69bb057a7f",
+      "after": "e0ffd1c18cbf8e93cb62ee23f89cff915aec0ce0e7231f75691dee17f39f8d60"
+    },
+    {
+      "file": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+      "before": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2",
+      "after": "d01d05146af02c3541144082c38ca1b176ae467bd1b97cce7855e537605c9d4d"
+    },
+    {
+      "file": "apps/web/scripts/smoke-production.cjs",
+      "before": "9f369e7506d37e161f15e39d26a0fe8f19a36d31a5be87a888c90474869ec84b",
+      "after": "5e121a850b4e885710a260f0dafd19ec0918a5fe60cb64599432223be63cd5ee"
+    },
+    {
+      "file": "apps/web/scripts/smoke-routes.cjs",
+      "before": "28aebaf57f2e1c9faca81552263ed74a92afe5a59d616798f5a67fe8b5788f74",
+      "after": "6c6282f5bbb1541dc2e302d0e1ee91526959aee27082cd7923f5aa8cc9b2d62e"
+    },
+    {
+      "file": "apps/web/scripts/snapshot-outbox-contract.cjs",
+      "before": "6e4c0975c97a17ef85a9045acf847e8cc1ccb43e1dd7ea0abe39e9239dd64970",
+      "after": "68c5264a4396dfc8bf59ceb634cc49f5d335412d9f555e883e49d9947386e188"
+    },
+    {
+      "file": "apps/web/scripts/supabase-client-contract.cjs",
+      "before": "9b078566d0e2c2bcfc65b12645fc12321259c0218bd077fbf28a17808d60525f",
+      "after": "0aaafe69ab1ef7c4aea61191de294ad09a1fcdba14bc001cee4ab0a65757a3ce"
+    },
+    {
+      "file": "apps/web/scripts/supabase-schema-contract.cjs",
+      "before": "609a5e241db879481e1900542c9fb7c02a606ab70ef020307ff14cfa834b1a91",
+      "after": "82e471621dcf7c1807d2042b38ae2b474e2de0051a062908a589b6b85f1b2242"
+    },
+    {
+      "file": "apps/web/src/app/artifact-visual-contract.ts",
+      "before": "1819190c6fa4ee4757712569d3bdadc7f0712def32ff70589eb45e018f6d81c3",
+      "after": "b4d3b3c77bcf1244ab84096f6eaaed4a7f198e11dd71819ed8226697483566b1"
+    },
+    {
+      "file": "apps/web/src/app/cockpit-model.ts",
+      "before": "818c6ea7af38e677f0b2eea4efa016c012cea90b0d79c0d33995c1ac7bdf2163",
+      "after": "b1028c7db2c1facb122432324ae694f3565e9bddc2fb94706290404db42c0861"
+    },
+    {
+      "file": "apps/web/src/app/cockpit/layout.tsx",
+      "before": "ecef52d3df740dfddbbab96bf0251abc5c1d6622effbe4f2f0885cf430ee6eb7",
+      "after": "8d9f0b540ea2ffe951ee7336c3850406c5ca5ef3ff0a3a164beb7d47e7a2b0ee"
+    },
+    {
+      "file": "apps/web/src/app/cockpit/page.tsx",
+      "before": "bb3a83effe22c57ebc1941389652483541716f002b1d616f777f80765d942dbb",
+      "after": "49d2b814d911e3269bfdae15000049ed02dbd1a7b32903838d58a3e7fd790120"
+    },
+    {
+      "file": "apps/web/src/app/globals.css",
+      "before": "c5e7344bdd3d0c772147b355b65b4b5e31e6fdf6be294eee7227b82e4400c78f",
+      "after": "69a0213667d96e3865e52b59f426be6669ee8fdcf97ae21c3bbfe24f6f369d72"
+    },
+    {
+      "file": "apps/web/src/app/layout.tsx",
+      "before": "33229babe950020ca22c81d9eeb83af83d79e98cd548b8829789eb12b3868809",
+      "after": "e6197163a22af8ff42c11bc325fb7668ae3b5e86253e7d82f8c99be24f0dd2df"
+    },
+    {
+      "file": "apps/web/src/app/learn/animated-counter.tsx",
+      "before": "4915c7055d60fe3b2082a0ede8a7818983e6573f68b9a213c95caf2e26d8cd6b",
+      "after": "d1c3b8c929f4cd54fa0fac719ba6eb5760c2cbdcfafb60d27ebc1bd2682ffc23"
+    },
+    {
+      "file": "apps/web/src/app/learn/celebration-canvases.tsx",
+      "before": "61d9a5c153e6f4920ac5f510a5809a9773630b35b129174477cd179ca3209979",
+      "after": "01fda0c5d3ec64eed9fa7debd61d9c64c2a46529d9488ff994b8bf9c8b03d6f1"
+    },
+    {
+      "file": "apps/web/src/app/learn/layout.tsx",
+      "before": "5caffde74226dad99f96d44c6ef8d5e622048d62d663729a49be527532a01245",
+      "after": "0d0611ae039f1380a3cd3f7579b34b470cf2d3c6bc727af2ee6e873bf8c31251"
+    },
+    {
+      "file": "apps/web/src/app/learn/lesson-card.tsx",
+      "before": "919254f270e59a30948d3c68ec2cdc704518ebf3387e3c4eb2e2324a3916f841",
+      "after": "4d12cef100afcffb52af3bc4652fde0aefe1832680fd8245ddc234ad9127210f"
+    },
+    {
+      "file": "apps/web/src/app/learn/page.tsx",
+      "before": "654543df12c09f2138847e4693a540c213b91aefd4e72220fdd23ddbb2900453",
+      "after": "39682020e1743868ef41f1f7ee7d91ffced7d22f294a5d3ffa08c1f39e76ab92"
+    },
+    {
+      "file": "apps/web/src/app/learn/progress-store.ts",
+      "before": "446211992a12af88205394e743ca1645d3e3d2268d083da824eaf43e095fae3d",
+      "after": "546c212b2dc58ff163f7bc50c79b06056e3f2596baa77852c3795f479f6443f2"
+    },
+    {
+      "file": "apps/web/src/app/learn/use-learn-progress.ts",
+      "before": "8a4539fa7542f48dba4b90b6dd1711ff6e2be2d31c71781c277dd384d88f9449",
+      "after": "eacc83c1eeac3140cb7e7de313807f293450e69fe6e1127e93ae58ea015c2d50"
+    },
+    {
+      "file": "apps/web/src/app/manifest.ts",
+      "before": "e62486e63422b03c64a87fe436148e98516075eaec8d9d705b490168b311d525",
+      "after": "749f36f966bf125bf533f8dc6f8d96fcf0fa4afcb1a9de987f1c41a2c8b370de"
+    },
+    {
+      "file": "apps/web/src/app/opengraph-image.tsx",
+      "before": "4e548bec2b275729473356bc0d49c850b4f9a199548d0af087ef3de1dd504b19",
+      "after": "ec855beba94850c7ee2f72cf16602eb0c5a3f9e5c224ee2196a04d76b573270c"
+    },
+    {
+      "file": "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx",
+      "before": "725a66a5acbc33e305cc0f1a2bfe10942ad72357c52ba9491789b527cdcc9d5a",
+      "after": "88df7de872b76f49d123293e623e2563e2679e5b7f48966b93aa61e3eba6e850"
+    },
+    {
+      "file": "apps/web/src/app/portfolio/layout.tsx",
+      "before": "f99a74686dfc442196b3e1a15a428322073a92d532e10312e19312485a3ca1fe",
+      "after": "89c7540c71f1e5729965a7f7c3eaf75fe7cf1da6149a7fc649ac10457e64d9a5"
+    },
+    {
+      "file": "apps/web/src/app/portfolio/portfolio-types.ts",
+      "before": "1ec03ad505ce370d552a86d04abb46175ff7e5c6863e2720179d14de9f113366",
+      "after": "313fbc696dc5d1a494539bd671d4afd0d4c3949afb3b67269300b22b1b3496f9"
+    },
+    {
+      "file": "apps/web/src/app/robots.ts",
+      "before": "dcff0c95e28f8b53bff184103a383acd1de06444722712c89961b5c834fe9e4f",
+      "after": "efb5fd978335fa78bb904ace49478c73484f291f97f8f791e147a658f895d2e1"
+    },
+    {
+      "file": "apps/web/src/app/settings/backend-migration-contract.ts",
+      "before": "49bdb61f809e39c0a5cbc87a48f2b54abaf5ac5f43caf6c4eec5817b7194ccf8",
+      "after": "b1c234461b938526f7c8f92f5a3aba2104958130c76197dedccd2b4572ea5e3e"
+    },
+    {
+      "file": "apps/web/src/app/settings/backend-readiness.ts",
+      "before": "0acf5e50eb127948a63677470e706783e8489923f1af44ed5d0870a8fd1b5e7a",
+      "after": "9ee7411c9339ca15c71653ba0ab61238f4d5d2076cbff9766a9871076cd3d86f"
+    },
+    {
+      "file": "apps/web/src/app/settings/layout.tsx",
+      "before": "cf3d1de10c25449f858f955af1c889437f61fe2dff13bd155930f5e78d6f0fab",
+      "after": "b4e93ed33c67f78712729ac77e88f92128474c355ec3393b6d14467efaa9eec7"
+    },
+    {
+      "file": "apps/web/src/app/settings/page.tsx",
+      "before": "b555a54590651c56b60a455b78fc421f84b45dcb163fb18cb58b28c9d8cb0734",
+      "after": "afafcccc6cdff872c09af5c60fab8a66534feb94f071b8bb576f9e955ed4fbb1"
+    },
+    {
+      "file": "apps/web/src/app/simulator/layout.tsx",
+      "before": "41a5f630de1ee20929e4cfe2a30ed0840c4e5a50f45a410492954aac1ddc6162",
+      "after": "5d6fd9f95aff28051a79eaece7c933fd015c905962923c6ec5db33a6413d120a"
+    },
+    {
+      "file": "apps/web/src/app/sitemap.ts",
+      "before": "0bcf6f3c8e6e7989f5dfd9d3832096933e8bb8ce8ec95d7c175c338a134461df",
+      "after": "ea354a7d4706a2f46e501d30a6b43fbb8bb8dc9730c40ad8e82726caf26a774b"
+    },
+    {
+      "file": "apps/web/src/app/vault/layout.tsx",
+      "before": "aed27638dc1481cf5d6777dc8f77e59d2d4a1c6bc1fe54f95412eab5c8981e2b",
+      "after": "d3a12eb4c2a2e60e097cb898edd0190614e4109990305596855e67d8f562cdb8"
+    },
+    {
+      "file": "apps/web/src/components/ActionFeed.tsx",
+      "before": "0b600491253225a1812fd0040869de576056bb86943b4dffc067a7bce34b23d0",
+      "after": "ed263ad66660892b77013025bc139e2f4662003483f368b661d1c00f9f6bdc72"
+    },
+    {
+      "file": "apps/web/src/components/AnimatedButton.tsx",
+      "before": "ce0d51b6047cc14e47b4cc549ae65adc2084bd670e506a553f5db932bcf31127",
+      "after": "287abf40d67932493e57f93f7597d0bda8ad2e72439468c8fb0583c866ad0582"
+    },
+    {
+      "file": "apps/web/src/components/CountUp.tsx",
+      "before": "9078d2e600fe27f1cd8307d2c5a7b871855c4cc67c03e660dcad39a9bfb754b7",
+      "after": "39b245d97a219b99aaa2feb89344290b1f6e1c3a7ee4eff32639fd823b8a43fe"
+    },
+    {
+      "file": "apps/web/src/components/DomainTabs.tsx",
+      "before": "93d24eae9bc2e42bef3338f1b0edb1ae0d981afa30097144d019d8c27d5b0343",
+      "after": "d436af634c07f1fbad41f5c09842801d940bc620386607dd7997736ecaf63c4e"
+    },
+    {
+      "file": "apps/web/src/components/DualSlider.tsx",
+      "before": "c98309f0eb6862a6aa27d650b78606644fdf820cf12ec00ea7e9fb1c8d3731a5",
+      "after": "cb90aa8694911a90ce90a259389262726ab3e0ac9ad8c795ae8c5b22593bb69a"
+    },
+    {
+      "file": "apps/web/src/components/EditableNumber.tsx",
+      "before": "f90b299b040c37d467ff0d4c4f7cf663f967a6d775b56fccdb487cbbb466f808",
+      "after": "29ea53a7ad3cced77ff80d57820f142bbd56c2d19b81f729e081bdbed7482362"
+    },
+    {
+      "file": "apps/web/src/components/GlassCard.tsx",
+      "before": "3fb00d50afe5e374b673e3f3a734528e89c6eff90989f37136e00aa33d0b130a",
+      "after": "a661983735b1e89368dc746f279ee14255f83d5a347a7160efebcb13c18b1446"
+    },
+    {
+      "file": "apps/web/src/components/IntroAnimation.tsx",
+      "before": "06763b45de93c5a74dd24fb836e3d2f13b62ef84debad703335efc4d2c12c67d",
+      "after": "5d564c460b38d47bd5872bd80083130a936731b21e0590e0609da748734d608f"
+    },
+    {
+      "file": "apps/web/src/components/IntroModal.tsx",
+      "before": "0e3b175a7d3d4fd6c90a56db2543b289ed1373b9d49debe749fdcce42568f4fd",
+      "after": "7dc1709ec571442eec0ea0653f42e5f450c6729f30519d02b1a97b059dc98d53"
+    },
+    {
+      "file": "apps/web/src/components/MoneyLoopArtifactRail.tsx",
+      "before": "e9d85b7d66914c22c9f6987bfb5654df70eed36c1edd6f1c30c6eac4cfa11e94",
+      "after": "3a4c49914bbc6a336c380658bad357c2bd0dd9553b0d4319289bd46bcd08d70d"
+    },
+    {
+      "file": "apps/web/src/components/Navigation.tsx",
+      "before": "60b4fcda1c7c9f5397d77a5a3239d9f2e1fd7f9e8d8d2e45c93d9d5a115f400b",
+      "after": "39976c791ba5b57c0bfe1244b1efc8eb1e01795293fe1b1410453fe14549b8a8"
+    },
+    {
+      "file": "apps/web/src/components/PageTransition.tsx",
+      "before": "41536231221af7f393bcc521ef25ad5609d2429cb0296b7f69523ad317942152",
+      "after": "c316b29a90f2f6473d3806b06bd1fa41cfb606e013ba72f240c0a82d121c2b0c"
+    },
+    {
+      "file": "apps/web/src/components/PortfolioStrip.tsx",
+      "before": "9f4794fc530b370d8bb1748b0ffd18885e3a136da15527c461f47841bb85a0ef",
+      "after": "789bfd1b677b4284ff04ff2b3a4a7c03208a73bd03cd9d1de9d332e79d303446"
+    },
+    {
+      "file": "apps/web/src/components/PreAppPreview.tsx",
+      "before": "4ddaa300b202f298b76e819e66870720f1d3d61f5c922ac4db7ec39167b5f117",
+      "after": "514219585ab2af497e6e207a1b60b22734506b19c3f0ca1134dfc8d7566012c1"
+    },
+    {
+      "file": "apps/web/src/components/ProgressRing.tsx",
+      "before": "fbd2a369b5d6e6ae44920de0893b3eeb86846de93a53b92f9973caec3e6d80f1",
+      "after": "e609b31d8e4f9f73860954b38e425611b962cd8620f80820d2ae3bc53f80efe7"
+    },
+    {
+      "file": "apps/web/src/components/ScrollReveal.tsx",
+      "before": "afae1b9e5e611793123e9e3fa8b2b2b7bda55cc0a5e635a927b5a527b8a68e06",
+      "after": "0f19e35d2c29081ade50976d3fc6c242e241c41480f80da1614468ac251484a8"
+    },
+    {
+      "file": "apps/web/src/components/Skeleton.tsx",
+      "before": "1a74e0324ff344ec7b4a1b3b6d5cb5f21dc4c195707483279ceaf7c9d2be2591",
+      "after": "020aa188b7eb61bf0a3fb5cf9844b30e5dd1cab27dc29570fbbe7f0aeb3e1184"
+    },
+    {
+      "file": "apps/web/src/components/ThemeProvider.tsx",
+      "before": "2df38ed0213ad9673d6fb7199242dccf8810632d939ba011c8c5b573d810d25a",
+      "after": "cc428443122c7793fc7782cfabf82e04572b4738fc012d70ed918954781432c6"
+    },
+    {
+      "file": "apps/web/src/components/VitalCard.tsx",
+      "before": "25ef302f17abf0fd337fb229fcf39a759176c52ac48f80852f9d6fa92870ec1e",
+      "after": "186e18c688025a47b82ea09b1166f5216f4c09de993e1488cb8bd1cb75e58c4d"
+    },
+    {
+      "file": "apps/web/src/components/VitalsGrid.tsx",
+      "before": "2b14aaa8ac7fff20408b5734a87f968f4f52d8cf8ed21675365bbc9254809140",
+      "after": "77e9d6dbfd0b4ca21863d01d7638b3547b0f82e69f99e2063f763c106ee2501b"
+    },
+    {
+      "file": "apps/web/src/components/money-loop-3d/MoneyLoopThreeScene.tsx",
+      "before": "d8075d9dc0aefbd365893384344317a7b85aba1f61313e7f0b55aa6e7b75db2c",
+      "after": "3b6605485dca29ad72bd586b55e516b4b0fe177ef7097fd3b5ca93ac1ec4a830"
+    },
+    {
+      "file": "apps/web/src/components/money-loop-3d/MoneyLoopThreeStage.tsx",
+      "before": "47ebd16419753ce93216ed040dac35b1daf55329e8c93e4d4a0e4d6a5c96ed38",
+      "after": "7bff347a76239b12d8e7de371f9086de1bbfe8865fec3477789703b322cfab23"
+    },
+    {
+      "file": "apps/web/src/components/money-loop-3d/artifact-meshes.tsx",
+      "before": "7aff7b320a2c3e1deb2d965b9dac4503b19010e03d65af8b2023f9cd6b7414c5",
+      "after": "03507f044f38ae071d795361b8f1bb5f85a2634c64dd7f66a66673fe992bd06f"
+    },
+    {
+      "file": "apps/web/src/components/money-loop-3d/selection-motion.ts",
+      "before": "2b88f3cd6d8cfb6d571b013e8615a5d4e8101340541482d7338ef26a2125fa54",
+      "after": "325782ce83500354fa41126e7da8123e79fec8ebc78152945cc83a4e1dc59262"
+    },
+    {
+      "file": "apps/web/src/components/money-loop-3d/useMoneyLoopRenderMode.ts",
+      "before": "2cad5f041e6ae8edfd7f37bc47a67f305d017267924f5d6e6f5a4c76e669ba65",
+      "after": "fdff0adf8ebdb98505af2395a9df4690d78763922ee43b492ff18739422d5efb"
+    },
+    {
+      "file": "apps/web/src/components/pre-app-preview-model.ts",
+      "before": "9bc7221b47a663291e1949b14348f221573a6c89e963342e1e2781df83ec7ccd",
+      "after": "67c49996e8d0f4d267fee494054bad56d855d14ba3eeb9c2617d3bdfe97046ab"
+    },
+    {
+      "file": "apps/web/src/components/strategy-glass-fill-model.ts",
+      "before": "7cf001f3b0ab32b0671d9193631e9eb14bd00083d5a5537d2f19ac848163302c",
+      "after": "3727c11061410b773496dbec8e044c7e7b2c7bfe00efa4fb50301c34eb39f851"
+    },
+    {
+      "file": "apps/web/src/engine/money-loop.ts",
+      "before": "830ec8c9ba0f837da40ced2ca06ce02a767be3ca85313fdb1343edb02fe9c665",
+      "after": "6e40bf4c458351380de12097c22273a55442be02b276b381f9a9b3a29bde49b2"
+    },
+    {
+      "file": "apps/web/src/engine/velocity-targeting.ts",
+      "before": "6dd3a865e8c4be29791c4cffba351da0c418149d41e605fed3f0ca6dccef9106",
+      "after": "ce59e623d502c31229eff127e2e04f6d0fcdbb95566a0868300d675fdfcf299e"
+    },
+    {
+      "file": "apps/web/src/hooks/useIsClient.ts",
+      "before": "7dc0bd6d0d4d9f3c14a02df0ec6d86eb608cedfa43bfc1fab6c7132461eed561",
+      "after": "7251b3b6c780a5512e7ed793b0b35f10c641a3ccc16cd00f2adccef4077a38ad"
+    },
+    {
+      "file": "apps/web/src/lib/supabase/client.ts",
+      "before": "837538991324d8ea8717a7a81307ea1e6fc458d084b26669d4543ef2e35a478b",
+      "after": "4dea349ad490f802056873f63d39d0ae8ac051c31cae4c2c7e4592a9503696b1"
+    },
+    {
+      "file": "apps/web/src/lib/supabase/config.ts",
+      "before": "adad262b1058033e534daff6f0e2d6afe0cb363f9fe9de3e792e1935fda699f9",
+      "after": "1bef58df1e55a0478df7f7ddfabbe922f362ae213bd9209b80faca703c085558"
+    },
+    {
+      "file": "apps/web/src/lib/supabase/snapshot-outbox.ts",
+      "before": "27d570b45690331ba278f280a8b9e9a734f477a961e9cee480218a1ed69d6148",
+      "after": "b550c1cc2caff9645e6b5039c36d83f37d4b60c29555cf5c46a4421bfab516ac"
+    },
+    {
+      "file": "apps/web/src/lib/supabase/snapshot-sync.ts",
+      "before": "74ef7f3252710c214c15dea7cf139acf2f2fcb8869d834d9df3dd85e2de4b9a9",
+      "after": "b3ce5688353221625a401c61a8a1ef14ae8a753e9c08b55e60c3c7692898c7f7"
+    },
+    {
+      "file": "apps/web/src/stores/app-store.ts",
+      "before": "a1132e888969de636fa862d516ccf6663f4a37415f5d028ed1bad841a88f9f64",
+      "after": "81d83a85ddabb3f1ee007a7242d7315d7ec45c051cbccede063b35aec15cd28a"
+    },
+    {
+      "file": "apps/web/src/stores/preferences-store.ts",
+      "before": "24e597a6154b80116bb5f68da6228ce070d96199bf3985369601ba5debde09a0",
+      "after": "a21e29dcb3a124f58491ac20191eb9686fa42df7878fad1598da5314c3301320"
+    },
+    {
+      "file": "apps/web/src/stores/theme-store.ts",
+      "before": "b88023d06f448c01b78658ec4fee688f5e33eca2cc9c42867ff41c94b1b4442b",
+      "after": "4110ec4d8b20f9d0150530007e9db77c858736c540026c3c23219eb54e41f40f"
+    },
+    {
+      "file": "apps/web/tsconfig.json",
+      "before": "9c87177da4508c20989e06a873d8ff7d41f0d9c18a45a1e84d6820e21282d528",
+      "after": "de0a44433eb2c34d149c2b901ae8692c184bbb8ef7068920ef2b163ce912e62c"
+    },
+    {
+      "file": "apps/web/vercel.json",
+      "before": "b7c25207a1bd0127a53bd29a6b2fb99bd37b6ef72d7c470117faa690169608f6",
+      "after": "83e628055010c235d74bf99df22b94a1ffa4da89e92c142ad8d6a3f267f13276"
+    },
+    {
+      "file": "packages/financial-engine/fixtures/anonymized-lender-scenarios.v1.json",
+      "before": "c1b5e68b23d0aca4a6e89cbe61cad44f4a1659846da83a4c08309978f2cf90c2",
+      "after": "069781afc9a6b38a17a99153c03481d7e657bff8dc028065347765aec2f2e8b0"
+    }
+  ],
+  "changesVsPriorOracle": [
+    {
+      "file": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+      "before": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2",
+      "after": "d01d05146af02c3541144082c38ca1b176ae467bd1b97cce7855e537605c9d4d"
+    },
+    {
+      "file": "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx",
+      "before": "725a66a5acbc33e305cc0f1a2bfe10942ad72357c52ba9491789b527cdcc9d5a",
+      "after": "88df7de872b76f49d123293e623e2563e2679e5b7f48966b93aa61e3eba6e850"
+    }
+  ],
+  "failedHeadDisposition": {
+    "ciRuns": [
+      "39605673471",
+      "39605676575"
+    ],
+    "status": "Both web CI FAILED; SQL success per user. No fresh CI/hosted/browser/publication certification in this source review."
+  }
+}

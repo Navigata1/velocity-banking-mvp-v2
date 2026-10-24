@@ -1,0 +1,165 @@
+{
+  "verifiedAt": "2026-10-22T18:11:39.225Z",
+  "baseline": "93dcf67b7b19946f3fb599c1a6dcc4d7110a968a",
+  "stage": "Local pre-push dated LOC checkpoint; new-head remote verification pending",
+  "productionReady": false,
+  "protocol": "fixed-loc-daily-v1",
+  "documentVersion": 4,
+  "fresh": {
+    "localGates": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "three-stage",
+        "exitCode": 0
+      },
+      {
+        "name": "web-routes",
+        "exitCode": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0
+      },
+      {
+        "name": "simulator-comparison",
+        "exitCode": 0
+      },
+      {
+        "name": "dashboard",
+        "exitCode": 0
+      },
+      {
+        "name": "vault",
+        "exitCode": 0
+      },
+      {
+        "name": "portfolio",
+        "exitCode": 0
+      },
+      {
+        "name": "heroes",
+        "exitCode": 0
+      },
+      {
+        "name": "media-check",
+        "exitCode": 0
+      },
+      {
+        "name": "hero-video-verification",
+        "exitCode": 0
+      },
+      {
+        "name": "native-types",
+        "exitCode": 0
+      },
+      {
+        "name": "native-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "native-port",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "native-accessibility",
+        "exitCode": 0
+      },
+      {
+        "name": "native-android-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "native-ios-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-check",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-dry-build",
+        "exitCode": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0
+      }
+    ],
+    "sourcePins": 481,
+    "originalEngineRegressions": 360,
+    "focusedDatedGroups": 116,
+    "correctedWebWorkflows": 27,
+    "correctedExpoWebWorkflows": 15,
+    "independentFeeBoundaryGroups": 30,
+    "feeRoundingGridCases": 78
+  },
+  "evidence": {
+    "privateIndex": ".superpowers/sdd/2026-10-22-dated-lender-plan/local-evidence-index.json",
+    "fileCount": 3275,
+    "indexSha256": "488c539dfeeaf3b8b23313584b58bae83c4efe64deb9559a394b524e9b3754bf",
+    "fullGateReportSha256": "6ec68554cd2cb2c906638c04dd61084859e35215aa5c8f954d5adcdd11a259e3",
+    "sourcePinsSha256": "107dff372327e253f88b7faa2887ac574f4e747ada51266670b1ea23948b13a0"
+  },
+  "preserved": {
+    "educationalRuntimeAndPortfolioBody": "Exact baseline compiled runtime/body parity; old document3 raw1 remains100%, no rate rescaling",
+    "sourceAssetsAndPosters": "Unchanged",
+    "dependenciesLocksWorkflowsSql": "Unchanged",
+    "priorCheckpoint": "93dcf67b7b19946f3fb599c1a6dcc4d7110a968a",
+    "priorReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6344946083"
+  },
+  "retainedFailures": [
+    "Initial implementation double-converted fractional fees; corrected with actual editor-to-engine RED/GREEN and independent review. Earlier fee acceptance superseded.",
+    "Full attempt1 failed lint in two new test loaders; test-local names corrected.",
+    "Full attempt2 manually stopped for fee-unit correction; not a full pass.",
+    "Earlier web browser role/label selector failures corrected without weakening product assertions.",
+    "Parent native smoke guard incorrectly expected raw1 for1%; invalid guard evidence retained and superseded.",
+    "Prior hosted selection timing, source-index API freshness, host-port collision and Three warnings remain unresolved."
+  ],
+  "limitations": [
+    "Fixed APR and inclusive fixed minimum only; other debts retain educational monthly calendars.",
+    "Variable rates, percentage/interest-only minima, compounding, holds/reversals and undeclared fees remain unsupported.",
+    "Web stale-source guard is optimistic synchronous checking, not atomic cross-tab localStorage CAS.",
+    "Expo web/null-host/export proof is not physical SecureStore, signed-in device or hosted backend approval.",
+    "New-head CI/automatic preview/hosted/manual IAB and sealed receipt remain pending at this pre-push snapshot.",
+    "Full R3, all-ten photoreal approval, backend/security/recovery/accessibility/device/release remain open."
+  ]
+}

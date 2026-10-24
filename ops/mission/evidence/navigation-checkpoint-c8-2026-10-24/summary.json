@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-24T13:26:45.098Z",
+  "head": "c8ae01dadafca0d8d4f1c29c997becf03208c4da",
+  "status": "HOLD_COMBINED_CI",
+  "sourceCommits": ["425d6d7","c8ae01d"],
+  "scope": "Bounded navigation source fix and current exact-head evidence, not production acceptance",
+  "ci": {"events":[{"event":"push","declared":59,"observed":72,"statuses":{"success":63,"failure":2,"skipped":7},"declaredStepsPresentAndOrdered":true,"runId":40096204562,"attempt":1,"conclusion":"failure"},{"event":"pull_request","declared":59,"observed":72,"statuses":{"success":72,"failure":0,"skipped":0},"declaredStepsPresentAndOrdered":true,"runId":40096208108,"attempt":1,"conclusion":"success"}],"sourceGuards":{"observed":6,"allExactHead":true},"canonical":{"invocations":1,"exitCode":1},"mainRegressionGroups":431,"separateDatedReferences":24,"navigationCasesWithinMain":28,"rawReviewPacketSha256":"e348bcaa4f03cf1416aa485ba592a30a4f0e91bb24aa2681aaa4c7daef6f0c2d"},
+  "failedPush": {"error":"desktop decoded material canvas candidate settled in704ms beyond700ms","upload":"Mandatory proof empty because early failure preceded viewport PNG writes","downstreamPushChecksSkipped":true,"prSuccessDoesNotSubstitute":true,"cause":"UNKNOWN","unchangedRerun":false,"deadlineOrPixelWaiver":false},
+  "preview": {"url":"https://velocity-banking-mvp-v2-6bsx0xxq2-islanddevcrew.vercel.app","ready":true,"target":null,"exact25PublicHashes":true,"publicBytes":10143498,"standingHostedRoutes":14,"moneyLoopNext":1,"actualChromeCanonicalNavAndExplicitDemoExit":true,"defaultOriginalStudioRestored":true,"financialEdits":false,"consoleWarningsAndErrors":0},
+  "house": {"sourceBoundCandidateRenderedDesktop":true,"independentDecodedPNG":24,"baselineAndCandidatePerArm":12,"uniquePixelViewsPerArm":7,"comparisons":22,"storedPrePostPassed":4,"phonePNG":0,"whole48":"HOLD","cause":"UNKNOWN","candidateAdopted":false,"independentReviewSha256":"4f5aa8cf4ef8bec2f66818dd7d5e56ca88d34752072fcb1c8a2157078dfa6fb0","visual":"Selective room-depth benefit; exposed rounded shrub cores/sparse crowns/hedge blocks still toy-like; no art acceptance"},
+  "next": {"retention":"Private small source/CPU TDD proposal in progress; preserve failure report without altering assertion/time/pixel contracts","timing":"Only evidence-led next diagnostic: same-revision terminal callback to settled DOM commit to first successful predicate; no probe executed or product-cause claim","network":"Only next question: correlate exact page-owned FileLoader EOF/arrayBuffer/onLoad with server finish versus early close; no new render authorized"},
+  "tasksDone": 41,
+  "tasksTotal": 58,
+  "passedCommandGates": 27,
+  "totalCommandGates": 32,
+  "phasesClosed": 0,
+  "productionReady": false,
+  "merged": false
+}

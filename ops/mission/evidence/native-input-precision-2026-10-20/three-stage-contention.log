@@ -1,0 +1,14 @@
+
+> web@0.1.0 test:3d:built
+> node scripts/test-three-stage.cjs
+
+PASS desktop canvas effective DPR 1.500
+PASS desktop isolated canvas proof rejects a hidden WebGL canvas
+PASS desktop DOM token selection motion follows full, restrained, and blocked states
+TIMING desktop loc: {"selectionStartedAt":1792545763893,"selectionDeadline":1792545764593,"stabilityBudgetMs":300,"phases":[{"name":"input.dispatch","startedAtMs":0.01890000000003056,"status":"passed","endedAtMs":242.67190000000028,"durationMs":242.65300000000025},{"name":"selection.wait","startedAtMs":242.6791000000003,"status":"passed","endedAtMs":282.89100000000053,"durationMs":40.21190000000024},{"name":"stage.visible.wait","startedAtMs":243.10510000000068,"status":"passed","endedAtMs":282.91310000000067,"durationMs":39.80799999999999},{"name":"settled.wait","startedAtMs":243.30090000000018,"status":"passed","endedAtMs":586.8991999999998,"durationMs":343.59829999999965},{"name":"stage.scroll","startedAtMs":282.9193000000005,"status":"passed","endedAtMs":412.9274999999998,"durationMs":130.0081999999993},{"name":"stage.render.wait","startedAtMs":412.9333999999999,"status":"passed","endedAtMs":416.33629999999994,"durationMs":3.402900000000045},{"name":"stage.mode.read","startedAtMs":416.34709999999995,"status":"passed","endedAtMs":432.29129999999986,"durationMs":15.94419999999991},{"name":"candidate.clip","startedAtMs":587.2449000000006,"status":"passed","endedAtMs":598.0100000000002,"durationMs":10.76509999999962},{"name":"candidate.isolation","startedAtMs":598.0196999999998,"status":"passed","endedAtMs":605.4441999999999,"durationMs":7.42450000000008},{"name":"candidate.capture","timeoutMs":95,"deadline":1792545764593,"startedAtMs":605.4663,"status":"passed","endedAtMs":689.4838,"durationMs":84.01749999999993},{"name":"candidate.restore","startedAtMs":689.5057000000006,"status":"passed","endedAtMs":712.1908000000003,"durationMs":22.685099999999693},{"name":"candidate.decode","startedAtMs":712.2606999999998,"status":"passed","endedAtMs":717.6824000000006,"durationMs":5.421700000000783}]}
+Error: desktop decoded material canvas candidate settled in 718ms, beyond 700ms.
+    at captureSelectionCanvasState (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\test-three-stage.cjs:296:11)
+    at async exerciseSelection (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\test-three-stage.cjs:347:20)
+    at async waitForArtifact (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\test-three-stage.cjs:357:18)
+    at async verifyNormalViewport (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\test-three-stage.cjs:670:53)
+    at async run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\test-three-stage.cjs:720:7)

@@ -1,4 +1,4 @@
-import type { DebtItem, PayoffStrategy } from '@/engine/portfolio';
+import type { DebtItem, PayoffStrategy, PortfolioSimulationResult } from '@/engine/portfolio';
 import type { PortfolioRunChangeDirection, PortfolioRunComparisonStatus } from '@/engine/portfolio-run-diff';
 
 export const ALL_CATEGORIES: DebtItem['category'][] = [
@@ -32,10 +32,14 @@ export function strategyLabel(s: PayoffStrategy): string {
   return 'Avalanche';
 }
 
+export function isCurrentPortfolioTarget(result: PortfolioSimulationResult | undefined, id: string): boolean {
+  return result?.isPayoffPossible === true && result.debtRationales[id]?.isCurrentTarget === true;
+}
+
 export function strategyDescription(s: PayoffStrategy): string {
   if (s === 'velocity') return 'Planning default: ranks debts for cash-flow unlock, then daily interest burn. Compare Simulator cards before treating it as fastest or lowest-interest.';
   if (s === 'snowball') return 'Smallest balance first for fast wins and motivation.';
-  return 'Highest APR first to minimize total interest (classic math-optimal approach).';
+  return 'Highest current modeled APR first. Fees, changing rates and payment timing can change actual results.';
 }
 
 export function debtKindLabel(k: DebtItem['kind']): string {

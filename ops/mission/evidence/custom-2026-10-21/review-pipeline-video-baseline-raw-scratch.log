@@ -1,0 +1,71 @@
+{
+  "baselineHead": "8e2f25ef6b81ffc65b9f96644170834c511078d3",
+  "baselineManifestSha256": "6b66f7fbfd48b2407dd60dfe9f4818894aa5715d55af19dfe1f7a2e3a38188eb",
+  "baselineVideoManifestSha256": "33a19e8fdd7ef9c7b556e287d1c252107210cb4a4bed17283ed2b575978b9e45",
+  "currentVideoManifestSha256": "3ef72fee64543bf9c83fec35efe19743ebde25993f85a34cf10111cd05a49698",
+  "otherNineVideoRecordsAndBytesUnchanged": true,
+  "allTenCurrentVideoBytesMatchRecords": true,
+  "videos": [
+    {
+      "id": "car",
+      "bytes": 9684496,
+      "sha256": "a30b6ecc861cc10ab2df2287cf991a4449ab68b6ce287cabc82abb31f3cea081",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "house",
+      "bytes": 10122824,
+      "sha256": "b54fbf5a0b3e54628939385c801ed9f471ad59cd7c297532a14b3c8d418ead3c",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "land",
+      "bytes": 16507687,
+      "sha256": "dd6206b7064f5b7d2f78ee333c2abdcc723fad4e0f5f32b9de2cee712d61c00a",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "creditCard",
+      "bytes": 3309415,
+      "sha256": "dc5ef1e58e53d73c0fcc365515ed2ab1c4f6c36b01c54ab7e461bfbe428a120f",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "studentLoan",
+      "bytes": 5358977,
+      "sha256": "840ccef6fcbf909654c8808e4cee2e8bfb2b3af5189116492e9ac96ce1142ad1",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "medical",
+      "bytes": 4211775,
+      "sha256": "03e7cb1fecf57875a721585e2a18093f2ed6688baec839db2a6259126ae956da",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "personal",
+      "bytes": 5563251,
+      "sha256": "d56a9ba0b17f0d62cf4a60e878c8366a29b9e209320295c91223ae02d85d4042",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "recreation",
+      "bytes": 4773662,
+      "sha256": "12fecdaf4e2d01b6a42a5d70feab372b29a4b3906d84dfc78580c1157bb880e4",
+      "baselineRecordAndBytesUnchanged": true
+    },
+    {
+      "id": "custom",
+      "bytes": 3958880,
+      "sha256": "7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2",
+      "baselineRecordAndBytesUnchanged": false
+    },
+    {
+      "id": "vault",
+      "bytes": 7038275,
+      "sha256": "5e206f25d6c0acfd5fb1d35acbf9d55b69a6c0f18ea6fa2c1a14d7463b6a7812",
+      "baselineRecordAndBytesUnchanged": true
+    }
+  ]
+}
+

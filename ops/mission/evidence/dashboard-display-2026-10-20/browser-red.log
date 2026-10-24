@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: house: Interest Burn$51/day$51/day debt + $1/day LOC.AssumptionsDaily burn covers the selected target plus current LOC balance, matching this dashboard payoff scope.Actual lenders may post interest monthly and may use different balance rules.
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:65:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

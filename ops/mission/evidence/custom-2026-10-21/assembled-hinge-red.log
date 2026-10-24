@@ -1,0 +1,51 @@
+TAP version 13
+# Subtest: Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+not ok 1 - Custom assembled hinge channel stays empty through every barrel when the pin is excluded
+  ---
+  duration_ms: 108.7951
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:163:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    case, lid and brackets must not occupy the assembled shaft channel
+    
+    8 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 8
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:167:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Custom pin retains positive radial clearance in all five assembled hinge bores
+not ok 2 - Custom pin retains positive radial clearance in all five assembled hinge bores
+  ---
+  duration_ms: 12.3716
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:171:1'
+  failureType: 'testCodeFailure'
+  error: 'positive retained pin/bore clearance, not an allowed interference'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    verify (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:173:324)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:174:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 387.6851

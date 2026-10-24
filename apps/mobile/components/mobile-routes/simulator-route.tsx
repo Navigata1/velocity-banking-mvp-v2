@@ -2,6 +2,9 @@ import {
   buildMobileDashboardSnapshot,
   buildMobileSimulatorSnapshot,
   type MobileSimulatorSnapshot,
+  SIMULATOR_COMPARISON_SCOPE,
+  SIMULATOR_COMPARISON_ASSUMPTIONS,
+  SIMULATOR_COMPARISON_TIMING,
 } from '@interestshield/financial-engine';
 import { Text, View } from 'react-native';
 import { FinancialCard } from '@/components/financial-card';
@@ -11,6 +14,15 @@ function SimulatorStrategyPanel({ simulator }: { simulator: MobileSimulatorSnaps
   return (
     <FinancialCard title="Strategy Comparison">
       <View style={{ gap: 12 }}>
+        <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+          {SIMULATOR_COMPARISON_SCOPE} Traditional pays the active debt first using the full budget. Snowball targets the smaller balance; Avalanche targets the higher APR. Each reserves the loan payment and estimated LOC interest first.
+        </Text>
+        <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+          {SIMULATOR_COMPARISON_ASSUMPTIONS}
+        </Text>
+        <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+          {SIMULATOR_COMPARISON_TIMING}
+        </Text>
         {simulator.strategies.map((strategy) => (
           <View
             key={strategy.name}
@@ -28,6 +40,9 @@ function SimulatorStrategyPanel({ simulator }: { simulator: MobileSimulatorSnaps
             </Text>
             <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
               {strategy.totalInterestLabel} interest. {strategy.statusLabel ?? strategy.interestLabel}
+            </Text>
+            <Text selectable style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 19 }}>
+              {strategy.endingCashLabel}
             </Text>
           </View>
         ))}
@@ -48,7 +63,7 @@ export function SimulatorRoute() {
             <FinancialCard
               title="Current Plan"
               value={snapshot.nextMove}
-              detail={simulator.guardrail ?? snapshot.warning ?? 'Inputs are ready for a simulator pass.'}
+              detail={simulator.guardrail ?? snapshot.warning ?? snapshot.vitals[3].detail}
             />
             <FinancialCard
               title="Velocity Delta"

@@ -1,0 +1,107 @@
+{
+  "referencePngSha256": "54297a9940353fdab05356ebd1649d967d0cf316968b15f496903ec00731b2c1",
+  "referencePixelSha256": "674e6d0beee9142156c5cd99c026d7c3cda2fa0168ba6b8a323de8bad9a58a5c",
+  "bounds": {
+    "rms": 0.25,
+    "max": 1
+  },
+  "rows": [
+    {
+      "quality": 100,
+      "bytes": 294276,
+      "sha256": "c972f1dd1302d0a8989816be60cc90d777998b15a6825b1897116c3b0da226e9",
+      "pixelSha256": "674e6d0beee9142156c5cd99c026d7c3cda2fa0168ba6b8a323de8bad9a58a5c",
+      "angles": {
+        "rms": 2.3116454732048968e-7,
+        "max": 0.0000017075472925031877
+      },
+      "estimatedCarBytes": 2458974,
+      "guard": true
+    },
+    {
+      "quality": 99,
+      "bytes": 236634,
+      "sha256": "1fd35dafeaf7fc2269044bfbae58df5c83b7f874f707b420d5ba137d0d8a2eb5",
+      "pixelSha256": "cbe9baf3938c719bbe4c95f7b0e5c4829fa5b141114aaf09abd0de4269dd77c6",
+      "angles": {
+        "rms": 0.19363093675791576,
+        "max": 0.812984308022403
+      },
+      "estimatedCarBytes": 2401332,
+      "guard": true
+    },
+    {
+      "quality": 95,
+      "bytes": 236634,
+      "sha256": "1fd35dafeaf7fc2269044bfbae58df5c83b7f874f707b420d5ba137d0d8a2eb5",
+      "pixelSha256": "cbe9baf3938c719bbe4c95f7b0e5c4829fa5b141114aaf09abd0de4269dd77c6",
+      "angles": {
+        "rms": 0.19363093675791576,
+        "max": 0.812984308022403
+      },
+      "estimatedCarBytes": 2401332,
+      "guard": true
+    },
+    {
+      "quality": 90,
+      "bytes": 236634,
+      "sha256": "1fd35dafeaf7fc2269044bfbae58df5c83b7f874f707b420d5ba137d0d8a2eb5",
+      "pixelSha256": "cbe9baf3938c719bbe4c95f7b0e5c4829fa5b141114aaf09abd0de4269dd77c6",
+      "angles": {
+        "rms": 0.19363093675791576,
+        "max": 0.812984308022403
+      },
+      "estimatedCarBytes": 2401332,
+      "guard": true
+    },
+    {
+      "quality": 85,
+      "bytes": 236634,
+      "sha256": "1fd35dafeaf7fc2269044bfbae58df5c83b7f874f707b420d5ba137d0d8a2eb5",
+      "pixelSha256": "cbe9baf3938c719bbe4c95f7b0e5c4829fa5b141114aaf09abd0de4269dd77c6",
+      "angles": {
+        "rms": 0.19363093675791576,
+        "max": 0.812984308022403
+      },
+      "estimatedCarBytes": 2401332,
+      "guard": true
+    },
+    {
+      "quality": 80,
+      "bytes": 236634,
+      "sha256": "1fd35dafeaf7fc2269044bfbae58df5c83b7f874f707b420d5ba137d0d8a2eb5",
+      "pixelSha256": "cbe9baf3938c719bbe4c95f7b0e5c4829fa5b141114aaf09abd0de4269dd77c6",
+      "angles": {
+        "rms": 0.19363093675791576,
+        "max": 0.812984308022403
+      },
+      "estimatedCarBytes": 2401332,
+      "guard": true
+    },
+    {
+      "quality": 79,
+      "bytes": 195182,
+      "sha256": "0a464d4ccd9bd567dc3937a006646ea8b0f7f503db83acd3bdeedfc37255a805",
+      "pixelSha256": "572da06d64dadcba9a4ca52c38561edcaacb82d50744d1d35b5e8b4d22e3ab95",
+      "angles": {
+        "rms": 0.3155806799692033,
+        "max": 1.598680157401213
+      },
+      "estimatedCarBytes": 2359880,
+      "guard": false
+    }
+  ],
+  "mechanical": {
+    "bytes": 160840,
+    "sha256": "30ccece15268fc0268e6b53e4ba7b901703b3f983cdc842a0012fc4b19a8c3ae",
+    "pixelSha256": "1198a41a5762aa1a2049c5d94bb088cd554c91d94f28c7d0665fd33f246d855c",
+    "angles": {
+      "rms": 0.40367426225117975,
+      "max": 1.4326773991933692
+    },
+    "newNegativeZ": 0,
+    "oldNegativeZ": 0,
+    "estimatedCarWithBoth": 2338732
+  },
+  "note": "Actual unscaled full-resolution tangent vectors; limits set before measurements. No source/model publication. Geometry/other image quality not traded."
+}

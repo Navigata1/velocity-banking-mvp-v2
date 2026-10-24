@@ -286,7 +286,7 @@ const html = `<!doctype html>
 <style>
 :root{color-scheme:dark;--bg:#070f1c;--paper:#0d1b2f;--paper-2:#10243b;--ink:#eef6ff;--muted:#a9bdd3;--line:rgba(169,189,211,.18);--accent:#58d7b3;--blue:#77b7ff;--amber:#ffd166;--red:#ff8f8f;--good:#8ef2c0}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top left,rgba(88,215,179,.15),transparent 30rem),radial-gradient(circle at top right,rgba(119,183,255,.13),transparent 32rem),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,"Segoe UI",sans-serif;line-height:1.55}
+body{margin:0;background:radial-gradient(circle at top left,rgba(88,215,179,.15),transparent 30rem),radial-gradient(circle at top right,rgba(119,183,255,.13),transparent 32rem),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,"Segoe UI",sans-serif;line-height:1.55;overflow-wrap:anywhere}
 main{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:40px 0 60px}
 h1,h2,h3{margin:0;line-height:1.12}
 h1{font-size:clamp(2rem,5vw,3.8rem);letter-spacing:0;max-width:900px;margin-top:10px;overflow-wrap:anywhere}
@@ -350,7 +350,7 @@ button.copy:hover{background:rgba(88,215,179,.2)}
       ${chip(`active phase: ${resume.activePhase ?? "?"}`, "green")}
       ${chip(`${doneTasks}/${allTasks.length} tasks`, "blue")}
       ${chip(`${passedGates}/${allGates.length} gates passed`, gatesChipTone)}
-      ${chip(`${prLog.length} PRs merged`)}
+      ${chip(`${prLog.length} PRs tracked`)}
       ${chip(`sessions: ${m.sessionCount ?? 1}`)}
       ${chip(`updated: ${m.updated ?? "?"}`)}
     </div>

@@ -1,0 +1,63 @@
+
+> web@0.1.0 test:supabase
+> node scripts/supabase-ci-contract.cjs && node scripts/supabase-schema-contract.cjs && node scripts/supabase-client-contract.cjs && node scripts/snapshot-outbox-contract.cjs && node scripts/supabase-account-contract.cjs && cd ../.. && npx --yes supabase@2.109.1 test db --local supabase/tests
+
+TAP version 13
+# Subtest: standing CI runs a bounded real database isolation job
+ok 1 - standing CI runs a bounded real database isolation job
+  ---
+  duration_ms: 0.920074
+  type: 'test'
+  ...
+# Subtest: database commands pin the CLI and do not select a remote target
+ok 2 - database commands pin the CLI and do not select a remote target
+  ---
+  duration_ms: 0.342739
+  type: 'test'
+  ...
+# Subtest: database job preserves logs and always cleans up only its own project
+ok 3 - database job preserves logs and always cleans up only its own project
+  ---
+  duration_ms: 0.251684
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10.718439
+Supabase schema contract passed 6 owner-scoped tables.
+Supabase web client contract passed verified identity and ordered sync mutations.
+Web snapshot outbox contract passed transactional allocation, retry durability, and conflict blocking.
+Supabase account contract passed stable browser snapshot identity and real settings workflow.
+Connecting to local database...
+Error response from daemon: toomanyrequests: Data limit exceeded
+Error response from daemon: toomanyrequests: Data limit exceeded
+3.36: Pulling from supabase/pg_prove
+dcccee43ad5d: Pulling fs layer
+06d62d0de6d7: Pulling fs layer
+a22cb17b3b93: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+4f4fb700ef54: Waiting
+dcccee43ad5d: Verifying Checksum
+dcccee43ad5d: Download complete
+06d62d0de6d7: Verifying Checksum
+06d62d0de6d7: Download complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+a22cb17b3b93: Download complete
+dcccee43ad5d: Pull complete
+06d62d0de6d7: Pull complete
+a22cb17b3b93: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:eda7c5e68719e9c8287e78c017118407b48df904a51c935f5ab6098b8c0bc6bc
+Status: Downloaded newer image for ghcr.io/supabase/pg_prove:3.36
+ghcr.io/supabase/pg_prove:3.36
+/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/supabase/tests/owner_isolation_test.sql .. ok
+All tests successful.
+Files=1, Tests=63,  0 wallclock secs ( 0.01 usr +  0.01 sys =  0.02 CPU)
+Result: PASS

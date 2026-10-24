@@ -1,0 +1,150 @@
+{
+  "before": {
+    "name": "before-page-settle",
+    "ticks": 21,
+    "clip": {
+      "x": 536,
+      "y": 140,
+      "width": 592,
+      "height": 300
+    },
+    "foreground": 0,
+    "percent": 0,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "FIGURE",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "0",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      }
+    ]
+  },
+  "after": {
+    "name": "after-page-settle",
+    "ticks": 2,
+    "clip": {
+      "x": 536,
+      "y": 140,
+      "width": 592,
+      "height": 300
+    },
+    "foreground": 26132,
+    "percent": 14.713963963963964,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "FIGURE",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "opacity": "1",
+        "visibility": "visible",
+        "transform": "none"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+FAIL legacy APR draft single-scenario editor selects the legacy unit policy explicitly: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   'percent'
+-   'legacy-percent'
+  ]
+
+FAIL legacy APR draft legacy fraction and percent representations display their modeled rate: Expected values to be strictly equal:
+
+'0.005' !== '0.5'
+
+FAIL legacy APR draft changed rates up to100 percent store a legacy-compatible fraction: Expected values to be strictly equal:
+
+0.5 !== 0.005
+
+PASS legacy APR draft changed rates above100 percent retain a legacy percentage representation
+PASS legacy APR draft exact and equivalent no-ops preserve original legacy bytes
+FAIL legacy APR draft equivalent leading and trailing zeros do not migrate a legacy record: Expected values to be strictly equal:
+
+6.9 !== 0.069
+
+PASS legacy APR draft canonical Portfolio decimal APRs remain a separate unchanged policy
+PASS legacy APR draft stored ambiguous legacy2 is not retroactively reinterpreted as200 percent
+PASS legacy APR draft all supported displayed source values round-trip without overflow
+PASS legacy APR draft malformed drafts retain the exact previous raw value
+PASS legacy APR draft overflow, meaningful underflow and precision loss do not silently save
+FAIL legacy APR draft bounds compare modeled rates instead of mixed raw scalar order: Expected values to be strictly equal:
++ actual - expected
+
++ 'Input range is invalid.'
+- null
+
+FAIL legacy APR draft invalid semantic ranges fail and boundary messages use actual percent: The input did not match the regular expression /range is invalid/. Input:
+
+'Enter at most 2.'
+
+PASS legacy APR draft unmodified out-of-range legacy records remain exact rather than clamped
+FAIL legacy APR draft entered rates agree across display, dashboard and explicit Portfolio copy: Expected values to be strictly equal:
+
+0.5 !== 0.005
+
+15 legacy APR draft contracts failed.

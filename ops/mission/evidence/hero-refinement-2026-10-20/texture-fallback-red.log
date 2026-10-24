@@ -1,0 +1,11 @@
+PASS network failure preserves studio artwork and releases the stage
+locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for getByRole('status').filter({ hasText: '3D unavailable' }) to be visible
+
+    at run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\hero-fallback-smoke.cjs:24:76) {
+  log: [
+    "  - waiting for getByRole('status').filter({ hasText: '3D unavailable' }) to be visible"
+  ],
+  name: 'TimeoutError'
+}

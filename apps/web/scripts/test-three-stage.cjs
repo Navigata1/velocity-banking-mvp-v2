@@ -4,6 +4,8 @@ const path = require('node:path');
 const { chromium } = require('playwright-core');
 const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-harness.cjs');
 const { createGracefulShutdown, startBuiltServer, stopServer } = require('./built-server-harness.cjs');
+const { createPhaseTiming } = require('./three-stage-timing.cjs');
+const { createFailureEvidence } = require('./three-stage-failure-evidence.cjs');
 const {
   MAX_SETTLED_SPATIAL_CELL_DISTANCE,
   MAX_SETTLED_SPATIAL_MEAN_DISTANCE,
@@ -17,6 +19,7 @@ const {
 
 const appRoot = path.resolve(__dirname, '..');
 const evidenceDirectory = path.join(appRoot, 'test-results', 'three-stage');
+const failureEvidence = createFailureEvidence(evidenceDirectory);
 const SELECTION_SETTLE_BUDGET_MS = 700;
 const STABILITY_CONFIRMATION_BUDGET_MS = 300;
 const normalViewports = [
@@ -45,26 +48,23 @@ const shutdown = createGracefulShutdown({
   exit: (code) => process.exit(code),
 });
 
-process.once('SIGINT', () => { void shutdown(130); });
-process.once('SIGTERM', () => { void shutdown(143); });
-
 function remainingTimeout(deadline) {
   return Math.max(1, deadline - Date.now());
 }
 
-async function waitForNormalStage(page, viewportLabel, expectedRenderMode, timeout = 15000) {
+async function waitForNormalStage(page, viewportLabel, expectedRenderMode, timeout = 15000, timing = createPhaseTiming()) {
   const stage = page.getByTestId('money-loop-three-stage');
-  await stage.waitFor({ state: 'visible', timeout });
-  await stage.scrollIntoViewIfNeeded({ timeout });
-  await page.waitForFunction((expectedMode) => {
+  await timing.measure('stage.visible.wait', () => stage.waitFor({ state: 'visible', timeout }));
+  await timing.measure('stage.scroll', () => stage.scrollIntoViewIfNeeded({ timeout }));
+  await timing.measure('stage.render.wait', () => page.waitForFunction((expectedMode) => {
     const stageNode = document.querySelector('[data-testid="money-loop-three-stage"]');
     const canvas = stageNode?.querySelector('canvas');
     return stageNode?.getAttribute('data-render-mode') === expectedMode &&
       stageNode.getAttribute('data-should-render') === 'true' &&
       canvas instanceof HTMLCanvasElement &&
       getComputedStyle(canvas).opacity === '1';
-  }, expectedRenderMode, { timeout });
-  const mode = await stage.getAttribute('data-render-mode');
+  }, expectedRenderMode, { timeout }));
+  const mode = await timing.measure('stage.mode.read', () => stage.getAttribute('data-render-mode'));
   if (mode !== expectedRenderMode) throw new Error(`${viewportLabel} expected ${expectedRenderMode} render mode but received ${mode ?? 'no'}.`);
   return stage;
 }
@@ -160,38 +160,57 @@ function proveCanvasPng(screenshot, viewportLabel) {
   return proof;
 }
 
-async function resolveCanvasClip(page, viewportLabel) {
-  const canvas = page.getByTestId('money-loop-three-stage').locator('canvas');
-  const box = await canvas.boundingBox();
-  const viewport = await page.evaluate(() => ({ height: window.innerHeight, scrollY: window.scrollY, width: window.innerWidth }));
-  if (!box || box.width <= 0 || box.height <= 0 || box.x < 0 || box.y < 0 || box.x + box.width > viewport.width || box.y + box.height > viewport.height) {
+function validateCanvasClip({ box, viewport, scrollY }, viewportLabel) {
+  if (!box || ![box.x, box.y, box.width, box.height, viewport.width, viewport.height, scrollY].every(Number.isFinite) ||
+      box.width <= 0 || box.height <= 0 || viewport.width <= 0 || viewport.height <= 0 ||
+      box.x < 0 || box.y < 0 || box.x + box.width > viewport.width || box.y + box.height > viewport.height) {
     throw new Error(`${viewportLabel} canvas was not fully visible for clipped PNG capture.`);
   }
-  return { box, scrollY: viewport.scrollY };
+  return { box, scrollY };
 }
 
-async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null) {
-  const canvasClip = clip ?? await resolveCanvasClip(page, viewportLabel);
+async function resolveCanvasClip(page, viewportLabel) {
+  const canvas = page.getByTestId('money-loop-three-stage').locator('canvas');
+  const snapshot = await canvas.evaluate(node => {
+    const rect = node.getBoundingClientRect();
+    return { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
+  });
+  return validateCanvasClip(snapshot, viewportLabel);
+}
+
+async function captureCanvasElementPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas') {
+  const canvasClip = clip ?? await timing.measure(`${phase}.clip`, () => resolveCanvasClip(page, viewportLabel));
   let screenshot;
+  const timeoutMs = remainingTimeout(deadline);
   try {
-    screenshot = await page.screenshot({ clip: canvasClip.box, scale: 'css', timeout: remainingTimeout(deadline) });
+    screenshot = await timing.measure(`${phase}.capture`, () => page.screenshot({ clip: canvasClip.box, scale: 'css', timeout: timeoutMs }), { timeoutMs, deadline });
   } catch (error) {
-    throw new Error(`${viewportLabel} clipped canvas PNG capture started with ${remainingTimeout(deadline)}ms remaining: ${error.message}`);
+    throw new Error(`${viewportLabel} clipped canvas PNG capture started with ${timeoutMs}ms remaining: ${error.message}`, { cause: error });
   }
   const completedAt = Date.now();
+  failureEvidence.capture(phase, screenshot);
   if (completedAt > deadline) throw new Error(`${viewportLabel} canvas PNG capture completed after its deadline.`);
   return { canvasClip, completedAt, screenshot };
 }
 
-async function hideCanvasOverlaysForPixelCapture(page) {
-  return page.evaluate(() => {
-    const canvas = document.querySelector('[data-testid="money-loop-three-stage"] canvas');
+async function hideCanvasOverlaysForPixelCapture(page, includeClip, previousClip) {
+  return page.evaluate(({ includeClip, previousClip }) => {
+    const canvases = document.querySelectorAll('[data-testid="money-loop-three-stage"] canvas');
     const stage = document.querySelector('[data-testid="money-loop-three-stage"]');
     const orbit = document.querySelector('[data-testid="money-loop-payoff-orbit"]');
-    if (!(canvas instanceof HTMLCanvasElement) || !(stage instanceof HTMLElement) || !(orbit instanceof HTMLElement)) {
-      throw new Error('Money Loop canvas isolation could not find the canvas, stage, and orbit.');
+    const canvas = canvases[0];
+    if (canvases.length !== 1 || !(canvas instanceof HTMLCanvasElement) || !canvas.isConnected ||
+        !(stage instanceof HTMLElement) || !(orbit instanceof HTMLElement) || !stage.contains(canvas)) {
+      throw new Error('Money Loop canvas isolation could not find one connected canvas in the stage and orbit.');
     }
     const canvasRect = canvas.getBoundingClientRect();
+    const usePreviousClip = previousClip != null && Math.abs(window.scrollY - previousClip.scrollY) < 1;
+    // The selection caller's fresh crop was measured before isolation, not after it.
+    let snapshot = includeClip && previousClip != null && !usePreviousClip ? {
+      box: { x: canvasRect.left, y: canvasRect.top, width: canvasRect.width, height: canvasRect.height },
+      viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY,
+    } : undefined;
     const overlapsCanvas = (rect) => rect.left < canvasRect.right && rect.right > canvasRect.left && rect.top < canvasRect.bottom && rect.bottom > canvasRect.top;
     const hidden = [];
     let isolatedSvgOverlayCount = 0;
@@ -199,6 +218,7 @@ async function hideCanvasOverlaysForPixelCapture(page) {
       priority: stage.style.getPropertyPriority('background-color'),
       value: stage.style.getPropertyValue('background-color'),
     };
+    window.__moneyLoopPixelCaptureOverlays = { hidden, stageBackground };
     stage.style.setProperty('background-color', 'rgb(0 0 0)', 'important');
     for (const node of orbit.children) {
       if (!(node instanceof HTMLElement || node instanceof SVGElement) || node === stage || node.contains(stage)) continue;
@@ -208,9 +228,13 @@ async function hideCanvasOverlaysForPixelCapture(page) {
       if (node instanceof SVGElement) isolatedSvgOverlayCount += 1;
       node.style.setProperty('visibility', 'hidden', 'important');
     }
-    window.__moneyLoopPixelCaptureOverlays = { hidden, stageBackground };
-    return { hiddenOverlayCount: hidden.length, isolatedSvgOverlayCount };
-  });
+    if (includeClip && previousClip == null) {
+      const rect = canvas.getBoundingClientRect();
+      snapshot = { box: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+        viewport: { width: window.innerWidth, height: window.innerHeight }, scrollY: window.scrollY };
+    }
+    return { hiddenOverlayCount: hidden.length, isolatedSvgOverlayCount, snapshot, usePreviousClip };
+  }, { includeClip, previousClip });
 }
 
 async function restoreCanvasOverlaysAfterPixelCapture(page) {
@@ -230,14 +254,15 @@ async function restoreCanvasOverlaysAfterPixelCapture(page) {
   });
 }
 
-async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null) {
-  const isolation = await hideCanvasOverlaysForPixelCapture(page);
-  try {
+async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas', previousClip = null) {
+  return failureEvidence.guard(async () => {
+    const { snapshot, usePreviousClip, ...isolation } = await timing.measure(`${phase}.isolation`, () => hideCanvasOverlaysForPixelCapture(page, clip == null, previousClip));
     if (isolation.isolatedSvgOverlayCount < 1) throw new Error(`${viewportLabel} canvas isolation did not hide an overlapping SVG orbit overlay.`);
-    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, clip), isolation };
-  } finally {
-    await restoreCanvasOverlaysAfterPixelCapture(page);
-  }
+    const canvasClip = clip ?? timing.measureSync(`${phase}.clip`, () => usePreviousClip ? previousClip : validateCanvasClip(snapshot, viewportLabel));
+    return { ...await captureCanvasElementPng(page, viewportLabel, deadline, canvasClip, timing, phase), isolation };
+  }, async () => {
+    await timing.measure(`${phase}.restore`, () => restoreCanvasOverlaysAfterPixelCapture(page));
+  });
 }
 
 async function captureCanvasElementPngProof(page, viewportLabel, deadline, clip = null) {
@@ -250,15 +275,8 @@ async function captureCanvasElementPngProof(page, viewportLabel, deadline, clip 
   }
 }
 
-async function restoreOrResolveCanvasClip(page, viewportLabel, previousClip) {
-  const scrollY = await page.evaluate(() => window.scrollY);
-  return Math.abs(scrollY - previousClip.scrollY) < 1
-    ? previousClip
-    : resolveCanvasClip(page, viewportLabel);
-}
-
-async function restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline) {
-  await waitForNormalStage(page, viewportLabel, expectedRenderMode, remainingTimeout(deadline));
+async function restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline, timing = createPhaseTiming()) {
+  await waitForNormalStage(page, viewportLabel, expectedRenderMode, remainingTimeout(deadline), timing);
 }
 
 async function waitForStageSettled(page, artifactId, deadline) {
@@ -280,11 +298,11 @@ function formatSpatialDistance(distance) {
   return `max ${distance.maxCellDistance.toFixed(2)}, mean ${distance.meanCellDistance.toFixed(2)}, changed cells ${distance.changedCellCount}`;
 }
 
-async function captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, preClickFingerprint, preClickDescriptor, preClickClip) {
+async function captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, preClickFingerprint, preClickDescriptor, preClickClip, timing = createPhaseTiming()) {
   const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
-  const canvasClip = await restoreOrResolveCanvasClip(page, viewportLabel, preClickClip);
-  const candidateCapture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, canvasClip);
-  const candidatePixels = { ...candidateCapture, ...proveCanvasPng(candidateCapture.screenshot, viewportLabel) };
+  const candidateCapture = await captureIsolatedCanvasPng(page, viewportLabel, deadline, null, timing, 'candidate', preClickClip);
+  const canvasClip = candidateCapture.canvasClip;
+  const candidatePixels = { ...candidateCapture, ...timing.measureSync('candidate.decode', () => proveCanvasPng(candidateCapture.screenshot, viewportLabel)) };
   const candidateMaterialDistance = compareSpatialDescriptors(preClickDescriptor, candidatePixels.stabilityDescriptor);
   if (candidatePixels.identitySignature === preClickFingerprint || !hasMaterialSpatialChange(candidateMaterialDistance)) {
     throw new Error(`${viewportLabel} decoded candidate did not materially change from the pre-selection canvas: ${formatSpatialDistance(candidateMaterialDistance)}; material limits require max >= ${MIN_MATERIAL_SPATIAL_CELL_DISTANCE} and changed cells >= ${MIN_MATERIAL_SPATIAL_CHANGED_CELL_COUNT}.`);
@@ -297,11 +315,11 @@ async function captureSelectionCanvasState(page, viewportLabel, selectionStarted
   const confirmationDeadline = settledAt + STABILITY_CONFIRMATION_BUDGET_MS;
   let confirmationCapture;
   try {
-    confirmationCapture = await captureIsolatedCanvasPng(page, viewportLabel, confirmationDeadline, canvasClip);
+    confirmationCapture = await captureIsolatedCanvasPng(page, viewportLabel, confirmationDeadline, canvasClip, timing, 'confirmation');
   } catch (error) {
-    throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation missed its ${STABILITY_CONFIRMATION_BUDGET_MS}ms bound: ${error.message}`);
+    throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation missed its ${STABILITY_CONFIRMATION_BUDGET_MS}ms bound: ${error.message}`, { cause: error });
   }
-  const confirmationPixels = { ...confirmationCapture, ...proveCanvasPng(confirmationCapture.screenshot, viewportLabel) };
+  const confirmationPixels = { ...confirmationCapture, ...timing.measureSync('confirmation.decode', () => proveCanvasPng(confirmationCapture.screenshot, viewportLabel)) };
   const stableThrough = Date.now();
   if (stableThrough > confirmationDeadline) {
     throw new Error(`${viewportLabel} candidate settled in ${settledAtMs}ms, but stability confirmation completed ${stableThrough - settledAt}ms later, beyond ${STABILITY_CONFIRMATION_BUDGET_MS}ms.`);
@@ -329,19 +347,27 @@ async function waitForArtifactSelection(page, artifactId, geometry, timeout) {
 }
 
 async function exerciseSelection(page, viewportLabel, expectedRenderMode, artifactId, geometry, trigger) {
+  failureEvidence.begin(viewportLabel, artifactId);
   const preClickDeadline = Date.now() + 5000;
   await restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, preClickDeadline);
   await prepareStageAndTargetForClick(page, artifactId);
   const before = await captureCanvasElementPngProof(page, viewportLabel, preClickDeadline);
   const selectionStartedAt = Date.now();
-  await trigger();
-  const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
-  const selectionProof = waitForArtifactSelection(page, artifactId, geometry, remainingTimeout(deadline));
-  const restoredStage = restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline);
-  const settledStage = waitForStageSettled(page, artifactId, deadline);
-  await Promise.all([selectionProof, restoredStage, settledStage]);
-  const pixels = await captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, before.identitySignature, before.stabilityDescriptor, before.canvasClip);
-  return { pixels, pngProof: pixels, settledAtMs: pixels.settledAtMs, stableThroughMs: pixels.stableThroughMs };
+  const timing = createPhaseTiming();
+  failureEvidence.track(selectionStartedAt, timing, SELECTION_SETTLE_BUDGET_MS, STABILITY_CONFIRMATION_BUDGET_MS);
+  try {
+    await timing.measure('input.dispatch', trigger);
+    const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
+    const selectionProof = timing.measure('selection.wait', () => waitForArtifactSelection(page, artifactId, geometry, remainingTimeout(deadline)));
+    const restoredStage = restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, deadline, timing);
+    const settledStage = timing.measure('settled.wait', () => waitForStageSettled(page, artifactId, deadline));
+    await Promise.all([selectionProof, restoredStage, settledStage]);
+    const pixels = await captureSelectionCanvasState(page, viewportLabel, selectionStartedAt, before.identitySignature, before.stabilityDescriptor, before.canvasClip, timing);
+    return { pixels, pngProof: pixels, settledAtMs: pixels.settledAtMs, stableThroughMs: pixels.stableThroughMs };
+  } finally {
+    // Parallel waits overlap; running phases have no end timestamp if another wait failed first.
+    console.log(`TIMING ${viewportLabel} ${artifactId}: ${JSON.stringify({ selectionStartedAt, selectionDeadline: selectionStartedAt + SELECTION_SETTLE_BUDGET_MS, stabilityBudgetMs: STABILITY_CONFIRMATION_BUDGET_MS, phases: timing.phases })}`);
+  }
 }
 
 async function waitForArtifact(page, artifactId, geometry, viewportLabel, expectedRenderMode, selectionFingerprints) {
@@ -391,6 +417,7 @@ async function assertDomTokenSelectionMotion(page, viewportLabel, expectedRender
     }));
   });
   await page.reload({ waitUntil: 'networkidle' });
+  await page.getByText('Explore the Money Loop', { exact: true }).click();
   await waitForNormalStage(page, viewportLabel, expectedRenderMode);
   await waitForStageSettled(page, 'income', Date.now() + 15000);
   await assertMotion('loc', 'credit-aperture', 'restrained-turn', 'artifactSpinSelectHalf');
@@ -639,6 +666,7 @@ async function installCapableHardwareHints(context) {
 }
 
 async function verifyNormalViewport(browser, origin, viewportLabel, viewport, expectedRenderMode, expectedDpr) {
+  failureEvidence.begin(viewportLabel);
   const context = await browser.newContext({ deviceScaleFactor: 2, viewport, reducedMotion: 'no-preference' });
   await installCapableHardwareHints(context);
   const page = await context.newPage();
@@ -647,9 +675,10 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
   const onPageError = (error) => browserErrors.push(error.message);
   page.on('console', onConsole);
   page.on('pageerror', onPageError);
-  try {
+  return failureEvidence.guard(async () => {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`${viewportLabel} dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
+    await page.getByText('Explore the Money Loop', { exact: true }).click();
     await waitForNormalStage(page, viewportLabel, expectedRenderMode);
     await waitForStageSettled(page, 'income', Date.now() + 15000);
     const webgl2 = await assertGenuineWebgl2(page, viewportLabel);
@@ -667,19 +696,21 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
     const screenshotPath = path.join(evidenceDirectory, `${viewportLabel}.png`);
     await writeVerifiedScreenshot(page, screenshotPath, viewport.width, viewport.height);
     console.log(`PASS ${viewportLabel} ${expectedRenderMode} WebGL2 ${webgl2.renderer}; screenshot ${screenshotPath}`);
-  } finally {
+  }, async () => {
     page.off('console', onConsole);
     page.off('pageerror', onPageError);
     await context.close();
-  }
+  });
 }
 
 async function verifyReducedMotionFallback(browser, origin) {
+  failureEvidence.begin('reduced-motion');
   const context = await browser.newContext({ deviceScaleFactor: 2, viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   const page = await context.newPage();
-  try {
+  return failureEvidence.guard(async () => {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`reduced-motion dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
+    await page.getByText('Explore the Money Loop', { exact: true }).click();
     const stage = page.getByTestId('money-loop-three-stage');
     await stage.waitFor({ state: 'visible', timeout: 15000 });
     await stage.scrollIntoViewIfNeeded();
@@ -690,9 +721,9 @@ async function verifyReducedMotionFallback(browser, origin) {
     if ((await loc.getAttribute('aria-selected')) !== 'true') throw new Error('reduced-motion fallback did not preserve the DOM artifact controls.');
     await writeVerifiedScreenshot(page, path.join(evidenceDirectory, 'reduced-motion-static.png'), 1440, 900);
     console.log('PASS reduced-motion static fallback has no WebGL canvas and preserves DOM tabs');
-  } finally {
+  }, async () => {
     await context.close();
-  }
+  });
 }
 
 async function run() {
@@ -701,7 +732,7 @@ async function run() {
   if (!executablePath) throw new Error('No system Chrome, Chromium, or Edge executable was found. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH to override discovery.');
   fs.rmSync(evidenceDirectory, { recursive: true, force: true });
   fs.mkdirSync(evidenceDirectory, { recursive: true });
-  try {
+  return failureEvidence.guard(async () => {
     const started = await startBuiltServer(appRoot);
     activeServer = started.server;
     activeBrowser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
@@ -709,16 +740,23 @@ async function run() {
       await verifyNormalViewport(activeBrowser, started.origin, viewportLabel, viewport, expectedRenderMode, expectedDpr);
     }
     await verifyReducedMotionFallback(activeBrowser, started.origin);
+    failureEvidence.begin('selection-workflows');
+    await require('./smoke-three-selection.cjs').runSelectionSmoke({ browser: activeBrowser, origin: started.origin, output: path.join(evidenceDirectory, 'selection') });
     console.log(`Three-stage screenshots: ${evidenceDirectory}`);
-  } finally {
-    await activeBrowser?.close();
-    activeBrowser = undefined;
-    await stopServer(activeServer);
-    activeServer = undefined;
-  }
+  }, () => failureEvidence.guard(async () => {
+    await activeBrowser?.close(); activeBrowser = undefined;
+  }, async () => {
+    await stopServer(activeServer); activeServer = undefined;
+  }));
 }
 
-run().catch((error) => {
-  console.error(error.stack || error.message);
-  process.exitCode = 1;
-});
+module.exports = { waitForNormalStage, waitForStageSettled, assertGenuineWebgl2, captureIsolatedCanvasPng, proveCanvasPng, prepareStageAndTargetForClick };
+if (require.main === module) {
+  process.once('SIGINT', () => { void shutdown(130); });
+  process.once('SIGTERM', () => { void shutdown(143); });
+  run().catch((error) => {
+    failureEvidence.write(error);
+    console.error(error.stack || error.message);
+    process.exitCode = 1;
+  });
+}

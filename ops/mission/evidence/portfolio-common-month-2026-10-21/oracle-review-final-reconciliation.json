@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-21T12:57:44.234Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "files": 239,
+  "changesSinceOracleStart": [
+    {
+      "file": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+      "before": "8dd2a4063061f203454e1a001c382c7540d5e48110a5b399190d1f60af8d97a5",
+      "after": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2"
+    }
+  ],
+  "changesSincePriorFailedFreeze": [
+    {
+      "file": "apps/web/scripts/portfolio-common-month-reference-tests.cjs",
+      "before": "15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd",
+      "after": "d6655109cfb91f96f832cc720f7d0a71b38e57857e7bc556b81a6c77d6e6e9ec"
+    },
+    {
+      "file": "apps/web/scripts/smoke-portfolio-common-month.cjs",
+      "before": "8dd2a4063061f203454e1a001c382c7540d5e48110a5b399190d1f60af8d97a5",
+      "after": "a936228c293cbee4fa56d1a67cb323122f85d1a8b99afaa53ce70b289c9b41b2"
+    }
+  ],
+  "reviewInputChanges": [],
+  "preservedPriorFailedFreeze": true,
+  "browserChangeReversedExactly": true
+}

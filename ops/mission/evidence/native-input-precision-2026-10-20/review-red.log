@@ -1,0 +1,52 @@
+PASS native input money preserves cents and sub-cent values
+PASS native input percentage display shifts decimal without multiplication noise
+PASS native input small and large scientific representations expand without losing their value
+PASS native input all no-op kinds retain the original exact IEEE value
+PASS native input money draft is interpreted only as the completed number
+PASS native input percentage entry shifts exact decimal before Number conversion
+PASS native input valid grouped USD money paste is supported
+PASS native input empty, incomplete, negative and malformed drafts preserve previous value
+PASS native input fractional and unsafe whole-number changes do not silently round
+PASS native input overflow and meaningful underflow are rejected instead of saved as infinity or zero
+PASS native input zero is an explicit valid edit
+PASS native input form resets with account scope and disabled edits cannot commit
+FAIL native input new money edits reject decimal precision already lost during Number conversion: Expected values to be strictly equal:
++ actual - expected
+
++ 100000000000000.02
+- 120.7
+
+FAIL native input fractional whole-number digits cannot disappear in IEEE conversion: Expected values to be strictly equal:
+
+12 !== 60
+
+FAIL native input ambiguous comma keyboard amounts never silently become thousandfold values: Expected values to be strictly equal:
+
+120700 !== 120.7
+
+node:assert:150
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: 3 native input draft contracts failed
+
+3 !== 0
+
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\financial-input-draft-contract.cjs:93:8)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

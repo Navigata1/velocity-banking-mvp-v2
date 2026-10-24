@@ -1,0 +1,50 @@
+async function vitalLayout(page, width) {
+  const prefix = width < 768 ? 'dashboard-mobile-vital-' : 'dashboard-vital-';
+  return page.locator(`[data-testid^="${prefix}"]`).evaluateAll((articles) => articles.map((article) => {
+    const [label, value] = article.querySelectorAll('p'), card = article.getBoundingClientRect();
+    const inspect = (element) => {
+      const text = element.textContent, box = element.getBoundingClientRect(), chars = [], clips = [];
+      let visible = true;
+      for (let ancestor = element; ancestor; ancestor = ancestor.parentElement) {
+        const style = getComputedStyle(ancestor), rect = ancestor.getBoundingClientRect();
+        visible &&= style.visibility === 'visible' && style.display !== 'none' && Number(style.opacity) >= 0.99;
+        clips.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom,
+          x: style.overflowX !== 'visible', y: style.overflowY !== 'visible' });
+      }
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) for (let offset = 0; offset < node.length; offset++) {
+        const range = document.createRange(); range.setStart(node, offset); range.setEnd(node, offset + 1);
+        const rect = range.getBoundingClientRect();
+        chars.push({ left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, height: rect.height });
+      }
+      const tokens = [...text.matchAll(/<?\$[\d,]+(?:\.\d+)?|\/day|[A-Za-z]+/g)].map((match) => {
+        const rects = chars.slice(match.index, match.index + match[0].length);
+        return { text: match[0], oneLine: rects.length > 0 && rects.every(r => r.height > 0 && Math.abs(r.top - rects[0].top) <= 1),
+          contained: rects.every(r => r.left >= Math.max(box.left, card.left) - 1 && r.right <= Math.min(box.right, card.right) + 1 &&
+            r.top >= Math.max(box.top, card.top) - 1 && r.bottom <= Math.min(box.bottom, card.bottom) + 1 &&
+            clips.every(c => (!c.x || (r.left >= c.left - 1 && r.right <= c.right + 1)) && (!c.y || (r.top >= c.top - 1 && r.bottom <= c.bottom + 1)))) };
+      });
+      return { text, tokens, visible, glyphTop: Math.min(...chars.map(r => r.top)), glyphBottom: Math.max(...chars.map(r => r.bottom)),
+        fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
+        fits: element.scrollWidth <= element.clientWidth + 1 };
+    };
+    return { id: article.dataset.testid, label: inspect(label), value: inspect(value),
+      inViewport: card.width > 0 && card.height > 0 && card.left >= -1 && card.right <= innerWidth + 1 && card.top >= -1 && card.bottom <= innerHeight,
+      width: card.width, height: card.height };
+  }));
+}
+
+function assertVitalLayout(layout, context) {
+  assert.equal(layout.length, 4, context + ': all four vitals remain visible');
+  assert.deepEqual(layout.map(v => v.label.text.trim()), ['Cash Flow', 'Interest Burn', 'Debt-Free ETA', 'Next Move']);
+  for (const vital of layout) for (const part of ['label', 'value']) {
+    assert.ok(vital.inViewport, context + ': all four vitals stay in the first viewport');
+    assert.ok(vital.label.glyphBottom <= vital.value.glyphTop + 1, context + ': label and value glyphs must not overlap');
+    const result = vital[part];
+    assert.ok(result.visible && result.fits && result.tokens.length > 0 && result.tokens.every(t => t.oneLine && t.contained),
+      `${context}: ${vital.id} ${part} must fit without splitting tokens: ${JSON.stringify(result)}`);
+    if (part === 'value') assert.ok(result.fontSize >= 12, context + ': value text stays readable');
+  }
+}
+

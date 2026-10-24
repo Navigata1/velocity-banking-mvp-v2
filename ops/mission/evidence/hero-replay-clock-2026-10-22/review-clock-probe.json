@@ -1,0 +1,57 @@
+{
+  "kind": "bounded CPU-only in-memory candidate and negative controls",
+  "baseline": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+  "sourceSha256": "09134334a2f0b7a1abb97a07ffdd0c915078423fdc2e77f92dc7595619bbd0c5",
+  "testSha256": "9881504b4114d958c26d7d4bd44c0b24b5389804367e8f317a1d188da3be68b5",
+  "actualPatchSha256": "b07901d78c6f6ee9726d16645df78700b7363dc4313315524cecf254601783a6",
+  "inMemoryCandidateSha256": "b07901d78c6f6ee9726d16645df78700b7363dc4313315524cecf254601783a6",
+  "cases": [
+    {
+      "label": "untouched-current-source-RED",
+      "exitCode": 1,
+      "messages": [
+        "Error: Cannot fast-forward to the past"
+      ]
+    },
+    {
+      "label": "exact-three-deletions-in-memory-GREEN",
+      "exitCode": 0,
+      "messages": [
+        "PASS hero replay clock: one paused sample, no resume or re-pause before Replay",
+        "PASS hero replay clock: original 16ms primer and 15x100ms samples retained",
+        "PASS hero replay clock negative controls: delayed re-pause and premature caller resume rejected"
+      ]
+    },
+    {
+      "label": "actual-tracked-patch-GREEN",
+      "exitCode": 0,
+      "messages": [
+        "PASS hero replay clock: one paused sample, no resume or re-pause before Replay",
+        "PASS hero replay clock: original 16ms primer and 15x100ms samples retained",
+        "PASS hero replay clock negative controls: delayed re-pause and premature caller resume rejected"
+      ]
+    },
+    {
+      "label": "restore-only-helper-repause-RED",
+      "exitCode": 1,
+      "messages": [
+        "Error: Cannot fast-forward to the past"
+      ]
+    },
+    {
+      "label": "restore-only-domain-resume-RED",
+      "exitCode": 1,
+      "messages": [
+        "AssertionError [ERR_ASSERTION]: callers must not resume between the original capture and Replay\n\n1 !== 0\n"
+      ]
+    },
+    {
+      "label": "restore-only-vault-resume-RED",
+      "exitCode": 1,
+      "messages": [
+        "AssertionError [ERR_ASSERTION]: callers must not resume between the original capture and Replay\n\n1 !== 0\n"
+      ]
+    }
+  ],
+  "disclaimer": "No browser, GPU, server, network, tracked writes, or end-to-end validation. Protocol-only proof."
+}

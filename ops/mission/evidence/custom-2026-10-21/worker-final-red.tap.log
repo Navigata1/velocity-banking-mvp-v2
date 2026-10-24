@@ -1,0 +1,325 @@
+TAP version 13
+# Subtest: Custom replaces the study with hash-protected procedural original refinement in both manifests
+not ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests
+  ---
+  duration_ms: 18.4478
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:87:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom must replace the untextured study
+    + actual - expected
+    
+    + undefined
+    - 'refined-textured'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'refined-textured'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:88:56)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+not ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow
+  ---
+  duration_ms: 6.6301
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:95:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    four real PBR triplets replace flat study materials
+    
+    0 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:96:169)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+not ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell
+  ---
+  duration_ms: 12.3101
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Case
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:109:47)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom dark dial is a closed seated cylinder with its top near author Y .264
+not ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264
+  ---
+  duration_ms: 7.1886
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:112:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:113:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom rose is a closed raised faceted metal eight-point body seated on the dial
+not ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial
+  ---
+  duration_ms: 40.3496
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:117:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:120:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+not ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks
+  ---
+  duration_ms: 8.1995
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:124:44)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+not ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group
+  ---
+  duration_ms: 6.7887
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:130:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:131:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom axle and pivot physically connect the dial and both needle roots
+not ok 8 - Custom axle and pivot physically connect the dial and both needle roots
+  ---
+  duration_ms: 10.3408
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:137:98)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom transparent closed lens covers the complete needle and pivot without intersecting them
+not ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them
+  ---
+  duration_ms: 5.9272
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:141:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:142:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+not ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y
+  ---
+  duration_ms: 5.6848
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:148:79)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+not ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin
+  ---
+  duration_ms: 24.863
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:153:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:155:40)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+not ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints
+  ---
+  duration_ms: 17.8279
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:166:73)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom front lug physically seats the closed bail with a real empty ring aperture
+not ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture
+  ---
+  duration_ms: 4.0314
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:170:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Custom refinement requires one rendered C-Assembly
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:171:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+not ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication
+  ---
+  duration_ms: 14.3458
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\custom-refinement.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: 'Custom refinement requires a protected imported record'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:180:51)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 0
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 342.721

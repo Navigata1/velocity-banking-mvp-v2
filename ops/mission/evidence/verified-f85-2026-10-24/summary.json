@@ -1,0 +1,210 @@
+{
+  "at": "2026-10-24T16:03:11.951Z",
+  "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+  "status": "VERIFIED_CODE_CHECKPOINT_NOT_PRODUCTION",
+  "ci": {
+    "at": "2026-10-24T15:59:38.943Z",
+    "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+    "packetSHA256": "e26db52d84e2f9c975b895c4967786a217e0be071bc56fd28e127a9b6537a1c5",
+    "manifestSHA256": "bbfde3d8c048834e96eb21a18848dc26565cd504364aaeccf3dc06302758448f",
+    "namedPayloads": 353,
+    "sourcesVerified": 4,
+    "events": [
+      {
+        "event": "push",
+        "runId": 40106828674,
+        "attempt": 1,
+        "conclusion": "success",
+        "declared": 59,
+        "observed": 72,
+        "statuses": {
+          "success": 72,
+          "failure": 0,
+          "skipped": 0
+        },
+        "allDeclaredStepsPresentInOrder": true
+      },
+      {
+        "event": "pull_request",
+        "runId": 40106832837,
+        "attempt": 1,
+        "conclusion": "success",
+        "declared": 59,
+        "observed": 72,
+        "statuses": {
+          "success": 72,
+          "failure": 0,
+          "skipped": 0
+        },
+        "allDeclaredStepsPresentInOrder": true
+      }
+    ],
+    "sourceGuards": {
+      "actual": 6,
+      "allMatchExactHead": true
+    },
+    "perMainLogEvidence": {
+      "mainRegressionSummary": 448,
+      "separateDatedReferences": 24,
+      "navigationGuardianSuite": 45,
+      "mockedRetention": 11,
+      "bothLogsVerified": true,
+      "notNewFinancialAggregate": true
+    },
+    "canonical": {
+      "at": "2026-10-24T15:58:07.345Z",
+      "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+      "invocations": 1,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "push: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40106828674/attempts/1; attempt 1; 3 complete successful jobs, all steps executed\npull_request: https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/40106832837/attempts/1; attempt 1; 3 complete successful jobs, all steps executed\n",
+      "stderr": ""
+    },
+    "independentReview": {
+      "checks": 24,
+      "passed": 24,
+      "failed": 0
+    },
+    "bothCompleteAutomaticEvents": true,
+    "rerun": false,
+    "performanceCause": "UNKNOWN",
+    "productionReady": false
+  },
+  "local": {
+    "gates": 15,
+    "mainRegressionGroups": 448,
+    "separateDatedReferences": 24,
+    "navGuardianWithinMain": 45,
+    "separateMockedRetention": 11
+  },
+  "hosted": {
+    "at": "2026-10-24T15:31:46.650Z",
+    "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+    "preview": "https://velocity-banking-mvp-v2-p5d8m0tr3-islanddevcrew.vercel.app",
+    "deployment": "dpl_E4SPnAaW8LPek8AfZr1YZu9mQfW5",
+    "target": null,
+    "servedAssets": 25,
+    "servedBytes": 10143498,
+    "renderedRoutes": 14,
+    "moneyLoopNext": 1,
+    "guardianWorkflows": 6,
+    "keyboardQuestions": 15,
+    "canonical950": 9,
+    "legacy3889": 6,
+    "threeBookKeysPreserved": true,
+    "dialogFitWidths": [
+      280,
+      375,
+      1440
+    ],
+    "rawJob": {
+      "pid": 30536,
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedMs": 129925,
+      "totalProcesses": 72,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "assignedBeforeResume": true,
+      "killOnJobClose": true
+    },
+    "manualChrome": {
+      "entryFocus": "questioninput",
+      "forwardWrap": "teacher",
+      "reverseWrap": "send",
+      "escapeReturnsExactOpener": true,
+      "closeReturnsExactOpener": true,
+      "readableLineBreaksObserved": true,
+      "questionSource": "Shared portfolio at question time",
+      "currentCashFlow3500Observed": true,
+      "originalStudioRestored": true,
+      "financialEdits": false,
+      "consoleWarningsAndErrors": 0,
+      "pins": [
+        {
+          "name": "modal-f85-entry-focus.txt",
+          "bytes": 1094,
+          "sha256": "efed3d0a17ce7a422e0166064a516c370cd4a4ea57264cad1eaca0fe01959042"
+        },
+        {
+          "name": "modal-f85-tab-wrap.txt",
+          "bytes": 635,
+          "sha256": "04797273590e8259603dee8310d66dd9056603e92bbae2bb5c0edf5c4f2fbbd2"
+        },
+        {
+          "name": "modal-f85-reverse-tab-wrap.txt",
+          "bytes": 271,
+          "sha256": "c6aeb118d556201921dee386da48764cf66a3df1ba312d88afa9c52e9f11e23e"
+        },
+        {
+          "name": "modal-f85-escape-restores-opener.txt",
+          "bytes": 430,
+          "sha256": "358f0178b4cdc0a91c8cb04996e807cf66386accf62d31393c7ac5f72a4a79c8"
+        },
+        {
+          "name": "modal-f85-button-close-restores-opener.txt",
+          "bytes": 448,
+          "sha256": "ec6f3d516ba24c752666b803c9ccc0f8c31912ac22c361548df54127d6b7e5c1"
+        },
+        {
+          "name": "modal-f85-readable-answer-ax.txt",
+          "bytes": 7433,
+          "sha256": "8bb5f500d5c40c4b907910898d9365356171db5ee57662b3258dbfee6e2b0c94"
+        },
+        {
+          "name": "modal-f85-readable-answer.png",
+          "bytes": 63857,
+          "sha256": "54d5406073cbea9b96a9faf09fcc07957227de1c87d501c0fd22440a74c97e75"
+        },
+        {
+          "name": "modal-f85-final-dashboard-ax.txt",
+          "bytes": 7804,
+          "sha256": "b89d3146668db4857b0838fd47b902d2b9d570b7614e2370f8bd24a1e48aa1ff"
+        },
+        {
+          "name": "modal-f85-final-dashboard.png",
+          "bytes": 92335,
+          "sha256": "0956b4ade73645d40a289465f14229b0aa44196f767c6a7108c1f58fe061870c"
+        },
+        {
+          "name": "modal-f85-browser-warnings-errors.json",
+          "bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "productionReady": false
+  },
+  "currentComment": {
+    "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6381687586",
+    "bodySHA256": "215731897d3086414f235896b3412d6f4046ce6355e2ac0b1464e4075b80df37"
+  },
+  "privateDiagnostic": {
+    "id": "d7136f29-257e-41ca-83a1-a87f46e85dca",
+    "baseline": "72cca256b8298863dc7af665e725c4dec1354887",
+    "status": "FAILED_SETUP",
+    "lint": true,
+    "types": true,
+    "build": false,
+    "browserObservationRan": false,
+    "buildError": "Turbopack could not resolve Next through node_modules junction outside the isolated project root",
+    "causeOfHistoricalDeadlineMiss": "UNKNOWN",
+    "dependencyJunctionCompatibility": "FAILED_IN_THIS_SETUP",
+    "jobsAllClosed": true,
+    "unchangedRetry": false,
+    "rootBuildUntouched": true,
+    "performanceFixed": false,
+    "priorPreparation": "V2 stopped on raw shared-fixture GitLF/WindowsCRLF equality; partial private folders2442f976 retained. V3 copied exact app+shared Git blobs; five reviewed buffers/data255 unique files accepted before separate one-shot."
+  },
+  "taskCounts": {
+    "done": 41,
+    "total": 58,
+    "passedScopedGates": 28,
+    "totalScopedGates": 32,
+    "closedPhases": 0
+  },
+  "historical72": "Mixed CI remains historical HOLD; current new-source success does not identify or fix its rapid-return timing cause.",
+  "merged": false,
+  "productionReady": false
+}

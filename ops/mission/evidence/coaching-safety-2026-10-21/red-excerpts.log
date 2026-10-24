@@ -1,0 +1,61 @@
+PASS coaching safety healthy default still offers the bounded principal chunk
+FAIL coaching safety non-amortizing debt cannot earn a positive chunk suggestion: unavailable projection must not suggest a new chunk
+FAIL coaching safety unfunded minimums require review instead of ordinary pause guidance: unavailable projection must not suggest a new chunk
+FAIL coaching safety a failed horizon is not presented as a workable chunk plan: unavailable projection must not suggest a new chunk
+PASS coaching safety cash flow keeps its more specific safety priority
+PASS coaching safety missing LOC keeps its more specific safety priority
+PASS coaching safety over-limit LOC keeps its more specific safety priority
+PASS coaching safety full LOC keeps its more specific safety priority
+PASS coaching safety high utilization keeps its more specific safety priority
+FAIL coaching safety exactly80 percent utilization still exposes the actual projection failure: unavailable projection must not suggest a new chunk
+PASS coaching safety affordable final payment stays valid and pauses only new chunks
+PASS coaching safety zero-surplus scheduled payments stays valid and pauses only new chunks
+FAIL coaching safety Cockpit does not announce readiness for the same unavailable projection: Expected values to be strictly equal:
++ actual - expected
+
++ 'Ready to model'
+- 'Review inputs'
+     ^
+
+FAIL coaching safety Vault does not announce stabilization readiness when debt interest is unfunded: Expected values to be strictly equal:
++ actual - expected
+
++ 'Ready'
+- 'Review inputs'
+     ^
+
+FAIL coaching safety Learn carries the same safety reason and a non-borrowing next move: The input did not match the regular expression /payment.*interest/i. Input:
+
+''
+
+PASS coaching safety coaching does not mutate the saved scenario or its precise raw rates
+16 coaching safety contracts failed.
+
+FAIL native coaching safety failed-projection 375px: coaching safety assertions failed; see separately named checks
+
+24 !== 0
+
+PASS native coaching safety healthy-final-payment 375px
+FAIL native coaching safety failed-projection 280px: coaching safety assertions failed; see separately named checks
+
+24 !== 0
+
+PASS native coaching safety healthy-final-payment 280px
+FAIL native coaching safety failed-projection 1440px: coaching safety assertions failed; see separately named checks
+
+24 !== 0
+
+PASS native coaching safety healthy-final-payment 1440px
+AssertionError [ERR_ASSERTION]: native coaching safety rendered regressions failed
+
+3 !== 0
+
+    at runCoachingSafetyFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\coaching-safety-smoke.cjs:226:10)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\coaching-safety-smoke.cjs:241:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

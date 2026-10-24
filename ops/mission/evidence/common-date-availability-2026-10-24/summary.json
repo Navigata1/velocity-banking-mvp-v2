@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-24T11:42:18.502Z",
+  "sourceHead": "3791fa8bb08a642546f562725f21577a80775c81",
+  "scope": "One supported mixed-coverage dated book and its income-date control; captured source/CPU audit, not full R2/R3, painted UI, lender or production approval",
+  "verdict": "No supported defect found within this narrow audit; no solver change proposed",
+  "case": {"initialLiabilities":170,"monthlyIncome":124,"monthlyLivingExpense":24,"fixedLOCAPR":0.365,"fixedDaysPerYear":365,"payoffDate":"2026-02-28","lateIncomePayoffCash":{"velocity":24.04,"snowball":22.44,"avalanche":23.16},"nextBill":24,"nextBillDate":"2026-03-01","unsupportedFutureColumns":["snowball","avalanche"],"signedMonth2SnowballMinusVelocity":-1.6,"qualification":"Synthetic educational policy example, not a general strategy ranking or financial advice"},
+  "observed": {"comparisonPreparations":6,"atMonthQueries":36,"directSimulations":6,"inferredTotalSolverInvocations":24,"independentScenariosClaimed":false,"capturedPolicySnapshots":108,"independentReviewerMonthlyRows":12,"independentReviewerDailyBalances":354,"independentReviewerNewSolverRuns":0},
+  "behavior": ["Accepted month0 and exact payoff remain observable after later coverage failure","An unavailable reference suppresses all signed deltas, not independent usable columns","Future closed-cash bill cannot borrow income that arrives later or reuse a closed LOC","Moving income before the bill alone restores coverage for all policies"],
+  "failureAccounting": {"originalProspectiveChecks":{"passed":16,"failed":8},"productREDs":0,"failuresWereIncorrectAuditorPolicyTimingEstimates":true,"originalFailuresPreserved":true,"capturedReconciledChecks":22,"correctedChecksUseSameCaptureNotSecondSolverRun":true},
+  "integrity": {"authorPacketSha256":"d0b2a0acc519a9b1dc237ab96a58d67589d1ea598d0de3251c07cb5d8326bc7d","independentReviewPacketSha256":"4f7e2a256833bb06188281ee84bdcbca745e70c36c9019b89a6bd09bdd4ef7ff","independentReviewSealSha256":"f2539c53f31e17f7be502a2d07f1431b2928dec3dfe7c98405282364aa924f03","exactBigIntReviewInputPins":45,"parentRawRecordsVerified":61,"protectedNamedInputContinuity":"Author historical inventory, not parent repeated full-stage or PRE/POST acceptance"},
+  "sourceChanges": 0,
+  "taskClosures": 0,
+  "gateClosures": 0,
+  "productionReady": false
+}

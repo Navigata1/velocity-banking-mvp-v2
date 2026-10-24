@@ -1,0 +1,20 @@
+{
+  "scope": "Fresh local bundle exports, not native-device QA. Main financial entry and media source digest unchanged; Portfolio is a new portable subpath, not yet native aggregate integration.",
+  "portfolioSourceSha256": "d5de89bfed7e1abbc5087d4ae4febf40fc0a5387c3bdd346ff098f439ed190d8",
+  "exports": [
+    {
+      "platform": "android",
+      "file": "apps/mobile/dist-android/_expo/static/js/android/entry-8f0964ef4e8bbfce60a4e58d2417cd5a.hbc",
+      "bytes": 3588245,
+      "sha256": "81f115662cff1cc0d7bae67aa4ead439935b99cfcb331a74433e21cc406c6571",
+      "modifiedAt": "2026-10-20T22:17:31.174Z"
+    },
+    {
+      "platform": "ios",
+      "file": "apps/mobile/dist-ios/_expo/static/js/ios/entry-77196d453ede9075e1ec0340564b3a0f.hbc",
+      "bytes": 3302784,
+      "sha256": "39f3b8773f5916f5b1df5efe67f0297a6382740e98f1eab615d0491ba431f22e",
+      "modifiedAt": "2026-10-20T22:17:52.678Z"
+    }
+  ]
+}

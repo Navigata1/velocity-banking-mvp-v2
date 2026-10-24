@@ -1,0 +1,10 @@
+
+> web@0.1.0 lint
+> eslint
+
+
+C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\hero-presentation-proof.cjs
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 1 problem (1 error, 0 warnings)
+

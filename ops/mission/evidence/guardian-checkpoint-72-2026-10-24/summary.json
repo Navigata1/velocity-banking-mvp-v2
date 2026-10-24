@@ -1,0 +1,119 @@
+{
+  "at": "2026-10-24T15:07:08.329Z",
+  "head": "72cca256b8298863dc7af665e725c4dec1354887",
+  "status": "HOLD_COMBINED_CI",
+  "sourceCommits": [
+    "22a66dd",
+    "3f5e32d",
+    "72cca25"
+  ],
+  "ci": {
+    "events": [
+      {
+        "event": "push",
+        "runId": 40102330954,
+        "conclusion": "success",
+        "declared": 59,
+        "observed": 72,
+        "statuses": {
+          "success": 72,
+          "failure": 0,
+          "skipped": 0
+        },
+        "allDeclaredStepsPresentInOrder": true
+      },
+      {
+        "event": "pull_request",
+        "runId": 40102334507,
+        "conclusion": "failure",
+        "declared": 59,
+        "observed": 72,
+        "statuses": {
+          "success": 64,
+          "failure": 1,
+          "skipped": 7
+        },
+        "allDeclaredStepsPresentInOrder": true
+      }
+    ],
+    "sourceGuards": {
+      "actual": 6,
+      "allMatchExactHead": true
+    },
+    "perMainLogEvidence": {
+      "mainRegressionSummary": 441,
+      "separateDatedReferences": 24,
+      "navigationGuardianSuite": 38,
+      "mockedRetentionCases": 11,
+      "bothLogsVerified": true,
+      "notNewFinancialAggregate": true
+    },
+    "canonicalInvocations": 1,
+    "canonicalExit": 1,
+    "rawPacketSHA256": "e4fbcf1ef1d3ced2b4d2f9edd7a308d842b6b9802a9624b2523f54119241ffba"
+  },
+  "failure": {
+    "event": "pull_request",
+    "workflow": "desktop-rapid-return",
+    "message": "Clipped PNG capture began with29ms remaining and timed out",
+    "original700msLimitUnchanged": true,
+    "normal18AndReducedMotionPassed": true,
+    "otherSharedWorkflowPasses": 5,
+    "proofUploadSucceeded": true,
+    "artifactContentsValidated": false,
+    "cause": "UNKNOWN",
+    "unchangedRerun": false,
+    "waiver": false
+  },
+  "local": {
+    "focusedGates": 15,
+    "mainRegressionGroups": 441,
+    "separateDatedReferences": 24,
+    "navGuardianWithinMain": 38,
+    "separateMockRetention": 11,
+    "guardianSavedBookQuestions": 15,
+    "dialogWidths": [
+      280,
+      375,
+      1440
+    ],
+    "rawThreeBookKeysPreserved": true,
+    "controlledNegative": "Expectedchild1, two real decoded PNGs; not an injected-workflow pass or performance fix"
+  },
+  "preview": {
+    "url": "https://velocity-banking-mvp-v2-6bpkmtyxt-islanddevcrew.vercel.app",
+    "deployment": "dpl_13vf5zQuchmcqvj8WXoQiy4C4RH2",
+    "ready": true,
+    "target": null,
+    "servedAssets": 25,
+    "servedBytes": 10143498,
+    "renderedRoutes": 14,
+    "moneyLoopNext": 1,
+    "guardianWorkflows": 6,
+    "guardianQuestions": 15,
+    "sourceAndAmounts": true,
+    "originalStudioRestored": true,
+    "financialEdits": false
+  },
+  "additionalKeyboardFinding": {
+    "actualChromeEscapeAndBackgroundTab": true,
+    "threeWidthStrongerOracleFocusFailures": 3,
+    "unaffectedAdverseWorkflowPasses": 3,
+    "sourceCPUProposal": "Private112-line proposal;38existing+7newcases45GREEN aftergenuineRED; independentlimitedacceptance;notadopted",
+    "firstCrossRealmBrowserHarnessFailureRetained": true,
+    "correctedSameCJSRealm": true,
+    "actualBrowserGREEN": false
+  },
+  "currentComment": {
+    "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6381687586",
+    "bodySHA256": "bd6f05ba407e4a8f840452ee45afca0ce3a28ac6a561e209a62f062a05edddc4"
+  },
+  "remaining": "Photoreal all-angle/mobile/provenance, graphics timing/network, backend/recovery, scenario/lender, security, final accessibility/native gates remain open.",
+  "tasksDone": 40,
+  "tasksTotal": 58,
+  "passedCommandGates": 27,
+  "totalCommandGates": 32,
+  "phasesClosed": 0,
+  "merged": false,
+  "productionReady": false
+}

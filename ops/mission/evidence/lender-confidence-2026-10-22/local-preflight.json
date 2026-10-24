@@ -1,0 +1,201 @@
+{
+  "baseline": "d03a7c1a5a9753a6e8981f6a21c7756b590031ab",
+  "verifiedAt": "2026-10-22T13:55:28.510Z",
+  "stage": "Pre-push lender confidence integration; remote verification pending",
+  "productionReady": false,
+  "localStages": 29,
+  "sourcePinCount": 445,
+  "regressions": 360,
+  "referenceProbes": 23247,
+  "modelContracts": 21,
+  "wiringContracts": 6,
+  "lender": {
+    "termGroups": 15,
+    "portfolioCodecGroups": 12,
+    "forecastBasisGroups": 12,
+    "draftGroups": 6,
+    "snapshotGroups": 9,
+    "webBrowserWorkflows": 15,
+    "nativeBrowserWorkflows": 15,
+    "numericalTermsEnforcementComplete": false,
+    "calendarEnforcementComplete": false,
+    "oldSavedBytesRetained": true,
+    "explicitDocumentVersion": 3,
+    "review": "Four shared/web findings and both native physical findings closed;17 final shared edges and45 native memory-IO integration probes pass. Not physical-device/backend proof."
+  },
+  "localWebWorkflowLayouts": 183,
+  "hostedTargetWorkflowLayouts": 183,
+  "originalNormalThreeActions": 18,
+  "selectionWorkflows": 6,
+  "media": {
+    "contracts": 223,
+    "freshRemotionStills": 27,
+    "freshTurntableExports": false,
+    "sourceAssetsChanged": false,
+    "scenarioFixtureRefreshed": true,
+    "unchangedEducationalStories": 2
+  },
+  "native": {
+    "workflowChecks": 97,
+    "navigationAssertions": 1,
+    "fullContractsPassed": true,
+    "freshAndroidAndIosHermesExports": true,
+    "physicalDeviceProof": false
+  },
+  "sourceBoundary": {
+    "baseline": "d03a7c1a5a9753a6e8981f6a21c7756b590031ab",
+    "verifiedAt": "2026-10-22T13:25:48.489Z",
+    "protectedRoots": [
+      "apps/web/public",
+      ".github/workflows",
+      "supabase",
+      "package.json",
+      "package-lock.json",
+      "apps/web/package.json",
+      "apps/web/package-lock.json",
+      "apps/mobile/package.json",
+      "apps/mobile/package-lock.json",
+      "apps/report-worker"
+    ],
+    "mediaAllowed": [
+      "apps/media/remotion/data/scenarios.v1.json",
+      "apps/media/remotion/src/scenario-schema.ts",
+      "apps/media/scripts/remotion-compositions-contract.test.mjs"
+    ],
+    "unchangedRemotionStories": 2,
+    "unchangedFunctionBodies": [
+      {
+        "file": "packages/financial-engine/src/index.ts",
+        "before": "simulateMoneyLoopPayoff",
+        "after": "simulateEducationalMoneyLoopPayoff"
+      },
+      {
+        "file": "packages/financial-engine/src/index.ts",
+        "before": "compareMortgageRepayment",
+        "after": "compareEducationalMortgageRepayment"
+      },
+      {
+        "file": "packages/financial-engine/src/index.ts",
+        "before": "calculateLOCInterestAccrual",
+        "after": "calculateLOCInterestAccrual"
+      },
+      {
+        "file": "packages/financial-engine/src/index.ts",
+        "before": "simulateAmortizedPayoff",
+        "after": "simulateAmortizedPayoff"
+      },
+      {
+        "file": "packages/financial-engine/src/portfolio.ts",
+        "before": "simulatePortfolio",
+        "after": "simulateEducationalPortfolio"
+      },
+      {
+        "file": "apps/web/src/components/money-loop-3d/selection-motion.ts",
+        "before": "getSelectionMotionElapsedSeconds",
+        "after": "getSelectionMotionElapsedSeconds"
+      },
+      {
+        "file": "apps/web/src/components/money-loop-3d/selection-motion.ts",
+        "before": "getSelectionMotionFrame",
+        "after": "getSelectionMotionFrame"
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "before": "waitForNormalStage",
+        "after": "waitForNormalStage"
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "before": "waitForStageSettled",
+        "after": "waitForStageSettled"
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "before": "assertGenuineWebgl2",
+        "after": "assertGenuineWebgl2"
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "before": "captureIsolatedCanvasPng",
+        "after": "captureIsolatedCanvasPng"
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "before": "proveCanvasPng",
+        "after": "proveCanvasPng"
+      }
+    ],
+    "prior": [
+      {
+        "file": ".superpowers/sdd/2026-10-22-selection-settlement/current-checkpoint.json",
+        "count": 256,
+        "sha256": "3291c3b467f0ba2ad1746642b489a840373dc1dff0404838e93ff29555bd73f5"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-selection-settlement/local-evidence-index.json",
+        "count": 96,
+        "sha256": "c0b8832855b540d84218fa1e9e0a9684ced00aef7c4320d3959fc2e7dbada847"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-projected-loc-limit/current-checkpoint.json",
+        "count": 116,
+        "sha256": "3730facc8c34036023effd3f17a28f59cf584bc2f699283bcd8edef510adb4b9"
+      },
+      {
+        "file": "ops/mission/evidence/projected-loc-limit-2026-10-22/raw-evidence-index.json",
+        "count": 138,
+        "sha256": "747dd6a8877607a9a590b767497a4c51a1ed3ad72a8ab509a8f28c0fc9ffd8c2"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-portfolio-history/current-checkpoint.json",
+        "count": 92,
+        "sha256": "1dceeae440e939796d39eb7f201819923613d14b0eecf846ed5274ef2b4286c7"
+      },
+      {
+        "file": "ops/mission/evidence/portfolio-history-2026-10-22/raw-evidence-index.json",
+        "count": 202,
+        "sha256": "27bec6df1f064dd51ea83b2e3787a517b721e2873eec2b2b6eb1e8324f4a59ef"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-photographic-environment/cpu-checkpoint.json",
+        "count": 12,
+        "sha256": "f5438c6c93891dda4b572ca4bb6a0330a7d89a563698c0eb0ca1afd7edb5ba49"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-photographic-environment/render-checkpoint.json",
+        "count": 69,
+        "sha256": "455b81f5ecbfa6e6a8a6e065c80cac9f16a81c575c655074de0e7bf75c75895e"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-environment-orientation/checkpoint.json",
+        "count": 29,
+        "sha256": "bbbaad13e9060a1ceefe9f716829841adc70449ec6664a278e4f4396a04f900f"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-environment-calibration/checkpoint.json",
+        "count": 68,
+        "sha256": "d5538682ec0a1039814b128d01c67d5d438e9985cf4a87f1b2772fa39b565a4a"
+      }
+    ],
+    "educationalLedgerFixtures": "forecast-basis-tests.cjs retains three complete no-profile ledger SHA fixtures",
+    "productionReady": false,
+    "photorealAssetsApproved": false,
+    "priorScreenshotDeadlineIssueResolved": false
+  },
+  "rawEvidence": {
+    "index": ".superpowers/sdd/2026-10-22-lender-confidence/local-evidence-index.json",
+    "entries": 495,
+    "sha256": "0cfcb1e1b341e1b13127c0574ff509241cdae1214b4ff7a26ae85b15e3763158"
+  },
+  "priorRemoteCheckpoint": {
+    "head": "d03a7c1a5a9753a6e8981f6a21c7756b590031ab",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6339608765",
+    "shippingFiles": 256,
+    "localFiles": 96
+  },
+  "remaining": [
+    "Both complete new exact-head CI events, known automatic READY preview, hosted183/20assets, final actual IAB and immutable receipt",
+    "Numerical fees/minimums/rate changes/draw expiry, dated posting/rounding/intraday availability and reserves",
+    "All-ten photoreal approval, known Three warnings and screenshot reliability, dedicated backend/security/recovery, physical native and final release"
+  ]
+}

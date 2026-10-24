@@ -1,0 +1,25 @@
+Watching push 39587774650 3b58beffd14db959cedc667b1c892ef5c0cc672b
+node:child_process:955
+    throw err;
+    ^
+
+Error: Command failed: gh run watch 39587774650 --repo Navigata1/velocity-banking-mvp-v2 --exit-status --interval 60
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execFileSync (node:child_process:952:15)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-mobile-vitals\watch-ci.cjs:12:7)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 15652,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v22.22.2

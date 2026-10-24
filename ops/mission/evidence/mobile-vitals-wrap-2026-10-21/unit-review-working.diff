@@ -1,0 +1,79 @@
+diff --git a/apps/web/scripts/smoke-dashboard-interest.cjs b/apps/web/scripts/smoke-dashboard-interest.cjs
+index bea2478..78e34af 100644
+--- a/apps/web/scripts/smoke-dashboard-interest.cjs
++++ b/apps/web/scripts/smoke-dashboard-interest.cjs
+@@ -88,14 +88,20 @@ async function checkVitalOracleControls(page) {
+     const target = page.getByTestId(kind === 'hidden-value' ? 'dashboard-mobile-vital-next-move' : 'dashboard-mobile-vital-interest-burn');
+     const saved = await target.evaluate((article, kind) => {
+       const [label, value] = article.querySelectorAll('p');
+-      const saved = { styles: [label, value, article, article.parentElement].map(el => el.getAttribute('style')), text: value.textContent };
++      const walker = document.createTreeWalker(value, NodeFilter.SHOW_TEXT), texts = [];
++      let node;
++      while ((node = walker.nextNode())) texts.push(node.data);
++      const saved = { styles: [label, value, article, article.parentElement].map(el => el.getAttribute('style')), texts, markup: value.innerHTML };
+       if (kind === 'hidden-value') value.style.opacity = '0';
+       if (kind === 'invisible-value') value.style.visibility = 'hidden';
+       if (kind === 'hidden-ancestor') article.style.opacity = '0';
+       if (kind === 'vertical-clip') { value.style.height = '1px'; value.style.overflow = 'hidden'; }
+       if (kind === 'ancestor-clip') { article.parentElement.style.height = '1px'; article.parentElement.style.overflow = 'hidden'; }
+       if (kind === 'label-collision') label.style.transform = `translateY(${value.getBoundingClientRect().top - label.getBoundingClientRect().top}px)`;
+-      if (kind === 'empty-value') value.textContent = '';
++      if (kind === 'empty-value') {
++        walker.currentNode = value;
++        while ((node = walker.nextNode())) node.data = '';
++      }
+       return saved;
+     }, kind);
+     try {
+@@ -112,9 +118,15 @@ async function checkVitalOracleControls(page) {
+         [label, value, article, article.parentElement].forEach((el, i) => {
+           if (saved.styles[i] === null) el.removeAttribute('style'); else el.setAttribute('style', saved.styles[i]);
+         });
+-        if (kind === 'empty-value') value.textContent = saved.text;
++        if (kind === 'empty-value') {
++          // Retain React-owned nodes, including nested unit spans and break opportunities.
++          const walker = document.createTreeWalker(value, NodeFilter.SHOW_TEXT);
++          let node, i = 0;
++          while ((node = walker.nextNode())) node.data = saved.texts[i++];
++        }
+       }, { saved, kind });
+     }
++    assert.equal(await target.evaluate(article => article.querySelectorAll('p')[1].innerHTML), saved.markup, 'controls must preserve value markup');
+     assert.deepEqual(await vitalLayout(page, 375), before, 'oracle controls must restore the real UI');
+   }
+   fs.writeFileSync(path.join(output, 'oracle-controls.json'), JSON.stringify(controls, null, 2) + '\n');
+@@ -223,6 +235,19 @@ async function checkVitalOracleControls(page) {
+         assert.ok(heroVisibleHeight >= 48,
+           'readable vitals must leave a visible part of the asset hero in the first viewport');
+         if (width === 375 && scenario.id === 'house') await checkVitalOracleControls(page);
++        if (width === 280 && scenario.id === 'large-import') {
++          const font = await amount.getAttribute('style');
++          try {
++            await amount.evaluate(el => { el.style.fontFamily = 'Verdana, sans-serif'; });
++            const fallback = await vitalLayout(page, width);
++            fs.writeFileSync(path.join(output, 'fallback-font-280.json'), JSON.stringify(fallback, null, 2) + '\n');
++            await page.screenshot({ path: path.join(output, 'fallback-font-280.png') });
++            assertVitalLayout(fallback, 'large-import wider fallback font 280px');
++          } finally {
++            await amount.evaluate((el, font) => { if (font === null) el.removeAttribute('style'); else el.setAttribute('style', font); }, font);
++          }
++          assert.deepEqual(await vitalLayout(page, width), layout, 'font probe must restore the real UI');
++        }
+         if (width === 1440 && ['house', 'large-import'].includes(scenario.id)) {
+           for (const boundaryWidth of [768, 1264]) {
+             await page.setViewportSize({ width: boundaryWidth, height: 900 });
+diff --git a/apps/web/src/app/page.tsx b/apps/web/src/app/page.tsx
+index 81f9d97..5b7998e 100644
+--- a/apps/web/src/app/page.tsx
++++ b/apps/web/src/app/page.tsx
+@@ -134,7 +134,9 @@ export default function Dashboard() {
+                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
+                 </div>
+                 <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
+-                  {vital.value}
++                  {vital.id === 'interest-burn' && vital.value.endsWith('/day') ? (
++                    <>{vital.value.slice(0, -4)}<wbr /><span className="inline-block whitespace-nowrap">/day</span></>
++                  ) : vital.value}
+                 </p>
+                 <p className="sr-only">
+                   {vital.caption}

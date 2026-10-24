@@ -1,0 +1,49 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (400)
+prune: Removed types... Accessor (509)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+prune: Removed types... Accessor (155)
+Refined House: 31316 triangles, 6 embedded textures, 1118 KiB.

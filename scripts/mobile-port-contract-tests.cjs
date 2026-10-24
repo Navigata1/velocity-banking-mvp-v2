@@ -57,6 +57,10 @@ function loadTsFile(filename) {
       return loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
     }
 
+    if (request === '@interestshield/financial-engine/input-draft') {
+      return loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/input-draft.ts'));
+    }
+
     if (request === 'expo-secure-store') {
       return {
         deleteItemAsync: async () => undefined,
@@ -135,6 +139,12 @@ test('mobile app declares an Expo Router shell and shared engine dependency', ()
   assert.ok(mobilePackage.dependencies['expo-router'], 'expected Expo Router dependency');
   assert.ok(mobilePackage.dependencies['expo-secure-store'], 'expected encrypted native key-value storage dependency');
   assert.equal(mobilePackage.dependencies['@interestshield/financial-engine'], 'file:../../packages/financial-engine');
+});
+
+test('native CLI shell quoting rejects a line terminator after a comment token', () => {
+  const { quote } = require(path.join(repoRoot, 'apps/mobile/node_modules/shell-quote'));
+  assert.throws(() => quote(['echo', 'ok', { comment: 'x' }, 'a\nUNTRUSTED_SENTINEL']), TypeError);
+  assert.equal(quote(['echo', 'safe value']), "echo 'safe value'");
 });
 
 test('Expo app exposes Codex run actions for local mobile workflows', () => {
@@ -681,50 +691,44 @@ test('shared mobile velocity delegates to the canonical Money Loop payoff engine
   assert.equal(mobileVelocity.isPayoffPossible, canonicalProjection.isPayoffPossible);
 });
 
-test('shared mobile amortized strategies delegate to the canonical payoff helper', () => {
+test('shared mobile direct strategies use the canonical two-liability comparison helper', () => {
   const sharedEnginePath = path.join(repoRoot, 'packages/financial-engine/src/index.ts');
   const sharedEngine = loadTsFile(sharedEnginePath);
   const sharedEngineSource = fs.readFileSync(sharedEnginePath, 'utf8');
   const baselineStart = sharedEngineSource.indexOf('function simulateMobileBaseline');
-  const baselineEnd = sharedEngineSource.indexOf('function simulateMobileWithExtraPayments', baselineStart);
-  const extraStart = baselineEnd;
-  const extraEnd = sharedEngineSource.indexOf('function formatMobileMonths', extraStart);
+  const baselineEnd = sharedEngineSource.indexOf('function formatMobileMonths', baselineStart);
   const baselineWrapper = sharedEngineSource.slice(baselineStart, baselineEnd);
-  const extraWrapper = sharedEngineSource.slice(extraStart, extraEnd);
   const defaultInput = sharedEngine.defaultMobileDashboardInput;
   const cashFlow = defaultInput.monthlyIncome - defaultInput.monthlyExpenses;
-  const surplusAfterMinimum = Math.max(0, cashFlow - defaultInput.activeDebt.monthlyPayment);
-  const canonicalBaseline = sharedEngine.simulateAmortizedPayoff({
+  const comparisonInput = {
     principalBalance: defaultInput.activeDebt.balance,
-    apr: defaultInput.activeDebt.apr,
-    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
-    maxMonths: 600,
-  });
-  const canonicalAccelerated = sharedEngine.simulateAmortizedPayoff({
-    principalBalance: defaultInput.activeDebt.balance,
-    apr: defaultInput.activeDebt.apr,
-    monthlyPayment: defaultInput.activeDebt.monthlyPayment,
-    extraPayment: surplusAfterMinimum,
-    maxMonths: 600,
-  });
+    debtApr: defaultInput.activeDebt.apr,
+    debtPayment: defaultInput.activeDebt.monthlyPayment,
+    loc: defaultInput.loc,
+    monthlyBudget: cashFlow,
+  };
+  const canonicalBaseline = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'debt-first' });
+  const canonicalSnowball = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'snowball' });
+  const canonicalAvalanche = sharedEngine.simulateDirectRepayment({ ...comparisonInput, strategy: 'avalanche' });
   const strategies = sharedEngine.buildMobileSimulatorSnapshot(defaultInput).strategies;
   const traditional = strategies.find((strategy) => strategy.name === 'Traditional');
   const snowball = strategies.find((strategy) => strategy.name === 'Snowball');
   const avalanche = strategies.find((strategy) => strategy.name === 'Avalanche');
 
   assert.ok(baselineWrapper.includes('simulateAmortizedPayoff({'), 'expected baseline wrapper to call the shared amortized payoff helper');
-  assert.ok(extraWrapper.includes('simulateAmortizedPayoff({'), 'expected extra-payment wrapper to call the shared amortized payoff helper');
   assert.ok(!baselineWrapper.includes('while (balance'), 'expected baseline wrapper not to duplicate an amortized payoff loop');
-  assert.ok(!extraWrapper.includes('while (balance'), 'expected extra-payment wrapper not to duplicate an amortized payoff loop');
+  assert.ok(sharedEngineSource.includes('simulateDirectRepayment({ ...directInputs'), 'mobile and web share the same comparison implementation');
   assert.ok(traditional, 'expected Traditional strategy in the mobile simulator snapshot');
   assert.ok(snowball, 'expected Snowball strategy in the mobile simulator snapshot');
   assert.ok(avalanche, 'expected Avalanche strategy in the mobile simulator snapshot');
   assert.equal(traditional.months, canonicalBaseline.payoffMonths);
   assert.equal(traditional.totalInterest.toFixed(2), canonicalBaseline.totalInterest.toFixed(2));
-  assert.equal(snowball.months, canonicalAccelerated.payoffMonths);
-  assert.equal(snowball.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
-  assert.equal(avalanche.months, canonicalAccelerated.payoffMonths);
-  assert.equal(avalanche.totalInterest.toFixed(2), canonicalAccelerated.totalInterest.toFixed(2));
+  assert.equal(snowball.months, canonicalSnowball.payoffMonths);
+  assert.equal(snowball.totalInterest.toFixed(2), canonicalSnowball.totalInterest.toFixed(2));
+  assert.equal(avalanche.months, canonicalAvalanche.payoffMonths);
+  assert.equal(avalanche.totalInterest.toFixed(2), canonicalAvalanche.totalInterest.toFixed(2));
+  assert.ok(Number(canonicalBaseline.monthlyData[0].locBalance) > 0, 'LOC liability is included');
+  assert.equal(traditional.endingCashLabel, `${sharedEngine.formatCurrency(canonicalBaseline.monthlyData.at(-1).cashBalance)} cash at payoff`);
 });
 
 test('shared mobile dashboard snapshot keeps the required four vitals aligned with web', () => {
@@ -819,20 +823,25 @@ test('shared mobile default assumptions start with the verified web demo Money L
   const vault = sharedEngine.buildMobileVaultSnapshot();
   const learn = sharedEngine.buildMobileLearnSnapshot();
 
-  assert.equal(defaultInput.monthlyIncome, 6500);
-  assert.equal(defaultInput.monthlyExpenses, 5000);
+  assert.equal(defaultInput.monthlyIncome, 8200);
+  assert.equal(defaultInput.monthlyExpenses, 4700);
   assert.equal(defaultInput.chunkAmount, 1000);
   assert.equal(defaultInput.activeDebt.termMonths, 48);
   assert.equal(defaultInput.loc.limit, 25000);
   assert.equal(defaultInput.loc.balance, 3200);
   assert.equal(defaultInput.loc.apr, 0.085);
-  assert.ok(webStoreSource.includes('monthlyIncome: 6500'));
-  assert.ok(webStoreSource.includes('monthlyExpenses: 5000'));
+  assert.ok(webStoreSource.includes('monthlyIncome: 8200'));
+  assert.ok(webStoreSource.includes('monthlyExpenses: 4700'));
   assert.ok(webStoreSource.includes('limit: 25000'));
   assert.ok(webStoreSource.includes('chunkAmount: 1000'));
 
   assert.equal(dashboard.warning, null);
-  assert.equal(dashboard.nextMove, 'Send $1,000 to principal');
+  assert.equal(dashboard.nextMove, 'Compare payoff paths');
+  const nextMove = dashboard.vitals.find((vital) => vital.label === 'Next Move');
+  assert.equal(nextMove.value, dashboard.nextMove);
+  assert.match(nextMove.detail, /same budget, debts and cash at the same date/);
+  assert.ok(simulator.velocity.interestSaved < 0, 'default Velocity comparison must retain its higher modeled interest');
+  assert.ok(simulator.velocity.monthsSaved < 0, 'default Velocity comparison must retain its slower payoff');
   assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value.endsWith('mo'), true);
   assert.notEqual(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
   assert.equal(simulator.guardrail, null);
@@ -888,11 +897,15 @@ test('shared mobile snapshots sanitize non-finite assumptions before rendering l
   assert.equal(dashboard.locUtilization, 0);
   assert.equal(dashboard.availableLoc, 0);
   assert.equal(dashboard.dailyInterestBurn, 0);
-  assert.equal(dashboard.loop.find((step) => step.label === 'Principal').value, 'Auto Loan');
+  assert.equal(dashboard.loop.find((step) => step.label === 'Principal').value, 'Review liability balances');
+  assert.equal(dashboard.nextMove, 'Review liability balances');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Interest Burn').value, 'Not available');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
   assert.equal(portfolio.totalDebt, 0);
   assert.equal(portfolio.totalMinimums, 0);
   assert.equal(portfolio.payoffPath.points[0].balance, 0);
-  assert.equal(simulator.guardrail, 'Income needs to exceed expenses before velocity payoff claims are projected.');
+  assert.equal(simulator.guardrail, 'Review the entered liability balances before relying on educational projections.');
+  assert.ok(simulator.strategies.every((strategy) => !strategy.isPayoffPossible));
   assert.equal(simulator.velocity.interestSaved, 0);
   assert.equal(simulator.velocity.monthsSaved, 0);
   assert.equal(cockpit.instruments.find((instrument) => instrument.label === 'Heading').value, 'Auto Loan');
@@ -974,23 +987,15 @@ test('Expo app uses dedicated shared-engine route modules instead of a monolithi
   assert.ok(routesSource.includes('accessibilityLabel="Active debt APR"'));
   assert.ok(routesSource.includes('accessibilityLabel="Active debt monthly payment"'));
   assert.ok(routesSource.includes('accessibilityLabel="Active debt term months"'));
-  assert.ok(
-    routesSource.includes('function finiteNonNegativeInputValue(value: number): number'),
-    'expected native numeric inputs to sanitize non-finite display values'
-  );
-  assert.ok(routesSource.includes('value={formatMoneyInputValue(value)}'), 'expected money inputs to use finite display formatting');
-  assert.ok(
-    routesSource.includes('value={formatWholeNumberInputValue(value)}'),
-    'expected whole-number inputs to use finite display formatting'
-  );
-  assert.ok(
-    routesSource.includes('value={formatPercentageInputValue(value)}'),
-    'expected percentage inputs to use finite display formatting'
-  );
-  assert.ok(
-    routesSource.includes('Math.round(finiteNonNegativeInputValue(value) * 10000) / 100'),
-    'expected APR input to preserve two decimal display precision after sanitizing'
-  );
+  const numericInput = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/financial-input-draft.ts'));
+  assert.equal(numericInput.formatFinancialInput(NaN, 'money'), '');
+  assert.equal(numericInput.formatFinancialInput(Infinity, 'percent'), '');
+  assert.equal(numericInput.formatFinancialInput(120.7, 'money'), '120.7');
+  assert.equal(numericInput.formatFinancialInput(0.07123456789, 'percent'), '7.123456789');
+  assert.equal(numericInput.resolveFinancialDraft(120.7, '12..3', 'money').value, 120.7);
+  assert.equal(numericInput.resolveFinancialDraft(120.7, '100000000000000.01', 'money').value, 120.7);
+  assert.ok(routesSource.includes('FinancialNumberInput') && routesSource.includes('value={draft}'),
+    'expected native numeric fields to edit validated local drafts');
   assert.ok(
     !routesSource.includes('value={String(Math.round(value))}') &&
       !routesSource.includes('value={String(value)}') &&
@@ -1046,10 +1051,12 @@ test('Expo app uses dedicated shared-engine route modules instead of a monolithi
     routesSource.includes('width: `${pressurePercent}%`'),
     'expected pressure segment width to be model-bound'
   );
-  assert.ok(routesSource.includes('MobilePortfolioPath'), 'expected Portfolio mode to render the native payoff path');
-  assert.ok(routesSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
+  assert.ok(routesSource.includes('PortfolioPayoffPath') && routesSource.includes('buildMobilePortfolioBookView'),
+    'expected Portfolio mode to render the shared whole-book payoff path');
+  const portfolioPathSource = fs.readFileSync(path.join(repoRoot, 'apps/mobile/components/portfolio/portfolio-payoff-path.tsx'), 'utf8');
+  assert.ok(portfolioPathSource.includes('testID="mobile-portfolio-payoff-path"'), 'expected mobile Portfolio payoff path smoke hook');
   assert.ok(
-    routesSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
+    portfolioPathSource.includes('testID={`mobile-portfolio-payoff-path-node-${index}`}'),
     'expected mobile Portfolio payoff path to render one node per engine point'
   );
   assert.ok(routesSource.includes('accessibilityRole="radiogroup"'), 'expected mobile payoff orbit to group one active node');
@@ -1088,7 +1095,7 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
     ['index.tsx', 'DashboardRoute', 'dashboard-route.tsx', ['buildMobileDashboardSnapshot'], 'index', 'InterestShield'],
     ['simulator.tsx', 'SimulatorRoute', 'simulator-route.tsx', ['buildMobileDashboardSnapshot', 'buildMobileSimulatorSnapshot'], 'simulator', 'Simulator'],
     ['cockpit.tsx', 'CockpitRoute', 'cockpit-route.tsx', ['buildMobileCockpitSnapshot'], 'cockpit', 'Cockpit'],
-    ['portfolio.tsx', 'PortfolioRoute', 'portfolio-route.tsx', ['buildMobilePortfolioSnapshot'], 'portfolio', 'Portfolio'],
+    ['portfolio.tsx', 'PortfolioRoute', 'portfolio-route.tsx', ['buildMobilePortfolioBookView'], 'portfolio', 'Portfolio'],
     ['learn.tsx', 'LearnRoute', 'learn-route.tsx', ['buildMobileLearnSnapshot'], 'learn', 'Learn'],
     ['vault.tsx', 'VaultRoute', 'vault-route.tsx', ['buildMobileVaultSnapshot'], 'vault', 'Vault'],
     ['settings.tsx', 'SettingsRoute', 'settings-route.tsx', [], 'settings', 'Settings'],
@@ -1129,6 +1136,7 @@ test('Expo mobile app exposes direct route parity for every demo mode', () => {
       'buildMobileSimulatorSnapshot',
       'buildMobileCockpitSnapshot',
       'buildMobilePortfolioSnapshot',
+      'buildMobilePortfolioBookView',
       'buildMobileLearnSnapshot',
       'buildMobileVaultSnapshot',
     ]) {
@@ -1154,10 +1162,7 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
     path.join(repoRoot, 'apps/mobile/components/financial-card.tsx'),
     'utf8'
   );
-  const controlsSource = fs.readFileSync(
-    path.join(repoRoot, 'apps/mobile/components/mobile-shell/controls.tsx'),
-    'utf8'
-  );
+  const controlsSource = readReachableSource(path.join(repoRoot, 'apps/mobile/components/mobile-shell/controls.tsx'));
   const orbitSource = fs.readFileSync(
     path.join(repoRoot, 'apps/mobile/components/mobile-shell/money-loop-visuals.tsx'),
     'utf8'
@@ -1167,7 +1172,7 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
     'utf8'
   );
   const portfolioPathSource = fs.readFileSync(
-    path.join(repoRoot, 'apps/mobile/components/mobile-shell/portfolio-path.tsx'),
+    path.join(repoRoot, 'apps/mobile/components/portfolio/portfolio-payoff-path.tsx'),
     'utf8'
   );
   const settingsSource = fs.readFileSync(
@@ -1194,7 +1199,8 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
   assert.ok(layoutSource.includes("statusBarBackgroundColor: '#0f172a'"));
   assert.ok(routeFrameSource.includes('useSafeAreaInsets'), 'expected Android and cutout-aware content insets');
   assert.ok(routeFrameSource.includes('automaticallyAdjustKeyboardInsets'), 'expected iOS keyboard insets');
-  assert.ok(routeFrameSource.includes('keyboardDismissMode="on-drag"'), 'expected drag-to-dismiss keyboard behavior');
+  assert.ok(routeFrameSource.includes("keyboardDismissMode={Platform.OS === 'web' ? 'none' : 'on-drag'}"),
+    'expected native drag dismissal without committing partial drafts during web programmatic scroll');
   assert.ok(routeFrameSource.includes('keyboardShouldPersistTaps="handled"'), 'expected one-tap controls while the keyboard is open');
   assert.ok(routeFrameSource.includes('paddingBottom: Math.max(36, insets.bottom + 24)'));
   assert.ok(routeFrameSource.includes('paddingLeft: 18 + insets.left'));
@@ -1225,8 +1231,10 @@ test('Expo native shell is safe-area, keyboard, screen-reader, and compact-width
   assert.ok(accountSource.includes('minHeight: 48'), 'expected account actions to meet the native target minimum');
   assert.ok(orbitSource.includes('accessibilityValue={{ text: mobileLoopStepAccessibilityValue(step) }}'));
   assert.ok(orbitSource.includes('const useLinearOrbit = fontScale >= 1.6'));
-  assert.ok(portfolioPathSource.includes('accessibilityLabel="Portfolio payoff progress"'));
-  assert.ok(portfolioPathSource.includes('portfolioPointAccessibilityLabel(point)'));
+  assert.ok(portfolioPathSource.includes('accessibilityLabel="Portfolio payoff path"'));
+  assert.ok(portfolioPathSource.includes('accessibilityRole="text"') && portfolioPathSource.includes('accessible'));
+  assert.ok(portfolioPathSource.includes('Modeled balance ${formatCurrency(point.balance)}'));
+  assert.ok(portfolioPathSource.includes('Interest this month ${formatCurrency(point.interest)}'));
   assert.ok(renderedSmokeSource.includes("['phone-landscape', { width: 844, height: 390 }]"));
   assert.ok(
     routeFrameSource.indexOf('{renderContent(context)}')
@@ -1412,9 +1420,14 @@ test('shared mobile simulator snapshot matches current web single-debt strategy 
     .sort((a, b) => a.months - b.months || a.totalInterest - b.totalInterest)[0];
   assert.equal(snapshot.guardrail, null);
   assert.equal(snapshot.velocity.months, velocity.months);
-  assert.equal(snapshot.velocity.interestSavedLabel.includes('modeled interest difference'), true);
+  const directBaseline = webStrategies.find((strategy) => strategy.name === 'Traditional');
+  const expectedInterestDelta = directBaseline.totalInterest - velocity.totalInterest;
+  assert.equal(snapshot.velocity.interestSaved, expectedInterestDelta);
+  assert.equal(snapshot.velocity.interestSavedLabel, `${sharedEngine.formatCurrency(Math.abs(expectedInterestDelta))} ${expectedInterestDelta > 0 ? 'less' : 'more'} modeled interest`);
   assert.equal(snapshot.velocity.interestSavedLabel.startsWith('Saves $'), false);
-  assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('faster'), true);
+  assert.equal(snapshot.velocity.monthsSaved, directBaseline.months - velocity.months);
+  assert.equal(snapshot.velocity.monthsSavedLabel.endsWith('slower'), true, 'current low-chunk example is slower than full-budget direct repayment');
+  assert.equal(velocity.endingCashLabel, `${sharedEngine.formatCurrency(webStrategies.find((strategy) => strategy.name === 'Velocity').endingCash)} cash at payoff`);
   assert.equal(snapshot.fastestStrategyName, fastestWebStrategy.name);
 });
 
@@ -1657,13 +1670,23 @@ test('mobile storage migrates only the legacy standalone demo default', () => {
     },
   }));
 
-  assert.equal(migrated.monthlyIncome, 6500);
-  assert.equal(migrated.monthlyExpenses, 5000);
+  assert.equal(migrated.monthlyIncome, 8200);
+  assert.equal(migrated.monthlyExpenses, 4700);
   assert.equal(migrated.chunkAmount, 1000);
   assert.equal(migrated.activeDebt.termMonths, 48);
   assert.equal(migrated.loc.limit, 25000);
   assert.equal(customZeroLimit.monthlyIncome, 6400);
   assert.equal(customZeroLimit.loc.limit, 0);
+});
+
+test('native recovery review uses legacy scenario APR units and explicit canonical book units', () => {
+  const labels = loadTsFile(path.join(repoRoot, 'apps/mobile/lib/accessibility-labels.ts'));
+  const sharedEngine = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const input = { ...sharedEngine.defaultMobileDashboardInput, activeDebt: { ...sharedEngine.defaultMobileDashboardInput.activeDebt, apr: 6.5 },
+    loc: { ...sharedEngine.defaultMobileDashboardInput.loc, apr: 8.5 } };
+  const spoken = labels.recoveryChoiceAccessibilityLabel(input, 'Reviewed source');
+  assert.match(spoken, /6\.5 percent APR/); assert.match(spoken, /8\.5 percent APR/); assert.doesNotMatch(spoken, /(?:650|850) percent APR/);
+  assert.equal(labels.formatRecoveryAPR(2, 'decimal'), '200');
 });
 
 test('shared mobile cockpit snapshot exposes the core demo instruments and guardrails', () => {
@@ -1762,7 +1785,7 @@ test('shared mobile vault snapshot turns the active debt model into an outcome p
 
   assert.equal(vault.guardrail, null);
   assert.ok(vault.freedomPathLabel.endsWith('mo'));
-  assert.ok(vault.interestFreedLabel.includes('modeled interest difference'));
+  assert.ok(/(?:more|less) modeled interest/.test(vault.interestFreedLabel));
   assert.equal(vault.interestFreedLabel.startsWith('Saves $'), false);
   assert.equal(vault.stages.length, 3);
   assert.equal(vault.stages[1].title, 'Debt Freedom');
@@ -1842,6 +1865,57 @@ test('shared mobile learn snapshot teaches from current Money Loop inputs', () =
 
   assert.ok(unsafeLearn.guardrail.includes('Income needs to exceed expenses'));
   assert.ok(unsafeLearn.lessons.find((lesson) => lesson.title === 'Cash Flow').detail.includes('learning mode'));
+});
+
+test('native final-payment and zero-surplus snapshots match the web Money Loop without false guardrails', () => {
+  const shared = loadTsFile(path.join(repoRoot, 'packages/financial-engine/src/index.ts'));
+  const web = loadTsFile(path.join(repoRoot, 'apps/web/src/engine/calculations.ts'));
+  for (const fixture of [
+    { balance: 100, apr: 0.12, expenses: 800, locBalance: 0, months: 1 },
+    { balance: 1000, apr: 0, expenses: 575, locBalance: 500, months: 4 },
+  ]) {
+    const input = {
+      monthlyIncome: 1000, monthlyExpenses: fixture.expenses, chunkAmount: 100, activeDebtName: 'Loan',
+      activeDebt: { balance: fixture.balance, apr: fixture.apr, monthlyPayment: 425 },
+      loc: { limit: 2000, balance: fixture.locBalance, apr: 0 },
+    };
+    const snapshot = shared.buildMobileSimulatorSnapshot(input);
+    const projection = web.simulateVelocity({ ...input, carLoan: input.activeDebt, extraPayment: input.chunkAmount });
+    assert.equal(snapshot.guardrail, null);
+    assert.equal(snapshot.velocity.months, fixture.months);
+    assert.equal(snapshot.velocity.months, projection.payoffMonths);
+    assert.equal(snapshot.velocity.totalInterest.toFixed(2), projection.totalInterest.toFixed(2));
+    assert.equal(shared.buildMobileVaultSnapshot(input).guardrail, null, 'pause-new-chunks guidance is not an invalid-payoff guardrail');
+    assert.equal(shared.buildMobileDashboardSnapshot(input).nextMove, 'Pause new chunks');
+  }
+});
+
+test('main CI requires native route and full persistence/input contracts', () => {
+  const yaml = require(path.join(repoRoot, 'apps/web/node_modules/js-yaml'));
+  const document = yaml.load(fs.readFileSync(path.join(repoRoot, '.github/workflows/ci.yml'), 'utf8'));
+  function verify(config) {
+    const primary = config.jobs['web-mobile-quality'];
+    assert.deepEqual(primary.needs, ['asset-hero-quality', 'backend-isolation']);
+    assert.equal(primary.if, '${{ !cancelled() }}');
+    const job = config.jobs['backend-isolation'];
+    assert.ok(job); assert.equal(job.if, undefined);
+    const step = job.steps.find(step => step.name === 'Run mobile contract tests');
+    assert.ok(step); assert.equal(step.if, undefined); assert.notEqual(step['continue-on-error'], true);
+    const commands = step.run.trim().split(/\r?\n/).map(line => line.trim());
+    assert.ok(commands.includes('node scripts/mobile-port-contract-tests.cjs'));
+    assert.ok(commands.includes('npm --prefix apps/mobile run test:supabase:mobile'), 'main CI must execute the full native persistence/input suite');
+  }
+  verify(document);
+  for (const corrupt of ['remove', 'skip', 'ignore-failure', 'disconnect', 'success-only']) {
+    const copy = structuredClone(document);
+    const step = copy.jobs['backend-isolation'].steps.find(step => step.name === 'Run mobile contract tests');
+    if (corrupt === 'remove') step.run = 'node scripts/mobile-port-contract-tests.cjs';
+    if (corrupt === 'skip') step.if = 'false';
+    if (corrupt === 'ignore-failure') step['continue-on-error'] = true;
+    if (corrupt === 'disconnect') copy.jobs['web-mobile-quality'].needs = ['asset-hero-quality'];
+    if (corrupt === 'success-only') delete copy.jobs['web-mobile-quality'].if;
+    assert.throws(() => verify(copy), `invalid ${corrupt} wiring must be rejected`);
+  }
 });
 
 if (process.exitCode) {

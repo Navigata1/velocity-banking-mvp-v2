@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
+require('./financial-input-draft-contract.cjs');
 
 const ownerId = '00000000-0000-4000-8000-00000000000a';
 const defaultInput = {
@@ -102,6 +103,7 @@ async function main() {
   assert.equal(durable.revision, 1);
   assert.equal(durable.input.monthlyIncome, 9100);
   console.log('Expo assumption storage contract rejected a stale-tab overwrite after recovery.');
+  await require('./mobile-assumption-physical-contract.cjs')();
 }
 
 main().catch((error) => {

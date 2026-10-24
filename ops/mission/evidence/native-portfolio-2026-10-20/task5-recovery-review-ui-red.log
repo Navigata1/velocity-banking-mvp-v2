@@ -1,0 +1,153 @@
+Recovery review UI source RED run 2026-10-21T03:42:24.6709855Z
+SOURCE_EXCERPT apps/mobile/components/mobile-supabase-account.tsx review binding
+  const { authError, authReady, client, consumeSyncNotice, session, syncNotice, retryPendingRecovery, runRecovery } = useMobileAuth();
+  const portfolio = useMobilePortfolio();
+  const reviewedDestination = useRef<{ ownerId: string; assumptions: string; portfolio: string } | null>(null);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<string | null>(null);
+  const [work, setWork] = useState<WorkState>('idle');
+  const [recoveryOptions, setRecoveryOptions] = useState<MobileSnapshotRecoveryOptions | null>(null);
+  const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null);
+  const [pendingRecovery, setPendingRecovery] = useState<MobileSnapshotRecoverySource | null>(null);
+  const [hasStagedRecovery, setHasStagedRecovery] = useState(false);
+  const [recoveryStateOwnerId, setRecoveryStateOwnerId] = useState<string | null>(null);
+  const recoveryConfirmationRef = useRef<ElementRef<typeof Text>>(null);
+  const currentOwnerId = session?.user.id ?? null;
+  const statusOwnerId = useRef<string | null>(currentOwnerId);
+  const renderOwnerId = useRef<string | null>(currentOwnerId);
+  renderOwnerId.current = currentOwnerId;
+  const recoveryRequestVersion = useRef(0);
+  const beginReview = (source: MobileSnapshotRecoverySource) => {
+    if (!currentOwnerId || !assumptionsReady || !portfolio.isHydrated || !['saved','empty'].includes(portfolio.status)) return;
+    reviewedDestination.current = { ownerId: currentOwnerId, assumptions: serializeMobileRecoveryAssumptions(assumptions),
+      portfolio: serializeMobileRecoveryPortfolio(portfolio.book) };
+    setPendingRecovery(JSON.parse(JSON.stringify(source)) as MobileSnapshotRecoverySource);
+  };
+
+SOURCE_EXCERPT apps/mobile/components/mobile-supabase-account.tsx confirmation
+  const confirmRecovery = async () => {
+    const expectedOwnerId = session?.user.id;
+    if (!client || !expectedOwnerId || !pendingRecovery) return;
+    const source = pendingRecovery;
+    const reviewed = reviewedDestination.current;
+    if (!reviewed || reviewed.ownerId !== expectedOwnerId) { setStatus('Recovery review expired. Review again.'); return; }
+    const requestVersion = ++recoveryRequestVersion.current;
+    const isCurrentRequest = () => renderOwnerId.current === expectedOwnerId
+      && recoveryRequestVersion.current === requestVersion;
+    setWork(source.kind === 'guest' ? 'adopting' : 'restoring');
+    setStatus(null);
+    let replacedLocally = false;
+    try {
+      if (!await isOnline()) {
+        if (isCurrentRequest()) {
+          setStatus('Reconnect before confirming recovery so the selected revision can be verified again.');
+        }
+        return;
+      }
+      if (!isCurrentRequest()) return;
+      const confirmation = source.kind === 'remote'
+        ? { clientRevision: source.snapshot.clientRevision, snapshotId: source.snapshot.snapshotId }
+        : {
+          kind: source.kind,
+          ownerId: expectedOwnerId,
+          reviewedAssumptions: serializeMobileRecoveryAssumptions(source.assumptions),
+          reviewedPortfolio: serializeMobileRecoveryPortfolio(source.portfolio ?? null),
+        };
+      const result = await runRecovery(expectedOwnerId, () => applyMobileSnapshotRecovery(client, {
+        confirmation,
+        expectedOwnerId,
+        reviewedLocalAssumptions: reviewed.assumptions,
+        reviewedLocalPortfolio: reviewed.portfolio,
+        source,
+      }, {
+        outbox: mobileSnapshotOutbox,
+        replaceAssumptions: async (nextInput, ownerLock, expectedRevision) => {
+          const backend = await onReplaceAssumptions(nextInput, ownerLock, expectedRevision);
+          replacedLocally = true;
+          return backend;
+        },
+        replacePortfolio: portfolio.replace,
+      }));
+      if (!isCurrentRequest()) return;
+      setRecoveryOptions(null);
+      setSelectedSnapshotId(null);
+      setPendingRecovery(null);
+      setHasStagedRecovery(false);
+      const actionLabel = source.kind === 'guest'
+        ? 'Guest assumptions adopted'
+        : source.kind === 'device'
+          ? 'This device kept as the account version'
+          : 'Snapshot restored';
+      setStatus(
+        result.synced
+          ? `${actionLabel} and synced. ${result.discarded} queued local change${result.discarded === 1 ? '' : 's'} replaced by your confirmation.`
+          : `${actionLabel} locally. Account sync remains queued.`
+      );
+    } catch (error) {
+      if (!isCurrentRequest()) return;
+      if (error instanceof MobileSnapshotRecoveryPendingError) {
+        setHasStagedRecovery(true);
+        setPendingRecovery(null);
+        setStatus(`Recovery is durably pending. Resume it below; it cannot be cancelled after confirmation. ${message(error)}`);
+      } else {
+        setStatus(
+          replacedLocally
+            ? `Recovery was saved locally, but account sync is queued. ${message(error)}`
+            : `Recovery was not applied: ${message(error)}`
+        );
+      }
+    } finally {
+      if (isCurrentRequest()) setWork('idle');
+    }
+  };
+React 19.2.3; actual MobileSupabaseAccount; captured RN Pressables, null host, memory services.
+SOURCE components/mobile-supabase-account.tsx sha256=9396d8664d003b4db9156c900ac3b5217a1e2c8a07324d743f61ccb5426ad091
+PASS Recovery review UI unchanged pair applies with review-open destination fingerprints
+FAIL Recovery review UI optimistic scenario change after review rejects before apply despite unchanged physical storage
+AssertionError [ERR_ASSERTION]: changed committed scenario must invalidate confirmation before recovery API
+
+1 !== 0
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:203:12
+    at async test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:180:27)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:198:3) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Recovery review UI changed committed Portfolio after review rejects before apply despite unchanged physical storage
+AssertionError [ERR_ASSERTION]: changed committed book must invalidate confirmation before recovery API
+
+1 !== 0
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:212:12
+    at async test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:180:27)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:207:3) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL Recovery review UI saving Portfolio blocks confirmation even when both current values equal review
+AssertionError [ERR_ASSERTION]: pending persistence must block confirmation before recovery API
+
+1 !== 0
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:220:12
+    at async test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:180:27)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\recovery-review-ui-contract.cjs:216:3) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+PASS Recovery review UI retained old-owner confirmation cannot apply or change the new owner
+5 Recovery review UI contracts: 2 passed, 3 failed. Memory ports only; no browser, device, native accessibility, physical storage, or cloud proof.
+CONTRACT_EXIT_CODE=1

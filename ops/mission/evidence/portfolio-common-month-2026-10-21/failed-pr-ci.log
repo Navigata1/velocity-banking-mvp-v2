@@ -1,0 +1,78 @@
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	﻿2026-10-21T13:14:20.7906411Z ##[group]Run npm run smoke:portfolio:built
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.7906725Z ^[[36;1mnpm run smoke:portfolio:built^[[0m
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.7935337Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.7935587Z ##[endgroup]
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.8610763Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.8611045Z > web@0.1.0 smoke:portfolio:built
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.8611786Z > node scripts/smoke-portfolio-budget.cjs && node scripts/smoke-portfolio-portability.cjs && node scripts/portfolio-input-smoke.cjs && node scripts/smoke-portfolio-common-month.cjs
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:20.8612256Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:22.8831358Z PASS Portfolio unfunded-extra at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:24.2952326Z PASS Portfolio retained-cash at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:25.7645906Z PASS Portfolio existing-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:27.0210125Z PASS Portfolio ranked-loc-cap at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:28.2729070Z PASS Portfolio split-ranked-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:29.4975413Z PASS Portfolio funded-final at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:30.7219854Z PASS Portfolio one-cent-short at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:31.9158932Z PASS Portfolio loc-interest-shortfall at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:33.1040061Z PASS Portfolio already-paid at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:34.4498202Z PASS Portfolio large-value at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:35.7754413Z PASS Portfolio large-loc at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:37.1036715Z PASS Portfolio focus-not-first-payoff at 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:38.1610288Z PASS Portfolio unfunded-extra at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:39.3625004Z PASS Portfolio retained-cash at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:40.6136319Z PASS Portfolio existing-loc at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:41.6624094Z PASS Portfolio ranked-loc-cap at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:42.7546595Z PASS Portfolio split-ranked-loc at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:43.8451630Z PASS Portfolio funded-final at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:44.8938731Z PASS Portfolio one-cent-short at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:46.0058365Z PASS Portfolio loc-interest-shortfall at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:47.1096871Z PASS Portfolio already-paid at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:48.2705513Z PASS Portfolio large-value at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:49.4471403Z PASS Portfolio large-loc at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:50.6365036Z PASS Portfolio focus-not-first-payoff at 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:53.7455026Z PASS web Portfolio portability canonical-round-trip 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:54.6750157Z PASS web Portfolio portability corrupt-primary 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:55.6014512Z PASS web Portfolio portability failed-publication 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:57.9798520Z PASS web Portfolio portability canonical-round-trip 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:14:59.0241561Z PASS web Portfolio portability corrupt-primary 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:00.0062291Z PASS web Portfolio portability failed-publication 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:00.8036815Z Portfolio input fixtures against existing built web app at http://127.0.0.1:40045; isolated 375/1440/280/1264px contexts.
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:05.0895788Z PASS precise Portfolio inputs 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:09.5552131Z PASS precise Portfolio inputs 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:13.5804872Z PASS precise Portfolio inputs 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:17.7177377Z PASS precise Portfolio inputs 1264px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:19.8579640Z PASS web common month cash-versus-wealth 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:21.0015106Z PASS web common month adverse 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:22.1678176Z PASS web common month blocked-reference 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:23.3355578Z PASS web common month failed-attempt 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:24.4902049Z PASS web common month nonzero-tolerance 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:25.6423253Z PASS web common month cleared 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:26.8427348Z PASS web common month large-values 1440px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:28.2121158Z PASS web common month cash-versus-wealth 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:29.3074236Z PASS web common month adverse 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:30.4073715Z PASS web common month blocked-reference 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:31.4416334Z PASS web common month failed-attempt 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:32.4950616Z PASS web common month nonzero-tolerance 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:33.5785606Z PASS web common month cleared 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:34.6411258Z PASS web common month large-values 375px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:35.8038557Z PASS web common month cash-versus-wealth 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:36.8707590Z PASS web common month adverse 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:37.9218523Z PASS web common month blocked-reference 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:38.9370225Z PASS web common month failed-attempt 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:39.9871192Z PASS web common month nonzero-tolerance 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:40.9904633Z PASS web common month cleared 280px
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0591843Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0592167Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0592258Z true !== false
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0592405Z 
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0592805Z     at assertGeometry (/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-portfolio-common-month.cjs:45:52)
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0593614Z     at runCommonMonthFixtures (/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-portfolio-common-month.cjs:81:65)
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0594435Z     at async main (/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-portfolio-common-month.cjs:104:308) {
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0594896Z   generatedMessage: true,
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0595112Z   code: 'ERR_ASSERTION',
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0595310Z   actual: true,
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0595497Z   expected: false,
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0595680Z   operator: 'strictEqual',
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0595883Z   diff: 'simple'
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0596098Z }
+Web and mobile quality gates	Verify funded Portfolio allocations and debt scope	2026-10-21T13:15:42.0776729Z ##[error]Process completed with exit code 1.

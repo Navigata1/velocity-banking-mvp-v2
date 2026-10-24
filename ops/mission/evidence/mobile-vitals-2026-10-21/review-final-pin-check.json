@@ -1,0 +1,24 @@
+{
+  "command": "node .superpowers/sdd/2026-10-21-mobile-vitals/review-final-pin-check.cjs",
+  "checked": "2026-10-21T10:44:05.232Z",
+  "currentHead": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "codeHashes": {
+    "apps/web/src/app/page.tsx": "01211b504632c98c4fd951656a7b4c02362a4f0b56591e491675613fe9444297",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "0a5d474b096426afef6e825cdaffc59ee2178e5060d080bae481a61f63260f6a",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "codeStable": true,
+  "priorReviewArtifactsUnchanged": true,
+  "browserProbeExit": 1,
+  "browserProbeReason": "Only untracked contract documentation changed during browser run; original broad checksum guard failed, all 8 positives and 12 controls passed",
+  "document": {
+    "path": "docs/mobile-vitals-contract-2026-10-21.md",
+    "initial": "deeba64a2a1c85511c59281a507a589b5ce1a65bf803a6a10fc6909e777e9190",
+    "afterProbe": "6d5657905147b2fc4ddedd16b4311f4c2424da182928f950a2ecbf2472a3d8b1",
+    "current": "6d5657905147b2fc4ddedd16b4311f4c2424da182928f950a2ecbf2472a3d8b1"
+  },
+  "positives": 8,
+  "mutantsRejected": 12,
+  "desktopSameLayoutAndPixels": true,
+  "serverStopped": true
+}

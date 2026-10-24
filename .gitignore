@@ -42,11 +42,17 @@ yarn-error.log*
 # Testing
 coverage/
 /apps/web/test-results/
+/apps/mobile/test-results/
 /apps/media/hyperframes/vendor/
 /apps/media/hyperframes/snapshots/
 /apps/media/hyperframes/output/
 /apps/media/hyperframes/.hyperframes/
 /apps/media/hyperframes/.thumbnails/
+/apps/media/hero-turntables/vendor/
+/apps/media/hero-turntables/.hyperframes/
+/apps/media/hero-turntables/.thumbnails/
+/apps/media/hero-turntables/snapshots/
+/apps/media/hero-turntables/output/
 /apps/media/remotion/out/
 /apps/media/remotion/bundle/
 /apps/media/remotion/public/fonts/

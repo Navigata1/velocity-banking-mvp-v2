@@ -1,0 +1,2874 @@
+{
+  "codec": "Existing meshoptimizer0.25 level3 VERSION0; no reorder/quantization/geometry change",
+  "attributeBuffers": 409,
+  "savedPaddedBytes": 0,
+  "estimatedAllLosslessCar": 2451462,
+  "estimatedOnlyTireBoundedCar": 2401332,
+  "carCap": 2359296,
+  "rows": [
+    {
+      "index": 14,
+      "filter": "OCTAHEDRAL",
+      "before": 1389,
+      "after": 1389,
+      "delta": 0
+    },
+    {
+      "index": 15,
+      "filter": "OCTAHEDRAL",
+      "before": 1377,
+      "after": 1377,
+      "delta": 0
+    },
+    {
+      "index": 16,
+      "filter": "NONE",
+      "before": 4124,
+      "after": 4124,
+      "delta": 0
+    },
+    {
+      "index": 17,
+      "filter": "OCTAHEDRAL",
+      "before": 1145,
+      "after": 1145,
+      "delta": 0
+    },
+    {
+      "index": 18,
+      "filter": "OCTAHEDRAL",
+      "before": 836,
+      "after": 836,
+      "delta": 0
+    },
+    {
+      "index": 19,
+      "filter": "OCTAHEDRAL",
+      "before": 25225,
+      "after": 25225,
+      "delta": 0
+    },
+    {
+      "index": 20,
+      "filter": "OCTAHEDRAL",
+      "before": 423,
+      "after": 423,
+      "delta": 0
+    },
+    {
+      "index": 21,
+      "filter": "OCTAHEDRAL",
+      "before": 220,
+      "after": 220,
+      "delta": 0
+    },
+    {
+      "index": 22,
+      "filter": "OCTAHEDRAL",
+      "before": 227,
+      "after": 227,
+      "delta": 0
+    },
+    {
+      "index": 23,
+      "filter": "NONE",
+      "before": 692,
+      "after": 692,
+      "delta": 0
+    },
+    {
+      "index": 24,
+      "filter": "OCTAHEDRAL",
+      "before": 3622,
+      "after": 3622,
+      "delta": 0
+    },
+    {
+      "index": 25,
+      "filter": "OCTAHEDRAL",
+      "before": 789,
+      "after": 789,
+      "delta": 0
+    },
+    {
+      "index": 26,
+      "filter": "OCTAHEDRAL",
+      "before": 786,
+      "after": 786,
+      "delta": 0
+    },
+    {
+      "index": 27,
+      "filter": "OCTAHEDRAL",
+      "before": 812,
+      "after": 812,
+      "delta": 0
+    },
+    {
+      "index": 28,
+      "filter": "OCTAHEDRAL",
+      "before": 797,
+      "after": 797,
+      "delta": 0
+    },
+    {
+      "index": 29,
+      "filter": "OCTAHEDRAL",
+      "before": 1214,
+      "after": 1214,
+      "delta": 0
+    },
+    {
+      "index": 30,
+      "filter": "OCTAHEDRAL",
+      "before": 1647,
+      "after": 1647,
+      "delta": 0
+    },
+    {
+      "index": 31,
+      "filter": "OCTAHEDRAL",
+      "before": 319,
+      "after": 319,
+      "delta": 0
+    },
+    {
+      "index": 32,
+      "filter": "NONE",
+      "before": 1290,
+      "after": 1290,
+      "delta": 0
+    },
+    {
+      "index": 33,
+      "filter": "OCTAHEDRAL",
+      "before": 374,
+      "after": 374,
+      "delta": 0
+    },
+    {
+      "index": 34,
+      "filter": "OCTAHEDRAL",
+      "before": 532,
+      "after": 532,
+      "delta": 0
+    },
+    {
+      "index": 35,
+      "filter": "NONE",
+      "before": 1542,
+      "after": 1542,
+      "delta": 0
+    },
+    {
+      "index": 36,
+      "filter": "OCTAHEDRAL",
+      "before": 341,
+      "after": 341,
+      "delta": 0
+    },
+    {
+      "index": 37,
+      "filter": "OCTAHEDRAL",
+      "before": 635,
+      "after": 635,
+      "delta": 0
+    },
+    {
+      "index": 38,
+      "filter": "OCTAHEDRAL",
+      "before": 792,
+      "after": 792,
+      "delta": 0
+    },
+    {
+      "index": 39,
+      "filter": "NONE",
+      "before": 2727,
+      "after": 2727,
+      "delta": 0
+    },
+    {
+      "index": 40,
+      "filter": "OCTAHEDRAL",
+      "before": 387,
+      "after": 387,
+      "delta": 0
+    },
+    {
+      "index": 41,
+      "filter": "OCTAHEDRAL",
+      "before": 2941,
+      "after": 2941,
+      "delta": 0
+    },
+    {
+      "index": 42,
+      "filter": "OCTAHEDRAL",
+      "before": 2997,
+      "after": 2997,
+      "delta": 0
+    },
+    {
+      "index": 43,
+      "filter": "OCTAHEDRAL",
+      "before": 2993,
+      "after": 2993,
+      "delta": 0
+    },
+    {
+      "index": 44,
+      "filter": "OCTAHEDRAL",
+      "before": 2637,
+      "after": 2637,
+      "delta": 0
+    },
+    {
+      "index": 45,
+      "filter": "OCTAHEDRAL",
+      "before": 2647,
+      "after": 2647,
+      "delta": 0
+    },
+    {
+      "index": 46,
+      "filter": "OCTAHEDRAL",
+      "before": 5379,
+      "after": 5379,
+      "delta": 0
+    },
+    {
+      "index": 47,
+      "filter": "OCTAHEDRAL",
+      "before": 2432,
+      "after": 2432,
+      "delta": 0
+    },
+    {
+      "index": 48,
+      "filter": "OCTAHEDRAL",
+      "before": 920,
+      "after": 920,
+      "delta": 0
+    },
+    {
+      "index": 49,
+      "filter": "OCTAHEDRAL",
+      "before": 1784,
+      "after": 1784,
+      "delta": 0
+    },
+    {
+      "index": 50,
+      "filter": "OCTAHEDRAL",
+      "before": 261,
+      "after": 261,
+      "delta": 0
+    },
+    {
+      "index": 51,
+      "filter": "OCTAHEDRAL",
+      "before": 1401,
+      "after": 1401,
+      "delta": 0
+    },
+    {
+      "index": 52,
+      "filter": "OCTAHEDRAL",
+      "before": 1407,
+      "after": 1407,
+      "delta": 0
+    },
+    {
+      "index": 53,
+      "filter": "OCTAHEDRAL",
+      "before": 918,
+      "after": 918,
+      "delta": 0
+    },
+    {
+      "index": 54,
+      "filter": "OCTAHEDRAL",
+      "before": 926,
+      "after": 926,
+      "delta": 0
+    },
+    {
+      "index": 55,
+      "filter": "OCTAHEDRAL",
+      "before": 77,
+      "after": 77,
+      "delta": 0
+    },
+    {
+      "index": 56,
+      "filter": "OCTAHEDRAL",
+      "before": 65,
+      "after": 65,
+      "delta": 0
+    },
+    {
+      "index": 57,
+      "filter": "OCTAHEDRAL",
+      "before": 390,
+      "after": 390,
+      "delta": 0
+    },
+    {
+      "index": 58,
+      "filter": "NONE",
+      "before": 1201,
+      "after": 1201,
+      "delta": 0
+    },
+    {
+      "index": 59,
+      "filter": "OCTAHEDRAL",
+      "before": 287,
+      "after": 287,
+      "delta": 0
+    },
+    {
+      "index": 60,
+      "filter": "OCTAHEDRAL",
+      "before": 596,
+      "after": 596,
+      "delta": 0
+    },
+    {
+      "index": 61,
+      "filter": "OCTAHEDRAL",
+      "before": 597,
+      "after": 597,
+      "delta": 0
+    },
+    {
+      "index": 62,
+      "filter": "OCTAHEDRAL",
+      "before": 1240,
+      "after": 1240,
+      "delta": 0
+    },
+    {
+      "index": 63,
+      "filter": "OCTAHEDRAL",
+      "before": 1261,
+      "after": 1261,
+      "delta": 0
+    },
+    {
+      "index": 64,
+      "filter": "OCTAHEDRAL",
+      "before": 7454,
+      "after": 7454,
+      "delta": 0
+    },
+    {
+      "index": 65,
+      "filter": "OCTAHEDRAL",
+      "before": 7290,
+      "after": 7290,
+      "delta": 0
+    },
+    {
+      "index": 66,
+      "filter": "OCTAHEDRAL",
+      "before": 1346,
+      "after": 1346,
+      "delta": 0
+    },
+    {
+      "index": 67,
+      "filter": "OCTAHEDRAL",
+      "before": 621,
+      "after": 621,
+      "delta": 0
+    },
+    {
+      "index": 68,
+      "filter": "OCTAHEDRAL",
+      "before": 243,
+      "after": 243,
+      "delta": 0
+    },
+    {
+      "index": 69,
+      "filter": "OCTAHEDRAL",
+      "before": 1917,
+      "after": 1917,
+      "delta": 0
+    },
+    {
+      "index": 70,
+      "filter": "OCTAHEDRAL",
+      "before": 386,
+      "after": 386,
+      "delta": 0
+    },
+    {
+      "index": 71,
+      "filter": "OCTAHEDRAL",
+      "before": 1077,
+      "after": 1077,
+      "delta": 0
+    },
+    {
+      "index": 72,
+      "filter": "OCTAHEDRAL",
+      "before": 3810,
+      "after": 3810,
+      "delta": 0
+    },
+    {
+      "index": 73,
+      "filter": "OCTAHEDRAL",
+      "before": 3573,
+      "after": 3573,
+      "delta": 0
+    },
+    {
+      "index": 74,
+      "filter": "OCTAHEDRAL",
+      "before": 9263,
+      "after": 9263,
+      "delta": 0
+    },
+    {
+      "index": 75,
+      "filter": "OCTAHEDRAL",
+      "before": 9120,
+      "after": 9120,
+      "delta": 0
+    },
+    {
+      "index": 76,
+      "filter": "OCTAHEDRAL",
+      "before": 7760,
+      "after": 7760,
+      "delta": 0
+    },
+    {
+      "index": 77,
+      "filter": "OCTAHEDRAL",
+      "before": 7997,
+      "after": 7997,
+      "delta": 0
+    },
+    {
+      "index": 78,
+      "filter": "OCTAHEDRAL",
+      "before": 4382,
+      "after": 4382,
+      "delta": 0
+    },
+    {
+      "index": 79,
+      "filter": "OCTAHEDRAL",
+      "before": 300,
+      "after": 300,
+      "delta": 0
+    },
+    {
+      "index": 80,
+      "filter": "OCTAHEDRAL",
+      "before": 1550,
+      "after": 1550,
+      "delta": 0
+    },
+    {
+      "index": 81,
+      "filter": "OCTAHEDRAL",
+      "before": 1614,
+      "after": 1614,
+      "delta": 0
+    },
+    {
+      "index": 82,
+      "filter": "OCTAHEDRAL",
+      "before": 596,
+      "after": 596,
+      "delta": 0
+    },
+    {
+      "index": 83,
+      "filter": "OCTAHEDRAL",
+      "before": 297,
+      "after": 297,
+      "delta": 0
+    },
+    {
+      "index": 84,
+      "filter": "OCTAHEDRAL",
+      "before": 1592,
+      "after": 1592,
+      "delta": 0
+    },
+    {
+      "index": 85,
+      "filter": "OCTAHEDRAL",
+      "before": 1483,
+      "after": 1483,
+      "delta": 0
+    },
+    {
+      "index": 86,
+      "filter": "OCTAHEDRAL",
+      "before": 826,
+      "after": 826,
+      "delta": 0
+    },
+    {
+      "index": 87,
+      "filter": "OCTAHEDRAL",
+      "before": 743,
+      "after": 743,
+      "delta": 0
+    },
+    {
+      "index": 88,
+      "filter": "OCTAHEDRAL",
+      "before": 396,
+      "after": 396,
+      "delta": 0
+    },
+    {
+      "index": 89,
+      "filter": "OCTAHEDRAL",
+      "before": 357,
+      "after": 357,
+      "delta": 0
+    },
+    {
+      "index": 90,
+      "filter": "OCTAHEDRAL",
+      "before": 409,
+      "after": 409,
+      "delta": 0
+    },
+    {
+      "index": 91,
+      "filter": "OCTAHEDRAL",
+      "before": 45,
+      "after": 45,
+      "delta": 0
+    },
+    {
+      "index": 92,
+      "filter": "OCTAHEDRAL",
+      "before": 724,
+      "after": 724,
+      "delta": 0
+    },
+    {
+      "index": 93,
+      "filter": "OCTAHEDRAL",
+      "before": 618,
+      "after": 618,
+      "delta": 0
+    },
+    {
+      "index": 94,
+      "filter": "OCTAHEDRAL",
+      "before": 1746,
+      "after": 1746,
+      "delta": 0
+    },
+    {
+      "index": 95,
+      "filter": "OCTAHEDRAL",
+      "before": 1683,
+      "after": 1683,
+      "delta": 0
+    },
+    {
+      "index": 96,
+      "filter": "OCTAHEDRAL",
+      "before": 554,
+      "after": 554,
+      "delta": 0
+    },
+    {
+      "index": 97,
+      "filter": "OCTAHEDRAL",
+      "before": 500,
+      "after": 500,
+      "delta": 0
+    },
+    {
+      "index": 98,
+      "filter": "OCTAHEDRAL",
+      "before": 895,
+      "after": 895,
+      "delta": 0
+    },
+    {
+      "index": 99,
+      "filter": "OCTAHEDRAL",
+      "before": 920,
+      "after": 920,
+      "delta": 0
+    },
+    {
+      "index": 100,
+      "filter": "OCTAHEDRAL",
+      "before": 355,
+      "after": 355,
+      "delta": 0
+    },
+    {
+      "index": 101,
+      "filter": "OCTAHEDRAL",
+      "before": 351,
+      "after": 351,
+      "delta": 0
+    },
+    {
+      "index": 102,
+      "filter": "OCTAHEDRAL",
+      "before": 162,
+      "after": 162,
+      "delta": 0
+    },
+    {
+      "index": 103,
+      "filter": "OCTAHEDRAL",
+      "before": 155,
+      "after": 155,
+      "delta": 0
+    },
+    {
+      "index": 104,
+      "filter": "OCTAHEDRAL",
+      "before": 372,
+      "after": 372,
+      "delta": 0
+    },
+    {
+      "index": 105,
+      "filter": "OCTAHEDRAL",
+      "before": 418,
+      "after": 418,
+      "delta": 0
+    },
+    {
+      "index": 106,
+      "filter": "OCTAHEDRAL",
+      "before": 994,
+      "after": 994,
+      "delta": 0
+    },
+    {
+      "index": 107,
+      "filter": "OCTAHEDRAL",
+      "before": 1529,
+      "after": 1529,
+      "delta": 0
+    },
+    {
+      "index": 108,
+      "filter": "OCTAHEDRAL",
+      "before": 1441,
+      "after": 1441,
+      "delta": 0
+    },
+    {
+      "index": 109,
+      "filter": "OCTAHEDRAL",
+      "before": 148,
+      "after": 148,
+      "delta": 0
+    },
+    {
+      "index": 110,
+      "filter": "OCTAHEDRAL",
+      "before": 150,
+      "after": 150,
+      "delta": 0
+    },
+    {
+      "index": 111,
+      "filter": "OCTAHEDRAL",
+      "before": 896,
+      "after": 896,
+      "delta": 0
+    },
+    {
+      "index": 112,
+      "filter": "OCTAHEDRAL",
+      "before": 912,
+      "after": 912,
+      "delta": 0
+    },
+    {
+      "index": 113,
+      "filter": "OCTAHEDRAL",
+      "before": 357,
+      "after": 357,
+      "delta": 0
+    },
+    {
+      "index": 114,
+      "filter": "OCTAHEDRAL",
+      "before": 355,
+      "after": 355,
+      "delta": 0
+    },
+    {
+      "index": 115,
+      "filter": "OCTAHEDRAL",
+      "before": 355,
+      "after": 355,
+      "delta": 0
+    },
+    {
+      "index": 116,
+      "filter": "OCTAHEDRAL",
+      "before": 395,
+      "after": 395,
+      "delta": 0
+    },
+    {
+      "index": 117,
+      "filter": "OCTAHEDRAL",
+      "before": 978,
+      "after": 978,
+      "delta": 0
+    },
+    {
+      "index": 118,
+      "filter": "OCTAHEDRAL",
+      "before": 773,
+      "after": 773,
+      "delta": 0
+    },
+    {
+      "index": 119,
+      "filter": "OCTAHEDRAL",
+      "before": 681,
+      "after": 681,
+      "delta": 0
+    },
+    {
+      "index": 120,
+      "filter": "OCTAHEDRAL",
+      "before": 450,
+      "after": 450,
+      "delta": 0
+    },
+    {
+      "index": 121,
+      "filter": "OCTAHEDRAL",
+      "before": 349,
+      "after": 349,
+      "delta": 0
+    },
+    {
+      "index": 122,
+      "filter": "OCTAHEDRAL",
+      "before": 404,
+      "after": 404,
+      "delta": 0
+    },
+    {
+      "index": 123,
+      "filter": "OCTAHEDRAL",
+      "before": 45,
+      "after": 45,
+      "delta": 0
+    },
+    {
+      "index": 124,
+      "filter": "OCTAHEDRAL",
+      "before": 738,
+      "after": 738,
+      "delta": 0
+    },
+    {
+      "index": 125,
+      "filter": "OCTAHEDRAL",
+      "before": 682,
+      "after": 682,
+      "delta": 0
+    },
+    {
+      "index": 126,
+      "filter": "OCTAHEDRAL",
+      "before": 502,
+      "after": 502,
+      "delta": 0
+    },
+    {
+      "index": 127,
+      "filter": "OCTAHEDRAL",
+      "before": 560,
+      "after": 560,
+      "delta": 0
+    },
+    {
+      "index": 128,
+      "filter": "OCTAHEDRAL",
+      "before": 1762,
+      "after": 1762,
+      "delta": 0
+    },
+    {
+      "index": 129,
+      "filter": "OCTAHEDRAL",
+      "before": 1700,
+      "after": 1700,
+      "delta": 0
+    },
+    {
+      "index": 130,
+      "filter": "OCTAHEDRAL",
+      "before": 2450,
+      "after": 2450,
+      "delta": 0
+    },
+    {
+      "index": 131,
+      "filter": "OCTAHEDRAL",
+      "before": 325,
+      "after": 325,
+      "delta": 0
+    },
+    {
+      "index": 132,
+      "filter": "OCTAHEDRAL",
+      "before": 408,
+      "after": 408,
+      "delta": 0
+    },
+    {
+      "index": 133,
+      "filter": "OCTAHEDRAL",
+      "before": 2495,
+      "after": 2495,
+      "delta": 0
+    },
+    {
+      "index": 134,
+      "filter": "OCTAHEDRAL",
+      "before": 330,
+      "after": 330,
+      "delta": 0
+    },
+    {
+      "index": 135,
+      "filter": "OCTAHEDRAL",
+      "before": 398,
+      "after": 398,
+      "delta": 0
+    },
+    {
+      "index": 136,
+      "filter": "OCTAHEDRAL",
+      "before": 2475,
+      "after": 2475,
+      "delta": 0
+    },
+    {
+      "index": 137,
+      "filter": "OCTAHEDRAL",
+      "before": 329,
+      "after": 329,
+      "delta": 0
+    },
+    {
+      "index": 138,
+      "filter": "OCTAHEDRAL",
+      "before": 398,
+      "after": 398,
+      "delta": 0
+    },
+    {
+      "index": 139,
+      "filter": "OCTAHEDRAL",
+      "before": 2496,
+      "after": 2496,
+      "delta": 0
+    },
+    {
+      "index": 140,
+      "filter": "OCTAHEDRAL",
+      "before": 328,
+      "after": 328,
+      "delta": 0
+    },
+    {
+      "index": 141,
+      "filter": "OCTAHEDRAL",
+      "before": 133,
+      "after": 133,
+      "delta": 0
+    },
+    {
+      "index": 142,
+      "filter": "NONE",
+      "before": 1466,
+      "after": 1466,
+      "delta": 0
+    },
+    {
+      "index": 143,
+      "filter": "OCTAHEDRAL",
+      "before": 465,
+      "after": 465,
+      "delta": 0
+    },
+    {
+      "index": 144,
+      "filter": "OCTAHEDRAL",
+      "before": 463,
+      "after": 463,
+      "delta": 0
+    },
+    {
+      "index": 145,
+      "filter": "NONE",
+      "before": 1263,
+      "after": 1263,
+      "delta": 0
+    },
+    {
+      "index": 146,
+      "filter": "OCTAHEDRAL",
+      "before": 6017,
+      "after": 6017,
+      "delta": 0
+    },
+    {
+      "index": 147,
+      "filter": "OCTAHEDRAL",
+      "before": 6006,
+      "after": 6006,
+      "delta": 0
+    },
+    {
+      "index": 148,
+      "filter": "OCTAHEDRAL",
+      "before": 253,
+      "after": 253,
+      "delta": 0
+    },
+    {
+      "index": 149,
+      "filter": "OCTAHEDRAL",
+      "before": 219,
+      "after": 219,
+      "delta": 0
+    },
+    {
+      "index": 150,
+      "filter": "NONE",
+      "before": 934,
+      "after": 934,
+      "delta": 0
+    },
+    {
+      "index": 151,
+      "filter": "OCTAHEDRAL",
+      "before": 3939,
+      "after": 3939,
+      "delta": 0
+    },
+    {
+      "index": 152,
+      "filter": "OCTAHEDRAL",
+      "before": 4270,
+      "after": 4270,
+      "delta": 0
+    },
+    {
+      "index": 153,
+      "filter": "OCTAHEDRAL",
+      "before": 972,
+      "after": 972,
+      "delta": 0
+    },
+    {
+      "index": 154,
+      "filter": "OCTAHEDRAL",
+      "before": 976,
+      "after": 976,
+      "delta": 0
+    },
+    {
+      "index": 155,
+      "filter": "NONE",
+      "before": 2933,
+      "after": 2933,
+      "delta": 0
+    },
+    {
+      "index": 156,
+      "filter": "OCTAHEDRAL",
+      "before": 1012,
+      "after": 1012,
+      "delta": 0
+    },
+    {
+      "index": 157,
+      "filter": "OCTAHEDRAL",
+      "before": 1012,
+      "after": 1012,
+      "delta": 0
+    },
+    {
+      "index": 158,
+      "filter": "OCTAHEDRAL",
+      "before": 979,
+      "after": 979,
+      "delta": 0
+    },
+    {
+      "index": 159,
+      "filter": "OCTAHEDRAL",
+      "before": 985,
+      "after": 985,
+      "delta": 0
+    },
+    {
+      "index": 160,
+      "filter": "NONE",
+      "before": 2926,
+      "after": 2926,
+      "delta": 0
+    },
+    {
+      "index": 161,
+      "filter": "OCTAHEDRAL",
+      "before": 1005,
+      "after": 1005,
+      "delta": 0
+    },
+    {
+      "index": 162,
+      "filter": "OCTAHEDRAL",
+      "before": 1020,
+      "after": 1020,
+      "delta": 0
+    },
+    {
+      "index": 163,
+      "filter": "OCTAHEDRAL",
+      "before": 432,
+      "after": 432,
+      "delta": 0
+    },
+    {
+      "index": 164,
+      "filter": "OCTAHEDRAL",
+      "before": 336,
+      "after": 336,
+      "delta": 0
+    },
+    {
+      "index": 165,
+      "filter": "OCTAHEDRAL",
+      "before": 417,
+      "after": 417,
+      "delta": 0
+    },
+    {
+      "index": 166,
+      "filter": "OCTAHEDRAL",
+      "before": 417,
+      "after": 417,
+      "delta": 0
+    },
+    {
+      "index": 167,
+      "filter": "NONE",
+      "before": 1217,
+      "after": 1217,
+      "delta": 0
+    },
+    {
+      "index": 168,
+      "filter": "OCTAHEDRAL",
+      "before": 2222,
+      "after": 2222,
+      "delta": 0
+    },
+    {
+      "index": 169,
+      "filter": "OCTAHEDRAL",
+      "before": 10259,
+      "after": 10259,
+      "delta": 0
+    },
+    {
+      "index": 170,
+      "filter": "OCTAHEDRAL",
+      "before": 431,
+      "after": 431,
+      "delta": 0
+    },
+    {
+      "index": 171,
+      "filter": "OCTAHEDRAL",
+      "before": 433,
+      "after": 433,
+      "delta": 0
+    },
+    {
+      "index": 172,
+      "filter": "OCTAHEDRAL",
+      "before": 415,
+      "after": 415,
+      "delta": 0
+    },
+    {
+      "index": 173,
+      "filter": "OCTAHEDRAL",
+      "before": 422,
+      "after": 422,
+      "delta": 0
+    },
+    {
+      "index": 174,
+      "filter": "OCTAHEDRAL",
+      "before": 2236,
+      "after": 2236,
+      "delta": 0
+    },
+    {
+      "index": 175,
+      "filter": "OCTAHEDRAL",
+      "before": 10298,
+      "after": 10298,
+      "delta": 0
+    },
+    {
+      "index": 176,
+      "filter": "OCTAHEDRAL",
+      "before": 431,
+      "after": 431,
+      "delta": 0
+    },
+    {
+      "index": 177,
+      "filter": "OCTAHEDRAL",
+      "before": 433,
+      "after": 433,
+      "delta": 0
+    },
+    {
+      "index": 178,
+      "filter": "OCTAHEDRAL",
+      "before": 415,
+      "after": 415,
+      "delta": 0
+    },
+    {
+      "index": 179,
+      "filter": "OCTAHEDRAL",
+      "before": 422,
+      "after": 422,
+      "delta": 0
+    },
+    {
+      "index": 180,
+      "filter": "OCTAHEDRAL",
+      "before": 2219,
+      "after": 2219,
+      "delta": 0
+    },
+    {
+      "index": 181,
+      "filter": "OCTAHEDRAL",
+      "before": 10228,
+      "after": 10228,
+      "delta": 0
+    },
+    {
+      "index": 182,
+      "filter": "OCTAHEDRAL",
+      "before": 2246,
+      "after": 2246,
+      "delta": 0
+    },
+    {
+      "index": 183,
+      "filter": "OCTAHEDRAL",
+      "before": 10209,
+      "after": 10209,
+      "delta": 0
+    },
+    {
+      "index": 184,
+      "filter": "NONE",
+      "before": 3407,
+      "after": 3407,
+      "delta": 0
+    },
+    {
+      "index": 185,
+      "filter": "NONE",
+      "before": 2139,
+      "after": 2139,
+      "delta": 0
+    },
+    {
+      "index": 186,
+      "filter": "NONE",
+      "before": 4288,
+      "after": 4288,
+      "delta": 0
+    },
+    {
+      "index": 187,
+      "filter": "NONE",
+      "before": 2800,
+      "after": 2800,
+      "delta": 0
+    },
+    {
+      "index": 188,
+      "filter": "NONE",
+      "before": 1603,
+      "after": 1603,
+      "delta": 0
+    },
+    {
+      "index": 189,
+      "filter": "NONE",
+      "before": 79990,
+      "after": 79990,
+      "delta": 0
+    },
+    {
+      "index": 190,
+      "filter": "NONE",
+      "before": 38824,
+      "after": 38824,
+      "delta": 0
+    },
+    {
+      "index": 191,
+      "filter": "NONE",
+      "before": 1105,
+      "after": 1105,
+      "delta": 0
+    },
+    {
+      "index": 192,
+      "filter": "NONE",
+      "before": 546,
+      "after": 546,
+      "delta": 0
+    },
+    {
+      "index": 193,
+      "filter": "NONE",
+      "before": 569,
+      "after": 569,
+      "delta": 0
+    },
+    {
+      "index": 194,
+      "filter": "NONE",
+      "before": 372,
+      "after": 372,
+      "delta": 0
+    },
+    {
+      "index": 195,
+      "filter": "NONE",
+      "before": 8546,
+      "after": 8546,
+      "delta": 0
+    },
+    {
+      "index": 196,
+      "filter": "NONE",
+      "before": 4983,
+      "after": 4983,
+      "delta": 0
+    },
+    {
+      "index": 197,
+      "filter": "NONE",
+      "before": 2168,
+      "after": 2168,
+      "delta": 0
+    },
+    {
+      "index": 198,
+      "filter": "NONE",
+      "before": 1394,
+      "after": 1394,
+      "delta": 0
+    },
+    {
+      "index": 199,
+      "filter": "NONE",
+      "before": 1189,
+      "after": 1189,
+      "delta": 0
+    },
+    {
+      "index": 200,
+      "filter": "NONE",
+      "before": 2062,
+      "after": 2062,
+      "delta": 0
+    },
+    {
+      "index": 201,
+      "filter": "NONE",
+      "before": 1386,
+      "after": 1386,
+      "delta": 0
+    },
+    {
+      "index": 202,
+      "filter": "NONE",
+      "before": 1195,
+      "after": 1195,
+      "delta": 0
+    },
+    {
+      "index": 203,
+      "filter": "NONE",
+      "before": 2975,
+      "after": 2975,
+      "delta": 0
+    },
+    {
+      "index": 204,
+      "filter": "NONE",
+      "before": 1840,
+      "after": 1840,
+      "delta": 0
+    },
+    {
+      "index": 205,
+      "filter": "NONE",
+      "before": 3976,
+      "after": 3976,
+      "delta": 0
+    },
+    {
+      "index": 206,
+      "filter": "NONE",
+      "before": 2503,
+      "after": 2503,
+      "delta": 0
+    },
+    {
+      "index": 207,
+      "filter": "NONE",
+      "before": 1474,
+      "after": 1474,
+      "delta": 0
+    },
+    {
+      "index": 208,
+      "filter": "NONE",
+      "before": 711,
+      "after": 711,
+      "delta": 0
+    },
+    {
+      "index": 209,
+      "filter": "NONE",
+      "before": 878,
+      "after": 878,
+      "delta": 0
+    },
+    {
+      "index": 210,
+      "filter": "NONE",
+      "before": 419,
+      "after": 419,
+      "delta": 0
+    },
+    {
+      "index": 211,
+      "filter": "NONE",
+      "before": 2554,
+      "after": 2554,
+      "delta": 0
+    },
+    {
+      "index": 212,
+      "filter": "NONE",
+      "before": 1151,
+      "after": 1151,
+      "delta": 0
+    },
+    {
+      "index": 213,
+      "filter": "NONE",
+      "before": 1001,
+      "after": 1001,
+      "delta": 0
+    },
+    {
+      "index": 214,
+      "filter": "NONE",
+      "before": 476,
+      "after": 476,
+      "delta": 0
+    },
+    {
+      "index": 215,
+      "filter": "NONE",
+      "before": 7156,
+      "after": 7156,
+      "delta": 0
+    },
+    {
+      "index": 216,
+      "filter": "NONE",
+      "before": 4306,
+      "after": 4306,
+      "delta": 0
+    },
+    {
+      "index": 217,
+      "filter": "NONE",
+      "before": 7205,
+      "after": 7205,
+      "delta": 0
+    },
+    {
+      "index": 218,
+      "filter": "NONE",
+      "before": 4794,
+      "after": 4794,
+      "delta": 0
+    },
+    {
+      "index": 219,
+      "filter": "NONE",
+      "before": 4201,
+      "after": 4201,
+      "delta": 0
+    },
+    {
+      "index": 220,
+      "filter": "NONE",
+      "before": 6287,
+      "after": 6287,
+      "delta": 0
+    },
+    {
+      "index": 221,
+      "filter": "NONE",
+      "before": 4179,
+      "after": 4179,
+      "delta": 0
+    },
+    {
+      "index": 222,
+      "filter": "NONE",
+      "before": 3684,
+      "after": 3684,
+      "delta": 0
+    },
+    {
+      "index": 223,
+      "filter": "NONE",
+      "before": 12574,
+      "after": 12574,
+      "delta": 0
+    },
+    {
+      "index": 224,
+      "filter": "NONE",
+      "before": 7484,
+      "after": 7484,
+      "delta": 0
+    },
+    {
+      "index": 225,
+      "filter": "NONE",
+      "before": 5378,
+      "after": 5378,
+      "delta": 0
+    },
+    {
+      "index": 226,
+      "filter": "NONE",
+      "before": 3366,
+      "after": 3366,
+      "delta": 0
+    },
+    {
+      "index": 227,
+      "filter": "NONE",
+      "before": 2412,
+      "after": 2412,
+      "delta": 0
+    },
+    {
+      "index": 228,
+      "filter": "NONE",
+      "before": 1255,
+      "after": 1255,
+      "delta": 0
+    },
+    {
+      "index": 229,
+      "filter": "NONE",
+      "before": 4504,
+      "after": 4504,
+      "delta": 0
+    },
+    {
+      "index": 230,
+      "filter": "NONE",
+      "before": 2175,
+      "after": 2175,
+      "delta": 0
+    },
+    {
+      "index": 231,
+      "filter": "NONE",
+      "before": 787,
+      "after": 787,
+      "delta": 0
+    },
+    {
+      "index": 232,
+      "filter": "NONE",
+      "before": 405,
+      "after": 405,
+      "delta": 0
+    },
+    {
+      "index": 233,
+      "filter": "NONE",
+      "before": 3703,
+      "after": 3703,
+      "delta": 0
+    },
+    {
+      "index": 234,
+      "filter": "NONE",
+      "before": 1873,
+      "after": 1873,
+      "delta": 0
+    },
+    {
+      "index": 235,
+      "filter": "NONE",
+      "before": 1679,
+      "after": 1679,
+      "delta": 0
+    },
+    {
+      "index": 236,
+      "filter": "NONE",
+      "before": 2480,
+      "after": 2480,
+      "delta": 0
+    },
+    {
+      "index": 237,
+      "filter": "NONE",
+      "before": 1235,
+      "after": 1235,
+      "delta": 0
+    },
+    {
+      "index": 238,
+      "filter": "NONE",
+      "before": 1099,
+      "after": 1099,
+      "delta": 0
+    },
+    {
+      "index": 239,
+      "filter": "NONE",
+      "before": 187,
+      "after": 187,
+      "delta": 0
+    },
+    {
+      "index": 240,
+      "filter": "NONE",
+      "before": 112,
+      "after": 112,
+      "delta": 0
+    },
+    {
+      "index": 241,
+      "filter": "NONE",
+      "before": 112,
+      "after": 112,
+      "delta": 0
+    },
+    {
+      "index": 242,
+      "filter": "NONE",
+      "before": 1075,
+      "after": 1075,
+      "delta": 0
+    },
+    {
+      "index": 243,
+      "filter": "NONE",
+      "before": 596,
+      "after": 596,
+      "delta": 0
+    },
+    {
+      "index": 244,
+      "filter": "NONE",
+      "before": 746,
+      "after": 746,
+      "delta": 0
+    },
+    {
+      "index": 245,
+      "filter": "NONE",
+      "before": 378,
+      "after": 378,
+      "delta": 0
+    },
+    {
+      "index": 246,
+      "filter": "NONE",
+      "before": 1544,
+      "after": 1544,
+      "delta": 0
+    },
+    {
+      "index": 247,
+      "filter": "NONE",
+      "before": 717,
+      "after": 717,
+      "delta": 0
+    },
+    {
+      "index": 248,
+      "filter": "NONE",
+      "before": 1538,
+      "after": 1538,
+      "delta": 0
+    },
+    {
+      "index": 249,
+      "filter": "NONE",
+      "before": 722,
+      "after": 722,
+      "delta": 0
+    },
+    {
+      "index": 250,
+      "filter": "NONE",
+      "before": 4098,
+      "after": 4098,
+      "delta": 0
+    },
+    {
+      "index": 251,
+      "filter": "NONE",
+      "before": 2528,
+      "after": 2528,
+      "delta": 0
+    },
+    {
+      "index": 252,
+      "filter": "NONE",
+      "before": 2076,
+      "after": 2076,
+      "delta": 0
+    },
+    {
+      "index": 253,
+      "filter": "NONE",
+      "before": 20427,
+      "after": 20427,
+      "delta": 0
+    },
+    {
+      "index": 254,
+      "filter": "NONE",
+      "before": 13384,
+      "after": 13384,
+      "delta": 0
+    },
+    {
+      "index": 255,
+      "filter": "NONE",
+      "before": 11677,
+      "after": 11677,
+      "delta": 0
+    },
+    {
+      "index": 256,
+      "filter": "NONE",
+      "before": 3385,
+      "after": 3385,
+      "delta": 0
+    },
+    {
+      "index": 257,
+      "filter": "NONE",
+      "before": 1975,
+      "after": 1975,
+      "delta": 0
+    },
+    {
+      "index": 258,
+      "filter": "NONE",
+      "before": 2069,
+      "after": 2069,
+      "delta": 0
+    },
+    {
+      "index": 259,
+      "filter": "NONE",
+      "before": 569,
+      "after": 569,
+      "delta": 0
+    },
+    {
+      "index": 260,
+      "filter": "NONE",
+      "before": 4410,
+      "after": 4410,
+      "delta": 0
+    },
+    {
+      "index": 261,
+      "filter": "NONE",
+      "before": 2512,
+      "after": 2512,
+      "delta": 0
+    },
+    {
+      "index": 262,
+      "filter": "NONE",
+      "before": 955,
+      "after": 955,
+      "delta": 0
+    },
+    {
+      "index": 263,
+      "filter": "NONE",
+      "before": 4250,
+      "after": 4250,
+      "delta": 0
+    },
+    {
+      "index": 264,
+      "filter": "NONE",
+      "before": 9756,
+      "after": 9756,
+      "delta": 0
+    },
+    {
+      "index": 265,
+      "filter": "NONE",
+      "before": 6262,
+      "after": 6262,
+      "delta": 0
+    },
+    {
+      "index": 266,
+      "filter": "NONE",
+      "before": 5499,
+      "after": 5499,
+      "delta": 0
+    },
+    {
+      "index": 267,
+      "filter": "NONE",
+      "before": 22136,
+      "after": 22136,
+      "delta": 0
+    },
+    {
+      "index": 268,
+      "filter": "NONE",
+      "before": 15137,
+      "after": 15137,
+      "delta": 0
+    },
+    {
+      "index": 269,
+      "filter": "NONE",
+      "before": 13417,
+      "after": 13417,
+      "delta": 0
+    },
+    {
+      "index": 270,
+      "filter": "NONE",
+      "before": 21495,
+      "after": 21495,
+      "delta": 0
+    },
+    {
+      "index": 271,
+      "filter": "NONE",
+      "before": 13544,
+      "after": 13544,
+      "delta": 0
+    },
+    {
+      "index": 272,
+      "filter": "NONE",
+      "before": 12156,
+      "after": 12156,
+      "delta": 0
+    },
+    {
+      "index": 273,
+      "filter": "NONE",
+      "before": 10745,
+      "after": 10745,
+      "delta": 0
+    },
+    {
+      "index": 274,
+      "filter": "NONE",
+      "before": 6208,
+      "after": 6208,
+      "delta": 0
+    },
+    {
+      "index": 275,
+      "filter": "NONE",
+      "before": 888,
+      "after": 888,
+      "delta": 0
+    },
+    {
+      "index": 276,
+      "filter": "NONE",
+      "before": 497,
+      "after": 497,
+      "delta": 0
+    },
+    {
+      "index": 277,
+      "filter": "NONE",
+      "before": 4576,
+      "after": 4576,
+      "delta": 0
+    },
+    {
+      "index": 278,
+      "filter": "NONE",
+      "before": 2727,
+      "after": 2727,
+      "delta": 0
+    },
+    {
+      "index": 279,
+      "filter": "NONE",
+      "before": 2365,
+      "after": 2365,
+      "delta": 0
+    },
+    {
+      "index": 280,
+      "filter": "NONE",
+      "before": 1350,
+      "after": 1350,
+      "delta": 0
+    },
+    {
+      "index": 281,
+      "filter": "NONE",
+      "before": 730,
+      "after": 730,
+      "delta": 0
+    },
+    {
+      "index": 282,
+      "filter": "NONE",
+      "before": 637,
+      "after": 637,
+      "delta": 0
+    },
+    {
+      "index": 283,
+      "filter": "NONE",
+      "before": 4513,
+      "after": 4513,
+      "delta": 0
+    },
+    {
+      "index": 284,
+      "filter": "NONE",
+      "before": 2864,
+      "after": 2864,
+      "delta": 0
+    },
+    {
+      "index": 285,
+      "filter": "NONE",
+      "before": 2537,
+      "after": 2537,
+      "delta": 0
+    },
+    {
+      "index": 286,
+      "filter": "NONE",
+      "before": 2519,
+      "after": 2519,
+      "delta": 0
+    },
+    {
+      "index": 287,
+      "filter": "NONE",
+      "before": 1566,
+      "after": 1566,
+      "delta": 0
+    },
+    {
+      "index": 288,
+      "filter": "NONE",
+      "before": 1444,
+      "after": 1444,
+      "delta": 0
+    },
+    {
+      "index": 289,
+      "filter": "NONE",
+      "before": 1074,
+      "after": 1074,
+      "delta": 0
+    },
+    {
+      "index": 290,
+      "filter": "NONE",
+      "before": 466,
+      "after": 466,
+      "delta": 0
+    },
+    {
+      "index": 291,
+      "filter": "NONE",
+      "before": 976,
+      "after": 976,
+      "delta": 0
+    },
+    {
+      "index": 292,
+      "filter": "NONE",
+      "before": 265,
+      "after": 265,
+      "delta": 0
+    },
+    {
+      "index": 293,
+      "filter": "NONE",
+      "before": 401,
+      "after": 401,
+      "delta": 0
+    },
+    {
+      "index": 294,
+      "filter": "NONE",
+      "before": 930,
+      "after": 930,
+      "delta": 0
+    },
+    {
+      "index": 295,
+      "filter": "NONE",
+      "before": 412,
+      "after": 412,
+      "delta": 0
+    },
+    {
+      "index": 296,
+      "filter": "NONE",
+      "before": 1970,
+      "after": 1970,
+      "delta": 0
+    },
+    {
+      "index": 297,
+      "filter": "NONE",
+      "before": 1043,
+      "after": 1043,
+      "delta": 0
+    },
+    {
+      "index": 298,
+      "filter": "NONE",
+      "before": 909,
+      "after": 909,
+      "delta": 0
+    },
+    {
+      "index": 299,
+      "filter": "NONE",
+      "before": 4580,
+      "after": 4580,
+      "delta": 0
+    },
+    {
+      "index": 300,
+      "filter": "NONE",
+      "before": 2377,
+      "after": 2377,
+      "delta": 0
+    },
+    {
+      "index": 301,
+      "filter": "NONE",
+      "before": 2172,
+      "after": 2172,
+      "delta": 0
+    },
+    {
+      "index": 302,
+      "filter": "NONE",
+      "before": 2092,
+      "after": 2092,
+      "delta": 0
+    },
+    {
+      "index": 303,
+      "filter": "NONE",
+      "before": 1162,
+      "after": 1162,
+      "delta": 0
+    },
+    {
+      "index": 304,
+      "filter": "NONE",
+      "before": 651,
+      "after": 651,
+      "delta": 0
+    },
+    {
+      "index": 305,
+      "filter": "NONE",
+      "before": 2194,
+      "after": 2194,
+      "delta": 0
+    },
+    {
+      "index": 306,
+      "filter": "NONE",
+      "before": 1406,
+      "after": 1406,
+      "delta": 0
+    },
+    {
+      "index": 307,
+      "filter": "NONE",
+      "before": 1225,
+      "after": 1225,
+      "delta": 0
+    },
+    {
+      "index": 308,
+      "filter": "NONE",
+      "before": 855,
+      "after": 855,
+      "delta": 0
+    },
+    {
+      "index": 309,
+      "filter": "NONE",
+      "before": 559,
+      "after": 559,
+      "delta": 0
+    },
+    {
+      "index": 310,
+      "filter": "NONE",
+      "before": 488,
+      "after": 488,
+      "delta": 0
+    },
+    {
+      "index": 311,
+      "filter": "NONE",
+      "before": 384,
+      "after": 384,
+      "delta": 0
+    },
+    {
+      "index": 312,
+      "filter": "NONE",
+      "before": 240,
+      "after": 240,
+      "delta": 0
+    },
+    {
+      "index": 313,
+      "filter": "NONE",
+      "before": 210,
+      "after": 210,
+      "delta": 0
+    },
+    {
+      "index": 314,
+      "filter": "NONE",
+      "before": 1004,
+      "after": 1004,
+      "delta": 0
+    },
+    {
+      "index": 315,
+      "filter": "NONE",
+      "before": 571,
+      "after": 571,
+      "delta": 0
+    },
+    {
+      "index": 316,
+      "filter": "NONE",
+      "before": 496,
+      "after": 496,
+      "delta": 0
+    },
+    {
+      "index": 317,
+      "filter": "NONE",
+      "before": 2612,
+      "after": 2612,
+      "delta": 0
+    },
+    {
+      "index": 318,
+      "filter": "NONE",
+      "before": 1012,
+      "after": 1012,
+      "delta": 0
+    },
+    {
+      "index": 319,
+      "filter": "NONE",
+      "before": 4438,
+      "after": 4438,
+      "delta": 0
+    },
+    {
+      "index": 320,
+      "filter": "NONE",
+      "before": 2814,
+      "after": 2814,
+      "delta": 0
+    },
+    {
+      "index": 321,
+      "filter": "NONE",
+      "before": 2513,
+      "after": 2513,
+      "delta": 0
+    },
+    {
+      "index": 322,
+      "filter": "NONE",
+      "before": 357,
+      "after": 357,
+      "delta": 0
+    },
+    {
+      "index": 323,
+      "filter": "NONE",
+      "before": 221,
+      "after": 221,
+      "delta": 0
+    },
+    {
+      "index": 324,
+      "filter": "NONE",
+      "before": 193,
+      "after": 193,
+      "delta": 0
+    },
+    {
+      "index": 325,
+      "filter": "NONE",
+      "before": 2200,
+      "after": 2200,
+      "delta": 0
+    },
+    {
+      "index": 326,
+      "filter": "NONE",
+      "before": 1412,
+      "after": 1412,
+      "delta": 0
+    },
+    {
+      "index": 327,
+      "filter": "NONE",
+      "before": 1241,
+      "after": 1241,
+      "delta": 0
+    },
+    {
+      "index": 328,
+      "filter": "NONE",
+      "before": 865,
+      "after": 865,
+      "delta": 0
+    },
+    {
+      "index": 329,
+      "filter": "NONE",
+      "before": 566,
+      "after": 566,
+      "delta": 0
+    },
+    {
+      "index": 330,
+      "filter": "NONE",
+      "before": 496,
+      "after": 496,
+      "delta": 0
+    },
+    {
+      "index": 331,
+      "filter": "NONE",
+      "before": 973,
+      "after": 973,
+      "delta": 0
+    },
+    {
+      "index": 332,
+      "filter": "NONE",
+      "before": 551,
+      "after": 551,
+      "delta": 0
+    },
+    {
+      "index": 333,
+      "filter": "NONE",
+      "before": 490,
+      "after": 490,
+      "delta": 0
+    },
+    {
+      "index": 334,
+      "filter": "NONE",
+      "before": 2589,
+      "after": 2589,
+      "delta": 0
+    },
+    {
+      "index": 335,
+      "filter": "NONE",
+      "before": 977,
+      "after": 977,
+      "delta": 0
+    },
+    {
+      "index": 336,
+      "filter": "NONE",
+      "before": 2455,
+      "after": 2455,
+      "delta": 0
+    },
+    {
+      "index": 337,
+      "filter": "NONE",
+      "before": 1509,
+      "after": 1509,
+      "delta": 0
+    },
+    {
+      "index": 338,
+      "filter": "NONE",
+      "before": 1379,
+      "after": 1379,
+      "delta": 0
+    },
+    {
+      "index": 339,
+      "filter": "NONE",
+      "before": 1189,
+      "after": 1189,
+      "delta": 0
+    },
+    {
+      "index": 340,
+      "filter": "NONE",
+      "before": 526,
+      "after": 526,
+      "delta": 0
+    },
+    {
+      "index": 341,
+      "filter": "NONE",
+      "before": 959,
+      "after": 959,
+      "delta": 0
+    },
+    {
+      "index": 342,
+      "filter": "NONE",
+      "before": 273,
+      "after": 273,
+      "delta": 0
+    },
+    {
+      "index": 343,
+      "filter": "NONE",
+      "before": 408,
+      "after": 408,
+      "delta": 0
+    },
+    {
+      "index": 344,
+      "filter": "NONE",
+      "before": 956,
+      "after": 956,
+      "delta": 0
+    },
+    {
+      "index": 345,
+      "filter": "NONE",
+      "before": 413,
+      "after": 413,
+      "delta": 0
+    },
+    {
+      "index": 346,
+      "filter": "NONE",
+      "before": 2015,
+      "after": 2015,
+      "delta": 0
+    },
+    {
+      "index": 347,
+      "filter": "NONE",
+      "before": 1063,
+      "after": 1063,
+      "delta": 0
+    },
+    {
+      "index": 348,
+      "filter": "NONE",
+      "before": 912,
+      "after": 912,
+      "delta": 0
+    },
+    {
+      "index": 349,
+      "filter": "NONE",
+      "before": 1163,
+      "after": 1163,
+      "delta": 0
+    },
+    {
+      "index": 350,
+      "filter": "NONE",
+      "before": 627,
+      "after": 627,
+      "delta": 0
+    },
+    {
+      "index": 351,
+      "filter": "NONE",
+      "before": 2088,
+      "after": 2088,
+      "delta": 0
+    },
+    {
+      "index": 352,
+      "filter": "NONE",
+      "before": 4598,
+      "after": 4598,
+      "delta": 0
+    },
+    {
+      "index": 353,
+      "filter": "NONE",
+      "before": 2401,
+      "after": 2401,
+      "delta": 0
+    },
+    {
+      "index": 354,
+      "filter": "NONE",
+      "before": 2201,
+      "after": 2201,
+      "delta": 0
+    },
+    {
+      "index": 355,
+      "filter": "NONE",
+      "before": 6168,
+      "after": 6168,
+      "delta": 0
+    },
+    {
+      "index": 356,
+      "filter": "NONE",
+      "before": 2942,
+      "after": 2942,
+      "delta": 0
+    },
+    {
+      "index": 357,
+      "filter": "NONE",
+      "before": 2333,
+      "after": 2333,
+      "delta": 0
+    },
+    {
+      "index": 358,
+      "filter": "NONE",
+      "before": 1211,
+      "after": 1211,
+      "delta": 0
+    },
+    {
+      "index": 359,
+      "filter": "NONE",
+      "before": 1393,
+      "after": 1393,
+      "delta": 0
+    },
+    {
+      "index": 360,
+      "filter": "NONE",
+      "before": 6098,
+      "after": 6098,
+      "delta": 0
+    },
+    {
+      "index": 361,
+      "filter": "NONE",
+      "before": 2942,
+      "after": 2942,
+      "delta": 0
+    },
+    {
+      "index": 362,
+      "filter": "NONE",
+      "before": 2341,
+      "after": 2341,
+      "delta": 0
+    },
+    {
+      "index": 363,
+      "filter": "NONE",
+      "before": 1253,
+      "after": 1253,
+      "delta": 0
+    },
+    {
+      "index": 364,
+      "filter": "NONE",
+      "before": 1394,
+      "after": 1394,
+      "delta": 0
+    },
+    {
+      "index": 365,
+      "filter": "NONE",
+      "before": 1402,
+      "after": 1402,
+      "delta": 0
+    },
+    {
+      "index": 366,
+      "filter": "NONE",
+      "before": 6144,
+      "after": 6144,
+      "delta": 0
+    },
+    {
+      "index": 367,
+      "filter": "NONE",
+      "before": 2910,
+      "after": 2910,
+      "delta": 0
+    },
+    {
+      "index": 368,
+      "filter": "NONE",
+      "before": 1373,
+      "after": 1373,
+      "delta": 0
+    },
+    {
+      "index": 369,
+      "filter": "NONE",
+      "before": 6176,
+      "after": 6176,
+      "delta": 0
+    },
+    {
+      "index": 370,
+      "filter": "NONE",
+      "before": 2931,
+      "after": 2931,
+      "delta": 0
+    },
+    {
+      "index": 371,
+      "filter": "NONE",
+      "before": 1060,
+      "after": 1060,
+      "delta": 0
+    },
+    {
+      "index": 372,
+      "filter": "NONE",
+      "before": 710,
+      "after": 710,
+      "delta": 0
+    },
+    {
+      "index": 373,
+      "filter": "NONE",
+      "before": 1089,
+      "after": 1089,
+      "delta": 0
+    },
+    {
+      "index": 374,
+      "filter": "NONE",
+      "before": 649,
+      "after": 649,
+      "delta": 0
+    },
+    {
+      "index": 375,
+      "filter": "NONE",
+      "before": 14625,
+      "after": 14625,
+      "delta": 0
+    },
+    {
+      "index": 376,
+      "filter": "NONE",
+      "before": 7591,
+      "after": 7591,
+      "delta": 0
+    },
+    {
+      "index": 377,
+      "filter": "NONE",
+      "before": 8689,
+      "after": 8689,
+      "delta": 0
+    },
+    {
+      "index": 378,
+      "filter": "NONE",
+      "before": 782,
+      "after": 782,
+      "delta": 0
+    },
+    {
+      "index": 379,
+      "filter": "NONE",
+      "before": 471,
+      "after": 471,
+      "delta": 0
+    },
+    {
+      "index": 380,
+      "filter": "NONE",
+      "before": 10475,
+      "after": 10475,
+      "delta": 0
+    },
+    {
+      "index": 381,
+      "filter": "NONE",
+      "before": 7523,
+      "after": 7523,
+      "delta": 0
+    },
+    {
+      "index": 382,
+      "filter": "NONE",
+      "before": 6180,
+      "after": 6180,
+      "delta": 0
+    },
+    {
+      "index": 383,
+      "filter": "NONE",
+      "before": 2433,
+      "after": 2433,
+      "delta": 0
+    },
+    {
+      "index": 384,
+      "filter": "NONE",
+      "before": 1396,
+      "after": 1396,
+      "delta": 0
+    },
+    {
+      "index": 385,
+      "filter": "NONE",
+      "before": 2419,
+      "after": 2419,
+      "delta": 0
+    },
+    {
+      "index": 386,
+      "filter": "NONE",
+      "before": 1620,
+      "after": 1620,
+      "delta": 0
+    },
+    {
+      "index": 387,
+      "filter": "NONE",
+      "before": 1396,
+      "after": 1396,
+      "delta": 0
+    },
+    {
+      "index": 388,
+      "filter": "NONE",
+      "before": 2423,
+      "after": 2423,
+      "delta": 0
+    },
+    {
+      "index": 389,
+      "filter": "NONE",
+      "before": 1384,
+      "after": 1384,
+      "delta": 0
+    },
+    {
+      "index": 390,
+      "filter": "NONE",
+      "before": 2409,
+      "after": 2409,
+      "delta": 0
+    },
+    {
+      "index": 391,
+      "filter": "NONE",
+      "before": 1623,
+      "after": 1623,
+      "delta": 0
+    },
+    {
+      "index": 392,
+      "filter": "NONE",
+      "before": 1399,
+      "after": 1399,
+      "delta": 0
+    },
+    {
+      "index": 393,
+      "filter": "NONE",
+      "before": 1183,
+      "after": 1183,
+      "delta": 0
+    },
+    {
+      "index": 394,
+      "filter": "NONE",
+      "before": 925,
+      "after": 925,
+      "delta": 0
+    },
+    {
+      "index": 395,
+      "filter": "NONE",
+      "before": 626,
+      "after": 626,
+      "delta": 0
+    },
+    {
+      "index": 396,
+      "filter": "NONE",
+      "before": 1097,
+      "after": 1097,
+      "delta": 0
+    },
+    {
+      "index": 397,
+      "filter": "NONE",
+      "before": 585,
+      "after": 585,
+      "delta": 0
+    },
+    {
+      "index": 398,
+      "filter": "NONE",
+      "before": 5196,
+      "after": 5196,
+      "delta": 0
+    },
+    {
+      "index": 399,
+      "filter": "NONE",
+      "before": 2717,
+      "after": 2717,
+      "delta": 0
+    },
+    {
+      "index": 400,
+      "filter": "NONE",
+      "before": 26161,
+      "after": 26161,
+      "delta": 0
+    },
+    {
+      "index": 401,
+      "filter": "NONE",
+      "before": 13636,
+      "after": 13636,
+      "delta": 0
+    },
+    {
+      "index": 402,
+      "filter": "NONE",
+      "before": 1183,
+      "after": 1183,
+      "delta": 0
+    },
+    {
+      "index": 403,
+      "filter": "NONE",
+      "before": 626,
+      "after": 626,
+      "delta": 0
+    },
+    {
+      "index": 404,
+      "filter": "NONE",
+      "before": 1097,
+      "after": 1097,
+      "delta": 0
+    },
+    {
+      "index": 405,
+      "filter": "NONE",
+      "before": 589,
+      "after": 589,
+      "delta": 0
+    },
+    {
+      "index": 406,
+      "filter": "NONE",
+      "before": 5252,
+      "after": 5252,
+      "delta": 0
+    },
+    {
+      "index": 407,
+      "filter": "NONE",
+      "before": 2691,
+      "after": 2691,
+      "delta": 0
+    },
+    {
+      "index": 408,
+      "filter": "NONE",
+      "before": 26228,
+      "after": 26228,
+      "delta": 0
+    },
+    {
+      "index": 409,
+      "filter": "NONE",
+      "before": 13611,
+      "after": 13611,
+      "delta": 0
+    },
+    {
+      "index": 410,
+      "filter": "NONE",
+      "before": 629,
+      "after": 629,
+      "delta": 0
+    },
+    {
+      "index": 411,
+      "filter": "NONE",
+      "before": 1097,
+      "after": 1097,
+      "delta": 0
+    },
+    {
+      "index": 412,
+      "filter": "NONE",
+      "before": 581,
+      "after": 581,
+      "delta": 0
+    },
+    {
+      "index": 413,
+      "filter": "NONE",
+      "before": 5216,
+      "after": 5216,
+      "delta": 0
+    },
+    {
+      "index": 414,
+      "filter": "NONE",
+      "before": 2771,
+      "after": 2771,
+      "delta": 0
+    },
+    {
+      "index": 415,
+      "filter": "NONE",
+      "before": 26004,
+      "after": 26004,
+      "delta": 0
+    },
+    {
+      "index": 416,
+      "filter": "NONE",
+      "before": 13531,
+      "after": 13531,
+      "delta": 0
+    },
+    {
+      "index": 417,
+      "filter": "NONE",
+      "before": 631,
+      "after": 631,
+      "delta": 0
+    },
+    {
+      "index": 418,
+      "filter": "NONE",
+      "before": 582,
+      "after": 582,
+      "delta": 0
+    },
+    {
+      "index": 419,
+      "filter": "NONE",
+      "before": 5242,
+      "after": 5242,
+      "delta": 0
+    },
+    {
+      "index": 420,
+      "filter": "NONE",
+      "before": 2677,
+      "after": 2677,
+      "delta": 0
+    },
+    {
+      "index": 421,
+      "filter": "NONE",
+      "before": 25986,
+      "after": 25986,
+      "delta": 0
+    },
+    {
+      "index": 422,
+      "filter": "NONE",
+      "before": 13557,
+      "after": 13557,
+      "delta": 0
+    }
+  ],
+  "note": "Every pre-filter and fully-filtered decompressed byte independently equal; payload-only estimate, no published candidate."
+}

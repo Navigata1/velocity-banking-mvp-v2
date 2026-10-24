@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-24T06:11:53.937Z",
+  "headBefore": "362252d769a7ff95d092632da9429917c7a9176e",
+  "scope": "NM02 coaching and durable regression contracts; no numerical solver, asset, dependency, workflow or managed-data change",
+  "priorCi": {"head":"362252d769a7ff95d092632da9429917c7a9176e","events":[{"id":40064285282,"event":"push","conclusion":"success"},{"id":40064286513,"event":"pull_request","conclusion":"success"}],"receipt":"https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6380392883"},
+  "tdd": {"initialRed":22,"standingRegressionRetained":"cleared daily-interest breakdown/assumptions","independentWarningsRed":6,"reviewedLearnIncomeFirstRed":1,"finalRegressions":403,"commonMonthProbes":23247,"arithmeticOnlyOverflowCompanion":true},
+  "local": {"web":0,"nativeContracts":0,"rootMobileGroups":40,"lint":0,"webTypes":0,"nativeTypes":0,"mediaTypes":0,"mediaCpuCases":227,"strictHyperFramesBeforeLearnOnlyFix":0,"remotionMatrixStillsBeforeLearnOnlyFix":27,"ciContractGroups":22,"scenarioCheck":0},
+  "preservation": {"originalSharedFunctions":52,"unchangedFunctions":46,"changedPresenters":6,"protectedFiles":23,"scenarioInputsResultsUnchanged":true,"scenarioChangedFields":["engineContractVersion","engineSourceDigest"]},
+  "native": {"platforms":["android","ios","web"],"exportedFiles":60,"exactSourceMaps":3,"configsUnchanged":5,"actualChromeStates":9,"errors":0,"originalAssumptionsRestored":true,"physicalDeviceProof":false},
+  "open": ["new-head remote CI and preview","allten photoreal/all-angle and approved finite videos","generic render operator","portableposter adoption/reliability","RSC abort cause","scenario/lender/calendar/managedbackend/security/a11y/device/release"],
+  "approval": {"newHeadCiApproved":false,"newPreviewApproved":false,"allTenPhotorealApproved":false,"mergeApproved":false,"productionReady":false}
+}

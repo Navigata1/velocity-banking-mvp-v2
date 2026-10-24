@@ -1,0 +1,464 @@
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+ok 1 - Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+  ---
+  duration_ms: 200.3572
+  type: 'test'
+  ...
+# Subtest: Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+ok 2 - Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+  ---
+  duration_ms: 204.8886
+  type: 'test'
+  ...
+# Subtest: Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+ok 3 - Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+  ---
+  duration_ms: 405.5318
+  type: 'test'
+  ...
+# Subtest: Credit Card keeps eight inset chip contacts connected to their recessed substrate
+ok 4 - Credit Card keeps eight inset chip contacts connected to their recessed substrate
+  ---
+  duration_ms: 139.0612
+  type: 'test'
+  ...
+# Subtest: Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+ok 5 - Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+  ---
+  duration_ms: 145.3515
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has actual reeding, two closed faces and recessed wave details
+ok 6 - Credit Card coin has actual reeding, two closed faces and recessed wave details
+  ---
+  duration_ms: 59.4731
+  type: 'test'
+  ...
+# Subtest: Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+ok 7 - Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+  ---
+  duration_ms: 498.8163
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+ok 8 - Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+  ---
+  duration_ms: 32.4376
+  type: 'test'
+  ...
+# Subtest: Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+ok 9 - Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+  ---
+  duration_ms: 155.9347
+  type: 'test'
+  ...
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 10 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 122.8775
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 11 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 52.7172
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 12 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 37.2157
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 13 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 448.8049
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 14 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 36.6449
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 15 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 112.0742
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 16 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 19.9273
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 17 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 1.5592
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 18 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 6.3692
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 19 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 1.2581
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 20 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 1.52
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 21 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 3.9601
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 22 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 3.3943
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 23 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 4.9686
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 24 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 1.6567
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 25 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 2.4242
+  type: 'test'
+  ...
+# Subtest: Land preserves generated sources, embedded PBR maps and the standing collection budget
+ok 26 - Land preserves generated sources, embedded PBR maps and the standing collection budget
+  ---
+  duration_ms: 190.5492
+  type: 'test'
+  ...
+# Subtest: Land has real pond depth and non-flat terrain rather than a water disk over grass
+ok 27 - Land has real pond depth and non-flat terrain rather than a water disk over grass
+  ---
+  duration_ms: 137.8614
+  type: 'test'
+  ...
+# Subtest: Land gravel ribbon follows the actual triangulated terrain without floating
+ok 28 - Land gravel ribbon follows the actual triangulated terrain without floating
+  ---
+  duration_ms: 82.8762
+  type: 'test'
+  ...
+# Subtest: Land keeps four grounded survey stakes and three connected textured trees
+ok 29 - Land keeps four grounded survey stakes and three connected textured trees
+  ---
+  duration_ms: 110.8084
+  type: 'test'
+  ...
+# Subtest: Land cutaway layers meet the terrain and preserve finite normalized geometry
+ok 30 - Land cutaway layers meet the terrain and preserve finite normalized geometry
+  ---
+  duration_ms: 150.3354
+  type: 'test'
+  ...
+# Subtest: Land cut faces include actual stone/root detail and varied leaf shading
+ok 31 - Land cut faces include actual stone/root detail and varied leaf shading
+  ---
+  duration_ms: 27.963
+  type: 'test'
+  ...
+# Subtest: Land woody components actually enter their trunks and reject detached branches
+ok 32 - Land woody components actually enter their trunks and reject detached branches
+  ---
+  duration_ms: 64.892
+  type: 'test'
+  ...
+# Subtest: Land cutaway has outward-facing lower joins, corners and a closed underside
+ok 33 - Land cutaway has outward-facing lower joins, corners and a closed underside
+  ---
+  duration_ms: 223.4987
+  type: 'test'
+  ...
+# Subtest: Land rechecks the live collection budget inside locked asset publication
+ok 34 - Land rechecks the live collection budget inside locked asset publication
+  ---
+  duration_ms: 113.0596
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 35 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 14.7636
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 36 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 3.8694
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 37 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 52.2491
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 38 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 26.8554
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 39 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 264.4099
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 40 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 44.0038
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 41 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 105.0531
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 42 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 923.6212
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 43 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 394.2498
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 44 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 235.4102
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 45 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 24.7395
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 46 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 4.4998
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 47 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 801.9689
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 48 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 3.478
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 49 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 3.4701
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 50 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 4.4632
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 51 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 3.0399
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 52 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 40.0789
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 53 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 6.977
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 54 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 2.7582
+  type: 'test'
+  ...
+# Subtest: Student Loan replaces the study with a protected original artifact and verifiable source provenance
+ok 55 - Student Loan replaces the study with a protected original artifact and verifiable source provenance
+  ---
+  duration_ms: 104.163
+  type: 'test'
+  ...
+# Subtest: Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+ok 56 - Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+  ---
+  duration_ms: 221.6939
+  type: 'test'
+  ...
+# Subtest: Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+ok 57 - Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+  ---
+  duration_ms: 125.2509
+  type: 'test'
+  ...
+# Subtest: Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+ok 58 - Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+  ---
+  duration_ms: 1712.4704
+  type: 'test'
+  ...
+# Subtest: Student Loan tassel has 48 separate volumetric strands attached to its head
+ok 59 - Student Loan tassel has 48 separate volumetric strands attached to its head
+  ---
+  duration_ms: 48.4643
+  type: 'test'
+  ...
+# Subtest: Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+ok 60 - Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+  ---
+  duration_ms: 25.4782
+  type: 'test'
+  ...
+# Subtest: Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+ok 61 - Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+  ---
+  duration_ms: 25.4289
+  type: 'test'
+  ...
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+ok 62 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 169.5512
+  type: 'test'
+  ...
+# Subtest: Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+ok 63 - Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+  ---
+  duration_ms: 28.9146
+  type: 'test'
+  ...
+# Subtest: Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+ok 64 - Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+  ---
+  duration_ms: 48.8106
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 65 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.72
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 66 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.7571
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 67 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 0.9563
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 68 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 0.2884
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 69 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.6825
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 70 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.3301
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 71 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.1856
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 72 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.3206
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 73 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 41.5293
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 74 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 2.8666
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 75 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3677
+  type: 'test'
+  ...
+1..75
+# tests 75
+# suites 0
+# pass 75
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3406.1031

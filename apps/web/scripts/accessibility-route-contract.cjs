@@ -7,7 +7,7 @@ const { collectReachableSources, readReachableSource } = require('../../../scrip
 const appRoot = path.resolve(__dirname, '..');
 
 const routeContracts = [
-  { route: '/', label: 'Dashboard', file: 'src/app/page.tsx', markers: ['Money Loop Dashboard', 'Dashboard vitals'] },
+  { route: '/', label: 'Dashboard', file: 'src/app/page.tsx', markers: ['InterestShield', 'Dashboard vitals'] },
   { route: '/simulator', label: 'Simulator', file: 'src/app/simulator/page.tsx', markers: ['What-If Simulator', 'Money Loop Timeline'] },
   { route: '/cockpit', label: 'Cockpit', file: 'src/app/cockpit/page.tsx', markers: ['Cockpit Mode', 'Flight Controls'] },
   { route: '/portfolio', label: 'Portfolio', file: 'src/app/portfolio/page.tsx', markers: ['Portfolio', 'Your Debts'] },

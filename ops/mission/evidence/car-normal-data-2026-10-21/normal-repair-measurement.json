@@ -1,0 +1,63 @@
+{
+  "bounds": {
+    "rms": 0.25,
+    "max": 1
+  },
+  "rows": [
+    {
+      "method": "pixel",
+      "threshold": 0.5,
+      "bytes": 215580,
+      "modified": 69224,
+      "rms": 0.2400555132755441,
+      "max": 0.4999981716455243,
+      "estimatedCarBytes": 2393472
+    },
+    {
+      "method": "pixel",
+      "threshold": 0.4,
+      "bytes": 222798,
+      "modified": 129447,
+      "rms": 0.1041020498700346,
+      "max": 0.3999803089579517,
+      "estimatedCarBytes": 2400690
+    },
+    {
+      "method": "pixel",
+      "threshold": 0.3,
+      "bytes": 223392,
+      "modified": 144832,
+      "rms": 0.05959335436536089,
+      "max": 0.29995530502916123,
+      "estimatedCarBytes": 2401284
+    },
+    {
+      "method": "channels",
+      "threshold": 0.5,
+      "bytes": 201194,
+      "modified": 69224,
+      "rms": 0.3103630513896766,
+      "max": 0.4999981716455243,
+      "estimatedCarBytes": 2379086
+    },
+    {
+      "method": "channels",
+      "threshold": 0.4,
+      "bytes": 212304,
+      "modified": 129447,
+      "rms": 0.1620564174089917,
+      "max": 0.39999840283239035,
+      "estimatedCarBytes": 2390196
+    },
+    {
+      "method": "channels",
+      "threshold": 0.3,
+      "bytes": 216022,
+      "modified": 144832,
+      "rms": 0.10239394945024892,
+      "max": 0.29997246874943656,
+      "estimatedCarBytes": 2393914
+    }
+  ],
+  "note": "Diagnostic only; no source/model publication and no changed geometry or relaxed acceptance bounds."
+}

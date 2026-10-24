@@ -1,0 +1,195 @@
+{
+  "generated": "2026-10-21T11:18:10.146Z",
+  "files": [
+    {
+      "name": "unit-final-descendant-clipping.json",
+      "bytes": 5026,
+      "sha256": "68cf44134754ae4eec7ab779a784362ac1e8554773b3f16068e6f9ae7707eed0"
+    },
+    {
+      "name": "unit-final-descendant-clipping.png",
+      "bytes": 83116,
+      "sha256": "c4dafbe99b7ffac88d5100041f21e05ef407de921871d3db3605b39ba29a9a3c"
+    },
+    {
+      "name": "unit-final-descendant-opacity.json",
+      "bytes": 5024,
+      "sha256": "2a513033364b52fa5d7f45aecaea0e2095a9ee8a97ef0a22f31c554a8391ffc7"
+    },
+    {
+      "name": "unit-final-descendant-opacity.png",
+      "bytes": 83116,
+      "sha256": "c4dafbe99b7ffac88d5100041f21e05ef407de921871d3db3605b39ba29a9a3c"
+    },
+    {
+      "name": "unit-final-descendant-visibility.json",
+      "bytes": 5029,
+      "sha256": "2badd3e7fd7bebeb834237889e3590bcd3ef3e2ac6dbda321e4b5b2fff7ad215"
+    },
+    {
+      "name": "unit-final-descendant-visibility.png",
+      "bytes": 83116,
+      "sha256": "c4dafbe99b7ffac88d5100041f21e05ef407de921871d3db3605b39ba29a9a3c"
+    },
+    {
+      "name": "unit-final-desktop-1440.json",
+      "bytes": 4679,
+      "sha256": "f3c2a971c65101654d128f6ef39b28164322bfb3d0338cd2ac290b99c7bac5ae"
+    },
+    {
+      "name": "unit-final-desktop-1440.png",
+      "bytes": 385623,
+      "sha256": "c6cd8ed46c498c49ce665b5263dc2b87dd36d736a4dec5f234ca2c6478ee3b78"
+    },
+    {
+      "name": "unit-final-evidence.json",
+      "bytes": 114000,
+      "sha256": "0570050e594fb450215b96600db0e37c7eadb17c0dc3ff900e3809d0b96039c9"
+    },
+    {
+      "name": "unit-final-helper-source.txt",
+      "bytes": 8146,
+      "sha256": "7a5d5f422841d8ca74c0bc6391d172846ef996f1a2aaf5329d026a09de8389fb"
+    },
+    {
+      "name": "unit-final-house-280-system.json",
+      "bytes": 4732,
+      "sha256": "b9baeb429a854f92c8b43f5044a5a504b858d64461bda2f4a81c16f5ef2199a8"
+    },
+    {
+      "name": "unit-final-house-280-verdana.json",
+      "bytes": 4735,
+      "sha256": "6260c2e32de06f040a0f79cd8ae4e247168bd03b38d9a60ebdccf264839b1b13"
+    },
+    {
+      "name": "unit-final-house-280-verdana.png",
+      "bytes": 83747,
+      "sha256": "72ed78e6550474f409e83c31d31a1b4ad42a24cb8a8c3863e42d5f0d2b97f3af"
+    },
+    {
+      "name": "unit-final-large-280-georgia.json",
+      "bytes": 4618,
+      "sha256": "fcfffca5229f21ac2bc3a139c80f59125faf6dce34fe54affbdcef2b4e632317"
+    },
+    {
+      "name": "unit-final-large-280-system.json",
+      "bytes": 4617,
+      "sha256": "5fc61951d131a071e27d5c7d205752730d9e74768c034c13a17a349879467a13"
+    },
+    {
+      "name": "unit-final-large-280-verdana.json",
+      "bytes": 4618,
+      "sha256": "be519395dc0ec48610887815120c8a31648bc15aac5977eb8ced9cf64c3f0439"
+    },
+    {
+      "name": "unit-final-large-280-verdana.png",
+      "bytes": 83443,
+      "sha256": "3e18f0e2ae1a4477f7f09bf3330b95eef800ab40b743069bef74f89e10b1dbc5"
+    },
+    {
+      "name": "unit-final-large-cent-280-system.json",
+      "bytes": 4622,
+      "sha256": "cae45f02c2b15eeb5743eca552ecbc12d2c940ead99b3bc152d2dd6686390521"
+    },
+    {
+      "name": "unit-final-large-cent-280-verdana.json",
+      "bytes": 4623,
+      "sha256": "14de165efdb316df9fabdfe328c49969d168870165a2d9d2dc667030282f52ab"
+    },
+    {
+      "name": "unit-final-large-cent-280-verdana.png",
+      "bytes": 83465,
+      "sha256": "bb856087dd4887a3eecd3832c51165c84f59bde7c9a739cd2b35bc1a069ff093"
+    },
+    {
+      "name": "unit-final-negative-280-system.json",
+      "bytes": 4756,
+      "sha256": "0717b1b372edca5649ec31cbdc5789c70fcf2c96c6402ae4dffb3923fc34f7d0"
+    },
+    {
+      "name": "unit-final-negative-280-verdana.json",
+      "bytes": 4759,
+      "sha256": "9013559ccc0c98b520b0b7c5b10daeb921535ccdcf49de8f3e0b67fdc2d36d7c"
+    },
+    {
+      "name": "unit-final-negative-280-verdana.png",
+      "bytes": 84490,
+      "sha256": "ded466bf23070f0f926bca8a76afef208305ddaa893a5340ce0a81ffb37e88c0"
+    },
+    {
+      "name": "unit-final-parent-controls.json",
+      "bytes": 49082,
+      "sha256": "8371bbdc74fdcf1ec7ed59f03cf7f1fd2344206f4f5d41953a441fe42d5f66ea"
+    },
+    {
+      "name": "unit-final-post-control-balance-edit.json",
+      "bytes": 4749,
+      "sha256": "f1c771af88aca5ae1e8fdbb7523657635fa36f99ad8fe7c4202134b9812be361"
+    },
+    {
+      "name": "unit-final-post-control-edit-navigation.json",
+      "bytes": 4752,
+      "sha256": "8f50827351e6cae07b439e72d7f0e86b22b0823d30bf04d64e48e8a47d453985"
+    },
+    {
+      "name": "unit-final-probe.cjs",
+      "bytes": 16282,
+      "sha256": "29e82ca1eeef0166b0456398d3317ec20076db8740497c5e670c82c07f0d53f7"
+    },
+    {
+      "name": "unit-final-probe.log",
+      "bytes": 2720,
+      "sha256": "e4b181a6b4edc153db1bd6289b162bcdeb1e1054d08a86f96251c92b2adcc428"
+    },
+    {
+      "name": "unit-final-report.md",
+      "bytes": 7939,
+      "sha256": "d9b4c51dcca74de65d341138be4390de0462a6ad2853952cf5ad604a828c73c2"
+    },
+    {
+      "name": "unit-final-short-375.json",
+      "bytes": 4733,
+      "sha256": "64816784d1c12c90ec0e94110d09ed802861c52ef83b52a27c57b6b4834f1430"
+    },
+    {
+      "name": "unit-final-short-375.png",
+      "bytes": 78377,
+      "sha256": "efca7dba4a85ce28b89d80f2037a0a96ca1801fb7ecec7114f0137bfa06ae7b0"
+    },
+    {
+      "name": "unit-final-threshold-18-280-system.json",
+      "bytes": 4622,
+      "sha256": "975152ec4d878e4c4bf6db984f279b7871f13effa1de831b9823e5a301c0fba6"
+    },
+    {
+      "name": "unit-final-threshold-18-280-verdana.json",
+      "bytes": 4641,
+      "sha256": "9c5c9063f168d63433844e58fe317ef655c3183f50a232b526bffefd5be38f9c"
+    },
+    {
+      "name": "unit-final-threshold-18-280-verdana.png",
+      "bytes": 83356,
+      "sha256": "d5d6d5543466c29b1b4a0cf3f4fc699163efa6c52f782d05ca2b14de47962706"
+    },
+    {
+      "name": "unit-final-threshold-19-280-system.json",
+      "bytes": 4622,
+      "sha256": "d71d7c332b68feda3ba03b2c6da2b4e50fd67194750fcabe6ab6fb3fe22c7afb"
+    },
+    {
+      "name": "unit-final-threshold-19-280-verdana.json",
+      "bytes": 4623,
+      "sha256": "8847bf3740a05cf8dd03af1d7119fa9af51d9e15d6be7559e78a9da75f4486ef"
+    },
+    {
+      "name": "unit-final-threshold-19-280-verdana.png",
+      "bytes": 83484,
+      "sha256": "ca549568eb3cc9052de7e5d1c8c1bce4a879dce246de445bbb538e1b1292a781"
+    },
+    {
+      "name": "unit-final-working.diff",
+      "bytes": 9551,
+      "sha256": "72ddedfa163967dd734f94c94329cef71f296b6ed926267e34a9ae5ab8221e05"
+    }
+  ]
+}

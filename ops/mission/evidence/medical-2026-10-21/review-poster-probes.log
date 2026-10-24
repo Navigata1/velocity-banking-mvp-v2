@@ -1,0 +1,136 @@
+{
+  "generatedAt": "2026-10-21T05:39:08.867Z",
+  "filesystem": "Only generated evidence log written; virtual fixtures never created on disk",
+  "results": [
+    {
+      "name": "poster.png",
+      "bytes": 1698030,
+      "sha256": "30dd8c59ba54ce8608863eaf9f8835c40296e829d1e97f635fb1f1d2b732e41f",
+      "width": 1536,
+      "height": 1024,
+      "transparent": 777424,
+      "opaque": 783354,
+      "green": 50083,
+      "redBadge": 0,
+      "redAnywhere": 0
+    },
+    {
+      "name": "original-poster.webp",
+      "bytes": 143410,
+      "sha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2",
+      "width": 1200,
+      "height": 800,
+      "transparent": 478515,
+      "opaque": 472613,
+      "green": 0,
+      "redBadge": 38784,
+      "redAnywhere": 38784
+    },
+    {
+      "name": "actual-published-poster",
+      "bytes": 130728,
+      "sha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1",
+      "metadata": {
+        "format": "webp",
+        "mediaType": "image/webp",
+        "size": 130728,
+        "width": 1200,
+        "height": 800,
+        "space": "srgb",
+        "channels": 4,
+        "depth": "uchar",
+        "isProgressive": false,
+        "isPalette": false,
+        "hasProfile": false,
+        "hasAlpha": true,
+        "autoOrient": {
+          "width": 1200,
+          "height": 800
+        }
+      }
+    },
+    {
+      "name": "publisher-input-snapshot",
+      "status": "PASS",
+      "mutationWhileWaiting": "original output and record preserved"
+    },
+    {
+      "name": "numeric-stale-revision",
+      "status": "PASS",
+      "nonLockWrites": 0
+    },
+    {
+      "name": "concurrent-publishers-stale-revision",
+      "status": "PASS",
+      "openAttempts": 3
+    },
+    {
+      "name": "concurrent-live-budget-before-write",
+      "status": "PASS",
+      "exactCapFirstPublish": true,
+      "rejectedSecondAssetAbsent": true
+    },
+    {
+      "name": "shared-lock-model-writer-budget",
+      "status": "PASS",
+      "queuedPosterNonLockWrites": 0
+    },
+    {
+      "name": "poster-id-path-containment",
+      "status": "PASS",
+      "cases": 6
+    },
+    {
+      "name": "malformed-string-revision",
+      "status": "REPRODUCED",
+      "previousRevision": 3,
+      "submittedRevision": "3",
+      "changedBytesAccepted": true,
+      "limitation": "requires a nonnumeric revision from a caller/config; actual current config uses numeric 2"
+    },
+    {
+      "name": "invalid-revision-then-downgrade",
+      "status": "REPRODUCED",
+      "revisions": [
+        3,
+        "invalid",
+        1
+      ],
+      "limitation": "malformed configuration/caller input, not the actual current numeric config"
+    },
+    {
+      "name": "edited-source-url-lexical-containment",
+      "status": "PASS",
+      "cases": 5,
+      "limit": "does not establish realpath containment for symlinks/junctions"
+    },
+    {
+      "name": "package-source-mutation-after-validation",
+      "status": "REPRODUCED",
+      "validatedSha256": "24991272baff80f71e1f2fca70533c93c62bc23d102a0a729e3765bf1c76f12a",
+      "packagedSha256": "11e259fa0ef29e81fdb011c49864bcd91163db49ad9d2447db8517c90641278c",
+      "packagedBytes": "unvalidated-source",
+      "packageReportedSuccess": true
+    },
+    {
+      "name": "package-live-manifest-race",
+      "status": "REPRODUCED",
+      "packageReportedSuccess": true,
+      "packageManifestDoesNotDescribeCopiedSource": true,
+      "limitation": "live-manifest copy was already present before this diff; not a newly introduced regression"
+    },
+    {
+      "name": "review-source-digests",
+      "status": "PASS",
+      "sha256": {
+        "prepare-medical-poster.mjs": "c791927f4e3a74714e5bcf6fd4357266b3c8b33953d65e164ccd84ee4a107584",
+        "build-medical-poster.mjs": "7d5acc78349e38b3bb315f0b4948a39181fe91064354a3d62483c3f458feef78",
+        "hero-poster-publication.mjs": "5610338871959a1b117f348b2fb0e9df1a55beceaf75a78d180944807decfb53",
+        "prepare-hero-posters.mjs": "1442c2f8587d1df2355f746df09bb932152910cac7b0841ed274151a88098857",
+        "package-hero-collection.mjs": "6bb29dd32708442a0f85d7e91b70efc9ee498718aa67b292c067554d29ec10f5",
+        "medical-poster.test.mjs": "ca969e5238e68ee1475cc4d27bfc02f081a01495379d3e3643419103040efb08",
+        "refined-hero-record.mjs": "a46755f486b3c7b0ae027fa8dc68a7b0b84387fab2cbe394fd7ec55571ab9e7b"
+      }
+    }
+  ]
+}

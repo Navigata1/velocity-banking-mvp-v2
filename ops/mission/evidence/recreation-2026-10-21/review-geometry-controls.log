@@ -1,0 +1,12 @@
+PINS [{"path":"apps/web/public/heroes/recreation.glb","bytes":520948,"sha256":"6aab14611026767374e76e4bbc36200d2197c1a2d6545f0ebeb97ccc122b7173"},{"path":"apps/media/scripts/build-refined-recreation.mjs","bytes":20252,"sha256":"5a36c2b119a4df1b3fa6d3d3a12e2499383f6ef284210268e445e9aea4c0003f"},{"path":"apps/media/scripts/recreation-refinement.test.mjs","bytes":32568,"sha256":"fc7be50cd2cb293efbbd73761ee5e95cc03347997da688c172df379d9388a7c2"}]
+HELPER_LIMITATION {"mixedOrientationDisconnectedSolidsAccepted":true,"actualCandidateSolidPartsCheckedIndividually":true}
+CURRENT_STANDING_SEAM_TEST PASS
+SEAM_FLOAT_MUTATION {"name":"R-Main-Seams","deltaZ":0.006,"standingTestAccepted":true,"error":null,"minVertexSurfaceGap":0.0037727392191321063,"maxVertexSurfaceGap":0.011129698534848194}
+SEAM_FLOAT_MUTATION {"name":"R-Jib-Seams","deltaZ":0.006,"standingTestAccepted":true,"error":null,"minVertexSurfaceGap":0.0037962084424525183,"maxVertexSurfaceGap":0.010770054903503168}
+CONFIRMED_CANDIDATE_RED AssertionError [ERR_ASSERTION]: boom centerline must not run through cabin roof
+
+1 !== 0
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-controls.mjs:36:12
+HELPER_CONTROLS [{"name":"finite edge crossing true contact","status":"PASS"},{"name":"nested solids rejects","status":"PASS"},{"name":"unbounded extension rejects","status":"PASS"},{"name":"coplanar separated overlapping AABB rejects","status":"PASS"},{"name":"open nested skins reject no parity","status":"PASS"},{"name":"closed wrong winding rejects","status":"PASS"},{"name":"one missing triangle rejects","status":"PASS"},{"name":"normalized accessor decoded","status":"PASS"},{"name":"nonuniform scale inverse-transpose","status":"PASS"},{"name":"GPU scale rotation translation expands","status":"PASS"}]
+END_PINS [{"path":"apps/web/public/heroes/recreation.glb","bytes":520948,"sha256":"6aab14611026767374e76e4bbc36200d2197c1a2d6545f0ebeb97ccc122b7173"},{"path":"apps/media/scripts/build-refined-recreation.mjs","bytes":20252,"sha256":"5a36c2b119a4df1b3fa6d3d3a12e2499383f6ef284210268e445e9aea4c0003f"},{"path":"apps/media/scripts/recreation-refinement.test.mjs","bytes":32568,"sha256":"fc7be50cd2cb293efbbd73761ee5e95cc03347997da688c172df379d9388a7c2"}]

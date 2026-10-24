@@ -1,0 +1,70 @@
+{
+  "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+  "notVerified": true,
+  "ci": [
+    {
+      "id": 39702904111,
+      "attempt": 1,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39702904111",
+      "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "name": "Web and mobile quality gates",
+          "conclusion": "success"
+        },
+        {
+          "name": "Isolated SQL and owner isolation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Asset hero quality gates",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 39702908995,
+      "attempt": 1,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/actions/runs/39702908995",
+      "headSha": "6ce6e5ede081903d771f5d9745826bcd42f88e96",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "name": "Isolated SQL and owner isolation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Asset hero quality gates",
+          "conclusion": "failure"
+        },
+        {
+          "name": "Web and mobile quality gates",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "hosted": {
+    "id": "42b0f0a7-abfc-4ca3-a9d6-450347ce0da7",
+    "suites": 12,
+    "workflows": 138,
+    "servedHashes": 20,
+    "status": "completed"
+  },
+  "explanation": "Both full events failed in the extra verifyReplay re-pause with an absolute past target. Initial samples passed. No CI reruns; next source repair retains one paused sample. Remote transport scheduling latency is inferred, not directly timed.",
+  "rawHeroLogs": [
+    {
+      "file": "failed-39702904111-heroes.log",
+      "bytes": 35528,
+      "sha256": "391ee1998eeb013ecc8462e1d491b11fddc1483d9bd8ff19c24200cbce834bc3"
+    },
+    {
+      "file": "failed-39702908995-heroes.log",
+      "bytes": 36346,
+      "sha256": "84942aaaa90044135fcdfcf8e8059a6667245781cab5ac9bf8087e0a23f35456"
+    }
+  ]
+}

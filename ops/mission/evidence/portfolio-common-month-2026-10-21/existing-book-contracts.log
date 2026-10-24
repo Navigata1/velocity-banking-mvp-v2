@@ -1,0 +1,18 @@
+PASS Portfolio book canonical document preserves every supported field and exact number
+PASS Portfolio book codec has a typed public web/native package entry
+PASS Portfolio book canonical validation and serialization never mutate their source
+PASS Portfolio book legacy exported and persisted documents convert mixed APR units exactly once
+PASS Portfolio book canonical high rates reach the engine with explicit units and no hidden extra cash
+PASS Portfolio book an explicitly empty book is valid but absence is never an empty default
+PASS Portfolio book finite inputs that overflow future cash are not successful or nonfinite projections
+PASS Portfolio book monthly liability aggregates must remain finite before a row is accepted
+PASS Portfolio book aggregate range checks cannot hide debts behind a large LOC or change with order
+PASS Portfolio book initial interest overflow is not mislabeled as zero-interest affordability
+PASS Portfolio book rounding residue in a derived LOC payment cannot reject an ordinary funded plan
+PASS Portfolio book overflow rollback retains accepted interest LOC charges and earlier payoff events
+PASS Portfolio book large but representable cash is not subjected to an arbitrary money cap
+PASS Portfolio book unknown versions units ambiguous wrappers and malformed JSON are rejected
+PASS Portfolio book duplicate empty and prototype-sensitive debt identities are rejected
+PASS Portfolio book invalid money APR terms ratios minimums and promo fields never coerce or clamp
+PASS Portfolio book unknown present fields fail explicitly instead of disappearing on a round trip
+17 portable Portfolio book contracts passed. Storage UI and paired recovery remain separate.

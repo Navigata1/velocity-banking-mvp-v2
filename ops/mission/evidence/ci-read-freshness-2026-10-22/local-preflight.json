@@ -1,0 +1,76 @@
+{
+  "verifiedAt": "2026-10-22T15:15:30.967Z",
+  "baseline": "55a0d953fbd0f24818f9afba9427019657ab3fb6",
+  "stage": "Local pre-push CI discovery maintenance; new-head remote verification pending",
+  "productionReady": false,
+  "fresh": {
+    "cliContracts": 22,
+    "stages": [
+      {
+        "name": "cli",
+        "status": 0
+      },
+      {
+        "name": "runtime",
+        "status": 0
+      },
+      {
+        "name": "render",
+        "status": 0
+      },
+      {
+        "name": "renderer",
+        "status": 0
+      },
+      {
+        "name": "static",
+        "status": 0
+      }
+    ],
+    "correctedLive55aChecker": "passed with strong revalidation headers; original failed report preserved"
+  },
+  "parity": {
+    "sourcePins": 445,
+    "changed": [
+      "scripts/check-restoration-ci.cjs",
+      "scripts/check-restoration-ci.test.cjs"
+    ],
+    "unchanged": 443,
+    "allApplicationAndAssetSourcesIdentical": true,
+    "oldImmutableEvidenceFiles": 495,
+    "oldIndexSha256": "0cfcb1e1b341e1b13127c0574ff509241cdae1214b4ff7a26ae85b15e3763158"
+  },
+  "inherited": {
+    "head": "55a0d953fbd0f24818f9afba9427019657ab3fb6",
+    "localGates": 29,
+    "webLayouts": 183,
+    "hostedSuites": 14,
+    "hostedLayouts": 183,
+    "servedAssetHashes": 20,
+    "manualIabStates": 6,
+    "hostedPointer": {
+      "id": "eda810c6-a299-4ceb-b500-290b1189bc2f",
+      "file": ".superpowers\\sdd\\2026-10-22-lender-confidence\\hosted-runs\\eda810c6-a299-4ceb-b500-290b1189bc2f\\verification.json",
+      "status": "completed"
+    },
+    "push": {
+      "id": 39791788358,
+      "attempt": 2
+    },
+    "pullRequest": {
+      "id": 39791798657,
+      "attempt": 1
+    },
+    "notFreshMaintenanceEvidence": true
+  },
+  "remaining": [
+    "Both complete new-head CI events, known automatic READY and new-head narrow served-asset/browser proof",
+    "Actual numerical lender/calendar enforcement; all-ten photoreal approval; backend/security/recovery; physical native/accessibility; production release"
+  ],
+  "retainedFailures": [
+    "55a original canonical checker stale empty run listing",
+    "No-cache-only live verifier still empty; strong no-store request returned both events",
+    "55a first-push54322port collision; exactly one unchanged whole rerun passed,owner/cause unknown",
+    "Older short-budget screenshot misses and nine known Three warnings unresolved"
+  ]
+}

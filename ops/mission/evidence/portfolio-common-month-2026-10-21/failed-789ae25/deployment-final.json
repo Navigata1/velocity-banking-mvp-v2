@@ -1,0 +1,57 @@
+{
+  "headSha": "789ae25cc3feaefba942d26e1c1fbde02b747aaf",
+  "preview": "https://velocity-banking-mvp-v2-6kj0np900-islanddevcrew.vercel.app",
+  "id": "dpl_DiNvgSVjwsniwKLCdoqu9q4yq9yn",
+  "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+  "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+  "scope": "islanddevcrew",
+  "state": "READY",
+  "target": null,
+  "metadata": {
+    "id": "dpl_DiNvgSVjwsniwKLCdoqu9q4yq9yn",
+    "name": "velocity-banking-mvp-v2",
+    "url": "velocity-banking-mvp-v2-6kj0np900-islanddevcrew.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1792591125809,
+    "creator": {
+      "uid": "QPOvN2WenLdiOTDpOvhQ4o5c",
+      "username": "jony02-7429"
+    },
+    "project": {
+      "id": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+      "name": "velocity-banking-mvp-v2",
+      "framework": "nextjs"
+    },
+    "meta": {
+      "githubCommitRef": "codex/restoration/asset-heroes",
+      "githubCommitSha": "789ae25cc3feaefba942d26e1c1fbde02b747aaf",
+      "githubCommitMessage": "docs(restoration): preserve failed CI and verified currency boundary correction",
+      "githubRepo": "velocity-banking-mvp-v2",
+      "githubOrg": "Navigata1"
+    },
+    "alias": [
+      "velocity-banking-mvp-v2-git-codex-restorat-c1b229-islanddevcrew.vercel.app"
+    ],
+    "target": null,
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1792591126802,
+    "ready": 1792591144318,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  },
+  "request": {
+    "idOrUrl": "dpl_DiNvgSVjwsniwKLCdoqu9q4yq9yn",
+    "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+    "withGitRepoInfo": "true"
+  },
+  "authenticatedTeam": {
+    "id": "team_rccC7q4MEQxCAEz45598ttAe",
+    "slug": "islanddevcrew",
+    "source": "Authenticated Vercel get_team",
+    "verifiedAt": "2026-10-21T13:59:33.364Z"
+  }
+}

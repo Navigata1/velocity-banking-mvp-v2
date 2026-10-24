@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: Medical poster retains traceable original-badge edit sources and current delivery hashes
+ok 1 - Medical poster retains traceable original-badge edit sources and current delivery hashes
+  ---
+  duration_ms: 8.4459
+  type: 'test'
+  ...
+# Subtest: Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+ok 2 - Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+  ---
+  duration_ms: 83.2233
+  type: 'test'
+  ...
+# Subtest: Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+ok 3 - Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+  ---
+  duration_ms: 4900.6172
+  type: 'test'
+  ...
+# Subtest: Legacy poster preparation and collection packaging retain the edited Medical source
+ok 4 - Legacy poster preparation and collection packaging retain the edited Medical source
+  ---
+  duration_ms: 9.1789
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+ok 5 - Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+  ---
+  duration_ms: 44.2622
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+ok 6 - Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+  ---
+  duration_ms: 30.8881
+  type: 'test'
+  ...
+# Subtest: Collection packaging delivers validated source and manifest snapshots despite source-path changes
+ok 7 - Collection packaging delivers validated source and manifest snapshots despite source-path changes
+  ---
+  duration_ms: 5.8801
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5245.4495

@@ -1,0 +1,5 @@
+
+> web@0.1.0 test:supabase:account
+> node scripts/supabase-account-contract.cjs
+
+Supabase account contract passed stable browser snapshot identity and real settings workflow.

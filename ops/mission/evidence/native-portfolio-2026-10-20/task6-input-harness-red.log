@@ -1,0 +1,16 @@
+AssertionError [ERR_ASSERTION]: a failed fixture must request failure before cleanup can finish or strand a promise
++ actual - expected
+
+  [
++   0
+-   1
+  ]
+
+    at main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-browser-harness-tests.cjs:23:10) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

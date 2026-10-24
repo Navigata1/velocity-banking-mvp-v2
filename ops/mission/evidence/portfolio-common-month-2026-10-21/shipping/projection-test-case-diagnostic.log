@@ -1,0 +1,47 @@
+TAP version 13
+# Subtest: Dashboard G6 retains daily18/ten-controls/fallback proof; comparison maps to G7/G8
+not ok 1 - Dashboard G6 retains daily18/ten-controls/fallback proof; comparison maps to G7/G8
+  ---
+  duration_ms: 1.2399
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release\\projection.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /ten.*controls|10.*controls/. Input:
+    
+    '18 hosted Dashboard workflows at280/375/1440 plus four768/1264 responsive probes preserve exact daily estimates, saved inputs, edit/restore/navigation and oversized no-ops. Ten actual DOM controls reject hidden/clipped/overlapping/empty values and prove original-node restoration; one wider-font positive probe passes without reducing12px minimum. Failed3b58bef history remains explicit. Not arbitrary-font/device, lender or full R2 approval.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '18 hosted Dashboard workflows at280/375/1440 plus four768/1264 responsive probes preserve exact daily estimates, saved inputs, edit/restore/navigation and oversized no-ops. Ten actual DOM controls reject hidden/clipped/overlapping/empty values and prove original-node restoration; one wider-font positive probe passes without reducing12px minimum. Failed3b58bef history remains explicit. Not arbitrary-font/device, lender or full R2 approval.'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-common-month/release/projection.test.mjs:41:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: projection preserves every phase/task status and leaves entire R2 open
+ok 2 - projection preserves every phase/task status and leaves entire R2 open
+  ---
+  duration_ms: 0.9658
+  type: 'test'
+  ...
+# {"artifact":"C:\\\\Users\\\\IslandDevCrew\\\\Documents\\\\Interest Shield\\\\.superpowers\\\\sdd\\\\2026-10-21-common-month\\\\release\\\\projection-green-proof.json","publisherSha256":"246cd3e745127b6fbcabdcabd536f831c0f15a0117688da6813d47a61d328665","scope":"Only synthetic proof written inside release/"}
+# Subtest: projection probe leaves actual mission state and publisher bytes untouched
+ok 3 - projection probe leaves actual mission state and publisher bytes untouched
+  ---
+  duration_ms: 4.8737
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 2
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 114.3143

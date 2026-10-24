@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-24T10:53:11.929Z",
+  "sourceHead": "3791fa8bb08a642546f562725f21577a80775c81",
+  "scope": "V5 actual preflight failure before driver or rendering; no candidate visual result",
+  "subject": {"packetSha256":"f721ac7337bf630030dedf6a371b7f0232a888cb2bc1d7ee8b9d597d9333f27f","closureSha256":"01ab2227de98bc50dc37b83b993b42f72e65ef43a46764e8cb394c7024e17146","privateLab":"hp6e-180c10abd826","candidateSha256":"2ca6e2c207eed6bee659f371c76162e2c96e5e76227c694fc1ce7781b8c8fd0c"},
+  "reviews": {"Bohr":"550aa4404a0ae6c45e9653fb6dc3f3a16c9c9f6cf886512c5dc1dbde30a8af06","Plato":"e813e0ed8b8308c4819f44a50bdbb8986dd6392ed5c38dfee69b6faf4768c58f","verdict":"ACCEPT_LIMITED_SOURCE_CPU_DATA_ONLY_NOT_NATIVE_SUCCESS","parentDecisionSha256":"45762e2bbaeaf1cd01ebd8486b91712e10285a381493fc4db1709a8044a43b48"},
+  "actual": {"terminalAt":"2026-10-24T10:49:43.278Z","childPid":31628,"exitCode":1,"signal":null,"status":"HOLD","attemptedDriverLaunch":false,"completedPrePostChecks":0,"precheck":null,"postcheck":null,"job":null,"driver":null,"approvedPngs":0,"proofs":0,"browserLaunched":false,"modelRequestBarrierExercised":false,"failure":"independent-outer-pre check timeout","checkerLimitMs":180000,"terminationUnconfirmedReported":false},
+  "diagnostic": {"workerStartCallerSourceOrStageBoundary":"UNOBSERVED","cause":"UNKNOWN","noProgressTraceAvailable":true,"noNewAssetOrMathDefectInferred":true,"noZeroActiveJobClaim":true,"wholeStageOrPrePostPassClaimed":false},
+  "retained": {"operationFiles":["outer-identity.json","outer-result.json"],"outerResultBytes":1206,"outerResultSha256":"6120597d9c5046c0c350c46de4d66598b4c42293727f665968e3cdb0b67f3602","sourceOperationProfilesAndPriorFailuresPreserved":true,"retryOrCleanupAuthorized":false},
+  "next": "Minimal fixed bounded source/CPU-only progress-telemetry proposal covering worker/caller/source/borrowed/tool/stage boundaries. No actual check, full fixture lab, runtime copy, time/scope waiver or retry authorized. Future instrumented success is noncausal.",
+  "productionReady": false,
+  "candidateVisualAccepted": false,
+  "priorCVisualRejectionUnchanged": true
+}

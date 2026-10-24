@@ -1,0 +1,128 @@
+{
+  "baseline": "35745b7f1e0b8b18a6279f7c54b47d4f0f9ea50e",
+  "sourceUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/15cd02d304e54cb42a4db4eefe719f76190f4b68/Models/CarConcept/glTF-Binary/CarConcept.glb",
+  "sourceSha256": "c272098089d78c5cd9fd9f24ff50ee8acf8d932c55f2d55fc10adb6c8998966b",
+  "beforeCarSha256": "8b47003fb31a8d1e41f271a05bf64bf6f68b84625d18992f1201a7f66e65ce54",
+  "beforeCarBytes": 2049728,
+  "normalMaps": [
+    {
+      "materials": [
+        "Mechanical"
+      ],
+      "width": 512,
+      "height": 512,
+      "channels": 3,
+      "sourceImageSha256": "400d7424a415923bedec4f8ea60e32e55bd88a38dc16d6f9898d8b3bbf400a18",
+      "sourcePixelSha256": "94f38d35a8cec24cc624a636bc5ffa95b1d8831e77ae007c3e86648f68684816",
+      "currentImageSha256": "25a90bd7ada0e2878a2fd6f107d114bb491a34c73f9fbc660d611fba35004637",
+      "currentPixelSha256": "18abfeeb63db8a48b378407bed70b782b93a5c380e7be38538f5035c5b38d6bb",
+      "sourcePngBytes": 358161,
+      "losslessWebpBytes": 223392,
+      "currentBytes": 37712,
+      "bestLosslessBytes": 223392
+    },
+    {
+      "materials": [
+        "Interior 1",
+        "Floormat",
+        "Interior 3 Carmine",
+        "Panel Sides"
+      ],
+      "width": 64,
+      "height": 32,
+      "channels": 3,
+      "sourceImageSha256": "c3b849657bb6b35957436ad08a3697961ea347d1a577f4660c900d12c9132442",
+      "sourcePixelSha256": "0d1c358c3355bba2e4d4fe981644ce6bde6cf69495b62cb10867831b53e58cd3",
+      "currentImageSha256": "0601c4c0b1e2604c137c2ab431c7038558f6ebda70f317d868e3f3ac1b18c734",
+      "currentPixelSha256": "520029409ca306c527f52b8dcdc5d4fe97230f0923e369d6813a23f52d449842",
+      "sourcePngBytes": 3528,
+      "losslessWebpBytes": 3156,
+      "currentBytes": 706,
+      "bestLosslessBytes": 3156
+    },
+    {
+      "materials": [
+        "Interior 2"
+      ],
+      "width": 32,
+      "height": 32,
+      "channels": 3,
+      "sourceImageSha256": "48d4d9e0fee0b489c3de6869aeadb7c031014bba1c101c313358c2dc89a33f23",
+      "sourcePixelSha256": "35bc19e9728db6b7aac623cafc9fe5e3350e08fbe0acd25014d627ad4b79df48",
+      "currentImageSha256": "6afe309a61138a5d4d5180f275d039268ca6bf6d8a15149aed18d11a0a70e2f5",
+      "currentPixelSha256": "a1b03cbafaf53e616b0452ff4d7e5b85cf45d596061e20becb449d0c6ddcaf8a",
+      "sourcePngBytes": 198,
+      "losslessWebpBytes": 120,
+      "currentBytes": 148,
+      "bestLosslessBytes": 120
+    },
+    {
+      "materials": [
+        "Paint 2 Carmine",
+        "Paint 1 Carmine"
+      ],
+      "width": 128,
+      "height": 128,
+      "channels": 3,
+      "sourceImageSha256": "3c4b65d9a8372147a41594eee96eae35127105de26142cc9e9b752c3f9754b8e",
+      "sourcePixelSha256": "f084dbffd99641c57a397c5de7b5defec889114310ed07861711b043bf787477",
+      "currentImageSha256": "3c4b65d9a8372147a41594eee96eae35127105de26142cc9e9b752c3f9754b8e",
+      "currentPixelSha256": "f084dbffd99641c57a397c5de7b5defec889114310ed07861711b043bf787477",
+      "sourcePngBytes": 46314,
+      "losslessWebpBytes": 36868,
+      "currentBytes": 46314,
+      "bestLosslessBytes": 36868
+    },
+    {
+      "materials": [
+        "Disc"
+      ],
+      "width": 128,
+      "height": 128,
+      "channels": 3,
+      "sourceImageSha256": "b4318c4125420cc54d3bc712a4546337ab285bec787d9222ab1fbee81d6dc36f",
+      "sourcePixelSha256": "166b768e816839ef1c75381037d222c0aa5dd23145a726306a78b37f4acd89c7",
+      "currentImageSha256": "63fea217bb1d36dd04b3b7bbc526f655e2bc087ed66f757fd17a909253d6ca19",
+      "currentPixelSha256": "9505af88c394f18ea9e2bb7cd381595bc6b0ca3616b16f2907c7568da67daa2e",
+      "sourcePngBytes": 8500,
+      "losslessWebpBytes": 6536,
+      "currentBytes": 1678,
+      "bestLosslessBytes": 6536
+    },
+    {
+      "materials": [
+        "Tireside"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "channels": 3,
+      "sourceImageSha256": "54297a9940353fdab05356ebd1649d967d0cf316968b15f496903ec00731b2c1",
+      "sourcePixelSha256": "674e6d0beee9142156c5cd99c026d7c3cda2fa0168ba6b8a323de8bad9a58a5c",
+      "currentImageSha256": "0767b8325770466dbb585e817c0bb853e8e7f5c864f4083b9f052274d9a4a3ae",
+      "currentPixelSha256": "10410848d4fc7c06890f595cf25b767acf5222d8e8a0effe9b76894179bfa816",
+      "sourcePngBytes": 475684,
+      "losslessWebpBytes": 294240,
+      "currentBytes": 67900,
+      "bestLosslessBytes": 294240
+    },
+    {
+      "materials": [
+        "Tiretread"
+      ],
+      "width": 512,
+      "height": 128,
+      "channels": 3,
+      "sourceImageSha256": "10a31cec483d1c8dd9f68798f282e5b348200754e94ce940a6c3caf5f82a539b",
+      "sourcePixelSha256": "ff08861bab392eb1e495e36827ebd7097cee3ee9d8bb1831bfe21fdf62f9e0e4",
+      "currentImageSha256": "0dad4bb303b015b4d1524f65ac3add88786775571e3fdb36d2d28b85e1c781d7",
+      "currentPixelSha256": "90c0521862bfff6148e321da83e3a79d4831267717a670c810b172d076210d75",
+      "sourcePngBytes": 53752,
+      "losslessWebpBytes": 37500,
+      "currentBytes": 6514,
+      "bestLosslessBytes": 37500
+    }
+  ],
+  "estimatedCarAfterLosslessAndOrphan": 2459394,
+  "carCap": 2359296,
+  "note": "Payload estimate only; no transformed candidate or publication. All existing map dimensions match source. Paint PNG must remain byte-exact."
+}

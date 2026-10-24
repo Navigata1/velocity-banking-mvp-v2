@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   Bot,
   ChartNoAxesCombined,
@@ -20,10 +20,11 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useFinancialStore } from '@/stores/financial-store';
+import { portfolioPersistence, usePortfolioStore } from '@/stores/portfolio-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
-import { useState, useCallback } from 'react';
+import { Suspense, useState, useCallback, useEffect, useRef } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 
 const themeOptions: { value: Theme; label: string }[] = [
@@ -48,37 +49,75 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function Navigation() {
+function NavigationContent() {
   const pathname = usePathname();
+  const scenario = useSearchParams().get('scenario');
+  const portfolio = pathname === '/portfolio' || (pathname === '/' || pathname === '/simulator') && scenario === 'portfolio';
+  const portfolioReturnIntent = portfolio || (pathname === '/learn' || pathname === '/settings') && scenario === 'portfolio';
   const mounted = useIsClient();
   const [showAI, setShowAI] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [aiQuery, setAiQuery] = useState('');
-  const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
+  const [aiMessages, setAiMessages] = useState<{role: 'user' | 'ai', text: string, source?: string}[]>([
     { role: 'ai', text: "Hi! I'm your Velocity Guardian. I can help explain velocity banking concepts, answer questions about debt payoff strategy, or guide you through the app. What would you like to know?" }
   ]);
   const store = useFinancialStore();
   const { theme, setTheme } = useThemeStore();
   const { teacherMode, setTeacherMode } = usePreferencesStore();
+  const aiDialogRef = useRef<HTMLDivElement>(null);
+  const aiInputRef = useRef<HTMLInputElement>(null);
+  const aiTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // Use IntroModal's focus lifecycle, but restore the exact clicked opener.
+  useEffect(() => {
+    if (!showAI) return;
+    const dialog = aiDialogRef.current, trigger = aiTriggerRef.current;
+    if (!dialog) return;
+    const focusable = () => Array.from(dialog.querySelectorAll<HTMLElement>('button:not([disabled]),input:not([disabled])'))
+      .filter(element => element.offsetParent !== null || element === document.activeElement);
+    aiInputRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setShowAI(false); return; }
+      if (event.key !== 'Tab') return;
+      const controls = focusable(), first = controls[0], last = controls[controls.length - 1];
+      if (!first) { event.preventDefault(); dialog.focus(); return; }
+      if (!controls.includes(document.activeElement as HTMLElement)
+        || event.shiftKey && document.activeElement === first || !event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); (event.shiftKey ? last : first).focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, [showAI]);
 
   const handleAISubmit = useCallback(() => {
     if (!aiQuery.trim()) return;
     const userMessage = aiQuery.trim();
+    const book = portfolio && teacherMode && portfolioPersistence.getStatus().status === 'ready'
+      ? usePortfolioStore.getState() : null;
+    const context = portfolio ? book && Number.isFinite(book.monthlyIncome) && Number.isFinite(book.monthlyExpenses)
+      && Number.isFinite(book.monthlyIncome - book.monthlyExpenses) ? {
+        monthlyIncome: book.monthlyIncome, monthlyExpenses: book.monthlyExpenses,
+        cashFlow: book.monthlyIncome - book.monthlyExpenses, activeDomainLabel: 'Portfolio',
+      } : undefined : {
+        monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
+        cashFlow: store.monthlyIncome - store.monthlyExpenses, activeDomainLabel: store.activeDomain,
+      };
+    const source = teacherMode ? portfolio ? context ? 'Shared portfolio at question time'
+      : 'Shared portfolio unavailable at question time' : 'Single-target demo at question time' : undefined;
     setAiMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setAiQuery('');
     setTimeout(() => {
       const response = getGuardianResponse(userMessage, {
         teacherMode,
-        context: {
-          monthlyIncome: store.monthlyIncome,
-          monthlyExpenses: store.monthlyExpenses,
-          cashFlow: store.monthlyIncome - store.monthlyExpenses,
-          activeDomainLabel: store.activeDomain,
-        }
+        context,
       });
-      setAiMessages(prev => [...prev, { role: 'ai', text: response }]);
+      setAiMessages(prev => [...prev, { role: 'ai', text: response, source }]);
     }, 300);
-  }, [aiQuery, teacherMode, store]);
+  }, [aiQuery, teacherMode, store, portfolio]);
 
   const classes = themeClasses[mounted ? theme : 'original'];
   const ActiveThemeIcon = themeIcons[theme];
@@ -112,7 +151,7 @@ export default function Navigation() {
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={portfolioReturnIntent && (item.href === '/' || item.href === '/simulator' || item.href === '/learn' || item.href === '/settings') ? `${item.href}?scenario=portfolio` : item.href}
                   aria-label={item.label}
                   aria-current={pathname === item.href ? 'page' : undefined}
                   title={item.label}
@@ -130,7 +169,7 @@ export default function Navigation() {
             
             <button
               type="button"
-              onClick={() => setShowAI(true)}
+              onClick={event => { aiTriggerRef.current = event.currentTarget; setShowAI(true); }}
               className="flex min-h-12 min-w-0 items-center justify-center rounded-md px-2 py-3 text-gray-400 transition-all hover:bg-gray-800 hover:text-white md:hidden"
               aria-label="Open Velocity Guardian"
               title="Velocity Guardian"
@@ -141,7 +180,7 @@ export default function Navigation() {
           
           <button
             type="button"
-            onClick={() => setShowAI(true)}
+            onClick={event => { aiTriggerRef.current = event.currentTarget; setShowAI(true); }}
             aria-label="Open Velocity Guardian"
             className={`group relative mt-5 hidden w-full items-center gap-3 rounded-md border border-white/10 bg-white/[0.025] p-3 text-left md:flex`}
             style={{ perspective: '500px' }}
@@ -228,14 +267,16 @@ export default function Navigation() {
       {showAI && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div
+            ref={aiDialogRef}
+            tabIndex={-1}
             role="dialog"
             aria-modal="true"
             aria-labelledby="velocity-guardian-title"
             className={`${classes.bgSecondary} rounded-2xl ${classes.border} border w-full max-w-lg max-h-[80vh] flex flex-col shadow-2xl`}
           >
-            <div className={`flex items-center justify-between p-4 border-b ${classes.border} bg-gradient-to-r from-emerald-900/30 to-transparent`}>
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14">
+            <div className={`grid grid-cols-[minmax(0,1fr)_2.25rem] items-center gap-x-2 gap-y-3 p-4 border-b ${classes.border} bg-gradient-to-r from-emerald-900/30 to-transparent sm:flex sm:justify-between`}>
+              <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+                <div className="relative h-10 w-10 shrink-0 sm:h-14 sm:w-14">
                   <Image
                     src="/shield-guardian.webp"
                     alt="Velocity Guardian"
@@ -248,12 +289,12 @@ export default function Navigation() {
                     }}
                   />
                 </div>
-                <div>
-                  <h3 id="velocity-guardian-title" className={`${classes.text} font-semibold text-lg`}>Velocity Guardian</h3>
+                <div className="min-w-0">
+                  <h3 id="velocity-guardian-title" className={`${classes.text} font-semibold text-base sm:text-lg`}>Velocity Guardian</h3>
                   <p className="text-emerald-400 text-sm">Your interest protection guide</p>
                 </div>
               </div>
-               <div className="flex items-center gap-2">
+               <div className="col-span-2 row-start-2 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setTeacherMode(!teacherMode)}
@@ -270,7 +311,7 @@ export default function Navigation() {
                 onClick={() => setShowAI(false)}
                 aria-label="Close Velocity Guardian"
                 title="Close Velocity Guardian"
-                className={`${classes.textSecondary} hover:${classes.text} p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
+                className={`${classes.textSecondary} hover:${classes.text} col-start-2 row-start-1 shrink-0 p-2 hover:bg-slate-700/50 rounded-lg transition-colors`}
               >
                 <X aria-hidden="true" className="h-5 w-5" />
               </button>
@@ -284,7 +325,8 @@ export default function Navigation() {
                       ? 'bg-emerald-600 text-white' 
                       : `${classes.bgTertiary} ${classes.text}`
                   }`}>
-                    {msg.text}
+                    {msg.source && <p className="mb-1 text-xs opacity-75">{msg.source}</p>}
+                    {msg.role === 'ai' ? <span className="whitespace-pre-line [overflow-wrap:anywhere]">{msg.text}</span> : msg.text}
                   </div>
                 </div>
               ))}
@@ -293,20 +335,21 @@ export default function Navigation() {
             <div className={`p-4 border-t ${classes.border}`}>
               <div className="flex gap-2">
                 <input
+                  ref={aiInputRef}
                   type="text"
                   aria-label="Ask Velocity Guardian a question"
                   value={aiQuery}
                   onChange={(e) => setAiQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAISubmit()}
                   placeholder="Ask about velocity banking..."
-                  className={`flex-1 ${classes.bgTertiary} ${classes.border} border rounded-xl px-4 py-3 ${classes.text} placeholder-gray-400 focus:outline-none focus:border-emerald-500`}
+                  className={`min-w-0 flex-1 ${classes.bgTertiary} ${classes.border} border rounded-xl px-4 py-3 ${classes.text} placeholder-gray-400 focus:outline-none focus:border-emerald-500`}
                 />
                 <button
                   type="button"
                   onClick={handleAISubmit}
                   aria-label="Send question"
                   title="Send question"
-                  className={`${classes.glassButton} flex h-12 w-12 items-center justify-center rounded-md text-emerald-400`}
+                  className={`${classes.glassButton} flex h-12 w-12 shrink-0 items-center justify-center rounded-md text-emerald-400`}
                 >
                   <Send aria-hidden="true" className="h-5 w-5" />
                 </button>
@@ -317,4 +360,11 @@ export default function Navigation() {
       )}
     </>
   );
+}
+
+export default function Navigation() {
+  return <Suspense fallback={<nav aria-label="Primary navigation" aria-busy="true"
+    className="fixed bottom-0 left-0 right-0 z-50 h-[65px] border-t md:sticky md:top-0 md:h-screen md:w-56 md:border-r md:border-t-0" />}>
+    <NavigationContent />
+  </Suspense>;
 }

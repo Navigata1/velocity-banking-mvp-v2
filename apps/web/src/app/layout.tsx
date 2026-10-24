@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from 'react';
+import LegacyScenarioGuard from '@/components/LegacyScenarioGuard';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
@@ -87,7 +89,7 @@ export default function RootLayout({
             >
               <IntroModal />
               <PreAppPreview />
-              {children}
+              <Suspense fallback={children}><LegacyScenarioGuard>{children}</LegacyScenarioGuard></Suspense>
               <p className="px-4 pb-6 pt-2 text-center text-xs text-gray-500 md:hidden">
                 Educational tool. Not financial advice.
               </p>

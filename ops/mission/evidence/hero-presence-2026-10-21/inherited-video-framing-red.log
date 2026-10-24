@@ -1,0 +1,16 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: car model height 34.1% is below presentation minimum 38%
+    at presentationBounds (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\hero-presentation-proof.cjs:31:10)
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/verify-hero-turntables.mjs:25:21 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

@@ -1,0 +1,41 @@
+PASS 1440px slow-network poster continuity and selected-mode stability
+1440px car color samples: 532, 499
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px house color samples: 434, 373
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px land color samples: 482, 524
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px creditCard color samples: 173, 125
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px studentLoan color samples: 397, 437
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px medical color samples: 280, 266
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px personal color samples: 414, 399
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px recreation color samples: 332, 157
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px custom color samples: 315, 278
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS 1440px vault: nonblank, framed, moving
+PASS 375px slow-network poster continuity and selected-mode stability
+375px car color samples: 566, 531
+PASS 375px car: poster, real GLB, nonblank pixels, visible rotation, containment
+375px house color samples: 439, 378
+PASS 375px house: poster, real GLB, nonblank pixels, visible rotation, containment
+375px land color samples: 479, 550
+PASS 375px land: poster, real GLB, nonblank pixels, visible rotation, containment
+375px creditCard color samples: 194, 129
+PASS 375px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+375px studentLoan color samples: 416, 427
+PASS 375px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+375px medical color samples: 283, 256
+PASS 375px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+375px personal color samples: 423, 391
+PASS 375px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+375px recreation color samples: 351, 191
+PASS 375px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+375px custom color samples: 341, 289
+PASS 375px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS 375px vault: nonblank, framed, moving
+PASS reduced-motion still frame

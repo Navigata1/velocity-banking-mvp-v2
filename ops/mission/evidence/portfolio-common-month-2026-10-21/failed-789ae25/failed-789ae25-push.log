@@ -1,0 +1,26 @@
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	﻿2026-10-21T14:05:25.8920934Z ##[group]Run npm run test:heroes
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.8921291Z ^[[36;1mnpm run test:heroes^[[0m
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.8957075Z shell: /usr/bin/bash -e {0}
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.8957394Z ##[endgroup]
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.9903505Z 
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.9904146Z > web@0.1.0 test:heroes
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.9904800Z > node scripts/smoke-heroes.cjs && node scripts/hero-fallback-smoke.cjs
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:05:25.9905122Z 
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:06:20.9660879Z PASS 1440px slow-network poster continuity and selected-mode stability
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:07:18.1811780Z 1440px car color samples: 543, 591
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:07:19.3102826Z PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:07:50.8000033Z 1440px house color samples: 438, 314
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:07:51.0753930Z PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:13.2214230Z 1440px land color samples: 528, 440
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:13.4604968Z PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5873306Z AssertionError [ERR_ASSERTION]: insufficient visible geometry
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5874168Z     at visibleBounds (/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-heroes.cjs:20:10)
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5875103Z     at run (/home/runner/work/velocity-banking-mvp-v2/velocity-banking-mvp-v2/apps/web/scripts/smoke-heroes.cjs:88:52) {
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5875683Z   generatedMessage: false,
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5875963Z   code: 'ERR_ASSERTION',
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5876239Z   actual: false,
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5876474Z   expected: true,
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5876733Z   operator: '==',
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5876959Z   diff: 'simple'
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.5877183Z }
+Web and mobile quality gates	Verify asset hero loading, rotation and reduced motion	2026-10-21T14:08:31.6026452Z ##[error]Process completed with exit code 1.

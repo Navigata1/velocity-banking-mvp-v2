@@ -1,0 +1,159 @@
+{
+  "at": "2026-10-21T13:44:30.137Z",
+  "scope": "Bounded source and synthetic-controller checks only; no real DOM, browser, server or heavy suite",
+  "canonicalFixture": {
+    "decoded": true,
+    "horizon": 0,
+    "balance": 1000000000,
+    "allThreeInitialNet": -1000000000,
+    "text": "-$1,000,000,000.00",
+    "aboveBoundaryScientific": true
+  },
+  "syntheticGeometry": {
+    "new160": {
+      "text": "-$1,000,000,000.00",
+      "metricWidth": 160,
+      "glyphWidth": 156.359375,
+      "fontSize": 14,
+      "fontFamilyRequested": "Verdana",
+      "fits": true,
+      "contained": true,
+      "oneLine": true,
+      "pageOverflow": false
+    },
+    "old144": {
+      "text": "-$1,000,000,000.00",
+      "metricWidth": 144,
+      "glyphWidth": 156.359375,
+      "fontSize": 14,
+      "fontFamilyRequested": "Verdana",
+      "fits": false,
+      "contained": false,
+      "oneLine": true,
+      "pageOverflow": false
+    },
+    "wrapRejected": true
+  },
+  "componentOnlySmClassAdded": true,
+  "widths": [
+    280,
+    375,
+    640,
+    690,
+    700,
+    768,
+    1024,
+    1100,
+    1120,
+    1280,
+    1440
+  ],
+  "controller": {
+    "local": {
+      "starts": 1,
+      "stops": 1,
+      "browsersClosed": 1,
+      "contextsClosed": 11,
+      "contextsOpened": 11,
+      "realWrites": 0
+    },
+    "hosted": {
+      "starts": 0,
+      "stops": 0,
+      "browsersClosed": 1,
+      "contextsClosed": 11,
+      "contextsOpened": 11,
+      "realWrites": 0
+    },
+    "viewportAndMetricFieldsDistinct": true,
+    "negativeChecks": [
+      {
+        "mode": "old-144",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "wrap",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "clip",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "small-font",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "page-overflow",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "bad-text",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 4,
+          "contextsOpened": 4,
+          "realWrites": 0
+        }
+      },
+      {
+        "mode": "page-error",
+        "rejected": true,
+        "cleanup": {
+          "starts": 1,
+          "stops": 1,
+          "browsersClosed": 1,
+          "contextsClosed": 1,
+          "contextsOpened": 1,
+          "realWrites": 0
+        }
+      }
+    ]
+  },
+  "limit": "Synthetic geometry and memory-port cleanup do not establish actual font fit or rendered-browser GREEN.",
+  "exit": 0,
+  "milliseconds": 810
+}

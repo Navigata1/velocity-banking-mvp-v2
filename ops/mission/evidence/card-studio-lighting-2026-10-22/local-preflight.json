@@ -1,0 +1,189 @@
+{
+  "verifiedAt": "2026-10-22T23:36:31.108Z",
+  "baseline": "da04699ebe391c23abe7216629c5ec70293b8984",
+  "stage": "State42 PRE-PUSH Card-only shared studio lighting",
+  "productionReady": false,
+  "fresh": {
+    "localGates": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "three-stage",
+        "exitCode": 0
+      },
+      {
+        "name": "web-routes",
+        "exitCode": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0
+      },
+      {
+        "name": "simulator-comparison",
+        "exitCode": 0
+      },
+      {
+        "name": "dashboard",
+        "exitCode": 0
+      },
+      {
+        "name": "vault",
+        "exitCode": 0
+      },
+      {
+        "name": "portfolio",
+        "exitCode": 0
+      },
+      {
+        "name": "heroes",
+        "exitCode": 0
+      },
+      {
+        "name": "media-check",
+        "exitCode": 0
+      },
+      {
+        "name": "hero-video-verification",
+        "exitCode": 0
+      },
+      {
+        "name": "native-types",
+        "exitCode": 0
+      },
+      {
+        "name": "native-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "native-port",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "native-accessibility",
+        "exitCode": 0
+      },
+      {
+        "name": "native-android-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "native-ios-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-check",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-dry-build",
+        "exitCode": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0
+      }
+    ],
+    "sourcePins": 485,
+    "heroLayouts": 20,
+    "originalEngineRegressions": 360,
+    "datedGroups": 116,
+    "cardVideo": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "duration": 9,
+      "decodedFrames": 270,
+      "bytes": 3821982,
+      "sha256": "b759217cbec11c4515bac180691f5706284f4768141b96b014bd616ad289d98a",
+      "minimumVisiblePixels": 90,
+      "maximumFinalSecondMeanChannelDelta": 0.011926328502415458
+    },
+    "otherNineVideoHashesPreserved": true,
+    "knownDesktopPhoneReplayFallbacks": "standing suite; not physical device proof"
+  },
+  "privateStudy": {
+    "artifacts": 665,
+    "checkpointSha256": "52a6748cefa858a613254389de50e9dd4bcd23145f77aec7f10aa06e0017b2da",
+    "samples": 1900,
+    "profiles": 3,
+    "cases": 4,
+    "readoutsPerCase": 11,
+    "actualEnvironmentUniform": true,
+    "independentOriginalFramesViewed": 21,
+    "verdict": "Bounded gain: strong5s,modest4s rear,2s silver gradient restored; not final photoreal approval"
+  },
+  "evidence": {
+    "fullGateReport": ".superpowers/sdd/2026-10-22-card-studio-adoption/full-gates-1613d59f-ffc6-43ed-935b-2858a279c968/verification.json",
+    "fullGateReportSha256": "84d61c46c10c502fc37f9af32ad4ef85eda80f382aaeeff2edb7d2d94487a564",
+    "sourcePinsSha256": "b9c1b05924d067a73a9f1c640c61380bb51173747ffb1051189e6b6453884fbc",
+    "sourceReviewSha256": "0ef17aacccd7a010f599a702f7124aad9080912f6eafed129de728f8c50bf566",
+    "allFrameProof": ".superpowers/sdd/2026-10-22-card-studio-adoption/card-frames-677c8f23-05c2-43c1-a1d7-4d774f1027a1/verification.json",
+    "allFrameProofSha256": "4fa593052b3cc5472a2f631b32a7d0b49e559a382bcb908ef4bfa6a75af94b6d"
+  },
+  "inherited": {
+    "verifiedHead": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6351915021",
+    "completeFirstAttemptCi": [
+      "39854282873",
+      "39854293255"
+    ],
+    "servedAssets": 20,
+    "hostedLayouts": 210,
+    "manualIabStates": 8,
+    "originalPortfolioRestored": true
+  },
+  "preserved": [
+    "All ten GLB/poster and asset-manifest bytes; all materials/maps/camera/exposure/yaw/clock/math/backend/dependency/lock/workflow/caps",
+    "Default/unknown/near-match/othernine studio rooms and original five reflection cards;9otherMP4 hashes"
+  ],
+  "failures": [
+    "Earlier broad reflector rejected; old ownership/default-framebuffer P2 fixed only in new private copies",
+    "Original blank270frame private export stays FAILED despite CLI0/.mjs MIME errors; corrected separate JS project succeeds",
+    "V2 reusable preflight binding P2 reproduced; exact retained v2 fixture hashes match; v3 CPUfix, no new v3 GPU claim",
+    "Earlier canvas701ms/CPU2/Remotion/failedf782 remain failed and are not diagnosed by this lighting change"
+  ],
+  "limits": [
+    "New-head complete CI/automaticREADY/hosted/IAB/finalreadback/receipt pending at this snapshot",
+    "R1 final all-angle/material/chip/coin/allten/hardware approval remains OPEN",
+    "Full R3 lender/calendar, dedicated backend/security/recovery, physical native/accessibility and production remain OPEN"
+  ]
+}

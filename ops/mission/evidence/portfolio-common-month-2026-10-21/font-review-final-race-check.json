@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-21T13:24:17.537Z",
+  "head": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+  "base": "7bd72ac67f2e0aa32cd0275361c6bf983eb4ea47",
+  "files": 239,
+  "sourceChangesDuringReview": [],
+  "syntaxCheckExit": 0,
+  "exit": 0,
+  "disposition": "7bd72ac remains failed web CI head. This is stable uncommitted two-web-file source candidate only; no fresh CI/hosted/render/publication approval."
+}

@@ -1,0 +1,49 @@
+
+> web@0.1.0 test:heroes
+> node scripts/smoke-heroes.cjs && node scripts/hero-fallback-smoke.cjs
+
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+PASS hero readiness deadline controls: late results and pending waits rejected
+PASS 1440px slow-network poster continuity and selected-mode stability
+1440px car color samples: 529, 532
+PASS 1440px car: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px house color samples: 418, 432
+PASS 1440px house: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px land color samples: 484, 542
+PASS 1440px land: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px creditCard color samples: 196, 70
+PASS 1440px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px studentLoan color samples: 420, 378
+PASS 1440px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px medical color samples: 267, 290
+PASS 1440px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px personal color samples: 414, 447
+PASS 1440px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px recreation color samples: 367, 264
+PASS 1440px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+1440px custom color samples: 343, 311
+PASS 1440px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS 1440px vault: nonblank, framed, moving
+PASS 375px slow-network poster continuity and selected-mode stability
+375px car color samples: 570, 556
+PASS 375px car: poster, real GLB, nonblank pixels, visible rotation, containment
+375px house color samples: 411, 446
+PASS 375px house: poster, real GLB, nonblank pixels, visible rotation, containment
+375px land color samples: 471, 538
+PASS 375px land: poster, real GLB, nonblank pixels, visible rotation, containment
+375px creditCard color samples: 200, 82
+PASS 375px creditCard: poster, real GLB, nonblank pixels, visible rotation, containment
+375px studentLoan color samples: 428, 391
+PASS 375px studentLoan: poster, real GLB, nonblank pixels, visible rotation, containment
+375px medical color samples: 272, 301
+PASS 375px medical: poster, real GLB, nonblank pixels, visible rotation, containment
+375px personal color samples: 419, 442
+PASS 375px personal: poster, real GLB, nonblank pixels, visible rotation, containment
+375px recreation color samples: 358, 264
+PASS 375px recreation: poster, real GLB, nonblank pixels, visible rotation, containment
+375px custom color samples: 328, 312
+PASS 375px custom: poster, real GLB, nonblank pixels, visible rotation, containment
+PASS 375px vault: nonblank, framed, moving
+PASS reduced-motion still frame
+PASS network failure preserves studio artwork and releases the stage
+PASS texture failure preserves studio artwork and releases the stage

@@ -1,0 +1,18 @@
+Portfolio input fixtures against existing built web app at http://127.0.0.1:62376; isolated 375/1440/280px contexts.
+PASS precise Portfolio inputs 375px
+PASS precise Portfolio inputs 1440px
+FAIL precise Portfolio inputs 280px: Portfolio primary target share display needs horizontal scrolling: {"width":92,"contentWidth":101}
+FAIL precise Portfolio inputs 1264px: Portfolio line of credit APR display needs horizontal scrolling: {"width":106,"contentWidth":109}
+AssertionError [ERR_ASSERTION]: precise Portfolio rendered input fixtures must all pass
+
+2 !== 0
+
+    at runPortfolioInputFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:208:10)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:234:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

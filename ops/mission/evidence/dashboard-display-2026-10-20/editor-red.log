@@ -1,0 +1,23 @@
+
+> web@0.1.0 smoke:dashboard:built
+> node scripts/smoke-dashboard-interest.cjs
+
+PASS Dashboard interest house at 1440px
+PASS Dashboard interest auto at 1440px
+PASS Dashboard interest cleared at 1440px
+PASS Dashboard interest sub-cent at 1440px
+PASS Dashboard interest cent-mismatch at 1440px
+AssertionError [ERR_ASSERTION]: Mortgage balance no-op edit must preserve the imported value
++ actual - expected
+
++ 10000000
+- 100000000
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:90:20 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 10000000,
+  expected: 100000000,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

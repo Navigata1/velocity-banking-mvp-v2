@@ -4,7 +4,32 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const vm = require('node:vm');
+const React = require('react');
+const { renderToStaticMarkup } = require('react-dom/server');
 const { readReachableSource } = require('../../../scripts/source-contract-helpers.cjs');
+require('./portfolio-apr-unit-tests.cjs');
+require('./portfolio-book-tests.cjs');
+require('./portfolio-persistence-tests.cjs');
+require('./lender-snapshot-tests.cjs').runLenderSnapshotTests();
+require('./portfolio-store-storage-tests.cjs');
+require('./portfolio-browser-harness-tests.cjs');
+require('./lender-terms-tests.cjs').runLenderTermsTests();
+require('./lender-portfolio-tests.cjs').runLenderPortfolioTests();
+require('./forecast-basis-tests.cjs').runForecastBasisTests();
+require('./lender-draft-tests.cjs').runLenderDraftTests();
+require('./legacy-scenario-guard-tests.cjs').runLegacyScenarioGuardTests();
+require('./dated-plan-tests.cjs').runDatedPlanTests();
+require('./dated-codec-tests.cjs').runDatedCodecTests();
+require('./dated-loc-tests.cjs').runDatedLOCTests();
+require('./dated-fee-unit-tests.cjs').runDatedFeeUnitTests();
+require('./dated-portfolio-tests.cjs').runDatedPortfolioTests();
+require('./dated-comparison-tests.cjs').runDatedComparisonTests();
+require('./dated-review-regression-tests.cjs').runDatedReviewRegressionTests();
+require('./dated-conservation-reference-tests.cjs').runDatedConservationReferenceTests();
+require('./dated-presentation-tests.cjs').runDatedPresentationTests();
+require('./dated-ui-contract-tests.cjs').runDatedUIContractTests();
+require('./dated-storage-tests.cjs').runDatedStorageTests();
+require('node:child_process').execFileSync(process.execPath, [path.join(__dirname, 'dated-snapshot-tests.cjs')], { stdio: 'inherit' });
 
 const moduleCache = new Map();
 const portfolioRouteDir = path.resolve(__dirname, '..', 'src/app/portfolio');
@@ -47,6 +72,7 @@ function loadTsFile(filename) {
       esModuleInterop: true,
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2020,
+      jsx: ts.JsxEmit.ReactJSX,
     },
   }).outputText;
 
@@ -56,6 +82,24 @@ function loadTsFile(filename) {
   const localRequire = (request) => {
     if (request === '@interestshield/financial-engine') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/index.ts'));
+    }
+    if (request === '@interestshield/financial-engine/portfolio') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio.ts'));
+    }
+    if (request === '@interestshield/financial-engine/portfolio-path') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-path.ts'));
+    }
+    if (request === '@interestshield/financial-engine/portfolio-common-month') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-common-month.ts'));
+    }
+    if (request === '@interestshield/financial-engine/portfolio-book') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio-book.ts'));
+    }
+    if (request === '@interestshield/financial-engine/input-draft') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/input-draft.ts'));
+    }
+    if (request === '@interestshield/financial-engine/dated-plan') {
+      return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/dated-plan.ts'));
     }
 
     if (request.startsWith('.')) {
@@ -119,6 +163,7 @@ const moneyLoop = loadTsModule('src/engine/money-loop.ts');
 const portfolio = loadTsModule('src/engine/portfolio.ts');
 const portfolioPathVisual = loadTsModule('src/engine/portfolio-path-visual.ts');
 const portfolioRunDiff = loadTsModule('src/engine/portfolio-run-diff.ts');
+const portfolioFormatting = loadTsModule('src/app/portfolio/portfolio-formatters.ts');
 const portfolioStore = loadTsModule('src/stores/portfolio-store.ts');
 const financialStore = loadTsModule('src/stores/financial-store.ts');
 const appStore = loadTsModule('src/stores/app-store.ts');
@@ -141,9 +186,722 @@ function test(name, fn) {
   tests.push({ name, fn });
 }
 
+require('./money-loop-detail-truth-tests.cjs').registerMoneyLoopDetailTruthTests({test,loadTsModule});
+require('./dashboard-comparison-truth-tests.cjs').registerDashboardComparisonTruthTests({test,financialStore,dashboardModel,calculations,sharedFinancialEngine,loadTsModule});
+require('./liability-coaching-tests.cjs').registerLiabilityCoachingTests({test,dashboardModel,calculations,sharedFinancialEngine});
+require('./portfolio-navigation-tests.cjs').registerPortfolioNavigationTests({test});
+
 function roundCents(value) {
   return Math.round(value * 100) / 100;
 }
+
+const fundedPortfolio = {
+  monthlyIncome: 100, monthlyExpenses: 0, extraMonthlyPayment: 0,
+  debts: [{ id: 'funded-loan', name: 'Funded Loan', category: 'auto', kind: 'amortized',
+    balance: 1000, apr: 0, minPaymentRule: { type: 'fixed', amount: 100 }, paymentSource: 'checking' }],
+  settings: { strategy: 'avalanche', focusMode: 'single', splitRatioPrimary: 0.7 },
+  maxMonths: 120,
+};
+
+test('Portfolio extra allocations never create money beyond entered household cash flow', () => {
+  for (const strategy of ['snowball', 'avalanche', 'velocity']) {
+    const result = portfolio.simulatePortfolio({ ...fundedPortfolio, extraMonthlyPayment: 200,
+      settings: { ...fundedPortfolio.settings, strategy } });
+    assert.equal(result.payoffMonths, 10, strategy);
+    assert.equal(result.monthResults[0].payments['funded-loan'], 100, strategy);
+    assert.ok(result.assumptions.some(note => note.includes('not additional income')));
+  }
+});
+
+test('Portfolio manual extra caps retain unused cash without changing saved inputs', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 500, extraMonthlyPayment: 50 };
+  const before = JSON.stringify(input);
+  const result = portfolio.simulatePortfolio(input);
+  assert.equal(result.payoffMonths, 7);
+  assert.equal(result.monthResults[0].payments['funded-loan'], 150);
+  assert.equal(result.monthResults[0].cashBalance, 350);
+  assert.equal(result.cashAtPayoff, 2500);
+  assert.equal(JSON.stringify(input), before);
+  assert.equal(portfolio.simulatePortfolio({ ...input, extraMonthlyPayment: 0 }).payoffMonths, 2);
+});
+
+test('Every Portfolio strategy and focus includes an existing LOC until both liabilities clear', () => {
+  for (const strategy of ['snowball', 'avalanche', 'velocity']) {
+    for (const focusMode of ['single', 'split']) {
+      const result = portfolio.simulatePortfolio({ ...fundedPortfolio,
+        loc: { limit: 2000, balance: 500, apr: 0 }, chunkAmount: 0,
+        settings: { ...fundedPortfolio.settings, strategy, focusMode } });
+      assert.equal(result.isPayoffPossible, true, `${strategy}/${focusMode}`);
+      assert.equal(result.payoffMonths, 15, `${strategy}/${focusMode}`);
+      assert.equal(result.monthResults[9].locBalance, 500);
+      assert.equal(result.monthResults.at(-1).locBalance, 0);
+    }
+  }
+});
+
+test('Direct Portfolio policies reserve LOC interest before funding target extras', () => {
+  for (const strategy of ['snowball', 'avalanche']) {
+    const result = portfolio.simulatePortfolio({ ...fundedPortfolio,
+      loc: { limit: 2000, balance: 500, apr: 0.365 },
+      settings: { ...fundedPortfolio.settings, strategy } });
+    assert.equal(result.isPayoffPossible, false);
+    assert.equal(result.failureReason, 'cashflow-below-minimums');
+    assert.equal(result.monthResults.length, 0);
+    assert.ok(result.warnings.some(note => note.includes('$115')), result.warnings.join(' | '));
+  }
+});
+
+test('Portfolio accepts a funded clipped final payment and rejects a one-cent shortfall', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 120.7,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 120, apr: 0.07,
+      minPaymentRule: { type: 'fixed', amount: 425 } }] };
+  const result = portfolio.simulatePortfolio(input);
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 1);
+  assert.equal(roundCents(result.monthResults[0].payments['funded-loan']), 120.7);
+  const short = portfolio.simulatePortfolio({ ...input, monthlyIncome: 120.69 });
+  assert.equal(short.isPayoffPossible, false);
+  assert.equal(short.failureReason, 'cashflow-below-minimums');
+});
+
+test('Portfolio debt-first priorities include the LOC for snowball and effective-rate avalanche', () => {
+  for (const strategy of ['snowball', 'avalanche']) {
+    const result = portfolio.simulatePortfolio({ ...fundedPortfolio, monthlyIncome: 600,
+      loc: { limit: 2000, balance: 500, apr: 0.365 }, maxMonths: 1,
+      settings: { ...fundedPortfolio.settings, strategy } });
+    assert.equal(result.monthResults[0].payments['funded-loan'], 100);
+    assert.equal(roundCents(result.monthResults[0].locBalance), 15);
+    assert.equal(roundCents(result.monthResults[0].locInterest), 15);
+  }
+});
+
+test('Portfolio monthly books conserve both liabilities, interest, household budget and cash', () => {
+  for (const strategy of ['snowball', 'avalanche', 'velocity']) {
+    for (const focusMode of ['single', 'split']) {
+      const input = { ...fundedPortfolio, monthlyIncome: 1200, monthlyExpenses: 850,
+        extraMonthlyPayment: 50, loc: { limit: 5000, balance: 500, apr: 0.08 }, chunkAmount: 120,
+        debts: [...fundedPortfolio.debts,
+          { ...fundedPortfolio.debts[0], id: 'second', balance: 400, apr: 0.12,
+            minPaymentRule: { type: 'fixed', amount: 50 } }],
+        settings: { ...fundedPortfolio.settings, strategy, focusMode } };
+      const result = portfolio.simulatePortfolio(input);
+      assert.equal(result.isPayoffPossible, true, `${strategy}/${focusMode}`);
+      let previousNetDebt = 1900;
+      for (const month of result.monthResults) {
+        const interest = Object.values(month.interestCharges).reduce((sum, n) => sum + n, 0) + month.locInterest;
+        const netDebt = Object.values(month.balances).reduce((sum, n) => sum + n, 0) + month.locBalance - month.cashBalance;
+        assert.ok(Math.abs(previousNetDebt + interest - 350 - netDebt) < 1e-7,
+          `${strategy}/${focusMode}/${month.month}: ${previousNetDebt}+${interest}-350 != ${netDebt}`);
+        previousNetDebt = netDebt;
+      }
+    }
+  }
+});
+
+test('Portfolio Velocity reserves scheduled payments and routes the funded residual to its LOC', () => {
+  const result = portfolio.simulatePortfolio({ ...fundedPortfolio, monthlyIncome: 300,
+    loc: { limit: 5000, balance: 500, apr: 0 }, chunkAmount: 100,
+    settings: { ...fundedPortfolio.settings, strategy: 'velocity' }, maxMonths: 1 });
+  const row = result.moneyLoopMonthlyData[0];
+  assert.equal(result.monthResults[0].payments['funded-loan'], 100);
+  assert.equal(row.cashFlowPaydown, 200);
+  assert.ok(row.events.some(event => event.type === 'loc-chunk-draw' && event.amount === 100));
+});
+
+test('Web Portfolio delegates its calculation module to the portable shared engine', () => {
+  const adapter = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/portfolio.ts'), 'utf8');
+  assert.ok(adapter.includes("export * from '@interestshield/financial-engine/portfolio'"));
+  assert.ok(!adapter.includes('function simulatePortfolio'));
+});
+
+test('Portfolio preserves unpaid post-promo interest instead of losing liability', () => {
+  const result = portfolio.simulatePortfolio({ ...fundedPortfolio, maxMonths: 3,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 10000,
+      promo: { introApr: 0, monthsRemaining: 2, postIntroApr: 0.24 } }] });
+  assert.equal(roundCents(result.monthResults[2]?.balances['funded-loan']), 9896);
+  assert.equal(result.isPayoffPossible, false);
+});
+
+test('Portfolio path and run summaries include LOC debt after listed targets are cleared', () => {
+  const input = { ...fundedPortfolio, loc: { limit: 2000, balance: 500, apr: 0 } };
+  const result = portfolio.simulatePortfolio(input);
+  const pathModel = portfolioPathVisual.buildPortfolioPathVisualModel(result, 1500);
+  const tenthMonth = pathModel.sampledPoints.find(point => point.month === 10);
+  assert.equal(tenthMonth?.balance ?? result.monthResults[9].locBalance, 500);
+  const withInterest = { ...result, monthResults: [{ month: 1, balances: {}, interestCharges: {},
+    payments: {}, targetIds: [], locBalance: 200, locInterest: 1.25, cashBalance: 0 }], moneyLoopMonthlyData: [] };
+  const withLoc = portfolioPathVisual.buildPortfolioPathVisualModel(withInterest, 500);
+  assert.equal(withLoc.sampledPoints.at(-1).balance, 200);
+  assert.equal(withLoc.sampledPoints.at(-1).interest, 1.25);
+  assert.equal(portfolioRunDiff.summarizePortfolioRun(input, result).totalDebt, 1500);
+});
+
+test('Portfolio presents funded allocations, LOC controls and retained cash in every strategy', () => {
+  const source = readPortfolioRouteSource();
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.ok(workflow.includes('npm run smoke:portfolio:built'), 'CI must exercise funded Portfolio interactions');
+  assert.ok(source.includes('Extra allocation'));
+  assert.ok(source.includes('Automatic surplus'));
+  assert.ok(source.includes('data-testid="portfolio-cash-at-payoff"'));
+  assert.ok(source.includes('data-testid="portfolio-liability-scope"'));
+  assert.ok(source.includes('data-testid="portfolio-budget"'));
+  assert.ok(!source.includes("{store.strategy === 'velocity' && (\n              <div data-testid=\"portfolio-loc-controls\""));
+  assert.ok(!source.includes('Use the Simulator cards to compare modeled payoff speed and interest cost under the same assumptions'));
+});
+
+test('Direct Portfolio manual caps include principal allocated to a ranked LOC', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 1000, extraMonthlyPayment: 50,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 10000 }],
+    loc: { limit: 10000, balance: 5000, apr: 0 },
+    settings: { ...fundedPortfolio.settings, strategy: 'snowball' }, maxMonths: 1 };
+  const row = portfolio.simulatePortfolio(input).monthResults[0];
+  assert.equal(row.locBalance, 4950);
+  assert.equal(row.cashBalance, 850);
+  const onlyLoc = portfolio.simulatePortfolio({ ...input, debts: [] }).monthResults[0];
+  assert.equal(onlyLoc.locBalance, 4950);
+  assert.equal(onlyLoc.cashBalance, 950);
+});
+
+test('Direct Portfolio split slots include a second-ranked LOC instead of a lower-priority loan', () => {
+  for (const strategy of ['snowball', 'avalanche']) {
+    const input = { ...fundedPortfolio, monthlyIncome: 1200,
+      debts: [{ ...fundedPortfolio.debts[0], apr: strategy === 'avalanche' ? 0.24 : 0 },
+        { ...fundedPortfolio.debts[0], id: 'large', balance: 10000 }],
+      loc: { limit: 10000, balance: 2000, apr: strategy === 'avalanche' ? 0.12 : 0 },
+      settings: { ...fundedPortfolio.settings, strategy, focusMode: 'split' }, maxMonths: 1 };
+    const row = portfolio.simulatePortfolio(input).monthResults[0];
+    const residual = 1000 - row.locInterest;
+    assert.equal(row.payments.large, 100);
+    assert.equal(roundCents(row.payments['funded-loan']), roundCents(100 + residual * 0.7));
+    assert.equal(roundCents(row.locPayment - row.locInterest), roundCents(residual * 0.3));
+  }
+});
+
+test('Portfolio cleared and LOC-only books do not require a new borrowing setup', () => {
+  const paid = portfolio.simulatePortfolio({ ...fundedPortfolio, monthlyIncome: 0,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 0 }],
+    loc: { limit: 0, balance: 0, apr: 0 }, settings: { ...fundedPortfolio.settings, strategy: 'velocity' } });
+  assert.equal(paid.isPayoffPossible, true);
+  assert.equal(paid.payoffMonths, 0);
+  assert.equal(paid.warnings.length, 0);
+  assert.equal(portfolioPathVisual.buildPortfolioPathVisualModel(paid, 0).statusLabel, 'Paid off');
+  for (const limit of [0, 500]) {
+    const locOnly = portfolio.simulatePortfolio({ ...fundedPortfolio, debts: [],
+      loc: { limit, balance: 500, apr: 0 }, settings: { ...fundedPortfolio.settings, strategy: 'velocity' } });
+    assert.equal(locOnly.isPayoffPossible, true);
+    assert.equal(locOnly.payoffMonths, 5);
+  }
+});
+
+test('Portfolio run comparisons retain a remaining LOC as the actual next target', () => {
+  const input = { ...fundedPortfolio, debts: [], loc: { limit: 2000, balance: 2000, apr: 0 } };
+  const result = portfolio.simulatePortfolio(input);
+  const summary = portfolioRunDiff.summarizePortfolioRun(input, result);
+  assert.equal(summary.primaryTargetName, 'Line of Credit');
+  assert.equal(summary.payoffMonths, 20);
+});
+
+test('Portfolio paid-off comparisons do not describe valid zero months as unprojected', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 0, debts: [] };
+  const summary = portfolioRunDiff.summarizePortfolioRun(input, portfolio.simulatePortfolio(input));
+  const comparison = portfolioRunDiff.comparePortfolioRuns(undefined, summary);
+  assert.equal(comparison.changes[0].value, 'Paid off');
+});
+
+test('Portfolio numeric overflow is a rejected projection with an explicit comparison reason', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 1,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 6, apr: 0, minPaymentRule: { type: 'fixed', amount: 1 } }],
+    loc: { limit: 0, balance: 0, apr: 0 } };
+  const normal = portfolio.simulatePortfolio(input);
+  assert.equal(normal.isPayoffPossible, true);
+  const overflowInput = { ...input, monthlyIncome: 1e308 };
+  const rejected = portfolio.simulatePortfolio(overflowInput);
+  assert.equal(rejected.isPayoffPossible, false);
+  assert.equal(rejected.failureReason, 'numeric-range-exceeded');
+  const comparison = portfolioRunDiff.comparePortfolioRuns(
+    portfolioRunDiff.summarizePortfolioRun(input, normal),
+    portfolioRunDiff.summarizePortfolioRun(overflowInput, rejected)
+  );
+  assert.match(comparison.changes.find(change => change.id === 'projection').body, /numeric range/i);
+  assert.ok(!comparison.changes.some(change => ['payoff-months', 'total-interest'].includes(change.id)));
+});
+
+test('Portfolio suppresses unsupported LOC interest claims and inactive draw controls', () => {
+  const source = readPortfolioRouteSource();
+  assert.ok(source.includes("portfolioProjectionValid ? formatAmount(locInterestPaid) : 'Not projected'"));
+  assert.ok(source.includes("store.strategy === 'velocity' && store.focusMode === 'single'"));
+});
+
+test('Portfolio focus labels use current allocation targets rather than eventual payoff order', () => {
+  const input = { ...fundedPortfolio, monthlyIncome: 700,
+    debts: [{ ...fundedPortfolio.debts[0], balance: 100 },
+      { ...fundedPortfolio.debts[0], id: 'mortgage', name: 'Mortgage', balance: 1000,
+        minPaymentRule: { type: 'fixed', amount: 500 } }],
+    loc: { limit: 2000, balance: 500, apr: 0 }, chunkAmount: 0,
+    settings: { ...fundedPortfolio.settings, strategy: 'velocity' } };
+  const result = portfolio.simulatePortfolio(input);
+  assert.equal(result.payoffOrder[0].id, 'funded-loan');
+  assert.equal(result.primaryTargetName, 'Mortgage');
+  assert.equal(typeof portfolioFormatting.isCurrentPortfolioTarget, 'function');
+  assert.equal(portfolioFormatting.isCurrentPortfolioTarget(result, 'funded-loan'), false);
+  assert.equal(portfolioFormatting.isCurrentPortfolioTarget(result, 'mortgage'), true);
+  const source = readPortfolioRouteSource();
+  assert.ok(!source.includes('payoffOrder[0]?.id === d.id'));
+  assert.ok(source.includes('isCurrentPortfolioTarget(result, p.id)'));
+});
+
+const mortgageComparisonFixture = {
+  principalBalance: 1000, debtApr: 0, debtPayment: 100,
+  loc: { limit: 2000, balance: 0, apr: 0 },
+  monthlyIncome: 1000, monthlyExpenses: 500, maxMonths: 1200,
+};
+
+function mortgageComparison(overrides = {}) {
+  assert.equal(typeof sharedFinancialEngine.compareMortgageRepayment, 'function', 'mortgage comparisons need the shared funded two-liability contract');
+  return sharedFinancialEngine.compareMortgageRepayment({ ...mortgageComparisonFixture, ...overrides });
+}
+
+test('capped direct repayment preserves the scheduled loan policy and accounts for unused cash', () => {
+  const projection = sharedFinancialEngine.simulateDirectRepayment({
+    ...mortgageComparisonFixture, monthlyBudget: 500, strategy: 'debt-first', debtExtraPaymentCap: 0,
+  });
+  assert.equal(projection.payoffMonths, 10);
+  assert.equal(projection.monthlyData[0].debtPayment, 100);
+  assert.equal(projection.monthlyData.at(-1).cashBalance, 4000);
+});
+
+test('all mortgage plans reject a scheduled payment that exceeds the available household budget', () => {
+  const result = mortgageComparison({ monthlyIncome: 50, monthlyExpenses: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, false, key);
+    assert.equal(result[key].failureReason, 'cashflow-below-minimums', key);
+  }
+});
+
+test('mortgage comparison includes the existing LOC and accepts zero residual with no new chunks', () => {
+  const result = mortgageComparison({ monthlyIncome: 100, monthlyExpenses: 0,
+    loc: { limit: 5000, balance: 2000, apr: 0 } });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true, key);
+    assert.equal(result[key].months, 30, key);
+    assert.equal(result[key].totalInterest, 0, key);
+  }
+  assert.equal(result.velocity.chunkSize, 0);
+});
+
+test('mortgage extra allocations are capped after the mortgage and modeled LOC interest reserve', () => {
+  const result = mortgageComparison({ debtPayment: 400,
+    loc: { limit: 2000, balance: 500, apr: 0.365 } });
+  assert.equal(result.monthlyBudget, 500);
+  assert.equal(result.extraPayment.extraAmount, 85);
+  assert.ok(result.biweekly.extraAmount <= 85);
+});
+
+test('mortgage policies conserve the same starting liabilities and budget as debt or cash', () => {
+  const input = { ...mortgageComparisonFixture, loc: { limit: 2000, balance: 300, apr: 0 } };
+  const result = mortgageComparison(input);
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    const plan = result[key];
+    assert.equal(plan.isPayoffPossible, true, key);
+    assert.ok(Math.abs(plan.months * 500 - 1300 - plan.totalInterest - plan.cashAtPayoff) < 1e-6, key);
+  }
+  assert.equal(mortgageComparison().standard.cashAtPayoff, 4000);
+});
+
+test('mortgage Velocity retains its existing chunk policy and uses the supplied gross cash routing', () => {
+  const input = { ...mortgageComparisonFixture, debtApr: 0.12,
+    loc: { limit: 2000, balance: 400, apr: 0.2 } };
+  const expected = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 1000, debtApr: 0.12, debtPayment: 100,
+    loc: input.loc, chunkAmount: 100, cashFlowPaydown: 400,
+    locDepositAmount: 1000, locExpenseAmount: 600, maxMonths: 1200, initialMonthsSinceChunk: 999,
+  });
+  const result = mortgageComparison(input).velocity;
+  assert.equal(result.months, expected.payoffMonths);
+  assert.equal(result.totalInterest, expected.totalInterest);
+  assert.equal(result.cashAtPayoff, expected.monthlyData.at(-1).cashBalance);
+});
+
+test('mortgage comparison retains adverse signed interest differences instead of hiding them', () => {
+  const result = mortgageComparison({ monthlyIncome: 120, monthlyExpenses: 0,
+    loc: { limit: 2000, balance: 0, apr: 0.5 } });
+  assert.equal(result.velocity.isPayoffPossible, true);
+  assert.ok(result.velocity.saved < -1);
+  assert.equal(result.velocity.saved, result.standard.totalInterest - result.velocity.totalInterest);
+  assert.equal(result.velocity.monthsSaved, result.standard.months - result.velocity.months);
+});
+
+test('all mortgage plans accept a clipped final payment below the scheduled amount', () => {
+  const result = mortgageComparison({ principalBalance: 120, debtApr: 0.07, debtPayment: 425,
+    monthlyIncome: 120.7, monthlyExpenses: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true, key);
+    assert.equal(result[key].months, 1, key);
+    assert.equal(roundCents(result[key].totalInterest), 0.7, key);
+  }
+});
+
+test('an already paid mortgage and LOC need no new borrowing setup or payoff date', () => {
+  const input = { entryMode: 'current', currentBalance: 0, currentRate: 0,
+    currentMonthlyPayment: 100, remainingTermMonths: 10, originalTermYears: 30 };
+  const result = calculations.compareMortgageStrategies(input, 0, { limit: 0, balance: 0, apr: 0 });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(result[key].isPayoffPossible, true);
+    assert.equal(result[key].months, 0);
+  }
+  assert.equal(result.standard.payoffDate, 'Already paid off');
+});
+
+test('mortgage web adapter rejects unfunded direct plans and delegates actual household routing', () => {
+  const input = { entryMode: 'current', currentBalance: 1000, currentRate: 0,
+    currentMonthlyPayment: 100, remainingTermMonths: 10, originalTermYears: 30 };
+  const unfunded = calculations.compareMortgageStrategies(input, 50, { limit: 2000, balance: 0, apr: 0 });
+  assert.equal(unfunded.standard.isPayoffPossible, false);
+  const routed = calculations.compareMortgageStrategies(input,
+    { monthlyIncome: 1000, monthlyExpenses: 500 }, { limit: 2000, balance: 300, apr: 0 });
+  const shared = mortgageComparison({ loc: { limit: 2000, balance: 300, apr: 0 } });
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.equal(routed[key].months, shared[key].months, key);
+    assert.equal(routed[key].cashAtPayoff, shared[key].cashAtPayoff, key);
+  }
+});
+
+test('Vault labels adverse outcomes and suppresses differences without a usable reference', () => {
+  const model = loadTsModule('src/app/vault-model.ts');
+  const adverse = { saved: -42, monthsSaved: -3, isPayoffPossible: true, canCompare: true };
+  assert.equal(model.formatVaultStrategySavings(adverse), '$42 more modeled interest');
+  assert.equal(model.formatVaultStrategyTimeDelta(adverse), '3 months slower');
+  assert.equal(model.formatVaultStrategySavings({ ...adverse, canCompare: false }), 'Not projected');
+  assert.equal(model.formatVaultStrategyTimeDelta({ ...adverse, canCompare: false }), 'Reference needs review');
+  assert.equal(model.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Paid off');
+});
+
+test('Vault comparison displays household routing, both liabilities and retained cash without a universal win claim', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.match(source, /compareMortgageStrategies\(mortgageInput, \{\s*monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses/);
+  assert.ok(source.includes('data-testid="vault-strategy-comparison"'));
+  for (const key of ['standard', 'biweekly', 'extraPayment', 'velocity']) {
+    assert.ok(source.includes(`data-testid="vault-plan-${key}"`));
+    assert.ok(source.includes(`formatVaultCashAtPayoff(strategies.${key})`));
+  }
+  assert.ok(source.includes('Same mortgage, existing LOC balance and available monthly budget'));
+  assert.ok(!source.includes('These projections are not yet like-for-like'));
+  assert.ok(source.includes('not a common-date wealth comparison'));
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.ok(workflow.includes('npm run smoke:vault:built'), 'CI must run the actual Vault interaction gate');
+});
+
+test('Vault freedom illustration retains valid slower outcomes without inventing freed-payment growth', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 24,
+    velocity: { months: 36, saved: -42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.equal(model.interestSavedLabel, '$42 more modeled interest');
+  assert.equal(model.freedYears, 0);
+  assert.equal(model.investmentGrowth, 0);
+  assert.match(model.investmentCaption, /No earlier payoff/);
+});
+
+test('Vault freed-payment illustration uses actual months rather than separately rounded payoff years', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 24,
+    velocity: { months: 18, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0,
+  });
+  assert.equal(model.freedYears, 0.5);
+  assert.equal(model.investmentGrowth, 600);
+});
+
+test('Vault illustration contributions cannot exceed the actual funded monthly budget', () => {
+  const input = { entryMode: 'current', currentBalance: 120, currentRate: 0.07,
+    currentMonthlyPayment: 425, remainingTermMonths: 10, originalTermYears: 30 };
+  const plans = calculations.compareMortgageStrategies(input, 123.7, { limit: 2000, balance: 3, apr: 0.08 });
+  assert.equal(plans.standard.months, 2);
+  assert.equal(plans.velocity.months, 1);
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: plans.standard.months, velocity: plans.velocity,
+    monthlyPayment: 425, monthlyBudget: 123.7, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.ok(Math.abs(model.investmentGrowth - 123.7 * (1 + 0.07 / 12)) < 1e-8);
+  assert.ok(!model.investmentCaption.includes('$425'));
+});
+
+test('Vault timeline scales exclude failed payoff horizons', () => {
+  const model = loadTsModule('src/app/vault-model.ts');
+  assert.equal(typeof model.buildVaultComparisonMaxMonths, 'function');
+  const maximum = model.buildVaultComparisonMaxMonths([
+    { months: 371, isPayoffPossible: true }, { months: 1200, isPayoffPossible: false },
+  ]);
+  assert.equal(maximum, 371);
+  assert.equal(model.buildVaultVisualPercent(371, maximum), 100);
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('buildVaultComparisonMaxMonths([strategies.standard, strategies.velocity])'));
+});
+
+test('Vault rejects fractional investment horizons before presenting growth', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  const input = { currentAge: 40, standardMonths: 24,
+    velocity: { months: 18.5, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 0 };
+  assert.equal(helpers.buildVaultFreedomPathModel(input).isProjected, false);
+});
+
+test('Vault rejects overflowing investment illustrations instead of displaying zero', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  assert.equal(helpers.buildVaultFreedomPathModel({ currentAge: 40, standardMonths: 24,
+    velocity: { months: 1, saved: 42, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 500, investmentRate: 1e308 }).isProjected, false);
+});
+
+test('Vault adverse sub-dollar differences remain visible in cents', () => {
+  const helpers = loadTsModule('src/app/vault-model.ts');
+  assert.equal(helpers.formatVaultStrategySavings({ saved: -0.49, monthsSaved: 0, isPayoffPossible: true }), '$0.49 more modeled interest');
+  assert.equal(helpers.formatVaultCashAtPayoff({ cashAtPayoff: 0.49, isPayoffPossible: true }), 'Cash at payoff: $0.49');
+});
+
+test('Vault formats large illustrations within a readable monetary label', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 360,
+    velocity: { months: 108, saved: 1000, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 6000, monthlyBudget: 12000, investmentRate: 0.07,
+  });
+  assert.equal(model.isProjected, true);
+  assert.equal(model.portfolioValueLabel, '$3.45M');
+});
+
+test('Vault acknowledges fully paid balances instead of requesting unusable projection inputs', () => {
+  const model = loadTsModule('src/app/vault-model.ts').buildVaultFreedomPathModel({
+    currentAge: 40, standardMonths: 0,
+    velocity: { months: 0, saved: 0, isPayoffPossible: true, canCompare: true },
+    monthlyPayment: 100, monthlyBudget: 0, investmentRate: 0.07,
+  });
+  assert.equal(model.timelineLabel, 'Already paid off');
+  assert.ok(!model.freedomYearsLabel.includes('Review'));
+  assert.equal(model.investmentGrowth, 0);
+});
+
+test('restoration releases unused debt payments into LOC recovery', () => {
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 200, debtApr: 0, debtPayment: 425,
+    loc: { limit: 25000, apr: 0, balance: 2750 },
+    chunkAmount: 0, cashFlowPaydown: 1075,
+    locDepositAmount: 6500, locExpenseAmount: 5425,
+  });
+  assert.equal(result.payoffMonths, 2);
+  assert.equal(result.monthlyData[0].locBalance, 1450);
+  assert.equal(result.monthlyData[1].locBalance, 0);
+  assert.equal(result.monthlyData[1].events.find(e => e.type === 'expenses-from-loc').amount, 5000);
+});
+
+test('LOC-backed Velocity accepts an affordable clipped final payment and preserves cash', () => {
+  const result = calculations.simulateVelocity({
+    monthlyIncome: 1000, monthlyExpenses: 800,
+    carLoan: { balance: 100, apr: 0.12, monthlyPayment: 425 },
+    loc: { limit: 1000, balance: 0, apr: 0.10 }, extraPayment: 1000,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 1);
+  assert.equal(roundCents(result.totalInterest), 1);
+  assert.equal(roundCents(result.monthlyData[0].cashBalance), 99);
+  assert.equal(roundCents(result.monthlyData[0].cashFlow), 99);
+});
+
+test('zero cash after the scheduled payment can recover the LOC after that payment is released', () => {
+  const result = calculations.simulateVelocity({
+    monthlyIncome: 1000, monthlyExpenses: 575,
+    carLoan: { balance: 1000, apr: 0, monthlyPayment: 425 },
+    loc: { limit: 2000, balance: 500, apr: 0 }, extraPayment: 100,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 4);
+  assert.ok(result.monthlyData.every(row => !row.events.some(event => event.type === 'loc-chunk-draw')), 'no new chunk without recoverable surplus');
+  assert.equal(result.monthlyData.at(-1).locBalance, 0);
+  assert.equal(result.monthlyData.at(-1).cashBalance, 200);
+});
+
+test('Money Loop cannot bypass zero recovery with a stale chunk-age sentinel', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 0, locDepositAmount: 1000,
+    locExpenseAmount: 1000, monthsSinceChunk: 999,
+  });
+  assert.equal(row.didChunk, false);
+  assert.equal(row.debtBalance, 900);
+  assert.equal(row.locBalance, 500);
+});
+
+test('Money Loop caps chunk recovery to routed surplus instead of trusting a larger hint', () => {
+  const base = {
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 500, locDepositAmount: 1000,
+    locExpenseAmount: 1000, monthsSinceChunk: 999,
+  };
+  const zero = sharedFinancialEngine.simulateMoneyLoopMonth(base);
+  assert.equal(zero.didChunk, false, 'a hint cannot create recovery cash');
+  assert.equal(zero.cashFlowPaydown, 0);
+  const positive = sharedFinancialEngine.simulateMoneyLoopMonth({ ...base, locExpenseAmount: 950, monthsSinceChunk: 0 });
+  assert.equal(positive.didChunk, false, '100 chunk requires two months of actual 50 surplus');
+  assert.equal(positive.cashFlowPaydown, 50);
+});
+
+test('Money Loop labels a routed shortfall without pretending retained cash is a new LOC paydown', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 0, debtApr: 0, debtPayment: 0,
+    loc: { limit: 2000, balance: 0, apr: 0 }, locBalance: 0,
+    chunkAmount: 0, cashFlowPaydown: 500, locDepositAmount: 0,
+    locExpenseAmount: 50, monthsSinceChunk: 999, cashBalance: 100,
+  });
+  assert.equal(row.cashFlowPaydown, -50);
+  assert.equal(row.cashBalance, 50);
+  assert.equal(row.locBalance, 0);
+  assert.equal(row.events.at(-1).label, 'Routed spending exceeds deposits');
+});
+
+test('Money Loop uses valid calendar totals rather than optimistic summaries for chunk recovery', () => {
+  const row = sharedFinancialEngine.simulateMoneyLoopMonth({
+    month: 1, debtBalance: 1000, debtApr: 0, debtPayment: 100,
+    loc: { limit: 2000, balance: 500, apr: 0 }, locBalance: 500,
+    chunkAmount: 100, cashFlowPaydown: 500,
+    locDepositAmount: 1000, locExpenseAmount: 950, monthsSinceChunk: 999,
+    locAccrualCalendar: { year: 2026, month: 10, transactions: [
+      { day: 1, type: 'deposit', amount: 1000 }, { day: 30, type: 'expense', amount: 1000 },
+    ] },
+  });
+  assert.equal(row.didChunk, false);
+  assert.equal(row.cashFlowPaydown, 0);
+  assert.equal(row.locBalance, 500);
+  assert.equal(row.locInterestMethod, 'transaction-calendar');
+});
+
+test('Money Loop payoff rejects routing that omits the scheduled loan outflow', () => {
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+    principalBalance: 100, debtApr: 0.12, debtPayment: 425,
+    loc: { limit: 1000, balance: 0, apr: 0.1 }, chunkAmount: 0,
+    cashFlowPaydown: 0, locDepositAmount: 0, locExpenseAmount: 0,
+  });
+  assert.equal(result.isPayoffPossible, false, 'zero income cannot fund a phantom final payment');
+  assert.equal(result.failureReason, 'invalid-routing');
+});
+
+test('exactly affordable final payments tolerate floating-point reconstruction only', () => {
+  const base = {
+    principalBalance: 120, debtApr: 0.07, debtPayment: 425,
+    loc: { limit: 2000, balance: 0, apr: 0 }, chunkAmount: 0,
+    cashFlowPaydown: 120.7 - 425, locDepositAmount: 120.7, locExpenseAmount: 425,
+  };
+  const shared = sharedFinancialEngine.simulateMoneyLoopPayoff(base);
+  assert.equal(shared.isPayoffPossible, true);
+  assert.equal(shared.payoffMonths, 1);
+  assert.equal(roundCents(shared.totalInterest), 0.7);
+  const web = calculations.simulateVelocity({
+    monthlyIncome: 120.7, monthlyExpenses: 0,
+    carLoan: { balance: 120, apr: 0.07, monthlyPayment: 425 }, loc: base.loc, extraPayment: 100,
+  });
+  assert.equal(web.isPayoffPossible, true);
+  const noLOC = calculations.simulateVelocity({
+    monthlyIncome: 1211, monthlyExpenses: 0,
+    carLoan: { balance: 1200, apr: 0.11, monthlyPayment: 2000 }, extraPayment: 0,
+  });
+  assert.equal(noLOC.isPayoffPossible, true, 'the same tolerance applies without a LOC');
+  assert.equal(noLOC.payoffMonths, 1);
+  assert.equal(noLOC.totalInterest, 11);
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, locDepositAmount: 120.69 }).isPayoffPossible, false, 'one cent short is still unaffordable');
+});
+
+test('shared payoff preflight uses routed household budget and refuses an unaffordable payment', () => {
+  const base = {
+    principalBalance: 100, debtApr: 0.12, debtPayment: 425,
+    loc: { limit: 1000, balance: 0, apr: 0.10 }, chunkAmount: 0,
+    cashFlowPaydown: -225, locDepositAmount: 1000, locExpenseAmount: 1225,
+  };
+  const affordable = sharedFinancialEngine.simulateMoneyLoopPayoff(base);
+  assert.equal(affordable.isPayoffPossible, true);
+  assert.equal(affordable.payoffMonths, 1);
+  assert.equal(affordable.monthlyData[0].cashFlowPaydown, 99);
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, principalBalance: 1000 }).failureReason, 'cashflow-below-minimums');
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...base, locDepositAmount: 800 }).failureReason, 'negative-cashflow');
+});
+
+test('web and mobile coaching do not propose a chunk when scheduled payments consume recovery cash', () => {
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: 1000, monthlyExpenses: 575, chunkAmount: 100,
+    activeDebt: { name: 'Loan', balance: 1000, interestRate: 0, minimumPayment: 425 }, allDebts: [],
+    loc: { limit: 2000, balance: 500, interestRate: 0 },
+    baseline: { months: 4, totalInterest: 0, isPayoffPossible: true },
+    velocity: { months: 4, totalInterest: 0, savings: 0, isPayoffPossible: true },
+  });
+  assert.equal(model.nextMove.title, 'Pause new chunks');
+  const mobile = sharedFinancialEngine.buildMobileDashboardSnapshot({
+    monthlyIncome: 1000, monthlyExpenses: 575, chunkAmount: 100, activeDebtName: 'Loan',
+    activeDebt: { balance: 1000, apr: 0, monthlyPayment: 425 },
+    loc: { limit: 2000, balance: 500, apr: 0 },
+  });
+  assert.equal(mobile.nextMove, 'Pause new chunks');
+});
+
+test('restoration reserves the minimum before allowing extra payments', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 10000, apr: 0, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5500, monthlyExpenses: 5000, extraPayment: 500,
+  });
+  assert.equal(result.monthlyData[0].carBalance, 9500);
+  assert.ok(result.monthlyData.every(month => month.cashFlow >= 0));
+});
+
+test('restoration refuses an unaffordable minimum without a LOC', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 10000, apr: 0.07, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5300, monthlyExpenses: 5000, extraPayment: 100,
+  });
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'cashflow-below-minimums');
+});
+
+test('restoration accepts an affordable final payoff below the scheduled minimum', () => {
+  const result = calculations.simulateVelocity({
+    carLoan: { balance: 200, apr: 0.12, monthlyPayment: 425, termMonths: 60 },
+    monthlyIncome: 5300, monthlyExpenses: 5000, extraPayment: 0,
+  });
+  assert.equal(result.isPayoffPossible, true);
+  assert.equal(result.payoffMonths, 1);
+  assert.equal(result.monthlyData[0].cashFlow, 98);
+});
+
+test('restoration calendar retains excess deposits as cash instead of borrowing them again', () => {
+  const result = sharedFinancialEngine.calculateLOCInterestAccrual({
+    startBalance: 1000, apr: 0.1, monthlyIncome: 2000, monthlyExpenses: 1000,
+    calendar: { year: 2026, month: 4, transactions: [
+      { day: 1, type: 'deposit', amount: 2000 },
+      { day: 30, type: 'expense', amount: 1000 },
+    ] },
+  });
+  assert.equal(result.endingBalance, 0);
+  assert.equal(result.endingCashBalance, 0);
+  assert.equal(result.interest, 0);
+});
+
+test('restoration LOC ledger conserves principal, posted interest and retained cash', () => {
+  for (const principalBalance of [200, 1800, 18450]) {
+    const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+      principalBalance, debtApr: 0.069, debtPayment: 425,
+      loc: { limit: 25000, apr: 0.085, balance: 2750 },
+      chunkAmount: 1000, cashFlowPaydown: 1075,
+      locDepositAmount: 6500, locExpenseAmount: 5425,
+    });
+    let openingNetDebt = principalBalance + 2750;
+    for (const month of result.monthlyData) {
+      const closingNetDebt = month.debtBalance + month.locBalance - month.cashBalance;
+      const expected = openingNetDebt + month.debtInterest + month.locInterest + 5000 - 6500;
+      assert.ok(Math.abs(closingNetDebt - expected) < 1e-7, `unbalanced month ${month.month}`);
+      openingNetDebt = closingNetDebt;
+    }
+  }
+});
 
 function assertFiniteNumbersAndCleanText(value, pathLabel = 'value') {
   if (typeof value === 'number') {
@@ -361,10 +1119,158 @@ test('Money Loop LOC event balances stay continuous after income and expense rou
   assert.equal(roundCents(month.locBalance), roundCents(expectedEndingBalance));
 });
 
+function projectedLocLimitFixture() {
+  const loc = { limit: 100000, balance: 99990, apr: 0.12 };
+  const loan = { balance: 10000, apr: 0, monthlyPayment: 1000, termMonths: 10 };
+  return {
+    loc, loan,
+    single: { principalBalance: 10000, debtApr: 0, debtPayment: 1000, loc, chunkAmount: 0,
+      cashFlowPaydown: 500, locDepositAmount: 2000, locExpenseAmount: 1500, maxMonths: 600 },
+    web: { monthlyIncome: 2000, monthlyExpenses: 500, carLoan: loan, loc, useVelocity: true, extraPayment: 0 },
+    book: { monthlyIncome: 2000, monthlyExpenses: 500, extraMonthlyPayment: 0, chunkAmount: 0, loc,
+      aprUnit: 'decimal', settings: { strategy: 'velocity', focusMode: 'single', splitRatioPrimary: 0.7 },
+      debts: [{ id: 'capacity', name: 'Capacity fixture', kind: 'amortized', category: 'auto', balance: 10000,
+        apr: 0, minPaymentRule: { type: 'fixed', amount: 1000 }, paymentSource: 'checking' }] },
+  };
+}
+
+test('shared and web Velocity stop a payoff projection when a later LOC balance exceeds capacity', () => {
+  const fixture = projectedLocLimitFixture();
+  for (const result of [sharedFinancialEngine.simulateMoneyLoopPayoff(fixture.single), calculations.simulateVelocity(fixture.web)]) {
+    assert.equal(result.isPayoffPossible, false, 'a later recovery cannot validate an earlier over-limit month');
+    assert.equal(result.failureReason, 'loc-projection-overlimit');
+    assert.equal(result.monthlyData.length, 0, 'the over-limit month is not an accepted projection row');
+    assert.equal(result.locLimitBreach.month, 1);
+    assert.ok(result.locLimitBreach.balance > fixture.loc.limit, 'retain the calculated breach without clamping it');
+    assert.equal(result.locLimitBreach.limit, fixture.loc.limit);
+  }
+  assert.ok(calculations.runSimulation(fixture.web).warnings.some(warning => warning.type === 'loc-projection-overlimit'));
+});
+
+test('canonical Portfolio stops an over-capacity Velocity path without mutating the book', () => {
+  const fixture = projectedLocLimitFixture(), before = JSON.stringify(fixture.book);
+  const result = portfolio.simulatePortfolio(fixture.book);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.monthResults.length, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.equal(result.payoffMonths, 0);
+  assert.equal(result.locLimitBreach.month, 1);
+  assert.ok(Math.abs(result.locLimitBreach.balance - 100464.1205479452) < 1e-8);
+  assert.equal(result.payoffOrder.length, 0, 'no fabricated later debt payoff order');
+  assert.equal(result.cashAtPayoff, 0);
+  assert.ok(result.warnings.some(warning => warning.includes('modeled LOC balance') && warning.includes('entered limit')));
+  assert.equal(JSON.stringify(fixture.book), before);
+});
+
+test('legacy multi-debt Velocity also stops at projected capacity and cannot claim saved time', () => {
+  const fixture = projectedLocLimitFixture();
+  const debt = { id: 'capacity', name: 'Capacity fixture', type: 'auto', ...fixture.loan };
+  const result = calculations.simulateMultiDebt([debt], 2000, 500, fixture.loc, 'velocity', 0);
+  assert.equal(result.isPayoffPossible, false);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.totalMonths, 0);
+  assert.equal(result.moneyLoopMonthlyData.length, 0);
+  assert.equal(result.locLimitBreach.month, 1);
+  assert.ok(result.locLimitBreach.balance > fixture.loc.limit);
+  assert.equal(result.debts[0].monthlyData.length, 0);
+  assert.equal(result.debts[0].interestSaved, 0);
+  assert.equal(result.monthsSaved, 0);
+  assert.equal(result.totalInterestSaved, 0);
+  assert.equal(result.freedomDate, null);
+});
+
+test('multi-debt capacity failure rolls back the entire unaccepted month, including earlier siblings', () => {
+  const fixture = projectedLocLimitFixture();
+  const other = { id: 'other', name: 'Earlier sibling', type: 'auto', balance: 50, apr: 0, monthlyPayment: 50, termMonths: 1 };
+  const focus = { id: 'focus', name: 'Higher rate focus', type: 'auto', balance: 10000, apr: 0.01, monthlyPayment: 1000, termMonths: 11 };
+  const result = calculations.simulateMultiDebt([other, focus], 2000, 500, fixture.loc, 'velocity', 0);
+  assert.equal(result.failureReason, 'loc-projection-overlimit');
+  assert.equal(result.totalMonths, 0);
+  for (const debt of result.debts) {
+    assert.equal(debt.monthlyData.length, 0, 'no sibling rows from a partly processed invalid month');
+    assert.equal(debt.payoffMonths, 0);
+    assert.equal(debt.totalInterest, 0);
+    assert.equal(debt.interestSaved, 0);
+  }
+});
+
+test('common-month comparison cannot accept the projected over-limit breach as a funded prefix', () => {
+  const fixture = projectedLocLimitFixture(), { settings, aprUnit, ...book } = fixture.book;
+  void aprUnit;
+  const api = loadTsFile(path.resolve(__dirname, '../../../packages/financial-engine/src/portfolio-common-month.ts'));
+  const prepared = api.preparePortfolioComparison({ ...book, ...settings });
+  const initial = prepared.atMonth(0).plans.find(plan => plan.strategy === 'velocity');
+  assert.equal(initial.snapshot.status, 'initial');
+  const first = prepared.atMonth(1).plans.find(plan => plan.strategy === 'velocity');
+  assert.equal(first.payoff.possible, false);
+  assert.equal(first.payoff.reason, 'loc-projection-overlimit');
+  assert.equal(first.snapshot.status, 'unavailable');
+  assert.equal(first.snapshot.coveredThroughMonth, 0);
+  assert.equal(first.snapshot.netModeledWealth, null);
+});
+
+test('projected capacity guard permits equality and genuinely funded high-utilization paths', () => {
+  const fixture = projectedLocLimitFixture();
+  const boundary = { ...fixture.single, loc: { limit: 10026.5, balance: 10000, apr: 0.73 }, maxMonths: 1 };
+  const exact = sharedFinancialEngine.simulateMoneyLoopPayoff(boundary);
+  assert.equal(exact.monthlyData[0].locBalance, boundary.loc.limit);
+  assert.equal(exact.failureReason, 'payoff-horizon-exceeded', 'equality is not an over-limit violation');
+  assert.equal(sharedFinancialEngine.simulateMoneyLoopPayoff({ ...boundary, loc: { ...boundary.loc, limit: 10026.49 } }).failureReason, 'loc-projection-overlimit');
+  for (const loc of [{ ...fixture.loc, balance: 20000 }, { ...fixture.loc, apr: 0 }]) {
+    const single = sharedFinancialEngine.simulateMoneyLoopPayoff({ ...fixture.single, loc });
+    const book = portfolio.simulatePortfolio({ ...fixture.book, loc });
+    assert.equal(single.isPayoffPossible, true);
+    assert.equal(book.isPayoffPossible, true);
+    assert.ok(single.monthlyData.every(row => row.locBalance <= loc.limit));
+    assert.ok(book.monthResults.every(row => row.locBalance <= loc.limit));
+  }
+});
+
+test('web and native Simulator distinguish projected capacity failure and withhold payoff labels', () => {
+  const fixture = projectedLocLimitFixture();
+  const web = simulatorModel.buildSimulatorStrategyCards(calculations.compareSingleDebtStrategies(fixture.web)).find(card => card.name === 'Velocity');
+  const mobile = sharedFinancialEngine.buildMobileSimulatorSnapshot({ monthlyIncome: 2000, monthlyExpenses: 500,
+    activeDebtName: 'Capacity fixture', activeDebt: fixture.loan, loc: fixture.loc, chunkAmount: 0 });
+  const native = mobile.strategies.find(strategy => strategy.name === 'Velocity');
+  for (const card of [web, native]) {
+    assert.equal(card.isPayoffPossible, false);
+    assert.equal(card.failureReason, 'loc-projection-overlimit');
+    assert.equal(card.monthsLabel, 'Review inputs');
+    assert.equal(card.interestLabel, 'Not projected');
+    assert.equal(card.statusLabel, 'Projected LOC limit exceeded');
+  }
+  assert.equal(mobile.velocity.monthsSavedLabel, 'Review inputs');
+  assert.ok(mobile.guardrail.includes('modeled LOC balance'), 'projected capacity takes priority over an initial utilization warning');
+});
+
+test('Vault explains projected over-capacity separately from an initially over-limit balance', () => {
+  const vault = loadTsModule('src/app/vault-model.ts');
+  assert.equal(vault.formatVaultProjectionFailure('loc-projection-overlimit'), 'Projected LOC limit exceeded');
+  const warning = vault.buildVaultVelocitySetupWarning({ isPayoffPossible: false, failureReason: 'loc-projection-overlimit' });
+  assert.equal(warning.title, 'Projected LOC limit exceeded');
+  assert.ok(warning.body.includes('modeled LOC balance') && warning.body.includes('entered limit'));
+  assert.ok(!warning.body.includes('entered LOC balance is above'), 'do not claim the starting balance was over limit');
+});
+
+test('web Dashboard coaching prioritizes the actual projected capacity failure', () => {
+  const fixture = projectedLocLimitFixture(), simulation = calculations.runSimulation(fixture.web);
+  const projection = value => ({ months: value.payoffMonths, totalInterest: value.totalInterest,
+    isPayoffPossible: value.isPayoffPossible, failureReason: value.failureReason });
+  const debt = { name: 'Capacity fixture', balance: 10000, interestRate: 0, minimumPayment: 1000 };
+  const result = dashboardModel.buildDashboardModel({ monthlyIncome: 2000, monthlyExpenses: 500, chunkAmount: 0,
+    activeDebt: debt, allDebts: [debt], loc: { limit: 100000, balance: 99990, interestRate: 0.12 },
+    baseline: projection(simulation.baseline), velocity: { ...projection(simulation.velocity), savings: 0 } });
+  assert.equal(result.nextMove.title, 'Review LOC capacity');
+  assert.ok(result.warnings.some(warning => warning.kind === 'loc-projection-overlimit' && warning.title === 'Projected LOC limit exceeded'));
+  assert.ok(!result.warnings.some(warning => warning.kind === 'loc-overlimit'), 'current balance is still below the entered limit');
+});
+
 test('lender terms contract versions confidence and blocks projections with missing terms', () => {
   const missing = sharedFinancialEngine.buildLenderTermsContract({});
 
-  assert.equal(missing.version, '2.0.0');
+  assert.equal(missing.version, '3.0.0');
+  assert.equal(missing.inputComplete, false);
   assert.equal(missing.confidence, 'incomplete');
   assert.equal(missing.projectionReady, false);
   assert.deepEqual(Array.from(missing.missingFields), [
@@ -388,7 +1294,9 @@ test('lender terms contract versions confidence and blocks projections with miss
   };
   const estimated = sharedFinancialEngine.buildLenderTermsContract(input);
   assert.equal(estimated.confidence, 'estimated');
-  assert.equal(estimated.projectionReady, true);
+  assert.equal(estimated.inputComplete, true);
+  assert.equal(estimated.projectionReady, false);
+  assert.deepEqual(Array.from(estimated.unmodeledFields), Array.from(missing.missingFields));
   assert.deepEqual(Array.from(estimated.estimatedFields), Array.from(missing.missingFields));
 
   const verified = sharedFinancialEngine.buildLenderTermsContract({
@@ -396,12 +1304,20 @@ test('lender terms contract versions confidence and blocks projections with miss
     sources: Object.fromEntries(missing.missingFields.map((field) => [field, 'lender-document'])),
   });
   assert.equal(verified.confidence, 'complete');
-  assert.equal(verified.projectionReady, true);
+  assert.equal(verified.inputComplete, true);
+  assert.equal(verified.projectionReady, false);
   assert.deepEqual(Array.from(verified.estimatedFields), []);
 
-  const invalidMinimum = sharedFinancialEngine.buildLenderTermsContract({
+  const zeroMinimum = sharedFinancialEngine.buildLenderTermsContract({
     ...input,
     minimumPayment: { mode: 'fixed', value: 0 },
+  });
+  assert.equal(zeroMinimum.confidence, 'estimated');
+  assert.equal(zeroMinimum.inputComplete, true);
+  assert.deepEqual(Array.from(zeroMinimum.missingFields), []);
+  const invalidMinimum = sharedFinancialEngine.buildLenderTermsContract({
+    ...input,
+    minimumPayment: { mode: 'fixed', value: -1 },
   });
   assert.equal(invalidMinimum.confidence, 'incomplete');
   assert.deepEqual(Array.from(invalidMinimum.missingFields), ['minimumPayment']);
@@ -475,7 +1391,7 @@ test('LOC transaction calendar accrues from dated closing balances and labels fa
 test('daily interest burn uses the shared financial-engine helper', () => {
   const dashboardModelSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/dashboard-model.ts'), 'utf8');
   const financialStoreSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/stores/financial-store.ts'), 'utf8');
-  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/portfolio.ts'), 'utf8');
+  const portfolioSource = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'packages/financial-engine/src/portfolio.ts'), 'utf8');
   const velocityTargetingSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/velocity-targeting.ts'), 'utf8');
 
   assert.equal(roundCents(sharedFinancialEngine.calculateDailyInterest(18450, 0.069)), 3.49);
@@ -485,7 +1401,7 @@ test('daily interest burn uses the shared financial-engine helper', () => {
   assert.equal(roundCents(calculations.calculateDailyInterest(18450, -0.069)), 0);
   assert.equal(velocityTargeting.estimateDailyInterest(18450, 6.9), calculations.calculateDailyInterest(18450, 6.9));
   assert.ok(
-    dashboardModelSource.includes('calculateDailyInterest(debt.balance, debt.interestRate)') &&
+    dashboardModelSource.includes('calculateDailyInterest(safeInput.activeDebt.balance, safeInput.activeDebt.interestRate)') &&
       dashboardModelSource.includes('calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate)'),
     'expected dashboard daily burn to use the shared helper for debt and LOC balances'
   );
@@ -494,8 +1410,8 @@ test('daily interest burn uses the shared financial-engine helper', () => {
     'expected cockpit/store daily interest to use the shared helper'
   );
   assert.ok(
-    portfolioSource.includes('calculateDailyInterest(balance, getEffectiveApr(debt))') &&
-      portfolioSource.includes('calculateDailyInterest(balance, aprUsedForBurn)'),
+    portfolioSource.includes("calculateDailyInterest(balance, getEffectiveApr(debt), 'decimal')") &&
+      portfolioSource.includes("calculateDailyInterest(balance, aprUsedForBurn, 'decimal')"),
     'expected portfolio priority burn math to use the shared helper'
   );
   assert.ok(
@@ -866,10 +1782,14 @@ test('shared mobile snapshots sanitize non-finite planning inputs before display
   assert.equal(dashboard.locUtilization, 0);
   assert.equal(dashboard.dailyInterestBurn, 0);
   assert.equal(dashboard.vitals.length, 4);
-  assert.equal(dashboard.warning, 'Income needs to exceed expenses before the Money Loop can recover LOC draws.');
+  assert.equal(dashboard.warning, 'Review the entered liability balances before relying on educational projections.');
+  assert.equal(dashboard.nextMove, 'Review liability balances');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Interest Burn').value, 'Not available');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
+  assert.ok(snapshots[2].strategies.every((strategy) => !strategy.isPayoffPossible));
 });
 
-test('shared mobile portfolio labels amortized planning separately from LOC ledger math', () => {
+test('legacy mobile planning labels remain compatible while the native book declares its actual model', () => {
   const portfolioSnapshot = sharedFinancialEngine.buildMobilePortfolioSnapshot({
     monthlyIncome: 6500,
     monthlyExpenses: 5000,
@@ -903,12 +1823,13 @@ test('shared mobile portfolio labels amortized planning separately from LOC ledg
     'expected mobile Portfolio to render the modeling-mode contract'
   );
   assert.ok(
-    mobilePortfolioSource.includes('value={portfolio.modelingLabel}'),
-    'expected mobile Portfolio to display the modeling label'
+    mobilePortfolioSource.includes('value={view.payoffLabel}'),
+    'expected native aggregate Portfolio to display the shared whole-book result state'
   );
   assert.ok(
-    mobilePortfolioSource.includes('detail={portfolio.modelingDetail}'),
-    'expected mobile Portfolio to display the modeling detail'
+    mobilePortfolioSource.includes('Funded monthly estimate:')
+      && mobilePortfolioSource.includes('Lender fees, posting rules and dated calendars are not modeled.'),
+    'expected native aggregate Portfolio to disclose its funded model and lender limits'
   );
 });
 
@@ -1081,8 +2002,8 @@ test('shared Money Loop payoff distinguishes horizon misses from under-interest 
   assert.ok(result.monthlyData.length > 0, 'expected a horizon-limited Money Loop projection to keep its event ledger');
 });
 
-test('shared Money Loop payoff sanitizes non-finite inputs before building an event ledger', () => {
-  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({
+test('shared Money Loop sanitizes debt inputs without inventing cash from non-finite routing', () => {
+  const input = {
     principalBalance: 1000,
     debtApr: Number.NaN,
     debtPayment: 250,
@@ -1097,7 +2018,13 @@ test('shared Money Loop payoff sanitizes non-finite inputs before building an ev
     locExpenseAmount: Number.NaN,
     maxMonths: Number.NaN,
     initialMonthsSinceChunk: Number.NaN,
-  });
+  };
+
+  const rejected = sharedFinancialEngine.simulateMoneyLoopPayoff(input);
+  assert.equal(rejected.isPayoffPossible, false, 'a NaN income cannot fund debt payments');
+  assert.equal(rejected.failureReason, 'invalid-routing');
+  assert.equal(rejected.monthlyData.length, 0);
+  const result = sharedFinancialEngine.simulateMoneyLoopPayoff({ ...input, locDepositAmount: 600, locExpenseAmount: 250 });
 
   assert.equal(result.isPayoffPossible, true);
   assert.equal(result.payoffMonths, 4);
@@ -1226,12 +2153,12 @@ test('shared Money Loop payoff includes LOC recovery after the target debt is cl
   const finalMonth = result.monthlyData.at(-1);
 
   assert.equal(result.isPayoffPossible, true);
-  assert.equal(result.payoffMonths, 4);
+  assert.equal(result.payoffMonths, 3);
   assert.equal(roundCents(finalMonth.debtBalance), 0);
   assert.equal(roundCents(finalMonth.locBalance), 0);
   assert.equal(
     result.monthlyData.map((month) => roundCents(month.locBalance)).join('|'),
-    '750|500|250|0'
+    '650|300|0'
   );
 });
 
@@ -1276,9 +2203,10 @@ test('multi-debt velocity exposes the shared Money Loop event ledger', () => {
   assert.ok(firstMonth, 'expected multi-debt velocity to expose Money Loop monthly data');
   assert.equal(
     firstMonth.events.map((event) => event.type).join('|'),
-    'debt-interest|loc-chunk-draw|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
+    'debt-interest|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
   );
-  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw').amount, 1000);
+  assert.equal(firstMonth.cashFlowPaydown, 0, 'the current planner allocates its full budget to debt payments');
+  assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw'), undefined, 'a stale chunk age cannot authorize borrowing without recovery');
   assert.equal(
     roundCents(firstMonth.events.find((event) => event.type === 'loc-interest').amount),
     roundCents(firstMonth.locInterest)
@@ -1308,8 +2236,8 @@ test('multi-debt velocity treats the focus payment as a cash outflow for LOC rec
   const firstMonth = velocity.moneyLoopMonthlyData[0];
   const chunkDraw = firstMonth.events.find((event) => event.type === 'loc-chunk-draw');
 
-  assert.ok(chunkDraw, 'expected a tiny LOC chunk so the LOC recovery math is visible');
-  assert.equal(roundCents(firstMonth.locBalance), 1001);
+  assert.equal(chunkDraw, undefined, 'no chunk without cash reserved for LOC recovery');
+  assert.equal(roundCents(firstMonth.locBalance), 1000);
   assert.equal(roundCents(firstMonth.cashFlowPaydown), 0);
 });
 
@@ -1334,7 +2262,7 @@ test('multi-debt velocity includes LOC recovery after the final debt payoff', ()
   );
 
   assert.equal(velocity.debts[0].payoffMonths, 1);
-  assert.equal(velocity.totalMonths, 2);
+  assert.equal(velocity.totalMonths, 1);
   assert.equal(velocity.isPayoffPossible, true);
 });
 
@@ -2008,7 +2936,7 @@ test('portfolio simulation does not project payoff when cash flow cannot cover m
   assert.equal(result.payoffOrder.length, 0);
   assert.equal(result.monthResults.length, 0);
   assert.ok(
-    result.warnings.some((warning) => warning.includes("doesn't cover all minimums")),
+    result.warnings.some((warning) => warning.includes("doesn't cover modeled obligations")),
     result.warnings.join(' | ')
   );
 });
@@ -2097,8 +3025,10 @@ test('portfolio page blocks debt-free date claims for invalid projections', () =
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
 
   assert.ok(source.includes('portfolioProjectionValid'), 'expected Portfolio page to derive projection validity');
-  assert.ok(source.includes("portfolioProjectionValid ? formatDate(payoffMonths) : 'Review inputs'"));
-  assert.ok(source.includes("portfolioProjectionValid ? formatCurrency(totalInterest) : 'Not projected'"));
+  assert.ok(source.includes("payoffMonths === 0 ? 'Already paid off' : payoffPlan?.payoffDate ?? formatDate(payoffMonths)"));
+  assert.ok(source.includes("payoffPlan?.state === 'residual' ? 'Nonzero balance remains' : 'Review inputs'"));
+  assert.ok(source.includes("payoffPlan?.state === 'projected' || payoffPlan?.state === 'cleared'"));
+  assert.ok(source.includes("portfolioProjectionValid ? formatAmount(totalInterest) : 'Not projected'"));
   assert.ok(
     source.includes('if (!portfolioProjectionValid || payoffOrder.length === 0) return null;'),
     'expected the payoff-order module to suppress invalid or empty projections'
@@ -2160,16 +3090,16 @@ test('portfolio strategy picker distinguishes planning default from fastest payo
     'expected Portfolio to avoid implying Velocity is always fastest or lowest-interest'
   );
   assert.ok(
-    source.includes('Use the Simulator cards to compare modeled payoff speed and interest cost'),
-    'expected Portfolio to point users back to modeled Simulator comparisons'
+    source.includes('The single-target Simulator demo uses separate inputs.') && source.includes('href="/simulator?scenario=portfolio"'),
+    'expected Portfolio to distinguish the separate single-target demo from its explicit shared Simulator view'
   );
   assert.ok(
     source.includes('data-testid="portfolio-velocity-modeling-note"'),
     'expected a stable hook for the Velocity modeling note'
   );
   assert.ok(
-    source.includes('ranking and allocation guidance only; it is not a LOC event ledger'),
-    'expected Portfolio to label non-ledger Velocity planning'
+    source.includes('No LOC chunk draws are modeled.'),
+    'expected Portfolio to distinguish direct LOC repayment from chunk modeling'
   );
   assert.ok(
     source.includes('single-lane plan includes a LOC event ledger and LOC interest estimate'),
@@ -2230,7 +3160,7 @@ test('portfolio run comparison explains projection deltas after an edit', () => 
   };
   const improvedInputs = {
     ...baselineInputs,
-    extraMonthlyPayment: 250,
+    monthlyIncome: baselineInputs.monthlyIncome + 250,
     debts: baselineInputs.debts.map((debt) => ({ ...debt, minPaymentRule: { ...debt.minPaymentRule } })),
   };
 
@@ -2948,7 +3878,7 @@ test('settings local demo data reset clears only InterestShield storage keys', (
 test('settings full local demo snapshot exports only known InterestShield storage keys', () => {
   const storage = createMemoryStorage();
   storage.setItem('velocity-bank-storage', '{"state":{"monthlyIncome":6500}}');
-  storage.setItem('interestshield-portfolio-v1', '{"state":{"strategy":"velocity"}}');
+  storage.setItem('interestshield-portfolio-v1', JSON.stringify({ version: 1, state: JSON.parse(portfolioStore.usePortfolioStore.getState().exportState()).data }));
   storage.setItem('unrelated-app-key', 'keep-me');
 
   const result = settingsSnapshot.exportLocalDemoSnapshot(storage);
@@ -2968,6 +3898,97 @@ test('settings full local demo snapshot exports only known InterestShield storag
     ['interestshield-portfolio-v1', 'velocity-bank-storage']
   );
   assert.ok(!result.json.includes('unrelated-app-key'));
+});
+
+test('Settings snapshots map canonical Portfolio bytes through the existing logical key and preserve legacy sources', () => {
+  const storage = createMemoryStorage(), document = portfolioStore.usePortfolioStore.getState().exportState();
+  storage.setItem('interestshield-portfolio-v1', 'preserved-legacy-source');
+  storage.setItem('interestshield-portfolio-v2', document);
+  const exported = settingsSnapshot.exportLocalDemoSnapshot(storage);
+  assert.equal(exported.ok, true);
+  const entries = JSON.parse(exported.json).storage;
+  assert.deepEqual(entries, [{ key: 'interestshield-portfolio-v1', value: document }]);
+  const data = JSON.parse(document).data; data.monthlyIncome = 9876.54321;
+  const target = JSON.stringify({ version: 2, aprUnit: 'decimal', data }, null, 2);
+  assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [{ key: 'interestshield-portfolio-v1', value: target }] }), storage).ok, true);
+  assert.equal(storage.getItem('interestshield-portfolio-v2'), target);
+  assert.equal(storage.getItem('interestshield-portfolio-v1'), 'preserved-legacy-source');
+  assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [] }), storage).ok, true);
+  assert.equal(storage.getItem('interestshield-portfolio-v2'), target, 'missing source book preserves its destination');
+});
+
+test('Settings book-only Portfolio snapshots preserve the destination scenario byte-for-byte', () => {
+  const data = JSON.parse(portfolioStore.usePortfolioStore.getState().exportState()).data;
+  data.monthlyIncome = 9876.54321;
+  const scenario = ' \n' + JSON.stringify({ version: 0, state: { monthlyIncome: 7123.456, monthlyExpenses: 4200.007 } }, null, 3) + '\n';
+  const documents = [
+    { label: 'canonical', value: JSON.stringify({ version: 2, aprUnit: 'decimal', data }) },
+    { label: 'legacy', value: JSON.stringify({ version: 1, state: data }) },
+    { label: 'explicit empty', value: JSON.stringify({ version: 2, aprUnit: 'decimal',
+      data: { ...data, debts: [], loc: { limit: 0, balance: 0, apr: 0 } } }) },
+  ];
+  for (const document of documents) {
+    const storage = createMemoryStorage();
+    storage.setItem('velocity-bank-storage', scenario);
+    storage.setItem('interestshield-portfolio-v1', 'preserved-legacy-source');
+    storage.setItem('interestshield-preferences-v1', 'old-preferences');
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1,
+      storage: [{ key: 'interestshield-portfolio-v1', value: document.value }] }), storage);
+    assert.equal(result.ok, true, document.label);
+    assert.equal(result.imported, 1);
+    assert.equal(storage.getItem('velocity-bank-storage'), scenario, `${document.label} book must preserve the destination scenario`);
+    assert.equal(JSON.parse(storage.getItem('interestshield-portfolio-v2')).data.monthlyIncome, 9876.54321);
+    assert.equal(storage.getItem('interestshield-portfolio-v1'), 'preserved-legacy-source');
+    assert.equal(storage.getItem('interestshield-preferences-v1'), null, 'only the absent scenario gets the book-only exception');
+  }
+});
+
+test('Settings Portfolio snapshots with other entries retain full-snapshot scenario replacement semantics', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  for (const entry of [
+    { key: 'interestshield-theme', value: 'new-theme' },
+    { key: 'velocity-bank-storage', value: '{"version":0,"state":{"monthlyIncome":8123.456}}' },
+  ]) {
+    const storage = createMemoryStorage();
+    storage.setItem('velocity-bank-storage', 'original-scenario');
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1,
+      storage: [{ key: 'interestshield-portfolio-v1', value: document }, entry] }), storage);
+    assert.equal(result.ok, true);
+    assert.equal(result.imported, 2);
+    assert.equal(storage.getItem('velocity-bank-storage'), entry.key === 'velocity-bank-storage' ? entry.value : null);
+    assert.equal(storage.getItem(entry.key), entry.value);
+    assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
+});
+
+test('Settings snapshot rejects corrupt or duplicate present books before mutating any destination', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  for (const entries of [[{ key: 'interestshield-portfolio-v1', value: '{bad' }],
+    [{ key: 'interestshield-portfolio-v1', value: document }, { key: 'interestshield-portfolio-v1', value: document }]]) {
+    const storage = createMemoryStorage(); storage.setItem('velocity-bank-storage', 'original'); storage.setItem('interestshield-portfolio-v2', document);
+    assert.equal(settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: entries }), storage).ok, false);
+    assert.equal(storage.getItem('velocity-bank-storage'), 'original'); assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
+});
+
+test('Settings snapshot rolls back both physical Portfolio and other demo keys after a write interruption', () => {
+  const document = portfolioStore.usePortfolioStore.getState().exportState();
+  const data = JSON.parse(document).data; data.monthlyIncome = 9123;
+  const target = JSON.stringify({ version: 2, aprUnit: 'decimal', data }, null, 2);
+  for (const failedKey of ['interestshield-portfolio-v2', 'velocity-bank-storage']) {
+    const storage = createMemoryStorage(); storage.setItem('velocity-bank-storage', 'original-finance');
+    storage.setItem('interestshield-portfolio-v1', 'original-legacy'); storage.setItem('interestshield-portfolio-v2', document);
+    let failed = false;
+    const port = { ...storage, setItem: (key, value) => {
+      if (key === failedKey && !failed) { failed = true; throw new Error('Synthetic one-shot publication interruption'); }
+      storage.setItem(key, value);
+    } };
+    const result = settingsSnapshot.importLocalDemoSnapshot(JSON.stringify({ version: 1, storage: [
+      { key: 'interestshield-portfolio-v1', value: target }, { key: 'velocity-bank-storage', value: 'updated-finance' },
+    ] }), port);
+    assert.equal(result.ok, false); assert.equal(storage.getItem('velocity-bank-storage'), 'original-finance');
+    assert.equal(storage.getItem('interestshield-portfolio-v1'), 'original-legacy'); assert.equal(storage.getItem('interestshield-portfolio-v2'), document);
+  }
 });
 
 test('settings full local demo snapshot import rejects unknown storage keys without mutating storage', () => {
@@ -3081,21 +4102,12 @@ test('shared persistence contract builds deterministic owner-scoped snapshot ups
 });
 
 test('editable financial controls expose contextual screen-reader labels', () => {
-  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
+  const controls = loadTsModule('src/components/EditableNumber.tsx');
   const dashboardSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
-
-  assert.ok(
-    componentSource.includes('ariaLabel?: string'),
-    'expected EditableNumber to accept a caller-provided screen-reader label'
-  );
-  assert.ok(
-    componentSource.includes('aria-label={editLabel}'),
-    'expected editable display buttons to expose a contextual edit label'
-  );
-  assert.ok(
-    componentSource.includes('aria-label={inputLabel}'),
-    'expected edit-mode inputs to expose a contextual input label'
-  );
+  const html = renderToStaticMarkup(React.createElement(controls.EditableCurrency,
+    { value: 8200, onChange() {}, ariaLabel: 'Audit monthly income' }));
+  assert.match(html, /aria-label="Edit Audit monthly income, current value \$8,200"/);
+  assert.match(html, /<button[^>]*type="button"/);
   assert.ok(
     dashboardSource.includes('ariaLabel="Monthly income"'),
     'expected Dashboard income editor to provide a contextual label'
@@ -3110,33 +4122,26 @@ test('editable financial controls expose contextual screen-reader labels', () =>
   );
 });
 
-test('editable financial controls sanitize non-finite display values', () => {
-  const componentSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/EditableNumber.tsx'), 'utf8');
-
-  assert.ok(
-    componentSource.includes('function sanitizeValue(value: number, min: number, max: number): number'),
-    'expected EditableNumber to centralize finite display sanitization'
-  );
-  assert.ok(
-    componentSource.includes('const finiteValue = Number.isFinite(value) ? value : min'),
-    'expected EditableNumber to fall back from non-finite values before formatting'
-  );
-  assert.ok(
-    componentSource.includes('const safeValue = sanitizeValue(value, min, max)'),
-    'expected EditableNumber to sanitize the incoming value prop'
-  );
-  assert.ok(
-    componentSource.includes('formatDisplay(safeValue)'),
-    'expected EditableNumber display and aria labels to use sanitized values'
-  );
-  assert.ok(
-    componentSource.includes('setTempValue((safeValue * 100).toFixed(1))'),
-    'expected percent editing to avoid non-finite temp values'
-  );
-  assert.ok(
-    componentSource.includes('setTempValue(safeValue.toString())'),
-    'expected edit and escape flows to reset to sanitized values'
-  );
+test('editable financial controls disclose non-finite values and preserve actual APR units', () => {
+  const controls = loadTsModule('src/components/EditableNumber.tsx');
+  const canonical = loadTsModule('src/components/PortfolioEditableNumber.tsx');
+  const cases = [
+    [controls.EditableCurrency, Number.NaN, 'Not available'],
+    [controls.EditableCurrency, Number.POSITIVE_INFINITY, 'Not available'],
+    [controls.EditableCurrency, Number.NEGATIVE_INFINITY, 'Not available'],
+    [controls.EditableCurrency, 100000000, '$100,000,000'],
+    [controls.EditablePercentage, 0.069, '6.9%'],
+    [controls.EditablePercentage, 0.069123456, '6.9123456%'],
+    [controls.EditablePercentage, 6.5, '6.5%'],
+    [controls.EditablePercentage, 2, '2%'],
+    [controls.EditablePercentage, 200, '200%'],
+    [canonical.EditablePercentage, 2, '200%'],
+  ];
+  const observed = cases.map(([Component, value]) => {
+    const html = renderToStaticMarkup(React.createElement(Component, { value, onChange() {}, ariaLabel: 'Audit value' }));
+    return html.match(/aria-label="Edit Audit value, current value ([^"]*)"/)?.[1];
+  });
+  assert.deepEqual(observed, cases.map(([, , expected]) => expected));
 });
 
 test('simulator editable controls expose contextual screen-reader labels', () => {
@@ -3191,8 +4196,8 @@ test('simulator mortgage option controls expose selected state', () => {
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.entryMode === mode}'), 'expected entry mode selected state');
   assert.ok(source.includes('role="group" aria-label="Mortgage original term"'), 'expected term controls to be grouped');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.originalTermYears === t}'), 'expected term selected state');
-  assert.ok(source.includes('role="group" aria-label="Mortgage payment frequency"'), 'expected payment frequency controls to be grouped');
-  assert.ok(source.includes('aria-pressed={store.mortgageDetails.paymentFrequency === freq}'), 'expected payment frequency selected state');
+  assert.ok(!source.includes('aria-label="Mortgage payment frequency"'), 'unused timing choices must not imply a modeled result');
+  assert.ok(source.includes('data-testid="mortgage-timing-assumption"'), 'monthly estimate is explicit');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasExtraPayments}'), 'expected extra-payment toggle state');
   assert.ok(source.includes('aria-pressed={store.mortgageDetails.hasRefinanced}'), 'expected refinance toggle state');
 });
@@ -3268,8 +4273,8 @@ test('vault mortgage option controls expose selected state', () => {
   assert.ok(source.includes('aria-pressed={md.entryMode === mode}'), 'expected Vault entry mode selected state');
   assert.ok(source.includes('role="group" aria-label="Vault mortgage original term"'), 'expected Vault term controls to be grouped');
   assert.ok(source.includes('aria-pressed={md.originalTermYears === t}'), 'expected Vault term selected state');
-  assert.ok(source.includes('role="group" aria-label="Vault mortgage payment frequency"'), 'expected Vault payment frequency controls to be grouped');
-  assert.ok(source.includes('aria-pressed={md.paymentFrequency === freq}'), 'expected Vault payment frequency selected state');
+  assert.ok(!source.includes('aria-label="Vault mortgage payment frequency"'), 'Vault cannot offer unused timing choices');
+  assert.ok(source.includes('data-testid="vault-mortgage-timing-assumption"'), 'Vault discloses the monthly estimate');
   assert.ok(source.includes('aria-pressed={md.hasExtraPayments}'), 'expected Vault extra-payment toggle state');
   assert.ok(source.includes('aria-pressed={md.hasRefinanced}'), 'expected Vault refinance toggle state');
 });
@@ -3278,7 +4283,8 @@ test('cockpit emergency scenario uses recovery-oriented coach copy', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/cockpit/page.tsx'), 'utf8');
 
   assert.ok(source.includes('data-testid="cockpit-emergency-coach-note"'), 'expected a stable emergency coach note hook');
-  assert.ok(source.includes('Emergency scenario active'), 'expected neutral emergency scenario copy');
+  assert.ok(source.includes('Emergency drill active'), 'expected an educational drill rather than a simulated expense claim');
+  assert.ok(source.includes('not part of the payoff calculation'), 'expected the unmodeled expense to be disclosed');
   assert.ok(source.includes('Recovery is part of the plan'), 'expected recovery-oriented guidance');
   assert.ok(source.includes('Pause new chunks until the emergency cost is absorbed.'), 'expected a pause-chunk recovery step');
   assert.ok(source.includes('Protect essentials and minimum payments before chasing payoff speed.'), 'expected essentials-first guidance');
@@ -3587,7 +4593,7 @@ test('portfolio velocity labels its ranking assumptions instead of implying LOC 
     result.assumptions.join(' | ')
   );
   assert.ok(
-    result.assumptions.some((note) => note.includes('does not simulate LOC chunk draws or LOC interest')),
+    result.assumptions.some((note) => note.includes('No LOC chunk draws are modeled')),
     result.assumptions.join(' | ')
   );
 });
@@ -3635,6 +4641,7 @@ test('portfolio velocity uses shared Money Loop LOC math when LOC inputs are pre
     'debt-interest|loc-chunk-draw|debt-payment|income-to-loc|expenses-from-loc|loc-interest|loc-cashflow-paydown'
   );
   assert.equal(firstMonth.events.find((event) => event.type === 'loc-chunk-draw').amount, 1000);
+  assert.equal(firstMonth.cashFlowPaydown, 1110, 'only the budget remaining after scheduled payments recovers the LOC');
   assert.ok(result.locInterestPaid > 0, `expected LOC interest, got ${result.locInterestPaid}`);
   assert.equal(roundCents(firstMonth.locInterest), roundCents(result.locInterestPaid));
   assert.equal(roundCents(result.totalInterest), roundCents(debtInterestOnly + result.locInterestPaid));
@@ -3686,7 +4693,7 @@ test('portfolio velocity does not label LOC math when cash flow cannot cover min
     result.assumptions.join(' | ')
   );
   assert.ok(
-    result.assumptions.some((note) => note.includes('does not simulate LOC chunk draws or LOC interest')),
+    result.assumptions.some((note) => note.includes('No LOC chunk draws are modeled')),
     result.assumptions.join(' | ')
   );
   assert.ok(
@@ -3909,9 +4916,9 @@ test('portfolio velocity treats target debt payments as cash outflows for LOC re
   const firstMonth = result.moneyLoopMonthlyData[0];
   const chunkDraw = firstMonth.events.find((event) => event.type === 'loc-chunk-draw');
 
-  assert.ok(chunkDraw, 'expected a tiny LOC chunk so the LOC recovery math is visible');
-  assert.equal(roundCents(firstMonth.locBalance), 1001);
-  assert.equal(roundCents(firstMonth.cashFlowPaydown), 0);
+  assert.equal(chunkDraw.amount, 1);
+  assert.equal(roundCents(firstMonth.locBalance), 801);
+  assert.equal(roundCents(firstMonth.cashFlowPaydown), 200);
 });
 
 test('portfolio velocity includes LOC recovery after the final debt payoff', () => {
@@ -3946,7 +4953,7 @@ test('portfolio velocity includes LOC recovery after the final debt payoff', () 
   });
 
   assert.equal(result.payoffOrder[0].monthPaidOff, 1);
-  assert.equal(result.payoffMonths, 2);
+  assert.equal(result.payoffMonths, 1);
   assert.equal(result.isPayoffPossible, true);
 });
 
@@ -3997,7 +5004,7 @@ test('portfolio store records a comparison against the previous run', () => {
     assert.equal(importResult.ok, true);
     assert.equal(portfolioStore.usePortfolioStore.getState().lastRunComparison.status, 'baseline');
 
-    portfolioStore.usePortfolioStore.getState().setExtraMonthlyPayment(250);
+    portfolioStore.usePortfolioStore.getState().setMonthlyIncome(5250);
     const comparison = portfolioStore.usePortfolioStore.getState().lastRunComparison;
 
     assert.equal(comparison.status, 'changed');
@@ -4017,6 +5024,64 @@ test('portfolio store records a comparison against the previous run', () => {
       lastRunComparison: undefined,
     });
   }
+});
+
+test('canonical Portfolio history cannot publish a successful payoff for unpaid residuals', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const debt = (id, balance, minimum = 10) => ({ id, name: id, category: 'auto', kind: 'amortized', balance, apr: 0,
+    minPaymentRule: { type: 'fixed', amount: minimum }, paymentSource: 'checking' });
+  const book = { monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 0, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'velocity', focusMode: 'single', splitRatioPrimary: .7, debts: [debt('a', 10.005)] };
+  const cases = [book, { ...book, debts: [debt('a', .005)] }, { ...book, debts: [], loc: { limit: 1, balance: .005, apr: 0 } },
+    { ...book, monthlyIncome: 2, extraMonthlyPayment: 1, debts: [debt('a', 1.000005, 1), debt('b', 5, 1)] }];
+  try {
+    for (const fixture of cases) for (const strategy of ['velocity', 'snowball', 'avalanche']) {
+      assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: { ...fixture, strategy } })).ok, true);
+      const state = portfolioStore.usePortfolioStore.getState();
+      assert.equal(state.lastResult.isPayoffPossible, true, 'legacy numerical result stays unchanged');
+      assert.equal(state.lastRunSummary.isPayoffPossible, false, `${strategy} history cannot treat an unpaid residual as cleared`);
+      assert.equal(state.lastRunComparison.status, 'baseline');
+      assert.equal(state.lastRunComparison.changes[0].value, 'Review inputs');
+    }
+  } finally { store.importState(original); }
+});
+
+test('canonical Portfolio history restores only accepted payoff and retains valid timing comparisons', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const book = { monthlyIncome: 10, monthlyExpenses: 0, extraMonthlyPayment: 0, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'snowball', focusMode: 'single', splitRatioPrimary: .7,
+    debts: [{ id: 'a', name: 'Loan A', category: 'auto', kind: 'amortized', balance: 10.005, apr: 0,
+      minPaymentRule: { type: 'fixed', amount: 10 }, paymentSource: 'checking' }] };
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().lastRunSummary.isPayoffPossible, false);
+    store.setMonthlyIncome(20);
+    let state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'projection').value, 'Projection restored');
+    store.setMonthlyIncome(10);state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, false);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'projection').value, 'Needs review');
+    book.debts[0].balance = 20;
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().lastRunSummary.payoffMonths, 2);
+    store.setMonthlyIncome(30);state = portfolioStore.usePortfolioStore.getState();
+    assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes.find(change => change.id === 'payoff-months').value, '1 mo sooner');
+    book.debts = [];
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    state = portfolioStore.usePortfolioStore.getState();assert.equal(state.lastRunSummary.isPayoffPossible, true);
+    assert.equal(state.lastRunComparison.changes[0].value, 'Paid off');
+  } finally { store.importState(original); }
+});
+
+test('accepted history metadata cannot override a failed numerical projection', () => {
+  const inputs = { aprUnit: 'decimal', monthlyIncome: 0, monthlyExpenses: 0, extraMonthlyPayment: 0,
+    chunkAmount: 0, loc: { limit: 0, balance: 0, apr: 0 }, settings: { strategy: 'snowball', focusMode: 'single', splitRatioPrimary: .7 },
+    debts: [{ id: 'a', name: 'Loan A', category: 'auto', kind: 'amortized', balance: 10, apr: 0,
+      minPaymentRule: { type: 'fixed', amount: 10 }, paymentSource: 'checking' }] };
+  const result = portfolio.simulatePortfolio(inputs);assert.equal(result.isPayoffPossible, false);
+  assert.equal(portfolioRunDiff.summarizePortfolioRun(inputs, result, true).isPayoffPossible, false);
 });
 
 test('portfolio backup export and import preserve Money Loop planning inputs', () => {
@@ -4065,6 +5130,39 @@ test('portfolio backup export and import preserve Money Loop planning inputs', (
   }
 });
 
+test('web Portfolio accepts canonical 200-percent APR backups without legacy reinterpretation', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const book = { monthlyIncome: 1000, monthlyExpenses: 0, extraMonthlyPayment: 20, chunkAmount: 0,
+    loc: { limit: 0, balance: 0, apr: 0 }, strategy: 'avalanche', focusMode: 'single', splitRatioPrimary: 0.7,
+    debts: [{ id: 'canonical-high-apr', name: '  Imported precise debt  ', category: 'custom', kind: 'amortized',
+      balance: 1200, apr: 2, minPaymentRule: { type: 'fixed', amount: 300 }, paymentSource: 'checking',
+      termMonths: 61, notes: '  Preserve exact notes  ', createdAt: '2026-10-20T00:00:00Z' }] };
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 2, aprUnit: 'decimal', data: book })).ok, true);
+    const result = portfolioStore.usePortfolioStore.getState().recompute();
+    assert.equal(result.monthResults[0].interestCharges['canonical-high-apr'], 200);
+    assert.equal(result.monthResults[0].cashBalance, 680);
+    const exported = JSON.parse(store.exportState());
+    assert.equal(exported.version, 2); assert.equal(exported.aprUnit, 'decimal');
+    assert.deepEqual(exported.data, book);
+  } finally { store.importState(original); }
+});
+
+test('web Portfolio converts legacy rates once and rejects unsupported document units without mutation', () => {
+  const store = portfolioStore.usePortfolioStore.getState(), original = store.exportState();
+  const data = JSON.parse(original).data; data.loc.apr = 8.5; data.debts[0].apr = 6.5;
+  try {
+    assert.equal(store.importState(JSON.stringify({ version: 1, data })).ok, true);
+    assert.equal(portfolioStore.usePortfolioStore.getState().loc.apr, 0.085);
+    assert.equal(portfolioStore.usePortfolioStore.getState().debts[0].apr, 0.065);
+    const before = store.exportState();
+    for (const invalid of [{ version: 99, data }, { version: 2, aprUnit: 'percent', data }, { version: 2, data }]) {
+      assert.equal(store.importState(JSON.stringify(invalid)).ok, false);
+      assert.equal(store.exportState(), before);
+    }
+  } finally { store.importState(original); }
+});
+
 test('portfolio backup import rejects non-finite money inputs without corrupting state', () => {
   const store = portfolioStore.usePortfolioStore.getState();
   const original = store.exportState();
@@ -4074,6 +5172,7 @@ test('portfolio backup import rejects non-finite money inputs without corrupting
     const result = store.importState(JSON.stringify({
       version: 1,
       data: {
+        ...originalData,
         monthlyIncome: 'not-a-number',
         monthlyExpenses: 5000,
         debts: [{
@@ -4382,6 +5481,82 @@ test('dashboard payoff helpers use the canonical single-debt engine', () => {
     roundCents(actualVelocity.savings),
     roundCents(Math.max(0, expectedBaseline.totalInterest - expectedVelocity.totalInterest))
   );
+});
+
+test('Simulator comparison keeps the existing LOC and full available budget in its baseline', () => {
+  const result = calculations.runSimulation({
+    monthlyIncome: 1000, monthlyExpenses: 500,
+    carLoan: { balance: 600, apr: 0, monthlyPayment: 100 },
+    loc: { limit: 2000, balance: 400, apr: 0 },
+    useVelocity: true, extraPayment: 100,
+  });
+  assert.equal(result.baseline.payoffMonths, 2, 'both debts, not a six-month target-only minimum plan');
+  assert.equal(result.baseline.monthlyData[0].carBalance, 100);
+  assert.equal(result.baseline.monthlyData[0].locBalance, 400, 'existing LOC cannot disappear');
+  assert.equal(result.baseline.monthlyData[1].locBalance, 0);
+});
+
+test('shared direct repayment accounts for payments, interest and retained cash each month', () => {
+  for (const strategy of ['debt-first', 'snowball', 'avalanche']) {
+    const result = sharedFinancialEngine.simulateDirectRepayment({
+      principalBalance: 1250, debtApr: 0.12, debtPayment: 100,
+      loc: { limit: 2000, balance: 450, apr: 0.24 },
+      monthlyBudget: 600, strategy,
+    });
+    assert.equal(result.isPayoffPossible, true);
+    let previousTotal = 1700;
+    let previousCash = 0;
+    for (const row of result.monthlyData) {
+      const endTotal = row.debtBalance + row.locBalance;
+      assert.ok(Math.abs(previousTotal + row.debtInterest + row.locInterest - row.debtPayment - row.locPayment - endTotal) < 1e-8);
+      assert.ok(Math.abs(previousCash + 600 - row.debtPayment - row.locPayment - row.cashBalance) < 1e-8);
+      assert.ok(row.debtPayment + row.locPayment <= 600 + 1e-8, 'cannot spend more than the household budget');
+      previousTotal = endTotal;
+      previousCash = row.cashBalance;
+    }
+    assert.equal(roundCents(previousTotal), 0);
+    assert.ok(previousCash > 0, 'last-month surplus remains visible');
+  }
+});
+
+test('direct repayment priorities include the LOC and transfer unused payments in the same month', () => {
+  const input = {
+    principalBalance: 1000, debtApr: 0.12, debtPayment: 100,
+    loc: { limit: 2000, balance: 300, apr: 0.24 }, monthlyBudget: 500,
+  };
+  const direct = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'debt-first' }).monthlyData[0];
+  const snowball = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'snowball' }).monthlyData[0];
+  const avalanche = sharedFinancialEngine.simulateDirectRepayment({ ...input, strategy: 'avalanche' }).monthlyData[0];
+  const locInterest = 300 * 0.24 * 30 / 365;
+  assert.ok(Math.abs(direct.locBalance - 300) < 1e-8, 'debt-first reserves LOC interest before targeting the loan');
+  assert.ok(Math.abs(direct.debtBalance - (1010 - (500 - locInterest))) < 1e-8);
+  assert.equal(snowball.locBalance, 0, 'smaller LOC is paid first');
+  assert.equal(avalanche.locBalance, 0, 'higher-rate LOC is paid first');
+  assert.ok(Math.abs(snowball.debtPayment - (500 - 300 - locInterest)) < 1e-8, 'unused LOC allocation rolls to target immediately');
+  assert.equal(snowball.debtBalance, avalanche.debtBalance);
+  const highTarget = { ...input, debtApr: 0.36 };
+  const highTargetAvalanche = sharedFinancialEngine.simulateDirectRepayment({ ...highTarget, strategy: 'avalanche' });
+  assert.ok(Math.abs(highTargetAvalanche.monthlyData[0].locBalance - 300) < 1e-8);
+});
+
+test('direct repayment rejects unaffordable obligations but clips the final target payment', () => {
+  const input = { principalBalance: 1000, debtApr: 0, debtPayment: 100, loc: { limit: 1000, balance: 300, apr: 0.24 }, strategy: 'snowball' };
+  assert.equal(sharedFinancialEngine.simulateDirectRepayment({ ...input, monthlyBudget: 102 }).failureReason, 'cashflow-below-minimums');
+  assert.equal(sharedFinancialEngine.simulateDirectRepayment({ ...input, monthlyBudget: 0 }).failureReason, 'negative-cashflow');
+  const final = sharedFinancialEngine.simulateDirectRepayment({ ...input, principalBalance: 50, monthlyBudget: 90 });
+  assert.equal(final.isPayoffPossible, true);
+  assert.equal(final.monthlyData[0].debtPayment, 50);
+});
+
+test('Simulator deltas retain slower and more-interest outcomes instead of clamping them to zero', () => {
+  const result = calculations.runSimulation({
+    monthlyIncome: 1000, monthlyExpenses: 500,
+    carLoan: { balance: 1000, apr: 0.12, monthlyPayment: 100 },
+    loc: { limit: 2000, balance: 0, apr: 0.30 },
+    useVelocity: true, extraPayment: 1,
+  });
+  assert.ok(result.velocity.monthsSaved < 0, 'slow low-chunk plan must not look equal to direct repayment');
+  assert.ok(result.velocity.interestSaved < 0, 'extra interest must remain signed');
 });
 
 test('single-debt strategy comparison keeps velocity aligned with runSimulation', () => {
@@ -4754,7 +5929,7 @@ test('simulator balance chart bars clamp invalid and over-starting balances', ()
   assert.equal(simulatorModel.buildSimulatorBalanceBarHeightPercent(5000, Number.POSITIVE_INFINITY), 0);
 
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/simulator/page.tsx'), 'utf8');
-  assert.ok(source.includes('buildSimulatorBalanceBarHeightPercent(month.carBalance, currentDebt.balance)'), 'expected Simulator chart to use bounded height helper');
+  assert.ok(source.includes('buildSimulatorBalanceBarHeightPercent(month.carBalance + month.locBalance, currentDebt.balance + (inputs.loc?.balance ?? 0))'), 'bounded chart uses the same two-liability scope as the comparison');
   assert.ok(!source.includes('(month.carBalance / (currentDebt.balance || 1)) * 100'), 'expected Simulator chart not to use raw ratio CSS height');
 });
 
@@ -4941,7 +6116,7 @@ test('mortgage purchase-mode analysis uses shared schedule without advancing une
     refinanceCount: 0,
   };
   const analysis = calculations.calculateMortgageAnalysis(input);
-  const strategies = calculations.compareMortgageStrategies(input, 1500, {
+  const strategies = calculations.compareMortgageStrategies(input, 2000, {
     limit: 50000,
     apr: 0.08,
     balance: 0,
@@ -4983,7 +6158,7 @@ test('mortgage purchase-mode strategies ignore hidden stale current balance inpu
   };
 
   const analysis = calculations.calculateMortgageAnalysis(input);
-  const strategies = calculations.compareMortgageStrategies(input, 1500, {
+  const strategies = calculations.compareMortgageStrategies(input, 2000, {
     limit: 50000,
     apr: 0.08,
     balance: 0,
@@ -5137,10 +6312,10 @@ test('mortgage standard strategy uses the actual current monthly payment', () =>
   );
 });
 
-test('mortgage strategy payment plans use the shared amortized payoff helper', () => {
+test('mortgage strategy plans use the shared funded comparison and preserve scheduled amortization', () => {
   const calculationsSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/engine/calculations.ts'), 'utf8');
-  const wrapperStart = calculationsSource.indexOf('function simulateMortgagePaymentPlan');
-  const wrapperEnd = calculationsSource.indexOf('export function compareMortgageStrategies', wrapperStart);
+  const wrapperStart = calculationsSource.indexOf('export function compareMortgageStrategies');
+  const wrapperEnd = calculationsSource.indexOf('export interface BiweeklyResult', wrapperStart);
   const wrapperSource = calculationsSource.slice(wrapperStart, wrapperEnd);
   const input = {
     entryMode: 'current',
@@ -5172,7 +6347,7 @@ test('mortgage strategy payment plans use the shared amortized payoff helper', (
     maxMonths: input.remainingTermMonths * 4,
   });
 
-  assert.ok(wrapperSource.includes('simulateAmortizedPayoff({'), 'expected mortgage strategy plans to delegate to the shared payoff helper');
+  assert.ok(wrapperSource.includes('compareMortgageRepayment({'), 'expected mortgage strategy plans to delegate to the shared funded comparison');
   assert.ok(!wrapperSource.includes('while ('), 'expected mortgage strategy plans not to keep a separate payoff loop');
   assert.equal(strategies.standard.months, sharedProjection.payoffMonths);
   assert.equal(roundCents(strategies.standard.totalInterest), roundCents(sharedProjection.totalInterest));
@@ -5320,9 +6495,9 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
     isPayoffPossible: true,
   };
 
-  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'No modeled interest difference');
+  assert.equal(vaultModel.formatVaultStrategySavings(zeroImprovement), 'Same modeled interest');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(zeroImprovement), 'No faster payoff');
-  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), '$1,250 modeled interest difference');
+  assert.equal(vaultModel.formatVaultStrategySavings(positiveImprovement), '$1,250 less modeled interest');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(positiveImprovement), '7 months faster');
   assert.equal(vaultModel.formatVaultStrategySavings(invalidProjection), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyTimeDelta(invalidProjection), 'Cash flow below payment');
@@ -5332,7 +6507,7 @@ test('vault strategy labels do not frame zero improvement as savings', () => {
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: 240, isPayoffPossible: true }), '240 mo');
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.NaN, isPayoffPossible: true }), 'Review inputs');
   assert.equal(vaultModel.formatVaultStrategyMonths({ months: Number.POSITIVE_INFINITY, isPayoffPossible: true }), 'Review inputs');
-  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Review inputs');
+  assert.equal(vaultModel.formatVaultStrategyMonths({ months: 0, isPayoffPossible: true }), 'Paid off');
   assert.equal(vaultModel.formatVaultStrategyInterest(12345, true), '$12,345 interest');
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.NaN, true), 'Not projected');
   assert.equal(vaultModel.formatVaultStrategyInterest(Number.POSITIVE_INFINITY, true), 'Not projected');
@@ -5347,7 +6522,7 @@ test('modeled payoff comparison labels do not promise savings', () => {
   assert.ok(!combined.includes('`saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
   assert.ok(!combined.includes('saves ${formatcurrency'), 'expected modeled result labels not to use promise-like Saves copy');
   assert.ok(
-    combined.includes('modeled interest difference'),
+    combined.includes('modeled interest'),
     'expected payoff result labels to frame deltas as modeled interest differences'
   );
 });
@@ -5404,7 +6579,7 @@ test('vault visual percentages clamp invalid and over-range values', () => {
   assert.ok(source.includes('buildVaultVisualPercent(yr.interestPaid, total)'), 'expected Vault amortization split to clamp visual percent');
   assert.ok(source.includes('buildVaultVisualPercent(total, maxVal)'), 'expected Vault amortization height to clamp visual percent');
   assert.ok(
-    source.includes('buildVaultVisualPercent(freedomPath.velocityYears, freedomPath.standardYears)'),
+    source.includes('buildVaultVisualPercent(strategies.velocity.months, timelineMaxMonths)'),
     'expected Vault freedom timeline to clamp visual percent'
   );
   assert.ok(source.includes('formatVaultPercentLabel(analysis.interestPercentOfPayment)'), 'expected Vault interest text to use safe percent labels');
@@ -5666,7 +6841,7 @@ test('vault freedom path blocks impact claims when velocity is invalid', () => {
   assert.equal(model.interestSavedLabel, 'Not projected');
   assert.equal(model.freedomYearsLabel, 'Review inputs');
   assert.equal(model.portfolioValueLabel, 'Not projected');
-  assert.equal(model.timelineLabel, 'Velocity path needs usable inputs first');
+  assert.equal(model.timelineLabel, 'Illustration needs review');
   assert.equal(model.investmentGrowth, 0);
 });
 
@@ -5693,7 +6868,7 @@ test('vault freedom path rejects non-finite inputs before projecting impact clai
   assert.equal(model.interestSavedLabel, 'Not projected');
   assert.equal(model.freedomYearsLabel, 'Review inputs');
   assert.equal(model.portfolioValueLabel, 'Not projected');
-  assert.equal(model.timelineLabel, 'Velocity path needs usable inputs first');
+  assert.equal(model.timelineLabel, 'Illustration needs review');
   assert.equal(model.standardAgeLabel, 'Review inputs');
   assert.equal(model.velocityAgeLabel, 'Review inputs');
   assert.ok(
@@ -6300,13 +7475,52 @@ test('Guardian velocity guidance does not treat LOC use as automatically safe', 
     'expected Guardian ADB copy to include terms and fees before recommending timing changes'
   );
   assert.ok(
-    answerBank.includes('use the simulator to test frequency'),
-    'expected Guardian chunk-frequency copy to route timing choices through model testing'
+    answerBank.includes('does not compare weekly or biweekly chunk schedules'),
+    'Guardian must state the current monthly-model limit'
   );
   assert.ok(
     answerBank.includes('optimization is secondary to safety'),
     'expected Guardian chunk strategy copy to prioritize safety over optimization'
   );
+});
+
+test('Guardian Simulator and frequency guidance matches the actual comparison contract', () => {
+  const timing = guardian.shieldGuardianQA.find((entry) => entry.keywords.includes('chunk frequency'));
+  const simulator = guardian.shieldGuardianQA.find((entry) => entry.keywords.includes('use simulator'));
+  const answers = [...timing.answers, ...simulator.answers].join(' ').toLowerCase();
+  assert.ok(!answers.includes('test frequency'));
+  assert.ok(!answers.includes('chunk amounts and frequencies'));
+  assert.ok(!answers.includes('baseline (minimum payments)'));
+  assert.ok(answers.includes('same active debt and loc'));
+  assert.ok(answers.includes('available budget'));
+  const allAnswers = guardian.shieldGuardianQA.flatMap((entry) => entry.answers).join(' ').toLowerCase();
+  assert.ok(!allAnswers.includes('traditional is passive'));
+  assert.ok(!allAnswers.includes('compare the modeled path to minimum payments'));
+});
+
+test('legacy saved timing fields survive removal of inactive controls', () => {
+  const state = financialStore.useFinancialStore.getState();
+  const sanitized = financialStore.sanitizePersistedFinancialState({
+    chunkFrequency: 'weekly',
+    mortgageDetails: { ...state.mortgageDetails, paymentFrequency: 'biweekly' },
+  }, state);
+  assert.equal(sanitized.chunkFrequency, 'weekly');
+  assert.equal(sanitized.mortgageDetails.paymentFrequency, 'biweekly');
+});
+
+test('Vault labels the annual-extra approximation separately from dated biweekly payments', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('data-testid="mortgage-annual-extra-assumption"'));
+  assert.ok(source.includes('Annual Extra (Estimate)'));
+  assert.ok(!source.includes('Bi-Weekly Payments'));
+});
+
+test('Vault discloses its two-liability allocation scope before showing strategy deltas', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/vault/page.tsx'), 'utf8');
+  assert.ok(source.includes('data-testid="vault-comparison-scope-warning"'));
+  assert.ok(source.includes('Same mortgage, existing LOC balance and available monthly budget'));
+  assert.ok(source.includes('outcomes cannot be attributed to Velocity alone'));
+  assert.ok(source.indexOf('data-testid="vault-comparison-scope-warning"') < source.indexOf('Annual Extra (Estimate)'));
 });
 
 test('Guardian getting-started prompt routes to planning-first guidance', () => {
@@ -6550,6 +7764,86 @@ test('dashboard model keeps the first screen to four vitals and blocks unstable 
   assert.ok(model.warnings.some((warning) => warning.kind === 'loc-utilization'));
 });
 
+for (const fixture of [
+  { id: 'House rounding', balance: 285000, apr: 0.065, locBalance: 3200, locApr: 0.085,
+    value: 'Est. $51.50/day', debt: '$50.75', loc: '$0.75' },
+  { id: 'Auto rounding', balance: 18450, apr: 0.069, locBalance: 3200, locApr: 0.085,
+    value: 'Est. $4.23/day', debt: '$3.49', loc: '$0.75' },
+  { id: 'cleared balances', balance: 0, apr: 0.065, locBalance: 0, locApr: 0.085,
+    value: 'Est. $0.00/day', debt: '$0.00', loc: '$0.00' },
+  { id: 'positive sub-cent', balance: 1, apr: 0.01, locBalance: 0, locApr: 0,
+    value: 'Est. <$0.01/day', debt: '<$0.01', loc: '$0.00' },
+  { id: 'one-cent boundary', balance: 10, apr: 0.365, locBalance: 0, locApr: 0,
+    value: 'Est. $0.01/day', debt: '$0.01', loc: '$0.00' },
+  { id: 'independent cent rounding', balance: 1236, apr: 0.365, locBalance: 236, locApr: 0.365,
+    value: 'Est. $1.47/day', debt: '$1.24', loc: '$0.24' },
+  { id: 'large imported balances', balance: 100000000, apr: 0.365, locBalance: 100000000, locApr: 0.365,
+    value: 'Est. $200,000.00/day', debt: '$100,000.00', loc: '$100,000.00' },
+  { id: 'unrounded warning threshold', balance: 50004, apr: 0.365, locBalance: 0, locApr: 0,
+    value: 'Est. $50.00/day', debt: '$50.00', loc: '$0.00' },
+]) {
+  test(`dashboard daily-interest display preserves unrounded scope: ${fixture.id}`, () => {
+    const activeDebt = { name: 'Selected Loan', balance: fixture.balance,
+      interestRate: fixture.apr, minimumPayment: 425 };
+    const input = {
+      monthlyIncome: 8200, monthlyExpenses: 4700, chunkAmount: 1000, activeDebt,
+      allDebts: [activeDebt, { name: 'Other Loan', balance: 90000000, interestRate: 0.99, minimumPayment: 5000 }],
+      loc: { limit: 200000000, balance: fixture.locBalance, interestRate: fixture.locApr },
+      baseline: { months: 48, totalInterest: 2600, isPayoffPossible: true },
+      velocity: { months: 24, totalInterest: 1800, savings: 800, isPayoffPossible: true },
+    };
+    const unchanged = JSON.stringify(input);
+    const model = dashboardModel.buildDashboardModel(input);
+    const vital = model.vitals.find((v) => v.id === 'interest-burn');
+    assert.equal(vital.value, fixture.value);
+    assert.equal(vital.caption, `Debt: ${fixture.debt}/day; LOC: ${fixture.loc}/day.`);
+    assert.ok(vital.assumptions.some((a) => a.includes('rounded independently')));
+    assert.ok(vital.assumptions.some((a) => a.includes('selected target plus current LOC balance')));
+    assert.equal(model.debtDailyInterest, fixture.balance * (fixture.apr / 365));
+    assert.equal(model.locDailyInterest, fixture.locBalance * (fixture.locApr / 365));
+    assert.equal(model.dailyInterestBurn, model.debtDailyInterest + model.locDailyInterest);
+    assert.equal(vital.tone, model.dailyInterestBurn > 50 ? 'amber' : 'sky');
+    assert.equal(model.vitals.length, 4);
+    assert.equal(model.vitals.find((v) => v.id === 'cash-flow').value, '$3,500');
+    assert.equal(JSON.stringify(input), unchanged, 'presentation must not mutate its inputs');
+  });
+}
+
+for (const overflow of [
+  { id: 'multiplication', apr: 365000, locBalance: 0, locApr: 0 },
+  { id: 'sum of finite components', apr: 36500, locBalance: Number.MAX_VALUE, locApr: 36500,
+    finiteComponents: true, value: 'Not available', caption: 'Review the entered liability balances before relying on educational projections.' },
+  { id: 'finite-cohort sum of finite components', balance: Number.MAX_VALUE / 2, apr: 73000,
+    locBalance: Number.MAX_VALUE / 2, locApr: 73000, finiteComponents: true },
+]) test(`dashboard daily-interest display rejects overflow: ${overflow.id}`, () => {
+  const debt = { name: 'Oversized import', balance: overflow.balance ?? Number.MAX_VALUE, interestRate: overflow.apr, minimumPayment: 425 };
+  const model = dashboardModel.buildDashboardModel({
+    monthlyIncome: 8200, monthlyExpenses: 4700, chunkAmount: 1000,
+    activeDebt: debt, allDebts: [debt],
+    loc: { limit: Number.MAX_VALUE, balance: overflow.locBalance, interestRate: overflow.locApr },
+    baseline: { months: 48, totalInterest: 2600, isPayoffPossible: true },
+    velocity: { months: 24, totalInterest: 1800, savings: 800, isPayoffPossible: true },
+  });
+  const vital = model.vitals.find((v) => v.id === 'interest-burn');
+  assert.equal(model.dailyInterestBurn, Infinity, 'do not rewrite the existing numeric calculation');
+  if (overflow.finiteComponents) {
+    assert.ok(Number.isFinite(model.debtDailyInterest) && Number.isFinite(model.locDailyInterest));
+  }
+  assert.equal(vital.value, overflow.value ?? 'Review inputs');
+  assert.equal(vital.caption, overflow.caption ?? 'Daily interest exceeds the supported numeric range. Review balance and APR.');
+});
+
+test('CI retains the rendered dashboard daily-interest gate and its failure artifacts', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'));
+  const workflow = fs.readFileSync(path.resolve(__dirname, '../../../.github/workflows/ci.yml'), 'utf8');
+  assert.equal(pkg.scripts['smoke:dashboard:built'], 'node scripts/smoke-dashboard-interest.cjs && node scripts/smoke-legacy-web-truth.cjs');
+  assert.ok(workflow.includes('run: npm run smoke:dashboard:built'));
+  assert.match(workflow, /name: Upload dashboard interest proof\s+if: always\(\)/);
+  const primary = require('js-yaml').load(workflow).jobs['web-mobile-quality'];
+  const proof = primary.steps.find(step => step.name === 'Upload dashboard interest proof');
+  assert.deepEqual(proof.with.path.trim().split(/\r?\n/), ['apps/web/test-results/dashboard-interest', 'apps/web/test-results/legacy-web-truth']);
+});
+
 test('dashboard model treats a missing LOC limit as setup needed instead of maxed out', () => {
   const model = dashboardModel.buildDashboardModel({
     monthlyIncome: 6500,
@@ -6760,10 +8054,10 @@ test('dashboard model sanitizes non-finite first-screen and artifact inputs', ()
   assert.equal(model.locUtilization, 0);
   assert.equal(model.locUtilizationLabel, 'No LOC');
   assert.equal(model.dailyInterestBurn, 0);
-  assert.equal(model.etaValue, 'Stabilize first');
+  assert.equal(model.etaValue, 'Review inputs');
   assert.equal(model.vitals.length, 4);
-  assert.ok(model.warnings.some((warning) => warning.kind === 'cash-flow'), JSON.stringify(model.warnings));
-  assert.ok(model.warnings.some((warning) => warning.kind === 'loc-setup'), JSON.stringify(model.warnings));
+  assert.equal(model.nextMove.title, 'Review liability balances');
+  assert.ok(model.warnings.some((warning) => warning.title === 'Review liability balances'), JSON.stringify(model.warnings));
   assert.ok(model.moneyLoopArtifacts.every((artifact) => Number.isFinite(artifact.fillPercent)), JSON.stringify(model.moneyLoopArtifacts));
   assert.ok(!visibleText.includes('NaN'), visibleText);
   assert.ok(!visibleText.includes('Infinity'), visibleText);
@@ -7247,12 +8541,14 @@ test('Money Loop lazy Three stage remains a client-only visual enhancement behin
   assert.ok(stageSource.includes('data-testid="money-loop-three-stage"'));
   assert.ok(stageSource.includes('data-render-mode={renderMode}'));
   assert.ok(stageSource.includes('data-active-artifact={activeArtifactId}'));
-  assert.ok(stageSource.includes("data-selection-state={settledArtifactId === activeArtifactId ? 'settled' : 'transitioning'}"));
+  assert.ok(stageSource.includes('data-selection-revision={selectionRevision}'));
+  assert.ok(stageSource.includes("data-selection-state={isMoneyLoopSelectionSettled(settledSelection, { id: activeArtifactId, revision: selectionRevision }) ? 'settled' : 'transitioning'}"));
+  assert.ok(railSource.includes('selectionRevision={selectionRevision}') && stageSource.includes('selectionRevision={selectionRevision}') && sceneSource.includes('selectionRevision={selectionRevision}'));
   assert.ok(stageSource.includes('aria-hidden="true"'));
   assert.ok(stageSource.includes('h-64 w-64 md:h-72 md:w-72'));
   assert.ok(stageSource.includes('<Canvas'));
   assert.ok(stageSource.includes('onSelectionSettled={onSelectionSettled}'));
-  assert.ok(sceneSource.includes('onSelectionSettled(activeArtifact.id)') && sceneSource.includes('onFirstFrame()'), 'expected first-frame and terminal Three callbacks to settle the active artifact');
+  assert.ok(sceneSource.includes('onSelectionSettled(activeArtifact.id, selectionRevision)') && sceneSource.includes('onFirstFrame()'), 'expected terminal callbacks to identify the actual selection instance');
 
   const meshesSource = fs.existsSync(meshesPath) ? fs.readFileSync(meshesPath, 'utf8') : '';
   assert.ok(meshesSource.includes('DepositReservoirMesh'));
@@ -7311,9 +8607,9 @@ test('Money Loop Three selection runtime contracts preserve exact selection and 
   assert.equal(selectionMotion.getSelectionMotionElapsedSeconds(Number.NaN, 2000), 0, 'expected an invalid selection timestamp to stay bounded');
   const settledIds = [];
   const notifySettled = selectionMotion.createSelectionSettledNotifier((id) => settledIds.push(id));
-  assert.equal(notifySettled('loc'), true);
-  assert.equal(notifySettled('loc'), false, 'expected one terminal notification per active artifact');
-  assert.equal(notifySettled('expenses'), true);
+  assert.equal(notifySettled('loc', 0), true);
+  assert.equal(notifySettled('loc', 0), false, 'expected one terminal notification per selection instance');
+  assert.equal(notifySettled('expenses', 1), true);
   assert.deepEqual(settledIds, ['loc', 'expenses']);
 
   const railSource = fs.readFileSync(path.resolve(__dirname, '..', 'src/components/MoneyLoopArtifactRail.tsx'), 'utf8');
@@ -7392,7 +8688,7 @@ test('dashboard home page exposes a compact mobile four-vital summary', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/page.tsx'), 'utf8');
 
   assert.ok(source.includes('data-testid="dashboard-mobile-vitals"'), 'expected a stable mobile vitals hook');
-  assert.ok(source.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected mobile vitals to show all four cards in one compact row');
+  // Token fit and first-screen visibility are exercised by smoke-dashboard-interest.cjs.
   assert.ok(source.includes('min-h-[82px]'), 'expected mobile vital cards to fit the first screen summary');
   assert.ok(source.includes('data-testid="dashboard-mobile-money-loop-bridge"'), 'expected the Money Loop bridge to remain on the mobile first screen');
   assert.ok(
@@ -7445,7 +8741,6 @@ test('dashboard mobile vital cards keep coach copy available without first-scree
   const mobileVitalsSource = source.slice(mobileVitalsStart, mobileBridgeStart);
 
   assert.ok(mobileVitalsStart >= 0 && mobileBridgeStart > mobileVitalsStart, 'expected mobile vitals section before the mobile bridge');
-  assert.ok(mobileVitalsSource.includes('grid grid-cols-4 gap-1.5 md:hidden'), 'expected all four mobile vitals to fit in one row');
   assert.ok(mobileVitalsSource.includes('min-h-[82px]'), 'expected mobile vital cards to reserve compact first-screen height');
   assert.ok(!mobileVitalsSource.includes('line-clamp'), 'expected mobile vital captions not to be line-clamped');
   assert.ok(!mobileVitalsSource.includes('truncate'), 'expected mobile vital captions not to be truncated');
@@ -7507,7 +8802,7 @@ test('Money Loop artifact rail exposes an item-selection carousel', () => {
   const css = fs.readFileSync(path.resolve(__dirname, '..', 'src/app/globals.css'), 'utf8');
 
   assert.ok(source.includes('useState'), 'expected artifact rail to track the selected artifact');
-  assert.ok(source.includes('setActiveArtifactId'), 'expected artifact selector controls to update the active artifact');
+  assert.ok(source.includes('setSelection(current => advanceMoneyLoopSelection(current, id, selectionStartedAt))'), 'expected artifact selection to use the latest state and advance its revision atomically');
   assert.ok(source.includes('data-testid="money-loop-artifact-active"'), 'expected a stable active artifact smoke hook');
   assert.ok(source.includes('role="tablist"'), 'expected selector controls to expose tablist semantics');
   assert.ok(source.includes('aria-selected={isActive}'), 'expected selector controls to expose selected state');
@@ -8214,10 +9509,15 @@ test('repository documents the verified Vercel release and custom-domain handoff
     'expected the runbook to document rendered production verification'
   );
   assert.ok(
-    runbook.includes('The final InterestShield custom-domain hostname was not found') &&
-      runbook.includes('Do not guess or silently register a hostname') &&
+    runbook.includes('confirmed `interestshield.app` and `www.interestshield.app` already verified') &&
+      runbook.includes('Do not re-add the domain or replace its working records') &&
+      runbook.includes('No DNS, domain assignment, backend or production configuration was changed') &&
       runbook.includes('NEXT_PUBLIC_SITE_URL'),
-    'expected the runbook to preserve the unresolved custom-domain handoff honestly'
+    'expected the runbook to record the verified binding and preserve final-release checks without reconfiguring production'
+  );
+  assert.ok(
+    !runbook.includes('The final InterestShield custom-domain hostname was not found'),
+    'expected the obsolete unknown-hostname blocker to stay removed'
   );
 });
 
@@ -8232,6 +9532,63 @@ test('client mount hook notifies subscribers after hydration', () => {
     source.includes('const subscribe = (callback: () => void)'),
     'expected useIsClient subscription to notify React after hydration'
   );
+});
+
+test('first-run demo defaults open Dashboard, Vault, and Portfolio without warning states', () => {
+  const state = financialStore.useFinancialStore.getState();
+  const cashFlow = state.monthlyIncome - state.monthlyExpenses;
+  const loc = { limit: state.loc.limit, apr: state.loc.interestRate, balance: state.loc.balance };
+
+  for (const [domain, debt] of Object.entries(state.debts)) {
+    const baseline = state.getBaselinePayoff(domain);
+    const velocity = state.getVelocityPayoff(domain);
+    assert.ok(baseline.isPayoffPossible, `${domain} baseline should be stable: ${baseline.failureReason}`);
+    assert.ok(velocity.isPayoffPossible, `${domain} velocity should be stable: ${velocity.failureReason}`);
+    const model = dashboardModel.buildDashboardModel({
+      monthlyIncome: state.monthlyIncome,
+      monthlyExpenses: state.monthlyExpenses,
+      chunkAmount: state.chunkAmount,
+      activeDebt: debt,
+      allDebts: Object.values(state.debts),
+      loc: state.loc,
+      baseline,
+      velocity,
+    });
+    assert.equal(JSON.stringify(model.warnings.map((warning) => warning.title)), '[]', `${domain} dashboard should open without warnings`);
+    assert.equal(model.statusLabel, 'Ready to simulate', `${domain} dashboard status`);
+  }
+
+  const mortgageInput = { ...state.mortgageDetails, currentAge: state.currentAge };
+  const analysis = calculations.calculateMortgageAnalysis(mortgageInput);
+  assert.equal(JSON.stringify(analysis.warnings.map((warning) => warning.type)), '[]', 'Vault mortgage history should be internally consistent');
+  const strategies = calculations.compareMortgageStrategies(mortgageInput, cashFlow, loc);
+  assert.ok(strategies.velocity.isPayoffPossible, `Vault velocity path should be stable: ${strategies.velocity.failureReason}`);
+
+  assert.equal(state.mortgageDetails.currentBalance, state.debts.house.balance, 'Vault and Dashboard mortgage balance');
+  assert.equal(state.mortgageDetails.currentRate, state.debts.house.interestRate, 'Vault and Dashboard mortgage APR');
+  assert.equal(state.mortgageDetails.currentMonthlyPayment, state.debts.house.minimumPayment, 'Vault and Dashboard mortgage payment');
+
+  const portfolioState = portfolioStore.usePortfolioStore.getState();
+  assert.equal(portfolioState.monthlyIncome, state.monthlyIncome, 'Portfolio and Dashboard income');
+  assert.equal(portfolioState.monthlyExpenses, state.monthlyExpenses, 'Portfolio and Dashboard expenses');
+  const portfolioResult = portfolioState.recompute();
+  assert.equal(JSON.stringify(portfolioResult.warnings), '[]', 'Portfolio should open without warnings');
+  assert.ok(portfolioResult.isPayoffPossible, 'Portfolio payoff path should be projected');
+
+  const sharedDebts = [
+    ['auto-demo', 'car'],
+    ['mortgage-demo', 'house'],
+    ['land-demo', 'land'],
+    ['card-demo', 'creditCard'],
+  ];
+  for (const [portfolioId, domain] of sharedDebts) {
+    const portfolioDebt = portfolioState.debts.find((debt) => debt.id === portfolioId);
+    assert.equal(portfolioDebt.balance, state.debts[domain].balance, `${portfolioDebt.name} balance matches Dashboard`);
+    assert.equal(portfolioDebt.apr, state.debts[domain].interestRate, `${portfolioDebt.name} APR matches Dashboard`);
+  }
+
+  assert.equal(sharedFinancialEngine.defaultMobileDashboardInput.monthlyIncome, state.monthlyIncome, 'mobile demo income matches web');
+  assert.equal(sharedFinancialEngine.defaultMobileDashboardInput.monthlyExpenses, state.monthlyExpenses, 'mobile demo expenses matches web');
 });
 
 let failures = 0;

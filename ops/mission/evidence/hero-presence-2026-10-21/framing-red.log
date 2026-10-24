@@ -1,0 +1,278 @@
+TAP version 13
+# Subtest: Hero orbit fit contains flat video through a complete revolution
+not ok 1 - Hero orbit fit contains flat video through a complete revolution
+  ---
+  duration_ms: 1.084
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: Hero orbit fit contains flat portrait through a complete revolution
+not ok 2 - Hero orbit fit contains flat portrait through a complete revolution
+  ---
+  duration_ms: 0.1611
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Hero orbit fit contains flat mobile through a complete revolution
+not ok 3 - Hero orbit fit contains flat mobile through a complete revolution
+  ---
+  duration_ms: 0.0852
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit contains tall video through a complete revolution
+not ok 4 - Hero orbit fit contains tall video through a complete revolution
+  ---
+  duration_ms: 0.0811
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit contains balanced portrait through a complete revolution
+not ok 5 - Hero orbit fit contains balanced portrait through a complete revolution
+  ---
+  duration_ms: 0.0836
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit contains balanced video through a complete revolution
+not ok 6 - Hero orbit fit contains balanced video through a complete revolution
+  ---
+  duration_ms: 0.0834
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:32:3'
+  failureType: 'testCodeFailure'
+  error: 'fit must use the supplied rotation profile'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit retains radius/height correlation instead of inflating every point to a cylinder
+not ok 7 - Hero orbit fit retains radius/height correlation instead of inflating every point to a cylinder
+  ---
+  duration_ms: 0.1171
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: 'thin top and bottom must not inherit the widest middle radius'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:39:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit uses the real narrow aspect instead of a clipping aspect floor
+not ok 8 - Hero orbit fit uses the real narrow aspect instead of a clipping aspect floor
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: 'finite positive camera distance'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    contained (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:17:10)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:43:28)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit guards tiny geometry against near-plane clipping
+not ok 9 - Hero orbit fit guards tiny geometry against near-plane clipping
+  ---
+  duration_ms: 3.68
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(distance<0.11)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:46:70)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit rejects nonfinite, empty and inconsistent geometry or aspects
+not ok 10 - Hero orbit fit rejects nonfinite, empty and inconsistent geometry or aspects
+  ---
+  duration_ms: 0.4995
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (RangeError).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    name: 'RangeError'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:50:60)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero orbit fit refuses a frame that cannot fit inside the unchanged far plane
+not ok 11 - Hero orbit fit refuses a frame that cannot fit inside the unchanged far plane
+  ---
+  duration_ms: 0.1961
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:58:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (RangeError).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    name: 'RangeError'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:59:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Hero projection verifier rejects clipped, nonfinite and orthographic-fit mutations
+not ok 12 - Hero projection verifier rejects clipped, nonfinite and orthographic-fit mutations
+  ---
+  duration_ms: 0.1441
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-framing.test.mjs:61:1'
+  failureType: 'testCodeFailure'
+  error: 'finite positive camera distance'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    contained (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:17:10)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-framing.test.mjs:62:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 0
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 852.7527

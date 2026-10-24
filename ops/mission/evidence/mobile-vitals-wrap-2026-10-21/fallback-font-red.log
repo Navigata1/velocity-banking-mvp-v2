@@ -1,0 +1,21 @@
+PASS Dashboard interest house at 375px
+PASS Dashboard interest auto at 375px
+PASS Dashboard interest cleared at 375px
+PASS Dashboard interest sub-cent at 375px
+PASS Dashboard interest cent-mismatch at 375px
+PASS Dashboard interest large-import at 375px
+PASS Dashboard interest house at 280px
+PASS Dashboard interest auto at 280px
+PASS Dashboard interest cleared at 280px
+PASS Dashboard interest sub-cent at 280px
+PASS Dashboard interest cent-mismatch at 280px
+AssertionError [ERR_ASSERTION]: large-import wider fallback font 280px: dashboard-mobile-vital-interest-burn value must fit without splitting tokens: {"text":"Est. $200,000.00/day","tokens":[{"text":"Est","oneLine":true,"contained":true},{"text":"$200,000.00","oneLine":true,"contained":true},{"text":"/day","oneLine":true,"contained":false}],"visible":true,"glyphTop":162,"glyphBottom":192,"fontSize":12,"fits":false}
+    at assertVitalLayout (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:79:12)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:233:13 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

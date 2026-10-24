@@ -1,0 +1,3 @@
+PASS hero replay clock: one paused sample, no resume or re-pause before Replay
+PASS hero replay clock: original 16ms primer and 15x100ms samples retained
+PASS hero replay clock negative controls: delayed re-pause and premature caller resume rejected

@@ -1,0 +1,18 @@
+
+> web@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 45ms
+- Experiments (use with caution):
+  ✓ externalDir
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+../../packages/financial-engine/src/portfolio-common-month.ts(74,10): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ 'invalid-horizon': string; 'invalid-input': string; 'invalid-trace': string; 'inconsistent-trace': string; 'numeric-range-exceeded': string; 'cent-tolerance': string; 'negative-cashflow': string; 'incomplete-horizon': string; }'.
+../../packages/financial-engine/src/portfolio-common-month.ts(74,26): error TS2339: Property 'reason' does not exist on type 'CommonMonthSnapshot'.
+  Property 'reason' does not exist on type 'AvailableCommonMonth'.
+Failed to type check.
+

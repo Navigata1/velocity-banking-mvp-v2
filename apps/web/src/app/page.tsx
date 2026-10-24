@@ -1,10 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import { normalizeApr } from '@interestshield/financial-engine';
 import DomainTabs from '@/components/DomainTabs';
 import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
 import MoneyLoopArtifactRail from '@/components/MoneyLoopArtifactRail';
 import PageTransition from '@/components/PageTransition';
+import AssetHero from '@/components/hero/AssetHero';
+import { heroAssets } from '@/data/hero-assets';
+import { formatCurrency } from '@/engine/calculations';
 import { useFinancialStore, Domain } from '@/stores/financial-store';
 import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -47,7 +54,18 @@ const toneStyles: Record<DashboardTone, {
   },
 };
 
+const PortfolioDashboard = dynamic(() => import('./PortfolioDashboard'));
+
+function DashboardSource() {
+  const params = useSearchParams();
+  return params.get('scenario') === 'portfolio' ? <PortfolioDashboard /> : <TargetDashboard />;
+}
+
 export default function Dashboard() {
+  return <Suspense fallback={<p role="status" className="p-6">Loading dashboard...</p>}><DashboardSource /></Suspense>;
+}
+
+function TargetDashboard() {
   const mounted = useIsClient();
   const store = useFinancialStore();
   const { theme } = useThemeStore();
@@ -72,8 +90,7 @@ export default function Dashboard() {
   const domain = store.activeDomain;
   const debtType = store.getActiveDebtType();
   const activeDebt = store.debts[debtType];
-  const baseline = store.getBaselinePayoff(debtType);
-  const velocity = store.getVelocityPayoff(debtType);
+  const { baseline, velocity } = store.getPayoffComparison(debtType);
   const model = buildDashboardModel({
     monthlyIncome: store.monthlyIncome,
     monthlyExpenses: store.monthlyExpenses,
@@ -93,8 +110,8 @@ export default function Dashboard() {
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex min-w-0 items-center gap-4">
               <div>
-                <p className={`text-xs font-medium ${classes.textSecondary}`}>Money Loop Dashboard</p>
-                <h1 className={`mt-0.5 text-xl font-semibold md:text-2xl ${classes.text}`}>Dashboard</h1>
+                <p className={`text-xs font-medium ${classes.textSecondary}`}>InterestShield</p>
+                <h1 className={`mt-0.5 text-xl font-semibold md:text-2xl ${classes.text}`}>{heroAssets[domain].label} Dashboard</h1>
               </div>
               <div className={`hidden items-center gap-2 border-l border-white/10 pl-4 text-xs font-medium sm:inline-flex ${statusStyle.value}`}>
                 <span className={`h-2 w-2 rounded-full ${statusStyle.dot}`} />
@@ -113,7 +130,7 @@ export default function Dashboard() {
 
         <section
           data-testid="dashboard-mobile-vitals"
-          className="grid grid-cols-4 gap-1.5 md:hidden"
+          className="grid grid-cols-2 gap-1.5 md:hidden"
           aria-label="Dashboard vitals"
         >
           {model.vitals.map((vital) => {
@@ -122,7 +139,7 @@ export default function Dashboard() {
               <article
                 key={vital.id}
                 data-testid={`dashboard-mobile-vital-${vital.id}`}
-                className={`${classes.glass} ${style.card} min-h-[82px] rounded-xl border p-2`}
+                className={`${classes.glass} ${style.card} min-h-[82px] min-w-0 rounded-xl border p-2`}
               >
                 <div className="flex items-start justify-between gap-1">
                   <p className={`text-[9px] font-semibold uppercase leading-3 ${classes.textSecondary}`}>
@@ -130,8 +147,10 @@ export default function Dashboard() {
                   </p>
                   <span className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
                 </div>
-                <p className={`mt-1.5 text-sm font-bold leading-tight break-words ${style.value}`}>
-                  {vital.value}
+                <p className={`mt-1.5 font-bold leading-tight ${vital.value.length > 18 ? 'text-xs' : 'text-sm'} ${style.value}`}>
+                  {vital.id === 'interest-burn' && vital.value.endsWith('/day') ? (
+                    <>{vital.value.slice(0, -4)}<wbr /><span className="inline-block whitespace-nowrap">/day</span></>
+                  ) : vital.value}
                 </p>
                 <p className="sr-only">
                   {vital.caption}
@@ -217,6 +236,22 @@ export default function Dashboard() {
           })}
         </section>
 
+        <section aria-label="Selected debt" className={`grid min-w-0 items-center gap-4 border-b border-current/10 py-5 md:grid-cols-[minmax(0,1.7fr)_minmax(240px,1fr)] ${classes.text}`}>
+          <AssetHero key={domain} id={domain} />
+          <div className="min-w-0 px-2 pb-3 md:px-5">
+            <p className={`text-xs font-medium uppercase ${classes.textSecondary}`}>{activeDebt.name}</p>
+            <p className="mt-2 text-3xl font-semibold tabular-nums">{formatCurrency(activeDebt.balance)}</p>
+            <p className={`mt-1 text-sm ${classes.textSecondary}`}>Remaining principal</p>
+            <div className={`my-5 grid grid-cols-2 gap-4 border-y border-current/15 py-4 text-sm ${classes.textSecondary}`}>
+              <div><p>APR</p><strong className={`mt-1 block font-medium ${classes.text}`}>{new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(normalizeApr(activeDebt.interestRate))}</strong></div>
+              <div><p>Monthly payment</p><strong className={`mt-1 block font-medium ${classes.text}`}>{formatCurrency(activeDebt.minimumPayment)}</strong></div>
+            </div>
+            <p className={`text-sm font-semibold ${nextMoveStyle.value}`}>{model.nextMove.title}</p>
+            <p className={`mt-2 text-sm leading-6 ${classes.textSecondary}`}>{model.nextMove.caption}</p>
+            <Link href="/simulator" className="mt-4 inline-flex min-h-11 items-center border-b border-emerald-500 font-medium text-emerald-500">Compare payoff paths</Link>
+          </div>
+        </section>
+
         <section id="dashboard-money-loop-artifacts" className="mt-4 scroll-mt-4 border-y border-white/10 py-4 md:mt-5 md:py-5">
           <div className="min-w-0">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -229,11 +264,14 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <MoneyLoopArtifactRail
+            <details>
+              <summary className={`mt-3 cursor-pointer text-sm font-medium ${classes.text}`}>Explore the Money Loop</summary>
+              <MoneyLoopArtifactRail
               data-testid="money-loop-artifact-rail"
               artifacts={model.moneyLoopArtifacts}
               className="mt-4"
             />
+            </details>
           </div>
         </section>
 
@@ -345,15 +383,15 @@ export default function Dashboard() {
                 <div className="mt-4 space-y-4">
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Income</span>
-                    <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} size="md" ariaLabel="Monthly income" />
+                    <EditableCurrency value={store.monthlyIncome} max={Math.max(10000000, store.monthlyIncome)} onChange={store.setMonthlyIncome} size="md" ariaLabel="Monthly income" />
                   </label>
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Expenses</span>
-                    <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} size="md" ariaLabel="Monthly expenses" />
+                    <EditableCurrency value={store.monthlyExpenses} max={Math.max(10000000, store.monthlyExpenses)} onChange={store.setMonthlyExpenses} size="md" ariaLabel="Monthly expenses" />
                   </label>
                   <label className="block">
                     <span className={`block text-xs ${classes.textSecondary}`}>Chunk Amount</span>
-                    <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} size="md" ariaLabel="Velocity chunk amount" />
+                    <EditableCurrency value={store.chunkAmount} max={Math.max(10000000, store.chunkAmount)} onChange={store.setChunkAmount} size="md" ariaLabel="Velocity chunk amount" />
                   </label>
                 </div>
               </div>
@@ -365,6 +403,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Balance</span>
                     <EditableCurrency
                       value={activeDebt.balance}
+                      max={Math.max(10000000, activeDebt.balance)}
                       onChange={(value) => store.updateDebt(debtType, { balance: value })}
                       size="md"
                       ariaLabel={`${activeDebt.name} balance`}
@@ -383,6 +422,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Minimum Payment</span>
                     <EditableCurrency
                       value={activeDebt.minimumPayment}
+                      max={Math.max(10000000, activeDebt.minimumPayment)}
                       onChange={(value) => store.updateDebt(debtType, { minimumPayment: value })}
                       size="md"
                       ariaLabel={`${activeDebt.name} minimum payment`}
@@ -403,6 +443,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Limit</span>
                     <EditableCurrency
                       value={store.loc.limit}
+                      max={Math.max(10000000, store.loc.limit)}
                       onChange={(value) => store.updateLOC({ limit: value })}
                       size="md"
                       ariaLabel="Line of credit limit"
@@ -412,6 +453,7 @@ export default function Dashboard() {
                     <span className={`block text-xs ${classes.textSecondary}`}>Balance</span>
                     <EditableCurrency
                       value={store.loc.balance}
+                      max={Math.max(10000000, store.loc.balance)}
                       onChange={(value) => store.updateLOC({ balance: value })}
                       size="md"
                       ariaLabel="Line of credit balance"

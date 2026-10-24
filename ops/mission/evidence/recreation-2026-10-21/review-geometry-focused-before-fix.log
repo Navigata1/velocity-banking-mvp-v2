@@ -1,0 +1,8 @@
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-probe.mjs:12
+if(pins.some((p,i)=>p.sha256!==expected[i]))throw Error('Input drift: '+JSON.stringify(pins));
+                                                  ^
+
+Error: Input drift: [{"path":"apps/web/public/heroes/recreation.glb","bytes":520948,"sha256":"6aab14611026767374e76e4bbc36200d2197c1a2d6545f0ebeb97ccc122b7173"},{"path":"apps/media/scripts/build-refined-recreation.mjs","bytes":20252,"sha256":"7f9d61b7c2a490450857fcf6562ae51d5ee966e427c9489d888fca72204c82b0"},{"path":"apps/media/scripts/recreation-refinement.test.mjs","bytes":34461,"sha256":"34e4fe99b5d9f612e5a7f53c1798e1f16150b9a2d8c85cfb55062142fce900d8"}]
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-probe.mjs:12:51
+
+Node.js v22.22.2

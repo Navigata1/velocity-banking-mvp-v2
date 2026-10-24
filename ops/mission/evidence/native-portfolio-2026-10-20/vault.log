@@ -1,0 +1,24 @@
+
+> web@0.1.0 smoke:vault:built
+> node scripts/smoke-vault-comparison.cjs
+
+PASS Vault failed-velocity-horizon at 1440px
+PASS Vault large-illustration at 1440px
+PASS Vault unfunded at 1440px
+PASS Vault existing-loc-zero-recovery at 1440px
+PASS Vault clipped-final at 1440px
+PASS Vault clipped-contribution at 1440px
+PASS Vault one-cent-short at 1440px
+PASS Vault cash-reserves at 1440px
+PASS Vault adverse-interest at 1440px
+PASS Vault already-paid at 1440px
+PASS Vault failed-velocity-horizon at 375px
+PASS Vault large-illustration at 375px
+PASS Vault unfunded at 375px
+PASS Vault existing-loc-zero-recovery at 375px
+PASS Vault clipped-final at 375px
+PASS Vault clipped-contribution at 375px
+PASS Vault one-cent-short at 375px
+PASS Vault cash-reserves at 375px
+PASS Vault adverse-interest at 375px
+PASS Vault already-paid at 375px

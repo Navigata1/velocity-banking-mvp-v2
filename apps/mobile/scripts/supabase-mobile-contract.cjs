@@ -15,6 +15,7 @@ function loadTsFile(filename, mocks = {}) {
     if (request === '@interestshield/persistence-contract') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages', 'persistence-contract', 'src', 'index.ts'));
     }
+    if (request.startsWith('@interestshield/financial-engine')) return loadTsFile(fs.realpathSync(require.resolve(request)), mocks);
     if (request.startsWith('.')) {
       const base = path.resolve(path.dirname(filename), request);
       const resolved = [base, `${base}.ts`, path.join(base, 'index.ts')].find(fs.existsSync);

@@ -127,7 +127,7 @@ export const scenarioStorySchema = z.discriminatedUnion('id', [
 export const scenarioBundleSchema = z.object({
   version: z.literal(1),
   engineContractVersion: z.string().regex(/^source-sha256:[a-f0-9]{12}$/),
-  lenderTermsContractVersion: z.literal('2.0.0'),
+  lenderTermsContractVersion: z.literal('3.0.0'),
   engineSourceDigest: z.string().regex(/^[a-f0-9]{64}$/),
   generatedBy: z.array(z.string().min(1)).min(1),
   scenarios: z.array(scenarioStorySchema).length(3),

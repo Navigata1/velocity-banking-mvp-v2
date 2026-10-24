@@ -2,9 +2,10 @@
 
 import { Canvas, type GLProps } from '@react-three/fiber';
 import { WebGLRenderer } from 'three';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { MoneyLoopRenderMode, MoneyLoopVisualArtifact, MoneyLoopVisualContract } from '@/app/artifact-visual-contract';
 import MoneyLoopThreeScene from './MoneyLoopThreeScene';
+import { isMoneyLoopSelectionSettled, type MoneyLoopSelectionIdentity } from './selection-motion';
 import {
   bindMoneyLoopCanvasContextEvents,
   createMoneyLoopGlFactory,
@@ -18,12 +19,13 @@ interface MoneyLoopThreeStageProps {
   visualContract: MoneyLoopVisualContract;
   activeArtifactId: MoneyLoopVisualArtifact['id'];
   selectionStartedAt: number;
+  selectionRevision: number;
   onSelect: (id: MoneyLoopVisualArtifact['id']) => void;
   onRenderModeChange: (renderMode: MoneyLoopRenderMode) => void;
 }
 
-interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'visualContract' | 'activeArtifactId' | 'selectionStartedAt' | 'onSelect'> {
-  onSelectionSettled: (id: MoneyLoopVisualArtifact['id']) => void;
+interface ActiveMoneyLoopCanvasProps extends Pick<MoneyLoopThreeStageProps, 'visualContract' | 'activeArtifactId' | 'selectionStartedAt' | 'selectionRevision' | 'onSelect'> {
+  onSelectionSettled: (id: MoneyLoopVisualArtifact['id'], revision: number) => void;
   renderMode: 'efficient' | 'full';
   canvasSettings: MoneyLoopCanvasSettings;
   canvasVisible: boolean;
@@ -36,6 +38,7 @@ function ActiveMoneyLoopCanvas({
   visualContract,
   activeArtifactId,
   selectionStartedAt,
+  selectionRevision,
   onSelect,
   onSelectionSettled,
   renderMode,
@@ -76,6 +79,7 @@ function ActiveMoneyLoopCanvas({
         artifacts={visualContract.artifacts}
         activeArtifactId={activeArtifactId}
         selectionStartedAt={selectionStartedAt}
+        selectionRevision={selectionRevision}
         onSelect={onSelect}
         onSelectionSettled={onSelectionSettled}
         canvasSettings={canvasSettings}
@@ -89,14 +93,23 @@ export default function MoneyLoopThreeStage({
   visualContract,
   activeArtifactId,
   selectionStartedAt,
+  selectionRevision,
   onSelect,
   onRenderModeChange,
 }: MoneyLoopThreeStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const [settledArtifactId, setSettledArtifactId] = useState<MoneyLoopVisualArtifact['id'] | null>(null);
+  const [settledSelection, setSettledSelection] = useState<MoneyLoopSelectionIdentity | null>(null);
+  const activeSelectionRef = useRef<MoneyLoopSelectionIdentity>({ id: activeArtifactId, revision: selectionRevision });
   const { renderMode, shouldRender, canvasVisible, controller } = useMoneyLoopRenderMode(visualContract.isComplete, stageRef);
   const canvasSettings = getMoneyLoopCanvasSettings(renderMode);
-  const onSelectionSettled = useCallback((id: MoneyLoopVisualArtifact['id']) => setSettledArtifactId(id), []);
+  useLayoutEffect(() => {
+    activeSelectionRef.current = { id: activeArtifactId, revision: selectionRevision };
+  }, [activeArtifactId, selectionRevision]);
+  const onSelectionSettled = useCallback((id: MoneyLoopVisualArtifact['id'], revision: number) => {
+    const completed = { id, revision };
+    if (!isMoneyLoopSelectionSettled(completed, activeSelectionRef.current)) return;
+    setSettledSelection(previous => isMoneyLoopSelectionSettled(previous, completed) ? previous : completed);
+  }, []);
 
   useEffect(() => onRenderModeChange(renderMode), [onRenderModeChange, renderMode]);
 
@@ -108,7 +121,8 @@ export default function MoneyLoopThreeStage({
       data-render-mode={renderMode}
       data-should-render={shouldRender}
       data-active-artifact={activeArtifactId}
-      data-selection-state={settledArtifactId === activeArtifactId ? 'settled' : 'transitioning'}
+      data-selection-revision={selectionRevision}
+      data-selection-state={isMoneyLoopSelectionSettled(settledSelection, { id: activeArtifactId, revision: selectionRevision }) ? 'settled' : 'transitioning'}
       className="pointer-events-auto absolute left-1/2 top-1/2 h-64 w-64 md:h-72 md:w-72 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
     >
       {shouldRender && renderMode !== 'static' ? (
@@ -116,6 +130,7 @@ export default function MoneyLoopThreeStage({
           visualContract={visualContract}
           activeArtifactId={activeArtifactId}
           selectionStartedAt={selectionStartedAt}
+          selectionRevision={selectionRevision}
           onSelect={onSelect}
           onSelectionSettled={onSelectionSettled}
           renderMode={renderMode}

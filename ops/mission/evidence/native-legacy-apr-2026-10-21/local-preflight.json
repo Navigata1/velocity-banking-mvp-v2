@@ -1,0 +1,241 @@
+{
+  "baseline": "8561784b7dbad554de70fd82f63fd40cca00eb01",
+  "verifiedAt": "2026-10-21T17:06:37.014Z",
+  "stage": "Local native APR compatibility preflight; BOTH new exact-head complete CI events still required",
+  "productionReady": false,
+  "priorVerifiedCiReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6321350077",
+  "sources": {
+    "apps/mobile/components/mobile-shell/controls.tsx": "0b10f0bf75bfc1c2af0184090c688b696fd47fe7f7bf00457610e8f34438b5ea",
+    "apps/mobile/package.json": "5b08fbfa0f7f391c00032394c9bde863ae4ca080c528192065f42f0171908dfa",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "924ff8ef759fb50e6459697ec6d04cd55d113578dd721c45f492c74cd9a20f36",
+    "packages/financial-engine/src/input-draft.ts": "3a92b4a6c4280787dfed3d3be86409408cabf7ab24df724016fbae7bc3e36e93",
+    "apps/mobile/scripts/legacy-apr-draft-contract.cjs": "9aa8084944ae140dc4c3b63797ee477ce8a030a843176e75384882688d8cc187",
+    "apps/mobile/scripts/legacy-apr-smoke.cjs": "b122399512520eb7e189819d8b573de697368a07b397ca4842c7a65fb66e41ca"
+  },
+  "normalizedSources": {
+    "apps/mobile/components/mobile-shell/controls.tsx": "0b10f0bf75bfc1c2af0184090c688b696fd47fe7f7bf00457610e8f34438b5ea",
+    "apps/mobile/package.json": "5b08fbfa0f7f391c00032394c9bde863ae4ca080c528192065f42f0171908dfa",
+    "apps/mobile/scripts/smoke-accessibility-rendered.cjs": "924ff8ef759fb50e6459697ec6d04cd55d113578dd721c45f492c74cd9a20f36",
+    "packages/financial-engine/src/input-draft.ts": "3a92b4a6c4280787dfed3d3be86409408cabf7ab24df724016fbae7bc3e36e93",
+    "apps/mobile/scripts/legacy-apr-draft-contract.cjs": "9aa8084944ae140dc4c3b63797ee477ce8a030a843176e75384882688d8cc187",
+    "apps/mobile/scripts/legacy-apr-smoke.cjs": "b122399512520eb7e189819d8b573de697368a07b397ca4842c7a65fb66e41ca"
+  },
+  "sourceBoundary": {
+    "modified": [
+      "apps/mobile/components/mobile-shell/controls.tsx",
+      "apps/mobile/package.json",
+      "apps/mobile/scripts/smoke-accessibility-rendered.cjs",
+      "packages/financial-engine/src/input-draft.ts"
+    ],
+    "added": [
+      "apps/mobile/scripts/legacy-apr-draft-contract.cjs",
+      "apps/mobile/scripts/legacy-apr-smoke.cjs"
+    ],
+    "protectedSources": 289,
+    "models": 10,
+    "posters": 10,
+    "videos": 10,
+    "numericalAllocationsAndAccrualUnchanged": true,
+    "dependencyAndStorageSchemasUnchanged": true
+  },
+  "tests": {
+    "legacyDrafts": 15,
+    "originalDrafts": 19,
+    "nativeContracts": true,
+    "nativeTypecheck": true,
+    "mobilePort": true,
+    "webRegressions": 348,
+    "commonMonthContracts": 31,
+    "referenceProbes": 23247,
+    "webBuild": true,
+    "webLint": true,
+    "mediaContracts": 145,
+    "freshStills": 27,
+    "ciContracts": 14,
+    "rendererContracts": 4,
+    "nativeOriginalBrowserCases": 70,
+    "nativeNewBrowserCases": 6,
+    "separateFocusedNavigationAssertions": 1,
+    "androidBundle": true,
+    "iosBundle": true
+  },
+  "red": {
+    "draftFailures": 7,
+    "renderedCases": 6,
+    "parentActualIab": true
+  },
+  "manualActualIab": {
+    "origin": "http://127.0.0.1:61625",
+    "scope": "Actual IAB UI on exported Expo, synthetic default inputs only; no hidden storage inspection",
+    "before": "INTEREST BURN\n$4/day\nSimple daily accrual estimate across active debt and LOC balance.",
+    "entered": "200",
+    "after": "INTEREST BURN\n$102/day",
+    "copiedDisplay": "200",
+    "visibleExport": {
+      "version": 2,
+      "aprUnit": "decimal",
+      "data": {
+        "monthlyIncome": 8200,
+        "monthlyExpenses": 4700,
+        "extraMonthlyPayment": 0,
+        "chunkAmount": 1000,
+        "loc": {
+          "limit": 25000,
+          "balance": 3200,
+          "apr": 0.085
+        },
+        "strategy": "velocity",
+        "focusMode": "single",
+        "splitRatioPrimary": 0.7,
+        "debts": [
+          {
+            "id": "8dfecabb-90b0-40f0-bf63-54536c1b1910",
+            "name": "Auto Loan",
+            "category": "custom",
+            "kind": "amortized",
+            "balance": 18450,
+            "apr": 2,
+            "minPaymentRule": {
+              "type": "fixed",
+              "amount": 425
+            },
+            "paymentSource": "checking",
+            "termMonths": 48
+          }
+        ]
+      }
+    },
+    "logs": []
+  },
+  "rawLocalLogs": {
+    "directory": ".superpowers/sdd/2026-10-21-native-legacy-apr",
+    "files": {
+      "draft-red.log": {
+        "bytes": 1950,
+        "sha256": "d6a473251045a3f4e58941c39e7ad849a3d42ae6bf91ee75febf6b05b55a6680"
+      },
+      "draft-green.log": {
+        "bytes": 1398,
+        "sha256": "b6bf0af11c1395ebe3e3dab23cf2f7723bf3c567253f9cb7b65f8d7c0ce02745"
+      },
+      "existing-drafts.log": {
+        "bytes": 1625,
+        "sha256": "f24eb4cc2d3545b2efbd134db7a2ad2765ba85f705b17ea034d0b9bbf1474ccd"
+      },
+      "native-types.log": {
+        "bytes": 58,
+        "sha256": "ae675a3306b86d33f87925cf20ccf821c3f3e34125d23149eb14e3106f5ca399"
+      },
+      "native-contracts.log": {
+        "bytes": 18842,
+        "sha256": "51d8b41817afa714031daa6863a071a69dc247d2f113c0700ee493221b6f7b86"
+      },
+      "mobile-port.log": {
+        "bytes": 3329,
+        "sha256": "b5c4251b4b03a76580496168eefd7cea184d7f3bc27a75f966b6888b505d2274"
+      },
+      "native-build.log": {
+        "bytes": 2684,
+        "sha256": "59b06f9a5ff97dd35d616fcabf1b8a5dfa8d0e64d3dd9822babe0e83e3a64bd8"
+      },
+      "android-bundle.log": {
+        "bytes": 327,
+        "sha256": "cc4711cbe774d832f1b48992433de8158bb8aec48a70ebaa0d09fac097a52ca1"
+      },
+      "ios-bundle.log": {
+        "bytes": 307,
+        "sha256": "028eedd66001602a70d62e088a8cb3fee8f087d0905accd56d00f9142cf9f3c7"
+      },
+      "web-tests.log": {
+        "bytes": 43942,
+        "sha256": "ccaa95f7aebfd8b402b1b0e34d31f12b25e1529fa3008ac85b71af8e7b45bfd7"
+      },
+      "web-lint.log": {
+        "bytes": 32,
+        "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+      },
+      "web-build.log": {
+        "bytes": 992,
+        "sha256": "e84275bc95438ecae80ceaa8cf834463759855fc1da075d0b9994a2688a82e25"
+      },
+      "media-check.log": {
+        "bytes": 57228,
+        "sha256": "3d5b4433c5cadf0f2980f5e935acefe427c1e0a78d4772c3945e7dbe18f5ace0"
+      },
+      "ci-contracts.log": {
+        "bytes": 2717,
+        "sha256": "27dd60bc7e4acb37a6e2999b320216aeab79dcc590efdb26fe23bb3a08158995"
+      },
+      "renderer-contracts.log": {
+        "bytes": 969,
+        "sha256": "55eb7098650b4f5493bb1330a51684ac38c75295967949eb9446304d3cdaa8b8"
+      },
+      "renderer-existing.log": {
+        "bytes": 35,
+        "sha256": "3b5fc60ebbc97238cbe9268a9770a2e7a57cd2302d5ed9cc254d6e3a4371b0d2"
+      },
+      "browser-full-green/run.log": {
+        "bytes": 3028,
+        "sha256": "d8c034051da3f0ffb5a65ea2bbbf725b4851809ba546942e7f2d3ffa867493e4"
+      },
+      "browser-full-green/run-status.json": {
+        "bytes": 304,
+        "sha256": "9038ec47c64568c89b203cfe9bd09ab279f55581ad8aaf5591838a3eed9c8d82"
+      },
+      "browser-full-green/count-reconciliation.json": {
+        "bytes": 428,
+        "sha256": "5a9fc6931f60df61fc3a35efce744aa7a37ee1242a01654d70dfa240274f43ef"
+      },
+      "browser-green-final/legacy-apr-verification.json": {
+        "bytes": 7640,
+        "sha256": "a8817ebbe39bf8b8f5697241e5234955d97d2360ff050d952792e50394f4f33a"
+      },
+      "browser-full-green/legacy-apr-verification.json": {
+        "bytes": 7640,
+        "sha256": "d4354747662c0c3d1101c5505d975dee88ac41adf5d61d603c650912ae74a98a"
+      },
+      "manual-before.json": {
+        "bytes": 451,
+        "sha256": "2640625639d0650db7b8d6e1a6d950e19a8561d2bfe443acc6074accab1aa273"
+      },
+      "manual-before-viewport.jpg": {
+        "bytes": 58882,
+        "sha256": "1f43da972ef1c28d3eb28d9f6e54240c7eb7a2eb3250656615e9a60d1cd0f7b7"
+      },
+      "manual-after.json": {
+        "bytes": 1149,
+        "sha256": "fe445a07e6c2102e3fb0fc0a106e39d9c06b4611a39499c934cd8bf167b75a65"
+      },
+      "manual-after-field.jpg": {
+        "bytes": 58882,
+        "sha256": "1f43da972ef1c28d3eb28d9f6e54240c7eb7a2eb3250656615e9a60d1cd0f7b7"
+      },
+      "manual-after-copy.jpg": {
+        "bytes": 42873,
+        "sha256": "5cbc742a9af850979f4eac7c38cef9f09ef35714baa1dbf2158bfe50f11148c9"
+      }
+    }
+  },
+  "countReconciliation": {
+    "applicationHarnessExitCode": 0,
+    "firstCountingWrapperExitCode": 1,
+    "reason": "Wrapper incorrectly expected76 raw PASS lines. Standing harness exit0; actual77 includes one separate focused-navigation assertion. No test changed or removed.",
+    "standingOriginalCaseReceipts": 70,
+    "newLegacyAprCaseReceipts": 6,
+    "additionalFocusedNavigationAssertions": 1,
+    "totalPassLines": 77,
+    "originalFixturesUnchanged": true
+  },
+  "inheritedHosted": {
+    "headSha": "cc09e2e3f560c380445333907469ba813035a7a2",
+    "cases": 120,
+    "note": "Web source and old percent policy unchanged; hosted120 is inherited, NOT smoke of this native-source checkpoint."
+  },
+  "limitations": [
+    "No physical-device, locale-complete keyboard, signed-in or cloud flow approval.",
+    "No production promotion, schema/provider/DNS/access/data mutation or paid GPU job.",
+    "All ten hero models, posters and videos unchanged; this is not final photoreal art approval.",
+    "No Desktop HTML republishing or local-file browser workaround.",
+    "Shared scenarios, lender/calendar/backend/security/device/release work remains open."
+  ]
+}

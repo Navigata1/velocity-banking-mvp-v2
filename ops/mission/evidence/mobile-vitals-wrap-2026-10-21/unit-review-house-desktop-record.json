@@ -1,0 +1,1177 @@
+{
+  "name": "house-desktop-record",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "layout": [
+    {
+      "id": "dashboard-vital-cash-flow",
+      "label": {
+        "text": "Cash Flow",
+        "tokens": [
+          {
+            "text": "Cash",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Flow",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 156,
+        "glyphBottom": 172,
+        "fontSize": 12,
+        "fits": true
+      },
+      "value": {
+        "text": "$3,500",
+        "tokens": [
+          {
+            "text": "$3,500",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 179,
+        "glyphBottom": 211,
+        "fontSize": 24,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 291.5,
+      "height": 162
+    },
+    {
+      "id": "dashboard-vital-interest-burn",
+      "label": {
+        "text": "Interest Burn",
+        "tokens": [
+          {
+            "text": "Interest",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Burn",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 156,
+        "glyphBottom": 172,
+        "fontSize": 12,
+        "fits": true
+      },
+      "value": {
+        "text": "Est. $51.50/day",
+        "tokens": [
+          {
+            "text": "Est",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "$51.50",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "/day",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 179,
+        "glyphBottom": 211,
+        "fontSize": 24,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 291.5,
+      "height": 162
+    },
+    {
+      "id": "dashboard-vital-debt-free-eta",
+      "label": {
+        "text": "Debt-Free ETA",
+        "tokens": [
+          {
+            "text": "Debt",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Free",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "ETA",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 156,
+        "glyphBottom": 172,
+        "fontSize": 12,
+        "fits": true
+      },
+      "value": {
+        "text": "Stabilize first",
+        "tokens": [
+          {
+            "text": "Stabilize",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "first",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 179,
+        "glyphBottom": 211,
+        "fontSize": 24,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 291.5,
+      "height": 162
+    },
+    {
+      "id": "dashboard-vital-next-move",
+      "label": {
+        "text": "Next Move",
+        "tokens": [
+          {
+            "text": "Next",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Move",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 156,
+        "glyphBottom": 172,
+        "fontSize": 12,
+        "fits": true
+      },
+      "value": {
+        "text": "Fix the payoff inputs",
+        "tokens": [
+          {
+            "text": "Fix",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "the",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "payoff",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "inputs",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 179,
+        "glyphBottom": 211,
+        "fontSize": 24,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 291.5,
+      "height": 162
+    }
+  ],
+  "dom": [
+    {
+      "id": "dashboard-vital-cash-flow",
+      "parts": [
+        {
+          "text": "Cash Flow",
+          "innerText": "CASH FLOW",
+          "markup": "Cash Flow",
+          "chars": [
+            {
+              "text": "C",
+              "left": 265,
+              "right": 272.453125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "a",
+              "left": 272.453125,
+              "right": 280.515625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "s",
+              "left": 280.5,
+              "right": 287.046875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "h",
+              "left": 287.03125,
+              "right": 295.875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": " ",
+              "left": 295.859375,
+              "right": 299.171875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "F",
+              "left": 299.15625,
+              "right": 305.203125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "l",
+              "left": 305.1875,
+              "right": 310.703125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "o",
+              "left": 310.703125,
+              "right": 319.78125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "w",
+              "left": 319.765625,
+              "right": 331.375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "12px",
+          "width": 72.421875,
+          "client": 72,
+          "scroll": 72,
+          "wbrCount": 0,
+          "unit": null
+        },
+        {
+          "text": "$3,500",
+          "innerText": "$3,500",
+          "markup": "$3,500",
+          "chars": [
+            {
+              "text": "$",
+              "left": 265,
+              "right": 278.328125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "3",
+              "left": 278.3125,
+              "right": 291.65625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": ",",
+              "left": 291.640625,
+              "right": 297.4375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "5",
+              "left": 297.4375,
+              "right": 310.765625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "0",
+              "left": 310.75,
+              "right": 324.09375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "0",
+              "left": 324.078125,
+              "right": 337.421875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "24px",
+          "width": 72.421875,
+          "client": 72,
+          "scroll": 72,
+          "wbrCount": 0,
+          "unit": null
+        }
+      ],
+      "overlap": false
+    },
+    {
+      "id": "dashboard-vital-interest-burn",
+      "parts": [
+        {
+          "text": "Interest Burn",
+          "innerText": "INTEREST BURN",
+          "markup": "Interest Burn",
+          "chars": [
+            {
+              "text": "I",
+              "left": 556.5,
+              "right": 560,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "n",
+              "left": 559.984375,
+              "right": 569.203125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "t",
+              "left": 569.203125,
+              "right": 575.828125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 575.8125,
+              "right": 582.046875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "r",
+              "left": 582.03125,
+              "right": 589.515625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 589.5,
+              "right": 595.71875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "s",
+              "left": 595.703125,
+              "right": 602.25,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "t",
+              "left": 602.25,
+              "right": 608.875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": " ",
+              "left": 608.859375,
+              "right": 612.171875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "B",
+              "left": 612.15625,
+              "right": 619.421875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "u",
+              "left": 619.40625,
+              "right": 627.859375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "r",
+              "left": 627.84375,
+              "right": 635.328125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "n",
+              "left": 635.3125,
+              "right": 644.53125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "12px",
+          "width": 161.6875,
+          "client": 162,
+          "scroll": 162,
+          "wbrCount": 0,
+          "unit": null
+        },
+        {
+          "text": "Est. $51.50/day",
+          "innerText": "Est. $51.50/day",
+          "markup": "Est. $51.50/day",
+          "chars": [
+            {
+              "text": "E",
+              "left": 556.5,
+              "right": 568.921875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "s",
+              "left": 568.921875,
+              "right": 579.28125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "t",
+              "left": 579.265625,
+              "right": 587.953125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": ".",
+              "left": 587.9375,
+              "right": 593.734375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": " ",
+              "left": 593.71875,
+              "right": 600.328125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "$",
+              "left": 600.328125,
+              "right": 613.65625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "5",
+              "left": 613.640625,
+              "right": 626.984375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "1",
+              "left": 626.96875,
+              "right": 636.640625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": ".",
+              "left": 636.625,
+              "right": 642.421875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "5",
+              "left": 642.421875,
+              "right": 655.75,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "0",
+              "left": 655.734375,
+              "right": 669.078125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "/",
+              "left": 669.0625,
+              "right": 679,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "d",
+              "left": 678.984375,
+              "right": 693.46875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "a",
+              "left": 693.453125,
+              "right": 705.984375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "y",
+              "left": 705.984375,
+              "right": 718.1875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "24px",
+          "width": 161.6875,
+          "client": 162,
+          "scroll": 162,
+          "wbrCount": 0,
+          "unit": null
+        }
+      ],
+      "overlap": false
+    },
+    {
+      "id": "dashboard-vital-debt-free-eta",
+      "parts": [
+        {
+          "text": "Debt-Free ETA",
+          "innerText": "DEBT-FREE ETA",
+          "markup": "Debt-Free ETA",
+          "chars": [
+            {
+              "text": "D",
+              "left": 848,
+              "right": 856.609375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 856.59375,
+              "right": 862.828125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "b",
+              "left": 862.8125,
+              "right": 869.640625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "t",
+              "left": 869.625,
+              "right": 876.265625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "-",
+              "left": 876.25,
+              "right": 881.09375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "F",
+              "left": 881.078125,
+              "right": 887.125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "r",
+              "left": 887.109375,
+              "right": 894.59375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 894.578125,
+              "right": 900.796875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 900.78125,
+              "right": 907.015625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": " ",
+              "left": 907,
+              "right": 910.3125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "E",
+              "left": 910.296875,
+              "right": 916.578125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "T",
+              "left": 916.5625,
+              "right": 922.328125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "A",
+              "left": 922.3125,
+              "right": 930.390625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "12px",
+          "width": 139.9375,
+          "client": 140,
+          "scroll": 140,
+          "wbrCount": 0,
+          "unit": null
+        },
+        {
+          "text": "Stabilize first",
+          "innerText": "Stabilize first",
+          "markup": "Stabilize first",
+          "chars": [
+            {
+              "text": "S",
+              "left": 848,
+              "right": 860.375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "t",
+              "left": 860.375,
+              "right": 869.046875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "a",
+              "left": 869.046875,
+              "right": 881.578125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "b",
+              "left": 881.5625,
+              "right": 896.046875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "i",
+              "left": 896.03125,
+              "right": 902.3125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "l",
+              "left": 902.296875,
+              "right": 908.578125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "i",
+              "left": 908.5625,
+              "right": 914.84375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "z",
+              "left": 914.84375,
+              "right": 926,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "e",
+              "left": 925.984375,
+              "right": 938.75,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": " ",
+              "left": 938.734375,
+              "right": 945.34375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "f",
+              "left": 945.328125,
+              "right": 953.609375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "i",
+              "left": 953.609375,
+              "right": 959.890625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "r",
+              "left": 959.875,
+              "right": 968.921875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "s",
+              "left": 968.90625,
+              "right": 979.265625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "t",
+              "left": 979.25,
+              "right": 987.9375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "24px",
+          "width": 139.9375,
+          "client": 140,
+          "scroll": 140,
+          "wbrCount": 0,
+          "unit": null
+        }
+      ],
+      "overlap": false
+    },
+    {
+      "id": "dashboard-vital-next-move",
+      "parts": [
+        {
+          "text": "Next Move",
+          "innerText": "NEXT MOVE",
+          "markup": "Next Move",
+          "chars": [
+            {
+              "text": "N",
+              "left": 1139.5,
+              "right": 1148.71875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 1148.703125,
+              "right": 1155.0625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "x",
+              "left": 1155.046875,
+              "right": 1162.703125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "t",
+              "left": 1162.6875,
+              "right": 1169.328125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": " ",
+              "left": 1169.3125,
+              "right": 1172.625,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "M",
+              "left": 1172.609375,
+              "right": 1183.71875,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "o",
+              "left": 1183.703125,
+              "right": 1192.78125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "v",
+              "left": 1192.765625,
+              "right": 1200.484375,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            },
+            {
+              "text": "e",
+              "left": 1200.46875,
+              "right": 1206.703125,
+              "top": 156,
+              "bottom": 172,
+              "height": 16
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "12px",
+          "width": 222.515625,
+          "client": 223,
+          "scroll": 223,
+          "wbrCount": 0,
+          "unit": null
+        },
+        {
+          "text": "Fix the payoff inputs",
+          "innerText": "Fix the payoff inputs",
+          "markup": "Fix the payoff inputs",
+          "chars": [
+            {
+              "text": "F",
+              "left": 1139.5,
+              "right": 1151.5625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "i",
+              "left": 1151.546875,
+              "right": 1157.828125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "x",
+              "left": 1157.828125,
+              "right": 1169.859375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": " ",
+              "left": 1169.84375,
+              "right": 1176.453125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "t",
+              "left": 1176.4375,
+              "right": 1185.125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "h",
+              "left": 1185.109375,
+              "right": 1199.09375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "e",
+              "left": 1199.078125,
+              "right": 1211.84375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": " ",
+              "left": 1211.828125,
+              "right": 1218.4375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "p",
+              "left": 1218.4375,
+              "right": 1232.625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "a",
+              "left": 1232.609375,
+              "right": 1245.15625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "y",
+              "left": 1245.140625,
+              "right": 1257.171875,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "o",
+              "left": 1257.15625,
+              "right": 1271.109375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "f",
+              "left": 1271.09375,
+              "right": 1279.375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "f",
+              "left": 1279.375,
+              "right": 1287.65625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": " ",
+              "left": 1287.640625,
+              "right": 1294.25,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "i",
+              "left": 1294.234375,
+              "right": 1300.515625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "n",
+              "left": 1300.515625,
+              "right": 1314.53125,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "p",
+              "left": 1314.515625,
+              "right": 1328.984375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "u",
+              "left": 1328.96875,
+              "right": 1342.984375,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "t",
+              "left": 1342.984375,
+              "right": 1351.65625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            },
+            {
+              "text": "s",
+              "left": 1351.65625,
+              "right": 1362.015625,
+              "top": 179,
+              "bottom": 211,
+              "height": 32
+            }
+          ],
+          "painted": true,
+          "contained": true,
+          "font": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          "fontSize": "24px",
+          "width": 222.515625,
+          "client": 223,
+          "scroll": 223,
+          "wbrCount": 0,
+          "unit": null
+        }
+      ],
+      "overlap": false
+    }
+  ],
+  "hero": {
+    "visibleHeight": 464,
+    "loaded": true
+  },
+  "failure": null,
+  "accepted": true,
+  "independent": true
+}

@@ -1,0 +1,673 @@
+{
+  "origin": "http://127.0.0.1:64938",
+  "receipts": [
+    {
+      "scenario": "failed-velocity-horizon",
+      "width": 1440,
+      "expectedMonths": [
+        "371 mo",
+        "371 mo",
+        "371 mo",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n371 mo\n\n$33,953 interest\n\nPayoff: Sep 2057\n\nCash at payoff: $109",
+        "biweekly": "Annual Extra (Estimate)\n\n371 mo\n\n$27 more modeled interest\n\nNo faster payoff\n\nCash at payoff: $82",
+        "extraPayment": "+$0.01/mo Extra\n\n371 mo\n\n$27 more modeled interest\n\nNo faster payoff\n\nCash at payoff: $82",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nExtend projection horizon"
+      },
+      "input": {
+        "income": 200,
+        "expenses": 0,
+        "balance": 30000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 20000,
+          "balance": 10138,
+          "interestRate": 0.12
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "large-illustration",
+      "width": 1440,
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n360 mo\n\n$1,155,485 interest\n\nPayoff: Oct 2056\n\nCash at payoff: $2,164,515",
+        "biweekly": "Annual Extra (Estimate)\n\n294 mo\n\n$244,485 less modeled interest\n\n66 months faster\n\nCash at payoff: $1,617,000",
+        "extraPayment": "+$1,000/mo Extra\n\n252 mo\n\n$397,233 less modeled interest\n\n108 months faster\n\nCash at payoff: $1,265,748",
+        "velocity": "⚡ Velocity Banking\n\n108 mo\n\nCash at payoff: $1,555\n\n$861,040 less modeled interest\n\n252 months faster"
+      },
+      "input": {
+        "income": 20000,
+        "expenses": 8000,
+        "balance": 1000000,
+        "apr": 0.06,
+        "payment": 6000,
+        "loc": {
+          "limit": 100000,
+          "balance": 0,
+          "interestRate": 0.08
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "unfunded",
+      "width": 1440,
+      "expectedMonths": [
+        "Review inputs",
+        "Review inputs",
+        "Review inputs",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "biweekly": "Annual Extra (Estimate)\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "extraPayment": "+$0/mo Extra\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nCash flow below payment"
+      },
+      "input": {
+        "income": 50,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "existing-loc-zero-recovery",
+      "width": 1440,
+      "expectedMonths": [
+        "30 mo",
+        "30 mo",
+        "30 mo",
+        "30 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n30 mo\n\n$0 interest\n\nPayoff: Apr 2029\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\n30 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\n30 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\n30 mo\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 100,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 2000,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "clipped-final",
+      "width": 1440,
+      "expectedMonths": [
+        "1 mo",
+        "1 mo",
+        "1 mo",
+        "1 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n1 mo\n\n$1 interest\n\nPayoff: Nov 2026\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\n1 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\n1 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\n1 mo\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 120.7,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "clipped-contribution",
+      "width": 1440,
+      "expectedMonths": [
+        "2 mo",
+        "2 mo",
+        "2 mo",
+        "1 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n2 mo\n\n$1 interest\n\nPayoff: Dec 2026\n\nCash at payoff: $124",
+        "biweekly": "Annual Extra (Estimate)\n\n2 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $124",
+        "extraPayment": "+$3/mo Extra\n\n2 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $124",
+        "velocity": "⚡ Velocity Banking\n\n1 mo\n\nCash at payoff: $0.00\n\n$0.02 less modeled interest\n\n1 month faster"
+      },
+      "input": {
+        "income": 123.7,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 2000,
+          "balance": 3,
+          "interestRate": 0.08
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "one-cent-short",
+      "width": 1440,
+      "expectedMonths": [
+        "Review inputs",
+        "Review inputs",
+        "Review inputs",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "biweekly": "Annual Extra (Estimate)\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "extraPayment": "+$0/mo Extra\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nCash flow below payment"
+      },
+      "input": {
+        "income": 120.69,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "cash-reserves",
+      "width": 1440,
+      "expectedMonths": [
+        "10 mo",
+        "10 mo",
+        "3 mo",
+        "5 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n10 mo\n\n$0 interest\n\nPayoff: Aug 2027\n\nCash at payoff: $4,000",
+        "biweekly": "Annual Extra (Estimate)\n\n10 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $4,000",
+        "extraPayment": "+$250/mo Extra\n\n3 mo\n\nSame modeled interest\n\n7 months faster\n\nCash at payoff: $500",
+        "velocity": "⚡ Velocity Banking\n\n5 mo\n\nCash at payoff: $1,500\n\nSame modeled interest\n\n5 months faster"
+      },
+      "input": {
+        "income": 1000,
+        "expenses": 500,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "adverse-interest",
+      "width": 1440,
+      "expectedMonths": [
+        "10 mo",
+        "10 mo",
+        "9 mo",
+        "9 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n10 mo\n\n$0 interest\n\nPayoff: Aug 2027\n\nCash at payoff: $200",
+        "biweekly": "Annual Extra (Estimate)\n\n10 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $200",
+        "extraPayment": "+$20/mo Extra\n\n9 mo\n\nSame modeled interest\n\n1 month faster\n\nCash at payoff: $80",
+        "velocity": "⚡ Velocity Banking\n\n9 mo\n\nCash at payoff: $79\n\n$1 more modeled interest\n\n1 month faster"
+      },
+      "input": {
+        "income": 120,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0.5
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "already-paid",
+      "width": 1440,
+      "expectedMonths": [
+        "Paid off",
+        "Paid off",
+        "Paid off",
+        "Paid off"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nPaid off\n\n$0 interest\n\nPayoff: Already paid off\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\nPaid off\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\nPaid off\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\nPaid off\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 0,
+        "expenses": 0,
+        "balance": 0,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 0,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "failed-velocity-horizon",
+      "width": 375,
+      "expectedMonths": [
+        "371 mo",
+        "371 mo",
+        "371 mo",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n371 mo\n\n$33,953 interest\n\nPayoff: Sep 2057\n\nCash at payoff: $109",
+        "biweekly": "Annual Extra (Estimate)\n\n371 mo\n\n$27 more modeled interest\n\nNo faster payoff\n\nCash at payoff: $82",
+        "extraPayment": "+$0.01/mo Extra\n\n371 mo\n\n$27 more modeled interest\n\nNo faster payoff\n\nCash at payoff: $82",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nExtend projection horizon"
+      },
+      "input": {
+        "income": 200,
+        "expenses": 0,
+        "balance": 30000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 20000,
+          "balance": 10138,
+          "interestRate": 0.12
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "large-illustration",
+      "width": 375,
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n360 mo\n\n$1,155,485 interest\n\nPayoff: Oct 2056\n\nCash at payoff: $2,164,515",
+        "biweekly": "Annual Extra (Estimate)\n\n294 mo\n\n$244,485 less modeled interest\n\n66 months faster\n\nCash at payoff: $1,617,000",
+        "extraPayment": "+$1,000/mo Extra\n\n252 mo\n\n$397,233 less modeled interest\n\n108 months faster\n\nCash at payoff: $1,265,748",
+        "velocity": "⚡ Velocity Banking\n\n108 mo\n\nCash at payoff: $1,555\n\n$861,040 less modeled interest\n\n252 months faster"
+      },
+      "input": {
+        "income": 20000,
+        "expenses": 8000,
+        "balance": 1000000,
+        "apr": 0.06,
+        "payment": 6000,
+        "loc": {
+          "limit": 100000,
+          "balance": 0,
+          "interestRate": 0.08
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "unfunded",
+      "width": 375,
+      "expectedMonths": [
+        "Review inputs",
+        "Review inputs",
+        "Review inputs",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "biweekly": "Annual Extra (Estimate)\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "extraPayment": "+$0/mo Extra\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nCash flow below payment"
+      },
+      "input": {
+        "income": 50,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "existing-loc-zero-recovery",
+      "width": 375,
+      "expectedMonths": [
+        "30 mo",
+        "30 mo",
+        "30 mo",
+        "30 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n30 mo\n\n$0 interest\n\nPayoff: Apr 2029\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\n30 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\n30 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\n30 mo\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 100,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 2000,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "clipped-final",
+      "width": 375,
+      "expectedMonths": [
+        "1 mo",
+        "1 mo",
+        "1 mo",
+        "1 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n1 mo\n\n$1 interest\n\nPayoff: Nov 2026\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\n1 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\n1 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\n1 mo\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 120.7,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "clipped-contribution",
+      "width": 375,
+      "expectedMonths": [
+        "2 mo",
+        "2 mo",
+        "2 mo",
+        "1 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n2 mo\n\n$1 interest\n\nPayoff: Dec 2026\n\nCash at payoff: $124",
+        "biweekly": "Annual Extra (Estimate)\n\n2 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $124",
+        "extraPayment": "+$3/mo Extra\n\n2 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $124",
+        "velocity": "⚡ Velocity Banking\n\n1 mo\n\nCash at payoff: $0.00\n\n$0.02 less modeled interest\n\n1 month faster"
+      },
+      "input": {
+        "income": 123.7,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 2000,
+          "balance": 3,
+          "interestRate": 0.08
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "one-cent-short",
+      "width": 375,
+      "expectedMonths": [
+        "Review inputs",
+        "Review inputs",
+        "Review inputs",
+        "Review inputs"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "biweekly": "Annual Extra (Estimate)\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "extraPayment": "+$0/mo Extra\n\nReview inputs\n\nNot projected\n\nCash flow below payment\n\nCash at payoff: Not projected",
+        "velocity": "⚡ Velocity Banking\n\nReview inputs\n\nCash at payoff: Not projected\n\nNot projected\n\nCash flow below payment"
+      },
+      "input": {
+        "income": 120.69,
+        "expenses": 0,
+        "balance": 120,
+        "apr": 0.07,
+        "payment": 425,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "cash-reserves",
+      "width": 375,
+      "expectedMonths": [
+        "10 mo",
+        "10 mo",
+        "3 mo",
+        "5 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n10 mo\n\n$0 interest\n\nPayoff: Aug 2027\n\nCash at payoff: $4,000",
+        "biweekly": "Annual Extra (Estimate)\n\n10 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $4,000",
+        "extraPayment": "+$250/mo Extra\n\n3 mo\n\nSame modeled interest\n\n7 months faster\n\nCash at payoff: $500",
+        "velocity": "⚡ Velocity Banking\n\n5 mo\n\nCash at payoff: $1,500\n\nSame modeled interest\n\n5 months faster"
+      },
+      "input": {
+        "income": 1000,
+        "expenses": 500,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "adverse-interest",
+      "width": 375,
+      "expectedMonths": [
+        "10 mo",
+        "10 mo",
+        "9 mo",
+        "9 mo"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\n10 mo\n\n$0 interest\n\nPayoff: Aug 2027\n\nCash at payoff: $200",
+        "biweekly": "Annual Extra (Estimate)\n\n10 mo\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $200",
+        "extraPayment": "+$20/mo Extra\n\n9 mo\n\nSame modeled interest\n\n1 month faster\n\nCash at payoff: $80",
+        "velocity": "⚡ Velocity Banking\n\n9 mo\n\nCash at payoff: $79\n\n$1 more modeled interest\n\n1 month faster"
+      },
+      "input": {
+        "income": 120,
+        "expenses": 0,
+        "balance": 1000,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 5000,
+          "balance": 0,
+          "interestRate": 0.5
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    },
+    {
+      "scenario": "already-paid",
+      "width": 375,
+      "expectedMonths": [
+        "Paid off",
+        "Paid off",
+        "Paid off",
+        "Paid off"
+      ],
+      "observedCards": {
+        "standard": "Scheduled Mortgage + LOC\n\nPaid off\n\n$0 interest\n\nPayoff: Already paid off\n\nCash at payoff: $0.00",
+        "biweekly": "Annual Extra (Estimate)\n\nPaid off\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "extraPayment": "+$0/mo Extra\n\nPaid off\n\nSame modeled interest\n\nNo faster payoff\n\nCash at payoff: $0.00",
+        "velocity": "⚡ Velocity Banking\n\nPaid off\n\nCash at payoff: $0.00\n\nSame modeled interest\n\nNo faster payoff"
+      },
+      "input": {
+        "income": 0,
+        "expenses": 0,
+        "balance": 0,
+        "apr": 0,
+        "payment": 100,
+        "loc": {
+          "limit": 0,
+          "balance": 0,
+          "interestRate": 0
+        }
+      },
+      "errors": [],
+      "overflow": {
+        "page": false,
+        "cards": false
+      },
+      "savedTimingPreserved": true
+    }
+  ]
+}

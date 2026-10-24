@@ -1,0 +1,201 @@
+{
+  "at": "2026-10-23T15:33:33.293Z",
+  "head": "4896106c967011a75806f4b49447db64318110d9",
+  "collection": "93eea29f-65cf-4445-969b-3ad34a83c240",
+  "scope": "Parent original-image observations and screening decision only; not execution attestation or physical performance approval.",
+  "originals": [
+    {
+      "name": "instanced-351-pose-0-t0.png",
+      "sha256": "bd14937cc21fe889a0795f9df16044f1019bb0c99f160676bdbabc0d8efa7a95",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-0-t0.png",
+      "sha256": "ebb891c04cbe9d3e51155296f0a4857a990d4175f4d4e2c8b8beea99f2b9d6de",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-1-t2.png",
+      "sha256": "9b50760344665abea77840ca166a407e8bf67fdd9ee618192aae34abbcbd4bf2",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-1-t2.png",
+      "sha256": "90728ad9813f3e85c7afd3227d920ed71adeefa7f4dfccfca0e6cbaaaa4b2e16",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-2-t3.png",
+      "sha256": "2ee9bd1892f3fa819aea9a47bcdd4b2b9f17f0e91c9da5e7f561616523d71d7c",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-2-t3.png",
+      "sha256": "98429a2bfa550511ea1b6e83f8342b41d4857c6f4e16a4af26cc824cac668970",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-3-t4.png",
+      "sha256": "c40d65982842aac117be4374d1da9be7ebadeb568c8d69879edbf037699410f8",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-3-t4.png",
+      "sha256": "bd6f691b995ac08185096bfac0ee1bf0b0689e46dd9e951b296be0d118d74fea",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-4-t5.png",
+      "sha256": "525721d3fdccba174b4934afc05863b912d8ad98da41c450033fb8a26f16349a",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-4-t5.png",
+      "sha256": "43c438f4de97d067fe904ae3b9418cbde04bf8669aac326d782510cad6173cb1",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-5-t6.png",
+      "sha256": "1ec3c432000df487d4f89cd200b746b61537eac75d82b1d393769620bd661cbb",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-5-t6.png",
+      "sha256": "14fe912b590e3897d095ba13eee97c3fe6be1586fb5e4544e3b870f76ea49e66",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-351-pose-6-t8.5.png",
+      "sha256": "bd14937cc21fe889a0795f9df16044f1019bb0c99f160676bdbabc0d8efa7a95",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-351-pose-6-t8.5.png",
+      "sha256": "ebb891c04cbe9d3e51155296f0a4857a990d4175f4d4e2c8b8beea99f2b9d6de",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-0-t0.png",
+      "sha256": "95576e0dca8936151f98277b75afba6e6d44e9642683ff7fb0f5883202f3979e",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-0-t0.png",
+      "sha256": "bef5f83c631648bac5dbe1d88cad8e9eed53f41e9d4123a7436992626048c7b4",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-1-t2.png",
+      "sha256": "dadb3434aa65eccd3aa9a100661be50cea6f59a50db956fcffc42d03a06282b4",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-1-t2.png",
+      "sha256": "ff14d52a671f549ec6923e2da50e8d18ea7df855635aae32ba8f9e428265b51f",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-2-t3.png",
+      "sha256": "c8c2301a10d827c7c348d343c434660f70bc3450dfa9175aa886fb93bde55ce3",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-2-t3.png",
+      "sha256": "87c1696efde54fde5a17b4c0151b89995704bb33dc3ee8df1d10b76169b4480f",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-3-t4.png",
+      "sha256": "972f334fe7edc4874b425ccc159328ad0b1012d8fba9009d69ad9fe257dc1c20",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-3-t4.png",
+      "sha256": "512fdcb544d206c28b771e86a57532ec154140f60151ea875147cd4f6cecd831",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-4-t5.png",
+      "sha256": "f30d4444ab0d22fb331c2489fd25925fcd485be3127cee065183a3becaa9cded",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-4-t5.png",
+      "sha256": "0f70095c2d741db31614c24751d21e32b51832ea6dc76b98c177cb142c74c48b",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-5-t6.png",
+      "sha256": "30c67f26d03fafc07f5ed3aa0d7afeb9992cbf333932196bd93cacdc5ed4548f",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-5-t6.png",
+      "sha256": "5580f1257122ec79f3ed4212543545d9faa11037d8782d896dba1367208d61f6",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-725-pose-6-t8.5.png",
+      "sha256": "95576e0dca8936151f98277b75afba6e6d44e9642683ff7fb0f5883202f3979e",
+      "parentViewedOriginal": true
+    },
+    {
+      "name": "instanced-shadow-725-pose-6-t8.5.png",
+      "sha256": "bef5f83c631648bac5dbe1d88cad8e9eed53f41e9d4123a7436992626048c7b4",
+      "parentViewedOriginal": true
+    }
+  ],
+  "renderScreening": "PASS",
+  "candidateArtDecision": "ACCEPT_BOUNDED",
+  "productAdoption": "HOLD",
+  "reportedCounters": {
+    "baseline": {
+      "calls": 211,
+      "triangles": 45480,
+      "textures": 8
+    },
+    "candidate": {
+      "calls": 378,
+      "triangles": 90432,
+      "textures": 10
+    }
+  },
+  "observations": [
+    "All fourteen matched phone/desktop pose pairs were viewed at original resolution. The last desktop t5 and phone t6 pair was re-viewed after an earlier tool output was truncated; that lost output is not counted as a view.",
+    "Useful but modest depth appears under roof eaves, window sills and recessed frames, around planting contact and across the side gable roof.",
+    "No obvious shadow acne, silhouette clipping, detached edges or glass breakage was seen in the twenty-eight reviewed originals.",
+    "The House still reads as an architectural miniature, with plain interiors and angular foliage. These shadows do not establish photoreal quality.",
+    "Candidate fits the declared 467-call/90960-triangle screening limits, but costs 167 calls more than the current 211-call renderer; screening is not a device performance budget."
+  ],
+  "ruling": "Keep the exact private candidate for reference, but do not add live shadows to the product. Require a materially stronger visual benefit and physical-device performance evidence before reconsidering default live shadows. Advance the independently found cleanup-observability bug as a separate narrow product fix.",
+  "open": [
+    "HDEP-001 falsy thrown-value cleanup aggregation, including current shipped instancing.",
+    "All-ten final photoreal/art review, materials, interiors and foliage.",
+    "Physical FPS/memory/energy and actual React lifecycle/network evidence for any future adoption."
+  ],
+  "rawWarningsRetained": [
+    "Four ReadPixels GPU-stall warnings in initial baseline phone context.",
+    "Prospective Git LF-to-CRLF warnings in native worker stderr."
+  ],
+  "productAdopted": false,
+  "productionReady": false,
+  "independentReview": {
+    "path": ".superpowers/sdd/2026-10-23-house-instanced-depth/review-render-fca75291-f645-482a-a412-628339ad7940/REVIEW.md",
+    "sha256": "d9879a61b6ce0514944a6a1f0e59d6dd8bdaa56d9a8b0f6e85106bc6b4798946",
+    "verdict": "BOUNDED_ACCEPT_PRIVATE_ONLY",
+    "originalsViewed": 28,
+    "enumeratedInputsUnchanged": 696
+  },
+  "integrity": {
+    "sourcePins": 495,
+    "runtimePins": 13,
+    "publicAssetPins": 20,
+    "unchangedAtStudyCompletion": true
+  },
+  "limits": [
+    "Bounding-box edge screen, not per-pixel silhouette-distance proof.",
+    "SwiftShader fixed-seek evidence, not physical FPS/memory/energy, full temporal quality or product lifecycle evidence.",
+    "ReadPixels and eighteen Git line-ending warning lines retained.",
+    "HDEP-001 remains unfixed at this study checkpoint."
+  ]
+}

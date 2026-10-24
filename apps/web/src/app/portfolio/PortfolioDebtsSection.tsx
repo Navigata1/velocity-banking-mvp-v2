@@ -1,7 +1,6 @@
 'use client';
 
-import { EditableCurrency, EditablePercentage } from '@/components/EditableNumber';
-import ScrollReveal from '@/components/ScrollReveal';
+import { EditableCurrency, EditablePercentage } from '@/components/PortfolioEditableNumber';
 import { formatCurrency } from '@/engine/calculations';
 import type { DebtItem, DebtPriorityRationale } from '@/engine/portfolio';
 import { usePortfolioStore } from '@/stores/portfolio-store';
@@ -12,6 +11,7 @@ import {
   debtKindLabel,
   formatPortfolioPercentLabel,
   getMinPaymentValue,
+  isCurrentPortfolioTarget,
   paymentSourceLabel,
 } from './portfolio-formatters';
 import type { PortfolioThemeClasses } from './portfolio-types';
@@ -24,7 +24,6 @@ interface PortfolioDebtsSectionProps {
 export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioDebtsSectionProps) {
   const store = usePortfolioStore();
   const result = store.lastResult;
-  const payoffOrder = result?.payoffOrder ?? [];
 
   const renderCategorySelect = (debt: DebtItem, fullWidth = false, ariaLabel = `${debt.name} debt type`) => (
     <select
@@ -121,8 +120,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
   };
 
   return (
-    <ScrollReveal variant="fadeUp" delay={0.1}>
-      <section className={`${classes.glass} rounded-3xl p-6 md:p-8`}>
+      <section className={`${classes.glass} rounded-3xl p-4 md:p-8`}>
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className={`text-xl font-bold ${classes.text}`}>Your Debts</h2>
@@ -150,7 +148,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
           <>
             <div className="space-y-4 md:hidden">
               {store.debts.map((d) => {
-                const isPrimary = payoffOrder.length > 0 && payoffOrder[0]?.id === d.id;
+                const isPrimary = isCurrentPortfolioTarget(result, d.id);
                 return (
                   <div
                     key={d.id}
@@ -169,7 +167,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                           />
                           <p className={`${classes.textMuted} mt-1 text-[11px]`}>
                             {debtKindLabel(d.kind)}
-                            {isPrimary && <span className="ml-2 text-emerald-400">Focus Target</span>}
+                            {isPrimary && <span data-testid={`portfolio-focus-${d.id}`} className="ml-2 text-emerald-400">Focus Target</span>}
                           </p>
                           {renderDebtRationale(result?.debtRationales?.[d.id])}
                         </div>
@@ -183,10 +181,10 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div className={`${classes.glass} rounded-xl p-3`}>
                         <p className={`${classes.textMuted} text-[11px] mb-1`}>Balance</p>
-                        <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
+                        <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                       </div>
                       <div className={`${classes.glass} rounded-xl p-3`}>
                         <p className={`${classes.textMuted} text-[11px] mb-1`}>APR</p>
@@ -218,7 +216,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
             </div>
 
             <div className="hidden overflow-x-auto md:block">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[76rem] text-sm">
                 <thead>
                   <tr className={`${classes.textMuted} text-xs border-b ${classes.border}`}>
                     <th className="py-3 text-left">Debt</th>
@@ -233,7 +231,7 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                 </thead>
                 <tbody>
                   {store.debts.map((d) => {
-                    const isPrimary = payoffOrder.length > 0 && payoffOrder[0]?.id === d.id;
+                    const isPrimary = isCurrentPortfolioTarget(result, d.id);
                     return (
                       <tr key={d.id} className={`border-b ${classes.border} hover:bg-slate-800/20 transition-colors ${isPrimary ? 'bg-emerald-500/5' : ''}`}>
                         <td className="py-3 pr-3">
@@ -248,20 +246,20 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
                               />
                               <p className={`${classes.textMuted} text-[11px]`}>
                                 {debtKindLabel(d.kind)}
-                                {isPrimary && <span className="text-emerald-400 ml-2">⚡ Focus Target</span>}
+                                {isPrimary && <span data-testid={`portfolio-focus-${d.id}`} className="text-emerald-400 ml-2">⚡ Focus Target</span>}
                               </p>
                               {renderDebtRationale(result?.debtRationales?.[d.id], true)}
                             </div>
                           </div>
                         </td>
                         <td className="py-3 pr-3">{renderCategorySelect(d)}</td>
-                        <td className="py-3 pr-3">
-                          <EditableCurrency value={d.balance} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
+                        <td className="min-w-[10rem] py-3 pr-3">
+                          <EditableCurrency value={d.balance} max={Math.max(10000000, d.balance)} onChange={(v) => store.updateDebt(d.id, { balance: v })} ariaLabel={`${d.name} balance`} size="md" />
                         </td>
-                        <td className="py-3 pr-3">
+                        <td className="min-w-[14rem] py-3 pr-3">
                           <EditablePercentage value={d.apr} onChange={(v) => store.updateDebt(d.id, { apr: v })} ariaLabel={`${d.name} APR`} size="md" />
                         </td>
-                        <td className="py-3 pr-3">
+                        <td className="min-w-[8rem] py-3 pr-3">
                           {d.minPaymentRule.type === 'fixed' ? (
                             <EditableCurrency
                               value={d.minPaymentRule.amount}
@@ -298,6 +296,5 @@ export default function PortfolioDebtsSection({ classes, onAddDebt }: PortfolioD
           </>
         )}
       </section>
-    </ScrollReveal>
   );
 }

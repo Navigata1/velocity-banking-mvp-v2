@@ -1,0 +1,25 @@
+{
+  "headSha": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6315242743",
+  "preview": "https://velocity-banking-mvp-v2-m6slhn034-islanddevcrew.vercel.app",
+  "deploymentId": "dpl_9xWRX1G7xEpNinJ88YmCPCHpnpE9",
+  "ci": [
+    {
+      "id": 39592109336,
+      "event": "push",
+      "attempt": 1
+    },
+    {
+      "id": 39592115293,
+      "event": "pull_request",
+      "attempt": 1
+    }
+  ],
+  "desktop": {
+    "files": 322,
+    "publicationEntries": 324,
+    "backups": 48,
+    "htmlSha256": "720ebd84c8a94bb6cc49c7ee46bb0c77e63e8a32fc8464c9b4668ba5e3d864df"
+  },
+  "note": "Read-only baseline verification; not newly executed application tests."
+}

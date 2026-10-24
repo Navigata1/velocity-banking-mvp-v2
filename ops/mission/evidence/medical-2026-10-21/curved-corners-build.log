@@ -1,0 +1,28 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (216)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+prune: Removed types... Accessor (96)
+{"triangles":29544,"meshes":54,"textures":[{"name":"M-Enamel-Color","bytes":1858},{"name":"M-Enamel-Normal","bytes":25440},{"name":"M-Enamel-Roughness","bytes":1266},{"name":"M-Steel-Color","bytes":1866},{"name":"M-Steel-Normal","bytes":8312},{"name":"M-Steel-Roughness","bytes":1788},{"name":"M-Rubber-Color","bytes":1900},{"name":"M-Rubber-Normal","bytes":30218},{"name":"M-Rubber-Roughness","bytes":1212}],"bytes":746812,"collection":10602034}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-medical.mjs:156
+if(output.length>0.5*1024*1024||triangles>65000||collection>10*1024*1024)throw new Error('Medical exceeds unchanged delivery limits; previous artifact untouched');
+                                                                               ^
+
+Error: Medical exceeds unchanged delivery limits; previous artifact untouched
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-medical.mjs:156:80
+
+Node.js v22.22.2

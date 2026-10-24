@@ -1,0 +1,17 @@
+Portfolio input fixtures against existing built web app at http://127.0.0.1:62688; isolated 375/1440/280px contexts.
+FAIL precise Portfolio inputs 375px: complete APR draft is clipped at 375px: {"width":96,"contentWidth":175}
+PASS precise Portfolio inputs 1440px
+FAIL precise Portfolio inputs 280px: complete APR draft is clipped at 280px: {"width":48,"contentWidth":175}
+AssertionError [ERR_ASSERTION]: precise Portfolio rendered input fixtures must all pass
+
+2 !== 0
+
+    at runPortfolioInputFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:200:10)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:226:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

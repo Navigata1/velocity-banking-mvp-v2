@@ -1,0 +1,5681 @@
+{
+  "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615",
+  "bytes": 509120,
+  "worldBounds": {
+    "min": [
+      -1.5999994597011482,
+      -6.966040516920291e-7,
+      -1.3459226413430223
+    ],
+    "max": [
+      1.5999980064243078,
+      2.2609513575819937,
+      1.3459449392187595
+    ]
+  },
+  "authoredToWorldScale": 1.1401678199445944,
+  "uniqueTriangles": 26104,
+  "instancedTriangles": 43412,
+  "meshNodes": 113,
+  "uniqueMeshes": 50,
+  "vertices": 27256,
+  "decodedAccessorBytes": 684651,
+  "publicBytes": 10364342,
+  "publicHeadroom": 121418,
+  "materials": [
+    {
+      "name": "M-Enamel-Pearl",
+      "baseColor": [
+        0.8069522576650873,
+        0.8387990117372213,
+        0.8069522576650873,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.09,
+      "doubleSided": false,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ]
+    },
+    {
+      "name": "M-Rubber-Black",
+      "baseColor": [
+        0.008568125615105716,
+        0.011612245176281512,
+        0.011612245176281512,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.15,
+      "doubleSided": false,
+      "extensions": []
+    },
+    {
+      "name": "M-Steel-Polished",
+      "baseColor": [
+        0.5332764040016892,
+        0.5840784178830671,
+        0.5840784178830671,
+        1
+      ],
+      "roughness": 0.6,
+      "metalness": 1,
+      "normalScale": 0.14,
+      "doubleSided": false,
+      "extensions": []
+    },
+    {
+      "name": "M-Badge-Green",
+      "baseColor": [
+        0.0021246888847058823,
+        0.09084171117479915,
+        0.03954623527052923,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 0,
+      "normalScale": 0.09,
+      "doubleSided": false,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ]
+    },
+    {
+      "name": "M-Steel-Diaphragm",
+      "baseColor": [
+        0.2874408377161099,
+        0.3371636150376657,
+        0.3371636150376657,
+        1
+      ],
+      "roughness": 1,
+      "metalness": 1,
+      "normalScale": 0.14,
+      "doubleSided": false,
+      "extensions": []
+    }
+  ],
+  "textures": [
+    {
+      "name": "M-Enamel-Color",
+      "bytes": 1146,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.11019897460938,
+          "unique": 8
+        },
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.11019897460938,
+          "unique": 8
+        },
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.11019897460938,
+          "unique": 8
+        }
+      ]
+    },
+    {
+      "name": "M-Enamel-Normal",
+      "bytes": 9414,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 125,
+          "max": 130,
+          "mean": 127.50129699707031,
+          "unique": 6
+        },
+        {
+          "min": 125,
+          "max": 130,
+          "mean": 127.49873352050781,
+          "unique": 6
+        },
+        {
+          "min": 255,
+          "max": 255,
+          "mean": 255,
+          "unique": 1
+        }
+      ]
+    },
+    {
+      "name": "M-Enamel-Roughness",
+      "bytes": 1462,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 251,
+          "max": 255,
+          "mean": 254.6163330078125,
+          "unique": 5
+        },
+        {
+          "min": 68,
+          "max": 75,
+          "mean": 71.47703552246094,
+          "unique": 8
+        },
+        {
+          "min": 0,
+          "max": 5,
+          "mean": 0.405731201171875,
+          "unique": 6
+        }
+      ]
+    },
+    {
+      "name": "M-Steel-Color",
+      "bytes": 1098,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 229,
+          "max": 241,
+          "mean": 235.2824249267578,
+          "unique": 11
+        },
+        {
+          "min": 229,
+          "max": 241,
+          "mean": 235.2824249267578,
+          "unique": 11
+        },
+        {
+          "min": 229,
+          "max": 241,
+          "mean": 235.2824249267578,
+          "unique": 11
+        }
+      ]
+    },
+    {
+      "name": "M-Steel-Normal",
+      "bytes": 6360,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 126,
+          "max": 129,
+          "mean": 127.50123596191406,
+          "unique": 4
+        },
+        {
+          "min": 120,
+          "max": 135,
+          "mean": 127.50022888183594,
+          "unique": 16
+        },
+        {
+          "min": 255,
+          "max": 255,
+          "mean": 255,
+          "unique": 1
+        }
+      ]
+    },
+    {
+      "name": "M-Steel-Roughness",
+      "bytes": 2016,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 250,
+          "max": 255,
+          "mean": 254.50454711914062,
+          "unique": 6
+        },
+        {
+          "min": 96,
+          "max": 108,
+          "mean": 101.84339904785156,
+          "unique": 13
+        },
+        {
+          "min": 249,
+          "max": 255,
+          "mean": 254.45196533203125,
+          "unique": 7
+        }
+      ]
+    },
+    {
+      "name": "M-Rubber-Color",
+      "bytes": 1144,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.1226806640625,
+          "unique": 8
+        },
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.1226806640625,
+          "unique": 8
+        },
+        {
+          "min": 231,
+          "max": 239,
+          "mean": 235.1226806640625,
+          "unique": 8
+        }
+      ]
+    },
+    {
+      "name": "M-Rubber-Normal",
+      "bytes": 9432,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 126,
+          "max": 130,
+          "mean": 127.49986267089844,
+          "unique": 5
+        },
+        {
+          "min": 125,
+          "max": 130,
+          "mean": 127.49942016601562,
+          "unique": 6
+        },
+        {
+          "min": 255,
+          "max": 255,
+          "mean": 255,
+          "unique": 1
+        }
+      ]
+    },
+    {
+      "name": "M-Rubber-Roughness",
+      "bytes": 1446,
+      "width": 256,
+      "height": 256,
+      "channels": [
+        {
+          "min": 251,
+          "max": 255,
+          "mean": 254.63784790039062,
+          "unique": 5
+        },
+        {
+          "min": 185,
+          "max": 192,
+          "mean": 188.7724609375,
+          "unique": 8
+        },
+        {
+          "min": 0,
+          "max": 5,
+          "mean": 0.3583984375,
+          "unique": 6
+        }
+      ]
+    }
+  ],
+  "stats": [
+    {
+      "name": "M-Body-Frame@3",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1579999923706057,
+          0.07200854892482167,
+          -0.4080052936558307
+        ],
+        "max": [
+          1.1579999923706057,
+          1.2079914510751786,
+          0.4080053214092435
+        ]
+      },
+      "faces": 1248,
+      "vertices": 624,
+      "edges": 1872,
+      "boundary": 6,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 2,
+      "dupes": 0,
+      "volume": 0.4017709965179132,
+      "area": 11.389457040289043,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Body-Front@4",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1050000190734866,
+          0.119992056211641,
+          0.37998878423181065
+        ],
+        "max": [
+          1.1050000190734866,
+          1.1600079437883593,
+          0.4050112157681896
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.05729722227712147,
+      "area": 4.711246070662237,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Body-Back@5",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1050000190734866,
+          0.119992056211641,
+          -0.4050112157681894
+        ],
+        "max": [
+          1.1050000190734866,
+          1.1600079437883593,
+          -0.37998878423181043
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.05729722227712123,
+      "area": 4.711246070662237,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Case-Lid@6",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1599999666213991,
+          1.2149974095236011,
+          -0.4099844237630062
+        ],
+        "max": [
+          1.1599999666213991,
+          1.465002590476399,
+          0.4099844237630063
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.4542227907124152,
+      "area": 4.868073237560859,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Gasket@7",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1449999809265137,
+          1.1975061038683745,
+          -0.395003503048595
+        ],
+        "max": [
+          1.1449999809265137,
+          1.217493896131626,
+          0.3950035030485951
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.03608725296725108,
+      "area": 3.7140594252890375,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Foot-0@8",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9500000014901161,
+          -6.109662450612396e-7,
+          -0.36999908578580665
+        ],
+        "max": [
+          -0.7499999985098839,
+          0.08000061096624508,
+          -0.1900009142141935
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0027481238039743436,
+      "area": 0.11779311100671783,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Foot-1@9",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9500000014901161,
+          -6.109662450612396e-7,
+          0.19000091421419343
+        ],
+        "max": [
+          -0.7499999985098839,
+          0.08000061096624508,
+          0.36999908578580665
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.002748123803974357,
+      "area": 0.11779311100671783,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Foot-2@10",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7499999985098841,
+          -6.109662450612396e-7,
+          -0.36999908578580654
+        ],
+        "max": [
+          0.9500000014901163,
+          0.08000061096624508,
+          -0.19000091421419338
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00274812380397435,
+      "area": 0.11779311100671783,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Foot-3@11",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7499999985098839,
+          -6.109662450612396e-7,
+          0.19000091421419354
+        ],
+        "max": [
+          0.9500000014901161,
+          0.08000061096624508,
+          0.36999908578580676
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0027481238039743484,
+      "area": 0.11779311100671783,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Front-Molded-Bead@12",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.0211519002914429,
+          0.18883833506613246,
+          0.3989880806797574
+        ],
+        "max": [
+          1.0211519002914429,
+          1.0912241019913629,
+          0.4130118959552221
+        ]
+      },
+      "faces": 1536,
+      "vertices": 768,
+      "edges": 2304,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0007183799082261192,
+      "area": 0.23725646552759572,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@14",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1760777574777606,
+          0.053922242522239705,
+          -0.43800056057601616
+        ],
+        "max": [
+          -1.0159999998100104,
+          0.21400000018998988,
+          -0.3979994411636946
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006275060924116799,
+      "area": 0.05125160604078153,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap--1-false-false@15",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1750575421383833,
+          0.05494245786161686,
+          -0.44300000002607715
+        ],
+        "max": [
+          -1.0170007821725457,
+          0.21299921782745462,
+          -0.2370000058412553
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0014743459114137133,
+      "area": 0.11842424485258314,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@17",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1760777574777606,
+          0.053922242522239705,
+          0.39799943942398397
+        ],
+        "max": [
+          -1.0159999998100104,
+          0.21400000018998988,
+          0.4380005588363055
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006275060924116563,
+      "area": 0.051251606040781494,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap--1-false-true@18",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1750575421383835,
+          0.05494245786161686,
+          0.23699999997392296
+        ],
+        "max": [
+          -1.017000782172546,
+          0.21299921782745462,
+          0.4429999941587448
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0014743459114136812,
+      "area": 0.11842424485258317,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@19",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1140236539052077,
+          0.11597634609479247,
+          0.32500000134110457
+        ],
+        "max": [
+          -1.0900251193300718,
+          0.13997488066992858,
+          0.44499999865889556
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00005290452288932841,
+      "area": 0.009871705272023362,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Head@20",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1290330150903256,
+          0.1009669849096747,
+          0.4390000199151296
+        ],
+        "max": [
+          -1.075015758144954,
+          0.15498424185504633,
+          0.44899997964994276
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00002115224396502885,
+      "area": 0.00648160755662655,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@21",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1195243866921456,
+          0.12547561337171684,
+          0.4370002136253098
+        ],
+        "max": [
+          -1.084524386543134,
+          0.1304756133930042,
+          0.4389997863746902
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.4020047196602525e-7,
+      "area": 0.0004726855294701953,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@23",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.186077764729659,
+          1.3776666664766772,
+          -0.4380001849347638
+        ],
+        "max": [
+          -1.072666666476677,
+          1.4910777647296591,
+          -0.3979998168049468
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00035414011480751275,
+      "area": 0.03201868712649459,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap--1-true-false@24",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1850573697595037,
+          1.3786676210194098,
+          -0.44300000002607715
+        ],
+        "max": [
+          -1.0736676210194094,
+          1.490057369759504,
+          -0.2370000058412553
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0009923540980692985,
+      "area": 0.083956463226235,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@26",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.186077764729659,
+          1.3776666664766772,
+          0.39799981506523624
+        ],
+        "max": [
+          -1.072666666476677,
+          1.4910777647296591,
+          0.43800018319505324
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0003541401148081742,
+      "area": 0.032018687126494576,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap--1-true-true@27",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.185057369759504,
+          1.3786676210194098,
+          0.23699999997392296
+        ],
+        "max": [
+          -1.0736676210194096,
+          1.490057369759504,
+          0.4429999941587448
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0009923540980690793,
+      "area": 0.08395646322623503,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@28",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1402847289808529,
+          1.4212861944057171,
+          0.3250000013411045
+        ],
+        "max": [
+          -1.116286194405717,
+          1.445284728980853,
+          0.4449999986588955
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00005290452288931831,
+      "area": 0.009871705272023348,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Head@29",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1552940901659707,
+          1.4062768332205993,
+          0.4390000199151296
+        ],
+        "max": [
+          -1.101276833220599,
+          1.460294090165971,
+          0.44899997964994276
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243964834747,
+      "area": 0.006481607556626559,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@30",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.1307854617039286,
+          1.4157854616187793,
+          0.4370002136253097
+        ],
+        "max": [
+          -1.1257854616826413,
+          1.4507854617677909,
+          0.43899978637469017
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004719555825e-7,
+      "area": 0.0004726855294702023,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@32",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0159999998100104,
+          0.053922242522239705,
+          -0.43800056057601605
+        ],
+        "max": [
+          1.1760777574777606,
+          0.21400000018998988,
+          -0.3979994411636945
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006275060924116948,
+      "area": 0.051251606040781585,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap-1-false-false@33",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0170007821725457,
+          0.05494245786161686,
+          -0.4430000000260769
+        ],
+        "max": [
+          1.1750575421383833,
+          0.21299921782745465,
+          -0.23700000584125508
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0014743459114136832,
+      "area": 0.11842424485258327,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@35",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0159999998100104,
+          0.053922242522239705,
+          0.39799943942398414
+        ],
+        "max": [
+          1.1760777574777606,
+          0.21400000018998988,
+          0.4380005588363057
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006275060924116591,
+      "area": 0.051251606040781585,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap-1-false-true@36",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0170007821725455,
+          0.05494245786161686,
+          0.23699999997392307
+        ],
+        "max": [
+          1.175057542138383,
+          0.21299921782745465,
+          0.4429999941587449
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.001474345911413693,
+      "area": 0.1184242448525832,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@37",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0900251193300716,
+          0.11597634609479247,
+          0.32500000134110474
+        ],
+        "max": [
+          1.1140236539052075,
+          0.13997488066992858,
+          0.4449999986588957
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000052904522889296213,
+      "area": 0.009871705272023364,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Head@38",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0750157581449538,
+          0.1009669849096747,
+          0.4390000199151298
+        ],
+        "max": [
+          1.1290330150903254,
+          0.15498424185504633,
+          0.448999979649943
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243965041857,
+      "area": 0.006481607556626547,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@39",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.099524386606996,
+          0.11047561330785471,
+          0.43700021362530994
+        ],
+        "max": [
+          1.1045243866282832,
+          0.14547561345686633,
+          0.4389997863746904
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.4020047195758436e-7,
+      "area": 0.0004726855294702015,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@41",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0726666664766769,
+          1.3776666664766772,
+          -0.43800018493476356
+        ],
+        "max": [
+          1.1860777647296588,
+          1.4910777647296591,
+          -0.39799981680494656
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0003541401148079427,
+      "area": 0.0320186871264946,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap-1-true-false@42",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0736676210194094,
+          1.3786676210194098,
+          -0.44300000002607703
+        ],
+        "max": [
+          1.1850573697595037,
+          1.490057369759504,
+          -0.2370000058412552
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0009923540980690054,
+      "area": 0.08395646322623503,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Face@44",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0726666664766769,
+          1.3776666664766772,
+          0.3979998150652364
+        ],
+        "max": [
+          1.1860777647296588,
+          1.4910777647296591,
+          0.4380001831950534
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0003541401148079505,
+      "area": 0.0320186871264946,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Wrap-1-true-true@45",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.0736676210194094,
+          1.3786676210194098,
+          0.23699999997392307
+        ],
+        "max": [
+          1.1850573697595037,
+          1.490057369759504,
+          0.4429999941587449
+        ]
+      },
+      "faces": 500,
+      "vertices": 252,
+      "edges": 750,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0009923540980688954,
+      "area": 0.08395646322623504,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@46",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.1162861944057167,
+          1.4212861944057171,
+          0.3250000013411046
+        ],
+        "max": [
+          1.1402847289808526,
+          1.445284728980853,
+          0.4449999986588956
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00005290452288925015,
+      "area": 0.009871705272023348,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Head@47",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.1012768332205989,
+          1.4062768332205993,
+          0.43900001991512977
+        ],
+        "max": [
+          1.1552940901659705,
+          1.460294090165971,
+          0.4489999796499429
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243964778575,
+      "area": 0.006481607556626553,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@48",
+      "mesh": "",
+      "box": {
+        "min": [
+          1.110785461618779,
+          1.4307854616826414,
+          0.43700021362530994
+        ],
+        "max": [
+          1.1457854617677905,
+          1.4357854617039287,
+          0.4389997863746904
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004716214607e-7,
+      "area": 0.0004726855294702019,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Plate@50",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8549998446738648,
+          0.9350000041723254,
+          0.3954983982818551
+        ],
+        "max": [
+          -0.6650001553261354,
+          1.2249999958276752,
+          0.43050160171814494
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.001864808373951239,
+      "area": 0.1330410959377584,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Plate@51",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8549999988079072,
+          1.2949998481603555,
+          0.4005000765158689
+        ],
+        "max": [
+          -0.665000001192093,
+          1.415000151839645,
+          0.4354999234841313
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0007560491493994037,
+      "area": 0.06003296016053349,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Pivot@52",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8649999967217447,
+          1.17399914629352,
+          0.43199914629351993
+        ],
+        "max": [
+          -0.6550000032782556,
+          1.2260008537064804,
+          0.4840008537064802
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00044311739629498704,
+      "area": 0.038471160753219845,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lever@53",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8124997731973325,
+          1.0149999964237215,
+          0.44249931243943996
+        ],
+        "max": [
+          -0.7075002268026676,
+          1.195000003576279,
+          0.4875006875605603
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0007855501717142262,
+      "area": 0.0544378746032185,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Catch@54",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8392317433080309,
+          1.199532985687256,
+          0.4478832881507845
+        ],
+        "max": [
+          -0.6807682566919694,
+          1.368996858596802,
+          0.47749175619507145
+        ]
+      },
+      "faces": 480,
+      "vertices": 246,
+      "edges": 726,
+      "boundary": 12,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006133208424933332,
+      "area": 0.03306061388346553,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@55",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.830999877657744,
+          0.9780001223422562,
+          0.40600000044703494
+        ],
+        "max": [
+          -0.8070001223422562,
+          1.0019998776577441,
+          0.44599999955296526
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000017634460781531397,
+      "area": 0.003878345062258607,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@56",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8460086284726859,
+          0.9629913715273143,
+          0.44000001991512966
+        ],
+        "max": [
+          -0.7919913715273142,
+          1.017008628472686,
+          0.4499999796499428
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00002115224396477484,
+      "area": 0.006481607556626569,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@57",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.836500000074506,
+          0.9874999999893564,
+          0.4380002136253099
+        ],
+        "max": [
+          -0.8014999999254944,
+          0.9925000000106438,
+          0.43999978637469034
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004718642775e-7,
+      "area": 0.0004726855294701917,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@58",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.830999877657744,
+          1.3480001223422564,
+          0.41000000044703494
+        ],
+        "max": [
+          -0.8070001223422562,
+          1.3719998776577442,
+          0.44999999955296527
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000017634460781544977,
+      "area": 0.003878345062258583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@59",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8460086284726859,
+          1.3329913715273145,
+          0.44400001991512966
+        ],
+        "max": [
+          -0.7919913715273142,
+          1.3870086284726861,
+          0.4539999796499428
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243964713767,
+      "area": 0.006481607556626558,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@60",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.836500000074506,
+          1.3574999999893567,
+          0.4420002136253099
+        ],
+        "max": [
+          -0.8014999999254944,
+          1.362500000010644,
+          0.44399978637469034
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004720121118e-7,
+      "area": 0.0004726855294702013,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@61",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.712999877657744,
+          0.9780001223422562,
+          0.4060000004470349
+        ],
+        "max": [
+          -0.6890001223422562,
+          1.0019998776577441,
+          0.4459999995529652
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00001763446078150956,
+      "area": 0.003878345062258607,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@62",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.7280086284726858,
+          0.9629913715273143,
+          0.44000001991512966
+        ],
+        "max": [
+          -0.6739913715273141,
+          1.017008628472686,
+          0.4499999796499428
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243964996564,
+      "area": 0.006481607556626569,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@63",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.718500000074506,
+          0.9874999999893564,
+          0.43800021362530983
+        ],
+        "max": [
+          -0.6834999999254944,
+          0.9925000000106438,
+          0.4399997863746903
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.4020047203551525e-7,
+      "area": 0.0004726855294701917,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@64",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.7129998776577441,
+          1.3480001223422564,
+          0.4100000004470349
+        ],
+        "max": [
+          -0.6890001223422563,
+          1.3719998776577442,
+          0.4499999995529652
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000017634460781478332,
+      "area": 0.003878345062258583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@65",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.728008628472686,
+          1.3329913715273145,
+          0.44400001991512966
+        ],
+        "max": [
+          -0.6739913715273144,
+          1.3870086284726861,
+          0.4539999796499428
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243965057537,
+      "area": 0.006481607556626558,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@66",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.7185000000745059,
+          1.3574999999893567,
+          0.44200021362530983
+        ],
+        "max": [
+          -0.6834999999254943,
+          1.362500000010644,
+          0.4439997863746903
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004720730336e-7,
+      "area": 0.0004726855294702013,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Body-Leaf@68",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9100000059604645,
+          1.064998776080658,
+          -0.42750083995443144
+        ],
+        "max": [
+          -0.6099999940395355,
+          1.225001223919342,
+          -0.3924991600455685
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0016188202706656654,
+      "area": 0.11785262284906284,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Lid-Leaf@69",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9100000059604646,
+          1.2099977081314663,
+          -0.44250083995443146
+        ],
+        "max": [
+          -0.6099999940395356,
+          1.360002291868534,
+          -0.4074991600455685
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0015151022882124864,
+      "area": 0.11135730417693762,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-0@70",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9055001682062103,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          -0.8504998317937897,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639557958,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-1@71",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8465001682062103,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          -0.7914998317937898,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639526277,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-2@72",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.7875001682062104,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          -0.7324998317937899,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639508122,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-3@73",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.7285001682062104,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          -0.6734998317937899,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0002350304263949773,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-4@74",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.6695001682062104,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          -0.6144998317937899,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639503514,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Pin@75",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9300000017881395,
+          1.1985023802965058,
+          -0.4539976197034944
+        ],
+        "max": [
+          -0.5899999982118608,
+          1.2264976197034945,
+          -0.4260023802965056
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00020802243890451162,
+      "area": 0.031084282783419293,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Plate@77",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6650001553261354,
+          0.9350000041723254,
+          0.3954983982818552
+        ],
+        "max": [
+          0.8549998446738648,
+          1.2249999958276752,
+          0.430501601718145
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0018648083739512906,
+      "area": 0.1330410959377584,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Plate@78",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6650000011920929,
+          1.2949998481603555,
+          0.40050007651586894
+        ],
+        "max": [
+          0.8549999988079071,
+          1.415000151839645,
+          0.43549992348413136
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0007560491493993007,
+      "area": 0.06003296016053351,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Pivot@79",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6550000032782556,
+          1.17399914629352,
+          0.43199914629352
+        ],
+        "max": [
+          0.8649999967217447,
+          1.2260008537064804,
+          0.48400085370648027
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0004431173962954253,
+      "area": 0.038471160753219845,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lever@80",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7075002268026677,
+          1.0149999964237215,
+          0.44249931243944
+        ],
+        "max": [
+          0.8124997731973326,
+          1.195000003576279,
+          0.48750068756056036
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0007855501717142258,
+      "area": 0.05443787460321853,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Catch@81",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6807682566919694,
+          1.199532985687256,
+          0.4478832881507845
+        ],
+        "max": [
+          0.8392317433080309,
+          1.368996858596802,
+          0.47749175619507145
+        ]
+      },
+      "faces": 480,
+      "vertices": 246,
+      "edges": 726,
+      "boundary": 12,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006133208424939794,
+      "area": 0.03306061388346553,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@82",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6890001223422563,
+          0.9780001223422562,
+          0.406000000447035
+        ],
+        "max": [
+          0.7129998776577441,
+          1.0019998776577441,
+          0.4459999995529653
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000017634460781530076,
+      "area": 0.003878345062258607,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@83",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6739913715273143,
+          0.9629913715273143,
+          0.44000001991512977
+        ],
+        "max": [
+          0.7280086284726859,
+          1.017008628472686,
+          0.4499999796499429
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243965102613,
+      "area": 0.006481607556626562,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@84",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6834999999254943,
+          0.9874999999893564,
+          0.43800021362530994
+        ],
+        "max": [
+          0.7185000000745059,
+          0.9925000000106438,
+          0.4399997863746904
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004719955709e-7,
+      "area": 0.0004726855294701917,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@85",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6890001223422562,
+          1.3480001223422564,
+          0.410000000447035
+        ],
+        "max": [
+          0.712999877657744,
+          1.3719998776577442,
+          0.4499999995529653
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00001763446078158752,
+      "area": 0.003878345062258583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@86",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6739913715273143,
+          1.3329913715273145,
+          0.4440000199151297
+        ],
+        "max": [
+          0.7280086284726859,
+          1.3870086284726861,
+          0.4539999796499429
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243965220276,
+      "area": 0.006481607556626549,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@87",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6834999999254943,
+          1.3574999999893567,
+          0.44200021362530995
+        ],
+        "max": [
+          0.7185000000745059,
+          1.362500000010644,
+          0.4439997863746904
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.4020047197397264e-7,
+      "area": 0.0004726855294702013,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@88",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.8070001223422562,
+          0.9780001223422562,
+          0.4060000004470349
+        ],
+        "max": [
+          0.830999877657744,
+          1.0019998776577441,
+          0.4459999995529652
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0000176344607815401,
+      "area": 0.003878345062258607,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@89",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7919913715273142,
+          0.9629913715273143,
+          0.44000001991512977
+        ],
+        "max": [
+          0.8460086284726859,
+          1.017008628472686,
+          0.4499999796499429
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000021152243964668386,
+      "area": 0.006481607556626569,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@90",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.8014999999254943,
+          0.9874999999893564,
+          0.4380002136253099
+        ],
+        "max": [
+          0.8365000000745059,
+          0.9925000000106438,
+          0.43999978637469034
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004720571536e-7,
+      "area": 0.0004726855294701917,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@91",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.8070001223422562,
+          1.3480001223422564,
+          0.41000000044703494
+        ],
+        "max": [
+          0.830999877657744,
+          1.3719998776577442,
+          0.44999999955296527
+        ]
+      },
+      "faces": 64,
+      "vertices": 34,
+      "edges": 96,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00001763446078151047,
+      "area": 0.003878345062258583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@92",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7919913715273142,
+          1.3329913715273145,
+          0.4440000199151298
+        ],
+        "max": [
+          0.8460086284726859,
+          1.3870086284726861,
+          0.45399997964994293
+        ]
+      },
+      "faces": 336,
+      "vertices": 168,
+      "edges": 504,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00002115224396520435,
+      "area": 0.006481607556626558,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@93",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.8014999999254944,
+          1.3574999999893567,
+          0.4420002136253099
+        ],
+        "max": [
+          0.836500000074506,
+          1.362500000010644,
+          0.44399978637469034
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 3.402004718652989e-7,
+      "area": 0.0004726855294702013,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Body-Leaf@95",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6099999940395356,
+          1.064998776080658,
+          -0.42750083995443144
+        ],
+        "max": [
+          0.9100000059604646,
+          1.225001223919342,
+          -0.3924991600455685
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0016188202706656633,
+      "area": 0.1178526228490628,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Lid-Leaf@96",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6099999940395356,
+          1.2099977081314663,
+          -0.44250083995443157
+        ],
+        "max": [
+          0.9100000059604646,
+          1.360002291868534,
+          -0.40749916004556863
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.001515102288212342,
+      "area": 0.11135730417693762,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-0@97",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.61449983179379,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          0.6695001682062105,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0002350304263949251,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-1@98",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6734998317937899,
+          1.175499999523163,
+          -0.47700000047683705
+        ],
+        "max": [
+          0.7285001682062104,
+          1.2495000004768373,
+          -0.40299999952316273
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0002350304263949789,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-2@99",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7324998317937899,
+          1.175499999523163,
+          -0.47700000047683705
+        ],
+        "max": [
+          0.7875001682062104,
+          1.2495000004768373,
+          -0.40299999952316273
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639500413,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-3@100",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.7914998317937898,
+          1.175499999523163,
+          -0.47700000047683716
+        ],
+        "max": [
+          0.8465001682062103,
+          1.2495000004768373,
+          -0.40299999952316284
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00023503042639507252,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Knuckle-4@101",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.8504998317937899,
+          1.175499999523163,
+          -0.47700000047683705
+        ],
+        "max": [
+          0.9055001682062104,
+          1.2495000004768373,
+          -0.40299999952316273
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0002350304263949443,
+      "area": 0.021312333056053574,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Hinge-Pin@102",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.5899999982118608,
+          1.1985023802965058,
+          -0.4539976197034943
+        ],
+        "max": [
+          0.9300000017881395,
+          1.2264976197034945,
+          -0.4260023802965055
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00020802243890462318,
+      "area": 0.031084282783419293,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Tube@104",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.5350000262260437,
+          1.489997802236699,
+          -0.05500702195365885
+        ],
+        "max": [
+          0.5350000262260437,
+          1.9550022502153888,
+          0.05500702195365896
+        ]
+      },
+      "faces": 1792,
+      "vertices": 904,
+      "edges": 2696,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.023011438297378627,
+      "area": 0.5713036937244933,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Left@105",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.624999995827675,
+          1.4525019081980906,
+          -0.10500075994137602
+        ],
+        "max": [
+          -0.3350000041723252,
+          1.5074980918019099,
+          0.10500075994137613
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0031824678322218123,
+      "area": 0.15843950477608743,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Collar@106",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.5550000029802323,
+          1.487500075004843,
+          -0.07500000298023218
+        ],
+        "max": [
+          -0.40499999701976785,
+          1.5524999249951574,
+          0.0750000029802323
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0011412747238576488,
+      "area": 0.06569748988370075,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Bolt@107",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.5060000005364419,
+          1.5069996946911048,
+          -0.0910000005364418
+        ],
+        "max": [
+          -0.45399999946355823,
+          1.5190003053088954,
+          -0.0389999994635582
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000025322427804523298,
+      "area": 0.006177494825525829,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Bolt@108",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.5060000005364418,
+          1.5069996946911048,
+          0.0389999994635582
+        ],
+        "max": [
+          -0.4539999994635582,
+          1.5190003053088954,
+          0.0910000005364418
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000025322427804568726,
+      "area": 0.00617749482552583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Right@109",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.3350000041723252,
+          1.4525019081980906,
+          -0.10500075994137602
+        ],
+        "max": [
+          0.624999995827675,
+          1.5074980918019099,
+          0.10500075994137613
+        ]
+      },
+      "faces": 300,
+      "vertices": 152,
+      "edges": 450,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.003182467832221822,
+      "area": 0.15843950477608743,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Collar@110",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.40499999701976785,
+          1.487500075004843,
+          -0.07500000298023218
+        ],
+        "max": [
+          0.5550000029802323,
+          1.5524999249951574,
+          0.0750000029802323
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0011412747238576508,
+      "area": 0.06569748988370075,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Bolt@111",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.4539999994635583,
+          1.5069996946911048,
+          -0.0910000005364417
+        ],
+        "max": [
+          0.5060000005364419,
+          1.5190003053088954,
+          -0.03899999946355809
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000025322427804550966,
+      "area": 0.00617749482552583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Base-Bolt@112",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.4539999994635583,
+          1.5069996946911048,
+          0.03899999946355831
+        ],
+        "max": [
+          0.5060000005364419,
+          1.5190003053088954,
+          0.09100000053644192
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000025322427804537332,
+      "area": 0.00617749482552583,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Handle-Grip@113",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.28999999165534973,
+          1.817001253647149,
+          -0.08299874635285101
+        ],
+        "max": [
+          0.28999999165534984,
+          1.982998746352851,
+          0.08299874635285112
+        ]
+      },
+      "faces": 1024,
+      "vertices": 512,
+      "edges": 1536,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0072876888596961524,
+      "area": 0.5115717421982815,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Badge-Plate@115",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.30060793815266096,
+          0.2777625465393067,
+          0.400004858912186
+        ],
+        "max": [
+          0.30060793815266096,
+          1.0020820045471193,
+          0.44799514008943636
+        ]
+      },
+      "faces": 596,
+      "vertices": 300,
+      "edges": 894,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.014991960406675085,
+      "area": 0.7131295508815122,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Badge-Rim@116",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.31231918119349544,
+          0.26340754270553596,
+          0.40400550229099164
+        ],
+        "max": [
+          0.31231918119349544,
+          1.0164992058277131,
+          0.45199449709061035
+        ]
+      },
+      "faces": 1200,
+      "vertices": 600,
+      "edges": 1800,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.004342975027302026,
+      "area": 0.3606473391171855,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Y-Junction@118",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.6659999996423722,
+          0.2840000003576279,
+          0.6340000003576278
+        ],
+        "max": [
+          -0.534000000357628,
+          0.41599999964237216,
+          0.7659999996423721
+        ]
+      },
+      "faces": 720,
+      "vertices": 362,
+      "edges": 1080,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0011791106314259846,
+      "area": 0.05416487550946833,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Main-Tube@119",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.9131474494934084,
+          0.019549183081196048,
+          0.5836045028796497
+        ],
+        "max": [
+          1.236881494522095,
+          0.38155088247795277,
+          1.546120893753499
+        ]
+      },
+      "faces": 2080,
+      "vertices": 1048,
+      "edges": 3128,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.017103042319349282,
+      "area": 1.062167881773462,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Y-Left-Branch@120",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.073947787284851,
+          0.3115423256442964,
+          0.5238447521670563
+        ],
+        "max": [
+          -0.5876286029815675,
+          0.5557779437019409,
+          0.7394209767834447
+        ]
+      },
+      "faces": 800,
+      "vertices": 408,
+      "edges": 1208,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0022170387421824164,
+      "area": 0.1318119753627767,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Ear-Left-Tube@121",
+      "mesh": "",
+      "box": {
+        "min": [
+          -1.2125903125390198,
+          0.5060114264488221,
+          0.5277468588766073
+        ],
+        "max": [
+          -0.7941276077643253,
+          0.9717169404029847,
+          0.631399628836253
+        ]
+      },
+      "faces": 1024,
+      "vertices": 520,
+      "edges": 1544,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0019291635405632155,
+      "area": 0.10168537907636739,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Ear-Left-Tip@122",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.8102152131361466,
+          0.8704406627353608,
+          0.564378916444886
+        ],
+        "max": [
+          -0.7108796904527162,
+          0.9715388529619722,
+          0.6620955016249153
+        ]
+      },
+      "faces": 672,
+      "vertices": 336,
+      "edges": 1008,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00045766421466715427,
+      "area": 0.038526486336896745,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Y-Right-Branch@123",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.6127750277519227,
+          0.31164903318566933,
+          0.5241765176813885
+        ],
+        "max": [
+          -0.14512917399406441,
+          0.5553837629588162,
+          0.7393818104703148
+        ]
+      },
+      "faces": 800,
+      "vertices": 408,
+      "edges": 1208,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.002089369975983343,
+      "area": 0.1275720213578911,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Ear-Right-Tube@124",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.42587241269683185,
+          0.5060114264488221,
+          0.5277468588766073
+        ],
+        "max": [
+          -0.007409707922137437,
+          0.9717169404029847,
+          0.631399628836253
+        ]
+      },
+      "faces": 1024,
+      "vertices": 520,
+      "edges": 1544,
+      "boundary": 16,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.001039423187978242,
+      "area": 0.10168538924880767,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Ear-Right-Tip@125",
+      "mesh": "",
+      "box": {
+        "min": [
+          -0.5091203095472839,
+          0.8704406627353608,
+          0.564378916444886
+        ],
+        "max": [
+          -0.40978478686385356,
+          0.9715388529619722,
+          0.6620955016249153
+        ]
+      },
+      "faces": 672,
+      "vertices": 336,
+      "edges": 1008,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.000457664214667217,
+      "area": 0.03852648633689676,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Chestpiece-Body@126",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6450000071525573,
+          0.000002062864921992258,
+          0.8750000071525577
+        ],
+        "max": [
+          1.0349999928474427,
+          0.07499794011531026,
+          1.264999992847443
+        ]
+      },
+      "faces": 768,
+      "vertices": 322,
+      "edges": 960,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 128,
+      "dupes": 0,
+      "volume": 0.007658688422160596,
+      "area": 0.2803284324550802,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Chestpiece-Rim@127",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.6360000038146972,
+          0.06400239801233688,
+          0.8660000038146975
+        ],
+        "max": [
+          1.0439999961853028,
+          0.10699760580236041,
+          1.273999996185303
+        ]
+      },
+      "faces": 768,
+      "vertices": 384,
+      "edges": 1152,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0014293015197755744,
+      "area": 0.155750594657961,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Chestpiece-Diaphragm@128",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.667000007033348,
+          0.07099980205933228,
+          0.8970000070333484
+        ],
+        "max": [
+          1.012999992966652,
+          0.09800019770224917,
+          1.2429999929666522
+        ]
+      },
+      "faces": 512,
+      "vertices": 194,
+      "edges": 576,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 128,
+      "dupes": 0,
+      "volume": 0.0021669983989604314,
+      "area": 0.2081529255123631,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Chestpiece-Connector@129",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.5699999964237216,
+          0.021998808466780956,
+          1.0369988084667812
+        ],
+        "max": [
+          0.7500000035762789,
+          0.08800119153321906,
+          1.1030011915332194
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.0006118945762633894,
+      "area": 0.044061905254073615,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    {
+      "name": "M-Chestpiece-Collar@130",
+      "mesh": "",
+      "box": {
+        "min": [
+          0.5600001832736139,
+          0.01100000023841858,
+          1.0260000002384189
+        ],
+        "max": [
+          0.619999816726386,
+          0.09899999976158144,
+          1.1139999997615817
+        ]
+      },
+      "faces": 128,
+      "vertices": 66,
+      "edges": 192,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "inconsistent": 0,
+      "degenerates": 0,
+      "dupes": 0,
+      "volume": 0.00036258449507656145,
+      "area": 0.02864709035453046,
+      "normalMismatch": 0,
+      "uvZero": 0,
+      "self": {
+        "count": 0,
+        "examples": []
+      }
+    }
+  ],
+  "contactPairs": [
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Body-Front@4",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7673523029285632,
+        0.14592924292009754,
+        0.4050112157681896
+      ]
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Body-Back@5",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.999816210948723,
+        0.1479904814666107,
+        -0.37998878423181054
+      ]
+    },
+    {
+      "a": "M-Gasket@7",
+      "b": "M-Body-Frame@3",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0667085295074468,
+        1.2028243219801509,
+        -0.3950035030485949
+      ]
+    },
+    {
+      "a": "M-Gasket@7",
+      "b": "M-Case-Lid@6",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0872223376220733,
+        1.217493896131626,
+        -0.32664936344540685
+      ]
+    },
+    {
+      "a": "M-Badge-Plate@115",
+      "b": "M-Body-Front@4",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.29841571113214577,
+        0.9274212833759096,
+        0.40501121576818955
+      ]
+    },
+    {
+      "a": "M-Badge-Rim@116",
+      "b": "M-Badge-Plate@115",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.2671131497968806,
+        0.8983566374544781,
+        0.4479951400894363
+      ]
+    },
+    {
+      "a": "M-Front-Molded-Bead@12",
+      "b": "M-Body-Front@4",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.0205784998662641,
+        0.30213399161114374,
+        0.4050112157681895
+      ]
+    },
+    {
+      "a": "M-Handle-Grip@113",
+      "b": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.28999999165534973,
+        1.861108907752317,
+        0.03889417630177386
+      ]
+    },
+    {
+      "a": "M-Main-Tube@119",
+      "b": "M-Y-Junction@118",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6560238896677874,
+        0.3529123797040951,
+        0.7340113976223622
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Body@126",
+      "b": "M-Chestpiece-Rim@127",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.9429109654821891,
+        0.06430114614749158,
+        1.2240179617162
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Body@126",
+      "b": "M-Chestpiece-Diaphragm@128",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7754644203154125,
+        0.07317644411376431,
+        1.225804175284444
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Rim@127",
+      "b": "M-Chestpiece-Diaphragm@128",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.9402681208839985,
+        0.09797721039750915,
+        1.2040627403036626
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Connector@129",
+      "b": "M-Chestpiece-Body@126",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7500000035762789,
+        0.07499794011531026,
+        1.05000205988469
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Connector@129",
+      "b": "M-Chestpiece-Collar@130",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.6199998167263859,
+        0.05500000000000001,
+        1.1030011915332194
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Collar@130",
+      "b": "M-Main-Tube@119",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.5600001832736139,
+        0.04785005176027175,
+        1.1059421064570856
+      ]
+    },
+    {
+      "a": "M-Chestpiece-Connector@129",
+      "b": "M-Main-Tube@119",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.5699999964237216,
+        0.022445609109721376,
+        1.0700000000000003
+      ]
+    },
+    {
+      "a": "M-Y-Left-Branch@120",
+      "b": "M-Y-Junction@118",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6459827777352177,
+        0.3919014977618122,
+        0.7200331423177598
+      ]
+    },
+    {
+      "a": "M-Y-Left-Branch@120",
+      "b": "M-Ear-Left-Tube@121",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.0606286436801877,
+        0.5177411590016304,
+        0.5778227566262013
+      ]
+    },
+    {
+      "a": "M-Ear-Left-Tube@121",
+      "b": "M-Ear-Left-Tip@122",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7954636857294847,
+        0.9393933615630248,
+        0.5925006582591472
+      ]
+    },
+    {
+      "a": "M-Handle-Base-Left@105",
+      "b": "M-Case-Lid@6",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.3475041337638631,
+        1.465002590476399,
+        -0.10238080188700116
+      ]
+    },
+    {
+      "a": "M-Handle-Base-Left@105",
+      "b": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.4799930042723848,
+        1.5074980918019099,
+        0.05500702195365896
+      ]
+    },
+    {
+      "a": "M-Y-Right-Branch@123",
+      "b": "M-Y-Junction@118",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.5417169493579223,
+        0.35858243904317855,
+        0.7280938874082967
+      ]
+    },
+    {
+      "a": "M-Y-Right-Branch@123",
+      "b": "M-Ear-Right-Tube@124",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.16540193325738103,
+        0.5315956986698992,
+        0.5797713619255596
+      ]
+    },
+    {
+      "a": "M-Ear-Right-Tube@124",
+      "b": "M-Ear-Right-Tip@125",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.4210094004787302,
+        0.9427790238812843,
+        0.6274872932299488
+      ]
+    },
+    {
+      "a": "M-Handle-Base-Right@109",
+      "b": "M-Case-Lid@6",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.612495866236137,
+        1.465002590476399,
+        -0.10238080188700116
+      ]
+    },
+    {
+      "a": "M-Handle-Base-Right@109",
+      "b": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.4799930042723849,
+        1.5074980918019099,
+        0.05500702195365896
+      ]
+    }
+  ],
+  "hardware": [
+    {
+      "name": "M-Foot-0@8",
+      "other": "M-Body-Frame@3",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.9420079394486928,
+        0.07200854892482167,
+        -0.3629339890580947
+      ]
+    },
+    {
+      "name": "M-Foot-1@9",
+      "other": "M-Body-Frame@3",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.9420079394486928,
+        0.07200854892482167,
+        0.19706601094190543
+      ]
+    },
+    {
+      "name": "M-Foot-2@10",
+      "other": "M-Body-Frame@3",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7579920605513074,
+        0.07200854892482167,
+        -0.3629339890580946
+      ]
+    },
+    {
+      "name": "M-Foot-3@11",
+      "other": "M-Body-Frame@3",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7579920605513072,
+        0.07200854892482167,
+        0.19706601094190554
+      ]
+    },
+    {
+      "name": "M-Corner-Face@14",
+      "other": "M-Corner-Wrap--1-false-false@15",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1429964411499012,
+        0.20999891118184488,
+        -0.3979994411636947
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap--1-false-false@15",
+      "other": "M-Corner-Face@14",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1744845069743037,
+        0.21294056451606636,
+        -0.4364133202922809
+      ]
+    },
+    {
+      "name": "M-Corner-Face@17",
+      "other": "M-Corner-Wrap--1-false-true@18",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1429964411499014,
+        0.20999891118184488,
+        0.4380005588363055
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap--1-false-true@18",
+      "other": "M-Corner-Face@17",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.149558700217565,
+        0.2129871685633383,
+        0.399651369798675
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@19",
+      "other": "M-Corner-Face@17",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1002256653041054,
+        0.139617718303844,
+        0.39799943942398397
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Head@20",
+      "other": "M-Corner-Wrap--1-false-true@18",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1190239884615887,
+        0.12997527562408956,
+        0.4429999941587448
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@21",
+      "other": "M-Corner-Face@17",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.119247736402568,
+        0.13042274007511193,
+        0.4380005588363055
+      ]
+    },
+    {
+      "name": "M-Corner-Face@23",
+      "other": "M-Corner-Wrap--1-true-false@24",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.0766660110621233,
+        1.4579966135115154,
+        -0.3979998168049468
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap--1-true-false@24",
+      "other": "M-Corner-Face@23",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.073727345740768,
+        1.490057369759504,
+        -0.4364172030287328
+      ]
+    },
+    {
+      "name": "M-Corner-Face@26",
+      "other": "M-Corner-Wrap--1-true-true@27",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.0766660110621233,
+        1.4579966135115154,
+        0.43800018319505324
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap--1-true-true@27",
+      "other": "M-Corner-Face@26",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.0737273457407681,
+        1.490057369759504,
+        0.3995827969712672
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@28",
+      "other": "M-Corner-Face@26",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1166433539172627,
+        1.4314867547556207,
+        0.39799981506523624
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Head@29",
+      "other": "M-Corner-Wrap--1-true-true@27",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1262857994515558,
+        1.450285063537234,
+        0.4429999941587448
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@30",
+      "other": "M-Corner-Face@26",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -1.1258383350005334,
+        1.4505088114782132,
+        0.43800018319505324
+      ]
+    },
+    {
+      "name": "M-Corner-Face@32",
+      "other": "M-Corner-Wrap-1-false-false@33",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0200010888181554,
+        0.08700355885009917,
+        -0.39799944116369457
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap-1-false-false@33",
+      "other": "M-Corner-Face@32",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.017059435483934,
+        0.05551549302569634,
+        -0.4364133202922811
+      ]
+    },
+    {
+      "name": "M-Corner-Face@35",
+      "other": "M-Corner-Wrap-1-false-true@36",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0200010888181554,
+        0.08700355885009917,
+        0.4380005588363056
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap-1-false-true@36",
+      "other": "M-Corner-Face@35",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0170128314366618,
+        0.0804412997824357,
+        0.3996513697986754
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@37",
+      "other": "M-Corner-Face@35",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.0903822816961561,
+        0.12977433469589483,
+        0.3979994394239842
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Head@38",
+      "other": "M-Corner-Wrap-1-false-true@36",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1000247243759105,
+        0.11097601153841166,
+        0.4429999941587449
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@39",
+      "other": "M-Corner-Face@35",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.099577259924888,
+        0.11075226359743245,
+        0.4380005588363057
+      ]
+    },
+    {
+      "name": "M-Corner-Face@41",
+      "other": "M-Corner-Wrap-1-true-false@42",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.152996613511515,
+        1.3816660110621235,
+        -0.39799981680494656
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap-1-true-false@42",
+      "other": "M-Corner-Face@41",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1850573697595037,
+        1.3787273457407683,
+        -0.4364172030287326
+      ]
+    },
+    {
+      "name": "M-Corner-Face@44",
+      "other": "M-Corner-Wrap-1-true-true@45",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.152996613511515,
+        1.3816660110621235,
+        0.4380001831950534
+      ]
+    },
+    {
+      "name": "M-Corner-Wrap-1-true-true@45",
+      "other": "M-Corner-Face@44",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1850573697595037,
+        1.3787273457407683,
+        0.39958279697126736
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Shaft@46",
+      "other": "M-Corner-Face@44",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1264867547556203,
+        1.4216433539172628,
+        0.3979998150652364
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Head@47",
+      "other": "M-Corner-Wrap-1-true-true@45",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1452850635372336,
+        1.431285799451556,
+        0.4429999941587449
+      ]
+    },
+    {
+      "name": "M-Corner-Screw-Slot-Base@48",
+      "other": "M-Corner-Face@44",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        1.1455088114782128,
+        1.4308383350005336,
+        0.4380001831950534
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Plate@50",
+      "other": "M-Latch-Lower-Screw-Shaft@55",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8190000000000001,
+        0.9780001223422562,
+        0.43050160171814494
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Plate@51",
+      "other": "M-Latch-Upper-Screw-Shaft@58",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8190000000000001,
+        1.3480001223422564,
+        0.4354999234841313
+      ]
+    },
+    {
+      "name": "M-Latch-Pivot@52",
+      "other": "M-Latch-Lever@53",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8029910376845767,
+        1.1900502032587357,
+        0.4820205076884121
+      ]
+    },
+    {
+      "name": "M-Latch-Lever@53",
+      "other": "M-Latch-Pivot@52",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8042075886581074,
+        1.1780996266091104,
+        0.4440841386995038
+      ]
+    },
+    {
+      "name": "M-Latch-Catch@54",
+      "other": "M-Latch-Pivot@52",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8088427311734669,
+        1.2256988808255664,
+        0.4549357495481616
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@55",
+      "other": "M-Latch-Lower-Plate@50",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8207793808604571,
+        0.9783539173671424,
+        0.43050160171814494
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@56",
+      "other": "M-Latch-Lower-Screw-Shaft@55",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8306022839956458,
+        0.988000337758271,
+        0.44226988514760274
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@57",
+      "other": "M-Latch-Lower-Screw-Shaft@55",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8072744178899723,
+        0.9886204547453096,
+        0.4380002136253099
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@58",
+      "other": "M-Latch-Upper-Plate@51",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8206647629069171,
+        1.3483311278325207,
+        0.4354999234841313
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@59",
+      "other": "M-Latch-Catch@54",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7934523937702677,
+        1.3565631823102988,
+        0.4539999796499428
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@60",
+      "other": "M-Latch-Upper-Screw-Shaft@58",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8072744178899723,
+        1.3586204547453098,
+        0.4420002136253099
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@61",
+      "other": "M-Latch-Lower-Plate@50",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7027793808604571,
+        0.9783539173671424,
+        0.43050160171814494
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@62",
+      "other": "M-Latch-Lower-Screw-Shaft@61",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7126022839956458,
+        0.988000337758271,
+        0.4422698851476027
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@63",
+      "other": "M-Latch-Lower-Screw-Shaft@61",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6892744178899723,
+        0.9886204547453096,
+        0.43800021362530983
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@64",
+      "other": "M-Latch-Upper-Plate@51",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7026647629069173,
+        1.3483311278325207,
+        0.4354999234841313
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@65",
+      "other": "M-Latch-Catch@54",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6962406863538759,
+        1.3346263722927074,
+        0.4539999796499428
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@66",
+      "other": "M-Latch-Upper-Screw-Shaft@64",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6892744178899725,
+        1.3586204547453098,
+        0.44200021362530983
+      ]
+    },
+    {
+      "name": "M-Hinge-Body-Leaf@68",
+      "other": "M-Hinge-Lid-Leaf@69",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.9064670680536968,
+        1.21333247135752,
+        -0.4241662545814103
+      ]
+    },
+    {
+      "name": "M-Hinge-Lid-Leaf@69",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6164500812735911,
+        1.2237698020130532,
+        -0.4087305819518573
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-0@70",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.8504998317937897,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-1@71",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7914998317937898,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-2@72",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.7324998317937899,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-3@73",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6734998317937899,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-4@74",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.6144998317937899,
+        1.209488873691206,
+        -0.42486335582891954
+      ]
+    },
+    {
+      "name": "M-Hinge-Pin@75",
+      "other": "M-Hinge-Body-Leaf@68",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.616079692090881,
+        1.2125000000000001,
+        -0.4260023802965056
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Plate@77",
+      "other": "M-Latch-Lower-Screw-Shaft@82",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7010000000000002,
+        0.9780001223422562,
+        0.430501601718145
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Plate@78",
+      "other": "M-Latch-Upper-Screw-Shaft@85",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7010000000000001,
+        1.3480001223422564,
+        0.43549992348413136
+      ]
+    },
+    {
+      "name": "M-Latch-Pivot@79",
+      "other": "M-Latch-Lever@80",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7170089623154234,
+        1.1900502032587357,
+        0.48202050768841215
+      ]
+    },
+    {
+      "name": "M-Latch-Lever@80",
+      "other": "M-Latch-Pivot@79",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7157924113418928,
+        1.1780996266091104,
+        0.4440841386995039
+      ]
+    },
+    {
+      "name": "M-Latch-Catch@81",
+      "other": "M-Latch-Pivot@79",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7111572688265333,
+        1.2256988808255664,
+        0.4549357495481616
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@82",
+      "other": "M-Latch-Lower-Plate@77",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.6992206191395431,
+        0.9783539173671424,
+        0.430501601718145
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@83",
+      "other": "M-Latch-Lower-Screw-Shaft@82",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.6893977160043544,
+        0.988000337758271,
+        0.44226988514760285
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@84",
+      "other": "M-Latch-Lower-Screw-Shaft@82",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7127255821100279,
+        0.9886204547453096,
+        0.43800021362530994
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@85",
+      "other": "M-Latch-Upper-Plate@78",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.699335237093083,
+        1.3483311278325207,
+        0.43549992348413136
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@86",
+      "other": "M-Latch-Catch@81",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7265476062297325,
+        1.3565631823102988,
+        0.4539999796499429
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@87",
+      "other": "M-Latch-Upper-Screw-Shaft@85",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7127255821100278,
+        1.3586204547453098,
+        0.44200021362530995
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Shaft@88",
+      "other": "M-Latch-Lower-Plate@77",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.817220619139543,
+        0.9783539173671424,
+        0.430501601718145
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@89",
+      "other": "M-Latch-Lower-Screw-Shaft@88",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.8073977160043543,
+        0.988000337758271,
+        0.44226988514760285
+      ]
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Slot-Base@90",
+      "other": "M-Latch-Lower-Screw-Shaft@88",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.8307255821100278,
+        0.9886204547453096,
+        0.4380002136253099
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Shaft@91",
+      "other": "M-Latch-Upper-Plate@78",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.817335237093083,
+        1.3483311278325207,
+        0.43549992348413136
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@92",
+      "other": "M-Latch-Catch@81",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.8237593136461243,
+        1.3346263722927074,
+        0.45399997964994293
+      ]
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Slot-Base@93",
+      "other": "M-Latch-Upper-Screw-Shaft@91",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.8307255821100278,
+        1.3586204547453098,
+        0.4420002136253099
+      ]
+    },
+    {
+      "name": "M-Hinge-Body-Leaf@95",
+      "other": "M-Hinge-Lid-Leaf@96",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.6135329319463034,
+        1.21333247135752,
+        -0.4241662545814104
+      ]
+    },
+    {
+      "name": "M-Hinge-Lid-Leaf@96",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.9035499187264091,
+        1.2237698020130532,
+        -0.4087305819518574
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-0@97",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.6695001682062105,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-1@98",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7285001682062104,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-2@99",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.7875001682062104,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-3@100",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.8465001682062103,
+        1.2100135473077351,
+        -0.42750083995443144
+      ]
+    },
+    {
+      "name": "M-Hinge-Knuckle-4@101",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.9055001682062104,
+        1.209488873691206,
+        -0.42486335582891943
+      ]
+    },
+    {
+      "name": "M-Hinge-Pin@102",
+      "other": "M-Hinge-Body-Leaf@95",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.9039203079091191,
+        1.2125000000000001,
+        -0.4260023802965055
+      ]
+    },
+    {
+      "name": "M-Handle-Tube@104",
+      "other": "M-Handle-Base-Left@105",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.4799930042723848,
+        1.5074980918019099,
+        0.05500702195365896
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Left@105",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.4799930042723848,
+        1.5074980918019099,
+        0.05500702195365896
+      ]
+    },
+    {
+      "name": "M-Handle-Collar@106",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.49010870678804425,
+        1.5524999249951574,
+        0.050815502901200564
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Bolt@107",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.48216710579521316,
+        1.5069996946911048,
+        -0.054106166284879846
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Bolt@108",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.49706822830791436,
+        1.5069996946911048,
+        0.047931771692085616
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Right@109",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.4799930042723849,
+        1.5074980918019099,
+        0.05500702195365896
+      ]
+    },
+    {
+      "name": "M-Handle-Collar@110",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.4800000000000001,
+        1.5524999249951574,
+        0.05500412322017609
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Bolt@111",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.4778341510954566,
+        1.5069996946911048,
+        -0.05411248455415079
+      ]
+    },
+    {
+      "name": "M-Handle-Base-Bolt@112",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        0.4629416710227754,
+        1.5069996946911048,
+        0.04794167102277543
+      ]
+    },
+    {
+      "name": "M-Handle-Grip@113",
+      "other": "M-Handle-Tube@104",
+      "gap": 0,
+      "intersects": true,
+      "containedVertex": null,
+      "pair": [
+        -0.28999999165534973,
+        1.861108907752317,
+        0.03889417630177386
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "a": "M-Y-Junction@118",
+      "b": "M-Main-Tube@119",
+      "count": 54,
+      "example": {
+        "faces": [
+          15,
+          1567
+        ],
+        "point": [
+          -0.6626546960975159,
+          0.337602014166802,
+          0.7161311506586173
+        ]
+      }
+    },
+    {
+      "a": "M-Y-Junction@118",
+      "b": "M-Y-Left-Branch@120",
+      "count": 72,
+      "example": {
+        "faces": [
+          6,
+          614
+        ],
+        "point": [
+          -0.6430879739259575,
+          0.3996084554230485,
+          0.7
+        ]
+      }
+    },
+    {
+      "a": "M-Y-Junction@118",
+      "b": "M-Y-Right-Branch@123",
+      "count": 56,
+      "example": {
+        "faces": [
+          301,
+          228
+        ],
+        "point": [
+          -0.5607801360325434,
+          0.4016472137743756,
+          0.689490367743918
+        ]
+      }
+    },
+    {
+      "a": "M-Main-Tube@119",
+      "b": "M-Y-Left-Branch@120",
+      "count": 45,
+      "example": {
+        "faces": [
+          0,
+          765
+        ],
+        "point": [
+          -0.6333050549758709,
+          0.36697448656532333,
+          0.7315296682875948
+        ]
+      }
+    },
+    {
+      "a": "M-Main-Tube@119",
+      "b": "M-Y-Right-Branch@123",
+      "count": 33,
+      "example": {
+        "faces": [
+          0,
+          768
+        ],
+        "point": [
+          -0.6010597023185987,
+          0.37060098534734454,
+          0.7272238590140552
+        ]
+      }
+    },
+    {
+      "a": "M-Main-Tube@119",
+      "b": "M-Chestpiece-Connector@129",
+      "count": 131,
+      "example": {
+        "faces": [
+          255,
+          12
+        ],
+        "point": [
+          0.5849014786268082,
+          0.08592745791367667,
+          1.0811809891455295
+        ]
+      }
+    },
+    {
+      "a": "M-Main-Tube@119",
+      "b": "M-Chestpiece-Collar@130",
+      "count": 50,
+      "example": {
+        "faces": [
+          253,
+          68
+        ],
+        "point": [
+          0.5600001832736139,
+          0.08353128732114934,
+          1.094303496287698
+        ]
+      }
+    },
+    {
+      "a": "M-Y-Left-Branch@120",
+      "b": "M-Ear-Left-Tube@121",
+      "count": 19,
+      "example": {
+        "faces": [
+          784,
+          0
+        ],
+        "point": [
+          -1.0587907702580024,
+          0.5230954534324245,
+          0.5797072523753422
+        ]
+      }
+    },
+    {
+      "a": "M-Y-Left-Branch@120",
+      "b": "M-Y-Right-Branch@123",
+      "count": 37,
+      "example": {
+        "faces": [
+          220,
+          417
+        ],
+        "point": [
+          -0.6001366115124744,
+          0.3401564614802857,
+          0.6638596498094885
+        ]
+      }
+    },
+    {
+      "a": "M-Ear-Left-Tube@121",
+      "b": "M-Ear-Left-Tip@122",
+      "count": 37,
+      "example": {
+        "faces": [
+          130,
+          73
+        ],
+        "point": [
+          -0.7952811304593409,
+          0.9510453429647737,
+          0.6143441789014952
+        ]
+      }
+    },
+    {
+      "a": "M-Y-Right-Branch@123",
+      "b": "M-Ear-Right-Tube@124",
+      "count": 19,
+      "example": {
+        "faces": [
+          784,
+          0
+        ],
+        "point": [
+          -0.16270233405444168,
+          0.5285112046142839,
+          0.5814872393739758
+        ]
+      }
+    },
+    {
+      "a": "M-Ear-Right-Tube@124",
+      "b": "M-Ear-Right-Tip@125",
+      "count": 36,
+      "example": {
+        "faces": [
+          136,
+          35
+        ],
+        "point": [
+          -0.4258676508088789,
+          0.9474360694963171,
+          0.5979353818188248
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Body@126",
+      "b": "M-Chestpiece-Rim@127",
+      "count": 488,
+      "example": {
+        "faces": [
+          133,
+          127
+        ],
+        "point": [
+          0.8222909466609202,
+          0.06429864457671636,
+          1.2543640993093674
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Body@126",
+      "b": "M-Chestpiece-Diaphragm@128",
+      "count": 248,
+      "example": {
+        "faces": [
+          135,
+          129
+        ],
+        "point": [
+          0.826770892546339,
+          0.07317700853713026,
+          1.237991191117425
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Body@126",
+      "b": "M-Chestpiece-Connector@129",
+      "count": 84,
+      "example": {
+        "faces": [
+          165,
+          7
+        ],
+        "point": [
+          0.7089163396628234,
+          0.07499794011531026,
+          1.0960740454809619
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Rim@127",
+      "b": "M-Chestpiece-Diaphragm@128",
+      "count": 480,
+      "example": {
+        "faces": [
+          133,
+          133
+        ],
+        "point": [
+          0.8324623230980595,
+          0.09797690466930217,
+          1.2372390278618575
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Rim@127",
+      "b": "M-Chestpiece-Connector@129",
+      "count": 70,
+      "example": {
+        "faces": [
+          93,
+          25
+        ],
+        "point": [
+          0.6493427307046838,
+          0.07384448631052629,
+          1.0429796283332358
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Diaphragm@128",
+      "b": "M-Chestpiece-Connector@129",
+      "count": 64,
+      "example": {
+        "faces": [
+          90,
+          27
+        ],
+        "point": [
+          0.7454337674032155,
+          0.07099980205933228,
+          1.0413133566339412
+        ]
+      }
+    },
+    {
+      "a": "M-Chestpiece-Connector@129",
+      "b": "M-Chestpiece-Collar@130",
+      "count": 88,
+      "example": {
+        "faces": [
+          0,
+          96
+        ],
+        "point": [
+          0.6199998167263859,
+          0.05964980678695257,
+          1.1025429554548123
+        ]
+      }
+    }
+  ]
+}

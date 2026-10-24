@@ -19,24 +19,53 @@ jobs:
     name: Web and mobile quality gates
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    needs: [asset-hero-quality, backend-isolation]
+    if: ${{ !cancelled() }}
 
     steps:
+      - name: Require prerequisite quality jobs
+        env:
+          HERO_RESULT: ${{ needs.asset-hero-quality.result }}
+          SQL_RESULT: ${{ needs.backend-isolation.result }}
+        run: |
+          set -euo pipefail
+          test "$HERO_RESULT" = success
+          test "$SQL_RESULT" = success
+
       - name: Check out repository
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
 
       - name: Set up Node
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            apps/web/package-lock.json
-            apps/mobile/package-lock.json
-            apps/media/package-lock.json
+          cache-dependency-path: apps/web/package-lock.json
 
       - name: Install web dependencies
         working-directory: apps/web
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Run CI verification contracts
+        run: |
+          node scripts/check-restoration-ci.test.cjs
+          node --test scripts/audit-web-runtime.test.cjs
+
+      - name: Audit web runtime dependencies
+        working-directory: apps/web
+        run: node ../../scripts/audit-web-runtime.cjs
 
       - name: Run web regression tests
         working-directory: apps/web
@@ -51,11 +80,12 @@ jobs:
         run: npm run build
 
       - name: Verify built Money Loop Three stage
+        id: three_stage
         working-directory: apps/web
         run: npm run test:3d:built
 
       - name: Upload Money Loop Three stage proof
-        if: success()
+        if: ${{ !cancelled() && (steps.three_stage.outcome == 'success' || steps.three_stage.outcome == 'failure') }}
         uses: actions/upload-artifact@v4
         with:
           name: money-loop-three-stage
@@ -70,9 +100,194 @@ jobs:
         working-directory: apps/web
         run: npm run smoke:rendered:built
 
+      - name: Verify same-liability Simulator comparisons
+        working-directory: apps/web
+        run: npm run smoke:comparison:built
+
+      - name: Verify daily-interest display and saved dashboard inputs
+        working-directory: apps/web
+        run: npm run smoke:dashboard:built
+
+      - name: Upload dashboard interest proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-interest-proof
+          path: |
+            apps/web/test-results/dashboard-interest
+            apps/web/test-results/legacy-web-truth
+          if-no-files-found: warn
+
+      - name: Upload Simulator comparison proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulator-comparison-proof
+          path: apps/web/test-results/comparison
+          if-no-files-found: warn
+
+      - name: Verify funded Vault mortgage comparisons
+        working-directory: apps/web
+        run: npm run smoke:vault:built
+
+      - name: Upload Vault comparison proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vault-comparison-proof
+          path: apps/web/test-results/vault-comparison
+          if-no-files-found: warn
+
+      - name: Verify funded Portfolio allocations and debt scope
+        working-directory: apps/web
+        run: npm run smoke:portfolio:built
+
+      - name: Upload Portfolio budget proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-budget-proof
+          path: |
+            apps/web/test-results/portfolio-budget
+            apps/web/test-results/portfolio-portability
+            apps/web/test-results/portfolio-input
+            apps/web/test-results/shared-portfolio-dashboard
+          if-no-files-found: warn
+
+  asset-hero-quality:
+    name: Asset hero quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Build web app
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Verify asset hero loading, rotation and reduced motion
+        working-directory: apps/web
+        run: npm run test:heroes
+
+      - name: Upload asset hero browser proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-hero-browser-proof
+          path: apps/web/test-results/heroes
+          if-no-files-found: warn
+
+  backend-isolation:
+    name: Isolated SQL and owner isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify checked-out source
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_HEAD"
+          printf 'Verified source %s\n' "$actual"
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            apps/web/package-lock.json
+            apps/media/package-lock.json
+            apps/report-worker/package-lock.json
+            apps/mobile/package-lock.json
+
+      - name: Install web contract dependencies
+        run: npm --prefix apps/web ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Check isolated database wiring
+        run: node apps/web/scripts/supabase-ci-contract.cjs
+
+      - name: Install pinned Supabase CLI
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+        with:
+          version: 2.109.1
+
+      - name: Start disposable database
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/backend-isolation"
+          supabase --version | tee "$RUNNER_TEMP/backend-isolation/cli-version.log"
+          supabase db start 2>&1 | tee "$RUNNER_TEMP/backend-isolation/start.log"
+
+      - name: Replay all migrations without seed data
+        shell: bash
+        run: supabase db reset --local --no-seed 2>&1 | tee "$RUNNER_TEMP/backend-isolation/reset.log"
+
+      - name: Verify client contracts and SQL owner isolation
+        shell: bash
+        run: npm --prefix apps/web run test:supabase 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap.log"
+
+      - name: Lint application database functions
+        shell: bash
+        run: supabase db lint --local --schema public --fail-on warning 2>&1 | tee "$RUNNER_TEMP/backend-isolation/lint.log"
+
+      - name: Check database security advisors
+        shell: bash
+        run: supabase db advisors --local --type security --fail-on error 2>&1 | tee "$RUNNER_TEMP/backend-isolation/security-advisors.log"
+
+      - name: Repeat SQL tests to verify fixture rollback
+        shell: bash
+        run: supabase test db --local supabase/tests 2>&1 | tee "$RUNNER_TEMP/backend-isolation/pgtap-repeat.log"
+
+      - name: Stop disposable database
+        if: always()
+        timeout-minutes: 2
+        run: supabase stop --project-id Interest_Shield --no-backup
+
+      - name: Upload database isolation proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-isolation-proof
+          path: ${{ runner.temp }}/backend-isolation
+          if-no-files-found: warn
+
       - name: Install media workspace dependencies
         working-directory: apps/media
-        run: npm ci --ignore-scripts
+        run: npm ci --ignore-scripts --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Read pinned Remotion Chrome version
         id: remotion-chrome-version
@@ -91,9 +306,14 @@ jobs:
           CHROME_PATH: ${{ steps.remotion-chrome.outputs.chrome-path }}
         run: npm run check
 
+      - name: Run report renderer contracts
+        run: |
+          node ops/mission/test-renderer.mjs
+          node --test ops/mission/report-renderer-tests.mjs
+
       - name: Install report Worker dependencies
         working-directory: apps/report-worker
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
 
       - name: Check and test report Worker
         working-directory: apps/report-worker
@@ -105,7 +325,11 @@ jobs:
 
       - name: Install mobile dependencies
         working-directory: apps/mobile
-        run: npm ci
+        run: npm ci --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000
+
+      - name: Audit critical native dependency advisories
+        working-directory: apps/mobile
+        run: npm audit --omit=dev --audit-level=critical
 
       - name: Run mobile type-check
         working-directory: apps/mobile
@@ -128,7 +352,17 @@ jobs:
         run: npm run smoke:accessibility:built
 
       - name: Run mobile contract tests
-        run: node scripts/mobile-port-contract-tests.cjs
+        run: |
+          node scripts/mobile-port-contract-tests.cjs
+          npm --prefix apps/mobile run test:supabase:mobile
+
+      - name: Upload native Portfolio and accessibility proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-portfolio-accessibility-proof
+          path: apps/mobile/test-results/accessibility
+          if-no-files-found: warn
 
       - name: Verify iOS smoke guard on Linux
         working-directory: apps/mobile

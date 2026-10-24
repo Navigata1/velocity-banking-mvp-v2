@@ -3,6 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
 const CHUNK_SIZE = 1800;
+const STRICT_CHUNK_LIMIT = 2048;
 const MANIFEST_SUFFIX = '.manifest';
 const SNAPSHOT_OWNER_LOCK_PREFIX = 'interestshield.mobile.snapshot-owner.';
 const ownerLockTokens = new WeakSet<object>();
@@ -34,18 +35,22 @@ export function isMobileSnapshotOwnerLock(
   value: MobileSnapshotOwnerLock | undefined,
   ownerId: string
 ): value is MobileSnapshotOwnerLock {
-  return !!value && value.ownerId === ownerId && ownerLockTokens.has(value);
+  return !!value && ownerLockTokens.has(value) && value.ownerId === ownerId;
 }
 
 export function withMobileSnapshotOwnerLock<T>(
   ownerId: string,
   action: (lock: MobileSnapshotOwnerLock) => Promise<T>
 ): Promise<T> {
-  const lock = { ownerId };
-  ownerLockTokens.add(lock);
+  const lock = Object.freeze({ ownerId });
+  const run = async () => {
+    ownerLockTokens.add(lock);
+    try { return await action(lock); }
+    finally { ownerLockTokens.delete(lock); }
+  };
   if (Platform.OS !== 'web') {
     const previous = nativeOwnerLockQueues.get(ownerId) ?? Promise.resolve();
-    const operation = previous.catch(() => undefined).then(() => action(lock));
+    const operation = previous.catch(() => undefined).then(run);
     const tail = operation.then(() => undefined, () => undefined);
     nativeOwnerLockQueues.set(ownerId, tail);
     void tail.then(() => {
@@ -62,7 +67,7 @@ export function withMobileSnapshotOwnerLock<T>(
   return locks.request(
     `${SNAPSHOT_OWNER_LOCK_PREFIX}${ownerId}`,
     { mode: 'exclusive' },
-    () => action(lock)
+    run
   );
 }
 
@@ -74,16 +79,40 @@ function chunkKey(key: string, generation: string, index: number): string {
   return `${key}.${generation}.${index}`;
 }
 
-function readManifest(raw: string | null): ChunkManifest | null {
-  if (!raw) return null;
+function readManifest(raw: string | null, strict = false): ChunkManifest | null {
+  if (raw === null) return null;
   try {
     const value = JSON.parse(raw) as Partial<ChunkManifest>;
-    if (value.version !== 1 || typeof value.generation !== 'string') return null;
-    if (!Number.isInteger(value.count) || (value.count ?? 0) < 1) return null;
+    if (value.version !== 1 || typeof value.generation !== 'string'
+      || !Number.isInteger(value.count) || (value.count ?? 0) < 1) throw new Error('Invalid manifest.');
+    if (strict && (!Number.isSafeInteger(value.count) || (value.count ?? 0) > STRICT_CHUNK_LIMIT
+      || !/^[A-Za-z0-9._-]{1,128}$/.test(value.generation)
+      || Object.keys(value).some(key => !['version','generation','count'].includes(key)))) throw new Error('Invalid strict manifest.');
     return value as ChunkManifest;
   } catch {
+    if (strict) throw new Error('Encrypted storage manifest is corrupt or exceeds its chunk limit.');
     return null;
   }
+}
+
+// SecureStore limits bytes, not UTF-16 code units. Keep Unicode code points together.
+function secureChunks(value: string): string[] {
+  const chunks: string[] = [];
+  let characters: string[] = [];
+  let bytes = 0;
+  for (const character of value) {
+    const point = character.codePointAt(0) ?? 0;
+    const width = point <= 0x7f ? 1 : point <= 0x7ff ? 2 : point <= 0xffff ? 3 : 4;
+    if (bytes + width > CHUNK_SIZE) {
+      chunks.push(characters.join(''));
+      characters = [];
+      bytes = 0;
+    }
+    characters.push(character);
+    bytes += width;
+  }
+  if (characters.length || !chunks.length) chunks.push(characters.join(''));
+  return chunks;
 }
 
 async function deleteGeneration(store: SecureStorePort, key: string, manifest: ChunkManifest | null) {
@@ -97,28 +126,38 @@ async function deleteGeneration(store: SecureStorePort, key: string, manifest: C
 
 export function createChunkedSecureAuthStorage(
   store: SecureStorePort = SecureStore,
-  createGeneration: () => string = Crypto.randomUUID
+  createGeneration: () => string = Crypto.randomUUID,
+  { strictRead = false }: { strictRead?: boolean } = {}
 ): AsyncAuthStorage {
   return {
     async getItem(key) {
-      const manifest = readManifest(await store.getItemAsync(manifestKey(key)));
+      const manifest = readManifest(await store.getItemAsync(manifestKey(key)), strictRead);
       if (!manifest) return null;
       const chunks = await Promise.all(
         Array.from({ length: manifest.count }, (_, index) =>
           store.getItemAsync(chunkKey(key, manifest.generation, index))
         )
       );
-      return chunks.every((chunk): chunk is string => chunk !== null) ? chunks.join('') : null;
+      if (!chunks.every((chunk): chunk is string => typeof chunk === 'string')) {
+        if (strictRead) throw new Error('Encrypted storage generation is incomplete.');
+        return null;
+      }
+      return chunks.join('');
     },
     async removeItem(key) {
-      const manifest = readManifest(await store.getItemAsync(manifestKey(key)));
+      const manifest = readManifest(await store.getItemAsync(manifestKey(key)), strictRead);
       await store.deleteItemAsync(manifestKey(key));
       await deleteGeneration(store, key, manifest);
     },
     async setItem(key, value) {
-      const previous = readManifest(await store.getItemAsync(manifestKey(key)));
+      const previous = readManifest(await store.getItemAsync(manifestKey(key)), strictRead);
       const generation = createGeneration();
-      const chunks = value.match(new RegExp(`.{1,${CHUNK_SIZE}}`, 'gs')) ?? [''];
+      if (strictRead) {
+        readManifest(JSON.stringify({ version: 1, generation, count: 1 }), true);
+        if (generation === previous?.generation) throw new Error('Encrypted storage generation must be new.');
+      }
+      const chunks = secureChunks(value);
+      if (strictRead && chunks.length > STRICT_CHUNK_LIMIT) throw new Error('Encrypted storage value is too large for the chunk limit.');
       const next: ChunkManifest = { count: chunks.length, generation, version: 1 };
       try {
         for (const [index, chunk] of chunks.entries()) {

@@ -62,20 +62,41 @@ test('keeps media checks in the standing GitHub quality workflow', async () => {
   const workflowDocument = parseDocument(workflowSource);
   assert.deepEqual(workflowDocument.errors, []);
   const workflow = workflowDocument.toJS();
-  const job = workflow.jobs['web-mobile-quality'];
-  const steps = job.steps;
-  const checkoutIndex = steps.findIndex((step) => step.uses?.startsWith('actions/checkout@'));
-  const installIndex = steps.findIndex((step) =>
-    step['working-directory'] === 'apps/media'
-      && step.run === 'npm ci --ignore-scripts'
-      && step.if !== false);
-  const checkIndex = steps.findIndex((step) =>
-    step['working-directory'] === 'apps/media' && step.run === 'npm run check' && step.if !== false);
+  function verify(config) {
+    const primary = config.jobs['web-mobile-quality'];
+    assert.deepEqual(primary.needs, ['asset-hero-quality', 'backend-isolation']);
+    assert.equal(primary.if, '${{ !cancelled() }}');
+    const job = config.jobs['backend-isolation'];
+    assert.equal(job.if, undefined);
+    const steps = job.steps;
+    const checkoutIndex = steps.findIndex((step) => step.uses?.startsWith('actions/checkout@'));
+    const installIndex = steps.findIndex((step) =>
+      step['working-directory'] === 'apps/media'
+        && step.run === 'npm ci --ignore-scripts --audit=true --fetch-timeout=60000 --fetch-retries=1 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=3000');
+    const checkIndex = steps.findIndex((step) =>
+      step['working-directory'] === 'apps/media' && step.run === 'npm run check');
 
-  assert.ok(job.steps.some((step) =>
-    step.with?.['cache-dependency-path']?.includes('apps/media/package-lock.json')));
-  assert.ok(checkoutIndex >= 0);
-  assert.ok(installIndex > checkoutIndex);
-  assert.ok(checkIndex > installIndex);
+    assert.ok(job.steps.some((step) =>
+      step.with?.['cache-dependency-path']?.includes('apps/media/package-lock.json')));
+    assert.ok(checkoutIndex >= 0);
+    assert.ok(installIndex > checkoutIndex);
+    assert.ok(checkIndex > installIndex);
+    for (const index of [installIndex, checkIndex]) {
+      assert.equal(steps[index].if, undefined);
+      assert.notEqual(steps[index]['continue-on-error'], true);
+    }
+  }
+  verify(workflow);
+  for (const change of ['remove-check', 'skip-check', 'ignore-failure', 'disable-scripts-guard', 'disconnect']) {
+    const copy = structuredClone(workflow);
+    const steps = copy.jobs['backend-isolation'].steps;
+    const check = steps.find(step => step.name === 'Check media identity contracts');
+    if (change === 'remove-check') copy.jobs['backend-isolation'].steps = steps.filter(step => step !== check);
+    if (change === 'skip-check') check.if = 'false';
+    if (change === 'ignore-failure') check['continue-on-error'] = true;
+    if (change === 'disable-scripts-guard') steps.find(step => step.name === 'Install media workspace dependencies').run = 'npm ci';
+    if (change === 'disconnect') copy.jobs['web-mobile-quality'].needs = ['asset-hero-quality'];
+    assert.throws(() => verify(copy), `invalid ${change} media wiring must be rejected`);
+  }
   await access(new URL('apps/media/package-lock.json', root));
 });

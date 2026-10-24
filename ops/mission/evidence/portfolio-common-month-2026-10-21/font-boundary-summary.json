@@ -1,0 +1,15 @@
+{
+  "source": "Actual wider-font boundary executions; additional diagnostics, not extra standing workflow cases",
+  "widths": [
+    280,
+    360,
+    640,
+    768,
+    1024,
+    1440
+  ],
+  "executions": 42,
+  "fontFamilyRequested": "Verdana",
+  "output": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\wide-font-boundaries",
+  "allPassed": true
+}

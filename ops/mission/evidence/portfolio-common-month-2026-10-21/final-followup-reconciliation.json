@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-21T12:49:42.404Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "previousHead": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "count": 239,
+  "changesSinceFollowup": [
+    {
+      "file": "apps/web/scripts/portfolio-common-month-tests.cjs",
+      "before": "c9c7489cf38fab0882d73cd71c01eec63ed2b7a1a4d0e8f6966471b6f8199e5c",
+      "after": "4f8b2115992c1f8134d4dae0b682be473ecb163fc35171eebc365149bcb8d2c7"
+    },
+    {
+      "file": "packages/financial-engine/src/common-month.ts",
+      "before": "6ebec7e2d08cf4e78037aad48ace1b7eb791992258f9e7de459173b98833e49c",
+      "after": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5"
+    }
+  ],
+  "changesSinceOriginal": [
+    {
+      "file": "apps/web/scripts/portfolio-common-month-tests.cjs",
+      "before": "ae517b08d913b7e7db4bfe7446cbb7d57332d86a2489d6b20c17bba35f992b92",
+      "after": "4f8b2115992c1f8134d4dae0b682be473ecb163fc35171eebc365149bcb8d2c7"
+    },
+    {
+      "file": "packages/financial-engine/src/common-month.ts",
+      "before": "0ecc1cb9eabf231a0e51d2ac97728520b657c0fad18367fc6663a4c86b7968a0",
+      "after": "66b2344c29159d6c3bdc2ca99bcd0476420710f7ce89e9cfd7f98a27e09cbfc5"
+    },
+    {
+      "file": "packages/financial-engine/src/portfolio-common-month.ts",
+      "before": "01bc269b3633da9a174660fc843c87b58cbd635d828de3aa8fd976d8ba0a1f38",
+      "after": "ae7a34c664c1e7624cee077fdfda87f7dddec66c4f888519a5fbb4801c86ed09"
+    }
+  ],
+  "priorReviewArtifactsChanged": []
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-21T12:58:49.683Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "count": 239,
+  "newTargetChanges": [],
+  "reviewInputChanges": [],
+  "priorFailedFreezeExit": 1,
+  "exit": 0,
+  "note": "New explicitly reconciled oracle+capture target only; old failure untouched. No full reference/browser run."
+}

@@ -9,9 +9,11 @@ import { useThemeStore, themeClasses } from '@/stores/theme-store';
 import ScrollReveal from '@/components/ScrollReveal';
 import PageTransition from '@/components/PageTransition';
 import { useIsClient } from '@/hooks/useIsClient';
-import { buildCashFlowGaugeDash, buildDebtBalanceGaugeDash, buildDebtFreedomProgressPercent } from '../cockpit-model';
+import { buildCashFlowGaugeDash, buildCockpitScenario, buildDebtBalanceGaugeDash, formatCockpitMoney } from '../cockpit-model';
+import { buildDashboardModel } from '../dashboard-model';
 
 interface Instrument {
+  id: string;
   label: string;
   value: string | number;
   unit?: string;
@@ -19,6 +21,7 @@ interface Instrument {
   editable?: boolean;
   onEdit?: (val: number) => void;
   numericValue?: number;
+  note?: string;
 }
 
 const emergencyRecoverySteps = [
@@ -73,17 +76,21 @@ export default function CockpitPage() {
 
   const debtType = store.getActiveDebtType();
   const currentDebt = store.debts[debtType];
-  const dailyInterest = store.getDailyInterest(debtType);
-  const velocity = store.getVelocityPayoff(debtType);
   const activeDomainLabel = store.activeDomain.charAt(0).toUpperCase() + store.activeDomain.slice(1);
   
   const cashFlow = store.getCashFlow();
-  const etaMonths = turbulence ? velocity.months + 2 : velocity.months;
+  const {baseline,velocity,projection} = buildCockpitScenario({monthlyIncome:store.monthlyIncome,monthlyExpenses:store.monthlyExpenses,
+    carLoan:{balance:currentDebt.balance,apr:currentDebt.interestRate,monthlyPayment:currentDebt.minimumPayment},
+    loc:{limit:store.loc.limit,balance:store.loc.balance,apr:store.loc.interestRate},extraPayment:store.chunkAmount,useVelocity:true},
+    {emergencyActive:emergency,depositIncomeToLoc,expenseCardOn});
+  const dashboard = buildDashboardModel({ monthlyIncome: store.monthlyIncome, monthlyExpenses: store.monthlyExpenses,
+    chunkAmount: store.chunkAmount, activeDebt: currentDebt, allDebts: [currentDebt], loc: store.loc, baseline, velocity });
+  const interest = dashboard.vitals.find(vital => vital.id === 'interest-burn')!;
   const routingAssumption = buildRoutingAssumption(depositIncomeToLoc, expenseCardOn);
-  const freedomProgressPercent = buildDebtFreedomProgressPercent(currentDebt.balance);
 
   const instruments: Instrument[] = [
     {
+      id: 'cash-flow',
       label: 'Airspeed',
       value: formatCurrency(cashFlow),
       numericValue: cashFlow,
@@ -93,36 +100,40 @@ export default function CockpitPage() {
       onEdit: (val: number) => store.setMonthlyIncome(val + store.monthlyExpenses),
     },
     {
+      id: 'interest-burn',
       label: 'Fuel Burn',
-      value: formatCurrency(dailyInterest),
-      unit: '/day',
+      value: interest.value.endsWith('/day') ? interest.value.slice(0, -4) : interest.value,
+      unit: interest.value.endsWith('/day') ? '/day' : undefined,
       status: 'warning',
+      note: interest.caption,
     },
     {
+      id: 'heading',
       label: 'Heading',
       value: activeDomainLabel,
       status: 'normal',
     },
     {
+      id: 'eta',
       label: 'ETA',
-      value: etaMonths,
-      unit: ' months',
-      status: turbulence ? 'warning' : 'normal',
+      value: projection.eta,
+      status: projection.state === 'review' || projection.state === 'unmodeled' ? 'warning' : 'normal',
+      note: 'Selected debt + LOC.',
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'normal': return 'text-emerald-400 border-emerald-500/50 bg-emerald-500/10';
-      case 'warning': return 'text-amber-400 border-amber-500/50 bg-amber-500/10';
-      case 'danger': return 'text-red-400 border-red-500/50 bg-red-500/10';
+      case 'normal': return `${theme === 'light' ? 'text-emerald-800' : 'text-emerald-400'} border-emerald-500/50 bg-emerald-500/10`;
+      case 'warning': return `${theme === 'light' ? 'text-amber-800' : 'text-amber-400'} border-amber-500/50 bg-amber-500/10`;
+      case 'danger': return `${theme === 'light' ? 'text-red-800' : 'text-red-400'} border-red-500/50 bg-red-500/10`;
       default: return 'text-gray-400';
     }
   };
 
   return (
     <PageTransition>
-    <div className="p-6 md:p-10 max-w-6xl mx-auto">
+    <div className="p-3 md:p-6 max-w-6xl mx-auto [&_button>span]:whitespace-normal [&_button>span]:[overflow-wrap:anywhere] max-sm:[&_.flex:has(>[data-financial-editor])]:flex-col max-sm:[&_.flex:has(>[data-financial-editor])]:items-stretch max-sm:[&_.flex:has(>[data-financial-editor])]:gap-1">
       <ScrollReveal as="header" className="mb-8">
         <h1 className={`text-3xl font-bold ${classes.text} mb-2`}>Cockpit Mode</h1>
         <p className={classes.textSecondary}>Your financial flight simulator</p>
@@ -141,9 +152,9 @@ export default function CockpitPage() {
             className="mb-6 rounded-xl border border-amber-500/50 bg-amber-500/20 p-4"
             data-testid="cockpit-emergency-coach-note"
           >
-            <p className="font-medium text-amber-300">Emergency scenario active</p>
+            <p className={`font-medium ${theme === 'light' ? 'text-amber-800' : 'text-amber-300'}`}>Emergency drill active</p>
             <p className={`mt-1 text-sm leading-6 ${classes.textSecondary}`}>
-              A $600 expense extends the estimate by 2 months. Recovery is part of the plan.
+              The $600 drill is not part of the payoff calculation. Recovery is part of the plan.
             </p>
             <ul className={`mt-3 list-disc space-y-1 pl-5 text-sm leading-6 ${classes.textSecondary}`}>
               {emergencyRecoverySteps.map((step) => (
@@ -154,12 +165,12 @@ export default function CockpitPage() {
         )}
 
         <ScrollReveal variant="scaleIn">
-        <div className={`${classes.glass} rounded-3xl p-8 mb-8`}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className={`${classes.glass} rounded-3xl p-3 md:p-6 mb-8`}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
             {instruments.map((instrument, i) => (
               <div
                 key={i}
-                className={`rounded-2xl border p-6 text-center ${getStatusColor(instrument.status)}`}
+                className={`min-w-0 rounded-lg border p-3 text-center ${getStatusColor(instrument.status)}`}
               >
                 <div className="text-sm opacity-80 mb-2">{instrument.label}</div>
                 {instrument.editable && instrument.onEdit && instrument.numericValue !== undefined ? (
@@ -167,16 +178,21 @@ export default function CockpitPage() {
                     value={instrument.numericValue} 
                     onChange={instrument.onEdit}
                     ariaLabel="Cockpit airspeed cash flow"
-                    size="lg"
+                    size="md"
                   />
                 ) : (
-                  <div className="text-2xl md:text-3xl font-bold">
+                  <div data-testid={`cockpit-${instrument.id}`} className="text-sm md:text-xl font-bold [overflow-wrap:anywhere]">
                     {instrument.value}
-                    {instrument.unit && <span className="text-lg opacity-60">{instrument.unit}</span>}
+                    {instrument.unit && <><wbr /><span className="inline-block whitespace-nowrap text-xs opacity-80">{instrument.unit}</span></>}
                   </div>
                 )}
+                {instrument.note ? <p className="mt-2 text-xs leading-5 [overflow-wrap:anywhere]">{instrument.note}</p> : null}
               </div>
             ))}
+          </div>
+          <div data-testid="cockpit-projection-status" data-state={projection.state} className={`mt-4 space-y-2 text-sm ${classes.textSecondary}`}>
+            <p role="status">{projection.detail}</p>
+            <p data-testid="cockpit-projection-scope" className="text-xs">Selected debt plus the separate LOC. Other assets are not included.</p>
           </div>
 
           {/* Flight Simulator Panel */}
@@ -199,7 +215,7 @@ export default function CockpitPage() {
               <div className="absolute bottom-2 right-1/4 w-2 h-2 bg-zinc-500 rounded-full opacity-50" />
             </div>
 
-            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <div className="p-3 md:p-6 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_224px_minmax(0,1fr)] gap-6 items-center">
               {/* Left panel - Altitude/Progress gauge */}
               <div className="flex flex-col items-center">
                 <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 border-2 border-zinc-500 shadow-inner">
@@ -217,13 +233,14 @@ export default function CockpitPage() {
                       transform="rotate(-90 50 50)"
                       className="opacity-60"
                     />
-                    <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">ALTITUDE</text>
+                    <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">BALANCE</text>
                     <text x="50" y="58" textAnchor="middle" fill="#10b981" fontSize="12" fontFamily="monospace">
-                      {freedomProgressPercent}%
+                      USD
                     </text>
                   </svg>
                 </div>
-                <span className="text-xs text-zinc-400 mt-2">Progress to Freedom</span>
+                <span data-testid="cockpit-debt-balance" className="mt-2 max-w-full text-sm text-zinc-200 [overflow-wrap:anywhere]">{formatCockpitMoney(currentDebt.balance)}</span>
+                <span className="text-xs text-zinc-400 mt-1">Balance scale: $50,000</span>
               </div>
 
               {/* Center - Main Heading Dial */}
@@ -309,11 +326,12 @@ export default function CockpitPage() {
                     />
                     <text x="50" y="45" textAnchor="middle" fill="#9ca3af" fontSize="8">FUEL</text>
                     <text x="50" y="58" textAnchor="middle" fill="#f59e0b" fontSize="12" fontFamily="monospace">
-                      {formatCurrency(cashFlow)}
+                      USD/mo
                     </text>
                   </svg>
                 </div>
-                <span className="text-xs text-zinc-400 mt-2">Cash Flow Rate</span>
+                <span className="mt-2 max-w-full text-sm text-zinc-200 [overflow-wrap:anywhere]">{formatCockpitMoney(cashFlow)}/mo</span>
+                <span className="text-xs text-zinc-400 mt-1">Cash flow scale: $3,000/mo</span>
               </div>
             </div>
           </div>
@@ -321,12 +339,12 @@ export default function CockpitPage() {
         </ScrollReveal>
 
         <ScrollReveal variant="fadeUp" stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className={`${classes.glass} rounded-2xl p-6`}>
+          <div className={`${classes.glass} min-w-0 rounded-lg p-3 md:p-6`}>
             <h3 className={`font-semibold mb-4 ${classes.text}`}>Scenario Controls</h3>
             <div className="space-y-4">
               <div>
                 <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Income</label>
-                <div className="flex items-center gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
                   <input
                     type="range"
                     min="2000"
@@ -335,14 +353,14 @@ export default function CockpitPage() {
                     value={store.monthlyIncome}
                     onChange={(e) => store.setMonthlyIncome(Number(e.target.value))}
                     aria-label="Cockpit monthly income slider"
-                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                    className="min-w-0 w-full h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                   />
                   <EditableCurrency value={store.monthlyIncome} onChange={store.setMonthlyIncome} ariaLabel="Cockpit monthly income" size="sm" />
                 </div>
               </div>
               <div>
                 <label className={`block text-sm ${classes.textSecondary} mb-2`}>Monthly Expenses</label>
-                <div className="flex items-center gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
                   <input
                     type="range"
                     min="1000"
@@ -351,14 +369,14 @@ export default function CockpitPage() {
                     value={store.monthlyExpenses}
                     onChange={(e) => store.setMonthlyExpenses(Number(e.target.value))}
                     aria-label="Cockpit monthly expenses slider"
-                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                    className="min-w-0 w-full h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
                   <EditableCurrency value={store.monthlyExpenses} onChange={store.setMonthlyExpenses} ariaLabel="Cockpit monthly expenses" size="sm" />
                 </div>
               </div>
               <div>
                 <label className={`block text-sm ${classes.textSecondary} mb-2`}>Chunk Size</label>
-                <div className="flex items-center gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
                   <input
                     type="range"
                     min="100"
@@ -367,7 +385,7 @@ export default function CockpitPage() {
                     value={store.chunkAmount}
                     onChange={(e) => store.setChunkAmount(Number(e.target.value))}
                     aria-label="Cockpit chunk size slider"
-                    className="flex-1 h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="min-w-0 w-full h-2 bg-gray-500/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
                   />
                   <EditableCurrency value={store.chunkAmount} onChange={store.setChunkAmount} ariaLabel="Cockpit chunk size" size="sm" />
                 </div>
@@ -375,7 +393,7 @@ export default function CockpitPage() {
             </div>
           </div>
 
-          <div className={`${classes.glass} rounded-2xl p-6`}>
+          <div className={`${classes.glass} min-w-0 rounded-lg p-3 md:p-6`}>
             <h3 className={`font-semibold mb-4 ${classes.text}`}>
               {activeDomainLabel} Details
             </h3>
@@ -409,7 +427,7 @@ export default function CockpitPage() {
               </div>
               <div className={`pt-2 border-t ${classes.border} flex justify-between`}>
                 <span className={classes.textSecondary}>Modeled Interest Delta</span>
-                <span className="text-emerald-500 font-bold">{formatCurrency(velocity.savings)}</span>
+                <span data-testid="cockpit-interest-delta" className={`min-w-0 font-bold [overflow-wrap:anywhere] ${projection.interestDelta === 'Not projected' ? classes.textSecondary : projection.interestDelta.startsWith('-') ? theme === 'light' ? 'text-amber-800' : 'text-amber-300' : theme === 'light' ? 'text-emerald-700' : 'text-emerald-400'}`}>{projection.interestDelta}</span>
               </div>
             </div>
           </div>
@@ -421,17 +439,19 @@ export default function CockpitPage() {
           <div className="flex flex-wrap gap-4">
             {!emergency ? (
               <button
+                type="button"
                 onClick={handleEmergency}
-                className="px-6 py-3 bg-amber-500/20 border border-amber-500/50 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors"
+                className={`px-6 py-3 bg-amber-500/20 border border-amber-500/50 ${theme === 'light' ? 'text-amber-800' : 'text-amber-400'} rounded-xl hover:bg-amber-500/30 transition-colors`}
               >
-                Simulate Emergency Expense ($600)
+                Start $600 emergency drill
               </button>
             ) : (
               <button
+                type="button"
                 onClick={resetEmergency}
-                className="px-6 py-3 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 rounded-xl hover:bg-emerald-500/30 transition-colors"
+                className={`px-6 py-3 bg-emerald-500/20 border border-emerald-500/50 ${theme === 'light' ? 'text-emerald-800' : 'text-emerald-400'} rounded-xl hover:bg-emerald-500/30 transition-colors`}
               >
-                Clear Turbulence
+                End emergency drill
               </button>
             )}
             <button
@@ -441,8 +461,8 @@ export default function CockpitPage() {
               onClick={() => setDepositIncomeToLoc((value) => !value)}
               className={`px-6 py-3 rounded-xl border transition-colors ${
                 depositIncomeToLoc
-                  ? 'border-blue-400/70 bg-blue-500/25 text-blue-200'
-                  : 'border-blue-500/30 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20'
+                  ? `border-blue-400/70 bg-blue-500/25 ${theme === 'light' ? 'text-blue-900' : 'text-blue-200'}`
+                  : `border-blue-500/30 bg-blue-500/10 ${theme === 'light' ? 'text-blue-800' : 'text-blue-400'} hover:bg-blue-500/20`
               }`}
             >
               Income to LOC: {depositIncomeToLoc ? 'On' : 'Off'}
@@ -454,8 +474,8 @@ export default function CockpitPage() {
               onClick={() => setExpenseCardOn((value) => !value)}
               className={`px-6 py-3 rounded-xl border transition-colors ${
                 expenseCardOn
-                  ? 'border-cyan-400/70 bg-cyan-500/25 text-cyan-200'
-                  : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20'
+                  ? `border-cyan-400/70 bg-cyan-500/25 ${theme === 'light' ? 'text-cyan-900' : 'text-cyan-200'}`
+                  : `border-cyan-500/30 bg-cyan-500/10 ${theme === 'light' ? 'text-cyan-800' : 'text-cyan-400'} hover:bg-cyan-500/20`
               }`}
             >
               Expense card: {expenseCardOn ? 'On' : 'Off'}
@@ -476,7 +496,7 @@ export default function CockpitPage() {
       </div>
 
       <footer className={`mt-12 text-center text-sm ${classes.textSecondary}`}>
-        Educational tool. Click any number to edit. Not financial advice.
+        Educational tool. Not financial advice.
       </footer>
     </div>
     </PageTransition>

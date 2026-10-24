@@ -1,0 +1,56 @@
+{
+  "verifiedAt": "2026-10-20T23:03:02.257Z",
+  "baseline": "14ad261b493116d33240fe9a2e203762aee94a51",
+  "house": {
+    "id": "house",
+    "quality": "refined-textured",
+    "bytes": 1144500,
+    "meshes": 155,
+    "triangles": 31316,
+    "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
+    "sourceSha256": "26fad67c8f8908d0f34cd3fc42aa14c3f417908bc6a56f2ed3d1a8dd69f4f82f",
+    "sourceFile": "apps/media/scripts/build-refined-house.mjs",
+    "materialSourceSha256": "ee03a127097e0fed9039be1d64cd13358fbf11e5b0c1519a5c6b0aad13b30a4e",
+    "creator": "InterestShield project",
+    "license": "Original project geometry and generated material sources",
+    "provenance": "Original authored limestone House with actual openings, standing-seam roof, oak joinery, interiors and planted forecourt; AI-generated albedos with authored approximate PBR maps. Not a scan or exact poster reconstruction.",
+    "units": "normalized stage units",
+    "version": 2
+  },
+  "vendorSha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639",
+  "video": {
+    "id": "house",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9,
+    "bytes": 10122824,
+    "sha256": "b54fbf5a0b3e54628939385c801ed9f471ad59cd7c297532a14b3c8d418ead3c",
+    "motion": {
+      "changedCellCount": 19,
+      "maxCellDistance": 81.09095290645588,
+      "meanCellDistance": 8.22620053969038
+    },
+    "closure": {
+      "changedCellCount": 0,
+      "maxCellDistance": 0.0755224664031573,
+      "meanCellDistance": 0.0073992422595517415
+    }
+  },
+  "report": {
+    "bytes": 92218,
+    "sha256": "99fb1936b1de5b950f5b9cebeb10f29135b073ab0acf77e52a0cfdd9ba2dceb2",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "runtimeBrowserVerification": "not claimed; local-file opening was policy-blocked"
+  },
+  "logs": {
+    "web-tests.log": "7e90c80fc81ea10b25e88d93b6b06428d4b0cbf2c793890445f3285d63a6801f",
+    "contracts.log": "6659f7adfb0e9018cba20b1817e1f4ffc2beee5e5f9a059ed28a98585939294b",
+    "web-build.log": "7e4e8830a42564a86520cba9094c650eb77425eb65ffa654875e97b8bfacd3c8",
+    "web-lint.log": "f9a21ecb409cdea1f61b7e813acc2fe2b2231e6d75fde4df7ab8eb89fc078bd7",
+    "heroes.log": "d97c89361a5febbcc5ddf1ccb7bc0757f5b97628918568429cc73e2839677c7d",
+    "routes.log": "6ad4e9a8b12f8ad79151f392bbb4622d8db360684d5e3c1ed77e150df668d4b9",
+    "media-check.log": "44f41fe18ff6361bfd0f4b3a08ed2e0a71bed7ecea60c3937cb136eb8a24685d",
+    "house-tests.log": "336b82ec73656c8929e1c1a6a7118a296e4f2a6878a0f9d771f21ab46bd94025"
+  }
+}

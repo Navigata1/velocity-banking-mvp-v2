@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "created": "2026-10-21",
+  "purpose": "Original cognac satchel, brass fittings, stitched leather shoulder strap, silver key and inserted illustrative papers.",
+  "resolution": 256,
+  "leatherColorResolution": 512,
+  "normalResolution": 256,
+  "images": [{
+    "file": "../student-loan/leather.png",
+    "sha256": "7b4897dbee5f4ad7e0982e3cb81a10fb3bcb445db9a084b073215738e01a74e1",
+    "origin": "Original Codex built-in image_gen source retained with Student Loan; reused unchanged with explicit source path and shader dye.",
+    "originalOutput": "exec-7595a962-77c7-42c1-9773-0aca4bc2df46.png"
+  }],
+  "surfaces": {"leatherNormalScale": 0.65, "metalNormalScale": 0.14, "leatherRoughness": 0.48, "brassRoughness": 0.35, "steelRoughness": 0.42, "grainSeed": 6927},
+  "limitations": "Generated leather albedo and height-derived normals are authored visual approximations, not photographed scans or measured relief/reflectance. The original grayscale source remains unchanged;512px leather color and256px roughness/renormalized lossless normals are delivery derivatives. Metal maps are procedural. Geometry is original, not exact poster reconstruction; paper chart is static illustration, not financial results. Final all-collection art and production approval remain open."
+}

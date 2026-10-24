@@ -1,0 +1,10 @@
+AssertionError [ERR_ASSERTION]: house 375px: dashboard-mobile-vital-interest-burn value must fit without splitting tokens: {"text":"Est. $51.50/day","tokens":[{"text":"Est","oneLine":true,"contained":true},{"text":"$51.50","oneLine":true,"contained":true},{"text":"/day","oneLine":false,"contained":true}],"fontSize":14,"fits":true}
+    at assertVitalLayout (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:66:12)
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-dashboard-interest.cjs:168:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-21T12:41:40.009Z",
+  "pins": {
+    "review-runner.cjs": "e576d6b0dd02ee3696bd62c8fa9e05f9aadd25287bab352d684139cc7a1e5f5b",
+    "review-probes.cjs": "1984bc1395173417bbadcc0477c614c7bf76f0bfac15af4c544dc7353bebf07a",
+    "review-report.md": "b23a4cc05dbfdd403b0e5d052f52454fc92dcfab8dc8ed7db59fc9b581123c6e",
+    "review-findings.json": "f91c8d4da77f153c1fb93806479880e9472eb77ad509b0a5d33c85b21518f6db",
+    "review-pins.json": "c4009359fd3e0ab7049c5ac183d0931aa50f7510fd9b3c23aebd0f10d50ccc92"
+  }
+}

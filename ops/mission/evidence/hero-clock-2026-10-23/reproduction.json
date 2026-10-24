@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-23T15:59:27.996Z",
+  "baselineHead": "4896106c967011a75806f4b49447db64318110d9",
+  "cleanupCandidateUnchanged": true,
+  "observation": {
+    "visibleWallSeconds": 8,
+    "frameIntervalMs": 500,
+    "angle": 0.10345127194667714,
+    "target": 5.733185307179586,
+    "pendingRaf": 1,
+    "renders": 19
+  },
+  "result": "Private proposed visible-time clock contract:2pass/5intendedAssertionError failures, no import/setup errors.",
+  "passing": [
+    "Normal62.5ms cadence completes one revolution and stops.",
+    "Initial reduced motion remains at rest without RAF."
+  ],
+  "failing": [
+    "Slow500ms cadence endpoint.",
+    "Irregular cadence endpoint.",
+    "Single8second visible gap endpoint.",
+    "Hidden gap with no delivered RAF leaks into visible progress.",
+    "Replay during pause does not complete at slow visible cadence."
+  ],
+  "causalScope": "In the controlled CPU simulation, Math.min(deltaSeconds,0.1) discards visible time. This is not proof of historical Chrome capture delay, WebGL behavior or physical performance.",
+  "inputs": {
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7299a706eb992f0360e4df7f86e85d61cd1adf2eb17de639a945d486fe939285",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "80f1395a2e59056531102d2e6163dd68a8a057441f3533ade646e480e7418a77",
+    "apps/web/src/components/hero/turntable.ts": "e3a488ca249bf4fae70220b98c790362283dfcc298369f54bbc03a53f40c23b0",
+    "apps/web/src/components/hero/house-instances.ts": "9accd84136ada962ad5d719b83b4f767148f570888cafac4c8b737a623842842"
+  },
+  "proposedContract": "Eight seconds from first visible RAF to one-revolution rest; hidden time excluded, replay/reduced-motion/lifecycle behavior preserved.",
+  "nextAction": "After current cleanup checkpoint is verified, implement and independently review a separate focused clock slice. Do not change the running495-source candidate.",
+  "privatePlan": ".superpowers/sdd/2026-10-23-hero-low-cadence/next-action.md",
+  "implemented": false,
+  "productChanged": false,
+  "productionReady": false
+}

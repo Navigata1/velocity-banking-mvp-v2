@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: same-month comparison surface must exist
+
+0 !== 1
+
+    at runCommonMonthFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-common-month.cjs:37:72)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\smoke-accessibility-rendered.cjs:143:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-24T04:46:53.066Z",
+  "headBefore": "ab9a166742d1b9ad8f3250554940501078e93c13",
+  "scope": "Root contract and dated mission metadata only; no app/solver/art/renderer/dependency/workflow change",
+  "priorCi": {"events":[{"id":40062690351,"event":"push","attempt":1,"conclusion":"failure"},{"id":40062692135,"event":"pull_request","attempt":1,"conclusion":"failure"}],"graphics":"both success","failedStep":"Run mobile contract tests","validSourceGuards":4,"canonicalExit":1,"receipt":"https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6380007920","workflowRerun":false},
+  "tdd": {"actualRootBaseline":{"pass":39,"fail":1},"correctedRootGroups":40,"additionalAssertions":["next-vital agreement","same budget/debts/cash/date caution","default higher Velocity interest","default slower Velocity payoff"],"initialInvocationSetupErrorRetained":true},
+  "local": {"rootMobilePort":0,"nativeCoaching":0,"nativeCoachingGroups":16,"ciContracts":0,"ciContractGroups":22,"priorUnchangedWebRegressionGroups":376,"priorUnchangedCommonMonthProbes":23247},
+  "preservation": {"priorApplicationSourcesUnchanged":true,"protectedFiles":23,"publicModelPosterFiles":20,"protectedBuildIdUnchanged":true},
+  "parallel": {"posterV3":"source/CPU ACCEPT c2044622; portable wiring unadopted","nm02":"source/CPU HOLD ad383a42, independent reference loader","hp6":"limited source/data/CPU ACCEPT372fcde6;78independent groups, no runtime binding or captures","operator":"generic root integration P1 proposal only"},
+  "approval": {"newHeadCiApproved":false,"allTenPhotorealApproved":false,"fullVideoGenerationApproved":false,"mergeApproved":false,"productionReady":false}
+}

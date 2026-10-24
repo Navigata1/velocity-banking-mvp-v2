@@ -1,0 +1,25 @@
+PASS car presentation height 80.0%
+PASS house presentation height 80.0%
+PASS land presentation height 80.0%
+PASS creditCard presentation height 80.0%
+PASS studentLoan presentation height 80.0%
+PASS medical presentation height 80.0%
+PASS personal presentation height 80.0%
+PASS recreation presentation height 80.0%
+PASS custom presentation height 80.0%
+PASS vault presentation height 80.0%
+PASS hero presentation controls: small silhouettes rejected for all ten models
+PASS hero visibility controls: blank, undersized and clipped frames rejected
+PASS hero readiness deadline controls: late results and pending waits rejected
+PASS hero cadence controls: primer 16ms and 15x100ms samples
+PASS 1440px slow-network poster continuity and selected-mode stability
+AssertionError [ERR_ASSERTION]: car model height 28.3% is below presentation minimum 38%
+    at presentationBounds (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:29:10)
+    at run (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-heroes.cjs:194:23) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

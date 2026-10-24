@@ -1,0 +1,553 @@
+{
+  "baseline": "35745b7f1e0b8b18a6279f7c54b47d4f0f9ea50e",
+  "rows": [
+    {
+      "materials": [
+        "Mechanical"
+      ],
+      "sourcePixelSha256": "94f38d35a8cec24cc624a636bc5ffa95b1d8831e77ae007c3e86648f68684816",
+      "normalScales": [
+        {
+          "name": "Mechanical",
+          "scale": 1
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 223440
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 223440
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 223440
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 223440
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 223440
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 223440
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 410593
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 261829
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 223440
+      }
+    },
+    {
+      "materials": [
+        "Interior 1",
+        "Floormat",
+        "Interior 3 Carmine",
+        "Panel Sides"
+      ],
+      "sourcePixelSha256": "0d1c358c3355bba2e4d4fe981644ce6bde6cf69495b62cb10867831b53e58cd3",
+      "normalScales": [
+        {
+          "name": "Interior 1",
+          "scale": 1
+        },
+        {
+          "name": "Floormat",
+          "scale": 1
+        },
+        {
+          "name": "Interior 3 Carmine",
+          "scale": 1
+        },
+        {
+          "name": "Panel Sides",
+          "scale": 0
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 3142
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 3142
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 3142
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 3142
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 3142
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 3142
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 4242
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 3402
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 3142
+      }
+    },
+    {
+      "materials": [
+        "Interior 2"
+      ],
+      "sourcePixelSha256": "35bc19e9728db6b7aac623cafc9fe5e3350e08fbe0acd25014d627ad4b79df48",
+      "normalScales": [
+        {
+          "name": "Interior 2",
+          "scale": 1
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 92
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 92
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 92
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 92
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 92
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 92
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 179
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 178
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 92
+      }
+    },
+    {
+      "materials": [
+        "Paint 2 Carmine",
+        "Paint 1 Carmine"
+      ],
+      "sourcePixelSha256": "f084dbffd99641c57a397c5de7b5defec889114310ed07861711b043bf787477",
+      "normalScales": [
+        {
+          "name": "Paint 2 Carmine",
+          "scale": 0.30000001192092896
+        },
+        {
+          "name": "Paint 1 Carmine",
+          "scale": 0.30000001192092896
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 36868
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 36868
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 36868
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 36868
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 36868
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 36868
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 41319
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 43096
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 36868
+      }
+    },
+    {
+      "materials": [
+        "Disc"
+      ],
+      "sourcePixelSha256": "166b768e816839ef1c75381037d222c0aa5dd23145a726306a78b37f4acd89c7",
+      "normalScales": [
+        {
+          "name": "Disc",
+          "scale": 1
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 6438
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 6438
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 6438
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 6438
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 6438
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 6438
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 10380
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 8243
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 6438
+      }
+    },
+    {
+      "materials": [
+        "Tireside"
+      ],
+      "sourcePixelSha256": "674e6d0beee9142156c5cd99c026d7c3cda2fa0168ba6b8a323de8bad9a58a5c",
+      "normalScales": [
+        {
+          "name": "Tireside",
+          "scale": 1
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 286764
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 286764
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 286764
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 286764
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 286764
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 286764
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 491714
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 415489
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 286764
+      }
+    },
+    {
+      "materials": [
+        "Tiretread"
+      ],
+      "sourcePixelSha256": "ff08861bab392eb1e495e36827ebd7097cee3ee9d8bb1831bfe21fdf62f9e0e4",
+      "normalScales": [
+        {
+          "name": "Tiretread",
+          "scale": 1
+        }
+      ],
+      "variants": [
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "default",
+          "bytes": 37136
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "photo",
+          "bytes": 37136
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "picture",
+          "bytes": 37136
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "drawing",
+          "bytes": 37136
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "icon",
+          "bytes": 37136
+        },
+        {
+          "format": "webp",
+          "quality": 100,
+          "effort": 6,
+          "preset": "text",
+          "bytes": 37136
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": false,
+          "bytes": 94381
+        },
+        {
+          "format": "png",
+          "compressionLevel": 9,
+          "adaptiveFiltering": true,
+          "bytes": 51392
+        }
+      ],
+      "best": {
+        "format": "webp",
+        "quality": 100,
+        "effort": 6,
+        "preset": "default",
+        "bytes": 37136
+      }
+    }
+  ],
+  "estimatedCarAfterAllLossless": 2451462,
+  "carCap": 2359296,
+  "note": "All variants decoded and RGB-exact. Payload estimate only, no publication or pixel-lossy alternative."
+}

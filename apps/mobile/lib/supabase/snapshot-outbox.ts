@@ -5,8 +5,10 @@ import {
   type SnapshotRevisionConflictKind,
 } from '@interestshield/persistence-contract';
 import type { MobileDashboardInput } from '@interestshield/financial-engine';
+import { decodePortfolioBook, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { captureMobileSnapshotAssumptions, decodeMobileSnapshotAssumptions, readMobileSnapshotPortfolioState,
+  readMobileSnapshotPortfolio, serializeMobileRecoveryPortfolio, validatePortfolioFingerprint } from './portfolio-snapshot';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { decodeMobileAssumptions } from '../mobile-assumption-storage';
 import {
   createMobileAuthStorage,
   isMobileSnapshotOwnerLock,
@@ -70,6 +72,7 @@ export type MobileSnapshotRecoverySourceKind = 'device' | 'guest' | 'remote';
 
 interface StoredMobileSnapshotRecovery {
   expectedLocalAssumptions: string;
+  expectedLocalPortfolio?: string;
   item: MobileSnapshotOutboxItem;
   recoveryId: string;
   serverRevision: number;
@@ -78,11 +81,16 @@ interface StoredMobileSnapshotRecovery {
 
 export interface MobileSnapshotPendingRecovery extends StoredMobileSnapshotRecovery {
   assumptions: MobileDashboardInput;
+  portfolio?: PortfolioBook | null;
+  portfolioDocumentVersion?: 3 | 4;
 }
 
 export interface MobileSnapshotStageRecoveryInput {
   assumptions: MobileDashboardInput;
+  portfolio?: PortfolioBook | null;
+  portfolioDocumentVersion?: 3 | 4;
   expectedLocalAssumptions: string;
+  expectedLocalPortfolio?: string;
   expectedOwnerId: string;
   serverRevision: number;
   snapshotIdempotencyKey: string;
@@ -222,12 +230,18 @@ function readStoredRecovery(value: unknown, ownerId: string): StoredMobileSnapsh
     || (value.sourceKind !== 'device' && value.sourceKind !== 'guest' && value.sourceKind !== 'remote')
   ) throw new Error('Snapshot outbox contains a malformed recovery journal.');
   const item = readItem(value.item, ownerId);
+  if (value.expectedLocalPortfolio !== undefined) {
+    if (typeof value.expectedLocalPortfolio !== 'string') throw new Error('Snapshot recovery Portfolio fingerprint is malformed.');
+    validatePortfolioFingerprint(value.expectedLocalPortfolio);
+    readMobileSnapshotPortfolio(item.assumptionsJson.storage);
+  }
   if (
     item.operationIdempotencyKey !== value.recoveryId
     || item.clientRevision !== (value.serverRevision as number) + 1
   ) throw new Error('Snapshot outbox recovery journal does not match its prepared operation.');
   return {
     expectedLocalAssumptions: value.expectedLocalAssumptions,
+    ...(value.expectedLocalPortfolio === undefined ? {} : { expectedLocalPortfolio: value.expectedLocalPortfolio as string }),
     item,
     recoveryId: value.recoveryId,
     serverRevision: value.serverRevision as number,
@@ -340,12 +354,15 @@ export function createMobileSnapshotOutbox(
         (entry) => entry.key === 'interestshield-mobile-assumptions-v1'
       );
       const assumptions = storageEntry
-        ? decodeMobileAssumptions(storageEntry.value, ownerId)
+        ? decodeMobileSnapshotAssumptions(storageEntry.value, ownerId)
         : null;
       if (!assumptions) {
         throw new Error('Snapshot outbox recovery journal has invalid mobile assumptions.');
       }
-      return copy({ ...recovery, assumptions });
+      const portfolio = readMobileSnapshotPortfolioState(recovery.item.assumptionsJson.storage);
+      return copy({ ...recovery, assumptions,
+        ...(recovery.expectedLocalPortfolio === undefined ? {} : { portfolio: portfolio.book,
+          ...(portfolio.documentVersion === undefined ? {} : { portfolioDocumentVersion: portfolio.documentVersion }) }) });
     }, ownerLock);
   };
 
@@ -365,6 +382,8 @@ export function createMobileSnapshotOutbox(
   };
 
   const enqueue = async (input: MobileSnapshotEnqueueInput): Promise<MobileSnapshotOutboxItem> => {
+    input = { ...input, assumptions: captureMobileSnapshotAssumptions(input.assumptions),
+      ...(input.portfolio === undefined ? {} : { portfolio: input.portfolio === null ? null : decodePortfolioBook(input.portfolio) }) };
     const ownerId = requireOwnerId(input.expectedOwnerId);
     const snapshotIdempotencyKey = requireIdempotencyKey(
       await getSnapshotIdempotencyKey(),
@@ -423,6 +442,15 @@ export function createMobileSnapshotOutbox(
     input: MobileSnapshotStageRecoveryInput,
     ownerLock?: MobileSnapshotOwnerLock
   ): Promise<MobileSnapshotStagedRecovery> => {
+    input = { ...input, assumptions: captureMobileSnapshotAssumptions(input.assumptions),
+      ...(input.portfolio === undefined ? {} : { portfolio: input.portfolio === null ? null : decodePortfolioBook(input.portfolio) }) };
+    if ((input.portfolio === undefined) !== (input.expectedLocalPortfolio === undefined)) {
+      throw new Error('Paired Portfolio recovery requires its reviewed destination fingerprint.');
+    }
+    if (input.portfolio === null && input.expectedLocalPortfolio !== 'null') {
+      throw new Error('Paired Portfolio recovery cannot omit an existing book. Use an explicitly empty inventory instead.');
+    }
+    if (input.expectedLocalPortfolio !== undefined) validatePortfolioFingerprint(input.expectedLocalPortfolio);
     const ownerId = requireOwnerId(input.expectedOwnerId);
     const snapshotIdempotencyKey = requireIdempotencyKey(
       input.snapshotIdempotencyKey,
@@ -451,6 +479,8 @@ export function createMobileSnapshotOutbox(
       }
       const prepared = await prepareSnapshot({
         assumptions: input.assumptions,
+        ...(input.portfolio === undefined ? {} : { portfolio: input.portfolio }),
+        ...(input.portfolioDocumentVersion === undefined ? {} : { portfolioDocumentVersion: input.portfolioDocumentVersion }),
         clientRevision,
         expectedOwnerId: ownerId,
         operationIdempotencyKey: recoveryId,
@@ -458,6 +488,12 @@ export function createMobileSnapshotOutbox(
       });
       const item: MobileSnapshotOutboxItem = { ...prepared, enqueuedAt, version: OUTBOX_VERSION };
       readItem(item, ownerId);
+      const preparedPortfolio = readMobileSnapshotPortfolioState(item.assumptionsJson.storage);
+      if (input.expectedLocalPortfolio !== undefined
+        && serializeMobileRecoveryPortfolio(preparedPortfolio.book, preparedPortfolio.documentVersion)
+          !== serializeMobileRecoveryPortfolio(input.portfolio ?? null, input.portfolioDocumentVersion)) {
+        throw new Error('Snapshot recovery preparation changed its Portfolio target.');
+      }
       if (item.snapshotIdempotencyKey !== snapshotIdempotencyKey) {
         throw new Error('Snapshot recovery preparation changed its installation stream.');
       }
@@ -469,6 +505,7 @@ export function createMobileSnapshotOutbox(
       }
       envelope.recovery = {
         expectedLocalAssumptions: input.expectedLocalAssumptions,
+        ...(input.expectedLocalPortfolio === undefined ? {} : { expectedLocalPortfolio: input.expectedLocalPortfolio }),
         item,
         recoveryId,
         serverRevision: input.serverRevision,

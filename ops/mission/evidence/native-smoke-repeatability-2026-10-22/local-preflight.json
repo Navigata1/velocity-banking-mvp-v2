@@ -1,0 +1,174 @@
+{
+  "verifiedAt": "2026-10-22T20:55:19.253Z",
+  "baseline": "f7821ba9e928b34038dadb75ea41e2512f4172fb",
+  "stage": "Local pre-push native-smoke repeatability plus canvas checkpoint; new-head CI/preview pending",
+  "productionReady": false,
+  "fresh": {
+    "localGates": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "three-stage",
+        "exitCode": 0
+      },
+      {
+        "name": "web-routes",
+        "exitCode": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0
+      },
+      {
+        "name": "simulator-comparison",
+        "exitCode": 0
+      },
+      {
+        "name": "dashboard",
+        "exitCode": 0
+      },
+      {
+        "name": "vault",
+        "exitCode": 0
+      },
+      {
+        "name": "portfolio",
+        "exitCode": 0
+      },
+      {
+        "name": "heroes",
+        "exitCode": 0
+      },
+      {
+        "name": "media-check",
+        "exitCode": 0
+      },
+      {
+        "name": "hero-video-verification",
+        "exitCode": 0
+      },
+      {
+        "name": "native-types",
+        "exitCode": 0
+      },
+      {
+        "name": "native-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "native-port",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "native-accessibility",
+        "exitCode": 0
+      },
+      {
+        "name": "native-android-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "native-ios-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-check",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-dry-build",
+        "exitCode": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0
+      }
+    ],
+    "sourcePins": 485,
+    "focusedCaptureGroups": 20,
+    "nativeOutputCpuGroups": 3,
+    "realNativeRepeatRuns": 2,
+    "realNativeRepeatDatedCases": 30,
+    "privateShippingFixtures": 162,
+    "originalEngineRegressions": 360,
+    "focusedDatedGroups": 116,
+    "datedWebLayouts": 27,
+    "directThreeStage": "Original18actions, six selection workflows, hidden WebGL rejection, reduced-motion fallback; unchanged450/700/300 bounds"
+  },
+  "evidence": {
+    "privateIndex": ".superpowers/sdd/2026-10-22-native-smoke-repeatability/local-evidence-index.json",
+    "fileCount": 3216,
+    "indexSha256": "ba6da7def0a045c42697b02870c3a85bb3a35ba28fb058ae3a59d354fc4c1e0f",
+    "fullGateReportSha256": "cafb82dba2250a96947d42581c8288aa68d0414f62c98a5ced07e634868aaa23",
+    "sourcePinsSha256": "143c25be426d1fbb3daa96705d22dddcd0e42225594dbc1e5f46d1baa9686547",
+    "currentNativeDated": {
+      "file": ".superpowers/sdd/2026-10-22-native-smoke-repeatability/local-artifacts/native/dated-current/verification.json",
+      "bytes": 345135,
+      "sha256": "f7034f6be713edf4fb1185999a8ada54838e572bb6316c09d25dbf3141618618"
+    }
+  },
+  "preserved": {
+    "applicationFinancialNativeMediaWorkerAssets": "All baseline481 source pins unchanged except five named Node harness/contract scripts; four test roots added",
+    "dependenciesLocksSqlWorkflowsCaps": "Unchanged",
+    "lastVerifiedHead": "93dcf67b7b19946f3fb599c1a6dcc4d7110a968a",
+    "lastVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6344946083",
+    "failedPredecessor": "f7821ba9e928b34038dadb75ea41e2512f4172fb",
+    "failureComment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6349085540"
+  },
+  "boundedEvidence": {
+    "interiorCrossover": "Eight viewport/fixture pairs have equal observed old/new PNG hash sets in two fixed orderings; rotated width drift recorded; not exact geometry equality",
+    "boundary": "128 actual main-document boundary/direct-locator cases, zero acceptance mismatches; requested subpixel offsets may quantize",
+    "artificialCpu2": "Original4/6; candidate5/6, desktop rapid decode709ms failed700. Single samples, not speed/reliability/CI root-cause proof"
+  },
+  "retainedFailures": [
+    "Prior canvas fullattempt1 failed lint in three test-local variables; source-only correction retained.",
+    "Prior canvas full2 failed original desktopprincipal701ms>700; full3 failed Remotion target closure; remaining native smoke rejected its reused protected output. Old27/29 collection is FAILED, not a green checkpoint.",
+    "f782 required CI pair failed: both first attempts failed and whole push retry failed; PR retry passed. No third unchanged retry or verified receipt.",
+    "Initial private VM diagnostic failed cross-realm equality before measured workflows; invalid harness, not app defect.",
+    "Initial exact rotated PNG-equality proof failed; unchanged old helper also varied. Fixed crossover outputs retained without favorable repeats.",
+    "Review found a token-mock coverage gap; real callbacks and deletion-only restoration negative control now pass. No product restoration defect claimed."
+  ],
+  "limitations": [
+    "New-head complete CI pair/automatic READY/hosted/IAB/seal pending at this snapshot.",
+    "No universal geometry, timing, iframe, pinch-zoom, exclusive-directory reservation or hardware claim; UUID output retains receipt-based guard.",
+    "Full lender/calendar R3, all-ten photoreal approval, backend/security/recovery, physical native/accessibility and final production release remain open."
+  ]
+}

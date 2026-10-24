@@ -1,0 +1,263 @@
+{
+  "baseline": "dfdfe24916218ba3a2039cc55ffbefd4a283c49a",
+  "verifiedAt": "2026-10-22T10:38:52.165Z",
+  "productionReady": false,
+  "stage": "Local selection-settlement correction; new exact-head remote verification pending",
+  "localStages": 29,
+  "regressions": 360,
+  "selectionCpuGroups": 7,
+  "referenceProbes": 23247,
+  "modelContracts": 21,
+  "wiringContracts": 6,
+  "selectionBrowser": {
+    "workflows": 6,
+    "redFailures": 2,
+    "redPositiveControls": 4,
+    "green": [
+      {
+        "name": "desktop-rapid-return",
+        "pixels": {
+          "settledAndDecodedMs": 610,
+          "stableThroughMs": 644,
+          "colors": 27,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "desktop-rapid-return-canvas.png",
+          "bytes": 16924,
+          "sha256": "9a3ebe717a695d3c9f26429397edc77cb53000ccabebe19786c7c6eed6247020"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      },
+      {
+        "name": "desktop-settled-return",
+        "pixels": {
+          "settledAndDecodedMs": 580,
+          "stableThroughMs": 629,
+          "colors": 32,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "desktop-settled-return-canvas.png",
+          "bytes": 18269,
+          "sha256": "5e1d5d11f9b2d97d9eb1d6ae36b4f85fe05fa940d3e88e329b3911b90472bcd4"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      },
+      {
+        "name": "desktop-current-noop",
+        "pixels": {
+          "settledAndDecodedMs": 110,
+          "stableThroughMs": 161,
+          "colors": 32,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "desktop-current-noop-canvas.png",
+          "bytes": 18056,
+          "sha256": "2e114b8492ce543166f81905f4cb754b03b7c51d9605c6fc01508a784ff6815b"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      },
+      {
+        "name": "mobile-rapid-return",
+        "pixels": {
+          "settledAndDecodedMs": 568,
+          "stableThroughMs": 602,
+          "colors": 24,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "mobile-rapid-return-canvas.png",
+          "bytes": 8531,
+          "sha256": "ffdaba7dc7b5e4272bcbfa75126b2791643f1dac30e8e6b0d21a112819d16b73"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      },
+      {
+        "name": "mobile-settled-return",
+        "pixels": {
+          "settledAndDecodedMs": 565,
+          "stableThroughMs": 599,
+          "colors": 27,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "mobile-settled-return-canvas.png",
+          "bytes": 8521,
+          "sha256": "fc58b02c283185d55b272b60cd38d4f200c1fd9137eece4955898e5c777d4667"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      },
+      {
+        "name": "mobile-current-noop",
+        "pixels": {
+          "settledAndDecodedMs": 99,
+          "stableThroughMs": 132,
+          "colors": 27,
+          "opaquePixels": 81,
+          "distance": {
+            "changedCellCount": 0,
+            "maxCellDistance": 0,
+            "meanCellDistance": 0
+          },
+          "file": "mobile-current-noop-canvas.png",
+          "bytes": 8583,
+          "sha256": "74f3b3114054802f9252870abfe1e8a2884fb3062620daf0a6ef43336cacb17e"
+        },
+        "revision": "0",
+        "sourceBytesPreserved": true,
+        "financialVitalsUnchanged": true
+      }
+    ],
+    "contextsClosed": 6,
+    "physicalHardwareProof": false
+  },
+  "standingWebWorkflows": 162,
+  "hostedTargetWorkflows": 168,
+  "unchangedOriginalNormalThreeActions": 18,
+  "media": {
+    "contracts": 222,
+    "freshRemotionStills": 27,
+    "freshTurntableExports": false,
+    "assetChanges": false
+  },
+  "native": {
+    "workflowChecks": 82,
+    "focusedNavigationAssertions": 1,
+    "freshAndroidAndIosHermesExports": true,
+    "physicalDeviceProof": false
+  },
+  "sourceBoundary": {
+    "baseline": "dfdfe24916218ba3a2039cc55ffbefd4a283c49a",
+    "verifiedAt": "2026-10-22T10:10:24.671Z",
+    "protectedRoots": [
+      "packages",
+      "apps/web/src/engine",
+      "apps/web/src/app",
+      "apps/web/src/stores",
+      "apps/web/src/lib",
+      "apps/web/public",
+      "apps/mobile",
+      "apps/media",
+      "apps/report-worker",
+      ".github/workflows",
+      "supabase",
+      "package.json",
+      "package-lock.json",
+      "apps/web/package.json",
+      "apps/web/package-lock.json"
+    ],
+    "unchangedFunctions": [
+      {
+        "file": "apps/web/src/components/money-loop-3d/selection-motion.ts",
+        "names": [
+          "getSelectionMotionElapsedSeconds",
+          "getSelectionMotionFrame"
+        ]
+      },
+      {
+        "file": "apps/web/scripts/test-three-stage.cjs",
+        "names": [
+          "waitForNormalStage",
+          "waitForStageSettled",
+          "assertGenuineWebgl2",
+          "captureIsolatedCanvasPng",
+          "proveCanvasPng",
+          "prepareStageAndTargetForClick",
+          "verifyNormalViewport",
+          "verifyReducedMotionFallback"
+        ]
+      }
+    ],
+    "checkpoints": [
+      {
+        "file": ".superpowers/sdd/2026-10-22-projected-loc-limit/current-checkpoint.json",
+        "count": 116,
+        "sha256": "3730facc8c34036023effd3f17a28f59cf584bc2f699283bcd8edef510adb4b9"
+      },
+      {
+        "file": "ops/mission/evidence/projected-loc-limit-2026-10-22/raw-evidence-index.json",
+        "count": 138,
+        "sha256": "747dd6a8877607a9a590b767497a4c51a1ed3ad72a8ab509a8f28c0fc9ffd8c2"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-portfolio-history/current-checkpoint.json",
+        "count": 92,
+        "sha256": "1dceeae440e939796d39eb7f201819923613d14b0eecf846ed5274ef2b4286c7"
+      },
+      {
+        "file": "ops/mission/evidence/portfolio-history-2026-10-22/raw-evidence-index.json",
+        "count": 202,
+        "sha256": "27bec6df1f064dd51ea83b2e3787a517b721e2873eec2b2b6eb1e8324f4a59ef"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-photographic-environment/cpu-checkpoint.json",
+        "count": 12,
+        "sha256": "f5438c6c93891dda4b572ca4bb6a0330a7d89a563698c0eb0ca1afd7edb5ba49"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-photographic-environment/render-checkpoint.json",
+        "count": 69,
+        "sha256": "455b81f5ecbfa6e6a8a6e065c80cac9f16a81c575c655074de0e7bf75c75895e"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-environment-orientation/checkpoint.json",
+        "count": 29,
+        "sha256": "bbbaad13e9060a1ceefe9f716829841adc70449ec6664a278e4f4396a04f900f"
+      },
+      {
+        "file": ".superpowers/sdd/2026-10-22-environment-calibration/checkpoint.json",
+        "count": 68,
+        "sha256": "d5538682ec0a1039814b128d01c67d5d438e9985cf4a87f1b2772fa39b565a4a"
+      }
+    ],
+    "motionSeconds": 0.45,
+    "domTokenMs": 650,
+    "settlementDeadlineMs": 700,
+    "stabilityDeadlineMs": 300,
+    "priorScreenshotDeadlineIssueResolved": false,
+    "photorealAssetsApproved": false
+  },
+  "rawEvidence": {
+    "index": ".superpowers/sdd/2026-10-22-selection-settlement/local-evidence-index.json",
+    "entries": 96,
+    "sha256": "c0b8832855b540d84218fa1e9e0a9684ced00aef7c4320d3959fc2e7dbada847"
+  },
+  "priorRemoteCheckpoint": {
+    "head": "dfdfe24916218ba3a2039cc55ffbefd4a283c49a",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6337764821",
+    "shippingFiles": 116,
+    "localFiles": 138
+  },
+  "remaining": [
+    "Both complete new exact-head CI events, automatic known READY preview, hosted168/20served assets/manual and immutable receipt",
+    "Prior screenshot deadline failure remains unresolved, despite bounded positive rerun; no timing relaxation",
+    "All-ten photoreal and independent art approval; physical hardware/native; lender calendars/terms/reserves; dedicated backend recovery/security and final release"
+  ]
+}

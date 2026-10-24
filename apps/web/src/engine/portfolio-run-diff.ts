@@ -61,7 +61,8 @@ function getMinPayment(debt: DebtItem): number {
 }
 
 function formatMonths(months: number): string {
-  if (!Number.isFinite(months) || months <= 0) return 'not projected';
+  if (!Number.isFinite(months) || months < 0) return 'not projected';
+  if (months === 0) return 'Paid off';
 
   const wholeMonths = Math.ceil(months);
   const years = Math.floor(wholeMonths / 12);
@@ -90,12 +91,16 @@ function focusLabel(focusMode: FocusMode): string {
 }
 
 function failureReasonLabel(reason?: PortfolioFailureReason): string {
+  if (reason === 'lender-terms-incomplete') return 'lender terms incomplete';
+  if (reason === 'lender-terms-unmodeled') return 'lender terms not modeled';
   if (reason === 'negative-cashflow') return 'negative cash flow';
   if (reason === 'cashflow-below-minimums') return 'cash flow below minimums';
   if (reason === 'payment-below-interest') return 'payment below interest';
   if (reason === 'loc-setup') return 'LOC setup needed';
   if (reason === 'loc-no-capacity') return 'no LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return 'projected LOC limit exceeded';
+  if (reason === 'numeric-range-exceeded') return 'amounts exceed the numeric range';
   if (reason === 'payoff-horizon-exceeded') return 'projection horizon exceeded';
   return 'review the warnings';
 }
@@ -104,6 +109,7 @@ function findPrimaryTargetName(
   inputs: PortfolioSimulationInputs,
   result: PortfolioSimulationResult
 ): string | undefined {
+  if (result.primaryTargetName) return result.primaryTargetName;
   const rationaleTarget = Object.values(result.debtRationales)
     .find((rationale) => rationale.isCurrentTarget);
   if (rationaleTarget) {
@@ -120,15 +126,16 @@ function findPrimaryTargetName(
 
 export function summarizePortfolioRun(
   inputs: PortfolioSimulationInputs,
-  result: PortfolioSimulationResult
+  result: PortfolioSimulationResult,
+  payoffAccepted: boolean = result.isPayoffPossible
 ): PortfolioRunSummary {
   return {
     cashFlow: inputs.monthlyIncome - inputs.monthlyExpenses,
-    totalDebt: inputs.debts.reduce((sum, debt) => sum + Math.max(0, debt.balance), 0),
+    totalDebt: inputs.debts.reduce((sum, debt) => sum + Math.max(0, debt.balance), 0) + Math.max(0, inputs.loc?.balance ?? 0),
     totalMinimums: inputs.debts.reduce((sum, debt) => sum + getMinPayment(debt), 0),
     payoffMonths: result.payoffMonths,
     totalInterest: result.totalInterest,
-    isPayoffPossible: result.isPayoffPossible,
+    isPayoffPossible: result.isPayoffPossible && payoffAccepted,
     failureReason: result.failureReason,
     strategy: inputs.settings.strategy,
     focusMode: inputs.settings.focusMode,

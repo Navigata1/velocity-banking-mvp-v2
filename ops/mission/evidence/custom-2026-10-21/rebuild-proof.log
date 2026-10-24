@@ -1,0 +1,32 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (67)
+prune: Removed types... Accessor (33)
+{"triangles":13200,"rendered":21240,"meshes":17,"maps":12,"bytes":237844,"collection":9908162}
+Refined Custom: 13200 unique/21240 rendered triangles,12 maps,237844 bytes; public9908162 bytes.
+PASS identical Custom model regeneration
+car: preserving imported refined asset
+house: preserving imported refined asset
+land: preserving imported refined asset
+creditCard: preserving imported refined asset
+studentLoan: preserving imported refined asset
+medical: preserving imported refined asset
+personal: preserving imported refined asset
+recreation: preserving imported refined asset
+custom: preserving imported refined asset
+vault: preserving imported refined asset
+PASS protected full model rebuild
+car: 163 KiB
+house: 239 KiB
+land: 394 KiB
+creditCard: 110 KiB
+studentLoan: 336 KiB
+personal: 292 KiB
+recreation: 139 KiB
+custom: 142 KiB
+vault: 168 KiB
+PASS protected full poster rebuild
+Packaged 10 verified heroes in C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-custom\package-proof
+PASS real 40-file art/poster/model/video package and captured manifest hashes

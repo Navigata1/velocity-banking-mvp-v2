@@ -1,0 +1,21 @@
+
+> web@0.1.0 smoke:rendered:built
+> node scripts/smoke-rendered.cjs
+
+Rendered smoke origin: https://velocity-banking-mvp-v2-pe45snkft-islanddevcrew.vercel.app
+Browser executable: C:\Program Files\Google\Chrome\Application\chrome.exe
+PASS desktop / 1440px
+PASS desktop /simulator 1440px
+PASS desktop /cockpit 1440px
+PASS desktop /portfolio 1440px
+PASS desktop /learn 1440px
+PASS desktop /settings 1440px
+PASS desktop /vault 1440px
+PASS desktop Money Loop Next selects LOC
+PASS mobile / 375px
+PASS mobile /simulator 375px
+PASS mobile /cockpit 375px
+PASS mobile /portfolio 375px
+PASS mobile /learn 375px
+PASS mobile /settings 375px
+PASS mobile /vault 375px

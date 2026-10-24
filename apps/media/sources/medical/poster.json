@@ -1,0 +1,14 @@
+{
+  "revision": 2,
+  "generated": "2026-10-21",
+  "tool": "OpenAI image_gen",
+  "source": "exec-f539b88b-9084-4456-be6a-96426589c10c.png",
+  "sourceSha256": "30dd8c59ba54ce8608863eaf9f8835c40296e829d1e97f635fb1f1d2b732e41f",
+  "originalPosterSha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2",
+  "previousSource": "exec-f2604576-9027-410e-8f4e-9eb674801c16.png",
+  "previousSourceSha256": "5a6977f9194a9cd2c5860318bdb639b910927462a892ea4c2f9190f9f5211325",
+  "prompt": "Edit the supplied medical-case cutout for InterestShield. Keep the same recognizable white enamel hard medical case, chrome rounded corner guards, chrome carrying handle with white grip, articulated metal latches, and detailed black-and-chrome stethoscope lying across the foreground. Preserve the objects, their pose, proportions, perspective, elegant photorealistic product-render finish and layout. Make one focused design change: completely remove the red cross from the front of the white case and replace it with a single original dark emerald-green heraldic shield badge, with a narrow polished chrome bevel around the shield perimeter. The shield has a broad gently rounded top and a single pointed bottom, a plain green face, no cross, plus sign, text, letters, institutional insignia or other marks. Keep this badge centered where the old cross was. No red emblem remains anywhere. Refine edge/material fidelity without adding objects or changing the case/stethoscope arrangement. Output a genuine transparent alpha-background cutout, no floor, backdrop, gradient, glow or checkerboard. Keep every object fully visible with a little transparent breathing space around the handle and stethoscope. Preserve the wide 3:2 canvas aspect, high resolution ideally 2048 by 1365. Do not add labels, medical promises, money, banners or UI.",
+  "intent": "Retain the white case/stethoscope identity with an original non-institutional emerald shield badge. This is a conservative production design choice, not legal clearance or organizational endorsement.",
+  "guidance": "https://www.icrc.org/en/law-and-policy/use-emblems",
+  "limitations": "Generated product-render artwork, not a real medical product, reconstructed mesh or measured material scan. Actual output is 1536x1024 with preserved alpha; only WebP delivery resizing/compression follows generation. The original edit input is retained unchanged as original-poster.webp. The 3D candidate is separately authored and not an exact reconstruction."
+}

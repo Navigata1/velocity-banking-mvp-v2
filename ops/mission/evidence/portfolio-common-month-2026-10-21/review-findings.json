@@ -1,0 +1,63 @@
+{
+  "base": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "target": "uncommitted tracked working diff plus seven new executable files",
+  "method": "single-reviewer sequential dimension passes, followed by source reread and refute-first reproductions; no subagents",
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "title": "Do not infer that an unpaid residual is spurious from its size alone",
+      "file": "packages/financial-engine/src/portfolio-common-month.ts",
+      "start": 41,
+      "end": 43,
+      "reach": "canonical Portfolio adapter; every strategy; also future cash continuation",
+      "probe": "review-probes.cjs red-dust",
+      "exit": 1,
+      "actual": "H2 modeled, a=0, b=97, cash=255, net=158; H1 had a=2^-40 and H2 payment/interest for a were both zero",
+      "expected": "H0/H1 remain available; H2 onward unavailable cent-tolerance, since genuine entered inventory disappeared without repayment",
+      "refutation": "Confirmed after rereading allocation and adapter. All input amounts are exactly representable binary rationals, APR is zero, and (256+2^-40)-256 is exact. The previous-operation epsilon bound cannot establish that this residual was a rounding artifact. The effect is sub-cent, not a claimed cents-level financial loss. No arbitrary-precision production math or lender posting is required to recognize the unsupported clearance."
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "title": "Guard required rows before dereferencing month",
+      "file": "packages/financial-engine/src/common-month.ts",
+      "start": 104,
+      "end": 105,
+      "reach": "generic trace reducer malformed-input boundary; not reproduced via current canonical engine output",
+      "probe": "review-probes.cjs red-null",
+      "exit": 1,
+      "actual": "Valid H1 works; H2 with rows=[validRow,null] throws TypeError reading month",
+      "expected": "H2 unavailable invalid-trace with coveredThroughMonth=1; same treatment for a required sparse row",
+      "refutation": "Confirmed. The guard only establishes that rows is an array, not that every element is a position. TypeScript does not validate the runtime trace, and the explicitly promised malformed-trace fail-closed boundary already validates other row fields. This is not a demonstrated crash in the current Portfolio UI."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "title": "Retain interest residuals until signed conservation has completed",
+      "file": "packages/financial-engine/src/common-month.ts",
+      "start": 107,
+      "end": 113,
+      "reach": "generic trace reducer finite high-magnitude precision contract; no canonical Portfolio policy reproduction claimed",
+      "probe": "review-probes.cjs red-interest",
+      "exit": 1,
+      "actual": "H2 unavailable inconsistent-trace, coverage=1, after cumulative interest 1e16+1 was rounded to 1e16",
+      "expected": "H2 modeled net=-1; all raw conservation terms sum exactly to zero",
+      "refutation": "Confirmed. All inputs and the final net -1 are finite exactly represented integers. The existing partial-sum helper returns raw conservation residual 0; only pre-collapsing interest causes residual -1 and the rejection. Rounded interestThroughMonth is an acceptable diagnostic, but should not be fed back into the validation oracle. This finding requests residual preservation, not arbitrary-precision lender posting."
+    }
+  ],
+  "coverageGapsNotFindings": [
+    "The browser helper changes horizon but never changes selected strategy; seeded reference columns do not prove current-selection UI updates.",
+    "New browser cases are guest-only and always provide a book; they do not assert the comparison draft and result after owner changes or absent-book hydration.",
+    "The seven unchanged hook contracts exercise actual React reconciliation with null host surfaces and mocked storage, not the new comparison view, browser, or physical storage.",
+    "The seeded reference suite has a separate direct ledger and independent row accounting, but much of Velocity's expected inventory is still read from production rows. Counts are not independent policy completeness.",
+    "Geometry controls prove zero-opacity, clipping, and empty-value rejection when run; the source does not establish absence of all occlusion, low-opacity, color/contrast, label-overlap, or native text-scaling failures."
+  ],
+  "strengths": [
+    "Same canonical decoded book and explicit decimal APR are used for all three policies.",
+    "Prepared traces are private to each captured book and atMonth returns fresh maps and payoff metadata.",
+    "Current selected policy is used for signed deltas, and unavailable references do not fabricate zero deltas.",
+    "Existing native storageScope keys and absent-book conditional remain in place; no new persistence path or cross-owner cache.",
+    "The four browser-oracle negative controls preserve original text-node identity and restore styles."
+  ]
+}

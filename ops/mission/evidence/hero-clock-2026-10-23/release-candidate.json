@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-23T18:16:46.809Z",
+  "baselineVerifiedHead": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "baselineReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6370542236",
+  "candidate": "Local pre-push candidate snapshot, not verified remote or production approval",
+  "sourcePins": 495,
+  "changedSources": [
+    "apps/web/scripts/hero-lifecycle-tests.cjs",
+    "apps/web/src/components/hero/HeroModelStage.tsx"
+  ],
+  "inputBoundary": "Enumerated application/workflow/asset map, not every repository file; root SQL/config inputs need explicit separate pinning for a backend change.",
+  "runtimePinsUnchanged": 13,
+  "publicAssetsUnchanged": 20,
+  "sourceReview": {
+    "id": "669ff2b6-a136-4fe8-8bb5-038cc5ef6907",
+    "standing": 11,
+    "selectedControls": 6,
+    "baselineRefutations": 7,
+    "adversarialDisposition": "27 distinct scenarios:24 first-pass successes plus3 realm-safe supplements; original comparator/over-freeze recorder failures retained."
+  },
+  "parentPolicy": {
+    "pass": 4,
+    "fail": 0,
+    "method": "Actual sources through synchronous simulated hook/event bridge, not actual React scheduling/browser proof; prior harness0/4 and3/1 failures retained."
+  },
+  "local": {
+    "id": "ab510193-abb8-46cf-96fc-10f7ad686b4d",
+    "gates": 29,
+    "fromScratch": true,
+    "webCopies": 228,
+    "startedAt": "2026-10-23T17:29:58.164Z",
+    "finishedAt": "2026-10-23T18:07:26.346Z",
+    "reportSha256": "331b798c1d18a38fb2539d69db5a111f6c95d19990155bf18f8b978fa95230d4",
+    "ownedProcesses": 2720,
+    "activeAfterAllRecordedCleanup": 0,
+    "originalBuildIdPreserved": "q9-LUQ84V55MwthjHnK99"
+  },
+  "canonicalHouse": {
+    "id": "c13118c0-d850-4956-9cef-f4c6737e0a13",
+    "fixtureId": "34355f79-6ad4-4494-b4c3-da6d8702f0a1",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 270,
+    "seconds": 9,
+    "sha256": "786f32ca6a36896ffbb0a1768f87ed6b387a166bf452d1b0bf62d5ae1bcbdf6a",
+    "originalFramesViewed": 7,
+    "boundedAccepted": true,
+    "encodedBytesEqualF708": true,
+    "sevenSampleBytesEqualF708": true,
+    "ownedProcesses": 45,
+    "activeAfterCleanup": 0,
+    "newExports": 1,
+    "standingTenVideoCheckUsesStoredExports": true
+  },
+  "codeScope": "Web visible-time clock and permanent lifecycle regressions only. No model/poster/material/light/camera/media composition, calculation, dependency, workflow or backend changes.",
+  "nextRequired": [
+    "One current artifact capture after final metadata; entire unskipped43/currentcase12 and exact ten publication pins.",
+    "Four focused local commits, exact working/committed source verification and one nonforce tested-tip push to existing draftPR256.",
+    "Both complete exact-head attempt1CI/alljobs/steps/sixguards, known automaticgitREADY, hosted15/210/20, actual currentIAB5/Chrome5, fresh guarded unique receipt/seal."
+  ],
+  "open": [
+    "All-ten final photoreal/all-angle and physical FPS/memory/energy approval.",
+    "Historical491/493 canvas/deadline failures, raw RSC/storage observations and instrumented Chrome timing cause remain unexplained.",
+    "Parent hidden/offscreen remount is not same-object/no-refetch resume; first-visible-RAF timing is not a click-to-rest wall-clock guarantee.",
+    "Lender/calendar reconciliation, dedicated backend/account isolation/backup/recovery, dependency advisories, physical native/accessibility and production."
+  ],
+  "productionReady": false,
+  "prDraftOpen": true,
+  "goalActive": true,
+  "pushed": false
+}

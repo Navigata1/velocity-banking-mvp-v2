@@ -1,0 +1,109 @@
+[
+  {
+    "id": "car",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-f473d226-3567-4602-a46c-ea55f14f9493.png",
+    "sourceSha256": "60f0d160647234844f3f7727ab4ecf88492129e7d2b5fb7305224b6801564c89",
+    "posterSha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97",
+    "bytes": 166578,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "house",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-9eb4bb6a-4848-40d6-87d1-df59bdf67a82.png",
+    "sourceSha256": "e2a1cca55dc4e41e855e34c01ef6f9d1c41232b3e9d818f8a7f119a64e15f98b",
+    "posterSha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca",
+    "bytes": 244470,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "land",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-5a8a3eb0-e5ed-4b92-9589-7ae85c06a120.png",
+    "sourceSha256": "b171db43b69efede45ad6334c9acd9a3ffc65f0c8343e14e4061972644d3634f",
+    "posterSha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345",
+    "bytes": 403746,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "creditCard",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-01f84116-1b2f-4ab6-81f4-c1b6ec1ca2f8.png",
+    "sourceSha256": "b697cdc35a639786876675aee530e7c9b4efd0d1fbe82c00dd222dc8fb46e131",
+    "posterSha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198",
+    "bytes": 112828,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "studentLoan",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-8444db0a-fe6e-414d-842b-d9cdbaabb96a.png",
+    "sourceSha256": "8c565df317acfbcc8ab86dce6c668dab88784ec2e69a91de4aa34744f09c8b4d",
+    "posterSha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1",
+    "bytes": 344514,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "medical",
+    "generated": "2026-10-21",
+    "tool": "OpenAI image_gen",
+    "source": "exec-f539b88b-9084-4456-be6a-96426589c10c.png",
+    "sourceFile": "apps/media/sources/medical/poster.png",
+    "sourceSha256": "30dd8c59ba54ce8608863eaf9f8835c40296e829d1e97f635fb1f1d2b732e41f",
+    "posterSha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1",
+    "bytes": 130728,
+    "role": "Edited generated product-render reference and transparent static fallback; original emerald shield badge, not a reconstructed mesh.",
+    "revision": 2,
+    "previous": {
+      "source": "exec-f2604576-9027-410e-8f4e-9eb674801c16.png",
+      "sourceSha256": "5a6977f9194a9cd2c5860318bdb639b910927462a892ea4c2f9190f9f5211325",
+      "posterSha256": "090b189bd6ec0a40e23ad470acbf86ff0b950a481153fc6f991a2876e5e9cda2"
+    }
+  },
+  {
+    "id": "personal",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-d886def9-70b0-45ec-bb9e-5df0a5623dc7.png",
+    "sourceSha256": "9a4944fce07132b12a297340cba6d44afc8fe4843a2f32a703e78f9a55719c21",
+    "posterSha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9",
+    "bytes": 298994,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "recreation",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-6947528c-23c1-4139-b1d1-04bc08462e6a.png",
+    "sourceSha256": "fae53c1a66924adbb39f76c05e48a683e668dde6ab7154aff400eac1bef1f066",
+    "posterSha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621",
+    "bytes": 142004,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "custom",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-6b35f159-2a9a-4bae-a365-60ede6a3303f.png",
+    "sourceSha256": "b3dad090b62cec3b035ecfb6422f6d8e2fc03d0a3ba9541d85f8d78e749765ae",
+    "posterSha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870",
+    "bytes": 145068,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  },
+  {
+    "id": "vault",
+    "generated": "2026-10-20",
+    "tool": "OpenAI image_gen",
+    "source": "exec-dc438c3c-2951-4913-8c52-e4267472e450.png",
+    "sourceSha256": "f7420e57ba6064c1d4dcbd3ab115cd59cc37eaabcbcc56ff176a0e322b089700",
+    "posterSha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874",
+    "bytes": 171688,
+    "role": "Generated product-render reference and static fallback; not a reconstructed mesh."
+  }
+]

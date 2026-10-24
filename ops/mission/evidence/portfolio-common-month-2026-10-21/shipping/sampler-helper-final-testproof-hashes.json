@@ -1,0 +1,75 @@
+{
+  "scope": "Bounded sampler release-helper maintenance only; not app cadence, GPU, either CI event, D6 verification or publication certification",
+  "root": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release",
+  "sourceFiles": [
+    "shipping-guards.mjs",
+    "shipping-guards.test.mjs",
+    "postflight.mjs",
+    "publish-desktop.mjs",
+    "release-preparation.md"
+  ],
+  "tests": {
+    "previousChecks": 146,
+    "currentChecks": 147,
+    "projectionTests": 3,
+    "syntaxExecutables": 4
+  },
+  "sourceBoundaryUnchanged": {
+    "pins": 293,
+    "oldUnchanged": 279,
+    "oldModified": 6,
+    "newFiles": 8
+  },
+  "requiredCiMarker": "PASS hero cadence controls: primer 16ms and 15x100ms samples",
+  "cadenceScope": "Fixed10Hz endpoint test, not wall-time FPS/full turn/device approval",
+  "files": {
+    "shipping-guards.mjs": {
+      "bytes": 28059,
+      "sha256": "46c8a4242fd7533e9c9e28ea72293e2db7f9f34a4e431c4636e54b82f69757f5"
+    },
+    "shipping-guards.test.mjs": {
+      "bytes": 32335,
+      "sha256": "f5a0d2b801df8275a0abbb970ec4473dcb111eb57f437e9acd7eae0e6f0945ce"
+    },
+    "postflight.mjs": {
+      "bytes": 16135,
+      "sha256": "d4d51eef2fa094790728438fe0ea0552bcf0736113a5e6f49b102c3fbcad2d29"
+    },
+    "publish-desktop.mjs": {
+      "bytes": 17865,
+      "sha256": "dca5d2205f34cf0c5715ee4dd53e85ee5621b95938f4d39990eed8da652c71bb"
+    },
+    "release-preparation.md": {
+      "bytes": 22168,
+      "sha256": "a2f6d26f885409a86d1ffb306418be398e8e8f9b8c5f6bf8d4eb689ec9627f9a"
+    },
+    "projection-sampler-green-proof.json": {
+      "bytes": 113372,
+      "sha256": "73e757c2565cd57a8eef28affd825695f1953f2c68164cdb3ff080d655ef4c82"
+    },
+    "sampler-helper-before-146.log": {
+      "bytes": 8130,
+      "sha256": "303654d8e5aa78a6957e5667e93e16938dbcbdfb70c4b798e4dcec66b5ed842d"
+    },
+    "sampler-helper-green.log": {
+      "bytes": 8213,
+      "sha256": "e4d533f2ee3d7f1b8940227b52dcae25c16e2036504070dfd16140c4a7a34da8"
+    },
+    "sampler-helper-marker-red.log": {
+      "bytes": 4192,
+      "sha256": "9c32d54ed2854f8116c810b2a7410bb56e1153e8d0172a7fe384824d06d5a25f"
+    },
+    "sampler-helper-projection-green.log": {
+      "bytes": 1122,
+      "sha256": "1ee6945a9c10f2fc9d656165c47868a0458f1ede5d23828f57b38f8e52f302c1"
+    },
+    "sampler-helper-protected-testproof.json": {
+      "bytes": 1678,
+      "sha256": "3a3b8a38bb51dde11970706c61ed4d15b7910d789b8190cef4022e3a31b7ff16"
+    },
+    "sampler-helper-syntax-testproof.log": {
+      "bytes": 132,
+      "sha256": "526e03a16b6819d865782f1cf8f129ea256c624af44bb660af27911afa49200c"
+    }
+  }
+}

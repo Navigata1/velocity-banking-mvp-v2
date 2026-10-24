@@ -1,4 +1,5 @@
-import { calculateDailyInterest, formatCurrency } from '../engine/calculations';
+import { calculateDailyInterest, formatCurrency, LOC_PROJECTION_OVER_LIMIT_LABEL, LOC_PROJECTION_OVER_LIMIT_WARNING } from '../engine/calculations';
+import { assessKnownSafety, availablePayoff, classifyLiabilities, CLEARED_LIABILITY_DETAIL, INVALID_LIABILITY_DETAIL, KNOWN_CASH_FLOW_WARNING } from '@interestshield/financial-engine';
 
 export type DashboardTone = 'emerald' | 'sky' | 'amber' | 'rose';
 
@@ -47,7 +48,7 @@ export interface DashboardVital {
 }
 
 export interface DashboardWarning {
-  kind: 'cash-flow' | 'loc-setup' | 'loc-no-capacity' | 'loc-overlimit' | 'loc-utilization' | 'payoff';
+  kind: 'cash-flow' | 'loc-setup' | 'loc-no-capacity' | 'loc-overlimit' | 'loc-projection-overlimit' | 'loc-utilization' | 'payoff';
   title: string;
   body: string;
 }
@@ -119,11 +120,19 @@ function formatMonths(months: number): string {
 }
 
 function isProjectedPayoffPossible(projection: DashboardProjectionInput): boolean {
-  return projection.isPayoffPossible !== false && Number.isFinite(projection.months) && projection.months > 0;
+  return availablePayoff(projection.months, projection.totalInterest, projection.isPayoffPossible);
 }
 
 function safeNonNegative(value: number, fallback = 0): number {
   return Number.isFinite(value) ? Math.max(0, value) : fallback;
+}
+
+const dailyInterestCurrency = new Intl.NumberFormat('en-US', {
+  style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2,
+});
+
+function formatDailyInterest(amount: number): string {
+  return amount > 0 && amount < 0.01 ? '<$0.01' : dailyInterestCurrency.format(amount);
 }
 
 function sanitizeProjection(input: DashboardProjectionInput): DashboardProjectionInput {
@@ -369,6 +378,11 @@ function buildNextMove(
     };
   }
 
+  if (input.velocity.failureReason === 'loc-projection-overlimit') {
+    return { title: 'Review LOC capacity', value: 'Review inputs', caption: LOC_PROJECTION_OVER_LIMIT_WARNING,
+      tone: 'rose', assumptions: ['A month-end balance above the entered LOC limit stops this modeled payoff path.'] };
+  }
+
   if (locUtilization > 0.8) {
     return {
       title: 'Pay down the LOC',
@@ -410,6 +424,19 @@ function buildNextMove(
     };
   }
 
+  if (input.activeDebt.balance === 0 && input.loc.balance > 0) {
+    return { title: 'Pay down the LOC', value: formatCurrency(input.loc.balance), tone: 'sky',
+      caption: 'Only the LOC remains. Model its repayment without a new target principal chunk.', assumptions: ['Educational estimate, not a money movement instruction.'] };
+  }
+
+  if (cashFlow <= input.activeDebt.minimumPayment) {
+    return {
+      title: 'Pause new chunks', value: 'No new draw', tone: 'amber',
+      caption: 'New chunks need cash flow beyond scheduled payments. Unused final payments remain available for LOC recovery.',
+      assumptions: ['A valid payoff path does not mean a new LOC draw is recoverable this month.'],
+    };
+  }
+
   if (safeChunk <= 0) {
     return {
       title: 'Choose a starter chunk',
@@ -424,18 +451,19 @@ function buildNextMove(
   }
 
   return {
-    title: 'Send the next chunk',
+    title: 'Compare payoff paths',
     value: formatCurrency(safeChunk),
-    caption: `Aim at ${input.activeDebt.name}, then use cash flow to pull the LOC back down.`,
-    tone: 'emerald',
+    caption: 'Compare the selected debt and existing LOC using the same monthly budget before modeling another chunk.',
+    tone: 'sky',
     assumptions: [
-      'The chunk is capped by the active debt balance and available LOC capacity.',
-      'This is an educational simulation step, not an instruction to move real funds.',
+      'Available LOC room and a feasible chunk do not establish lower interest or a faster payoff.',
+      'Compare cash and all included liabilities at the same date; this is not an instruction to move real funds.',
     ],
   };
 }
 
 export function buildDashboardModel(input: DashboardModelInput): DashboardModel {
+  const liability = classifyLiabilities(input.activeDebt.balance, input.loc.balance);
   const safeInput = sanitizeDashboardInput(input);
   const cashFlow = safeInput.monthlyIncome - safeInput.monthlyExpenses;
   const availableLoc = Math.max(0, safeInput.loc.limit - safeInput.loc.balance);
@@ -444,16 +472,16 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
   const locOverLimit = !locNeedsSetup && safeInput.loc.balance > safeInput.loc.limit;
   const locNoCapacity = !locNeedsSetup && safeInput.loc.balance === safeInput.loc.limit;
   const locUtilizationLabel = locNeedsSetup ? formatLocSetupLabel(safeInput.loc) : `${Math.round(locUtilization * 100)}%`;
-  const debtDailyInterest = safeInput.allDebts.reduce(
-    (sum, debt) => sum + calculateDailyInterest(debt.balance, debt.interestRate),
-    0
-  );
+  const debtDailyInterest = calculateDailyInterest(safeInput.activeDebt.balance, safeInput.activeDebt.interestRate);
   const locDailyInterest = calculateDailyInterest(safeInput.loc.balance, safeInput.loc.interestRate);
   const dailyInterestBurn = debtDailyInterest + locDailyInterest;
-  const velocityPossible = cashFlow > 0 && isProjectedPayoffPossible(safeInput.velocity);
-  const baselinePossible = isProjectedPayoffPossible(safeInput.baseline);
-  const etaValue = velocityPossible ? formatMonths(safeInput.velocity.months) : 'Stabilize first';
-  const nextMove = buildNextMove(safeInput, cashFlow, locUtilization, locOverLimit, locNoCapacity, velocityPossible);
+  const velocityPossible = liability === 'outstanding' && cashFlow > 0 && isProjectedPayoffPossible(input.velocity);
+  const baselinePossible = liability === 'outstanding' && isProjectedPayoffPossible(input.baseline);
+  const etaValue = liability === 'cleared' ? 'No debt remaining' : velocityPossible ? formatMonths(safeInput.velocity.months)
+    : liability === 'outstanding' && cashFlow <= 0 ? 'Stabilize first' : 'Review inputs';
+  const nextMove: DashboardNextMove = liability === 'outstanding' ? buildNextMove(safeInput, cashFlow, locUtilization, locOverLimit, locNoCapacity, velocityPossible)
+    : { title: liability === 'cleared' ? 'No debt remaining' : 'Review liability balances', value: etaValue,
+      caption: liability === 'cleared' ? CLEARED_LIABILITY_DETAIL : INVALID_LIABILITY_DETAIL, tone: liability === 'cleared' ? 'sky' : 'amber', assumptions: ['Educational model of the entered selected target and LOC only.'] };
 
   const warnings: DashboardWarning[] = [];
   if (cashFlow <= 0) {
@@ -481,6 +509,8 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       title: 'No LOC room available',
       body: 'The LOC balance is at the entered limit. Pay it down before modeling another chunk.',
     });
+  } else if (safeInput.velocity.failureReason === 'loc-projection-overlimit') {
+    warnings.push({ kind: 'loc-projection-overlimit', title: LOC_PROJECTION_OVER_LIMIT_LABEL, body: LOC_PROJECTION_OVER_LIMIT_WARNING });
   } else if (locUtilization > 0.8) {
     warnings.push({
       kind: 'loc-utilization',
@@ -496,6 +526,13 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     });
   }
 
+  if (liability !== 'outstanding') {
+    const safety = assessKnownSafety(input.monthlyIncome, input.monthlyExpenses, input.loc.balance, input.loc.limit);
+    warnings.length = 0;
+    if (liability === 'invalid') warnings.push({ kind: 'payoff', title: nextMove.title, body: nextMove.caption });
+    if (safety.nonpositiveCashFlow) warnings.push({ kind: 'cash-flow', title: 'Cash flow is not positive', body: KNOWN_CASH_FLOW_WARNING });
+    if (safety.highLocUtilization) warnings.push({ kind: 'loc-utilization', title: 'LOC utilization is above 80%', body: 'The LOC is too heavily used for a comfortable buffer. Pay it down before modeling another chunk.' });
+  }
   const vitals: DashboardVital[] = [
     {
       id: 'cash-flow',
@@ -511,11 +548,14 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     {
       id: 'interest-burn',
       label: 'Interest Burn',
-      value: `${formatCurrency(dailyInterestBurn)}/day`,
-      caption: `${formatCurrency(debtDailyInterest)}/day debt + ${formatCurrency(locDailyInterest)}/day LOC.`,
+      value: Number.isFinite(dailyInterestBurn) ? `Est. ${formatDailyInterest(dailyInterestBurn)}/day` : 'Review inputs',
+      caption: Number.isFinite(dailyInterestBurn)
+        ? `Debt: ${formatDailyInterest(debtDailyInterest)}/day; LOC: ${formatDailyInterest(locDailyInterest)}/day.`
+        : 'Daily interest exceeds the supported numeric range. Review balance and APR.',
       tone: dailyInterestBurn > 50 ? 'amber' : 'sky',
       assumptions: [
-        'Daily burn is a simple daily accrual estimate across modeled debts plus current LOC balance.',
+        'Daily burn covers the selected target plus current LOC balance, matching this dashboard payoff scope.',
+        'Amounts are rounded independently for display; displayed components may not add to the displayed total. Calculations retain unrounded values.',
         'Actual lenders may post interest monthly and may use different balance rules.',
       ],
     },
@@ -524,11 +564,11 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
       label: 'Debt-Free ETA',
       value: etaValue,
       caption: velocityPossible
-        ? `${formatMonths(safeInput.baseline.months)} baseline, ${formatCurrency(safeInput.velocity.savings)} estimated interest difference.`
+        ? 'Selected target + LOC. Other debts are not included.'
         : 'No debt-free date shown until the plan is stable.',
       tone: velocityPossible ? 'sky' : 'rose',
       assumptions: [
-        baselinePossible ? 'Baseline uses the current minimum-payment path.' : 'Baseline payoff is currently marked invalid by the engine.',
+        baselinePossible ? 'Direct repayment covers the selected target and existing LOC with the same monthly budget.' : 'Direct repayment is currently marked invalid by the engine.',
         'Velocity ETA uses the shared single-debt velocity engine for the active target.',
       ],
     },
@@ -542,6 +582,14 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     },
   ];
 
+  if (liability !== 'outstanding') for (const vital of vitals) {
+    if (liability === 'cleared' && (vital.id === 'interest-burn' || vital.id === 'cash-flow')) {
+      vital.assumptions = [...vital.assumptions, CLEARED_LIABILITY_DETAIL];
+      continue;
+    }
+    vital.caption = nextMove.caption; vital.assumptions = nextMove.assumptions; vital.tone = nextMove.tone; if (liability === 'invalid' && vital.id === 'interest-burn') vital.value = 'Not available';
+  }
+  const noTarget = liability === 'outstanding' && input.activeDebt.balance === 0;
   return {
     cashFlow,
     availableLoc,
@@ -552,12 +600,16 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
     debtDailyInterest,
     locDailyInterest,
     etaValue,
-    statusLabel: warnings.length > 0 ? 'Needs review' : 'Ready to simulate',
+    statusLabel: liability === 'cleared' ? 'No debt remaining' : warnings.length > 0 ? 'Needs review' : 'Ready to simulate',
     statusTone: warnings.length > 0 ? 'amber' : 'emerald',
     nextMove,
     vitals,
-    moneyLoopArtifacts: buildMoneyLoopArtifacts(safeInput, cashFlow, availableLoc, locUtilization),
-    changeExplanations: buildChangeExplanations(safeInput, cashFlow, availableLoc, locUtilization, velocityPossible, baselinePossible),
+    moneyLoopArtifacts: buildMoneyLoopArtifacts(safeInput, cashFlow, availableLoc, locUtilization).map((item): DashboardLoopArtifact => liability !== 'outstanding'
+      ? { ...item, value: item.id === 'principal' || item.id === 'loc' ? nextMove.title : item.value, note: nextMove.caption, signal: nextMove.title, tone: nextMove.tone, operationalState: liability === 'cleared' ? 'stable' : 'blocked' }
+      : noTarget && item.id === 'principal' ? { ...item, value: 'No target balance', note: nextMove.caption } : item),
+    changeExplanations: buildChangeExplanations(safeInput, cashFlow, availableLoc, locUtilization, velocityPossible, baselinePossible).map((item): DashboardChangeExplanation => liability !== 'outstanding'
+      ? { ...item, value: item.id === 'cash-flow' ? item.value : nextMove.title, body: nextMove.caption, tone: nextMove.tone }
+      : noTarget && item.id === 'chunk' ? { ...item, value: 'No target balance', body: nextMove.caption } : item),
     warnings,
     moneyLoopSteps: [
       {
@@ -585,6 +637,7 @@ export function buildDashboardModel(input: DashboardModelInput): DashboardModel 
         value: safeInput.activeDebt.name,
         note: 'Chunks target principal so future interest has less balance to attach to.',
       },
-    ],
+    ].map(step => liability !== 'outstanding' ? { ...step, value: step.label === 'Principal' || step.label === 'LOC' ? nextMove.title : step.value, note: nextMove.caption }
+      : noTarget && step.label === 'Principal' ? { ...step, note: nextMove.caption } : step),
   };
 }

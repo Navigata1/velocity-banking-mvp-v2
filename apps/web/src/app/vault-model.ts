@@ -1,10 +1,11 @@
-import { formatCurrency } from '../engine/calculations';
+import { formatCurrency, formatCurrencyPrecise, LOC_PROJECTION_OVER_LIMIT_LABEL, LOC_PROJECTION_OVER_LIMIT_WARNING } from '../engine/calculations';
 
 interface VaultVelocityProjection {
   months: number;
   saved: number;
   isPayoffPossible: boolean;
   failureReason?: string;
+  canCompare?: boolean;
 }
 
 interface VaultStrategyProjection {
@@ -12,6 +13,7 @@ interface VaultStrategyProjection {
   monthsSaved: number;
   isPayoffPossible: boolean;
   failureReason?: string;
+  canCompare?: boolean;
 }
 
 interface VaultMonthsProjection {
@@ -26,6 +28,7 @@ export interface VaultFreedomPathInput {
   standardMonths: number;
   velocity: VaultVelocityProjection;
   monthlyPayment: number;
+  monthlyBudget: number;
   investmentRate: number;
 }
 
@@ -55,12 +58,12 @@ export interface VaultVelocitySetupWarning {
   severity: 'warning' | 'critical';
 }
 
-function calculateFreedPaymentGrowth(monthlyPayment: number, annualRate: number, freedYears: number): number {
-  if (!Number.isFinite(monthlyPayment) || !Number.isFinite(annualRate) || !Number.isFinite(freedYears)) return 0;
-  if (monthlyPayment <= 0 || annualRate < 0 || freedYears <= 0 || freedYears > MAX_FREED_PAYMENT_YEARS) return 0;
+function calculateFreedPaymentGrowth(monthlyPayment: number, annualRate: number, freedMonths: number): number {
+  if (!Number.isFinite(monthlyPayment) || !Number.isFinite(annualRate) || !Number.isInteger(freedMonths)) return 0;
+  if (monthlyPayment <= 0 || annualRate < 0 || freedMonths <= 0 || freedMonths > MAX_FREED_PAYMENT_YEARS * 12) return 0;
 
   let investmentGrowth = 0;
-  for (let i = 0; i < freedYears * 12; i++) {
+  for (let i = 0; i < freedMonths; i++) {
     investmentGrowth = (investmentGrowth + monthlyPayment) * (1 + annualRate / 12);
   }
   return investmentGrowth;
@@ -70,6 +73,7 @@ export function formatVaultProjectionFailure(reason?: string): string {
   if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return LOC_PROJECTION_OVER_LIMIT_LABEL;
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below payment';
   if (reason === 'payment-below-interest') return 'Payment below interest';
@@ -106,6 +110,10 @@ export function buildVaultVelocitySetupWarning(
     };
   }
 
+  if (velocity.failureReason === 'loc-projection-overlimit') {
+    return { title: LOC_PROJECTION_OVER_LIMIT_LABEL, body: LOC_PROJECTION_OVER_LIMIT_WARNING, severity: 'critical' };
+  }
+
   if (velocity.failureReason === 'negative-cashflow' || velocity.failureReason === 'cashflow-below-minimums') {
     return {
       title: 'Cash flow needs room first',
@@ -138,22 +146,32 @@ export function buildVaultVelocitySetupWarning(
 }
 
 export function formatVaultStrategySavings(strategy: VaultStrategyProjection): string {
-  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.saved)) return 'Not projected';
-  return strategy.saved > 0.005 ? `${formatCurrency(strategy.saved)} modeled interest difference` : 'No modeled interest difference';
+  if (!strategy.isPayoffPossible || strategy.canCompare === false || !Number.isFinite(strategy.saved)) return 'Not projected';
+  if (Math.abs(strategy.saved) < 0.005) return 'Same modeled interest';
+  const amount = Math.abs(strategy.saved);
+  return `${amount < 1 ? formatCurrencyPrecise(amount) : formatCurrency(amount)} ${strategy.saved > 0 ? 'less' : 'more'} modeled interest`;
 }
 
 export function formatVaultStrategyTimeDelta(strategy: VaultStrategyProjection, suffix = ''): string {
   if (!strategy.isPayoffPossible || !Number.isFinite(strategy.monthsSaved)) {
     return formatVaultProjectionFailure(strategy.failureReason);
   }
-  return strategy.monthsSaved > 0 ? `${strategy.monthsSaved} months faster${suffix}` : 'No faster payoff';
+  if (strategy.canCompare === false) return 'Reference needs review';
+  if (strategy.monthsSaved === 0) return 'No faster payoff';
+  return `${Math.abs(strategy.monthsSaved)} month${Math.abs(strategy.monthsSaved) === 1 ? '' : 's'} ${strategy.monthsSaved > 0 ? 'faster' : 'slower'}${suffix}`;
 }
 
 export function formatVaultStrategyMonths(strategy: VaultMonthsProjection): string {
-  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.months) || strategy.months <= 0) {
+  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.months) || strategy.months < 0) {
     return 'Review inputs';
   }
+  if (strategy.months === 0) return 'Paid off';
   return `${strategy.months} mo`;
+}
+
+export function formatVaultCashAtPayoff(strategy: { cashAtPayoff: number; isPayoffPossible: boolean }): string {
+  if (!strategy.isPayoffPossible || !Number.isFinite(strategy.cashAtPayoff)) return 'Cash at payoff: Not projected';
+  return `Cash at payoff: ${strategy.cashAtPayoff < 1 ? formatCurrencyPrecise(strategy.cashAtPayoff) : formatCurrency(strategy.cashAtPayoff)}`;
 }
 
 export function formatVaultStrategyInterest(totalInterest: number, isPayoffPossible: boolean): string {
@@ -169,6 +187,10 @@ export function buildVaultComparisonWidthPercent(
   if (!isPayoffPossible) return 0;
 
   return buildVaultVisualPercent(strategyMonths, standardMonths);
+}
+
+export function buildVaultComparisonMaxMonths(plans: VaultMonthsProjection[]): number {
+  return Math.max(0, ...plans.filter(plan => plan.isPayoffPossible && Number.isInteger(plan.months) && plan.months >= 0).map(plan => plan.months));
 }
 
 export function buildVaultVisualPercent(value: number, maxValue = 100): number {
@@ -195,21 +217,34 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
     ? Math.ceil(input.standardMonths / 12)
     : 0;
   const safeCurrentAge = Number.isFinite(input.currentAge) && input.currentAge >= 0 ? input.currentAge : 0;
+  if (input.standardMonths === 0 && input.velocity.months === 0 && input.velocity.isPayoffPossible && input.velocity.canCompare !== false) {
+    return { isProjected: false, standardYears: 0, velocityYears: 0, freedYears: 0, investmentGrowth: 0,
+      interestSavedLabel: 'Already paid off', freedomYearsLabel: 'Paid off',
+      portfolioValueLabel: 'Not projected', timelineLabel: 'Already paid off',
+      standardAgeLabel: 'Already paid off', velocityAgeLabel: 'Already paid off',
+      investmentCaption: 'No remaining payoff period to illustrate. Existing savings are not estimated here.',
+    };
+  }
   const canProject =
     input.velocity.isPayoffPossible &&
-    Number.isFinite(input.velocity.months) &&
+    input.velocity.canCompare !== false &&
+    Number.isInteger(input.velocity.months) &&
     Number.isFinite(input.velocity.saved) &&
-    Number.isFinite(input.standardMonths) &&
+    Number.isInteger(input.standardMonths) &&
     Number.isFinite(input.monthlyPayment) &&
+    Number.isFinite(input.monthlyBudget) && input.monthlyBudget > 0 &&
     Number.isFinite(input.investmentRate) &&
     input.velocity.months > 0 &&
     input.standardMonths > 0 &&
     input.monthlyPayment >= 0 &&
     input.investmentRate >= 0 &&
-    input.velocity.months <= input.standardMonths &&
+    Math.ceil(input.velocity.months / 12) <= MAX_FREED_PAYMENT_YEARS &&
     standardYears <= MAX_FREED_PAYMENT_YEARS;
+  const monthsEarlier = input.standardMonths - input.velocity.months;
+  const contribution = Math.min(input.monthlyPayment, input.monthlyBudget);
+  const investmentGrowth = canProject ? calculateFreedPaymentGrowth(contribution, input.investmentRate, Math.max(0, monthsEarlier)) : 0;
 
-  if (!canProject) {
+  if (!canProject || !Number.isFinite(investmentGrowth)) {
     return {
       isProjected: false,
       standardYears,
@@ -219,20 +254,18 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
       interestSavedLabel: 'Not projected',
       freedomYearsLabel: 'Review inputs',
       portfolioValueLabel: 'Not projected',
-      timelineLabel: 'Velocity path needs usable inputs first',
+      timelineLabel: 'Illustration needs review',
       standardAgeLabel: standardYears > 0 ? `Age ${safeCurrentAge + standardYears}` : 'Review inputs',
       velocityAgeLabel: 'Review inputs',
-      investmentCaption: 'Velocity payoff needs usable inputs before freed-payment growth can be estimated.',
+      investmentCaption: 'Review payoff horizons, available budget and return assumptions before estimating contributions.',
     };
   }
 
   const velocityYears = Math.ceil(input.velocity.months / 12);
-  const freedYears = Math.max(0, standardYears - velocityYears);
-  const investmentGrowth = calculateFreedPaymentGrowth(
-    input.monthlyPayment,
-    input.investmentRate,
-    freedYears
-  );
+  const freedYears = Math.max(0, monthsEarlier) / 12;
+  const portfolioValueLabel = investmentGrowth < 1e6 ? formatCurrencyPrecise(investmentGrowth)
+    : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD',
+      notation: investmentGrowth < 1e15 ? 'compact' : 'scientific', maximumFractionDigits: 2 }).format(investmentGrowth);
 
   return {
     isProjected: true,
@@ -240,12 +273,15 @@ export function buildVaultFreedomPathModel(input: VaultFreedomPathInput): VaultF
     velocityYears,
     freedYears,
     investmentGrowth,
-    interestSavedLabel: formatCurrency(input.velocity.saved),
-    freedomYearsLabel: `${freedYears} years`,
-    portfolioValueLabel: formatCurrency(investmentGrowth),
-    timelineLabel: 'Velocity path projected',
-    standardAgeLabel: `Age ${safeCurrentAge + standardYears}`,
-    velocityAgeLabel: `Free at ${safeCurrentAge + velocityYears}`,
-    investmentCaption: `By investing your freed ${formatCurrency(input.monthlyPayment)}/mo for ${freedYears} years @ ${formatVaultPercentLabel(input.investmentRate * 100)} return`,
+    interestSavedLabel: formatVaultStrategySavings({ ...input.velocity, monthsSaved: monthsEarlier }),
+    freedomYearsLabel: `${freedYears.toFixed(1)} years`,
+    portfolioValueLabel,
+    timelineLabel: monthsEarlier === 0 ? 'Same modeled payoff month'
+      : `${Math.abs(monthsEarlier)} month${Math.abs(monthsEarlier) === 1 ? '' : 's'} ${monthsEarlier > 0 ? 'earlier' : 'later'}`,
+    standardAgeLabel: `Age ${(safeCurrentAge + input.standardMonths / 12).toFixed(1)}`,
+    velocityAgeLabel: `Paid off at ${(safeCurrentAge + input.velocity.months / 12).toFixed(1)}`,
+    investmentCaption: monthsEarlier > 0
+      ? `Illustration: assume a ${formatCurrencyPrecise(contribution)}/mo contribution at each month start for ${monthsEarlier} months @ ${formatVaultPercentLabel(input.investmentRate * 100)} annual return. This is not incremental savings; excludes cash reserves and is not a net-wealth comparison.`
+      : 'No earlier payoff in this model; no freed-payment growth is projected.',
   };
 }

@@ -1,0 +1,19 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (65)
+prune: Removed types... Accessor (230)
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+prune: Removed types... Accessor (83)
+{"triangles":29348,"meshes":71,"textures":[{"name":"SL-Cloth-Color","bytes":68014},{"name":"SL-Cloth-Normal","bytes":434070},{"name":"SL-Cloth-Roughness","bytes":25480},{"name":"SL-Leather-Color","bytes":76032},{"name":"SL-Leather-Normal","bytes":432930},{"name":"SL-Leather-Roughness","bytes":17458},{"name":"SL-Paper-Color","bytes":23232},{"name":"SL-Paper-Normal","bytes":71704},{"name":"SL-Paper-Roughness","bytes":3210}],"bytes":1435748,"collection":10953392}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:163
+if(output.length>0.75*1024*1024||collection>10*1024*1024||triangles>75000)throw new Error('Student Loan exceeds unchanged delivery limits; existing artifact untouched');
+                                                                                ^
+
+Error: Student Loan exceeds unchanged delivery limits; existing artifact untouched
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/build-refined-student-loan.mjs:163:81
+
+Node.js v22.22.2

@@ -1,4 +1,4 @@
-import type { PayoffFailureReason, SingleDebtStrategyResult } from '../engine/calculations';
+import { formatCurrency, LOC_PROJECTION_OVER_LIMIT_LABEL, type PayoffFailureReason, type SingleDebtStrategyResult } from '../engine/calculations';
 
 export interface SimulatorStrategyCard {
   name: SingleDebtStrategyResult['name'];
@@ -11,6 +11,7 @@ export interface SimulatorStrategyCard {
   monthsLabel: string;
   interestLabel: string;
   statusLabel?: string;
+  endingCashLabel: string;
 }
 
 export interface SimulatorWarningInput {
@@ -44,12 +45,14 @@ const LOC_OVER_LIMIT_TITLE = 'LOC balance is over the limit';
 const LOC_OVER_LIMIT_BODY = 'The LOC balance is above the available limit. Bring it back under the limit before modeling another chunk.';
 
 function formatFailure(reason?: PayoffFailureReason): string {
+  if (reason === 'invalid-routing') return 'Review routed cash flows';
   if (reason === 'negative-cashflow') return 'Needs positive cash flow';
   if (reason === 'cashflow-below-minimums') return 'Cash flow below minimums';
   if (reason === 'payment-below-interest') return 'Payment below interest';
   if (reason === 'loc-setup') return 'Enter LOC terms';
   if (reason === 'loc-no-capacity') return 'No LOC room';
   if (reason === 'loc-overlimit') return 'LOC over limit';
+  if (reason === 'loc-projection-overlimit') return LOC_PROJECTION_OVER_LIMIT_LABEL;
   if (reason === 'payoff-horizon-exceeded') return 'Extend projection horizon';
   return 'Review inputs';
 }
@@ -156,6 +159,7 @@ export function buildSimulatorStrategyCards(strategies: SingleDebtStrategyResult
       monthsLabel: isPayoffPossible ? `${strategy.months} mo` : 'Review inputs',
       interestLabel: isPayoffPossible ? 'Projected interest' : 'Not projected',
       statusLabel: isPayoffPossible ? undefined : formatFailure(strategy.failureReason),
+      endingCashLabel: isPayoffPossible ? `${formatCurrency(strategy.endingCash)} cash at payoff` : 'Cash not projected',
     };
   });
 }

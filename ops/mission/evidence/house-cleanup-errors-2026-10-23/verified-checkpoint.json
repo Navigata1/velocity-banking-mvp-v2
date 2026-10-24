@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-23T17:27:45.902Z",
+  "head": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6370542236",
+  "checkpointSha256": "418305eede0902f295a0c88d846c94200b07ccb37164877c05f0b993a3864b14",
+  "directArtifacts": 6066,
+  "completeCi": [
+    {
+      "event": "push",
+      "id": 39988785819,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": 3
+    },
+    {
+      "event": "pull_request",
+      "id": 39988789782,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": 3
+    }
+  ],
+  "local": {
+    "sourcePins": 495,
+    "gates": 29,
+    "fromScratch": true
+  },
+  "hosted": {
+    "suites": 15,
+    "layouts": 210,
+    "servedAssets": 20
+  },
+  "actualManualHeroStates": 10,
+  "inheritedFinancialStates": 8,
+  "currentCanonicalHouseVideosAtThisCheckpoint": 1,
+  "originalVideoFramesViewed": 7,
+  "scope": "Verified f708 cleanup checkpoint only, not the subsequent local web clock change, final photoreal or production approval.",
+  "productionReady": false
+}

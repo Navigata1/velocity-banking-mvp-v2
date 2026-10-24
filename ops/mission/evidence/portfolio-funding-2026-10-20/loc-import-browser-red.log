@@ -1,0 +1,23 @@
+
+> web@0.1.0 smoke:portfolio:built
+> node scripts/smoke-portfolio-budget.cjs
+
+PASS Portfolio unfunded-extra at 1440px
+PASS Portfolio retained-cash at 1440px
+PASS Portfolio existing-loc at 1440px
+PASS Portfolio ranked-loc-cap at 1440px
+PASS Portfolio split-ranked-loc at 1440px
+PASS Portfolio funded-final at 1440px
+PASS Portfolio one-cent-short at 1440px
+PASS Portfolio loc-interest-shortfall at 1440px
+PASS Portfolio already-paid at 1440px
+PASS Portfolio large-value at 1440px
+AssertionError [ERR_ASSERTION]: imported LOC limit must not be silently clipped
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\smoke-portfolio-budget.cjs:80:22 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-21T12:00:00.997Z",
+  "source": "Authenticated read-only Vercel MCP get_deployment and get_team; selected metadata only",
+  "request": {
+    "idOrUrl": "dpl_9xWRX1G7xEpNinJ88YmCPCHpnpE9",
+    "teamId": "team_rccC7q4MEQxCAEz45598ttAe",
+    "withGitRepoInfo": "true"
+  },
+  "deployment": {
+    "id": "dpl_9xWRX1G7xEpNinJ88YmCPCHpnpE9",
+    "state": "READY",
+    "readyState": "READY",
+    "target": null,
+    "url": "velocity-banking-mvp-v2-m6slhn034-islanddevcrew.vercel.app",
+    "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+    "meta": {
+      "githubCommitSha": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+      "githubCommitRef": "codex/restoration/asset-heroes",
+      "githubRepo": "velocity-banking-mvp-v2",
+      "githubOrg": "Navigata1"
+    },
+    "gitSource": null
+  },
+  "team": {
+    "id": "team_rccC7q4MEQxCAEz45598ttAe",
+    "slug": "islanddevcrew"
+  }
+}

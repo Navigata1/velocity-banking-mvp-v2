@@ -1,0 +1,98 @@
+{
+  "observedAt": "2026-10-23T03:47:21.302Z",
+  "head": "8dfba166b3326a2fd3787c9f0f16708a2190f858",
+  "productionReady": false,
+  "adopted": false,
+  "publicHeroAssetsChanged": 0,
+  "polishedStudy": {
+    "fixture": "15762f9a-cf71-44fd-8cf4-ff6332105da7",
+    "capture": "b9cdaf3d-7550-4081-bdec-d5b84426e09c",
+    "rawStageImages": 28,
+    "viewports": [
+      1440,
+      375
+    ],
+    "poses": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8.5
+    ],
+    "candidateChanges": "One GLB JSON material-reference byte, eight exclusive chip contacts, same523764bytes",
+    "review": "review-a1e681de-7631-4271-827f-d2c6512912bf.md",
+    "verdict": "KEEP_PRIVATE_ONLY",
+    "improvement": "Front/rest and2s finish separation",
+    "tradeoff": "3s contact segmentation less readable",
+    "limits": [
+      "No served-build binding in firstcapture",
+      "Desktopviewport sidebar differs; stagePNGs only support chip-isolated comparison",
+      "Wholeface/coin/allten photoreal approval remainsopen"
+    ]
+  },
+  "softStudy": {
+    "fixture": "7bddbbd0-bef6-44a3-9434-2ad694a4bfc3",
+    "bytes": 523936,
+    "addedBytes": 172,
+    "sha256": "0e11e543cc85a5e34fd45df982bcca847dc43ac1f936326f7ec34becd15a8466",
+    "cpuTests": 2,
+    "build": {
+      "id": "e15ea70d-4964-44f7-b232-14c88f5346a7",
+      "buildId": "pj3vA-P48ZEa-sTH8luoR",
+      "sourceCopies": 221,
+      "currentSourcePins": 485,
+      "staticFiles": 49,
+      "passed": true,
+      "existingAppNextUntouched": true
+    },
+    "servedBindingCpuTests": 3,
+    "initialCapture": "FAILED_BEFORE_ZERO_CONTEXTS",
+    "chromeLaunchSetup": "Three failedsetuprecords retained; consistentOSfoldermetadata variantpassedblank/emptycookie/owned-effective-profile checks. MetadataABbothS_OK, exactfirstcauseunconfirmed. No protection/defaultprofilebypass.",
+    "appFunctionalCapture": {
+      "id": "900486ff-9883-4329-99a5-38a1d949744d",
+      "images": 28,
+      "resources": {
+        "contextsOpened": 4,
+        "contextsClosed": 4
+      },
+      "browserClosed": true,
+      "serverStopped": true,
+      "servedStaticPerFixture": 33,
+      "midturnExactPoseComparison": false
+    },
+    "exactHyperframesReference": {
+      "id": "85b1a868-82ab-4a1d-a0ed-7853a102e3d3",
+      "images": 14,
+      "resources": {
+        "contextsOpened": 2,
+        "contextsClosed": 2
+      },
+      "browserClosed": true,
+      "serverClosed": true,
+      "canonicalSeekTimes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8.5
+      ],
+      "sourceCompositionUnchanged": true,
+      "sharedRuntimeSourceParity": true,
+      "scope": "Exactvideo-reference poses, not actualdashboardtiming/FPS"
+    },
+    "newRenderedFrames": 42,
+    "setupReview": ".superpowers/sdd/2026-10-22-card-contact-softness/setup-review-508a8c6e-431e-4c85-9698-b600a8b7e9c7/REVIEW.md",
+    "setupDisposition": "configuration-validated-cause-unconfirmed",
+    "independentArtReview": ".superpowers/sdd/2026-10-22-card-contact-softness/review-34a012b4-d951-4df8-8685-a992989f6059.md",
+    "artDisposition": "KEEP_FOCUSED_SOURCE_PROPOSAL_NOT_PHOTOREAL_APPROVAL"
+  },
+  "limits": [
+    "No product asset/material/rendering/math/dependency change",
+    "No final photoreal or allangle/physicalhardware approval",
+    "Task-owned evidence retained, existing previews untouched"
+  ]
+}

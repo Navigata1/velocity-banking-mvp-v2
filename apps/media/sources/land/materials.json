@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "created": "2026-10-20",
+  "purpose": "Original generated albedo/opacity sources for authored Land geometry, not measured scans or a reconstructed terrain.",
+  "images": [
+    {
+      "file": "meadow-albedo-v1.png",
+      "sha256": "a501c26c2242c4a3f5f0f705468871c2e9a78a44bed90d5afd7338036c50764b",
+      "origin": "Codex built-in image generator",
+      "originalOutput": "exec-7077771d-7bdb-43f1-9b29-c84daffc6a55.png",
+      "brief": "Orthographic overhead meadow grass/clover albedo, fine blades, restrained green/olive/straw variation, even diffuse illumination, compatible tile edges; no scene, path, tree, pond, border or text."
+    },
+    {
+      "file": "oak-leaf-albedo-v1.png",
+      "sha256": "0dc28af4a8849ada6915a68e4447523804861cd17020462f523ef5f1c0beb5ea",
+      "origin": "Codex built-in image generator",
+      "originalOutput": "exec-f4883ac4-4b32-4ab2-8616-2ba43ee94252.png",
+      "brief": "Single photorealistic overhead mid-green oak leaf with veins, short downward stem, tip upward, even neutral lighting and transparent alpha outside the leaf; no tree, branch, scene, shadow or text."
+    }
+  ],
+  "limitations": "Generated albedo/opacity images, not scanned material. Terrain, pond and branches are authored geometry. Soil/bark and micro-normal/roughness/ripple maps are deterministic visual approximations, not surveyed geology or measured surface data. Tiling and collection fidelity require rendered review."
+}

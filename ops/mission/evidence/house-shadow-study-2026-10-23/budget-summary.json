@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-23T11:08:19.878Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "private-phone-budget-evaluated-instancing-under-review",
+  "productionReady": false,
+  "productAdopted": false,
+  "productNetworkApproved": false,
+  "sourcePinsUnchanged": 486,
+  "assetPinsUnchanged": 20,
+  "selectedEvidenceOnly": true,
+  "selectedEvidencePins": {
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/baseline.json": "b0c81c9d4c669fa9173a4f72dfb060529a6c41f58b0cf9799bcd149f3b793552",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/budget-shadow.mjs": "00f9c7f956747de33fc04a9ec52fe0cdd43a43995ede77e9c468ea69dddc5d83",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/budget-shadow.test.mjs": "2c281fa974f50073961863f867d9476f13aadd096a286b6d98baf27944752876",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/phone-capture-4b4a45cb-d63f-406d-8570-239f1683a81a/phone-proof.json": "9856b15911b00d6e38318c4d720234653e9373a58efd2ec7b3ccea8c9740a6d9",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/phone-capture-4b4a45cb-d63f-406d-8570-239f1683a81a/verification.json": "e3514675671249b237bb654636399ceb2e29ea2ae98a896209601c2a5d180aef",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/review-resolution-bc31961c-a9d2-425d-b269-ae85729283fb/report.md": "de6dfc816786be4cdd30980a7539bf1316f0e1c0575fd29e325d69502ad5502f",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/review-phone-4f3d0922-1bcf-45ac-9456-6b021ef5a1c9/report.md": "c2eb65029579917248293ec5715fd7ab0793aa4eb940e28dd3ef5916cbbb1751",
+    ".superpowers/sdd/2026-10-23-house-shadow-viewport-budget/review-phone-4f3d0922-1bcf-45ac-9456-6b021ef5a1c9/evidence.json": "af7d778ca9417dbabd868694d4ab8db078fe78492f2738d73547dee37c2c23c5",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/baseline.json": "946a5910dfb7086014b864213bb9365a2fa28225da5e6b1c76d0a56fe0e5505c",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/instances.mjs": "952d73f4830457f5116eb714a791280007c3fb62507325f4298bed7cb28892c2",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/instances.test.mjs": "db59f558e91f59bad9415176944cb4a4ed1aec122cd45e17bd03ff5c4fb60f7e",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/capture-bb42e637-dbd9-4587-b538-e645cf51610b/graphics-proof.json": "5e64b0f44f6c09903fed849b19821d18428a446d79aef29a2c687a5ca7fd6f1e",
+    ".superpowers/sdd/2026-10-23-house-instance-budget/capture-bb42e637-dbd9-4587-b538-e645cf51610b/verification.json": "fb8368528bd8edbf2d58c9bfe71d7fbc0fa7d95d0625fc01465dbca5ad58bdf5"
+  },
+  "phoneBudget": {
+    "collection": "4b4a45cb-d63f-406d-8570-239f1683a81a",
+    "width": 351,
+    "height": 270,
+    "dpr": 1,
+    "allocatedSizes": [
+      2048,
+      1024
+    ],
+    "poses": 7,
+    "images": 22,
+    "cpuGroups": 8,
+    "defaultGroups": 16,
+    "independentProbes": 8,
+    "controls": 3,
+    "private1024Accepted": true,
+    "allLiveShadowAdoption": "held",
+    "physicalCostsMeasured": false
+  },
+  "instances": {
+    "collection": "bb42e637-dbd9-4587-b538-e645cf51610b",
+    "dimensions": [
+      [
+        351,
+        270
+      ],
+      [
+        725,
+        420
+      ]
+    ],
+    "poses": 7,
+    "matchedPairs": 14,
+    "images": 44,
+    "contextsClosed": 4,
+    "reportedCalls": [
+      467,
+      211
+    ],
+    "reportedTriangles": [
+      45480,
+      45480
+    ],
+    "reportedTextureCounts": [
+      8,
+      8
+    ],
+    "cpuGroups": 10,
+    "controls": 3,
+    "originalImagesIndividuallyViewedByParent": 28,
+    "independentWholeStudyReview": "pending",
+    "adopted": false,
+    "physicalPerformanceApproved": false
+  },
+  "network": {
+    "existingActualWebAggregate": "failed",
+    "causeEstablished": false,
+    "noExemptionsOrWorkaround": true
+  },
+  "limits": [
+    "Standalone seek/reset is not React Replay or Next/RSC networking.",
+    "Renderer draw/triangle/texture counters are not measured physical FPS, memory, energy or photorealism.",
+    "No source, model, dependency or provider mutation, merge, deployment or status-only push."
+  ]
+}

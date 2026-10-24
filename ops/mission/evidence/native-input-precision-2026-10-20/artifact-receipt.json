@@ -1,0 +1,127 @@
+{
+  "verifiedAt": "2026-10-21T01:45:19.503Z",
+  "baseline": "8f65aef57947d02eb7f568df1e7e6f977b288a0b",
+  "engineAndWebRuntimeUnchanged": true,
+  "allTenModelRecordsAndBinariesUnchanged": true,
+  "native": {
+    "draftContracts": 15,
+    "browserFixtures": [
+      {
+        "width": 375,
+        "noOpFields": 10,
+        "typedDecimal": "120.70",
+        "storedBalance": 120.7,
+        "income": 8300.45,
+        "apr": 0.07123456789,
+        "invalidDrafts": 10,
+        "savedInputsPreserved": true,
+        "errors": []
+      },
+      {
+        "width": 1440,
+        "noOpFields": 10,
+        "typedDecimal": "120.70",
+        "storedBalance": 120.7,
+        "income": 8300.45,
+        "apr": 0.07123456789,
+        "invalidDrafts": 10,
+        "savedInputsPreserved": true,
+        "errors": []
+      }
+    ],
+    "existingRouteViewportExecutions": 35,
+    "exports": {
+      "android": [
+        {
+          "path": "apps/mobile/dist-android/_expo/static/js/android/entry-ade406bcc214c5a91fc1e964aa91d5d6.hbc",
+          "bytes": 3591954,
+          "sha256": "e3c55aeccf75358db6c5945a67b5b8b760b7237c4a4588c31037c2b4bf612d99"
+        }
+      ],
+      "ios": [
+        {
+          "path": "apps/mobile/dist-ios/_expo/static/js/ios/entry-5434de5dbaae8f76e41247da1ce6d2a7.hbc",
+          "bytes": 3306450,
+          "sha256": "84f063d7f07084cdfbf3dcee1eebeee34a1caa30146851709227955f2497bc10"
+        }
+      ]
+    },
+    "lifecycleProof": "static wiring and existing owner guards, not signed-in device QA"
+  },
+  "timing": {
+    "deterministicCases": 4,
+    "renderedSelections": 18,
+    "limits": [
+      700,
+      300
+    ],
+    "initialMissResolved": false
+  },
+  "publicCollection": {
+    "bytes": 10415192,
+    "cap": 10485760,
+    "headroom": 70568
+  },
+  "observerSourceSha256": "07568324aacc3d829f71b5607764c95ad6970d4224174984c95bcfabed3c0b21",
+  "sources": {
+    ".github/workflows/ci.yml": "6621a966a307ad7fad44c45b86ae8c2ed3227f882f1dfee5222fbf1c2ec39ae9",
+    "apps/mobile/lib/financial-input-draft.ts": "d5f17b678f34e2933fc5dcd21ee519f281fc4f7b45a9b9538c89da8c7be1491d",
+    "apps/mobile/components/mobile-shell/number-input.tsx": "90efd2f9b868bb28d2cd8ec9c9a3918ed9b012579aed83ed86a8107f55a489c3",
+    "apps/mobile/components/mobile-shell/controls.tsx": "41f4d0907ea4a33aa9d2176b11545a5e8225c0a386d76df0502fe8a0e3c923f2",
+    "apps/mobile/components/mobile-routes/route-screen.tsx": "ffb89181e211a1720f4cdebe33771466c0d7f3b79707f444af1c38072fa64405",
+    "apps/mobile/hooks/use-persisted-mobile-assumptions.ts": "308663d5e314c6fb78a42295e93719f5e0414a78e40db83c00f03b16e6100990",
+    "apps/mobile/scripts/financial-input-draft-contract.cjs": "78b7f9c9043702c2bbbc325251435546b0944f1c2f98f830bbbcd2376c58c22e",
+    "apps/mobile/scripts/financial-input-smoke.cjs": "761a34cb112eaaf4b329acea624e6b5f237190495e8c0d96dd2ee9f7d0242baa",
+    "scripts/mobile-port-contract-tests.cjs": "c1c5e9ab870b935b7b950ef6d9d7b5a30ab54739885d33b47792e8ab9ec01e43",
+    "apps/web/scripts/test-three-stage.cjs": "f5bb82a7ca80e8088ff7d6ff422bae8826ccdcf39ecdb9862e75375c12efef15",
+    "apps/web/scripts/three-stage-timing.cjs": "2000dd8f29c728d54ce76e004064afadd4b5f63346f9b27f58971edf394d3329",
+    "apps/web/scripts/three-stage-timing-tests.cjs": "88e06d13191b32f277467d4581aa48c94c7516397d177f7a99a62b76d940c46b"
+  },
+  "logs": {
+    "browser-red.log": "86772993cdb20c023b0347a1a644e8e8c09f1a8af95eae9ee90f31db64222649",
+    "typing-red.log": "60cc79bf9e4522aa5d4f33d1a7f2396865ad40023fe6fff01f2033d535b937d7",
+    "review-red.log": "0df6d081657c688f28b54a1465cc0f92ce9cd286e01ac60b6fa28439eb42f4dc",
+    "scroll-blur-red.json": "ac68627a634fa8e19e4ca35498fb893b4945370d972c93f65fbe40ac24bf261b",
+    "ci-coverage-red.log": "94f5bb4dec00957e657c9bfb30f7abcb14ad7761bd47aecc9c249b098490ae53",
+    "input-contracts.log": "b00282cb39a5bb1e7de7f92ec9a38cb80a7664cd99cb93371f12a3daba5ca8e6",
+    "browser.log": "29b5793f5f64cd2258cf471c6a7357ab3ba37616872460aee45833077c289ead",
+    "build.log": "bc28a8f1dbab30bcd3d85116534d506fba1458204d227f6a32ac7d1c1634af51",
+    "web-tests.log": "8fce7165dff01052294c3293522b0e973730a80cbfa1df3595dbfb0e36a23d3c",
+    "web-build.log": "124f485c1f352e06e9c2ae6cb1b08f89ccb12fdf06ad886500fbfa93ce0fa23c",
+    "web-lint.log": "f9a21ecb409cdea1f61b7e813acc2fe2b2231e6d75fde4df7ab8eb89fc078bd7",
+    "three-stage.log": "1e6fe39ccb7a3e8565ead4db4b3f1e86f5f71acb76c76354b59ee452cfe9f3bc",
+    "three-stage-contention.log": "32ec11c1a2092c4eccc5e6723a737dc9747f028edf97175d1840d8cbcf026751",
+    "timing-tests.log": "89fcb85a3ded78d998880c427f0903f1804509d91ea733fa028ffa267c1b978a",
+    "mobile-check.log": "5f34733856cfba630a1302f4e09847c4f2d78034e85e82d4dd77d61f4e17d795",
+    "mobile-contracts.log": "43c4e0431571c79eb497410b181903a172a414afd6564abcda7ab65581e6d804",
+    "mobile-routes.log": "95ae702f653ae3c28295b59d8033eff7d929854b74d9f7158e805c6c2f978c01",
+    "android.log": "ef0c2f7466c0e1e92cd4e24371347c84c147efa364d21b92c118049485d3b818",
+    "ios.log": "af331bd31dee6765c7af8726eea403c2b0cd7978d93678e05d03c501927bd071",
+    "media-check.log": "390026bc812212a16fe861dd3b389af26fa961c158d7e3af35046723d318934d",
+    "heroes.log": "c3d96de4fbf254f5d46f9e8770b10d1fb10d8a8eb97372f55cc80f93bb38a8d8",
+    "heroes-navigation-failure.log": "7d2b5d3b16ff6b1634b147fca45a713bddf842528882f47d246ac3724cfee760",
+    "fallbacks.log": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4",
+    "routes.log": "1ba9af1a13be1124b52299cd648dc4f6daf61b3ea3dc1e6b34802dba1033ed67",
+    "turntables.log": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd",
+    "timing-red.log": "b947b81607c51e979bf6b4a1c96bf5f7017ae24d47d01c145971af1a41204da9",
+    "timing-red-baseline-replay.log": "a42b5b1f3830586517ece3a13c9d2c547ecab8afe7caedee555262bfe1a0cbd5"
+  },
+  "screenshots": {
+    "native-inputs-375.png": "aba4ac797d12784c7e85f06c0a79a369bc371f45a146e5c6849c874e0c264508",
+    "native-inputs-1440.png": "026fa4a1be51a42b797b73a770c2051ae15ddc7ad455780d17f701084b226683"
+  },
+  "report": {
+    "bytes": 99074,
+    "sha256": "7a45e4b9d2c4bfabbe6f78425c5d2378da964b57b45b5d3030eac52bd15fcd74",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "runtimeBrowserVerification": "not claimed; earlier local-file policy block not retried"
+  },
+  "limitations": [
+    "Number representation is not arbitrary-precision finance",
+    "Locale/signed-in device lifecycle remains open",
+    "Original rendering/nav misses not declared fixed",
+    "New exact-head full CI and hosted proof still required",
+    "No production approval"
+  ]
+}

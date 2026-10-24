@@ -1,0 +1,223 @@
+{
+  "id": "negative-280-verdana",
+  "viewport": {
+    "width": 280,
+    "height": 900
+  },
+  "accepted": true,
+  "failure": null,
+  "layout": [
+    {
+      "id": "dashboard-mobile-vital-cash-flow",
+      "label": {
+        "text": "Cash Flow",
+        "tokens": [
+          {
+            "text": "Cash",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Flow",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 144,
+        "glyphBottom": 156,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "-$90,000,000",
+        "tokens": [
+          {
+            "text": "$90,000,000",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 161,
+        "glyphBottom": 180,
+        "fontSize": 14,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-interest-burn",
+      "label": {
+        "text": "Interest Burn",
+        "tokens": [
+          {
+            "text": "Interest",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Burn",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 144,
+        "glyphBottom": 156,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "Est. $51.50/day",
+        "tokens": [
+          {
+            "text": "Est",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "$51.50",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "/day",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 162,
+        "glyphBottom": 196.5,
+        "fontSize": 14,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-debt-free-eta",
+      "label": {
+        "text": "Debt-Free ETA",
+        "tokens": [
+          {
+            "text": "Debt",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Free",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "ETA",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 232,
+        "glyphBottom": 244,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "Stabilize first",
+        "tokens": [
+          {
+            "text": "Stabilize",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "first",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 249,
+        "glyphBottom": 268,
+        "fontSize": 14,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-next-move",
+      "label": {
+        "text": "Next Move",
+        "tokens": [
+          {
+            "text": "Next",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Move",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 232,
+        "glyphBottom": 244,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "Restore positive cash flow",
+        "tokens": [
+          {
+            "text": "Restore",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "positive",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "cash",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "flow",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 249,
+        "glyphBottom": 280,
+        "fontSize": 12,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    }
+  ],
+  "hero": {
+    "loaded": true,
+    "visibleHeight": 314
+  },
+  "unit": {
+    "wbr": 1,
+    "text": "/day",
+    "display": "inline-block",
+    "whiteSpace": "nowrap",
+    "opacity": "1",
+    "visibility": "visible",
+    "fontSize": "14px"
+  }
+}

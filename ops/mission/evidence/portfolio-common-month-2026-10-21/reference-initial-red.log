@@ -1,0 +1,16 @@
+Command: node apps/web/scripts/portfolio-common-month-reference-tests.cjs
+Stage: first completed run, before adding seeded nonzero reference rows and five further boundary probes.
+Terminal process exit code: 1
+
+FAIL boundaries: large-cancellation/listed-small-after-large: 0 !== -1
+FAIL boundaries: large-cancellation/listed-small-before-large: 0 !== -1
+FAIL boundaries: large-cancellation/separate-loc-small: 0 !== -1
+FAIL boundaries: large-cancellation/cash-residual-plus-small: 2 !== 3
+zero-apr: 19232 passed, 0 failed
+hand-calculated: 8 passed, 0 failed
+required-prefix: 504 passed, 0 failed
+boundaries: 13 passed, 4 failed
+{"seed":20261021,"finalState":4261141148,"randomDraws":85,"counts":{"zeroSources":8,"zeroBooks":32,"zeroComparisons":19232,"zeroSnapshots":57696,"handSources":5,"handComparisons":8,"handSnapshots":24,"rateSources":0,"rateBooks":0,"ratePaths":0,"accountedRows":0,"directOraclePaths":0,"directOracleRows":0,"rateComparisons":0,"rateSnapshots":0,"prefixSources":1,"prefixMutations":72,"prefixSnapshots":504,"boundarySnapshots":17},"passed":19757,"failed":4}
+
+This is a compact transcription of the actual terminal result, not a raw log.
+No production files were altered to obtain these assertion failures.

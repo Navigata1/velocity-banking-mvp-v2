@@ -1,0 +1,173 @@
+{
+  "capturedAt": "2026-10-21T15:31:10.894Z",
+  "sourceHash": "6231db4e77516c3c811bdefee7d567265a80dee3406ea05a1f7888ac74cd7fe9",
+  "viewportCases": 20,
+  "widths": [
+    1440,
+    375
+  ],
+  "mode": "software GPU, fixed16ms primer and15x100ms two-pose sampling; not FPS",
+  "processExitCode": 0,
+  "files": {
+    "1440-car-3d-start.png": {
+      "bytes": 56213,
+      "sha256": "2a0555fbbd7fa1150533ef7dfeefb741294588f3c2677af8c63ae28b1ed96d63"
+    },
+    "1440-car-3d.png": {
+      "bytes": 53797,
+      "sha256": "44b6618eea37d019c1e983d8d260a0b608329fe764d6e3fda2c257f53f022fb6"
+    },
+    "1440-house-3d-start.png": {
+      "bytes": 65813,
+      "sha256": "d08b564f5e76e09aeb79eb1c54a928c208e280de743235960d71e79903c16100"
+    },
+    "1440-house-3d.png": {
+      "bytes": 70123,
+      "sha256": "b3515d07f4b9366f88008baccd5166d4b571f06199f4c50e01794ef6ef8bde54"
+    },
+    "1440-land-3d-start.png": {
+      "bytes": 73533,
+      "sha256": "335dc0d2a7404bb4483ccfdf25e184f12f4a2a9ed62f488d4dafadcd807c0725"
+    },
+    "1440-land-3d.png": {
+      "bytes": 84749,
+      "sha256": "156fd4e6cb5924625623c3382ac61573d26c3999e1eacd1601be660b24416a1e"
+    },
+    "1440-creditCard-3d-start.png": {
+      "bytes": 35032,
+      "sha256": "f706d68265bf11fc38db999222fdb890cb45dd1d7544cbf033efdac794fbb57f"
+    },
+    "1440-creditCard-3d.png": {
+      "bytes": 26332,
+      "sha256": "1c56b85ca364b7b13d2081b2622ec52a2c0ffdfbc6282a79c339f8a876a3deca"
+    },
+    "1440-studentLoan-3d-start.png": {
+      "bytes": 34450,
+      "sha256": "139e190ef65870a18624138abd4c7495acd63f4db7eec89b1b9756c4eee6345e"
+    },
+    "1440-studentLoan-3d.png": {
+      "bytes": 23456,
+      "sha256": "274e5eda0fbdd4ba4ec00bbafb400f7b92e8b2c6e0b28fecf3b39084574a1460"
+    },
+    "1440-medical-3d-start.png": {
+      "bytes": 37371,
+      "sha256": "6cafa2233a21348ff44d7383c7cbb1cc0c06ff9949cdcb9775ae0b203ac46f1c"
+    },
+    "1440-medical-3d.png": {
+      "bytes": 34892,
+      "sha256": "0ab8afccf63fe03acce442a79edbe043ff2f114b0bec7dc23f1bacec26a122ce"
+    },
+    "1440-personal-3d-start.png": {
+      "bytes": 37336,
+      "sha256": "ea13189c72355927fa4b452bbc29c9947e9e3bd962e654f6e62b35f784c34e47"
+    },
+    "1440-personal-3d.png": {
+      "bytes": 33955,
+      "sha256": "a56e7b3eec355ae56df9aa6b21f565a20e848fb376d3a3909154c48bc8b4a93c"
+    },
+    "1440-recreation-3d-start.png": {
+      "bytes": 35794,
+      "sha256": "42bb3dd6ac97d46d7f48227206490ce09e72d10a46499819b5f0ee0b57fa196c"
+    },
+    "1440-recreation-3d.png": {
+      "bytes": 28976,
+      "sha256": "ca3ee0b891fe3de22fa3c0de0f46b3466c8169b80fee6b656552903386c8e10b"
+    },
+    "1440-custom-3d-start.png": {
+      "bytes": 48184,
+      "sha256": "b3fb74cb2ba4d7fe765947b351142e75dc9373df9e294085352fa3d9bb34b12e"
+    },
+    "1440-custom-3d.png": {
+      "bytes": 43301,
+      "sha256": "dc81b8c39280ec6573563df412e3329e4227abff9655da215665dbaa2b159a22"
+    },
+    "1440-vault-3d-start.png": {
+      "bytes": 37140,
+      "sha256": "14e041e64971da3e537fd0a53865fd09ac78d648be98ceb0f8c972ccb89e1727"
+    },
+    "1440-vault-3d.png": {
+      "bytes": 31334,
+      "sha256": "d7fd088375f80a05d754c8685478b1eecc9951b6df1dce23b17fdf55eb90d0bc"
+    },
+    "375-car-3d-start.png": {
+      "bytes": 26294,
+      "sha256": "97c82cda1a7d0f88cc1d91152b12ab8e86bb8b90be8922e2cfaea0864c356dc7"
+    },
+    "375-car-3d.png": {
+      "bytes": 24813,
+      "sha256": "fe46444614b23345f8e6bfa501cc67ad555c7aba09586e204547834dcbbfc16d"
+    },
+    "375-house-3d-start.png": {
+      "bytes": 31122,
+      "sha256": "6c964be844dbf36047a3a9f348175a005355410ec649807dd970bd4b14376323"
+    },
+    "375-house-3d.png": {
+      "bytes": 32604,
+      "sha256": "8ac5d1fd4b3be49f6ec468ad00ce476c31d404f9467aebe2fc1d3726e51c6373"
+    },
+    "375-land-3d-start.png": {
+      "bytes": 32486,
+      "sha256": "9765d0501d1dd051c8177fdf71003dbeafbcf3b489ff3636a38605366f900e7e"
+    },
+    "375-land-3d.png": {
+      "bytes": 38017,
+      "sha256": "93ebbe22cb7bd5dbe996b7c6522935868e3f9700a72c67f4996e3378cb30e9c7"
+    },
+    "375-creditCard-3d-start.png": {
+      "bytes": 17037,
+      "sha256": "da1975bd05a9dd7128a5ae3571a6d80d60b0ededdddcd4fa93ac8a3f66fad6a3"
+    },
+    "375-creditCard-3d.png": {
+      "bytes": 12793,
+      "sha256": "37515e1de9e8392ec55fdee9d646d02d31e4b495f387f2a0e5e8260d5a3c9651"
+    },
+    "375-studentLoan-3d-start.png": {
+      "bytes": 16916,
+      "sha256": "cf7639f6e6df008f6689f62e7d8fb8965b33a2b21a7992292d9af890995a2722"
+    },
+    "375-studentLoan-3d.png": {
+      "bytes": 11920,
+      "sha256": "5a743e036911a5bd0cf4248101c3b9ce4847bcc3db73ca40280770c835110d3d"
+    },
+    "375-medical-3d-start.png": {
+      "bytes": 18178,
+      "sha256": "241211d55de34ab17a5b8a9ed05dd58de1315d1a901fb4769b578eaf83813be9"
+    },
+    "375-medical-3d.png": {
+      "bytes": 17076,
+      "sha256": "193e6ccc34a7d4c1ba4c7638be610edf1e81d2bb0854265dfba6d6eee4f0709b"
+    },
+    "375-personal-3d-start.png": {
+      "bytes": 17572,
+      "sha256": "ce049b2b17c5395f2f253fd1f5e1d9d5cb59b2cc3659203e9c782ee60afd415f"
+    },
+    "375-personal-3d.png": {
+      "bytes": 16245,
+      "sha256": "3a71b60754d75143b8f2caa11a3d2b35e45b914c22caa1df0fba8edfbf3030b3"
+    },
+    "375-recreation-3d-start.png": {
+      "bytes": 17718,
+      "sha256": "2225c72a5fe5667e86bc6df33a3aa7b537e1b34774eae2452286127e576939c3"
+    },
+    "375-recreation-3d.png": {
+      "bytes": 14249,
+      "sha256": "666472feb8285052f06e7e7fcf69dd8f1529d537a50dca45147bb3699e1be332"
+    },
+    "375-custom-3d-start.png": {
+      "bytes": 21638,
+      "sha256": "69c4b9b42f7118edcc13618c4c0e9cf6e8a002afcd2fbb8abe0f721a1549a8f7"
+    },
+    "375-custom-3d.png": {
+      "bytes": 20294,
+      "sha256": "fc365115dc8ab84fadeab49deb506f6b4b15a384060cfbc315c7b36e539a73e1"
+    },
+    "375-vault-3d-start.png": {
+      "bytes": 24470,
+      "sha256": "a5ffb388849f0e05e16f34ab8ca1af294cf16cb072151b053be7cb87d28a0d75"
+    },
+    "375-vault-3d.png": {
+      "bytes": 20817,
+      "sha256": "478e28de80356aac55933f62ba261c965dc921d99227c2540a24e5410846b449"
+    }
+  }
+}

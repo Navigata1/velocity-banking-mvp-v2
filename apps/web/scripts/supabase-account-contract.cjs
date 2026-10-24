@@ -11,6 +11,9 @@ function loadTsFile(filename) {
   }).outputText;
   const testModule = { exports: {} };
   const localRequire = (request) => {
+    if (request.startsWith('@interestshield/financial-engine')) return loadTsFile(fs.realpathSync(require.resolve(request)));
+    if (request.startsWith('@/')) return loadTsFile(path.resolve(__dirname, '../src', request.slice(2) + '.ts'));
+    if (request.startsWith('.')) return loadTsFile(path.resolve(path.dirname(filename), request + '.ts'));
     if (request === '@interestshield/persistence-contract') {
       return loadTsFile(path.resolve(__dirname, '..', '..', '..', 'packages', 'persistence-contract', 'src', 'index.ts'));
     }

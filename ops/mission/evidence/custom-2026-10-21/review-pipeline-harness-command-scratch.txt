@@ -1,0 +1,6 @@
+@{
+models = ((git show 8e2f25ef6b81ffc65b9f96644170834c511078d3:apps/media/hero-models.json | Out-String) | ConvertFrom-Json)
+imports = ((git show 8e2f25ef6b81ffc65b9f96644170834c511078d3:apps/media/hero-imported.json | Out-String) | ConvertFrom-Json)
+posters = ((git show 8e2f25ef6b81ffc65b9f96644170834c511078d3:apps/media/hero-provenance.json | Out-String) | ConvertFrom-Json)
+} | ConvertTo-Json -Depth 20 | node --experimental-vm-modules .superpowers/sdd/2026-10-21-custom/review-pipeline-harness-scratch.mjs
+

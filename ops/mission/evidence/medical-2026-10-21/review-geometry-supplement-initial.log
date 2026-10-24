@@ -1,0 +1,1389 @@
+{
+  "sha256": "8de456c77af3ebacd549ea5d49d20e222d6b42fd7483ee774f10936590be8318",
+  "framing": [
+    {
+      "aspect": 0.6,
+      "distance": 15.385343383291662,
+      "maxAbsNdcX": 0.6533092208736168,
+      "maxAbsNdcY": 0.37534507590118327,
+      "minDepth": 0.9892667196715947,
+      "maxDepth": 0.9924195271944392,
+      "extreme": {
+        "yaw": 200,
+        "point": [
+          1.0405760098941121,
+          1.7786506489388902,
+          -1.3499373053374664
+        ],
+        "ndc": [
+          -0.6533092208736168,
+          0.12066164868541611,
+          0.9907108175357046
+        ]
+      }
+    },
+    {
+      "aspect": 1,
+      "distance": 9.464169012128709,
+      "maxAbsNdcX": 0.6470558987556156,
+      "maxAbsNdcY": 0.6473844710211412,
+      "minDepth": 0.9778915221521886,
+      "maxDepth": 0.986385587590729,
+      "extreme": {
+        "yaw": 205,
+        "point": [
+          1.0405760098941121,
+          1.7786506489388902,
+          -1.3499373053374664
+        ],
+        "ndc": [
+          -0.6470558987556156,
+          0.18906094654136726,
+          0.9817575797429683
+        ]
+      }
+    },
+    {
+      "aspect": 1.7777777777777777,
+      "distance": 9.464169012128709,
+      "maxAbsNdcX": 0.36396894305003386,
+      "maxAbsNdcY": 0.6473844710211412,
+      "minDepth": 0.9778915221521886,
+      "maxDepth": 0.986385587590729,
+      "extreme": {
+        "yaw": 205,
+        "point": [
+          1.0405760098941121,
+          1.7786506489388902,
+          -1.3499373053374664
+        ],
+        "ndc": [
+          -0.36396894305003386,
+          0.18906094654136726,
+          0.9817575797429683
+        ]
+      }
+    }
+  ],
+  "sphere": {
+    "center": [
+      -0.000006685636216752222,
+      1.199680707577363,
+      0.000004606318180444546
+    ],
+    "radius": 2.4154430754706833
+  },
+  "components": [
+    [
+      "M-Body-Frame@3",
+      "M-Body-Front@4",
+      "M-Body-Back@5",
+      "M-Gasket@7",
+      "M-Foot-0@8",
+      "M-Foot-1@9",
+      "M-Foot-2@10",
+      "M-Foot-3@11",
+      "M-Corner-Face@14",
+      "M-Corner-Side@15",
+      "M-Corner-Edge@16",
+      "M-Corner-Face@18",
+      "M-Corner-Side@19",
+      "M-Corner-Edge@20",
+      "M-Corner-Screw-Shaft@21",
+      "M-Corner-Face@36",
+      "M-Corner-Side@37",
+      "M-Corner-Edge@38",
+      "M-Corner-Face@40",
+      "M-Corner-Side@41",
+      "M-Corner-Edge@42",
+      "M-Corner-Screw-Shaft@43",
+      "M-Latch-Lower-Plate@58",
+      "M-Hinge-Body-Leaf@76",
+      "M-Hinge-Knuckle-0@78",
+      "M-Hinge-Knuckle-1@79",
+      "M-Hinge-Knuckle-2@80",
+      "M-Hinge-Knuckle-3@81",
+      "M-Hinge-Knuckle-4@82",
+      "M-Latch-Lower-Plate@85",
+      "M-Hinge-Body-Leaf@103",
+      "M-Hinge-Knuckle-0@105",
+      "M-Hinge-Knuckle-1@106",
+      "M-Hinge-Knuckle-2@107",
+      "M-Hinge-Knuckle-3@108",
+      "M-Hinge-Knuckle-4@109",
+      "M-Front-Molded-Bead@12",
+      "M-Badge-Plate@123",
+      "M-Badge-Rim@124",
+      "M-Case-Lid@6",
+      "M-Corner-Screw-Head@22",
+      "M-Corner-Screw-Slot-Base@23",
+      "M-Corner-Screw-Head@44",
+      "M-Corner-Screw-Slot-Base@45",
+      "M-Latch-Lower-Screw-Shaft@63",
+      "M-Latch-Lower-Screw-Shaft@69",
+      "M-Hinge-Lid-Leaf@77",
+      "M-Hinge-Pin@83",
+      "M-Latch-Lower-Screw-Shaft@90",
+      "M-Latch-Lower-Screw-Shaft@96",
+      "M-Hinge-Lid-Leaf@104",
+      "M-Hinge-Pin@110",
+      "M-Corner-Face@25",
+      "M-Corner-Side@26",
+      "M-Corner-Edge@27",
+      "M-Corner-Face@29",
+      "M-Corner-Side@30",
+      "M-Corner-Edge@31",
+      "M-Corner-Screw-Shaft@32",
+      "M-Corner-Face@47",
+      "M-Corner-Side@48",
+      "M-Corner-Edge@49",
+      "M-Corner-Face@51",
+      "M-Corner-Side@52",
+      "M-Corner-Edge@53",
+      "M-Corner-Screw-Shaft@54",
+      "M-Latch-Upper-Plate@59",
+      "M-Latch-Upper-Plate@86",
+      "M-Handle-Base-Left@113",
+      "M-Handle-Base-Right@117",
+      "M-Latch-Lower-Screw-Head@64",
+      "M-Latch-Lower-Screw-Slot-Base@65",
+      "M-Latch-Lower-Screw-Head@70",
+      "M-Latch-Lower-Screw-Slot-Base@71",
+      "M-Latch-Lower-Screw-Head@91",
+      "M-Latch-Lower-Screw-Slot-Base@92",
+      "M-Latch-Lower-Screw-Head@97",
+      "M-Latch-Lower-Screw-Slot-Base@98",
+      "M-Corner-Screw-Head@33",
+      "M-Corner-Screw-Slot-Base@34",
+      "M-Corner-Screw-Head@55",
+      "M-Corner-Screw-Slot-Base@56",
+      "M-Latch-Upper-Screw-Shaft@66",
+      "M-Latch-Upper-Screw-Shaft@72",
+      "M-Latch-Upper-Screw-Shaft@93",
+      "M-Latch-Upper-Screw-Shaft@99",
+      "M-Handle-Tube@112",
+      "M-Handle-Collar@114",
+      "M-Handle-Base-Bolt@115",
+      "M-Handle-Base-Bolt@116",
+      "M-Handle-Collar@118",
+      "M-Handle-Base-Bolt@119",
+      "M-Handle-Base-Bolt@120",
+      "M-Latch-Upper-Screw-Head@67",
+      "M-Latch-Upper-Screw-Slot-Base@68",
+      "M-Latch-Upper-Screw-Head@73",
+      "M-Latch-Upper-Screw-Slot-Base@74",
+      "M-Latch-Upper-Screw-Head@94",
+      "M-Latch-Upper-Screw-Slot-Base@95",
+      "M-Latch-Upper-Screw-Head@100",
+      "M-Latch-Upper-Screw-Slot-Base@101",
+      "M-Handle-Grip@121",
+      "M-Latch-Catch@62",
+      "M-Latch-Catch@89",
+      "M-Latch-Pivot@60",
+      "M-Latch-Pivot@87",
+      "M-Latch-Lever@61",
+      "M-Latch-Lever@88"
+    ],
+    [
+      "M-Y-Junction@126",
+      "M-Main-Tube@127",
+      "M-Y-Left-Branch@128",
+      "M-Y-Right-Branch@131",
+      "M-Chestpiece-Body@134",
+      "M-Chestpiece-Rim@135",
+      "M-Chestpiece-Diaphragm@136",
+      "M-Chestpiece-Connector@137",
+      "M-Chestpiece-Collar@138"
+    ],
+    [
+      "M-Ear-Left-Tube@129",
+      "M-Ear-Left-Tip@130"
+    ],
+    [
+      "M-Ear-Right-Tube@132",
+      "M-Ear-Right-Tip@133"
+    ]
+  ],
+  "contacts": [
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Body-Front@4",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Body-Back@5",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Gasket@7",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Foot-0@8",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Foot-1@9",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Foot-2@10",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Foot-3@11",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Face@14",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Side@15",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Edge@16",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Face@18",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Side@19",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Edge@20",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Screw-Shaft@21",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Face@36",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Side@37",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Edge@38",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Face@40",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Side@41",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Edge@42",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Corner-Screw-Shaft@43",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Latch-Lower-Plate@58",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Body-Leaf@76",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-0@78",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-1@79",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-2@80",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-3@81",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-4@82",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Latch-Lower-Plate@85",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Body-Leaf@103",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-0@105",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-1@106",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-2@107",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-3@108",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Frame@3",
+      "b": "M-Hinge-Knuckle-4@109",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Front-Molded-Bead@12",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Corner-Face@18",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Corner-Screw-Shaft@21",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Corner-Face@40",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Corner-Screw-Shaft@43",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Latch-Lower-Plate@58",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Latch-Lower-Plate@85",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Badge-Plate@123",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Front@4",
+      "b": "M-Badge-Rim@124",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Back@5",
+      "b": "M-Corner-Face@14",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Back@5",
+      "b": "M-Corner-Face@36",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Back@5",
+      "b": "M-Hinge-Body-Leaf@76",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Body-Back@5",
+      "b": "M-Hinge-Body-Leaf@103",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Gasket@7",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Face@25",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Side@26",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Edge@27",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Face@29",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Side@30",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Edge@31",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Screw-Shaft@32",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Face@47",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Side@48",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Edge@49",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Face@51",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Side@52",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Edge@53",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Corner-Screw-Shaft@54",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Latch-Upper-Plate@59",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Hinge-Lid-Leaf@77",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Latch-Upper-Plate@86",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Hinge-Lid-Leaf@104",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Handle-Base-Left@113",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Case-Lid@6",
+      "b": "M-Handle-Base-Right@117",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Gasket@7",
+      "b": "M-Hinge-Body-Leaf@76",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Gasket@7",
+      "b": "M-Hinge-Body-Leaf@103",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Front-Molded-Bead@12",
+      "b": "M-Corner-Face@18",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Front-Molded-Bead@12",
+      "b": "M-Corner-Face@40",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Front-Molded-Bead@12",
+      "b": "M-Latch-Lower-Plate@58",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Front-Molded-Bead@12",
+      "b": "M-Latch-Lower-Plate@85",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@14",
+      "b": "M-Corner-Side@15",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@14",
+      "b": "M-Corner-Edge@16",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@15",
+      "b": "M-Corner-Edge@16",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@18",
+      "b": "M-Corner-Side@19",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@18",
+      "b": "M-Corner-Edge@20",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@18",
+      "b": "M-Corner-Screw-Shaft@21",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@19",
+      "b": "M-Corner-Edge@20",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@21",
+      "b": "M-Corner-Screw-Head@22",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@21",
+      "b": "M-Corner-Screw-Slot-Base@23",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@25",
+      "b": "M-Corner-Side@26",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@25",
+      "b": "M-Corner-Edge@27",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@26",
+      "b": "M-Corner-Edge@27",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@29",
+      "b": "M-Corner-Side@30",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@29",
+      "b": "M-Corner-Edge@31",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@29",
+      "b": "M-Corner-Screw-Shaft@32",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@30",
+      "b": "M-Corner-Edge@31",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@32",
+      "b": "M-Corner-Screw-Head@33",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@32",
+      "b": "M-Corner-Screw-Slot-Base@34",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@36",
+      "b": "M-Corner-Side@37",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@36",
+      "b": "M-Corner-Edge@38",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@37",
+      "b": "M-Corner-Edge@38",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@40",
+      "b": "M-Corner-Side@41",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@40",
+      "b": "M-Corner-Edge@42",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@40",
+      "b": "M-Corner-Screw-Shaft@43",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@41",
+      "b": "M-Corner-Edge@42",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@43",
+      "b": "M-Corner-Screw-Head@44",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@43",
+      "b": "M-Corner-Screw-Slot-Base@45",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@47",
+      "b": "M-Corner-Side@48",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@47",
+      "b": "M-Corner-Edge@49",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@48",
+      "b": "M-Corner-Edge@49",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@51",
+      "b": "M-Corner-Side@52",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@51",
+      "b": "M-Corner-Edge@53",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Face@51",
+      "b": "M-Corner-Screw-Shaft@54",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Side@52",
+      "b": "M-Corner-Edge@53",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@54",
+      "b": "M-Corner-Screw-Head@55",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Corner-Screw-Shaft@54",
+      "b": "M-Corner-Screw-Slot-Base@56",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Plate@58",
+      "b": "M-Latch-Lower-Screw-Shaft@63",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Plate@58",
+      "b": "M-Latch-Lower-Screw-Shaft@69",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Plate@59",
+      "b": "M-Latch-Upper-Screw-Shaft@66",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Plate@59",
+      "b": "M-Latch-Upper-Screw-Shaft@72",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Pivot@60",
+      "b": "M-Latch-Lever@61",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Pivot@60",
+      "b": "M-Latch-Catch@62",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Catch@62",
+      "b": "M-Latch-Upper-Screw-Head@67",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Catch@62",
+      "b": "M-Latch-Upper-Screw-Head@73",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@63",
+      "b": "M-Latch-Lower-Screw-Head@64",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@63",
+      "b": "M-Latch-Lower-Screw-Slot-Base@65",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@66",
+      "b": "M-Latch-Upper-Screw-Head@67",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@66",
+      "b": "M-Latch-Upper-Screw-Slot-Base@68",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@69",
+      "b": "M-Latch-Lower-Screw-Head@70",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@69",
+      "b": "M-Latch-Lower-Screw-Slot-Base@71",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@72",
+      "b": "M-Latch-Upper-Screw-Head@73",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@72",
+      "b": "M-Latch-Upper-Screw-Slot-Base@74",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Lid-Leaf@77",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Knuckle-0@78",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Knuckle-1@79",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Knuckle-2@80",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Knuckle-3@81",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Knuckle-4@82",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@76",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Knuckle-0@78",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Knuckle-1@79",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Knuckle-2@80",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Knuckle-3@81",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Knuckle-4@82",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@77",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-0@78",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-1@79",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-2@80",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-3@81",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-4@82",
+      "b": "M-Hinge-Pin@83",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Plate@85",
+      "b": "M-Latch-Lower-Screw-Shaft@90",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Plate@85",
+      "b": "M-Latch-Lower-Screw-Shaft@96",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Plate@86",
+      "b": "M-Latch-Upper-Screw-Shaft@93",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Plate@86",
+      "b": "M-Latch-Upper-Screw-Shaft@99",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Pivot@87",
+      "b": "M-Latch-Lever@88",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Pivot@87",
+      "b": "M-Latch-Catch@89",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Catch@89",
+      "b": "M-Latch-Upper-Screw-Head@94",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Catch@89",
+      "b": "M-Latch-Upper-Screw-Head@100",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@90",
+      "b": "M-Latch-Lower-Screw-Head@91",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@90",
+      "b": "M-Latch-Lower-Screw-Slot-Base@92",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@93",
+      "b": "M-Latch-Upper-Screw-Head@94",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@93",
+      "b": "M-Latch-Upper-Screw-Slot-Base@95",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@96",
+      "b": "M-Latch-Lower-Screw-Head@97",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Lower-Screw-Shaft@96",
+      "b": "M-Latch-Lower-Screw-Slot-Base@98",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@99",
+      "b": "M-Latch-Upper-Screw-Head@100",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Latch-Upper-Screw-Shaft@99",
+      "b": "M-Latch-Upper-Screw-Slot-Base@101",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Lid-Leaf@104",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Knuckle-0@105",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Knuckle-1@106",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Knuckle-2@107",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Knuckle-3@108",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Knuckle-4@109",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Body-Leaf@103",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Knuckle-0@105",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Knuckle-1@106",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Knuckle-2@107",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Knuckle-3@108",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Knuckle-4@109",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Lid-Leaf@104",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-0@105",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-1@106",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-2@107",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-3@108",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Hinge-Knuckle-4@109",
+      "b": "M-Hinge-Pin@110",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Left@113",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Collar@114",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Bolt@115",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Bolt@116",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Right@117",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Collar@118",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Bolt@119",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Base-Bolt@120",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Tube@112",
+      "b": "M-Handle-Grip@121",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Left@113",
+      "b": "M-Handle-Collar@114",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Left@113",
+      "b": "M-Handle-Base-Bolt@115",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Left@113",
+      "b": "M-Handle-Base-Bolt@116",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Collar@114",
+      "b": "M-Handle-Base-Bolt@115",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Collar@114",
+      "b": "M-Handle-Base-Bolt@116",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Right@117",
+      "b": "M-Handle-Collar@118",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Right@117",
+      "b": "M-Handle-Base-Bolt@119",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Base-Right@117",
+      "b": "M-Handle-Base-Bolt@120",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Collar@118",
+      "b": "M-Handle-Base-Bolt@119",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Handle-Collar@118",
+      "b": "M-Handle-Base-Bolt@120",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Badge-Plate@123",
+      "b": "M-Badge-Rim@124",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Y-Junction@126",
+      "b": "M-Main-Tube@127",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Y-Junction@126",
+      "b": "M-Y-Left-Branch@128",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Y-Junction@126",
+      "b": "M-Y-Right-Branch@131",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Y-Left-Branch@128",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Y-Right-Branch@131",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Chestpiece-Body@134",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Chestpiece-Rim@135",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Chestpiece-Diaphragm@136",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Chestpiece-Connector@137",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Main-Tube@127",
+      "b": "M-Chestpiece-Collar@138",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Y-Left-Branch@128",
+      "b": "M-Y-Right-Branch@131",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Ear-Left-Tube@129",
+      "b": "M-Ear-Left-Tip@130",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Ear-Right-Tube@132",
+      "b": "M-Ear-Right-Tip@133",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Body@134",
+      "b": "M-Chestpiece-Rim@135",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Body@134",
+      "b": "M-Chestpiece-Diaphragm@136",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Body@134",
+      "b": "M-Chestpiece-Connector@137",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Rim@135",
+      "b": "M-Chestpiece-Diaphragm@136",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Rim@135",
+      "b": "M-Chestpiece-Connector@137",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Diaphragm@136",
+      "b": "M-Chestpiece-Connector@137",
+      "kind": "surface"
+    },
+    {
+      "a": "M-Chestpiece-Connector@137",
+      "b": "M-Chestpiece-Collar@138",
+      "kind": "surface"
+    }
+  ],
+  "normalLengthRange": [
+    0.9941860876173804,
+    1.0051945189027056
+  ],
+  "UVRange": [
+    -1.149999976158142,
+    1.149999976158142
+  ],
+  "UVOutsideUnit": [
+    {
+      "name": "M-Body-Frame@3",
+      "minUV": -1.149999976158142,
+      "maxUV": 1.149999976158142
+    },
+    {
+      "name": "M-Corner-Screw-Head@22",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Corner-Screw-Head@33",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Corner-Screw-Head@44",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Corner-Screw-Head@55",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@64",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@67",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@70",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@73",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@91",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@94",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Lower-Screw-Head@97",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Latch-Upper-Screw-Head@100",
+      "minUV": -0.026000000536441803,
+      "maxUV": 1.0010000467300415
+    },
+    {
+      "name": "M-Badge-Plate@123",
+      "minUV": -0.3499999940395355,
+      "maxUV": 1.0099999904632568
+    },
+    {
+      "name": "M-Badge-Rim@124",
+      "minUV": -0.36924999952316284,
+      "maxUV": 1.00600004196167
+    }
+  ]
+}

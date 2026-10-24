@@ -1,0 +1,21 @@
+
+> web@0.1.0 smoke:rendered:built
+> node scripts/smoke-rendered.cjs
+
+Rendered smoke origin: http://127.0.0.1:58552
+Browser executable: C:\Program Files\Google\Chrome\Application\chrome.exe
+PASS desktop / 1440px
+PASS desktop /simulator 1440px
+PASS desktop /cockpit 1440px
+PASS desktop /portfolio 1440px
+PASS desktop /learn 1440px
+PASS desktop /settings 1440px
+PASS desktop /vault 1440px
+PASS desktop Money Loop Next selects LOC
+PASS mobile / 390px
+PASS mobile /simulator 390px
+PASS mobile /cockpit 390px
+PASS mobile /portfolio 390px
+PASS mobile /learn 390px
+PASS mobile /settings 390px
+PASS mobile /vault 390px

@@ -1,0 +1,224 @@
+
+> @interestshield/media@0.1.0 test:contracts
+> node --test scripts/*.test.mjs
+
+TAP version 13
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 1 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 14.2448
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 2 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 2.0625
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 3 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 21.3581
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 4 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 4.5874
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 5 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 3.1866
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 6 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 4.2874
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 7 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 6.4301
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 8 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 6.4645
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 9 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 1.9077
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 10 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 1.9157
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 11 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 9.2952
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 12 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 2.3642
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 13 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 19.5062
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 14 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 21.3212
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 15 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 16.5472
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 16 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 8.2861
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 17 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 449.0364
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 18 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 2.2268
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 19 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 2.1604
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 20 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 6.2853
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 21 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 2.1513
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 22 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 20.9694
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 23 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 2.7143
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 24 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 1.0619
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 25 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 2.6639
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 26 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 0.449
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 27 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 0.6568
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 28 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 0.1719
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 29 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 0.4936
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 30 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.3568
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 31 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 0.9292
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 32 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.2003
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 33 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 27.7949
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 34 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 1.2461
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 35 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.2074
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 748.9826

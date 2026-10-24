@@ -1,0 +1,43 @@
+{
+  "origin": "http://127.0.0.1:61625",
+  "scope": "Actual IAB UI on exported Expo, synthetic default inputs only; no hidden storage inspection",
+  "before": "INTEREST BURN\n$4/day\nSimple daily accrual estimate across active debt and LOC balance.",
+  "entered": "200",
+  "after": "INTEREST BURN\n$102/day",
+  "copiedDisplay": "200",
+  "visibleExport": {
+    "version": 2,
+    "aprUnit": "decimal",
+    "data": {
+      "monthlyIncome": 8200,
+      "monthlyExpenses": 4700,
+      "extraMonthlyPayment": 0,
+      "chunkAmount": 1000,
+      "loc": {
+        "limit": 25000,
+        "balance": 3200,
+        "apr": 0.085
+      },
+      "strategy": "velocity",
+      "focusMode": "single",
+      "splitRatioPrimary": 0.7,
+      "debts": [
+        {
+          "id": "8dfecabb-90b0-40f0-bf63-54536c1b1910",
+          "name": "Auto Loan",
+          "category": "custom",
+          "kind": "amortized",
+          "balance": 18450,
+          "apr": 2,
+          "minPaymentRule": {
+            "type": "fixed",
+            "amount": 425
+          },
+          "paymentSource": "checking",
+          "termMonths": 48
+        }
+      ]
+    }
+  },
+  "logs": []
+}

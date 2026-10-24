@@ -1,0 +1,293 @@
+{
+  "baseline": "46a6867d2bd885c147b7ad18b6da2c613fcfee2f",
+  "verifiedAt": "2026-10-22T05:30:14.429Z",
+  "productionReady": false,
+  "stage": "Locally verified canonical Portfolio Simulator; new exact-head remote gates still required",
+  "localStages": 30,
+  "serializedMainStages": 27,
+  "actualSupplementalAudits": 3,
+  "stages": [
+    {
+      "name": "ci-contracts",
+      "code": 0,
+      "log": "full-gates-attempt2-ci-contracts.log"
+    },
+    {
+      "name": "runtime-contracts",
+      "code": 0,
+      "log": "full-gates-attempt2-runtime-contracts.log"
+    },
+    {
+      "name": "sql-wiring",
+      "code": 0,
+      "log": "full-gates-attempt2-sql-wiring.log"
+    },
+    {
+      "name": "web-tests",
+      "code": 0,
+      "log": "full-gates-attempt2-web-tests.log"
+    },
+    {
+      "name": "web-lint",
+      "code": 0,
+      "log": "full-gates-attempt2-web-lint.log"
+    },
+    {
+      "name": "web-build",
+      "code": 0,
+      "log": "full-gates-attempt2-web-build.log"
+    },
+    {
+      "name": "three-stage",
+      "code": 0,
+      "log": "full-gates-attempt2-three-stage.log"
+    },
+    {
+      "name": "web-routes",
+      "code": 0,
+      "log": "full-gates-attempt2-web-routes.log"
+    },
+    {
+      "name": "web-rendered",
+      "code": 0,
+      "log": "full-gates-attempt2-web-rendered.log"
+    },
+    {
+      "name": "simulator-comparison",
+      "code": 0,
+      "log": "full-gates-attempt2-simulator-comparison.log"
+    },
+    {
+      "name": "dashboard",
+      "code": 0,
+      "log": "full-gates-attempt2-dashboard.log"
+    },
+    {
+      "name": "vault",
+      "code": 0,
+      "log": "full-gates-attempt2-vault.log"
+    },
+    {
+      "name": "portfolio",
+      "code": 0,
+      "log": "full-gates-attempt2-portfolio.log"
+    },
+    {
+      "name": "heroes",
+      "code": 0,
+      "log": "full-gates-attempt2-heroes.log"
+    },
+    {
+      "name": "media-check",
+      "code": 0,
+      "log": "full-gates-attempt2-media-check.log"
+    },
+    {
+      "name": "hero-video-verification",
+      "code": 0,
+      "log": "full-gates-attempt2-hero-video-verification.log"
+    },
+    {
+      "name": "native-types",
+      "code": 0,
+      "log": "full-gates-attempt2-native-types.log"
+    },
+    {
+      "name": "native-contracts",
+      "code": 0,
+      "log": "full-gates-attempt2-native-contracts.log"
+    },
+    {
+      "name": "native-port",
+      "code": 0,
+      "log": "full-gates-attempt2-native-port.log"
+    },
+    {
+      "name": "native-web-build",
+      "code": 0,
+      "log": "full-gates-attempt2-native-web-build.log"
+    },
+    {
+      "name": "native-web-smoke",
+      "code": 0,
+      "log": "full-gates-attempt2-native-web-smoke.log"
+    },
+    {
+      "name": "native-accessibility",
+      "code": 0,
+      "log": "full-gates-attempt2-native-accessibility.log"
+    },
+    {
+      "name": "worker-check",
+      "code": 0,
+      "log": "full-gates-attempt2-worker-check.log"
+    },
+    {
+      "name": "worker-tests",
+      "code": 0,
+      "log": "full-gates-attempt2-worker-tests.log"
+    },
+    {
+      "name": "worker-dry-build",
+      "code": 0,
+      "log": "full-gates-attempt2-worker-dry-build.log"
+    },
+    {
+      "name": "report-renderer",
+      "code": 0,
+      "log": "full-gates-attempt2-report-renderer.log"
+    },
+    {
+      "name": "report-contracts",
+      "code": 0,
+      "log": "full-gates-attempt2-report-contracts.log"
+    },
+    {
+      "name": "web-runtime",
+      "code": 0,
+      "log": "audit-web-runtime.log"
+    },
+    {
+      "name": "worker-runtime",
+      "code": 0,
+      "log": "audit-worker-runtime.log"
+    },
+    {
+      "name": "native-critical",
+      "code": 0,
+      "log": "audit-native-critical.log"
+    }
+  ],
+  "sourcePins": {
+    "file": "full-gates-attempt2.json",
+    "sha256": "e3b21bd4261787745519b014ebe766255e5c39c30f0cbf0bc6300d9533ad026c",
+    "count": 407,
+    "scope": "Candidate working tree held from test start to end; not an exact committed-head claim"
+  },
+  "protectedSourceBoundary": "Engine formulas/packages, stores, editors, all models/posters/media/manifests, native/Worker, dependencies/locks and CI workflow unchanged",
+  "modelContracts": 21,
+  "wiringContracts": 4,
+  "regressions": 348,
+  "referenceProbes": 23247,
+  "canonicalSimulator": {
+    "id": "b163f1d7-d393-4370-a876-1b14141c71e2",
+    "workflows": 18,
+    "widths": [
+      280,
+      375,
+      1440
+    ],
+    "themes": 3,
+    "financialTextElements": 90,
+    "minimumContrast": 6.8913283630388324,
+    "originalDomControls": 15,
+    "contextsClosed": 18,
+    "screenshots": 18
+  },
+  "originalWebWorkflows": 138,
+  "totalWebWorkflows": 156,
+  "captures": [
+    {
+      "file": "dashboard-interest__verification.json",
+      "source": "apps/web/test-results/dashboard-interest/verification.json",
+      "workflows": 18,
+      "sha256": "7930e81cf1c41ab1f25e1a743a115461cee3d26d3bb10b3447e870815ec17f50",
+      "bytes": 123760
+    },
+    {
+      "file": "portfolio-budget__verification.json",
+      "source": "apps/web/test-results/portfolio-budget/verification.json",
+      "workflows": 24,
+      "sha256": "fa58329176b784f017cc2d533efb859c3791d7da07f1baa08c268a18421f236d",
+      "bytes": 35747
+    },
+    {
+      "file": "vault-comparison__verification.json",
+      "source": "apps/web/test-results/vault-comparison/verification.json",
+      "workflows": 20,
+      "sha256": "a077b0bf1cabf2000f6ecce416a5c85e3f75d63229402502c8d445792a4cb0e5",
+      "bytes": 21859
+    },
+    {
+      "file": "comparison__verification.json",
+      "source": "apps/web/test-results/comparison/verification.json",
+      "workflows": 16,
+      "sha256": "1a6f8fd9895e23d711e524e7abaca6e12e3d5d7fea4e9f48c4a2f7f4fce55f58",
+      "bytes": 2877
+    },
+    {
+      "file": "portfolio-portability__verification.json",
+      "source": "apps/web/test-results/portfolio-portability/verification.json",
+      "workflows": 6,
+      "sha256": "f095d49411cb8ae3f864460cb8cde9073aa938a2ca72dc73fba4d02584ceb52d",
+      "bytes": 602
+    },
+    {
+      "file": "portfolio-input__portfolio-input-verification.json",
+      "source": "apps/web/test-results/portfolio-input/portfolio-input-verification.json",
+      "workflows": 4,
+      "sha256": "60247527d301e83dd92f4039d36a893abb96ee24cf8b36c7f9904c900516e64d",
+      "bytes": 1887
+    },
+    {
+      "file": "portfolio-common-month__verification.json",
+      "source": "apps/web/test-results/portfolio-common-month/verification.json",
+      "workflows": 21,
+      "sha256": "3088608134c76d54e88eb029576ad0bdcc193d384f53924483d4d58368b3f3a6",
+      "bytes": 174331
+    },
+    {
+      "file": "currency-width__verification.json",
+      "source": "apps/web/test-results/currency-width/verification.json",
+      "workflows": 11,
+      "sha256": "34686018bb6a12c1c0c65cf92942d92e52acf985c374afe4061b2e8ae4b12593",
+      "bytes": 3668
+    },
+    {
+      "file": "shared-portfolio-dashboard__verification.json",
+      "source": "apps/web/test-results/shared-portfolio-dashboard/verification.json",
+      "workflows": 6,
+      "sha256": "be32d882f2333dc2993453b6ce9cbe103a7f2952310ad0baa6fd9470c940b7ea",
+      "bytes": 6565
+    },
+    {
+      "file": "legacy-web-truth__verification.json",
+      "source": "apps/web/test-results/legacy-web-truth/verification.json",
+      "workflows": 12,
+      "sha256": "01352949fac490ffe55059e41e0ae309f6fbd1353c17f920cd117881842d6d87",
+      "bytes": 1386565
+    },
+    {
+      "file": "portfolio-simulator__verification.json",
+      "source": "apps/web/test-results/portfolio-simulator/verification.json",
+      "workflows": 18,
+      "sha256": "778879af78751c052b20994644d68dc338276d6152b7e8558f5847c4db6bb5f0",
+      "bytes": 600339
+    }
+  ],
+  "priorVerifiedCheckpoint": {
+    "head": "46a6867d2bd885c147b7ad18b6da2c613fcfee2f",
+    "push": 39718984403,
+    "pullRequest": 39718988817,
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6332579568"
+  },
+  "review": {
+    "independentGroups": 12,
+    "parentReadbackGroups": 12,
+    "importantLinkedResidualFix": "Dashboard1mo and Portfolio100% path RED to review/hidden path GREEN; single final fix pass, no engine change"
+  },
+  "rawEvidence": {
+    "directory": ".superpowers/sdd/2026-10-22-portfolio-simulator",
+    "index": "local-evidence-index.json",
+    "sha256": "bcb056308640d26a84b0d2c3e2fee27eb16a9a3332f83e705d55090d448b38f0",
+    "entries": 148,
+    "initialIndexSha256": "b4467bb0782b153db1f8165d20c8c2d928c675c688ad3c54469a03e138fdf50d",
+    "note": "Mutable live ledger and unexecuted hosted helper excluded. Original index and exact indexed ledger snapshot retained; no test or source evidence changed."
+  },
+  "remaining": [
+    "Both complete actual-head CI events and verified automatic READY preview/new hosted156/served20/manual evidence/receipt",
+    "All-ten final photoreal acceptance and remaining Car/Card/hardware/clock work",
+    "Other scenario ownership, lender/calendar, security/backend recovery and physical native/release gates"
+  ],
+  "freshTurntableExports": false
+}

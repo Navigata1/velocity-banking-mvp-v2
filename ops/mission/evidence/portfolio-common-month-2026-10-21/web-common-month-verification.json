@@ -1,0 +1,5619 @@
+{
+  "origin": "http://127.0.0.1:64580",
+  "receipts": [
+    {
+      "name": "cash-versus-wealth",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "cash": "$200.00",
+          "debt": "$80.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        },
+        "velocity": {
+          "cash": "$120.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$200.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$200.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$80.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$190.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$190.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "adverse",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "$37.79",
+          "difference": "-$0.80"
+        },
+        "avalanche": {
+          "net": "$38.59",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$82.21",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$82.21",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$37.79",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$37.79",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.80",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.80",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.40",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.40",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "blocked-reference",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available",
+          "difference": "Not available"
+        },
+        "snowball": {
+          "net": "-$80.00",
+          "difference": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$110.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$110.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "failed-attempt",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "-$76.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "nonzero-tolerance",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "cleared",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "cash": "$300.00",
+          "net": "$300.00"
+        },
+        "snowball": {
+          "net": "$300.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "large-values",
+      "width": 1440,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "net": "-$190,000,000.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$99,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$99,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$91,000,000.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$91,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 191.59375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 191.609375,
+            "fontSize": 14,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "cash-versus-wealth",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "cash": "$200.00",
+          "debt": "$80.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        },
+        "velocity": {
+          "cash": "$120.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$200.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$200.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$80.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$190.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$190.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [
+        {
+          "kind": "ancestor-opacity",
+          "rejected": true,
+          "restored": true
+        },
+        {
+          "kind": "value-opacity",
+          "rejected": true,
+          "restored": true,
+          "originalNode": true
+        },
+        {
+          "kind": "value-clip",
+          "rejected": true,
+          "restored": true,
+          "originalNode": true
+        },
+        {
+          "kind": "empty-value",
+          "rejected": true,
+          "restored": true,
+          "originalNode": true
+        }
+      ],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "adverse",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "$37.79",
+          "difference": "-$0.80"
+        },
+        "avalanche": {
+          "net": "$38.59",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$82.21",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$82.21",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$37.79",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$37.79",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.80",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.80",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.40",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.40",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "blocked-reference",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available",
+          "difference": "Not available"
+        },
+        "snowball": {
+          "net": "-$80.00",
+          "difference": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$110.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$110.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "failed-attempt",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "-$76.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "nonzero-tolerance",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "cleared",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "cash": "$300.00",
+          "net": "$300.00"
+        },
+        "snowball": {
+          "net": "$300.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "large-values",
+      "width": 375,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "net": "-$190,000,000.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$99,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$99,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$91,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$91,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 146.5,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "cash-versus-wealth",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "cash": "$200.00",
+          "debt": "$80.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        },
+        "velocity": {
+          "cash": "$120.00",
+          "debt": "$0.00",
+          "loc": "$0.00",
+          "net": "$120.00",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$200.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$200.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$80.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$190.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$190.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$120.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "adverse",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "$37.79",
+          "difference": "-$0.80"
+        },
+        "avalanche": {
+          "net": "$38.59",
+          "difference": "$0.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$120.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$120.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$82.21",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$82.21",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$37.79",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$37.79",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.80",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.80",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.19",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.19",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$0.40",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$0.40",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$38.59",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$38.59",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "blocked-reference",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available",
+          "difference": "Not available"
+        },
+        "snowball": {
+          "net": "-$80.00",
+          "difference": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$110.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$110.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$30.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$30.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$60.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$60.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$40.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$40.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$80.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$80.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "failed-attempt",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "-$76.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$76.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$76.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$76.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "nonzero-tolerance",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "net": "Not available"
+        },
+        "snowball": {
+          "net": "Not available"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "Not available",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "Not",
+                "oneLine": true
+              },
+              {
+                "text": "available",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "cleared",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "velocity": {
+          "cash": "$300.00",
+          "net": "$300.00"
+        },
+        "snowball": {
+          "net": "$300.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$300.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$300.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": null,
+      "storagePreserved": true,
+      "errors": []
+    },
+    {
+      "name": "large-values",
+      "width": 280,
+      "native": false,
+      "expected": {
+        "snowball": {
+          "net": "-$190,000,000.00"
+        }
+      },
+      "geometry": {
+        "pageOverflow": false,
+        "sectionOverflow": false,
+        "metrics": [
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$99,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$99,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$91,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$91,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$90,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$90,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$100,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$100,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "-$190,000,000.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "-$190,000,000.00",
+                "oneLine": true
+              }
+            ]
+          },
+          {
+            "text": "$0.00",
+            "width": 214,
+            "fontSize": 12,
+            "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            "fits": true,
+            "visible": true,
+            "contained": true,
+            "tokens": [
+              {
+                "text": "$0.00",
+                "oneLine": true
+              }
+            ]
+          }
+        ]
+      },
+      "oracleControls": [],
+      "widerFontProbe": {
+        "fontFamily": "Verdana",
+        "passed": true,
+        "minFontSize": 12
+      },
+      "storagePreserved": true,
+      "errors": []
+    }
+  ]
+}

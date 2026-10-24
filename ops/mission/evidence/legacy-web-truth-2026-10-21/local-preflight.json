@@ -1,0 +1,381 @@
+{
+  "baseline": "17457ccd7db7cb83cf7ddecaa3a206ee7e345800",
+  "verifiedAt": "2026-10-21T19:50:35.347Z",
+  "stage": "Local legacy-web input and Cockpit presentation preflight; BOTH final-head CI events and fresh hosted138 proof required",
+  "productionReady": false,
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6323921807",
+  "sources": {
+    ".github/workflows/ci.yml": "b6061a158e6c0ad086717e6b0c0f956d1fec517837b2c9159cb4b5db28301527",
+    "apps/web/package.json": "a05d7916103320c2b0a78a4e5546e451ee84da3aa49b64d01e45c2b7a645fd35",
+    "apps/web/scripts/engine-regression-tests.cjs": "cb70a4d99f4cba99e9acff7ab213412c6c64de99a51dae2eaca66343d5c9e7d9",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9d9c268864f85cd8d51fea6e482f08934e55417d7329186cfaa46e09c5b8567b",
+    "apps/web/src/app/cockpit-model.ts": "48c99c9d1906a0b792bb452cc66c358c3b8d517ced9e1abac10d7dd00ff83fc8",
+    "apps/web/src/app/cockpit/page.tsx": "db5d2d363318de706d1bed6a15683f3701059ce9a8c5b30f3c9fec7d53fbc0eb",
+    "apps/web/src/app/page.tsx": "9662553ea335c014d1ed71fc12cc358ba494b5e8cde96534ffcd07ca28577894",
+    "apps/web/src/app/simulator/page.tsx": "c365e2fbeb9efdfee4f899c3c2f5da59c145bf5f51e0649d148a49ccf4d9ccbe",
+    "apps/web/src/app/vault/page.tsx": "5b53dc4333b3888eb9c2af19684b9bf1154410e6fa54e0be656fd92e41fa4095",
+    "apps/web/src/components/EditableNumber.tsx": "3550e875c19e9bd8758ff72f77c9bb92dccb35f4cebaa2db7d8e4eecfb43ca58",
+    "apps/web/src/components/PortfolioEditableNumber.tsx": "ec705586f8395c7f92841940f1b0e54d81dcc0bab9a50bfd5484984f3de4a4cc",
+    "scripts/check-restoration-ci.test.cjs": "00a23a7e0eb6bfc385fdb57a45b9619b3666085288da375ddfe5b5e186df285a",
+    "apps/web/scripts/cockpit-projection-tests.cjs": "1a97246d76159dc9459df4e19ca3b1b0a71c25702a92c934516bb5a92386ae89",
+    "apps/web/scripts/smoke-legacy-web-truth.cjs": "dc12202ad43d1b276ee54735b17b51a2759b93f3395a053ea5e4caf4a4afc444"
+  },
+  "normalizedSources": {
+    ".github/workflows/ci.yml": "b6061a158e6c0ad086717e6b0c0f956d1fec517837b2c9159cb4b5db28301527",
+    "apps/web/package.json": "a05d7916103320c2b0a78a4e5546e451ee84da3aa49b64d01e45c2b7a645fd35",
+    "apps/web/scripts/engine-regression-tests.cjs": "cb70a4d99f4cba99e9acff7ab213412c6c64de99a51dae2eaca66343d5c9e7d9",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "9d9c268864f85cd8d51fea6e482f08934e55417d7329186cfaa46e09c5b8567b",
+    "apps/web/src/app/cockpit-model.ts": "48c99c9d1906a0b792bb452cc66c358c3b8d517ced9e1abac10d7dd00ff83fc8",
+    "apps/web/src/app/cockpit/page.tsx": "db5d2d363318de706d1bed6a15683f3701059ce9a8c5b30f3c9fec7d53fbc0eb",
+    "apps/web/src/app/page.tsx": "9662553ea335c014d1ed71fc12cc358ba494b5e8cde96534ffcd07ca28577894",
+    "apps/web/src/app/simulator/page.tsx": "c365e2fbeb9efdfee4f899c3c2f5da59c145bf5f51e0649d148a49ccf4d9ccbe",
+    "apps/web/src/app/vault/page.tsx": "5b53dc4333b3888eb9c2af19684b9bf1154410e6fa54e0be656fd92e41fa4095",
+    "apps/web/src/components/EditableNumber.tsx": "3550e875c19e9bd8758ff72f77c9bb92dccb35f4cebaa2db7d8e4eecfb43ca58",
+    "apps/web/src/components/PortfolioEditableNumber.tsx": "ec705586f8395c7f92841940f1b0e54d81dcc0bab9a50bfd5484984f3de4a4cc",
+    "scripts/check-restoration-ci.test.cjs": "00a23a7e0eb6bfc385fdb57a45b9619b3666085288da375ddfe5b5e186df285a",
+    "apps/web/scripts/cockpit-projection-tests.cjs": "1a97246d76159dc9459df4e19ca3b1b0a71c25702a92c934516bb5a92386ae89",
+    "apps/web/scripts/smoke-legacy-web-truth.cjs": "dc12202ad43d1b276ee54735b17b51a2759b93f3395a053ea5e4caf4a4afc444"
+  },
+  "sourceBoundary": {
+    "modified": [
+      ".github/workflows/ci.yml",
+      "apps/web/package.json",
+      "apps/web/scripts/engine-regression-tests.cjs",
+      "apps/web/scripts/smoke-dashboard-interest.cjs",
+      "apps/web/src/app/cockpit-model.ts",
+      "apps/web/src/app/cockpit/page.tsx",
+      "apps/web/src/app/page.tsx",
+      "apps/web/src/app/simulator/page.tsx",
+      "apps/web/src/app/vault/page.tsx",
+      "apps/web/src/components/EditableNumber.tsx",
+      "apps/web/src/components/PortfolioEditableNumber.tsx",
+      "scripts/check-restoration-ci.test.cjs"
+    ],
+    "added": [
+      "apps/web/scripts/cockpit-projection-tests.cjs",
+      "apps/web/scripts/smoke-legacy-web-truth.cjs"
+    ],
+    "protectedSources": 332,
+    "originalFinancialSources": 9,
+    "models": 10,
+    "posters": 10,
+    "videos": 10
+  },
+  "tests": {
+    "webRegressions": 348,
+    "overviewContracts": 21,
+    "cockpitProjectionContracts": 31,
+    "commonMonthContracts": 31,
+    "referenceProbes": 23247,
+    "mediaContracts": 145,
+    "freshStills": 27,
+    "ciContracts": 14,
+    "staticRendererContracts": 4,
+    "localWebStages": 15,
+    "priorWebWorkflows": 126,
+    "newLegacyWorkflows": 12,
+    "newLegacyAssertions": 711,
+    "nativeTypes": true,
+    "nativeFullContracts": true
+  },
+  "localBrowserExecution": {
+    "segments": 2,
+    "successfulStages": 15,
+    "initialFailure": "Dashboard partial-fixture priming expected a no-op to write; fixed setup uses real +1/restore, all prior assertions retained plus exact no-op bytes.",
+    "proofMode": "15 successful stages across two serial segments, not one clean sweep. Initial fixture-priming failure retained.",
+    "build": "Z-yZeymBAJICjBPEhV4He",
+    "productPins": {
+      ".github/workflows/ci.yml": "b6061a158e6c0ad086717e6b0c0f956d1fec517837b2c9159cb4b5db28301527",
+      "apps/web/package.json": "a05d7916103320c2b0a78a4e5546e451ee84da3aa49b64d01e45c2b7a645fd35",
+      "apps/web/scripts/engine-regression-tests.cjs": "cb70a4d99f4cba99e9acff7ab213412c6c64de99a51dae2eaca66343d5c9e7d9",
+      "apps/web/src/app/cockpit-model.ts": "48c99c9d1906a0b792bb452cc66c358c3b8d517ced9e1abac10d7dd00ff83fc8",
+      "apps/web/src/app/cockpit/page.tsx": "db5d2d363318de706d1bed6a15683f3701059ce9a8c5b30f3c9fec7d53fbc0eb",
+      "apps/web/src/app/page.tsx": "9662553ea335c014d1ed71fc12cc358ba494b5e8cde96534ffcd07ca28577894",
+      "apps/web/src/app/simulator/page.tsx": "c365e2fbeb9efdfee4f899c3c2f5da59c145bf5f51e0649d148a49ccf4d9ccbe",
+      "apps/web/src/app/vault/page.tsx": "5b53dc4333b3888eb9c2af19684b9bf1154410e6fa54e0be656fd92e41fa4095",
+      "apps/web/src/components/EditableNumber.tsx": "3550e875c19e9bd8758ff72f77c9bb92dccb35f4cebaa2db7d8e4eecfb43ca58",
+      "apps/web/src/components/PortfolioEditableNumber.tsx": "ec705586f8395c7f92841940f1b0e54d81dcc0bab9a50bfd5484984f3de4a4cc",
+      "scripts/check-restoration-ci.test.cjs": "00a23a7e0eb6bfc385fdb57a45b9619b3666085288da375ddfe5b5e186df285a",
+      "apps/web/scripts/cockpit-projection-tests.cjs": "1a97246d76159dc9459df4e19ca3b1b0a71c25702a92c934516bb5a92386ae89",
+      "apps/web/scripts/smoke-legacy-web-truth.cjs": "dc12202ad43d1b276ee54735b17b51a2759b93f3395a053ea5e4caf4a4afc444"
+    }
+  },
+  "observedRed": {
+    "baselineBuild": "6MiW8nqh6lCJOMfmYmwYX",
+    "workflows": 12,
+    "assertionFailures": 352,
+    "setupFailures": 0,
+    "meaning": "Repeated assertions across twelve workflows, not a count of unique product bugs"
+  },
+  "actualIab": {
+    "syntheticOnly": true,
+    "invalidIncome": "abc rejected visibly; saved8200/cashflow3500 preserved; Escape restores button focus",
+    "newApr": "200 retained as200%; precise burn101.84/day and failed ETA",
+    "failedCockpit": "Review inputs/Not projected, not0months/zero savings",
+    "drill": "Not projected; explicit600 not in calculation",
+    "routingOff": "Not projected; alternate routing not modeled",
+    "restored": "First updated build restored6.9%/14mo; its old unequal-scope2056.87 difference was caught by independent review and replaced. Final actual equal-budget builder yields -294.47 in31pure/standing browser contracts; fresh hosted IAB required.",
+    "scope": "Manual truth behavior on first updated build, before review corrections. Final source/theme/width/scope proof is standing browser and fresh hosted IAB, not relabeled old screenshot."
+  },
+  "rawLocalEvidence": {
+    "directory": ".superpowers/sdd/2026-10-21-legacy-web-truth",
+    "files": {
+      "editor-ssr-red.log": {
+        "bytes": 37240,
+        "sha256": "c7181293a49837db6f2518d1b5591d3e4236e20a37b080c3fe7c0cfa94b1e644"
+      },
+      "editor-ssr-green.log": {
+        "bytes": 34591,
+        "sha256": "704f1fa4f85ead3678b72d16f3917a4607b3943def8b676509fa8b49ffe93794"
+      },
+      "cockpit-model-red.log": {
+        "bytes": 2564,
+        "sha256": "0296972973bce9f7bf8bb1fb04be1a9b978a0b50b393eb3e5039e7048ae79ec6"
+      },
+      "cockpit-model-green.log": {
+        "bytes": 1964,
+        "sha256": "6e19a8c392582fb1824cda857099796dadeb4eee36d7d932a8e27260afd93f97"
+      },
+      "cockpit-range-red.log": {
+        "bytes": 2242,
+        "sha256": "8385b13a85580ddb6d28aec13dd31a4f3774a778c88fd5e495b55e3635f6c2cd"
+      },
+      "cockpit-range-green.log": {
+        "bytes": 2148,
+        "sha256": "c5e9a3fc478eef654963a0588960ff3d2659d38fa473678a8f94464ea5cf678b"
+      },
+      "cockpit-sign-red.log": {
+        "bytes": 2336,
+        "sha256": "f93699ff277194e086f349941878e4989da4b905fffdd7cdb320c08b7bcf0b4e"
+      },
+      "cockpit-sign-green.log": {
+        "bytes": 2148,
+        "sha256": "c5e9a3fc478eef654963a0588960ff3d2659d38fa473678a8f94464ea5cf678b"
+      },
+      "review-scope-zero-red.log": {
+        "bytes": 2933,
+        "sha256": "719a2b346f788b3a08f7a005b511973546528efa42c8f4fb65cedc41280b86c0"
+      },
+      "review-scope-zero-green.log": {
+        "bytes": 2586,
+        "sha256": "8f38578dc93eaf6aafaa9ba62696580983d81a736b4596322d56c68287d69c6e"
+      },
+      "ci-retention-red.log": {
+        "bytes": 35463,
+        "sha256": "44abeac5ba6d03c408b434e7fc0d3e2098a2642e1aca98fa26bc462aa445a47f"
+      },
+      "ci-retention-green.log": {
+        "bytes": 34591,
+        "sha256": "704f1fa4f85ead3678b72d16f3917a4607b3943def8b676509fa8b49ffe93794"
+      },
+      "final-build.log": {
+        "bytes": 991,
+        "sha256": "7f4f8be020de83e7303cdd4c1e5cae6098648bd5c78ec42165e25fccb9fb9a57"
+      },
+      "quality.json": {
+        "bytes": 706,
+        "sha256": "bc7ba5b122ed8e638d069e37329515f5abb1cf20f2243ba968e47c4c32e822db"
+      },
+      "web-gates.json": {
+        "bytes": 5092,
+        "sha256": "1ed8cdeffcbedae88e3d08a7dac9f4f34575a8624f770a2d87d140fb50b2b364"
+      },
+      "first-web-gates-red.json": {
+        "bytes": 1712,
+        "sha256": "91f67b2b29c06c3f4669726d18766ea76487d576c87b487aa7347276c0ab8a46"
+      },
+      "dashboard-priming-red.log": {
+        "bytes": 2872,
+        "sha256": "118152b81771d24d98eabcde52551abdb97149a5a37cb24c95a983da735bf26a"
+      },
+      "dashboard-priming-oversize-setup.log": {
+        "bytes": 542,
+        "sha256": "f84b7f9294c8f41edaf4a4c05886d907d905eba994878210cef7fa58404a1acb"
+      },
+      "dashboard-priming-green.log": {
+        "bytes": 783,
+        "sha256": "14ca39403d5daf2863657dfb9d46a325cc50b263ef4336deb038108ae7d2d7c5"
+      },
+      "harness-final-unit.log": {
+        "bytes": 34591,
+        "sha256": "704f1fa4f85ead3678b72d16f3917a4607b3943def8b676509fa8b49ffe93794"
+      },
+      "harness-final-lint.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "harness-final-ci.log": {
+        "bytes": 2713,
+        "sha256": "05e2814cc8a77f05a074f2665e930a4ba38b40262201b5911bb6526cf3f04549"
+      },
+      "invalid-before.txt": {
+        "bytes": 7188,
+        "sha256": "03beee3f4763d778799bc78e2e1efa13055c37b1bfa7b908c8da8f9ea1fd995a"
+      },
+      "invalid-after.txt": {
+        "bytes": 6863,
+        "sha256": "175a1badbf1a64bf05e40f90d1ee5c24050ba84fe9051b8c76e41c186d4eb86f"
+      },
+      "apr-before.txt": {
+        "bytes": 7188,
+        "sha256": "f46b8b6ac50adf6a374dd998aa9d7ccc12d9598bd501f8c031c47d60541b943c"
+      },
+      "apr-after.txt": {
+        "bytes": 6873,
+        "sha256": "b2daa0a53b4b408ef48fe2afcca17035c83938655f7c8aab852112a35bd5f454"
+      },
+      "cockpit-before.txt": {
+        "bytes": 4728,
+        "sha256": "474da8ce8b49c47eab598d4d574cb1b6e085e46b3d9c366adc6c57f89442710c"
+      },
+      "cockpit-after.txt": {
+        "bytes": 4742,
+        "sha256": "b784ee583c30d1336359852a5c71d4740aa1e2f1d233992fa859cd36d307e1d7"
+      },
+      "emergency-before.txt": {
+        "bytes": 5160,
+        "sha256": "b33a94ef2ef3cf8e3c87754a6504713fcbcc8368758dff4f7f86f0c0816c4820"
+      },
+      "emergency-after.txt": {
+        "bytes": 5205,
+        "sha256": "050ae72a8b8a595bdcc577556a33f412d4ac0255b13c447dc9be893f36f709dd"
+      },
+      "routing-after.txt": {
+        "bytes": 4739,
+        "sha256": "65ac4fb85d7496306cd4979fb029dd7aceb78d42070c4e5ccbf12ea845921598"
+      },
+      "invalid-before.jpg": {
+        "bytes": 74032,
+        "sha256": "2c9822cba3327d673293dbe99f769a8f930d654486056ff301686de46eb578ce"
+      },
+      "invalid-after.jpg": {
+        "bytes": 69988,
+        "sha256": "f72d4980bcedd8e3a58b8666f9d8c1e0ca771553c359d9bf2d337b8d6b675661"
+      },
+      "emergency-before.jpg": {
+        "bytes": 65556,
+        "sha256": "c83b1b71aee9b2195380dd34e0ef23f40b497f4d6f7791916e2a3c42cc1a5ce1"
+      },
+      "emergency-after.jpg": {
+        "bytes": 59267,
+        "sha256": "bb36a26feffc7c497ffc36897d06e5646a7234b34e3de96fae8466d6eca905b4"
+      },
+      "healthy-after.jpg": {
+        "bytes": 57895,
+        "sha256": "c27a2cfe002d5a63f6a2e45127df9f41036cceff66f3af743c1ee975c21f3199"
+      },
+      "server-before.json": {
+        "bytes": 141,
+        "sha256": "fb004047467e93123b07ccdfb22ef68f01be7f9567c5d394873c48cf924db43b"
+      },
+      "server-after.json": {
+        "bytes": 296,
+        "sha256": "30f07d7ff0dbae491251767b1bc27c0e8d2c62a91d540b2def32f1e52d56bf0f"
+      },
+      "web-tests.log": {
+        "bytes": 47861,
+        "sha256": "f4cee182181eb3fd894c88277b31decad9e327bfd4d27f0f7895d27cf1a6d132"
+      },
+      "web-lint.log": {
+        "bytes": 28,
+        "sha256": "73f54382ed38c39a0d05708a84e9e421a73b82381dbfda81b6d35c0191a9ac98"
+      },
+      "media-check.log": {
+        "bytes": 55669,
+        "sha256": "4551532245a5e457f680b751aace6c3856543c937c22ed5e2fbdd7aaad6223c5"
+      },
+      "native-types.log": {
+        "bytes": 54,
+        "sha256": "bad36cc439be9c708e6b347196a9dce9b487a5c5f03c7daba48318c5612940d9"
+      },
+      "native-contracts.log": {
+        "bytes": 20068,
+        "sha256": "3f9e3a884df6e54422c8835298da5f3149aefc2e93446bab5e0b19a4837e2ce7"
+      },
+      "mobile-port.log": {
+        "bytes": 3288,
+        "sha256": "3fa16fd1f846df494e41d01027d4dfda472b3525daf58688c968de08d8af0f57"
+      },
+      "ci-contracts.log": {
+        "bytes": 2618,
+        "sha256": "0faadacc74833691882a233e289b1e8a3edcfea4539c4ab31f875e2f66fb17c0"
+      },
+      "renderer-existing.log": {
+        "bytes": 34,
+        "sha256": "f73bc01951b76b00ed25bbf1911dd5205720b88aa1d3ff3efd244f5bb02e19d7"
+      },
+      "renderer-contracts.log": {
+        "bytes": 933,
+        "sha256": "e6e09d2c8ded7004698ab64269319aee42be5a359b4fcf0081a6e21d7c9e94c6"
+      },
+      "legacy-truth.log": {
+        "bytes": 1214,
+        "sha256": "9113b51c953891414f4bc659e85f6b7e8858a300cebe19f9e205303d2e2c1da5"
+      },
+      "shared-dashboard.log": {
+        "bytes": 314,
+        "sha256": "abdb719a7761f3a5eb0f93478b2e85344f8a55c35fd4a4bfb01f84abc1a56e21"
+      },
+      "three.log": {
+        "bytes": 46766,
+        "sha256": "571c424af1c43ba2cd756ae9638fe24c1d1f01d4d5aca27fa2ba68fd0b11b877"
+      },
+      "heroes.log": {
+        "bytes": 2711,
+        "sha256": "b17a00479231895a9f564cf459c0958090712cb66c0eb23a8a6e5be95fb9ca2a"
+      },
+      "fallbacks.log": {
+        "bytes": 138,
+        "sha256": "6eadb901c5d1425bc2b9ee9c7cdafc9bc38bb8624d9ebfe483d23dee5ca6bee4"
+      },
+      "routes.log": {
+        "bytes": 353,
+        "sha256": "e78e43830f582131da3c616efd0c9cb113e3bc21ce40fd607c136924274c3df0"
+      },
+      "rendered.log": {
+        "bytes": 541,
+        "sha256": "48fc20d64a544a0b55d1e6e9fbf12626c2e583d9369afaab91f1daa86f27abcf"
+      },
+      "dashboard.log": {
+        "bytes": 765,
+        "sha256": "34f732d54d186e0ec5161d592c63b152523f1649cac2e78ac86a65ca09bb57b3"
+      },
+      "portfolio.log": {
+        "bytes": 954,
+        "sha256": "35385d28d976b3394ab5f3c6e0d022d16b2677cde72327d9e4ffe816cb9b1918"
+      },
+      "vault.log": {
+        "bytes": 756,
+        "sha256": "ade77cb7f095d0493ec8bace599e6fc6202260ff83d732ea553c9147d831f911"
+      },
+      "comparison.log": {
+        "bytes": 882,
+        "sha256": "9ea0f3d3f8ac7f426af33fed60faa2a5a4bcbb245e9be2c53248b2c11a5d4080"
+      },
+      "portability.log": {
+        "bytes": 337,
+        "sha256": "e7a99a941e3c9669b92a072b9ca0437e4232d3d9e4a53366572c18259179ce8b"
+      },
+      "input.log": {
+        "bytes": 268,
+        "sha256": "9574e7202280a1fa317611f5826cd54b33e5b7bc5b72ba0a4f5a8162d44a5414"
+      },
+      "common-month.log": {
+        "bytes": 927,
+        "sha256": "3c64877eb2882aa40d7b0ed54f9247d6d00d0e5c6ddc9acecf12c9a4f59a87ba"
+      },
+      "currency-width.log": {
+        "bytes": 467,
+        "sha256": "c1d800b11ba30d86efc0f9ffe34b2e0f14c8bd167a8c005f5dbefb03f58e426e"
+      }
+    }
+  },
+  "limitations": [
+    "No numerical solver, saved source schema/store, backend, dependency or asset payload change.",
+    "Cockpit still reads legacy selected-debt plus LOC, not the canonical whole-book Dashboard.",
+    "Emergency and alternate routing remain explicitly unmodeled; lender/calendar/posting/rounding and full source adoption remain open.",
+    "Ten 3D candidates are unchanged; final all-angle photoreal approval is not implied.",
+    "Native pure/types refreshed; actual exported native/browser CI and physical device/security/release remain separate gates.",
+    "No merge, production promotion, Desktop HTML republishing/rehosting workaround, paidGPU or cloud/schema/DNS/data/access mutation."
+  ]
+}

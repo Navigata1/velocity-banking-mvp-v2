@@ -1,0 +1,168 @@
+{
+  "observedAt": "2026-10-23T05:43:27.929Z",
+  "head": "617a2f845297ad5966fb86826e55ff0be8d2acec",
+  "status": "failed",
+  "approved": false,
+  "productionReady": false,
+  "goalActive": true,
+  "checkpoint": {
+    "file": ".superpowers/sdd/2026-10-23-card-chip-adoption/failed-checkpoint.json",
+    "sha256": "a3db31b0f3cd415303a6fa87de00c331fc3bf6aa39fbd22cdc99a67508804993",
+    "artifacts": 5367,
+    "comment": {
+      "id": 6358275114,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6358275114",
+      "bodySha256": "3fab3dbf8f56372f39ea136b172f3b5e574105fa4fba418599f0f39054418862"
+    }
+  },
+  "ciEvents": [
+    {
+      "event": "push",
+      "id": 39904442756,
+      "attempt": 1,
+      "conclusion": "failure"
+    },
+    {
+      "event": "pull_request",
+      "id": 39904449992,
+      "attempt": 1,
+      "conclusion": "failure"
+    }
+  ],
+  "timings": [
+    {
+      "event": "push",
+      "runId": 39904442756,
+      "jobId": 120257263095,
+      "label": "desktop-rapid-return",
+      "startedAt": 1792733387233,
+      "deadline": 1792733387933,
+      "phaseOriginElapsedMs": 202,
+      "phases": [
+        {
+          "name": "selection.settled.wait",
+          "startedAtMs": 0.07888800000364427,
+          "status": "passed",
+          "endedAtMs": 452.4537210000053,
+          "durationMs": 452.3748330000017
+        },
+        {
+          "name": "candidate.isolation",
+          "startedAtMs": 452.46582400000625,
+          "status": "passed",
+          "endedAtMs": 492.86446300000534,
+          "durationMs": 40.39863899999909
+        },
+        {
+          "name": "candidate.clip",
+          "startedAtMs": 492.8752830000012,
+          "status": "passed",
+          "endedAtMs": 492.88551200000074,
+          "durationMs": 0.010228999999526422
+        },
+        {
+          "name": "candidate.capture",
+          "timeoutMs": 5,
+          "deadline": 1792733387933,
+          "startedAtMs": 492.8969530000031,
+          "status": "failed",
+          "endedAtMs": 499.0005700000038,
+          "durationMs": 6.103617000000668
+        },
+        {
+          "name": "candidate.restore",
+          "startedAtMs": 499.1273880000008,
+          "status": "passed",
+          "endedAtMs": 500.526174000006,
+          "durationMs": 1.3987860000052024
+        }
+      ]
+    },
+    {
+      "event": "pull_request",
+      "runId": 39904449992,
+      "jobId": 120255831236,
+      "label": "desktop-rapid-return",
+      "startedAt": 1792733087775,
+      "deadline": 1792733088475,
+      "phaseOriginElapsedMs": 191,
+      "phases": [
+        {
+          "name": "selection.settled.wait",
+          "startedAtMs": 0.029995999997481704,
+          "status": "passed",
+          "endedAtMs": 439.2933009999979,
+          "durationMs": 439.2633050000004
+        },
+        {
+          "name": "candidate.isolation",
+          "startedAtMs": 439.30430200000046,
+          "status": "passed",
+          "endedAtMs": 474.3149720000001,
+          "durationMs": 35.010669999999664
+        },
+        {
+          "name": "candidate.clip",
+          "startedAtMs": 474.3278859999991,
+          "status": "passed",
+          "endedAtMs": 474.3383959999992,
+          "durationMs": 0.010510000000067521
+        },
+        {
+          "name": "candidate.capture",
+          "timeoutMs": 35,
+          "deadline": 1792733088475,
+          "startedAtMs": 474.35905400000047,
+          "status": "failed",
+          "endedAtMs": 511.0906350000005,
+          "durationMs": 36.731581000000006
+        },
+        {
+          "name": "candidate.restore",
+          "startedAtMs": 511.1580819999981,
+          "status": "passed",
+          "endedAtMs": 512.5223909999986,
+          "durationMs": 1.3643090000005031
+        }
+      ]
+    }
+  ],
+  "nonPrimaryJobs": {
+    "heroSuccess": 2,
+    "sqlIsolationSuccess": 2,
+    "actualSourceGuards": 6
+  },
+  "local": {
+    "gates": 29,
+    "sourcePins": 485,
+    "continuation": {
+      "priorRun": "294a51b4-fe72-4595-a2d3-48e7be89c2e8",
+      "priorFailedReportSha256": "ff6e8c7a1c50a1e7957fe4d0237f404351c77671690d596d9c63e10782dbbfb4",
+      "same485SourcePins": true,
+      "retainedPassedStages": 14,
+      "freshRemainingStages": 15,
+      "onlyEnvironmentDelta": "Append existing C:/Windows/System32/WindowsPowerShell/v1.0 to PATH; actual exported finder RED/GREEN proved lookup",
+      "notSingleAttempt": true,
+      "oldFailureRetained": true,
+      "dispatcherSha256": "fef6cc39fd37abb1766f6708b1d3abeed05f11090a868332883aa02f2cb865b2"
+    },
+    "notSingleAttempt": true
+  },
+  "hosted": {
+    "suites": 15,
+    "workflowLayouts": 210,
+    "servedAssets": 20,
+    "origin": "https://velocity-banking-mvp-v2-ixll8i4b8-islanddevcrew.vercel.app",
+    "manualFinancialStates": 0
+  },
+  "lastFullyVerified": {
+    "head": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": 6351915021
+  },
+  "limits": [
+    "Only primary Money Loop rapid-return PNG capture failed; both events remain failed",
+    "Current Card source/model finish is adopted, not an all-ten photographic or production approval",
+    "No unchanged CI rerun, budget/clock-origin/threshold waiver, manual deployment or production promotion",
+    "Next capture-path proposals require real-pixel/geometry/restore equivalence and fresh exact-head verification"
+  ]
+}

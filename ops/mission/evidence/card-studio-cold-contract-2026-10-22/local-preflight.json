@@ -1,0 +1,196 @@
+{
+  "verifiedAt": "2026-10-23T00:30:59.643Z",
+  "baseline": "04866661e19c889cc05089599a65818f53c15552",
+  "stage": "State43 PRE-PUSH cold media setup correction",
+  "productionReady": false,
+  "change": {
+    "sourceFile": "apps/media/scripts/photoreal-assets.test.mjs",
+    "addedLines": 3,
+    "originalAssertionsPreserved": 38,
+    "preparation": "Existing local prepare script before exact generated parity reads; Node subprocess, no shell, 30s timeout; no skip or fallback",
+    "preserved": "Every other 484 source pin equals the previous checkpoint, including runtime, assets, math, native, backend, dependencies, workflows and caps"
+  },
+  "fresh": {
+    "localGates": [
+      {
+        "name": "ci-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "runtime-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "sql-wiring",
+        "exitCode": 0
+      },
+      {
+        "name": "web-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "web-lint",
+        "exitCode": 0
+      },
+      {
+        "name": "web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "three-stage",
+        "exitCode": 0
+      },
+      {
+        "name": "web-routes",
+        "exitCode": 0
+      },
+      {
+        "name": "web-rendered",
+        "exitCode": 0
+      },
+      {
+        "name": "simulator-comparison",
+        "exitCode": 0
+      },
+      {
+        "name": "dashboard",
+        "exitCode": 0
+      },
+      {
+        "name": "vault",
+        "exitCode": 0
+      },
+      {
+        "name": "portfolio",
+        "exitCode": 0
+      },
+      {
+        "name": "heroes",
+        "exitCode": 0
+      },
+      {
+        "name": "media-check",
+        "exitCode": 0
+      },
+      {
+        "name": "hero-video-verification",
+        "exitCode": 0
+      },
+      {
+        "name": "native-types",
+        "exitCode": 0
+      },
+      {
+        "name": "native-contracts",
+        "exitCode": 0
+      },
+      {
+        "name": "native-port",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-build",
+        "exitCode": 0
+      },
+      {
+        "name": "native-web-smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "native-accessibility",
+        "exitCode": 0
+      },
+      {
+        "name": "native-android-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "native-ios-bundle",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-check",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "worker-dry-build",
+        "exitCode": 0
+      },
+      {
+        "name": "report-renderer",
+        "exitCode": 0
+      },
+      {
+        "name": "report-contracts",
+        "exitCode": 0
+      }
+    ],
+    "sourcePins": 485,
+    "requestedHeroSoftwareGpu": true,
+    "note": "Software hero flag path requested on Windows; not identical Linux or actual unmasked driver proof",
+    "coldTrackedFileFixtures": {
+      "red": {
+        "passed": 2,
+        "failed": 1,
+        "error": "ENOENT",
+        "trackedFiles": 324
+      },
+      "green": {
+        "passed": 3,
+        "failed": 0,
+        "trackedFiles": 324,
+        "generatedIgnoredFiles": 50
+      }
+    },
+    "independentCpuControls": 6
+  },
+  "retainedFrozenCardVideo": {
+    "sourceSha256": "b759217cbec11c4515bac180691f5706284f4768141b96b014bd616ad289d98a",
+    "bytes": 3821982,
+    "decodedFrames": 270,
+    "minimumVisiblePixels": 90,
+    "maximumFinalSecondMeanChannelDelta": 0.011926328502415458,
+    "note": "Same previously rendered/decoded bytes, NOT a new render. Fresh standing all-ten video verification reran at this source."
+  },
+  "evidence": {
+    "fullGateReport": ".superpowers/sdd/2026-10-22-card-studio-cold-contract/full-gates-ad1a732c-5733-409f-b2c1-1c7471d035d5/verification.json",
+    "fullGateReportSha256": "33cd83dfba1aba0cb7ba7df9cd9bc6631c576c1eb8c6f7c768071b5a54748c69",
+    "sourcePinsSha256": "c9b62093b668fd8ba38ba2ffe3c29d8befec19a57fe003ce5e21962e549d1794",
+    "reviewFile": ".superpowers/sdd/2026-10-22-card-studio-cold-contract/review-cpu-83c24d68-077f-4705-9ac0-326cb3dcbd78/verification.json",
+    "reviewSha256": "523daef938f2ed95b5d9e70cfa9d694fcef43a6cf8700bba1a06a0c4266cd307"
+  },
+  "failedPredecessor": {
+    "head": "04866661e19c889cc05089599a65818f53c15552",
+    "artifacts": 6686,
+    "checkpointSha256": "baed4818349ee841d7d2d4437e58718c69539441b27d58a30c019f4e663f8002",
+    "comment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6353969005",
+    "ci": [
+      "39873127335",
+      "39873134824"
+    ],
+    "sql": "Both SQL-named jobs passed63SQL assertions twice, then media identity test failed on unprepared ignored vendors",
+    "separateHeroFailure": "Push Vault visibility timeout120000ms after9desktopdomains passed; PRhero passed. Root cause unresolved, not fixed by this setup correction",
+    "primary": "Web/mobile jobs intentionally failed prerequisite guard without checkout; no six-source-guard or primary-suite pass",
+    "hosted": {
+      "suites": 15,
+      "workflowLayouts": 210,
+      "servedAssets": 20
+    },
+    "localWarmGates": 29,
+    "verifiedReceiptPublished": false
+  },
+  "lastVerified": {
+    "head": "da04699ebe391c23abe7216629c5ec70293b8984",
+    "receipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6351915021"
+  },
+  "limits": [
+    "New corrected-head complete CI/automaticREADY/hosted/IAB/finalreadback/receipt pending",
+    "Cold fixtures use existing installed-dependency junctions, not a clean dependency install or Linux proof",
+    "Do not claim this test setup correction diagnoses or fixes the separate Vault timeout",
+    "All final photoreal, full R3 lender/calendar, managed backend/security/recovery, physical native/accessibility and production gates remain OPEN"
+  ]
+}

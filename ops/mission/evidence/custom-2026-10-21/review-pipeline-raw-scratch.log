@@ -1,0 +1,1407 @@
+(node:31060) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (67)
+prune: Removed types... Accessor (33)
+{"triangles":13200,"rendered":21160,"meshes":17,"maps":12,"bytes":237124,"collection":9907442}
+Refined Custom: 13200 unique/21160 rendered triangles,12 maps,237124 bytes; public9907442 bytes.
+REVIEW_PIPELINE_JSON_BEGIN
+{
+  "baseline": "8e2f25ef6b81ffc65b9f96644170834c511078d3",
+  "started": "2026-10-21T09:32:19.331Z",
+  "before": {
+    "apps/media/scripts/build-refined-custom.mjs": {
+      "bytes": 13356,
+      "raw": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17",
+      "lf": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17"
+    },
+    "apps/media/scripts/custom-refinement.test.mjs": {
+      "bytes": 30949,
+      "raw": "435156a825ef814c2114e75a48c8cc139678d5d65db6ec06e097cde49e74dcc5",
+      "lf": "435156a825ef814c2114e75a48c8cc139678d5d65db6ec06e097cde49e74dcc5"
+    },
+    "apps/media/sources/custom/materials.json": {
+      "bytes": 1248,
+      "raw": "26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532"
+    },
+    "apps/web/public/heroes/custom.glb": {
+      "bytes": 237124,
+      "raw": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b"
+    },
+    "apps/media/hero-imported.json": {
+      "bytes": 9214,
+      "raw": "217d3c84edb12b6568302412b44648eb87bd2ee558db9caa72f1f29c02af36cf"
+    },
+    "apps/media/hero-models.json": {
+      "bytes": 9214,
+      "raw": "d3e297e3bd06c65f33ae6472ceddb95780103d370c9a7a89c077dbfb0d7ef6d6"
+    },
+    ".superpowers/sdd/2026-10-21-custom/rebuild-proof.mjs": {
+      "bytes": 5368,
+      "raw": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1",
+      "lf": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1"
+    },
+    "canonicalConfig": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0"
+  },
+  "baselineTracked": {
+    "checked": 1299,
+    "crlfOnly": 306,
+    "different": [
+      {
+        "path": "apps/media/hero-imported.json",
+        "expected": "ddf44c3cc510cd3600dd88c3f02955d320c0d22a",
+        "actual": "0c948505b34138992c8493edb2d6a53acfb538db"
+      },
+      {
+        "path": "apps/media/hero-models.json",
+        "expected": "6322e3bbf4763a9369750f263c1edbd2e6240dbc",
+        "actual": "8089bf6b11b8e69c07907860da632984c4bf728a"
+      },
+      {
+        "path": "apps/media/hero-turntables/ASSET-COLLECTION.md",
+        "expected": "9089880dc59f663fa4b77256f0b5c9dd9e17d8b4",
+        "actual": "8193804f8e9880b0a63d8cb9a069ab88e76a0e8a"
+      },
+      {
+        "path": "apps/media/hero-turntables/DESIGN.md",
+        "expected": "c65397a1da37030c1506282d4606e8ea9476ce37",
+        "actual": "300ecb3e554264df7cee2d5ca7c582162efd37a9"
+      },
+      {
+        "path": "apps/web/public/heroes/custom.glb",
+        "expected": "0cbeb96cfa742a09b7861caa005154261bd6f4b1",
+        "actual": "39229e8892398fb21fe343d75abca62254fedbd4"
+      },
+      {
+        "path": "docs/ASSET-CREDITS.md",
+        "expected": "448c3995018fc2fcdc90da5f952898979ddb85a5",
+        "actual": "ea8c15e4bd31e694738f032bf955ab0ce8b2f643"
+      }
+    ],
+    "missing": []
+  },
+  "assetFiles": {
+    "car.glb": {
+      "bytes": 2013548,
+      "sha256": "15a8e84b4efa1ef896dbd244a87f065bc5da8e45ca912c3599b78f8ac56d6d11"
+    },
+    "car.webp": {
+      "bytes": 166578,
+      "sha256": "20aa6f0add0b03228e07967794c65a65d3f2fde3b73279f168d3c1ae5d2bbe97"
+    },
+    "house.glb": {
+      "bytes": 1144500,
+      "sha256": "fd4b44c07ba6a36e1711923874b158d02dcf75eda289836dea6dbd890360a639"
+    },
+    "house.webp": {
+      "bytes": 244470,
+      "sha256": "ace3f78e8e9ffdbe8fc2172b60f344906eccf0f47ed989b57de1299a8e9f51ca"
+    },
+    "land.glb": {
+      "bytes": 709260,
+      "sha256": "4b09041fd2f952a7cddef196d9a2078360194913e1ff175ef96b89c5ff7aa3de"
+    },
+    "land.webp": {
+      "bytes": 403746,
+      "sha256": "35eee65e0a2b167584491f5db7518cb3b10a89d3e4531a4cb8c3dc91897fd345"
+    },
+    "creditCard.glb": {
+      "bytes": 516984,
+      "sha256": "223aebb70009929f4b69829e59e8e8487d4783e90b192e076a10c570a0983a17"
+    },
+    "creditCard.webp": {
+      "bytes": 112828,
+      "sha256": "29caa22a9f3f653fac14fc0383183532b90a8f8e30b9a61b64b615ef80d33198"
+    },
+    "studentLoan.glb": {
+      "bytes": 715276,
+      "sha256": "284d956676b8b7656edb4a927de084ee4508549692e8dc859225e32a5ca18222"
+    },
+    "studentLoan.webp": {
+      "bytes": 344514,
+      "sha256": "225cfbabaddb778d040a318026467f328725b75725d27047b11b69bd776bdbe1"
+    },
+    "medical.glb": {
+      "bytes": 509120,
+      "sha256": "b6df483391ee3d552f8a128ab8327484d833754f6a907e7fa0899eca5dd6c615"
+    },
+    "medical.webp": {
+      "bytes": 130728,
+      "sha256": "d583676e52f8742757c33b865603210e0b5430c78feda5243ef70c2b5a6c87a1"
+    },
+    "personal.glb": {
+      "bytes": 519844,
+      "sha256": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79"
+    },
+    "personal.webp": {
+      "bytes": 298994,
+      "sha256": "9fa71ac161b38a49301370be598bf61ba27779748b2ce562cb3130f22d3f6ab9"
+    },
+    "recreation.glb": {
+      "bytes": 521544,
+      "sha256": "c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7"
+    },
+    "recreation.webp": {
+      "bytes": 142004,
+      "sha256": "1548ed83bec3d406a92f23052599904305c0493c29d77f57131498d018ff1621"
+    },
+    "custom.glb": {
+      "bytes": 237124,
+      "sha256": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b"
+    },
+    "custom.webp": {
+      "bytes": 145068,
+      "sha256": "080b96852981dd1db561e43a9b7552405368249d69ccb2f92988f8e733f05870"
+    },
+    "vault.glb": {
+      "bytes": 719996,
+      "sha256": "6846a098bbdd974f89101de68548e90bced312991745eae88549a3a6f9129594"
+    },
+    "vault.webp": {
+      "bytes": 171688,
+      "sha256": "ae8a75e3ea413892d3b56e441716b0658cb6aba2e711178bb97d0bc434990874"
+    }
+  },
+  "publicBytes": 9907442,
+  "geometryCounts": {
+    "unique": 13200,
+    "rendered": 21160,
+    "meshes": 17
+  },
+  "uv": {
+    "min": 0,
+    "max": 1,
+    "noncollapsedTexturedTriangles": 12240,
+    "accessorTypes": [
+      {
+        "type": "VEC3",
+        "componentType": 5126,
+        "normalized": false
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5126,
+        "normalized": false
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5126,
+        "normalized": false
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5120,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      },
+      {
+        "type": "VEC3",
+        "componentType": 5122,
+        "normalized": true
+      },
+      {
+        "type": "VEC2",
+        "componentType": 5123,
+        "normalized": true
+      }
+    ]
+  },
+  "textures": [
+    {
+      "name": "C-Steel-Color",
+      "bytes": 596,
+      "sha256": "b60a657bcf24e4e4611041f79d2c30e32cf0996caf910116d5723ccfacfcd41e",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 197,
+          "max": 212,
+          "mean": 204.3154296875,
+          "mae": 1.35870361328125,
+          "maxError": 5
+        },
+        {
+          "min": 197,
+          "max": 212,
+          "mean": 204.3154296875,
+          "mae": 1.35870361328125,
+          "maxError": 5
+        },
+        {
+          "min": 197,
+          "max": 212,
+          "mean": 204.3154296875,
+          "mae": 1.35870361328125,
+          "maxError": 5
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Steel-Linear",
+          "slot": "baseColor",
+          "renderedTriangles": 8576
+        }
+      ]
+    },
+    {
+      "name": "C-Steel-Normal",
+      "bytes": 7138,
+      "sha256": "e0e23c6e6ba978d9625f64dea581287686e05a88b5498cfe0e67bc9f3cb70aa2",
+      "codec": [
+        "VP8L"
+      ],
+      "stats": [
+        {
+          "min": 127,
+          "max": 128,
+          "mean": 127.50006103515625,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 109,
+          "max": 145,
+          "mean": 127.49937438964844,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 254,
+          "max": 255,
+          "mean": 254.4627227783203,
+          "mae": 0,
+          "maxError": 0
+        }
+      ],
+      "normalLength": {
+        "min": 0.9962559668865694,
+        "max": 1.0040670850420794
+      },
+      "uses": [
+        {
+          "material": "C-Steel-Linear",
+          "slot": "normal",
+          "renderedTriangles": 8576
+        }
+      ]
+    },
+    {
+      "name": "C-Steel-Roughness",
+      "bytes": 1664,
+      "sha256": "6abd1b6a906f12940ca684b6ed34e2ee22d3d9c6fe23249163a10ececf91ca63",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 250,
+          "max": 255,
+          "mean": 254.2993927001953,
+          "mae": 0.7006072998046875,
+          "maxError": 5
+        },
+        {
+          "min": 68,
+          "max": 79,
+          "mean": 73.86944580078125,
+          "mae": 1.7214202880859375,
+          "maxError": 6
+        },
+        {
+          "min": 248,
+          "max": 255,
+          "mean": 254.2843475341797,
+          "mae": 0.7156524658203125,
+          "maxError": 7
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Steel-Linear",
+          "slot": "metallicRoughness",
+          "renderedTriangles": 8576
+        }
+      ]
+    },
+    {
+      "name": "C-Radial-Color",
+      "bytes": 190,
+      "sha256": "510d7ad950d5654c8655eed101f5569024857b15b340ce9d725200f5bbfb1f8e",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 200,
+          "max": 206,
+          "mean": 204.00765991210938,
+          "mae": 1.1551513671875,
+          "maxError": 3
+        },
+        {
+          "min": 200,
+          "max": 206,
+          "mean": 204.00765991210938,
+          "mae": 1.1551513671875,
+          "maxError": 3
+        },
+        {
+          "min": 200,
+          "max": 206,
+          "mean": 204.00765991210938,
+          "mae": 1.1551513671875,
+          "maxError": 3
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Steel-Radial",
+          "slot": "baseColor",
+          "renderedTriangles": 10832
+        }
+      ]
+    },
+    {
+      "name": "C-Radial-Normal",
+      "bytes": 31160,
+      "sha256": "611afe71faa6c7e5e10cb3e1ecd83c583e578015b0c6797b51c098056ea4ec71",
+      "codec": [
+        "VP8L"
+      ],
+      "stats": [
+        {
+          "min": 120,
+          "max": 135,
+          "mean": 127.50132751464844,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 120,
+          "max": 135,
+          "mean": 127.4986572265625,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 255,
+          "max": 255,
+          "mean": 255,
+          "mae": 0,
+          "maxError": 0
+        }
+      ],
+      "normalLength": {
+        "min": 1.0000153785822494,
+        "max": 1.0034542417195282
+      },
+      "uses": [
+        {
+          "material": "C-Steel-Radial",
+          "slot": "normal",
+          "renderedTriangles": 10832
+        }
+      ]
+    },
+    {
+      "name": "C-Radial-Roughness",
+      "bytes": 798,
+      "sha256": "2ec04fb09c6e70669502ebaa11813bfc823298ef6fcc07ce6cd441b19367138e",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 252,
+          "max": 255,
+          "mean": 254.36566162109375,
+          "mae": 0.63433837890625,
+          "maxError": 3
+        },
+        {
+          "min": 65,
+          "max": 71,
+          "mean": 68.61781311035156,
+          "mae": 1.3568572998046875,
+          "maxError": 4
+        },
+        {
+          "min": 252,
+          "max": 255,
+          "mean": 254.03111267089844,
+          "mae": 0.9688873291015625,
+          "maxError": 3
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Steel-Radial",
+          "slot": "metallicRoughness",
+          "renderedTriangles": 10832
+        }
+      ]
+    },
+    {
+      "name": "C-Dial-Color",
+      "bytes": 1872,
+      "sha256": "acc61759f51b8750b3b02eb944f317fc33f6c1ff8cf4024c6b0e0cd19fd287d6",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 196,
+          "max": 213,
+          "mean": 204.1621551513672,
+          "mae": 0.9207916259765625,
+          "maxError": 6
+        },
+        {
+          "min": 196,
+          "max": 213,
+          "mean": 204.1621551513672,
+          "mae": 0.9207916259765625,
+          "maxError": 6
+        },
+        {
+          "min": 196,
+          "max": 213,
+          "mean": 204.1621551513672,
+          "mae": 0.9207916259765625,
+          "maxError": 6
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Dial",
+          "slot": "baseColor",
+          "renderedTriangles": 768
+        }
+      ]
+    },
+    {
+      "name": "C-Dial-Normal",
+      "bytes": 26516,
+      "sha256": "9600d90c95343e14970222695480606c25f6477123043e5de6e1d2fae79f8171",
+      "codec": [
+        "VP8L"
+      ],
+      "stats": [
+        {
+          "min": 117,
+          "max": 138,
+          "mean": 127.49981689453125,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 118,
+          "max": 137,
+          "mean": 127.50132751464844,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 255,
+          "max": 255,
+          "mean": 255,
+          "mae": 0,
+          "maxError": 0
+        }
+      ],
+      "normalLength": {
+        "min": 1.0000153785822494,
+        "max": 1.0040670850420794
+      },
+      "uses": [
+        {
+          "material": "C-Dial",
+          "slot": "normal",
+          "renderedTriangles": 768
+        }
+      ]
+    },
+    {
+      "name": "C-Dial-Roughness",
+      "bytes": 3818,
+      "sha256": "a6fd4db4f155a60b722d41dcca0ce478b3f165766c791947215f52d41f76e8d2",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 250,
+          "max": 255,
+          "mean": 254.70852661132812,
+          "mae": 0.291473388671875,
+          "maxError": 5
+        },
+        {
+          "min": 118,
+          "max": 133,
+          "mean": 125.17428588867188,
+          "mae": 0.9424285888671875,
+          "maxError": 5
+        },
+        {
+          "min": 250,
+          "max": 255,
+          "mean": 254.71484375,
+          "mae": 0.28515625,
+          "maxError": 5
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Dial",
+          "slot": "metallicRoughness",
+          "renderedTriangles": 768
+        }
+      ]
+    },
+    {
+      "name": "C-Enamel-Color",
+      "bytes": 2416,
+      "sha256": "b44d21a9abb9a8b382900e11d112d5e0deb00a78ce874a1f9c7715070ae73292",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 196,
+          "max": 214,
+          "mean": 204.0819091796875,
+          "mae": 0.9616851806640625,
+          "maxError": 6
+        },
+        {
+          "min": 196,
+          "max": 214,
+          "mean": 204.0819091796875,
+          "mae": 0.9616851806640625,
+          "maxError": 6
+        },
+        {
+          "min": 196,
+          "max": 214,
+          "mean": 204.0819091796875,
+          "mae": 0.9616851806640625,
+          "maxError": 6
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Enamel-Green",
+          "slot": "baseColor",
+          "renderedTriangles": 12
+        },
+        {
+          "material": "C-Enamel-Red",
+          "slot": "baseColor",
+          "renderedTriangles": 12
+        }
+      ]
+    },
+    {
+      "name": "C-Enamel-Normal",
+      "bytes": 19770,
+      "sha256": "3cde4a11c66c8c03ba8917ecf1dfe74a2a7107dcef2e003ea03091190cc62cab",
+      "codec": [
+        "VP8L"
+      ],
+      "stats": [
+        {
+          "min": 108,
+          "max": 147,
+          "mean": 127.5001220703125,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 115,
+          "max": 140,
+          "mean": 127.50006103515625,
+          "mae": 0,
+          "maxError": 0
+        },
+        {
+          "min": 253,
+          "max": 255,
+          "mean": 254.9937286376953,
+          "mae": 0,
+          "maxError": 0
+        }
+      ],
+      "normalLength": {
+        "min": 0.9958854220908663,
+        "max": 1.0041283488025305
+      },
+      "uses": [
+        {
+          "material": "C-Enamel-Green",
+          "slot": "normal",
+          "renderedTriangles": 12
+        },
+        {
+          "material": "C-Enamel-Red",
+          "slot": "normal",
+          "renderedTriangles": 12
+        }
+      ]
+    },
+    {
+      "name": "C-Enamel-Roughness",
+      "bytes": 3840,
+      "sha256": "6bfff906aeeb750ffa850652e5930ada58ccec305a598da1f6adc8f1f598b18d",
+      "codec": [
+        "VP8 "
+      ],
+      "stats": [
+        {
+          "min": 250,
+          "max": 255,
+          "mean": 254.52392578125,
+          "mae": 0.47607421875,
+          "maxError": 5
+        },
+        {
+          "min": 41,
+          "max": 57,
+          "mean": 48.46369934082031,
+          "mae": 1.037811279296875,
+          "maxError": 6
+        },
+        {
+          "min": 0,
+          "max": 6,
+          "mean": 0.6811676025390625,
+          "mae": 0.6811676025390625,
+          "maxError": 6
+        }
+      ],
+      "uses": [
+        {
+          "material": "C-Enamel-Green",
+          "slot": "metallicRoughness",
+          "renderedTriangles": 12
+        },
+        {
+          "material": "C-Enamel-Red",
+          "slot": "metallicRoughness",
+          "renderedTriangles": 12
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "C-Steel-Linear",
+      "renderedTriangles": 8576,
+      "color": [
+        0.5583403896257968,
+        0.5972017883558645,
+        0.6307571363387763,
+        1
+      ],
+      "metallic": 0.84,
+      "roughness": 1,
+      "normalScale": 0.18,
+      "alpha": "OPAQUE",
+      "doubleSided": false,
+      "extensions": {
+        "KHR_materials_anisotropy": {
+          "anisotropyStrength": 0.38
+        }
+      }
+    },
+    {
+      "name": "C-Dial",
+      "renderedTriangles": 768,
+      "color": [
+        0.02121901037134225,
+        0.02955683443236377,
+        0.031896033067374104,
+        1
+      ],
+      "metallic": 0.86,
+      "roughness": 1,
+      "normalScale": 0.11,
+      "alpha": "OPAQUE",
+      "doubleSided": false
+    },
+    {
+      "name": "C-Steel-Radial",
+      "renderedTriangles": 10832,
+      "color": [
+        0.5972017883558645,
+        0.6307571363387763,
+        0.6444796819634361,
+        1
+      ],
+      "metallic": 0.94,
+      "roughness": 1,
+      "normalScale": 0.16,
+      "alpha": "OPAQUE",
+      "doubleSided": false
+    },
+    {
+      "name": "C-Enamel-Green",
+      "renderedTriangles": 12,
+      "color": [
+        0.002428215868235294,
+        0.18116424423948302,
+        0.09530746662221588,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 1,
+      "normalScale": 0.06,
+      "alpha": "OPAQUE",
+      "doubleSided": false,
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 0.82,
+          "clearcoatRoughnessFactor": 0.12
+        }
+      }
+    },
+    {
+      "name": "C-Enamel-Red",
+      "renderedTriangles": 12,
+      "color": [
+        0.46778379610254284,
+        0.02217388478862708,
+        0.031896033067374104,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 1,
+      "normalScale": 0.06,
+      "alpha": "OPAQUE",
+      "doubleSided": false,
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 0.82,
+          "clearcoatRoughnessFactor": 0.12
+        }
+      }
+    },
+    {
+      "name": "C-Glass",
+      "renderedTriangles": 960,
+      "color": [
+        0.76052450467022,
+        0.8387990117372213,
+        0.8307698767709715,
+        0.12
+      ],
+      "metallic": 0,
+      "roughness": 0.07,
+      "normalScale": 1,
+      "alpha": "BLEND",
+      "doubleSided": false
+    }
+  ],
+  "reproduction": {
+    "exactBytes": true,
+    "sha256": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b",
+    "bytes": 237124,
+    "exactRecord": true,
+    "realFilesystemWriterInvocations": 0
+  },
+  "publication": [
+    {
+      "name": "exact-cap",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "asset-write",
+        "asset-rename",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "cap-plus-one-stale-preflight-zero",
+      "error": "Custom public budget changed before locked publication; previous artifact untouched",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "removed-guard-negative-control",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "asset-write",
+        "asset-rename",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "close",
+        "unlock"
+      ],
+      "mutantEscaped": true
+    },
+    {
+      "name": "stale-guard-negative-control",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "asset-write",
+        "asset-rename",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "manifest-write",
+        "manifest-rename",
+        "manifest-cleanup",
+        "close",
+        "unlock"
+      ],
+      "mutantEscaped": true
+    },
+    {
+      "name": "imports-error-ordering",
+      "error": "imports-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "inventory-error-ordering",
+      "error": "inventory-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "size-error-ordering",
+      "error": "size-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "stat-error-ordering",
+      "error": "stat-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "asset-error-ordering",
+      "error": "asset-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "asset-write",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "rename-error-ordering",
+      "error": "rename-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "asset-write",
+        "asset-rename",
+        "close",
+        "unlock"
+      ]
+    },
+    {
+      "name": "manifest-error-ordering",
+      "error": "manifest-error",
+      "events": [
+        "lock",
+        "lock-owner",
+        "read-imports",
+        "read-inventory",
+        "size",
+        "stat",
+        "asset-write",
+        "asset-rename",
+        "manifest-write",
+        "manifest-cleanup",
+        "close",
+        "unlock"
+      ]
+    }
+  ],
+  "logs": {
+    "full-initial-red.log": {
+      "sha256": "66eff75911102da0c610aaa8c28f1d9df51a2087e7b5647745ad027471f3a0e3",
+      "bytes": 46168,
+      "summary": [
+        "not ok 10 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "not ok 11 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "not ok 12 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "not ok 13 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "not ok 14 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "not ok 15 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "not ok 16 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "not ok 17 - Custom axle and pivot physically connect the dial and both needle roots",
+        "not ok 18 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "not ok 19 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "not ok 20 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "not ok 21 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "not ok 22 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "not ok 23 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 143",
+        "# pass 129",
+        "# fail 14",
+        "# duration_ms 10246.0017"
+      ]
+    },
+    "media-contracts.log": {
+      "sha256": "e4f6b5332a9fe1fda1ea5d28247a8516f375e2c93a091c5828865ee0fac9bae3",
+      "bytes": 35633,
+      "summary": [
+        "ok 10 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "ok 11 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "ok 12 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "ok 13 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "ok 14 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "ok 15 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "ok 16 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "ok 17 - Custom axle and pivot physically connect the dial and both needle roots",
+        "ok 18 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "ok 19 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "ok 20 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "ok 21 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "ok 22 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "ok 23 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 143",
+        "# pass 143",
+        "# fail 0",
+        "# duration_ms 11564.933"
+      ]
+    },
+    "worker-red.tap.log": {
+      "sha256": "a46fb168ce5a5435f31998f6d8094c9c46e1c807377fa052454bf149b5d08da6",
+      "bytes": 13873,
+      "summary": [
+        "not ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "not ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "not ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "not ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "not ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "not ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "not ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "not ok 8 - Custom axle and pivot physically connect the dial and both needle roots",
+        "not ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "not ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "not ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "not ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "not ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "not ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 14",
+        "# pass 0",
+        "# fail 14",
+        "# duration_ms 359.9948"
+      ]
+    },
+    "worker-final-red.tap.log": {
+      "sha256": "f981d5ebae423990d068e0a76f01de1ab136546b951240c3e82aada18809cf1a",
+      "bytes": 13872,
+      "summary": [
+        "not ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "not ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "not ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "not ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "not ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "not ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "not ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "not ok 8 - Custom axle and pivot physically connect the dial and both needle roots",
+        "not ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "not ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "not ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "not ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "not ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "not ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 14",
+        "# pass 0",
+        "# fail 14",
+        "# duration_ms 342.721"
+      ]
+    },
+    "worker-existing-readonly.log": {
+      "sha256": "3cc99f55996beec8c9d8dea3d3c2e4444f3a1231b98caa8d086891d06f544a0d",
+      "bytes": 983,
+      "summary": [
+        "# tests 108",
+        "# pass 108",
+        "# fail 0",
+        "# duration_ms 14330.2569"
+      ]
+    },
+    "first-contracts.log": {
+      "sha256": "e1decca4025aa7b290f8057d5533506221a8ef626e19046222dd701c412ef2d0",
+      "bytes": 5323,
+      "summary": [
+        "ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "not ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "ok 8 - Custom axle and pivot physically connect the dial and both needle roots",
+        "ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "not ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 14",
+        "# pass 12",
+        "# fail 2",
+        "# duration_ms 5069.8422"
+      ]
+    },
+    "art-refined-contracts.log": {
+      "sha256": "568eb57b3dc1aeccf00ccf538eb5dec65d55e8fbc9ac09f51bb79e7139a1a22d",
+      "bytes": 3661,
+      "summary": [
+        "ok 1 - Custom replaces the study with hash-protected procedural original refinement in both manifests",
+        "ok 2 - Custom uses twelve embedded 256px WebP PBR maps with lossless normalized normals and no glow",
+        "ok 3 - Custom case is closed with an actual central dial recess and floor, not a disk or open shell",
+        "ok 4 - Custom dark dial is a closed seated cylinder with its top near author Y .264",
+        "ok 5 - Custom rose is a closed raised faceted metal eight-point body seated on the dial",
+        "ok 6 - Custom has sixty closed radially aligned seated ticks with twelve longer major ticks",
+        "ok 7 - Custom needle has two closed opposed faceted enamel halves in one Y-rotated needle group",
+        "ok 8 - Custom axle and pivot physically connect the dial and both needle roots",
+        "ok 9 - Custom transparent closed lens covers the complete needle and pivot without intersecting them",
+        "ok 10 - Custom lid is an upright attached open concave cup, with inward floor facing local minus Y",
+        "ok 11 - Custom five closed hollow hinge knuckles share one real bore traversed by the X-axis pin",
+        "ok 12 - Custom four hinge brackets join actual case/lid skins at opposite knuckle endpoints",
+        "ok 13 - Custom front lug physically seats the closed bail with a real empty ring aperture",
+        "ok 14 - Custom retains finite grounded 3.2 stage, both 65k caps, 0.5MiB, 16bit UV/position and fresh locked 10MiB publication",
+        "# tests 14",
+        "# pass 14",
+        "# fail 0",
+        "# duration_ms 5107.3102"
+      ]
+    }
+  },
+  "after": {
+    "apps/media/scripts/build-refined-custom.mjs": {
+      "bytes": 13356,
+      "raw": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17",
+      "lf": "9fff1a7c8ab02f7e1aab67438731a7d22469ff2b266f4f08c6852fc9d3593e17"
+    },
+    "apps/media/scripts/custom-refinement.test.mjs": {
+      "bytes": 30949,
+      "raw": "435156a825ef814c2114e75a48c8cc139678d5d65db6ec06e097cde49e74dcc5",
+      "lf": "435156a825ef814c2114e75a48c8cc139678d5d65db6ec06e097cde49e74dcc5"
+    },
+    "apps/media/sources/custom/materials.json": {
+      "bytes": 1248,
+      "raw": "26ab2c71429e558b26a4108802e785088ce7e1cc231ea89db6e0ad4ed5531532"
+    },
+    "apps/web/public/heroes/custom.glb": {
+      "bytes": 237124,
+      "raw": "45129c97f6177442f9381fa56683c3c7c117b1e928235f66295f665113948c7b"
+    },
+    "apps/media/hero-imported.json": {
+      "bytes": 9214,
+      "raw": "217d3c84edb12b6568302412b44648eb87bd2ee558db9caa72f1f29c02af36cf"
+    },
+    "apps/media/hero-models.json": {
+      "bytes": 9214,
+      "raw": "d3e297e3bd06c65f33ae6472ceddb95780103d370c9a7a89c077dbfb0d7ef6d6"
+    },
+    ".superpowers/sdd/2026-10-21-custom/rebuild-proof.mjs": {
+      "bytes": 5368,
+      "raw": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1",
+      "lf": "797c46d8227158188982049b69f1fbe381d776dc87f20fb02d1bbe57d5cc78f1"
+    },
+    "canonicalConfig": "16311e6307a5e2e3edef5bc424f95bf8e3762570c1cc5e254e4f111dea7d0dd0"
+  },
+  "finished": "2026-10-21T09:32:22.296Z"
+}
+REVIEW_PIPELINE_JSON_END
+

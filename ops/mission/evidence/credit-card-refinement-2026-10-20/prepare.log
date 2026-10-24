@@ -1,0 +1,5 @@
+
+> @interestshield/media@0.1.0 prepare:hyperframes
+> node scripts/prepare-hyperframes-assets.mjs
+
+Prepared 4 pinned HyperFrames assets.

@@ -7,9 +7,11 @@ const ts = require('typescript');
 const appRoot = path.resolve(__dirname, '..');
 const publicRoot = path.join(appRoot, 'public');
 const sourceRoot = path.join(appRoot, 'src');
-const maxTotalBytes = 2 * 1024 * 1024;
+// Ten lazy GLB models plus optimized posters, not ten eager hero downloads.
+const maxTotalBytes = 10 * 1024 * 1024;
 const maxSingleBytes = Math.floor(1.25 * 1024 * 1024);
-const maxFileCount = 8;
+const perFileBudgets = { '/heroes/car.glb': Math.floor(2.25 * 1024 * 1024) };
+const maxFileCount = 28;
 
 function listFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -50,10 +52,10 @@ assert.ok(
   totalBytes <= maxTotalBytes,
   `public assets use ${(totalBytes / 1024 / 1024).toFixed(2)} MiB; budget is ${(maxTotalBytes / 1024 / 1024).toFixed(2)} MiB`,
 );
-assert.ok(
-  largest.bytes <= maxSingleBytes,
-  `${largest.publicPath} uses ${(largest.bytes / 1024 / 1024).toFixed(2)} MiB; per-file budget is ${(maxSingleBytes / 1024 / 1024).toFixed(2)} MiB`,
-);
+for (const asset of assets) {
+  const budget = perFileBudgets[asset.publicPath] ?? maxSingleBytes;
+  assert.ok(asset.bytes <= budget, `${asset.publicPath} exceeds its ${(budget / 1024 / 1024).toFixed(2)} MiB budget`);
+}
 assert.ok(
   assets.length <= maxFileCount,
   `public asset count is ${assets.length}; budget is ${maxFileCount}`,

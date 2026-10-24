@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-24T04:20:24.440Z",
+  "headBefore": "545fc53a06b33f1f31ab7eb34b4cfa9efa2ffa55",
+  "sourcePacketSha256": "c02f25fff56c4ba0b407933d7d43bcc7ec04acdad2fefed85b1870fa731e0fa6",
+  "review": {"decisionSha256":"2f7523dcb23496d50dfcc359028b3a63b0fdc0d652fffa81ba72f439fc7960f0","sealSha256":"2714b663d38570a2364c37b25ae3c79588fdf9a97cfde66a63a608e2df0442d5","scope":"source/CPU only"},
+  "tdd": {"originalAssertionsRed":6,"inheritedCarRed":1,"finalRegressions":376,"commonMonthProbes":23247,"initialFixtureCorrectionRetained":true},
+  "local": {"web":0,"lint":0,"webTypes":0,"nativeTypes":0,"nativeContracts":0,"mediaCpuCases":227,"mediaTypes":0,"scenarioCheck":0,"ciContracts":22},
+  "preservation": {"sharedNamedDeclarations":126,"unchangedDeclarations":125,"changedPresenter":"buildMobileDashboardSnapshot","generatedScenarioResultsUnchanged":true,"scenarioChangedIdentityFields":2,"protectedFilesUnchanged":23,"artAndNumericalSolversUnchanged":true},
+  "native": {"exportedFiles":60,"platforms":["android","ios","web"],"exactSharedSourceMaps":3,"existingConfigsUnchanged":5,"chrome":"desktop Expo healthy/failed/restored/reload; errors[]; synthetic APR only","scope":"not physical/signed-in/complete device QA"},
+  "open": ["NM02 cleared/residual/LOC-only","full scenario/lender/calendar/managed-backend/security/a11y/device","allten photographic art/approved finite videos","generic render operatorP1","poster cause/reliability","production"],
+  "approval": {"newHeadCiApproved":false,"newWebPreviewApproved":false,"productionReady":false,"mergeApproved":false}
+}

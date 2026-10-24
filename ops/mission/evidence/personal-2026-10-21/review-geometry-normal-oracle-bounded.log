@@ -1,0 +1,21 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '81c5a1417e6a7bf95bdb053383d1b573e72356b253f5f5a88480d8fe707969d7'
+- '70d0c90cb036506cad2ff12696125b8e2e69d232ef709ac75448b3e8ce841343'
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-normal-oracle.mjs:18:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '81c5a1417e6a7bf95bdb053383d1b573e72356b253f5f5a88480d8fe707969d7',
+  expected: '70d0c90cb036506cad2ff12696125b8e2e69d232ef709ac75448b3e8ce841343',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
+

@@ -1,0 +1,27 @@
+PINS [{"path":"apps/web/public/heroes/recreation.glb","bytes":521544,"sha256":"c7ce5658eefd0e928ea857e70ca35803e2812308032a071cdcb82412434f41a7"},{"path":"apps/media/scripts/build-refined-recreation.mjs","bytes":20361,"sha256":"2edfb8fae498e2877a49ce16de7530c645fcdb5dbc1cbdffdd1884ac95f7473e"},{"path":"apps/media/scripts/recreation-refinement.test.mjs","bytes":37501,"sha256":"d7185ec2ed9bb6955a27db98047fa5d91159d491cf5461dae1b0dc4aab5dd794"}]
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support--1--0.48","target":"R-Cabin-Roof","crossings":[[-0.4800000000000001,1.144498856449919,-0.2129960020752587],[-0.4794177531103271,1.144498856449919,-0.21315364097115272],[-0.4765056306649984,1.144498856449919,-0.21394207586901462]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support--1--0.48","target":"R-Grab-Rail--1","crossings":[[-0.4800000000000001,1.1617050386059145,-0.2129960020752587],[-0.47728600797810533,1.1609702460061002,-0.213730794675073],[-0.4765056306649984,1.1607589648121586,-0.21394207586901462]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_FLOAT_CONTROL {"name":"R-Grab-Support--1--0.48","detached":true}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support--1-0.33","target":"R-Cabin-Roof","crossings":[[0.33000000000000007,1.144498856449919,-0.21299600207525868],[0.3305822468896731,1.144498856449919,-0.2131536409711527],[0.33349436933500176,1.144498856449919,-0.2139420758690146]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support--1-0.33","target":"R-Grab-Rail--1","crossings":[[0.33000000000000007,1.1617050386059147,-0.21299600207525868],[0.33271399202189483,1.1609702460061002,-0.21373079467507297],[0.33349436933500176,1.1607589648121586,-0.2139420758690146]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_FLOAT_CONTROL {"name":"R-Grab-Support--1-0.33","detached":true}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support-1--0.48","target":"R-Cabin-Roof","crossings":[[-0.48,1.144498856449919,0.2270039979247414],[-0.47941775311032697,1.144498856449919,0.2268463590288474],[-0.4765056306649983,1.144498856449919,0.2260579241309855]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support-1--0.48","target":"R-Grab-Rail-1","crossings":[[-0.48,1.1617050386059145,0.2270039979247414],[-0.4772860079781052,1.1609702460061002,0.22626920532492711],[-0.4765056306649983,1.1607589648121586,0.2260579241309855]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_FLOAT_CONTROL {"name":"R-Grab-Support-1--0.48","detached":true}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support-1-0.33","target":"R-Cabin-Roof","crossings":[[0.33000000000000007,1.144498856449919,0.2270039979247414],[0.3305822468896731,1.144498856449919,0.2268463590288474],[0.33349436933500176,1.144498856449919,0.2260579241309855]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_ACTUAL {"name":"R-Grab-Support-1-0.33","target":"R-Grab-Rail-1","crossings":[[0.33000000000000007,1.1617050386059147,0.2270039979247414],[0.33271399202189483,1.1609702460061002,0.22626920532492711],[0.33349436933500176,1.1607589648121586,0.2260579241309855]],"vertexSurfaceDistance":0,"witness":null}
+P3_SUPPORT_FLOAT_CONTROL {"name":"R-Grab-Support-1-0.33","detached":true}
+P3_WINCH_ACTUAL {"name":"R-Winch-Base--1","target":"R-Deck","crossings":[[0.7200000000000001,0.8609823596876042,-0.34500045777764227],[0.7249436874108757,0.8609823596876042,-0.34632436050801235],[0.742507400738548,0.8609823596876042,-0.3510278633991517]],"vertexSurfaceDistance":0,"witness":null}
+P3_WINCH_ACTUAL {"name":"R-Winch-Base--1","target":"R-Winch-Drum--1","crossings":[[0.7200000000000001,0.9,-0.3610074159978028],[0.7344962920010988,0.9,-0.3648832667012544],[0.7345021624019039,0.9,-0.36488913710205956]],"vertexSurfaceDistance":0,"witness":null}
+P3_WINCH_ACTUAL {"name":"R-Winch-Base-1","target":"R-Deck","crossings":[[0.7200000000000002,0.8609823596876042,0.4349995422223579],[0.7249436874108758,0.8609823596876042,0.43367563949198784],[0.7425074007385482,0.8609823596876042,0.4289721366008485]],"vertexSurfaceDistance":0,"witness":null}
+P3_WINCH_ACTUAL {"name":"R-Winch-Base-1","target":"R-Winch-Drum-1","crossings":[[0.7200000000000002,0.9,0.4189925840021974],[0.7344962920010989,0.9,0.41511673329874577],[0.734502162401904,0.9,0.41511086289794064]],"vertexSurfaceDistance":0,"witness":null}
+SOLID_ANGLE_VS_HELPER {"sailName":"R-Mainsail","components":5,"sections":125,"points":750,"mismatches":0,"buriedCenters":0,"outsideRadius":0,"sectionFailures":0}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-probe.mjs:52
+export function intersections(a,b,limit=10){const hits=[];for(const t of a)for(const u of b){if(!t.box.intersectsBox(u.box))continue;for(const [s,target]of [[t,u],[u,t]])for(let k=0;k<3;k++){const p=segmentHit(s[k],s[(k+1)%3],target);if(p&&!hits.some(q=>q.distanceTo(p)<1e-6)){hits.push(p);if(hits.length>=limit)return hits;}}}return hits;}
+                                                                                                       ^
+
+TypeError: Cannot read properties of undefined (reading 'intersectsBox')
+    at intersections (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-probe.mjs:52:104)
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-recreation/review-geometry-p3-controls.mjs:29:444
+
+Node.js v22.22.2

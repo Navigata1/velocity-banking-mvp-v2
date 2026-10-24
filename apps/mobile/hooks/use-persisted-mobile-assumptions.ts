@@ -2,7 +2,7 @@ import {
   defaultMobileDashboardInput,
   type MobileDashboardInput,
 } from '@interestshield/financial-engine';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   loadMobileAssumptionsForOwner,
   mobileAssumptionsStorageKey,
@@ -35,6 +35,11 @@ function toSavedStatus(backend: MobileAssumptionStorageBackend): MobileAssumptio
   return 'unavailable';
 }
 
+function storageReviewMessage(error: unknown): string | null {
+  if (!error || typeof error !== 'object' || !('code' in error) || error.code !== 'unsupported-mobile-assumptions') return null;
+  return 'message' in error && typeof error.message === 'string' ? error.message : 'Saved scenario requires review. Existing data was not replaced.';
+}
+
 function cloneDefaultMobileInput(): MobileDashboardInput {
   return {
     ...defaultMobileDashboardInput,
@@ -52,29 +57,36 @@ export function usePersistedMobileAssumptions(
   const [loadedScope, setLoadedScope] = useState<string | null>(null);
   const [storageStatus, setStorageStatus] = useState<MobileAssumptionStorageStatus>('loading');
   const [canPersist, setCanPersist] = useState(false);
+  const [storageError, setStorageError] = useState<string | null>(null);
   const lastPersistedInput = useRef<MobileDashboardInput | null>(null);
   const saveQueue = useRef<Promise<void>>(Promise.resolve());
   const saveVersion = useRef(0);
+  const persistenceEpoch = useRef(0);
   const storageRevision = useRef(0);
   const scope = mobileAssumptionsStorageKey(ownerId);
-  const activeScope = useRef(scope);
-  activeScope.current = scope;
-  const isHydrated = authReady && loadedScope === scope;
+  const activeScope = useRef<string | null>(null);
+  const isHydrated = authReady && loadedScope === scope && storageError === null;
   const fallbackInput = useMemo(() => cloneDefaultMobileInput(), [scope]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    isMounted.current = true;
+    activeScope.current = authReady ? scope : null;
     return () => {
       isMounted.current = false;
+      if (activeScope.current === scope) activeScope.current = null;
+      persistenceEpoch.current += 1;
     };
-  }, []);
+  }, [authReady, scope]);
 
   useEffect(() => {
     let shouldApply = true;
     setLoadedScope(null);
     setStorageStatus('loading');
     setCanPersist(false);
+    setStorageError(null);
     lastPersistedInput.current = null;
     saveVersion.current += 1;
+    persistenceEpoch.current += 1;
     storageRevision.current = 0;
     setInput(cloneDefaultMobileInput());
     if (!authReady) return () => { shouldApply = false; };
@@ -89,7 +101,7 @@ export function usePersistedMobileAssumptions(
         setCanPersist(result.backend !== 'unavailable');
         setStorageStatus(toRestoredStatus(result.backend, result.restored));
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         if (!shouldApply || !isMounted.current) return;
         const fallback = cloneDefaultMobileInput();
         lastPersistedInput.current = fallback;
@@ -98,6 +110,7 @@ export function usePersistedMobileAssumptions(
         setLoadedScope(scope);
         setCanPersist(false);
         setStorageStatus('unavailable');
+        setStorageError(storageReviewMessage(error));
       });
 
     return () => {
@@ -109,24 +122,30 @@ export function usePersistedMobileAssumptions(
     if (!authReady || !canPersist || loadedScope !== scope || input === lastPersistedInput.current) return;
     lastPersistedInput.current = input;
     const operationVersion = ++saveVersion.current;
+    const operationEpoch = persistenceEpoch.current;
     const operation = saveQueue.current
       .catch(() => undefined)
-      .then(() => saveMobileAssumptionsForOwner(ownerId, input, {
-        expectedRevision: storageRevision.current,
-      }));
+      .then(() => {
+        if (!isMounted.current || activeScope.current !== scope || persistenceEpoch.current !== operationEpoch) {
+          throw new Error('Queued assumptions were cancelled by an account change or restore.');
+        }
+        return saveMobileAssumptionsForOwner(ownerId, input, { expectedRevision: storageRevision.current });
+      });
     saveQueue.current = operation.then(() => undefined, () => undefined);
     operation
       .then((result) => {
-        if (activeScope.current === scope) storageRevision.current = result.revision;
+        if (activeScope.current === scope && persistenceEpoch.current === operationEpoch) storageRevision.current = Math.max(storageRevision.current, result.revision);
         if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
           setCanPersist(true);
           setStorageStatus(toSavedStatus(result.backend));
         }
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
           setCanPersist(false);
           setStorageStatus('unavailable');
+          const review = storageReviewMessage(error);
+          if (review) setStorageError(review);
         }
       });
   }, [authReady, canPersist, input, loadedScope, ownerId, scope]);
@@ -137,7 +156,8 @@ export function usePersistedMobileAssumptions(
   }, [isHydrated, scope]);
 
   const resetAssumptions = useCallback(async (): Promise<MobileAssumptionStorageBackend> => {
-    if (!isHydrated) throw new Error('Mobile assumptions are still loading for this account.');
+    if (!isHydrated || !isMounted.current || activeScope.current !== scope) throw new Error('Mobile assumptions are still loading for this account.');
+    persistenceEpoch.current += 1;
     const nextInput = cloneDefaultMobileInput();
     lastPersistedInput.current = nextInput;
     setInput(nextInput);
@@ -145,15 +165,19 @@ export function usePersistedMobileAssumptions(
     if (!canPersist) return 'unavailable';
 
     const operationVersion = ++saveVersion.current;
+    const operationEpoch = persistenceEpoch.current;
     const operation = saveQueue.current
       .catch(() => undefined)
-      .then(() => saveMobileAssumptionsForOwner(ownerId, nextInput, {
-        expectedRevision: storageRevision.current,
-      }));
+      .then(() => {
+        if (!isMounted.current || activeScope.current !== scope || persistenceEpoch.current !== operationEpoch) {
+          throw new Error('Queued reset was cancelled by an account change or restore.');
+        }
+        return saveMobileAssumptionsForOwner(ownerId, nextInput, { expectedRevision: storageRevision.current });
+      });
     saveQueue.current = operation.then(() => undefined, () => undefined);
     try {
       const result = await operation;
-      if (activeScope.current === scope) storageRevision.current = result.revision;
+      if (activeScope.current === scope && persistenceEpoch.current === operationEpoch) storageRevision.current = Math.max(storageRevision.current, result.revision);
       if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
         setCanPersist(true);
         setStorageStatus(toSavedStatus(result.backend));
@@ -163,6 +187,8 @@ export function usePersistedMobileAssumptions(
       if (isMounted.current && activeScope.current === scope && saveVersion.current === operationVersion) {
         setCanPersist(false);
         setStorageStatus('unavailable');
+        const review = storageReviewMessage(error);
+        if (review) setStorageError(review);
       }
       throw error;
     }
@@ -176,6 +202,9 @@ export function usePersistedMobileAssumptions(
     if (!isHydrated || activeScope.current !== scope) {
       throw new Error('Mobile assumptions are still loading for this account.');
     }
+    if (ownerLock && !isMobileSnapshotOwnerLock(ownerLock, ownerId ?? 'guest')) throw new Error('Assumption replacement lock is invalid.');
+    nextInput = { ...nextInput, activeDebt: { ...nextInput.activeDebt }, loc: { ...nextInput.loc } };
+    persistenceEpoch.current += 1;
     const operationVersion = ++saveVersion.current;
     const precedingOperation = saveQueue.current;
     const hasOwnerLock = isMobileSnapshotOwnerLock(ownerLock, ownerId ?? 'guest');
@@ -219,6 +248,8 @@ export function usePersistedMobileAssumptions(
       ) {
         setCanPersist(false);
         setStorageStatus('unavailable');
+        const review = storageReviewMessage(error);
+        if (review) setStorageError(review);
       }
       throw error;
     }
@@ -231,5 +262,7 @@ export function usePersistedMobileAssumptions(
     resetAssumptions,
     setInput: updateAssumptions,
     storageStatus,
+    storageScope: scope,
+    ...(storageError === null ? {} : { storageError }),
   };
 }

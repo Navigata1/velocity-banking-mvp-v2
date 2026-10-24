@@ -1,0 +1,11 @@
+PIN {"glb":"c02f3dd56362e0cf01d21a4306426dfc3fb6fc985e0d06115a83ed61a617ba88","bytes":519088,"source":"67ccb0f841a56b3403e87a744827ca70604d76bb71e2dccf32af335da6504ca5","fullClearance":false}
+file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-clip-uv.mjs:28
+  for (let i = 0; i < g.index.count; i += 3) {
+                              ^
+
+TypeError: Cannot read properties of null (reading 'count')
+    at sourceAudit (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-clip-uv.mjs:28:31)
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-personal/review-geometry-clip-uv.mjs:34:63
+
+Node.js v22.22.2
+

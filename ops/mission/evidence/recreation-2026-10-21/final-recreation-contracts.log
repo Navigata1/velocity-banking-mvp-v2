@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+ok 1 - Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+  ---
+  duration_ms: 44.6591
+  type: 'test'
+  ...
+# Subtest: Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+ok 2 - Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+  ---
+  duration_ms: 166.7702
+  type: 'test'
+  ...
+# Subtest: Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+ok 3 - Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+  ---
+  duration_ms: 158.2357
+  type: 'test'
+  ...
+# Subtest: Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+ok 4 - Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+  ---
+  duration_ms: 181.381
+  type: 'test'
+  ...
+# Subtest: Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+ok 5 - Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+  ---
+  duration_ms: 259.1872
+  type: 'test'
+  ...
+# Subtest: Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+ok 6 - Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+  ---
+  duration_ms: 29.7859
+  type: 'test'
+  ...
+# Subtest: Recreation boom, both sail feet and sheets clear the actual cabin roof
+ok 7 - Recreation boom, both sail feet and sheets clear the actual cabin roof
+  ---
+  duration_ms: 230.0904
+  type: 'test'
+  ...
+# Subtest: Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+ok 8 - Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+  ---
+  duration_ms: 1844.633
+  type: 'test'
+  ...
+# Subtest: Recreation closed teal keel and rudder physically join the hull and extend below it
+ok 9 - Recreation closed teal keel and rudder physically join the hull and extend below it
+  ---
+  duration_ms: 440.7069
+  type: 'test'
+  ...
+# Subtest: Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+ok 10 - Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+  ---
+  duration_ms: 74.7227
+  type: 'test'
+  ...
+# Subtest: Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+ok 11 - Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+  ---
+  duration_ms: 11.606
+  type: 'test'
+  ...
+# Subtest: Recreation grab rails have two real standoffs seated on the cabin roof
+ok 12 - Recreation grab rails have two real standoffs seated on the cabin roof
+  ---
+  duration_ms: 17.2031
+  type: 'test'
+  ...
+# Subtest: Recreation winch bases sit on the actual timber deck
+ok 13 - Recreation winch bases sit on the actual timber deck
+  ---
+  duration_ms: 53.7707
+  type: 'test'
+  ...
+# Subtest: Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+ok 14 - Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+  ---
+  duration_ms: 232.5967
+  type: 'test'
+  ...
+# Subtest: Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+ok 15 - Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+  ---
+  duration_ms: 69.2668
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4120.1845

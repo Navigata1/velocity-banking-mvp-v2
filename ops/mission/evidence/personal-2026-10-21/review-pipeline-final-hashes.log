@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "model": "e079fc7b95c562fa6180434491cf3511d54fbf79cb155bf1d89c822bafe77b79",
+  "modelBytes": 519844,
+  "sourceLF": "588e52c8a9547e98df1a643bb465ec4a884ff85df84b9cefd5fef35efc73864c",
+  "configRaw": "c2bb19587d1b4628d819d674657d8689a38d10b052fbda637dcf4c025c08b247",
+  "configCanonical": "3377df695d1a66ace34911e0e5bc2e5bf5fd0b6a6b2479ed1f5c05208df47523",
+  "retainedLeather": "7b4897dbee5f4ad7e0982e3cb81a10fb3bcb445db9a084b073215738e01a74e1",
+  "inspectedHelperAndTestsUnchanged": true,
+  "protectedPersonalRecordsMatch": true
+}

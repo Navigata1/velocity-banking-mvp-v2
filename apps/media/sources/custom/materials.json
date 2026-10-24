@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "created": "2026-10-21",
+  "purpose": "Original procedural material fields for the authored InterestShield pocket compass. No downloaded textures or measured material scans.",
+  "images": [],
+  "resolution": 256,
+  "surfaces": {
+    "steel": { "roughness": 0.29, "normalScale": 0.18, "tile": [1, 1] },
+    "radial": { "roughness": 0.27, "normalScale": 0.16, "tile": [1, 1] },
+    "dial": { "roughness": 0.49, "normalScale": 0.11, "tile": [1, 1] },
+    "enamel": { "roughness": 0.19, "normalScale": 0.06, "tile": [1, 1] }
+  },
+  "authoring": "Deterministic linear/radial brushed fields, subtle dark-dial grain and enamel microvariation. Height differences derive tangent-space normals, normalized before lossless WebP packing; neutral color and packed roughness/metal fields are lossy WebP. Mesh UVs choose planar radial faces and curved linear bands. Steel's optional anisotropy uses its actual UV direction, not emission.",
+  "limitations": "Authored approximate PBR and transparent BLEND lens, not scans, refraction, exact poster reconstruction, certified alloy or a calibrated navigation instrument. Lossless normal packing does not imply zero quantization/filtering loss. Final collection-wide art approval remains open."
+}

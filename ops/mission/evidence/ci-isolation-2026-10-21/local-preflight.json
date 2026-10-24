@@ -1,0 +1,97 @@
+{
+  "baseline": "cc09e2e3f560c380445333907469ba813035a7a2",
+  "verifiedAt": "2026-10-21T16:32:08.585Z",
+  "stage": "Local CI/report maintenance preflight; both NEW complete exact-head three-job events still required",
+  "productionReady": false,
+  "baselineReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6320460045",
+  "baselinePrimaryJobSeconds": {
+    "push": 1198,
+    "pullRequest": 799
+  },
+  "perJobCapSeconds": 1200,
+  "tests": {
+    "ciContracts": 14,
+    "staticRendererContracts": 4,
+    "existingRendererContract": true,
+    "webRegressions": 348,
+    "commonMonthContracts": 31,
+    "seededReferenceProbes": 23247,
+    "mobilePortContract": true
+  },
+  "sourcePreservation": {
+    "unchangedProtectedSources": 292,
+    "modifiedProtectedSources": [
+      ".github/workflows/ci.yml"
+    ],
+    "baselineInventory": "ops/mission/evidence/portfolio-common-month-2026-10-21/artifact-receipt.json",
+    "models": 10,
+    "posters": 10,
+    "videos": 10,
+    "backendStructurallyIdentical": true,
+    "primaryRemainingStepsStructurallyIdentical": true
+  },
+  "sources": {
+    ".github/workflows/ci.yml": "458d96ca256115e07e818a7e1e4b7ceedeb3f1d684cd85bfa2b0adc507946145",
+    "scripts/check-restoration-ci.cjs": "ab80ed56b114f45f64d11d63445b48414cd33dae6a85acc7156b07bb50523402",
+    "scripts/check-restoration-ci.test.cjs": "094460ff7f6d81fc52a6c51bfd800b35d572eba2dab0105030cbcbd41b172da5",
+    "ops/mission/render-sotu.mjs": "0eeacc358df6457c8f2f029c722b039d4ae8fba82f10431d2ae5fe1cb07743df",
+    "ops/mission/report-renderer-tests.mjs": "021d58505bbbc7d845936296ec3c46a8b2a94b729376903d8b8e3f2a2d24de6a"
+  },
+  "rawLocalLogs": {
+    "directory": ".superpowers/sdd/2026-10-21-ci-isolation",
+    "files": {
+      "ci-contract-red.log": {
+        "bytes": 14837,
+        "sha256": "241b4f9e8be97a0849edcf12dcec3edfab7b9ca62a06ec0b0d9f990097339743"
+      },
+      "ci-committed-workflow-red.log": {
+        "bytes": 3583,
+        "sha256": "9acebfe382e6e0b2a1f0c4c7a14da41ab2dcdca5b8ef4e51b54330519fdfc786"
+      },
+      "ci-contract-final-green.log": {
+        "bytes": 2711,
+        "sha256": "437cd95875d405436a7fb93b85f37d3d98242253b17136e1b698a3660912a738"
+      },
+      "renderer-red.log": {
+        "bytes": 2718,
+        "sha256": "c2070971b1c9753887715cd76736385dfab20650232bd03f5556bc47e328eaaa"
+      },
+      "renderer-parent.log": {
+        "bytes": 969,
+        "sha256": "7f9f71162009980e7722e6370a4aaf13fde4800b5164db4afd24da27e9d9a442"
+      },
+      "renderer-parent-existing.log": {
+        "bytes": 35,
+        "sha256": "3b5fc60ebbc97238cbe9268a9770a2e7a57cd2302d5ed9cc254d6e3a4371b0d2"
+      },
+      "web-tests-final.log": {
+        "bytes": 43943,
+        "sha256": "280ddc2926c909f92a8a36fb23225903d3ecf15058abdefe5d44e23bd5b1dd11"
+      },
+      "web-lint-final.log": {
+        "bytes": 32,
+        "sha256": "b8303accb3abe359a2041cd0ef73e24ae6685685e64e5bbc1241a25351d61391"
+      },
+      "mobile-contracts.log": {
+        "bytes": 3329,
+        "sha256": "b5c4251b4b03a76580496168eefd7cea184d7f3bc27a75f966b6888b505d2274"
+      },
+      "baseline-cli-real.log": {
+        "bytes": 318,
+        "sha256": "0b65e21f6ffed340f87b7a00c17ca2f4568c544e588149e2af812362c89be2e6"
+      }
+    }
+  },
+  "excerptFormatting": "Committed excerpts use LF and trim trailing whitespace; raw logs and hashes remain unchanged.",
+  "inheritedHosted": {
+    "headSha": "cc09e2e3f560c380445333907469ba813035a7a2",
+    "invocationId": "5061a9c0-1660-4ed6-8b68-02af11525249",
+    "cases": 120,
+    "note": "No application/asset/financial changes. These are inherited baseline results, not fresh smoke of the pending new head."
+  },
+  "limitations": [
+    "Not a new application release or production approval.",
+    "Static report tests are not browser viewport proof. File navigation remains policy-blocked; no workaround.",
+    "No provider, financial, dependency, device or all-angle art certification."
+  ]
+}

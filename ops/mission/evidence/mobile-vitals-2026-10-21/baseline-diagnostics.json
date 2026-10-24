@@ -1,0 +1,19 @@
+{
+  "scope": "Verifier diagnostics, not application test failures or baseline artifact drift",
+  "initialComparisonIssues": [
+    {
+      "subject": "Renderer raw hash",
+      "receiptCheckoutSha256": "c61b7ed4427296a60531b894ffe560ee4087fdf45a5f6df86aaff16a7a4bb495",
+      "gitBlobSha256": "faf32253aa3cabf5b5c14278d812d37764afa5e987c99c1932d51a1764c968b2",
+      "explanation": "Receipt hashes the 20469-byte CRLF checkout. Git HEAD stores 20071-byte LF content. Normalized content and explicit CRLF reproduction match."
+    },
+    {
+      "subject": "hero-imported and hero-models record arrays",
+      "explanation": "All ten records match by ID. Array ordering differs, so comparing serialized arrays without sorting was an invalid verifier assumption."
+    },
+    {
+      "subject": "Four reconstructed CI log hashes",
+      "explanation": "Initial reconstruction omitted internal empty lines and left ESC bytes raw. Retaining empty lines and rendering ESC as ^[ reproduces the prior gh log bytes exactly for all four jobs. Raw archives are retained separately."
+    }
+  ]
+}

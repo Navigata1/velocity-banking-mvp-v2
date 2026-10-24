@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-10-21T10:32:44.857Z",
+  "head": "caefd8086180513b3fb6c1cf85492174996a437b",
+  "status": " M apps/web/scripts/engine-regression-tests.cjs\n M apps/web/scripts/smoke-dashboard-interest.cjs\n M apps/web/src/app/page.tsx\n",
+  "files": [
+    {
+      "name": "baseline-diagnostics.json",
+      "bytes": 1082,
+      "sha256": "1c377ad73bed0da142b42a3a2227a5293317b6a23de32b4f04d68942a5215d4c",
+      "ignored": true
+    },
+    {
+      "name": "baseline-git-end.log",
+      "bytes": 78,
+      "sha256": "3ce6b6db50b7e1a4eb3554c42ae67a8551c4c18eea14303a7aa163a85db9b2c4",
+      "ignored": true
+    },
+    {
+      "name": "baseline-git-start.log",
+      "bytes": 78,
+      "sha256": "3ce6b6db50b7e1a4eb3554c42ae67a8551c4c18eea14303a7aa163a85db9b2c4",
+      "ignored": true
+    },
+    {
+      "name": "baseline-inventory.cjs",
+      "bytes": 1588,
+      "sha256": "911384f3b228e353a7283508d40537e8da972713642eb5bc9c31ceb8b96bde52",
+      "ignored": true
+    },
+    {
+      "name": "baseline-origin-ref.json",
+      "bytes": 492,
+      "sha256": "5b2f72a92a37f184e40156e0538507df222c549b3653dbd6ea620084e2816033",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pr256.json",
+      "bytes": 21982,
+      "sha256": "eeb352a2bc8359c5790ebff4bd396770a1cc3a01baae3603347a8715e78a87b2",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-attempt1-raw.zip",
+      "bytes": 206292,
+      "sha256": "ae7360869e37a8a67569a2f0c6987e6d71415c37a2eab9e3a479e1a284d808a1",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-metadata.json",
+      "bytes": 50421,
+      "sha256": "5baecea361151179f2d3c87d78e60a856ed1c53fb683998497a6a02c48444863",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-sql.log",
+      "bytes": 119458,
+      "sha256": "f34fe91ac51354e2b9edaa72dc2b17bcc7596a86fdd0f9f1bc220b57ae54d69c",
+      "ignored": true
+    },
+    {
+      "name": "baseline-pull_request-web.log",
+      "bytes": 538241,
+      "sha256": "b2f6b27a730c8404a7ff2a533e04ed563112b603d840751793040a355af5105f",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-attempt1-raw.zip",
+      "bytes": 203790,
+      "sha256": "76b300658036478d1d7e720febb0195d8dd10235c8ab56ee2b73bfd5b3c86ea9",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-metadata.json",
+      "bytes": 50429,
+      "sha256": "0c7ce7fe3113d546c25994d268172ed2722f1fee0570cab41776dfb6ae427011",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-sql.log",
+      "bytes": 118566,
+      "sha256": "77b9c3f35b367ffc33f2107f9743e7b7dd39e37d361bb7f672acf0bcdfaee53f",
+      "ignored": true
+    },
+    {
+      "name": "baseline-push-web.log",
+      "bytes": 536695,
+      "sha256": "003ef06f7b742a24a9faa5e246206b818e09e8c4d74b7c12928fd1ed3efc0578",
+      "ignored": true
+    },
+    {
+      "name": "baseline-report.md",
+      "bytes": 7069,
+      "sha256": "21c97e8f6525dfa965b1960505b37efc330373e0c86c56bbb3371321cab4cf72",
+      "ignored": true
+    },
+    {
+      "name": "baseline-results.json",
+      "bytes": 1089281,
+      "sha256": "c59f11b798e66f6ba766c5a535bed9860add0444c61a97c7d9222ccd1fe40aa1",
+      "ignored": true
+    },
+    {
+      "name": "baseline-vercel-project.json",
+      "bytes": 1330,
+      "sha256": "628ef669d5d947c550caf7fea52cd3538ba47a8d8deceb59abf7bc1038cedd36",
+      "ignored": true
+    },
+    {
+      "name": "baseline-vercel-response.json",
+      "bytes": 1471,
+      "sha256": "7b369440f88e89a76d34dc42d0ac4273d7fde1fd124cde47abcf400c65862fb9",
+      "ignored": true
+    },
+    {
+      "name": "baseline-vercel-team.json",
+      "bytes": 317,
+      "sha256": "fdfef8c86c37cb3a3d8cd7a2a3cad02e4d1db85968a665122b2a0e5c515ffc78",
+      "ignored": true
+    },
+    {
+      "name": "baseline-verify.cjs",
+      "bytes": 21598,
+      "sha256": "915edb365b9b07d39c840af5a2f7b1069f206f26f8c524994d55607ab4063080",
+      "ignored": true
+    }
+  ],
+  "self": {
+    "name": "baseline-files.json",
+    "ignored": true,
+    "note": "Self-hash omitted"
+  }
+}

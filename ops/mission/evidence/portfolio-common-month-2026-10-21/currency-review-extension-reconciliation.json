@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-21T13:43:30.054Z",
+  "head": "578b87d03b5959aec889925a20b3d64d69507cc0",
+  "count": 240,
+  "extensionFromInitial239": [
+    {
+      "file": "apps/web/package.json",
+      "before": "a6d9ab68b3d60370cc6f407aaaa3702ef410a79d81e4417fa6f0ff4235f6738a",
+      "after": "9998e365b8595cf841a799ba764f03cf29c727ae57376cf4011fe1e0123251be"
+    },
+    {
+      "file": "apps/web/scripts/smoke-portfolio-currency-width.cjs",
+      "before": null,
+      "after": "c1a1be358c40af59852a235537f7c9ce3a70203a8e2be8a89da76bd4398c33d4"
+    }
+  ],
+  "changesVsPriorFont": [
+    {
+      "file": "apps/web/package.json",
+      "before": "a6d9ab68b3d60370cc6f407aaaa3702ef410a79d81e4417fa6f0ff4235f6738a",
+      "after": "9998e365b8595cf841a799ba764f03cf29c727ae57376cf4011fe1e0123251be"
+    },
+    {
+      "file": "apps/web/scripts/smoke-portfolio-currency-width.cjs",
+      "before": null,
+      "after": "c1a1be358c40af59852a235537f7c9ce3a70203a8e2be8a89da76bd4398c33d4"
+    },
+    {
+      "file": "apps/web/src/app/portfolio/PortfolioCommonMonth.tsx",
+      "before": "88df7de872b76f49d123293e623e2563e2679e5b7f48966b93aa61e3eba6e850",
+      "after": "8d713edb897afa8cea91147a87106c99f6ea9f18f4519a644d85d84c99ac73a6"
+    }
+  ],
+  "existingHelperUnchanged": true,
+  "packageOnlyAppendedExistingScript": true,
+  "scopeNote": "240-file web/mobile/engine subset, not parent full293-source shipping inventory; explicit addition of permanent gate and package wiring."
+}

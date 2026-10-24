@@ -1,0 +1,77 @@
+FAIL web Portfolio store failed import cannot replace active state or be resurrected by a later unrelated edit
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
+  '{\n' +
+    '  "version": 2,\n' +
+    '  "aprUnit": "decimal",\n' +
+    '  "data": {\n' +
++   '    "monthlyIncome": 9000,\n' +
+-   '    "monthlyIncome": 7200,\n' +
+    '    "monthlyExpenses": 4500,\n' +
+    '    "extraMonthlyPayment": 50,\n' +
+    '    "chunkAmount": 0,\n' +
+    '    "loc": {\n' +
+    '      "limit": 25000,\n' +
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:36:42
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:32:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:33:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '{\n' +
+    '  "version": 2,\n' +
+    '  "aprUnit": "decimal",\n' +
+    '  "data": {\n' +
+    '    "monthlyIncome": 9000,\n' +
+    '    "monthlyExpenses": 4500,\n' +
+    '    "extraMonthlyPayment": 50,\n' +
+    '    "chunkAmount": 0,\n' +
+    '    "loc": {\n' +
+    '      "limit": 25000,\n' +
+    '...',
+  expected: '{\n' +
+    '  "version": 2,\n' +
+    '  "aprUnit": "decimal",\n' +
+    '  "data": {\n' +
+    '    "monthlyIncome": 7200,\n' +
+    '    "monthlyExpenses": 4500,\n' +
+    '    "extraMonthlyPayment": 50,\n' +
+    '    "chunkAmount": 0,\n' +
+    '    "loc": {\n' +
+    '      "limit": 25000,\n' +
+    '...',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL web Portfolio store successful replacement is already durable before subscribers observe the new active book
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:44:10
+    at test (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:32:37)
+    at Object.<anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-store-storage-tests.cjs:41:1)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+PASS web Portfolio store identical import does not publish state or rewrite storage
+3 real-store Portfolio persistence contracts failed. Memory Web Storage, not browser quota durability.

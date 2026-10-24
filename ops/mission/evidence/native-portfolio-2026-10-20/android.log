@@ -1,0 +1,7 @@
+
+> interest-shield-mobile@0.1.0 smoke:android-bundle
+> node scripts/smoke-android-bundle.cjs
+
+Android bundle export smoke passed.
+Output: C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\dist-android
+Bundle files: _expo\static\js\android\entry-ede180a91bd10cedf37dcae476547408.hbc

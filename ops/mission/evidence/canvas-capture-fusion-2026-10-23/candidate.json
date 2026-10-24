@@ -1,0 +1,122 @@
+{
+  "at": "2026-10-23T19:18:03.006Z",
+  "candidateStatus": "Local pre-push QA-only candidate; remote verification pending",
+  "baselineHead": "111aea97cdddfee8c942dc6a6e18661a28aa9def",
+  "baselineHeadVerified": false,
+  "latestVerifiedHead": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "latestVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6370542236",
+  "failedClockStatus": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6372381653",
+  "sourceInputs": 495,
+  "changedSources": [
+    "apps/web/scripts/canvas-overlay-tests.cjs",
+    "apps/web/scripts/test-three-stage.cjs"
+  ],
+  "runtimeUnchanged": 13,
+  "assetsUnchanged": 20,
+  "productionCodeChanged": false,
+  "cpu": {
+    "red": "21 passed;2 intended assertions on unchanged capture source. Initial wrong-geometry fixture20/3 is retained.",
+    "green": 25,
+    "behaviorMutationsRejected": 9
+  },
+  "sourceReview": {
+    "id": "review-009fc5a5-979a-4700-8757-12d0a393dc8e",
+    "independentChecks": 54,
+    "mutationRejections": 13,
+    "guardedHelperExit": 0,
+    "findings": 0,
+    "clearanceSha256": "403d4b783b073d0f529191f88e5534645982240a6bb04230e77ab9ae60005a14",
+    "preservedFailures": "Initial independent review52/53 and Windows launcher quoting failure are retained; corrected54/54 was not a clean first attempt.",
+    "validationRuling": {
+      "broader29OrHouseVideoRequiredForThisQaOnlyChange": false,
+      "waiver": false,
+      "required": [
+        "Full web CPU suite, lint and types.",
+        "Fresh built Money Loop18 normal actions, six selection workflows and reduced motion on a provenance-bound build.",
+        "Both complete exact-new-head three-job CI events, every step and a known automatic READY deployment."
+      ]
+    }
+  },
+  "focused": [
+    {
+      "name": "web-tests",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "media-tests",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-lint",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-types",
+      "status": 0,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "built": {
+    "id": "2552857e-b57f-4e47-b5ab-bbc9975f7777",
+    "webCopies": 228,
+    "buildId": "RRxAP9eoRUSLTR4W7LF7C",
+    "newBuildPerformed": false,
+    "normalActions": 18,
+    "additionalSelectionWorkflows": 6,
+    "reducedMotionPassed": true,
+    "ownedProcesses": 59,
+    "activeAfterCleanup": 0,
+    "changedInheritedBuildOutputs": [],
+    "scope": "Current QA scripts against an exact copy of the source-bound production build. Not a new build or full29 local rerun. Unrelated app, media, native and backend inputs are unchanged."
+  },
+  "priorClock": {
+    "local29Passed": true,
+    "hosted15Passed": true,
+    "workflowLayouts": 210,
+    "servedAssets": 20,
+    "manualHeroStates": 10,
+    "pushCi": "failed40002265265attempt1",
+    "prCi": "passed40002270993attempt1",
+    "verified": false
+  },
+  "carStudy": {
+    "disposition": "both-arms-not-adopted",
+    "viewedOriginals": 18,
+    "graphicsComparison": {
+      "id": "58bf4229-0659-4e44-8844-8f2698305f36",
+      "status": "completed",
+      "ownedProcesses": 39,
+      "activeAfterCleanup": 0,
+      "contexts": 6,
+      "calls": 214,
+      "triangles": 269942,
+      "textures": 15,
+      "physicalApproval": false
+    },
+    "cli": {
+      "id": "46683bc5-269d-4103-a138-a8ed0af0d5ff",
+      "status": "failed",
+      "fixturesRun": 1,
+      "fixturesNotRun": 5,
+      "ownedProcesses": 11,
+      "activeAfterCleanup": 0
+    },
+    "strongerSafetyCounterexamples": 4,
+    "productChanged": false
+  },
+  "nextRequired": [
+    "One focused tested-tip push to existing draftPR256 after exactcommitted/workingbytechecks.",
+    "Bothcomplete new exact-headCI/allthreejobs/allsteps/sourceguards and knownautomaticgitREADY binding; keep111failure.",
+    "Currentremote evidence before claiming thisboundedQAcheckpointverified. No merge orproductionpromotion."
+  ],
+  "productionReady": false,
+  "goalActive": true,
+  "prDraftOpen": true
+}

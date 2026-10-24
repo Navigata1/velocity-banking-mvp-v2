@@ -1,0 +1,6 @@
+prune: Removed types... Accessor (10)
+prune: Removed types... Accessor (102)
+prune: Removed types... Accessor (46)
+{"triangles":14100,"instantiated":27548,"meshes":28,"largest":[{"name":"P-Piping","triangles":2560},{"name":"P-Body","triangles":1352},{"name":"P-Shoulder-Strap","triangles":1028},{"name":"P-Strap-L","triangles":1016},{"name":"P-Buckle-L","triangles":864},{"name":"P-Strap-Keeper-L","triangles":864},{"name":"P-Key","triangles":792},{"name":"P-Paper-Front","triangles":608},{"name":"P-Paper-Back","triangles":608},{"name":"P-Flap","triangles":516}],"textures":[{"name":"P-Leather-Color","bytes":76032},{"name":"P-Leather-Normal","bytes":95180},{"name":"P-Leather-Roughness","bytes":1362},{"name":"P-Brass-Color","bytes":1018},{"name":"P-Brass-Normal","bytes":2348},{"name":"P-Brass-Roughness","bytes":810},{"name":"P-Steel-Color","bytes":1018},{"name":"P-Steel-Normal","bytes":2352},{"name":"P-Steel-Roughness","bytes":790}],"bytes":504492,"collection":10288298}
+{"jsonBytes":48168,"accessors":110,"bufferViews":102,"buffers":[{"byteLength":456296},{"byteLength":568116,"extensions":{"EXT_meshopt_compression":{"fallback":true}}}],"compressedGeometryBytes":275216}
+Refined Personal: 14100 unique/27548 instantiated triangles,9 maps,504492 bytes; public10288298 bytes.

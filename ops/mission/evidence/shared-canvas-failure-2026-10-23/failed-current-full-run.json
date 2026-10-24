@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-23T12:53:27.635Z",
+  "status": "fresh493-source-full-run-FAILED-stage7",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "pushed": false,
+  "productionReady": false,
+  "sourceCount": 493,
+  "webCopies": 226,
+  "fullRun": {
+    "id": "c7b6d6d0-f993-439d-bd0d-fa97ad6f2e7f",
+    "directory": ".superpowers/sdd/2026-10-23-shared-canvas-failure-evidence/full-gates-c7b6d6d0-f993-439d-bd0d-fa97ad6f2e7f",
+    "status": "failed",
+    "finishedAt": "2026-10-23T12:48:01.135Z",
+    "passedStages": [
+      "ci-contracts",
+      "runtime-contracts",
+      "sql-wiring",
+      "web-tests",
+      "web-lint",
+      "web-build"
+    ],
+    "failedStage": "three-stage",
+    "notRun": 22,
+    "allOwnedJobsClosed": true
+  },
+  "selection": {
+    "failedWorkflow": "desktop-rapid-return",
+    "passedOtherWorkflows": 5,
+    "contextCounts": {
+      "contextsOpened": 6,
+      "contextsClosed": 6
+    },
+    "error": "desktop-rapid-return clipped canvas PNG capture started with 34ms remaining: page.screenshot: Timeout 34ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n",
+    "timing": {
+      "label": "desktop-rapid-return",
+      "startedAt": 1792759667046,
+      "deadline": 1792759667746,
+      "phaseOriginElapsedMs": 244,
+      "phases": [
+        {
+          "name": "selection.settled.wait",
+          "startedAtMs": 0.04279999999926076,
+          "status": "passed",
+          "endedAtMs": 403.35699999999997,
+          "durationMs": 403.3142000000007
+        },
+        {
+          "name": "candidate.isolation",
+          "startedAtMs": 403.3690000000024,
+          "status": "passed",
+          "endedAtMs": 422.09660000000076,
+          "durationMs": 18.727599999998347
+        },
+        {
+          "name": "candidate.clip",
+          "startedAtMs": 422.1094000000012,
+          "status": "passed",
+          "endedAtMs": 422.1213000000025,
+          "durationMs": 0.011900000001332955
+        },
+        {
+          "name": "candidate.capture",
+          "timeoutMs": 34,
+          "deadline": 1792759667746,
+          "startedAtMs": 422.14190000000235,
+          "status": "failed",
+          "endedAtMs": 468.58179999999993,
+          "durationMs": 46.43989999999758
+        },
+        {
+          "name": "candidate.restore",
+          "startedAtMs": 468.64610000000175,
+          "status": "passed",
+          "endedAtMs": 533.397100000002,
+          "durationMs": 64.7510000000002
+        }
+      ]
+    },
+    "scope": "Observed screenshot timing miss, not established product/transport/CPU cause or House/math defect"
+  },
+  "canonicalVideo": {
+    "fixture": "7fe0fb53-466c-4093-bb4e-d12c0b5746a9",
+    "prepared": true,
+    "rendered": false
+  },
+  "limits": [
+    "No unchanged full rerun or inherited successful prefix permitted.",
+    "Original491 Portfolio missing Car canvas remains FAILED and separate/unexplained; six-case diagnostic remains NONCAUSAL.",
+    "No push, hosted, newactualmanual, canonicalrender, merge or deployment. GitHub6ff5568 remains verified."
+  ]
+}

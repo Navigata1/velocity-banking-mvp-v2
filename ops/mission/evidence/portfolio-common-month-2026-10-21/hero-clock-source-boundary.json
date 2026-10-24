@@ -1,0 +1,14 @@
+{
+  "verifiedAt": "2026-10-21T14:20:01.218Z",
+  "previousHead": "789ae25cc3feaefba942d26e1c1fbde02b747aaf",
+  "sourceCount": 293,
+  "changes": [
+    {
+      "file": "apps/web/scripts/smoke-heroes.cjs",
+      "before": "307ee07b810ee242f970729839cbab22f622a95a7da355954eba682ea586776f",
+      "after": "a1552ec29ec5693be3285cd4161dde70e27f910ce9a7c89048bf32cd8e397219"
+    }
+  ],
+  "unchanged": 292,
+  "productionReady": false
+}

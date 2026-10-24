@@ -1,0 +1,277 @@
+TAP version 13
+# Subtest: Car Mechanical normal preserves original full-resolution RGB
+not ok 1 - Car Mechanical normal preserves original full-resolution RGB
+  ---
+  duration_ms: 70.7557
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:31:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    normal data must match pinned original pixels
+    + actual - expected
+    
+    + '18abfeeb63db8a48b378407bed70b782b93a5c380e7be38538f5035c5b38d6bb'
+    - '94f38d35a8cec24cc624a636bc5ffa95b1d8831e77ae007c3e86648f68684816'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '94f38d35a8cec24cc624a636bc5ffa95b1d8831e77ae007c3e86648f68684816'
+  actual: '18abfeeb63db8a48b378407bed70b782b93a5c380e7be38538f5035c5b38d6bb'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:37:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Car Interior 1 normal preserves original full-resolution RGB
+not ok 2 - Car Interior 1 normal preserves original full-resolution RGB
+  ---
+  duration_ms: 24.259
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:31:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    normal data must match pinned original pixels
+    + actual - expected
+    
+    + '520029409ca306c527f52b8dcdc5d4fe97230f0923e369d6813a23f52d449842'
+    - '0d1c358c3355bba2e4d4fe981644ce6bde6cf69495b62cb10867831b53e58cd3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '0d1c358c3355bba2e4d4fe981644ce6bde6cf69495b62cb10867831b53e58cd3'
+  actual: '520029409ca306c527f52b8dcdc5d4fe97230f0923e369d6813a23f52d449842'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:37:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car Interior 2 normal preserves original full-resolution RGB
+not ok 3 - Car Interior 2 normal preserves original full-resolution RGB
+  ---
+  duration_ms: 27.3194
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:31:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    normal data must match pinned original pixels
+    + actual - expected
+    
+    + 'a1b03cbafaf53e616b0452ff4d7e5b85cf45d596061e20becb449d0c6ddcaf8a'
+    - '35bc19e9728db6b7aac623cafc9fe5e3350e08fbe0acd25014d627ad4b79df48'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '35bc19e9728db6b7aac623cafc9fe5e3350e08fbe0acd25014d627ad4b79df48'
+  actual: 'a1b03cbafaf53e616b0452ff4d7e5b85cf45d596061e20becb449d0c6ddcaf8a'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:37:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car Disc normal preserves original full-resolution RGB
+not ok 4 - Car Disc normal preserves original full-resolution RGB
+  ---
+  duration_ms: 54.235
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:31:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    normal data must match pinned original pixels
+    + actual - expected
+    
+    + '9505af88c394f18ea9e2bb7cd381595bc6b0ca3616b16f2907c7568da67daa2e'
+    - '166b768e816839ef1c75381037d222c0aa5dd23145a726306a78b37f4acd89c7'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '166b768e816839ef1c75381037d222c0aa5dd23145a726306a78b37f4acd89c7'
+  actual: '9505af88c394f18ea9e2bb7cd381595bc6b0ca3616b16f2907c7568da67daa2e'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:37:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car Tiretread normal preserves original full-resolution RGB
+not ok 5 - Car Tiretread normal preserves original full-resolution RGB
+  ---
+  duration_ms: 31.2908
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:31:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    normal data must match pinned original pixels
+    + actual - expected
+    
+    + '90c0521862bfff6148e321da83e3a79d4831267717a670c810b172d076210d75'
+    - 'ff08861bab392eb1e495e36827ebd7097cee3ee9d8bb1831bfe21fdf62f9e0e4'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ff08861bab392eb1e495e36827ebd7097cee3ee9d8bb1831bfe21fdf62f9e0e4'
+  actual: '90c0521862bfff6148e321da83e3a79d4831267717a670c810b172d076210d75'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:37:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car delivers only referenced images and preserves required extension semantics
+not ok 6 - Car delivers only referenced images and preserves required extension semantics
+  ---
+  duration_ms: 19.9277
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    13 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 13
+  operator: 'strictEqual'
+  stack: |-
+    references (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:42:10)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:53:96)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car reference verifier rejects orphan, dangling and stripped-required variants
+not ok 7 - Car reference verifier rejects orphan, dangling and stripped-required variants
+  ---
+  duration_ms: 20.3386
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:54:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    13 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 13
+  operator: 'strictEqual'
+  stack: |-
+    references (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:42:10)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:55:28)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car normal bindings retain source sampling, transforms and authored zero strength
+ok 8 - Car normal bindings retain source sampling, transforms and authored zero strength
+  ---
+  duration_ms: 21.375
+  type: 'test'
+  ...
+# Subtest: Car normal repair retains all existing compressed geometry payloads
+ok 9 - Car normal repair retains all existing compressed geometry payloads
+  ---
+  duration_ms: 24.0583
+  type: 'test'
+  ...
+# Subtest: Car cleanup refuses wrong-image without disposing live resources
+not ok 10 - Car cleanup refuses wrong-image without disposing live resources
+  ---
+  duration_ms: 12.1637
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:88:77'
+  failureType: 'testCodeFailure'
+  error: 'a fail-closed cleanup boundary must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    cleanup (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:85:10)
+    async TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:89:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car cleanup refuses required-extension without disposing live resources
+not ok 11 - Car cleanup refuses required-extension without disposing live resources
+  ---
+  duration_ms: 3.7203
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:88:77'
+  failureType: 'testCodeFailure'
+  error: 'a fail-closed cleanup boundary must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    cleanup (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:85:10)
+    async TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:89:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car cleanup refuses live-extension without disposing live resources
+not ok 12 - Car cleanup refuses live-extension without disposing live resources
+  ---
+  duration_ms: 3.0859
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:88:77'
+  failureType: 'testCodeFailure'
+  error: 'a fail-closed cleanup boundary must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    cleanup (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:85:10)
+    async TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:89:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car remeasures aggregate bytes inside its locked publication callback
+not ok 13 - Car remeasures aggregate bytes inside its locked publication callback
+  ---
+  duration_ms: 5.1519
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:111:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async verifyPublication (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:109:14)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Car publication verifier rejects removed and stale-total guard mutations
+not ok 14 - Car publication verifier rejects removed and stale-total guard mutations
+  ---
+  duration_ms: 3.2019
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\car-normal-data.test.mjs:112:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async verifyPublication (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:109:14)
+    async TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/car-normal-data.test.mjs:113:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 2
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 535.05

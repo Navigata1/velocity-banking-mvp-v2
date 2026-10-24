@@ -18,7 +18,8 @@ const padBottom = 30;
 const baselineY = chartHeight - padBottom;
 
 function formatMonths(months: number): string {
-  if (!Number.isFinite(months) || months <= 0) return 'Needs review';
+  if (!Number.isFinite(months) || months < 0) return 'Needs review';
+  if (months === 0) return 'Paid off';
 
   const years = Math.floor(months / 12);
   const remainingMonths = months % 12;
@@ -92,7 +93,8 @@ export default function PortfolioPayoffPath({ model }: PortfolioPayoffPathProps)
           <h2 className={`mt-1 text-xl font-bold ${classes.text}`}>Balance descent</h2>
           <p className={`mt-2 max-w-xl text-sm leading-6 ${classes.textSecondary}`}>
             {model.isProjected
-              ? `Modeled from ${formatCurrency(model.startingBalance)} to ${formatCurrency(model.endingBalance)} across ${formatMonths(model.payoffMonths)}.`
+              ? model.payoffMonths === 0 ? 'All modeled balances are cleared.'
+                : `Modeled from ${formatCurrency(model.startingBalance)} to ${formatCurrency(model.endingBalance)} across ${formatMonths(model.payoffMonths)}.`
               : 'Resolve the warning inputs before trusting a payoff path.'}
           </p>
         </div>
@@ -173,9 +175,7 @@ export default function PortfolioPayoffPath({ model }: PortfolioPayoffPathProps)
           </div>
           <div className={`${classes.glassButton} rounded-xl border ${classes.border} p-3`}>
             <p className={`text-[11px] font-semibold uppercase ${classes.textMuted}`}>Modeled progress</p>
-            <p className={`mt-1 text-lg font-bold ${model.isProjected ? 'text-emerald-300' : 'text-amber-200'}`}>
-              {Math.round(progressPercent)}%
-            </p>
+            <p data-testid="portfolio-path-progress" className={`mt-1 text-lg font-bold ${model.isProjected ? 'text-emerald-300' : 'text-amber-200'}`}>{model.isProjected ? `${Math.round(progressPercent)}%` : 'Not projected'}</p>
           </div>
           <div className={`${classes.glassButton} rounded-xl border ${classes.border} p-3`}>
             <p className={`text-[11px] font-semibold uppercase ${classes.textMuted}`}>Interest estimate</p>

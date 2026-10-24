@@ -1,0 +1,11 @@
+car: preserving imported refined asset
+house: 132 parts, 68556 triangles, 1192 KiB
+land: 155 parts, 53984 triangles, 155 KiB
+creditCard: 68 parts, 42356 triangles, 536 KiB
+studentLoan: 52 parts, 39396 triangles, 877 KiB
+medical: 15 parts, 7772 triangles, 356 KiB
+personal: 95 parts, 56988 triangles, 567 KiB
+recreation: 32 parts, 28656 triangles, 872 KiB
+custom: 81 parts, 45976 triangles, 255 KiB
+vault: preserving imported refined asset
+PASS clean study regeneration preserves all ten GLB hashes and collection order

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-24T15:23:26.993Z",
+  "head": "72cca256b8298863dc7af665e725c4dec1354887",
+  "task": "R0-T12",
+  "status": "BOUNDED_RETENTION_IMPLEMENTATION_VERIFIED",
+  "artifactId": 12564090765,
+  "run": 40102334507,
+  "zipBytes": 2501403,
+  "zipSHA256": "59bd6062e18d9cf9731819f875f26e04c9c093d05b731604330e4d2c08edb90c",
+  "entries": 18,
+  "failurePhase": "selection-workflows",
+  "finerContext": "UNKNOWN",
+  "inventedFailedCandidate": false,
+  "failedCandidatePNG": false,
+  "strictWorkflows": {
+    "failed": 1,
+    "passed": 5
+  },
+  "existingPNGsDecoded": 16,
+  "reportedSelectionHashesMatched": 13,
+  "receiptSHA256": "c271417894744cc1ff7bdba9bfd2b6b1efc833aedab55149de37ea90fbf1e87d",
+  "separateControlledNegative": "ActualearlycandidatePNGretentionverifiedlocally;oldfailure-retentiongapclosed",
+  "originalCI": "HOLD:pushsuccess/PRfailure",
+  "timingCause": "UNKNOWN",
+  "performanceFixed": false,
+  "productionReady": false
+}

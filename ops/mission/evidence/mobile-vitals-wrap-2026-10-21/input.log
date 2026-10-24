@@ -1,0 +1,5 @@
+Portfolio input fixtures against existing built web app at http://127.0.0.1:54590; isolated 375/1440/280/1264px contexts.
+PASS precise Portfolio inputs 375px
+PASS precise Portfolio inputs 1440px
+PASS precise Portfolio inputs 280px
+PASS precise Portfolio inputs 1264px

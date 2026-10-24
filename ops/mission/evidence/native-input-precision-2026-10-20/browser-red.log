@@ -1,0 +1,17 @@
+
+> interest-shield-mobile@0.1.0 smoke:accessibility:built
+> node scripts/smoke-accessibility-rendered.cjs
+
+AssertionError [ERR_ASSERTION]: native debt balance must display saved cents
+
+'121' !== '120.7'
+
+    at verifyFinancialInputs (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\financial-input-smoke.cjs:33:14)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\scripts\smoke-accessibility-rendered.cjs:141:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '121',
+  expected: '120.7',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

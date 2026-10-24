@@ -1,19 +1,39 @@
 import {
   calculateADBInterest,
+  assessForecastBasis,
+  decodeLenderTerms,
+  type ForecastBasis,
+  type LenderForecastFailureReason,
   calculateAmortizationPayment,
   calculateCashFlow,
   calculateDailyInterest,
   calculateDailyRate,
+  calculateRequiredDebtPayment,
   calculateTotalAmortizationInterest,
+  compareMortgageRepayment,
   formatCurrency,
   simulateAmortizedPayoff,
+  simulateDirectRepayment,
+  type DirectRepaymentStrategy,
   type LOCDetails,
+  type MortgageComparisonResult,
+  type MortgageRepaymentInputs,
+  type LOCProjectionLimitBreach,
+  LOC_PROJECTION_OVER_LIMIT_WARNING,
 } from '@interestshield/financial-engine';
 import {
   simulateMoneyLoopMonth,
   simulateMoneyLoopPayoff,
   type MoneyLoopMonthlyResult,
 } from './money-loop';
+
+export {
+  SIMULATOR_COMPARISON_SCOPE,
+  SIMULATOR_COMPARISON_ASSUMPTIONS,
+  SIMULATOR_COMPARISON_TIMING,
+  LOC_PROJECTION_OVER_LIMIT_LABEL,
+  LOC_PROJECTION_OVER_LIMIT_WARNING,
+} from '@interestshield/financial-engine';
 
 export {
   calculateADBInterest,
@@ -95,23 +115,29 @@ export interface MonthlyResult {
   locInterest: number;
   cashFlow: number;
   events?: SimulationEvent[];
+  cashBalance?: number;
 }
 
 export type PayoffFailureReason =
+  | LenderForecastFailureReason
   | 'payment-below-interest'
   | 'negative-cashflow'
   | 'cashflow-below-minimums'
+  | 'invalid-routing'
   | 'loc-setup'
   | 'loc-no-capacity'
   | 'loc-overlimit'
+  | 'loc-projection-overlimit'
   | 'payoff-horizon-exceeded';
 
 export interface PayoffSimulation {
+  forecastBasis?: ForecastBasis;
   payoffMonths: number;
   totalInterest: number;
   monthlyData: MonthlyResult[];
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
 }
 
 export interface SimulationResult {
@@ -128,20 +154,24 @@ export interface Warning {
     | 'negative-cashflow'
     | 'cashflow-below-minimums'
     | 'loc-overlimit'
+    | 'loc-projection-overlimit'
     | 'loc-no-capacity'
     | 'loc-overutilization'
     | 'negative-amortization'
     | 'payment-too-low'
+    | 'lender-terms'
     | 'no-loc';
   severity: 'info' | 'warning' | 'critical';
   message: string;
 }
 
 export interface MultiDebtResult {
+  forecastBasis?: ForecastBasis;
   strategy: 'velocity' | 'snowball' | 'avalanche';
   debts: DebtPayoffResult[];
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  locLimitBreach?: LOCProjectionLimitBreach;
   totalInterestPaid: number;
   locInterestPaid: number;
   moneyLoopMonthlyData: MoneyLoopMonthlyResult[];
@@ -150,7 +180,7 @@ export interface MultiDebtResult {
   totalMonths: number;
   baselineTotalMonths: number;
   monthsSaved: number;
-  freedomDate: Date;
+  freedomDate: Date | null;
   warnings: Warning[];
 }
 
@@ -173,6 +203,7 @@ export interface SingleDebtStrategyResult {
   totalInterest: number;
   isPayoffPossible: boolean;
   failureReason?: PayoffFailureReason;
+  endingCash: number;
 }
 
 // ─── Core Math ───────────────────────────────────────────────────────
@@ -194,6 +225,7 @@ function sanitizeLoc(loc: LOCDetails | undefined): LOCDetails | undefined {
     limit: safeNonNegative(loc.limit),
     apr: safeNonNegative(loc.apr),
     balance: safeNonNegative(loc.balance),
+    ...(loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(loc.lenderTerms) }),
   };
 }
 
@@ -239,6 +271,9 @@ export function generateWarnings(
   const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
   const safeLoc = sanitizeLoc(loc);
   const safeDebts = debts?.map(sanitizeDebtItem);
+  const forecastBasis = assessForecastBasis(safeLoc?.lenderTerms);
+  if (!forecastBasis.canProject) warnings.push({ type: 'lender-terms', severity: 'warning',
+    message: `${forecastBasis.label}. Supplied lender terms are retained but are not enforced by the monthly model.` });
   const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
 
   if (cashFlow <= 0) {
@@ -330,6 +365,9 @@ export function generateWarnings(
 // ─── Baseline Simulation (Standard Amortization) ─────────────────────
 
 export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
   const projection = simulateAmortizedPayoff({
@@ -341,6 +379,7 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
 
   return {
     payoffMonths: projection.payoffMonths,
+    forecastBasis,
     totalInterest: projection.totalInterest,
     monthlyData: projection.monthlyData.map((month) => ({
       month: month.month,
@@ -369,6 +408,9 @@ export function simulateBaseline(inputs: SimulationInputs): PayoffSimulation {
  * LOC balance increases by chunk amount, then gets paid down by cash flow over time.
  */
 export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
+  const forecastBasis = assessForecastBasis(inputs.loc?.lenderTerms);
+  if (!forecastBasis.canProject) return { forecastBasis, payoffMonths: 0, totalInterest: 0,
+    monthlyData: [], isPayoffPossible: false, failureReason: forecastBasis.reason };
   const safeInputs = sanitizeSimulationInputs(inputs);
 
   if (!safeInputs.loc) {
@@ -417,7 +459,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  if (cashFlow < safeInputs.carLoan.monthlyPayment) {
+  if (cashFlow + 1e-8 < calculateRequiredDebtPayment(safeInputs.carLoan.balance, safeInputs.carLoan.apr, safeInputs.carLoan.monthlyPayment)) {
     return {
       payoffMonths: 0,
       totalInterest: 0,
@@ -427,7 +469,7 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
     };
   }
 
-  const locCashFlowPaydown = Math.max(0, cashFlow - safeInputs.carLoan.monthlyPayment);
+  const locCashFlowPaydown = cashFlow - safeInputs.carLoan.monthlyPayment;
   const chunkAmount = Math.max(
     0,
     safeInputs.extraPayment > 0 ? safeInputs.extraPayment : Math.min(locCashFlowPaydown * 3, safeInputs.loc.limit * 0.4)
@@ -455,18 +497,26 @@ export function simulateVelocity(inputs: SimulationInputs): PayoffSimulation {
       locBalance: month.locBalance,
       carInterest: month.debtInterest,
       locInterest: month.locInterest,
-      cashFlow: locCashFlowPaydown,
+      cashFlow: month.cashFlowPaydown,
       events: month.events,
+      cashBalance: month.cashBalance,
     })),
     isPayoffPossible: moneyLoop.isPayoffPossible,
     failureReason: moneyLoop.failureReason,
+    ...(moneyLoop.locLimitBreach ? { locLimitBreach: moneyLoop.locLimitBreach } : {}),
   };
 }
 
 function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const cashFlow = safeInputs.monthlyIncome - safeInputs.monthlyExpenses;
-  const extraPayment = Math.min(Math.max(0, safeInputs.extraPayment), Math.max(0, cashFlow));
+  const requiredPayment = calculateRequiredDebtPayment(safeInputs.carLoan.balance, safeInputs.carLoan.apr, safeInputs.carLoan.monthlyPayment);
+  if (safeInputs.carLoan.balance > 0 && cashFlow + 1e-8 < requiredPayment) {
+    return { payoffMonths: 0, totalInterest: 0, monthlyData: [],
+      isPayoffPossible: false, failureReason: 'cashflow-below-minimums' };
+  }
+  const extraPayment = Math.min(Math.max(0, safeInputs.extraPayment),
+    Math.max(0, cashFlow - safeInputs.carLoan.monthlyPayment));
   const projection = simulateAmortizedPayoff({
     principalBalance: safeInputs.carLoan.balance,
     apr: safeInputs.carLoan.apr,
@@ -474,6 +524,7 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
     extraPayment,
     maxMonths: 600,
   });
+  let retainedCash = 0;
 
   return {
     payoffMonths: projection.payoffMonths,
@@ -484,7 +535,8 @@ function simulateWithExtraPayments(inputs: SimulationInputs): PayoffSimulation {
       locBalance: 0,
       carInterest: month.interest,
       locInterest: 0,
-      cashFlow: cashFlow - safeInputs.carLoan.monthlyPayment - extraPayment,
+      cashFlow: cashFlow - month.payment,
+      cashBalance: (retainedCash += cashFlow - month.payment),
     })),
     isPayoffPossible: projection.isPayoffPossible,
     failureReason: projection.failureReason,
@@ -514,6 +566,7 @@ export function simulateMultiDebt(
   const safeMonthlyExpenses = safeNonNegative(monthlyExpenses);
   const safeLoc = sanitizeLoc(loc);
   const safeChunkAmount = chunkAmount === undefined ? undefined : safeNonNegative(chunkAmount);
+  const forecastBasis = assessForecastBasis(safeLoc?.lenderTerms);
   const warnings = generateWarnings(safeMonthlyIncome, safeMonthlyExpenses, safeLoc, safeDebts);
   const cashFlow = safeMonthlyIncome - safeMonthlyExpenses;
   const totalMinPayments = safeDebts.reduce((sum, d) => sum + d.monthlyPayment, 0);
@@ -545,6 +598,7 @@ export function simulateMultiDebt(
 
     return {
       strategy,
+      forecastBasis,
       debts: invalidDebtResults,
       isPayoffPossible: false,
       failureReason,
@@ -556,10 +610,12 @@ export function simulateMultiDebt(
       totalMonths: 0,
       baselineTotalMonths: baselineMaxMonths,
       monthsSaved: 0,
-      freedomDate: new Date(),
+      freedomDate: null,
       warnings,
     };
   };
+
+  if (!forecastBasis.canProject) return buildInvalidResult(forecastBasis.reason);
 
   const underInterestDebt = safeDebts.find((debt) => {
     const monthlyInterest = debt.balance * calculateMonthlyRate(debt.apr);
@@ -615,6 +671,7 @@ export function simulateMultiDebt(
   }
 
   let locBalance = safeLoc?.balance ?? 0;
+  let locCashBalance = 0;
   let locInterestPaid = 0;
   const moneyLoopMonthlyData: MoneyLoopMonthlyResult[] = [];
   let month = 0;
@@ -623,6 +680,8 @@ export function simulateMultiDebt(
     0,
     safeChunkAmount ?? Math.min(Math.max(0, cashFlow) * 3, (safeLoc?.limit ?? 0) * 0.4)
   );
+  let projectedLocOverLimit = false;
+  let locLimitBreach: LOCProjectionLimitBreach | undefined;
 
   while (month < 600) {
     const allPaidOff = sortedDebts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
@@ -630,6 +689,12 @@ export function simulateMultiDebt(
     if (allPaidOff && !hasOutstandingVelocityLoc) break;
 
     month++;
+
+    const monthStart = strategy === 'velocity' && safeLoc ? {
+      balances: new Map(balances), interestPaid: new Map(interestPaid), payoffMonths: new Map(payoffMonths),
+      details: new Map([...monthlyDetails].map(([id, rows]) => [id, rows.length])),
+      locBalance, locCashBalance, locInterestPaid, loopLength: moneyLoopMonthlyData.length,
+    } : null;
 
     let freedPayments = 0;
     let usedMoneyLoopThisMonth = false;
@@ -671,9 +736,11 @@ export function simulateMultiDebt(
           locDepositAmount: safeMonthlyIncome,
           locExpenseAmount: safeMonthlyExpenses + focusPayment + otherActivePayments,
           monthsSinceChunk,
+          cashBalance: locCashBalance,
         });
 
         locBalance = monthResult.locBalance;
+        locCashBalance = monthResult.cashBalance;
         locInterestPaid += monthResult.locInterest;
         monthsSinceChunk = monthResult.monthsSinceChunk;
         balances.set(d.id, monthResult.debtBalance);
@@ -693,6 +760,7 @@ export function simulateMultiDebt(
           locInterestMethod: monthResult.locInterestMethod,
           cashFlowPaydown: monthResult.cashFlowPaydown,
           events: monthResult.events,
+          cashBalance: monthResult.cashBalance,
         });
         usedMoneyLoopThisMonth = true;
 
@@ -737,8 +805,27 @@ export function simulateMultiDebt(
       locInterestPaid += locInterest;
       locBalance = Math.max(0, locBalance - cashFlow + locInterest);
     }
+    if (strategy === 'velocity' && safeLoc && monthStart && locBalance > safeLoc.limit) {
+      projectedLocOverLimit = true;
+      if (Number.isFinite(locBalance)) locLimitBreach = { month, balance: locBalance, limit: safeLoc.limit };
+      // Commit no sibling rows or payoff events from an unfunded modeled month.
+      for (const debt of safeDebts) {
+        balances.set(debt.id, monthStart.balances.get(debt.id)!);
+        interestPaid.set(debt.id, monthStart.interestPaid.get(debt.id)!);
+        payoffMonths.set(debt.id, monthStart.payoffMonths.get(debt.id)!);
+        monthlyDetails.get(debt.id)!.length = monthStart.details.get(debt.id)!;
+      }
+      locBalance = monthStart.locBalance; locCashBalance = monthStart.locCashBalance; locInterestPaid = monthStart.locInterestPaid;
+      moneyLoopMonthlyData.length = monthStart.loopLength;
+      month--;
+      warnings.push({ type: 'loc-projection-overlimit', severity: 'critical', message: LOC_PROJECTION_OVER_LIMIT_WARNING });
+      break;
+    }
   }
 
+  const debtsPaidOff = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
+  const velocityLocRecovered = strategy !== 'velocity' || !loc || locBalance <= 0.01;
+  const isPayoffPossible = !projectedLocOverLimit && debtsPaidOff && velocityLocRecovered;
   // Compile results
   const debtResults: DebtPayoffResult[] = safeDebts.map(d => {
     const baseline = baselineResults.find(b => b.id === d.id)!;
@@ -752,32 +839,30 @@ export function simulateMultiDebt(
       baselinePayoffMonths: baseline.payoffMonths,
       totalInterest: totalInt,
       baselineInterest: baseline.totalInterest,
-      interestSaved: Math.max(0, baseline.totalInterest - totalInt),
+      interestSaved: isPayoffPossible ? Math.max(0, baseline.totalInterest - totalInt) : 0,
       monthlyData: monthlyDetails.get(d.id) ?? [],
     };
   });
 
   const debtInterest = debtResults.reduce((s, d) => s + d.totalInterest, 0);
   const totalInterest = debtInterest + (strategy === 'velocity' ? locInterestPaid : 0);
-  const debtsPaidOff = debts.every(d => (balances.get(d.id) ?? 0) <= 0.01);
-  const velocityLocRecovered = strategy !== 'velocity' || !loc || locBalance <= 0.01;
-  const isPayoffPossible = debtsPaidOff && velocityLocRecovered;
-  const freedomDate = new Date();
-  freedomDate.setMonth(freedomDate.getMonth() + month);
+  const freedomDate = isPayoffPossible ? new Date() : null;
+  freedomDate?.setMonth(freedomDate.getMonth() + month);
 
   return {
     strategy,
     debts: debtResults,
     isPayoffPossible,
-    failureReason: isPayoffPossible ? undefined : 'payoff-horizon-exceeded',
+    failureReason: isPayoffPossible ? undefined : projectedLocOverLimit ? 'loc-projection-overlimit' : 'payoff-horizon-exceeded',
+    ...(locLimitBreach ? { locLimitBreach } : {}),
     totalInterestPaid: totalInterest,
     locInterestPaid: strategy === 'velocity' ? locInterestPaid : 0,
     moneyLoopMonthlyData: strategy === 'velocity' ? moneyLoopMonthlyData : [],
     baselineTotalInterest: baselineTotal,
-    totalInterestSaved: Math.max(0, baselineTotal - totalInterest),
+    totalInterestSaved: isPayoffPossible ? Math.max(0, baselineTotal - totalInterest) : 0,
     totalMonths: month,
     baselineTotalMonths: baselineMaxMonths,
-    monthsSaved: Math.max(0, baselineMaxMonths - month),
+    monthsSaved: isPayoffPossible ? Math.max(0, baselineMaxMonths - month) : 0,
     freedomDate,
     warnings,
   };
@@ -806,9 +891,29 @@ function simulateBaselineDebt(debt: DebtItem): {
 
 // ─── Legacy API (backwards compatible) ───────────────────────────────
 
+function simulateDirectComparison(inputs: SimulationInputs, strategy: DirectRepaymentStrategy): PayoffSimulation {
+  const projection = simulateDirectRepayment({
+    principalBalance: inputs.carLoan.balance,
+    debtApr: inputs.carLoan.apr,
+    debtPayment: inputs.carLoan.monthlyPayment,
+    loc: inputs.loc,
+    monthlyBudget: inputs.monthlyIncome - inputs.monthlyExpenses,
+    strategy,
+  });
+  return {
+    ...projection,
+    monthlyData: projection.monthlyData.map((row) => ({
+      month: row.month, carBalance: row.debtBalance, locBalance: row.locBalance,
+      carInterest: row.debtInterest, locInterest: row.locInterest,
+      cashFlow: inputs.monthlyIncome - inputs.monthlyExpenses,
+      cashBalance: row.cashBalance,
+    })),
+  };
+}
+
 export function runSimulation(inputs: SimulationInputs): SimulationResult {
   const safeInputs = sanitizeSimulationInputs(inputs);
-  const baseline = simulateBaseline(safeInputs);
+  const baseline = simulateDirectComparison(safeInputs, 'debt-first');
   const velocity = simulateVelocity(safeInputs);
   const canCompareSavings = baseline.isPayoffPossible && velocity.isPayoffPossible;
   const warnings = generateWarnings(
@@ -816,13 +921,16 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
     safeInputs.monthlyExpenses,
     safeInputs.loc,
   );
+  if (velocity.failureReason === 'loc-projection-overlimit') {
+    warnings.push({ type: 'loc-projection-overlimit', severity: 'critical', message: LOC_PROJECTION_OVER_LIMIT_WARNING });
+  }
 
   return {
     baseline,
     velocity: {
       ...velocity,
-      interestSaved: canCompareSavings ? Math.max(0, baseline.totalInterest - velocity.totalInterest) : 0,
-      monthsSaved: canCompareSavings ? Math.max(0, baseline.payoffMonths - velocity.payoffMonths) : 0,
+      interestSaved: canCompareSavings ? baseline.totalInterest - velocity.totalInterest : 0,
+      monthsSaved: canCompareSavings ? baseline.payoffMonths - velocity.payoffMonths : 0,
     },
     warnings,
   };
@@ -831,17 +939,8 @@ export function runSimulation(inputs: SimulationInputs): SimulationResult {
 export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDebtStrategyResult[] {
   const safeInputs = sanitizeSimulationInputs(inputs);
   const simulation = runSimulation(safeInputs);
-  const surplusAfterMinimum = Math.max(
-    0,
-    safeInputs.monthlyIncome - safeInputs.monthlyExpenses - safeInputs.carLoan.monthlyPayment
-  );
-  const acceleratedInputs: SimulationInputs = {
-    ...safeInputs,
-    loc: undefined,
-    useVelocity: false,
-    extraPayment: surplusAfterMinimum,
-  };
-  const accelerated = simulateVelocity(acceleratedInputs);
+  const snowball = simulateDirectComparison(safeInputs, 'snowball');
+  const avalanche = simulateDirectComparison(safeInputs, 'avalanche');
 
   return [
     {
@@ -850,20 +949,23 @@ export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDeb
       totalInterest: simulation.baseline.totalInterest,
       isPayoffPossible: simulation.baseline.isPayoffPossible,
       failureReason: simulation.baseline.failureReason,
+      endingCash: simulation.baseline.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Snowball',
-      months: accelerated.payoffMonths,
-      totalInterest: accelerated.totalInterest,
-      isPayoffPossible: accelerated.isPayoffPossible,
-      failureReason: accelerated.failureReason,
+      months: snowball.payoffMonths,
+      totalInterest: snowball.totalInterest,
+      isPayoffPossible: snowball.isPayoffPossible,
+      failureReason: snowball.failureReason,
+      endingCash: snowball.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Avalanche',
-      months: accelerated.payoffMonths,
-      totalInterest: accelerated.totalInterest,
-      isPayoffPossible: accelerated.isPayoffPossible,
-      failureReason: accelerated.failureReason,
+      months: avalanche.payoffMonths,
+      totalInterest: avalanche.totalInterest,
+      isPayoffPossible: avalanche.isPayoffPossible,
+      failureReason: avalanche.failureReason,
+      endingCash: avalanche.monthlyData.at(-1)?.cashBalance ?? 0,
     },
     {
       name: 'Velocity',
@@ -871,6 +973,7 @@ export function compareSingleDebtStrategies(inputs: SimulationInputs): SingleDeb
       totalInterest: simulation.velocity.totalInterest,
       isPayoffPossible: simulation.velocity.isPayoffPossible,
       failureReason: simulation.velocity.failureReason,
+      endingCash: simulation.velocity.monthlyData.at(-1)?.cashBalance ?? 0,
     },
   ];
 }
@@ -1112,57 +1215,15 @@ export function generateAmortizationBreakdown(
 
 // ─── Strategy Comparison ─────────────────────────────────────────────
 
-interface MortgagePaymentProjection {
-  months: number;
-  totalInterest: number;
-  isPayoffPossible: boolean;
-  failureReason?: PayoffFailureReason;
-}
-
-interface MortgageStrategyProjection extends MortgagePaymentProjection {
-  saved: number;
-  monthsSaved: number;
-}
-
-export interface StrategyComparisonResult {
-  standard: MortgagePaymentProjection & { payoffDate: string };
-  biweekly: MortgageStrategyProjection;
-  extraPayment: MortgageStrategyProjection & { extraAmount: number };
-  velocity: MortgageStrategyProjection & { chunkSize: number };
-}
-
-function simulateMortgagePaymentPlan(
-  balance: number,
-  apr: number,
-  monthlyPayment: number,
-  maxMonths: number
-): MortgagePaymentProjection {
-  const projection = simulateAmortizedPayoff({
-    principalBalance: balance,
-    apr,
-    monthlyPayment,
-    maxMonths,
-  });
-
-  return {
-    months: projection.payoffMonths,
-    totalInterest: projection.totalInterest,
-    isPayoffPossible: projection.isPayoffPossible,
-    failureReason: projection.failureReason,
-  };
+export interface StrategyComparisonResult extends MortgageComparisonResult {
+  standard: MortgageComparisonResult['standard'] & { payoffDate: string };
 }
 
 export function compareMortgageStrategies(
   input: MortgageAnalysisInput,
-  cashFlow: number,
+  cashFlow: number | Pick<MortgageRepaymentInputs, 'monthlyIncome' | 'monthlyExpenses'>,
   loc: LOCDetails
 ): StrategyComparisonResult {
-  const safeCashFlow = Number.isFinite(cashFlow) ? cashFlow : 0;
-  const safeLoc: LOCDetails = {
-    limit: Number.isFinite(loc.limit) ? Math.max(0, loc.limit) : 0,
-    apr: Number.isFinite(loc.apr) ? Math.max(0, loc.apr) : 0,
-    balance: Number.isFinite(loc.balance) ? Math.max(0, loc.balance) : 0,
-  };
   const originalTermMonths = (Number.isFinite(input.originalTermYears) ? Math.max(0, input.originalTermYears) : 0) * 12;
   const purchaseAnalysis = input.entryMode === 'purchase' ? calculateMortgageAnalysis(input) : null;
   const balance = purchaseAnalysis
@@ -1191,147 +1252,19 @@ export function compareMortgageStrategies(
       : calculateAmortizationPayment(balance, rate, remainingMonths);
   const payoffHorizonMonths = Math.max(remainingMonths * 4, originalTermMonths, 1200);
 
-  const standard = simulateMortgagePaymentPlan(balance, rate, payment, payoffHorizonMonths);
-  const standardMonths = standard.isPayoffPossible ? standard.months : remainingMonths;
-  const standardDate = standard.isPayoffPossible ? formatDate(standard.months) : 'Not projected';
-
-  if (!standard.isPayoffPossible) {
-    const invalidProjection: MortgagePaymentProjection = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: standard.failureReason,
-    };
-
-    return {
-      standard: { ...standard, payoffDate: standardDate },
-      biweekly: {
-        ...invalidProjection,
-        saved: 0,
-        monthsSaved: 0,
-      },
-      extraPayment: {
-        ...invalidProjection,
-        saved: 0,
-        monthsSaved: 0,
-        extraAmount: 0,
-      },
-      velocity: {
-        ...invalidProjection,
-        saved: 0,
-        monthsSaved: 0,
-        chunkSize: 0,
-      },
-    };
-  }
-
-  const calculateSavings = (projection: MortgagePaymentProjection) => ({
-    saved: standard.isPayoffPossible && projection.isPayoffPossible
-      ? Math.max(0, standard.totalInterest - projection.totalInterest)
-      : 0,
-    monthsSaved: standard.isPayoffPossible && projection.isPayoffPossible
-      ? Math.max(0, standardMonths - projection.months)
-      : 0,
+  // Numeric legacy callers supply a net-budget estimate; the route supplies gross flows.
+  const routing = typeof cashFlow === 'number'
+    ? { monthlyIncome: cashFlow, monthlyExpenses: 0 } : cashFlow;
+  const comparison = compareMortgageRepayment({
+    principalBalance: balance, debtApr: rate, debtPayment: payment,
+    loc, ...routing, maxMonths: payoffHorizonMonths,
   });
-
-  const extraMonthlyFromBiweekly = safeCashFlow > 0 ? Math.min(payment / 12, safeCashFlow) : 0;
-  const biweekly = simulateMortgagePaymentPlan(
-    balance,
-    rate,
-    payment + extraMonthlyFromBiweekly,
-    payoffHorizonMonths
-  );
-
-  const extraAmt = safeCashFlow > 0
-    ? Math.min(safeCashFlow, Math.max(safeCashFlow * 0.5, 200), 1000)
-    : 0;
-  const extraPayment = simulateMortgagePaymentPlan(
-    balance,
-    rate,
-    payment + extraAmt,
-    payoffHorizonMonths
-  );
-
-  const locNeedsSetup = safeLoc.limit <= 0;
-  const locOverLimit = !locNeedsSetup && safeLoc.balance > safeLoc.limit;
-  const locNoCapacity = !locNeedsSetup && safeLoc.balance === safeLoc.limit;
-  const locCashFlowPaydown = Math.max(0, safeCashFlow - payment);
-  const chunkSize = locNeedsSetup || locOverLimit || locNoCapacity || safeCashFlow <= 0 || locCashFlowPaydown <= 0
-    ? 0
-    : Math.min(safeLoc.limit * 0.4, locCashFlowPaydown * 3, balance * 0.1);
-
-  let velocity: MortgagePaymentProjection;
-  if (locNeedsSetup) {
-    velocity = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'loc-setup',
-    };
-  } else if (locOverLimit) {
-    velocity = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'loc-overlimit',
-    };
-  } else if (locNoCapacity) {
-    velocity = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'loc-no-capacity',
-    };
-  } else if (safeCashFlow <= 0) {
-    velocity = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'negative-cashflow',
-    };
-  } else if (locCashFlowPaydown <= 0) {
-    velocity = {
-      months: 0,
-      totalInterest: 0,
-      isPayoffPossible: false,
-      failureReason: 'cashflow-below-minimums',
-    };
-  } else {
-    const moneyLoopVelocity = simulateMoneyLoopPayoff({
-      principalBalance: balance,
-      debtApr: rate,
-      debtPayment: payment,
-      loc: safeLoc,
-      chunkAmount: chunkSize,
-      cashFlowPaydown: locCashFlowPaydown,
-      locDepositAmount: safeCashFlow,
-      locExpenseAmount: payment,
-      maxMonths: payoffHorizonMonths,
-      initialMonthsSinceChunk: 999,
-    });
-    velocity = {
-      months: moneyLoopVelocity.payoffMonths,
-      totalInterest: moneyLoopVelocity.totalInterest,
-      isPayoffPossible: moneyLoopVelocity.isPayoffPossible,
-      failureReason: moneyLoopVelocity.failureReason,
-    };
-  }
-
   return {
-    standard: { ...standard, payoffDate: standardDate },
-    biweekly: {
-      ...biweekly,
-      ...calculateSavings(biweekly),
-    },
-    extraPayment: {
-      ...extraPayment,
-      ...calculateSavings(extraPayment),
-      extraAmount: extraAmt,
-    },
-    velocity: {
-      ...velocity,
-      ...calculateSavings(velocity),
-      chunkSize,
+    ...comparison,
+    standard: {
+      ...comparison.standard,
+      payoffDate: !comparison.standard.isPayoffPossible ? 'Not projected'
+        : comparison.standard.months === 0 ? 'Already paid off' : formatDate(comparison.standard.months),
     },
   };
 }
@@ -1389,6 +1322,8 @@ export function comparePaymentStrategies(
   monthlyExpenses: number,
   chunkAmount: number
 ): StrategyComparison {
+  const forecastBasis = assessForecastBasis(loc?.lenderTerms);
+  if (!forecastBasis.canProject) throw new Error(`${forecastBasis.label}. Lender terms are not modeled by this legacy comparison.`);
   const payoffHorizonMonths = Math.max(termMonths * 4, termMonths, 600);
   const monthlyProjection = simulateAmortizedPayoff({
     principalBalance: balance,
@@ -1403,7 +1338,7 @@ export function comparePaymentStrategies(
     monthlyIncome,
     monthlyExpenses,
     carLoan: { balance, apr, monthlyPayment },
-    loc: loc ? { limit: loc.limit, apr: loc.apr, balance: loc.balance } : undefined,
+    loc: sanitizeLoc(loc),
     useVelocity: true,
     extraPayment: chunkAmount,
   };

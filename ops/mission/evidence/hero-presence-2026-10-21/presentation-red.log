@@ -1,0 +1,182 @@
+TAP version 13
+# Subtest: shared hero visibility rejects blank, undersized and edge-clipped geometry
+not ok 1 - shared hero visibility rejects blank, undersized and edge-clipped geometry
+  ---
+  duration_ms: 1.4021
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:13:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: shared hero presentation rejects small silhouettes for every domain
+not ok 2 - shared hero presentation rejects small silhouettes for every domain
+  ---
+  duration_ms: 0.3916
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:18:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: video presentation measures height against the art viewport, not the full frame
+not ok 3 - video presentation measures height against the art viewport, not the full frame
+  ---
+  duration_ms: 1.586
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:24:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: video visibility cannot use footer decoration as model evidence
+not ok 4 - video visibility cannot use footer decoration as model evidence
+  ---
+  duration_ms: 0.2372
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:28:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: shared visibility refuses malformed and out-of-frame art rectangles
+not ok 5 - shared visibility refuses malformed and out-of-frame art rectangles
+  ---
+  duration_ms: 0.3587
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:32:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: shared hero presentation refuses unknown domains instead of accepting an absent minimum
+not ok 6 - shared hero presentation refuses unknown domains instead of accepting an absent minimum
+  ---
+  duration_ms: 0.2026
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\hero-presentation.test.mjs:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    required shared hero presentation API
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    api (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:6:27)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/hero-presentation.test.mjs:36:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.6185

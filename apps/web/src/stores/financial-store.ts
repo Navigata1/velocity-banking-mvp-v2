@@ -1,11 +1,13 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { assertLegacyScenarioState, legacyScenarioStorage } from './legacy-scenario-storage';
 import {
   calculateDailyInterest,
   simulateBaseline,
   simulateVelocity,
+  runSimulation,
   type PayoffFailureReason,
   type SimulationInputs,
 } from '../engine/calculations';
@@ -191,6 +193,7 @@ export interface FinancialState {
   getTotalDebt: () => number;
   getBaselinePayoff: (type: DebtType) => PayoffProjection;
   getVelocityPayoff: (type: DebtType) => VelocityPayoffProjection;
+  getPayoffComparison: (type: DebtType) => { baseline: PayoffProjection; velocity: VelocityPayoffProjection };
 }
 
 const debtTypes: DebtType[] = [
@@ -354,6 +357,7 @@ export function sanitizePersistedFinancialState(
   persistedState: unknown,
   currentState: FinancialState
 ): Partial<PersistedFinancialFields> {
+  assertLegacyScenarioState(persistedState);
   if (!persistedState || typeof persistedState !== 'object' || Array.isArray(persistedState)) {
     return {};
   }
@@ -379,6 +383,7 @@ export function sanitizePersistedFinancialState(
 }
 
 const createSimulationInputs = (state: FinancialState, type: DebtType): SimulationInputs | null => {
+  if (legacyScenarioStorage.getStatus().blocked) return null;
   const debt = state.debts[type];
   if (!debt) return null;
 
@@ -404,22 +409,22 @@ const createSimulationInputs = (state: FinancialState, type: DebtType): Simulati
 export const useFinancialStore = create<FinancialState>()(
   persist(
     (set, get) => ({
-      monthlyIncome: 6500,
-      monthlyExpenses: 5000,
+      monthlyIncome: 8200,
+      monthlyExpenses: 4700,
       currentAge: 32,
       activeDomain: 'car' as Domain,
       mortgageDetails: {
         entryMode: 'both' as const,
         purchaseAge: 28,
-        originalCost: 320000,
+        originalCost: 375000,
         originalTermYears: 30,
         originalRate: 0.065,
-        downPayment: 64000,
+        downPayment: 75000,
         currentAge: 32,
         currentBalance: 285000,
         remainingTermMonths: 312,
         currentRate: 0.065,
-        currentMonthlyPayment: 1850,
+        currentMonthlyPayment: 1896,
         paymentFrequency: 'monthly' as const,
         hasExtraPayments: false,
         extraPaymentAmount: 0,
@@ -454,16 +459,16 @@ export const useFinancialStore = create<FinancialState>()(
           name: 'Mortgage',
           balance: 285000,
           interestRate: 0.065,
-          minimumPayment: 1850,
-          termMonths: 336,
+          minimumPayment: 1896,
+          termMonths: 312,
         },
         land: {
           id: 'land-1',
           type: 'land',
           name: 'Land Investment',
-          balance: 75000,
-          interestRate: 0.055,
-          minimumPayment: 650,
+          balance: 45000,
+          interestRate: 0.065,
+          minimumPayment: 450,
           termMonths: 180,
         },
         creditCard: {
@@ -608,6 +613,22 @@ export const useFinancialStore = create<FinancialState>()(
         return Object.values(state.debts).reduce((sum, debt) => sum + debt.balance, 0);
       },
       
+      getPayoffComparison: (type) => {
+        const state = get();
+        const inputs = debtTypes.includes(type) && Object.hasOwn(state.debts, type) ? createSimulationInputs(state, type) : null;
+        if (!inputs) return {
+          baseline: { months: 0, totalInterest: 0, isPayoffPossible: false },
+          velocity: { months: 0, totalInterest: 0, savings: 0, isPayoffPossible: false },
+        };
+        const { baseline, velocity } = runSimulation(inputs);
+        return {
+          baseline: { months: baseline.payoffMonths, totalInterest: baseline.totalInterest,
+            isPayoffPossible: baseline.isPayoffPossible, failureReason: baseline.failureReason },
+          velocity: { months: velocity.payoffMonths, totalInterest: velocity.totalInterest,
+            savings: velocity.interestSaved, isPayoffPossible: velocity.isPayoffPossible, failureReason: velocity.failureReason },
+        };
+      },
+
       getBaselinePayoff: (type) => {
         const state = get();
         const inputs = createSimulationInputs(state, type);
@@ -644,6 +665,7 @@ export const useFinancialStore = create<FinancialState>()(
     }),
     {
       name: 'velocity-bank-storage',
+      storage: createJSONStorage(() => legacyScenarioStorage),
       partialize: (state) => ({
         monthlyIncome: state.monthlyIncome,
         monthlyExpenses: state.monthlyExpenses,

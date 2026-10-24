@@ -1,0 +1,20 @@
+
+> web@0.1.0 smoke:comparison:built
+> node scripts/smoke-comparison.cjs
+
+PASS Simulator affordable-final-payment at 1440px
+PASS Simulator zero-after-minimum at 1440px
+PASS Simulator exact-final-payment at 1440px
+PASS Simulator zero-interest-two-liabilities at 1440px
+PASS Simulator velocity-slower-and-more-interest at 1440px
+PASS Simulator unaffordable-minimum at 1440px
+PASS legacy weekly timing preserved without inactive controls at 1440px
+PASS legacy biweekly timing preserved without inactive controls at 1440px
+PASS Simulator affordable-final-payment at 375px
+PASS Simulator zero-after-minimum at 375px
+PASS Simulator exact-final-payment at 375px
+PASS Simulator zero-interest-two-liabilities at 375px
+PASS Simulator velocity-slower-and-more-interest at 375px
+PASS Simulator unaffordable-minimum at 375px
+PASS legacy weekly timing preserved without inactive controls at 375px
+PASS legacy biweekly timing preserved without inactive controls at 375px

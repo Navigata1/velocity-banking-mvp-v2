@@ -1,0 +1,50 @@
+PASS actual baseline comparison: other nine model/import records and all ten poster records
+(node:31356) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ AssertionError [ERR_ASSERTION]: custom initial video bytes
++ + actual - expected
++ 
++ + '7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2'
++ - '01f09157370157d53dd8039dc985a4b7883e632cc81fac2d311a732bbeba9036'
++ 
++     at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-custom/rebuild-proof.mjs:14:35 {
++   actual: '7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2',
++   code: 'ERR_ASSERTION',
++   diff: 'simple',
++   expected: '01f09157370157d53dd8039dc985a4b7883e632cc81fac2d311a732bbeba9036',
++   generatedMessage: false,
++   operator: 'strictEqual'
++ }
+- undefined
+
+    at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-custom/review-pipeline-harness-scratch.mjs:42:35 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: AssertionError [ERR_ASSERTION]: custom initial video bytes
+  + actual - expected
+  
+  + '7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2'
+  - '01f09157370157d53dd8039dc985a4b7883e632cc81fac2d311a732bbeba9036'
+  
+      at file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/.superpowers/sdd/2026-10-21-custom/rebuild-proof.mjs:14:35 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '7f608566467db9840c79d86bf9570a727c18e9b88681a96aee000f50cf2d9bb2',
+    expected: '01f09157370157d53dd8039dc985a4b7883e632cc81fac2d311a732bbeba9036',
+    operator: 'strictEqual',
+    diff: 'simple'
+  },
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
+

@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-23T20:26:18.850Z",
+  "status": "Pre-push test-only candidate; actual expanded SQL execution pending",
+  "baselineHead": "36e322408d982ba478666fedd74ee8be461f511b",
+  "baselineVerified": false,
+  "wholeAppPriorVerifiedHead": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "previousFailureStatus": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6373868068",
+  "previous36e": {
+    "push": {
+      "id": 40014272810,
+      "attempt": 1,
+      "conclusion": "success"
+    },
+    "pullRequest": {
+      "id": 40014277151,
+      "attempt": 1,
+      "conclusion": "failure",
+      "reason": "desktop rapid-return screenshot timeout42ms remaining"
+    },
+    "frozenFiles": 914
+  },
+  "changedSources": [
+    "apps/web/scripts/supabase-ci-contract.cjs"
+  ],
+  "addedRootSql": [
+    "supabase/tests/owner_permission_matrix_test.sql"
+  ],
+  "applicationInputs": 495,
+  "explicitBackendAndContextInputs": 18,
+  "committedBackendInputs": 17,
+  "contextOnly": [
+    ".superpowers/sdd/2026-10-23-owner-matrix/next-action.md"
+  ],
+  "sourcePinScope": "Enumerated application inputs, with rootSQL/config/newtest pinned separately; not a whole-repository count.",
+  "matrix": {
+    "sha256": "aeb64269ff1eb908f30d087e792a8c622caa6344d91193cffd54fb918d8c15b6",
+    "declaredNewAssertions": 222,
+    "oldAssertionsUnchanged": 63,
+    "combinedExpected": 285,
+    "sqlExecuted": false,
+    "fourMigrationsUnchanged": true,
+    "all96BasicCrudCellsSourceReviewed": true,
+    "roles": [
+      "anon",
+      "authenticated-without-subject",
+      "owner A",
+      "owner B"
+    ],
+    "sourceOnlyReview": "1df43265-7fe0-4772-a092-cefc540cda5a"
+  },
+  "wiring": {
+    "red": "3pass/1intended missing-new-file assertion",
+    "green": "4pass/0fail",
+    "scope": "Discovery/declared plan/transaction-boundary checks, not SQL execution or authorization proof"
+  },
+  "integrationReview": {
+    "id": "review-4d980a32-8709-4f6b-9946-60be29d982c1",
+    "clearanceSha256": "acfc0363d9749102a2befdfdd9df1127ecc247a4841033224eb36135275b8cbb",
+    "results": {
+      "standing": 4,
+      "independentIncludingFourStanding": 24,
+      "controlledNegativeCasesRejected": 12,
+      "focusedCommands": 8,
+      "sqlExecuted": false
+    },
+    "findings": 0,
+    "validationRuling": {
+      "classification": "test-only source integration; SQL execution and CI remain unverified",
+      "requiredLocal": "five backend contract commands + full web CPU tests + lint + types",
+      "requiredLocalEvidence": ".superpowers/sdd/2026-10-23-owner-matrix-adoption/review-4d980a32-8709-4f6b-9946-60be29d982c1/parent-focused.json",
+      "requiredRemote": "new exact-head push and pull_request backend jobs: Files=2 Tests=285 Result:PASS twice each, reset/replay, lint/advisors, cleanup, raw logs and source guards",
+      "observeWholeCi": "all three jobs on both events, all six actual-source guards; keep scoped SQL distinct from aggregate outcome",
+      "extraUnrelatedLocal29HouseGpuHostedManualRequiredForThisPatch": false,
+      "existingCiAndReleaseGatesWaived": false
+    }
+  },
+  "focused": [
+    {
+      "name": "supabase-ci-contract",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "supabase-schema-contract",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "supabase-client-contract",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "snapshot-outbox-contract",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "supabase-account-contract",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-tests",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-lint",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-types",
+      "status": 0,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "runtimeUnchanged": 13,
+  "assetsUnchanged": 20,
+  "appMathArtDependenciesWorkflowSchemaGrantsUnchanged": true,
+  "actualSqlRequired": [
+    "Both named files, Files=2, Tests=285 and Result:PASS twice per exact-head SQL job",
+    "Clean four-migration replay, public function lint/advisors, targeted cleanup and raw source stdout guards"
+  ],
+  "aggregateReleaseRequired": "Observe both complete new workflows/all jobs/steps. Scoped SQL success cannot erase unrelated browser failures or approve production.",
+  "noNewGpuOrManualOrVideoRun": true,
+  "managedCloudAccessed": false,
+  "productionReady": false,
+  "goalActive": true,
+  "prDraftOpen": true
+}

@@ -14,7 +14,7 @@ const evidenceDir = process.env.RENDERED_SMOKE_EVIDENCE_DIR
   : null;
 const mobileViewportWidth = Number(process.env.RENDERED_SMOKE_MOBILE_WIDTH || 390);
 const routes = [
-  ['/', 'Money Loop Dashboard'],
+  ['/', 'Auto Dashboard'],
   ['/simulator', 'What-If Simulator'],
   ['/cockpit', 'Cockpit Mode'],
   ['/portfolio', 'Portfolio'],
@@ -98,6 +98,9 @@ async function verifyRoute(page, origin, route, marker, viewportLabel) {
       throw new Error(`${viewportLabel} ${route} did not hydrate main-content marker ${marker} within 15 seconds.`);
     }
     await settleImages(page);
+    if (route === '/' && viewportLabel === 'desktop') {
+      await page.getByText('Explore the Money Loop', { exact: true }).click();
+    }
 
     const result = await page.evaluate(({ expectedMarker, route: currentRoute, viewportLabel: currentViewport }) => {
       const root = document.documentElement;
@@ -215,6 +218,7 @@ async function run() {
         page.on('pageerror', onPageError);
         try {
           await page.goto(origin, { waitUntil: 'networkidle' });
+          await page.getByText('Explore the Money Loop', { exact: true }).click();
           await page.getByRole('button', { name: 'Next Money Loop artifact' }).click();
           const locArtifact = page.getByTestId('money-loop-artifact-node-loc');
           if ((await locArtifact.getAttribute('aria-selected')) !== 'true') {

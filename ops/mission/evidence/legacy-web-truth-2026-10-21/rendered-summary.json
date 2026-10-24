@@ -1,0 +1,121 @@
+{
+  "origin": "http://127.0.0.1:57105",
+  "completedAt": "2026-10-21T19:37:51.731Z",
+  "scriptSha256": "dc12202ad43d1b276ee54735b17b51a2759b93f3395a053ea5e4caf4a4afc444",
+  "provenance": {
+    "baselineHead": "17457ccd7db7cb83cf7ddecaa3a206ee7e345800",
+    "baselineBuildId": "6MiW8nqh6lCJOMfmYmwYX",
+    "red": false,
+    "headAtRun": "17457ccd7db7cb83cf7ddecaa3a206ee7e345800",
+    "localBuildId": "Z-yZeymBAJICjBPEhV4He",
+    "servedBuildId": "Z-yZeymBAJICjBPEhV4He",
+    "servedRootSha256": "d27789a6c2e1bf63a895f4f7d86645d169c072e0ae88a1b009d2636c993b8c6e"
+  },
+  "resources": {
+    "browser": "closed",
+    "server": "stopped",
+    "serverPid": 30716,
+    "contextsOpened": 70,
+    "contextsClosed": 70
+  },
+  "counts": {
+    "workflows": 12,
+    "passed": 12,
+    "assertionRedWorkflows": 0,
+    "setupFailedWorkflows": 0,
+    "assertions": 711,
+    "assertionFailures": 0,
+    "setupFailures": 0
+  },
+  "rawReport": {
+    "path": "apps/web/test-results/legacy-web-truth/verification.json",
+    "bytes": 1386565,
+    "sha256": "7e61e29a1d50918cd4a590b8b5cd2de46b95056429faadc7865df204fe2ed711"
+  },
+  "receipts": [
+    {
+      "name": "legacy-draft-safety",
+      "width": 280,
+      "passed": true,
+      "assertions": 93,
+      "setupFailures": []
+    },
+    {
+      "name": "legacy-apr-semantics",
+      "width": 280,
+      "passed": true,
+      "assertions": 51,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-failed-projections",
+      "width": 280,
+      "passed": true,
+      "assertions": 64,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-healthy-drill-routing",
+      "width": 280,
+      "passed": true,
+      "assertions": 29,
+      "setupFailures": []
+    },
+    {
+      "name": "legacy-draft-safety",
+      "width": 375,
+      "passed": true,
+      "assertions": 93,
+      "setupFailures": []
+    },
+    {
+      "name": "legacy-apr-semantics",
+      "width": 375,
+      "passed": true,
+      "assertions": 51,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-failed-projections",
+      "width": 375,
+      "passed": true,
+      "assertions": 64,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-healthy-drill-routing",
+      "width": 375,
+      "passed": true,
+      "assertions": 29,
+      "setupFailures": []
+    },
+    {
+      "name": "legacy-draft-safety",
+      "width": 1440,
+      "passed": true,
+      "assertions": 93,
+      "setupFailures": []
+    },
+    {
+      "name": "legacy-apr-semantics",
+      "width": 1440,
+      "passed": true,
+      "assertions": 51,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-failed-projections",
+      "width": 1440,
+      "passed": true,
+      "assertions": 64,
+      "setupFailures": []
+    },
+    {
+      "name": "cockpit-healthy-drill-routing",
+      "width": 1440,
+      "passed": true,
+      "assertions": 29,
+      "setupFailures": []
+    }
+  ]
+}

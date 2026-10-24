@@ -1,0 +1,15 @@
+{
+  "branch": {
+    "ref": "refs/heads/codex/restoration/asset-heroes",
+    "sha": "1aec5bf7be3d0f3c26079141245e4c7291fd8778"
+  },
+  "pr": {
+    "number": 256,
+    "state": "open",
+    "draft": true,
+    "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+    "branch": "codex/restoration/asset-heroes",
+    "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+    "updatedAt": "2026-10-21T11:52:59Z"
+  }
+}

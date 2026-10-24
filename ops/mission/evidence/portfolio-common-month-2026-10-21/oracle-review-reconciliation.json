@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-21T12:52:46.795Z",
+  "head": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "previousHead": "1aec5bf7be3d0f3c26079141245e4c7291fd8778",
+  "previousCount": 239,
+  "currentCount": 239,
+  "unchanged": 238,
+  "changes": [
+    {
+      "file": "apps/web/scripts/portfolio-common-month-reference-tests.cjs",
+      "before": "15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd",
+      "after": "d6655109cfb91f96f832cc720f7d0a71b38e57857e7bc556b81a6c77d6e6e9ec"
+    }
+  ],
+  "reviewInputPins": {
+    "reference-followup-before.cjs": "15a3917980416c658fec2ff8bfc8d86a818860a001687e51359da83751fdadfd",
+    "reference-followup-decision.md": "f47a26b4e7447baaaca7efb0bf0c9376c4373f72fc0f7c67a40001d2a0a22a97",
+    "final-followup-race-check.json": "00016b7b94d616a282e3e7a3523ffc71a711086d4af3cddc7bde47506d274027",
+    "final-followup-reference-drift.json": "c6b3298d49ca37ebcb0a30c0c510583d7d915c88d66ccbd6618a32a7d2af5ddd",
+    "final-followup-report.md": "eddda137b2cbbb9e3079d6d709572d08769f6f3ebb194b9dbad33bc0b80ce8cd"
+  }
+}

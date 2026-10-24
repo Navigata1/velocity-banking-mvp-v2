@@ -33,6 +33,24 @@ export interface MobileAssumptionSaveOptions {
   ownerLock?: MobileSnapshotOwnerLock;
 }
 
+export class UnsupportedMobileAssumptionsError extends Error {
+  readonly code = 'unsupported-mobile-assumptions';
+
+  constructor() {
+    super('Legacy scenario storage does not support lender terms or dated plans. Existing data was not replaced. Review the source or use a Portfolio document3/4.');
+    this.name = 'UnsupportedMobileAssumptionsError';
+  }
+}
+
+function hasUnsupportedExtensions(value: unknown): boolean {
+  return !!value && typeof value === 'object' && ('datedPlan' in value
+    || 'loc' in value && !!value.loc && typeof value.loc === 'object' && 'lenderTerms' in value.loc);
+}
+
+function assertSupportedMobileAssumptions(value: unknown): void {
+  if (hasUnsupportedExtensions(value)) throw new UnsupportedMobileAssumptionsError();
+}
+
 interface StoredMobileAssumptionsPayload {
   input: MobileDashboardInput;
   ownerId?: MobileAssumptionOwnerId;
@@ -58,6 +76,7 @@ function isFiniteNumber(value: unknown): value is number {
 
 function normalizeMobileDashboardInput(value: unknown): MobileDashboardInput | null {
   if (!value || typeof value !== 'object') return null;
+  if (hasUnsupportedExtensions(value)) return null;
 
   const candidate = value as Partial<MobileDashboardInput>;
   const activeDebt = candidate.activeDebt;
@@ -140,6 +159,7 @@ export function encodeMobileAssumptions(
   ownerId: MobileAssumptionOwnerId = null,
   revision = 0
 ): string {
+  assertSupportedMobileAssumptions(input);
   if (!Number.isSafeInteger(revision) || revision < 0) {
     throw new Error('Mobile assumption revision must be a non-negative safe integer.');
   }
@@ -187,6 +207,15 @@ export function decodeMobileAssumptions(
   return decodeMobileAssumptionsPayload(rawValue, expectedOwnerId)?.input ?? null;
 }
 
+function readStoredMobileAssumptions(rawValue: string | null, ownerId: MobileAssumptionOwnerId) {
+  let payload: unknown;
+  try { payload = rawValue === null ? null : JSON.parse(rawValue); }
+  catch { return null; }
+  // A recognized unsupported extension is not ordinary malformed-data fallback.
+  if (payload && typeof payload === 'object' && 'input' in payload) assertSupportedMobileAssumptions(payload.input);
+  return decodeMobileAssumptionsPayload(rawValue, ownerId);
+}
+
 async function getSecureStoreAvailable(): Promise<boolean> {
   try {
     return await SecureStore.isAvailableAsync();
@@ -222,7 +251,7 @@ export async function loadMobileAssumptionsForOwner(
   return withAssumptionOwnerLock(ownerId, ownerLock, async () => {
     const storageKey = mobileAssumptionsStorageKey(ownerId);
     if (await getSecureStoreAvailable()) {
-      const stored = decodeMobileAssumptionsPayload(await SecureStore.getItemAsync(storageKey), ownerId);
+      const stored = readStoredMobileAssumptions(await SecureStore.getItemAsync(storageKey), ownerId);
       return {
         backend: 'secure-store',
         input: stored?.input ?? fallbackInput,
@@ -233,7 +262,7 @@ export async function loadMobileAssumptionsForOwner(
 
     const localStorage = getLocalStorage();
     if (localStorage) {
-      const stored = decodeMobileAssumptionsPayload(localStorage.getItem(storageKey), ownerId);
+      const stored = readStoredMobileAssumptions(localStorage.getItem(storageKey), ownerId);
       return {
         backend: 'local-storage',
         input: stored?.input ?? fallbackInput,
@@ -251,6 +280,7 @@ export async function saveMobileAssumptionsForOwner(
   input: MobileDashboardInput,
   options: MobileAssumptionSaveOptions = {}
 ): Promise<MobileAssumptionSaveResult> {
+  assertSupportedMobileAssumptions(input);
   return withAssumptionOwnerLock(ownerId, options.ownerLock, async () => {
     const storageKey = mobileAssumptionsStorageKey(ownerId);
     const secureStoreAvailable = await getSecureStoreAvailable();
@@ -258,7 +288,7 @@ export async function saveMobileAssumptionsForOwner(
     const raw = secureStoreAvailable
       ? await SecureStore.getItemAsync(storageKey)
       : localStorage?.getItem(storageKey) ?? null;
-    const currentRevision = decodeMobileAssumptionsPayload(raw, ownerId)?.revision ?? 0;
+    const currentRevision = readStoredMobileAssumptions(raw, ownerId)?.revision ?? 0;
     if (
       options.expectedRevision !== undefined
       && options.expectedRevision !== currentRevision

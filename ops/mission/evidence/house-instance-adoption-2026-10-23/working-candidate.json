@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-23T11:42:08.516Z",
+  "head": "6ff5568e7f7ff09ed14925e17a8b3b127e2454a7",
+  "status": "working-source-integrated-new-local-suite-and-source-review-running",
+  "codeIntegratedWorking": true,
+  "adopted": false,
+  "pushed": false,
+  "productionReady": false,
+  "sourceInputCount": 491,
+  "plannedExistingChanges": 5,
+  "addedFiles": 5,
+  "assetPinsUnchanged": 20,
+  "sourcePins": {
+    "apps/web/src/components/hero/house-instances.ts": "e732d45e7a8b94797c7c376ee29cbfb02a21bc5c57a94ea7b02438e4364b500c",
+    "apps/web/scripts/house-instance-tests.cjs": "c9f78650b76cf6b56905b1688be22f8c0934a23cb478b69f6af9989e3ed1b17e",
+    "apps/web/src/components/hero/HeroModelStage.tsx": "80f1395a2e59056531102d2e6163dd68a8a057441f3533ade646e480e7418a77",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "7299a706eb992f0360e4df7f86e85d61cd1adf2eb17de639a945d486fe939285",
+    "apps/web/package.json": "f1a3809346ab6ce264857d130e9dc9d78e7879a4bb7dd96dcf9e908d6d48d366",
+    "apps/media/scripts/prepare-hyperframes-assets.mjs": "9c9b128e93f3c75cb8a12804b2dad3d2d62090bbf1fe1dba152e812175b198e1",
+    "apps/media/hero-turntables/index.html": "0d4d3fc4050456653b1980d998f373e6fbcf263aa87fb4afba3f9e0b6126d42d",
+    "apps/media/scripts/house-instance-wiring.test.mjs": "17d22705ba3870eef981be753f21be2a5079fa3da8b4794ac8dfdef789582f49",
+    "apps/media/hyperframes/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4",
+    "apps/media/hero-turntables/vendor/house-instances.js": "cc00e04f639027fc46459c69ad9c4bf82ebf10d47f9cb79ad26113ef829dfbe4"
+  },
+  "candidatePinsSha256": "1b7eb7f75115d7a27a6e20d642c70bee7ff42dd4ed6bce8563a27f5a7078020f",
+  "sourceReview": {
+    "id": "67965a2a-228f-4936-9c48-37a3aa192dd6",
+    "status": "running"
+  },
+  "graphics": {
+    "id": "ecd86d16-9303-4d30-b7a2-bad247a37d6b",
+    "currentSharedTypedSource": true,
+    "poses": 7,
+    "pairedPoses": 14,
+    "images": 44,
+    "dimensions": [
+      [
+        351,
+        270
+      ],
+      [
+        725,
+        420
+      ]
+    ],
+    "reportedCalls": [
+      467,
+      211
+    ],
+    "reportedTriangles": [
+      45480,
+      45480
+    ],
+    "reportedTextureCounts": [
+      8,
+      8
+    ],
+    "activeProcessesAfterCleanup": 0,
+    "scope": "Fresh current491-source typed shared-module standalone graphics; not React UI/Replay/Next network or physical FPS/photo proof",
+    "sha256": "da5b7922ef51828b49532d395bb89d61d3cf2635f3560b3169fa0af5de5f34ed",
+    "parentNewImagesViewed": false
+  },
+  "local29": {
+    "id": "97fa04cc-60a0-4e81-adb9-abc6aeaa27a6",
+    "status": "running",
+    "completed": false,
+    "sourcePins": 491,
+    "webExactCopies": 224
+  },
+  "focusedParentChecks": {
+    "typedHelperCases": 18,
+    "isolatedStrictTypecheck": true,
+    "componentDesiredRedBeforeWiring": true,
+    "componentReplayAndFailureChecks": true,
+    "mediaAstCases": 3,
+    "standingSuiteStillRequired": true
+  },
+  "limits": [
+    "Working source is not a new verified GitHub checkpoint; latest verified head remains6ff5568.",
+    "Fresh standalone shared-module rendering is not actual React UI/Replay, Next/RSC or physical performance.",
+    "All-ten stored video verification is not new exports from this integration; full-motion/photo/physical approval remains open.",
+    "Product RSC FAILED, shadows HELD; no source push, merge, manual deployment or promotion."
+  ]
+}

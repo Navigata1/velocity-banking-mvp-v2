@@ -1,0 +1,96 @@
+{
+  "at": "2026-10-23T19:46:48.881Z",
+  "status": "Local pre-push fixture-only candidate; new remote verification pending",
+  "baselineHead": "d842fdb6fa7c7923e7d1e07c9a683787414c0c8c",
+  "baselineVerified": false,
+  "wholeAppPriorVerifiedHead": "f708bda933d8adcd12947a08f2e2c6183ee00915",
+  "priorVerifiedReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6370542236",
+  "failedD842": {
+    "push": 40010779271,
+    "pullRequest": 40010782452,
+    "bothAttempt": 1,
+    "bothConclusion": "failure",
+    "failedStep": "Run web regression tests",
+    "test": 20,
+    "prerequisiteHeroSqlJobsPassed": 4,
+    "sixSourceGuards": true,
+    "frozenArtifacts": 229,
+    "statusComment": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6373224401"
+  },
+  "sourceInputs": 495,
+  "changedSources": [
+    "apps/web/scripts/canvas-overlay-tests.cjs"
+  ],
+  "fixtureSha256": "db3a8953e923ace14aa7ae992de4c22ae33c67126ecdfd7b52c6ce815e982f82",
+  "productionCodeChanged": false,
+  "runtimeUnchanged": 13,
+  "assetsUnchanged": 20,
+  "cpu": {
+    "unchangedReproduction": "25 tests / 24 pass / 1 clean-checkout ENOENT",
+    "permanentRed": "27 tests / 24 pass / 3 expected failures",
+    "green": "27 / 27 / 0",
+    "noOutputDirectoryBeforeOrAfter": true,
+    "sourceReview": "review-e1dff0c1-2bdd-46a5-bc31-0185b9e8004b",
+    "sourceReviewClearanceSha256": "9d0056815be43faa6817411ae7b84fdb4cd4e3ee3fed725aadc89de7eb426321"
+  },
+  "focused": [
+    {
+      "name": "web-tests",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "media-tests",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-lint",
+      "status": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "web-types",
+      "status": 0,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "validationRuling": {
+    "fixtureOnly": true,
+    "noAdditionalUnrelatedLocal29HouseGpuOrHostedManualDuplicateNeeded": true,
+    "waiver": false,
+    "required": [
+      "Full web CPU suite, media227 contracts, lint and types",
+      "Both complete new exact-head CI events/all jobs/steps/six actual source guards",
+      "Known automatic git READY binding"
+    ],
+    "limits": [
+      "No new rendering/manual/video or production approval",
+      "Original optional broad parent-lab snapshot remains FAILED; required source groups exact"
+    ]
+  },
+  "noNewGpuRender": true,
+  "noNewHouseVideo": true,
+  "noNewHostedManualHeroes": true,
+  "privateBackend": {
+    "lines": 257,
+    "plannedAssertions": 191,
+    "actualSqlExecuted": false,
+    "adopted": false,
+    "existing63AndFourMigrationsUnchanged": true,
+    "independentReview": "Changes requested: two P2 findings, not SQL proof",
+    "gaps": "Nine null-JWT CRUD cases and11 foreign-target cases per owner are missing; eight matrix queries need deterministic ordering."
+  },
+  "nextRequired": [
+    "Exact committed/working input check, then one nonforce push to existing draft PR256.",
+    "Both new exact-head complete CI events, all three jobs/every step/six source guards, plus known automatic git READY preview.",
+    "No success claim, merge or production promotion while gates remain open."
+  ],
+  "goalActive": true,
+  "prDraftOpen": true,
+  "productionReady": false
+}

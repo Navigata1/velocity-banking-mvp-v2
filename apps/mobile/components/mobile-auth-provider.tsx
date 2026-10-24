@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -27,6 +28,10 @@ interface MobileAuthContextValue {
   session: Session | null;
   status: MobileAuthStatus;
   syncNotice: MobileSyncNotice | null;
+  recoveryBusy: boolean;
+  isRecoveryBusy: () => boolean;
+  retryPendingRecovery: () => Promise<boolean>;
+  runRecovery: <T>(ownerId: string, action: () => Promise<T>) => Promise<T>;
 }
 
 interface MobileSyncNotice {
@@ -45,8 +50,16 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
   const [authError, setAuthError] = useState<string | null>(null);
   const [syncNotice, setSyncNotice] = useState<MobileSyncNotice | null>(null);
   const [recoveryReadyOwner, setRecoveryReadyOwner] = useState<string | null>(null);
+  const [recoveryBusyOwner, setRecoveryBusyOwner] = useState<string | null>(null);
+  const recoveryWorkOwner = useRef<string | null>(null);
+  const recoveryAttempt = useRef<{ ownerId: string; promise: Promise<boolean> } | null>(null);
   const activeOwnerId = useRef<string | null>(null);
   const nextSyncNoticeId = useRef(0);
+  const mounted = useRef(false);
+  useLayoutEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; recoveryWorkOwner.current = null; };
+  }, []);
 
   const consumeSyncNotice = useCallback((noticeId: number) => {
     setSyncNotice((current) => current?.id === noticeId ? null : current);
@@ -63,6 +76,8 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
         activeOwnerId.current = nextOwnerId;
         setRecoveryReadyOwner(null);
         setSyncNotice(null);
+        recoveryWorkOwner.current = null;
+        setRecoveryBusyOwner(null);
       }
       setSession(nextSession);
       setAuthError(null);
@@ -105,20 +120,50 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
   }, [client]);
 
   const ownerId = session?.user.id ?? null;
+  const isRecoveryBusy = useCallback(() => recoveryWorkOwner.current !== null
+    && recoveryWorkOwner.current === activeOwnerId.current, []);
+  const retryPendingRecovery = useCallback((): Promise<boolean> => {
+    const expectedOwner = activeOwnerId.current;
+    if (!mounted.current || !client || !expectedOwner) return Promise.reject(new Error('No active account is available for recovery.'));
+    if (recoveryAttempt.current?.ownerId === expectedOwner) return recoveryAttempt.current.promise;
+    if (recoveryWorkOwner.current === expectedOwner) return Promise.reject(new Error('Recovery is already applying.'));
+    setRecoveryReadyOwner(null);
+    const promise = resumePendingMobileSnapshotRecovery(expectedOwner).then(resumed => {
+      if (mounted.current && activeOwnerId.current === expectedOwner) { setRecoveryReadyOwner(expectedOwner); setAuthError(null); }
+      return resumed;
+    }).catch((error: unknown) => {
+      if (mounted.current && activeOwnerId.current === expectedOwner) {
+        setAuthError(error instanceof Error ? error.message : 'Pending account recovery could not finish.');
+      }
+      throw error;
+    });
+    const attempt = { ownerId: expectedOwner, promise };
+    recoveryAttempt.current = attempt;
+    void promise.finally(() => { if (recoveryAttempt.current === attempt) recoveryAttempt.current = null; }).catch(() => undefined);
+    return promise;
+  }, [client]);
+  const runRecovery = useCallback(async <T,>(expectedOwner: string, action: () => Promise<T>): Promise<T> => {
+    if (!mounted.current || activeOwnerId.current !== expectedOwner || recoveryWorkOwner.current !== null) throw new Error('Account changed or recovery is already applying.');
+    recoveryWorkOwner.current = expectedOwner;
+    setRecoveryBusyOwner(expectedOwner);
+    try { return await action(); }
+    catch (error) {
+      if (mounted.current && activeOwnerId.current === expectedOwner && error && typeof error === 'object' && 'pendingRecovery' in error && error.pendingRecovery === true) {
+        setRecoveryReadyOwner(null);
+        setAuthError('Confirmed recovery is pending. Retry recovery before editing or syncing.');
+      }
+      throw error;
+    } finally {
+      if (mounted.current && recoveryWorkOwner.current === expectedOwner) {
+        recoveryWorkOwner.current = null;
+        setRecoveryBusyOwner(null);
+      }
+    }
+  }, []);
   useEffect(() => {
     if (!client || !ownerId) return;
-    let active = true;
-    resumePendingMobileSnapshotRecovery(ownerId)
-      .then(() => {
-        if (active && activeOwnerId.current === ownerId) setRecoveryReadyOwner(ownerId);
-      })
-      .catch((error: unknown) => {
-        if (!active || activeOwnerId.current !== ownerId) return;
-        setAuthError(error instanceof Error ? error.message : 'Pending account recovery could not finish.');
-        setRecoveryReadyOwner(ownerId);
-      });
-    return () => { active = false; };
-  }, [client, ownerId]);
+    void retryPendingRecovery().catch(() => undefined);
+  }, [client, ownerId, retryPendingRecovery]);
 
   useEffect(() => {
     if (!client || !ownerId || recoveryReadyOwner !== ownerId) return;
@@ -153,7 +198,10 @@ export function MobileAuthProvider({ children }: PropsWithChildren) {
     session,
     status,
     syncNotice,
-  }), [authError, client, consumeSyncNotice, ownerId, recoveryReadyOwner, session, status, syncNotice]);
+    recoveryBusy: recoveryBusyOwner === ownerId && ownerId !== null,
+    isRecoveryBusy, retryPendingRecovery, runRecovery,
+  }), [authError, client, consumeSyncNotice, ownerId, recoveryReadyOwner, session, status, syncNotice,
+    recoveryBusyOwner, isRecoveryBusy, retryPendingRecovery, runRecovery]);
 
   return <MobileAuthContext.Provider value={value}>{children}</MobileAuthContext.Provider>;
 }

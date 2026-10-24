@@ -1,6 +1,7 @@
 # Vercel Release Alias Runbook
 
-Last verified: 2026-07-16
+Last domain verification: 2026-10-20. July release history below is retained;
+the October restoration branch is not merged or promoted.
 
 ## Current Release State
 
@@ -12,6 +13,7 @@ Last verified: 2026-07-16
 - Root directory: `apps/web`.
 - Framework: `nextjs`.
 - Canonical project alias: `https://velocity-banking-mvp-v2.vercel.app`.
+- Verified custom domain: `https://interestshield.app`; `www` redirects to apex.
 - Public compatibility alias: `https://web-islanddevcrew.vercel.app`.
 - Production protection: public; Vercel project SSO protection is disabled.
 
@@ -70,9 +72,9 @@ npx --yes vercel@latest cache purge `
   --cwd apps/web
 ```
 
-The canonical project alias follows production deployments. The compatibility
-alias is manually assigned, so verify and reassign it after a release until the
-final custom domain replaces it.
+The project alias and verified custom domain follow production deployments. The
+compatibility alias is manually assigned, so verify it after an authorized release.
+Do not promote the restoration branch while its required gates remain open.
 
 ## Route Smoke
 
@@ -166,19 +168,25 @@ functional rollback, because it serves the obsolete app shell.
 
 ## Custom Domain
 
-The final InterestShield custom-domain hostname was not found in the Vercel team
-domain inventory or repository configuration during the July 16 verification.
-Do not guess or silently register a hostname.
+The hostname was unknown in July. On October 20, authenticated Vercel discovery
+confirmed `interestshield.app` and `www.interestshield.app` already verified on
+this exact project. Public A records match Vercel's configuration; Cloudflare
+nameservers are authoritative. Vercel reports no misconfiguration/conflicts.
+Normal HTTPS returns 200, `www` returns 308 to apex, and all seven current public
+routes pass HTTP smoke. Settings still confirms local-only backend/sync.
 
-Once the owned hostname is identified:
+Evidence: `ops/mission/evidence/timing-and-budget-2026-10-20/domain-readiness.json`.
+No DNS, domain assignment, backend or production configuration was changed.
+Do not re-add the domain or replace its working records as a setup step.
 
-1. Add it to `velocity-banking-mvp-v2` in Vercel.
-2. Apply the Vercel DNS records at its authoritative DNS provider.
-3. Wait for Vercel certificate issuance and domain verification.
-4. Run route and rendered Chrome smoke with `PRODUCTION_ORIGIN` and
+After all restoration release gates pass and promotion is authorized:
+
+1. Verify the merged `main` source SHA on the production deployment.
+2. Run route and rendered Chrome smoke with `PRODUCTION_ORIGIN` and
    `RENDERED_SMOKE_ORIGIN` set to the custom hostname.
-5. Update `NEXT_PUBLIC_SITE_URL` in Production.
-6. Verify canonical, sitemap, robots, Open Graph, and install metadata use the
+3. Verify Production `NEXT_PUBLIC_SITE_URL`; the restored source default is now
+   `https://interestshield.app`, with explicit overrides still supported.
+4. Verify canonical, sitemap, robots, Open Graph, and install metadata use the
    custom hostname.
-7. Keep the `web-islanddevcrew.vercel.app` alias as a temporary rollback path
+5. Keep the `web-islanddevcrew.vercel.app` alias as a temporary rollback path
    until the custom domain has remained green through a release cycle.

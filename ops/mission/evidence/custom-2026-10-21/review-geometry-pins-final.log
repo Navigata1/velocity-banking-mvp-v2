@@ -1,0 +1,69 @@
+COMMAND git rev-parse HEAD; git status --short; Get-FileHash apps/web/public/heroes/custom.glb,apps/media/scripts/build-refined-custom.mjs,apps/media/scripts/custom-refinement.test.mjs,apps/media/sources/custom/materials.json,apps/media/hero-imported.json,apps/media/hero-models.json -Algorithm SHA256 | Format-List Path,Hash; Get-Content .superpowers/sdd/2026-10-21-custom/worker-final-red.tap.log -Tail 10; Get-Content .superpowers/sdd/2026-10-21-custom/first-contracts.log -Tail 16; Get-Content .superpowers/sdd/2026-10-21-custom/media-contracts.log -Tail 10; node --version
+EXIT 0
+8e2f25ef6b81ffc65b9f96644170834c511078d3
+ M apps/media/hero-imported.json
+ M apps/media/hero-models.json
+ M apps/media/hero-turntables/ASSET-COLLECTION.md
+ M apps/media/hero-turntables/DESIGN.md
+ M apps/web/public/heroes/custom.glb
+ M docs/ASSET-CREDITS.md
+?? apps/media/scripts/build-refined-custom.mjs
+?? apps/media/scripts/custom-refinement.test.mjs
+?? apps/media/sources/custom/
+?? docs/custom-refinement-contract-2026-10-21.md
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\public\heroes\custom.glb
+Hash : 45129C97F6177442F9381FA56683C3C7C117B1E928235F66295F665113948C7B
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\scripts\build-refined-custom.mjs
+Hash : 9FFF1A7C8AB02F7E1AAB67438731A7D22469FF2B266F4F08C6852FC9D3593E17
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\scripts\custom-refinement.test.mjs
+Hash : 435156A825EF814C2114E75A48C8CC139678D5D65DB6EC06E097CDE49E74DCC5
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\sources\custom\materials.json
+Hash : 26AB2C71429E558B26A4108802E785088CE7E1CC231EA89DB6E0AD4ED5531532
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\hero-imported.json
+Hash : 217D3C84EDB12B6568302412B44648EB87BD2EE558DB9CAA72F1F29C02AF36CF
+
+Path : C:\Users\IslandDevCrew\Documents\Interest Shield\apps\media\hero-models.json
+Hash : D3E297E3BD06C65F33AE6472CEDDB95780103D370C9A7A89C077DBFB0D7EF6D6
+
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 0
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 342.721
+  operator: '=='
+  stack: |-
+    uvTriangles (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:75:253)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/custom-refinement.test.mjs:181:319)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 12
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5069.8422
+  ...
+1..143
+# tests 143
+# suites 0
+# pass 143
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11564.933
+v22.22.2

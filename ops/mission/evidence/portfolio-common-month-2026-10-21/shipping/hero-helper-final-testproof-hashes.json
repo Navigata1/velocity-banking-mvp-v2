@@ -1,0 +1,78 @@
+{
+  "scope": "Bounded release helper metadata/filesystem and synthetic projection tests only; no app hero, hosted, CI or Desktop publication certification",
+  "root": "C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\.superpowers\\sdd\\2026-10-21-common-month\\release",
+  "sourceFiles": [
+    "shipping-guards.mjs",
+    "shipping-guards.test.mjs",
+    "postflight.mjs",
+    "publish-desktop.mjs",
+    "release-preparation.md"
+  ],
+  "tests": {
+    "previousChecks": 144,
+    "currentChecks": 146,
+    "projectionTests": 3,
+    "syntaxExecutables": 4
+  },
+  "sourceBoundary": {
+    "pins": 293,
+    "oldUnchanged": 279,
+    "oldModified": 6,
+    "newFiles": 8
+  },
+  "requiredCiMarker": "PASS hero visibility controls: blank, undersized and clipped frames rejected",
+  "files": {
+    "shipping-guards.mjs": {
+      "bytes": 27993,
+      "sha256": "41061a58491bab23b4c9a9b413fa33d1eff38c1c1fcfbae7f2a8bdbcb9023e5b"
+    },
+    "shipping-guards.test.mjs": {
+      "bytes": 31920,
+      "sha256": "44a9f4b4071d5212ddd40e1df7a8b6b868403d3aa13e7f212f90e5c1f4c50acc"
+    },
+    "postflight.mjs": {
+      "bytes": 15452,
+      "sha256": "90a0eb595ff682ca64a6c5128709a68deb56008b6515441dbc0195f4e2a2b73f"
+    },
+    "publish-desktop.mjs": {
+      "bytes": 17571,
+      "sha256": "c7829425de5f8f0990fdd49e387b11dca11ceba4324acdb83fe4fcfef49d849c"
+    },
+    "release-preparation.md": {
+      "bytes": 18955,
+      "sha256": "80432bfdfa24789199f86c4b2b7da3a23867425218c5728061ab77a70b3b3afe"
+    },
+    "hero-helper-allowlist-red.log": {
+      "bytes": 9652,
+      "sha256": "d7bddf1b5b99588d95b917332539c16a103d94d7ef9ba02f7bcf185259ead0e4"
+    },
+    "hero-helper-before-144.log": {
+      "bytes": 7987,
+      "sha256": "0e926568a63c0f586e209f632169f06493ee4a3f406fb3df2440e98b3565d0a1"
+    },
+    "hero-helper-green.log": {
+      "bytes": 8130,
+      "sha256": "70ac20760f8db91f21b754e131f504b7e2549dc57d4bdf5a6a24465ae78255af"
+    },
+    "hero-helper-marker-red.log": {
+      "bytes": 4105,
+      "sha256": "607ee8ef741c589ebd4a62fd4c86f18c1fde2c4fcfe9f5a4c7999790eb8e02f8"
+    },
+    "hero-helper-projection-green.log": {
+      "bytes": 1119,
+      "sha256": "f159a49e3aa3aea4c66fe6bba80c709d51487d5bb5fe12dcbb6aee1b865ef678"
+    },
+    "hero-helper-protected-testproof.json": {
+      "bytes": 1440,
+      "sha256": "e3c352c3f9d4b6c409dcd2964e5cef46a161e568ade2e6c8b0d37c2c5f281e0f"
+    },
+    "hero-helper-syntax-testproof.log": {
+      "bytes": 132,
+      "sha256": "526e03a16b6819d865782f1cf8f129ea256c624af44bb660af27911afa49200c"
+    },
+    "projection-hero-green-proof.json": {
+      "bytes": 111630,
+      "sha256": "0c89bb1b33309f5509074eb8793381d18e7b399b9f88c048ecab736b1a4aaf32"
+    }
+  }
+}

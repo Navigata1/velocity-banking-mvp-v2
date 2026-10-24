@@ -1,0 +1,8 @@
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one.
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (67)
+prune: Removed types... Accessor (33)
+{"triangles":13200,"rendered":21160,"meshes":17,"maps":12,"bytes":254928,"collection":9925246}
+Refined Custom: 13200 unique/21160 rendered triangles,12 maps,254928 bytes; public9925246 bytes.

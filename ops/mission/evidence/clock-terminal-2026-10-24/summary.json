@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "at": "2026-10-24T01:13:00Z",
+  "source": "cd20f17108c5cd57d99dae35f2e1869423988b94",
+  "status": "partial-ci-release-held",
+  "push": { "run": 40045629097, "attempt": 1, "conclusion": "success", "allJobsAndStepsPassed": true },
+  "pullRequest": { "run": 40045632074, "attempt": 1, "conclusion": "failure", "failedJob": 120729845413, "failedStep": "Verify built Money Loop Three stage", "captureRemainingMs": 17, "causeProven": false },
+  "sourceGuards": { "expected": 6, "valid": 6 },
+  "sql": { "distinctAssertions": 285, "passesPerEvent": 2, "events": 2, "assertionExecutions": 1140, "actualJobLogsRead": true },
+  "bothAssetJobsPassed": true,
+  "canonicalChecker": { "command": "node scripts/check-restoration-ci.cjs", "at": "2026-10-24T01:06:20.683Z", "exit": 1, "error": "pull_request not successful" },
+  "preview": { "id": "dpl_CHnx5HMB34SpKyikirZCaoywhz1G", "state": "READY", "source": "git", "target": null, "url": "https://velocity-banking-mvp-v2-3hfkd81ih-islanddevcrew.vercel.app/", "readbackAt": "2026-10-24T01:08:36Z" },
+  "chrome": { "scope": "Car and House readiness/Replay, restored Auto Studio; no finance edits", "observedConsoleErrors": 0, "allRoutesOrAssetsTested": false, "screenshotsViewedInlineNotSaved": true },
+  "assetProof": { "artifact": 12542045190, "pngs": 102, "zipSha256": "93bced95f0be78fc6537a4f55951dfb91aada52abe4dabdddd38e2ff9a512093", "reviewed": "allten desktop single-pose; Car and House phone", "finalPhotographicApproval": false },
+  "privateGeneration": { "id": "7d2c88ac-b49a-4ebd-805b-9500855581cc", "mp4sProduced": 10, "overall": "failed-mandatory-runtime-postcheck", "childExit": 0, "totalProcesses": 204, "activeAfterCleanup": 0, "runtimeAddedFiles": 3, "runtimeAddedBytes": 987712, "baselineContentEdits": 0, "causeProven": false, "verifiedOrPackaged": false, "approved": false },
+  "houseV2": { "sha256": "faca67dac5afea711c0efc117865720e089e341a8d653833f416fe762e210592", "producerCpu": 26, "independentCpu": 15, "approval": "cpu-geometry-only", "capturedOrAdopted": false },
+  "terminalReceipt": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256#issuecomment-6377941309",
+  "localEvidence": ".superpowers/sdd/2026-10-24-clock-millisecond/checkpoint",
+  "workflowRerun": false,
+  "productionReady": false
+}

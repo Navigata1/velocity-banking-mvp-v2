@@ -1,0 +1,63 @@
+{
+  "verifiedAt": "2026-10-21T00:08:43.428Z",
+  "baseline": "232b503c0f543c91ff81d4f11b221d9fe051517b",
+  "changedSources": {
+    "apps/web/src/app/dashboard-model.ts": "015119a090003eb4d3aef53abea8ca4aa33f56d7f80197487cbd477239f344bd",
+    "apps/web/src/app/page.tsx": "cda6af7343f07bc8ee24e48e68ccbe1653a33aa4c5773f204b433ae12587c760",
+    "apps/web/scripts/engine-regression-tests.cjs": "9862eb5c7b5c4cb55da1990cc0a4cee9c76f59ad2e9357fe94c7f14d5cdabf78",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "a1d6ee45622e0bcec5dd2531a00acaae85b3204bc9075268e1e1059c2e19a82e",
+    "apps/web/package.json": "133c6e34e67a4ad37f43aaa886841201c9bfbb7de95424defbbc74dab29024d0",
+    ".github/workflows/ci.yml": "ea0da1fd8946a1936e556a879390df01809073600489e59311459d4f827bc94b"
+  },
+  "regressions": 340,
+  "dashboard": {
+    "cases": 12,
+    "widths": [
+      1440,
+      375
+    ],
+    "largeNoOpFieldsPerWidth": 7,
+    "savedInputsPreserved": true,
+    "errors": []
+  },
+  "comparisonCases": {
+    "simulator": 16,
+    "vault": 20,
+    "portfolio": 24
+  },
+  "assets": {
+    "modelRecordsUnchanged": 10,
+    "actualModelHashesVerified": 10,
+    "existingVideoHashesVerified": 10,
+    "rebuiltVideos": 0,
+    "publicBytes": 10447116
+  },
+  "report": {
+    "bytes": 95378,
+    "sha256": "be2d79dd23f99f9b8798eab29b210a85140996cbac783e28b21ea94103a2f624",
+    "externalRuntimeResources": 0,
+    "inlineScriptsParsed": 1,
+    "runtimeBrowserVerification": "not claimed; local-file opening policy-blocked, not retried"
+  },
+  "logs": {
+    "regression-red.log": "93457630d4114edf65640d6146a387a0bc573b10202c315dca4104d92533a2a0",
+    "ci-wiring-red.log": "ffc1f17d516ae8c268c248d0547903d1a22d4a0ad18228d2d02b0315ceb1299c",
+    "browser-red.log": "8a51b0ed97f704a09a506f1b870c62134f875648af0daba05d4251e20e6dc2fb",
+    "overflow-fixture-error.log": "1db4bd1cbe9e92dfbb28bdc84447cdff1501df6ec1c924d61b928fd1de15cea7",
+    "overflow-red.log": "d8e87ad8bd30c6ce295762dfd9b49c7023436f8202961d1b33807217f8b78d7d",
+    "editor-red.log": "308bd0de2a7edd139f8381026b4412451b66515bc0bb968f64aefdac48d780ba",
+    "web-tests.log": "1becbea641a7c2a3661f12fc5132d7cf5456a70f2ee7b8eceb53051f621af48c",
+    "web-build.log": "1b22497297957e70d8406811f426276b917277e6ec788b5e13b3eb582722091a",
+    "web-lint.log": "f9a21ecb409cdea1f61b7e813acc2fe2b2231e6d75fde4df7ab8eb89fc078bd7",
+    "browser-green.log": "834d28e47492d27dcd537836b7ab84566bb14aa08530e80c0a1c2268b822dbb0",
+    "routes.log": "fa54f875193adbbf94623670d1d313d147f6687faa44d0d1f52671590047ebe9",
+    "heroes.log": "abf249bce7674c47f120c19a2908492ee0eb56f727431728aeb184682c157bc4",
+    "comparison.log": "7f078324c65328045734a39c6c5db4c50e1452d3c5fb65cbec329fce9064c4c5",
+    "vault.log": "8dd9a02e4bb652301d8eb827c8ea9fb0ba2c20c760840b25c4bd1f68f72734e2",
+    "portfolio.log": "32209a7deee6d2991846746ee3685b40b7170be23c73878547a1e42588e221f4",
+    "media-check.log": "8031e958003f183a4d96dfd931dec6d8c250ea521a6c5aaa3772d6aec15feba2",
+    "mobile-check.log": "5f34733856cfba630a1302f4e09847c4f2d78034e85e82d4dd77d61f4e17d795",
+    "mobile-contracts.log": "de13f3b3414c0a1cad59023f07c7ac51c06cb8add1242e9cd386d50c38667e62",
+    "turntables.log": "235b9edcf5d708614455672f49a7f822317914671be2642f84b3cac437c13ccd"
+  }
+}

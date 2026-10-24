@@ -1,0 +1,77 @@
+{
+  "origin": "http://127.0.0.1:8112",
+  "receipts": [
+    {
+      "name": "create-edit",
+      "width": 375,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "copy",
+      "width": 375,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "imported-no-op",
+      "width": 375,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "stale-tab",
+      "width": 375,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "transfer",
+      "width": 375,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "create-edit",
+      "width": 1440,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "copy",
+      "width": 1440,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "imported-no-op",
+      "width": 1440,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "stale-tab",
+      "width": 1440,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "transfer",
+      "width": 1440,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "imported-no-op",
+      "width": 280,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "transfer",
+      "width": 280,
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

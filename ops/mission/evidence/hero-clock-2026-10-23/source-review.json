@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-23T17:34:01.370Z",
+  "reviewId": "669ff2b6-a136-4fe8-8bb5-038cc5ef6907",
+  "status": "source-only-accepted",
+  "accepted": true,
+  "findings": [],
+  "sourcePins": {
+    "apps/web/src/components/hero/HeroModelStage.tsx": "b510593d5766fe02b9751cbf1771414cab1b027e64bd4de74514086042bdc669",
+    "apps/web/scripts/hero-lifecycle-tests.cjs": "1b7ba20d6fbe33bca40c9e5fec24756d7747bbd670c1e0a5a5a5c42ddb589bad"
+  },
+  "requiredFrozenInputFiles": 537,
+  "integrity": {
+    "sourcePins": 495,
+    "runtimePins": 13,
+    "assets": 20,
+    "drift": []
+  },
+  "standing": {
+    "pass": 11,
+    "fail": 0,
+    "skipped": 0
+  },
+  "controls": 6,
+  "freshActualBaselineRefutations": 7,
+  "adversarialDisposition": "27 distinct scenario probes covered: 24 first-pass successes plus three successful realm-safe supplements. Preserve the original three comparator failures; do not report the initial recorder as a clean 27/0 run.",
+  "retainedReviewFailures": [
+    {
+      "command": "run-review.cjs",
+      "result": "24 fresh adversarial probes passed; three retention probes failed the reviewer's host-literal versus VM-object deepStrictEqual comparator despite identical zero counters. All six permanent mutations and seven actual-baseline refutations succeeded. The recorder also over-froze a concurrent parent-owned integration helper. These failures are retained unchanged."
+    },
+    {
+      "command": "finalize-evidence.cjs",
+      "result": "New narrow retention supplement passed 3/0 and explicitly reproduced each original comparator artifact, then asserted exact primitive resource counters, identities, material state, instance release and listener cleanup. Retained RED/GREEN checks and diff check succeeded. The recorder subsequently stopped on concurrent parent plan/progress updates. No product change, standing rerun or hidden favorable retry."
+    }
+  ],
+  "full29": {
+    "id": "ab510193-abb8-46cf-96fc-10f7ad686b4d",
+    "status": "running",
+    "fromScratch": true,
+    "maximumFreshRuns": 1,
+    "samePriorManifestAndCaps": true
+  },
+  "scope": "Bounded source-only independent acceptance. Current complete local integration still running; no actual React/browser/physical/photo/remote or production approval.",
+  "productionReady": false
+}

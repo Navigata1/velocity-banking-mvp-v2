@@ -1,0 +1,8 @@
+Selected observed failures; not a complete transcript.
+Initial Land tests rejected old study: expected refined-textured, actual undefined.
+Decoded terrain contact: path probe outside footprint at (-1.0655257063425394, 1.6210929155349731).
+New cut-face detail test: Land-Cutaway-Inclusions missing.
+Richer intermediate rejected: model799760bytes, public collection10537616bytes.
+Next intermediate rejected: model761828bytes, public collection10499684bytes.
+Publication wiring test: collection budget must be rechecked in the publication callback before replacing bytes.
+Final: nine Land cases pass; deliberate detached branch, reversed foundation and removed budget guard rejected in memory.

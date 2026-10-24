@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 1 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 4.4323
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 236.462

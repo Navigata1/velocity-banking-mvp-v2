@@ -1,0 +1,10 @@
+AssertionError [ERR_ASSERTION]: vital layout oracle accepted broken styles: [{"kind":"hidden-value","rejected":true},{"kind":"invisible-value","rejected":true},{"kind":"hidden-ancestor","rejected":true},{"kind":"vertical-clip","rejected":true},{"kind":"ancestor-clip","rejected":true},{"kind":"label-collision","rejected":true},{"kind":"empty-value","rejected":true},{"kind":"unit-opacity","rejected":false},{"kind":"unit-visibility","rejected":false},{"kind":"unit-clip","rejected":true}]
+    at checkVitalOracleControls (eval at <anonymous> (C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-mobile-vitals\replay-old-unit-oracle.cjs:6:13), <anonymous>:107:10)
+    at async C:\Users\IslandDevCrew\Documents\Interest Shield\.superpowers\sdd\2026-10-21-mobile-vitals\replay-old-unit-oracle.cjs:7:681 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

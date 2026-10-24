@@ -1,0 +1,9 @@
+START http://127.0.0.1:58773 own server pid 15664
+CURRENT house 375x900 guards=true independent=true values=["$3,500","Est. $51.50/day","Stabilize first","Fix the payoff inputs"] hero=314
+MUTANT original-four-column accepted=false ["review 375: dashboard-mobile-vital-interest-burn value must fit without splitting tokens: {\"text\":\"Est. $51.50/day\",\"tokens\":[{\"text\":\"Est\",\"oneLine\":true,\"contained\":true},{\"text\":\"$51.50\",\"oneLine\":true,\"contained\":true},{\"text\":\"/day\",\"oneLine\":false,\"contained\":true}],\"fontSize\":14,\"fits\":true}"]
+MUTANT forced-currency-chop accepted=false ["review 375: dashboard-mobile-vital-interest-burn value must fit without splitting tokens: {\"text\":\"Est. $51.50/day\",\"tokens\":[{\"text\":\"Est\",\"oneLine\":false,\"contained\":true},{\"text\":\"$51.50\",\"oneLine\":false,\"contained\":true},{\"text\":\"/day\",\"oneLine\":false,\"contained\":true}],\"fontSize\":14,\"fits\":true}"]
+MUTANT hidden-next-move accepted=true []
+MUTANT vertical-currency-clip accepted=true []
+MUTANT label-value-collision accepted=true []
+MUTANT hero-offscreen accepted=false ["hero visible height -456 < 48"]
+CURRENT short375x667 hero=211

@@ -1,0 +1,855 @@
+{
+  "started": "2026-10-21T11:08:03.698Z",
+  "command": "node .superpowers/sdd/2026-10-21-mobile-vitals/unit-review-descendant-probe.cjs",
+  "initialHashes": {
+    "apps/web/src/app/page.tsx": "e966bf3a2499d7a50792f3f89ca042791514537dd00a570825bc9ffea97d5b5c",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "4c9dc62afe83128fc9ff3c8dafbd6ef6614b7671ae9546a652a29999d13cb679",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "head": "3b58beffd14db959cedc667b1c892ef5c0cc672b",
+  "controls": [
+    {
+      "kind": "unit-opacity-zero",
+      "style": "opacity:0",
+      "accepted": true,
+      "failure": null,
+      "layout": [
+        {
+          "id": "dashboard-mobile-vital-cash-flow",
+          "label": {
+            "text": "Cash Flow",
+            "tokens": [
+              {
+                "text": "Cash",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Flow",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "$90,000,000",
+            "tokens": [
+              {
+                "text": "$90,000,000",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 161,
+            "glyphBottom": 180,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-interest-burn",
+          "label": {
+            "text": "Interest Burn",
+            "tokens": [
+              {
+                "text": "Interest",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Burn",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Est. $200,000.00/day",
+            "tokens": [
+              {
+                "text": "Est",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "$200,000.00",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "/day",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 162,
+            "glyphBottom": 207,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-debt-free-eta",
+          "label": {
+            "text": "Debt-Free ETA",
+            "tokens": [
+              {
+                "text": "Debt",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Free",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "ETA",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "4 mo",
+            "tokens": [
+              {
+                "text": "mo",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 268,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-next-move",
+          "label": {
+            "text": "Next Move",
+            "tokens": [
+              {
+                "text": "Next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Move",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Send the next chunk",
+            "tokens": [
+              {
+                "text": "Send",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "the",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "chunk",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 280,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        }
+      ],
+      "inheritedAmountGuard": {
+        "text": "Est. $200,000.00/day",
+        "fits": true,
+        "unit": {
+          "opacity": "0",
+          "visibility": "visible",
+          "height": 15,
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "kind": "unit-visibility-hidden",
+      "style": "visibility:hidden",
+      "accepted": true,
+      "failure": null,
+      "layout": [
+        {
+          "id": "dashboard-mobile-vital-cash-flow",
+          "label": {
+            "text": "Cash Flow",
+            "tokens": [
+              {
+                "text": "Cash",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Flow",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "$90,000,000",
+            "tokens": [
+              {
+                "text": "$90,000,000",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 161,
+            "glyphBottom": 180,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-interest-burn",
+          "label": {
+            "text": "Interest Burn",
+            "tokens": [
+              {
+                "text": "Interest",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Burn",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Est. $200,000.00/day",
+            "tokens": [
+              {
+                "text": "Est",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "$200,000.00",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "/day",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 162,
+            "glyphBottom": 207,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-debt-free-eta",
+          "label": {
+            "text": "Debt-Free ETA",
+            "tokens": [
+              {
+                "text": "Debt",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Free",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "ETA",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "4 mo",
+            "tokens": [
+              {
+                "text": "mo",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 268,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-next-move",
+          "label": {
+            "text": "Next Move",
+            "tokens": [
+              {
+                "text": "Next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Move",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Send the next chunk",
+            "tokens": [
+              {
+                "text": "Send",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "the",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "chunk",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 280,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        }
+      ],
+      "inheritedAmountGuard": {
+        "text": "Est. $200,000.00/day",
+        "fits": true,
+        "unit": {
+          "opacity": "1",
+          "visibility": "hidden",
+          "height": 15,
+          "overflow": "visible"
+        }
+      }
+    },
+    {
+      "kind": "unit-overflow-clipping",
+      "style": "height:1px;overflow:hidden",
+      "accepted": false,
+      "failure": "unit-overflow-clipping: dashboard-mobile-vital-interest-burn value must fit without splitting tokens: {\"text\":\"Est. $200,000.00/day\",\"tokens\":[{\"text\":\"Est\",\"oneLine\":true,\"contained\":true},{\"text\":\"$200,000.00\",\"oneLine\":true,\"contained\":true},{\"text\":\"/day\",\"oneLine\":true,\"contained\":false}],\"visible\":true,\"glyphTop\":162,\"glyphBottom\":218,\"fontSize\":12,\"fits\":true}",
+      "layout": [
+        {
+          "id": "dashboard-mobile-vital-cash-flow",
+          "label": {
+            "text": "Cash Flow",
+            "tokens": [
+              {
+                "text": "Cash",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Flow",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "$90,000,000",
+            "tokens": [
+              {
+                "text": "$90,000,000",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 161,
+            "glyphBottom": 180,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-interest-burn",
+          "label": {
+            "text": "Interest Burn",
+            "tokens": [
+              {
+                "text": "Interest",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Burn",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 144,
+            "glyphBottom": 156,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Est. $200,000.00/day",
+            "tokens": [
+              {
+                "text": "Est",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "$200,000.00",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "/day",
+                "oneLine": true,
+                "contained": false
+              }
+            ],
+            "visible": true,
+            "glyphTop": 162,
+            "glyphBottom": 218,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-debt-free-eta",
+          "label": {
+            "text": "Debt-Free ETA",
+            "tokens": [
+              {
+                "text": "Debt",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Free",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "ETA",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "4 mo",
+            "tokens": [
+              {
+                "text": "mo",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 268,
+            "fontSize": 14,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        },
+        {
+          "id": "dashboard-mobile-vital-next-move",
+          "label": {
+            "text": "Next Move",
+            "tokens": [
+              {
+                "text": "Next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "Move",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 232,
+            "glyphBottom": 244,
+            "fontSize": 9,
+            "fits": true
+          },
+          "value": {
+            "text": "Send the next chunk",
+            "tokens": [
+              {
+                "text": "Send",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "the",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "next",
+                "oneLine": true,
+                "contained": true
+              },
+              {
+                "text": "chunk",
+                "oneLine": true,
+                "contained": true
+              }
+            ],
+            "visible": true,
+            "glyphTop": 249,
+            "glyphBottom": 280,
+            "fontSize": 12,
+            "fits": true
+          },
+          "inViewport": true,
+          "width": 125,
+          "height": 82
+        }
+      ],
+      "inheritedAmountGuard": {
+        "text": "Est. $200,000.00/day",
+        "fits": true,
+        "unit": {
+          "opacity": "1",
+          "visibility": "visible",
+          "height": 1,
+          "overflow": "hidden"
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "origin": "http://127.0.0.1:64354",
+  "serverPid": 21716,
+  "before": [
+    {
+      "id": "dashboard-mobile-vital-cash-flow",
+      "label": {
+        "text": "Cash Flow",
+        "tokens": [
+          {
+            "text": "Cash",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Flow",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 144,
+        "glyphBottom": 156,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "$90,000,000",
+        "tokens": [
+          {
+            "text": "$90,000,000",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 161,
+        "glyphBottom": 180,
+        "fontSize": 14,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-interest-burn",
+      "label": {
+        "text": "Interest Burn",
+        "tokens": [
+          {
+            "text": "Interest",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Burn",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 144,
+        "glyphBottom": 156,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "Est. $200,000.00/day",
+        "tokens": [
+          {
+            "text": "Est",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "$200,000.00",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "/day",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 162,
+        "glyphBottom": 207,
+        "fontSize": 12,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-debt-free-eta",
+      "label": {
+        "text": "Debt-Free ETA",
+        "tokens": [
+          {
+            "text": "Debt",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Free",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "ETA",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 232,
+        "glyphBottom": 244,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "4 mo",
+        "tokens": [
+          {
+            "text": "mo",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 249,
+        "glyphBottom": 268,
+        "fontSize": 14,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    },
+    {
+      "id": "dashboard-mobile-vital-next-move",
+      "label": {
+        "text": "Next Move",
+        "tokens": [
+          {
+            "text": "Next",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "Move",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 232,
+        "glyphBottom": 244,
+        "fontSize": 9,
+        "fits": true
+      },
+      "value": {
+        "text": "Send the next chunk",
+        "tokens": [
+          {
+            "text": "Send",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "the",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "next",
+            "oneLine": true,
+            "contained": true
+          },
+          {
+            "text": "chunk",
+            "oneLine": true,
+            "contained": true
+          }
+        ],
+        "visible": true,
+        "glyphTop": 249,
+        "glyphBottom": 280,
+        "fontSize": 12,
+        "fits": true
+      },
+      "inViewport": true,
+      "width": 125,
+      "height": 82
+    }
+  ],
+  "finalHashes": {
+    "apps/web/src/app/page.tsx": "e966bf3a2499d7a50792f3f89ca042791514537dd00a570825bc9ffea97d5b5c",
+    "apps/web/scripts/smoke-dashboard-interest.cjs": "4c9dc62afe83128fc9ff3c8dafbd6ef6614b7671ae9546a652a29999d13cb679",
+    "apps/web/scripts/engine-regression-tests.cjs": "df7744d9e3594e38f547bf3b92b4c258f5c7ee49cdfaab88365449dbb7978114"
+  },
+  "filesStable": true,
+  "serverStopped": true,
+  "finished": "2026-10-21T11:08:08.093Z"
+}

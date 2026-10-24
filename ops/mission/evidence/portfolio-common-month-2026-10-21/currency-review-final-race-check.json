@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-21T13:45:39.866Z",
+  "head": "578b87d03b5959aec889925a20b3d64d69507cc0",
+  "base": "578b87d03b5959aec889925a20b3d64d69507cc0",
+  "subsetFiles": 240,
+  "changesSinceExplicitExtension": [],
+  "scratchInputChanges": [],
+  "syntaxChecks": [
+    {
+      "file": "apps/web/scripts/smoke-portfolio-currency-width.cjs",
+      "exit": 0
+    },
+    {
+      "file": ".superpowers\\sdd\\2026-10-21-common-month\\currency-width-boundary.cjs",
+      "exit": 0
+    }
+  ],
+  "exit": 0,
+  "note": "Explicit 240-file target; parent full293 shipping inventory not recounted; no actual browser/full gates/CI run."
+}

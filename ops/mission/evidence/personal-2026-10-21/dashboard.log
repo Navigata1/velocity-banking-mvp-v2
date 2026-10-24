@@ -1,0 +1,12 @@
+PASS Dashboard interest house at 1440px
+PASS Dashboard interest auto at 1440px
+PASS Dashboard interest cleared at 1440px
+PASS Dashboard interest sub-cent at 1440px
+PASS Dashboard interest cent-mismatch at 1440px
+PASS Dashboard interest large-import at 1440px
+PASS Dashboard interest house at 375px
+PASS Dashboard interest auto at 375px
+PASS Dashboard interest cleared at 375px
+PASS Dashboard interest sub-cent at 375px
+PASS Dashboard interest cent-mismatch at 375px
+PASS Dashboard interest large-import at 375px

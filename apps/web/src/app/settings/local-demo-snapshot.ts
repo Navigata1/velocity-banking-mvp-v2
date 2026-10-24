@@ -1,4 +1,7 @@
 import { LOCAL_DEMO_STORAGE_KEYS, type StorageLike } from './local-data-reset';
+import { CANONICAL_PORTFOLIO_KEY, LEGACY_PORTFOLIO_KEY, TERMS_PORTFOLIO_KEY, DATED_PORTFOLIO_KEY, readPortfolioSnapshotDocument } from '@/stores/portfolio-persistence';
+import { decodePortfolioDocument, encodePortfolioDocument } from '@interestshield/financial-engine/portfolio-book';
+import { assertLegacyScenarioDocument } from '@/stores/legacy-scenario-storage';
 import { BACKEND_HANDOFF_TARGETS } from './backend-readiness';
 import {
   buildBackendMigrationContract,
@@ -35,7 +38,8 @@ function isKnownStorageKey(value: unknown): value is LocalDemoStorageKey {
 
 function readSnapshotEntries(storage: StorageLike): LocalDemoSnapshotEntry[] {
   return LOCAL_DEMO_STORAGE_KEYS.flatMap((key) => {
-    const value = storage.getItem(key);
+    const value = key === LEGACY_PORTFOLIO_KEY ? readPortfolioSnapshotDocument(storage) : storage.getItem(key);
+    if (key === 'velocity-bank-storage' && value !== null) assertLegacyScenarioDocument(value);
     return value == null ? [] : [{ key, value }];
   });
 }
@@ -54,20 +58,25 @@ export function exportLocalDemoSnapshot(storage: StorageLike | null = browserSto
   | { ok: false; error: string } {
   if (!storage) return { ok: false, error: 'Browser storage is unavailable.' };
 
-  const payload = {
-    version: LOCAL_DEMO_SNAPSHOT_VERSION,
-    exportedAt: new Date().toISOString(),
-    mode: 'local-demo',
-    backendTargets: BACKEND_HANDOFF_TARGETS,
-    backendMigrationContract: buildBackendMigrationContract(),
-    storage: readSnapshotEntries(storage),
-  };
+  try {
+    const payload = {
+      version: LOCAL_DEMO_SNAPSHOT_VERSION,
+      exportedAt: new Date().toISOString(),
+      mode: 'local-demo',
+      backendTargets: BACKEND_HANDOFF_TARGETS,
+      backendMigrationContract: buildBackendMigrationContract(),
+      storage: readSnapshotEntries(storage),
+    };
 
-  return {
-    ok: true,
-    count: payload.storage.length,
-    json: JSON.stringify(payload, null, 2),
-  };
+    return {
+      ok: true,
+      count: payload.storage.length,
+      json: JSON.stringify(payload, null, 2),
+    };
+  } catch (error) {
+    return { ok: false, error: error && typeof error === 'object' && 'message' in error && typeof error.message === 'string'
+      ? error.message : 'Snapshot data could not be read.' };
+  }
 }
 
 export function importLocalDemoSnapshot(
@@ -103,23 +112,70 @@ export function importLocalDemoSnapshot(
       if (typeof entry.value !== 'string') {
         throw new Error('Snapshot storage value is invalid.');
       }
+      if (entry.key === 'velocity-bank-storage') assertLegacyScenarioDocument(entry.value);
 
-      return entry;
+      if (entry.key !== LEGACY_PORTFOLIO_KEY) return entry;
+      const book = decodePortfolioDocument(entry.value);
+      const version = JSON.parse(entry.value).version;
+      return { ...entry, value: encodePortfolioDocument(book, version === 3 || version === 4 ? version : undefined) };
     });
-
-    for (const key of LOCAL_DEMO_STORAGE_KEYS) {
-      storage.removeItem(key);
+    if (new Set(entries.map(entry => entry.key)).size !== entries.length) throw new Error('Snapshot contains duplicate storage keys.');
+    const portfolio = entries.find(entry => entry.key === LEGACY_PORTFOLIO_KEY);
+    let portfolioKey = CANONICAL_PORTFOLIO_KEY;
+    if (portfolio) {
+      const dated = storage.getItem(DATED_PORTFOLIO_KEY);
+      const active = dated === null ? storage.getItem(TERMS_PORTFOLIO_KEY) : null;
+      if (dated !== null || active !== null) readPortfolioSnapshotDocument(storage);
+      else {
+        // Historical explicit restore may retain malformed old archives, but cannot hide new semantic data.
+        const raw = storage.getItem(CANONICAL_PORTFOLIO_KEY) ?? storage.getItem(LEGACY_PORTFOLIO_KEY);
+        let previous: unknown;
+        try { previous = raw === null ? null : JSON.parse(raw); } catch { previous = null; }
+        if (previous && typeof previous === 'object') {
+          const document = previous as { data?: unknown; state?: unknown };
+          if ([document.data, document.state, document].some(data => data && typeof data === 'object' && ('datedPlan' in data
+            || 'loc' in data && data.loc && typeof data.loc === 'object' && 'lenderTerms' in data.loc))) {
+            throw new Error('Unsupported dated or lender data in an older Portfolio channel needs review before restore.');
+          }
+        }
+      }
+      const version = JSON.parse(portfolio.value).version;
+      if (dated !== null || version === 4) {
+        portfolioKey = DATED_PORTFOLIO_KEY;
+        portfolio.value = encodePortfolioDocument(decodePortfolioDocument(portfolio.value), 4);
+      } else if (active !== null || version === 3) {
+        portfolioKey = TERMS_PORTFOLIO_KEY;
+        portfolio.value = encodePortfolioDocument(decodePortfolioDocument(portfolio.value), 3);
+      }
     }
-
-    for (const entry of entries) {
-      storage.setItem(entry.key, entry.value);
+    const bookOnly = entries.length === 1 && portfolio !== undefined;
+    const replacedKeys = LOCAL_DEMO_STORAGE_KEYS.filter(key => key !== LEGACY_PORTFOLIO_KEY
+      && (!bookOnly || key !== 'velocity-bank-storage'));
+    if (replacedKeys.includes('velocity-bank-storage')) {
+      const scenario = storage.getItem('velocity-bank-storage');
+      if (scenario !== null) assertLegacyScenarioDocument(scenario);
+    }
+    const physicalKeys = [...replacedKeys, ...(portfolio ? [portfolioKey] : [])];
+    const before = physicalKeys.map(key => ({ key, value: storage.getItem(key) }));
+    try {
+      if (portfolio) storage.setItem(portfolioKey, portfolio.value);
+      for (const key of replacedKeys) storage.removeItem(key);
+      for (const entry of entries) if (entry.key !== LEGACY_PORTFOLIO_KEY) storage.setItem(entry.key, entry.value);
+    } catch (error) {
+      let incomplete = false;
+      for (const entry of before) {
+        try { if (entry.value === null) storage.removeItem(entry.key); else storage.setItem(entry.key, entry.value); }
+        catch { incomplete = true; }
+      }
+      if (incomplete) throw new Error('Snapshot import was interrupted and rollback could not finish. Keep the original backup; browser storage needs repair.');
+      throw error;
     }
 
     return { ok: true, imported: entries.length };
   } catch (error) {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : 'Failed to import snapshot JSON.',
+      error: error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ? error.message : 'Failed to import snapshot JSON.',
     };
   }
 }

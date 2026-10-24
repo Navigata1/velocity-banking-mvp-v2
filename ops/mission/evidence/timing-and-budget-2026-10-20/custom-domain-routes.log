@@ -1,0 +1,12 @@
+
+> web@0.1.0 smoke:production
+> node scripts/smoke-production.cjs
+
+Production origin: https://interestshield.app
+PASS Dashboard /
+PASS Simulator /simulator
+PASS Cockpit /cockpit
+PASS Portfolio /portfolio
+PASS Learn /learn
+PASS Settings /settings
+PASS Vault /vault

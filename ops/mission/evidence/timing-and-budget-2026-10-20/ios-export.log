@@ -1,0 +1,7 @@
+
+> interest-shield-mobile@0.1.0 smoke:ios-bundle
+> node scripts/smoke-ios-bundle.cjs
+
+iOS bundle export smoke passed.
+Output: C:\Users\IslandDevCrew\Documents\Interest Shield\apps\mobile\dist-ios
+Bundle files: _expo\static\js\ios\entry-f757b3fd73cd976b323f518fec3a3fe8.hbc

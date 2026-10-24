@@ -1,0 +1,17 @@
+Portfolio input fixtures against existing built web app at http://127.0.0.1:53017; isolated 375/1440/280px contexts.
+PASS precise Portfolio inputs 375px
+FAIL precise Portfolio inputs 1440px: currency digits split across lines at 1440px
+PASS precise Portfolio inputs 280px
+AssertionError [ERR_ASSERTION]: precise Portfolio rendered input fixtures must all pass
+
+1 !== 0
+
+    at runPortfolioInputFixtures (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:204:10)
+    at async main (C:\Users\IslandDevCrew\Documents\Interest Shield\apps\web\scripts\portfolio-input-smoke.cjs:230:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

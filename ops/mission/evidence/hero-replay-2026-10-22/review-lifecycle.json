@@ -1,0 +1,96 @@
+{
+  "baseline": "462a218342dfa95343bde6882546e99e882e5c99",
+  "generatedAt": "2026-10-22T00:34:06.937Z",
+  "hashes": {
+    "stage": "9f3321a5d84e4da9427cf93911f2208f9885a8267d094014eda7a695e1d7707a",
+    "smoke": "09134334a2f0b7a1abb97a07ffdd0c915078423fdc2e77f92dc7595619bbd0c5"
+  },
+  "method": "Actual transpiled stage with simulated hooks/RAF/renderer; actual smoke replay helpers and pixel thresholds with synthetic angle fixture. No browser, WebGL, network, build, dependencies, or test suites.",
+  "results": [
+    {
+      "name": "current",
+      "helperPassed": true,
+      "helperError": null,
+      "pendingAfterHelper": 1,
+      "pendingAfterTenMoreSeconds": 0,
+      "angleAfterTenMoreSeconds": 5.733185307179586,
+      "finalAngle": 5.733185307179586,
+      "renderersCreated": 1,
+      "loadsStarted": 1,
+      "readyEvents": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "mutant-no-restart-cancellation",
+      "helperPassed": true,
+      "helperError": null,
+      "pendingAfterHelper": 2,
+      "pendingAfterTenMoreSeconds": 0,
+      "angleAfterTenMoreSeconds": 5.733185307179586,
+      "finalAngle": 5.733185307179586,
+      "renderersCreated": 1,
+      "loadsStarted": 1,
+      "readyEvents": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "mutant-never-stop",
+      "helperPassed": true,
+      "helperError": null,
+      "pendingAfterHelper": 1,
+      "pendingAfterTenMoreSeconds": 1,
+      "angleAfterTenMoreSeconds": 5.733185307179586,
+      "finalAngle": 5.733185307179586,
+      "renderersCreated": 1,
+      "loadsStarted": 1,
+      "readyEvents": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "mutant-stop-at-1.6-seconds",
+      "helperPassed": true,
+      "helperError": null,
+      "pendingAfterHelper": 1,
+      "pendingAfterTenMoreSeconds": 0,
+      "angleAfterTenMoreSeconds": 0.10345127194667714,
+      "finalAngle": 5.733185307179586,
+      "renderersCreated": 1,
+      "loadsStarted": 1,
+      "readyEvents": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "negative-control-no-op-replay",
+      "helperPassed": false,
+      "helperError": "replay must restart at the initial pose\n\ntrue !== false\n",
+      "pendingAfterHelper": 1,
+      "pendingAfterTenMoreSeconds": 0,
+      "angleAfterTenMoreSeconds": 5.733185307179586,
+      "finalAngle": 5.733185307179586,
+      "renderersCreated": 1,
+      "loadsStarted": 1,
+      "readyEvents": [
+        false,
+        true
+      ]
+    }
+  ],
+  "otherChecks": [
+    "pending-load replay does not refetch",
+    "late resolution after unmount disposes decoded resources",
+    "rapid repeated replay leaves one RAF",
+    "reduced-motion replay schedules no RAF",
+    "context-lost callback and unmount cleanup",
+    "renderer/environment construction failure",
+    "failed texture callback revokes blob and never signals ready",
+    "model replacement disposes old renderer"
+  ]
+}

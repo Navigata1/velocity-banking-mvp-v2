@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+ok 1 - Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+  ---
+  duration_ms: 68.0943
+  type: 'test'
+  ...
+# Subtest: Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+ok 2 - Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+  ---
+  duration_ms: 597.5771
+  type: 'test'
+  ...
+# Subtest: Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+ok 3 - Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+  ---
+  duration_ms: 488.3828
+  type: 'test'
+  ...
+# Subtest: Credit Card keeps eight inset chip contacts connected to their recessed substrate
+ok 4 - Credit Card keeps eight inset chip contacts connected to their recessed substrate
+  ---
+  duration_ms: 111.2557
+  type: 'test'
+  ...
+# Subtest: Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+ok 5 - Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+  ---
+  duration_ms: 126.5487
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has actual reeding, two closed faces and recessed wave details
+ok 6 - Credit Card coin has actual reeding, two closed faces and recessed wave details
+  ---
+  duration_ms: 70.2605
+  type: 'test'
+  ...
+# Subtest: Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+ok 7 - Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+  ---
+  duration_ms: 533.1611
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+ok 8 - Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+  ---
+  duration_ms: 19.2051
+  type: 'test'
+  ...
+# Subtest: Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+ok 9 - Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+  ---
+  duration_ms: 98.8953
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4616.5246

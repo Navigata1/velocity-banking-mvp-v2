@@ -1,0 +1,10 @@
+
+> web@0.1.0 smoke:comparison:built
+> node scripts/smoke-comparison.cjs
+
+PASS Simulator zero-interest-two-liabilities at 1440px
+PASS Simulator velocity-slower-and-more-interest at 1440px
+PASS Simulator unaffordable-minimum at 1440px
+PASS Simulator zero-interest-two-liabilities at 375px
+PASS Simulator velocity-slower-and-more-interest at 375px
+PASS Simulator unaffordable-minimum at 375px

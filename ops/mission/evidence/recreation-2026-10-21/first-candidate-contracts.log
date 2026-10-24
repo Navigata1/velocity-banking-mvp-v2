@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+ok 1 - Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+  ---
+  duration_ms: 42.7106
+  type: 'test'
+  ...
+# Subtest: Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+ok 2 - Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+  ---
+  duration_ms: 146.4563
+  type: 'test'
+  ...
+# Subtest: Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+ok 3 - Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+  ---
+  duration_ms: 120.251
+  type: 'test'
+  ...
+# Subtest: Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+ok 4 - Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+  ---
+  duration_ms: 147.593
+  type: 'test'
+  ...
+# Subtest: Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+ok 5 - Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+  ---
+  duration_ms: 197.0508
+  type: 'test'
+  ...
+# Subtest: Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+ok 6 - Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+  ---
+  duration_ms: 31.5471
+  type: 'test'
+  ...
+# Subtest: Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+ok 7 - Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+  ---
+  duration_ms: 407.0831
+  type: 'test'
+  ...
+# Subtest: Recreation closed teal keel and rudder physically join the hull and extend below it
+ok 8 - Recreation closed teal keel and rudder physically join the hull and extend below it
+  ---
+  duration_ms: 387.4969
+  type: 'test'
+  ...
+# Subtest: Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+ok 9 - Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+  ---
+  duration_ms: 63.1596
+  type: 'test'
+  ...
+# Subtest: Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+ok 10 - Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+  ---
+  duration_ms: 10.9544
+  type: 'test'
+  ...
+# Subtest: Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+ok 11 - Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+  ---
+  duration_ms: 167.0559
+  type: 'test'
+  ...
+# Subtest: Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+ok 12 - Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+  ---
+  duration_ms: 30.3071
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1985.0724

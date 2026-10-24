@@ -1,0 +1,11 @@
+{
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "scripts/*.test.mjs"
+  ],
+  "cwd": "file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/",
+  "status": 1,
+  "signal": null,
+  "error": null
+}

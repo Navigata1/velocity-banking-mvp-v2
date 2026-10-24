@@ -13,14 +13,21 @@ import type {
 import { simulatePortfolio } from '@/engine/portfolio';
 import type { PortfolioRunComparison, PortfolioRunSummary } from '@/engine/portfolio-run-diff';
 import { comparePortfolioRuns, summarizePortfolioRun } from '@/engine/portfolio-run-diff';
+import { buildPortfolioPayoffModel } from '@/engine/portfolio-payoff-model';
+import { decodePortfolioBook, decodePortfolioDocument, encodePortfolioDocument, type PortfolioBook } from '@interestshield/financial-engine/portfolio-book';
+import { decodeLenderTerms, type LenderTermsInput, type MoneyLoopLOC } from '@interestshield/financial-engine';
+import { decodeDatedPortfolioPlan, type DatedPortfolioPlan } from '@interestshield/financial-engine/dated-plan';
+import { createPortfolioPersistence, LEGACY_PORTFOLIO_KEY } from './portfolio-persistence';
 
 export type { DebtItem, PayoffStrategy, FocusMode } from '@/engine/portfolio';
 
-export interface PortfolioLOC {
-  limit: number;
-  balance: number;
-  apr: number;
+function browserPortfolioStorage() {
+  try { return typeof window === 'undefined' ? null : window.localStorage; }
+  catch { return null; }
 }
+export const portfolioPersistence = createPortfolioPersistence(browserPortfolioStorage());
+
+export type PortfolioLOC = MoneyLoopLOC;
 
 export interface PortfolioState {
   debts: DebtItem[];
@@ -32,6 +39,7 @@ export interface PortfolioState {
   strategy: PayoffStrategy;
   focusMode: FocusMode;
   splitRatioPrimary: number;
+  datedPlan?: DatedPortfolioPlan;
   lastResult?: PortfolioSimulationResult;
   lastRunSummary?: PortfolioRunSummary;
   lastRunComparison?: PortfolioRunComparison;
@@ -40,7 +48,9 @@ export interface PortfolioState {
   setMonthlyExpenses: (v: number) => void;
   setExtraMonthlyPayment: (v: number) => void;
   setChunkAmount: (v: number) => void;
-  updateLOC: (patch: Partial<PortfolioLOC>) => void;
+  updateLOC: (patch: Partial<Pick<PortfolioLOC, 'limit' | 'balance' | 'apr'>>) => void;
+  setLenderTerms: (input: LenderTermsInput | null) => { ok: true } | { ok: false; error: string };
+  setDatedPlan: (plan: DatedPortfolioPlan | null) => { ok: true } | { ok: false; error: string };
   setStrategy: (s: PayoffStrategy) => void;
   setFocusMode: (m: FocusMode) => void;
   setSplitRatioPrimary: (r: number) => void;
@@ -78,9 +88,9 @@ const starterDebts: DebtItem[] = [
     category: 'mortgage',
     kind: 'amortized',
     balance: 285000,
-    apr: 0.0575,
-    minPaymentRule: { type: 'fixed', amount: 1850 },
-    termMonths: 336,
+    apr: 0.065,
+    minPaymentRule: { type: 'fixed', amount: 1896 },
+    termMonths: 312,
     paymentSource: 'checking',
     createdAt: new Date().toISOString(),
   },
@@ -295,7 +305,15 @@ type PersistedPortfolioFields = Pick<
   | 'strategy'
   | 'focusMode'
   | 'splitRatioPrimary'
+  | 'datedPlan'
 >;
+
+function portfolioBookFromState(state: PersistedPortfolioFields): PortfolioBook {
+  return decodePortfolioBook({ monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
+    extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount, loc: state.loc,
+    strategy: state.strategy, focusMode: state.focusMode, splitRatioPrimary: state.splitRatioPrimary, debts: state.debts,
+    ...(state.datedPlan === undefined ? {} : { datedPlan: state.datedPlan }) });
+}
 
 export function sanitizePersistedPortfolioState(
   persistedState: unknown,
@@ -309,6 +327,8 @@ export function sanitizePersistedPortfolioState(
 
   return {
     debts: sanitizePersistedDebts(persisted.debts, currentState.debts),
+    ...('datedPlan' in persisted ? { datedPlan: decodeDatedPortfolioPlan(persisted.datedPlan) }
+      : currentState.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(currentState.datedPlan) }),
     monthlyIncome: safeNonNegativeNumber(persisted.monthlyIncome, currentState.monthlyIncome, 'Monthly income'),
     monthlyExpenses: safeNonNegativeNumber(persisted.monthlyExpenses, currentState.monthlyExpenses, 'Monthly expenses'),
     extraMonthlyPayment: safeNonNegativeNumber(
@@ -321,6 +341,9 @@ export function sanitizePersistedPortfolioState(
       limit: safeNonNegativeNumber(persisted.loc?.limit, currentState.loc.limit, 'LOC limit'),
       balance: safeNonNegativeNumber(persisted.loc?.balance, currentState.loc.balance, 'LOC balance'),
       apr: safeNonNegativeNumber(persisted.loc?.apr, currentState.loc.apr, 'LOC APR'),
+      ...(persisted.loc && 'lenderTerms' in persisted.loc
+        ? { lenderTerms: decodeLenderTerms(persisted.loc.lenderTerms) }
+        : currentState.loc.lenderTerms === undefined ? {} : { lenderTerms: decodeLenderTerms(currentState.loc.lenderTerms) }),
     },
     strategy: selectKnownValue(persisted.strategy, payoffStrategies, currentState.strategy),
     focusMode: selectKnownValue(persisted.focusMode, focusModes, currentState.focusMode),
@@ -332,8 +355,8 @@ export const usePortfolioStore = create<PortfolioState>()(
   persist(
     (set, get) => ({
       debts: starterDebts,
-      monthlyIncome: 6500,
-      monthlyExpenses: 5000,
+      monthlyIncome: 8200,
+      monthlyExpenses: 4700,
       extraMonthlyPayment: 0,
       chunkAmount: 1000,
       loc: {
@@ -372,13 +395,35 @@ export const usePortfolioStore = create<PortfolioState>()(
         set((state) => ({
           loc: {
             ...state.loc,
-            ...patch,
             limit: safeNonNegativeNumber(patch.limit, state.loc.limit, 'LOC limit'),
             balance: safeNonNegativeNumber(patch.balance, state.loc.balance, 'LOC balance'),
             apr: safeNonNegativeNumber(patch.apr, state.loc.apr, 'LOC APR'),
           },
         }));
         get().recompute();
+      },
+
+      setLenderTerms: (input) => {
+        try {
+          const book = portfolioBookFromState(get());
+          if (input === null) delete book.loc.lenderTerms;
+          else book.loc.lenderTerms = decodeLenderTerms(input);
+          const version = book.datedPlan !== undefined || portfolioPersistence.getDocumentVersion() === 4 ? 4 : 3;
+          return get().importState(encodePortfolioDocument(book, version));
+        } catch (cause) {
+          return { ok: false as const, error: cause instanceof Error ? cause.message : 'Lender terms are invalid.' };
+        }
+      },
+
+      setDatedPlan: (plan) => {
+        try {
+          const book = portfolioBookFromState(get());
+          if (plan === null) delete book.datedPlan;
+          else book.datedPlan = decodeDatedPortfolioPlan(plan);
+          return get().importState(encodePortfolioDocument(book, 4));
+        } catch (cause) {
+          return { ok: false as const, error: cause instanceof Error ? cause.message : 'Dated plan is invalid.' };
+        }
       },
 
       setStrategy: (s) => { set({ strategy: s }); get().recompute(); },
@@ -428,58 +473,37 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
 
       exportState: () => {
-        const state = get();
-        return JSON.stringify({
-          version: 1,
-          exportedAt: new Date().toISOString(),
-          data: {
-            monthlyIncome: state.monthlyIncome,
-            monthlyExpenses: state.monthlyExpenses,
-            extraMonthlyPayment: state.extraMonthlyPayment,
-            chunkAmount: state.chunkAmount,
-            loc: state.loc,
-            strategy: state.strategy,
-            focusMode: state.focusMode,
-            splitRatioPrimary: state.splitRatioPrimary,
-            debts: state.debts,
-          },
-        }, null, 2);
+        const version = portfolioPersistence.getDocumentVersion();
+        if (!portfolioPersistence.canWrite() && portfolioPersistence.getStatus().status === 'error') {
+          throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio storage needs review before export.');
+        }
+        return encodePortfolioDocument(portfolioBookFromState(get()), version === 3 || version === 4 ? version : undefined);
       },
 
       importState: (jsonStr) => {
         try {
-          const parsed = JSON.parse(jsonStr);
-          const data = parsed?.data ?? parsed;
-          if (!data) return { ok: false as const, error: 'Invalid file format.' };
-          const debts = Array.isArray(data.debts) ? data.debts : null;
-          if (!debts) return { ok: false as const, error: 'No debts found in file.' };
-          const importedDebts = debts.map(sanitizeImportedDebt);
-          const monthlyIncome = nonNegativeNumber(data.monthlyIncome, 0, 'Monthly income');
-          const monthlyExpenses = nonNegativeNumber(data.monthlyExpenses, 0, 'Monthly expenses');
-          const extraMonthlyPayment = nonNegativeNumber(data.extraMonthlyPayment, 0, 'Extra monthly payment');
-          const chunkAmount = nonNegativeNumber(data.chunkAmount, 1000, 'Velocity chunk');
-          const loc = {
-            limit: nonNegativeNumber(data.loc?.limit, 25000, 'LOC limit'),
-            balance: nonNegativeNumber(data.loc?.balance, 3200, 'LOC balance'),
-            apr: nonNegativeNumber(data.loc?.apr ?? data.loc?.interestRate, 0.085, 'LOC APR'),
-          };
-          const splitRatioPrimary = Math.min(1, Math.max(0, finiteNumber(data.splitRatioPrimary, 0.7, 'Split ratio')));
-
-          set({
-            monthlyIncome,
-            monthlyExpenses,
-            extraMonthlyPayment,
-            chunkAmount,
-            loc,
-            strategy: selectKnownValue(data.strategy, ['velocity', 'snowball', 'avalanche'], 'velocity') as PayoffStrategy,
-            focusMode: selectKnownValue(data.focusMode, ['single', 'split'], 'single') as FocusMode,
-            splitRatioPrimary,
-            debts: importedDebts,
-          });
+          const book = decodePortfolioDocument(jsonStr);
+          const version = JSON.parse(jsonStr).version;
+          const documentVersion = version === 3 || version === 4 ? version : undefined;
+          const activeVersion = portfolioPersistence.getDocumentVersion() ?? 2;
+          if (!portfolioPersistence.canWrite()) throw new Error('Portfolio storage needs review before replacement.');
+          const unchanged = encodePortfolioDocument(book) === encodePortfolioDocument(portfolioBookFromState(get()));
+          if (unchanged) {
+            // Preflight even a no-op, without migrating equivalent old1/default state just to acknowledge it.
+            const stored = portfolioPersistence.getItem(LEGACY_PORTFOLIO_KEY);
+            if (portfolioPersistence.getStatus().status === 'ready' && activeVersion >= (documentVersion ?? 2)
+              && (stored === null || encodePortfolioDocument(stored.state) === encodePortfolioDocument(book))) return { ok: true as const };
+          }
+          portfolioPersistence.setItem(LEGACY_PORTFOLIO_KEY, { state: book, version: 2 }, documentVersion);
+          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
+          if (unchanged) return { ok: true as const };
+          set({ ...book, datedPlan: book.datedPlan, lastResult: undefined, lastRunSummary: undefined, lastRunComparison: undefined });
           get().recompute();
+          if (portfolioPersistence.getStatus().status !== 'ready') throw new Error(portfolioPersistence.getStatus().error ?? 'Portfolio was not saved.');
           return { ok: true as const };
         } catch (e: unknown) {
-          return { ok: false as const, error: e instanceof Error ? e.message : 'Failed to parse JSON.' };
+          return { ok: false as const, error: e && typeof e === 'object' && 'message' in e && typeof e.message === 'string'
+            ? e.message : 'Failed to parse JSON.' };
         }
       },
 
@@ -491,6 +515,7 @@ export const usePortfolioStore = create<PortfolioState>()(
           splitRatioPrimary: state.splitRatioPrimary,
         };
         const inputs: PortfolioSimulationInputs = {
+          aprUnit: 'decimal',
           monthlyIncome: state.monthlyIncome,
           monthlyExpenses: state.monthlyExpenses,
           extraMonthlyPayment: state.extraMonthlyPayment,
@@ -499,9 +524,16 @@ export const usePortfolioStore = create<PortfolioState>()(
           loc: state.loc,
           chunkAmount: state.chunkAmount,
           maxMonths: 600,
+          ...(state.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(state.datedPlan) }),
         };
         const result = simulatePortfolio(inputs);
-        const summary = summarizePortfolioRun(inputs, result);
+        const payoff = buildPortfolioPayoffModel({
+          monthlyIncome: state.monthlyIncome, monthlyExpenses: state.monthlyExpenses,
+          extraMonthlyPayment: state.extraMonthlyPayment, chunkAmount: state.chunkAmount,
+          loc: state.loc, debts: state.debts, ...settings,
+          ...(state.datedPlan === undefined ? {} : { datedPlan: decodeDatedPortfolioPlan(state.datedPlan) }),
+        }).plans.find(plan => plan.strategy === state.strategy);
+        const summary = summarizePortfolioRun(inputs, result, payoff?.state === 'projected' || payoff?.state === 'cleared');
         const comparison = comparePortfolioRuns(state.lastRunSummary, summary);
         set({
           lastResult: result,
@@ -512,8 +544,13 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
     }),
     {
-      name: 'interestshield-portfolio-v1',
-      version: 1,
+      name: LEGACY_PORTFOLIO_KEY,
+      version: 2,
+      storage: {
+        getItem: portfolioPersistence.getItem,
+        setItem: (key, value) => portfolioPersistence.setItem(key, { state: value.state, version: value.version ?? 0 }),
+        removeItem: portfolioPersistence.removeItem,
+      },
       partialize: (state) => ({
         debts: state.debts,
         monthlyIncome: state.monthlyIncome,
@@ -524,11 +561,13 @@ export const usePortfolioStore = create<PortfolioState>()(
         strategy: state.strategy,
         focusMode: state.focusMode,
         splitRatioPrimary: state.splitRatioPrimary,
+        ...(state.datedPlan === undefined ? {} : { datedPlan: state.datedPlan }),
       }),
-      merge: (persistedState, currentState) => ({
-        ...currentState,
-        ...sanitizePersistedPortfolioState(persistedState, currentState),
-      }),
+      merge: (persistedState, currentState) => {
+        if (persistedState == null) return currentState;
+        const book = decodePortfolioBook(persistedState);
+        return { ...currentState, ...book, datedPlan: book.datedPlan };
+      },
     }
   )
 );

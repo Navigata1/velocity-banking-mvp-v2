@@ -1,0 +1,65 @@
+{
+  "observedAt": "2026-10-20T19:25:46Z",
+  "domain": "interestshield.app",
+  "wwwDomain": "www.interestshield.app",
+  "vercel": {
+    "team": "islanddevcrew",
+    "project": "velocity-banking-mvp-v2",
+    "projectId": "prj_AYKVLmLw6D1vZmOFPQ512WdfpM5s",
+    "apexVerified": true,
+    "wwwVerified": true,
+    "configuredBy": "A",
+    "misconfigured": false,
+    "conflicts": []
+  },
+  "dns": {
+    "nameservers": ["damiete.ns.cloudflare.com", "surina.ns.cloudflare.com"],
+    "aRecords": ["216.150.1.1", "216.150.16.1"],
+    "matchesVercelConfiguration": true
+  },
+  "https": {
+    "apexStatus": 200,
+    "title": "InterestShield - Financial Empowerment",
+    "certificateValidation": "Normal HTTPS validation; no bypass used",
+    "wwwStatus": 308,
+    "wwwLocation": "https://interestshield.app/"
+  },
+  "currentPublicRoutes": {
+    "passed": 7,
+    "evidence": "custom-domain-routes.log",
+    "scope": "Current public deployment, not the unreleased restoration branch"
+  },
+  "deployedSettings": {
+    "url": "https://interestshield.app/settings",
+    "backend": "Local demo mode; no production backend is connected",
+    "accountSync": "Private account sync is not configured",
+    "evidence": "Custom-Domain-Backend-Status.jpg"
+  },
+  "candidateMetadata": {
+    "defaultOrigin": "https://interestshield.app",
+    "explicitEnvironmentOverridePreserved": true,
+    "builtHomeCanonical": "https://interestshield.app",
+    "builtRobotsHost": "https://interestshield.app",
+    "builtSitemapDomain": "interestshield.app",
+    "legacyAliasInSitemap": false
+  },
+  "dockerProbe": {
+    "command": "docker version --format {{.Server.Version}}",
+    "deadlineSeconds": 20,
+    "result": "No server response; only owned read-only probe stopped",
+    "sqlStackVerified": false
+  },
+  "changes": {
+    "dnsWrites": false,
+    "domainAssignments": false,
+    "productionEnvironmentWrites": false,
+    "backendMutations": false,
+    "productionDeployment": false
+  },
+  "remaining": [
+    "Verify the final restored main deployment SHA before release",
+    "Verify Production NEXT_PUBLIC_SITE_URL and built metadata at release",
+    "Run restored desktop/mobile browser and route smoke on the custom domain after authorized promotion",
+    "Establish isolated SQL/RLS proof and an explicitly verified backend target"
+  ]
+}

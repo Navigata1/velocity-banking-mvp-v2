@@ -1,0 +1,943 @@
+TAP version 13
+# Subtest: Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+ok 1 - Credit Card retains original procedural source hashes, embedded PBR and tighter delivery budgets
+  ---
+  duration_ms: 200.1036
+  type: 'test'
+  ...
+# Subtest: Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+ok 2 - Credit Card uses two thin closed rounded cards with detailed front and back surfaces
+  ---
+  duration_ms: 255.9
+  type: 'test'
+  ...
+# Subtest: Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+ok 3 - Credit Card sweeping motifs are true recesses, not floating decorative tubes or decals
+  ---
+  duration_ms: 474.7883
+  type: 'test'
+  ...
+# Subtest: Credit Card keeps eight inset chip contacts connected to their recessed substrate
+ok 4 - Credit Card keeps eight inset chip contacts connected to their recessed substrate
+  ---
+  duration_ms: 196.9915
+  type: 'test'
+  ...
+# Subtest: Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+ok 5 - Credit Card compressed caps retain outward winding, consistent UVs and non-overlapping triangles
+  ---
+  duration_ms: 203.6436
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has actual reeding, two closed faces and recessed wave details
+ok 6 - Credit Card coin has actual reeding, two closed faces and recessed wave details
+  ---
+  duration_ms: 121.8663
+  type: 'test'
+  ...
+# Subtest: Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+ok 7 - Credit Card coin engravings have two-sided recess depth and reject plain replacement faces
+  ---
+  duration_ms: 895.2817
+  type: 'test'
+  ...
+# Subtest: Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+ok 8 - Credit Card coin has 96 actual angular reed peaks rather than arbitrary radial variation
+  ---
+  duration_ms: 24.2253
+  type: 'test'
+  ...
+# Subtest: Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+ok 9 - Credit Card has finite normalized stage geometry and a protected locked aggregate-budget guard
+  ---
+  duration_ms: 207.7191
+  type: 'test'
+  ...
+# Subtest: House embeds optimized original surfaces and verifiable generation provenance
+ok 10 - House embeds optimized original surfaces and verifiable generation provenance
+  ---
+  duration_ms: 141.9167
+  type: 'test'
+  ...
+# Subtest: House keeps the original architectural identity with real apertures and detailed back/sides
+ok 11 - House keeps the original architectural identity with real apertures and detailed back/sides
+  ---
+  duration_ms: 43.8339
+  type: 'test'
+  ...
+# Subtest: House tower rooms are not blocked by a hidden retained exterior facade
+ok 12 - House tower rooms are not blocked by a hidden retained exterior facade
+  ---
+  duration_ms: 93.4328
+  type: 'test'
+  ...
+# Subtest: House full-turn silhouette closes exposed connecting walls and pitched gable slots
+ok 13 - House full-turn silhouette closes exposed connecting walls and pitched gable slots
+  ---
+  duration_ms: 501.9642
+  type: 'test'
+  ...
+# Subtest: House landscaping leaves the garage approach clear
+ok 14 - House landscaping leaves the garage approach clear
+  ---
+  duration_ms: 82.5317
+  type: 'test'
+  ...
+# Subtest: House retains normalized finite geometry, stable footing and bounded triangles
+ok 15 - House retains normalized finite geometry, stable footing and bounded triangles
+  ---
+  duration_ms: 112.0194
+  type: 'test'
+  ...
+# Subtest: pins renderer tooling and exposes one real HyperFrames quality command
+ok 16 - pins renderer tooling and exposes one real HyperFrames quality command
+  ---
+  duration_ms: 22.9263
+  type: 'test'
+  ...
+# Subtest: ignores every generated HyperFrames workspace directory
+ok 17 - ignores every generated HyperFrames workspace directory
+  ---
+  duration_ms: 4.5147
+  type: 'test'
+  ...
+# Subtest: keeps a runtime animation map synchronized with every composition source
+ok 18 - keeps a runtime animation map synchronized with every composition source
+  ---
+  duration_ms: 15.7592
+  type: 'test'
+  ...
+# Subtest: derives a project DESIGN.md from identity version 1 before composition HTML
+ok 19 - derives a project DESIGN.md from identity version 1 before composition HTML
+  ---
+  duration_ms: 3.7501
+  type: 'test'
+  ...
+# Subtest: assembles a deterministic 30-second root reel from launch and tutorial compositions
+ok 20 - assembles a deterministic 30-second root reel from launch and tutorial compositions
+  ---
+  duration_ms: 3.9175
+  type: 'test'
+  ...
+# Subtest: keeps Studio mutation IDs unique across transported templates
+ok 21 - keeps Studio mutation IDs unique across transported templates
+  ---
+  duration_ms: 4.0105
+  type: 'test'
+  ...
+# Subtest: keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+ok 22 - keeps both composition timelines synchronous, finite, captioned, and renderer neutral
+  ---
+  duration_ms: 8.8925
+  type: 'test'
+  ...
+# Subtest: stores non-overlapping plain-language caption cues within contract limits
+ok 23 - stores non-overlapping plain-language caption cues within contract limits
+  ---
+  duration_ms: 21.7049
+  type: 'test'
+  ...
+# Subtest: keeps the average-balance relationship qualitative without decorative percentages
+ok 24 - keeps the average-balance relationship qualitative without decorative percentages
+  ---
+  duration_ms: 3.1276
+  type: 'test'
+  ...
+# Subtest: keeps renderer packages isolated from calculator and Expo manifests after installation
+ok 25 - keeps renderer packages isolated from calculator and Expo manifests after installation
+  ---
+  duration_ms: 4.6615
+  type: 'test'
+  ...
+# Subtest: Land preserves generated sources, embedded PBR maps and the standing collection budget
+ok 26 - Land preserves generated sources, embedded PBR maps and the standing collection budget
+  ---
+  duration_ms: 113.2244
+  type: 'test'
+  ...
+# Subtest: Land has real pond depth and non-flat terrain rather than a water disk over grass
+ok 27 - Land has real pond depth and non-flat terrain rather than a water disk over grass
+  ---
+  duration_ms: 217.0875
+  type: 'test'
+  ...
+# Subtest: Land gravel ribbon follows the actual triangulated terrain without floating
+ok 28 - Land gravel ribbon follows the actual triangulated terrain without floating
+  ---
+  duration_ms: 138.567
+  type: 'test'
+  ...
+# Subtest: Land keeps four grounded survey stakes and three connected textured trees
+ok 29 - Land keeps four grounded survey stakes and three connected textured trees
+  ---
+  duration_ms: 135.8453
+  type: 'test'
+  ...
+# Subtest: Land cutaway layers meet the terrain and preserve finite normalized geometry
+ok 30 - Land cutaway layers meet the terrain and preserve finite normalized geometry
+  ---
+  duration_ms: 221.1458
+  type: 'test'
+  ...
+# Subtest: Land cut faces include actual stone/root detail and varied leaf shading
+ok 31 - Land cut faces include actual stone/root detail and varied leaf shading
+  ---
+  duration_ms: 20.8175
+  type: 'test'
+  ...
+# Subtest: Land woody components actually enter their trunks and reject detached branches
+ok 32 - Land woody components actually enter their trunks and reject detached branches
+  ---
+  duration_ms: 80.5867
+  type: 'test'
+  ...
+# Subtest: Land cutaway has outward-facing lower joins, corners and a closed underside
+ok 33 - Land cutaway has outward-facing lower joins, corners and a closed underside
+  ---
+  duration_ms: 300.5759
+  type: 'test'
+  ...
+# Subtest: Land rechecks the live collection budget inside locked asset publication
+ok 34 - Land rechecks the live collection budget inside locked asset publication
+  ---
+  duration_ms: 105.8236
+  type: 'test'
+  ...
+# Subtest: ships a version-matched human visual identity specification
+ok 35 - ships a version-matched human visual identity specification
+  ---
+  duration_ms: 11.16
+  type: 'test'
+  ...
+# Subtest: keeps the machine-readable specification snapshot synchronized
+ok 36 - keeps the machine-readable specification snapshot synchronized
+  ---
+  duration_ms: 5.7747
+  type: 'test'
+  ...
+# Subtest: keeps media checks in the standing GitHub quality workflow
+ok 37 - keeps media checks in the standing GitHub quality workflow
+  ---
+  duration_ms: 36.3842
+  type: 'test'
+  ...
+# Subtest: Medical poster retains traceable original-badge edit sources and current delivery hashes
+ok 38 - Medical poster retains traceable original-badge edit sources and current delivery hashes
+  ---
+  duration_ms: 30.6814
+  type: 'test'
+  ...
+# Subtest: Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+ok 39 - Medical fallback preserves transparent detailed case/stethoscope and uses an emerald badge
+  ---
+  duration_ms: 185.8973
+  type: 'test'
+  ...
+# Subtest: Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+ok 40 - Medical poster preparation is reproducible and rejects corrupted source lineage before encoding
+  ---
+  duration_ms: 8047.2353
+  type: 'test'
+  ...
+# Subtest: Legacy poster preparation and collection packaging retain the edited Medical source
+ok 41 - Legacy poster preparation and collection packaging retain the edited Medical source
+  ---
+  duration_ms: 8.79
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+ok 42 - Poster publication rejects an actual cap-plus-one replacement without changing old bytes or provenance
+  ---
+  duration_ms: 41.877
+  type: 'test'
+  ...
+# Subtest: Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+ok 43 - Poster publication rejects malformed incoming or stored revisions before asset and provenance writes
+  ---
+  duration_ms: 35.3768
+  type: 'test'
+  ...
+# Subtest: Collection packaging delivers validated source and manifest snapshots despite source-path changes
+ok 44 - Collection packaging delivers validated source and manifest snapshots despite source-path changes
+  ---
+  duration_ms: 5.1311
+  type: 'test'
+  ...
+# Subtest: Medical replaces the study with protected original geometry and verifiable source provenance
+ok 45 - Medical replaces the study with protected original geometry and verifiable source provenance
+  ---
+  duration_ms: 132.9768
+  type: 'test'
+  ...
+# Subtest: Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+ok 46 - Medical embeds nine varied 256px WebP PBR maps with non-emissive enamel, steel and rubber
+  ---
+  duration_ms: 215.8401
+  type: 'test'
+  ...
+# Subtest: Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+ok 47 - Medical case has a real enclosed cavity, separate lid and gasket, rejecting solid infill
+  ---
+  duration_ms: 464.8113
+  type: 'test'
+  ...
+# Subtest: Medical handle is an arched tube with an actual open aperture and attached grip and bases
+ok 48 - Medical handle is an arched tube with an actual open aperture and attached grip and bases
+  ---
+  duration_ms: 823.6939
+  type: 'test'
+  ...
+# Subtest: Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+ok 49 - Medical feet, latches and rear hinges are rigid attached geometry rather than floating details
+  ---
+  duration_ms: 181.5636
+  type: 'test'
+  ...
+# Subtest: Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+ok 50 - Medical corner guards wrap the case curvature with actual open quarter-shell geometry
+  ---
+  duration_ms: 1354.1828
+  type: 'test'
+  ...
+# Subtest: Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+ok 51 - Medical badge is an original volumetric emerald shield with a contacting steel rim, not a cross
+  ---
+  duration_ms: 49.7837
+  type: 'test'
+  ...
+# Subtest: Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+ok 52 - Medical stethoscope has a connected Y, paired rubber branches, silver earbows and tips, rejecting detachment
+  ---
+  duration_ms: 2973.3405
+  type: 'test'
+  ...
+# Subtest: Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+ok 53 - Medical foreground tubing loops visibly and its chestpiece has a shaped body, annular rim and diaphragm
+  ---
+  duration_ms: 194.5766
+  type: 'test'
+  ...
+# Subtest: Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+ok 54 - Medical decoded surfaces are finite, outward, grounded, normalized and within shipping budgets; contact rejects false positives
+  ---
+  duration_ms: 119.2857
+  type: 'test'
+  ...
+# Subtest: Medical contact verification rejects concentric open tube skins without touching surfaces
+ok 55 - Medical contact verification rejects concentric open tube skins without touching surfaces
+  ---
+  duration_ms: 12.2795
+  type: 'test'
+  ...
+# Subtest: Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+ok 56 - Medical tubing stays outside the chestpiece body, rim and diaphragm except its separate connector
+  ---
+  duration_ms: 25.2661
+  type: 'test'
+  ...
+# Subtest: Medical badge rim is closed and outward with visible aperture-facing inner walls
+ok 57 - Medical badge rim is closed and outward with visible aperture-facing inner walls
+  ---
+  duration_ms: 33.4932
+  type: 'test'
+  ...
+# Subtest: Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+ok 58 - Medical rechecks the unchanged live 10MiB public cap inside locked publication before any write
+  ---
+  duration_ms: 42.5959
+  type: 'test'
+  ...
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+ok 59 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 117.7428
+  type: 'test'
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+ok 60 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 330.5051
+  type: 'test'
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+ok 61 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 269.1482
+  type: 'test'
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+ok 62 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 399.4344
+  type: 'test'
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+ok 63 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 4234.526
+  type: 'test'
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+ok 64 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 603.0891
+  type: 'test'
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+ok 65 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 265.5209
+  type: 'test'
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+ok 66 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 161.7298
+  type: 'test'
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+ok 67 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 13.7564
+  type: 'test'
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+ok 68 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 169.1711
+  type: 'test'
+  ...
+# Subtest: Personal geometry verification expands actual GPU instance translation, rotation and scale
+ok 69 - Personal geometry verification expands actual GPU instance translation, rotation and scale
+  ---
+  duration_ms: 10.336
+  type: 'test'
+  ...
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 70 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 2.0482
+  type: 'test'
+  ...
+# Subtest: Personal textured surfaces retain bounded nondegenerate UVs after compression
+ok 71 - Personal textured surfaces retain bounded nondegenerate UVs after compression
+  ---
+  duration_ms: 54.9231
+  type: 'test'
+  ...
+# Subtest: Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ok 72 - Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+  ---
+  duration_ms: 5.7119
+  type: 'test'
+  ...
+# Subtest: Personal papers clear the folded flap while retaining a real inserted mouth path
+ok 73 - Personal papers clear the folded flap while retaining a real inserted mouth path
+  ---
+  duration_ms: 251.0351
+  type: 'test'
+  ...
+# Subtest: Personal every real stitch instance is surface-seated rather than buried or floating
+ok 74 - Personal every real stitch instance is surface-seated rather than buried or floating
+  ---
+  duration_ms: 2004.5889
+  type: 'test'
+  ...
+# Subtest: Personal key bevel has no proper nonadjacent surface crossings
+ok 75 - Personal key bevel has no proper nonadjacent surface crossings
+  ---
+  duration_ms: 155.0528
+  type: 'test'
+  ...
+# Subtest: Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+ok 76 - Personal stitch burial verifier accepts an exposed acute edge instead of one ambiguous face normal
+  ---
+  duration_ms: 6.3629
+  type: 'test'
+  ...
+# Subtest: refined car carries textured PBR materials and compressed self-contained geometry
+ok 77 - refined car carries textured PBR materials and compressed self-contained geometry
+  ---
+  duration_ms: 20.4484
+  type: 'test'
+  ...
+# Subtest: refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+ok 78 - refined Vault has an open chamber, physical door pivot and embedded PBR surfaces
+  ---
+  duration_ms: 296.3162
+  type: 'test'
+  ...
+# Subtest: web and HyperFrames share the same photographic studio reflections
+ok 79 - web and HyperFrames share the same photographic studio reflections
+  ---
+  duration_ms: 13.7866
+  type: 'test'
+  ...
+# Subtest: Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+not ok 80 - Recreation protects the refined artifact in both manifests and hashes its builder, recipe and retained original sources
+  ---
+  duration_ms: 34.4262
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:119:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    replace the old untextured Recreation study
+    + actual - expected
+    
+    + undefined
+    - 'refined-textured'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'refined-textured'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:120:60)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+not ok 81 - Recreation embeds genuinely used varied Canvas, Timber, Paint and Steel WebP PBR maps without emission
+  ---
+  duration_ms: 25.3444
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:132:1'
+  failureType: 'testCodeFailure'
+  error: 'at least nine meaningful embedded maps, not untextured study materials'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:134:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+not ok 82 - Recreation hull is a closed outward double-wall open-top volume with a white upper body and teal lower body
+  ---
+  duration_ms: 15.0145
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:159:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Hull must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:160:50)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+not ok 83 - Recreation timber deck leaves a true recessed cockpit void with a contacting floor and walls, rejecting infill
+  ---
+  duration_ms: 12.5163
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:176:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Deck must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:177:56)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+not ok 84 - Recreation cabin side windows are actual wall apertures with fitted transparent panes, not painted or opaque infill
+  ---
+  duration_ms: 37.4733
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:185:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Cabin-Port must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:188:17)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+not ok 85 - Recreation two ivory sails have closed thin skins and true billow beyond any best-fit plane
+  ---
+  duration_ms: 9.6642
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:195:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Mainsail must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:197:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+not ok 86 - Recreation physical seam paths follow both actual billowed sail surfaces and reject displaced or planar chords
+  ---
+  duration_ms: 19.7106
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:201:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Mainsail must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:203:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation closed teal keel and rudder physically join the hull and extend below it
+not ok 87 - Recreation closed teal keel and rudder physically join the hull and extend below it
+  ---
+  duration_ms: 14.1621
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:210:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Hull must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:211:41)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+not ok 88 - Recreation mast, boom and real standing rigging meet their actual supports at bounded endpoints
+  ---
+  duration_ms: 23.3358
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:217:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Mast must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:218:41)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+not ok 89 - Recreation wheel and pedestal form a connected volumetric helm supported by the cockpit floor
+  ---
+  duration_ms: 16.2464
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:230:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    R-Wheel must exist exactly once in rendered scenes
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    named (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:19:79)
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:231:42)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+not ok 90 - Recreation preserves both 65k triangle budgets, 0.5MiB artifact, grounded 3.2 stage, real 16bit UVs and locked live 10MiB cap
+  ---
+  duration_ms: 39.6524
+  type: 'test'
+  location: 'C:\\Users\\IslandDevCrew\\Documents\\Interest Shield\\apps\\media\\scripts\\recreation-refinement.test.mjs:235:1'
+  failureType: 'testCodeFailure'
+  error: 'Recreation must recover headroom within 0.5MiB'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/IslandDevCrew/Documents/Interest%20Shield/apps/media/scripts/recreation-refinement.test.mjs:236:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+ok 91 - Recreation verifiers expand GPU TRS, use normalized accessors and inverse-transpose normals, and reject false contact/void/volume fixtures
+  ---
+  duration_ms: 175.1828
+  type: 'test'
+  ...
+# Subtest: updating one refined hero preserves other assets and stable inventory order
+ok 92 - updating one refined hero preserves other assets and stable inventory order
+  ---
+  duration_ms: 120.5008
+  type: 'test'
+  ...
+# Subtest: an import overlapping a real study rebuild remains the final asset and inventory
+ok 93 - an import overlapping a real study rebuild remains the final asset and inventory
+  ---
+  duration_ms: 1052.6399
+  type: 'test'
+  ...
+# Subtest: concurrent importer processes retain every refined record in both manifests
+ok 94 - concurrent importer processes retain every refined record in both manifests
+  ---
+  duration_ms: 506.8746
+  type: 'test'
+  ...
+# Subtest: Windows sharing errors retry exclusive lock acquisition without weakening ownership
+ok 95 - Windows sharing errors retry exclusive lock acquisition without weakening ownership
+  ---
+  duration_ms: 280.3292
+  type: 'test'
+  ...
+# Subtest: pins one isolated Remotion toolchain and exposes standing render gates
+ok 96 - pins one isolated Remotion toolchain and exposes standing render gates
+  ---
+  duration_ms: 14.1498
+  type: 'test'
+  ...
+# Subtest: commits deterministic scenario JSON generated from the shared financial engine
+ok 97 - commits deterministic scenario JSON generated from the shared financial engine
+  ---
+  duration_ms: 7.1093
+  type: 'test'
+  ...
+# Subtest: accepts a CRLF scenario checkout when generated financial data is unchanged
+ok 98 - accepts a CRLF scenario checkout when generated financial data is unchanged
+  ---
+  duration_ms: 848.2858
+  type: 'test'
+  ...
+# Subtest: validates every scenario through a strict discriminated runtime schema
+ok 99 - validates every scenario through a strict discriminated runtime schema
+  ---
+  duration_ms: 4.3802
+  type: 'test'
+  ...
+# Subtest: registers every story in landscape portrait and square plus the representative still
+ok 100 - registers every story in landscape portrait and square plus the representative still
+  ---
+  duration_ms: 3.5516
+  type: 'test'
+  ...
+# Subtest: keeps scenario motion frame-driven local and truth-first
+ok 101 - keeps scenario motion frame-driven local and truth-first
+  ---
+  duration_ms: 5.9313
+  type: 'test'
+  ...
+# Subtest: binds visible financial values to scenario data and follows identity geometry
+ok 102 - binds visible financial values to scenario data and follows identity geometry
+  ---
+  duration_ms: 3.0835
+  type: 'test'
+  ...
+# Subtest: runs browser-rendered overflow proofs and constrains colors to the tested palette
+ok 103 - runs browser-rendered overflow proofs and constrains colors to the tested palette
+  ---
+  duration_ms: 37.4434
+  type: 'test'
+  ...
+# Subtest: requires one exact Chrome build in local and CI renders and ignores every cache surface
+ok 104 - requires one exact Chrome build in local and CI renders and ignores every cache surface
+  ---
+  duration_ms: 6.1026
+  type: 'test'
+  ...
+# Subtest: protects Remotion output and browser bundles from broad staging
+ok 105 - protects Remotion output and browser bundles from broad staging
+  ---
+  duration_ms: 1.9074
+  type: 'test'
+  ...
+# Subtest: Student Loan replaces the study with a protected original artifact and verifiable source provenance
+ok 106 - Student Loan replaces the study with a protected original artifact and verifiable source provenance
+  ---
+  duration_ms: 84.3537
+  type: 'test'
+  ...
+# Subtest: Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+ok 107 - Student Loan embeds nine optimized varied PBR maps and non-emissive dielectric surfaces
+  ---
+  duration_ms: 235.5261
+  type: 'test'
+  ...
+# Subtest: Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+ok 108 - Student Loan has two thin closed books with actual pages, covers, spines and attached binding bands
+  ---
+  duration_ms: 207.2401
+  type: 'test'
+  ...
+# Subtest: Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+ok 109 - Student Loan cap support and all three cords physically connect, rejecting lateral detachment
+  ---
+  duration_ms: 2287.9784
+  type: 'test'
+  ...
+# Subtest: Student Loan tassel has 48 separate volumetric strands attached to its head
+ok 110 - Student Loan tassel has 48 separate volumetric strands attached to its head
+  ---
+  duration_ms: 81.8693
+  type: 'test'
+  ...
+# Subtest: Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+ok 111 - Student Loan diploma is an open X-axis shell with an internal spiral and rejects a filled lumen
+  ---
+  duration_ms: 43.6813
+  type: 'test'
+  ...
+# Subtest: Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+ok 112 - Student Loan bow has volumetric loops with real holes and connected knot, band and tails
+  ---
+  duration_ms: 42.2874
+  type: 'test'
+  ...
+# Subtest: Student Loan bow surfaces do not cross or invert outside their tied knot
+ok 113 - Student Loan bow surfaces do not cross or invert outside their tied knot
+  ---
+  duration_ms: 276.12
+  type: 'test'
+  ...
+# Subtest: Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+ok 114 - Student Loan stays finite, grounded, normalized and within its tighter artifact budgets
+  ---
+  duration_ms: 45.134
+  type: 'test'
+  ...
+# Subtest: Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+ok 115 - Student Loan preserves the current aggregate 10MiB cap and its live locked-publication dataflow
+  ---
+  duration_ms: 76.2482
+  type: 'test'
+  ...
+# Subtest: exports one immutable, versioned renderer-neutral identity
+ok 116 - exports one immutable, versioned renderer-neutral identity
+  ---
+  duration_ms: 3.3694
+  type: 'test'
+  ...
+# Subtest: uses a semantic palette with AA-safe readable pairs
+ok 117 - uses a semantic palette with AA-safe readable pairs
+  ---
+  duration_ms: 1.3048
+  type: 'test'
+  ...
+# Subtest: defines deterministic landscape, portrait, and square frames with bounded safe areas
+ok 118 - defines deterministic landscape, portrait, and square frames with bounded safe areas
+  ---
+  duration_ms: 1.7018
+  type: 'test'
+  ...
+# Subtest: uses deterministic frame motion and a complete reduced-motion substitute
+ok 119 - uses deterministic frame motion and a complete reduced-motion substitute
+  ---
+  duration_ms: 1.2702
+  type: 'test'
+  ...
+# Subtest: quantizes HyperFrames time and seeded geometry from portable test vectors
+ok 120 - quantizes HyperFrames time and seeded geometry from portable test vectors
+  ---
+  duration_ms: 5.1523
+  type: 'test'
+  ...
+# Subtest: keeps financial visual channels literal and distinguishes LOC utilization from capacity
+ok 121 - keeps financial visual channels literal and distinguishes LOC utilization from capacity
+  ---
+  duration_ms: 0.3802
+  type: 'test'
+  ...
+# Subtest: renders LOC utilization and capacity with opposite explicit units
+ok 122 - renders LOC utilization and capacity with opposite explicit units
+  ---
+  duration_ms: 1.2623
+  type: 'test'
+  ...
+# Subtest: freezes readable typography, caption behavior, coach tone, and educational stories
+ok 123 - freezes readable typography, caption behavior, coach tone, and educational stories
+  ---
+  duration_ms: 0.2941
+  type: 'test'
+  ...
+# Subtest: forbids renderer dependencies in calculator and mobile manifests
+ok 124 - forbids renderer dependencies in calculator and mobile manifests
+  ---
+  duration_ms: 41.1233
+  type: 'test'
+  ...
+# Subtest: detects renderer package families, aliases, and transitive lockfile entries
+ok 125 - detects renderer package families, aliases, and transitive lockfile entries
+  ---
+  duration_ms: 3.1633
+  type: 'test'
+  ...
+# Subtest: names explicit visual and messaging anti-patterns
+ok 126 - names explicit visual and messaging anti-patterns
+  ---
+  duration_ms: 0.3949
+  type: 'test'
+  ...
+1..126
+# tests 126
+# suites 0
+# pass 115
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8799.816

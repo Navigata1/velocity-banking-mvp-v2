@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-10-21T17:33:15.2766495Z",
+  "status": "complete",
+  "browserTimingLaneReleased": true,
+  "fixtureSha256": "911818e5ffbdf57c9118c4ce3688282fe22a29bd962b62b8a022b374ac383ec4",
+  "rebuiltBundleSha256": "41096bef03716012d83df4a6df683b521bfe7bf431262205f96088789d246fdd",
+  "sourceEdits": ["New apps/mobile/scripts/coaching-safety-smoke.cjs", "Exactly one require and one call in apps/mobile/scripts/smoke-accessibility-rendered.cjs"],
+  "exportBuildsByWorker": 0,
+  "fixtureFrozenSinceStableRed": true,
+  "stableRed": { "passed": 3, "expectedFailed": 3, "failedSafetyAssertionsPerFailedCase": 24, "sourceModelExportPreserved": true, "receipt": "browser-red/coaching-verification.json" },
+  "standaloneGreen": { "passed": 6, "failed": 0, "sourceModelExportPreserved": true, "surfaces": 60, "viewportScreenshots": 69, "receipt": "browser-green/coaching-verification.json" },
+  "standingGreen": {
+    "originalCaseCount": 76,
+    "newCoachingCaseCount": 6,
+    "passed": 82,
+    "failed": 0,
+    "counts": { "commonMonth": 21, "financialInputs": 2, "portfolioBook": 12, "legacyApr": 6, "coachingSafety": 6, "routes": 35 },
+    "separateFocusedNavigationPassed": 1,
+    "sourceModelExportPreserved": true,
+    "originalDefinitionsUnchanged": true,
+    "log": "browser-full82.log",
+    "separateReceipts": ["browser-full82/native-common-month-verification.json", "browser-full82/financial-inputs-verification.json", "browser-full82/portfolio-verification.json", "browser-full82/legacy-apr-verification.json", "browser-full82/coaching-verification.json", "browser-focused-navigation-verification.json"]
+  },
+  "terminals": [
+    { "sessionId": 95613, "role": "baseline frozen server", "pid": 29748, "state": "exited", "exitCode": 1, "intentionalStop": true },
+    { "sessionId": 85925, "role": "retained setup diagnostic 002", "state": "exited", "exitCode": 1 },
+    { "sessionId": 36043, "role": "retained setup diagnostic 003", "state": "exited", "exitCode": 1 },
+    { "sessionId": 83440, "role": "stable RED", "state": "exited", "exitCode": 1, "expectedFailure": true },
+    { "sessionId": 34416, "role": "standalone GREEN6", "state": "exited", "exitCode": 0 },
+    { "sessionId": 55029, "role": "standing GREEN82 plus focused navigation1", "state": "exited", "exitCode": 0 },
+    { "sessionId": 18700, "role": "actual rebuilt export GREEN server", "pid": 23472, "state": "exited", "exitCode": 1, "intentionalStop": true }
+  ],
+  "servers": [
+    { "port": 53983, "pid": 29748, "state": "stopped" },
+    { "port": 53984, "pid": 23472, "state": "stopped" },
+    { "port": 53985, "pid": 27732, "state": "stopped by original harness finally" }
+  ],
+  "rawSetupDiagnostics": ["browser-setup-failed-001", "browser-setup-failed-002", "browser-setup-failed-003", "browser-setup-diagnostics.md"],
+  "scope": "Existing Playwright against native Expo web export over loopback HTTP; fresh synthetic contexts, no real user storage, no physical-device claim, no dependencies/install/cloud/commits."
+}

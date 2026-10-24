@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: Personal replaces the study with protected original provenance and explicitly reused leather
+ok 1 - Personal replaces the study with protected original provenance and explicitly reused leather
+  ---
+  duration_ms: 39.0313
+  type: 'test'
+  ...
+# Subtest: Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+ok 2 - Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+  ---
+  duration_ms: 108.4012
+  type: 'test'
+  ...
+# Subtest: Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+ok 3 - Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+  ---
+  duration_ms: 108.9411
+  type: 'test'
+  ...
+# Subtest: Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+ok 4 - Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+  ---
+  duration_ms: 126.0957
+  type: 'test'
+  ...
+# Subtest: Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+ok 5 - Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+  ---
+  duration_ms: 815.1501
+  type: 'test'
+  ...
+# Subtest: Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+ok 6 - Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+  ---
+  duration_ms: 361.2674
+  type: 'test'
+  ...
+# Subtest: Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+ok 7 - Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+  ---
+  duration_ms: 134.5461
+  type: 'test'
+  ...
+# Subtest: Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+ok 8 - Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+  ---
+  duration_ms: 124.586
+  type: 'test'
+  ...
+# Subtest: Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+ok 9 - Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+  ---
+  duration_ms: 24.7539
+  type: 'test'
+  ...
+# Subtest: Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+ok 10 - Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+  ---
+  duration_ms: 138.2127
+  type: 'test'
+  ...
+# Subtest: Personal geometry verification expands actual GPU instance translation, rotation and scale
+ok 11 - Personal geometry verification expands actual GPU instance translation, rotation and scale
+  ---
+  duration_ms: 9.6845
+  type: 'test'
+  ...
+# Subtest: Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+ok 12 - Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+  ---
+  duration_ms: 2.7187
+  type: 'test'
+  ...
+# Subtest: Personal textured surfaces retain bounded nondegenerate UVs after compression
+ok 13 - Personal textured surfaces retain bounded nondegenerate UVs after compression
+  ---
+  duration_ms: 37.1802
+  type: 'test'
+  ...
+# Subtest: Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ok 14 - Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+  ---
+  duration_ms: 6.3945
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2278.1472
+

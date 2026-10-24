@@ -1,0 +1,38 @@
+PASS mobile app declares an Expo Router shell and shared engine dependency
+PASS native CLI shell quoting rejects a line terminator after a comment token
+PASS Expo app exposes Codex run actions for local mobile workflows
+PASS Expo Android smoke is repeatable against a booted emulator
+PASS Expo Android bundle smoke validates native export output when emulator launch is unavailable
+PASS Expo iOS smoke is repeatable on macOS and explicit when unavailable
+PASS Expo iOS bundle smoke validates native export output when Simulator launch is unavailable
+PASS GitHub CI protects web and mobile quality gates
+PASS manual release smoke protects deployed web and optional mobile export gates
+PASS manual iOS native smoke runs on a macOS simulator host
+PASS manual Android native smoke runs on a GitHub emulator host
+PASS mobile native release config is explicit for Android and iOS builds
+PASS mobile web export is configured for Vercel SPA hosting and repeatable smoke tests
+PASS shared financial engine matches current web engine on core fixtures
+PASS shared mobile velocity delegates to the canonical Money Loop payoff engine
+PASS shared mobile direct strategies use the canonical two-liability comparison helper
+PASS shared mobile dashboard snapshot keeps the required four vitals aligned with web
+PASS native dashboard renders the four vitals before coach or review cards
+PASS shared mobile default assumptions start with the verified web demo Money Loop
+PASS shared mobile snapshots sanitize non-finite assumptions before rendering labels
+PASS Expo app uses dedicated shared-engine route modules instead of a monolithic shell
+PASS Expo mobile app exposes direct route parity for every demo mode
+PASS Expo native shell is safe-area, keyboard, screen-reader, and compact-width ready
+PASS shared mobile portfolio snapshot explains cash-flow coverage and debt priority
+PASS shared mobile portfolio payoff path stays in review mode when inputs are unsafe
+PASS shared mobile portfolio payoff path delegates to the canonical amortized helper
+PASS shared mobile simulator snapshot matches current web single-debt strategy comparison
+PASS shared mobile simulator snapshot suppresses velocity payoff claims when cash flow is invalid
+PASS shared mobile simulator snapshot treats a missing LOC limit as setup needed instead of over-limit
+PASS shared mobile simulator snapshot treats a full LOC as no available room instead of over-limit
+PASS shared mobile snapshots distinguish LOC over limit from high utilization
+PASS mobile assumptions persist through encrypted native storage with a web fallback
+PASS mobile storage migrates only the legacy standalone demo default
+PASS shared mobile cockpit snapshot exposes the core demo instruments and guardrails
+PASS shared mobile cockpit snapshot stays in review mode when cash flow or LOC setup is unsafe
+PASS shared mobile vault snapshot turns the active debt model into an outcome path
+PASS shared mobile learn snapshot teaches from current Money Loop inputs
+Mobile port contract passed.

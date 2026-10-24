@@ -1,0 +1,141 @@
+{
+  "at": "2026-10-24T15:52:05.154Z",
+  "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+  "status": "PREVIEW_AND_LOCAL_VERIFIED_CI_PENDING",
+  "sourceCommit": "03aa399",
+  "push": {
+    "commits": [
+      "03aa399",
+      "f85c6b3"
+    ],
+    "pushes": 1,
+    "retried": false,
+    "initialPRReadbackWasStale": true
+  },
+  "local": {
+    "gates": 15,
+    "mainRegressionGroups": 448,
+    "separateDatedReferences": 24,
+    "navGuardianWithinMain": 45,
+    "separateRetentionCPU": 11
+  },
+  "hosted": {
+    "at": "2026-10-24T15:31:46.650Z",
+    "head": "f85c6b3aa31debd903b717a9499837647c5b5dd4",
+    "preview": "https://velocity-banking-mvp-v2-p5d8m0tr3-islanddevcrew.vercel.app",
+    "deployment": "dpl_E4SPnAaW8LPek8AfZr1YZu9mQfW5",
+    "target": null,
+    "servedAssets": 25,
+    "servedBytes": 10143498,
+    "renderedRoutes": 14,
+    "moneyLoopNext": 1,
+    "guardianWorkflows": 6,
+    "keyboardQuestions": 15,
+    "canonical950": 9,
+    "legacy3889": 6,
+    "threeBookKeysPreserved": true,
+    "dialogFitWidths": [
+      280,
+      375,
+      1440
+    ],
+    "rawJob": {
+      "pid": 30536,
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedMs": 129925,
+      "totalProcesses": 72,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "assignedBeforeResume": true,
+      "killOnJobClose": true
+    },
+    "manualChrome": {
+      "entryFocus": "questioninput",
+      "forwardWrap": "teacher",
+      "reverseWrap": "send",
+      "escapeReturnsExactOpener": true,
+      "closeReturnsExactOpener": true,
+      "readableLineBreaksObserved": true,
+      "questionSource": "Shared portfolio at question time",
+      "currentCashFlow3500Observed": true,
+      "originalStudioRestored": true,
+      "financialEdits": false,
+      "consoleWarningsAndErrors": 0,
+      "pins": [
+        {
+          "name": "modal-f85-entry-focus.txt",
+          "bytes": 1094,
+          "sha256": "efed3d0a17ce7a422e0166064a516c370cd4a4ea57264cad1eaca0fe01959042"
+        },
+        {
+          "name": "modal-f85-tab-wrap.txt",
+          "bytes": 635,
+          "sha256": "04797273590e8259603dee8310d66dd9056603e92bbae2bb5c0edf5c4f2fbbd2"
+        },
+        {
+          "name": "modal-f85-reverse-tab-wrap.txt",
+          "bytes": 271,
+          "sha256": "c6aeb118d556201921dee386da48764cf66a3df1ba312d88afa9c52e9f11e23e"
+        },
+        {
+          "name": "modal-f85-escape-restores-opener.txt",
+          "bytes": 430,
+          "sha256": "358f0178b4cdc0a91c8cb04996e807cf66386accf62d31393c7ac5f72a4a79c8"
+        },
+        {
+          "name": "modal-f85-button-close-restores-opener.txt",
+          "bytes": 448,
+          "sha256": "ec6f3d516ba24c752666b803c9ccc0f8c31912ac22c361548df54127d6b7e5c1"
+        },
+        {
+          "name": "modal-f85-readable-answer-ax.txt",
+          "bytes": 7433,
+          "sha256": "8bb5f500d5c40c4b907910898d9365356171db5ee57662b3258dbfee6e2b0c94"
+        },
+        {
+          "name": "modal-f85-readable-answer.png",
+          "bytes": 63857,
+          "sha256": "54d5406073cbea9b96a9faf09fcc07957227de1c87d501c0fd22440a74c97e75"
+        },
+        {
+          "name": "modal-f85-final-dashboard-ax.txt",
+          "bytes": 7804,
+          "sha256": "b89d3146668db4857b0838fd47b902d2b9d570b7614e2370f8bd24a1e48aa1ff"
+        },
+        {
+          "name": "modal-f85-final-dashboard.png",
+          "bytes": 92335,
+          "sha256": "0956b4ade73645d40a289465f14229b0aa44196f767c6a7108c1f58fe061870c"
+        },
+        {
+          "name": "modal-f85-browser-warnings-errors.json",
+          "bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "productionReady": false
+  },
+  "automaticCI": {
+    "push": 40106828674,
+    "pull_request": 40106832837,
+    "attempt": 1,
+    "aggregate": "PENDING",
+    "canonicalInvoked": false
+  },
+  "historical72": {
+    "aggregate": "HOLD",
+    "artifactContentsNowValidated": true,
+    "performanceFixed": false
+  },
+  "remaining": [
+    "Final all-ten photoreal assets and rotation provenance",
+    "Graphics timing and network reliability",
+    "Scenario consolidation and lender/calendar reconciliation",
+    "Dedicated managed backend, recovery and backups",
+    "Toolchain security, complete accessibility and signed-in physical devices"
+  ],
+  "merged": false,
+  "productionReady": false
+}

@@ -1,0 +1,89 @@
+{
+  "origin": "http://127.0.0.1:53668",
+  "receipts": [
+    {
+      "width": 375,
+      "passed": true,
+      "observedAPR": {
+        "label": "Edit Precision Loan APR, current value 200%",
+        "draft": "200"
+      },
+      "geometry": {
+        "width": 375,
+        "scrollWidth": 375,
+        "overlay": false
+      },
+      "inputPixels": {
+        "width": 249,
+        "height": 49,
+        "brightPixels": 3226,
+        "colors": 210
+      },
+      "errors": [],
+      "isolatedRequests": []
+    },
+    {
+      "width": 1440,
+      "passed": true,
+      "observedAPR": {
+        "label": "Edit Precision Loan APR, current value 200%",
+        "draft": "200"
+      },
+      "geometry": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overlay": false
+      },
+      "inputPixels": {
+        "width": 213,
+        "height": 49,
+        "brightPixels": 3137,
+        "colors": 337
+      },
+      "errors": [],
+      "isolatedRequests": []
+    },
+    {
+      "width": 280,
+      "passed": true,
+      "observedAPR": {
+        "label": "Edit Precision Loan APR, current value 200%",
+        "draft": "200"
+      },
+      "geometry": {
+        "width": 280,
+        "scrollWidth": 280,
+        "overlay": false
+      },
+      "inputPixels": {
+        "width": 154,
+        "height": 49,
+        "brightPixels": 2941,
+        "colors": 209
+      },
+      "errors": [],
+      "isolatedRequests": []
+    },
+    {
+      "width": 1264,
+      "passed": true,
+      "observedAPR": {
+        "label": "Edit Precision Loan APR, current value 200%",
+        "draft": "200"
+      },
+      "geometry": {
+        "width": 1264,
+        "scrollWidth": 1264,
+        "overlay": false
+      },
+      "inputPixels": {
+        "width": 213,
+        "height": 49,
+        "brightPixels": 3137,
+        "colors": 340
+      },
+      "errors": [],
+      "isolatedRequests": []
+    }
+  ]
+}

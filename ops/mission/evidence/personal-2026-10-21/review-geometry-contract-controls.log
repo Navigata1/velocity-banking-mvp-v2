@@ -1,0 +1,20 @@
+PIN {"glb":"ae5bf9e062b060f4e1e0a7d150d606089550ec52e6006e1315447a1c509cb748","tests":"1aa90da5d38464c70710ed26719b2e25fb8c8b603700725e8e241f6a3497bd0a","transformation":"AST removes imports, injects only the decoded personal fixture, and substitutes original import.meta.url; callbacks/helpers otherwise unchanged"}
+BASELINE PASS Personal replaces the study with protected original provenance and explicitly reused leather
+BASELINE PASS Personal embeds varied WebP leather, brass and steel maps with bounded non-emissive PBR
+BASELINE PASS Personal has a closed-volume open-top shell and a contacting thick curved flap, rejecting infill and winding damage
+BASELINE PASS Personal handle has an actual open leather arch and two contacting brass ring and leather tab chains
+BASELINE PASS Personal front straps have real punched holes, open closed-volume buckles and attached brass tongues
+BASELINE PASS Personal shoulder strap is one continuous leather ribbon connected through both ring and tab assemblies
+BASELINE PASS Personal merged stitches and piping are actual exposed geometry following the leather surfaces
+BASELINE PASS Personal key has a closed outward toothed silhouette and real bow aperture in the foreground
+BASELINE PASS Personal paper pair is actually inserted in the shell mouth with a static contacting illustrative chart
+BASELINE PASS Personal preserves finite outward normalized geometry, both triangle budgets, 16-bit precision and live locked 10MiB publication
+BASELINE PASS Personal geometry verification expands actual GPU instance translation, rotation and scale
+BASELINE PASS Personal ribbon verification accepts nonplanar flat straps and rejects round cords
+BASELINE PASS Personal textured surfaces retain bounded nondegenerate UVs after compression
+BASELINE PASS Personal UV verifier reads normalized accessor values and still rejects true out-of-range coordinates
+ESCAPED MUTATION: all 50 already-buried handle stitch translations moved 0.02 farther back; original seam contract still PASS
+ESCAPED MUTATION: handle rivet translated 2 local units off support; original handle-chain contract still PASS (rivet omitted)
+DETECTED CONTROL: actual key reversed-winding mutation correctly rejected
+END 14 baseline contracts PASS; escaped mutations and rejecting control observed; inputs unchanged; no writes
+
