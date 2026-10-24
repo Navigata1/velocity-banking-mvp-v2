@@ -1,0 +1,119 @@
+{
+  "at": "2026-10-24T14:23:50.706Z",
+  "status": "LOCAL_VERIFIED_REMOTE_PENDING",
+  "baselineHead": "c8ae01dadafca0d8d4f1c29c997becf03208c4da",
+  "sourcePins": {
+    "apps/web/src/components/Navigation.tsx": "e4030e7945fa1456ebc4bebd26769456e5d531ac1d062522c43f191537478d65",
+    "apps/web/scripts/portfolio-navigation-tests.cjs": "0727e32f7f6d3f4f5b3d2a6c34ef6a9cc63593df906832020d9b6ee5df86a641",
+    "apps/web/scripts/test-three-stage.cjs": "dfeb1226c4d50a0a338674ef86868528acae1633acbc918e3332fce7e5325c0c",
+    "apps/web/scripts/three-stage-failure-evidence.cjs": "5478854b6d0d96a3b09716ab6860518713cb19958de041bf083c89fbd7d83751",
+    "apps/web/scripts/three-stage-failure-evidence-tests.cjs": "d881426ce0550da757d71dc1659065d15988907e9cd8e934caf521cfca6d5890",
+    "apps/web/package.json": "35dfbc9228e9d9371e12a9e5cb1436e35ea8eca58d5ba614b1a429080b2c1e2e",
+    "apps/web/scripts/smoke-shared-portfolio-dashboard.cjs": "ed9b8029f3cd9e52b539c1c514739bd287f6e99d03346dcf01cf7bc7abebae2d"
+  },
+  "scope": "Question-time Guardian source ownership, bounded responsive dialog and failure-evidence retention. No financial formula or art changes.",
+  "history": [
+    {
+      "stage": "first13",
+      "passed": 4,
+      "failed": "web-lint",
+      "laterUnrun": 8,
+      "repair": "Four-reference fixture-local reserved binding rename; no assertion changes"
+    },
+    {
+      "stage": "second14",
+      "passed": 14,
+      "guardianQuestions": 15,
+      "geometry": "280px scroll266/client246; diagnostic exposed overflow, not fit approval"
+    },
+    {
+      "stage": "layoutRED",
+      "widthsPassed": [
+        375,
+        1440
+      ],
+      "assertionFailureWidth": 280,
+      "childExit": 1,
+      "supervisorExit": 0,
+      "parentLauncherExpectationErrorRetained": true
+    },
+    {
+      "stage": "final15",
+      "passed": 15,
+      "allJobsClosed": true
+    }
+  ],
+  "tests": {
+    "mainRegressionGroups": 441,
+    "separateDatedReferences": 24,
+    "guardianNavigationCasesWithinMain": 38,
+    "retentionCPU": 11,
+    "normalThreeStage": "18 selections,6 shared selection workflows and reduced motion; unchanged original pixel/deadline checks",
+    "guardianWorkflows": 6,
+    "questions": 15,
+    "canonical950": 9,
+    "legacy3889": 6,
+    "protectedBookKeys": 3,
+    "layout": [
+      {
+        "width": 280,
+        "passed": true,
+        "client": 246,
+        "scroll": 246
+      },
+      {
+        "width": 375,
+        "passed": true,
+        "client": 341,
+        "scroll": 341
+      },
+      {
+        "width": 1440,
+        "passed": true,
+        "client": 510,
+        "scroll": 510
+      }
+    ],
+    "renderedRoutes": 14,
+    "moneyLoopNext": 1,
+    "reportContracts": 5
+  },
+  "controlledNegative": {
+    "status": "EXPECTED_FAILURE_RETAINED_NOT_A_PASS_OF_THE_INJECTED_WORKFLOW",
+    "childExitCode": 1,
+    "error": "PRIVATE_RETENTION_AFTER_VALID_CANDIDATE",
+    "selection": "loc",
+    "images": [
+      {
+        "phase": "canvas",
+        "bytes": 16807,
+        "sha256": "b2dd83f3b5d644613b41a2fadb5c98be1df297bf664bac88e1f3fb3b2312c397",
+        "width": 288,
+        "height": 288
+      },
+      {
+        "phase": "candidate",
+        "bytes": 17320,
+        "sha256": "fbcbc03e8e4498cb979fa3d6045464e4ed89e3f6d396f15311b93ff479e17858",
+        "width": 288,
+        "height": 288
+      }
+    ],
+    "newCaptureRequestedByRecorder": false
+  },
+  "proofs": {
+    "localGateSHA256": "9d886b98c45a650ee511f3ff121b6f950085d4c99b5d8b915fc380de87678c35",
+    "protectedNamedRecords": 765,
+    "rootBuildPreserved": true,
+    "sourceCPUReview": "8a21f05bb4070da406ad846ff0a04de4f1750ad135c996ff1a0c107cb17b23c6",
+    "browserSourceReview": "d274c3bf06b48c9289a3fea2593514133ff02963f51f89d1de4d1228e8ae61fe",
+    "layoutReviewSHA256": "6d8a96591adbcb2701260bcedcb6630208dfc4d2fcbcc13df9fd36ba21f9c618"
+  },
+  "limits": [
+    "New pushed revision still needs both complete automatic CI events, exact READY preview, hosted and manual browser verification.",
+    "Original c8 mixed CI,704ms deadline failure and earlier failed gates remain retained. Timing cause and universal margin are not established.",
+    "Original art retained; House D not accepted. Backend, full scenario ownership, lender, accessibility, security, native and production gates remain open."
+  ],
+  "productionReady": false,
+  "merged": false
+}
