@@ -5,6 +5,7 @@ const { chromium } = require('playwright-core');
 const { findBrowserExecutable, getHeadlessChromiumArgs } = require('./browser-harness.cjs');
 const { createGracefulShutdown, startBuiltServer, stopServer } = require('./built-server-harness.cjs');
 const { createPhaseTiming } = require('./three-stage-timing.cjs');
+const { createFailureEvidence } = require('./three-stage-failure-evidence.cjs');
 const {
   MAX_SETTLED_SPATIAL_CELL_DISTANCE,
   MAX_SETTLED_SPATIAL_MEAN_DISTANCE,
@@ -18,6 +19,7 @@ const {
 
 const appRoot = path.resolve(__dirname, '..');
 const evidenceDirectory = path.join(appRoot, 'test-results', 'three-stage');
+const failureEvidence = createFailureEvidence(evidenceDirectory);
 const SELECTION_SETTLE_BUDGET_MS = 700;
 const STABILITY_CONFIRMATION_BUDGET_MS = 300;
 const normalViewports = [
@@ -187,6 +189,7 @@ async function captureCanvasElementPng(page, viewportLabel, deadline, clip = nul
     throw new Error(`${viewportLabel} clipped canvas PNG capture started with ${timeoutMs}ms remaining: ${error.message}`, { cause: error });
   }
   const completedAt = Date.now();
+  failureEvidence.capture(phase, screenshot);
   if (completedAt > deadline) throw new Error(`${viewportLabel} canvas PNG capture completed after its deadline.`);
   return { canvasClip, completedAt, screenshot };
 }
@@ -252,14 +255,14 @@ async function restoreCanvasOverlaysAfterPixelCapture(page) {
 }
 
 async function captureIsolatedCanvasPng(page, viewportLabel, deadline, clip = null, timing = createPhaseTiming(), phase = 'canvas', previousClip = null) {
-  try {
+  return failureEvidence.guard(async () => {
     const { snapshot, usePreviousClip, ...isolation } = await timing.measure(`${phase}.isolation`, () => hideCanvasOverlaysForPixelCapture(page, clip == null, previousClip));
     if (isolation.isolatedSvgOverlayCount < 1) throw new Error(`${viewportLabel} canvas isolation did not hide an overlapping SVG orbit overlay.`);
     const canvasClip = clip ?? timing.measureSync(`${phase}.clip`, () => usePreviousClip ? previousClip : validateCanvasClip(snapshot, viewportLabel));
     return { ...await captureCanvasElementPng(page, viewportLabel, deadline, canvasClip, timing, phase), isolation };
-  } finally {
+  }, async () => {
     await timing.measure(`${phase}.restore`, () => restoreCanvasOverlaysAfterPixelCapture(page));
-  }
+  });
 }
 
 async function captureCanvasElementPngProof(page, viewportLabel, deadline, clip = null) {
@@ -344,12 +347,14 @@ async function waitForArtifactSelection(page, artifactId, geometry, timeout) {
 }
 
 async function exerciseSelection(page, viewportLabel, expectedRenderMode, artifactId, geometry, trigger) {
+  failureEvidence.begin(viewportLabel, artifactId);
   const preClickDeadline = Date.now() + 5000;
   await restoreStageForPixelSampling(page, viewportLabel, expectedRenderMode, preClickDeadline);
   await prepareStageAndTargetForClick(page, artifactId);
   const before = await captureCanvasElementPngProof(page, viewportLabel, preClickDeadline);
   const selectionStartedAt = Date.now();
   const timing = createPhaseTiming();
+  failureEvidence.track(selectionStartedAt, timing, SELECTION_SETTLE_BUDGET_MS, STABILITY_CONFIRMATION_BUDGET_MS);
   try {
     await timing.measure('input.dispatch', trigger);
     const deadline = selectionStartedAt + SELECTION_SETTLE_BUDGET_MS;
@@ -661,6 +666,7 @@ async function installCapableHardwareHints(context) {
 }
 
 async function verifyNormalViewport(browser, origin, viewportLabel, viewport, expectedRenderMode, expectedDpr) {
+  failureEvidence.begin(viewportLabel);
   const context = await browser.newContext({ deviceScaleFactor: 2, viewport, reducedMotion: 'no-preference' });
   await installCapableHardwareHints(context);
   const page = await context.newPage();
@@ -669,7 +675,7 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
   const onPageError = (error) => browserErrors.push(error.message);
   page.on('console', onConsole);
   page.on('pageerror', onPageError);
-  try {
+  return failureEvidence.guard(async () => {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`${viewportLabel} dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
     await page.getByText('Explore the Money Loop', { exact: true }).click();
@@ -690,17 +696,18 @@ async function verifyNormalViewport(browser, origin, viewportLabel, viewport, ex
     const screenshotPath = path.join(evidenceDirectory, `${viewportLabel}.png`);
     await writeVerifiedScreenshot(page, screenshotPath, viewport.width, viewport.height);
     console.log(`PASS ${viewportLabel} ${expectedRenderMode} WebGL2 ${webgl2.renderer}; screenshot ${screenshotPath}`);
-  } finally {
+  }, async () => {
     page.off('console', onConsole);
     page.off('pageerror', onPageError);
     await context.close();
-  }
+  });
 }
 
 async function verifyReducedMotionFallback(browser, origin) {
+  failureEvidence.begin('reduced-motion');
   const context = await browser.newContext({ deviceScaleFactor: 2, viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   const page = await context.newPage();
-  try {
+  return failureEvidence.guard(async () => {
     const response = await page.goto(origin, { waitUntil: 'networkidle' });
     if (!response || response.status() !== 200) throw new Error(`reduced-motion dashboard returned HTTP ${response?.status() ?? 'no response'}.`);
     await page.getByText('Explore the Money Loop', { exact: true }).click();
@@ -714,9 +721,9 @@ async function verifyReducedMotionFallback(browser, origin) {
     if ((await loc.getAttribute('aria-selected')) !== 'true') throw new Error('reduced-motion fallback did not preserve the DOM artifact controls.');
     await writeVerifiedScreenshot(page, path.join(evidenceDirectory, 'reduced-motion-static.png'), 1440, 900);
     console.log('PASS reduced-motion static fallback has no WebGL canvas and preserves DOM tabs');
-  } finally {
+  }, async () => {
     await context.close();
-  }
+  });
 }
 
 async function run() {
@@ -725,7 +732,7 @@ async function run() {
   if (!executablePath) throw new Error('No system Chrome, Chromium, or Edge executable was found. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH to override discovery.');
   fs.rmSync(evidenceDirectory, { recursive: true, force: true });
   fs.mkdirSync(evidenceDirectory, { recursive: true });
-  try {
+  return failureEvidence.guard(async () => {
     const started = await startBuiltServer(appRoot);
     activeServer = started.server;
     activeBrowser = await chromium.launch({ executablePath, headless: true, args: getHeadlessChromiumArgs() });
@@ -733,14 +740,14 @@ async function run() {
       await verifyNormalViewport(activeBrowser, started.origin, viewportLabel, viewport, expectedRenderMode, expectedDpr);
     }
     await verifyReducedMotionFallback(activeBrowser, started.origin);
+    failureEvidence.begin('selection-workflows');
     await require('./smoke-three-selection.cjs').runSelectionSmoke({ browser: activeBrowser, origin: started.origin, output: path.join(evidenceDirectory, 'selection') });
     console.log(`Three-stage screenshots: ${evidenceDirectory}`);
-  } finally {
-    await activeBrowser?.close();
-    activeBrowser = undefined;
-    await stopServer(activeServer);
-    activeServer = undefined;
-  }
+  }, () => failureEvidence.guard(async () => {
+    await activeBrowser?.close(); activeBrowser = undefined;
+  }, async () => {
+    await stopServer(activeServer); activeServer = undefined;
+  }));
 }
 
 module.exports = { waitForNormalStage, waitForStageSettled, assertGenuineWebgl2, captureIsolatedCanvasPng, proveCanvasPng, prepareStageAndTargetForClick };
@@ -748,6 +755,7 @@ if (require.main === module) {
   process.once('SIGINT', () => { void shutdown(130); });
   process.once('SIGTERM', () => { void shutdown(143); });
   run().catch((error) => {
+    failureEvidence.write(error);
     console.error(error.stack || error.message);
     process.exitCode = 1;
   });
