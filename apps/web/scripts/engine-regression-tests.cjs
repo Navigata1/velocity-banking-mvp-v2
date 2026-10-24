@@ -187,6 +187,7 @@ function test(name, fn) {
 
 require('./money-loop-detail-truth-tests.cjs').registerMoneyLoopDetailTruthTests({test,loadTsModule});
 require('./dashboard-comparison-truth-tests.cjs').registerDashboardComparisonTruthTests({test,financialStore,dashboardModel,calculations,sharedFinancialEngine,loadTsModule});
+require('./liability-coaching-tests.cjs').registerLiabilityCoachingTests({test,dashboardModel,calculations,sharedFinancialEngine});
 
 function roundCents(value) {
   return Math.round(value * 100) / 100;
@@ -1779,7 +1780,11 @@ test('shared mobile snapshots sanitize non-finite planning inputs before display
   assert.equal(dashboard.locUtilization, 0);
   assert.equal(dashboard.dailyInterestBurn, 0);
   assert.equal(dashboard.vitals.length, 4);
-  assert.equal(dashboard.warning, 'Income needs to exceed expenses before the Money Loop can recover LOC draws.');
+  assert.equal(dashboard.warning, 'Review the entered liability balances before relying on educational projections.');
+  assert.equal(dashboard.nextMove, 'Review liability balances');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Interest Burn').value, 'Not available');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
+  assert.ok(snapshots[2].strategies.every((strategy) => !strategy.isPayoffPossible));
 });
 
 test('legacy mobile planning labels remain compatible while the native book declares its actual model', () => {
@@ -7804,9 +7809,12 @@ for (const fixture of [
 
 for (const overflow of [
   { id: 'multiplication', apr: 365000, locBalance: 0, locApr: 0 },
-  { id: 'sum of finite components', apr: 36500, locBalance: Number.MAX_VALUE, locApr: 36500 },
+  { id: 'sum of finite components', apr: 36500, locBalance: Number.MAX_VALUE, locApr: 36500,
+    finiteComponents: true, value: 'Not available', caption: 'Review the entered liability balances before relying on educational projections.' },
+  { id: 'finite-cohort sum of finite components', balance: Number.MAX_VALUE / 2, apr: 73000,
+    locBalance: Number.MAX_VALUE / 2, locApr: 73000, finiteComponents: true },
 ]) test(`dashboard daily-interest display rejects overflow: ${overflow.id}`, () => {
-  const debt = { name: 'Oversized import', balance: Number.MAX_VALUE, interestRate: overflow.apr, minimumPayment: 425 };
+  const debt = { name: 'Oversized import', balance: overflow.balance ?? Number.MAX_VALUE, interestRate: overflow.apr, minimumPayment: 425 };
   const model = dashboardModel.buildDashboardModel({
     monthlyIncome: 8200, monthlyExpenses: 4700, chunkAmount: 1000,
     activeDebt: debt, allDebts: [debt],
@@ -7816,11 +7824,11 @@ for (const overflow of [
   });
   const vital = model.vitals.find((v) => v.id === 'interest-burn');
   assert.equal(model.dailyInterestBurn, Infinity, 'do not rewrite the existing numeric calculation');
-  if (overflow.id === 'sum of finite components') {
+  if (overflow.finiteComponents) {
     assert.ok(Number.isFinite(model.debtDailyInterest) && Number.isFinite(model.locDailyInterest));
   }
-  assert.equal(vital.value, 'Review inputs');
-  assert.equal(vital.caption, 'Daily interest exceeds the supported numeric range. Review balance and APR.');
+  assert.equal(vital.value, overflow.value ?? 'Review inputs');
+  assert.equal(vital.caption, overflow.caption ?? 'Daily interest exceeds the supported numeric range. Review balance and APR.');
 });
 
 test('CI retains the rendered dashboard daily-interest gate and its failure artifacts', () => {
@@ -8044,10 +8052,10 @@ test('dashboard model sanitizes non-finite first-screen and artifact inputs', ()
   assert.equal(model.locUtilization, 0);
   assert.equal(model.locUtilizationLabel, 'No LOC');
   assert.equal(model.dailyInterestBurn, 0);
-  assert.equal(model.etaValue, 'Stabilize first');
+  assert.equal(model.etaValue, 'Review inputs');
   assert.equal(model.vitals.length, 4);
-  assert.ok(model.warnings.some((warning) => warning.kind === 'cash-flow'), JSON.stringify(model.warnings));
-  assert.ok(model.warnings.some((warning) => warning.kind === 'loc-setup'), JSON.stringify(model.warnings));
+  assert.equal(model.nextMove.title, 'Review liability balances');
+  assert.ok(model.warnings.some((warning) => warning.title === 'Review liability balances'), JSON.stringify(model.warnings));
   assert.ok(model.moneyLoopArtifacts.every((artifact) => Number.isFinite(artifact.fillPercent)), JSON.stringify(model.moneyLoopArtifacts));
   assert.ok(!visibleText.includes('NaN'), visibleText);
   assert.ok(!visibleText.includes('Infinity'), visibleText);

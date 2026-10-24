@@ -14,7 +14,7 @@ export function CockpitRoute() {
             <FinancialCard
               title="Flight Status"
               value={cockpit.flightStatusLabel}
-              detail={cockpit.warning ?? 'Core Money Loop instruments are ready for an educational pass.'}
+              detail={cockpit.warning ?? cockpit.instruments.find(instrument => instrument.label === 'ETA')?.detail}
             />
             <FinancialCard title="Instruments">
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>

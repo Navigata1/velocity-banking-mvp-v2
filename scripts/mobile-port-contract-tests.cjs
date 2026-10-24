@@ -897,11 +897,15 @@ test('shared mobile snapshots sanitize non-finite assumptions before rendering l
   assert.equal(dashboard.locUtilization, 0);
   assert.equal(dashboard.availableLoc, 0);
   assert.equal(dashboard.dailyInterestBurn, 0);
-  assert.equal(dashboard.loop.find((step) => step.label === 'Principal').value, 'Auto Loan');
+  assert.equal(dashboard.loop.find((step) => step.label === 'Principal').value, 'Review liability balances');
+  assert.equal(dashboard.nextMove, 'Review liability balances');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Interest Burn').value, 'Not available');
+  assert.equal(dashboard.vitals.find((vital) => vital.label === 'Debt-Free ETA').value, 'Review inputs');
   assert.equal(portfolio.totalDebt, 0);
   assert.equal(portfolio.totalMinimums, 0);
   assert.equal(portfolio.payoffPath.points[0].balance, 0);
-  assert.equal(simulator.guardrail, 'Income needs to exceed expenses before velocity payoff claims are projected.');
+  assert.equal(simulator.guardrail, 'Review the entered liability balances before relying on educational projections.');
+  assert.ok(simulator.strategies.every((strategy) => !strategy.isPayoffPossible));
   assert.equal(simulator.velocity.interestSaved, 0);
   assert.equal(simulator.velocity.monthsSaved, 0);
   assert.equal(cockpit.instruments.find((instrument) => instrument.label === 'Heading').value, 'Auto Loan');

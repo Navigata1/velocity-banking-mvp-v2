@@ -1,3 +1,31 @@
+export type LiabilityState = 'invalid' | 'cleared' | 'outstanding';
+
+export function classifyLiabilities(debt: number, loc: number): LiabilityState {
+  if (![debt, loc].every(value => Number.isFinite(value) && value >= 0) || !Number.isFinite(debt + loc)) return 'invalid';
+  return debt === 0 && loc === 0 ? 'cleared' : 'outstanding';
+}
+
+export function availablePayoff(months: number, interest: number, possible?: boolean): boolean {
+  return possible === true && Number.isSafeInteger(months) && months > 0 && Number.isFinite(interest) && interest >= 0;
+}
+
+export const CLEARED_LIABILITY_DETAIL = 'Both entered balances are exactly zero. No future repayment is modeled; this is not lender payoff confirmation.';
+export const INVALID_LIABILITY_DETAIL = 'Review the entered liability balances before relying on educational projections.';
+export const KNOWN_CASH_FLOW_WARNING = 'Cash flow is zero or negative. Review income and expenses before planning future borrowing.';
+
+export function assessKnownSafety(income: number, expenses: number, balance: number, limit: number) {
+  return {
+    nonpositiveCashFlow: Number.isFinite(income) && Number.isFinite(expenses) && income <= expenses,
+    highLocUtilization: Number.isFinite(balance) && balance >= 0 && Number.isFinite(limit) && limit > 0 && balance / limit > 0.8,
+  };
+}
+
+function terminalSafetyWarning(input: MobileDashboardInput, invalid: boolean): string | null {
+  const safety = assessKnownSafety(input.monthlyIncome, input.monthlyExpenses, input.loc.balance, input.loc.limit);
+  return [invalid && INVALID_LIABILITY_DETAIL, safety.nonpositiveCashFlow && KNOWN_CASH_FLOW_WARNING,
+    safety.highLocUtilization && LOC_HIGH_UTILIZATION_WARNING].filter(Boolean).join(' ') || null;
+}
+
 export interface LoanDetails {
   balance: number;
   apr: number;
@@ -448,7 +476,7 @@ export interface MobileCockpitCheck {
 }
 
 export interface MobileCockpitSnapshot {
-  flightStatusLabel: 'Ready to model' | 'Review inputs';
+  flightStatusLabel: 'Ready to model' | 'Review inputs' | 'No debt remaining';
   warning: string | null;
   instruments: MobileCockpitInstrument[];
   flightChecks: MobileCockpitCheck[];
@@ -1380,6 +1408,7 @@ function compareEducationalMortgageRepayment(input: MortgageRepaymentInputs): Om
 export function buildMobileDashboardSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileDashboardSnapshot {
+  const liability = classifyLiabilities(input.activeDebt.balance, input.loc.balance);
   const model = normalizeMobileDashboardInput(input);
   const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
   const locNeedsSetup = model.loc.limit <= 0;
@@ -1395,9 +1424,10 @@ export function buildMobileDashboardSnapshot(
   const monthlyFlowBase = Math.max(model.monthlyIncome, model.monthlyExpenses, 1);
   const principalImpact = model.activeDebt.balance > 0 ? safeChunk / model.activeDebt.balance : 0;
   const velocityProjection = simulateMobileVelocity(model);
-  const etaValue = velocityProjection.isPayoffPossible
+  const velocityAvailable = liability === 'outstanding' && availablePayoff(velocityProjection.payoffMonths, velocityProjection.totalInterest, velocityProjection.isPayoffPossible);
+  const etaValue = liability === 'cleared' ? 'No debt remaining' : velocityAvailable
     ? `${velocityProjection.payoffMonths} mo`
-    : cashFlow <= 0
+    : liability === 'outstanding' && cashFlow <= 0
       ? 'Stabilize first'
       : 'Review inputs';
 
@@ -1406,7 +1436,11 @@ export function buildMobileDashboardSnapshot(
     ? 'Enter known LOC limit, APR, fees, and draw rules before trusting velocity chunk projections.'
     : null;
 
-  if (cashFlow <= 0) {
+  if (liability === 'invalid') {
+    nextMove = 'Review liability balances'; warning = terminalSafetyWarning(input, true);
+  } else if (liability === 'cleared') {
+    nextMove = 'No debt remaining'; warning = terminalSafetyWarning(input, false);
+  } else if (cashFlow <= 0) {
     nextMove = 'Restore positive cash flow';
     warning = 'Income needs to exceed expenses before the Money Loop can recover LOC draws.';
   } else if (locOverLimit) {
@@ -1421,9 +1455,11 @@ export function buildMobileDashboardSnapshot(
   } else if (!locNeedsSetup && locUtilization > 0.8) {
     nextMove = 'Pay down the LOC';
     warning = LOC_HIGH_UTILIZATION_WARNING;
-  } else if (!locNeedsSetup && !velocityProjection.isPayoffPossible) {
+  } else if (!locNeedsSetup && !velocityAvailable) {
     nextMove = 'Review payoff inputs';
     warning = `${formatPayoffFailure(velocityProjection.failureReason)}. Review the assumptions before modeling another chunk.`;
+  } else if (!locNeedsSetup && model.activeDebt.balance === 0) {
+    nextMove = 'Pay down the LOC';
   } else if (!locNeedsSetup && cashFlow <= model.activeDebt.monthlyPayment) {
     nextMove = 'Pause new chunks';
   } else if (!locNeedsSetup && safeChunk > 0) {
@@ -1454,10 +1490,10 @@ export function buildMobileDashboardSnapshot(
       {
         label: 'Debt-Free ETA',
         value: etaValue,
-        detail: velocityProjection.isPayoffPossible
+        detail: velocityAvailable
           ? 'Velocity payoff estimate from the shared simulator.'
           : 'No debt-free date shown until inputs support a stable projection.',
-        tone: velocityProjection.isPayoffPossible ? 'good' : cashFlow <= 0 ? 'risk' : 'watch',
+        tone: velocityAvailable ? 'good' : cashFlow <= 0 ? 'risk' : 'watch',
       },
       {
         label: 'Next Move',
@@ -1469,7 +1505,8 @@ export function buildMobileDashboardSnapshot(
             : 'Educational estimate, not a money movement instruction.',
         tone: warning || nextMove === 'Pause new chunks' ? 'watch' : 'good',
       },
-    ],
+    ].map((vital): MobileVital => liability === 'outstanding' || (liability === 'cleared' && vital.label === 'Cash Flow') ? vital as MobileVital
+      : { ...vital, value: liability === 'invalid' && vital.label === 'Interest Burn' ? 'Not available' : vital.value, detail: liability === 'cleared' ? CLEARED_LIABILITY_DETAIL : INVALID_LIABILITY_DETAIL, tone: 'neutral' }),
     loop: [
       {
         label: 'Income',
@@ -1503,7 +1540,10 @@ export function buildMobileDashboardSnapshot(
         detail: 'Chunks target balance reduction after setup checks.',
         pressurePercent: clampLoopPressure(principalImpact),
       },
-    ],
+    ].map(step => liability !== 'outstanding'
+      ? { ...step, value: step.label === 'Principal' ? nextMove : step.value, detail: liability === 'cleared' ? CLEARED_LIABILITY_DETAIL : INVALID_LIABILITY_DETAIL }
+      : model.activeDebt.balance === 0 && step.label === 'Principal'
+        ? { ...step, value: 'No target balance', detail: 'Only the LOC remains. No target principal chunk is modeled.' } : step),
   };
 }
 
@@ -1796,27 +1836,30 @@ function simulateMobileVelocity(input: MobileDashboardInput): MobilePayoffProjec
 function toMobileSimulatorStrategy(
   name: MobileSimulatorStrategyName,
   projection: MobilePayoffProjection,
-  endingCash = 0
+  endingCash = 0,
+  liability: LiabilityState = 'outstanding'
 ): MobileSimulatorStrategy {
-  const isPayoffPossible = projection.isPayoffPossible !== false && projection.payoffMonths > 0;
+  const cleared = liability === 'cleared';
+  const isPayoffPossible = liability === 'outstanding' && availablePayoff(projection.payoffMonths, projection.totalInterest, projection.isPayoffPossible);
 
   return {
     name,
     months: isPayoffPossible ? projection.payoffMonths : 0,
     totalInterest: isPayoffPossible ? projection.totalInterest : 0,
     isPayoffPossible,
-    failureReason: projection.failureReason,
-    monthsLabel: isPayoffPossible ? `${projection.payoffMonths} mo` : 'Review inputs',
-    totalInterestLabel: isPayoffPossible ? formatCurrency(projection.totalInterest) : 'Not projected',
-    interestLabel: isPayoffPossible ? 'Projected interest' : 'Not projected',
-    statusLabel: isPayoffPossible ? undefined : formatPayoffFailure(projection.failureReason),
-    endingCashLabel: isPayoffPossible ? `${formatCurrency(endingCash)} cash at payoff` : 'Cash not projected',
+    failureReason: cleared ? undefined : projection.failureReason,
+    monthsLabel: cleared ? 'No debt remaining' : isPayoffPossible ? `${projection.payoffMonths} mo` : 'Review inputs',
+    totalInterestLabel: cleared ? formatCurrency(0) : isPayoffPossible ? formatCurrency(projection.totalInterest) : 'Not projected',
+    interestLabel: cleared ? CLEARED_LIABILITY_DETAIL : isPayoffPossible ? 'Projected interest' : 'Not projected',
+    statusLabel: cleared ? 'No debt remaining' : isPayoffPossible ? undefined : formatPayoffFailure(projection.failureReason),
+    endingCashLabel: cleared ? CLEARED_LIABILITY_DETAIL : isPayoffPossible ? `${formatCurrency(endingCash)} cash at payoff` : 'Cash not projected',
   };
 }
 
 export function buildMobileSimulatorSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileSimulatorSnapshot {
+  const liability = classifyLiabilities(input.activeDebt.balance, input.loc.balance);
   const model = normalizeMobileDashboardInput(input);
   const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
   const directInputs = {
@@ -1828,12 +1871,13 @@ export function buildMobileSimulatorSnapshot(
   const avalanche = simulateDirectRepayment({ ...directInputs, strategy: 'avalanche' });
   const velocityProjection = simulateMobileVelocity(model);
   const strategies = [
-    toMobileSimulatorStrategy('Traditional', baseline, baseline.monthlyData.at(-1)?.cashBalance),
-    toMobileSimulatorStrategy('Snowball', snowball, snowball.monthlyData.at(-1)?.cashBalance),
-    toMobileSimulatorStrategy('Avalanche', avalanche, avalanche.monthlyData.at(-1)?.cashBalance),
-    toMobileSimulatorStrategy('Velocity', velocityProjection, velocityProjection.endingCash),
+    toMobileSimulatorStrategy('Traditional', baseline, baseline.monthlyData.at(-1)?.cashBalance, liability),
+    toMobileSimulatorStrategy('Snowball', snowball, snowball.monthlyData.at(-1)?.cashBalance, liability),
+    toMobileSimulatorStrategy('Avalanche', avalanche, avalanche.monthlyData.at(-1)?.cashBalance, liability),
+    toMobileSimulatorStrategy('Velocity', velocityProjection, velocityProjection.endingCash, liability),
   ];
-  const canCompareVelocity = baseline.isPayoffPossible && velocityProjection.isPayoffPossible;
+  const velocityAvailable = liability === 'outstanding' && availablePayoff(velocityProjection.payoffMonths, velocityProjection.totalInterest, velocityProjection.isPayoffPossible);
+  const canCompareVelocity = velocityAvailable && availablePayoff(baseline.payoffMonths, baseline.totalInterest, baseline.isPayoffPossible);
   const interestSaved = canCompareVelocity ? baseline.totalInterest - velocityProjection.totalInterest : 0;
   const monthsSaved = canCompareVelocity ? baseline.payoffMonths - velocityProjection.payoffMonths : 0;
   const fastestStrategy = strategies
@@ -1842,7 +1886,11 @@ export function buildMobileSimulatorSnapshot(
 
   let guardrail: string | null = null;
   const forecastBasis = assessForecastBasis(model.loc.lenderTerms);
-  if (!forecastBasis.canProject) {
+  if (liability === 'cleared') {
+    guardrail = terminalSafetyWarning(input, false);
+  } else if (liability === 'invalid') {
+    guardrail = terminalSafetyWarning(input, true);
+  } else if (!forecastBasis.canProject) {
     guardrail = `${forecastBasis.label}. Supplied lender terms are not enforced by the monthly model.`;
   } else if (cashFlow <= 0) {
     guardrail = 'Income needs to exceed expenses before velocity payoff claims are projected.';
@@ -1858,22 +1906,24 @@ export function buildMobileSimulatorSnapshot(
     guardrail = LOC_HIGH_UTILIZATION_WARNING;
   } else if (cashFlow + 1e-8 < calculateRequiredDebtPayment(model.activeDebt.balance, model.activeDebt.apr, model.activeDebt.monthlyPayment)) {
     guardrail = 'Cash flow does not cover the active debt minimum payment yet.';
+  } else if (!velocityAvailable) {
+    guardrail = `${formatPayoffFailure(velocityProjection.failureReason)}. Review the educational projection.`;
   }
 
   return {
     guardrail,
-    fastestStrategyName: fastestStrategy?.name ?? null,
+    fastestStrategyName: liability === 'outstanding' ? fastestStrategy?.name ?? null : null,
     strategies,
     velocity: {
-      months: velocityProjection.isPayoffPossible ? velocityProjection.payoffMonths : 0,
-      totalInterest: velocityProjection.isPayoffPossible ? velocityProjection.totalInterest : 0,
+      months: velocityAvailable ? velocityProjection.payoffMonths : 0,
+      totalInterest: velocityAvailable ? velocityProjection.totalInterest : 0,
       interestSaved,
       monthsSaved,
-      interestSavedLabel: !canCompareVelocity ? 'Not projected'
+      interestSavedLabel: liability === 'cleared' ? 'No debt remaining' : !canCompareVelocity ? 'Not projected'
         : Math.abs(interestSaved) < 0.005 ? 'Same modeled interest'
           : interestSaved > 0 ? `${formatCurrency(interestSaved)} less modeled interest`
             : `${formatCurrency(Math.abs(interestSaved))} more modeled interest`,
-      monthsSavedLabel: canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
+      monthsSavedLabel: liability === 'cleared' ? 'No debt remaining' : canCompareVelocity ? formatMonthsSaved(monthsSaved) : 'Review inputs',
     },
   };
 }
@@ -1881,13 +1931,14 @@ export function buildMobileSimulatorSnapshot(
 export function buildMobileVaultSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileVaultSnapshot {
+  const cleared = classifyLiabilities(input.activeDebt.balance, input.loc.balance) === 'cleared';
   const model = normalizeMobileDashboardInput(input);
-  const dashboard = buildMobileDashboardSnapshot(model);
-  const simulator = buildMobileSimulatorSnapshot(model);
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
   const guardrail = simulator.guardrail ?? dashboard.warning;
   const hasModeledPath = !guardrail && simulator.velocity.months > 0;
-  const freedomPathLabel = hasModeledPath ? `${simulator.velocity.months} mo` : 'Review inputs';
-  const interestFreedLabel = hasModeledPath ? simulator.velocity.interestSavedLabel : 'Not projected';
+  const freedomPathLabel = cleared ? 'No debt remaining' : hasModeledPath ? `${simulator.velocity.months} mo` : 'Review inputs';
+  const interestFreedLabel = cleared ? 'No debt remaining' : hasModeledPath ? simulator.velocity.interestSavedLabel : 'Not projected';
 
   return {
     guardrail,
@@ -1896,20 +1947,20 @@ export function buildMobileVaultSnapshot(
     stages: [
       {
         title: 'Stabilize',
-        value: guardrail ? 'Review inputs' : 'Ready',
-        detail: guardrail ?? 'Cash flow, LOC capacity, and minimum-payment coverage pass the first checks.',
+        value: guardrail ? 'Review inputs' : cleared ? 'No debt remaining' : 'Ready',
+        detail: guardrail ?? (cleared ? CLEARED_LIABILITY_DETAIL : 'Cash flow, LOC capacity, and minimum-payment coverage pass the first checks.'),
       },
       {
         title: 'Debt Freedom',
         value: freedomPathLabel,
-        detail: hasModeledPath
+        detail: cleared ? CLEARED_LIABILITY_DETAIL : hasModeledPath
           ? `${model.activeDebtName} has a modeled Velocity path using the current chunk, LOC recovery, and daily interest assumptions.`
           : 'No debt-free date is shown until the Money Loop inputs support a stable projection.',
       },
       {
         title: 'Interest Comparison',
         value: interestFreedLabel,
-        detail: hasModeledPath
+        detail: cleared ? CLEARED_LIABILITY_DETAIL : hasModeledPath
           ? 'Velocity versus full-budget direct repayment of the same active debt and LOC. A difference is not an emergency reserve or a promise of savings.'
           : 'Buffer planning waits until the payoff path is stable enough to model.',
       },
@@ -1920,9 +1971,10 @@ export function buildMobileVaultSnapshot(
 export function buildMobileLearnSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileLearnSnapshot {
+  const cleared = classifyLiabilities(input.activeDebt.balance, input.loc.balance) === 'cleared';
   const model = normalizeMobileDashboardInput(input);
-  const dashboard = buildMobileDashboardSnapshot(model);
-  const simulator = buildMobileSimulatorSnapshot(model);
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
   const cashFlow = calculateCashFlow(model.monthlyIncome, model.monthlyExpenses);
   const locNeedsSetup = model.loc.limit <= 0;
   const locOverLimit = !locNeedsSetup && model.loc.balance > model.loc.limit;
@@ -1936,19 +1988,20 @@ export function buildMobileLearnSnapshot(
       {
         title: 'Money Loop',
         value: dashboard.nextMove,
-        detail: `${model.activeDebtName} is the current modeled target. The loop connects income, expenses, LOC room, and principal movement before any payoff claim is shown.`,
+        detail: cleared ? CLEARED_LIABILITY_DETAIL : guardrail ?? (input.activeDebt.balance === 0 ? 'Only the LOC remains. No target principal chunk is modeled.' : `${model.activeDebtName} is the current modeled target. The loop connects income, expenses, LOC room, and principal movement before any payoff claim is shown.`),
       },
       {
         title: 'Cash Flow',
         value: `${formatCurrency(cashFlow)}/mo`,
-        detail: cashFlow > 0
-          ? `${formatCurrency(cashFlow)} monthly cash flow is the recovery fuel after minimum payments and planned chunks.`
-          : 'Income needs to exceed expenses first, so LOC payoff stays in learning mode.',
+        detail: cleared ? dashboard.warning ?? CLEARED_LIABILITY_DETAIL : cashFlow <= 0
+          ? 'Income needs to exceed expenses first, so LOC payoff stays in learning mode.'
+          : input.activeDebt.balance === 0 ? 'Monthly cash flow can repay the remaining LOC; no target principal chunk is modeled.'
+            : `${formatCurrency(cashFlow)} monthly cash flow is the recovery fuel after minimum payments and planned chunks.`,
       },
       {
         title: 'LOC Room',
-        value: locNeedsSetup ? 'Enter LOC terms' : `${formatCurrency(availableLoc)} open`,
-        detail: locNeedsSetup
+        value: cleared ? 'No debt remaining' : locNeedsSetup ? 'Enter LOC terms' : `${formatCurrency(availableLoc)} open`,
+        detail: cleared ? CLEARED_LIABILITY_DETAIL : locNeedsSetup
           ? 'Available credit needs a real limit before velocity chunks are modeled.'
           : locOverLimit
             ? 'The LOC balance is above the limit, so payoff claims stay in review mode.'
@@ -1958,7 +2011,7 @@ export function buildMobileLearnSnapshot(
       },
       {
         title: 'Interest Visibility',
-        value: `${formatCurrency(dashboard.dailyInterestBurn)}/day`,
+        value: dashboard.vitals[1].value,
         detail: 'Daily interest is a simple accrual estimate across active debt and LOC balance, not a lender posting promise.',
       },
     ],
@@ -1968,14 +2021,15 @@ export function buildMobileLearnSnapshot(
 export function buildMobileCockpitSnapshot(
   input: MobileDashboardInput = defaultMobileDashboardInput
 ): MobileCockpitSnapshot {
+  const cleared = classifyLiabilities(input.activeDebt.balance, input.loc.balance) === 'cleared';
   const model = normalizeMobileDashboardInput(input);
-  const dashboard = buildMobileDashboardSnapshot(model);
-  const simulator = buildMobileSimulatorSnapshot(model);
+  const dashboard = buildMobileDashboardSnapshot(input);
+  const simulator = buildMobileSimulatorSnapshot(input);
   const warning = simulator.guardrail ?? dashboard.warning;
-  const etaLabel = simulator.velocity.months > 0 ? `${simulator.velocity.months} mo` : 'Review inputs';
+  const etaLabel = cleared ? 'No debt remaining' : simulator.velocity.months > 0 ? `${simulator.velocity.months} mo` : 'Review inputs';
 
   return {
-    flightStatusLabel: warning ? 'Review inputs' : 'Ready to model',
+    flightStatusLabel: cleared ? 'No debt remaining' : warning ? 'Review inputs' : 'Ready to model',
     warning,
     instruments: [
       {
@@ -1986,7 +2040,7 @@ export function buildMobileCockpitSnapshot(
       },
       {
         label: 'Fuel Burn',
-        value: `${formatCurrency(dashboard.dailyInterestBurn)}/day`,
+        value: dashboard.vitals[1].value,
         detail: 'Daily interest estimate across active debt and LOC.',
         status: dashboard.dailyInterestBurn > 0 ? 'warning' : 'normal',
       },
@@ -2004,8 +2058,11 @@ export function buildMobileCockpitSnapshot(
           : 'Suppressed until inputs support a stable projection.',
         status: simulator.velocity.months > 0 ? 'normal' : 'warning',
       },
-    ],
-    flightChecks: [
+    ].map((instrument): MobileCockpitInstrument => cleared && instrument.label !== 'Airspeed'
+      ? { ...instrument as MobileCockpitInstrument, detail: CLEARED_LIABILITY_DETAIL, status: 'normal' } : instrument as MobileCockpitInstrument),
+    flightChecks: cleared ? [{ label: 'No debt remaining', passed: true, detail: CLEARED_LIABILITY_DETAIL },
+      ...(assessKnownSafety(input.monthlyIncome, input.monthlyExpenses, input.loc.balance, input.loc.limit).nonpositiveCashFlow
+        ? [{ label: 'Positive cash flow', passed: false, detail: KNOWN_CASH_FLOW_WARNING }] : [])] : [
       {
         label: 'Positive cash flow',
         passed: dashboard.cashFlow > 0,

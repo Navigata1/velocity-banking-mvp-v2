@@ -2,7 +2,7 @@
   "version": 1,
   "mission": {
     "name": "InterestShield Original-Vision Production Restoration",
-    "tagline": "Compare-first coaching is pushed. Both ab9 CI events exposed a stale root mobile contract; its strengthened40-group local correction passes. Renewed CI, photoreal and release gates remain open.",
+    "tagline": "Cleared, residual and LOC-only coaching now agrees across web and Expo; independent budget warnings remain visible. Local403 regressions pass. New-head CI, photoreal and release gates remain open.",
     "repo": "Navigata1/velocity-banking-mvp-v2",
     "repoPath": "C:/Users/IslandDevCrew/Documents/Interest Shield",
     "defaultBranch": "main",
@@ -10,8 +10,8 @@
     "northStar": "Truth-first, hope-forward Velocity Banking education with correct math, explicit assumptions, private owner-scoped data, calm coaching, and no promised outcomes.",
     "status": "active",
     "started": "2026-07-12",
-    "updated": "2026-10-24T04:47:51.533Z",
-    "sessionCount": 78
+    "updated": "2026-10-24T06:11:53.937Z",
+    "sessionCount": 79
   },
   "policies": {
     "merge": "review",
@@ -204,7 +204,7 @@
           "status": "pending",
           "evidence": "ops/mission/evidence/comparison-contract-alignment-2026-10-24/summary.json",
           "lastRun": "2026-10-24T02:12:02.705Z",
-          "notes": "Historicalcd20 push40045629097 passed/PR40045632074 failed actualThree17ms remaining; canonicalexit1/receipt6377941309 retained, cause unproven. State76:53e69170 both complete attempt1 events40050422119/40050426295/all6guards/canonical0 verified, receipt6378603653; actual285SQL assertions twice/event(1140executions,not distinct). Newly integrated handoff requires its own complete pair; no inherited new-head approval or unchanged rerun. 545 now fully verified at6379361182. State77 comparison/coaching source is independently accepted with local376/23247; its own complete automatic push/PR CI pair is still required, not inherited or rerun. State78:ab9 attempt1 push40062690351/PR40062692135 bothFAILED at stale root mobile default coaching assertion; graphics passed, downstream Web prerequisite correctly failed, only4/6source guards executed. Canonical1/receipt6380007920 retained. Corrected contract40/40local; needs new-source automatic pair, no unchanged rerun."
+          "notes": "Historicalcd20 push40045629097 passed/PR40045632074 failed actualThree17ms remaining; canonicalexit1/receipt6377941309 retained, cause unproven. State76:53e69170 both complete attempt1 events40050422119/40050426295/all6guards/canonical0 verified, receipt6378603653; actual285SQL assertions twice/event(1140executions,not distinct). Newly integrated handoff requires its own complete pair; no inherited new-head approval or unchanged rerun. 545 now fully verified at6379361182. State77 comparison/coaching source is independently accepted with local376/23247; its own complete automatic push/PR CI pair is still required, not inherited or rerun. State78:ab9 attempt1 push40062690351/PR40062692135 bothFAILED at stale root mobile default coaching assertion; graphics passed, downstream Web prerequisite correctly failed, only4/6source guards executed. Canonical1/receipt6380007920 retained. Corrected contract40/40local; needs new-source automatic pair, no unchanged rerun. Prior362252d both attempt1 CI40064285282/40064286513 passed all3jobs/6guards/canonical0, receipt6380392883. State79 changed coaching needs its own complete automatic pair; pending, not inherited."
         },
         {
           "id": "R0-G4",
@@ -562,7 +562,7 @@
             "R2-T5"
           ],
           "pr": null,
-          "notes": "Independent NM02 confirms seven expected RED groups: exact-cleared cohorts can receive setup/invalid coaching, nonzero dust can inherit zero-month/Send0, and LOC-only can solicit a starter chunk. Source/CPU proposal in preparation; no solver tolerance/normalization/ownership change or completion claim. Fresh NM02 source/CPU review HOLD ad383a42: new helper import breaks existing independent reference loader (require absent); no root adoption. Existing classification/caller checks passed; a minimal rebase/loader repair and fresh review/full standing gates remain required."
+          "notes": "Independent NM02 confirms seven expected RED groups: exact-cleared cohorts can receive setup/invalid coaching, nonzero dust can inherit zero-month/Send0, and LOC-only can solicit a starter chunk. Source/CPU proposal in preparation; no solver tolerance/normalization/ownership change or completion claim. Fresh NM02 source/CPU review HOLD ad383a42: new helper import breaks existing independent reference loader (require absent); no root adoption. Existing classification/caller checks passed; a minimal rebase/loader repair and fresh review/full standing gates remain required. State79 root integration: raw liability classifier, strict future-payoff availability, LOC-only paydown, four-vital scope and cross-view terminal labels. ActualRED22, cleared-interest RED, independent-warning RED6 and reviewed Learn income-first RED1 corrected without solver changes. Full403/23247, native contracts/root40, lint/types/media227 and fresh3platform exact-source exports pass; final desktopChrome source states/restored/reload/errors0. Independent final review/new-head remote proof required; not finalR2/lender/device approval."
         }
       ],
       "gates": [
@@ -571,9 +571,9 @@
           "title": "Financial regressions",
           "command": "npm --prefix apps/web test",
           "status": "passed",
-          "evidence": "ops/mission/evidence/comparison-coaching-2026-10-24/summary.json",
-          "lastRun": "2026-10-24T04:11:16.966Z",
-          "notes": "351 regressions pass, including12 residual/strategy subcases,accepted restoration/withdrawal,valid/cleared timing and failed-result override rejection. Original numerical packages unchanged. Not lender-calendar certification. State77 fresh fullweb-v2 passes376 regressions/23247 common-month probes. Shared numerical declarations and all Remotion scenario inputs/results unchanged; only the coaching presenter/source identities change. Not lender certification."
+          "evidence": "ops/mission/evidence/liability-coaching-2026-10-24/summary.json",
+          "lastRun": "2026-10-24T06:11:22.472Z",
+          "notes": "351 regressions pass, including12 residual/strategy subcases,accepted restoration/withdrawal,valid/cleared timing and failed-result override rejection. Original numerical packages unchanged. Not lender-calendar certification. State77 fresh fullweb-v2 passes376 regressions/23247 common-month probes. Shared numerical declarations and all Remotion scenario inputs/results unchanged; only the coaching presenter/source identities change. Not lender certification. State79 fullweb403/23247 and independent reference pass.46of52original shared functions unchanged; six presentation functions and one display interface change. Scenario inputs/results and23protectedart/build files exact. Not lender certification."
         },
         {
           "id": "R2-G2",
@@ -993,7 +993,7 @@
     {
       "label": "Web regression cases passing",
       "baseline": "263",
-      "current": "376",
+      "current": "403",
       "target": "360",
       "direction": "up"
     },
@@ -1537,13 +1537,20 @@
       "mergedAt": null,
       "title": "Strengthen root compare-first mobile contract after CI failure (draft)",
       "phase": "R2"
+    },
+    {
+      "number": 256,
+      "url": "https://github.com/Navigata1/velocity-banking-mvp-v2/pull/256",
+      "mergedAt": null,
+      "title": "Coherent cleared, residual and LOC-only coaching with independent safety warnings (draft)",
+      "phase": "R2"
     }
   ],
   "resume": {
     "activePhase": "R1",
     "nextActions": [
-      "State78:ab9 compare-first implementation/READY preview/actual Chrome and all20servedhashes verified, but BOTH attempt1 CI40062690351/40062692135 FAILED stale root mobile-port assertion; graphics both passed, downstream Web prerequisite failed/4guards, canonical1/receipt6380007920 retained. ActualrootRED39pass1fail then40GREEN, nativecoaching16/CI22GREEN. Review/push focused contract+datedmetadata correction; obtain BOTH new complete automatic CI events/all6guards/canonical0/newREADY actualproof. No unchanged rerun or production promotion.",
-      "NM02 source proposal63e06195 is HOLD after independent ad383a42 review: adding liability-coaching import breaks actual standalone financial-reference loader. Preserve exact-cleared/dust/LOC-only semantics, all numerical/reference assertions and current NM01V2 own-target fix. Repair minimally in fresh source proposal, then independent review and full standing gates; no current root adoption.",
+      "State79 NM02 root coaching adopted locally:403regressions/23247probes, root40/nativecontracts/lint/types/media227, fresh3platform source-map exports and final actualChrome Expo source states pass. Finish final independently reviewed <=400line commit/push; require BOTH new automatic exact-head CI events/all6guards/canonical0 and READY preview/browser/20asset hashes. Prior362 fully verified at6380392883; failedab9 history retained. No merge/production promotion or unchanged workflow rerun.",
+      "Preserve exact-cleared/dust/LOC-only raw-cohort contract and independent known CF<=0/LOC>80 warnings. Solvers/APR/cent tolerance/allocation/persistence unchanged; standalone reference loader retained without relative import. NM02 new-head rendered proof remains open; next substantive financial work is four-source consolidation, actual lender/calendar support and common-date comparisons.",
       "Short-stage517c6dd2 controls and prepare passed; actual ten-video render837a0a33 FAILED mandatory POST despite childexit0/204processes/0active. Generation7d2c88ac videos remain UNAPPROVED. Hypatia confirmed only3literal%SystemDrive% cache additions, no baseline content edits; cause unproven. No verify/package, cleanup, ignorelist, rebaseline, unchanged retry or old-MP4 backfill. Read private progress.md before a new reviewed environment change.",
       "Generic production operator/root aliases P1 remains OPEN despite accepted configured copy and fixed private binding. Preserve ergonomic workflows; do not adopt stage-only adapters until reproducible configured root wiring is independently reviewed. Real complete-ten decoded proof and delivery still required.",
       "HouseV2 faca67dac5afea711c0efc117865720e089e341a8d653833f416fe762e210592 fixes two side clearances .72/.76,26producer+15independentCPU only; no images/adoption, public House unchanged. Paired fixture19CPU remains PENDING_RUNTIME_BIND. Chrome ENV probeV2 source fixes both V1 faults and is CPUaccepted, BUT actualone-shot STOPPED initial exact-map validation before either arm (a/bnull): unexpectedWindows environment keys. NoChrome/pwsh/Job, no cache-hypothesis result or retry. Investigate deterministic bootstrap contract before fresh review/new decision. CIstartupobserverV2 remains separate privateHOLD2.",
@@ -1577,7 +1584,7 @@
       "Public custom reconstruction GPU quota; no authenticated Hugging Face connection. Do not initiate paid GPU jobs without a defined authorized budget.",
       "Supabase project binding is unconfigured. Fresh isolated SQL/RLS proof now passes in disposable GitHub CI despite local Docker being unavailable. Hosted API/account recovery, provider patch/backup state and final restored production release remain gated; domain binding is verified.",
       "State51: unclassified baseline RSCprefetch-shaped aborts remain an open network/release finding; art subchecks do not pass the aggregate network gate. Investigation is not a globalgoal block. Fixed2k House policy was not adopted; all-ten finalphoto/physical performance remain open.",
-      "ab9 bothautomaticCIevents failed one stale root mobile-coaching assertion; corrected40-group local contract needs renewed exact-head approval. HP3 consumedHOLD/zero captures; HP5sourceHOLD and HP6limitedsourceCPUaccepted, runtime binding pending. PosterV3 CPUaccepted, not portable adoption/paint reliability. OldtenvideoFAILED/UNAPPROVED, genericoperatorP1, alltenphoto, NM02reference-loaderHOLD/scenarios/lender/calendar, managedbackend/security/a11y/device/release stayOPEN. No retry/rebaseline/cleanup or paidGPU authority."
+      "Prior362 both complete CI events verified. NewNM02 root integration needs own exact-head CI/preview approval. HP6 source/real-loaderCPU42 and binding DESIGN accepted, concrete binding DISABLED; oldHP3consumedHOLD/zeroimages and oldfulltenFAILED/UNAPPROVED retained. PortableposterV2 acceptedCPU/unadopted, genericoperatorP1 and RSCobserverV1HOLD/V2repair remain. Alltenphoto/scenarios/lender/calendar/managedbackend/security/a11y/device/release OPEN. No cleanup/rebaseline/retry/backfill/paidGPU authority."
     ],
     "conventions": [
       "Continue focused verified restoration commits on codex/restoration/asset-heroes and draft PR #256; do not branch-switch or reset preserved work.",

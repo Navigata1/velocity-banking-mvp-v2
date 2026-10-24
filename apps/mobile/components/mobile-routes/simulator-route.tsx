@@ -63,7 +63,7 @@ export function SimulatorRoute() {
             <FinancialCard
               title="Current Plan"
               value={snapshot.nextMove}
-              detail={simulator.guardrail ?? snapshot.warning ?? 'Inputs are ready for a simulator pass.'}
+              detail={simulator.guardrail ?? snapshot.warning ?? snapshot.vitals[3].detail}
             />
             <FinancialCard
               title="Velocity Delta"
