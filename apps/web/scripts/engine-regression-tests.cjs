@@ -189,6 +189,7 @@ function test(name, fn) {
 require('./money-loop-detail-truth-tests.cjs').registerMoneyLoopDetailTruthTests({test,loadTsModule});
 require('./dashboard-comparison-truth-tests.cjs').registerDashboardComparisonTruthTests({test,financialStore,dashboardModel,calculations,sharedFinancialEngine,loadTsModule});
 require('./liability-coaching-tests.cjs').registerLiabilityCoachingTests({test,dashboardModel,calculations,sharedFinancialEngine});
+require('./portfolio-navigation-tests.cjs').registerPortfolioNavigationTests({test});
 
 function roundCents(value) {
   return Math.round(value * 100) / 100;

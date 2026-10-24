@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   Bot,
   ChartNoAxesCombined,
@@ -23,7 +23,7 @@ import { useFinancialStore } from '@/stores/financial-store';
 import { useThemeStore, themeClasses, Theme } from '@/stores/theme-store';
 import { usePreferencesStore } from '@/stores/preferences-store';
 import { getGuardianResponse } from '@/data/shield-guardian-qa';
-import { useState, useCallback } from 'react';
+import { Suspense, useState, useCallback } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 
 const themeOptions: { value: Theme; label: string }[] = [
@@ -48,8 +48,10 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function Navigation() {
+function NavigationContent() {
   const pathname = usePathname();
+  const scenario = useSearchParams().get('scenario');
+  const portfolio = pathname === '/portfolio' || (pathname === '/' || pathname === '/simulator') && scenario === 'portfolio';
   const mounted = useIsClient();
   const [showAI, setShowAI] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
@@ -112,7 +114,7 @@ export default function Navigation() {
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={portfolio && (item.href === '/' || item.href === '/simulator') ? `${item.href}?scenario=portfolio` : item.href}
                   aria-label={item.label}
                   aria-current={pathname === item.href ? 'page' : undefined}
                   title={item.label}
@@ -317,4 +319,11 @@ export default function Navigation() {
       )}
     </>
   );
+}
+
+export default function Navigation() {
+  return <Suspense fallback={<nav aria-label="Primary navigation" aria-busy="true"
+    className="fixed bottom-0 left-0 right-0 z-50 h-[65px] border-t md:sticky md:top-0 md:h-screen md:w-56 md:border-r md:border-t-0" />}>
+    <NavigationContent />
+  </Suspense>;
 }

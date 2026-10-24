@@ -114,7 +114,32 @@ async function sharedEdits(page, origin, output, width) {
   });
   assert.equal(lightContrast.length, 4); assert.ok(lightContrast.every(metric => metric.ratio >= 4.5), JSON.stringify(lightContrast));
   await fit(page); await unchangedLegacy(page);
-  return { geometry, lightContrast, bidirectional: true, legacyBytesPreserved: true, modelChecked: width !== 280 };
+  const primaryNavigation = await primaryPortfolioNavigation(page, origin, expected);
+  return { geometry, lightContrast, bidirectional: true, legacyBytesPreserved: true, modelChecked: width !== 280, primaryNavigation };
+}
+async function primaryPortfolioNavigation(page, origin, expected) {
+  const saved = await stored(page), nav = page.getByTestId('primary-navigation');
+  for (const source of ['/portfolio', '/?scenario=portfolio', '/simulator?scenario=portfolio']) {
+    for (const [label, href, id, cash] of [
+      ['Dashboard', '/?scenario=portfolio', 'shared-portfolio-dashboard', 'shared-value-cash-flow'],
+      ['Simulator', '/simulator?scenario=portfolio', 'portfolio-simulator', 'portfolio-simulator-cash-flow'],
+    ]) {
+      await page.goto(origin + source, { waitUntil: 'networkidle' });
+      await nav.getByRole('link', { name: label, exact: true }).click();
+      await page.getByTestId(id).waitFor();
+      assert.equal(new URL(page.url()).pathname + new URL(page.url()).search, href);
+      assert.equal(await page.getByTestId(cash).innerText(), '$950.00');
+      assert.equal(await nav.getByRole('link', { name: label, exact: true }).getAttribute('aria-current'), 'page');
+      assert.equal(await stored(page), saved); assert.deepEqual(JSON.parse(saved).data, expected); await unchangedLegacy(page);
+    }
+  }
+  await page.getByRole('link', { name: 'Single-target demo', exact: true }).click();
+  await page.getByRole('link', { name: 'Portfolio scenario', exact: true }).waitFor();
+  assert.equal(new URL(page.url()).search, ''); assert.equal(await nav.getByRole('link', { name: 'Dashboard', exact: true }).getAttribute('href'), '/');
+  assert.equal(await stored(page), saved); await unchangedLegacy(page);
+  await page.goto(origin + '/?scenario=portfolio', { waitUntil: 'networkidle' });
+  await page.getByTestId('shared-portfolio-dashboard').waitFor();
+  return { canonicalPrimaryTransitions: 6, explicitDemoExit: true, originalSavedBytesPreserved: true };
 }
 async function adverseStates(page, origin, output, width) {
   const debtOnly = () => { const book = fixture(); book.debts = book.debts.slice(0, 1); book.loc.balance = 0; return book; };
